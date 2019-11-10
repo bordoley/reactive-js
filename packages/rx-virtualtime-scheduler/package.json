@@ -1,0 +1,30 @@
+{
+  "name": "@rx-min/rx-virtualtime-scheduler",
+  "version": "0.0.0",
+  "description": "Virtual time scheduler",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "format": "prettier --write src/**/* test/**/*"
+  },
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "dependencies": {
+    "@rx-min/rx-disposables": "0.0.0",
+    "@rx-min/rx-core": "0.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.15.3",
+    "typescript": "^3.2.2"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@rx-min/rx-disposables",
+  "version": "0.0.0",
+  "description": "Disposables",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "format": "prettier --write src/**/* test/**/*"
+  },
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "devDependencies": {
+    "prettier": "^1.15.3",
+    "typescript": "^3.2.2"
+  }
+}

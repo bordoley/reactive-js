@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "tsc -b packages/rx-disposables packages/rx-core packages/rx-scheduler packages/rx-operators packages/rx-observables packages/rx-imperative packages/rx-react packages/rx-virtualtime-scheduler packages/ix",
+    "clean": "rimraf packages/**/dist",
+    "format": "lerna run format"
+  },
+  "devDependencies": {
+    "lerna": "^3.4.3",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.2.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {}
+}

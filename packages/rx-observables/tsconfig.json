@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.settings.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+  },
+  "references": [
+    { "path": "../rx-disposables" },
+    { "path": "../rx-core" }
+  ]
+}
