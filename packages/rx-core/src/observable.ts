@@ -60,15 +60,22 @@ export interface OperatorLike<A, B> {
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   source: ObservableLike<TSrc>;
-  operator: OperatorLike<TSrc, T>;
+  operators: ReadonlyArray<OperatorLike<any, any>>;
 
-  constructor(source: ObservableLike<TSrc>, operator: OperatorLike<TSrc, T>) {
+  constructor(source: ObservableLike<TSrc>, operators: ReadonlyArray<OperatorLike<any, any>>) {
     this.source = source;
-    this.operator = operator;
+    this.operators = operators;
   }
 
+  private liftSubscriber(subscriber: SubscriberLike<any>) {
+    return this.operators.reduce(
+      (acc, next) => next(acc),
+      subscriber,
+    );
+  } 
+
   subscribe(subscriber: SubscriberLike<T>) {
-    const liftedSubscrber = this.operator(subscriber);
+    const liftedSubscrber = this.liftSubscriber(subscriber);
     this.source.subscribe(liftedSubscrber);
   }
 }
@@ -83,16 +90,15 @@ function lift<T, A, B, C, D, E, F, G>(src: ObservableLike<T>, op1: OperatorLike<
 function lift<T, A, B, C, D, E, F, G, H>(src: ObservableLike<T>, op1: OperatorLike<T, A>, op2: OperatorLike<A, B>, op3: OperatorLike<B, C>, op4: OperatorLike<C, D>, op5: OperatorLike<D, E>, op6: OperatorLike<E, F>, op7: OperatorLike<F, G>, op8: OperatorLike<G, H>): ObservableLike<H>;
 function lift<T, A, B, C, D, E, F, G, H, I>(src: ObservableLike<T>, op1: OperatorLike<T, A>, op2: OperatorLike<A, B>, op3: OperatorLike<B, C>, op4: OperatorLike<C, D>, op5: OperatorLike<D, E>, op6: OperatorLike<E, F>, op7: OperatorLike<F, G>, op8: OperatorLike<G, H>, op9: OperatorLike<H, I>): ObservableLike<I>;
 function lift(source: ObservableLike<any>, operator: OperatorLike<any, any>, ...operators: Array<OperatorLike<any, any>>): ObservableLike<any> {
-  const [sourceSource, sourceOperator] = (source instanceof LiftedObservable)
-    ? [source.source, (subscriber: SubscriberLike<any>) => source.operator(operator(subscriber))]
-    : [source, operator];
+  const sourceSource = (source instanceof LiftedObservable)
+    ? source.source
+    : source;
 
-  let liftedOperator = operator;
-  for (let i = 0; i < operators.length; i++) {
-    liftedOperator = subscriber => liftedOperator(operators[i](subscriber));
-  }
+  const allOperators = (source instanceof LiftedObservable)
+    ? [...(source.operators), operator, ...operators]
+    : [operator, ...operators];
 
-  return new LiftedObservable(sourceSource, liftedOperator);
+  return new LiftedObservable(sourceSource, allOperators);
 }
 
 class ObserveSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
