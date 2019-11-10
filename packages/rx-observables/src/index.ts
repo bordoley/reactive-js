@@ -77,7 +77,7 @@ export const ofArray = <T>(values: ReadonlyArray<T>, scheduler: SchedulerLike, d
       }
     };
 
-    continuationResult = delay != null ? [continuation, delay] : continuation;
+    continuationResult = delay !== undefined ? [continuation, delay] : continuation;
 
     subscriber.add(
       scheduler.schedule(continuation, delay)
@@ -175,7 +175,7 @@ export const concat = <T>(head: ObservableLike<T>, ...tail: Array<ObservableLike
     const queue = [head, ...tail];
     const subscribeNext = () => {
       const head = queue.shift();
-      if (head != null) {
+      if (head !== undefined) {
         let innerSubscription = Disposable.disposed;
 
         const continuation = () => {
@@ -187,7 +187,7 @@ export const concat = <T>(head: ObservableLike<T>, ...tail: Array<ObservableLike
         innerSubscription = Observable.connect(Observable.lift(head, observe(observer)));
       } 
 
-      return head != null;
+      return head !== undefined;
     }
 
     subscribeNext();

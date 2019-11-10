@@ -26,7 +26,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     const scheduledTime = now + (delay || 0);
 
     const queueAtScheduledTime = this.timeQueue[scheduledTime];
-    if (queueAtScheduledTime != null) {
+    if (queueAtScheduledTime !== undefined) {
       queueAtScheduledTime.push(work);
     } else {
       this.timeQueue[scheduledTime] = [work];
@@ -45,7 +45,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
           return continuationCallback;
         } else if (result instanceof Function) {
           return () => this.createWorkCallback(disposable, shouldYield, result);
-        } else if (result != null) {
+        } else if (result !== undefined) {
           const [resultContinuation, delay] = result;
           const callback = resultContinuation === continuation
             ? continuationCallback

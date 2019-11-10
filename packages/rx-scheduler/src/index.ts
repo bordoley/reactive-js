@@ -29,7 +29,7 @@ class RxScheduler implements SchedulerLike {
     const callbackNode = unstable_scheduleCallback(
       this.priorityLevel,
       callback,
-      delay != null ? { delay } : undefined,
+      delay !== undefined ? { delay } : undefined,
     );
 
     const innerDisposable = Disposable.create(() => unstable_cancelCallback(callbackNode));
@@ -48,7 +48,7 @@ class RxScheduler implements SchedulerLike {
           return continuationCallback;
         } else if (result instanceof Function) {
           return this.createFrameCallback(disposable, shouldYield, result);
-        } else if (result != null) {
+        } else if (result !== undefined) {
           const [resultContinuation, delay] = result;
           const callback = resultContinuation === continuation
             ? continuationCallback

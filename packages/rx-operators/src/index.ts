@@ -1,3 +1,4 @@
+export { debounceTime } from "./debounce";
 export { distinctUntilChanged } from "./distinctUntilChanged";
 export { ignoreElements } from "./ignoreElements";
 export { keep } from "./keep";
