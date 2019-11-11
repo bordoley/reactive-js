@@ -7,7 +7,7 @@ import {
 } from "@rx-min/rx-core";
 
 class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {
-  public readonly scheduler: SchedulerLike;
+  readonly scheduler: SchedulerLike;
 
   constructor(delegate: SubscriberLike<T>, scheduler: SchedulerLike) {
     super(delegate);

@@ -77,7 +77,7 @@ class RxScheduler implements SchedulerLike {
     return continuationCallback;
   }
 
-  public schedule(
+  schedule(
     continuation: SchedulerContinuation,
     delay: number | void,
   ): DisposableLike {

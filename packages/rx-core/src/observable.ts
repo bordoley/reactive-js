@@ -4,7 +4,11 @@ import {
   DisposableLike,
 } from "@rx-min/rx-disposables";
 
-import { throwIfNotConnected, DelegatingSubscriber, SubscriberLike } from "./subscriber";
+import {
+  throwIfNotConnected,
+  DelegatingSubscriber,
+  SubscriberLike,
+} from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
 import { SchedulerLike } from "./scheduler";
 
@@ -13,9 +17,9 @@ export interface ObservableLike<T> {
 }
 
 class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  public readonly subscription: CompositeDisposableLike;
-  public readonly scheduler: SchedulerLike;
-  public isConnected = false;
+  readonly subscription: CompositeDisposableLike;
+  readonly scheduler: SchedulerLike;
+  isConnected = false;
 
   constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
     this.scheduler = scheduler;
@@ -24,7 +28,7 @@ class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
 
   notify(notification: Notification, data: T | Error | undefined) {
     throwIfNotConnected(this);
-    
+
     if (!this.subscription.isDisposed) {
       switch (notification) {
         case Notifications.next:
@@ -53,8 +57,8 @@ export interface Operator<A, B> {
 }
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
-  source: ObservableLike<TSrc>;
-  operators: ReadonlyArray<Operator<any, any>>;
+  readonly source: ObservableLike<TSrc>;
+  readonly operators: ReadonlyArray<Operator<any, any>>;
 
   constructor(
     source: ObservableLike<TSrc>,
