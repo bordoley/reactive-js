@@ -1,12 +1,11 @@
 import { Subject, SubjectLike } from "./subject";
-import { DisposableLike } from "@rx-min/rx-disposables";
-import { Notifications, ObservableLike, SubscriberLike } from "@rx-min/rx-core";
+import { Notifications, ObservableLike, ObservableResourceLike, SubscriberLike } from "@rx-min/rx-core";
 
 export interface EventLike<T> extends ObservableLike<T> {
   dispatch(event: T): void;
 }
 
-export interface EventSourceLike<T> extends EventLike<T>, DisposableLike{}
+export interface EventSourceLike<T> extends EventLike<T>, ObservableResourceLike<T>{}
 
 class EventSourceImpl<T> implements EventSourceLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();

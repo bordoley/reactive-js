@@ -1,13 +1,13 @@
 import { DisposableLike, Disposable } from "@rx-min/rx-disposables";
 
 import {
-  ObservableLike,
+  ObservableResourceLike,
   ObserverLike,
   Notification,
   SubscriberLike
 } from "@rx-min/rx-core";
 
-export interface SubjectLike<T> extends ObserverLike<T>, DisposableLike, ObservableLike<T> {}
+export interface SubjectLike<T> extends ObserverLike<T>, ObservableResourceLike<T> {}
 
 class SubjectImpl<T> implements SubjectLike<T> {
   private _isDisposed = false;

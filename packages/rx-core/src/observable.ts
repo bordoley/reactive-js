@@ -127,3 +127,5 @@ export const Observable = {
   connect,
   lift,
 };
+
+export interface ObservableResourceLike<T> extends ObservableLike<T>, DisposableLike{}

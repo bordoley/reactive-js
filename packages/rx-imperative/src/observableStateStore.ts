@@ -1,5 +1,4 @@
-import { DisposableLike } from "@rx-min/rx-disposables";
-import { DelegatingSubscriber, Notifications, ObservableLike, Observable, SchedulerLike, SchedulerContinuationLike, SubscriberLike } from "@rx-min/rx-core";
+import { DelegatingSubscriber, Notifications, ObservableLike, Observable, ObservableResourceLike, SchedulerLike, SchedulerContinuationLike, SubscriberLike } from "@rx-min/rx-core";
 
 import { EventSource, EventSourceLike } from './eventSource';
 import { shareReplayLast } from './sharedObservable';
@@ -10,7 +9,7 @@ export interface ObservableStateLike<T> extends ObservableLike<T> {
   dispatch(updater: StateUpdater<T>): void;
 }
 
-export interface ObservableStateStoreLike<T> extends ObservableStateLike<T>, DisposableLike { }
+export interface ObservableStateStoreLike<T> extends ObservableStateLike<T>, ObservableResourceLike<T> { }
 
 class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>, T> {
   private readonly scheduler: SchedulerLike;
@@ -110,7 +109,7 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T>{
   }
 }
 
-const create = <T>(initialValue: T, scheduler: SchedulerLike) =>
+const create = <T>(initialValue: T, scheduler: SchedulerLike): ObservableStateStoreLike<T> =>
   new ObservableStateStoreImpl(initialValue, scheduler);
 
 export const ObservableStateStore = {
