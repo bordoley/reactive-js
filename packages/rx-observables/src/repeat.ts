@@ -5,7 +5,7 @@ import {
   Observable,
   observe,
   Operator,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 import { SerialDisposable, SerialDisposableLike } from "@rx-min/rx-disposables";
@@ -18,7 +18,7 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   constructor(
     delegate: SubscriberLike<T>,
     observable: ObservableLike<T>,
-    shouldRepeat: (error: Error | undefined) => boolean
+    shouldRepeat: (error: Error | undefined) => boolean,
   ) {
     super(delegate);
     this.observable = observable;
@@ -41,8 +41,8 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
       this.innerSubscription.setInnerDisposable(
         Observable.connect(
           Observable.lift(this.observable, observe(this)),
-          this.scheduler
-        )
+          this.scheduler,
+        ),
       );
     }
   }
@@ -60,7 +60,7 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
-  shouldRepeat: (error: Error | undefined) => boolean
+  shouldRepeat: (error: Error | undefined) => boolean,
 ): Operator<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
@@ -71,7 +71,7 @@ const defaultRepeatPredicate = (error: Error | undefined): boolean =>
 
 export const repeat = <T>(
   observable: ObservableLike<T>,
-  predicate: () => boolean = alwaysTrue
+  predicate: () => boolean = alwaysTrue,
 ): ObservableLike<T> => {
   const repeatPredicate =
     predicate === alwaysTrue
@@ -80,7 +80,7 @@ export const repeat = <T>(
 
   return Observable.lift(
     observable,
-    repeatOperator(observable, repeatPredicate)
+    repeatOperator(observable, repeatPredicate),
   );
 };
 
@@ -91,7 +91,7 @@ const defaultRetryPredicate = (error: Error | undefined): boolean =>
 
 export const retry = <T>(
   observable: ObservableLike<T>,
-  predicate: (error: Error) => boolean = alwaysTrue1
+  predicate: (error: Error) => boolean = alwaysTrue1,
 ): ObservableLike<T> => {
   const retryPredicate =
     predicate === alwaysTrue1
@@ -100,6 +100,6 @@ export const retry = <T>(
 
   return Observable.lift(
     observable,
-    repeatOperator(observable, retryPredicate)
+    repeatOperator(observable, retryPredicate),
   );
 };

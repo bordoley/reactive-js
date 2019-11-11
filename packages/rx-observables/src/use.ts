@@ -3,7 +3,7 @@ import {
   observe,
   Observable,
   ObservableLike,
-  ObservableResourceLike
+  ObservableResourceLike,
 } from "@rx-min/rx-core";
 
 export const use = <T>(factory: () => ObservableResourceLike<T>) =>
@@ -14,8 +14,8 @@ export const use = <T>(factory: () => ObservableResourceLike<T>) =>
       .add(
         Observable.connect(
           Observable.lift(resource, observe(subscriber)),
-          subscriber.scheduler
-        )
+          subscriber.scheduler,
+        ),
       )
       .add(resource);
   });

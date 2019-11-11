@@ -4,7 +4,7 @@ import {
   Operator,
   SchedulerLike,
   SchedulerContinuation,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
@@ -59,6 +59,6 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 }
 
 export const observeOn = <T>(
-  observeOnScheduler: SchedulerLike
+  observeOnScheduler: SchedulerLike,
 ): Operator<T, T> => subscriber =>
   new ObserveOnSubscriber(subscriber, observeOnScheduler);

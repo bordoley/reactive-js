@@ -6,7 +6,7 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-  ObserverLike
+  ObserverLike,
 } from "@rx-min/rx-core";
 
 import { create } from "./create";
@@ -54,7 +54,7 @@ export const concat = <T>(
 
         innerSubscription = Observable.connect(
           Observable.lift(head, observe(observer)),
-          subscriber.scheduler
+          subscriber.scheduler,
         );
       }
 

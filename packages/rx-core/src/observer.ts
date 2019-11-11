@@ -4,7 +4,7 @@ export type Notification = NotifyNext | NotifyComplete;
 
 export const Notifications = {
   next: 1 as NotifyNext,
-  complete: 2 as NotifyComplete
+  complete: 2 as NotifyComplete,
 };
 
 export interface ObserverLike<T> {

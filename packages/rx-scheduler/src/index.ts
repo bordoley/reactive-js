@@ -8,20 +8,20 @@ import {
   unstable_cancelCallback,
   unstable_now,
   unstable_shouldYield,
-  unstable_scheduleCallback
+  unstable_scheduleCallback,
 } from "scheduler";
 
 import {
   ObservableLike,
   Observable,
   SchedulerContinuation,
-  SchedulerLike
+  SchedulerLike,
 } from "@rx-min/rx-core";
 import {
   Disposable,
   SerialDisposable,
   DisposableLike,
-  SerialDisposableLike
+  SerialDisposableLike,
 } from "@rx-min/rx-disposables";
 
 class RxScheduler implements SchedulerLike {
@@ -38,16 +38,16 @@ class RxScheduler implements SchedulerLike {
   private scheduleCallback(
     disposable: SerialDisposableLike,
     callback: FrameCallbackType,
-    delay: number | void
+    delay: number | void,
   ) {
     const callbackNode = unstable_scheduleCallback(
       this.priorityLevel,
       callback,
-      delay !== undefined ? { delay } : undefined
+      delay !== undefined ? { delay } : undefined,
     );
 
     const innerDisposable = Disposable.create(() =>
-      unstable_cancelCallback(callbackNode)
+      unstable_cancelCallback(callbackNode),
     );
     disposable.setInnerDisposable(innerDisposable);
   }
@@ -55,7 +55,7 @@ class RxScheduler implements SchedulerLike {
   private createFrameCallback(
     disposable: SerialDisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuation
+    continuation: SchedulerContinuation,
   ): FrameCallbackType {
     const continuationCallback: FrameCallbackType = () => {
       if (!disposable.isDisposed) {
@@ -79,7 +79,7 @@ class RxScheduler implements SchedulerLike {
 
   public schedule(
     continuation: SchedulerContinuation,
-    delay: number | void
+    delay: number | void,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
 
@@ -91,7 +91,7 @@ class RxScheduler implements SchedulerLike {
     this.scheduleCallback(
       disposable,
       this.createFrameCallback(disposable, shouldYield, continuation),
-      delay
+      delay,
     );
 
     return disposable;
@@ -99,16 +99,16 @@ class RxScheduler implements SchedulerLike {
 }
 
 export const immediatePriority: SchedulerLike = new RxScheduler(
-  unstable_ImmediatePriority
+  unstable_ImmediatePriority,
 );
 export const userBlockingPriority: SchedulerLike = new RxScheduler(
-  unstable_UserBlockingPriority
+  unstable_UserBlockingPriority,
 );
 export const normalPriority: SchedulerLike = new RxScheduler(
-  unstable_NormalPriority
+  unstable_NormalPriority,
 );
 export const idlePriority: SchedulerLike = new RxScheduler(
-  unstable_IdlePriority
+  unstable_IdlePriority,
 );
 export const lowPriority: SchedulerLike = new RxScheduler(unstable_LowPriority);
 

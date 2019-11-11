@@ -15,5 +15,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "prettier": {
+    "bracketSpacing": true,
+    "proseWrap": "never",
+    "singleQuote": false,
+    "trailingComma": "all"
+  },
   "dependencies": {}
 }

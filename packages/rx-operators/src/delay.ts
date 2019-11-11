@@ -5,7 +5,7 @@ import {
   SubscriberLike,
   Notification,
   SchedulerContinuation,
-  Notifications
+  Notifications,
 } from "@rx-min/rx-core";
 
 class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {

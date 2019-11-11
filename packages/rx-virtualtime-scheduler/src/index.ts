@@ -35,7 +35,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private createWorkCallback(
     disposable: DisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuation
+    continuation: SchedulerContinuation,
   ) {
     const continuationCallback: () => void = () => {
       if (!disposable.isDisposed) {
@@ -59,7 +59,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number | void
+    delay: number | void,
   ): DisposableLike {
     const disposable = Disposable.empty();
 
@@ -67,7 +67,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
     this.scheduleInternal(
       this.createWorkCallback(disposable, shouldYield, continuation),
-      delay
+      delay,
     );
 
     return disposable;
@@ -95,5 +95,5 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 const create = (): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl();
 
 export const VirtualTimeScheduler = {
-  create
+  create,
 };

@@ -4,7 +4,7 @@ import {
   Operator,
   SchedulerLike,
   SchedulerContinuation,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
@@ -51,7 +51,7 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.value = data;
 
     this.innerSubscription.setInnerDisposable(
-      this.scheduler.schedule(this.schedulerContinuation, this.dueTime)
+      this.scheduler.schedule(this.schedulerContinuation, this.dueTime),
     );
   }
 }

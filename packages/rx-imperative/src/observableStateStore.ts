@@ -6,7 +6,7 @@ import {
   ObservableResourceLike,
   SchedulerLike,
   SchedulerContinuation,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 import { EventSource, EventSourceLike } from "./eventSource";
@@ -100,9 +100,9 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
-        subscriber => new ObservableStateSubscriber(subscriber, initialState)
+        subscriber => new ObservableStateSubscriber(subscriber, initialState),
       ),
-      scheduler
+      scheduler,
     );
   }
 
@@ -125,10 +125,10 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
 
 const create = <T>(
   initialValue: T,
-  scheduler: SchedulerLike
+  scheduler: SchedulerLike,
 ): ObservableStateStoreLike<T> =>
   new ObservableStateStoreImpl(initialValue, scheduler);
 
 export const ObservableStateStore = {
-  create
+  create,
 };

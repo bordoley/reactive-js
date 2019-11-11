@@ -1,7 +1,7 @@
 import {
   CompositeDisposableLike,
   Disposable,
-  DisposableLike
+  DisposableLike,
 } from "@rx-min/rx-disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
@@ -24,7 +24,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     delegate.add(
       Disposable.create(() => {
         this.isStopped = true;
-      })
+      }),
     );
   }
 

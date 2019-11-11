@@ -5,7 +5,7 @@ import {
   ObservableLike,
   Operator,
   SubscriberLike,
-  Observable
+  Observable,
 } from "@rx-min/rx-core";
 import { Disposable } from "@rx-min/rx-disposables";
 
@@ -18,7 +18,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   constructor(
     delegate: SubscriberLike<T>,
     maxBufferSize: number,
-    maxConcurrency: number
+    maxConcurrency: number,
   ) {
     super(delegate);
     this.maxBufferSize = maxBufferSize;
@@ -27,7 +27,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     delegate.add(
       Disposable.create(() => {
         this.queue.length = 0;
-      })
+      }),
     );
   }
 
@@ -65,8 +65,8 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.add(
       Observable.connect(
         Observable.lift(next, this.innerOperator),
-        this.scheduler
-      )
+        this.scheduler,
+      ),
     );
   }
 
@@ -87,7 +87,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
 export const merge = <T>({
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-  maxConcurrency = Number.MAX_SAFE_INTEGER
+  maxConcurrency = Number.MAX_SAFE_INTEGER,
 }): Operator<ObservableLike<T>, T> => subscriber =>
   new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 

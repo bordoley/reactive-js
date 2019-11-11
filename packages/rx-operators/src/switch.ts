@@ -7,7 +7,7 @@ import {
   SubscriberLike,
   Observable,
   observe,
-  ObserverLike
+  ObserverLike,
 } from "@rx-min/rx-core";
 import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
 
@@ -45,10 +45,10 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       Observable.connect(
         Observable.lift(
           data,
-          observe(new SwitchSubscriber.InnerObserver(this))
+          observe(new SwitchSubscriber.InnerObserver(this)),
         ),
-        this.scheduler
-      )
+        this.scheduler,
+      ),
     );
   }
 

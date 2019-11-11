@@ -3,22 +3,22 @@ export {
   NotifyNext,
   NotifyComplete,
   Notification,
-  Notifications
+  Notifications,
 } from "./observer";
 export {
   SubscriberLike,
   DelegatingSubscriber,
-  MonoTypeDelegatingSubscriber
+  MonoTypeDelegatingSubscriber,
 } from "./subscriber";
 export {
   observe,
   ObservableLike,
   Observable,
   ObservableResourceLike,
-  Operator
+  Operator,
 } from "./observable";
 export {
   SchedulerContinuation,
   SchedulerContinuationResult,
-  SchedulerLike
+  SchedulerLike,
 } from "./scheduler";

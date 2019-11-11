@@ -37,7 +37,7 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
           if (event === this.event && data === this.data) {
             subscriber.notify(event, data);
           }
-        })
+        }),
       );
     }
     this.subject.subscribe(subscriber);
@@ -48,5 +48,5 @@ const create = <T>(scheduler: SchedulerLike): SubjectLike<T> =>
   new ReplayLastSubjectImpl(scheduler);
 
 export const ReplayLastSubject = {
-  create
+  create,
 };

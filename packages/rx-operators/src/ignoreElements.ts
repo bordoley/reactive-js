@@ -2,7 +2,7 @@ import {
   DelegatingSubscriber,
   Notifications,
   Operator,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
@@ -18,5 +18,5 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 }
 
 export const ignoreElements = <TA, TB>(): Operator<TA, TB> => (
-  subscriber: SubscriberLike<TB>
+  subscriber: SubscriberLike<TB>,
 ) => new IgnoreElementsSubscriber<TA, TB>(subscriber);

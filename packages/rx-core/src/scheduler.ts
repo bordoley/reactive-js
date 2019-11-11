@@ -13,6 +13,6 @@ export interface SchedulerLike {
   now: number;
   schedule(
     continuation: SchedulerContinuation,
-    delay: number | void
+    delay: number | void,
   ): DisposableLike;
 }

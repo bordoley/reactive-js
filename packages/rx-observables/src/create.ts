@@ -13,5 +13,5 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
 }
 
 export const create = <T>(
-  onSubscribe: (subscriber: SubscriberLike<T>) => void
+  onSubscribe: (subscriber: SubscriberLike<T>) => void,
 ): ObservableLike<T> => new OnSubscribeObservable(onSubscribe);

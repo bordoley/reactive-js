@@ -2,7 +2,7 @@ import {
   DelegatingSubscriber,
   Notifications,
   Operator,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
@@ -24,7 +24,7 @@ class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
 }
 
 export const map = <A, B>(
-  mapper: (data: A) => B
+  mapper: (data: A) => B,
 ): Operator<A, B> => subscriber => {
   if (subscriber instanceof MapSubscriber) {
     const delegate = subscriber.delegate;

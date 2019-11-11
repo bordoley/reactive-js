@@ -3,7 +3,7 @@ import {
   Notifications,
   ObservableLike,
   ObservableResourceLike,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 export interface EventLike<T> extends ObservableLike<T> {
@@ -37,5 +37,5 @@ class EventSourceImpl<T> implements EventSourceLike<T> {
 const create = <T>(): EventSourceLike<T> => new EventSourceImpl();
 
 export const EventSource = {
-  create
+  create,
 };

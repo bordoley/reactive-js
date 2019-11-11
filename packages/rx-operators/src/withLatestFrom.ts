@@ -7,7 +7,7 @@ import {
   SubscriberLike,
   Observable,
   observe,
-  ObserverLike
+  ObserverLike,
 } from "@rx-min/rx-core";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
@@ -41,7 +41,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   constructor(
     delegate: SubscriberLike<TC>,
     other: ObservableLike<TB>,
-    selector: (a: TA, b: TB) => TC
+    selector: (a: TA, b: TB) => TC,
   ) {
     super(delegate);
     this.selector = selector;
@@ -50,10 +50,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
       Observable.connect(
         Observable.lift(
           other,
-          observe(new WithLatestFromSubscriber.InnerObserver(this))
+          observe(new WithLatestFromSubscriber.InnerObserver(this)),
         ),
-        this.scheduler
-      )
+        this.scheduler,
+      ),
     );
   }
 
@@ -71,6 +71,6 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC
+  selector: (a: TA, b: TB) => TC,
 ): Operator<TA, TC> => subscriber =>
   new WithLatestFromSubscriber(subscriber, other, selector);

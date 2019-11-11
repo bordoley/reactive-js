@@ -3,7 +3,7 @@ import {
   ObservableLike,
   SchedulerLike,
   SchedulerContinuation,
-  SchedulerContinuationResult
+  SchedulerContinuationResult,
 } from "@rx-min/rx-core";
 
 import { create } from "./create";
@@ -11,7 +11,7 @@ import { create } from "./create";
 export const ofArray = <T>(
   values: ReadonlyArray<T>,
   scheduler: SchedulerLike,
-  delay: number | void
+  delay: number | void,
 ): ObservableLike<T> =>
   create(subscriber => {
     let index = 0;
@@ -58,7 +58,7 @@ export const ofArray = <T>(
 export const ofValue = <T>(
   value: T,
   scheduler: SchedulerLike,
-  delay: number | void
+  delay: number | void,
 ): ObservableLike<T> => ofArray([value], scheduler, delay);
 
 export const empty = <T>(scheduler: SchedulerLike): ObservableLike<T> =>

@@ -5,14 +5,14 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-  SchedulerLike
+  SchedulerLike,
 } from "@rx-min/rx-core";
 
 import { normalPriority } from "@rx-min/rx-scheduler";
 
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike = normalPriority
+  scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
   const [error, updateError] = useState<Error | undefined>(undefined);
@@ -36,19 +36,19 @@ export const useObservable = <T>(
                   }
                   break;
               }
-            }
-          })
+            },
+          }),
         ),
-        scheduler
+        scheduler,
       ),
-    [observable, updateState, updateError]
+    [observable, updateState, updateError],
   );
 
   useEffect(
     () => () => {
       subscription.dispose();
     },
-    [subscription]
+    [subscription],
   );
 
   if (error !== undefined) {

@@ -4,7 +4,7 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-  ObserverLike
+  ObserverLike,
 } from "@rx-min/rx-core";
 
 import { create } from "./create";
@@ -47,16 +47,16 @@ export const merge = <T>(
     subscriber.add(
       Observable.connect(
         Observable.lift(head, observe(observer)),
-        subscriber.scheduler
-      )
+        subscriber.scheduler,
+      ),
     );
 
     for (let observable of tail) {
       subscriber.add(
         Observable.connect(
           Observable.lift(observable, observe(observer)),
-          subscriber.scheduler
-        )
+          subscriber.scheduler,
+        ),
       );
     }
   });

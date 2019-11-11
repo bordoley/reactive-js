@@ -66,7 +66,7 @@ disposed.dispose();
 export const Disposable = {
   create,
   empty,
-  disposed
+  disposed,
 };
 
 export interface CompositeDisposableLike extends DisposableLike {
@@ -108,7 +108,7 @@ class CompositeDisposableImpl extends AbstractDisposable
 }
 
 export const CompositeDisposable = {
-  create: (): CompositeDisposableLike => new CompositeDisposableImpl()
+  create: (): CompositeDisposableLike => new CompositeDisposableImpl(),
 };
 
 export interface SerialDisposableLike extends DisposableLike {
@@ -148,5 +148,5 @@ class SerialDisposableImpl extends AbstractDisposable
 }
 
 export const SerialDisposable = {
-  create: () => new SerialDisposableImpl(disposed)
+  create: () => new SerialDisposableImpl(disposed),
 };

@@ -2,7 +2,7 @@ import {
   DelegatingSubscriber,
   Notifications,
   Operator,
-  SubscriberLike
+  SubscriberLike,
 } from "@rx-min/rx-core";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
@@ -12,7 +12,7 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     scanner: (acc: TAcc, next: T) => TAcc,
-    initialValue: TAcc
+    initialValue: TAcc,
   ) {
     super(delegate);
     this.scanner = scanner;
@@ -34,6 +34,6 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
 
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
-  initialValue: TAcc
+  initialValue: TAcc,
 ): Operator<T, TAcc> => subscriber =>
   new ScanSubscriber(subscriber, scanner, initialValue);
