@@ -1,3 +1,5 @@
+import { DisposableLike, Disposable } from "@rx-min/rx-disposables";
+
 import {
   DelegatingSubscriber,
   Notifications,
@@ -9,12 +11,23 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import { distinctUntilChanged, map } from "@rx-min/rx-operators";
+import {
+  distinctUntilChanged,
+  map,
+  onNext,
+  scan,
+  ignoreElements,
+} from "@rx-min/rx-operators";
+
 import {
   EventResource,
   EventResourceLike,
   shareReplayLast,
 } from "@rx-min/rx-imperative";
+
+import { merge } from "@rx-min/rx-observables";
+
+import { AsyncIterableLike } from "@rx-min/ix-core";
 
 export type StateUpdater<T> = (oldState: T) => T;
 
@@ -96,32 +109,41 @@ const observableState = <T>(initialState: T) => (
 ) => new ObservableStateSubscriber(subscriber, initialState);
 
 class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
-  private readonly dispatcher: EventResourceLike<
-    StateUpdater<T>
-  > = EventResource.create();
+  private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
   private readonly delegate: ObservableLike<T>;
+  private readonly disposable: DisposableLike;
 
-  constructor(initialState: T, scheduler: SchedulerLike) {
+  constructor(
+    initialState: T,
+    scheduler: SchedulerLike,
+    equals: (a: T, b: T) => boolean,
+  ) {
+    this.dispatcher = EventResource.create();
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
         observableState(initialState),
-        distinctUntilChanged(),
+        distinctUntilChanged(equals),
       ),
       scheduler,
+    );
+
+    this.disposable = Disposable.compose(
+      this.dispatcher,
+      Observable.connect(this.delegate, scheduler),
     );
   }
 
   get isDisposed() {
-    return this.dispatcher.isDisposed;
+    return this.disposable.isDisposed;
   }
 
   dispose() {
-    this.dispatcher.dispose();
+    this.disposable.dispose();
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    return this.delegate.subscribe(subscriber);
+    this.delegate.subscribe(subscriber);
   }
 
   dispatch(updater: StateUpdater<T>) {
@@ -129,11 +151,14 @@ class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
   }
 }
 
+const referenceEquality = <T>(a: T, b: T): boolean => a === b;
+
 const create = <T>(
-  initialValue: T,
+  initialState: T,
   scheduler: SchedulerLike,
+  equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableStateResourceLike<T> =>
-  new ObservableStateResourceImpl(initialValue, scheduler);
+  new ObservableStateResourceImpl(initialState, scheduler, equals);
 
 class MappedObservableState<TSrc, T> implements ObservableStateLike<T> {
   private readonly delegate: ObservableStateLike<TSrc>;
@@ -144,13 +169,14 @@ class MappedObservableState<TSrc, T> implements ObservableStateLike<T> {
     delegate: ObservableStateLike<TSrc>,
     sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
     mapper: (v: TSrc) => T,
+    equals: (a: T, b: T) => boolean,
   ) {
     this.delegate = delegate;
     this.sourceReducer = sourceReducer;
     this.observable = Observable.lift(
       delegate,
       map(mapper),
-      distinctUntilChanged(),
+      distinctUntilChanged(equals),
     );
   }
 
@@ -167,8 +193,100 @@ const createMapped = <TSrc, T>(
   delegate: ObservableStateLike<TSrc>,
   sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
   mapper: (v: TSrc) => T,
+  equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableStateLike<T> =>
-  new MappedObservableState(delegate, sourceReducer, mapper);
+  new MappedObservableState(delegate, sourceReducer, mapper, equals);
+
+const pairify = <T>([_, oldState]: [T, T], next: T): [T, T] => [oldState, next];
+
+const mapLast = <T>([_, state]: [T, T]): T => state;
+
+class ObservableSyncedStateResourceImpl<TReq, T>
+  implements ObservableStateResourceLike<T> {
+  private readonly delegate: ObservableStateResourceLike<T>;
+  private readonly observable: ObservableLike<T>;
+  private readonly disposable: DisposableLike;
+
+  constructor(
+    initialState: T,
+    initialRequest: TReq,
+    asyncIterable: AsyncIterableLike<TReq, T>,
+    computeReq: (oldState: T, newState: T) => TReq | void,
+    scheduler: SchedulerLike,
+    equals: (a: T, b: T) => boolean,
+  ) {
+    this.delegate = create(initialState, scheduler, equals);
+
+    const iterator = asyncIterable.iterateAsync();
+
+    const onStateChanged = ([oldState, newState]: [T, T]) => {
+      const req = computeReq(oldState, newState);
+      if (req !== undefined) {
+        iterator.request(req);
+      }
+    };
+
+    const initialScanState: [T, T] = [initialState, initialState];
+
+    this.observable = shareReplayLast(
+      merge(
+        Observable.lift(
+          iterator,
+          onNext(next => this.delegate.dispatch(_ => next)),
+          ignoreElements(),
+        ),
+        Observable.lift(
+          this.delegate,
+          scan(pairify, initialScanState),
+          onNext(onStateChanged),
+          map(mapLast),
+        ),
+      ),
+      scheduler,
+    );
+
+    this.disposable = Disposable.compose(
+      Observable.connect(this.observable, scheduler),
+      iterator,
+      this.delegate,
+    );
+
+    iterator.request(initialRequest);
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.observable.subscribe(subscriber);
+  }
+
+  dispatch(updater: StateUpdater<T>) {
+    this.delegate.dispatch(updater);
+  }
+}
+
+const createSynced = <TReq, T>(
+  initialState: T,
+  initialRequest: TReq,
+  asyncIterable: AsyncIterableLike<TReq, T>,
+  computeReq: (oldState: T, newState: T) => TReq | void,
+  scheduler: SchedulerLike,
+  equals: (a: T, b: T) => boolean = referenceEquality,
+): ObservableStateResourceLike<T> =>
+  new ObservableSyncedStateResourceImpl(
+    initialState,
+    initialRequest,
+    asyncIterable,
+    computeReq,
+    scheduler,
+    equals,
+  );
 
 export const ObservableState = {
   create,

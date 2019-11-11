@@ -5,5 +5,5 @@ export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
 }
 
 export interface AsyncIterableLike<TReq, T> {
-  iterate(): AsyncIteratorLike<TReq, T>;
+  iterateAsync(): AsyncIteratorLike<TReq, T>;
 }

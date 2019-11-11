@@ -46,6 +46,18 @@ class TeardownDisposable extends AbstractDisposable {
 const create = (teardown: () => void): DisposableLike =>
   new TeardownDisposable(teardown);
 
+const compose = (
+  disposable: DisposableLike,
+  ...disposables: DisposableLike[]
+): DisposableLike =>
+  create(() => {
+    disposable.dispose();
+
+    for (let disp of disposables) {
+      disp.dispose();
+    }
+  });
+
 class EmptyDisposable implements DisposableLike {
   private _isDisposed = false;
 
@@ -64,6 +76,7 @@ const disposed: DisposableLike = new EmptyDisposable();
 disposed.dispose();
 
 export const Disposable = {
+  compose,
   create,
   empty,
   disposed,

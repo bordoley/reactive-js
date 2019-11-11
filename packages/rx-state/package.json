@@ -17,9 +17,11 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
+    "@rx-min/ix-core": "0.0.0",
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-imperative": "0.0.0",
-    "@rx-min/rx-operators": "0.0.0"
+    "@rx-min/rx-operators": "0.0.0",
+    "@rx-min/rx-observables": "0.0.0"
   }
 }

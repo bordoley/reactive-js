@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/rx-observable",
+  "name": "@rx-min/rx-observables",
   "version": "0.0.0",
   "description": "rx observable helpers",
   "main": "dist/index.js",
