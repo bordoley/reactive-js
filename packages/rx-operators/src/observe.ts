@@ -28,9 +28,7 @@ export const onComplete = <T>(
     }
   });
 
-export const onError = <T>(
-  onError: (error: Error) => void
-): Operator<T, T> =>
+export const onError = <T>(onError: (error: Error) => void): Operator<T, T> =>
   observe({
     notify: (notif: Notification, data: T | Error | undefined) => {
       switch (notif) {

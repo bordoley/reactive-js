@@ -4,9 +4,6 @@
   "description": "React bindings for RX",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "scripts": {
-    "format": "prettier --write src/**/* test/**/*"
-  },
   "keywords": [
     "rx"
   ],
@@ -26,8 +23,6 @@
     "@rx-min/rx-scheduler": "0.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11",
-    "prettier": "^1.15.3",
-    "typescript": "^3.2.2"
+    "@types/react": "^16.9.11"
   }
 }

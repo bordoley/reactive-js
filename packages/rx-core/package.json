@@ -4,9 +4,6 @@
   "description": "RxCore",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "scripts": {
-    "format": "prettier --write src/**/* test/**/*"
-  },
   "keywords": [
     "rx"
   ],
@@ -21,9 +18,5 @@
   },
   "dependencies": {
     "@rx-min/rx-disposables": "0.0.0"
-  },
-  "devDependencies": {
-    "prettier": "^1.15.3",
-    "typescript": "^3.2.2"
   }
 }

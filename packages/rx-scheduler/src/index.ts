@@ -11,7 +11,12 @@ import {
   unstable_scheduleCallback
 } from "scheduler";
 
-import { ObservableLike, Observable, SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
+import {
+  ObservableLike,
+  Observable,
+  SchedulerContinuation,
+  SchedulerLike
+} from "@rx-min/rx-core";
 import {
   Disposable,
   SerialDisposable,
@@ -93,12 +98,18 @@ class RxScheduler implements SchedulerLike {
   }
 }
 
-export const immediatePriority: SchedulerLike = new RxScheduler(unstable_ImmediatePriority);
+export const immediatePriority: SchedulerLike = new RxScheduler(
+  unstable_ImmediatePriority
+);
 export const userBlockingPriority: SchedulerLike = new RxScheduler(
   unstable_UserBlockingPriority
 );
-export const normalPriority: SchedulerLike = new RxScheduler(unstable_NormalPriority);
-export const idlePriority: SchedulerLike = new RxScheduler(unstable_IdlePriority);
+export const normalPriority: SchedulerLike = new RxScheduler(
+  unstable_NormalPriority
+);
+export const idlePriority: SchedulerLike = new RxScheduler(
+  unstable_IdlePriority
+);
 export const lowPriority: SchedulerLike = new RxScheduler(unstable_LowPriority);
 
 export const connectImmediatePriority = <T>(observable: ObservableLike<T>) =>

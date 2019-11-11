@@ -4,9 +4,6 @@
   "description": "interactive extensions",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "scripts": {
-    "format": "prettier --write src/**/* test/**/*"
-  },
   "keywords": [
     "rx"
   ],
@@ -24,9 +21,5 @@
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
     "@rx-min/rx-imperative": "0.0.0"
-  },
-  "devDependencies": {
-    "prettier": "^1.15.3",
-    "typescript": "^3.2.2"
   }
 }

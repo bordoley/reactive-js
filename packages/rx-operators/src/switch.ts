@@ -58,7 +58,5 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 }
 
-export const switch_ = <T>(): Operator<
-  ObservableLike<T>,
-  T
-> => subscriber => new SwitchSubscriber(subscriber);
+export const switch_ = <T>(): Operator<ObservableLike<T>, T> => subscriber =>
+  new SwitchSubscriber(subscriber);
