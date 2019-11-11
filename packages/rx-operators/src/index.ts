@@ -1,4 +1,5 @@
 export { debounceTime } from "./debounce";
+export { delay } from "./delay";
 export { distinctUntilChanged } from "./distinctUntilChanged";
 export { ignoreElements } from "./ignoreElements";
 export { keep } from "./keep";
@@ -7,3 +8,4 @@ export { concat, exhaust, merge } from "./merge";
 export { observe, onNext, onComplete, onError } from './observe';
 export { scan } from "./scan";
 export { switch_ } from "./switch";
+export { withLatestFrom } from "./withLatestFrom";
