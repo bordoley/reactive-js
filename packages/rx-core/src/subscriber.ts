@@ -9,6 +9,12 @@ export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly subscription: CompositeDisposableLike;
 }
 
+export const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
+  if (!subscriber.isConnected) {
+    throw new Error("Attempted to notify subscriber before it is connected");
+  }
+};
+
 export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   private isStopped = false;
   readonly delegate: SubscriberLike<B>;
@@ -56,9 +62,9 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   }
 
   notify(notification: Notification, data: A | Error | undefined) {
-    if (!this.isConnected) {
-      throw new Error("Attempted to notify subscriber before it is connected");
-    } else if (!this.isStopped) {
+    throwIfNotConnected(this);
+    
+    if (!this.isStopped) {
       switch (notification) {
         case Notifications.next:
           this.tryOnNext(data as A);

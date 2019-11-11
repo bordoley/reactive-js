@@ -4,7 +4,7 @@ import {
   DisposableLike,
 } from "@rx-min/rx-disposables";
 
-import { DelegatingSubscriber, SubscriberLike } from "./subscriber";
+import { throwIfNotConnected, DelegatingSubscriber, SubscriberLike } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
 import { SchedulerLike } from "./scheduler";
 
@@ -23,9 +23,9 @@ class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
   }
 
   notify(notification: Notification, data: T | Error | undefined) {
-    if (!this.isConnected) {
-      throw new Error("Attempted to notify subscriber before it is connected");
-    } else if (!this.subscription.isDisposed) {
+    throwIfNotConnected(this);
+    
+    if (!this.subscription.isDisposed) {
       switch (notification) {
         case Notifications.next:
           break;
