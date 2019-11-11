@@ -1,11 +1,11 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   Operator,
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-class KeepSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   private predicate: (data: T) => boolean;
 
   constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {

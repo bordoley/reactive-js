@@ -1,5 +1,5 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   Operator,
   SchedulerLike,
@@ -9,7 +9,7 @@ import {
 
 import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
 
-class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;
   private readonly innerSubscription = SerialDisposable.create();
   private value: T | undefined;

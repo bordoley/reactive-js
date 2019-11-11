@@ -1,12 +1,12 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   Operator,
   SchedulerLike,
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-class UseSchedulerSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {
   public readonly scheduler: SchedulerLike;
 
   constructor(delegate: SubscriberLike<T>, scheduler: SchedulerLike) {

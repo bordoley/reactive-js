@@ -5,11 +5,7 @@ export {
   Notification,
   Notifications,
 } from "./observer";
-export {
-  SubscriberLike,
-  DelegatingSubscriber,
-  MonoTypeDelegatingSubscriber,
-} from "./subscriber";
+export { SubscriberLike, DelegatingSubscriber } from "./subscriber";
 export {
   observe,
   ObservableLike,

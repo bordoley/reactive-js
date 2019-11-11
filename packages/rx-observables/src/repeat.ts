@@ -1,5 +1,5 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   ObservableLike,
   Observable,
@@ -10,7 +10,7 @@ import {
 
 import { SerialDisposable, SerialDisposableLike } from "@rx-min/rx-disposables";
 
-class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;
   private readonly observable: ObservableLike<T>;
   private readonly shouldRepeat: (error: Error | undefined) => boolean;

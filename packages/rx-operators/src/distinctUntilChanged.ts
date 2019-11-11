@@ -1,13 +1,11 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   Operator,
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-class DistinctUntilChangedSubscriber<T> extends MonoTypeDelegatingSubscriber<
-  T
-> {
+class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;
   private prev: T | undefined;
 

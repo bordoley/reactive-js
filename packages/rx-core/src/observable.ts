@@ -4,7 +4,7 @@ import {
   DisposableLike,
 } from "@rx-min/rx-disposables";
 
-import { MonoTypeDelegatingSubscriber, SubscriberLike } from "./subscriber";
+import { DelegatingSubscriber, SubscriberLike } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
 import { SchedulerLike } from "./scheduler";
 
@@ -162,7 +162,7 @@ function lift(
   return new LiftedObservable(sourceSource, allOperators);
 }
 
-class ObserveSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   private observer: ObserverLike<T>;
 
   constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {

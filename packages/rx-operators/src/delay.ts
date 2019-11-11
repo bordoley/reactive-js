@@ -1,14 +1,13 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Operator,
-  SchedulerLike,
   SubscriberLike,
   Notification,
   SchedulerContinuation,
   Notifications,
 } from "@rx-min/rx-core";
 
-class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
   private readonly queue: Array<
     [number, Notification, T | Error | undefined]

@@ -1,5 +1,5 @@
 import {
-  MonoTypeDelegatingSubscriber,
+  DelegatingSubscriber,
   Notifications,
   Operator,
   SchedulerLike,
@@ -7,7 +7,7 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
+class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly observeOnScheduler: SchedulerLike;
   private readonly nextQueue: Array<T> = [];
   private isComplete = false;

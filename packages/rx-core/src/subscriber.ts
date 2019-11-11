@@ -1,9 +1,4 @@
-import {
-  CompositeDisposableLike,
-  Disposable,
-  DisposableLike,
-  CompositeDisposable,
-} from "@rx-min/rx-disposables";
+import { CompositeDisposableLike, Disposable } from "@rx-min/rx-disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
 import { SchedulerLike } from "./scheduler";
@@ -76,7 +71,3 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     }
   }
 }
-
-export abstract class MonoTypeDelegatingSubscriber<
-  T
-> extends DelegatingSubscriber<T, T> {}

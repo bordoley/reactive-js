@@ -1,5 +1,4 @@
 import {
-  MonoTypeDelegatingSubscriber,
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
@@ -31,7 +30,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     );
   }
 
-  static InnerSubscriber = class<T> extends MonoTypeDelegatingSubscriber<T> {
+  static InnerSubscriber = class<T> extends DelegatingSubscriber<T, T> {
     private readonly parent: MergeSubscriber<T>;
 
     constructor(delegate: SubscriberLike<T>, parent: MergeSubscriber<T>) {
