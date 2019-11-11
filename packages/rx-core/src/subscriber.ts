@@ -2,16 +2,16 @@ import {
   CompositeDisposableLike,
   Disposable,
   DisposableLike,
+  CompositeDisposable,
 } from "@rx-min/rx-disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
 import { SchedulerLike } from "./scheduler";
 
-export interface SubscriberLike<T>
-  extends ObserverLike<T>,
-    CompositeDisposableLike {
+export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly isConnected: boolean;
   readonly scheduler: SchedulerLike;
+  readonly subscription: CompositeDisposableLike;
 }
 
 export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
@@ -21,7 +21,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   constructor(delegate: SubscriberLike<B>) {
     this.delegate = delegate;
 
-    delegate.add(
+    delegate.subscription.add(
       Disposable.create(() => {
         this.isStopped = true;
       }),
@@ -36,22 +36,8 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     return this.delegate.scheduler;
   }
 
-  get isDisposed() {
-    return this.delegate.isDisposed;
-  }
-
-  add(disposable: DisposableLike): CompositeDisposableLike {
-    this.delegate.add(disposable);
-    return this;
-  }
-
-  remove(disposable: DisposableLike): CompositeDisposableLike {
-    this.delegate.remove(disposable);
-    return this;
-  }
-
-  dispose() {
-    this.delegate.dispose();
+  get subscription() {
+    return this.delegate.subscription;
   }
 
   protected abstract onNext(data: A): void;

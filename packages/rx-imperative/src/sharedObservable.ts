@@ -47,7 +47,9 @@ class SharedObservable<T> implements ObservableLike<T> {
       subscriber.scheduler,
     );
 
-    subscriber.add(Disposable.create(this.teardown)).add(innerSubscription);
+    subscriber.subscription
+      .add(Disposable.create(this.teardown))
+      .add(innerSubscription);
 
     if (this.refCount === 1) {
       this.subscription = Observable.connect(

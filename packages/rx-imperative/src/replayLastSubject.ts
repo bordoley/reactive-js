@@ -32,7 +32,7 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed && this.event !== undefined) {
       const { data, event } = this;
-      subscriber.add(
+      subscriber.subscription.add(
         this.scheduler.schedule((_shouldYield: () => boolean) => {
           if (event === this.event && data === this.data) {
             subscriber.notify(event, data);

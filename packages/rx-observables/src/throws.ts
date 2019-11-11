@@ -17,5 +17,5 @@ export const throws = <T>(
       subscriber.notify(Notifications.complete, error);
     };
 
-    subscriber.add(scheduler.schedule(continuation, delay));
+    subscriber.subscription.add(scheduler.schedule(continuation, delay));
   });

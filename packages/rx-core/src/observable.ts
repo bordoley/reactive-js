@@ -1,4 +1,8 @@
-import { CompositeDisposable, DisposableLike } from "@rx-min/rx-disposables";
+import {
+  CompositeDisposable,
+  CompositeDisposableLike,
+  DisposableLike,
+} from "@rx-min/rx-disposables";
 
 import { MonoTypeDelegatingSubscriber, SubscriberLike } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
@@ -9,41 +13,24 @@ export interface ObservableLike<T> {
 }
 
 class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  private readonly disposable = CompositeDisposable.create();
+  public readonly subscription: CompositeDisposableLike;
   public readonly scheduler: SchedulerLike;
   public isConnected = false;
 
-  constructor(scheduler: SchedulerLike) {
+  constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
     this.scheduler = scheduler;
-  }
-
-  add(disposable: DisposableLike) {
-    this.disposable.add(disposable);
-    return this;
-  }
-
-  remove(disposable: DisposableLike) {
-    this.disposable.remove(disposable);
-    return this;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  dispose() {
-    this.disposable.dispose();
+    this.subscription = subscription;
   }
 
   notify(notification: Notification, data: T | Error | undefined) {
     if (!this.isConnected) {
       throw new Error("Attempted to notify subscriber before it is connected");
-    } else if (!this.isDisposed) {
+    } else if (!this.subscription.isDisposed) {
       switch (notification) {
         case Notifications.next:
           break;
         case Notifications.complete:
-          this.dispose();
+          this.subscription.dispose();
           break;
       }
     }
@@ -54,10 +41,11 @@ const connect = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
 ): DisposableLike => {
-  const subscriber = new AutoDisposingSubscriber(scheduler);
+  const subscription = CompositeDisposable.create();
+  const subscriber = new AutoDisposingSubscriber(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.isConnected = true;
-  return subscriber;
+  return subscription;
 };
 
 export interface Operator<A, B> {

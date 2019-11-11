@@ -44,7 +44,7 @@ export const merge = <T>(
   return create(subscriber => {
     const observer = new MergeObserver(subscriber, tail.length + 1);
 
-    subscriber.add(
+    subscriber.subscription.add(
       Observable.connect(
         Observable.lift(head, observe(observer)),
         subscriber.scheduler,
@@ -52,7 +52,7 @@ export const merge = <T>(
     );
 
     for (let observable of tail) {
-      subscriber.add(
+      subscriber.subscription.add(
         Observable.connect(
           Observable.lift(observable, observe(observer)),
           subscriber.scheduler,

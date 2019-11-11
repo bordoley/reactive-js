@@ -44,7 +44,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
         }
       });
 
-      subscriber.add(disposable);
+      subscriber.subscription.add(disposable);
     }
   }
 }

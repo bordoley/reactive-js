@@ -25,7 +25,7 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.shouldRepeat = shouldRepeat;
 
     this.innerSubscription = SerialDisposable.create();
-    this.add(this.innerSubscription);
+    this.subscription.add(this.innerSubscription);
   }
 
   protected onNext(data: T) {

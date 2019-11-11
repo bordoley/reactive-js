@@ -18,7 +18,7 @@ export const ofArray = <T>(
 
     let continuationResult: SchedulerContinuationResult;
     const continuation: SchedulerContinuation = shouldYield => {
-      if (subscriber.isDisposed) {
+      if (subscriber.subscription.isDisposed) {
         return;
       } else if (index >= values.length) {
         subscriber.notify(Notifications.complete, undefined);
@@ -52,7 +52,7 @@ export const ofArray = <T>(
     continuationResult =
       delay !== undefined ? [continuation, delay] : continuation;
 
-    subscriber.add(scheduler.schedule(continuation, delay));
+    subscriber.subscription.add(scheduler.schedule(continuation, delay));
   });
 
 export const ofValue = <T>(

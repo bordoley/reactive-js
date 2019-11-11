@@ -24,7 +24,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.maxBufferSize = maxBufferSize;
     this.maxConcurrency = maxConcurrency;
 
-    delegate.add(
+    this.subscription.add(
       Disposable.create(() => {
         this.queue.length = 0;
       }),
@@ -45,7 +45,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
     protected onComplete(error: Error | void) {
       this.parent.activeCount--;
-      this.parent.remove(this);
+      this.parent.subscription.remove(this.subscription);
 
       const nextObs = this.parent.queue.shift();
 
@@ -62,7 +62,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   private connectNext(next: ObservableLike<T>) {
     this.activeCount++;
-    this.add(
+    this.subscription.add(
       Observable.connect(
         Observable.lift(next, this.innerOperator),
         this.scheduler,

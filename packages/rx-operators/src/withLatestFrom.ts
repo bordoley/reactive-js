@@ -46,7 +46,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     super(delegate);
     this.selector = selector;
 
-    this.add(
+    this.subscription.add(
       Observable.connect(
         Observable.lift(
           other,
