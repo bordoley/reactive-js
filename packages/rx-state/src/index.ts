@@ -208,10 +208,10 @@ class ObservableSyncedStateResourceImpl<TReq, T>
   private readonly disposable: DisposableLike;
 
   constructor(
-    initialState: T,
-    initialRequest: TReq,
     asyncIterable: AsyncIterableLike<TReq, T>,
     computeReq: (oldState: T, newState: T) => TReq | void,
+    initialState: T,
+    initialRequest: TReq,
     scheduler: SchedulerLike,
     equals: (a: T, b: T) => boolean,
   ) {
@@ -272,23 +272,24 @@ class ObservableSyncedStateResourceImpl<TReq, T>
 }
 
 const createSynced = <TReq, T>(
-  initialState: T,
-  initialRequest: TReq,
   asyncIterable: AsyncIterableLike<TReq, T>,
   computeReq: (oldState: T, newState: T) => TReq | void,
+  initialState: T,
+  initialRequest: TReq,
   scheduler: SchedulerLike,
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableStateResourceLike<T> =>
   new ObservableSyncedStateResourceImpl(
-    initialState,
-    initialRequest,
     asyncIterable,
     computeReq,
+    initialState,
+    initialRequest,
     scheduler,
     equals,
   );
 
 export const ObservableState = {
   create,
+  createSynced,
   map: createMapped,
 };
