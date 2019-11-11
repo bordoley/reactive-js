@@ -1,8 +1,3 @@
-export { EventLike, EventSource, EventSourceLike } from "./eventSource";
-export {
-  ObservableStateStore,
-  ObservableStateLike,
-  ObservableStateStoreLike,
-} from "./observableStateStore";
+export { EventLike, EventResource, EventResourceLike } from "./event";
 export { share, shareReplayLast } from "./sharedObservable";
 export { Subject } from "./subject";

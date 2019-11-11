@@ -10,11 +10,11 @@ export interface EventLike<T> extends ObservableLike<T> {
   dispatch(event: T): void;
 }
 
-export interface EventSourceLike<T>
+export interface EventResourceLike<T>
   extends EventLike<T>,
     ObservableResourceLike<T> {}
 
-class EventSourceImpl<T> implements EventSourceLike<T> {
+class EventResourceImpl<T> implements EventResourceLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();
 
   get isDisposed() {
@@ -34,8 +34,8 @@ class EventSourceImpl<T> implements EventSourceLike<T> {
   }
 }
 
-const create = <T>(): EventSourceLike<T> => new EventSourceImpl();
+const create = <T>(): EventResourceLike<T> => new EventResourceImpl();
 
-export const EventSource = {
+export const EventResource = {
   create,
 };

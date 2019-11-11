@@ -9,16 +9,20 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import { EventSource, EventSourceLike } from "./eventSource";
-import { shareReplayLast } from "./sharedObservable";
+import { distinctUntilChanged, map } from "@rx-min/rx-operators";
+import {
+  EventResource,
+  EventResourceLike,
+  shareReplayLast,
+} from "@rx-min/rx-imperative";
 
-type StateUpdater<T> = (oldState: T) => T;
+export type StateUpdater<T> = (oldState: T) => T;
 
 export interface ObservableStateLike<T> extends ObservableLike<T> {
   dispatch(updater: StateUpdater<T>): void;
 }
 
-export interface ObservableStateStoreLike<T>
+export interface ObservableStateResourceLike<T>
   extends ObservableStateLike<T>,
     ObservableResourceLike<T> {}
 
@@ -39,17 +43,14 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     try {
-      const oldAcc = this.acc;
-
       while (this.nextQueue.length > 0) {
         const stateUpdater = this.nextQueue.shift() as StateUpdater<T>;
         this.acc = stateUpdater(this.acc);
 
         const yieldRequest = shouldYield();
         const hasMoreEvents = this.remainingEvents > 0;
-        const stateChanged = this.acc !== oldAcc;
 
-        if ((!hasMoreEvents || yieldRequest) && stateChanged) {
+        if (!hasMoreEvents || yieldRequest) {
           this.delegate.notify(Notifications.next, this.acc);
         }
 
@@ -90,17 +91,22 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
   }
 }
 
-class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
-  private readonly dispatcher: EventSourceLike<
+const observableState = <T>(initialState: T) => (
+  subscriber: SubscriberLike<T>,
+) => new ObservableStateSubscriber(subscriber, initialState);
+
+class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
+  private readonly dispatcher: EventResourceLike<
     StateUpdater<T>
-  > = EventSource.create();
+  > = EventResource.create();
   private readonly delegate: ObservableLike<T>;
 
   constructor(initialState: T, scheduler: SchedulerLike) {
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
-        subscriber => new ObservableStateSubscriber(subscriber, initialState),
+        observableState(initialState),
+        distinctUntilChanged(),
       ),
       scheduler,
     );
@@ -126,9 +132,45 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
 const create = <T>(
   initialValue: T,
   scheduler: SchedulerLike,
-): ObservableStateStoreLike<T> =>
-  new ObservableStateStoreImpl(initialValue, scheduler);
+): ObservableStateResourceLike<T> =>
+  new ObservableStateResourceImpl(initialValue, scheduler);
 
-export const ObservableStateStore = {
+class MappedObservableState<TSrc, T> implements ObservableStateLike<T> {
+  private readonly delegate: ObservableStateLike<TSrc>;
+  private readonly sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc;
+  private readonly observable: ObservableLike<T>;
+
+  constructor(
+    delegate: ObservableStateLike<TSrc>,
+    sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
+    mapper: (v: TSrc) => T,
+  ) {
+    this.delegate = delegate;
+    this.sourceReducer = sourceReducer;
+    this.observable = Observable.lift(
+      delegate,
+      map(mapper),
+      distinctUntilChanged(),
+    );
+  }
+
+  dispatch(updater: StateUpdater<T>) {
+    this.delegate.dispatch(state => this.sourceReducer(state, updater));
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.observable.subscribe(subscriber);
+  }
+}
+
+const createMapped = <TSrc, T>(
+  delegate: ObservableStateLike<TSrc>,
+  sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
+  mapper: (v: TSrc) => T,
+): ObservableStateLike<T> =>
+  new MappedObservableState(delegate, sourceReducer, mapper);
+
+export const ObservableState = {
   create,
+  map: createMapped,
 };
