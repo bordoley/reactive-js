@@ -2,16 +2,16 @@ import {
   DisposableLike
 } from "@rx-min/rx-disposables";
 
-export interface SchedulerContinuationLike {
+export interface SchedulerContinuation {
   (shouldYield: () => boolean): SchedulerContinuationResult;
 }
 
 export type SchedulerContinuationResult =
-  SchedulerContinuationLike
-  | Readonly<[SchedulerContinuationLike, number | void]>
+  SchedulerContinuation
+  | Readonly<[SchedulerContinuation, number | void]>
   | void;
 
 export interface SchedulerLike {
   now: number;
-  schedule(continuation: SchedulerContinuationLike, delay: number | void): DisposableLike;
+  schedule(continuation: SchedulerContinuation, delay: number | void): DisposableLike;
 }

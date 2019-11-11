@@ -4,7 +4,7 @@ import {
   SchedulerLike,
   SubscriberLike,
   Notification,
-  SchedulerContinuationLike,
+  SchedulerContinuation,
   Notifications,
 } from '@rx-min/rx-core';
 
@@ -19,7 +19,7 @@ class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.delay = delay;
   }
 
-  private doWork: SchedulerContinuationLike = (shouldYield) => {
+  private doWork: SchedulerContinuation = (shouldYield) => {
     const now = this.scheduler.now;
     while(this.queue.length > 0) {
       const [nextDueTime, notif, data] = this.queue[0];

@@ -11,7 +11,7 @@ import {
   unstable_scheduleCallback,
 } from 'scheduler';
 
-import { SchedulerContinuationLike, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
+import { SchedulerContinuation, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
 import { Disposable, SerialDisposable, DisposableLike, SerialDisposableLike } from '@rx-min/rx-disposables';
 
 class RxScheduler implements SchedulerLike {
@@ -39,7 +39,7 @@ class RxScheduler implements SchedulerLike {
   private createFrameCallback(
     disposable: SerialDisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuationLike,
+    continuation: SchedulerContinuation,
   ): FrameCallbackType {
     const continuationCallback: FrameCallbackType = () => {
       if (!disposable.isDisposed) {
@@ -64,7 +64,7 @@ class RxScheduler implements SchedulerLike {
     return continuationCallback;
   };
 
-  public schedule(continuation: SchedulerContinuationLike, delay: number | void): DisposableLike {
+  public schedule(continuation: SchedulerContinuation, delay: number | void): DisposableLike {
     const disposable = SerialDisposable.create();
 
     const shouldYield = () => {

@@ -2,7 +2,7 @@ import {
   Notifications, 
   ObservableLike,
   SchedulerLike, 
-  SchedulerContinuationLike, 
+  SchedulerContinuation, 
   SchedulerContinuationResult,  
 } from '@rx-min/rx-core';
 
@@ -13,7 +13,7 @@ export const ofArray = <T>(values: ReadonlyArray<T>, scheduler: SchedulerLike, d
     let index = 0;
 
     let continuationResult: SchedulerContinuationResult;
-    const continuation: SchedulerContinuationLike = (shouldYield) => {
+    const continuation: SchedulerContinuation = (shouldYield) => {
       if (subscriber.isDisposed) {
         return;
       } else if (index >= values.length) {

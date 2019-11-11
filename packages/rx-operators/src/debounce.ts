@@ -3,7 +3,7 @@ import {
   Notifications,
   OperatorLike,
   SchedulerLike,
-  SchedulerContinuationLike,
+  SchedulerContinuation,
   SubscriberLike
 } from "@rx-min/rx-core";
 
@@ -44,7 +44,7 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.delegate.notify(Notifications.complete, data);
   }
 
-  private schedulerContinuation: SchedulerContinuationLike = (_shouldYield) => {
+  private schedulerContinuation: SchedulerContinuation = (_shouldYield) => {
     this.debounceNext();
   }
 

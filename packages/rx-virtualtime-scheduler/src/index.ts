@@ -1,4 +1,4 @@
-import { SchedulerContinuationLike, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
+import { SchedulerContinuation, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
 import { Disposable, DisposableLike } from '@rx-min/rx-disposables';
 
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
@@ -36,7 +36,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private createWorkCallback(
     disposable: DisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuationLike,
+    continuation: SchedulerContinuation,
   ) {
     const continuationCallback: () => void = () => {
       if (!disposable.isDisposed) {
@@ -60,7 +60,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return continuationCallback;
   };
 
-  schedule(continuation: SchedulerContinuationLike, delay: number | void): DisposableLike {
+  schedule(continuation: SchedulerContinuation, delay: number | void): DisposableLike {
     const disposable = Disposable.empty();
 
     const shouldYield = () =>

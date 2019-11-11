@@ -6,14 +6,14 @@ import {
   Notifications,
   ObservableLike,
   SchedulerLike,
-  SchedulerContinuationLike,
+  SchedulerContinuation,
 } from '@rx-min/rx-core';
 
 import { create } from './create';
 
 export const throws = <T>(error: Error, scheduler: SchedulerLike, delay: number | void): ObservableLike<T> =>
   create(subscriber => {
-    const continuation: SchedulerContinuationLike = (_shouldYield) => {
+    const continuation: SchedulerContinuation = (_shouldYield) => {
       subscriber.notify(Notifications.complete, error);
     }
 

@@ -1,4 +1,4 @@
-import { DelegatingSubscriber, Notifications, ObservableLike, Observable, ObservableResourceLike, SchedulerLike, SchedulerContinuationLike, SubscriberLike } from "@rx-min/rx-core";
+import { DelegatingSubscriber, Notifications, ObservableLike, Observable, ObservableResourceLike, SchedulerLike, SchedulerContinuation, SubscriberLike } from "@rx-min/rx-core";
 
 import { EventSource, EventSourceLike } from './eventSource';
 import { shareReplayLast } from './sharedObservable';
@@ -25,7 +25,7 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>,
     this.scheduler = scheduler;
   }
 
-  private readonly drainQueue: SchedulerContinuationLike = (shouldYield) => {
+  private readonly drainQueue: SchedulerContinuation = (shouldYield) => {
     try {
       const oldAcc = this.acc;
 
