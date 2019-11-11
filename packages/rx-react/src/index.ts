@@ -8,11 +8,11 @@ import {
   SchedulerLike
 } from "@rx-min/rx-core";
 
-import { NormalPriority } from "@rx-min/rx-scheduler";
+import { normalPriority } from "@rx-min/rx-scheduler";
 
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike = NormalPriority
+  scheduler: SchedulerLike = normalPriority
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
   const [error, updateError] = useState<Error | undefined>(undefined);

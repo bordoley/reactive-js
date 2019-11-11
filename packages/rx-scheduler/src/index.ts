@@ -11,7 +11,7 @@ import {
   unstable_scheduleCallback
 } from "scheduler";
 
-import { SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
+import { ObservableLike, Observable, SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
 import {
   Disposable,
   SerialDisposable,
@@ -92,10 +92,22 @@ class RxScheduler implements SchedulerLike {
     return disposable;
   }
 }
-export const ImmediatePriority = new RxScheduler(unstable_ImmediatePriority);
-export const UserBlockingPriority = new RxScheduler(
+
+export const immediatePriority: SchedulerLike = new RxScheduler(unstable_ImmediatePriority);
+export const userBlockingPriority: SchedulerLike = new RxScheduler(
   unstable_UserBlockingPriority
 );
-export const NormalPriority = new RxScheduler(unstable_NormalPriority);
-export const IdlePriority = new RxScheduler(unstable_IdlePriority);
-export const LowPriority = new RxScheduler(unstable_LowPriority);
+export const normalPriority: SchedulerLike = new RxScheduler(unstable_NormalPriority);
+export const idlePriority: SchedulerLike = new RxScheduler(unstable_IdlePriority);
+export const lowPriority: SchedulerLike = new RxScheduler(unstable_LowPriority);
+
+export const connectImmediatePriority = <T>(observable: ObservableLike<T>) =>
+  Observable.connect(observable, immediatePriority);
+export const connectUserBlockingPriority = <T>(observable: ObservableLike<T>) =>
+  Observable.connect(observable, userBlockingPriority);
+export const connectNormalPriority = <T>(observable: ObservableLike<T>) =>
+  Observable.connect(observable, normalPriority);
+export const connectIdlePriority = <T>(observable: ObservableLike<T>) =>
+  Observable.connect(observable, idlePriority);
+export const connectLowPriority = <T>(observable: ObservableLike<T>) =>
+  Observable.connect(observable, lowPriority);
