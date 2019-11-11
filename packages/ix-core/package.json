@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/ix",
+  "name": "@rx-min/ix-core",
   "version": "0.0.0",
   "description": "interactive extensions",
   "main": "dist/index.js",

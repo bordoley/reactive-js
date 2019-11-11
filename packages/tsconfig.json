@@ -1,7 +1,7 @@
 {
   "files": [],
   "references": [
-      { "path": "ix" },
+      { "path": "ix-core" },
       { "path": "rx-core" },
       { "path": "rx-disposables" },
       { "path": "rx-imperative" },
