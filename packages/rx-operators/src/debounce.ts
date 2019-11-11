@@ -1,7 +1,7 @@
 import {
   MonoTypeDelegatingSubscriber,
   Notifications,
-  OperatorLike,
+  Operator,
   SchedulerLike,
   SchedulerContinuation,
   SubscriberLike
@@ -56,7 +56,7 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const debounceTime = <T>(dueTime: number): OperatorLike<T, T> => {
+export const debounceTime = <T>(dueTime: number): Operator<T, T> => {
   // FIXME: bounds check the duetime
   return (subscriber: SubscriberLike<T>) =>
     new DebounceTimeSubscriber(subscriber, dueTime);

@@ -60,17 +60,17 @@ const connect = <T>(
   return subscriber;
 };
 
-export interface OperatorLike<A, B> {
+export interface Operator<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   source: ObservableLike<TSrc>;
-  operators: ReadonlyArray<OperatorLike<any, any>>;
+  operators: ReadonlyArray<Operator<any, any>>;
 
   constructor(
     source: ObservableLike<TSrc>,
-    operators: ReadonlyArray<OperatorLike<any, any>>
+    operators: ReadonlyArray<Operator<any, any>>
   ) {
     this.source = source;
     this.operators = operators;
@@ -88,80 +88,80 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
 
 function lift<T, A>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>
+  op1: Operator<T, A>
 ): ObservableLike<A>;
 function lift<T, A, B>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>
 ): ObservableLike<B>;
 function lift<T, A, B, C>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>
 ): ObservableLike<C>;
 function lift<T, A, B, C, D>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>
 ): ObservableLike<D>;
 function lift<T, A, B, C, D, E>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>,
-  op5: OperatorLike<D, E>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>
 ): ObservableLike<E>;
 function lift<T, A, B, C, D, E, F>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>,
-  op5: OperatorLike<D, E>,
-  op6: OperatorLike<E, F>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>
 ): ObservableLike<F>;
 function lift<T, A, B, C, D, E, F, G>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>,
-  op5: OperatorLike<D, E>,
-  op6: OperatorLike<E, F>,
-  op7: OperatorLike<F, G>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>
 ): ObservableLike<G>;
 function lift<T, A, B, C, D, E, F, G, H>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>,
-  op5: OperatorLike<D, E>,
-  op6: OperatorLike<E, F>,
-  op7: OperatorLike<F, G>,
-  op8: OperatorLike<G, H>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>
 ): ObservableLike<H>;
 function lift<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableLike<T>,
-  op1: OperatorLike<T, A>,
-  op2: OperatorLike<A, B>,
-  op3: OperatorLike<B, C>,
-  op4: OperatorLike<C, D>,
-  op5: OperatorLike<D, E>,
-  op6: OperatorLike<E, F>,
-  op7: OperatorLike<F, G>,
-  op8: OperatorLike<G, H>,
-  op9: OperatorLike<H, I>
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>
 ): ObservableLike<I>;
 function lift(
   source: ObservableLike<any>,
-  operator: OperatorLike<any, any>,
-  ...operators: Array<OperatorLike<any, any>>
+  operator: Operator<any, any>,
+  ...operators: Array<Operator<any, any>>
 ): ObservableLike<any> {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;
@@ -193,7 +193,7 @@ class ObserveSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const observe = <T>(observer: ObserverLike<T>): OperatorLike<T, T> => (
+export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
   subscriber: SubscriberLike<T>
 ) => new ObserveSubscriber(subscriber, observer);
 

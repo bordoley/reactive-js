@@ -1,6 +1,6 @@
 import {
   MonoTypeDelegatingSubscriber,
-  OperatorLike,
+  Operator,
   SchedulerLike,
   SubscriberLike,
   Notification,
@@ -58,5 +58,5 @@ class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const delay = <T>(dueTime: number): OperatorLike<T, T> => subscriber =>
+export const delay = <T>(dueTime: number): Operator<T, T> => subscriber =>
   new DelaySubscriber(subscriber, dueTime);

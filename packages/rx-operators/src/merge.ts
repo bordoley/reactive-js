@@ -3,7 +3,7 @@ import {
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
-  OperatorLike,
+  Operator,
   SubscriberLike,
   Observable
 } from "@rx-min/rx-core";
@@ -57,7 +57,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
   };
 
-  private innerOperator: OperatorLike<T, T> = subscriber =>
+  private innerOperator: Operator<T, T> = subscriber =>
     new MergeSubscriber.InnerSubscriber(subscriber, this);
 
   private connectNext(next: ObservableLike<T>) {
@@ -88,11 +88,11 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 export const merge = <T>({
   maxBufferSize = Number.MAX_SAFE_INTEGER,
   maxConcurrency = Number.MAX_SAFE_INTEGER
-}): OperatorLike<ObservableLike<T>, T> => subscriber =>
+}): Operator<ObservableLike<T>, T> => subscriber =>
   new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 
-export const concat = <T>(): OperatorLike<ObservableLike<T>, T> =>
+export const concat = <T>(): Operator<ObservableLike<T>, T> =>
   merge({ maxConcurrency: 1 });
 
-export const exhaust = <T>(): OperatorLike<ObservableLike<T>, T> =>
+export const exhaust = <T>(): Operator<ObservableLike<T>, T> =>
   merge({ maxBufferSize: 0, maxConcurrency: 1 });

@@ -3,7 +3,7 @@ import {
   Notification,
   Notifications,
   ObservableLike,
-  OperatorLike,
+  Operator,
   SubscriberLike,
   Observable,
   observe,
@@ -58,7 +58,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 }
 
-export const switch_ = <T>(): OperatorLike<
+export const switch_ = <T>(): Operator<
   ObservableLike<T>,
   T
 > => subscriber => new SwitchSubscriber(subscriber);

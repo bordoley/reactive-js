@@ -1,7 +1,7 @@
 import {
   MonoTypeDelegatingSubscriber,
   Notifications,
-  OperatorLike,
+  Operator,
   SubscriberLike
 } from "@rx-min/rx-core";
 
@@ -27,5 +27,5 @@ class KeepSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 
 export const keep = <T>(
   predicate: (data: T) => boolean
-): OperatorLike<T, T> => subscriber =>
+): Operator<T, T> => subscriber =>
   new KeepSubscriber(subscriber, predicate);

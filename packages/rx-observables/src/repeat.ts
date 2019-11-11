@@ -4,7 +4,7 @@ import {
   ObservableLike,
   Observable,
   observe,
-  OperatorLike,
+  Operator,
   SubscriberLike
 } from "@rx-min/rx-core";
 
@@ -61,7 +61,7 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
   shouldRepeat: (error: Error | undefined) => boolean
-): OperatorLike<T, T> => (subscriber: SubscriberLike<T>) =>
+): Operator<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
 const alwaysTrue = () => true;

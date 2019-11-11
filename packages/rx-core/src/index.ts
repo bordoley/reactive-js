@@ -15,7 +15,7 @@ export {
   ObservableLike,
   Observable,
   ObservableResourceLike,
-  OperatorLike
+  Operator
 } from "./observable";
 export {
   SchedulerContinuation,

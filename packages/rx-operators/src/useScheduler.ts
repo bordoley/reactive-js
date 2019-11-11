@@ -1,7 +1,7 @@
 import {
   MonoTypeDelegatingSubscriber,
   Notifications,
-  OperatorLike,
+  Operator,
   SchedulerLike,
   SubscriberLike
 } from "@rx-min/rx-core";
@@ -25,5 +25,5 @@ class UseSchedulerSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 
 export const useScheduler = <T>(
   scheduler: SchedulerLike
-): OperatorLike<T, T> => subscriber =>
+): Operator<T, T> => subscriber =>
   new UseSchedulerSubscriber(subscriber, scheduler);

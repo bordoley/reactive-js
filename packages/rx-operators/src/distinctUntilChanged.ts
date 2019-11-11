@@ -1,7 +1,7 @@
 import {
   MonoTypeDelegatingSubscriber,
   Notifications,
-  OperatorLike,
+  Operator,
   SubscriberLike
 } from "@rx-min/rx-core";
 
@@ -33,5 +33,5 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
 export const distinctUntilChanged = <T>(
   equals = referenceEquality
-): OperatorLike<T, T> => subscriber =>
+): Operator<T, T> => subscriber =>
   new DistinctUntilChangedSubscriber(subscriber, equals);

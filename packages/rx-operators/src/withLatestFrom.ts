@@ -3,7 +3,7 @@ import {
   Notification,
   Notifications,
   ObservableLike,
-  OperatorLike,
+  Operator,
   SubscriberLike,
   Observable,
   observe,
@@ -72,5 +72,5 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC
-): OperatorLike<TA, TC> => subscriber =>
+): Operator<TA, TC> => subscriber =>
   new WithLatestFromSubscriber(subscriber, other, selector);

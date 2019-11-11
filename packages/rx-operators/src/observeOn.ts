@@ -1,7 +1,7 @@
 import {
   MonoTypeDelegatingSubscriber,
   Notifications,
-  OperatorLike,
+  Operator,
   SchedulerLike,
   SchedulerContinuation,
   SubscriberLike
@@ -60,5 +60,5 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 
 export const observeOn = <T>(
   observeOnScheduler: SchedulerLike
-): OperatorLike<T, T> => subscriber =>
+): Operator<T, T> => subscriber =>
   new ObserveOnSubscriber(subscriber, observeOnScheduler);
