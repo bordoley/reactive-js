@@ -4,9 +4,4 @@
     "rootDir": "src",
     "outDir": "dist",
   },
-  "references": [
-    { "path": "../rx-disposables" },
-    { "path": "../rx-core" },
-    { "path": "../rx-operators" }
-  ]
 }
