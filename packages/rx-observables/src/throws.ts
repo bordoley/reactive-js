@@ -9,7 +9,6 @@ import { create } from "./create";
 
 export const throws = <T>(
   error: Error,
-  scheduler: SchedulerLike,
   delay: number | void,
 ): ObservableLike<T> =>
   create(subscriber => {
@@ -17,5 +16,7 @@ export const throws = <T>(
       subscriber.notify(Notifications.complete, error);
     };
 
-    subscriber.subscription.add(scheduler.schedule(continuation, delay));
+    subscriber.subscription.add(
+      subscriber.scheduler.schedule(continuation, delay),
+    );
   });

@@ -10,7 +10,6 @@ import { create } from "./create";
 
 export const ofArray = <T>(
   values: ReadonlyArray<T>,
-  scheduler: SchedulerLike,
   delay: number | void,
 ): ObservableLike<T> =>
   create(subscriber => {
@@ -52,14 +51,12 @@ export const ofArray = <T>(
     continuationResult =
       delay !== undefined ? [continuation, delay] : continuation;
 
-    subscriber.subscription.add(scheduler.schedule(continuation, delay));
+    subscriber.subscription.add(
+      subscriber.scheduler.schedule(continuation, delay),
+    );
   });
 
-export const ofValue = <T>(
-  value: T,
-  scheduler: SchedulerLike,
-  delay: number | void,
-): ObservableLike<T> => ofArray([value], scheduler, delay);
+export const ofValue = <T>(value: T, delay: number | void): ObservableLike<T> =>
+  ofArray([value], delay);
 
-export const empty = <T>(scheduler: SchedulerLike): ObservableLike<T> =>
-  ofArray([], scheduler);
+export const empty = <T>(): ObservableLike<T> => ofArray([]);
