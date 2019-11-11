@@ -4,11 +4,11 @@ import {
   DisposableLike
 } from "@rx-min/rx-disposables";
 
-import { ObserverLike, Notification, Notifications } from './observer';
+import { ObserverLike, Notification, Notifications } from "./observer";
 
 export interface SubscriberLike<T>
-  extends ObserverLike<T>, CompositeDisposableLike {
-
+  extends ObserverLike<T>,
+    CompositeDisposableLike {
   readonly isConnected: boolean;
 }
 
@@ -20,11 +20,15 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     this.delegate = delegate;
 
     delegate.add(
-      Disposable.create(() => { this.isStopped = true })
+      Disposable.create(() => {
+        this.isStopped = true;
+      })
     );
   }
 
-  get isConnected() { return this.delegate.isConnected }
+  get isConnected() {
+    return this.delegate.isConnected;
+  }
 
   get isDisposed() {
     return this.delegate.isDisposed;
@@ -70,7 +74,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     } else if (!this.isStopped) {
       switch (notification) {
         case Notifications.next:
-          this.tryOnNext(data  as A)
+          this.tryOnNext(data as A);
           break;
         case Notifications.complete:
           this.isStopped = true;
@@ -81,8 +85,6 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   }
 }
 
-export abstract class MonoTypeDelegatingSubscriber<T> extends DelegatingSubscriber<
-  T,
+export abstract class MonoTypeDelegatingSubscriber<
   T
-  > {
-}
+> extends DelegatingSubscriber<T, T> {}

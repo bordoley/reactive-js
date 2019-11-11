@@ -8,11 +8,16 @@ import {
   unstable_cancelCallback,
   unstable_now,
   unstable_shouldYield,
-  unstable_scheduleCallback,
-} from 'scheduler';
+  unstable_scheduleCallback
+} from "scheduler";
 
-import { SchedulerContinuation, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
-import { Disposable, SerialDisposable, DisposableLike, SerialDisposableLike } from '@rx-min/rx-disposables';
+import { SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
+import {
+  Disposable,
+  SerialDisposable,
+  DisposableLike,
+  SerialDisposableLike
+} from "@rx-min/rx-disposables";
 
 class RxScheduler implements SchedulerLike {
   private readonly priorityLevel: number;
@@ -25,21 +30,27 @@ class RxScheduler implements SchedulerLike {
     return unstable_now();
   }
 
-  private scheduleCallback(disposable: SerialDisposableLike, callback: FrameCallbackType, delay: number | void) {
+  private scheduleCallback(
+    disposable: SerialDisposableLike,
+    callback: FrameCallbackType,
+    delay: number | void
+  ) {
     const callbackNode = unstable_scheduleCallback(
       this.priorityLevel,
       callback,
-      delay !== undefined ? { delay } : undefined,
+      delay !== undefined ? { delay } : undefined
     );
 
-    const innerDisposable = Disposable.create(() => unstable_cancelCallback(callbackNode));
+    const innerDisposable = Disposable.create(() =>
+      unstable_cancelCallback(callbackNode)
+    );
     disposable.setInnerDisposable(innerDisposable);
   }
 
   private createFrameCallback(
     disposable: SerialDisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuation,
+    continuation: SchedulerContinuation
   ): FrameCallbackType {
     const continuationCallback: FrameCallbackType = () => {
       if (!disposable.isDisposed) {
@@ -50,21 +61,21 @@ class RxScheduler implements SchedulerLike {
           return this.createFrameCallback(disposable, shouldYield, result);
         } else if (result !== undefined) {
           const [resultContinuation, delay] = result;
-          const callback = resultContinuation === continuation
-            ? continuationCallback
-            : this.createFrameCallback(disposable, shouldYield, continuation);
-          this.scheduleCallback(
-            disposable, 
-            callback,
-            delay
-          );
+          const callback =
+            resultContinuation === continuation
+              ? continuationCallback
+              : this.createFrameCallback(disposable, shouldYield, continuation);
+          this.scheduleCallback(disposable, callback, delay);
         }
       }
-    }
+    };
     return continuationCallback;
-  };
+  }
 
-  public schedule(continuation: SchedulerContinuation, delay: number | void): DisposableLike {
+  public schedule(
+    continuation: SchedulerContinuation,
+    delay: number | void
+  ): DisposableLike {
     const disposable = SerialDisposable.create();
 
     const shouldYield = () => {
@@ -73,8 +84,8 @@ class RxScheduler implements SchedulerLike {
     };
 
     this.scheduleCallback(
-      disposable, 
-      this.createFrameCallback(disposable, shouldYield, continuation), 
+      disposable,
+      this.createFrameCallback(disposable, shouldYield, continuation),
       delay
     );
 
@@ -82,7 +93,9 @@ class RxScheduler implements SchedulerLike {
   }
 }
 export const ImmediatePriority = new RxScheduler(unstable_ImmediatePriority);
-export const UserBlockingPriority = new RxScheduler(unstable_UserBlockingPriority);
+export const UserBlockingPriority = new RxScheduler(
+  unstable_UserBlockingPriority
+);
 export const NormalPriority = new RxScheduler(unstable_NormalPriority);
 export const IdlePriority = new RxScheduler(unstable_IdlePriority);
 export const LowPriority = new RxScheduler(unstable_LowPriority);

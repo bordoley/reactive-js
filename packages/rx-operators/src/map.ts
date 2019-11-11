@@ -23,17 +23,17 @@ class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
   }
 }
 
-export const map = <A, B>(mapper: (data: A) => B): OperatorLike<A, B> => 
-  subscriber => {
-    if (subscriber instanceof MapSubscriber) {
-      const delegate = subscriber.delegate;
-      const subscriberMapper = subscriber.mapper;
-      const fusionMapper = (data: A) => subscriberMapper(mapper(data));
-      return new MapSubscriber(delegate, fusionMapper);
-    } else {
-      return new MapSubscriber(subscriber, mapper);
-    }
-  };
+export const map = <A, B>(
+  mapper: (data: A) => B
+): OperatorLike<A, B> => subscriber => {
+  if (subscriber instanceof MapSubscriber) {
+    const delegate = subscriber.delegate;
+    const subscriberMapper = subscriber.mapper;
+    const fusionMapper = (data: A) => subscriberMapper(mapper(data));
+    return new MapSubscriber(delegate, fusionMapper);
+  } else {
+    return new MapSubscriber(subscriber, mapper);
+  }
+};
 
-export const mapTo = <A, B>(value: B): OperatorLike<A, B> => 
-  map(_ => value);
+export const mapTo = <A, B>(value: B): OperatorLike<A, B> => map(_ => value);

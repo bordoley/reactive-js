@@ -1,5 +1,5 @@
-import { SchedulerContinuation, SchedulerLike, SchedulerContinuationResult } from '@rx-min/rx-core';
-import { Disposable, DisposableLike } from '@rx-min/rx-disposables';
+import { SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
+import { Disposable, DisposableLike } from "@rx-min/rx-disposables";
 
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
   run(): void;
@@ -15,8 +15,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   private get hasMoreWork() {
     for (let key in this.timeQueue) {
-      if (this.timeQueue.hasOwnProperty(key))
-        return true;
+      if (this.timeQueue.hasOwnProperty(key)) return true;
     }
     return false;
   }
@@ -36,7 +35,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private createWorkCallback(
     disposable: DisposableLike,
     shouldYield: () => boolean,
-    continuation: SchedulerContinuation,
+    continuation: SchedulerContinuation
   ) {
     const continuationCallback: () => void = () => {
       if (!disposable.isDisposed) {
@@ -47,28 +46,28 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
           return () => this.createWorkCallback(disposable, shouldYield, result);
         } else if (result !== undefined) {
           const [resultContinuation, delay] = result;
-          const callback = resultContinuation === continuation
-            ? continuationCallback
-            : this.createWorkCallback(disposable, shouldYield, continuation);
-          this.scheduleInternal(
-            callback,
-            delay
-          );
+          const callback =
+            resultContinuation === continuation
+              ? continuationCallback
+              : this.createWorkCallback(disposable, shouldYield, continuation);
+          this.scheduleInternal(callback, delay);
         }
       }
-    }
+    };
     return continuationCallback;
-  };
+  }
 
-  schedule(continuation: SchedulerContinuation, delay: number | void): DisposableLike {
+  schedule(
+    continuation: SchedulerContinuation,
+    delay: number | void
+  ): DisposableLike {
     const disposable = Disposable.empty();
 
-    const shouldYield = () =>
-      disposable.isDisposed;
+    const shouldYield = () => disposable.isDisposed;
 
     this.scheduleInternal(
       this.createWorkCallback(disposable, shouldYield, continuation),
-      delay,
+      delay
     );
 
     return disposable;
@@ -76,11 +75,11 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   private advance() {
     const now = this.now;
-    const workQueue = this.timeQueue[now] || []
+    const workQueue = this.timeQueue[now] || [];
     while (workQueue.length > 0) {
-      const work = (workQueue.shift() as () => void);
+      const work = workQueue.shift() as () => void;
       work();
-    };
+    }
 
     delete this.timeQueue[now];
     this._now++;
@@ -96,5 +95,5 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 const create = (): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl();
 
 export const VirtualTimeScheduler = {
-  create,
+  create
 };

@@ -25,5 +25,7 @@ class KeepSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const keep = <T>(predicate: (data: T) => boolean): OperatorLike<T, T> =>
-   subscriber => new KeepSubscriber(subscriber, predicate);
+export const keep = <T>(
+  predicate: (data: T) => boolean
+): OperatorLike<T, T> => subscriber =>
+  new KeepSubscriber(subscriber, predicate);

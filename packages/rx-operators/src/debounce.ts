@@ -15,8 +15,12 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   private readonly innerSubscription = SerialDisposable.create();
   private value: T | undefined;
 
-  constructor(delegate: SubscriberLike<T>, scheduler: SchedulerLike, dueTime: number) {
-    super(delegate)
+  constructor(
+    delegate: SubscriberLike<T>,
+    scheduler: SchedulerLike,
+    dueTime: number
+  ) {
+    super(delegate);
     this.scheduler = scheduler;
     this.dueTime = dueTime;
   }
@@ -44,24 +48,25 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.delegate.notify(Notifications.complete, data);
   }
 
-  private schedulerContinuation: SchedulerContinuation = (_shouldYield) => {
+  private schedulerContinuation: SchedulerContinuation = _shouldYield => {
     this.debounceNext();
-  }
+  };
 
   protected onNext(data: T) {
     this.clearDebounce();
     this.value = data;
 
     this.innerSubscription.setInnerDisposable(
-      this.scheduler.schedule(
-        this.schedulerContinuation,
-        this.dueTime,
-      ),
+      this.scheduler.schedule(this.schedulerContinuation, this.dueTime)
     );
   }
 }
 
-export const debounceTime = <T>(scheduler: SchedulerLike, dueTime: number): OperatorLike<T, T> => {
+export const debounceTime = <T>(
+  scheduler: SchedulerLike,
+  dueTime: number
+): OperatorLike<T, T> => {
   // FIXME: bounds check the duetime
-  return (subscriber: SubscriberLike<T>) => new DebounceTimeSubscriber(subscriber, scheduler, dueTime);
-}
+  return (subscriber: SubscriberLike<T>) =>
+    new DebounceTimeSubscriber(subscriber, scheduler, dueTime);
+};

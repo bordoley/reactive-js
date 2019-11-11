@@ -4,7 +4,7 @@ import {
   Observable,
   ObservableLike,
   SchedulerLike,
-  SubscriberLike,
+  SubscriberLike
 } from "@rx-min/rx-core";
 
 import { Subject, SubjectLike } from "./subject";
@@ -39,10 +39,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>): void {
     const innerSubscription = Observable.connect(
-      Observable.lift(
-        this.subject,
-        observe(subscriber)
-      )
+      Observable.lift(this.subject, observe(subscriber))
     );
 
     subscriber.add(Disposable.create(this.teardown)).add(innerSubscription);
@@ -58,7 +55,10 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(observable: ObservableLike<T>): ObservableLike<T> =>
   new SharedObservable(observable, Subject.create);
 
-export const shareReplayLast = <T>(observable: ObservableLike<T>, scheduler: SchedulerLike): ObservableLike<T> => {
+export const shareReplayLast = <T>(
+  observable: ObservableLike<T>,
+  scheduler: SchedulerLike
+): ObservableLike<T> => {
   const replayLastSubjectFactory = () => ReplayLastSubject.create(scheduler);
   return new SharedObservable(observable, replayLastSubjectFactory);
 };

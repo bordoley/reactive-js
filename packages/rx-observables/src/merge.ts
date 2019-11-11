@@ -1,13 +1,13 @@
-import { 
+import {
   observe,
-  Notification, 
-  Notifications, 
+  Notification,
+  Notifications,
   Observable,
   ObservableLike,
-  ObserverLike, 
-} from '@rx-min/rx-core';
+  ObserverLike
+} from "@rx-min/rx-core";
 
-import { create } from './create';
+import { create } from "./create";
 
 class MergeObserver<T> implements ObserverLike<T> {
   private readonly delegate: ObserverLike<T>;
@@ -26,7 +26,7 @@ class MergeObserver<T> implements ObserverLike<T> {
         break;
       case Notifications.complete:
         if (data !== undefined) {
-          this.delegate.notify(notif, data)
+          this.delegate.notify(notif, data);
         } else {
           this.completedCount++;
           if (this.completedCount == this.count) {
@@ -37,20 +37,21 @@ class MergeObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const merge = <T>(head: ObservableLike<T>, ...tail: Array<ObservableLike<T>>): ObservableLike<T> => {
-  return create(
-    subscriber => {
-      const observer = new MergeObserver(subscriber, tail.length + 1);
+export const merge = <T>(
+  head: ObservableLike<T>,
+  ...tail: Array<ObservableLike<T>>
+): ObservableLike<T> => {
+  return create(subscriber => {
+    const observer = new MergeObserver(subscriber, tail.length + 1);
 
+    subscriber.add(
+      Observable.connect(Observable.lift(head, observe(observer)))
+    );
+
+    for (let observable of tail) {
       subscriber.add(
-        Observable.connect(Observable.lift(head, observe(observer)))
+        Observable.connect(Observable.lift(observable, observe(observer)))
       );
-
-      for (let observable of tail) {
-        subscriber.add(
-          Observable.connect(Observable.lift(observable, observe(observer)))
-        );
-      }
     }
-  );
+  });
 };

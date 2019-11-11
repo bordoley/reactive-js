@@ -1,7 +1,16 @@
-import { DelegatingSubscriber, Notifications, ObservableLike, Observable, ObservableResourceLike, SchedulerLike, SchedulerContinuation, SubscriberLike } from "@rx-min/rx-core";
+import {
+  DelegatingSubscriber,
+  Notifications,
+  ObservableLike,
+  Observable,
+  ObservableResourceLike,
+  SchedulerLike,
+  SchedulerContinuation,
+  SubscriberLike
+} from "@rx-min/rx-core";
 
-import { EventSource, EventSourceLike } from './eventSource';
-import { shareReplayLast } from './sharedObservable';
+import { EventSource, EventSourceLike } from "./eventSource";
+import { shareReplayLast } from "./sharedObservable";
 
 type StateUpdater<T> = (oldState: T) => T;
 
@@ -9,9 +18,14 @@ export interface ObservableStateLike<T> extends ObservableLike<T> {
   dispatch(updater: StateUpdater<T>): void;
 }
 
-export interface ObservableStateStoreLike<T> extends ObservableStateLike<T>, ObservableResourceLike<T> { }
+export interface ObservableStateStoreLike<T>
+  extends ObservableStateLike<T>,
+    ObservableResourceLike<T> {}
 
-class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>, T> {
+class ObservableStateSubscriber<T> extends DelegatingSubscriber<
+  StateUpdater<T>,
+  T
+> {
   private readonly scheduler: SchedulerLike;
   private readonly nextQueue: Array<StateUpdater<T>> = [];
   private isComplete = false;
@@ -19,18 +33,22 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>,
 
   private acc: T;
 
-  constructor(delegate: SubscriberLike<T>, initialValue: T, scheduler: SchedulerLike) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    initialValue: T,
+    scheduler: SchedulerLike
+  ) {
     super(delegate);
     this.acc = initialValue;
     this.scheduler = scheduler;
   }
 
-  private readonly drainQueue: SchedulerContinuation = (shouldYield) => {
+  private readonly drainQueue: SchedulerContinuation = shouldYield => {
     try {
       const oldAcc = this.acc;
 
       while (this.nextQueue.length > 0) {
-        const stateUpdater = (this.nextQueue.shift() as StateUpdater<T>);
+        const stateUpdater = this.nextQueue.shift() as StateUpdater<T>;
         this.acc = stateUpdater(this.acc);
 
         const yieldRequest = shouldYield();
@@ -54,7 +72,7 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>,
     if (this.isComplete) {
       this.delegate.notify(Notifications.complete, this.error);
     }
-  }
+  };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
@@ -78,15 +96,18 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<StateUpdater<T>,
   }
 }
 
-class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T>{
-  private readonly dispatcher: EventSourceLike<StateUpdater<T>> = EventSource.create();
+class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
+  private readonly dispatcher: EventSourceLike<
+    StateUpdater<T>
+  > = EventSource.create();
   private readonly delegate: ObservableLike<T>;
 
   constructor(initialState: T, scheduler: SchedulerLike) {
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
-        subscriber => new ObservableStateSubscriber(subscriber, initialState, scheduler),
+        subscriber =>
+          new ObservableStateSubscriber(subscriber, initialState, scheduler)
       ),
       scheduler
     );
@@ -109,9 +130,12 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T>{
   }
 }
 
-const create = <T>(initialValue: T, scheduler: SchedulerLike): ObservableStateStoreLike<T> =>
+const create = <T>(
+  initialValue: T,
+  scheduler: SchedulerLike
+): ObservableStateStoreLike<T> =>
   new ObservableStateStoreImpl(initialValue, scheduler);
 
 export const ObservableStateStore = {
-  create,
+  create
 };

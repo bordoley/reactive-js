@@ -1,27 +1,33 @@
-import { 
+import {
   MonoTypeDelegatingSubscriber,
   OperatorLike,
   SchedulerLike,
   SubscriberLike,
   Notification,
   SchedulerContinuation,
-  Notifications,
-} from '@rx-min/rx-core';
+  Notifications
+} from "@rx-min/rx-core";
 
 class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   private readonly scheduler: SchedulerLike;
   private readonly delay: number;
-  private readonly queue: Array<[number, Notification, T | Error | undefined]> = [];
+  private readonly queue: Array<
+    [number, Notification, T | Error | undefined]
+  > = [];
 
-  constructor(delegate: SubscriberLike<T>, scheduler: SchedulerLike, delay: number) {
-    super(delegate)
+  constructor(
+    delegate: SubscriberLike<T>,
+    scheduler: SchedulerLike,
+    delay: number
+  ) {
+    super(delegate);
     this.scheduler = scheduler;
     this.delay = delay;
   }
 
-  private doWork: SchedulerContinuation = (shouldYield) => {
+  private doWork: SchedulerContinuation = shouldYield => {
     const now = this.scheduler.now;
-    while(this.queue.length > 0) {
+    while (this.queue.length > 0) {
       const [nextDueTime, notif, data] = this.queue[0];
 
       if (now >= nextDueTime) {
@@ -37,7 +43,7 @@ class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
         return this.doWork;
       }
     }
-  }
+  };
 
   private doSchedule(notif: Notification, data: T | Error | undefined) {
     const now = this.scheduler.now;
@@ -58,5 +64,8 @@ class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const delay = <T>(scheduler: SchedulerLike, dueTime: number): OperatorLike<T, T> =>
-  subscriber => new DelaySubscriber(subscriber, scheduler, dueTime);
+export const delay = <T>(
+  scheduler: SchedulerLike,
+  dueTime: number
+): OperatorLike<T, T> => subscriber =>
+  new DelaySubscriber(subscriber, scheduler, dueTime);

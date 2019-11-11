@@ -9,13 +9,15 @@ import {
   observe,
   ObserverLike
 } from "@rx-min/rx-core";
-import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
 
-class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>  {
+class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
+  TA,
+  TC
+> {
   private readonly selector: (a: TA, b: TB) => TC;
   private otherLatest: TB | undefined;
 
-  static InnerObserver = class <TA, TB, TC> implements ObserverLike<TB> {
+  static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
     private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
 
     constructor(parent: WithLatestFromSubscriber<TA, TB, TC>) {
@@ -25,18 +27,22 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC> 
     notify(notif: Notification, data: TB | Error | undefined) {
       switch (notif) {
         case Notifications.next:
-          this.parent.otherLatest = (data as TB);
+          this.parent.otherLatest = data as TB;
           break;
         case Notifications.complete:
           if (data !== undefined) {
-            this.parent.notify(Notifications.complete, (data as Error));
+            this.parent.notify(Notifications.complete, data as Error);
           }
           break;
       }
     }
-  }
+  };
 
-  constructor(delegate: SubscriberLike<TC>, other: ObservableLike<TB>, selector: (a: TA, b: TB) => TC) {
+  constructor(
+    delegate: SubscriberLike<TC>,
+    other: ObservableLike<TB>,
+    selector: (a: TA, b: TB) => TC
+  ) {
     super(delegate);
     this.selector = selector;
 
@@ -44,8 +50,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC> 
       Observable.connect(
         Observable.lift(
           other,
-          observe(new WithLatestFromSubscriber.InnerObserver(this)),
-        ),
+          observe(new WithLatestFromSubscriber.InnerObserver(this))
+        )
       )
     );
   }
@@ -54,7 +60,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC> 
     if (this.otherLatest !== undefined) {
       const result = this.selector(data, this.otherLatest);
       this.delegate.notify(Notifications.next, result);
-    };
+    }
   }
 
   protected onComplete(error: Error | undefined) {
@@ -62,9 +68,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC> 
   }
 }
 
-
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC,
+  selector: (a: TA, b: TB) => TC
 ): OperatorLike<TA, TC> => subscriber =>
-    new WithLatestFromSubscriber(subscriber, other, selector);
+  new WithLatestFromSubscriber(subscriber, other, selector);

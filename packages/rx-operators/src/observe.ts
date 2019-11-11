@@ -1,4 +1,9 @@
-import { observe, Notification, Notifications, OperatorLike, Observable } from "@rx-min/rx-core";
+import {
+  observe,
+  Notification,
+  Notifications,
+  OperatorLike
+} from "@rx-min/rx-core";
 export { observe } from "@rx-min/rx-core";
 
 export const onNext = <T>(onNext: (data: T) => void): OperatorLike<T, T> =>
@@ -6,22 +11,26 @@ export const onNext = <T>(onNext: (data: T) => void): OperatorLike<T, T> =>
     notify: (notif: Notification, data: T | Error | undefined) => {
       switch (notif) {
         case Notifications.next:
-          onNext((data as T));
+          onNext(data as T);
       }
-    },
+    }
   });
 
-export const onComplete = <T>(onComplete: (err: Error | undefined) => void): OperatorLike<T, T> =>
+export const onComplete = <T>(
+  onComplete: (err: Error | undefined) => void
+): OperatorLike<T, T> =>
   observe({
     notify: (notif: Notification, data: T | Error | undefined) => {
       switch (notif) {
         case Notifications.complete:
           onComplete(data as Error | undefined);
       }
-    },
+    }
   });
 
-export const onError = <T>(onError: (error: Error) => void): OperatorLike<T, T> =>
+export const onError = <T>(
+  onError: (error: Error) => void
+): OperatorLike<T, T> =>
   observe({
     notify: (notif: Notification, data: T | Error | undefined) => {
       switch (notif) {
@@ -30,5 +39,5 @@ export const onError = <T>(onError: (error: Error) => void): OperatorLike<T, T> 
             onError(data as Error);
           }
       }
-    },
+    }
   });

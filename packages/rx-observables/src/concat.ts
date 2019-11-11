@@ -1,17 +1,15 @@
-import {
-  Disposable
-} from "@rx-min/rx-disposables";
+import { Disposable } from "@rx-min/rx-disposables";
 
-import { 
+import {
   observe,
-  Notification, 
-  Notifications, 
+  Notification,
+  Notifications,
   Observable,
   ObservableLike,
-  ObserverLike, 
-} from '@rx-min/rx-core';
+  ObserverLike
+} from "@rx-min/rx-core";
 
-import { create } from './create';
+import { create } from "./create";
 
 class ConcatObserver<T> implements ObserverLike<T> {
   private readonly delegate: ObserverLike<T>;
@@ -29,7 +27,7 @@ class ConcatObserver<T> implements ObserverLike<T> {
         break;
       case Notifications.complete:
         if (data !== undefined) {
-          this.delegate.notify(notif, data)
+          this.delegate.notify(notif, data);
         } else if (!this.continuation()) {
           this.delegate.notify(Notifications.complete, undefined);
         }
@@ -37,8 +35,11 @@ class ConcatObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const concat = <T>(head: ObservableLike<T>, ...tail: Array<ObservableLike<T>>): ObservableLike<T> => create(
-  subscriber => {
+export const concat = <T>(
+  head: ObservableLike<T>,
+  ...tail: Array<ObservableLike<T>>
+): ObservableLike<T> =>
+  create(subscriber => {
     const queue = [head, ...tail];
     const subscribeNext = () => {
       const head = queue.shift();
@@ -49,14 +50,15 @@ export const concat = <T>(head: ObservableLike<T>, ...tail: Array<ObservableLike
           subscriber.remove(innerSubscription);
           return subscribeNext();
         };
-        const observer = new ConcatObserver(subscriber, continuation)
+        const observer = new ConcatObserver(subscriber, continuation);
 
-        innerSubscription = Observable.connect(Observable.lift(head, observe(observer)));
-      } 
+        innerSubscription = Observable.connect(
+          Observable.lift(head, observe(observer))
+        );
+      }
 
       return head !== undefined;
-    }
+    };
 
     subscribeNext();
-  }
-);
+  });

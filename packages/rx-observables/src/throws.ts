@@ -1,23 +1,21 @@
 import {
-  Disposable
-} from "@rx-min/rx-disposables";
-
-import {
   Notifications,
   ObservableLike,
   SchedulerLike,
-  SchedulerContinuation,
-} from '@rx-min/rx-core';
+  SchedulerContinuation
+} from "@rx-min/rx-core";
 
-import { create } from './create';
+import { create } from "./create";
 
-export const throws = <T>(error: Error, scheduler: SchedulerLike, delay: number | void): ObservableLike<T> =>
+export const throws = <T>(
+  error: Error,
+  scheduler: SchedulerLike,
+  delay: number | void
+): ObservableLike<T> =>
   create(subscriber => {
-    const continuation: SchedulerContinuation = (_shouldYield) => {
+    const continuation: SchedulerContinuation = _shouldYield => {
       subscriber.notify(Notifications.complete, error);
-    }
+    };
 
-    subscriber.add(
-      scheduler.schedule(continuation, delay)
-    );
+    subscriber.add(scheduler.schedule(continuation, delay));
   });

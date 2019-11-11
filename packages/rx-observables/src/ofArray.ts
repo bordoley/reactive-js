@@ -1,19 +1,23 @@
-import { 
-  Notifications, 
+import {
+  Notifications,
   ObservableLike,
-  SchedulerLike, 
-  SchedulerContinuation, 
-  SchedulerContinuationResult,  
-} from '@rx-min/rx-core';
+  SchedulerLike,
+  SchedulerContinuation,
+  SchedulerContinuationResult
+} from "@rx-min/rx-core";
 
-import {create} from './create';
+import { create } from "./create";
 
-export const ofArray = <T>(values: ReadonlyArray<T>, scheduler: SchedulerLike, delay: number | void): ObservableLike<T> =>
+export const ofArray = <T>(
+  values: ReadonlyArray<T>,
+  scheduler: SchedulerLike,
+  delay: number | void
+): ObservableLike<T> =>
   create(subscriber => {
     let index = 0;
 
     let continuationResult: SchedulerContinuationResult;
-    const continuation: SchedulerContinuation = (shouldYield) => {
+    const continuation: SchedulerContinuation = shouldYield => {
       if (subscriber.isDisposed) {
         return;
       } else if (index >= values.length) {
@@ -45,14 +49,17 @@ export const ofArray = <T>(values: ReadonlyArray<T>, scheduler: SchedulerLike, d
       }
     };
 
-    continuationResult = delay !== undefined ? [continuation, delay] : continuation;
+    continuationResult =
+      delay !== undefined ? [continuation, delay] : continuation;
 
-    subscriber.add(
-      scheduler.schedule(continuation, delay)
-    );
+    subscriber.add(scheduler.schedule(continuation, delay));
   });
 
-export const ofValue = <T>(value: T, scheduler: SchedulerLike, delay: number | void): ObservableLike<T> =>
-  ofArray([value], scheduler, delay)
+export const ofValue = <T>(
+  value: T,
+  scheduler: SchedulerLike,
+  delay: number | void
+): ObservableLike<T> => ofArray([value], scheduler, delay);
 
-export const empty = <T>(scheduler: SchedulerLike): ObservableLike<T> => ofArray([], scheduler)
+export const empty = <T>(scheduler: SchedulerLike): ObservableLike<T> =>
+  ofArray([], scheduler);

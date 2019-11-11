@@ -1,4 +1,11 @@
-import { MonoTypeDelegatingSubscriber, Notifications, OperatorLike, SchedulerLike, SchedulerContinuation, SubscriberLike } from "@rx-min/rx-core";
+import {
+  MonoTypeDelegatingSubscriber,
+  Notifications,
+  OperatorLike,
+  SchedulerLike,
+  SchedulerContinuation,
+  SubscriberLike
+} from "@rx-min/rx-core";
 
 class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   private readonly scheduler: SchedulerLike;
@@ -11,7 +18,7 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     this.scheduler = scheduler;
   }
 
-  private readonly drainQueue: SchedulerContinuation = (shouldYield) => {
+  private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
       const next = this.nextQueue.shift();
       this.delegate.notify(Notifications.next, next);
@@ -27,7 +34,7 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
     if (this.isComplete) {
       this.delegate.notify(Notifications.complete, this.error);
     }
-  }
+  };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
@@ -51,5 +58,7 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const observeOn = <T>(scheduler: SchedulerLike): OperatorLike<T, T> =>
-  subscriber => new ObserveOnSubscriber(subscriber, scheduler);
+export const observeOn = <T>(
+  scheduler: SchedulerLike
+): OperatorLike<T, T> => subscriber =>
+  new ObserveOnSubscriber(subscriber, scheduler);

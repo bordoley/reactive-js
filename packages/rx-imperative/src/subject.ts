@@ -7,7 +7,9 @@ import {
   SubscriberLike
 } from "@rx-min/rx-core";
 
-export interface SubjectLike<T> extends ObserverLike<T>, ObservableResourceLike<T> {}
+export interface SubjectLike<T>
+  extends ObserverLike<T>,
+    ObservableResourceLike<T> {}
 
 class SubjectImpl<T> implements SubjectLike<T> {
   private _isDisposed = false;
@@ -50,5 +52,5 @@ class SubjectImpl<T> implements SubjectLike<T> {
 const create = <T>(): SubjectLike<T> => new SubjectImpl();
 
 export const Subject = {
-  create,
+  create
 };

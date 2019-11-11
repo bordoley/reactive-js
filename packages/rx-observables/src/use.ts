@@ -1,18 +1,16 @@
-import { create } from './create';
-import { observe, Observable, ObservableLike, ObservableResourceLike } from '@rx-min/rx-core';
-import { DisposableLike } from '@rx-min/rx-disposables';
+import { create } from "./create";
+import {
+  observe,
+  Observable,
+  ObservableLike,
+  ObservableResourceLike
+} from "@rx-min/rx-core";
 
-export const use = <T>(factory: () => ObservableResourceLike<T>) => create(
-  subscriber => {
+export const use = <T>(factory: () => ObservableResourceLike<T>) =>
+  create(subscriber => {
     const resource = factory();
 
-    subscriber.add(
-      Observable.connect(
-        Observable.lift(
-          resource,
-          observe(subscriber),
-        ),
-      ),
-    ).add(resource);
-  },
-);
+    subscriber
+      .add(Observable.connect(Observable.lift(resource, observe(subscriber))))
+      .add(resource);
+  });

@@ -11,16 +11,16 @@ import {
 } from "@rx-min/rx-core";
 import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
 
-class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>  {
+class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly innerSubscription = SerialDisposable.create();
 
-  static InnerObserver = class <T> implements ObserverLike<T> {
+  static InnerObserver = class<T> implements ObserverLike<T> {
     private readonly parent: SwitchSubscriber<T>;
-  
+
     constructor(parent: SwitchSubscriber<T>) {
       this.parent = parent;
     }
-  
+
     notify(notif: Notification, data: T | Error | undefined) {
       switch (notif) {
         case Notifications.next:
@@ -30,14 +30,12 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>  {
           if (data !== undefined) {
             this.parent.delegate.notify(Notifications.complete, data);
           }
-         break;
+          break;
       }
     }
-  }
+  };
 
-  constructor(
-    delegate: SubscriberLike<T>,
-  ) {
+  constructor(delegate: SubscriberLike<T>) {
     super(delegate);
   }
 
@@ -45,12 +43,9 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>  {
     this.innerSubscription.setInnerDisposable(Disposable.disposed);
     this.innerSubscription.setInnerDisposable(
       Observable.connect(
-        Observable.lift(
-          data,
-          observe(new SwitchSubscriber.InnerObserver(this))
-        )
+        Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this)))
       )
-    )
+    );
   }
 
   protected onComplete(error: Error | undefined) {
@@ -59,5 +54,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>  {
   }
 }
 
-export const switch_ = <T>(): OperatorLike<ObservableLike<T>, T> =>
-  subscriber => new SwitchSubscriber(subscriber);
+export const switch_ = <T>(): OperatorLike<
+  ObservableLike<T>,
+  T
+> => subscriber => new SwitchSubscriber(subscriber);

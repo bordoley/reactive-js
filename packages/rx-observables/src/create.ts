@@ -1,7 +1,4 @@
-import { 
-  ObservableLike,
-  SubscriberLike, 
-} from '@rx-min/rx-core';
+import { ObservableLike, SubscriberLike } from "@rx-min/rx-core";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   private onSubscribe: (subscriber: SubscriberLike<T>) => void;
@@ -16,6 +13,5 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
 }
 
 export const create = <T>(
-  onSubscribe: (subscriber: SubscriberLike<T>) => void,
-): ObservableLike<T> =>
-  new OnSubscribeObservable(onSubscribe);
+  onSubscribe: (subscriber: SubscriberLike<T>) => void
+): ObservableLike<T> => new OnSubscribeObservable(onSubscribe);

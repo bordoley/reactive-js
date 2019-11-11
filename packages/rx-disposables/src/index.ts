@@ -58,8 +58,7 @@ class EmptyDisposable implements DisposableLike {
   }
 }
 
-const empty = (): DisposableLike =>
-  new EmptyDisposable();
+const empty = (): DisposableLike => new EmptyDisposable();
 
 const disposed: DisposableLike = new EmptyDisposable();
 disposed.dispose();
@@ -109,15 +108,16 @@ class CompositeDisposableImpl extends AbstractDisposable
 }
 
 export const CompositeDisposable = {
-  create: (): CompositeDisposableLike => new CompositeDisposableImpl(),
-}
+  create: (): CompositeDisposableLike => new CompositeDisposableImpl()
+};
 
 export interface SerialDisposableLike extends DisposableLike {
   innerDisposable: DisposableLike;
   setInnerDisposable(disposable: DisposableLike): void;
 }
 
-class SerialDisposableImpl extends AbstractDisposable implements SerialDisposableLike {
+class SerialDisposableImpl extends AbstractDisposable
+  implements SerialDisposableLike {
   private _innerDisposable: DisposableLike;
 
   constructor(innerDisposable: DisposableLike) {
@@ -135,11 +135,11 @@ class SerialDisposableImpl extends AbstractDisposable implements SerialDisposabl
 
   setInnerDisposable(newDisposable: DisposableLike): void {
     const oldDisposable = this.innerDisposable;
-    this._innerDisposable = newDisposable
+    this._innerDisposable = newDisposable;
 
     if (oldDisposable !== newDisposable) {
       oldDisposable.dispose();
-    };
+    }
 
     if (this.isDisposed) {
       newDisposable.dispose();
@@ -148,6 +148,5 @@ class SerialDisposableImpl extends AbstractDisposable implements SerialDisposabl
 }
 
 export const SerialDisposable = {
-  create: () => new SerialDisposableImpl(disposed),
+  create: () => new SerialDisposableImpl(disposed)
 };
-
