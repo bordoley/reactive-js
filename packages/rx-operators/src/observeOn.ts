@@ -8,14 +8,14 @@ import {
 } from "@rx-min/rx-core";
 
 class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
-  private readonly scheduler: SchedulerLike;
+  private readonly observeOnScheduler: SchedulerLike;
   private readonly nextQueue: Array<T> = [];
   private isComplete = false;
   private error: Error | undefined;
 
-  constructor(delegate: SubscriberLike<T>, scheduler: SchedulerLike) {
+  constructor(delegate: SubscriberLike<T>, observeOnScheduler: SchedulerLike) {
     super(delegate);
-    this.scheduler = scheduler;
+    this.observeOnScheduler = observeOnScheduler;
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -38,7 +38,7 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.scheduler.schedule(this.drainQueue);
+      this.observeOnScheduler.schedule(this.drainQueue);
     }
   }
 
@@ -59,6 +59,6 @@ class ObserveOnSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
 }
 
 export const observeOn = <T>(
-  scheduler: SchedulerLike
+  observeOnScheduler: SchedulerLike
 ): OperatorLike<T, T> => subscriber =>
-  new ObserveOnSubscriber(subscriber, scheduler);
+  new ObserveOnSubscriber(subscriber, observeOnScheduler);

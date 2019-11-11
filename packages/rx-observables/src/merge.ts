@@ -45,12 +45,18 @@ export const merge = <T>(
     const observer = new MergeObserver(subscriber, tail.length + 1);
 
     subscriber.add(
-      Observable.connect(Observable.lift(head, observe(observer)))
+      Observable.connect(
+        Observable.lift(head, observe(observer)),
+        subscriber.scheduler
+      )
     );
 
     for (let observable of tail) {
       subscriber.add(
-        Observable.connect(Observable.lift(observable, observe(observer)))
+        Observable.connect(
+          Observable.lift(observable, observe(observer)),
+          subscriber.scheduler
+        )
       );
     }
   });

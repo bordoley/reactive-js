@@ -11,6 +11,11 @@ export const use = <T>(factory: () => ObservableResourceLike<T>) =>
     const resource = factory();
 
     subscriber
-      .add(Observable.connect(Observable.lift(resource, observe(subscriber))))
+      .add(
+        Observable.connect(
+          Observable.lift(resource, observe(subscriber)),
+          subscriber.scheduler
+        )
+      )
       .add(resource);
   });

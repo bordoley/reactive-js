@@ -51,7 +51,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
         Observable.lift(
           other,
           observe(new WithLatestFromSubscriber.InnerObserver(this))
-        )
+        ),
+        this.scheduler
       )
     );
   }

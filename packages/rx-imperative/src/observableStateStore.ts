@@ -26,21 +26,15 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
   StateUpdater<T>,
   T
 > {
-  private readonly scheduler: SchedulerLike;
   private readonly nextQueue: Array<StateUpdater<T>> = [];
   private isComplete = false;
   private error: Error | undefined;
 
   private acc: T;
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    initialValue: T,
-    scheduler: SchedulerLike
-  ) {
+  constructor(delegate: SubscriberLike<T>, initialValue: T) {
     super(delegate);
     this.acc = initialValue;
-    this.scheduler = scheduler;
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -106,8 +100,7 @@ class ObservableStateStoreImpl<T> implements ObservableStateStoreLike<T> {
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
-        subscriber =>
-          new ObservableStateSubscriber(subscriber, initialState, scheduler)
+        subscriber => new ObservableStateSubscriber(subscriber, initialState)
       ),
       scheduler
     );

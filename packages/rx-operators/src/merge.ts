@@ -62,7 +62,12 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   private connectNext(next: ObservableLike<T>) {
     this.activeCount++;
-    this.add(Observable.connect(Observable.lift(next, this.innerOperator)));
+    this.add(
+      Observable.connect(
+        Observable.lift(next, this.innerOperator),
+        this.scheduler
+      )
+    );
   }
 
   protected onNext(next: ObservableLike<T>) {

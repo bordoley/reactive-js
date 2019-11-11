@@ -53,7 +53,8 @@ export const concat = <T>(
         const observer = new ConcatObserver(subscriber, continuation);
 
         innerSubscription = Observable.connect(
-          Observable.lift(head, observe(observer))
+          Observable.lift(head, observe(observer)),
+          subscriber.scheduler
         );
       }
 

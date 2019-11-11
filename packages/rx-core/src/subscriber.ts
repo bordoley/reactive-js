@@ -5,11 +5,13 @@ import {
 } from "@rx-min/rx-disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
+import { SchedulerLike } from "./scheduler";
 
 export interface SubscriberLike<T>
   extends ObserverLike<T>,
     CompositeDisposableLike {
   readonly isConnected: boolean;
+  readonly scheduler: SchedulerLike;
 }
 
 export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
@@ -28,6 +30,10 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
 
   get isConnected() {
     return this.delegate.isConnected;
+  }
+
+  get scheduler() {
+    return this.delegate.scheduler;
   }
 
   get isDisposed() {

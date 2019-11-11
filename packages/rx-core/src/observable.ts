@@ -2,14 +2,20 @@ import { CompositeDisposable, DisposableLike } from "@rx-min/rx-disposables";
 
 import { MonoTypeDelegatingSubscriber, SubscriberLike } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
+import { SchedulerLike } from "./scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
 class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  public isConnected = false;
   private readonly disposable = CompositeDisposable.create();
+  public readonly scheduler: SchedulerLike;
+  public isConnected = false;
+
+  constructor(scheduler: SchedulerLike) {
+    this.scheduler = scheduler;
+  }
 
   add(disposable: DisposableLike) {
     this.disposable.add(disposable);
@@ -44,8 +50,11 @@ class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
   }
 }
 
-const connect = <T>(observable: ObservableLike<T>): DisposableLike => {
-  const subscriber = new AutoDisposingSubscriber();
+const connect = <T>(
+  observable: ObservableLike<T>,
+  scheduler: SchedulerLike
+): DisposableLike => {
+  const subscriber = new AutoDisposingSubscriber(scheduler);
   observable.subscribe(subscriber);
   subscriber.isConnected = true;
   return subscriber;

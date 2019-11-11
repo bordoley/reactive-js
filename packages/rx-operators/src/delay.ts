@@ -9,19 +9,13 @@ import {
 } from "@rx-min/rx-core";
 
 class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
-  private readonly scheduler: SchedulerLike;
   private readonly delay: number;
   private readonly queue: Array<
     [number, Notification, T | Error | undefined]
   > = [];
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    scheduler: SchedulerLike,
-    delay: number
-  ) {
+  constructor(delegate: SubscriberLike<T>, delay: number) {
     super(delegate);
-    this.scheduler = scheduler;
     this.delay = delay;
   }
 
@@ -64,8 +58,5 @@ class DelaySubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const delay = <T>(
-  scheduler: SchedulerLike,
-  dueTime: number
-): OperatorLike<T, T> => subscriber =>
-  new DelaySubscriber(subscriber, scheduler, dueTime);
+export const delay = <T>(dueTime: number): OperatorLike<T, T> => subscriber =>
+  new DelaySubscriber(subscriber, dueTime);

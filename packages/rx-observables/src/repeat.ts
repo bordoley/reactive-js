@@ -39,7 +39,10 @@ class RepeatSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
       this.innerSubscription.innerDisposable.dispose();
 
       this.innerSubscription.setInnerDisposable(
-        Observable.connect(Observable.lift(this.observable, observe(this)))
+        Observable.connect(
+          Observable.lift(this.observable, observe(this)),
+          this.scheduler
+        )
       );
     }
   }

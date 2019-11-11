@@ -10,18 +10,12 @@ import {
 import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
 
 class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
-  private readonly scheduler: SchedulerLike;
   private readonly dueTime: number;
   private readonly innerSubscription = SerialDisposable.create();
   private value: T | undefined;
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    scheduler: SchedulerLike,
-    dueTime: number
-  ) {
+  constructor(delegate: SubscriberLike<T>, dueTime: number) {
     super(delegate);
-    this.scheduler = scheduler;
     this.dueTime = dueTime;
   }
 
@@ -62,11 +56,8 @@ class DebounceTimeSubscriber<T> extends MonoTypeDelegatingSubscriber<T> {
   }
 }
 
-export const debounceTime = <T>(
-  scheduler: SchedulerLike,
-  dueTime: number
-): OperatorLike<T, T> => {
+export const debounceTime = <T>(dueTime: number): OperatorLike<T, T> => {
   // FIXME: bounds check the duetime
   return (subscriber: SubscriberLike<T>) =>
-    new DebounceTimeSubscriber(subscriber, scheduler, dueTime);
+    new DebounceTimeSubscriber(subscriber, dueTime);
 };

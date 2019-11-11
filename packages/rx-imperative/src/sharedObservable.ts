@@ -11,19 +11,21 @@ import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";
 
 class SharedObservable<T> implements ObservableLike<T> {
-  factory: () => SubjectLike<T>;
-  source: ObservableLike<T>;
+  private readonly source: ObservableLike<T>;
+  private readonly teardown: () => void;
+  private readonly scheduler: SchedulerLike;
 
-  refCount: number = 0;
-  subject: SubjectLike<T>;
-  subscription = Disposable.disposed;
+  private refCount: number = 0;
+  private subject: SubjectLike<T>;
+  private subscription = Disposable.disposed;
 
-  teardown: () => void;
-
-  constructor(source: ObservableLike<T>, factory: () => SubjectLike<T>) {
+  constructor(
+    source: ObservableLike<T>,
+    factory: () => SubjectLike<T>,
+    scheduler: SchedulerLike
+  ) {
     this.source = source;
-    this.factory = factory;
-    this.subject = factory();
+    this.scheduler = scheduler;
 
     this.teardown = () => {
       this.refCount--;
@@ -35,30 +37,37 @@ class SharedObservable<T> implements ObservableLike<T> {
         this.subject = factory();
       }
     };
+
+    this.subject = factory();
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {
     const innerSubscription = Observable.connect(
-      Observable.lift(this.subject, observe(subscriber))
+      Observable.lift(this.subject, observe(subscriber)),
+      subscriber.scheduler
     );
 
     subscriber.add(Disposable.create(this.teardown)).add(innerSubscription);
 
     if (this.refCount === 1) {
       this.subscription = Observable.connect(
-        Observable.lift(this.source, observe(this.subject))
+        Observable.lift(this.source, observe(this.subject)),
+        this.scheduler
       );
     }
   }
 }
 
-export const share = <T>(observable: ObservableLike<T>): ObservableLike<T> =>
-  new SharedObservable(observable, Subject.create);
+export const share = <T>(
+  observable: ObservableLike<T>,
+  scheduler: SchedulerLike
+): ObservableLike<T> =>
+  new SharedObservable(observable, Subject.create, scheduler);
 
 export const shareReplayLast = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike
 ): ObservableLike<T> => {
   const replayLastSubjectFactory = () => ReplayLastSubject.create(scheduler);
-  return new SharedObservable(observable, replayLastSubjectFactory);
+  return new SharedObservable(observable, replayLastSubjectFactory, scheduler);
 };
