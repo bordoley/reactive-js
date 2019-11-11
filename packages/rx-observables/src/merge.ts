@@ -1,7 +1,3 @@
-import {
-  Disposable
-} from "@rx-min/rx-disposables";
-
 import { 
   observe,
   Notification, 
