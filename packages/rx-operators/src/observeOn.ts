@@ -59,6 +59,6 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 export const observeOn = <T>(
-  observeOnScheduler: SchedulerLike,
+  scheduler: SchedulerLike | undefined,
 ): Operator<T, T> => subscriber =>
-  new ObserveOnSubscriber(subscriber, observeOnScheduler);
+  new ObserveOnSubscriber(subscriber, scheduler || subscriber.scheduler);
