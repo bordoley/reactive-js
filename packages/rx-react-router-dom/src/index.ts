@@ -1,4 +1,8 @@
-import { Router as RxReactRouter, RelativeURI, RoutableComponentProps } from "@rx-min/rx-react-router";
+import {
+  Router as RxReactRouter,
+  RelativeURI,
+  RoutableComponentProps,
+} from "@rx-min/rx-react-router";
 import {
   ObservableStateResource,
   ObservableState,
@@ -32,20 +36,26 @@ const mapper = (v: string): RelativeURI => {
   };
 };
 
-const createRelativeURILocation = (scheduler: SchedulerLike) =>
+const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
   ObservableStateResource.map(Location.create(scheduler), reducer, mapper);
 
 const createRelativeURIRouter = <TContext>(
   notFoundComponent: React.ComponentType<RoutableComponentProps>,
   routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
-  context: React.Context<TContext> | void,
-  scheduler: SchedulerLike = normalPriority,
-): React.ComponentType<TContext> => RxReactRouter.create(
-  () => createRelativeURILocation(scheduler), 
-  notFoundComponent,
-  routes,
-  context,
-);
+  options: {
+    context: React.Context<TContext> | void;
+    scheduler: SchedulerLike | void;
+  },
+): React.ComponentType<TContext> => {
+  const { context, scheduler = normalPriority } = options;
+
+  return RxReactRouter.create(
+    () => createRelativeURILocation(scheduler),
+    notFoundComponent,
+    routes,
+    context,
+  );
+};
 
 export const RelativeURILocation = {
   create: createRelativeURILocation,
