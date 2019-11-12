@@ -14,7 +14,7 @@ import {
   mapRequest as ixMapRequest,
 } from "@rx-min/ix-operators";
 
-import { Location } from "@rx-min/rx-dom";
+import { LocationState } from "@rx-min/rx-dom";
 import { SchedulerLike } from "@rx-min/rx-core";
 import { normalPriority } from "@rx-min/rx-scheduler";
 
@@ -47,7 +47,7 @@ const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
 
 const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
   pipe(
-    Location.create(scheduler),
+    LocationState.create(scheduler),
     ixMap(mapper),
     ixMapRequest(requestMapper),
     ixDistinctUntilChanged(),

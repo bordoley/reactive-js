@@ -1,2 +1,2 @@
 export { observableEvent } from "./observableEvent";
-export { Location } from "./location";
+export { LocationState } from "./location";

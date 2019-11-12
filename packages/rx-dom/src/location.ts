@@ -73,6 +73,6 @@ const create = (
 ): ObservableStateResourceLike<string> =>
   new DomLocationObservableStateResourceImpl(scheduler);
 
-export const Location = {
+export const LocationState = {
   create,
 };
