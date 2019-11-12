@@ -189,13 +189,17 @@ class MappedObservableState<TSrc, T> implements ObservableStateLike<T> {
   }
 }
 
-const createMapped = <TSrc, T>(
+const createMappedObservableState = <TSrc, T>(
   delegate: ObservableStateLike<TSrc>,
   sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
   mapper: (v: TSrc) => T,
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableStateLike<T> =>
   new MappedObservableState(delegate, sourceReducer, mapper, equals);
+
+export const ObservableState = {
+  map: createMappedObservableState,
+};
 
 const pairify = <T>([_, oldState]: [T, T], next: T): [T, T] => [oldState, next];
 
@@ -288,8 +292,40 @@ const createSynced = <TReq, T>(
     equals,
   );
 
-export const ObservableState = {
+class MappedObservableStateResource<TSrc, T>
+  extends MappedObservableState<TSrc, T>
+  implements ObservableStateResourceLike<T> {
+  private readonly disposable: ObservableStateResourceLike<TSrc>;
+
+  constructor(
+    delegate: ObservableStateResourceLike<TSrc>,
+    sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
+    mapper: (v: TSrc) => T,
+    equals: (a: T, b: T) => boolean,
+  ) {
+    super(delegate, sourceReducer, mapper, equals);
+    this.disposable = delegate;
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+}
+
+const createMappedObservableStateResource = <TSrc, T>(
+  delegate: ObservableStateResourceLike<TSrc>,
+  sourceReducer: (acc: TSrc, updater: StateUpdater<T>) => TSrc,
+  mapper: (v: TSrc) => T,
+  equals: (a: T, b: T) => boolean = referenceEquality,
+): ObservableStateResourceLike<T> =>
+  new MappedObservableStateResource(delegate, sourceReducer, mapper, equals);
+
+export const ObservableStateResource = {
   create,
   createSynced,
-  map: createMapped,
+  map: createMappedObservableStateResource,
 };
