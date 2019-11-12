@@ -51,25 +51,25 @@ export interface Operator<TSrcReq, TSrc, TReq, T> {
   (iterator: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
 }
 
-function pipe<TReq, T, TReqA, TA>(
+export function pipe<TReq, T, TReqA, TA>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
 ): AsyncIteratorLike<TReqA, TA>;
 
-function pipe<TReq, T, TReqA, TA, TReqB, TB>(
+export function pipe<TReq, T, TReqA, TA, TReqB, TB>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
 ): AsyncIteratorLike<TReqB, TB>;
 
-function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
+export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
   op3: Operator<TReqB, TB, TReqC, TC>,
 ): AsyncIteratorLike<TReqC, TC>;
 
-function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
+export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
@@ -77,7 +77,7 @@ function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   op4: Operator<TReqC, TC, TReqD, TD>,
 ): AsyncIteratorLike<TReqD, TD>;
 
-function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
+export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
@@ -86,7 +86,7 @@ function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
   op5: Operator<TReqD, TD, TReqE, TE>,
 ): AsyncIteratorLike<TReqE, TE>;
 
-function pipe<
+export function pipe<
   TReq,
   T,
   TReqA,
@@ -111,7 +111,7 @@ function pipe<
   op6: Operator<TReqE, TE, TReqF, TF>,
 ): AsyncIteratorLike<TReqF, TF>;
 
-function pipe<
+export function pipe<
   TReq,
   T,
   TReqA,
@@ -139,7 +139,7 @@ function pipe<
   op7: Operator<TReqF, TF, TReqG, TG>,
 ): AsyncIteratorLike<TReqG, TG>;
 
-function pipe<
+export function pipe<
   TReq,
   T,
   TReqA,
@@ -170,7 +170,7 @@ function pipe<
   op8: Operator<TReqG, TG, TReqH, TH>,
 ): AsyncIteratorLike<TReqH, TH>;
 
-function pipe<
+export function pipe<
   TReq,
   T,
   TReqA,
@@ -204,7 +204,7 @@ function pipe<
   op9: Operator<TReqH, TH, TReqI, TI>,
 ): AsyncIteratorLike<TReqI, TI>;
 
-function pipe(
+export function pipe(
   iterator: AsyncIteratorLike<any, any>,
   operator: Operator<any, any, any, any>,
   ...operators: Operator<any, any, any, any>[]
@@ -217,10 +217,6 @@ function pipe(
 
   return retval;
 }
-
-export const AsyncIterator = {
-  pipe,
-};
 
 class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
   readonly delegate: AsyncIterableLike<TReq, T>;
@@ -243,25 +239,25 @@ class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
   }
 }
 
-function lift<TReq, T, TReqA, TA>(
+export function lift<TReq, T, TReqA, TA>(
   src: AsyncIterableLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
 ): AsyncIterableLike<TReqA, TA>;
 
-function lift<TReq, T, TReqA, TA, TReqB, TB>(
+export function lift<TReq, T, TReqA, TA, TReqB, TB>(
   src: AsyncIterableLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
 ): AsyncIterableLike<TReqB, TB>;
 
-function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
+export function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
   src: AsyncIterableLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
   op3: Operator<TReqB, TB, TReqC, TC>,
 ): AsyncIterableLike<TReqC, TC>;
 
-function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
+export function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   src: AsyncIterableLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
@@ -269,7 +265,7 @@ function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   op4: Operator<TReqC, TC, TReqD, TD>,
 ): AsyncIterableLike<TReqD, TD>;
 
-function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
+export function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
   src: AsyncIterableLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
@@ -278,7 +274,7 @@ function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
   op5: Operator<TReqD, TD, TReqE, TE>,
 ): AsyncIterableLike<TReqE, TE>;
 
-function lift<
+export function lift<
   TReq,
   T,
   TReqA,
@@ -303,7 +299,7 @@ function lift<
   op6: Operator<TReqE, TE, TReqF, TF>,
 ): AsyncIterableLike<TReqF, TF>;
 
-function lift<
+export function lift<
   TReq,
   T,
   TReqA,
@@ -331,7 +327,7 @@ function lift<
   op7: Operator<TReqF, TF, TReqG, TG>,
 ): AsyncIterableLike<TReqG, TG>;
 
-function lift<
+export function lift<
   TReq,
   T,
   TReqA,
@@ -362,7 +358,7 @@ function lift<
   op8: Operator<TReqG, TG, TReqH, TH>,
 ): AsyncIterableLike<TReqH, TH>;
 
-function lift<
+export function lift<
   TReq,
   T,
   TReqA,
@@ -396,7 +392,7 @@ function lift<
   op9: Operator<TReqH, TH, TReqI, TI>,
 ): AsyncIterableLike<TReqI, TI>;
 
-function lift(
+export function lift(
   asyncIterable: AsyncIterableLike<any, any>,
   operator: Operator<any, any, any, any>,
   ...operators: Operator<any, any, any, any>[]
@@ -409,7 +405,3 @@ function lift(
       ])
     : new LiftedAsyncIterable(asyncIterable, [operator, ...operators]);
 }
-
-export const AsyncIterable = {
-  lift,
-};

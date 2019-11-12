@@ -4,11 +4,10 @@ import {
   RoutableComponentProps,
 } from "@rx-min/rx-react-router";
 import {
-  ObservableStateResource,
   StateUpdater,
 } from "@rx-min/rx-observable-state";
 
-import { AsyncIterator } from "@rx-min/ix-core";
+import { pipe } from "@rx-min/ix-core";
 import {
   distinctUntilChanged as ixDistinctUntilChanged,
   map as ixMap,
@@ -47,7 +46,7 @@ const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
 const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
-  AsyncIterator.pipe(
+  pipe(
     Location.create(scheduler),
     ixMap(mapper),
     ixMapRequest(requestMapper),
