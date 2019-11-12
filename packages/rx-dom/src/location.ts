@@ -25,7 +25,10 @@ class DomLocationObservableStateResourceImpl
 
   constructor(scheduler: SchedulerLike) {
     const initialState = getCurrentLocation();
-    const observableState = ObservableStateResource.create(initialState, scheduler);
+    const observableState = ObservableStateResource.create(
+      initialState,
+      scheduler,
+    );
 
     const subscription = Observable.connect(
       merge(

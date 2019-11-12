@@ -5,12 +5,28 @@ import {
 } from "@rx-min/rx-react-router";
 import {
   ObservableStateResource,
-  ObservableState,
   StateUpdater,
 } from "@rx-min/rx-observable-state";
+
+import { AsyncIterator } from "@rx-min/ix-core";
+import {
+  distinctUntilChanged as ixDistinctUntilChanged,
+  map as ixMap,
+  mapRequest as ixMapRequest,
+} from "@rx-min/ix-operators";
+
 import { Location } from "@rx-min/rx-dom";
 import { SchedulerLike } from "@rx-min/rx-core";
 import { normalPriority } from "@rx-min/rx-scheduler";
+
+const mapper = (v: string): RelativeURI => {
+  const parsedAccURL = new URL(v);
+  return {
+    path: parsedAccURL.pathname,
+    query: parsedAccURL.search,
+    fragment: parsedAccURL.hash,
+  };
+};
 
 const reducer = (
   acc: string,
@@ -27,17 +43,16 @@ const reducer = (
   return path + query + fragment;
 };
 
-const mapper = (v: string): RelativeURI => {
-  const parsedAccURL = new URL(v);
-  return {
-    path: parsedAccURL.pathname,
-    query: parsedAccURL.search,
-    fragment: parsedAccURL.hash,
-  };
-};
+const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
+  reducer(acc, updater);
 
 const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
-  ObservableStateResource.map(Location.create(scheduler), reducer, mapper);
+  AsyncIterator.pipe(
+    Location.create(scheduler),
+    ixMap(mapper),
+    ixMapRequest(requestMapper),
+    ixDistinctUntilChanged(),
+  );
 
 const createRelativeURIRouter = <TContext>(
   notFoundComponent: React.ComponentType<RoutableComponentProps>,

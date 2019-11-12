@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-observable-state",
+  "name": "@rx-min/ix-operators",
   "version": "0.0.0",
-  "description": "Rx observable state",
+  "description": "interactive extensions operators",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -18,11 +18,9 @@
   },
   "dependencies": {
     "@rx-min/ix-core": "0.0.0",
-    "@rx-min/ix-operators": "0.0.0",
-    "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-disposables": "0.0.0",
-    "@rx-min/rx-imperative": "0.0.0",
+    "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/rx-observables": "0.0.0"
+    "@rx-min/rx-imperative": "0.0.0"
   }
 }
