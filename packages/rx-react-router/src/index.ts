@@ -8,8 +8,6 @@ import { useResource, useObservable } from "@rx-min/rx-react";
 import { createElement, useCallback, useMemo, Children } from "react";
 import { Observable } from "@rx-min/rx-core";
 import { scan } from "@rx-min/rx-operators";
-import { string } from "prop-types";
-import { parse } from "path";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
