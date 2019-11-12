@@ -69,7 +69,7 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 
   private liftSubscriber(subscriber: SubscriberLike<any>) {
-    return this.operators.reduce((acc, next) => next(acc), subscriber);
+    return this.operators.reduceRight((acc, next) => next(acc), subscriber);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

@@ -1,8 +1,10 @@
 import {
   DelegatingSubscriber,
+  Notification,
   Notifications,
   ObservableLike,
   Observable,
+  ObserverLike,
   observe,
   Operator,
   SubscriberLike,
@@ -14,6 +16,51 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;
   private readonly observable: ObservableLike<T>;
   private readonly shouldRepeat: (error: Error | undefined) => boolean;
+  private readonly observer: ObserverLike<T>;
+
+  static RepeatObserver = class<T> implements ObserverLike<T> {
+    private readonly parent: RepeatSubscriber<T>;
+
+    constructor(parent: RepeatSubscriber<T>) {
+      this.parent = parent;
+    }
+
+    private setupSubscription() {
+      const alreadyDisposed = this.parent.innerSubscription.isDisposed;
+
+      if (!alreadyDisposed) {
+        this.parent.innerSubscription.innerDisposable.dispose();
+
+        this.parent.innerSubscription.setInnerDisposable(
+          Observable.connect(
+            Observable.lift(
+              this.parent.observable,
+              observe(this.parent.observer),
+            ),
+            this.parent.scheduler,
+          ),
+        );
+      }
+    }
+
+    notify(notif: Notification, data: T | Error | undefined) {
+      switch (notif) {
+        case Notifications.next:
+          this.parent.delegate.notify(Notifications.next, data);
+          break;
+        case Notifications.complete:
+          const shouldComplete = !this.parent.shouldRepeat(
+            data as Error | undefined,
+          );
+
+          if (shouldComplete) {
+            this.parent.delegate.notify(Notifications.complete, data);
+          } else {
+            this.setupSubscription();
+          }
+      }
+    }
+  };
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -26,35 +73,15 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
     this.innerSubscription = SerialDisposable.create();
     this.subscription.add(this.innerSubscription);
+    this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 
   protected onNext(data: T) {
-    this.delegate.notify(Notifications.next, data);
-  }
-
-  private setupSubscription() {
-    const alreadyDisposed = this.innerSubscription.isDisposed;
-
-    if (!alreadyDisposed) {
-      this.innerSubscription.innerDisposable.dispose();
-
-      this.innerSubscription.setInnerDisposable(
-        Observable.connect(
-          Observable.lift(this.observable, observe(this)),
-          this.scheduler,
-        ),
-      );
-    }
+    this.observer.notify(Notifications.next, data);
   }
 
   protected onComplete(data: Error | undefined) {
-    const shouldComplete = !this.shouldRepeat(data);
-
-    if (shouldComplete) {
-      this.delegate.notify(Notifications.complete, data);
-    } else {
-      this.setupSubscription();
-    }
+    this.observer.notify(Notifications.complete, data);
   }
 }
 
