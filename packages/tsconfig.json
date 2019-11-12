@@ -4,6 +4,7 @@
       { "path": "ix-core" },
       { "path": "rx-core" },
       { "path": "rx-disposables" },
+      { "path": "rx-dom" },
       { "path": "rx-imperative" },
       { "path": "rx-observables" },
       { "path": "rx-operators" },
