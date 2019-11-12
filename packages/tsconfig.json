@@ -9,6 +9,7 @@
       { "path": "rx-observables" },
       { "path": "rx-operators" },
       { "path": "rx-react" },
+      { "path": "rx-react-router" }, 
       { "path": "rx-scheduler" },
       { "path": "rx-observable-state" },
       { "path": "rx-virtualtime-scheduler" }

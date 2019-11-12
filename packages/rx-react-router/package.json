@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-dom",
+  "name": "@rx-min/rx-react-router",
   "version": "0.0.0",
-  "description": "Rx dom hooks",
+  "description": "Rx React Component router",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,10 +17,15 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
+    "react": "16.11.0",
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/rx-observable-state": "0.0.0"
+    "@rx-min/rx-observable-state": "0.0.0",
+    "@rx-min/rx-react": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11"
   }
 }
