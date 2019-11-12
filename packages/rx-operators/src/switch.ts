@@ -44,10 +44,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.innerSubscription.setInnerDisposable(Disposable.disposed);
     this.innerSubscription.setInnerDisposable(
       connect(
-        lift(
-          data,
-          observe(new SwitchSubscriber.InnerObserver(this)),
-        ),
+        lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
         this.scheduler,
       ),
     );

@@ -1,18 +1,16 @@
 import {
   Notifications,
+  Observable,
   ObservableLike,
-  SchedulerLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@rx-min/rx-core";
-
-import { create } from "./create";
 
 export const ofArray = <T>(
   values: ReadonlyArray<T>,
   delay: number | void,
 ): ObservableLike<T> =>
-  create(subscriber => {
+  Observable.create(subscriber => {
     let index = 0;
 
     let continuationResult: SchedulerContinuationResult;
@@ -59,7 +57,7 @@ export const ofDelayedValues = <T>(
 ): ObservableLike<T> =>
   values.length === 0
     ? empty()
-    : create(subscriber => {
+    : Observable.create(subscriber => {
         let index = 0;
 
         const continuation: SchedulerContinuation = (

@@ -1,6 +1,4 @@
-import { Notifications, ObservableLike } from "@rx-min/rx-core";
-
-import { create } from "@rx-min/rx-observables";
+import { Notifications, Observable, ObservableLike } from "@rx-min/rx-core";
 
 import { Disposable } from "@rx-min/rx-disposables";
 
@@ -9,7 +7,7 @@ export const observableEvent = <T>(
   eventName: string,
   selector: (ev: Event) => T,
 ): ObservableLike<T> =>
-  create(subscriber => {
+  Observable.create(subscriber => {
     const listener = (event: Event) => {
       try {
         const result = selector(event);

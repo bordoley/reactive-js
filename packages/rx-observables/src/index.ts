@@ -1,5 +1,4 @@
 export { concat } from "./concat";
-export { create } from "./create";
 export { merge } from "./merge";
 export { never } from "./never";
 export { empty, ofArray, ofDelayedValues, ofValue } from "./ofArray";

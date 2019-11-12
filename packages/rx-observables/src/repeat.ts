@@ -34,10 +34,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
         this.parent.innerSubscription.setInnerDisposable(
           connect(
-            lift(
-              this.parent.observable,
-              observe(this.parent.observer),
-            ),
+            lift(this.parent.observable, observe(this.parent.observer)),
             this.parent.scheduler,
           ),
         );
@@ -106,10 +103,7 @@ export const repeat = <T>(
       ? defaultRepeatPredicate
       : (error: Error | undefined) => error === undefined && predicate();
 
-  return lift(
-    observable,
-    repeatOperator(observable, repeatPredicate),
-  );
+  return lift(observable, repeatOperator(observable, repeatPredicate));
 };
 
 const alwaysTrue1 = <T>(_: T) => true;
@@ -126,8 +120,5 @@ export const retry = <T>(
       ? defaultRetryPredicate
       : (error: Error | undefined) => error !== undefined && predicate(error);
 
-  return lift(
-    observable,
-    repeatOperator(observable, retryPredicate),
-  );
+  return lift(observable, repeatOperator(observable, retryPredicate));
 };

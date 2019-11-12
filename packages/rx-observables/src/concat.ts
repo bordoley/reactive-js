@@ -6,11 +6,10 @@ import {
   observe,
   Notification,
   Notifications,
+  Observable,
   ObservableLike,
   ObserverLike,
 } from "@rx-min/rx-core";
-
-import { create } from "./create";
 
 class ConcatObserver<T> implements ObserverLike<T> {
   private readonly delegate: ObserverLike<T>;
@@ -40,7 +39,7 @@ export const concat = <T>(
   head: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T> =>
-  create(subscriber => {
+  Observable.create(subscriber => {
     const queue = [head, ...tail];
     const subscribeNext = () => {
       const head = queue.shift();

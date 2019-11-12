@@ -49,10 +49,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
     this.subscription.add(
       connect(
-        lift(
-          other,
-          observe(new WithLatestFromSubscriber.InnerObserver(this)),
-        ),
+        lift(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
         this.scheduler,
       ),
     );

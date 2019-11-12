@@ -142,10 +142,7 @@ const createRouter = <TContext>(
 
     const locationHistoryObservable = useMemo(
       () =>
-        lift(
-          locationResource,
-          scan(pairify, [undefined, emptyRelativeURI]),
-        ),
+        lift(locationResource, scan(pairify, [undefined, emptyRelativeURI])),
       [locationResource],
     );
 

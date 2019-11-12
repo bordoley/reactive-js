@@ -192,3 +192,11 @@ export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
+
+const create = <T>(
+  subscribe: (subscriber: SubscriberLike<T>) => void,
+): ObservableLike<T> => ({ subscribe });
+
+export const Observable = {
+  create,
+};

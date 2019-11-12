@@ -3,9 +3,7 @@ import {
   RelativeURI,
   RoutableComponentProps,
 } from "@rx-min/rx-react-router";
-import {
-  StateUpdater,
-} from "@rx-min/rx-observable-state";
+import { StateUpdater } from "@rx-min/rx-observable-state";
 
 import { pipe } from "@rx-min/ix-core";
 import {
