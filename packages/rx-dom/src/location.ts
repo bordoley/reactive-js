@@ -1,6 +1,7 @@
 import { Disposable, DisposableLike } from "@rx-min/rx-disposables";
 import { Observable, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
-import { onNext } from "@rx-min/rx-operators";
+import { keep, onNext } from "@rx-min/rx-operators";
+import { merge } from "@rx-min/rx-observables";
 import {
   ObservableState,
   ObservableStateLike,
@@ -26,12 +27,19 @@ class DomLocationObservableStateResourceImpl
     const initialState = getCurrentLocation();
     const observableState = ObservableState.create(initialState, scheduler);
 
-    const setState = (state: string) => observableState.dispatch(_ => state);
-
     const subscription = Observable.connect(
-      Observable.lift(
-        observableEvent(window, "popstate", _ => getCurrentLocation()),
-        onNext(setState),
+      merge(
+        Observable.lift(
+          observableEvent(window, "popstate", _ => getCurrentLocation()),
+          onNext((state: string) => observableState.dispatch(_ => state)),
+        ),
+        Observable.lift(
+          observableState,
+          keep(location => location !== getCurrentLocation()),
+          onNext((next: string) =>
+            window.history.pushState(undefined, "", next),
+          ),
+        ),
       ),
       scheduler,
     );
@@ -57,9 +65,11 @@ class DomLocationObservableStateResourceImpl
   }
 }
 
-const create = (scheduler: SchedulerLike): ObservableStateResourceLike<string> =>
+const create = (
+  scheduler: SchedulerLike,
+): ObservableStateResourceLike<string> =>
   new DomLocationObservableStateResourceImpl(scheduler);
 
-export const Location ={
+export const Location = {
   create,
 };
