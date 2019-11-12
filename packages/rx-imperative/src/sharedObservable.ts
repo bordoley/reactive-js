@@ -1,7 +1,8 @@
 import { Disposable } from "@rx-min/rx-disposables";
 import {
+  connect,
+  lift,
   observe,
-  Observable,
   ObservableLike,
   SchedulerLike,
   SubscriberLike,
@@ -42,8 +43,8 @@ class SharedObservable<T> implements ObservableLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {
-    const innerSubscription = Observable.connect(
-      Observable.lift(this.subject, observe(subscriber)),
+    const innerSubscription = connect(
+      lift(this.subject, observe(subscriber)),
       subscriber.scheduler,
     );
 
@@ -52,8 +53,8 @@ class SharedObservable<T> implements ObservableLike<T> {
       .add(innerSubscription);
 
     if (this.refCount === 1) {
-      this.subscription = Observable.connect(
-        Observable.lift(this.source, observe(this.subject)),
+      this.subscription = connect(
+        lift(this.source, observe(this.subject)),
         this.scheduler,
       );
     }

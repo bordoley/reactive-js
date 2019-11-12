@@ -7,9 +7,10 @@ export {
 } from "./observer";
 export { SubscriberLike, DelegatingSubscriber } from "./subscriber";
 export {
+  connect, 
+  lift,
   observe,
   ObservableLike,
-  Observable,
   ObservableResourceLike,
   Operator,
 } from "./observable";

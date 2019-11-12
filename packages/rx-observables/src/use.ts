@@ -1,8 +1,8 @@
 import { create } from "./create";
 import {
+  connect,
+  lift,
   observe,
-  Observable,
-  ObservableLike,
   ObservableResourceLike,
 } from "@rx-min/rx-core";
 
@@ -12,8 +12,8 @@ export const use = <T>(factory: () => ObservableResourceLike<T>) =>
 
     subscriber.subscription
       .add(
-        Observable.connect(
-          Observable.lift(resource, observe(subscriber)),
+        connect(
+          lift(resource, observe(subscriber)),
           subscriber.scheduler,
         ),
       )

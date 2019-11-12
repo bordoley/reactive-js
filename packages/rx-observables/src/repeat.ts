@@ -3,8 +3,9 @@ import {
   Notification,
   Notifications,
   ObservableLike,
-  Observable,
   ObserverLike,
+  connect,
+  lift,
   observe,
   Operator,
   SubscriberLike,
@@ -32,8 +33,8 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
         this.parent.innerSubscription.innerDisposable.dispose();
 
         this.parent.innerSubscription.setInnerDisposable(
-          Observable.connect(
-            Observable.lift(
+          connect(
+            lift(
               this.parent.observable,
               observe(this.parent.observer),
             ),
@@ -105,7 +106,7 @@ export const repeat = <T>(
       ? defaultRepeatPredicate
       : (error: Error | undefined) => error === undefined && predicate();
 
-  return Observable.lift(
+  return lift(
     observable,
     repeatOperator(observable, repeatPredicate),
   );
@@ -125,7 +126,7 @@ export const retry = <T>(
       ? defaultRetryPredicate
       : (error: Error | undefined) => error !== undefined && predicate(error);
 
-  return Observable.lift(
+  return lift(
     observable,
     repeatOperator(observable, retryPredicate),
   );

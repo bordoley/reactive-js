@@ -1,6 +1,3 @@
-import { Observable } from "@rx-min/rx-core";
-import { map as observableMap } from "@rx-min/rx-operators";
-
 import {
   AsyncIteratorLike,
   DelegatingAsyncIterator,

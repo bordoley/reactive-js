@@ -1,4 +1,4 @@
-import { Observable } from "@rx-min/rx-core";
+import { lift } from "@rx-min/rx-core";
 import { map as observableMap } from "@rx-min/rx-operators";
 
 import {
@@ -17,7 +17,7 @@ export const map = <TSrc, TReq, T>(
       ? [delegate.observable, delegate.disposable, delegate.dispatcher]
       : [delegate, delegate, (req: TReq) => delegate.dispatch(req)];
 
-  const mappedObservable = Observable.lift(observable, observableMap(mapper));
+  const mappedObservable = lift(observable, observableMap(mapper));
 
   return new DelegatingAsyncIterator(mappedObservable, dispatcher, disposable);
 };

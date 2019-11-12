@@ -5,7 +5,8 @@ import {
   ObservableLike,
   Operator,
   SubscriberLike,
-  Observable,
+  connect,
+  lift,
   observe,
   ObserverLike,
 } from "@rx-min/rx-core";
@@ -47,8 +48,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     this.selector = selector;
 
     this.subscription.add(
-      Observable.connect(
-        Observable.lift(
+      connect(
+        lift(
           other,
           observe(new WithLatestFromSubscriber.InnerObserver(this)),
         ),

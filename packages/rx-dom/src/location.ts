@@ -1,5 +1,5 @@
 import { Disposable, DisposableLike } from "@rx-min/rx-disposables";
-import { Observable, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
+import { connect, lift, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
 import { keep, onNext } from "@rx-min/rx-operators";
 import { merge } from "@rx-min/rx-observables";
 import {
@@ -30,13 +30,13 @@ class DomLocationObservableStateResourceImpl
       scheduler,
     );
 
-    const subscription = Observable.connect(
+    const subscription = connect(
       merge(
-        Observable.lift(
+        lift(
           observableEvent(window, "popstate", _ => getCurrentLocation()),
           onNext((state: string) => observableState.dispatch(_ => state)),
         ),
-        Observable.lift(
+        lift(
           observableState,
           keep(location => location !== getCurrentLocation()),
           onNext((next: string) =>

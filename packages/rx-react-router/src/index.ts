@@ -6,7 +6,7 @@ import {
 import { useResource, useObservable } from "@rx-min/rx-react";
 
 import { createElement, useCallback, useMemo, Children } from "react";
-import { Observable } from "@rx-min/rx-core";
+import { lift } from "@rx-min/rx-core";
 import { scan } from "@rx-min/rx-operators";
 
 // React Native doesn't use a standard URI library so define
@@ -142,7 +142,7 @@ const createRouter = <TContext>(
 
     const locationHistoryObservable = useMemo(
       () =>
-        Observable.lift(
+        lift(
           locationResource,
           scan(pairify, [undefined, emptyRelativeURI]),
         ),

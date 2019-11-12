@@ -1,8 +1,9 @@
 import {
+  connect,
+  lift,
   observe,
   Notification,
   Notifications,
-  Observable,
   ObservableLike,
   ObserverLike,
 } from "@rx-min/rx-core";
@@ -45,16 +46,16 @@ export const merge = <T>(
     const observer = new MergeObserver(subscriber, tail.length + 1);
 
     subscriber.subscription.add(
-      Observable.connect(
-        Observable.lift(head, observe(observer)),
+      connect(
+        lift(head, observe(observer)),
         subscriber.scheduler,
       ),
     );
 
     for (let observable of tail) {
       subscriber.subscription.add(
-        Observable.connect(
-          Observable.lift(observable, observe(observer)),
+        connect(
+          lift(observable, observe(observer)),
           subscriber.scheduler,
         ),
       );

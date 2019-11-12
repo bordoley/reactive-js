@@ -5,7 +5,8 @@ import {
   ObservableLike,
   Operator,
   SubscriberLike,
-  Observable,
+  connect,
+  lift,
   observe,
   ObserverLike,
 } from "@rx-min/rx-core";
@@ -42,8 +43,8 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.setInnerDisposable(Disposable.disposed);
     this.innerSubscription.setInnerDisposable(
-      Observable.connect(
-        Observable.lift(
+      connect(
+        lift(
           data,
           observe(new SwitchSubscriber.InnerObserver(this)),
         ),

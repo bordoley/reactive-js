@@ -1,10 +1,11 @@
 import { DisposableLike, Disposable } from "@rx-min/rx-disposables";
 
 import {
+  connect,
+  lift,
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
-  Observable,
   SchedulerLike,
   SchedulerContinuation,
   SubscriberLike,
@@ -113,7 +114,7 @@ class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
   ) {
     this.dispatcher = EventResource.create();
     this.delegate = shareReplayLast(
-      Observable.lift(
+      lift(
         this.dispatcher,
         observableState(initialState),
         distinctUntilChanged(equals),
@@ -123,7 +124,7 @@ class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
 
     this.disposable = Disposable.compose(
       this.dispatcher,
-      Observable.connect(this.delegate, scheduler),
+      connect(this.delegate, scheduler),
     );
   }
 

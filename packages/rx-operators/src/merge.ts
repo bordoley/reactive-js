@@ -1,10 +1,11 @@
 import {
+  connect,
+  lift,
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
-  Observable,
 } from "@rx-min/rx-core";
 import { Disposable } from "@rx-min/rx-disposables";
 
@@ -62,8 +63,8 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private connectNext(next: ObservableLike<T>) {
     this.activeCount++;
     this.subscription.add(
-      Observable.connect(
-        Observable.lift(next, this.innerOperator),
+      connect(
+        lift(next, this.innerOperator),
         this.scheduler,
       ),
     );

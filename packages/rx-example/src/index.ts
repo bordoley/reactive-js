@@ -1,4 +1,4 @@
-import { Observable } from "@rx-min/rx-core";
+import { lift } from "@rx-min/rx-core";
 import { ofArray, repeat } from "@rx-min/rx-observables";
 import {
   keep,
@@ -13,7 +13,7 @@ import {
 } from "@rx-min/rx-scheduler";
 
 connectNormalPriority(
-  Observable.lift(
+  lift(
     ofArray([1, 2, 3, 4]),
     onNext(next => {
       const time = Date.now();
@@ -36,7 +36,7 @@ connectNormalPriority(
 );
 
 connectIdlePriority(
-  Observable.lift(
+  lift(
     repeat(ofArray([1, 2, 3, 4])),
     onNext(next => {
       const time = Date.now();

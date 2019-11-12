@@ -1,4 +1,4 @@
-import { Observable } from "@rx-min/rx-core";
+import { lift } from "@rx-min/rx-core";
 import { distinctUntilChanged as observableDistinctUntilChanged } from "@rx-min/rx-operators";
 
 import {
@@ -16,7 +16,7 @@ export const distinctUntilChanged = <TReq, T>(
     delegate instanceof DelegatingAsyncIterator
       ? [delegate.observable, delegate.disposable, delegate.dispatcher]
       : [delegate, delegate, (req: TReq) => delegate.dispatch(req)];
-  const distinctUntilChangedObservable = Observable.lift(
+  const distinctUntilChangedObservable = lift(
     observable,
     observableDistinctUntilChanged(equals),
   );

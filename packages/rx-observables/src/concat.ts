@@ -1,10 +1,11 @@
 import { Disposable } from "@rx-min/rx-disposables";
 
 import {
+  connect,
+  lift,
   observe,
   Notification,
   Notifications,
-  Observable,
   ObservableLike,
   ObserverLike,
 } from "@rx-min/rx-core";
@@ -52,8 +53,8 @@ export const concat = <T>(
         };
         const observer = new ConcatObserver(subscriber, continuation);
 
-        innerSubscription = Observable.connect(
-          Observable.lift(head, observe(observer)),
+        innerSubscription = connect(
+          lift(head, observe(observer)),
           subscriber.scheduler,
         );
         subscriber.subscription.add(innerSubscription);

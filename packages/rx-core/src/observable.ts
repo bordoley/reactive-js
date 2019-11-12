@@ -41,7 +41,7 @@ class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
   }
 }
 
-const connect = <T>(
+export const connect = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
 ): DisposableLike => {
@@ -78,29 +78,29 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 }
 
-function lift<T, A>(
+export function lift<T, A>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
 ): ObservableLike<A>;
-function lift<T, A, B>(
+export function lift<T, A, B>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
 ): ObservableLike<B>;
-function lift<T, A, B, C>(
+export function lift<T, A, B, C>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
 ): ObservableLike<C>;
-function lift<T, A, B, C, D>(
+export function lift<T, A, B, C, D>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
   op4: Operator<C, D>,
 ): ObservableLike<D>;
-function lift<T, A, B, C, D, E>(
+export function lift<T, A, B, C, D, E>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -108,7 +108,7 @@ function lift<T, A, B, C, D, E>(
   op4: Operator<C, D>,
   op5: Operator<D, E>,
 ): ObservableLike<E>;
-function lift<T, A, B, C, D, E, F>(
+export function lift<T, A, B, C, D, E, F>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -117,7 +117,7 @@ function lift<T, A, B, C, D, E, F>(
   op5: Operator<D, E>,
   op6: Operator<E, F>,
 ): ObservableLike<F>;
-function lift<T, A, B, C, D, E, F, G>(
+export function lift<T, A, B, C, D, E, F, G>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -127,7 +127,7 @@ function lift<T, A, B, C, D, E, F, G>(
   op6: Operator<E, F>,
   op7: Operator<F, G>,
 ): ObservableLike<G>;
-function lift<T, A, B, C, D, E, F, G, H>(
+export function lift<T, A, B, C, D, E, F, G, H>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -138,7 +138,7 @@ function lift<T, A, B, C, D, E, F, G, H>(
   op7: Operator<F, G>,
   op8: Operator<G, H>,
 ): ObservableLike<H>;
-function lift<T, A, B, C, D, E, F, G, H, I>(
+export function lift<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -150,7 +150,7 @@ function lift<T, A, B, C, D, E, F, G, H, I>(
   op8: Operator<G, H>,
   op9: Operator<H, I>,
 ): ObservableLike<I>;
-function lift(
+export function lift(
   source: ObservableLike<any>,
   operator: Operator<any, any>,
   ...operators: Array<Operator<any, any>>
@@ -188,11 +188,6 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
 export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
   subscriber: SubscriberLike<T>,
 ) => new ObserveSubscriber(subscriber, observer);
-
-export const Observable = {
-  connect,
-  lift,
-};
 
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,

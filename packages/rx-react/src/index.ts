@@ -1,9 +1,10 @@
 import { useMemo, useEffect, useState } from "react";
 import {
+  connect,
+  lift,
   observe,
   Notification,
   Notifications,
-  Observable,
   ObservableLike,
   ObservableResourceLike,
   SchedulerLike,
@@ -32,7 +33,7 @@ const makeObservable = <T>(
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
 ) =>
-  Observable.lift(
+  lift(
     observable,
     observe({
       notify: (event: Notification, data: T | Error | undefined) => {
@@ -59,7 +60,7 @@ export const useObservable = <T>(
 
   useResource(
     () =>
-      Observable.connect(
+      connect(
         makeObservable(observable, updateState, updateError),
         scheduler,
       ),
