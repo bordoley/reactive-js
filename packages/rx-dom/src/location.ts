@@ -3,8 +3,8 @@ import { Observable, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
 import { keep, onNext } from "@rx-min/rx-operators";
 import { merge } from "@rx-min/rx-observables";
 import {
-  ObservableState,
   ObservableStateLike,
+  ObservableStateResource,
   ObservableStateResourceLike,
   StateUpdater,
 } from "@rx-min/rx-observable-state";
@@ -25,7 +25,7 @@ class DomLocationObservableStateResourceImpl
 
   constructor(scheduler: SchedulerLike) {
     const initialState = getCurrentLocation();
-    const observableState = ObservableState.create(initialState, scheduler);
+    const observableState = ObservableStateResource.create(initialState, scheduler);
 
     const subscription = Observable.connect(
       merge(
