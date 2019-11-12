@@ -31,8 +31,6 @@ export const useObservable = <T>(
                 case Notifications.complete:
                   if (data != undefined) {
                     updateError(_ => data as Error | undefined);
-                  } else {
-                    updateState(_ => undefined);
                   }
                   break;
               }
