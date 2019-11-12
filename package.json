@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "tsc -b packages/rx-disposables packages/rx-core packages/rx-scheduler packages/rx-operators packages/rx-observables packages/rx-imperative packages/rx-react packages/rx-virtualtime-scheduler packages/ix-core packages/rx-state",
+    "build": "tsc -b packages/rx-disposables packages/rx-core packages/rx-scheduler packages/rx-operators packages/rx-observables packages/rx-imperative packages/rx-react packages/rx-virtualtime-scheduler packages/ix-core packages/rx-observable-state",
     "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo",
     "format": "prettier --write packages/**/src/**/* packages/**/test/**/*"
   },

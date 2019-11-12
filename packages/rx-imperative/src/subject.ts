@@ -1,4 +1,4 @@
-import { DisposableLike, Disposable } from "@rx-min/rx-disposables";
+import { Disposable } from "@rx-min/rx-disposables";
 
 import {
   ObservableResourceLike,
