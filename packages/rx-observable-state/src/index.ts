@@ -10,9 +10,7 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import {
-  distinctUntilChanged,
-} from "@rx-min/rx-operators";
+import { distinctUntilChanged } from "@rx-min/rx-operators";
 
 import {
   EventResource,
@@ -22,7 +20,7 @@ import {
 
 import { AsyncIteratorLike } from "@rx-min/ix-core";
 
-export interface StateUpdater<T> { 
+export interface StateUpdater<T> {
   (oldState: T): T;
 }
 

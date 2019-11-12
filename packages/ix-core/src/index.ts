@@ -221,3 +221,195 @@ function pipe(
 export const AsyncIterator = {
   pipe,
 };
+
+class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
+  readonly delegate: AsyncIterableLike<TReq, T>;
+  readonly operators: ReadonlyArray<Operator<any, any, any, any>>;
+
+  constructor(
+    delegate: AsyncIterableLike<TReq, T>,
+    operators: ReadonlyArray<Operator<any, any, any, any>>,
+  ) {
+    this.delegate = delegate;
+    this.operators = operators;
+  }
+
+  iterateAsync() {
+    let iterator = this.delegate.iterateAsync();
+    for (let operator of this.operators) {
+      iterator = operator(iterator);
+    }
+    return iterator;
+  }
+}
+
+function lift<TReq, T, TReqA, TA>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+): AsyncIterableLike<TReqA, TA>;
+
+function lift<TReq, T, TReqA, TA, TReqB, TB>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+): AsyncIterableLike<TReqB, TB>;
+
+function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+): AsyncIterableLike<TReqC, TC>;
+
+function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+): AsyncIterableLike<TReqD, TD>;
+
+function lift<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD, TReqE, TE>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+  op5: Operator<TReqD, TD, TReqE, TE>,
+): AsyncIterableLike<TReqE, TE>;
+
+function lift<
+  TReq,
+  T,
+  TReqA,
+  TA,
+  TReqB,
+  TB,
+  TReqC,
+  TC,
+  TReqD,
+  TD,
+  TReqE,
+  TE,
+  TReqF,
+  TF
+>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+  op5: Operator<TReqD, TD, TReqE, TE>,
+  op6: Operator<TReqE, TE, TReqF, TF>,
+): AsyncIterableLike<TReqF, TF>;
+
+function lift<
+  TReq,
+  T,
+  TReqA,
+  TA,
+  TReqB,
+  TB,
+  TReqC,
+  TC,
+  TReqD,
+  TD,
+  TReqE,
+  TE,
+  TReqF,
+  TF,
+  TReqG,
+  TG
+>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+  op5: Operator<TReqD, TD, TReqE, TE>,
+  op6: Operator<TReqE, TE, TReqF, TF>,
+  op7: Operator<TReqF, TF, TReqG, TG>,
+): AsyncIterableLike<TReqG, TG>;
+
+function lift<
+  TReq,
+  T,
+  TReqA,
+  TA,
+  TReqB,
+  TB,
+  TReqC,
+  TC,
+  TReqD,
+  TD,
+  TReqE,
+  TE,
+  TReqF,
+  TF,
+  TReqG,
+  TG,
+  TReqH,
+  TH
+>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+  op5: Operator<TReqD, TD, TReqE, TE>,
+  op6: Operator<TReqE, TE, TReqF, TF>,
+  op7: Operator<TReqF, TF, TReqG, TG>,
+  op8: Operator<TReqG, TG, TReqH, TH>,
+): AsyncIterableLike<TReqH, TH>;
+
+function lift<
+  TReq,
+  T,
+  TReqA,
+  TA,
+  TReqB,
+  TB,
+  TReqC,
+  TC,
+  TReqD,
+  TD,
+  TReqE,
+  TE,
+  TReqF,
+  TF,
+  TReqG,
+  TG,
+  TReqH,
+  TH,
+  TReqI,
+  TI
+>(
+  src: AsyncIterableLike<TReq, T>,
+  op1: Operator<TReq, T, TReqA, TA>,
+  op2: Operator<TReqA, TA, TReqB, TB>,
+  op3: Operator<TReqB, TB, TReqC, TC>,
+  op4: Operator<TReqC, TC, TReqD, TD>,
+  op5: Operator<TReqD, TD, TReqE, TE>,
+  op6: Operator<TReqE, TE, TReqF, TF>,
+  op7: Operator<TReqF, TF, TReqG, TG>,
+  op8: Operator<TReqG, TG, TReqH, TH>,
+  op9: Operator<TReqH, TH, TReqI, TI>,
+): AsyncIterableLike<TReqI, TI>;
+
+function lift(
+  asyncIterable: AsyncIterableLike<any, any>,
+  operator: Operator<any, any, any, any>,
+  ...operators: Operator<any, any, any, any>[]
+): AsyncIterableLike<any, any> {
+  return asyncIterable instanceof LiftedAsyncIterable
+    ? new LiftedAsyncIterable(asyncIterable.delegate, [
+        ...asyncIterable.operators,
+        operator,
+        ...operators,
+      ])
+    : new LiftedAsyncIterable(asyncIterable, [operator, ...operators]);
+}
+
+export const AsyncIterable = {
+  lift,
+};
