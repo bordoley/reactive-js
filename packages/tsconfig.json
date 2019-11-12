@@ -10,6 +10,7 @@
       { "path": "rx-operators" },
       { "path": "rx-react" },
       { "path": "rx-react-router" }, 
+      { "path": "rx-react-router-dom" }, 
       { "path": "rx-scheduler" },
       { "path": "rx-observable-state" },
       { "path": "rx-virtualtime-scheduler" }
