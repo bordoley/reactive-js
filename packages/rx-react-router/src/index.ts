@@ -5,7 +5,7 @@ import {
 
 import {
   useAsyncIteratorFactory
-} from "@rx-min/rx-react";
+} from "@rx-min/rx-react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
 import { pipe } from "@rx-min/ix-core";

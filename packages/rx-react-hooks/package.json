@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/rx-react",
+  "name": "@rx-min/rx-react-hooks",
   "version": "0.0.0",
   "description": "React bindings for RX",
   "main": "dist/index.js",
