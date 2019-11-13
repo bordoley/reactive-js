@@ -12,11 +12,10 @@ import {
 } from "scheduler";
 
 import {
-  connect,
-  ObservableLike,
   SchedulerContinuation,
   SchedulerLike,
 } from "@rx-min/rx-core";
+
 import {
   Disposable,
   SerialDisposable,
@@ -113,14 +112,3 @@ export const idlePriority: SchedulerLike = new RxReactScheduler(
 export const lowPriority: SchedulerLike = new RxReactScheduler(
   unstable_LowPriority,
 );
-
-export const connectImmediatePriority = <T>(observable: ObservableLike<T>) =>
-  connect(observable, immediatePriority);
-export const connectUserBlockingPriority = <T>(observable: ObservableLike<T>) =>
-  connect(observable, userBlockingPriority);
-export const connectNormalPriority = <T>(observable: ObservableLike<T>) =>
-  connect(observable, normalPriority);
-export const connectIdlePriority = <T>(observable: ObservableLike<T>) =>
-  connect(observable, idlePriority);
-export const connectLowPriority = <T>(observable: ObservableLike<T>) =>
-  connect(observable, lowPriority);

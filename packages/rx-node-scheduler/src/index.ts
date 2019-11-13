@@ -99,6 +99,3 @@ class RxNodeScheduler implements SchedulerLike {
 }
 
 export const scheduler = new RxNodeScheduler();
-
-export const connect = <T>(observable: ObservableLike<T>) =>
-  connectOnScheduler(observable, scheduler);

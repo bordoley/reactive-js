@@ -1,4 +1,4 @@
-import { lift } from "@rx-min/rx-core";
+import { connect, lift } from "@rx-min/rx-core";
 import { ofDelayedValues } from "@rx-min/rx-observables";
 import {
   keep,
@@ -7,7 +7,10 @@ import {
   ignoreElements,
   onComplete,
 } from "@rx-min/rx-operators";
-import { connect } from "@rx-min/rx-node-scheduler";
+import { scheduler } from "@rx-min/rx-node-scheduler";
+
+//import { VirtualTimeScheduler} from '@rx-min/rx-virtualtime-scheduler';
+//const scheduler = VirtualTimeScheduler.create();
 
 connect(
   lift(
@@ -35,4 +38,9 @@ connect(
     onNext(_ => console.log("wtf")),
     onComplete(_ => console.log("completed")),
   ),
+  scheduler,
 );
+
+//scheduler.run();
+
+console.log("exit");

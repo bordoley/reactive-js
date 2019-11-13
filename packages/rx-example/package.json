@@ -25,6 +25,7 @@
     "@rx-min/rx-observable-state": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/rx-node-scheduler": "0.0.0"
+    "@rx-min/rx-node-scheduler": "0.0.0",
+    "@rx-min/rx-virtualtime-scheduler": "0.0.0"
   }
 }
