@@ -4,7 +4,7 @@ import {
 } from "@rx-min/ix-state-container";
 
 import {
-  useAsyncIteratorFactory
+  useAsyncIterator
 } from "@rx-min/rx-react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
@@ -141,7 +141,7 @@ const createRouter = <TContext>(
     );
 
   const RxReactRouter = (props: TContext) => {
-    const [route, uriUpdater] = useAsyncIteratorFactory(routePairFactory, []);
+    const [route, uriUpdater] = useAsyncIterator(routePairFactory, []);
 
     const child = route !== undefined
       ? createElement(

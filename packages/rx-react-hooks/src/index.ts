@@ -82,7 +82,7 @@ export const useObservableResource = <T>(
   return useObservable(resource, scheduler);
 };
 
-export const useAsyncIteratorFactory = <TReq, T>(
+export const useAsyncIterator = <TReq, T>(
   factory: () => AsyncIteratorLike<TReq, T>,
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
