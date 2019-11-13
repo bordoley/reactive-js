@@ -80,7 +80,7 @@ export const ofDelayedValues = <T>(
               }
             }
 
-            subscriber.notify(Notifications.complete, undefined);
+            subscriber.notify(Notifications.complete);
           }
         };
 
