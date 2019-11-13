@@ -15,7 +15,7 @@
       { "path": "rx-operators" },
       { "path": "rx-react-hooks" },
       { "path": "rx-react-router" },
-      { "path": "rx-react-router-dom" },
+      { "path": "rx-react-dom-router" },
       { "path": "rx-react-scheduler" },
       { "path": "rx-virtualtime-scheduler" }
   ]
