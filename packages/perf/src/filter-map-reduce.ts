@@ -22,7 +22,7 @@ export const run = (n: number) => {
 
   const suite = new Benchmark.Suite(`filter -> map -> reduce ${n} integers`);
 
-  suite.add('rx-min', (deferred: any) => {
+  suite.add('rx-min', () => {
     const { lift } = require('@rx-min/rx-core');
     const { ofArray } = require('@rx-min/rx-observables');
     const { keep, map, scan } = require('@rx-min/rx-operators');
@@ -35,7 +35,7 @@ export const run = (n: number) => {
       scan(sum, 0),
     );
 
-    run(observable, deferred);
+    run(observable);
   }).add('rx-js', () => {
     const { from } = require('rxjs');
     const { filter, map, scan } = require('rxjs/operators');
