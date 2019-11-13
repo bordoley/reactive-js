@@ -1,5 +1,5 @@
 import { lift } from "@rx-min/rx-core";
-import { ofArray, repeat } from "@rx-min/rx-observables";
+import { ofDelayedValues } from "@rx-min/rx-observables";
 import {
   keep,
   map,
@@ -11,7 +11,12 @@ import { connect } from "@rx-min/rx-node-scheduler";
 
 connect(
   lift(
-    ofArray([1, 2, 3, 4], 1000),
+    ofDelayedValues(
+      [1000, 1],
+      [2000, 2], 
+      [3000, 3], 
+      [3000, 4],
+    ),
     onNext(next => {
       const time = Date.now();
       console.log(time + ": " + next);
