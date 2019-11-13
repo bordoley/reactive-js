@@ -1,5 +1,5 @@
 import {
-  Router as RxReactRouter,
+  RxReactRouter,
   RelativeURI,
   RoutableComponentProps,
 } from "@rx-min/rx-react-router";
@@ -65,10 +65,6 @@ const createRelativeURIRouter = <TContext>(
     scheduler,
   );
 
-export const RelativeURILocation = {
-  create: createRelativeURILocation,
-};
-
-export const Router = {
+export const RxReactDomRouter = {
   create: createRelativeURIRouter,
 };
