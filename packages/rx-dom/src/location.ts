@@ -68,9 +68,7 @@ class DomLocationStateContainerResourceImpl
   }
 }
 
-const create = (
-  scheduler: SchedulerLike,
-): StateContainerResourceLike<string> =>
+const create = (scheduler: SchedulerLike): StateContainerResourceLike<string> =>
   new DomLocationStateContainerResourceImpl(scheduler);
 
 export const LocationState = {

@@ -3,9 +3,7 @@ import {
   StateContainerResourceLike,
 } from "@rx-min/ix-state-container";
 
-import {
-  useAsyncIterator
-} from "@rx-min/rx-react-hooks";
+import { useAsyncIterator } from "@rx-min/rx-react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
 import { pipe } from "@rx-min/ix-core";
@@ -143,12 +141,14 @@ const createRouter = <TContext>(
   const RxReactRouter = (props: TContext) => {
     const [route, uriUpdater] = useAsyncIterator(routePairFactory, []);
 
-    const child = route !== undefined
-      ? createElement(
-        routeMap[route[1].path] || notFoundComponent,
-        { referer: route[0], uri: route[1], uriUpdater}
-      ) : null;
-
+    const child =
+      route !== undefined
+        ? createElement(routeMap[route[1].path] || notFoundComponent, {
+            referer: route[0],
+            uri: route[1],
+            uriUpdater,
+          })
+        : null;
 
     return context !== undefined
       ? createElement(context.Provider, { value: props, children: child })

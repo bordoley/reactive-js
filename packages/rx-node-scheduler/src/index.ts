@@ -23,14 +23,23 @@ type SchedulerCtx = {
 };
 
 class RxNodeScheduler implements SchedulerLike {
+  private readonly timeout: number;
+  private startTime: number = this.now;
+
+  constructor(timeout: number) {
+    this.timeout = timeout;
+  }
+
   get now() {
     return Date.now();
   }
 
-  private handleSchedulerContinuation(
-    ctx: SchedulerCtx,
-    result: SchedulerContinuationResult,
-  ) {
+  private executeContinuation(ctx: SchedulerCtx) {
+    const { continuation, shouldYield } = ctx;
+
+    this.startTime = this.now;
+    const result = continuation(shouldYield);
+
     if (result instanceof Function) {
       ctx.continuation = result;
       this.scheduleNow(ctx);
@@ -51,23 +60,19 @@ class RxNodeScheduler implements SchedulerLike {
     ctx.disposable.innerDisposable.dispose();
     ctx.delay = undefined;
 
-    const { continuation, shouldYield } = ctx;
     await Promise.resolve();
-    const result = continuation(shouldYield);
-    this.handleSchedulerContinuation(ctx, result);
+    this.executeContinuation(ctx);
   }
 
   private scheduleDelayed(ctx: SchedulerCtx, delay: number) {
     ctx.disposable.innerDisposable.dispose();
     ctx.delay = delay;
 
-    const { continuation, disposable, shouldYield } = ctx;
     const timeout = setInterval(() => {
-      const result = continuation(shouldYield);
-      this.handleSchedulerContinuation(ctx, result);
+      this.executeContinuation(ctx);
     }, delay);
 
-    disposable.innerDisposable = Disposable.create(() =>
+    ctx.disposable.innerDisposable = Disposable.create(() =>
       clearInterval(timeout),
     );
   }
@@ -77,7 +82,9 @@ class RxNodeScheduler implements SchedulerLike {
     delay: number | void,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
-    const shouldYield = () => !disposable.isDisposed;
+    const shouldYield = () => {
+      return disposable.isDisposed || (this.startTime + this.timeout) < this.now;
+    };
 
     const ctx: SchedulerCtx = {
       continuation,
@@ -96,4 +103,4 @@ class RxNodeScheduler implements SchedulerLike {
   }
 }
 
-export const scheduler = new RxNodeScheduler();
+export const create = (timeout: number) => new RxNodeScheduler(timeout);
