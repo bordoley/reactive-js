@@ -3,6 +3,7 @@
   "references": [
       { "path": "ix-core" },
       { "path": "ix-operators" },
+      { "path": "perf" },
       { "path": "rx-core" },
       { "path": "rx-disposables" },
       { "path": "rx-dom" },

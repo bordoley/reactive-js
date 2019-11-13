@@ -1,0 +1,26 @@
+{
+  "name": "@rx-min/perf",
+  "version": "0.0.0",
+  "description": "interactive extensions",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "dependencies": {
+    "@rx-min/rx-core": "0.0.0",
+    "@rx-min/rx-observables": "0.0.0",
+    "@rx-min/rx-operators": "0.0.0",
+    "rxjs": "^6.5.3",
+    "benchmark": "^2.1.4"
+  }
+}
