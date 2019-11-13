@@ -14,12 +14,7 @@ import { scheduler } from "@rx-min/rx-node-scheduler";
 
 connect(
   lift(
-    ofDelayedValues(
-      [1000, 1],
-      [2000, 2], 
-      [3000, 3], 
-      [3000, 4],
-    ),
+    ofDelayedValues([1000, 1], [2000, 2], [3000, 3], [3000, 4]),
     onNext(next => {
       const time = Date.now();
       console.log(time + ": " + next);

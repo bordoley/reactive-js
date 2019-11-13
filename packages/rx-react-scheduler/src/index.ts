@@ -11,10 +11,7 @@ import {
   unstable_scheduleCallback,
 } from "scheduler";
 
-import {
-  SchedulerContinuation,
-  SchedulerLike,
-} from "@rx-min/rx-core";
+import { SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
 
 import {
   Disposable,
