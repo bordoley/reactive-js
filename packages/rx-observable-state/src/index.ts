@@ -39,7 +39,7 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
 > {
   private readonly nextQueue: Array<StateUpdater<T>> = [];
   private isComplete = false;
-  private error: Error | undefined;
+  private error: Error | void = undefined;
 
   private acc: T;
 
@@ -91,9 +91,9 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
     this.scheduleDrainQueue();
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     this.isComplete = true;
-    this.error = error;
+    this.error = error || undefined;
     this.scheduleDrainQueue();
   }
 }

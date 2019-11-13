@@ -5,8 +5,8 @@ import { Notification, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();
   private readonly scheduler: SchedulerLike;
-  private event: Notification | undefined = undefined;
-  private data: T | Error | undefined = undefined;
+  private event: Notification | void = undefined;
+  private data: T | Error | void = undefined;
 
   constructor(scheduler: SchedulerLike) {
     this.scheduler = scheduler;
@@ -23,7 +23,7 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   notify(event: Notification, data: T | Error | void): void {
     if (!this.isDisposed) {
       this.event = event;
-      this.data = data || undefined;
+      this.data = data;
     }
 
     this.subject.notify(event, data);

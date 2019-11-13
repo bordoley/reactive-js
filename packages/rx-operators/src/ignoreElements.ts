@@ -12,7 +12,7 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
   onNext(data: TA) {}
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.delegate.notify(Notifications.complete, data);
   }
 }

@@ -48,7 +48,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     );
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     this.innerSubscription.dispose();
     this.delegate.notify(Notifications.complete, error);
   }

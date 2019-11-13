@@ -32,7 +32,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.innerSubscription.innerDisposable = Disposable.disposed;
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     if (data !== undefined) {
       this.clearDebounce();
     } else {

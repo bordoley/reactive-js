@@ -43,7 +43,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
 
   protected abstract onNext(data: A): void;
 
-  protected abstract onComplete(error: Error | undefined): void;
+  protected abstract onComplete(error: Error | void): void;
 
   private tryOnNext(data: A) {
     try {
@@ -53,7 +53,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     }
   }
 
-  private tryOnComplete(data: Error | undefined) {
+  private tryOnComplete(data: Error | void) {
     try {
       this.onComplete(data);
     } catch (e) {
@@ -71,7 +71,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
           break;
         case Notifications.complete:
           this.isStopped = true;
-          this.tryOnComplete(data as Error | undefined);
+          this.tryOnComplete(data as Error | void);
           break;
       }
     }

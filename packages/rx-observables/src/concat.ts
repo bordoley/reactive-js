@@ -29,7 +29,7 @@ class ConcatObserver<T> implements ObserverLike<T> {
         if (data !== undefined) {
           this.delegate.notify(notif, data);
         } else if (!this.continuation()) {
-          this.delegate.notify(Notifications.complete, undefined);
+          this.delegate.notify(Notifications.complete);
         }
     }
   }

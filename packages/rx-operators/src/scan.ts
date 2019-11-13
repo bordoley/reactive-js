@@ -27,7 +27,7 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     this.delegate.notify(Notifications.next, nextAcc);
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.delegate.notify(Notifications.complete, data);
   }
 }

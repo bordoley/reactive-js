@@ -179,7 +179,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.delegate.notify(Notifications.next, data);
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     this.observer.notify(Notifications.complete, error);
     this.delegate.notify(Notifications.complete, error);
   }

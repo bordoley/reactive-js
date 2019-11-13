@@ -11,7 +11,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly observeOnScheduler: SchedulerLike;
   private readonly nextQueue: Array<T> = [];
   private isComplete = false;
-  private error: Error | undefined;
+  private error: Error | void = undefined;
 
   constructor(delegate: SubscriberLike<T>, observeOnScheduler: SchedulerLike) {
     super(delegate);
@@ -51,7 +51,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.scheduleDrainQueue();
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     this.isComplete = true;
     this.error = error;
     this.scheduleDrainQueue();
@@ -59,6 +59,6 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 export const observeOn = <T>(
-  scheduler: SchedulerLike | undefined,
+  scheduler: SchedulerLike | void,
 ): Operator<T, T> => subscriber =>
   new ObserveOnSubscriber(subscriber, scheduler || subscriber.scheduler);

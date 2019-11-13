@@ -17,13 +17,13 @@ export const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
   });
 
 export const onComplete = <T>(
-  onComplete: (err: Error | undefined) => void,
+  onComplete: (err: Error | void) => void,
 ): Operator<T, T> =>
   observe({
     notify: (notif: Notification, data: T | Error | void) => {
       switch (notif) {
         case Notifications.complete:
-          onComplete(data as Error | undefined);
+          onComplete(data as Error | void);
       }
     },
   });

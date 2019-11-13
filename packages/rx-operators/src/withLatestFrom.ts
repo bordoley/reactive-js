@@ -62,7 +62,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     }
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     this.delegate.notify(Notifications.complete, error);
   }
 }

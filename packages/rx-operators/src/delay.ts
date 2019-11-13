@@ -10,7 +10,7 @@ import {
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
   private readonly queue: Array<
-    [number, Notification, T | Error | undefined]
+    [number, Notification, T | Error | void]
   > = [];
 
   constructor(delegate: SubscriberLike<T>, delay: number) {
@@ -38,7 +38,7 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   };
 
-  private doSchedule(notif: Notification, data: T | Error | undefined) {
+  private doSchedule(notif: Notification, data: T | Error | void) {
     const now = this.scheduler.now;
     const dueTime = now + this.delay;
     this.queue.push([dueTime, notif, data]);
@@ -48,7 +48,7 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.doSchedule(Notifications.complete, data);
   }
 

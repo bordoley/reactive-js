@@ -75,7 +75,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
   }
 
-  protected onComplete(error: Error | undefined) {
+  protected onComplete(error: Error | void) {
     if (error !== undefined || this.activeCount === 0) {
       this.delegate.notify(Notifications.complete, error);
     }

@@ -18,7 +18,7 @@ class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
     this.delegate.notify(Notifications.next, mappedData);
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.delegate.notify(Notifications.complete, data);
   }
 }

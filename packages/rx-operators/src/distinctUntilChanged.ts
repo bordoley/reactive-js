@@ -22,7 +22,7 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.delegate.notify(Notifications.complete, data);
   }
 }

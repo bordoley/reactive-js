@@ -16,7 +16,7 @@ import { SerialDisposable, SerialDisposableLike } from "@rx-min/rx-disposables";
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;
   private readonly observable: ObservableLike<T>;
-  private readonly shouldRepeat: (error: Error | undefined) => boolean;
+  private readonly shouldRepeat: (error: Error | void) => boolean;
   private readonly observer: ObserverLike<T>;
 
   static RepeatObserver = class<T> implements ObserverLike<T> {
@@ -46,7 +46,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
           break;
         case Notifications.complete:
           const shouldComplete = !this.parent.shouldRepeat(
-            data as Error | undefined,
+            data as Error | void,
           );
 
           if (shouldComplete) {
@@ -61,7 +61,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     observable: ObservableLike<T>,
-    shouldRepeat: (error: Error | undefined) => boolean,
+    shouldRepeat: (error: Error | void) => boolean,
   ) {
     super(delegate);
     this.observable = observable;
@@ -76,20 +76,20 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observer.notify(Notifications.next, data);
   }
 
-  protected onComplete(data: Error | undefined) {
+  protected onComplete(data: Error | void) {
     this.observer.notify(Notifications.complete, data);
   }
 }
 
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
-  shouldRepeat: (error: Error | undefined) => boolean,
+  shouldRepeat: (error: Error | void) => boolean,
 ): Operator<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
 const alwaysTrue = () => true;
 
-const defaultRepeatPredicate = (error: Error | undefined): boolean =>
+const defaultRepeatPredicate = (error: Error | void): boolean =>
   error === undefined;
 
 export const repeat = <T>(
@@ -99,14 +99,14 @@ export const repeat = <T>(
   const repeatPredicate =
     predicate === alwaysTrue
       ? defaultRepeatPredicate
-      : (error: Error | undefined) => error === undefined && predicate();
+      : (error: Error | void) => error === undefined && predicate();
 
   return lift(observable, repeatOperator(observable, repeatPredicate));
 };
 
 const alwaysTrue1 = <T>(_: T) => true;
 
-const defaultRetryPredicate = (error: Error | undefined): boolean =>
+const defaultRetryPredicate = (error: Error | void): boolean =>
   error !== undefined;
 
 export const retry = <T>(
@@ -116,7 +116,7 @@ export const retry = <T>(
   const retryPredicate =
     predicate === alwaysTrue1
       ? defaultRetryPredicate
-      : (error: Error | undefined) => error !== undefined && predicate(error);
+      : (error: Error | void) => error !== undefined && predicate(error);
 
   return lift(observable, repeatOperator(observable, retryPredicate));
 };
