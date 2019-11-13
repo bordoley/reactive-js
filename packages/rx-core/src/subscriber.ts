@@ -17,10 +17,18 @@ export const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
 
 export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   private isStopped = false;
+  private readonly source: SubscriberLike<any>;
+
   readonly delegate: SubscriberLike<B>;
 
   constructor(delegate: SubscriberLike<B>) {
     this.delegate = delegate;
+
+    // We track the source to improve the performance 
+    // of the isConnected lookup that happens in notify.
+    this.source = (delegate instanceof DelegatingSubscriber)
+      ? delegate.source
+      : delegate;
 
     delegate.subscription.add(
       Disposable.create(() => {
@@ -30,15 +38,15 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   }
 
   get isConnected() {
-    return this.delegate.isConnected;
+    return this.source.isConnected;
   }
 
   get scheduler() {
-    return this.delegate.scheduler;
+    return this.source.scheduler;
   }
 
   get subscription() {
-    return this.delegate.subscription;
+    return this.source.subscription;
   }
 
   protected abstract onNext(data: A): void;
