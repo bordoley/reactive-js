@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-example",
+  "name": "@rx-min/rx-react-scheduler",
   "version": "0.0.0",
-  "description": "Rx example",
+  "description": "Scheduler bindings for RX",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,14 +17,11 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/ix-core": "0.0.0",
-    "@rx-min/ix-operators": "0.0.0",
-    "@rx-min/rx-core": "0.0.0",
+    "scheduler": "0.17.0",
     "@rx-min/rx-disposables": "0.0.0",
-    "@rx-min/rx-imperative": "0.0.0",
-    "@rx-min/rx-observable-state": "0.0.0",
-    "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/rx-node-scheduler": "0.0.0"
+    "@rx-min/rx-core": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/scheduler": "^0.16.1"
   }
 }

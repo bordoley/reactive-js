@@ -21,7 +21,7 @@
     "@rx-min/rx-dom": "0.0.0",
     "@rx-min/rx-observable-state": "0.0.0",
     "@rx-min/rx-react-router": "0.0.0",
-    "@rx-min/rx-scheduler": "0.0.0"
+    "@rx-min/rx-react-scheduler": "0.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.11"

@@ -10,7 +10,7 @@ import {
   SchedulerLike,
 } from "@rx-min/rx-core";
 
-import { normalPriority } from "@rx-min/rx-scheduler";
+import { normalPriority } from "@rx-min/rx-react-scheduler";
 import { DisposableLike } from "@rx-min/rx-disposables";
 
 export const useResource = <T extends DisposableLike>(

@@ -32,11 +32,9 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       if (!alreadyDisposed) {
         this.parent.innerSubscription.innerDisposable.dispose();
 
-        this.parent.innerSubscription.setInnerDisposable(
-          connect(
-            lift(this.parent.observable, observe(this.parent.observer)),
-            this.parent.scheduler,
-          ),
+        this.parent.innerSubscription.innerDisposable = connect(
+          lift(this.parent.observable, observe(this.parent.observer)),
+          this.parent.scheduler,
         );
       }
     }

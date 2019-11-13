@@ -6,7 +6,7 @@ export interface SchedulerContinuation {
 
 export type SchedulerContinuationResult =
   | SchedulerContinuation
-  | Readonly<[SchedulerContinuation, number | void]>
+  | Readonly<[SchedulerContinuation, number]>
   | void;
 
 export interface SchedulerLike {

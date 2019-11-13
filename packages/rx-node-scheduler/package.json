@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-scheduler",
+  "name": "@rx-min/rx-node-scheduler",
   "version": "0.0.0",
-  "description": "Scheduler bindings for RX",
+  "description": "Node.js scheduler",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,11 +17,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "scheduler": "0.17.0",
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-core": "0.0.0"
-  },
-  "devDependencies": {
-    "@types/scheduler": "^0.16.1"
   }
 }

@@ -126,7 +126,6 @@ export const CompositeDisposable = {
 
 export interface SerialDisposableLike extends DisposableLike {
   innerDisposable: DisposableLike;
-  setInnerDisposable(disposable: DisposableLike): void;
 }
 
 class SerialDisposableImpl extends AbstractDisposable
@@ -146,7 +145,7 @@ class SerialDisposableImpl extends AbstractDisposable
     this.innerDisposable.dispose();
   }
 
-  setInnerDisposable(newDisposable: DisposableLike): void {
+  set innerDisposable(newDisposable: DisposableLike) {
     const oldDisposable = this.innerDisposable;
     this._innerDisposable = newDisposable;
 

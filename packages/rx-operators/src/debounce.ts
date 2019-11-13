@@ -29,7 +29,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   private clearDebounce() {
-    this.innerSubscription.setInnerDisposable(Disposable.disposed);
+    this.innerSubscription.innerDisposable = Disposable.disposed;
   }
 
   protected onComplete(data: Error | undefined) {
@@ -50,8 +50,9 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.clearDebounce();
     this.value = data;
 
-    this.innerSubscription.setInnerDisposable(
-      this.scheduler.schedule(this.schedulerContinuation, this.dueTime),
+    this.innerSubscription.innerDisposable = this.scheduler.schedule(
+      this.schedulerContinuation,
+      this.dueTime,
     );
   }
 }

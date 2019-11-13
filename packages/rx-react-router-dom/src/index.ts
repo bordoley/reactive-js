@@ -14,7 +14,7 @@ import {
 
 import { LocationState } from "@rx-min/rx-dom";
 import { SchedulerLike } from "@rx-min/rx-core";
-import { normalPriority } from "@rx-min/rx-scheduler";
+import { normalPriority } from "@rx-min/rx-react-scheduler";
 
 const mapper = (v: string): RelativeURI => {
   const parsedAccURL = new URL(v);

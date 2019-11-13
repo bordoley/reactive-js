@@ -431,3 +431,9 @@ export function lift(
       ])
     : new LiftedAsyncIterable(asyncIterable, [operator, ...operators]);
 }
+
+/*
+export interface AsyncSource<TAcc, TNext> {
+  (reducer: (acc: TAcc, next: TNext) => ObservableLike<TAcc>, initialValue: TAcc):  ObservableLike<TAcc>
+}
+*/

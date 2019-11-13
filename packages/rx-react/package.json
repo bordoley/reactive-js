@@ -20,7 +20,7 @@
     "react": "16.11.0",
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-core": "0.0.0",
-    "@rx-min/rx-scheduler": "0.0.0"
+    "@rx-min/rx-react-scheduler": "0.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.11"
