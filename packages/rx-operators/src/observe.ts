@@ -8,7 +8,7 @@ export { observe } from "@rx-min/rx-core";
 
 export const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
   observe({
-    notify: (notif: Notification, data: T | Error |  void) => {
+    notify: (notif: Notification, data: T | Error | void) => {
       switch (notif) {
         case Notifications.next:
           onNext(data as T);
