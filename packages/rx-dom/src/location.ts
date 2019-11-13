@@ -21,11 +21,11 @@ const getCurrentLocation = () => {
 class DomLocationStateContainerResourceImpl
   implements StateContainerResourceLike<string> {
   private readonly disposable: DisposableLike;
-  private readonly observableState: StateContainerLike<string>;
+  private readonly stateContainer: StateContainerLike<string>;
 
   constructor(scheduler: SchedulerLike) {
     const initialState = getCurrentLocation();
-    const observableState = StateContainerResource.create(
+    const stateContainer = StateContainerResource.create(
       initialState,
       scheduler,
     );
@@ -34,10 +34,10 @@ class DomLocationStateContainerResourceImpl
       merge(
         lift(
           observableEvent(window, "popstate", _ => getCurrentLocation()),
-          onNext((state: string) => observableState.dispatch(_ => state)),
+          onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
         lift(
-          observableState,
+          stateContainer,
           keep(location => location !== getCurrentLocation()),
           onNext((next: string) =>
             window.history.pushState(undefined, "", next),
@@ -47,8 +47,8 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = Disposable.compose(subscription, observableState);
-    this.observableState = observableState;
+    this.disposable = Disposable.compose(subscription, stateContainer);
+    this.stateContainer = stateContainer;
   }
 
   get isDisposed() {
@@ -60,11 +60,11 @@ class DomLocationStateContainerResourceImpl
   }
 
   subscribe(subscriber: SubscriberLike<string>) {
-    this.observableState.subscribe(subscriber);
+    this.stateContainer.subscribe(subscriber);
   }
 
   dispatch(updater: StateUpdater<string>) {
-    this.observableState.dispatch(updater);
+    this.stateContainer.dispatch(updater);
   }
 }
 
