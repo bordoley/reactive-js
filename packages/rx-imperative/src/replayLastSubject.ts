@@ -1,6 +1,7 @@
 import { Subject, SubjectLike } from "./subject";
 
 import { Notification, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
+import { SerialDisposable } from "@rx-min/rx-disposables";
 
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();
@@ -30,17 +31,18 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    if (!this.isDisposed && this.event !== undefined) {
-      const { data, event } = this;
-      subscriber.subscription.add(
-        this.scheduler.schedule((_shouldYield: () => boolean) => {
-          if (event === this.event && data === this.data) {
-            subscriber.notify(event, data);
-          }
-        }),
+    if (!this.isDisposed) {
+      const innerSubscription = this.scheduler.schedule(
+        (_: () => boolean) => {
+          const { data, event } = this;
+          if (event !== undefined) { subscriber.notify(event, data); }
+          subscriber.subscription.remove(innerSubscription);
+          this.subject.subscribe(subscriber);          
+        },
       );
+
+      subscriber.subscription.add(innerSubscription);
     }
-    this.subject.subscribe(subscriber);
   }
 }
 
