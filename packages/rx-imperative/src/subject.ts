@@ -24,7 +24,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
     return this._isDisposed;
   }
 
-  notify(notification: Notification, data: T | Error | undefined): void {
+  notify(notification: Notification, data: T | Error | void): void {
     if (!this.isDisposed) {
       const subscribers = this.subscribers.slice();
       for (let subscriber of subscribers) {

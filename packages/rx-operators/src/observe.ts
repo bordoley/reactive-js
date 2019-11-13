@@ -8,7 +8,7 @@ export { observe } from "@rx-min/rx-core";
 
 export const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
   observe({
-    notify: (notif: Notification, data: T | Error | undefined) => {
+    notify: (notif: Notification, data: T | Error |  void) => {
       switch (notif) {
         case Notifications.next:
           onNext(data as T);
@@ -20,7 +20,7 @@ export const onComplete = <T>(
   onComplete: (err: Error | undefined) => void,
 ): Operator<T, T> =>
   observe({
-    notify: (notif: Notification, data: T | Error | undefined) => {
+    notify: (notif: Notification, data: T | Error | void) => {
       switch (notif) {
         case Notifications.complete:
           onComplete(data as Error | undefined);
@@ -30,7 +30,7 @@ export const onComplete = <T>(
 
 export const onError = <T>(onError: (error: Error) => void): Operator<T, T> =>
   observe({
-    notify: (notif: Notification, data: T | Error | undefined) => {
+    notify: (notif: Notification, data: T | Error | void) => {
       switch (notif) {
         case Notifications.complete:
           if (data !== undefined) {

@@ -39,7 +39,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       }
     }
 
-    notify(notif: Notification, data: T | Error | undefined) {
+    notify(notif: Notification, data: T | Error | void) {
       switch (notif) {
         case Notifications.next:
           this.parent.delegate.notify(Notifications.next, data);

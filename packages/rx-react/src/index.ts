@@ -36,7 +36,7 @@ const makeObservable = <T>(
   lift(
     observable,
     observe({
-      notify: (event: Notification, data: T | Error | undefined) => {
+      notify: (event: Notification, data: T | Error | void) => {
         switch (event) {
           case Notifications.next:
             updateState(_ => data as T);

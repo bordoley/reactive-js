@@ -25,7 +25,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
       this.parent = parent;
     }
 
-    notify(notif: Notification, data: TB | Error | undefined) {
+    notify(notif: Notification, data: TB | Error | void) {
       switch (notif) {
         case Notifications.next:
           this.parent.otherLatest = data as TB;

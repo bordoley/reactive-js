@@ -20,7 +20,7 @@ class ConcatObserver<T> implements ObserverLike<T> {
     this.continuation = continuation;
   }
 
-  notify(notif: Notification, data: T | Error | undefined) {
+  notify(notif: Notification, data: T | Error | void) {
     switch (notif) {
       case Notifications.next:
         this.delegate.notify(notif, data);

@@ -26,7 +26,7 @@ class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
     this.subscription = subscription;
   }
 
-  notify(notification: Notification, data: T | Error | undefined) {
+  notify(notification: Notification, data: T | Error | void) {
     throwIfNotConnected(this);
 
     if (!this.subscription.isDisposed) {

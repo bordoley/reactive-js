@@ -13,7 +13,7 @@ export const fromPromiseFactory = <T>(
       const result = await factory();
       if (!subscriber.subscription.isDisposed) {
         subscriber.notify(Notifications.next, result);
-        subscriber.notify(Notifications.complete, undefined);
+        subscriber.notify(Notifications.complete);
       }
     } catch (error) {
       if (!subscriber.subscription.isDisposed) {

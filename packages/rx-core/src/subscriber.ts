@@ -61,7 +61,7 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     }
   }
 
-  notify(notification: Notification, data: A | Error | undefined) {
+  notify(notification: Notification, data: A | Error | void) {
     throwIfNotConnected(this);
 
     if (!this.isStopped) {

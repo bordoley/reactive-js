@@ -20,10 +20,10 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
     this.subject.dispose;
   }
 
-  notify(event: Notification, data: T | Error | undefined): void {
+  notify(event: Notification, data: T | Error | void): void {
     if (!this.isDisposed) {
       this.event = event;
-      this.data = data;
+      this.data = data || undefined;
     }
 
     this.subject.notify(event, data);

@@ -9,6 +9,6 @@ export const Notifications = {
 
 export interface ObserverLike<T> {
   notify(notification: NotifyNext, data: T): void;
-  notify(notification: NotifyComplete, data: Error | undefined): void;
-  notify(notification: Notification, data: T | Error | undefined): void;
+  notify(notification: NotifyComplete, data: Error | void): void;
+  notify(notification: Notification, data: T | Error | void): void;
 }

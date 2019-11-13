@@ -22,7 +22,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent = parent;
     }
 
-    notify(notif: Notification, data: T | Error | undefined) {
+    notify(notif: Notification, data: T | Error | void) {
       switch (notif) {
         case Notifications.next:
           this.parent.delegate.notify(notif, data);

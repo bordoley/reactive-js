@@ -19,7 +19,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.count = count;
   }
 
-  notify(notif: Notification, data: T | Error | undefined) {
+  notify(notif: Notification, data: T | Error | void) {
     switch (notif) {
       case Notifications.next:
         this.delegate.notify(notif, data);
@@ -30,7 +30,7 @@ class MergeObserver<T> implements ObserverLike<T> {
         } else {
           this.completedCount++;
           if (this.completedCount == this.count) {
-            this.delegate.notify(Notifications.complete, undefined);
+            this.delegate.notify(Notifications.complete);
           }
         }
     }

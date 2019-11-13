@@ -35,7 +35,7 @@ export const ofArray = <T>(
           }
         }
 
-        subscriber.notify(Notifications.complete, undefined);
+        subscriber.notify(Notifications.complete);
       }
     };
 
