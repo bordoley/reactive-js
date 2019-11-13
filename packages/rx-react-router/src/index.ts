@@ -8,7 +8,7 @@ import {
 } from "@rx-min/rx-react";
 
 import { createElement, useCallback, useMemo } from "react";
-import { lift, pipe } from "@rx-min/ix-core";
+import { pipe } from "@rx-min/ix-core";
 import { scan } from "@rx-min/ix-operators";
 
 // React Native doesn't use a standard URI library so define

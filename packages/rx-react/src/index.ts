@@ -13,7 +13,7 @@ import {
 import { normalPriority } from "@rx-min/rx-react-scheduler";
 import { DisposableLike } from "@rx-min/rx-disposables";
 
-import { AsyncIterableLike, AsyncIteratorLike } from "@rx-min/ix-core";
+import { AsyncIteratorLike } from "@rx-min/ix-core";
 
 export const useResource = <T extends DisposableLike>(
   factory: () => T,
@@ -91,10 +91,4 @@ export const useAsyncIteratorFactory = <TReq, T>(
   const value = useObservable(iterator);
 
   return [value, dispatch];
-};
-
-export const useAsyncIterable = <TReq, T>(
-  iterable: AsyncIterableLike<TReq, T>,
-): [T | undefined, (req: TReq) => void] => {
-  return useAsyncIteratorFactory(() => iterable.iterateAsync(), [iterable]);
 };
