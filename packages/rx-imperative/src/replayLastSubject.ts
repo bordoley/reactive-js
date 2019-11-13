@@ -32,14 +32,14 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {
-      const innerSubscription = this.scheduler.schedule(
-        (_: () => boolean) => {
-          const { data, event } = this;
-          if (event !== undefined) { subscriber.notify(event, data); }
-          subscriber.subscription.remove(innerSubscription);
-          this.subject.subscribe(subscriber);          
-        },
-      );
+      const innerSubscription = this.scheduler.schedule((_: () => boolean) => {
+        const { data, event } = this;
+        if (event !== undefined) {
+          subscriber.notify(event, data);
+        }
+        subscriber.subscription.remove(innerSubscription);
+        this.subject.subscribe(subscriber);
+      });
 
       subscriber.subscription.add(innerSubscription);
     }

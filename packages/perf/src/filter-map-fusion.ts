@@ -1,7 +1,4 @@
-
-
-const Benchmark = require('benchmark');
-
+const Benchmark = require("benchmark");
 
 const createSrcData = (n: number) => {
   const src = new Array(n);
@@ -9,43 +6,43 @@ const createSrcData = (n: number) => {
     src[i] = i;
   }
   return src;
-}
+};
 
 const add1 = (x: number) => x + 1;
 const even = (x: number) => x % 2 === 0;
 const odd = (x: number) => x % 2 !== 0;
 const sum = (x: number, y: number) => x + y;
 
-
 export const run = (n: number) => {
   const src = createSrcData(n);
 
   const suite = Benchmark.Suite(`filter -> map -> fusion ${n} integers`);
 
-  suite.add('rx-min', () => {
-    const { lift } = require('@rx-min/rx-core');
-    const { ofArray } = require('@rx-min/rx-observables');
-    const { keep, map, scan } = require('@rx-min/rx-operators');
-    const { run } = require('./runners/rx-min-runner');
+  suite
+    .add("rx-min", () => {
+      const { lift } = require("@rx-min/rx-core");
+      const { ofArray } = require("@rx-min/rx-observables");
+      const { keep, map, scan } = require("@rx-min/rx-operators");
+      const { run } = require("./runners/rx-min-runner");
 
-    const observable = lift(
-      ofArray(src),
-      map(add1),
-      keep(odd),
-      map(add1),
-      map(add1),
-      keep(even),
-      scan(sum, 0),
-    );
+      const observable = lift(
+        ofArray(src),
+        map(add1),
+        keep(odd),
+        map(add1),
+        map(add1),
+        keep(even),
+        scan(sum, 0),
+      );
 
-    run(observable);
-  }).add('rx-js', () => {
-    const { from } = require('rxjs');
-    const { filter, map, scan  } = require('rxjs/operators');
-    const { run } = require('./runners/rxjs-runner');
+      run(observable);
+    })
+    .add("rx-js", () => {
+      const { from } = require("rxjs");
+      const { filter, map, scan } = require("rxjs/operators");
+      const { run } = require("./runners/rxjs-runner");
 
-    const observable =
-      from(src).pipe(
+      const observable = from(src).pipe(
         map(add1),
         filter(odd),
         map(add1),
@@ -53,8 +50,8 @@ export const run = (n: number) => {
         filter(even),
         scan(sum, 0),
       );
-    run(observable);
-  })
+      run(observable);
+    });
 
   return suite;
 };

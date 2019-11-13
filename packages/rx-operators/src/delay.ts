@@ -9,9 +9,7 @@ import {
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
-  private readonly queue: Array<
-    [number, Notification, T | Error | void]
-  > = [];
+  private readonly queue: Array<[number, Notification, T | Error | void]> = [];
 
   constructor(delegate: SubscriberLike<T>, delay: number) {
     super(delegate);

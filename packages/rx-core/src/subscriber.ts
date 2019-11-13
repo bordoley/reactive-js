@@ -24,11 +24,10 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   constructor(delegate: SubscriberLike<B>) {
     this.delegate = delegate;
 
-    // We track the source to improve the performance 
+    // We track the source to improve the performance
     // of the isConnected lookup that happens in notify.
-    this.source = (delegate instanceof DelegatingSubscriber)
-      ? delegate.source
-      : delegate;
+    this.source =
+      delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
 
     delegate.subscription.add(
       Disposable.create(() => {

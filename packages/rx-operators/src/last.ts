@@ -18,10 +18,11 @@ class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onComplete(data: Error | void) {
     if (this.last !== undefined) {
-      this.delegate.notify(Notifications.next, this.last)
+      this.delegate.notify(Notifications.next, this.last);
     }
     this.delegate.notify(Notifications.complete, data);
   }
 }
 
-export const last = <T>(subscriber: SubscriberLike<T>): SubscriberLike<T> => new LastSubscriber(subscriber);
+export const last = <T>(subscriber: SubscriberLike<T>): SubscriberLike<T> =>
+  new LastSubscriber(subscriber);
