@@ -31,7 +31,7 @@ export const run = (m: number, n: number) => {
       const { lift } = require("@rx-min/rx-core");
       const { merge, ofArray } = require("@rx-min/rx-observables");
       const { last, scan } = require("@rx-min/rx-operators");
-      const { run } = require("./runners/rx-min-runner");
+      const { run } = require("./rx-min-runner");
 
       const streams = src.map(x => ofArray(x));
       const observable = lift(merge.apply(undefined, streams), scan(sum, 0));
@@ -41,7 +41,7 @@ export const run = (m: number, n: number) => {
     .add("rx-js", () => {
       const { merge, from } = require("rxjs");
       const { last, scan } = require("rxjs/operators");
-      const { run } = require("./runners/rxjs-runner");
+      const { run } = require("./rxjs-runner");
 
       const streams = src.map(x => from(x));
       const observable = merge.apply(undefined, streams).pipe(scan(sum, 0));
