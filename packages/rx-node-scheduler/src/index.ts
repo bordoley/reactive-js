@@ -83,7 +83,7 @@ class RxNodeSchedulerImpl implements SchedulerLike {
   ): DisposableLike {
     const disposable = SerialDisposable.create();
     const shouldYield = () => {
-      return disposable.isDisposed || (this.startTime + this.timeout) < this.now;
+      return disposable.isDisposed || this.startTime + this.timeout < this.now;
     };
 
     const ctx: SchedulerCtx = {
@@ -103,7 +103,8 @@ class RxNodeSchedulerImpl implements SchedulerLike {
   }
 }
 
-const create = (timeout: number): SchedulerLike => new RxNodeSchedulerImpl(timeout);
+const create = (timeout: number): SchedulerLike =>
+  new RxNodeSchedulerImpl(timeout);
 
 export const RxNodeScheduler = {
   create,

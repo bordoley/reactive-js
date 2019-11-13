@@ -4,6 +4,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "tsc -b packages/rx-disposables packages/rx-core packages/rx-operators packages/rx-observables packages/rx-imperative packages/ix-core packages/ix-operators packages/ix-state-container packages/rx-node-scheduler packages/rx-react-scheduler packages/rx-react-hooks packages/rx-virtualtime-scheduler packages/rx-dom packages/rx-react-router packages/rx-react-router-dom packages/rx-example packages/perf",
     "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo",
+    "example": "node ./packages/rx-example/dist/index.js",
     "format": "prettier --write packages/**/src/** packages/**/test/**/*",
     "perf": "node ./packages/perf/dist/index.js"
   },

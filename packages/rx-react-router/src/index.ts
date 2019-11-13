@@ -11,7 +11,6 @@ import { scan } from "@rx-min/ix-operators";
 import { SchedulerLike } from "@rx-min/rx-core";
 import { normalPriority } from "@rx-min/rx-react-scheduler";
 
-
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
 export interface RelativeURI {
@@ -143,7 +142,11 @@ const createRouter = <TContext>(
     );
 
   const RxReactRouter = (props: TContext) => {
-    const [route, uriUpdater] = useAsyncIterator(routePairFactory, [], scheduler);
+    const [route, uriUpdater] = useAsyncIterator(
+      routePairFactory,
+      [],
+      scheduler,
+    );
 
     const child =
       route !== undefined
