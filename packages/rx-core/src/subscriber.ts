@@ -42,7 +42,9 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   }
 
   get scheduler() {
-    return this.source.scheduler;
+    // We allow operators to override the scheduler to enable
+    // scheduler hopping.
+    return this.delegate.scheduler;
   }
 
   get subscription() {
