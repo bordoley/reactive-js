@@ -1,6 +1,4 @@
 import {
-  connect as connectOnScheduler,
-  ObservableLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
   SchedulerLike,
