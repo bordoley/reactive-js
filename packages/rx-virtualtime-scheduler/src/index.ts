@@ -75,18 +75,19 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return disposable;
   }
 
-  private advance() {
+  private get next(){
     const now = this.now;
-    const workQueue = this.timeQueue[now] || [];
-    while (workQueue.length > 0) {
-      const work = workQueue.shift() as () => void;
-      work();
-    }
+    return this.timeQueue[now] || [];
   }
 
   run() {
     while (this.moveNext()) {
-      this.advance();
+      const workQueue = this.next;
+
+      while (workQueue.length > 0) {
+        const work = workQueue.shift() as () => void;
+        work();
+      }
     }
   }
 }
