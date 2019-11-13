@@ -7,13 +7,14 @@ export interface VirtualTimeSchedulerLike extends SchedulerLike {
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private readonly timeQueue: { [key: number]: Array<() => void> } = {};
-  private _now = 0;
+  private _now = -1;
 
   get now(): number {
     return this._now;
   }
 
-  private get hasMoreWork() {
+  private moveNext() {
+    this._now++;
     for (let key in this.timeQueue) {
       if (this.timeQueue.hasOwnProperty(key)) return true;
     }
@@ -82,11 +83,10 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     }
 
     delete this.timeQueue[now];
-    this._now++;
   }
 
   run() {
-    while (this.hasMoreWork) {
+    while (this.moveNext()) {
       this.advance();
     }
   }
