@@ -14,6 +14,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   }
 
   private moveNext() {
+    delete this.timeQueue[this.now];
     this._now++;
     for (let key in this.timeQueue) {
       if (this.timeQueue.hasOwnProperty(key)) return true;
@@ -23,7 +24,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   private scheduleInternal(work: () => void, delay: number | void) {
     const now = this.now;
-    const scheduledTime = now + (delay || 0);
+    const scheduledTime = now + (delay || 0) + 1;
 
     const queueAtScheduledTime = this.timeQueue[scheduledTime];
     if (queueAtScheduledTime !== undefined) {
@@ -81,8 +82,6 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
       const work = workQueue.shift() as () => void;
       work();
     }
-
-    delete this.timeQueue[now];
   }
 
   run() {
