@@ -20,9 +20,9 @@ const sum = (x: number, y: number) => x + y;
 export const run = (n: number) => {
   const src = createSrcData(n);
 
-  const suite = Benchmark.Suite(`filter -> map -> fusion ${n} integers`);
+  const suite = new Benchmark.Suite(`filter -> map -> reduce ${n} integers`);
 
-  suite.add('rx-min', () => {
+  suite.add('rx-min', (deferred: any) => {
     const { lift } = require('@rx-min/rx-core');
     const { ofArray } = require('@rx-min/rx-observables');
     const { keep, map, scan } = require('@rx-min/rx-operators');
@@ -30,27 +30,21 @@ export const run = (n: number) => {
 
     const observable = lift(
       ofArray(src),
-      map(add1),
-      keep(odd),
-      map(add1),
-      map(add1),
       keep(even),
+      map(add1),
       scan(sum, 0),
     );
 
-    run(observable);
+    run(observable, deferred);
   }).add('rx-js', () => {
     const { from } = require('rxjs');
-    const { filter, map, scan  } = require('rxjs/operators');
+    const { filter, map, scan } = require('rxjs/operators');
     const { run } = require('./runners/rxjs-runner');
 
     const observable =
       from(src).pipe(
-        map(add1),
-        filter(odd),
-        map(add1),
-        map(add1),
         filter(even),
+        map(add1),
         scan(sum, 0),
       );
     run(observable);
