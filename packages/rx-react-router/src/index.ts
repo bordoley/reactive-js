@@ -8,6 +8,9 @@ import { useAsyncIterator } from "@rx-min/rx-react-hooks";
 import { createElement, useCallback, useMemo } from "react";
 import { pipe } from "@rx-min/ix-core";
 import { scan } from "@rx-min/ix-operators";
+import { SchedulerLike } from "@rx-min/rx-core";
+import { normalPriority } from "@rx-min/rx-react-scheduler";
+
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
@@ -129,6 +132,7 @@ const createRouter = <TContext>(
   notFoundComponent: React.ComponentType<RoutableComponentProps>,
   routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
   context: React.Context<TContext> | void,
+  scheduler: SchedulerLike = normalPriority,
 ): React.ComponentType<TContext> => {
   const routeMap = routes.reduce(routesReducer, {});
 
@@ -139,7 +143,7 @@ const createRouter = <TContext>(
     );
 
   const RxReactRouter = (props: TContext) => {
-    const [route, uriUpdater] = useAsyncIterator(routePairFactory, []);
+    const [route, uriUpdater] = useAsyncIterator(routePairFactory, [], scheduler);
 
     const child =
       route !== undefined

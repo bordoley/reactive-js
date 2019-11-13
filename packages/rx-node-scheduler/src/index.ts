@@ -22,7 +22,7 @@ type SchedulerCtx = {
   readonly shouldYield: () => boolean;
 };
 
-class RxNodeScheduler implements SchedulerLike {
+class RxNodeSchedulerImpl implements SchedulerLike {
   private readonly timeout: number;
   private startTime: number = this.now;
 
@@ -103,4 +103,8 @@ class RxNodeScheduler implements SchedulerLike {
   }
 }
 
-export const create = (timeout: number) => new RxNodeScheduler(timeout);
+const create = (timeout: number): SchedulerLike => new RxNodeSchedulerImpl(timeout);
+
+export const RxNodeScheduler = {
+  create,
+};

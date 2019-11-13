@@ -7,10 +7,11 @@ import {
   ignoreElements,
   onComplete,
 } from "@rx-min/rx-operators";
-import { scheduler } from "@rx-min/rx-node-scheduler";
+import { RxNodeScheduler } from "@rx-min/rx-node-scheduler";
 
 //import { VirtualTimeScheduler} from '@rx-min/rx-virtualtime-scheduler';
 //const scheduler = VirtualTimeScheduler.create();
+const scheduler = RxNodeScheduler.create(500);
 
 connect(
   lift(

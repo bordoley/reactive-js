@@ -54,20 +54,16 @@ const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
 const createRelativeURIRouter = <TContext>(
   notFoundComponent: React.ComponentType<RoutableComponentProps>,
   routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
-  options: {
-    context: React.Context<TContext> | void;
-    scheduler: SchedulerLike | void;
-  },
-): React.ComponentType<TContext> => {
-  const { context, scheduler = normalPriority } = options;
-
-  return RxReactRouter.create(
+  context: React.Context<TContext> | void,
+  scheduler: SchedulerLike = normalPriority,
+): React.ComponentType<TContext> =>
+  RxReactRouter.create(
     () => createRelativeURILocation(scheduler),
     notFoundComponent,
     routes,
     context,
+    scheduler,
   );
-};
 
 export const RelativeURILocation = {
   create: createRelativeURILocation,
