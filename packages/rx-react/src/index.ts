@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect, useState, useCallback } from "react";
 import {
   connect,
   lift,
@@ -12,6 +12,8 @@ import {
 
 import { normalPriority } from "@rx-min/rx-react-scheduler";
 import { DisposableLike } from "@rx-min/rx-disposables";
+
+import { AsyncIterableLike, AsyncIteratorLike } from "@rx-min/ix-core";
 
 export const useResource = <T extends DisposableLike>(
   factory: () => T,
@@ -78,4 +80,21 @@ export const useObservableResource = <T>(
 ): T | undefined => {
   const resource = useResource(factory, deps);
   return useObservable(resource, scheduler);
+};
+
+export const useAsyncIteratorFactory = <TReq, T>(
+  factory: () => AsyncIteratorLike<TReq, T>,
+  deps: readonly any[] | undefined,
+): [T | undefined, (req: TReq) => void] => {
+  const iterator = useResource(factory, deps);
+  const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
+  const value = useObservable(iterator);
+
+  return [value, dispatch];
+};
+
+export const useAsyncIterable = <TReq, T>(
+  iterable: AsyncIterableLike<TReq, T>,
+): [T | undefined, (req: TReq) => void] => {
+  return useAsyncIteratorFactory(() => iterable.iterateAsync(), [iterable]);
 };

@@ -9,6 +9,7 @@ export { SubscriberLike, DelegatingSubscriber } from "./subscriber";
 export {
   connect,
   lift,
+  liftResource,
   observe,
   Observable,
   ObservableLike,

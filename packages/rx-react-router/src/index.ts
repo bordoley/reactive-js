@@ -1,13 +1,15 @@
 import {
   StateUpdater,
-  ObservableStateResourceLike,
-} from "@rx-min/rx-observable-state";
+  StateContainerResourceLike,
+} from "@rx-min/ix-state-container";
 
-import { useResource, useObservable } from "@rx-min/rx-react";
+import {
+  useAsyncIteratorFactory
+} from "@rx-min/rx-react";
 
-import { createElement, useCallback, useMemo, Children } from "react";
-import { lift } from "@rx-min/rx-core";
-import { scan } from "@rx-min/rx-operators";
+import { createElement, useCallback, useMemo } from "react";
+import { lift, pipe } from "@rx-min/ix-core";
+import { scan } from "@rx-min/ix-operators";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
@@ -125,35 +127,28 @@ const pairify = (
   oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
 
 const createRouter = <TContext>(
-  locationResourceFactory: () => ObservableStateResourceLike<RelativeURI>,
+  locationResourceFactory: () => StateContainerResourceLike<RelativeURI>,
   notFoundComponent: React.ComponentType<RoutableComponentProps>,
   routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
   context: React.Context<TContext> | void,
 ): React.ComponentType<TContext> => {
   const routeMap = routes.reduce(routesReducer, {});
 
+  const routePairFactory = () =>
+    pipe(
+      locationResourceFactory(),
+      scan(pairify, [undefined, emptyRelativeURI]),
+    );
+
   const RxReactRouter = (props: TContext) => {
-    const locationResource = useResource(locationResourceFactory, []);
+    const [route, uriUpdater] = useAsyncIteratorFactory(routePairFactory, []);
 
-    const uriUpdater = useCallback(
-      (update: StateUpdater<RelativeURI>) => locationResource.dispatch(update),
-      [locationResource],
-    );
+    const child = route !== undefined
+      ? createElement(
+        routeMap[route[1].path] || notFoundComponent,
+        { referer: route[0], uri: route[1], uriUpdater}
+      ) : null;
 
-    const locationHistoryObservable = useMemo(
-      () =>
-        lift(locationResource, scan(pairify, [undefined, emptyRelativeURI])),
-      [locationResource],
-    );
-
-    const route = useObservable(locationHistoryObservable);
-
-    let child = null;
-    if (route !== undefined) {
-      const [referer, uri] = route;
-      const component = routeMap[uri.path] || notFoundComponent;
-      child = createElement(component, { referer, uri, uriUpdater });
-    }
 
     return context !== undefined
       ? createElement(context.Provider, { value: props, children: child })

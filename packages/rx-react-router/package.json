@@ -18,11 +18,13 @@
   },
   "dependencies": {
     "react": "16.11.0",
+    "@rx-min/ix-core": "0.0.0",
+    "@rx-min/ix-operators": "0.0.0",
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/rx-observable-state": "0.0.0",
+    "@rx-min/ix-state-container": "0.0.0",
     "@rx-min/rx-react": "0.0.0"
   },
   "devDependencies": {

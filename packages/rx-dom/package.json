@@ -21,6 +21,6 @@
     "@rx-min/rx-disposables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/rx-observable-state": "0.0.0"
+    "@rx-min/ix-state-container": "0.0.0"
   }
 }

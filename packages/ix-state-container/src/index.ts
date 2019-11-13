@@ -25,15 +25,15 @@ export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
-export interface ObservableStateLike<T> extends ObservableLike<T> {
+export interface StateContainerLike<T> extends ObservableLike<T> {
   dispatch(request: StateUpdater<T>): void;
 }
 
-export interface ObservableStateResourceLike<T>
+export interface StateContainerResourceLike<T>
   extends AsyncIteratorLike<StateUpdater<T>, T>,
-    ObservableStateLike<T> {}
+    StateContainerLike<T> {}
 
-class ObservableStateSubscriber<T> extends DelegatingSubscriber<
+class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   StateUpdater<T>,
   T
 > {
@@ -98,11 +98,11 @@ class ObservableStateSubscriber<T> extends DelegatingSubscriber<
   }
 }
 
-const observableState = <T>(initialState: T) => (
+const batchScanOnScheduler = <T>(initialState: T) => (
   subscriber: SubscriberLike<T>,
-) => new ObservableStateSubscriber(subscriber, initialState);
+) => new BatchScanOnSchedulerSubscriber(subscriber, initialState);
 
-class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
+class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
   private readonly delegate: ObservableLike<T>;
   private readonly disposable: DisposableLike;
@@ -116,7 +116,7 @@ class ObservableStateResourceImpl<T> implements ObservableStateResourceLike<T> {
     this.delegate = shareReplayLast(
       lift(
         this.dispatcher,
-        observableState(initialState),
+        batchScanOnScheduler(initialState),
         distinctUntilChanged(equals),
       ),
       scheduler,
@@ -151,9 +151,9 @@ const create = <T>(
   initialState: T,
   scheduler: SchedulerLike,
   equals: (a: T, b: T) => boolean = referenceEquality,
-): ObservableStateResourceLike<T> =>
-  new ObservableStateResourceImpl(initialState, scheduler, equals);
+): StateContainerResourceLike<T> =>
+  new StateContainerResourceImpl(initialState, scheduler, equals);
 
-export const ObservableStateResource = {
+export const StateContainerResource = {
   create,
 };

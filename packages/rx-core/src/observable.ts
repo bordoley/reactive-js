@@ -193,6 +193,117 @@ export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
 
+class LiftedObservableResource<T> implements ObservableResourceLike<T> {
+  readonly observable: ObservableLike<T>;
+  readonly disposable: DisposableLike;
+
+  constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
+    this.observable = observable;
+    this.disposable = disposable;
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  subscribe(subscriber: SubscriberLike<T>): void {
+    this.observable.subscribe(subscriber);
+  }
+}
+
+export function liftResource<T, A>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+): ObservableResourceLike<A>;
+export function liftResource<T, A, B>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+): ObservableResourceLike<B>;
+export function liftResource<T, A, B, C>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+): ObservableResourceLike<C>;
+export function liftResource<T, A, B, C, D>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+): ObservableResourceLike<D>;
+export function liftResource<T, A, B, C, D, E>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+): ObservableResourceLike<E>;
+export function liftResource<T, A, B, C, D, E, F>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+): ObservableResourceLike<F>;
+export function liftResource<T, A, B, C, D, E, F, G>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+): ObservableResourceLike<G>;
+export function liftResource<T, A, B, C, D, E, F, G, H>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+): ObservableResourceLike<H>;
+export function liftResource<T, A, B, C, D, E, F, G, H, I>(
+  src: ObservableResourceLike<T>,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>,
+): ObservableResourceLike<I>;
+export function liftResource(
+  source: ObservableResourceLike<any>,
+  operator: Operator<any, any>,
+  ...operators: Array<Operator<any, any>>
+): ObservableResourceLike<any> {
+  const observable = lift.apply(undefined, [
+    source instanceof LiftedObservableResource ? source.observable : source,
+    operator,
+    ...operators,
+  ] as any);
+
+  const disposable =
+    source instanceof LiftedObservableResource ? source.disposable : source;
+
+  return new LiftedObservableResource(observable, disposable);
+}
+
 const create = <T>(
   subscribe: (subscriber: SubscriberLike<T>) => void,
 ): ObservableLike<T> => ({ subscribe });

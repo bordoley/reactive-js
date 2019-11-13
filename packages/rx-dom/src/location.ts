@@ -3,11 +3,11 @@ import { connect, lift, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
 import { keep, onNext } from "@rx-min/rx-operators";
 import { merge } from "@rx-min/rx-observables";
 import {
-  ObservableStateLike,
-  ObservableStateResource,
-  ObservableStateResourceLike,
+  StateContainerLike,
+  StateContainerResource,
+  StateContainerResourceLike,
   StateUpdater,
-} from "@rx-min/rx-observable-state";
+} from "@rx-min/ix-state-container";
 
 import { observableEvent } from "./observableEvent";
 
@@ -18,14 +18,14 @@ const getCurrentLocation = () => {
   return path + query + fragment;
 };
 
-class DomLocationObservableStateResourceImpl
-  implements ObservableStateResourceLike<string> {
+class DomLocationStateContainerResourceImpl
+  implements StateContainerResourceLike<string> {
   private readonly disposable: DisposableLike;
-  private readonly observableState: ObservableStateLike<string>;
+  private readonly observableState: StateContainerLike<string>;
 
   constructor(scheduler: SchedulerLike) {
     const initialState = getCurrentLocation();
-    const observableState = ObservableStateResource.create(
+    const observableState = StateContainerResource.create(
       initialState,
       scheduler,
     );
@@ -70,8 +70,8 @@ class DomLocationObservableStateResourceImpl
 
 const create = (
   scheduler: SchedulerLike,
-): ObservableStateResourceLike<string> =>
-  new DomLocationObservableStateResourceImpl(scheduler);
+): StateContainerResourceLike<string> =>
+  new DomLocationStateContainerResourceImpl(scheduler);
 
 export const LocationState = {
   create,

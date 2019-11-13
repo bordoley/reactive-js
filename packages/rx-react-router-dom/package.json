@@ -19,7 +19,7 @@
   "dependencies": {
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-dom": "0.0.0",
-    "@rx-min/rx-observable-state": "0.0.0",
+    "@rx-min/ix-state-container": "0.0.0",
     "@rx-min/rx-react-router": "0.0.0",
     "@rx-min/rx-react-scheduler": "0.0.0"
   },
