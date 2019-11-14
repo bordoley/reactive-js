@@ -5,10 +5,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerLike,
-} from "@reactive-js/scheduler"
-
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {
   readonly scheduler: SchedulerLike;

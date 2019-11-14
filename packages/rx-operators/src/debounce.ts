@@ -5,9 +5,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerContinuation,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 

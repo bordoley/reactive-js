@@ -4,9 +4,7 @@ import {
   ObservableLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerContinuation,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 export const throws = <T>(
   error: Error,

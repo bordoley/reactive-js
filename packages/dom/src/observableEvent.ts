@@ -1,4 +1,8 @@
-import { Notifications, Observable, ObservableLike } from "@reactive-js/rx-core";
+import {
+  Notifications,
+  Observable,
+  ObservableLike,
+} from "@reactive-js/rx-core";
 
 import { Disposable } from "@reactive-js/disposables";
 

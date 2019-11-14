@@ -1,7 +1,4 @@
-import {
-  SchedulerContinuation,
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 import {
   Disposable,
   SerialDisposable,

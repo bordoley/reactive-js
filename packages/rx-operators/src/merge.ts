@@ -40,38 +40,46 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
 
     protected onNext(data: T) {
-      this.delegate.notify(Notifications.next, data);
+      this.parent.delegate.notify(Notifications.next, data);
     }
 
     protected onComplete(error: Error | void) {
       this.parent.activeCount--;
       this.parent.subscription.remove(this.subscription);
 
-      const nextObs = this.parent.queue.shift();
-
       if (error !== undefined) {
         this.parent.notify(Notifications.complete, error);
-      } else if (nextObs !== undefined) {
-        this.parent.connectNext(nextObs);
+      } else {
+        this.parent.connectNext();
       }
     }
   };
 
-  private innerOperator: Operator<T, T> = subscriber =>
-    new MergeSubscriber.InnerSubscriber(subscriber, this);
+  private static innerOperator = <T>(
+    parent: MergeSubscriber<T>,
+  ): Operator<T, T> => subscriber =>
+    new MergeSubscriber.InnerSubscriber(subscriber, parent);
 
-  private connectNext(next: ObservableLike<T>) {
-    this.activeCount++;
-    this.subscription.add(
-      connect(lift(next, this.innerOperator), this.scheduler),
-    );
+  private connectNext() {
+    if (this.activeCount < this.maxConcurrency) {
+      const nextObs = this.queue.shift();
+
+      if (nextObs !== undefined) {
+        this.activeCount++;
+        this.subscription.add(
+          connect(
+            lift(nextObs, MergeSubscriber.innerOperator(this)),
+            this.scheduler,
+          ),
+        );
+      }
+    }
   }
 
   protected onNext(next: ObservableLike<T>) {
-    if (this.activeCount < this.maxConcurrency) {
-      this.connectNext(next);
-    } else if (this.queue.length < this.maxBufferSize) {
+    if (this.queue.length < this.maxBufferSize) {
       this.queue.push(next);
+      this.connectNext();
     }
   }
 
@@ -82,11 +90,19 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 }
 
-export const merge = <T>({
-  maxBufferSize = Number.MAX_SAFE_INTEGER,
-  maxConcurrency = Number.MAX_SAFE_INTEGER,
-}): Operator<ObservableLike<T>, T> => subscriber =>
-  new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
+export const merge = <T>(
+  options: {
+    maxBufferSize?: number;
+    maxConcurrency?: number;
+  } = {},
+): Operator<ObservableLike<T>, T> => {
+  const {
+    maxBufferSize = Number.MAX_SAFE_INTEGER,
+    maxConcurrency = Number.MAX_SAFE_INTEGER,
+  } = options;
+  return subscriber =>
+    new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
+};
 
 export const concat = <T>(): Operator<ObservableLike<T>, T> =>
   merge({ maxConcurrency: 1 });

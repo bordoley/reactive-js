@@ -11,7 +11,10 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { SerialDisposable, SerialDisposableLike } from "@reactive-js/disposables";
+import {
+  SerialDisposable,
+  SerialDisposableLike,
+} from "@reactive-js/disposables";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;

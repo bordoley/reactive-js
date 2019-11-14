@@ -9,9 +9,7 @@ import {
   ObservableResourceLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { DisposableLike } from "@reactive-js/disposables";

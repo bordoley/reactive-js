@@ -2,9 +2,7 @@ import { Subject, SubjectLike } from "./subject";
 
 import { Notification, SubscriberLike } from "@reactive-js/rx-core";
 
-import {
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();

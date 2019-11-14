@@ -7,9 +7,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";

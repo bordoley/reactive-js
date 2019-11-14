@@ -6,9 +6,7 @@ import {
   Notifications,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerContinuation,
-} from "@reactive-js/scheduler"
+import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;

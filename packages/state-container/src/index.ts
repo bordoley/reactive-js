@@ -9,10 +9,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import {
-  SchedulerLike,
-  SchedulerContinuation,
-} from"@reactive-js/scheduler";
+import { SchedulerLike, SchedulerContinuation } from "@reactive-js/scheduler";
 
 import { distinctUntilChanged } from "@reactive-js/rx-operators";
 

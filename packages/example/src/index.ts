@@ -1,8 +1,14 @@
 import { connect, lift } from "@reactive-js/rx-core";
-import { ofDelayedValues, generate, merge } from "@reactive-js/rx-observables";
+import {
+  ofDelayedValues,
+  generate,
+  ofArray,
+} from "@reactive-js/rx-observables";
 import {
   keep,
   map,
+  merge,
+  concat,
   onNext,
   ignoreElements,
   onComplete,
@@ -38,10 +44,19 @@ connect(
 
 connect(
   lift(
-    merge(
-      generate(x => x + 2, 1),
-      generate(x => x + 2, 0),
+    generate(x => x + 1, 0, 500),
+    map(x =>
+      ofArray(
+        [
+          [x, 1],
+          [x, 2],
+          [x, 3],
+          [x, 4],
+        ],
+        1000,
+      ),
     ),
+    merge(),
     onNext(console.log),
   ),
   scheduler,
