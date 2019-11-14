@@ -2,7 +2,7 @@ import {
   CompositeDisposable,
   CompositeDisposableLike,
   DisposableLike,
-} from "@rx-min/rx-disposables";
+} from "@rx-min/disposables";
 
 import {
   throwIfNotConnected,

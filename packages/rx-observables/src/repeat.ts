@@ -11,7 +11,7 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import { SerialDisposable, SerialDisposableLike } from "@rx-min/rx-disposables";
+import { SerialDisposable, SerialDisposableLike } from "@rx-min/disposables";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;

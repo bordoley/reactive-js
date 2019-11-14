@@ -17,6 +17,6 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/rx-disposables": "0.0.0"
+    "@rx-min/disposables": "0.0.0"
   }
 }

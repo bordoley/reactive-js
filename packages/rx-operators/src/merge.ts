@@ -7,7 +7,7 @@ import {
   Operator,
   SubscriberLike,
 } from "@rx-min/rx-core";
-import { Disposable } from "@rx-min/rx-disposables";
+import { Disposable } from "@rx-min/disposables";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly maxBufferSize: number;

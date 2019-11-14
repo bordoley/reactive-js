@@ -1,4 +1,4 @@
-import { Disposable } from "@rx-min/rx-disposables";
+import { Disposable } from "@rx-min/disposables";
 import {
   connect,
   lift,

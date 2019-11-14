@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-imperative",
+  "name": "@rx-min/example",
   "version": "0.0.0",
-  "description": "RxImperative",
+  "description": "Rx example",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,7 +17,9 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0"
+    "@rx-min/rx-core": "0.0.0",
+    "@rx-min/rx-observables": "0.0.0",
+    "@rx-min/rx-operators": "0.0.0",
+    "@rx-min/node-scheduler": "0.0.0"
   }
 }

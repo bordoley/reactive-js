@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-imperative",
+  "name": "@rx-min/node-scheduler",
   "version": "0.0.0",
-  "description": "RxImperative",
+  "description": "Node.js scheduler",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [

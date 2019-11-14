@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-imperative",
+  "name": "@rx-min/disposables",
   "version": "0.0.0",
-  "description": "RxImperative",
+  "description": "Disposables",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -15,9 +15,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/bordoley/rx-min.git"
-  },
-  "dependencies": {
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0"
   }
 }

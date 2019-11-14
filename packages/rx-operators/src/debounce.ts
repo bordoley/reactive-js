@@ -7,7 +7,7 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
+import { Disposable, SerialDisposable } from "@rx-min/disposables";
 
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;

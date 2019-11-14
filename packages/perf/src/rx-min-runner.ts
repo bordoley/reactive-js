@@ -1,5 +1,5 @@
 import { connect, ObservableLike } from "@rx-min/rx-core";
-import { VirtualTimeScheduler } from "@rx-min/rx-virtualtime-scheduler";
+import { VirtualTimeScheduler } from "@rx-min/virtualtime-scheduler";
 
 export const run = <T>(observable: ObservableLike<T>) => {
   const scheduler = VirtualTimeScheduler.create();

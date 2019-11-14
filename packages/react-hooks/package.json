@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-imperative",
+  "name": "@rx-min/react-hooks",
   "version": "0.0.0",
-  "description": "RxImperative",
+  "description": "React bindings for RX",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,7 +17,13 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
+    "react": "16.11.0",
+    "@rx-min/ix-core": "0.0.0",
     "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0"
+    "@rx-min/rx-core": "0.0.0",
+    "@rx-min/react-scheduler": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11"
   }
 }

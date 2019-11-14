@@ -10,7 +10,7 @@ import {
   observe,
   ObserverLike,
 } from "@rx-min/rx-core";
-import { Disposable, SerialDisposable } from "@rx-min/rx-disposables";
+import { Disposable, SerialDisposable } from "@rx-min/disposables";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly innerSubscription = SerialDisposable.create();

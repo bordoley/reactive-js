@@ -1,4 +1,4 @@
-import { DisposableLike } from "@rx-min/rx-disposables";
+import { DisposableLike } from "@rx-min/disposables";
 
 export interface SchedulerContinuation {
   (shouldYield: () => boolean): SchedulerContinuationResult;

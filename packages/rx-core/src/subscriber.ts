@@ -1,4 +1,4 @@
-import { CompositeDisposableLike, Disposable } from "@rx-min/rx-disposables";
+import { CompositeDisposableLike, Disposable } from "@rx-min/disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
 import { SchedulerLike } from "./scheduler";

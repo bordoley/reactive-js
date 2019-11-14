@@ -5,18 +5,18 @@
       { "path": "ix-operators" },
       { "path": "perf" },
       { "path": "rx-core" },
-      { "path": "rx-disposables" },
-      { "path": "rx-dom" },
-      { "path": "rx-example" },
+      { "path": "disposables" },
+      { "path": "dom" },
+      { "path": "example" },
       { "path": "rx-imperative" },
-      { "path": "rx-node-scheduler" },
-      { "path": "ix-state-container" },
+      { "path": "node-scheduler" },
+      { "path": "state-container" },
       { "path": "rx-observables" },
       { "path": "rx-operators" },
-      { "path": "rx-react-hooks" },
-      { "path": "rx-react-router" },
-      { "path": "rx-react-dom-router" },
-      { "path": "rx-react-scheduler" },
-      { "path": "rx-virtualtime-scheduler" }
+      { "path": "react-hooks" },
+      { "path": "react-router" },
+      { "path": "react-dom-router" },
+      { "path": "react-scheduler" },
+      { "path": "virtualtime-scheduler" }
   ]
 }

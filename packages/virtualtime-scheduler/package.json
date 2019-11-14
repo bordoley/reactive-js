@@ -1,7 +1,7 @@
 {
-  "name": "@rx-min/rx-imperative",
+  "name": "@rx-min/virtualtime-scheduler",
   "version": "0.0.0",
-  "description": "RxImperative",
+  "description": "Virtual time scheduler",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [

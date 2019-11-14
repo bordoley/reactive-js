@@ -4,7 +4,7 @@ import {
   SubscriberLike,
 } from "@rx-min/rx-core";
 
-import { DisposableLike } from "@rx-min/rx-disposables";
+import { DisposableLike } from "@rx-min/disposables";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;
