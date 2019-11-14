@@ -47,25 +47,25 @@ export interface Operator<TSrcReq, TSrc, TReq, T> {
   (iterator: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
 }
 
-export function pipe<TReq, T, TReqA, TA>(
+function pipe<TReq, T, TReqA, TA>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
 ): AsyncIteratorLike<TReqA, TA>;
 
-export function pipe<TReq, T, TReqA, TA, TReqB, TB>(
+function pipe<TReq, T, TReqA, TA, TReqB, TB>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
 ): AsyncIteratorLike<TReqB, TB>;
 
-export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
+function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
   op3: Operator<TReqB, TB, TReqC, TC>,
 ): AsyncIteratorLike<TReqC, TC>;
 
-export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
+function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   src: AsyncIteratorLike<TReq, T>,
   op1: Operator<TReq, T, TReqA, TA>,
   op2: Operator<TReqA, TA, TReqB, TB>,
@@ -73,7 +73,7 @@ export function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   op4: Operator<TReqC, TC, TReqD, TD>,
 ): AsyncIteratorLike<TReqD, TD>;
 
-export function pipe<
+function pipe<
   TReq,
   T,
   TReqA,
@@ -95,7 +95,7 @@ export function pipe<
   op5: Operator<TReqD, TD, TReqE, TE>,
 ): AsyncIteratorLike<TReqE, TE>;
 
-export function pipe<
+function pipe<
   TReq,
   T,
   TReqA,
@@ -120,7 +120,7 @@ export function pipe<
   op6: Operator<TReqE, TE, TReqF, TF>,
 ): AsyncIteratorLike<TReqF, TF>;
 
-export function pipe<
+function pipe<
   TReq,
   T,
   TReqA,
@@ -148,7 +148,7 @@ export function pipe<
   op7: Operator<TReqF, TF, TReqG, TG>,
 ): AsyncIteratorLike<TReqG, TG>;
 
-export function pipe<
+function pipe<
   TReq,
   T,
   TReqA,
@@ -179,7 +179,7 @@ export function pipe<
   op8: Operator<TReqG, TG, TReqH, TH>,
 ): AsyncIteratorLike<TReqH, TH>;
 
-export function pipe<
+function pipe<
   TReq,
   T,
   TReqA,
@@ -213,7 +213,7 @@ export function pipe<
   op9: Operator<TReqH, TH, TReqI, TI>,
 ): AsyncIteratorLike<TReqI, TI>;
 
-export function pipe(
+function pipe(
   iterator: AsyncIteratorLike<any, any>,
   operator: Operator<any, any, any, any>,
   ...operators: Operator<any, any, any, any>[]
@@ -226,3 +226,8 @@ export function pipe(
 
   return retval;
 }
+
+
+export const AsyncIterator = {
+  pipe,
+};

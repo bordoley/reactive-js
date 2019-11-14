@@ -5,7 +5,7 @@ import {
 } from "@reactive-js/react-router";
 import { StateUpdater } from "@reactive-js/state-container";
 
-import { pipe } from "@reactive-js/ix-core";
+import { AsyncIterator } from "@reactive-js/ix-core";
 import {
   distinctUntilChanged as ixDistinctUntilChanged,
   map as ixMap,
@@ -44,7 +44,7 @@ const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
 const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
-  pipe(
+  AsyncIterator.pipe(
     LocationState.create(scheduler),
     ixMap(mapper),
     ixMapRequest(requestMapper),
