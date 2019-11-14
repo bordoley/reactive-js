@@ -43,16 +43,19 @@ subscription.dispose();
 
 ### Static Functions
 
-*connect*
+*`connect<T>(
+  observable: ObservableLike<T>,
+  scheduler: SchedulerLike,
+): DisposableLike`*
 
-*observe*
+*`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
-*Notifications.next: NotifyNext*
+*`Notifications.next: NotifyNext`*
 
-*Notifications.complete: NotifyComplete*
+*`Notifications.complete: NotifyComplete`*
 
-*Observable.create*
+*`Observable.create<T>(subscribe: (subscriber: SubscriberLike<T>) => void): ObservableLike<T>`*
 
-*Observable.lift*
+*`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
-*ObservableResource.lift*
+*`ObservableResource.lift(source: ObservableResourceLike<any>, operator: Operator<any, any>, ...operators: Array<Operator<any, any>>): ObservableResourceLike<any>`*
