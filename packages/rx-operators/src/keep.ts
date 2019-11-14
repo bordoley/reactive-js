@@ -3,7 +3,7 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   private predicate: (data: T) => boolean;

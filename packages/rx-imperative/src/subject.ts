@@ -1,11 +1,11 @@
-import { Disposable } from "@rx-min/disposables";
+import { Disposable } from "@reactive-js/disposables";
 
 import {
   ObservableResourceLike,
   ObserverLike,
   Notification,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 export interface SubjectLike<T>
   extends ObserverLike<T>,

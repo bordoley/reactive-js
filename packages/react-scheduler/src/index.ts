@@ -11,14 +11,14 @@ import {
   unstable_scheduleCallback,
 } from "scheduler";
 
-import { SchedulerContinuation, SchedulerLike } from "@rx-min/scheduler";
+import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   Disposable,
   SerialDisposable,
   DisposableLike,
   SerialDisposableLike,
-} from "@rx-min/disposables";
+} from "@reactive-js/disposables";
 
 class RxReactScheduler implements SchedulerLike {
   private readonly priorityLevel: number;

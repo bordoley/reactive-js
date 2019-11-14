@@ -1,13 +1,13 @@
 import {
   SchedulerContinuation,
   SchedulerLike,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 import {
   Disposable,
   SerialDisposable,
   DisposableLike,
   SerialDisposableLike,
-} from "@rx-min/disposables";
+} from "@reactive-js/disposables";
 
 // This is a tremendously poor scheduler because it allows task to run until they've been
 // disposed. It would be better to do something similar to the react scheduler which maintains

@@ -1,7 +1,7 @@
-import { scan as observableScan } from "@rx-min/rx-operators";
+import { scan as observableScan } from "@reactive-js/rx-operators";
 import { lift } from "./lift";
 
-import { Operator } from "@rx-min/ix-core";
+import { Operator } from "@reactive-js/ix-core";
 
 export const scan = <TReq, T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,

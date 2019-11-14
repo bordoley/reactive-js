@@ -1,4 +1,4 @@
-import { DisposableLike, Disposable } from "@rx-min/disposables";
+import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import {
   connect,
@@ -7,22 +7,22 @@ import {
   Notifications,
   ObservableLike,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerLike,
   SchedulerContinuation,
-} from"@rx-min/scheduler";
+} from"@reactive-js/scheduler";
 
-import { distinctUntilChanged } from "@rx-min/rx-operators";
+import { distinctUntilChanged } from "@reactive-js/rx-operators";
 
 import {
   EventResource,
   EventResourceLike,
   shareReplayLast,
-} from "@rx-min/rx-imperative";
+} from "@reactive-js/rx-imperative";
 
-import { AsyncIteratorLike } from "@rx-min/ix-core";
+import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
 export interface StateUpdater<T> {
   (oldState: T): T;

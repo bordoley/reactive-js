@@ -1,4 +1,4 @@
-import { DisposableLike } from "@rx-min/disposables";
+import { DisposableLike } from "@reactive-js/disposables";
 
 export interface SchedulerContinuation {
   (shouldYield: () => boolean): SchedulerContinuationResult;

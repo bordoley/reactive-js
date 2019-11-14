@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/scheduler",
+  "name": "@reactive-js/scheduler",
   "version": "0.0.0",
   "description": "RxCore",
   "main": "dist/index.js",
@@ -17,6 +17,6 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/disposables": "0.0.0"
+    "@reactive-js/disposables": "0.0.0"
   }
 }

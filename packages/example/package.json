@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/example",
+  "name": "@reactive-js/example",
   "version": "0.0.0",
   "description": "Rx example",
   "main": "dist/index.js",
@@ -17,9 +17,9 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/rx-core": "0.0.0",
-    "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/node-scheduler": "0.0.0"
+    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-observables": "0.0.0",
+    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/node-scheduler": "0.0.0"
   }
 }

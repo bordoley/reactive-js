@@ -2,7 +2,7 @@ import {
   DelegatingSubscriber,
   Notifications,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
   // FIXME: This won't work with Bucklescript optional values

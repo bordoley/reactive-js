@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/react-dom-router",
+  "name": "@reactive-js/react-dom-router",
   "version": "0.0.0",
   "description": "Rx React dom router",
   "main": "dist/index.js",
@@ -17,11 +17,11 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/dom": "0.0.0",
-    "@rx-min/state-container": "0.0.0",
-    "@rx-min/react-router": "0.0.0",
-    "@rx-min/react-scheduler": "0.0.0",
-    "@rx-min/scheduler": "0.0.0"
+    "@reactive-js/dom": "0.0.0",
+    "@reactive-js/state-container": "0.0.0",
+    "@reactive-js/react-router": "0.0.0",
+    "@reactive-js/react-scheduler": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.11"

@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/dom",
+  "name": "@reactive-js/dom",
   "version": "0.0.0",
   "description": "Rx dom hooks",
   "main": "dist/index.js",
@@ -17,11 +17,11 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/rx-core": "0.0.0",
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/rx-observables": "0.0.0",
-    "@rx-min/scheduler": "0.0.0",
-    "@rx-min/state-container": "0.0.0"
+    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/rx-observables": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0",
+    "@reactive-js/state-container": "0.0.0"
   }
 }

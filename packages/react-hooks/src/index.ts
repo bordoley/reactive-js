@@ -7,16 +7,16 @@ import {
   Notifications,
   ObservableLike,
   ObservableResourceLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerLike,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 
-import { normalPriority } from "@rx-min/react-scheduler";
-import { DisposableLike } from "@rx-min/disposables";
+import { normalPriority } from "@reactive-js/react-scheduler";
+import { DisposableLike } from "@reactive-js/disposables";
 
-import { AsyncIteratorLike } from "@rx-min/ix-core";
+import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
 export const useResource = <T extends DisposableLike>(
   factory: () => T,

@@ -9,8 +9,8 @@ import {
   lift,
   observe,
   ObserverLike,
-} from "@rx-min/rx-core";
-import { Disposable, SerialDisposable } from "@rx-min/disposables";
+} from "@reactive-js/rx-core";
+import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly innerSubscription = SerialDisposable.create();

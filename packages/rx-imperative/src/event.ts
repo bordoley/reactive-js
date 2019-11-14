@@ -4,7 +4,7 @@ import {
   ObservableLike,
   ObservableResourceLike,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 export interface EventLike<T> extends ObservableLike<T> {
   dispatch(event: T): void;

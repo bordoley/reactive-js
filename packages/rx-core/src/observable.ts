@@ -2,7 +2,7 @@ import {
   CompositeDisposable,
   CompositeDisposableLike,
   DisposableLike,
-} from "@rx-min/disposables";
+} from "@reactive-js/disposables";
 
 import {
   throwIfNotConnected,
@@ -10,7 +10,7 @@ import {
   SubscriberLike,
 } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
-import { SchedulerLike } from "@rx-min/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;

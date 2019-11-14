@@ -3,7 +3,7 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private scanner: (acc: TAcc, next: T) => TAcc;

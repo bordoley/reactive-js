@@ -2,7 +2,7 @@ import {
   AsyncIteratorLike,
   DelegatingAsyncIterator,
   Operator,
-} from "@rx-min/ix-core";
+} from "@reactive-js/ix-core";
 
 export const mapRequest = <TSrcReq, TReq, T>(
   mapper: (v: TReq) => TSrcReq,

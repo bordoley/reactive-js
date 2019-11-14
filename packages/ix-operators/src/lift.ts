@@ -1,13 +1,13 @@
 import {
   lift as liftObservable,
   Operator as SubscriberOperator,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   AsyncIteratorLike,
   DelegatingAsyncIterator,
   Operator,
-} from "@rx-min/ix-core";
+} from "@reactive-js/ix-core";
 
 export const lift = <TReq>(
   operator: SubscriberOperator<any, any>,

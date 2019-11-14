@@ -1,13 +1,13 @@
-import { connect, lift } from "@rx-min/rx-core";
-import { ofDelayedValues, generate, merge } from "@rx-min/rx-observables";
+import { connect, lift } from "@reactive-js/rx-core";
+import { ofDelayedValues, generate, merge } from "@reactive-js/rx-observables";
 import {
   keep,
   map,
   onNext,
   ignoreElements,
   onComplete,
-} from "@rx-min/rx-operators";
-import { RxNodeScheduler } from "@rx-min/node-scheduler";
+} from "@reactive-js/rx-operators";
+import { RxNodeScheduler } from "@reactive-js/node-scheduler";
 
 const scheduler = RxNodeScheduler.create(1);
 /*

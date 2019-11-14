@@ -3,8 +3,8 @@ import {
   Notification,
   Notifications,
   Operator,
-} from "@rx-min/rx-core";
-export { observe } from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
+export { observe } from "@reactive-js/rx-core";
 
 export const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
   observe({

@@ -1,7 +1,7 @@
-import { CompositeDisposableLike, Disposable } from "@rx-min/disposables";
+import { CompositeDisposableLike, Disposable } from "@reactive-js/disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
-import { SchedulerLike } from "@rx-min/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly isConnected: boolean;

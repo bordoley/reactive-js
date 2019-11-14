@@ -6,8 +6,8 @@ import {
   ObservableLike,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
-import { Disposable } from "@rx-min/disposables";
+} from "@reactive-js/rx-core";
+import { Disposable } from "@reactive-js/disposables";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly maxBufferSize: number;

@@ -3,7 +3,7 @@ import {
   ObservableLike,
   SubscriberLike,
   Notifications,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,

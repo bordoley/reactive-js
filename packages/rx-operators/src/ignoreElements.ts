@@ -3,7 +3,7 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {

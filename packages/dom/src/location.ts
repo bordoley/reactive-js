@@ -1,14 +1,14 @@
-import { Disposable, DisposableLike } from "@rx-min/disposables";
-import { connect, lift, SubscriberLike } from "@rx-min/rx-core";
-import { SchedulerLike } from "@rx-min/scheduler";
-import { keep, onNext } from "@rx-min/rx-operators";
-import { merge } from "@rx-min/rx-observables";
+import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import { connect, lift, SubscriberLike } from "@reactive-js/rx-core";
+import { SchedulerLike } from "@reactive-js/scheduler";
+import { keep, onNext } from "@reactive-js/rx-operators";
+import { merge } from "@reactive-js/rx-observables";
 import {
   StateContainerLike,
   StateContainerResource,
   StateContainerResourceLike,
   StateUpdater,
-} from "@rx-min/state-container";
+} from "@reactive-js/state-container";
 
 import { observableEvent } from "./observableEvent";
 

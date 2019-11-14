@@ -3,7 +3,7 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;

@@ -2,12 +2,12 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 
 const alwaysFalse = () => false;
 

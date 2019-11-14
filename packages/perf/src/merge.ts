@@ -25,9 +25,9 @@ export const run = (m: number, n: number) => {
 
   suite
     .add("rx-min", () => {
-      const { lift } = require("@rx-min/rx-core");
-      const { merge, ofArray } = require("@rx-min/rx-observables");
-      const { scan } = require("@rx-min/rx-operators");
+      const { lift } = require("@reactive-js/rx-core");
+      const { merge, ofArray } = require("@reactive-js/rx-observables");
+      const { scan } = require("@reactive-js/rx-operators");
       const { run } = require("./rx-min-runner");
 
       const streams = src.map(x => ofArray(x));

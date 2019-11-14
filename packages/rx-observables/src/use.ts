@@ -4,7 +4,7 @@ import {
   observe,
   Observable,
   ObservableResourceLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 export const use = <T>(factory: () => ObservableResourceLike<T>) =>
   Observable.create(subscriber => {

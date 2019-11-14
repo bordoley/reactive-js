@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/ix-core",
+  "name": "@reactive-js/ix-core",
   "version": "0.0.0",
   "description": "interactive extensions",
   "main": "dist/index.js",
@@ -17,6 +17,6 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/rx-core": "0.0.0"
+    "@reactive-js/rx-core": "0.0.0"
   }
 }

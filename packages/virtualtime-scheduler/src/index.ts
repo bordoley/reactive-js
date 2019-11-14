@@ -1,5 +1,5 @@
-import { SchedulerContinuation, SchedulerLike } from "@rx-min/scheduler";
-import { Disposable, DisposableLike } from "@rx-min/disposables";
+import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
+import { Disposable, DisposableLike } from "@reactive-js/disposables";
 
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
   run(): void;

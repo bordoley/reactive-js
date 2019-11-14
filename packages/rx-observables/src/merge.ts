@@ -7,7 +7,7 @@ import {
   Observable,
   ObservableLike,
   ObserverLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class MergeObserver<T> implements ObserverLike<T> {
   private readonly delegate: ObserverLike<T>;

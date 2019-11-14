@@ -1,6 +1,6 @@
-import { Notifications, Observable, ObservableLike } from "@rx-min/rx-core";
+import { Notifications, Observable, ObservableLike } from "@reactive-js/rx-core";
 
-import { Disposable } from "@rx-min/disposables";
+import { Disposable } from "@reactive-js/disposables";
 
 export const observableEvent = <T>(
   target: EventTarget,

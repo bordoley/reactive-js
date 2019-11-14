@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/disposables",
+  "name": "@reactive-js/disposables",
   "version": "0.0.0",
   "description": "Disposables",
   "main": "dist/index.js",

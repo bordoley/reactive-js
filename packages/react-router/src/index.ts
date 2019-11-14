@@ -1,15 +1,15 @@
 import {
   StateUpdater,
   StateContainerResourceLike,
-} from "@rx-min/state-container";
+} from "@reactive-js/state-container";
 
-import { useAsyncIterator } from "@rx-min/react-hooks";
+import { useAsyncIterator } from "@reactive-js/react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
-import { pipe } from "@rx-min/ix-core";
-import { scan } from "@rx-min/ix-operators";
-import { SchedulerLike } from "@rx-min/scheduler";
-import { normalPriority } from "@rx-min/react-scheduler";
+import { pipe } from "@reactive-js/ix-core";
+import { scan } from "@reactive-js/ix-operators";
+import { SchedulerLike } from "@reactive-js/scheduler";
+import { normalPriority } from "@reactive-js/react-scheduler";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around

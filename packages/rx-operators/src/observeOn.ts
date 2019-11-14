@@ -3,12 +3,12 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerLike,
   SchedulerContinuation,
-} from "@rx-min/scheduler"
+} from "@reactive-js/scheduler"
 
 class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly observeOnScheduler: SchedulerLike;

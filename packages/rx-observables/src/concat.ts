@@ -1,4 +1,4 @@
-import { Disposable } from "@rx-min/disposables";
+import { Disposable } from "@reactive-js/disposables";
 
 import {
   connect,
@@ -9,7 +9,7 @@ import {
   Observable,
   ObservableLike,
   ObserverLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class ConcatObserver<T> implements ObserverLike<T> {
   private readonly delegate: ObserverLike<T>;

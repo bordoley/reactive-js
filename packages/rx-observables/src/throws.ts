@@ -2,11 +2,11 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 
 export const throws = <T>(
   error: Error,

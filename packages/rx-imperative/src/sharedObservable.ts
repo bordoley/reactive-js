@@ -1,15 +1,15 @@
-import { Disposable } from "@rx-min/disposables";
+import { Disposable } from "@reactive-js/disposables";
 import {
   connect,
   lift,
   observe,
   ObservableLike,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerLike,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 
 import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";

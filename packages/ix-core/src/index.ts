@@ -2,9 +2,9 @@ import {
   ObservableLike,
   ObservableResourceLike,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
-import { DisposableLike } from "@rx-min/disposables";
+import { DisposableLike } from "@reactive-js/disposables";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;

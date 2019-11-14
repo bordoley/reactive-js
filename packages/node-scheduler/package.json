@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/node-scheduler",
+  "name": "@reactive-js/node-scheduler",
   "version": "0.0.0",
   "description": "Node.js scheduler",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/scheduler": "0.0.0"
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0"
   }
 }

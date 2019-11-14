@@ -2,19 +2,19 @@ import {
   RxReactRouter,
   RelativeURI,
   RoutableComponentProps,
-} from "@rx-min/react-router";
-import { StateUpdater } from "@rx-min/state-container";
+} from "@reactive-js/react-router";
+import { StateUpdater } from "@reactive-js/state-container";
 
-import { pipe } from "@rx-min/ix-core";
+import { pipe } from "@reactive-js/ix-core";
 import {
   distinctUntilChanged as ixDistinctUntilChanged,
   map as ixMap,
   mapRequest as ixMapRequest,
-} from "@rx-min/ix-operators";
+} from "@reactive-js/ix-operators";
 
-import { LocationState } from "@rx-min/dom";
-import { SchedulerLike } from "@rx-min/scheduler";
-import { normalPriority } from "@rx-min/react-scheduler";
+import { LocationState } from "@reactive-js/dom";
+import { SchedulerLike } from "@reactive-js/scheduler";
+import { normalPriority } from "@reactive-js/react-scheduler";
 
 const mapper = (v: string): RelativeURI => {
   const parsedAccURL = new URL(v);

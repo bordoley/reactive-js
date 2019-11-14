@@ -3,13 +3,13 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
-} from "@rx-min/scheduler";
+} from "@reactive-js/scheduler";
 
-import { Disposable, SerialDisposable } from "@rx-min/disposables";
+import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;

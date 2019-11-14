@@ -3,11 +3,11 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerLike,
-} from "@rx-min/scheduler"
+} from "@reactive-js/scheduler"
 
 
 class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {

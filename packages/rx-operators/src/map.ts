@@ -3,7 +3,7 @@ import {
   Notifications,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
   mapper: (data: A) => B;

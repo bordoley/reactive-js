@@ -1,5 +1,5 @@
-import { distinctUntilChanged as observableDistinctUntilChanged } from "@rx-min/rx-operators";
-import { Operator } from "@rx-min/ix-core";
+import { distinctUntilChanged as observableDistinctUntilChanged } from "@reactive-js/rx-operators";
+import { Operator } from "@reactive-js/ix-core";
 import { lift } from "./lift";
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;

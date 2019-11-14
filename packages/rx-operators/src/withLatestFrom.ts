@@ -9,7 +9,7 @@ import {
   lift,
   observe,
   ObserverLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,

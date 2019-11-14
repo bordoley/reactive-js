@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/rx-operators",
+  "name": "@reactive-js/rx-operators",
   "version": "0.0.0",
   "description": "RxOperators",
   "main": "dist/index.js",
@@ -17,8 +17,8 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0",
-    "@rx-min/scheduler": "0.0.0"
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0"
   }
 }

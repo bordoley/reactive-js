@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/ix-operators",
+  "name": "@reactive-js/ix-operators",
   "version": "0.0.0",
   "description": "interactive extensions operators",
   "main": "dist/index.js",
@@ -17,10 +17,10 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@rx-min/ix-core": "0.0.0",
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0",
-    "@rx-min/rx-operators": "0.0.0",
-    "@rx-min/rx-imperative": "0.0.0"
+    "@reactive-js/ix-core": "0.0.0",
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/rx-imperative": "0.0.0"
   }
 }

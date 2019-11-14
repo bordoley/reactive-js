@@ -1,5 +1,5 @@
 {
-  "name": "@rx-min/react-scheduler",
+  "name": "@reactive-js/react-scheduler",
   "version": "0.0.0",
   "description": "Scheduler bindings for RX",
   "main": "dist/index.js",
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "scheduler": "0.17.0",
-    "@rx-min/disposables": "0.0.0",
-    "@rx-min/scheduler": "0.0.0"
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0"
   },
   "devDependencies": {
     "@types/scheduler": "^0.16.1"

@@ -9,9 +9,9 @@ export const run = (n: number) => {
 
   suite
     .add("rx-min", () => {
-      const { lift } = require("@rx-min/rx-core");
-      const { ofArray } = require("@rx-min/rx-observables");
-      const { scan } = require("@rx-min/rx-operators");
+      const { lift } = require("@reactive-js/rx-core");
+      const { ofArray } = require("@reactive-js/rx-observables");
+      const { scan } = require("@reactive-js/rx-operators");
       const { run } = require("./rx-min-runner");
 
       const observable = lift(ofArray(src), scan(sum, 0), scan(passthrough, 0));

@@ -9,9 +9,9 @@ import {
   observe,
   Operator,
   SubscriberLike,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
-import { SerialDisposable, SerialDisposableLike } from "@rx-min/disposables";
+import { SerialDisposable, SerialDisposableLike } from "@reactive-js/disposables";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;

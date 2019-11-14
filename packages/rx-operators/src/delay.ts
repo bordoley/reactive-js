@@ -4,11 +4,11 @@ import {
   SubscriberLike,
   Notification,
   Notifications,
-} from "@rx-min/rx-core";
+} from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
-} from "@rx-min/scheduler"
+} from "@reactive-js/scheduler"
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
