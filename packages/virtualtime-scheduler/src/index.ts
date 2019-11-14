@@ -22,16 +22,20 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return false;
   }
 
-  private scheduleInternal(work: () => void, delay: number | void) {
-    const now = this.now;
-    const scheduledTime = now + (delay || 0) + 1;
-
+  private schedulWorkAtTime(work: () => void, scheduledTime: number) {
     const queueAtScheduledTime = this.timeQueue[scheduledTime];
     if (queueAtScheduledTime !== undefined) {
       queueAtScheduledTime.push(work);
     } else {
       this.timeQueue[scheduledTime] = [work];
     }
+  }
+
+  private scheduleInternal(work: () => void, delay: number | void) {
+    const now = this.now;
+    const scheduledTime = now + (delay || 0) + 1;
+
+    this.schedulWorkAtTime(work, scheduledTime);
   }
 
   private createWorkCallback(
@@ -42,17 +46,23 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     const continuationCallback: () => void = () => {
       if (!disposable.isDisposed) {
         const result = continuation(shouldYield);
+
         if (result === continuation) {
-          return continuationCallback;
+          this.schedulWorkAtTime(continuationCallback, this.now);
         } else if (result instanceof Function) {
-          return () => this.createWorkCallback(disposable, shouldYield, result);
+          this.schedulWorkAtTime(
+            this.createWorkCallback(disposable, shouldYield, result),
+            this.now,
+          );
         } else if (result !== undefined) {
           const [resultContinuation, delay] = result;
           const callback =
             resultContinuation === continuation
               ? continuationCallback
               : this.createWorkCallback(disposable, shouldYield, continuation);
-          this.scheduleInternal(callback, delay);
+
+          const scheduledTime = this.now + delay;
+          this.schedulWorkAtTime(callback, scheduledTime);
         }
       }
     };
