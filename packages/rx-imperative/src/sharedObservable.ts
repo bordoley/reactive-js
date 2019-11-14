@@ -4,9 +4,12 @@ import {
   lift,
   observe,
   ObservableLike,
-  SchedulerLike,
   SubscriberLike,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerLike,
+} from "@rx-min/scheduler";
 
 import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";

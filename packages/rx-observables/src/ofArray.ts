@@ -2,9 +2,12 @@ import {
   Notifications,
   Observable,
   ObservableLike,
+} from "@rx-min/rx-core";
+
+import {
   SchedulerContinuation,
   SchedulerContinuationResult,
-} from "@rx-min/rx-core";
+} from "@rx-min/scheduler";
 
 export const ofArray = <T>(
   values: ReadonlyArray<T>,

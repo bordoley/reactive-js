@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@rx-min/disposables": "0.0.0",
-    "@rx-min/rx-core": "0.0.0"
+    "@rx-min/rx-core": "0.0.0",
+    "@rx-min/scheduler": "0.0.0"
   }
 }

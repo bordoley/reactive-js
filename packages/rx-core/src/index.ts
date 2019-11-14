@@ -16,8 +16,3 @@ export {
   ObservableResourceLike,
   Operator,
 } from "./observable";
-export {
-  SchedulerContinuation,
-  SchedulerContinuationResult,
-  SchedulerLike,
-} from "./scheduler";

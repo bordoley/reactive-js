@@ -10,7 +10,7 @@ import {
   SubscriberLike,
 } from "./subscriber";
 import { Notification, Notifications, ObserverLike } from "./observer";
-import { SchedulerLike } from "./scheduler";
+import { SchedulerLike } from "@rx-min/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;

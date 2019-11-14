@@ -1,4 +1,4 @@
-import { SchedulerContinuation, SchedulerLike } from "@rx-min/rx-core";
+import { SchedulerContinuation, SchedulerLike } from "@rx-min/scheduler";
 import { Disposable, DisposableLike } from "@rx-min/disposables";
 
 export interface VirtualTimeSchedulerLike extends SchedulerLike {

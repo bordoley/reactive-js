@@ -13,7 +13,7 @@ import {
 } from "@rx-min/ix-operators";
 
 import { LocationState } from "@rx-min/dom";
-import { SchedulerLike } from "@rx-min/rx-core";
+import { SchedulerLike } from "@rx-min/scheduler";
 import { normalPriority } from "@rx-min/react-scheduler";
 
 const mapper = (v: string): RelativeURI => {

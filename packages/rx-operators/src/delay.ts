@@ -3,9 +3,12 @@ import {
   Operator,
   SubscriberLike,
   Notification,
-  SchedulerContinuation,
   Notifications,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerContinuation,
+} from "@rx-min/scheduler"
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;

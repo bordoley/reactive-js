@@ -20,12 +20,12 @@
     "react": "16.11.0",
     "@rx-min/ix-core": "0.0.0",
     "@rx-min/ix-operators": "0.0.0",
-    "@rx-min/rx-core": "0.0.0",
     "@rx-min/disposables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
     "@rx-min/state-container": "0.0.0",
-    "@rx-min/react-hooks": "0.0.0"
+    "@rx-min/react-hooks": "0.0.0",
+    "@rx-min/scheduler": "0.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.11"

@@ -1,8 +1,7 @@
 import {
   SchedulerContinuation,
-  SchedulerContinuationResult,
   SchedulerLike,
-} from "@rx-min/rx-core";
+} from "@rx-min/scheduler";
 import {
   Disposable,
   SerialDisposable,

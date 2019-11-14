@@ -2,9 +2,13 @@ import {
   DelegatingSubscriber,
   Notifications,
   Operator,
-  SchedulerLike,
   SubscriberLike,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerLike,
+} from "@rx-min/scheduler"
+
 
 class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {
   readonly scheduler: SchedulerLike;

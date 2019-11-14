@@ -1,7 +1,10 @@
 import { Subject, SubjectLike } from "./subject";
 
-import { Notification, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
-import { SerialDisposable } from "@rx-min/disposables";
+import { Notification, SubscriberLike } from "@rx-min/rx-core";
+
+import {
+  SchedulerLike,
+} from "@rx-min/scheduler";
 
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();

@@ -8,7 +8,7 @@ import { useAsyncIterator } from "@rx-min/react-hooks";
 import { createElement, useCallback, useMemo } from "react";
 import { pipe } from "@rx-min/ix-core";
 import { scan } from "@rx-min/ix-operators";
-import { SchedulerLike } from "@rx-min/rx-core";
+import { SchedulerLike } from "@rx-min/scheduler";
 import { normalPriority } from "@rx-min/react-scheduler";
 
 // React Native doesn't use a standard URI library so define

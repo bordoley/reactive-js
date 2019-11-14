@@ -1,5 +1,6 @@
 import { Disposable, DisposableLike } from "@rx-min/disposables";
-import { connect, lift, SchedulerLike, SubscriberLike } from "@rx-min/rx-core";
+import { connect, lift, SubscriberLike } from "@rx-min/rx-core";
+import { SchedulerLike } from "@rx-min/scheduler";
 import { keep, onNext } from "@rx-min/rx-operators";
 import { merge } from "@rx-min/rx-observables";
 import {

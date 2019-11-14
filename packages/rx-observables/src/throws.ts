@@ -2,8 +2,11 @@ import {
   Notifications,
   Observable,
   ObservableLike,
-  SchedulerContinuation,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerContinuation,
+} from "@rx-min/scheduler";
 
 export const throws = <T>(
   error: Error,

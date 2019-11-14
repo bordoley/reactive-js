@@ -1,7 +1,7 @@
 import { CompositeDisposableLike, Disposable } from "@rx-min/disposables";
 
 import { ObserverLike, Notification, Notifications } from "./observer";
-import { SchedulerLike } from "./scheduler";
+import { SchedulerLike } from "@rx-min/scheduler";
 
 export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly isConnected: boolean;

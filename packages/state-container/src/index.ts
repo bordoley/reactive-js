@@ -6,10 +6,13 @@ import {
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
-  SchedulerLike,
-  SchedulerContinuation,
   SubscriberLike,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerLike,
+  SchedulerContinuation,
+} from"@rx-min/scheduler";
 
 import { distinctUntilChanged } from "@rx-min/rx-operators";
 

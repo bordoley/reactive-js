@@ -2,10 +2,12 @@ import {
   DelegatingSubscriber,
   Notifications,
   Operator,
-  SchedulerLike,
-  SchedulerContinuation,
   SubscriberLike,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerContinuation,
+} from "@rx-min/scheduler";
 
 import { Disposable, SerialDisposable } from "@rx-min/disposables";
 

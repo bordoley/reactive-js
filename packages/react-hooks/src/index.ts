@@ -7,8 +7,11 @@ import {
   Notifications,
   ObservableLike,
   ObservableResourceLike,
-  SchedulerLike,
 } from "@rx-min/rx-core";
+
+import {
+  SchedulerLike,
+} from "@rx-min/scheduler";
 
 import { normalPriority } from "@rx-min/react-scheduler";
 import { DisposableLike } from "@rx-min/disposables";
