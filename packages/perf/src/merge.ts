@@ -26,11 +26,11 @@ export const run = (m: number, n: number) => {
   suite
     .add("reactive-js", () => {
       const { Observable } = require("@reactive-js/rx-core");
-      const { merge, ofArray } = require("@reactive-js/rx-observables");
+      const { merge, fromArray } = require("@reactive-js/rx-observables");
       const { scan } = require("@reactive-js/rx-operators");
       const { run } = require("./reactive-js-runner");
 
-      const streams = src.map(x => ofArray(x));
+      const streams = src.map(x => fromArray(x));
       const observable = Observable.lift(
         merge.apply(undefined, streams),
         scan(sum, 0),
