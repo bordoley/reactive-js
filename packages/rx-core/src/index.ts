@@ -5,13 +5,11 @@ export {
   Notification,
   Notifications,
 } from "./observer";
-export { SubscriberLike, DelegatingSubscriber } from "./subscriber";
+export { observe, Operator, SubscriberLike, DelegatingSubscriber } from "./subscriber";
 export {
   connect,
-  observe,
   Observable,
   ObservableResource,
   ObservableLike,
   ObservableResourceLike,
-  Operator,
 } from "./observable";

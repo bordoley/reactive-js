@@ -2,10 +2,9 @@ import { CompositeDisposable, DisposableLike } from "@reactive-js/disposables";
 
 import {
   AutoDisposingSubscriber,
-  DelegatingSubscriber,
+  Operator,
   SubscriberLike,
 } from "./subscriber";
-import { Notification, Notifications, ObserverLike } from "./observer";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
@@ -22,10 +21,6 @@ export const connect = <T>(
   subscriber.isConnected = true;
   return subscription;
 };
-
-export interface Operator<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
-}
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   readonly source: ObservableLike<TSrc>;
@@ -136,29 +131,6 @@ function lift(
 
   return new LiftedObservable(sourceSource, allOperators);
 }
-
-class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private observer: ObserverLike<T>;
-
-  constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {
-    super(delegate);
-    this.observer = observer;
-  }
-
-  protected onNext(data: T) {
-    this.observer.notify(Notifications.next, data);
-    this.delegate.notify(Notifications.next, data);
-  }
-
-  protected onComplete(error: Error | void) {
-    this.observer.notify(Notifications.complete, error);
-    this.delegate.notify(Notifications.complete, error);
-  }
-}
-
-export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
-  subscriber: SubscriberLike<T>,
-) => new ObserveSubscriber(subscriber, observer);
 
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
