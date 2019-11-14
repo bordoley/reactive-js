@@ -1,6 +1,7 @@
 import {
   DelegatingSubscriber,
   Notifications,
+  Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
@@ -24,5 +25,5 @@ class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const last = <T>(subscriber: SubscriberLike<T>): SubscriberLike<T> =>
+export const last = <T>(): Operator<T, T> => subscriber =>
   new LastSubscriber(subscriber);
