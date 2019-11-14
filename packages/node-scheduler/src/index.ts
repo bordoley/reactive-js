@@ -102,6 +102,6 @@ class RxNodeSchedulerImpl implements SchedulerLike {
 const create = (timeout: number): SchedulerLike =>
   new RxNodeSchedulerImpl(timeout);
 
-export const RxNodeScheduler = {
+export const NodeScheduler = {
   create,
 };
