@@ -15,7 +15,7 @@ disposable.dispose();
 
 ### Interfaces
 
-*DisposableLike*: 
+*DisposableLike*
 
 Represents a managed resource.
 
@@ -27,7 +27,7 @@ Represents a managed resource.
 
   Releases the managed resource. Implementations must be idempotent, eg. it must safe to call dispose multiple times on a given resource.
 
-*CompositeDisposableLike*: 
+*CompositeDisposableLike*
 
 A disposable that can hold onto multiple other disposables.
 
@@ -61,7 +61,7 @@ Creates a new DisposableLike that disposes the provided DisposableLikes when dis
 
 Creates a new DisposableLike that calls the teardown function exactly once when initially disposed.
 
-`Disposable.empty(): DisposableLike`: 
+`Disposable.empty(): DisposableLike`
 
 Creates a new DisposableLike that does nothing when disposed.
 
