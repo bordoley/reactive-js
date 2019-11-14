@@ -17,9 +17,9 @@
 
 *`delay<T>(dueTime: number): Operator<T, T>`*
 
-*`distinctUntilChanged<T>(equals: (a: T, b: T) => boolean = referenceEquality): Operator<T, T>`*
+*`distinctUntilChanged<T>(equals?: (a: T, b: T) => boolean): Operator<T, T>`*
 
-*`exhaust = <T>(): Operator<ObservableLike<T>, T>`*
+*`exhaust<T>(): Operator<ObservableLike<T>, T>`*
 
 *`ignoreElements<TA, TB>(): Operator<TA, TB>`*
 
@@ -31,7 +31,7 @@
 
 *`mapTo<A, B>(value: B): Operator<A, B>`*
 
-*`merge<T>(options: { maxBufferSize?: number; maxConcurrency?: number} = {}): Operator<ObservableLike<T>, T>`*
+*`merge<T>(options?: { maxBufferSize?: number; maxConcurrency?: number}): Operator<ObservableLike<T>, T>`*
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
