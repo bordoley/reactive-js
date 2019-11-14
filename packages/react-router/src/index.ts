@@ -6,7 +6,7 @@ import {
 import { useAsyncIterator } from "@reactive-js/react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
-import { pipe } from "@reactive-js/ix-core";
+import { AsyncIterator } from "@reactive-js/ix-core";
 import { scan } from "@reactive-js/ix-operators";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { normalPriority } from "@reactive-js/react-scheduler";
@@ -136,7 +136,7 @@ const createRouter = <TContext>(
   const routeMap = routes.reduce(routesReducer, {});
 
   const routePairFactory = () =>
-    pipe(
+    AsyncIterator.pipe(
       locationResourceFactory(),
       scan(pairify, [undefined, emptyRelativeURI]),
     );
