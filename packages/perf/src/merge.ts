@@ -24,11 +24,11 @@ export const run = (m: number, n: number) => {
   const suite = new Benchmark.Suite(`merge ${m} x ${n} streams`);
 
   suite
-    .add("rx-min", () => {
+    .add("reactive-js", () => {
       const { lift } = require("@reactive-js/rx-core");
       const { merge, ofArray } = require("@reactive-js/rx-observables");
       const { scan } = require("@reactive-js/rx-operators");
-      const { run } = require("./rx-min-runner");
+      const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => ofArray(x));
       const observable = lift(merge.apply(undefined, streams), scan(sum, 0));
