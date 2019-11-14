@@ -11,7 +11,7 @@
 
 ### Static Functions
 
-*`concat = <T>(): Operator<ObservableLike<T>, T>`*
+*`concat<T>(): Operator<ObservableLike<T>, T>`*
 
 *`debounceTime<T>(dueTime: number): Operator<T, T>`*
 
