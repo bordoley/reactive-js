@@ -9,6 +9,10 @@ export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly subscription: CompositeDisposableLike;
 }
 
+export interface Operator<A, B> {
+  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
+}
+
 const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
   if (!subscriber.isConnected) {
     throw new Error("Attempted to notify subscriber before it is connected");
@@ -117,3 +121,26 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     }
   }
 }
+
+class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
+  private observer: ObserverLike<T>;
+
+  constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {
+    super(delegate);
+    this.observer = observer;
+  }
+
+  protected onNext(data: T) {
+    this.observer.notify(Notifications.next, data);
+    this.delegate.notify(Notifications.next, data);
+  }
+
+  protected onComplete(error: Error | void) {
+    this.observer.notify(Notifications.complete, error);
+    this.delegate.notify(Notifications.complete, error);
+  }
+}
+
+export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
+  subscriber: SubscriberLike<T>,
+) => new ObserveSubscriber(subscriber, observer);
