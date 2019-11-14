@@ -3,9 +3,12 @@ import {
   observe,
   Observable,
   ObservableResourceLike,
+  ObservableLike,
 } from "@reactive-js/rx-core";
 
-export const use = <T>(factory: () => ObservableResourceLike<T>) =>
+export const use = <T>(
+  factory: () => ObservableResourceLike<T>,
+): ObservableLike<T> =>
   Observable.create(subscriber => {
     const resource = factory();
 
