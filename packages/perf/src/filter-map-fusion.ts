@@ -1,20 +1,8 @@
 const Benchmark = require("benchmark");
-
-const createSrcData = (n: number) => {
-  const src = new Array(n);
-  for (var i = 0; i < src.length; ++i) {
-    src[i] = i;
-  }
-  return src;
-};
-
-const add1 = (x: number) => x + 1;
-const even = (x: number) => x % 2 === 0;
-const odd = (x: number) => x % 2 !== 0;
-const sum = (x: number, y: number) => x + y;
+import { add1, even, odd, sum, createArray } from "./utils";
 
 export const run = (n: number) => {
-  const src = createSrcData(n);
+  const src = createArray(n);
 
   const suite = Benchmark.Suite(`filter -> map -> fusion ${n} integers`);
 

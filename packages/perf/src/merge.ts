@@ -1,5 +1,7 @@
 const Benchmark = require("benchmark");
 
+import { sum } from "./utils";
+
 const createSrcData = (m: number, n: number) => {
   const a = new Array(n);
   for (var i = 0; i < a.length; ++i) {
@@ -16,11 +18,6 @@ const buildArray = (base: number, n: number) => {
   return a;
 };
 
-const add1 = (x: number) => x + 1;
-const even = (x: number) => x % 2 === 0;
-const odd = (x: number) => x % 2 !== 0;
-const sum = (x: number, y: number) => x + y;
-
 export const run = (m: number, n: number) => {
   const src = createSrcData(m, n);
 
@@ -30,7 +27,7 @@ export const run = (m: number, n: number) => {
     .add("rx-min", () => {
       const { lift } = require("@rx-min/rx-core");
       const { merge, ofArray } = require("@rx-min/rx-observables");
-      const { last, scan } = require("@rx-min/rx-operators");
+      const { scan } = require("@rx-min/rx-operators");
       const { run } = require("./rx-min-runner");
 
       const streams = src.map(x => ofArray(x));
@@ -40,7 +37,7 @@ export const run = (m: number, n: number) => {
     })
     .add("rx-js", () => {
       const { merge, from } = require("rxjs");
-      const { last, scan } = require("rxjs/operators");
+      const { scan } = require("rxjs/operators");
       const { run } = require("./rxjs-runner");
 
       const streams = src.map(x => from(x));

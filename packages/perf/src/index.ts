@@ -1,5 +1,6 @@
 import { run as runFilterMapFusion } from "./filter-map-fusion";
 import { run as runFilterMapReduce } from "./filter-map-reduce";
+import { run as runFold } from "./fold";
 import { run as runMerge } from "./merge";
 
 const padl = (n: number, s: string) => {
@@ -53,3 +54,4 @@ const runSuite = (suite: any) => {
 runSuite(runFilterMapFusion(1000000));
 runSuite(runFilterMapReduce(1000000));
 runSuite(runMerge(1000, 1000));
+runSuite(runFold(1000000));
