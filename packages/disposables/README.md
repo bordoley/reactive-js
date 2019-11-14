@@ -2,7 +2,18 @@
 
 Utilities for managing the lifetimes of resources.
 
-## Interfaces
+## Usage
+
+```typescript
+import { Disposable, DisposableLike } from "@reactive-js/disposables";
+
+const disposable: DisposableLike = Disposable.create();
+disposable.dispose();
+```
+
+## API
+
+### Interfaces
 
 *DisposableLike*: 
 
@@ -40,7 +51,7 @@ Returns the currently contained DisposableLike.
 
 Set the next DisposableLike on this container and dispose the previous one. Dispose the next DisposableLike if the container has been disposed.
 
-## API
+### Static Functions
 
 `Disposable.compose(disposable: DisposableLike, ...disposables: DisposableLike[]): DisposableLike`
 
