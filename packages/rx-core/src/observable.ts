@@ -1,11 +1,7 @@
-import {
-  CompositeDisposable,
-  CompositeDisposableLike,
-  DisposableLike,
-} from "@reactive-js/disposables";
+import { CompositeDisposable, DisposableLike } from "@reactive-js/disposables";
 
 import {
-  throwIfNotConnected,
+  AutoDisposingSubscriber,
   DelegatingSubscriber,
   SubscriberLike,
 } from "./subscriber";
@@ -14,31 +10,6 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
-}
-
-class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  readonly subscription: CompositeDisposableLike;
-  readonly scheduler: SchedulerLike;
-  isConnected = false;
-
-  constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
-    this.scheduler = scheduler;
-    this.subscription = subscription;
-  }
-
-  notify(notification: Notification, data: T | Error | void) {
-    throwIfNotConnected(this);
-
-    if (!this.subscription.isDisposed) {
-      switch (notification) {
-        case Notifications.next:
-          break;
-        case Notifications.complete:
-          this.subscription.dispose();
-          break;
-      }
-    }
-  }
 }
 
 export const connect = <T>(

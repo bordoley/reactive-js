@@ -9,11 +9,40 @@ export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly subscription: CompositeDisposableLike;
 }
 
-export const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
+const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
   if (!subscriber.isConnected) {
     throw new Error("Attempted to notify subscriber before it is connected");
   }
 };
+
+const __DEV__ = process.env.NODE_ENV !== "production";
+
+export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
+  readonly subscription: CompositeDisposableLike;
+  readonly scheduler: SchedulerLike;
+  isConnected = false;
+
+  constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
+    this.scheduler = scheduler;
+    this.subscription = subscription;
+  }
+
+  notify(notification: Notification, data: T | Error | void) {
+    if (__DEV__) {
+      throwIfNotConnected(this);
+    }
+
+    if (!this.subscription.isDisposed) {
+      switch (notification) {
+        case Notifications.next:
+          break;
+        case Notifications.complete:
+          this.subscription.dispose();
+          break;
+      }
+    }
+  }
+}
 
 export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   private isStopped = false;
@@ -71,7 +100,9 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
   }
 
   notify(notification: Notification, data: A | Error | void) {
-    throwIfNotConnected(this);
+    if (__DEV__) {
+      throwIfNotConnected(this);
+    }
 
     if (!this.isStopped) {
       switch (notification) {
