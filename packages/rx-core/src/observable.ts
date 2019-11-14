@@ -49,29 +49,29 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 }
 
-export function lift<T, A>(
+function lift<T, A>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
 ): ObservableLike<A>;
-export function lift<T, A, B>(
+function lift<T, A, B>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
 ): ObservableLike<B>;
-export function lift<T, A, B, C>(
+function lift<T, A, B, C>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
 ): ObservableLike<C>;
-export function lift<T, A, B, C, D>(
+function lift<T, A, B, C, D>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
   op4: Operator<C, D>,
 ): ObservableLike<D>;
-export function lift<T, A, B, C, D, E>(
+function lift<T, A, B, C, D, E>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -79,7 +79,7 @@ export function lift<T, A, B, C, D, E>(
   op4: Operator<C, D>,
   op5: Operator<D, E>,
 ): ObservableLike<E>;
-export function lift<T, A, B, C, D, E, F>(
+function lift<T, A, B, C, D, E, F>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -88,7 +88,7 @@ export function lift<T, A, B, C, D, E, F>(
   op5: Operator<D, E>,
   op6: Operator<E, F>,
 ): ObservableLike<F>;
-export function lift<T, A, B, C, D, E, F, G>(
+function lift<T, A, B, C, D, E, F, G>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -98,7 +98,7 @@ export function lift<T, A, B, C, D, E, F, G>(
   op6: Operator<E, F>,
   op7: Operator<F, G>,
 ): ObservableLike<G>;
-export function lift<T, A, B, C, D, E, F, G, H>(
+function lift<T, A, B, C, D, E, F, G, H>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -109,7 +109,7 @@ export function lift<T, A, B, C, D, E, F, G, H>(
   op7: Operator<F, G>,
   op8: Operator<G, H>,
 ): ObservableLike<H>;
-export function lift<T, A, B, C, D, E, F, G, H, I>(
+function lift<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -121,7 +121,7 @@ export function lift<T, A, B, C, D, E, F, G, H, I>(
   op8: Operator<G, H>,
   op9: Operator<H, I>,
 ): ObservableLike<I>;
-export function lift(
+function lift(
   source: ObservableLike<any>,
   operator: Operator<any, any>,
   ...operators: Array<Operator<any, any>>
@@ -186,29 +186,29 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   }
 }
 
-export function liftResource<T, A>(
+function liftResource<T, A>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
 ): ObservableResourceLike<A>;
-export function liftResource<T, A, B>(
+function liftResource<T, A, B>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
 ): ObservableResourceLike<B>;
-export function liftResource<T, A, B, C>(
+function liftResource<T, A, B, C>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
 ): ObservableResourceLike<C>;
-export function liftResource<T, A, B, C, D>(
+function liftResource<T, A, B, C, D>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
   op3: Operator<B, C>,
   op4: Operator<C, D>,
 ): ObservableResourceLike<D>;
-export function liftResource<T, A, B, C, D, E>(
+function liftResource<T, A, B, C, D, E>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -216,7 +216,7 @@ export function liftResource<T, A, B, C, D, E>(
   op4: Operator<C, D>,
   op5: Operator<D, E>,
 ): ObservableResourceLike<E>;
-export function liftResource<T, A, B, C, D, E, F>(
+function liftResource<T, A, B, C, D, E, F>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -225,7 +225,7 @@ export function liftResource<T, A, B, C, D, E, F>(
   op5: Operator<D, E>,
   op6: Operator<E, F>,
 ): ObservableResourceLike<F>;
-export function liftResource<T, A, B, C, D, E, F, G>(
+function liftResource<T, A, B, C, D, E, F, G>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -235,7 +235,7 @@ export function liftResource<T, A, B, C, D, E, F, G>(
   op6: Operator<E, F>,
   op7: Operator<F, G>,
 ): ObservableResourceLike<G>;
-export function liftResource<T, A, B, C, D, E, F, G, H>(
+function liftResource<T, A, B, C, D, E, F, G, H>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -246,7 +246,7 @@ export function liftResource<T, A, B, C, D, E, F, G, H>(
   op7: Operator<F, G>,
   op8: Operator<G, H>,
 ): ObservableResourceLike<H>;
-export function liftResource<T, A, B, C, D, E, F, G, H, I>(
+function liftResource<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableResourceLike<T>,
   op1: Operator<T, A>,
   op2: Operator<A, B>,
@@ -258,7 +258,7 @@ export function liftResource<T, A, B, C, D, E, F, G, H, I>(
   op8: Operator<G, H>,
   op9: Operator<H, I>,
 ): ObservableResourceLike<I>;
-export function liftResource(
+function liftResource(
   source: ObservableResourceLike<any>,
   operator: Operator<any, any>,
   ...operators: Array<Operator<any, any>>
@@ -275,10 +275,15 @@ export function liftResource(
   return new LiftedObservableResource(observable, disposable);
 }
 
+export const ObservableResource = {
+  lift: liftResource,
+};
+
 const create = <T>(
   subscribe: (subscriber: SubscriberLike<T>) => void,
 ): ObservableLike<T> => ({ subscribe });
 
 export const Observable = {
   create,
+  lift,
 };

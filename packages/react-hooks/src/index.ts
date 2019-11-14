@@ -1,10 +1,10 @@
 import { useMemo, useEffect, useState, useCallback } from "react";
 import {
   connect,
-  lift,
   observe,
   Notification,
   Notifications,
+  Observable,
   ObservableLike,
   ObservableResourceLike,
 } from "@reactive-js/rx-core";
@@ -36,7 +36,7 @@ const makeObservable = <T>(
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
 ) =>
-  lift(
+  Observable.lift(
     observable,
     observe({
       notify: (event: Notification, data: T | Error | void) => {

@@ -1,6 +1,5 @@
 import {
   connect,
-  lift,
   observe,
   Observable,
   ObservableResourceLike,
@@ -11,6 +10,11 @@ export const use = <T>(factory: () => ObservableResourceLike<T>) =>
     const resource = factory();
 
     subscriber.subscription
-      .add(connect(lift(resource, observe(subscriber)), subscriber.scheduler))
+      .add(
+        connect(
+          Observable.lift(resource, observe(subscriber)),
+          subscriber.scheduler,
+        ),
+      )
       .add(resource);
   });

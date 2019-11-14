@@ -1,5 +1,5 @@
 import { Disposable, DisposableLike } from "@reactive-js/disposables";
-import { connect, lift, SubscriberLike } from "@reactive-js/rx-core";
+import { connect, Observable, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { keep, onNext } from "@reactive-js/rx-operators";
 import { merge } from "@reactive-js/rx-observables";
@@ -33,11 +33,11 @@ class DomLocationStateContainerResourceImpl
 
     const subscription = connect(
       merge(
-        lift(
+        Observable.lift(
           observableEvent(window, "popstate", _ => getCurrentLocation()),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
-        lift(
+        Observable.lift(
           stateContainer,
           keep(location => location !== getCurrentLocation()),
           onNext((next: string) =>
