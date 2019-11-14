@@ -1,8 +1,8 @@
 import { connect, Observable } from "@reactive-js/rx-core";
 import {
-  ofDelayedValues,
+  fromDelayedValues,
   generate,
-  ofArray,
+  fromArray,
 } from "@reactive-js/rx-observables";
 import {
   keep,
@@ -21,7 +21,7 @@ const scheduler = NodeScheduler.create(1);
 /*
 connect(
   Observable.lift(
-    ofDelayedValues([1000, 1], [2000, 2], [3000, 3], [3000, 4]),
+    fromDelayedValues([1000, 1], [2000, 2], [3000, 3], [3000, 4]),
     onNext(next => {
       const time = Date.now();
       console.log(time + ": " + next);
@@ -49,7 +49,7 @@ connect(
   Observable.lift(
     generate(x => x + 1, 0, 500),
     map(x =>
-      ofArray(
+      fromArray(
         [
           [x, 1],
           [x, 2],
@@ -80,7 +80,7 @@ connect(
 connect(
   Observable.lift(
     generate(x => x + 1, 0, 233),
-    map(x => ofArray([x, x, x, x], 1000)),
+    map(x => fromArray([x, x, x, x], 1000)),
     exhaust(),
     onNext(console.log),
   ),

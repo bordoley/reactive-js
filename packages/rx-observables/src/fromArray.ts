@@ -9,7 +9,7 @@ import {
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
 
-export const ofArray = <T>(
+export const fromArray = <T>(
   values: ReadonlyArray<T>,
   delay: number | void,
 ): ObservableLike<T> =>
@@ -51,11 +51,11 @@ export const ofArray = <T>(
   });
 
 export const ofValue = <T>(value: T, delay: number | void): ObservableLike<T> =>
-  ofArray([value], delay);
+  fromArray([value], delay);
 
-export const empty = <T>(): ObservableLike<T> => ofArray([]);
+export const empty = <T>(): ObservableLike<T> => fromArray([]);
 
-export const ofDelayedValues = <T>(
+export const fromDelayedValues = <T>(
   ...values: Array<[number, T]>
 ): ObservableLike<T> =>
   values.length === 0
