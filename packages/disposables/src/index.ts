@@ -113,7 +113,8 @@ class CompositeDisposableImpl extends AbstractDisposable
     if (!this.isDisposed) {
       const index = this.disposables.indexOf(disposable);
       if (index !== -1) {
-        this.disposables.splice(index, 1);
+        const [old] = this.disposables.splice(index, 1);
+        old.dispose();
       }
     }
     return this;
