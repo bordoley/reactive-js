@@ -12,6 +12,7 @@ import {
   onNext,
   ignoreElements,
   onComplete,
+  switch_
 } from "@reactive-js/rx-operators";
 import { RxNodeScheduler } from "@reactive-js/node-scheduler";
 
@@ -42,6 +43,7 @@ connect(
 );
 */
 
+/*
 connect(
   lift(
     generate(x => x + 1, 0, 500),
@@ -57,6 +59,16 @@ connect(
       ),
     ),
     merge(),
+    onNext(console.log),
+  ),
+  scheduler,
+);*/
+
+connect(
+  lift(
+    generate(x => x + 1, 0, 500),
+    map(x => generate(x => x, x, 100)),
+    switch_(),
     onNext(console.log),
   ),
   scheduler,
