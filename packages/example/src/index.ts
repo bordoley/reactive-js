@@ -15,9 +15,9 @@ import {
   onComplete,
   switch_,
 } from "@reactive-js/rx-operators";
-import { RxNodeScheduler } from "@reactive-js/node-scheduler";
+import { NodeScheduler } from "@reactive-js/node-scheduler";
 
-const scheduler = RxNodeScheduler.create(1);
+const scheduler = NodeScheduler.create(1);
 /*
 connect(
   Observable.lift(
