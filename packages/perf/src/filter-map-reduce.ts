@@ -30,6 +30,29 @@ export const run = (n: number) => {
 
       const observable = from(src).pipe(filter(even), map(add1), scan(sum, 0));
       run(observable);
+    })
+    .add("callbags", () => {
+      const { map, filter, scan, pipe } = require("callbag-basics");
+      const { run } = require("./cb-runner");
+
+      const fromArray = <T>(arr: ReadonlyArray<T>) => (t: any, d: any) => {
+        if (t === 0) {
+          d(0, () => {});
+          for (let i = 0; i < arr.length; i++) {
+            d(1, arr[i]);
+          }
+          d(2);
+        }
+      };
+
+      const observable = pipe(
+        fromArray(src),
+        filter(even),
+        map(add1),
+        scan(sum, 0),
+      );
+
+      run(observable);
     });
 
   return suite;

@@ -20,6 +20,7 @@
     "@rx-min/rx-core": "0.0.0",
     "@rx-min/rx-observables": "0.0.0",
     "@rx-min/rx-operators": "0.0.0",
+    "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3",
     "benchmark": "^2.1.4"
   }

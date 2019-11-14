@@ -44,6 +44,26 @@ export const run = (m: number, n: number) => {
       const observable = merge.apply(undefined, streams).pipe(scan(sum, 0));
 
       run(observable);
+    })
+    .add("callbags", () => {
+      const { merge, scan, pipe } = require("callbag-basics");
+      const { run } = require("./cb-runner");
+
+      const fromArray = <T>(arr: ReadonlyArray<T>) => (t: any, d: any) => {
+        if (t === 0) {
+          d(0, () => {});
+          for (let i = 0; i < arr.length; i++) {
+            d(1, arr[i]);
+          }
+          d(2);
+        }
+      };
+
+      const streams = src.map(fromArray);
+
+      const observable = pipe(merge.apply(void 0, streams), scan(sum, 0));
+
+      run(observable);
     });
 
   return suite;
