@@ -1,13 +1,13 @@
 import {
+  connect,
+  observe,
   DelegatingSubscriber,
   Notification,
   Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
-  connect,
-  lift,
-  observe,
+  Observable,
   ObserverLike,
 } from "@reactive-js/rx-core";
 
@@ -49,7 +49,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
     this.subscription.add(
       connect(
-        lift(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
+        Observable.lift(
+          other,
+          observe(new WithLatestFromSubscriber.InnerObserver(this)),
+        ),
         this.scheduler,
       ),
     );

@@ -8,10 +8,9 @@ export {
 export { SubscriberLike, DelegatingSubscriber } from "./subscriber";
 export {
   connect,
-  lift,
-  liftResource,
   observe,
   Observable,
+  ObservableResource,
   ObservableLike,
   ObservableResourceLike,
   Operator,

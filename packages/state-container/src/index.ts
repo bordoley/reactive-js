@@ -2,7 +2,7 @@ import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import {
   connect,
-  lift,
+  Observable,
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
@@ -114,7 +114,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   ) {
     this.dispatcher = EventResource.create();
     this.delegate = shareReplayLast(
-      lift(
+      Observable.lift(
         this.dispatcher,
         batchScanOnScheduler(initialState),
         distinctUntilChanged(equals),

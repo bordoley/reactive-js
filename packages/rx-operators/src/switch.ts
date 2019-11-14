@@ -1,13 +1,13 @@
 import {
+  connect,
+  observe,
   DelegatingSubscriber,
   Notification,
   Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
-  connect,
-  lift,
-  observe,
+  Observable,
   ObserverLike,
 } from "@reactive-js/rx-core";
 import { Disposable, SerialDisposable } from "@reactive-js/disposables";
@@ -43,7 +43,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.innerDisposable = Disposable.disposed;
     this.innerSubscription.innerDisposable = connect(
-      lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
+      Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
       this.scheduler,
     );
   }

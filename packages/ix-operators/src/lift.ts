@@ -1,5 +1,5 @@
 import {
-  lift as liftObservable,
+  Observable,
   Operator as SubscriberOperator,
 } from "@reactive-js/rx-core";
 
@@ -20,7 +20,7 @@ export const lift = <TReq>(
       ? [delegate.observable, delegate.disposable, delegate.dispatcher]
       : [delegate, delegate, (req: TReq) => delegate.dispatch(req)];
 
-  const liftedObservable = liftObservable.apply(undefined, [
+  const liftedObservable = Observable.lift.apply(undefined, [
     observable,
     operator,
     ...operators,

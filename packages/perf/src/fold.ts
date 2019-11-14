@@ -9,12 +9,16 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { lift } = require("@reactive-js/rx-core");
+      const { Observable } = require("@reactive-js/rx-core");
       const { ofArray } = require("@reactive-js/rx-observables");
       const { scan } = require("@reactive-js/rx-operators");
       const { run } = require("./reactive-js-runner");
 
-      const observable = lift(ofArray(src), scan(sum, 0), scan(passthrough, 0));
+      const observable = Observable.lift(
+        ofArray(src),
+        scan(sum, 0),
+        scan(passthrough, 0),
+      );
 
       run(observable);
     })

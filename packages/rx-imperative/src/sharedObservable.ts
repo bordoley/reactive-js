@@ -1,8 +1,8 @@
 import { Disposable } from "@reactive-js/disposables";
 import {
   connect,
-  lift,
   observe,
+  Observable,
   ObservableLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -45,7 +45,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>): void {
     const innerSubscription = connect(
-      lift(this.subject, observe(subscriber)),
+      Observable.lift(this.subject, observe(subscriber)),
       subscriber.scheduler,
     );
 
@@ -55,7 +55,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
     if (this.refCount === 1) {
       this.subscription = connect(
-        lift(this.source, observe(this.subject)),
+        Observable.lift(this.source, observe(this.subject)),
         this.scheduler,
       );
     }

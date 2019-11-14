@@ -1,6 +1,5 @@
 import {
   connect,
-  lift,
   observe,
   Notification,
   Notifications,
@@ -45,12 +44,15 @@ export const merge = <T>(
     const observer = new MergeObserver(subscriber, tail.length + 1);
 
     subscriber.subscription.add(
-      connect(lift(head, observe(observer)), subscriber.scheduler),
+      connect(Observable.lift(head, observe(observer)), subscriber.scheduler),
     );
 
     for (let observable of tail) {
       subscriber.subscription.add(
-        connect(lift(observable, observe(observer)), subscriber.scheduler),
+        connect(
+          Observable.lift(observable, observe(observer)),
+          subscriber.scheduler,
+        ),
       );
     }
   });

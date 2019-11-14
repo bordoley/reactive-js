@@ -1,12 +1,12 @@
 import {
+  connect,
+  observe,
   DelegatingSubscriber,
   Notification,
   Notifications,
   ObservableLike,
   ObserverLike,
-  connect,
-  lift,
-  observe,
+  Observable,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -36,7 +36,10 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
         this.parent.innerSubscription.innerDisposable.dispose();
 
         this.parent.innerSubscription.innerDisposable = connect(
-          lift(this.parent.observable, observe(this.parent.observer)),
+          Observable.lift(
+            this.parent.observable,
+            observe(this.parent.observer),
+          ),
           this.parent.scheduler,
         );
       }
@@ -104,7 +107,10 @@ export const repeat = <T>(
       ? defaultRepeatPredicate
       : (error: Error | void) => error === undefined && predicate();
 
-  return lift(observable, repeatOperator(observable, repeatPredicate));
+  return Observable.lift(
+    observable,
+    repeatOperator(observable, repeatPredicate),
+  );
 };
 
 const alwaysTrue1 = <T>(_: T) => true;
@@ -121,5 +127,8 @@ export const retry = <T>(
       ? defaultRetryPredicate
       : (error: Error | void) => error !== undefined && predicate(error);
 
-  return lift(observable, repeatOperator(observable, retryPredicate));
+  return Observable.lift(
+    observable,
+    repeatOperator(observable, retryPredicate),
+  );
 };

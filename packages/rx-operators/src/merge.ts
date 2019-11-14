@@ -1,6 +1,6 @@
 import {
   connect,
-  lift,
+  Observable,
   DelegatingSubscriber,
   Notifications,
   ObservableLike,
@@ -69,7 +69,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
         this.activeCount++;
         this.subscription.add(
           connect(
-            lift(nextObs, MergeSubscriber.innerOperator(this)),
+            Observable.lift(nextObs, MergeSubscriber.innerOperator(this)),
             this.scheduler,
           ),
         );
