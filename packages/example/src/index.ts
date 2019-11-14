@@ -6,13 +6,14 @@ import {
 } from "@reactive-js/rx-observables";
 import {
   keep,
+  exhaust,
   map,
   merge,
   concat,
   onNext,
   ignoreElements,
   onComplete,
-  switch_
+  switch_,
 } from "@reactive-js/rx-operators";
 import { RxNodeScheduler } from "@reactive-js/node-scheduler";
 
@@ -64,11 +65,23 @@ connect(
   scheduler,
 );*/
 
+/*
 connect(
   lift(
     generate(x => x + 1, 0, 500),
     map(x => generate(x => x, x, 100)),
     switch_(),
+    onNext(console.log),
+  ),
+  scheduler,
+);
+*/
+
+connect(
+  lift(
+    generate(x => x + 1, 0, 233),
+    map(x => ofArray([x, x, x, x], 1000)),
+    exhaust(),
     onNext(console.log),
   ),
   scheduler,

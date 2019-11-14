@@ -77,7 +77,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 
   protected onNext(next: ObservableLike<T>) {
-    if (this.queue.length < this.maxBufferSize) {
+    if (this.queue.length + this.activeCount < this.maxBufferSize) {
       this.queue.push(next);
       this.connectNext();
     }
@@ -108,4 +108,4 @@ export const concat = <T>(): Operator<ObservableLike<T>, T> =>
   merge({ maxConcurrency: 1 });
 
 export const exhaust = <T>(): Operator<ObservableLike<T>, T> =>
-  merge({ maxBufferSize: 0, maxConcurrency: 1 });
+  merge({ maxBufferSize: 1, maxConcurrency: 1 });
