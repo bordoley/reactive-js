@@ -260,17 +260,19 @@ const create = <T>(
   delay: number = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
-    const continuation = (shouldYield: () => boolean) => {
-      try {
-        onSubscribe(subscriber);
-      } catch (error) {
-        subscriber.notify(Notifications.complete, error);
-      }
-    };
-
-    subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay),
+    const schedulerSubscription = subscriber.scheduler.schedule(
+      (_: () => boolean) => {
+        try {
+          onSubscribe(subscriber);
+        } catch (error) {
+          subscriber.notify(Notifications.complete, error);
+        }
+        subscriber.subscription.remove(schedulerSubscription);
+      },
+      delay,
     );
+
+    subscriber.subscription.add(schedulerSubscription);
   };
 
   return { subscribe };
