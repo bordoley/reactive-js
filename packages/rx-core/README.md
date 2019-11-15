@@ -9,11 +9,14 @@ import { connect, observe, Observable } from "@reactive-js/rx-core";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
 const scheduler = EventLoopScheduler.create(1);
-const observableThatDoesNothing = Observable.lift(
-  Observable.create((subscriber, shouldYield) => {}),
+const observable = Observable.lift(
+  Observable.create(subscriber => {
+    subscriber.notify(Notifications.next, "hello");
+    subscriber.notify(Notifications.complete);
+  }),
   observe((notif, data) => console.log(notif + ": " + data)),
 );
-const subscription = connect(observableThatDoesNothing, scheduler);
+const subscription = connect(observable, scheduler);
 subscription.dispose();
 ```
 
