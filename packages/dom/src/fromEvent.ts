@@ -6,7 +6,7 @@ import {
 
 import { Disposable } from "@reactive-js/disposables";
 
-export const observableEvent = <T>(
+export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
   selector: (ev: Event) => T,

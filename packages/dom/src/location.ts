@@ -10,7 +10,7 @@ import {
   StateUpdater,
 } from "@reactive-js/state-container";
 
-import { observableEvent } from "./observableEvent";
+import { fromEvent } from "./fromEvent";
 
 const getCurrentLocation = () => {
   const path = window.location.pathname;
@@ -34,7 +34,7 @@ class DomLocationStateContainerResourceImpl
     const subscription = connect(
       merge(
         Observable.lift(
-          observableEvent(window, "popstate", _ => getCurrentLocation()),
+          fromEvent(window, "popstate", _ => getCurrentLocation()),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
         Observable.lift(
