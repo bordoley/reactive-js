@@ -1,4 +1,4 @@
-= Microbenchmark Results
+# Microbenchmark Results
 
 Run on a Macbook Pro(2017) 2.9 GHz Intel Core i7, running MacOS v10.14.6 and node.js v13.1.0.
 
