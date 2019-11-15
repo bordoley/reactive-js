@@ -163,3 +163,9 @@ class SerialDisposableImpl extends AbstractDisposable
 export const SerialDisposable = {
   create: () => new SerialDisposableImpl(disposed),
 };
+
+export const throwIfDisposed = (disposable: DisposableLike) => {
+  if (disposable.isDisposed) {
+    throw new Error("Disposed");
+  }
+};

@@ -76,3 +76,7 @@ Creates a new CompositeDisposableLike instance.
 `SerialDisposable.create(): SerialDisposableLike`
 
 Creates a new SerialDisposable instance.
+
+`throwIfDisposed(disposable: DisposableLike):`
+
+Throws an Error if the disposable is disposed.

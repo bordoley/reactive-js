@@ -8,6 +8,7 @@ import {
   SerialDisposable,
   DisposableLike,
   SerialDisposableLike,
+  throwIfDisposed,
 } from "@reactive-js/disposables";
 
 type SchedulerCtx = {
@@ -130,9 +131,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     continuation: SchedulerContinuation,
     delay: number = 0,
   ): DisposableLike {
-    if (this.isDisposed) {
-      throw new Error("Scheduler is disposed");
-    }
+    throwIfDisposed(this);
 
     const disposable = SerialDisposable.create();
     const shouldYield = (): boolean =>

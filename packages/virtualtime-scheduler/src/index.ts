@@ -1,5 +1,12 @@
-import { SchedulerContinuation, SchedulerResourceLike } from "@reactive-js/scheduler";
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import {
+  SchedulerContinuation,
+  SchedulerResourceLike,
+} from "@reactive-js/scheduler";
+import {
+  Disposable,
+  DisposableLike,
+  throwIfDisposed,
+} from "@reactive-js/disposables";
 
 export interface VirtualTimeSchedulerLike extends SchedulerResourceLike {
   run(): void;
@@ -14,7 +21,15 @@ type SchedulerCtx = {
 };
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
-  private readonly disposable = Disposable.empty();
+  private readonly disposable = Disposable.create(
+    () => {
+      for (let key in this.timeQueue) {
+        if (this.timeQueue.hasOwnProperty(key)) {
+          delete this.timeQueue[key];
+        };
+      }
+    }
+  );
   private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
   private _now = -1;
 
@@ -24,6 +39,11 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   get now(): number {
     return this._now;
+  }
+
+  private get next() {
+    const now = this.now;
+    return this.timeQueue[now] || [];
   }
 
   dispose() {
@@ -71,6 +91,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     continuation: SchedulerContinuation,
     delay: number = 0,
   ): DisposableLike {
+    throwIfDisposed(this);
+
     const disposable = Disposable.empty();
     const shouldYield = (): boolean => disposable.isDisposed;
 
@@ -88,12 +110,9 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return ctx.disposable;
   }
 
-  private get next() {
-    const now = this.now;
-    return this.timeQueue[now] || [];
-  }
-
   run() {
+    throwIfDisposed(this);
+
     while (this.moveNext()) {
       const workQueue = this.next;
 
@@ -102,6 +121,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
         this.executeContinuation(ctx);
       }
     }
+
+    this.dispose();
   }
 }
 
