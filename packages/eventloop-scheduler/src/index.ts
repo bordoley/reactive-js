@@ -2,23 +2,32 @@ import {
   SchedulerContinuation,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
+
 import {
   Disposable,
   SerialDisposable,
   DisposableLike,
   SerialDisposableLike,
 } from "@reactive-js/disposables";
-import { createReadStream } from "fs";
 
 type SchedulerCtx = {
   continuation: SchedulerContinuation;
   delay: number;
   readonly disposable: SerialDisposableLike;
+  readonly scheduler: EventLoopSchedulerImpl;
   readonly shouldYield: () => boolean;
-  readonly callback: () => void;
 };
 
 class EventLoopSchedulerImpl implements SchedulerResourceLike {
+  private static callback(ctx: SchedulerCtx) {
+    if (!ctx.scheduler.isDisposed) {
+      ctx.scheduler.workqueue.push(ctx);
+      if (ctx.scheduler.workqueue.length === 1) {
+        ctx.scheduler.drainQueue();
+      }
+    }
+  }
+
   private readonly disposable: DisposableLike;
   private readonly workqueue: SchedulerCtx[] = [];
   private readonly timeout: number;
@@ -99,13 +108,17 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       // microtasks.
 
       if (ctx.delay > 0) {
-        const timeout = setInterval(ctx.callback, ctx.delay);
+        const timeout = setInterval(
+          EventLoopSchedulerImpl.callback,
+          ctx.delay,
+          ctx,
+        );
         ctx.disposable.innerDisposable = Disposable.create(() =>
           clearInterval(timeout),
         );
       } else {
         // FIXME: Shim setImmediate for the browser case or require a polyfill.
-        const immediate = setImmediate(ctx.callback);
+        const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
         ctx.disposable.innerDisposable = Disposable.create(() =>
           clearImmediate(immediate),
         );
@@ -122,26 +135,20 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     }
 
     const disposable = SerialDisposable.create();
-    const shouldYield = () =>
-      disposable.isDisposed || this.startTime + this.timeout < this.now;
+    const shouldYield = (): boolean =>
+      this.disposable.isDisposed ||
+      this.startTime + this.timeout < this.now;
 
-    const ctx: SchedulerCtx = {
+    const ctx = {
       continuation,
-      delay: Math.max(delay, 0),
+      delay,
       disposable,
+      scheduler: this,
       shouldYield,
-      callback: () => {
-        if (!this.isDisposed) {
-          this.workqueue.push(ctx);
-          if (this.workqueue.length === 1) {
-            this.drainQueue();
-          }
-        }
-      },
     };
 
     this.scheduleInternal(ctx);
-    return disposable;
+    return ctx.disposable;
   }
 }
 
