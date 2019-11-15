@@ -1,10 +1,14 @@
-import { SchedulerContinuation, SchedulerResourceLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuation,
+  SchedulerResourceLike,
+} from "@reactive-js/scheduler";
 import {
   Disposable,
   SerialDisposable,
   DisposableLike,
   SerialDisposableLike,
 } from "@reactive-js/disposables";
+import { createReadStream } from "fs";
 
 type SchedulerCtx = {
   continuation: SchedulerContinuation;
@@ -12,7 +16,6 @@ type SchedulerCtx = {
   readonly disposable: SerialDisposableLike;
   readonly shouldYield: () => boolean;
 };
-
 
 class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private readonly disposable: DisposableLike;
@@ -53,10 +56,10 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       const [resultContinuation, resultDelay] = result;
       ctx.continuation = resultContinuation;
 
-      if (resultDelay !== ctx.delay) {
+      if (resultDelay !== ctx.delay || ctx.delay === 0) {
         ctx.delay = Math.max(resultDelay, 0);
         this.scheduleInternal(ctx);
-      } 
+      }
       // else reuse the existing setInterval delay
     } else {
       ctx.disposable.innerDisposable.dispose();
@@ -103,10 +106,17 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       // which doesn't work with then the result of generate are scheduled as
       // microtasks.
 
-      const timeout = setInterval(callback, ctx.delay);
-      ctx.disposable.innerDisposable = Disposable.create(() =>
-        clearInterval(timeout),
-      );
+      if (ctx.delay > 0) {
+        const timeout = setInterval(callback, ctx.delay);
+        ctx.disposable.innerDisposable = Disposable.create(() =>
+          clearInterval(timeout),
+        );
+      } else {
+        const immediate = setImmediate(callback);
+        ctx.disposable.innerDisposable = Disposable.create(() =>
+          clearImmediate(immediate),
+        );
+      }
     }
   }
 
