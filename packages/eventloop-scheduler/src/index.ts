@@ -15,6 +15,7 @@ type SchedulerCtx = {
   delay: number;
   readonly disposable: SerialDisposableLike;
   readonly shouldYield: () => boolean;
+  readonly callback: () => void;
 };
 
 class EventLoopSchedulerImpl implements SchedulerResourceLike {
@@ -82,15 +83,6 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private scheduleInternal(ctx: SchedulerCtx) {
     ctx.disposable.innerDisposable.dispose();
 
-    const callback = () => {
-      if (!this.isDisposed) {
-        this.workqueue.push(ctx);
-        if (this.workqueue.length === 1) {
-          this.drainQueue();
-        }
-      }
-    };
-
     if (!this.isDisposed) {
       // Schedule continuations on the JS task queue to avoid a greedy producer
       // from hogging the scheduler and preventing other users of delays etc.
@@ -107,12 +99,13 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       // microtasks.
 
       if (ctx.delay > 0) {
-        const timeout = setInterval(callback, ctx.delay);
+        const timeout = setInterval(ctx.callback, ctx.delay);
         ctx.disposable.innerDisposable = Disposable.create(() =>
           clearInterval(timeout),
         );
       } else {
-        const immediate = setImmediate(callback);
+        // FIXME: Shim setImmediate for the browser case or require a polyfill.
+        const immediate = setImmediate(ctx.callback);
         ctx.disposable.innerDisposable = Disposable.create(() =>
           clearImmediate(immediate),
         );
@@ -137,6 +130,14 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       delay: Math.max(delay, 0),
       disposable,
       shouldYield,
+      callback: () => {
+        if (!this.isDisposed) {
+          this.workqueue.push(ctx);
+          if (this.workqueue.length === 1) {
+            this.drainQueue();
+          }
+        }
+      },
     };
 
     this.scheduleInternal(ctx);
