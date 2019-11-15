@@ -14,7 +14,7 @@ Fast modern reactive Javascript programming library
 * [@reactive-js/rx-observables](./packages/rx-observables)
 * [@reactive-js/rx-operators](./packages/rx-operators)
 
-### Async Interactive Programming (IX)
+### Asynchronous Interactive Programming (IX)
 * [@reactive-js/ix-core](./packages/ix-core)
 * [@reactive-js/state-container](./packages/state-container)
 
