@@ -55,16 +55,19 @@ const makeObservable = <T>(
   );
 
 export const useObservable = <T>(
-  observable: ObservableLike<T>,
+  factory: () => ObservableLike<T>,
+  deps: readonly any[] | undefined,
   scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
   const [error, updateError] = useState<Error | undefined>(undefined);
 
+  const observable = useMemo(factory, deps);
+
   useResource(
     () =>
       connect(makeObservable(observable, updateState, updateError), scheduler),
-    [observable, updateState, updateError, scheduler],
+    [, updateState, updateError, scheduler],
   );
 
   if (error !== undefined) {
@@ -80,7 +83,7 @@ export const useObservableResource = <T>(
   scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const resource = useResource(factory, deps);
-  return useObservable(resource, scheduler);
+  return useObservable(() => resource, [resource], scheduler);
 };
 
 export const useAsyncIterator = <TReq, T>(
@@ -90,7 +93,7 @@ export const useAsyncIterator = <TReq, T>(
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useResource(factory, deps);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
-  const value = useObservable(iterator, scheduler);
+  const value = useObservable(() => iterator, [iterator], scheduler);
 
   return [value, dispatch];
 };
