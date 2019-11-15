@@ -28,6 +28,8 @@ Represents a cooperative scheduler.
   Schedules the given continuation to be executed asynchronously by the SchedulerLike with an optional delay in ms. 
   The returned DisposableLike may be used to cancel the request.
 
+*SchedulerResourceLike*:
+
 *SchedulerContinuation*: 
 
 A function with the shape `(shouldYield: () => boolean): SchedulerContinuationResult` to be scheduled on a SchedulerLike. 

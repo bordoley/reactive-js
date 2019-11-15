@@ -13,3 +13,5 @@ export interface SchedulerLike {
   now: number;
   schedule(continuation: SchedulerContinuation, delay?: number): DisposableLike;
 }
+
+export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}
