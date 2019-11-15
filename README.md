@@ -4,23 +4,29 @@ Fast modern reactive Javascript programming library
 
 ## Packages
 
-### Core API
+### Core
 * [@reactive-js/disposables](./packages/disposables)
-* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler)
-* [@reactive-js/ix-core](./packages/ix-core)
+* [@reactive-js/scheduler](./packages/scheduler)
+
+### Reactive Programming (RX)
 * [@reactive-js/rx-core](./packages/rx-core)
 * [@reactive-js/rx-imperative](./packages/rx-imperative)
 * [@reactive-js/rx-observables](./packages/rx-observables)
 * [@reactive-js/rx-operators](./packages/rx-operators)
-* [@reactive-js/scheduler](./packages/scheduler)
+
+### Async Interactive Programming (IX)
+* [@reactive-js/ix-core](./packages/ix-core)
 * [@reactive-js/state-container](./packages/state-container)
+
+### Schedulers
+* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler)
+* [@reactive-js/react-scheduler](./packages/react-scheduler)
 * [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler)
 
 ### React JS Integration
 * [@reactive-js/react-dom-router](./packages/react-dom-router)
 * [@reactive-js/react-hooks](./packages/react-hooks)
 * [@reactive-js/react-router](./packages/react-router)
-* [@reactive-js/react-scheduler](./packages/react-scheduler)
 
 ### Browser Integration
 * [@reactive-js/dom](./packages/dom)
