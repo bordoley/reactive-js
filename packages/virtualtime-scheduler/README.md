@@ -1,4 +1,4 @@
-# @reactive-js/state-container
+# @reactive-js/virtualtime-scheduler
 
 ## API
 
