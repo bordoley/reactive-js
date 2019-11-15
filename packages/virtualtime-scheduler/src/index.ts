@@ -54,7 +54,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
               ? continuationCallback
               : this.createWorkCallback(disposable, shouldYield, continuation);
 
-          const scheduledTime = this.now + delay;
+          const scheduledTime = this.now + Math.max(delay, 0);
           this.schedulWorkAtTime(callback, scheduledTime);
         }
       }
@@ -66,6 +66,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     continuation: SchedulerContinuation,
     delay: number = 0,
   ): DisposableLike {
+    delay = Math.max(delay, 0);
     const disposable = Disposable.empty();
     const shouldYield = () => disposable.isDisposed;
     const now = this.now;

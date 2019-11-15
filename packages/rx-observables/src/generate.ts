@@ -45,10 +45,7 @@ export const generate = <T>(
     continuationResult = delay > 0 ? [continuation, delay] : continuation;
 
     subscriber.subscription.add(
-      subscriber.scheduler.schedule(
-        continuation,
-        delay,
-      ),
+      subscriber.scheduler.schedule(continuation, delay),
     );
   };
 

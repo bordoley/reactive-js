@@ -8,7 +8,7 @@ import {
 
 type SchedulerCtx = {
   continuation: SchedulerContinuation;
-  delay: number | void;
+  delay: number;
   readonly disposable: SerialDisposableLike;
   readonly shouldYield: () => boolean;
 };
@@ -33,13 +33,18 @@ class EventLoopSchedulerImpl implements SchedulerLike {
 
     if (result instanceof Function) {
       ctx.continuation = result;
-      this.scheduleNow(ctx);
+      ctx.delay = 0;
+      this.scheduleInternal(ctx);
     } else if (result !== undefined) {
       const [resultContinuation, resultDelay] = result;
       ctx.continuation = resultContinuation;
 
-      if (resultDelay !== ctx.delay) {
-        this.scheduleDelayed(ctx, resultDelay);
+      if (resultDelay !== ctx.delay && resultDelay > 0) {
+        ctx.delay = resultDelay;
+        this.scheduleInternal(ctx);
+      } else if (resultDelay <= 0) {
+        ctx.delay = 0;
+        this.scheduleInternal(ctx);
       }
       // else reuse the existing setInterval delay
     } else {
@@ -47,25 +52,20 @@ class EventLoopSchedulerImpl implements SchedulerLike {
     }
   }
 
-  private async scheduleNow(ctx: SchedulerCtx) {
+  private async scheduleInternal(ctx: SchedulerCtx) {
     ctx.disposable.innerDisposable.dispose();
-    ctx.delay = undefined;
 
-    await Promise.resolve();
-    this.executeContinuation(ctx);
-  }
-
-  private scheduleDelayed(ctx: SchedulerCtx, delay: number) {
-    ctx.disposable.innerDisposable.dispose();
-    ctx.delay = delay;
-
-    const timeout = setInterval(() => {
+    if (ctx.delay > 0) {
+      const timeout = setInterval(() => {
+        this.executeContinuation(ctx);
+      }, ctx.delay);
+      ctx.disposable.innerDisposable = Disposable.create(() =>
+        clearInterval(timeout),
+      );
+    } else {
+      await Promise.resolve();
       this.executeContinuation(ctx);
-    }, delay);
-
-    ctx.disposable.innerDisposable = Disposable.create(() =>
-      clearInterval(timeout),
-    );
+    }
   }
 
   schedule(
@@ -78,17 +78,12 @@ class EventLoopSchedulerImpl implements SchedulerLike {
 
     const ctx: SchedulerCtx = {
       continuation,
-      delay,
+      delay: Math.max(delay, 0),
       disposable,
       shouldYield,
     };
 
-    if (delay > 0) {
-      this.scheduleDelayed(ctx, delay);
-    } else {
-      this.scheduleNow(ctx);
-    }
-
+    this.scheduleInternal(ctx);
     return disposable;
   }
 }
