@@ -19,7 +19,6 @@
   "dependencies": {
     "react": "16.11.0",
     "@reactive-js/ix-core": "0.0.0",
-    "@reactive-js/ix-operators": "0.0.0",
     "@reactive-js/disposables": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",

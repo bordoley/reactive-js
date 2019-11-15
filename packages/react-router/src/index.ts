@@ -7,9 +7,9 @@ import { useAsyncIterator } from "@reactive-js/react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
 import { AsyncIterator } from "@reactive-js/ix-core";
-import { scan } from "@reactive-js/ix-operators";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { normalPriority } from "@reactive-js/react-scheduler";
+import { scan } from "@reactive-js/rx-operators";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
@@ -136,7 +136,7 @@ const createRouter = <TContext>(
   const routeMap = routes.reduce(routesReducer, {});
 
   const routePairFactory = () =>
-    AsyncIterator.pipe(
+    AsyncIterator.lift(
       locationResourceFactory(),
       scan(pairify, [undefined, emptyRelativeURI]),
     );
