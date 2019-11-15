@@ -8,6 +8,7 @@ import {
   Observable,
   ObservableLike,
   ObserverLike,
+  SubscriberLike,
 } from "@reactive-js/rx-core";
 
 class ConcatObserver<T> implements ObserverLike<T> {
@@ -34,12 +35,16 @@ class ConcatObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const concat = <T>(
-  head: ObservableLike<T>,
-  ...tail: Array<ObservableLike<T>>
-): ObservableLike<T> =>
-  Observable.create(subscriber => {
-    const queue = [head, ...tail];
+class ConcatObservable<T> implements ObservableLike<T> {
+  private readonly observables: readonly ObservableLike<T>[];
+
+  constructor(observables: readonly ObservableLike<T>[]) {
+    this.observables = observables;
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const queue = [...this.observables];
+
     const subscribeNext = () => {
       const head = queue.shift();
       if (head !== undefined) {
@@ -62,4 +67,10 @@ export const concat = <T>(
     };
 
     subscribeNext();
-  });
+  }
+}
+
+export const concat = <T>(
+  head: ObservableLike<T>,
+  ...tail: Array<ObservableLike<T>>
+): ObservableLike<T> => new ConcatObservable([head, ...tail]);

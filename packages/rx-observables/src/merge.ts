@@ -6,6 +6,7 @@ import {
   Observable,
   ObservableLike,
   ObserverLike,
+  SubscriberLike,
 } from "@reactive-js/rx-core";
 
 class MergeObserver<T> implements ObserverLike<T> {
@@ -40,14 +41,11 @@ export const merge = <T>(
   head: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T> => {
-  return Observable.create(subscriber => {
-    const observer = new MergeObserver(subscriber, tail.length + 1);
+  const observables = [head, ...tail];
+  const subscribe = (subscriber: SubscriberLike<T>) => {
+    const observer = new MergeObserver(subscriber, observables.length);
 
-    subscriber.subscription.add(
-      connect(Observable.lift(head, observe(observer)), subscriber.scheduler),
-    );
-
-    for (let observable of tail) {
+    for (let observable of observables) {
       subscriber.subscription.add(
         connect(
           Observable.lift(observable, observe(observer)),
@@ -55,5 +53,7 @@ export const merge = <T>(
         ),
       );
     }
-  });
+  };
+
+  return { subscribe };
 };

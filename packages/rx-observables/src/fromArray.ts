@@ -2,6 +2,7 @@ import {
   Notifications,
   Observable,
   ObservableLike,
+  SubscriberLike,
 } from "@reactive-js/rx-core";
 
 import {
@@ -9,11 +10,61 @@ import {
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
 
+class FromArrayObservable<T> implements ObservableLike<T> {
+  private readonly values: readonly T[];
+  private readonly delay: number;
+
+  constructor(values: readonly T[], delay: number) {
+    this.values = values;
+    this.delay = delay;
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    let index = 0;
+
+    let continuationResult: SchedulerContinuationResult;
+    const continuation: SchedulerContinuation = (
+      shouldYield: () => boolean,
+    ) => {
+      if (subscriber.subscription.isDisposed) {
+        return;
+      } else if (index < this.values.length && this.delay > 0) {
+        const value = this.values[index];
+        index++;
+        subscriber.notify(Notifications.next, value);
+        return continuationResult;
+      } else {
+        while (index < this.values.length) {
+          const value = this.values[index];
+          index++;
+          subscriber.notify(Notifications.next, value);
+
+          if (shouldYield()) {
+            return continuationResult;
+          }
+        }
+
+        subscriber.notify(Notifications.complete);
+      }
+    };
+
+    continuationResult =
+      this.delay > 0 ? [continuation, this.delay] : continuation;
+
+    subscriber.subscription.add(
+      subscriber.scheduler.schedule(
+        continuation,
+        this.delay > 0 ? this.delay : undefined,
+      ),
+    );
+  }
+}
+
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
-  delay: number | void,
-): ObservableLike<T> =>
-  Observable.create(subscriber => {
+  delay: number = 0,
+): ObservableLike<T> => {
+  const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
     let continuationResult: SchedulerContinuationResult;
@@ -42,54 +93,64 @@ export const fromArray = <T>(
       }
     };
 
-    continuationResult =
-      delay !== undefined ? [continuation, delay] : continuation;
+    continuationResult = delay > 0 ? [continuation, delay] : continuation;
 
     subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay),
+      subscriber.scheduler.schedule(
+        continuation,
+        delay > 0 ? delay : undefined,
+      ),
     );
-  });
+  };
 
-export const ofValue = <T>(value: T, delay: number | void): ObservableLike<T> =>
+  return { subscribe };
+};
+
+export const ofValue = <T>(value: T, delay: number = 0): ObservableLike<T> =>
   fromArray([value], delay);
 
 export const empty = <T>(): ObservableLike<T> => fromArray([]);
 
 export const fromDelayedValues = <T>(
+  value: [number, T],
   ...values: Array<[number, T]>
-): ObservableLike<T> =>
-  values.length === 0
-    ? empty()
-    : Observable.create(subscriber => {
-        let index = 0;
+): ObservableLike<T> => {
+  const delayedValues = [value, ...values];
 
-        const continuation: SchedulerContinuation = (
-          shouldYield: () => boolean,
-        ) => {
-          if (subscriber.subscription.isDisposed) {
-            return;
-          } else {
-            while (index < values.length) {
-              const [_, value] = values[index];
-              index++;
-              subscriber.notify(Notifications.next, value);
+  const subscribe = (subscriber: SubscriberLike<T>) => {
+    let index = 0;
 
-              const delay = index < values.length ? values[index][0] : 0;
+    const continuation: SchedulerContinuation = (
+      shouldYield: () => boolean,
+    ) => {
+      if (subscriber.subscription.isDisposed) {
+        return;
+      } else {
+        while (index < delayedValues.length) {
+          const [_, value] = delayedValues[index];
+          index++;
+          subscriber.notify(Notifications.next, value);
 
-              if (delay > 0) {
-                return [continuation, delay];
-              } else if (shouldYield()) {
-                return continuation;
-              }
-            }
+          const delay =
+            index < delayedValues.length ? delayedValues[index][0] : 0;
 
-            subscriber.notify(Notifications.complete);
+          if (delay > 0) {
+            return [continuation, delay];
+          } else if (shouldYield()) {
+            return continuation;
           }
-        };
+        }
 
-        const [delay, _] = values[index];
+        subscriber.notify(Notifications.complete);
+      }
+    };
 
-        subscriber.subscription.add(
-          subscriber.scheduler.schedule(continuation, delay),
-        );
-      });
+    const [delay, _] = delayedValues[index];
+
+    subscriber.subscription.add(
+      subscriber.scheduler.schedule(continuation, delay),
+    );
+  };
+
+  return { subscribe };
+};
