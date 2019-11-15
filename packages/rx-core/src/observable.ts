@@ -5,7 +5,10 @@ import {
   Operator,
   SubscriberLike,
 } from "./subscriber";
-import { SchedulerLike } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  SchedulerContinuationResult,
+} from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
@@ -252,8 +255,26 @@ export const ObservableResource = {
 };
 
 const create = <T>(
-  subscribe: (subscriber: SubscriberLike<T>) => void,
-): ObservableLike<T> => ({ subscribe });
+  onSubscribe: (
+    subscriber: SubscriberLike<T>,
+    shouldYield: () => boolean,
+  ) => SchedulerContinuationResult,
+  delay: number = 0,
+): ObservableLike<T> => {
+  const subscribe = (subscriber: SubscriberLike<T>) => {
+    const continuation = (shouldYield: () => boolean) =>
+      onSubscribe(subscriber, shouldYield);
+
+    subscriber.subscription.add(
+      subscriber.scheduler.schedule(
+        continuation,
+        delay > 0 ? delay : undefined,
+      ),
+    );
+  };
+
+  return { subscribe };
+};
 
 export const Observable = {
   create,

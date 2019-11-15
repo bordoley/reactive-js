@@ -10,7 +10,7 @@ import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
 const scheduler = EventLoopScheduler.create(1);
 const observableThatDoesNothing = Observable.lift(
-  Observable.create(subscriber => {}),
+  Observable.create((subscriber, shouldYield) => {}),
   observe((notif, data) => console.log(notif + ": " + data)),
 );
 const subscription = connect(observableThatDoesNothing, scheduler);
@@ -54,7 +54,7 @@ subscription.dispose();
 
 *`Notifications.complete: NotifyComplete`*
 
-*`Observable.create<T>(subscribe: (subscriber: SubscriberLike<T>) => void): ObservableLike<T>`*
+*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>, shouldYield: () => boolean) => SchedulerContinuationResult delay?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
