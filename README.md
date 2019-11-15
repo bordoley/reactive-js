@@ -1,4 +1,4 @@
-# Reactive JS: 
+# Reactive JS:
 
 Fast modern reactive Javascript programming library
 
@@ -6,6 +6,7 @@ Fast modern reactive Javascript programming library
 
 ### Core API
 * [@reactive-js/disposables](./packages/disposables)
+* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler)
 * [@reactive-js/ix-core](./packages/ix-core)
 * [@reactive-js/rx-core](./packages/rx-core)
 * [@reactive-js/rx-imperative](./packages/rx-imperative)
@@ -19,13 +20,10 @@ Fast modern reactive Javascript programming library
 * [@reactive-js/react-dom-router](./packages/react-dom-router)
 * [@reactive-js/react-hooks](./packages/react-hooks)
 * [@reactive-js/react-router](./packages/react-router)
+* [@reactive-js/react-scheduler](./packages/react-scheduler)
 
 ### Browser Integration
 * [@reactive-js/dom](./packages/dom)
-* [@reactive-js/react-scheduler](./packages/react-scheduler)
-
-### Node Integration
-* [@reactive-js/node-scheduler](./packages/node-scheduler)
 
 ## RxJS/TC39 Comparison
 

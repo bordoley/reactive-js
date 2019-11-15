@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/node-scheduler",
+  "name": "@reactive-js/eventloop-scheduler",
   "version": "0.0.0",
   "description": "Node.js scheduler",
   "main": "dist/index.js",

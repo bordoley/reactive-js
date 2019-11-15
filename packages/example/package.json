@@ -20,6 +20,6 @@
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
-    "@reactive-js/node-scheduler": "0.0.0"
+    "@reactive-js/eventloop-scheduler": "0.0.0"
   }
 }

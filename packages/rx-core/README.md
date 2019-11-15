@@ -6,9 +6,9 @@ Core interfaces for reactive programming in reactive-js.
 
 ```typescript
 import { connect, observe, Observable } from "@reactive-js/rx-core";
-import { NodeScheduler } from "@reactive-js/node-scheduler";
+import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
-const scheduler = NodeScheduler.create(1);
+const scheduler = EventLoopScheduler.create(1);
 const observableThatDoesNothing = Observable.lift(
   Observable.create(subscriber => {}),
   observe((notif, data) => console.log(notif + ": " + data)),
