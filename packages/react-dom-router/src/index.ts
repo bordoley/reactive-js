@@ -1,7 +1,7 @@
 import {
   Router as ReactRouter,
   RelativeURI,
-  RoutableComponentProps,
+  RouterProps,
 } from "@reactive-js/react-router";
 import { StateUpdater } from "@reactive-js/state-container";
 
@@ -51,20 +51,11 @@ const createRelativeURILocation = (
   return AsyncIterator.mapRequest(lifted, requestMapper);
 };
 
-const createRelativeURIRouter = <TContext>(
-  notFoundComponent: React.ComponentType<RoutableComponentProps>,
-  routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
-  context: React.Context<TContext> | void,
+const create = (
   scheduler: SchedulerLike = normalPriority,
-): React.ComponentType<TContext> =>
-  ReactRouter.create(
-    () => createRelativeURILocation(scheduler),
-    notFoundComponent,
-    routes,
-    context,
-    scheduler,
-  );
+): React.ComponentType<RouterProps> =>
+  ReactRouter.create(() => createRelativeURILocation(scheduler), scheduler);
 
 export const Router = {
-  create: createRelativeURIRouter,
+  create,
 };

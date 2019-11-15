@@ -126,24 +126,24 @@ const pairify = (
 ): [RelativeURI | undefined, RelativeURI] =>
   oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
 
-const createRouter = <TContext>(
+export type RouterProps = {
+  notFoundComponent: React.ComponentType<RoutableComponentProps>;
+  routes: readonly [string, React.ComponentType<RoutableComponentProps>][];
+};
+
+const create = (
   locationResourceFactory: () => StateContainerResourceLike<RelativeURI>,
-  notFoundComponent: React.ComponentType<RoutableComponentProps>,
-  routes: readonly [string, React.ComponentType<RoutableComponentProps>][],
-  context: React.Context<TContext> | void,
   scheduler: SchedulerLike = normalPriority,
-): React.ComponentType<TContext> => {
-  const routeMap = routes.reduce(routesReducer, {});
+): React.ComponentType<RouterProps> => {
+  const ReactRouter = ({ notFoundComponent, routes }: RouterProps) => {
+    const routeMap = useMemo(() => routes.reduce(routesReducer, {}), [routes]);
 
-  const routePairFactory = () =>
-    AsyncIterator.lift(
-      locationResourceFactory(),
-      scan(pairify, [undefined, emptyRelativeURI]),
-    );
-
-  const RxReactRouter = (props: TContext) => {
     const [route, uriUpdater] = useAsyncIterator(
-      routePairFactory,
+      () =>
+        AsyncIterator.lift(
+          locationResourceFactory(),
+          scan(pairify, [undefined, emptyRelativeURI]),
+        ),
       [],
       scheduler,
     );
@@ -157,14 +157,10 @@ const createRouter = <TContext>(
           })
         : null;
 
-    return context !== undefined
-      ? createElement(context.Provider, { value: props, children: child })
-      : child;
+    return child;
   };
 
-  return RxReactRouter;
+  return ReactRouter;
 };
 
-export const Router = {
-  create: createRouter,
-};
+export const Router = { create };
