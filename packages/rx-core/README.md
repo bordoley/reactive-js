@@ -43,10 +43,7 @@ subscription.dispose();
 
 ### Static Functions
 
-*`connect<T>(
-  observable: ObservableLike<T>,
-  scheduler: SchedulerLike,
-): DisposableLike`*
+*`connect<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): DisposableLike`*
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
@@ -54,7 +51,7 @@ subscription.dispose();
 
 *`Notifications.complete: NotifyComplete`*
 
-*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>, shouldYield: () => boolean) => SchedulerContinuationResult delay?: number): ObservableLike<T>`*
+*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>, shouldYield: () => boolean) => SchedulerContinuationResult, delay?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
