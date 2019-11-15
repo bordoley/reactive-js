@@ -8,7 +8,7 @@
 
 *`concat<T>(head: ObservableLike<T>,...tail: Array<ObservableLike<T>>): ObservableLike<T>`*
 
-*`empty<T>(): ObservableLike<T>`*
+*`empty<T>(delay?: number): ObservableLike<T>`*
 
 *`fromArray<T>(values: ReadonlyArray<T>, delay?: number): ObservableLike<T>`*
 

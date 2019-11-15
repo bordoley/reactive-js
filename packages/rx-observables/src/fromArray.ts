@@ -109,7 +109,8 @@ export const fromArray = <T>(
 export const ofValue = <T>(value: T, delay: number = 0): ObservableLike<T> =>
   fromArray([value], delay);
 
-export const empty = <T>(): ObservableLike<T> => fromArray([]);
+export const empty = <T>(delay: number = 0): ObservableLike<T> =>
+  fromArray([], delay);
 
 export const fromDelayedValues = <T>(
   value: [number, T],
