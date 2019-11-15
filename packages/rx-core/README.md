@@ -51,7 +51,7 @@ subscription.dispose();
 
 *`Notifications.complete: NotifyComplete`*
 
-*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>, shouldYield: () => boolean) => SchedulerContinuationResult, delay?: number): ObservableLike<T>`*
+*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>) => void, delay?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
