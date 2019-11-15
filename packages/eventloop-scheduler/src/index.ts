@@ -136,7 +136,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
     const disposable = SerialDisposable.create();
     const shouldYield = (): boolean =>
-      this.disposable.isDisposed ||
+      disposable.isDisposed ||
       this.startTime + this.timeout < this.now;
 
     const ctx = {
