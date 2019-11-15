@@ -6,11 +6,6 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposables";
 
-// This is a tremendously poor scheduler because it allows task to run until they've been
-// disposed. It would be better to do something similar to the react scheduler which maintains
-// internally a queue of work to do and then interrupts running work to yield the runloop to other
-// tasks both in progress and scheduled.
-
 type SchedulerCtx = {
   continuation: SchedulerContinuation;
   delay: number | void;
@@ -75,12 +70,11 @@ class EventLoopSchedulerImpl implements SchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number | void,
+    delay: number = 0,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
-    const shouldYield = () => {
-      return disposable.isDisposed || this.startTime + this.timeout < this.now;
-    };
+    const shouldYield = () =>
+      disposable.isDisposed || this.startTime + this.timeout < this.now;
 
     const ctx: SchedulerCtx = {
       continuation,
@@ -89,7 +83,7 @@ class EventLoopSchedulerImpl implements SchedulerLike {
       shouldYield,
     };
 
-    if (delay !== undefined && delay > 0) {
+    if (delay > 0) {
       this.scheduleDelayed(ctx, delay);
     } else {
       this.scheduleNow(ctx);

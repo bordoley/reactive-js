@@ -16,8 +16,7 @@ import {
   switch_,
 } from "@reactive-js/rx-operators";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
-
-const scheduler = EventLoopScheduler.create(1);
+const scheduler = EventLoopScheduler.create(500);
 /*
 connect(
   Observable.lift(
@@ -79,8 +78,8 @@ connect(
 
 connect(
   Observable.lift(
-    generate(x => x + 1, 0, 233),
-    map(x => fromArray([x, x, x, x], 1000)),
+    generate(x => x + 1, 0, 1),
+    map(x => fromArray([x, x, x, x], 100)),
     exhaust(),
     onNext(console.log),
   ),

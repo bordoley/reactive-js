@@ -17,9 +17,9 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
+    "@reactive-js/eventloop-scheduler": "0.0.0",
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
-    "@reactive-js/rx-operators": "0.0.0",
-    "@reactive-js/eventloop-scheduler": "0.0.0"
+    "@reactive-js/rx-operators": "0.0.0"
   }
 }

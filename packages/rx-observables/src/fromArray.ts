@@ -48,7 +48,7 @@ export const fromArray = <T>(
     subscriber.subscription.add(
       subscriber.scheduler.schedule(
         continuation,
-        delay > 0 ? delay : undefined,
+        delay,
       ),
     );
   };
