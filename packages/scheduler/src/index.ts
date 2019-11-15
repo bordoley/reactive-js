@@ -11,8 +11,5 @@ export type SchedulerContinuationResult =
 
 export interface SchedulerLike {
   now: number;
-  schedule(
-    continuation: SchedulerContinuation,
-    delay: number | void,
-  ): DisposableLike;
+  schedule(continuation: SchedulerContinuation, delay?: number): DisposableLike;
 }

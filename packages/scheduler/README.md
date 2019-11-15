@@ -22,7 +22,7 @@ Represents a cooperative scheduler.
   
 * `schedule(
     continuation: SchedulerContinuation,
-    delay: number | void,
+    delay?: number,
   ): DisposableLike;`
 
   Schedules the given continuation to be executed asynchronously by the SchedulerLike with an optional delay in ms. 

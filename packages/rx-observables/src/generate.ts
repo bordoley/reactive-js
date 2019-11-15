@@ -47,7 +47,7 @@ export const generate = <T>(
     subscriber.subscription.add(
       subscriber.scheduler.schedule(
         continuation,
-        delay > 0 ? delay : undefined,
+        delay,
       ),
     );
   };

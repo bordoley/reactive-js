@@ -20,7 +20,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposables";
 
-class RxReactScheduler implements SchedulerLike {
+class ReactSchedulerImpl implements SchedulerLike {
   private readonly priorityLevel: number;
 
   constructor(priorityLevel: number) {
@@ -34,12 +34,12 @@ class RxReactScheduler implements SchedulerLike {
   private scheduleCallback(
     disposable: SerialDisposableLike,
     callback: FrameCallbackType,
-    delay: number | void,
+    delay: number,
   ) {
     const callbackNode = unstable_scheduleCallback(
       this.priorityLevel,
       callback,
-      delay !== undefined ? { delay } : undefined,
+      delay > 0 ? { delay } : undefined,
     );
 
     const innerDisposable = Disposable.create(() =>
@@ -75,7 +75,7 @@ class RxReactScheduler implements SchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number | void,
+    delay: number = 0,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
 
@@ -94,18 +94,18 @@ class RxReactScheduler implements SchedulerLike {
   }
 }
 
-export const immediatePriority: SchedulerLike = new RxReactScheduler(
+export const immediatePriority: SchedulerLike = new ReactSchedulerImpl(
   unstable_ImmediatePriority,
 );
-export const userBlockingPriority: SchedulerLike = new RxReactScheduler(
+export const userBlockingPriority: SchedulerLike = new ReactSchedulerImpl(
   unstable_UserBlockingPriority,
 );
-export const normalPriority: SchedulerLike = new RxReactScheduler(
+export const normalPriority: SchedulerLike = new ReactSchedulerImpl(
   unstable_NormalPriority,
 );
-export const idlePriority: SchedulerLike = new RxReactScheduler(
+export const idlePriority: SchedulerLike = new ReactSchedulerImpl(
   unstable_IdlePriority,
 );
-export const lowPriority: SchedulerLike = new RxReactScheduler(
+export const lowPriority: SchedulerLike = new ReactSchedulerImpl(
   unstable_LowPriority,
 );
