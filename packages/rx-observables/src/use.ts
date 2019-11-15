@@ -23,5 +23,5 @@ export const use = <T>(
       .add(resource);
   };
 
-  return { subscribe };
+  return Observable.create(subscribe);
 };
