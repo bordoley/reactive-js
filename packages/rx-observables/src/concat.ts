@@ -35,15 +35,14 @@ class ConcatObserver<T> implements ObserverLike<T> {
   }
 }
 
-class ConcatObservable<T> implements ObservableLike<T> {
-  private readonly observables: readonly ObservableLike<T>[];
+export const concat = <T>(
+  head: ObservableLike<T>,
+  ...tail: Array<ObservableLike<T>>
+): ObservableLike<T> => {
+  const observables = [head, ...tail];
 
-  constructor(observables: readonly ObservableLike<T>[]) {
-    this.observables = observables;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const queue = [...this.observables];
+  const subscribe = (subscriber: SubscriberLike<T>) => {
+    const queue = [...observables];
 
     const subscribeNext = () => {
       const head = queue.shift();
@@ -67,10 +66,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
     };
 
     subscribeNext();
-  }
-}
+  };
 
-export const concat = <T>(
-  head: ObservableLike<T>,
-  ...tail: Array<ObservableLike<T>>
-): ObservableLike<T> => new ConcatObservable([head, ...tail]);
+  return { subscribe };
+};
