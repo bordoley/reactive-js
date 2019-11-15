@@ -138,7 +138,7 @@ function lift<TReq>(
 const mapRequest = <TSrcReq, TReq, T>(
   iterator: AsyncIteratorLike<TSrcReq, T>,
   mapper: (v: TReq) => TSrcReq,
-): AsyncIteratorLike<TReq, any> => {
+): AsyncIteratorLike<TReq, T> => {
   const [observable, disposable, dispatcher] =
     iterator instanceof DelegatingAsyncIterator
       ? [iterator.observable, iterator.disposable, iterator.dispatcher]
