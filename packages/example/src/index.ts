@@ -78,8 +78,8 @@ connect(
 
 connect(
   Observable.lift(
-    generate(x => x + 1, 0, 1),
-    map(x => fromArray([x, x, x, x], 100)),
+    generate(x => x + 1, 0),
+    map(x => fromArray([x, x, x, x])),
     exhaust(),
     onNext(console.log),
   ),
