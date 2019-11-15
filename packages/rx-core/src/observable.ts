@@ -9,6 +9,7 @@ import {
   SchedulerLike,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
+import { Notifications } from "./observer";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
@@ -259,8 +260,13 @@ const create = <T>(
   delay: number = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
-    const continuation = (shouldYield: () => boolean) =>
-      onSubscribe(subscriber);
+    const continuation = (shouldYield: () => boolean) => {
+      try{
+        onSubscribe(subscriber);
+      } catch (error) {
+        subscriber.notify(Notifications.complete, error);
+      }
+    };
 
     subscriber.subscription.add(
       subscriber.scheduler.schedule(

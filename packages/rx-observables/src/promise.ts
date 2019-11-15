@@ -9,7 +9,7 @@ export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
   delay: number = 0,
 ): ObservableLike<T> => {
-  const callback = async (subscriber: SubscriberLike<T>) => {
+  const onSubscribe = async (subscriber: SubscriberLike<T>) => {
     try {
       const result = await factory();
       if (!subscriber.subscription.isDisposed) {
@@ -23,7 +23,5 @@ export const fromPromiseFactory = <T>(
     }
   };
 
-  return Observable.create((subscriber: SubscriberLike<T>) => {
-    callback(subscriber);
-  }, delay);
+  return Observable.create(onSubscribe, delay);
 };
