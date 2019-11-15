@@ -58,7 +58,8 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 export const debounceTime = <T>(dueTime: number): Operator<T, T> => {
-  // FIXME: bounds check the duetime
-  return (subscriber: SubscriberLike<T>) =>
-    new DebounceTimeSubscriber(subscriber, dueTime);
+  if (dueTime <= 0) {
+    throw new Error("dueTime must be greater than 0");
+  }
+  return subscriber => new DebounceTimeSubscriber(subscriber, dueTime);
 };

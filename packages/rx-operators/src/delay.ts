@@ -56,5 +56,9 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const delay = <T>(dueTime: number): Operator<T, T> => subscriber =>
-  new DelaySubscriber(subscriber, dueTime);
+export const delay = <T>(dueTime: number): Operator<T, T> => {
+  if (dueTime <= 0) {
+    throw new Error("dueTime must be greater than 0");
+  }
+  return subscriber => new DelaySubscriber(subscriber, dueTime);
+};
