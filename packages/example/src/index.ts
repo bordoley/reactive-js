@@ -15,9 +15,9 @@ import {
   onComplete,
   switch_,
 } from "@reactive-js/rx-operators";
-import { NodeScheduler } from "@reactive-js/node-scheduler";
+import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
-const scheduler = NodeScheduler.create(1);
+const scheduler = EventLoopScheduler.create(1);
 /*
 connect(
   Observable.lift(
