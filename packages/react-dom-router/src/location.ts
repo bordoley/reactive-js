@@ -10,7 +10,7 @@ import {
   StateUpdater,
 } from "@reactive-js/state-container";
 
-import { fromEvent } from "./fromEvent";
+import { fromEvent } from "@reactive-js/dom";
 
 const getCurrentLocation = () => {
   const path = window.location.pathname;
