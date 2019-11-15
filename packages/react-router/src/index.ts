@@ -165,6 +165,6 @@ const createRouter = <TContext>(
   return RxReactRouter;
 };
 
-export const RxReactRouter = {
+export const Router = {
   create: createRouter,
 };
