@@ -51,9 +51,13 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
           this.parent.delegate.notify(Notifications.next, data);
           break;
         case Notifications.complete:
-          const shouldComplete = !this.parent.shouldRepeat(
-            data as Error | void,
-          );
+          let shouldComplete = false;
+          try {
+            shouldComplete = !this.parent.shouldRepeat(data as Error | void);
+          } catch (error) {
+            shouldComplete = true;
+            data = error;
+          }
 
           if (shouldComplete) {
             this.parent.delegate.notify(Notifications.complete, data);

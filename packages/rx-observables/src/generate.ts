@@ -25,20 +25,30 @@ export const generate = <T>(
       if (subscriber.subscription.isDisposed) {
         return;
       } else if (delay > 0) {
-        acc = generator(acc);
+        try {
+          acc = generator(acc);
+        } catch (error) {
+          subscriber.notify(Notifications.complete, error);
+          return;
+        }
+
         subscriber.notify(Notifications.next, acc);
         return continuationResult;
       } else {
         while (true) {
-          acc = generator(acc);
+          try {
+            acc = generator(acc);
+          } catch (error) {
+            subscriber.notify(Notifications.complete, error);
+            return;
+          }
+
           subscriber.notify(Notifications.next, acc);
 
           if (shouldYield()) {
             return continuationResult;
           }
         }
-
-        subscriber.notify(Notifications.complete);
       }
     };
 
