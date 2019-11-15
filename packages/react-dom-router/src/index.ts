@@ -7,10 +7,9 @@ import { StateUpdater } from "@reactive-js/state-container";
 
 import { AsyncIterator } from "@reactive-js/ix-core";
 import {
-  distinctUntilChanged as ixDistinctUntilChanged,
-  map as ixMap,
-  mapRequest as ixMapRequest,
-} from "@reactive-js/ix-operators";
+  distinctUntilChanged,
+  map,
+} from "@reactive-js/rx-operators";
 
 import { LocationState } from "@reactive-js/dom";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -43,13 +42,15 @@ const reducer = (
 const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
-const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) =>
-  AsyncIterator.pipe(
+const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) => {
+  const lifted = AsyncIterator.lift(
     LocationState.create(scheduler),
-    ixMap(mapper),
-    ixMapRequest(requestMapper),
-    ixDistinctUntilChanged(),
+    map(mapper),
+    distinctUntilChanged(),
   );
+
+  return AsyncIterator.mapRequest(lifted, requestMapper);
+};
 
 const createRelativeURIRouter = <TContext>(
   notFoundComponent: React.ComponentType<RoutableComponentProps>,

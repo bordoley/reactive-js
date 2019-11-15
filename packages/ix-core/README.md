@@ -6,12 +6,9 @@
 
 *AsyncIteratorLike*
 
-*Operator*
-
-### Abstract Classes
-
-*DelegatingAsyncIterator*
-
 ### Static Functions
 
-*`AsyncIterator.pipe(iterator: AsyncIteratorLike<any, any>, operator: Operator<any, any, any, any>, ...operators: Operator<any, any, any, any>[]): AsyncIteratorLike<any, any>`*
+*`AsyncIterator.lift<TReq>(iterator: AsyncIteratorLike<TReq, any>, operator: Operator<any, any>, ...operators: readonly Operator<any, any>[]): AsyncIteratorLike<TReq, any>`*
+
+*`AsyncIterator.mapRequest = <TSrcReq, TReq, T>(delegate: AsyncIteratorLike<TSrcReq, T>, mapper: (v: TReq) => TSrcReq,): AsyncIteratorLike<TReq, any>`*
+

@@ -1,22 +1,21 @@
 {
   "files": [],
   "references": [
-      { "path": "ix-core" },
-      { "path": "ix-operators" },
-      { "path": "perf" },
-      { "path": "rx-core" },
       { "path": "disposables" },
       { "path": "dom" },
       { "path": "example" },
-      { "path": "rx-imperative" },
+      { "path": "ix-core" },
       { "path": "node-scheduler" },
-      { "path": "state-container" },
-      { "path": "rx-observables" },
-      { "path": "rx-operators" },
+      { "path": "perf" },
+      { "path": "react-dom-router" },
       { "path": "react-hooks" },
       { "path": "react-router" },
-      { "path": "react-dom-router" },
       { "path": "react-scheduler" },
+      { "path": "rx-core" },
+      { "path": "rx-imperative" },
+      { "path": "rx-observables" },
+      { "path": "rx-operators" },
+      { "path": "state-container" },
       { "path": "virtualtime-scheduler" }
   ]
 }

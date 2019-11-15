@@ -6,11 +6,16 @@ import {
 
 import { DisposableLike } from "@reactive-js/disposables";
 
+import {
+  Observable,
+  Operator,
+} from "@reactive-js/rx-core";
+
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;
 }
 
-export class DelegatingAsyncIterator<TReq, T>
+class DelegatingAsyncIterator<TReq, T>
   implements AsyncIteratorLike<TReq, T> {
   public readonly observable: ObservableLike<T>;
   public readonly dispatcher: (req: TReq) => void;
@@ -43,191 +48,112 @@ export class DelegatingAsyncIterator<TReq, T>
   }
 }
 
-export interface Operator<TSrcReq, TSrc, TReq, T> {
-  (iterator: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
-}
-
-function pipe<TReq, T, TReqA, TA>(
+function lift<TReq, T, TA>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-): AsyncIteratorLike<TReqA, TA>;
-
-function pipe<TReq, T, TReqA, TA, TReqB, TB>(
+  op1: Operator<T, TA>,
+): AsyncIteratorLike<TReq, TA>;
+function lift<TReq, T, TA, TB>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-): AsyncIteratorLike<TReqB, TB>;
-
-function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC>(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+): AsyncIteratorLike<TReq, TB>;
+function lift<TReq, T, TA, TB, TC>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-): AsyncIteratorLike<TReqC, TC>;
-
-function pipe<TReq, T, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+): AsyncIteratorLike<TReq, TC>;
+function lift<TReq, T, TA, TB, TC, TD>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-): AsyncIteratorLike<TReqD, TD>;
-
-function pipe<
-  TReq,
-  T,
-  TReqA,
-  TA,
-  TReqB,
-  TB,
-  TReqC,
-  TC,
-  TReqD,
-  TD,
-  TReqE,
-  TE
->(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+): AsyncIteratorLike<TReq, TD>;
+function lift<TReq, T, TA, TB, TC, TD, TE>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-  op5: Operator<TReqD, TD, TReqE, TE>,
-): AsyncIteratorLike<TReqE, TE>;
-
-function pipe<
-  TReq,
-  T,
-  TReqA,
-  TA,
-  TReqB,
-  TB,
-  TReqC,
-  TC,
-  TReqD,
-  TD,
-  TReqE,
-  TE,
-  TReqF,
-  TF
->(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+  op5: Operator<TD, TE>,
+): AsyncIteratorLike<TReq, TE>;
+function lift<TReq, T, TA, TB, TC, TD, TE, TF>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-  op5: Operator<TReqD, TD, TReqE, TE>,
-  op6: Operator<TReqE, TE, TReqF, TF>,
-): AsyncIteratorLike<TReqF, TF>;
-
-function pipe<
-  TReq,
-  T,
-  TReqA,
-  TA,
-  TReqB,
-  TB,
-  TReqC,
-  TC,
-  TReqD,
-  TD,
-  TReqE,
-  TE,
-  TReqF,
-  TF,
-  TReqG,
-  TG
->(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+  op5: Operator<TD, TE>,
+  op6: Operator<TE, TF>,
+): AsyncIteratorLike<TReq, TF>;
+function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-  op5: Operator<TReqD, TD, TReqE, TE>,
-  op6: Operator<TReqE, TE, TReqF, TF>,
-  op7: Operator<TReqF, TF, TReqG, TG>,
-): AsyncIteratorLike<TReqG, TG>;
-
-function pipe<
-  TReq,
-  T,
-  TReqA,
-  TA,
-  TReqB,
-  TB,
-  TReqC,
-  TC,
-  TReqD,
-  TD,
-  TReqE,
-  TE,
-  TReqF,
-  TF,
-  TReqG,
-  TG,
-  TReqH,
-  TH
->(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+  op5: Operator<TD, TE>,
+  op6: Operator<TE, TF>,
+  op7: Operator<TF, TG>,
+): AsyncIteratorLike<TReq, TG>;
+function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG, TH>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-  op5: Operator<TReqD, TD, TReqE, TE>,
-  op6: Operator<TReqE, TE, TReqF, TF>,
-  op7: Operator<TReqF, TF, TReqG, TG>,
-  op8: Operator<TReqG, TG, TReqH, TH>,
-): AsyncIteratorLike<TReqH, TH>;
-
-function pipe<
-  TReq,
-  T,
-  TReqA,
-  TA,
-  TReqB,
-  TB,
-  TReqC,
-  TC,
-  TReqD,
-  TD,
-  TReqE,
-  TE,
-  TReqF,
-  TF,
-  TReqG,
-  TG,
-  TReqH,
-  TH,
-  TReqI,
-  TI
->(
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+  op5: Operator<TD, TE>,
+  op6: Operator<TE, TF>,
+  op7: Operator<TF, TG>,
+  op8: Operator<TG, TH>,
+): AsyncIteratorLike<TReq, TH>;
+function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   src: AsyncIteratorLike<TReq, T>,
-  op1: Operator<TReq, T, TReqA, TA>,
-  op2: Operator<TReqA, TA, TReqB, TB>,
-  op3: Operator<TReqB, TB, TReqC, TC>,
-  op4: Operator<TReqC, TC, TReqD, TD>,
-  op5: Operator<TReqD, TD, TReqE, TE>,
-  op6: Operator<TReqE, TE, TReqF, TF>,
-  op7: Operator<TReqF, TF, TReqG, TG>,
-  op8: Operator<TReqG, TG, TReqH, TH>,
-  op9: Operator<TReqH, TH, TReqI, TI>,
-): AsyncIteratorLike<TReqI, TI>;
+  op1: Operator<T, TA>,
+  op2: Operator<TA, TB>,
+  op3: Operator<TB, TC>,
+  op4: Operator<TC, TD>,
+  op5: Operator<TD, TE>,
+  op6: Operator<TE, TF>,
+  op7: Operator<TF, TG>,
+  op8: Operator<TG, TH>,
+  op9: Operator<TH, TI>,
+): AsyncIteratorLike<TReq, TI>;
+function lift<TReq>(
+  iterator: AsyncIteratorLike<TReq, any>,
+  operator: Operator<any, any>,
+  ...operators: readonly Operator<any, any>[]
+): AsyncIteratorLike<TReq, any> {
+  const [observable, disposable, dispatcher] =
+    iterator instanceof DelegatingAsyncIterator
+      ? [iterator.observable, iterator.disposable, iterator.dispatcher]
+      : [iterator, iterator, (req: TReq) => iterator.dispatch(req)];
 
-function pipe(
-  iterator: AsyncIteratorLike<any, any>,
-  operator: Operator<any, any, any, any>,
-  ...operators: Operator<any, any, any, any>[]
-): AsyncIteratorLike<any, any> {
-  let retval = operator(iterator);
+  const liftedObservable = Observable.lift.apply(undefined, [
+    observable,
+    operator,
+    ...operators,
+  ] as any);
 
-  for (let operator of operators) {
-    retval = operator(retval);
-  }
+  return new DelegatingAsyncIterator(liftedObservable, dispatcher, disposable);
+};
 
-  return retval;
-}
+const mapRequest = <TSrcReq, TReq, T>(
+  delegate: AsyncIteratorLike<TSrcReq, T>,
+  mapper: (v: TReq) => TSrcReq,
+): AsyncIteratorLike<TReq, any> => {
+  const [observable, disposable, dispatcher] =
+    delegate instanceof DelegatingAsyncIterator
+      ? [delegate.observable, delegate.disposable, delegate.dispatcher]
+      : [delegate, delegate, (req: TSrcReq) => delegate.dispatch(req)];
 
+  const mappedDispatcher = (req: TReq) => dispatcher(mapper(req));
+
+  return new DelegatingAsyncIterator(observable, mappedDispatcher, disposable);
+};
 
 export const AsyncIterator = {
-  pipe,
+  lift,
+  mapRequest,
 };
