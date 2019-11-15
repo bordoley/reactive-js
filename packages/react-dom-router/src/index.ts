@@ -8,7 +8,7 @@ import { StateUpdater } from "@reactive-js/state-container";
 import { AsyncIterator } from "@reactive-js/ix-core";
 import { distinctUntilChanged, map } from "@reactive-js/rx-operators";
 
-import { LocationState } from "@reactive-js/dom";
+import { LocationState } from "./location";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { normalPriority } from "@reactive-js/react-scheduler";
 
