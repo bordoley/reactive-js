@@ -1,16 +1,33 @@
-import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
+import { SchedulerContinuation, SchedulerResourceLike } from "@reactive-js/scheduler";
 import { Disposable, DisposableLike } from "@reactive-js/disposables";
 
-export interface VirtualTimeSchedulerLike extends SchedulerLike {
+export interface VirtualTimeSchedulerLike extends SchedulerResourceLike {
   run(): void;
 }
 
+type SchedulerCtx = {
+  continuation: SchedulerContinuation;
+  delay: number;
+  readonly disposable: DisposableLike;
+  readonly scheduler: VirtualTimeSchedulerImpl;
+  readonly shouldYield: () => boolean;
+};
+
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
-  private readonly timeQueue: { [key: number]: Array<() => void> } = {};
+  private readonly disposable = Disposable.empty();
+  private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
   private _now = -1;
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
 
   get now(): number {
     return this._now;
+  }
+
+  dispose() {
+    this.disposable.dispose();
   }
 
   private moveNext() {
@@ -22,59 +39,53 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return false;
   }
 
-  private schedulWorkAtTime(work: () => void, scheduledTime: number) {
-    const queueAtScheduledTime = this.timeQueue[scheduledTime];
-    if (queueAtScheduledTime !== undefined) {
-      queueAtScheduledTime.push(work);
-    } else {
-      this.timeQueue[scheduledTime] = [work];
+  private async executeContinuation(ctx: SchedulerCtx) {
+    const { continuation, shouldYield } = ctx;
+    const result = continuation(shouldYield);
+
+    if (result instanceof Function) {
+      ctx.continuation = result;
+      ctx.delay = 0;
+      this.schedulWorkAtTime(ctx, this.now);
+    } else if (result !== undefined) {
+      const [resultContinuation, resultDelay] = result;
+
+      ctx.continuation = resultContinuation;
+      ctx.delay = Math.max(resultDelay, 0);
+
+      const scheduledTime = this.now + ctx.delay;
+      this.schedulWorkAtTime(ctx, scheduledTime);
     }
   }
 
-  private createWorkCallback(
-    disposable: DisposableLike,
-    shouldYield: () => boolean,
-    continuation: SchedulerContinuation,
-  ) {
-    const continuationCallback = () => {
-      if (!disposable.isDisposed) {
-        const result = continuation(shouldYield);
-
-        if (result === continuation) {
-          this.schedulWorkAtTime(continuationCallback, this.now);
-        } else if (result instanceof Function) {
-          this.schedulWorkAtTime(
-            this.createWorkCallback(disposable, shouldYield, result),
-            this.now,
-          );
-        } else if (result !== undefined) {
-          const [resultContinuation, delay] = result;
-          const callback =
-            resultContinuation === continuation
-              ? continuationCallback
-              : this.createWorkCallback(disposable, shouldYield, continuation);
-
-          const scheduledTime = this.now + Math.max(delay, 0);
-          this.schedulWorkAtTime(callback, scheduledTime);
-        }
-      }
-    };
-    return continuationCallback;
+  private schedulWorkAtTime(ctx: SchedulerCtx, scheduledTime: number) {
+    const queueAtScheduledTime = this.timeQueue[scheduledTime];
+    if (queueAtScheduledTime !== undefined) {
+      queueAtScheduledTime.push(ctx);
+    } else {
+      this.timeQueue[scheduledTime] = [ctx];
+    }
   }
 
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
   ): DisposableLike {
-    delay = Math.max(delay, 0);
     const disposable = Disposable.empty();
-    const shouldYield = () => disposable.isDisposed;
-    const now = this.now;
-    const scheduledTime = now + delay + 1;
-    const work = this.createWorkCallback(disposable, shouldYield, continuation);
+    const shouldYield = (): boolean => disposable.isDisposed;
 
-    this.schedulWorkAtTime(work, scheduledTime);
-    return disposable;
+    const ctx = {
+      continuation,
+      delay: Math.max(delay, 0),
+      disposable,
+      scheduler: this,
+      shouldYield,
+    };
+
+    const now = Math.max(this.now, 0);
+    const scheduledTime = now + delay;
+    this.schedulWorkAtTime(ctx, scheduledTime);
+    return ctx.disposable;
   }
 
   private get next() {
@@ -87,8 +98,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
       const workQueue = this.next;
 
       while (workQueue.length > 0) {
-        const work = workQueue.shift() as () => void;
-        work();
+        const ctx = workQueue.shift() as SchedulerCtx;
+        this.executeContinuation(ctx);
       }
     }
   }
