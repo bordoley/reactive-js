@@ -6,17 +6,13 @@ import {
 
 import { DisposableLike } from "@reactive-js/disposables";
 
-import {
-  Observable,
-  Operator,
-} from "@reactive-js/rx-core";
+import { Observable, Operator } from "@reactive-js/rx-core";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;
 }
 
-class DelegatingAsyncIterator<TReq, T>
-  implements AsyncIteratorLike<TReq, T> {
+class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
   public readonly observable: ObservableLike<T>;
   public readonly dispatcher: (req: TReq) => void;
   public readonly disposable: DisposableLike;
@@ -137,17 +133,16 @@ function lift<TReq>(
   ] as any);
 
   return new DelegatingAsyncIterator(liftedObservable, dispatcher, disposable);
-};
+}
 
 const mapRequest = <TSrcReq, TReq, T>(
-  delegate: AsyncIteratorLike<TSrcReq, T>,
+  iterator: AsyncIteratorLike<TSrcReq, T>,
   mapper: (v: TReq) => TSrcReq,
 ): AsyncIteratorLike<TReq, any> => {
   const [observable, disposable, dispatcher] =
-    delegate instanceof DelegatingAsyncIterator
-      ? [delegate.observable, delegate.disposable, delegate.dispatcher]
-      : [delegate, delegate, (req: TSrcReq) => delegate.dispatch(req)];
-
+    iterator instanceof DelegatingAsyncIterator
+      ? [iterator.observable, iterator.disposable, iterator.dispatcher]
+      : [iterator, iterator, (req: TSrcReq) => iterator.dispatch(req)];
   const mappedDispatcher = (req: TReq) => dispatcher(mapper(req));
 
   return new DelegatingAsyncIterator(observable, mappedDispatcher, disposable);

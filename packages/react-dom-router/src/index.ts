@@ -6,10 +6,7 @@ import {
 import { StateUpdater } from "@reactive-js/state-container";
 
 import { AsyncIterator } from "@reactive-js/ix-core";
-import {
-  distinctUntilChanged,
-  map,
-} from "@reactive-js/rx-operators";
+import { distinctUntilChanged, map } from "@reactive-js/rx-operators";
 
 import { LocationState } from "@reactive-js/dom";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -42,7 +39,9 @@ const reducer = (
 const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
-const createRelativeURILocation = (scheduler: SchedulerLike = normalPriority) => {
+const createRelativeURILocation = (
+  scheduler: SchedulerLike = normalPriority,
+) => {
   const lifted = AsyncIterator.lift(
     LocationState.create(scheduler),
     map(mapper),
