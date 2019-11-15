@@ -255,15 +255,12 @@ export const ObservableResource = {
 };
 
 const create = <T>(
-  onSubscribe: (
-    subscriber: SubscriberLike<T>,
-    shouldYield: () => boolean,
-  ) => SchedulerContinuationResult,
+  onSubscribe: (subscriber: SubscriberLike<T>) => void,
   delay: number = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const continuation = (shouldYield: () => boolean) =>
-      onSubscribe(subscriber, shouldYield);
+      onSubscribe(subscriber);
 
     subscriber.subscription.add(
       subscriber.scheduler.schedule(

@@ -23,10 +23,7 @@ export const fromPromiseFactory = <T>(
     }
   };
 
-  return Observable.create(
-    (subscriber: SubscriberLike<T>, _: () => boolean) => {
-      callback(subscriber);
-    },
-    delay,
-  );
+  return Observable.create((subscriber: SubscriberLike<T>) => {
+    callback(subscriber);
+  }, delay);
 };
