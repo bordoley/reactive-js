@@ -8,4 +8,4 @@
 
 ### Static Functions
 
-*`VirtualTimeScheduler.create(): VirtualTimeSchedulerLike`*
+*`VirtualTimeScheduler.create(maxMicroTaskCount?: number): VirtualTimeSchedulerLike`*

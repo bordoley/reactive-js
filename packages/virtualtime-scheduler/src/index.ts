@@ -15,23 +15,26 @@ export interface VirtualTimeSchedulerLike extends SchedulerResourceLike {
 type SchedulerCtx = {
   continuation: SchedulerContinuation;
   delay: number;
+  microtaskCount: number;
   readonly disposable: DisposableLike;
-  readonly scheduler: VirtualTimeSchedulerImpl;
   readonly shouldYield: () => boolean;
 };
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
-  private readonly disposable = Disposable.create(
-    () => {
-      for (let key in this.timeQueue) {
-        if (this.timeQueue.hasOwnProperty(key)) {
-          delete this.timeQueue[key];
-        };
+  private readonly maxMicroTaskCount: number;
+  private readonly disposable = Disposable.create(() => {
+    for (let key in this.timeQueue) {
+      if (this.timeQueue.hasOwnProperty(key)) {
+        delete this.timeQueue[key];
       }
     }
-  );
+  });
   private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
   private _now = -1;
+
+  constructor(maxMicroTaskCount: number) {
+    this.maxMicroTaskCount = maxMicroTaskCount;
+  }
 
   get isDisposed() {
     return this.disposable.isDisposed;
@@ -61,6 +64,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   private async executeContinuation(ctx: SchedulerCtx) {
     const { continuation, shouldYield } = ctx;
+    ctx.microtaskCount = 0;
     const result = continuation(shouldYield);
 
     if (result instanceof Function) {
@@ -94,14 +98,18 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     throwIfDisposed(this);
 
     const disposable = Disposable.empty();
-    const shouldYield = (): boolean => disposable.isDisposed;
 
     const ctx = {
       continuation,
       delay: Math.max(delay, 0),
       disposable,
-      scheduler: this,
-      shouldYield,
+      microtaskCount: 0,
+      shouldYield: (): boolean => {
+        ctx.microtaskCount++;
+        return (
+          disposable.isDisposed || ctx.microtaskCount >= this.maxMicroTaskCount
+        );
+      },
     };
 
     const now = Math.max(this.now, 0);
@@ -126,7 +134,9 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   }
 }
 
-const create = (): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl();
+const create = (
+  maxMicroTaskCount: number = Number.MAX_SAFE_INTEGER,
+): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskCount);
 
 export const VirtualTimeScheduler = {
   create,
