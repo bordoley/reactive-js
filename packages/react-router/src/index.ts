@@ -25,7 +25,7 @@ export const RelativeURI = {
     fragment: "",
   },
   equals: (a: RelativeURI, b: RelativeURI) =>
-    a.path === b.path && a.query === b.query && a.fragment === b.fragment,
+   (a === b) || (a.path === b.path && a.query === b.query && a.fragment === b.fragment),
 };
 
 export interface RoutableComponentProps {
