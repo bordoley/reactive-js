@@ -11,13 +11,15 @@ import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
+  private readonly priority: number;
   private readonly queue: Array<[number, Notification<T>]> = [];
   private isComplete = false;
-  private error: Error | void = undefined;
+  private error: Error | undefined;
 
-  constructor(delegate: SubscriberLike<T>, delay: number) {
+  constructor(delegate: SubscriberLike<T>, delay: number, priority: number) {
     super(delegate);
     this.delay = delay;
+    this.priority = priority;
   }
 
   private doWork: SchedulerContinuation = shouldYield => {
@@ -30,15 +32,17 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
         notify(this.delegate, notification);
       } else {
         const delay = nextDueTime - now;
-        return [this.doWork, delay];
+        return [this.doWork, delay, this.priority];
       }
 
       const yieldRequested = shouldYield();
+
       if (yieldRequested && this.queue.length > 0) {
-        return this.doWork;
+        return [this.doWork, 0, this.priority];
       }
     }
   };
+
 
   private doSchedule(notification: Notification<T>) {
     const now = this.scheduler.now;
@@ -50,8 +54,8 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  protected onComplete(error: Error | void) {
-    this.doSchedule([NotificationKind.Complete, error || undefined]);
+  protected onComplete(error?: Error) {
+    this.doSchedule([NotificationKind.Complete, error]);
   }
 
   protected onNext(data: T) {
@@ -59,9 +63,9 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const delay = <T>(dueTime: number): Operator<T, T> => {
+export const delay = <T>(dueTime: number, priority: number = 3): Operator<T, T> => {
   if (dueTime <= 0) {
     throw new Error("dueTime must be greater than 0");
   }
-  return subscriber => new DelaySubscriber(subscriber, dueTime);
+  return subscriber => new DelaySubscriber(subscriber, dueTime, priority);
 };

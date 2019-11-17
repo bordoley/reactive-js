@@ -5,13 +5,11 @@ export interface SchedulerContinuation {
 }
 
 export type SchedulerContinuationResult =
-  | SchedulerContinuation
-  | Readonly<[SchedulerContinuation, number]>
-  | void;
+  Readonly<[SchedulerContinuation, number, number | void]> | void;
 
 export interface SchedulerLike {
   now: number;
-  schedule(continuation: SchedulerContinuation, delay?: number): DisposableLike;
+  schedule(continuation: SchedulerContinuation, delay?: number, priority?: number): DisposableLike;
 }
 
 export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}

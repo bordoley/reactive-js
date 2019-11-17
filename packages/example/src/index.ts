@@ -1,6 +1,6 @@
 import { connect, Observable } from "@reactive-js/rx-core";
 import {
-  fromDelayedValues,
+  fromScheduledValues,
   generate,
   fromArray,
 } from "@reactive-js/rx-observables";

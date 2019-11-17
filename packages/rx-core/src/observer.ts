@@ -1,6 +1,6 @@
 export interface ObserverLike<T> {
   next(data: T): void;
-  complete(error: Error | void): void;
+  complete(error?: Error): void;
 }
 
 export enum NotificationKind {

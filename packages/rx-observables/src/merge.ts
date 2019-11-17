@@ -21,7 +21,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.delegate.next(data);
   }
 
-  complete(error: Error | void) {
+  complete(error?: Error) {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {

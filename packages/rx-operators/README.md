@@ -35,13 +35,13 @@
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
-*`onComplete<T>(onComplete: (err: Error | void) => void): Operator<T, T>`*
+*`onComplete<T>(onComplete: (err?: Error) => void): Operator<T, T>`*
 
 *`onNext<T>(onNext: (data: T) => void): Operator<T, T>`*
 
 *`onError<T>(onError: (error: Error) => void): Operator<T, T>`*
 
-*`observeOn<T>(scheduler: SchedulerLike | void): Operator<T, T>`*
+*`observeOn<T>(scheduler?: SchedulerLike): Operator<T, T>`*
 
 *`scan<T, TAcc>(scanner: (acc: TAcc, next: T) => TAcc, initialValue: TAcc): Operator<T, TAcc>`*
 

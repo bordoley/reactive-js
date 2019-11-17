@@ -9,6 +9,7 @@ export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: T,
   delay: number = 0,
+  priority: number = 3,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let acc = initialValue;
@@ -47,7 +48,7 @@ export const generate = <T>(
       }
     };
 
-    continuationResult = delay > 0 ? [continuation, delay] : continuation;
+    continuationResult = [continuation, delay, priority];
 
     subscriber.subscription.add(
       subscriber.scheduler.schedule(continuation, delay),

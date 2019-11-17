@@ -24,7 +24,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent.delegate.next(data);
     }
 
-    complete(error: Error | void) {
+    complete(error?: Error) {
       if (error !== undefined) {
         this.parent.delegate.complete(error);
       }
@@ -43,7 +43,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     );
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.innerSubscription.dispose();
     this.delegate.complete(error);
   }

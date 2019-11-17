@@ -19,6 +19,7 @@ class PerfTestScheduler implements SchedulerLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
+    priority: number = 0,
   ): DisposableLike {
     this.queue.push(continuation);
     return Disposable.empty();

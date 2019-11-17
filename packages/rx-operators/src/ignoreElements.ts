@@ -11,7 +11,7 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
   onNext(data: TA) {}
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.delegate.complete(error);
   }
 }

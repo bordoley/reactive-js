@@ -7,9 +7,7 @@ import {
   ObservableResourceLike,
 } from "@reactive-js/rx-core";
 
-import { SchedulerLike } from "@reactive-js/scheduler";
-
-import { normalPriority } from "@reactive-js/react-scheduler";
+import { scheduler } from "@reactive-js/react-scheduler";
 import { DisposableLike } from "@reactive-js/disposables";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
@@ -38,14 +36,13 @@ const makeObservable = <T>(
     observable,
     observe({
       next: (data: T) => updateState(_ => data),
-      complete: (error: Error | void) => updateError(_ => error || undefined),
+      complete: (error?: Error) => updateError(_ => error),
     }),
   );
 
 export const useObservable = <T>(
   factory: () => ObservableLike<T>,
   deps: readonly any[] | undefined,
-  scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
   const [error, updateError] = useState<Error | undefined>(undefined);
@@ -68,20 +65,18 @@ export const useObservable = <T>(
 export const useObservableResource = <T>(
   factory: () => ObservableResourceLike<T>,
   deps: readonly any[] | undefined,
-  scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const resource = useResource(factory, deps);
-  return useObservable(() => resource, [resource], scheduler);
+  return useObservable(() => resource, [resource]);
 };
 
 export const useAsyncIterator = <TReq, T>(
   factory: () => AsyncIteratorLike<TReq, T>,
   deps: readonly any[] | undefined,
-  scheduler: SchedulerLike = normalPriority,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useResource(factory, deps);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
-  const value = useObservable(() => iterator, [iterator], scheduler);
+  const value = useObservable(() => iterator, [iterator]);
 
   return [value, dispatch];
 };

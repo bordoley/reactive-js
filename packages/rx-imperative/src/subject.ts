@@ -32,7 +32,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
     }
   }
 
-  complete(error: Error | void) {
+  complete(error?: Error) {
     if (!this.isDisposed) {
       const subscribers = this.subscribers.slice();
       for (let subscriber of subscribers) {

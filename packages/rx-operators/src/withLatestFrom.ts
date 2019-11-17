@@ -27,7 +27,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
       this.parent.otherLatest = data;
     }
 
-    complete(error: Error | void) {
+    complete(error?: Error) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
@@ -60,7 +60,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     }
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.delegate.complete(error);
   }
 }

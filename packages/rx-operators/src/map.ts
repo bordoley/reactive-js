@@ -17,7 +17,7 @@ class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
     this.delegate.next(mappedData);
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.delegate.complete(error);
   }
 }

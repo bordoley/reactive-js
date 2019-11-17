@@ -43,7 +43,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent.delegate.next(data);
     }
 
-    protected onComplete(error: Error | void) {
+    protected onComplete(error?: Error) {
       this.parent.activeCount--;
       this.parent.subscription.remove(this.subscription);
 
@@ -88,7 +88,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.isCompleted = true;
 
     if (error !== undefined || this.queue.length + this.activeCount === 0) {

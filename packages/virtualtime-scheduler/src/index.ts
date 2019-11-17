@@ -67,11 +67,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     ctx.microtaskCount = 0;
     const result = continuation(shouldYield);
 
-    if (result instanceof Function) {
-      ctx.continuation = result;
-      ctx.delay = 0;
-      this.schedulWorkAtTime(ctx, this.now);
-    } else if (result !== undefined) {
+   if (result !== undefined) {
       const [resultContinuation, resultDelay] = result;
 
       ctx.continuation = resultContinuation;
@@ -94,6 +90,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
+    _priority: number = 3,
   ): DisposableLike {
     throwIfDisposed(this);
 

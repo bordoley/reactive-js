@@ -37,7 +37,7 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
     }
   }
 
-  complete(error: Error | void) {
+  complete(_error?: Error) {
     if (__DEV__) {
       throwIfNotConnected(this);
     }
@@ -84,7 +84,7 @@ export abstract class DelegatingSubscriber<TA, TB>
 
   protected abstract onNext(data: TA): void;
 
-  protected abstract onComplete(error: Error | void): void;
+  protected abstract onComplete(error?: Error): void;
 
   private tryOnNext(data: TA) {
     try {
@@ -94,7 +94,7 @@ export abstract class DelegatingSubscriber<TA, TB>
     }
   }
 
-  private tryOnComplete(error: Error | void) {
+  private tryOnComplete(error?: Error) {
     try {
       this.onComplete(error);
     } catch (e) {
@@ -112,7 +112,7 @@ export abstract class DelegatingSubscriber<TA, TB>
     }
   }
 
-  complete(error: Error | void) {
+  complete(error?: Error) {
     if (__DEV__) {
       throwIfNotConnected(this);
     }
@@ -137,7 +137,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.delegate.next(data);
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.observer.complete(error);
     this.delegate.complete(error);
   }
