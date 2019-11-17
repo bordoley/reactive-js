@@ -67,8 +67,11 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     ctx.microtaskCount = 0;
     const result = continuation(shouldYield);
 
-   if (result !== undefined) {
-      const { continuation: resultContinuation, delay: resultDelay = 0} = result;
+    if (result !== undefined) {
+      const {
+        continuation: resultContinuation,
+        delay: resultDelay = 0,
+      } = result;
 
       ctx.continuation = resultContinuation;
       ctx.delay = Math.max(resultDelay, 0);

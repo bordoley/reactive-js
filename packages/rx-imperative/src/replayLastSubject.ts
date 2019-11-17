@@ -7,8 +7,6 @@ import {
   notify,
 } from "@reactive-js/rx-core";
 
-import { SchedulerLike } from "@reactive-js/scheduler";
-
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();
   private last: Notification<T> | undefined;
@@ -37,21 +35,22 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {
-      const innerSubscription = subscriber.scheduler.schedule((_: () => boolean) => {
-        if (this.last !== undefined) {
-          notify(subscriber, this.last);
-        }
-        subscriber.subscription.remove(innerSubscription);
-        this.subject.subscribe(subscriber);
-      });
+      const innerSubscription = subscriber.scheduler.schedule(
+        (_: () => boolean) => {
+          if (this.last !== undefined) {
+            notify(subscriber, this.last);
+          }
+          subscriber.subscription.remove(innerSubscription);
+          this.subject.subscribe(subscriber);
+        },
+      );
 
       subscriber.subscription.add(innerSubscription);
     }
   }
 }
 
-const create = <T>(): SubjectLike<T> =>
-  new ReplayLastSubjectImpl();
+const create = <T>(): SubjectLike<T> => new ReplayLastSubjectImpl();
 
 export const ReplayLastSubject = {
   create,

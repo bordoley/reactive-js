@@ -24,7 +24,7 @@ class DomLocationStateContainerResourceImpl
   private readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
-  constructor(scheduler: SchedulerLike, priority?: number) {
+  constructor(scheduler: SchedulerLike, delay?: number, priority?: number) {
     const initialState = getCurrentLocation();
     const stateContainer = StateContainerResource.create(
       initialState,
@@ -36,7 +36,13 @@ class DomLocationStateContainerResourceImpl
     const subscription = connect(
       merge(
         Observable.lift(
-          fromEvent(window, "popstate", _ => getCurrentLocation()),
+          fromEvent(
+            window,
+            "popstate",
+            _ => getCurrentLocation(),
+            delay,
+            priority,
+          ),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
         Observable.lift(
@@ -71,7 +77,10 @@ class DomLocationStateContainerResourceImpl
   }
 }
 
-const create = (scheduler: SchedulerLike, priority?: number): StateContainerResourceLike<string> =>
+const create = (
+  scheduler: SchedulerLike,
+  priority?: number,
+): StateContainerResourceLike<string> =>
   new DomLocationStateContainerResourceImpl(scheduler, priority);
 
 export const LocationState = {

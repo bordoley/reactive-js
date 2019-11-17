@@ -6,7 +6,8 @@ import {
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
-  delay: number = 0,
+  delay?: number,
+  priority?: number,
 ): ObservableLike<T> => {
   const onSubscribe = async (subscriber: SubscriberLike<T>) => {
     if (!subscriber.subscription.isDisposed) {
@@ -16,5 +17,5 @@ export const fromPromiseFactory = <T>(
     }
   };
 
-  return Observable.create(onSubscribe, delay);
+  return Observable.create(onSubscribe, delay, priority);
 };

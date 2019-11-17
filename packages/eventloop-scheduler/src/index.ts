@@ -60,14 +60,18 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     const result = continuation(shouldYield);
 
     if (result !== undefined) {
-      const {continuation: resultContinuation, delay: resultDelay = 0 } = result;
+      const {
+        continuation: resultContinuation,
+        delay: resultDelay = 0,
+      } = result;
       ctx.continuation = resultContinuation;
 
-      if (resultDelay !== ctx.delay || ctx.delay === 0) {
-        ctx.delay = Math.max(resultDelay, 0);
+      const reuseSetInterval = resultDelay === ctx.delay && ctx.delay !== 0;
+      ctx.delay = Math.max(resultDelay, 0);
+
+      if (!reuseSetInterval) {
         this.scheduleInternal(ctx);
       }
-      // else reuse the existing setInterval delay
     } else {
       ctx.disposable.innerDisposable.dispose();
     }
@@ -76,9 +80,8 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private async drainQueue() {
     while (this.workqueue.length > 0 && !this.isDisposed) {
       const ctx = this.workqueue.shift();
-      if (ctx !== undefined) {
-        this.executeContinuation(ctx);
-      }
+      this.executeContinuation(ctx as SchedulerCtx);
+
       // Not sure this is really necessary, but let's yield back
       // to the JS microtask queue between continuation executions
       // to avoid hogging too much cpu.
@@ -89,37 +92,39 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private scheduleInternal(ctx: SchedulerCtx) {
     ctx.disposable.innerDisposable.dispose();
 
-    if (!this.isDisposed) {
-      // Schedule continuations on the JS task queue to avoid a greedy producer
-      // from hogging the scheduler and preventing other users of delays etc.
-      // from scheduling work. For instance consider this pathological example:
-      //
-      //   Observable.lift(
-      //     generate(x => x + 1, 0),
-      //     map(x => fromArray([x, x, x, x])),
-      //     exhaust(),
-      //     onNext(console.log),
-      //    );
-      //
-      // which doesn't work with then the result of generate are scheduled as
-      // microtasks.
+    if (this.isDisposed) {
+      return;
+    }
 
-      if (ctx.delay > 0) {
-        const timeout = setInterval(
-          EventLoopSchedulerImpl.callback,
-          ctx.delay,
-          ctx,
-        );
-        ctx.disposable.innerDisposable = Disposable.create(() =>
-          clearInterval(timeout),
-        );
-      } else {
-        // FIXME: Shim setImmediate for the browser case or require a polyfill.
-        const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
-        ctx.disposable.innerDisposable = Disposable.create(() =>
-          clearImmediate(immediate),
-        );
-      }
+    // Schedule continuations on the JS task queue to avoid a greedy producer
+    // from hogging the scheduler and preventing other users of delays etc.
+    // from scheduling work. For instance consider this pathological example:
+    //
+    //   Observable.lift(
+    //     generate(x => x + 1, 0),
+    //     map(x => fromArray([x, x, x, x])),
+    //     exhaust(),
+    //     onNext(console.log),
+    //    );
+    //
+    // which doesn't work with then the result of generate are scheduled as
+    // microtasks.
+
+    if (ctx.delay > 0) {
+      const timeout = setInterval(
+        EventLoopSchedulerImpl.callback,
+        ctx.delay,
+        ctx,
+      );
+      ctx.disposable.innerDisposable = Disposable.create(() =>
+        clearInterval(timeout),
+      );
+    } else {
+      // FIXME: Shim setImmediate for the browser case or require a polyfill.
+      const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
+      ctx.disposable.innerDisposable = Disposable.create(() =>
+        clearImmediate(immediate),
+      );
     }
   }
 
@@ -147,7 +152,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   }
 }
 
-const create = (timeout: number): SchedulerResourceLike =>
+const create = (timeout: number = 500): SchedulerResourceLike =>
   new EventLoopSchedulerImpl(timeout);
 
 export const EventLoopScheduler = {

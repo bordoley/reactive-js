@@ -16,4 +16,4 @@
 
 *`RoutableStateComponent.create<TState>(component: React.ComponentType<RoutableStateComponentProps<TState>>, parseState: (fragment: string) => TState, serialize: (state: TState) => string, stateIsQuery?: boolean): React.ComponentType<RoutableComponentProps>`*
 
-*`Router.create(locationResourceFactory: () => StateContainerResourceLike<RelativeURI>, scheduler?: SchedulerLike): React.ComponentType<RouterProps>`*
+*`Router.create(locationResourceFactory: () => StateContainerResourceLike<RelativeURI>): React.ComponentType<RouterProps>`*

@@ -48,7 +48,7 @@ export const generate = <T>(
       }
     };
 
-    continuationResult = {continuation, delay, priority};
+    continuationResult = { continuation, delay, priority };
 
     subscriber.subscription.add(
       subscriber.scheduler.schedule(continuation, delay, priority),

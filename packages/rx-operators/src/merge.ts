@@ -5,6 +5,7 @@ import {
   ObservableLike,
   Operator,
   SubscriberLike,
+  observe,
 } from "@reactive-js/rx-core";
 import { Disposable } from "@reactive-js/disposables";
 
@@ -31,47 +32,36 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     );
   }
 
-  static InnerSubscriber = class<T> extends DelegatingSubscriber<T, T> {
-    private readonly parent: MergeSubscriber<T>;
-
-    constructor(delegate: SubscriberLike<T>, parent: MergeSubscriber<T>) {
-      super(delegate);
-      this.parent = parent;
-    }
-
-    protected onNext(data: T) {
-      this.parent.delegate.next(data);
-    }
-
-    protected onComplete(error?: Error) {
-      this.parent.activeCount--;
-      this.parent.subscription.remove(this.subscription);
-
-      if (error !== undefined) {
-        this.parent.complete(error);
-      } else {
-        this.parent.connectNext();
-      }
-    }
-  };
-
-  private static innerOperator = <T>(
-    parent: MergeSubscriber<T>,
-  ): Operator<T, T> => subscriber =>
-    new MergeSubscriber.InnerSubscriber(subscriber, parent);
-
   private connectNext() {
     if (this.activeCount < this.maxConcurrency) {
       const nextObs = this.queue.shift();
 
       if (nextObs !== undefined) {
         this.activeCount++;
-        this.subscription.add(
-          connect(
-            Observable.lift(nextObs, MergeSubscriber.innerOperator(this)),
-            this.scheduler,
+
+        const nextObsSubscription = connect(
+          Observable.lift(
+            nextObs,
+            observe({
+              next: (data: T) => {
+                this.delegate.next(data);
+              },
+              complete: (error?: Error) => {
+                this.activeCount--;
+
+                if (error !== undefined) {
+                  this.complete(error);
+                } else {
+                  this.connectNext();
+                }
+                this.subscription.remove(nextObsSubscription);
+              },
+            }),
           ),
+          this.scheduler,
         );
+
+        this.subscription.add(nextObsSubscription);
       } else if (this.isCompleted) {
         this.delegate.complete();
       }

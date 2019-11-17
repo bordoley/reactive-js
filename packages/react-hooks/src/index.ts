@@ -52,7 +52,7 @@ export const useObservable = <T>(
   useResource(
     () =>
       connect(makeObservable(observable, updateState, updateError), scheduler),
-    [, updateState, updateError, scheduler],
+    [updateState, updateError, scheduler],
   );
 
   if (error !== undefined) {

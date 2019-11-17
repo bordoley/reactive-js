@@ -8,12 +8,15 @@ import {
   Observable,
   ObserverLike,
 } from "@reactive-js/rx-core";
+import { DisposableLike } from "@reactive-js/disposables";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,
   TC
 > {
   private readonly selector: (a: TA, b: TB) => TC;
+  private readonly otherSubscription: DisposableLike;
+
   private otherLatest: TB | undefined;
 
   static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
@@ -42,15 +45,15 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     super(delegate);
     this.selector = selector;
 
-    this.subscription.add(
-      connect(
-        Observable.lift(
-          other,
-          observe(new WithLatestFromSubscriber.InnerObserver(this)),
-        ),
-        this.scheduler,
+    this.otherSubscription = connect(
+      Observable.lift(
+        other,
+        observe(new WithLatestFromSubscriber.InnerObserver(this)),
       ),
+      this.scheduler,
     );
+
+    this.subscription.add(this.otherSubscription);
   }
 
   protected onNext(data: TA) {
@@ -62,6 +65,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
   protected onComplete(error?: Error) {
     this.delegate.complete(error);
+    this.subscription.remove(this.otherSubscription);
   }
 }
 

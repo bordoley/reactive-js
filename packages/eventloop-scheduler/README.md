@@ -4,4 +4,4 @@
 
 ### Static Functions
 
-*`EventLoopScheduler.create(timeout: number): SchedulerResourceLike`*
+*`EventLoopScheduler.create(timeout?: number): SchedulerResourceLike`*

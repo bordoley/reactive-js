@@ -17,10 +17,12 @@ export interface RelativeURI {
   readonly fragment: string;
 }
 
-const emptyRelativeURI: RelativeURI = {
-  path: "",
-  query: "",
-  fragment: "",
+export const RelativeURI = {
+  empty: {
+    path: "",
+    query: "",
+    fragment: "",
+  },
 };
 
 export interface RoutableComponentProps {
@@ -122,7 +124,7 @@ const pairify = (
   [_, oldState]: [RelativeURI | undefined, RelativeURI],
   next: RelativeURI,
 ): [RelativeURI | undefined, RelativeURI] =>
-  oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
+  oldState === RelativeURI.empty ? [undefined, next] : [oldState, next];
 
 export type RouterProps = {
   notFoundComponent: React.ComponentType<RoutableComponentProps>;
@@ -139,7 +141,7 @@ const create = (
       () =>
         AsyncIterator.lift(
           locationResourceFactory(),
-          scan(pairify, [undefined, emptyRelativeURI]),
+          scan(pairify, [undefined, RelativeURI.empty]),
         ),
       [],
     );
