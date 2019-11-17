@@ -71,8 +71,5 @@ export const share = <T>(
 export const shareReplayLast = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
-): ObservableLike<T> => {
-  // FIXME
-  const replayLastSubjectFactory = () => ReplayLastSubject.create(scheduler);
-  return new SharedObservable(observable, replayLastSubjectFactory, scheduler);
-};
+): ObservableLike<T> =>
+  new SharedObservable(observable, ReplayLastSubject.create, scheduler);
