@@ -36,13 +36,14 @@ export const fromArray = <T>(
         }
 
         subscriber.complete();
+        // FIXME: Remove the inner subscription frm the subscrier.
       }
     };
 
     continuationResult = [continuation, delay, priority];
 
     subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay),
+      subscriber.scheduler.schedule(continuation, delay, priority),
     );
   };
 
@@ -89,13 +90,14 @@ export const fromScheduledValues = <T>(
         }
 
         subscriber.complete();
+        // FIXME: Remove the inner subscription frm the subscrier.
       }
     };
 
-    const [delay, _] = delayedValues[index];
+    const [delay, priority, _] = delayedValues[index];
 
     subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay),
+      subscriber.scheduler.schedule(continuation, delay, priority),
     );
   };
 

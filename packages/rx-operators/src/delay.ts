@@ -50,7 +50,7 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     this.queue.push([dueTime, notification]);
 
     if (this.queue.length === 1) {
-      this.scheduler.schedule(this.doWork, this.delay);
+      this.scheduler.schedule(this.doWork, this.delay, this.priority);
     }
   }
 
