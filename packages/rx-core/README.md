@@ -11,10 +11,13 @@ import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 const scheduler = EventLoopScheduler.create(1);
 const observable = Observable.lift(
   Observable.create(subscriber => {
-    subscriber.notify(Notifications.next, "hello");
-    subscriber.notify(Notifications.complete);
+    subscriber.next( "hello");
+    subscriber.complete();
   }),
-  observe((notif, data) => console.log(notif + ": " + data)),
+  observe({ 
+    next: next => console.log("next: " + next),
+    complete: err => console.log("complete: " + err),
+  }),
 );
 const subscription = connect(observable, scheduler);
 subscription.dispose();
