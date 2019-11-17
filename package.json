@@ -6,7 +6,8 @@
     "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo",
     "example": "node ./packages/example/dist/index.js",
     "format": "prettier --write packages/**/src/** packages/**/test/**/*",
-    "perf": "NODE_ENV=production node ./packages/perf/dist/index.js"
+    "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "lerna": "^3.18.4",
