@@ -6,7 +6,6 @@ export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
   selector: (ev: Event) => T,
-  delay?: number,
   priority?: number,
 ): ObservableLike<T> =>
   Observable.create(
@@ -29,6 +28,6 @@ export const fromEvent = <T>(
         target.addEventListener(eventName, listener, { passive: true });
       subscriber.subscription.add(innerSubscription);
     },
-    delay,
+    undefined,
     priority,
   );

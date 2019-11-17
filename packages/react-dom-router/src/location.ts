@@ -40,7 +40,6 @@ class DomLocationStateContainerResourceImpl
             window,
             "popstate",
             _ => getCurrentLocation(),
-            undefined,
             priority,
           ),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
