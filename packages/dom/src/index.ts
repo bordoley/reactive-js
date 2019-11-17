@@ -22,10 +22,11 @@ export const fromEvent = <T>(
         }
       };
 
-      (innerSubscription = Disposable.create(() => {
+      innerSubscription = Disposable.create(() => {
         target.removeEventListener(eventName, listener);
-      })),
-        target.addEventListener(eventName, listener, { passive: true });
+      });
+
+      target.addEventListener(eventName, listener, { passive: true });
       subscriber.subscription.add(innerSubscription);
     },
     undefined,
