@@ -13,9 +13,9 @@
 
 *`concat<T>(): Operator<ObservableLike<T>, T>`*
 
-*`debounceTime<T>(dueTime: number): Operator<T, T>`*
+*`debounceTime<T>(dueTime: number, priority?: number): Operator<T, T>`*
 
-*`delay<T>(dueTime: number): Operator<T, T>`*
+*`delay<T>(dueTime: number, priority?: number): Operator<T, T>`*
 
 *`distinctUntilChanged<T>(equals?: (a: T, b: T) => boolean): Operator<T, T>`*
 
@@ -41,12 +41,8 @@
 
 *`onError<T>(onError: (error: Error) => void): Operator<T, T>`*
 
-*`observeOn<T>(scheduler?: SchedulerLike): Operator<T, T>`*
-
 *`scan<T, TAcc>(scanner: (acc: TAcc, next: T) => TAcc, initialValue: TAcc): Operator<T, TAcc>`*
 
 *`switch_<T>(): Operator<ObservableLike<T>, T>`*
-
-*`useScheduler<T>(scheduler: SchedulerLike): Operator<T, T>`*
 
 *`withLatestFrom<TA, TB, TC>(other: ObservableLike<TB>, selector: (a: TA, b: TB) => TC): Operator<TA, TC>`*

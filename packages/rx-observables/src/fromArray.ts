@@ -4,6 +4,7 @@ import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
+import { Disposable } from "@reactive-js/disposables";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
@@ -50,55 +51,63 @@ export const fromArray = <T>(
   return { subscribe };
 };
 
-export const ofValue = <T>(value: T, delay: number = 0): ObservableLike<T> =>
-  fromArray([value], delay);
+export const ofValue = <T>(
+  value: T,
+  delay?: number,
+  priority?: number,
+): ObservableLike<T> => fromArray([value], delay, priority);
 
-export const empty = <T>(delay: number = 0): ObservableLike<T> =>
-  fromArray([], delay);
+export const empty = <T>(
+  delay?: number,
+  priority?: number,
+): ObservableLike<T> => fromArray([], delay, priority);
 
 export const fromScheduledValues = <T>(
-  value: [number, number | undefined, T],
-  ...values: Array<[number, number| undefined, T]>
+  value: [number | undefined, number | undefined, T],
+  ...values: Array<[number | undefined, number | undefined, T]>
 ): ObservableLike<T> => {
   const delayedValues = [value, ...values];
 
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
+    let innerSubscription = Disposable.disposed;
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
       if (subscriber.subscription.isDisposed) {
         return;
-      } else {
-        while (index < delayedValues.length) {
-          const [_d, _p, value] = delayedValues[index];
-          index++;
-          subscriber.next(value);
+      }
 
-          const delay =
-            index < delayedValues.length ? delayedValues[index][0] : 0;
+      while (index < delayedValues.length) {
+        const [_d, _p, value] = delayedValues[index];
+        index++;
+        subscriber.next(value);
 
-          const priority =
-            index < delayedValues.length ? delayedValues[index][1] : 0;
+        if (index < delayedValues.length) {
+          const delay = delayedValues[index][0] || 0;
+          const priority = delayedValues[index][1];
 
           if (delay > 0) {
-            return {continuation, delay, priority};
+            return { continuation, delay, priority };
           } else if (shouldYield()) {
-            return {continuation, delay: 0, priority};
+            return { continuation, delay: 0, priority };
           }
         }
-
-        subscriber.complete();
-        // FIXME: Remove the inner subscription frm the subscrier.
       }
+
+      subscriber.complete();
+      subscriber.subscription.remove(innerSubscription);
     };
 
     const [delay, priority, _] = delayedValues[index];
-
-    subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay, priority),
+    innerSubscription = subscriber.scheduler.schedule(
+      continuation,
+      delay,
+      priority,
     );
+
+    subscriber.subscription.add(innerSubscription);
   };
 
   return { subscribe };

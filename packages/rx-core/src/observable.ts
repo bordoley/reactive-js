@@ -1,6 +1,7 @@
 import { CompositeDisposable, DisposableLike } from "@reactive-js/disposables";
 
 import {
+  observeOn,
   AutoDisposingSubscriber,
   Operator,
   SubscriberLike,
@@ -254,9 +255,14 @@ export const ObservableResource = {
 const create = <T>(
   onSubscribe: (subscriber: SubscriberLike<T>) => void,
   delay?: number,
-  priority?: number
+  priority?: number,
 ): ObservableLike<T> => {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
+  const subscribe = (delegate: SubscriberLike<T>) => {
+    // The idea here is that an onSubscribe function may
+    // call onNext from unscheduled sources such as event handlers.
+    // So we marshall those events back to the scheduler.
+    const subscriber = observeOn(priority)(delegate);
+
     const schedulerSubscription = subscriber.scheduler.schedule(
       (_: () => boolean) => {
         try {

@@ -1,4 +1,9 @@
-import { DisposableLike, Disposable } from "@reactive-js/disposables";
+import {
+  DisposableLike,
+  Disposable,
+  SerialDisposableLike,
+  SerialDisposable,
+} from "@reactive-js/disposables";
 
 import {
   connect,
@@ -8,7 +13,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { SchedulerLike, SchedulerContinuation } from "@reactive-js/scheduler";
+import { SchedulerLike, SchedulerContinuation, SchedulerContinuationResult } from "@reactive-js/scheduler";
 
 import { distinctUntilChanged } from "@reactive-js/rx-operators";
 
@@ -36,8 +41,14 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   StateUpdater<T>,
   T
 > {
+  private readonly continuation: SchedulerContinuationResult;
+  private readonly priority?: number;
+  private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
+  private readonly queueClearDisposable: DisposableLike = Disposable.create(
+    () => {this.nextQueue.length = 0}
+  );
+
   private readonly nextQueue: Array<StateUpdater<T>> = [];
-  private readonly priority: number | undefined;
   private isComplete = false;
   private error: Error | undefined;
 
@@ -47,12 +58,19 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
     super(delegate);
     this.acc = initialValue;
     this.priority = priority;
+    this.continuation = {
+      continuation: this.drainQueue,
+      priority: this.priority,
+    };
+
+    this.subscription.add(this.schedulerSubscription).add(this.queueClearDisposable);
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     try {
       while (this.nextQueue.length > 0) {
         const stateUpdater = this.nextQueue.shift() as StateUpdater<T>;
+
         this.acc = stateUpdater(this.acc);
 
         const yieldRequest = shouldYield();
@@ -63,7 +81,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
         }
 
         if (yieldRequest && hasMoreEvents) {
-          return { continuation: this.drainQueue, delay: 0, priority: this.priority };
+          return this.continuation;
         }
       }
     } catch (error) {
@@ -74,12 +92,20 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
 
     if (this.isComplete) {
       this.delegate.complete(this.error);
+      this.subscription.remove(this.schedulerSubscription);
+      this.subscription.remove(this.queueClearDisposable);
     }
+
+    this.schedulerSubscription.innerDisposable = Disposable.disposed;
   };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.scheduler.schedule(this.drainQueue);
+      this.schedulerSubscription.innerDisposable = this.scheduler.schedule(
+        this.drainQueue,
+        0,
+        this.priority,
+      );
     }
   }
 
@@ -99,9 +125,11 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   }
 }
 
-const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
-  subscriber: SubscriberLike<T>,
-) => new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
+const batchScanOnScheduler = <T>(
+  initialState: T,
+  priority?: number,
+) => (subscriber: SubscriberLike<T>) =>
+  new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
@@ -112,7 +140,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     initialState: T,
     scheduler: SchedulerLike,
     equals: (a: T, b: T) => boolean,
-    priority?: number
+    priority?: number,
   ) {
     this.dispatcher = EventResource.create();
     this.delegate = shareReplayLast(
@@ -155,7 +183,12 @@ const create = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
   priority?: number,
 ): StateContainerResourceLike<T> =>
-  new StateContainerResourceImpl(initialState, scheduler, equals, priority);
+  new StateContainerResourceImpl(
+    initialState,
+    scheduler,
+    equals,
+    priority,
+  );
 
 export const StateContainerResource = {
   create,

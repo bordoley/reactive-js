@@ -26,10 +26,6 @@ subscription.dispose();
 
 *Notification*
 
-*NotifyNext*
-
-*NotifyComplete*
-
 *ObservableLike*
 
 *ObservableResourceLike*
@@ -44,15 +40,17 @@ subscription.dispose();
 
 *DelegatingSubscriber*
 
+### Enumerations
+
+*NotificationKind*
+
 ### Static Functions
 
 *`connect<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): DisposableLike`*
 
+*`notify<T>(observer: ObserverLike<T>, notification: Notification<T>)`*
+
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
-
-*`Notifications.next: NotifyNext`*
-
-*`Notifications.complete: NotifyComplete`*
 
 *`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>) => void, delay?: number): ObservableLike<T>`*
 

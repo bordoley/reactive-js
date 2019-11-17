@@ -47,26 +47,39 @@ class ReactSchedulerImpl implements SchedulerLike {
     disposable: SerialDisposableLike,
     shouldYield: () => boolean,
     continuation: SchedulerContinuation,
-    priority: number
+    priority: number,
   ): FrameCallbackType {
     const continuationCallback: FrameCallbackType = () => {
-      if (!disposable.isDisposed) {
-        const result = continuation(shouldYield);
-        if (result !== undefined) {
-          const { continuation: resultContinuation, delay = 0, priority: resultPriority = priority } = result;
-
-          const callback =
-            resultContinuation === continuation && resultPriority === priority 
-              ? continuationCallback
-              : this.createFrameCallback(disposable, shouldYield, continuation, priority);
-          
-          if (callback === continuationCallback && delay === 0) {
-            return callback;
-          } else {
-            this.scheduleCallback(disposable, callback, delay, resultPriority);
-          }
-        }
+      if (disposable.isDisposed) {
+        return;
       }
+
+      const result = continuation(shouldYield);
+      if (result === undefined) {
+        return;
+      }
+
+      const {
+        continuation: resultContinuation,
+        delay = 0,
+        priority: resultPriority = priority,
+      } = result;
+
+      const callback =
+        resultContinuation === continuation && resultPriority === priority
+          ? continuationCallback
+          : this.createFrameCallback(
+              disposable,
+              shouldYield,
+              continuation,
+              priority,
+            );
+
+      if (callback === continuationCallback && delay === 0) {
+        return callback;
+      }
+
+      this.scheduleCallback(disposable, callback, delay, resultPriority);
     };
     return continuationCallback;
   }

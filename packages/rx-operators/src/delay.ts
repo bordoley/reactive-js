@@ -9,17 +9,24 @@ import {
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
+import { Disposable, SerialDisposable } from "@reactive-js/disposables";
+
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
   private readonly priority: number | undefined;
   private readonly queue: Array<[number, Notification<T>]> = [];
-  private isComplete = false;
-  private error: Error | undefined;
+  private readonly innerSubscription = SerialDisposable.create();
 
-  constructor(delegate: SubscriberLike<T>, delay: number, priority: number | undefined) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    delay: number,
+    priority: number | undefined,
+  ) {
     super(delegate);
     this.delay = delay;
     this.priority = priority;
+
+    this.subscription.add(this.innerSubscription);
   }
 
   private doWork: SchedulerContinuation = shouldYield => {
@@ -30,19 +37,21 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
       if (now >= nextDueTime) {
         this.queue.shift();
         notify(this.delegate, notification);
+
+        if ((notification[0] = NotificationKind.Complete)) {
+          this.subscription.remove(this.innerSubscription);
+        }
       } else {
         const delay = nextDueTime - now;
-        return { continuation: this.doWork, delay, priority: this.priority};
+        return { continuation: this.doWork, delay, priority: this.priority };
       }
 
       const yieldRequested = shouldYield();
-
       if (yieldRequested && this.queue.length > 0) {
-        return { continuation: this.doWork, delay: 0, priority: this.priority};
+        return { continuation: this.doWork, delay: 0, priority: this.priority };
       }
     }
   };
-
 
   private doSchedule(notification: Notification<T>) {
     const now = this.scheduler.now;
@@ -63,7 +72,10 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const delay = <T>(dueTime: number, priority?: number): Operator<T, T> => {
+export const delay = <T>(
+  dueTime: number,
+  priority?: number,
+): Operator<T, T> => {
   if (dueTime <= 0) {
     throw new Error("dueTime must be greater than 0");
   }

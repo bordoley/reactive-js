@@ -30,17 +30,16 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     private setupSubscription() {
       const alreadyDisposed = this.parent.innerSubscription.isDisposed;
 
-      if (!alreadyDisposed) {
-        this.parent.innerSubscription.innerDisposable.dispose();
-
-        this.parent.innerSubscription.innerDisposable = connect(
-          Observable.lift(
-            this.parent.observable,
-            observe(this.parent.observer),
-          ),
-          this.parent.scheduler,
-        );
+      if (alreadyDisposed) {
+        return;
       }
+
+      this.parent.innerSubscription.innerDisposable.dispose();
+
+      this.parent.innerSubscription.innerDisposable = connect(
+        Observable.lift(this.parent.observable, observe(this.parent.observer)),
+        this.parent.scheduler,
+      );
     }
 
     next(data: T) {
@@ -56,11 +55,13 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
         // FIXME: Add a custom error type that includes the error that
         // caused should repeat to fail
+        // see: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#example
         error = repeatError;
       }
 
       if (shouldComplete) {
         this.parent.delegate.complete(error);
+        this.parent.subscription.remove(this.parent.innerSubscription);
       } else {
         this.setupSubscription();
       }
@@ -98,8 +99,7 @@ const repeatOperator = <T>(
 
 const alwaysTrue = () => true;
 
-const defaultRepeatPredicate = (error?: Error): boolean =>
-  error === undefined;
+const defaultRepeatPredicate = (error?: Error): boolean => error === undefined;
 
 export const repeat = <T>(
   observable: ObservableLike<T>,
@@ -118,8 +118,7 @@ export const repeat = <T>(
 
 const alwaysTrue1 = <T>(_: T) => true;
 
-const defaultRetryPredicate = (error?: Error): boolean =>
-  error !== undefined;
+const defaultRetryPredicate = (error?: Error): boolean => error !== undefined;
 
 export const retry = <T>(
   observable: ObservableLike<T>,

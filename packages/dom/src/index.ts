@@ -6,23 +6,29 @@ export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
   selector: (ev: Event) => T,
+  delay?: number,
+  priority?: number,
 ): ObservableLike<T> =>
-  Observable.create(subscriber => {
-    const listener = (event: Event) => {
-      try {
-        const result = selector(event);
-        subscriber.next(result);
-      } catch (error) {
-        subscriber.complete(error);
-        // FIXME: Dispose the inner subscription here
-      }
-    };
+  Observable.create(
+    subscriber => {
+      let innerSubscription = Disposable.disposed;
 
-    target.addEventListener(eventName, listener, { passive: true });
+      const listener = (event: Event) => {
+        try {
+          const result = selector(event);
+          subscriber.next(result);
+        } catch (error) {
+          subscriber.complete(error);
+          subscriber.subscription.remove(innerSubscription);
+        }
+      };
 
-    subscriber.subscription.add(
-      Disposable.create(() => {
+      (innerSubscription = Disposable.create(() => {
         target.removeEventListener(eventName, listener);
-      }),
-    );
-  });
+      })),
+        target.addEventListener(eventName, listener, { passive: true });
+      subscriber.subscription.add(innerSubscription);
+    },
+    delay,
+    priority,
+  );

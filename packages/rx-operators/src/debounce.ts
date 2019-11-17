@@ -14,10 +14,15 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly priority: number | undefined;
   private value: T | undefined;
 
-  constructor(delegate: SubscriberLike<T>, dueTime: number, priority: number | undefined) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    dueTime: number,
+    priority: number | undefined,
+  ) {
     super(delegate);
     this.dueTime = dueTime;
     this.priority = priority;
+    this.subscription.add(this.innerSubscription);
   }
 
   private debounceNext() {
@@ -41,6 +46,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
 
     this.delegate.complete(error);
+    this.subscription.remove(this.innerSubscription);
   }
 
   private schedulerContinuation: SchedulerContinuation = _shouldYield => {
@@ -59,9 +65,13 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const debounceTime = <T>(dueTime: number, priority?: number): Operator<T, T> => {
+export const debounceTime = <T>(
+  dueTime: number,
+  priority?: number,
+): Operator<T, T> => {
   if (dueTime <= 0) {
     throw new Error("dueTime must be greater than 0");
   }
-  return subscriber => new DebounceTimeSubscriber(subscriber, dueTime, priority);
+  return subscriber =>
+    new DebounceTimeSubscriber(subscriber, dueTime, priority);
 };

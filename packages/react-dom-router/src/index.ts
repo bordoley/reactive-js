@@ -38,10 +38,9 @@ const reducer = (
 const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
-const createRelativeURILocation = (
-) => {
+const createRelativeURILocation = (priority?: number) => {
   const lifted = AsyncIterator.lift(
-    LocationState.create(scheduler),
+    LocationState.create(scheduler, priority),
     map(mapper),
     distinctUntilChanged(),
   );
@@ -50,8 +49,9 @@ const createRelativeURILocation = (
 };
 
 const create = (
+  priority?: number,
 ): React.ComponentType<RouterProps> =>
-  ReactRouter.create(() => createRelativeURILocation());
+  ReactRouter.create(() => createRelativeURILocation(priority));
 
 export const Router = {
   create,
