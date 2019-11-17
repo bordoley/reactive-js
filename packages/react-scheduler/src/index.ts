@@ -53,19 +53,17 @@ class ReactSchedulerImpl implements SchedulerLike {
       if (!disposable.isDisposed) {
         const result = continuation(shouldYield);
         if (result !== undefined) {
-          const [resultContinuation, delay, resultPriority] = result;
-
-          const newPriority = resultPriority || priority;
+          const { continuation: resultContinuation, delay = 0, priority: resultPriority = priority } = result;
 
           const callback =
-            resultContinuation === continuation && newPriority === priority 
+            resultContinuation === continuation && resultPriority === priority 
               ? continuationCallback
               : this.createFrameCallback(disposable, shouldYield, continuation, priority);
           
           if (callback === continuationCallback && delay === 0) {
             return callback;
           } else {
-            this.scheduleCallback(disposable, callback, delay, newPriority);
+            this.scheduleCallback(disposable, callback, delay, resultPriority);
           }
         }
       }
@@ -76,7 +74,7 @@ class ReactSchedulerImpl implements SchedulerLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
-    priority: number = 3,
+    priority: number = unstable_NormalPriority,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
 

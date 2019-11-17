@@ -11,10 +11,10 @@ import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;
   private readonly innerSubscription = SerialDisposable.create();
-  private readonly priority: number;
+  private readonly priority: number | undefined;
   private value: T | undefined;
 
-  constructor(delegate: SubscriberLike<T>, dueTime: number, priority: number) {
+  constructor(delegate: SubscriberLike<T>, dueTime: number, priority: number | undefined) {
     super(delegate);
     this.dueTime = dueTime;
     this.priority = priority;
@@ -59,7 +59,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const debounceTime = <T>(dueTime: number, priority: number = 3): Operator<T, T> => {
+export const debounceTime = <T>(dueTime: number, priority?: number): Operator<T, T> => {
   if (dueTime <= 0) {
     throw new Error("dueTime must be greater than 0");
   }

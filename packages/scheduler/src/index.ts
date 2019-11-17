@@ -1,11 +1,14 @@
 import { DisposableLike } from "@reactive-js/disposables";
 
 export interface SchedulerContinuation {
-  (shouldYield: () => boolean): SchedulerContinuationResult;
+  (shouldYield: () => boolean): SchedulerContinuationResult | void;
 }
 
-export type SchedulerContinuationResult =
-  Readonly<[SchedulerContinuation, number, number | void]> | void;
+export type SchedulerContinuationResult = {
+  readonly continuation: SchedulerContinuation,
+  readonly delay?: number,
+  readonly priority?: number,
+}; 
 
 export interface SchedulerLike {
   now: number;
