@@ -9,8 +9,7 @@ import { AsyncIterator } from "@reactive-js/ix-core";
 import { distinctUntilChanged, map } from "@reactive-js/rx-operators";
 
 import { LocationState } from "./location";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { normalPriority } from "@reactive-js/react-scheduler";
+import { scheduler } from "@reactive-js/react-scheduler";
 
 const mapper = (v: string): RelativeURI => {
   const parsedAccURL = new URL(v);
@@ -40,7 +39,6 @@ const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
 const createRelativeURILocation = (
-  scheduler: SchedulerLike = normalPriority,
 ) => {
   const lifted = AsyncIterator.lift(
     LocationState.create(scheduler),
@@ -52,9 +50,8 @@ const createRelativeURILocation = (
 };
 
 const create = (
-  scheduler: SchedulerLike = normalPriority,
 ): React.ComponentType<RouterProps> =>
-  ReactRouter.create(() => createRelativeURILocation(scheduler), scheduler);
+  ReactRouter.create(() => createRelativeURILocation());
 
 export const Router = {
   create,

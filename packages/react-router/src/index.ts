@@ -7,8 +7,6 @@ import { useAsyncIterator } from "@reactive-js/react-hooks";
 
 import { createElement, useCallback, useMemo } from "react";
 import { AsyncIterator } from "@reactive-js/ix-core";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { normalPriority } from "@reactive-js/react-scheduler";
 import { scan } from "@reactive-js/rx-operators";
 
 // React Native doesn't use a standard URI library so define
@@ -133,7 +131,6 @@ export type RouterProps = {
 
 const create = (
   locationResourceFactory: () => StateContainerResourceLike<RelativeURI>,
-  scheduler: SchedulerLike = normalPriority,
 ): React.ComponentType<RouterProps> => {
   const ReactRouter = ({ notFoundComponent, routes }: RouterProps) => {
     const routeMap = useMemo(() => routes.reduce(routesReducer, {}), [routes]);
@@ -145,7 +142,6 @@ const create = (
           scan(pairify, [undefined, emptyRelativeURI]),
         ),
       [],
-      scheduler,
     );
 
     const child =

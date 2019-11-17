@@ -21,12 +21,6 @@ import {
 } from "@reactive-js/disposables";
 
 class ReactSchedulerImpl implements SchedulerLike {
-  private readonly priorityLevel: number;
-
-  constructor(priorityLevel: number) {
-    this.priorityLevel = priorityLevel;
-  }
-
   get now() {
     return unstable_now();
   }
@@ -35,9 +29,10 @@ class ReactSchedulerImpl implements SchedulerLike {
     disposable: SerialDisposableLike,
     callback: FrameCallbackType,
     delay: number,
+    priority: number,
   ) {
     const callbackNode = unstable_scheduleCallback(
-      this.priorityLevel,
+      priority,
       callback,
       delay > 0 ? { delay } : undefined,
     );
@@ -52,21 +47,26 @@ class ReactSchedulerImpl implements SchedulerLike {
     disposable: SerialDisposableLike,
     shouldYield: () => boolean,
     continuation: SchedulerContinuation,
+    priority: number
   ): FrameCallbackType {
     const continuationCallback: FrameCallbackType = () => {
       if (!disposable.isDisposed) {
         const result = continuation(shouldYield);
-        if (result === continuation) {
-          return continuationCallback;
-        } else if (result instanceof Function) {
-          return this.createFrameCallback(disposable, shouldYield, result);
-        } else if (result !== undefined) {
-          const [resultContinuation, delay] = result;
+        if (result !== undefined) {
+          const [resultContinuation, delay, resultPriority] = result;
+
+          const newPriority = resultPriority || priority;
+
           const callback =
-            resultContinuation === continuation
+            resultContinuation === continuation && newPriority === priority 
               ? continuationCallback
-              : this.createFrameCallback(disposable, shouldYield, continuation);
-          this.scheduleCallback(disposable, callback, delay);
+              : this.createFrameCallback(disposable, shouldYield, continuation, priority);
+          
+          if (callback === continuationCallback && delay === 0) {
+            return callback;
+          } else {
+            this.scheduleCallback(disposable, callback, delay, newPriority);
+          }
         }
       }
     };
@@ -76,6 +76,7 @@ class ReactSchedulerImpl implements SchedulerLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
+    priority: number = 3,
   ): DisposableLike {
     const disposable = SerialDisposable.create();
 
@@ -86,26 +87,13 @@ class ReactSchedulerImpl implements SchedulerLike {
 
     this.scheduleCallback(
       disposable,
-      this.createFrameCallback(disposable, shouldYield, continuation),
+      this.createFrameCallback(disposable, shouldYield, continuation, priority),
       delay,
+      priority,
     );
 
     return disposable;
   }
 }
 
-export const immediatePriority: SchedulerLike = new ReactSchedulerImpl(
-  unstable_ImmediatePriority,
-);
-export const userBlockingPriority: SchedulerLike = new ReactSchedulerImpl(
-  unstable_UserBlockingPriority,
-);
-export const normalPriority: SchedulerLike = new ReactSchedulerImpl(
-  unstable_NormalPriority,
-);
-export const idlePriority: SchedulerLike = new ReactSchedulerImpl(
-  unstable_IdlePriority,
-);
-export const lowPriority: SchedulerLike = new ReactSchedulerImpl(
-  unstable_LowPriority,
-);
+export const scheduler: SchedulerLike = new ReactSchedulerImpl();

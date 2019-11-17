@@ -26,7 +26,7 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     this.delegate.next(nextAcc);
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.delegate.complete(error);
   }
 }

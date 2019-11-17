@@ -10,7 +10,7 @@ export const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
   });
 
 export const onComplete = <T>(
-  onComplete: (err: Error | void) => void,
+  onComplete: (err?: Error) => void,
 ): Operator<T, T> =>
   observe({
     next: ignore,
@@ -20,7 +20,7 @@ export const onComplete = <T>(
 export const onError = <T>(onError: (error: Error) => void): Operator<T, T> =>
   observe({
     next: ignore,
-    complete: (error: Error | void) => {
+    complete: (error?: Error) => {
       if (error !== undefined) {
         onError(error);
       }

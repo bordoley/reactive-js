@@ -59,11 +59,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     this.startTime = this.now;
     const result = continuation(shouldYield);
 
-    if (result instanceof Function) {
-      ctx.continuation = result;
-      ctx.delay = 0;
-      this.scheduleInternal(ctx);
-    } else if (result !== undefined) {
+    if (result !== undefined) {
       const [resultContinuation, resultDelay] = result;
       ctx.continuation = resultContinuation;
 
@@ -130,6 +126,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
+    _priority: number = 3,
   ): DisposableLike {
     throwIfDisposed(this);
 

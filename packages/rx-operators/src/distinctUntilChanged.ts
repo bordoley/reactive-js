@@ -21,7 +21,7 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.delegate.complete(error);
   }
 }

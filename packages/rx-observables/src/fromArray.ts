@@ -8,6 +8,7 @@ import {
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
   delay: number = 0,
+  priority: number = 3,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
@@ -38,7 +39,7 @@ export const fromArray = <T>(
       }
     };
 
-    continuationResult = delay > 0 ? [continuation, delay] : continuation;
+    continuationResult = [continuation, delay, priority];
 
     subscriber.subscription.add(
       subscriber.scheduler.schedule(continuation, delay),
@@ -54,9 +55,9 @@ export const ofValue = <T>(value: T, delay: number = 0): ObservableLike<T> =>
 export const empty = <T>(delay: number = 0): ObservableLike<T> =>
   fromArray([], delay);
 
-export const fromDelayedValues = <T>(
-  value: [number, T],
-  ...values: Array<[number, T]>
+export const fromScheduledValues = <T>(
+  value: [number, number, T],
+  ...values: Array<[number, number, T]>
 ): ObservableLike<T> => {
   const delayedValues = [value, ...values];
 
@@ -70,17 +71,20 @@ export const fromDelayedValues = <T>(
         return;
       } else {
         while (index < delayedValues.length) {
-          const [_, value] = delayedValues[index];
+          const [_d, _p, value] = delayedValues[index];
           index++;
           subscriber.next(value);
 
           const delay =
             index < delayedValues.length ? delayedValues[index][0] : 0;
 
+          const priority =
+            index < delayedValues.length ? delayedValues[index][1] : 0;
+
           if (delay > 0) {
-            return [continuation, delay];
+            return [continuation, delay, priority];
           } else if (shouldYield()) {
-            return continuation;
+            return [continuation, 0, priority];
           }
         }
 

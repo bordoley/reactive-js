@@ -38,7 +38,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
 > {
   private readonly nextQueue: Array<StateUpdater<T>> = [];
   private isComplete = false;
-  private error: Error | void = undefined;
+  private error: Error | undefined;
 
   private acc: T;
 
@@ -61,7 +61,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
         }
 
         if (yieldRequest && hasMoreEvents) {
-          return this.drainQueue;
+          return [this.drainQueue, 0, undefined];
         }
       }
     } catch (error) {
@@ -90,9 +90,9 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
     this.scheduleDrainQueue();
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     this.isComplete = true;
-    this.error = error || undefined;
+    this.error = error;
     this.scheduleDrainQueue();
   }
 }

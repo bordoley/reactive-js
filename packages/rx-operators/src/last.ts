@@ -6,7 +6,7 @@ import {
 
 class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
   // FIXME: This won't work with Bucklescript optional values
-  private last: T | void = undefined;
+  private last: T | undefined;
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
@@ -16,7 +16,7 @@ class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.last = data;
   }
 
-  protected onComplete(error: Error | void) {
+  protected onComplete(error?: Error) {
     if (this.last !== undefined) {
       this.delegate.next(this.last);
     }
