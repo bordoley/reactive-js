@@ -133,10 +133,9 @@ function lift(
   return new LiftedObservable(sourceSource, allOperators);
 }
 
-export interface ObservableResourceLike<T>
-  extends ObservableLike<T> {
-    readonly disposable: DisposableLike;
-  };
+export interface ObservableResourceLike<T> extends ObservableLike<T> {
+  readonly disposable: DisposableLike;
+}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   readonly observable: ObservableLike<T>;

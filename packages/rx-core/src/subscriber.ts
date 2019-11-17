@@ -160,7 +160,9 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly priority?: number;
   private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
   private readonly queueClearDisposable: DisposableLike = Disposable.create(
-    () => {this.nextQueue.length = 0}
+    () => {
+      this.nextQueue.length = 0;
+    },
   );
 
   private readonly nextQueue: Array<T> = [];
@@ -176,7 +178,9 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
       priority: this.priority,
     };
 
-    this.subscription.add(this.schedulerSubscription).add(this.queueClearDisposable);
+    this.subscription
+      .add(this.schedulerSubscription)
+      .add(this.queueClearDisposable);
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {

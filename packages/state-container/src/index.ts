@@ -13,7 +13,11 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { SchedulerLike, SchedulerContinuation, SchedulerContinuationResult } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  SchedulerContinuation,
+  SchedulerContinuationResult,
+} from "@reactive-js/scheduler";
 
 import { distinctUntilChanged } from "@reactive-js/rx-operators";
 
@@ -45,7 +49,9 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   private readonly priority?: number;
   private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
   private readonly queueClearDisposable: DisposableLike = Disposable.create(
-    () => {this.nextQueue.length = 0}
+    () => {
+      this.nextQueue.length = 0;
+    },
   );
 
   private readonly nextQueue: Array<StateUpdater<T>> = [];
@@ -63,7 +69,9 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       priority: this.priority,
     };
 
-    this.subscription.add(this.schedulerSubscription).add(this.queueClearDisposable);
+    this.subscription
+      .add(this.schedulerSubscription)
+      .add(this.queueClearDisposable);
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -125,11 +133,9 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   }
 }
 
-const batchScanOnScheduler = <T>(
-  initialState: T,
-  priority?: number,
-) => (subscriber: SubscriberLike<T>) =>
-  new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
+const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
+  subscriber: SubscriberLike<T>,
+) => new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
@@ -176,12 +182,7 @@ const create = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
   priority?: number,
 ): StateContainerResourceLike<T> =>
-  new StateContainerResourceImpl(
-    initialState,
-    scheduler,
-    equals,
-    priority,
-  );
+  new StateContainerResourceImpl(initialState, scheduler, equals, priority);
 
 export const StateContainerResource = {
   create,

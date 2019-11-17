@@ -22,7 +22,9 @@ export const use = <T>(
           next: (next: T) => subscriber.next(next),
           complete: (error?: Error) => {
             subscriber.complete(error);
-            subscriber.subscription.remove(innerSubscription).remove(resource.disposable);
+            subscriber.subscription
+              .remove(innerSubscription)
+              .remove(resource.disposable);
           },
         }),
       ),

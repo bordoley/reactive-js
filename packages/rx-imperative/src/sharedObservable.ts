@@ -51,7 +51,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     if (this.refCount === 0) {
       this.subject = this.factory(this.priority);
     }
-    
+
     const subject = this.subject as SubjectLike<T>;
 
     const innerSubscription = connect(
@@ -84,4 +84,9 @@ export const shareReplayLast = <T>(
   scheduler: SchedulerLike,
   priority?: number,
 ): ObservableLike<T> =>
-  new SharedObservable(ReplayLastSubject.create, observable, scheduler, priority);
+  new SharedObservable(
+    ReplayLastSubject.create,
+    observable,
+    scheduler,
+    priority,
+  );

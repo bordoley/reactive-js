@@ -12,11 +12,9 @@ export interface SubjectLike<T>
     ObservableResourceLike<T> {}
 
 class SubjectImpl<T> implements SubjectLike<T> {
-  readonly disposable = Disposable.create(
-    () => {
-      this.subscribers = [];
-    }
-  );
+  readonly disposable = Disposable.create(() => {
+    this.subscribers = [];
+  });
   private readonly priority?: number;
 
   private subscribers: Array<SubscriberLike<T>> = [];
@@ -26,7 +24,9 @@ class SubjectImpl<T> implements SubjectLike<T> {
   }
 
   next(data: T) {
-    if (this.disposable.isDisposed) { return };
+    if (this.disposable.isDisposed) {
+      return;
+    }
 
     const subscribers = this.subscribers.slice();
     for (let subscriber of subscribers) {
@@ -35,7 +35,9 @@ class SubjectImpl<T> implements SubjectLike<T> {
   }
 
   complete(error?: Error) {
-    if (this.disposable.isDisposed) { return };
+    if (this.disposable.isDisposed) {
+      return;
+    }
 
     const subscribers = this.subscribers.slice();
     for (let subscriber of subscribers) {
@@ -60,7 +62,8 @@ class SubjectImpl<T> implements SubjectLike<T> {
   }
 }
 
-const create = <T>(priority?: number): SubjectLike<T> => new SubjectImpl(priority);
+const create = <T>(priority?: number): SubjectLike<T> =>
+  new SubjectImpl(priority);
 
 export const Subject = {
   create,
