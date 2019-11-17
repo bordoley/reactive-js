@@ -13,39 +13,49 @@ import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";
 
 class SharedObservable<T> implements ObservableLike<T> {
+  private readonly factory: (priority?: number) => SubjectLike<T>;
   private readonly source: ObservableLike<T>;
-  private readonly teardown: () => void;
   private readonly scheduler: SchedulerLike;
+  private readonly priority?: number;
+
+  private readonly teardown: () => void;
 
   private refCount: number = 0;
-  private subject: SubjectLike<T>;
-  private subscription = Disposable.disposed;
+  private subject?: SubjectLike<T>;
+  private sourceSubscription = Disposable.disposed;
 
   constructor(
+    factory: (priority?: number) => SubjectLike<T>,
     source: ObservableLike<T>,
-    factory: () => SubjectLike<T>,
     scheduler: SchedulerLike,
+    priority?: number,
   ) {
+    this.factory = factory;
     this.source = source;
     this.scheduler = scheduler;
+    this.priority = priority;
 
     this.teardown = () => {
       this.refCount--;
 
       if (this.refCount === 0) {
-        this.subscription.dispose();
-        this.subscription = Disposable.disposed;
-        this.subject.dispose();
-        this.subject = factory();
+        this.sourceSubscription.dispose();
+        this.sourceSubscription = Disposable.disposed;
+        (this.subject as SubjectLike<T>).disposable.dispose();
+        this.subject = undefined;
       }
     };
-
-    this.subject = factory();
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {
+    if (this.refCount === 0) {
+      this.subject = this.factory(this.priority);
+    }
+    
+    const subject = this.subject as SubjectLike<T>;
+
     const innerSubscription = connect(
-      Observable.lift(this.subject, observe(subscriber)),
+      Observable.lift(subject, observe(subscriber)),
       subscriber.scheduler,
     );
 
@@ -54,8 +64,8 @@ class SharedObservable<T> implements ObservableLike<T> {
       .add(innerSubscription);
 
     if (this.refCount === 1) {
-      this.subscription = connect(
-        Observable.lift(this.source, observe(this.subject)),
+      this.sourceSubscription = connect(
+        Observable.lift(this.source, observe(subject)),
         this.scheduler,
       );
     }
@@ -65,11 +75,13 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
+  priority?: number,
 ): ObservableLike<T> =>
-  new SharedObservable(observable, Subject.create, scheduler);
+  new SharedObservable(Subject.create, observable, scheduler, priority);
 
 export const shareReplayLast = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
+  priority?: number,
 ): ObservableLike<T> =>
-  new SharedObservable(observable, ReplayLastSubject.create, scheduler);
+  new SharedObservable(ReplayLastSubject.create, observable, scheduler, priority);

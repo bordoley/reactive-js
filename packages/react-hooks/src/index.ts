@@ -8,22 +8,27 @@ import {
 } from "@reactive-js/rx-core";
 
 import { scheduler } from "@reactive-js/react-scheduler";
-import { DisposableLike } from "@reactive-js/disposables";
+import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
-export const useResource = <T extends DisposableLike>(
+const useDisposable = (
+  disposable: DisposableLike
+) => {
+  useEffect(
+    () => () => {
+      disposable.dispose();
+    },
+    [disposable],
+  );
+};
+
+export const useDisposableResource = <T extends DisposableLike>(
   factory: () => T,
   deps: readonly any[] | undefined,
 ): T => {
   const resource = useMemo(factory, deps);
-  useEffect(
-    () => () => {
-      resource.dispose();
-    },
-    [resource],
-  );
-
+  useDisposable(resource);
   return resource;
 };
 
@@ -49,7 +54,7 @@ export const useObservable = <T>(
 
   const observable = useMemo(factory, deps);
 
-  useResource(
+  useDisposableResource(
     () =>
       connect(makeObservable(observable, updateState, updateError), scheduler),
     [updateState, updateError, scheduler],
@@ -66,17 +71,18 @@ export const useObservableResource = <T>(
   factory: () => ObservableResourceLike<T>,
   deps: readonly any[] | undefined,
 ): T | undefined => {
-  const resource = useResource(factory, deps);
-  return useObservable(() => resource, [resource]);
+  const observableResource = useMemo(factory, deps);
+  useDisposable(observableResource.disposable);
+  return useObservable(() => observableResource, [observableResource]);
 };
 
 export const useAsyncIterator = <TReq, T>(
   factory: () => AsyncIteratorLike<TReq, T>,
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
-  const iterator = useResource(factory, deps);
+  const iterator =  useMemo(factory, deps);
+  useDisposable(iterator.disposable);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
   const value = useObservable(() => iterator, [iterator]);
-
   return [value, dispatch];
 };

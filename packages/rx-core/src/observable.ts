@@ -134,8 +134,9 @@ function lift(
 }
 
 export interface ObservableResourceLike<T>
-  extends ObservableLike<T>,
-    DisposableLike {}
+  extends ObservableLike<T> {
+    readonly disposable: DisposableLike;
+  };
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   readonly observable: ObservableLike<T>;
@@ -144,14 +145,6 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
     this.observable = observable;
     this.disposable = disposable;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  dispose() {
-    this.disposable.dispose();
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {
@@ -242,10 +235,7 @@ function liftResource(
     ...operators,
   ] as any);
 
-  const disposable =
-    source instanceof LiftedObservableResource ? source.disposable : source;
-
-  return new LiftedObservableResource(observable, disposable);
+  return new LiftedObservableResource(observable, source.disposable);
 }
 
 export const ObservableResource = {

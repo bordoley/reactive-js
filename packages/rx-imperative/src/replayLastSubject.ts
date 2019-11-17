@@ -8,49 +8,49 @@ import {
 } from "@reactive-js/rx-core";
 
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
-  private readonly subject: SubjectLike<T> = Subject.create();
+  private readonly subject: SubjectLike<T>;
   private last: Notification<T> | undefined;
 
-  get isDisposed() {
-    return this.subject.isDisposed;
+  constructor(priority?: number){
+    this.subject = Subject.create(priority);
   }
-
-  dispose() {
-    this.subject.dispose;
+  
+  get disposable () {
+    return this.subject.disposable;
   }
 
   next(data: T) {
-    if (!this.isDisposed) {
-      this.last = [NotificationKind.Next, data];
-      this.subject.next(data);
-    }
+    if (this.disposable.isDisposed) { return }
+    
+    this.last = [NotificationKind.Next, data];
+    this.subject.next(data);
   }
 
   complete(error: Error) {
-    if (!this.isDisposed) {
-      this.last = [NotificationKind.Complete, error];
-      this.subject.complete(error);
-    }
+    if (this.disposable.isDisposed) { return }
+
+    this.last = [NotificationKind.Complete, error];
+    this.subject.complete(error);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    if (!this.isDisposed) {
-      const innerSubscription = subscriber.scheduler.schedule(
-        (_: () => boolean) => {
-          if (this.last !== undefined) {
-            notify(subscriber, this.last);
-          }
-          subscriber.subscription.remove(innerSubscription);
-          this.subject.subscribe(subscriber);
-        },
-      );
+    if (this.disposable.isDisposed) { return }
 
-      subscriber.subscription.add(innerSubscription);
-    }
+    const innerSubscription = subscriber.scheduler.schedule(
+      (_: () => boolean) => {
+        if (this.last !== undefined) {
+          notify(subscriber, this.last);
+        }
+        subscriber.subscription.remove(innerSubscription);
+        this.subject.subscribe(subscriber);
+      },
+    );
+
+    subscriber.subscription.add(innerSubscription);
   }
 }
 
-const create = <T>(): SubjectLike<T> => new ReplayLastSubjectImpl();
+const create = <T>(priority?: number): SubjectLike<T> => new ReplayLastSubjectImpl(priority);
 
 export const ReplayLastSubject = {
   create,

@@ -52,6 +52,8 @@ subscription.dispose();
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
+*`observeOn<T>(priority?: number): Operator<T, T>`*
+
 *`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>) => void, delay?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
