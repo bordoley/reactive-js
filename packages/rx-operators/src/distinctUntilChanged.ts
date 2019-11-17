@@ -6,7 +6,7 @@ import {
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;
-  private prev: T | undefined;
+  private prev: [T] | undefined;
 
   constructor(delegate: SubscriberLike<T>, equals: (a: T, b: T) => boolean) {
     super(delegate);
@@ -14,9 +14,16 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onNext(data: T) {
-    const shouldEmit = this.prev == undefined || !this.equals(this.prev, data);
+    const shouldEmit = this.prev === undefined || !this.equals(this.prev[0], data);
     if (shouldEmit) {
-      this.prev = data;
+      this.prev = [data];
+      
+      if (this.prev === undefined) {
+        this.prev = [data];
+      } else {
+        this.prev[0] = data;
+      }
+
       this.delegate.next(data);
     }
   }

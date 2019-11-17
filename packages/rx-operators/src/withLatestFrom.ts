@@ -17,7 +17,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   private readonly selector: (a: TA, b: TB) => TC;
   private readonly otherSubscription: DisposableLike;
 
-  private otherLatest: TB | undefined;
+  private otherLatest: [TB] | undefined;
 
   static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
     private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
@@ -27,7 +27,11 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     }
 
     next(data: TB) {
-      this.parent.otherLatest = data;
+      if (this.parent.otherLatest === undefined) {
+        this.parent.otherLatest = [data];
+      } else {
+        this.parent.otherLatest[0] = data;
+      }
     }
 
     complete(error?: Error) {
@@ -58,7 +62,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
   protected onNext(data: TA) {
     if (this.otherLatest !== undefined) {
-      const result = this.selector(data, this.otherLatest);
+      const [otherLatest] = this.otherLatest;
+      const result = this.selector(data, otherLatest);
       this.delegate.next(result);
     }
   }

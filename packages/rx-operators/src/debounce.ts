@@ -12,7 +12,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;
   private readonly innerSubscription = SerialDisposable.create();
   private readonly priority: number | undefined;
-  private value: T | undefined;
+  private value: [T] | undefined;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -28,7 +28,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private debounceNext() {
     this.clearDebounce();
     if (this.value != undefined) {
-      const value = this.value;
+      const [value] = this.value;
       this.value = undefined;
       this.delegate.next(value);
     }
@@ -55,7 +55,11 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     this.clearDebounce();
-    this.value = data;
+    if(this.value !== undefined) {
+      this.value[0] = data;;
+    } else {
+      this.value = [data];
+    }
 
     this.innerSubscription.innerDisposable = this.scheduler.schedule(
       this.schedulerContinuation,
