@@ -21,7 +21,7 @@ const getCurrentLocation = () => {
 
 class DomLocationStateContainerResourceImpl
   implements StateContainerResourceLike<string> {
-  private readonly disposable: DisposableLike;
+  readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
   constructor(scheduler: SchedulerLike, delay?: number, priority?: number) {
@@ -56,16 +56,8 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = Disposable.compose(subscription, stateContainer);
+    this.disposable = Disposable.compose(subscription, stateContainer.disposable);
     this.stateContainer = stateContainer;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  dispose() {
-    this.disposable.dispose();
   }
 
   subscribe(subscriber: SubscriberLike<string>) {

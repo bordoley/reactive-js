@@ -14,10 +14,10 @@
 
 ### Static Functions
 
-*`share<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): ObservableLike<T>`*
+*`share<T>(observable: ObservableLike<T>, scheduler: SchedulerLike, priority?: number): ObservableLike<T>`*
 
-*`shareReplayLast<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): ObservableLike<T>`*
+*`shareReplayLast<T>(observable: ObservableLike<T>, scheduler: SchedulerLike, priority?: number): ObservableLike<T>`*
 
-*`EventResource.create<T>(): EventResourceLike<T>`*
+*`EventResource.create<T>(priority?: number): EventResourceLike<T>`*
 
-*`Subject.create<T>(): SubjectLike<T>`*
+*`Subject.create<T>(priority?: number): SubjectLike<T>`*

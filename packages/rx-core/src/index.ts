@@ -6,6 +6,7 @@ export {
 } from "./observer";
 export {
   observe,
+  observeOn,
   Operator,
   SubscriberLike,
   DelegatingSubscriber,

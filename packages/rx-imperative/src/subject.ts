@@ -4,6 +4,7 @@ import {
   ObservableResourceLike,
   ObserverLike,
   SubscriberLike,
+  observeOn,
 } from "@reactive-js/rx-core";
 
 export interface SubjectLike<T>
@@ -11,48 +12,47 @@ export interface SubjectLike<T>
     ObservableResourceLike<T> {}
 
 class SubjectImpl<T> implements SubjectLike<T> {
-  private _isDisposed = false;
-  private subscribers: Array<ObserverLike<T>> = [];
+  readonly disposable = Disposable.create(
+    () => {
+      this.subscribers = [];
+    }
+  );
+  private readonly priority?: number;
 
-  dispose() {
-    this._isDisposed = true;
-    this.subscribers = [];
-  }
+  private subscribers: Array<SubscriberLike<T>> = [];
 
-  get isDisposed(): boolean {
-    return this._isDisposed;
+  constructor(priority?: number) {
+    this.priority = priority;
   }
 
   next(data: T) {
-    if (!this.isDisposed) {
-      const subscribers = this.subscribers.slice();
-      for (let subscriber of subscribers) {
-        subscriber.next(data);
-      }
+    if (this.disposable.isDisposed) { return };
+
+    const subscribers = this.subscribers.slice();
+    for (let subscriber of subscribers) {
+      subscriber.next(data);
     }
   }
 
   complete(error?: Error) {
-    if (!this.isDisposed) {
-      const subscribers = this.subscribers.slice();
-      for (let subscriber of subscribers) {
-        subscriber.complete(error);
-      }
+    if (this.disposable.isDisposed) { return };
+
+    const subscribers = this.subscribers.slice();
+    for (let subscriber of subscribers) {
+      subscriber.complete(error);
     }
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    if (!this.isDisposed) {
-      // FIXME: Wrap the subscriber in an observeOn observer to ensure
-      // we're on the right scheduler.
-      this.subscribers.push(subscriber);
+    if (!this.disposable.isDisposed) {
+      const scheduledSubscriber = observeOn()(subscriber);
+      this.subscribers.push(scheduledSubscriber);
 
       const disposable = Disposable.create(() => {
-        const index = this.subscribers.indexOf(subscriber);
+        const index = this.subscribers.indexOf(scheduledSubscriber);
         if (index !== -1) {
           this.subscribers.splice(index, 1);
         }
-        // FIXME: Remove the disposable from the subscriber after dispose
       });
 
       subscriber.subscription.add(disposable);
@@ -60,7 +60,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
   }
 }
 
-const create = <T>(): SubjectLike<T> => new SubjectImpl();
+const create = <T>(priority?: number): SubjectLike<T> => new SubjectImpl(priority);
 
 export const Subject = {
   create,

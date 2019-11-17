@@ -134,7 +134,7 @@ const batchScanOnScheduler = <T>(
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
   private readonly delegate: ObservableLike<T>;
-  private readonly disposable: DisposableLike;
+  readonly disposable: DisposableLike;
 
   constructor(
     initialState: T,
@@ -150,20 +150,13 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
         distinctUntilChanged(equals),
       ),
       scheduler,
+      priority,
     );
 
     this.disposable = Disposable.compose(
-      this.dispatcher,
+      this.dispatcher.disposable,
       connect(this.delegate, scheduler),
     );
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  dispose() {
-    this.disposable.dispose();
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

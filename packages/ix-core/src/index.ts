@@ -5,14 +5,15 @@ import {
 } from "@reactive-js/rx-core";
 
 import { Operator } from "@reactive-js/rx-core";
+import { DisposableLike } from "@reactive-js/disposables";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;
 }
 
 class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
-  public readonly delegate: ObservableResourceLike<T>;
-  public readonly dispatcher: (req: TReq) => void;
+  readonly delegate: ObservableResourceLike<T>;
+  readonly dispatcher: (req: TReq) => void;
 
   constructor(
     delegate: ObservableResourceLike<T>,
@@ -22,20 +23,16 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     this.dispatcher = dispatcher;
   }
 
+  get disposable(): DisposableLike {
+    return this.delegate.disposable;
+  }
+
   dispatch(req: TReq) {
     this.dispatcher(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.delegate.subscribe(subscriber);
-  }
-
-  get isDisposed() {
-    return this.delegate.isDisposed;
-  }
-
-  dispose() {
-    this.delegate.dispose();
   }
 }
 

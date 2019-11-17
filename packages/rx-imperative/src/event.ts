@@ -14,14 +14,14 @@ export interface EventResourceLike<T>
     ObservableResourceLike<T> {}
 
 class EventResourceImpl<T> implements EventResourceLike<T> {
-  private readonly subject: SubjectLike<T> = Subject.create();
+  private readonly subject: SubjectLike<T>;
 
-  get isDisposed() {
-    return this.subject.isDisposed;
+  constructor(priority?: number) {
+    this.subject = Subject.create(priority);
   }
 
-  dispose() {
-    this.subject.dispose();
+  get disposable() {
+    return this.subject.disposable;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -33,7 +33,7 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
   }
 }
 
-const create = <T>(): EventResourceLike<T> => new EventResourceImpl();
+const create = <T>(priority?: number): EventResourceLike<T> => new EventResourceImpl(priority);
 
 export const EventResource = {
   create,

@@ -20,14 +20,14 @@ export const use = <T>(
           next: (next: T) => subscriber.next(next),
           complete: (error?: Error) => {
             subscriber.complete(error);
-            subscriber.subscription.remove(innerSubscription).remove(resource);
+            subscriber.subscription.remove(innerSubscription).remove(resource.disposable);
           },
         }),
       ),
       subscriber.scheduler,
     );
 
-    subscriber.subscription.add(innerSubscription).add(resource);
+    subscriber.subscription.add(innerSubscription).add(resource.disposable);
   };
 
   return Observable.create(subscribe);
