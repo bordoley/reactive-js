@@ -2,10 +2,9 @@ import {
   DelegatingSubscriber,
   Operator,
   SubscriberLike,
-  next,
   notify,
-  complete,
   Notification,
+  NotificationKind,
 } from "@reactive-js/rx-core";
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
@@ -15,7 +14,6 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly queue: Array<[number, Notification<T>]> = [];
   private isComplete = false;
   private error: Error | void = undefined;
-
 
   constructor(delegate: SubscriberLike<T>, delay: number) {
     super(delegate);
@@ -53,11 +51,11 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onComplete(error: Error | void) {
-    this.doSchedule([complete, error || undefined]);
+    this.doSchedule([NotificationKind.Complete, error || undefined]);
   }
 
   protected onNext(data: T) {
-    this.doSchedule([next, data]);
+    this.doSchedule([NotificationKind.Next, data]);
   }
 }
 
