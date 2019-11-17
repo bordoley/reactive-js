@@ -1,10 +1,4 @@
-export { 
-  next,
-  notify,
-  complete,
-  Notification,
-  ObserverLike 
-} from "./observer";
+export { notify, NotificationKind, Notification, ObserverLike } from "./observer";
 export {
   observe,
   Operator,

@@ -1,7 +1,11 @@
-
 import { Subject, SubjectLike } from "./subject";
 
-import { next, complete, Notification, SubscriberLike, notify } from "@reactive-js/rx-core";
+import {
+  Notification,
+  NotificationKind,
+  SubscriberLike,
+  notify,
+} from "@reactive-js/rx-core";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -24,18 +28,17 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
 
   next(data: T) {
     if (!this.isDisposed) {
-      this.last = [next, data];
+      this.last = [NotificationKind.Next, data];
       this.subject.next(data);
     }
   }
 
   complete(error: Error) {
     if (!this.isDisposed) {
-      this.last = [complete, error];
+      this.last = [NotificationKind.Complete, error];
       this.subject.complete(error);
     }
   }
-
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {

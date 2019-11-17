@@ -43,7 +43,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {
-      // FIXME: Wrap the subscriber in an observeOn observer to ensure 
+      // FIXME: Wrap the subscriber in an observeOn observer to ensure
       // we're on the right scheduler.
       this.subscribers.push(subscriber);
 
