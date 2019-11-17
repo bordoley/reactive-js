@@ -36,12 +36,7 @@ class DomLocationStateContainerResourceImpl
     const subscription = connect(
       merge(
         Observable.lift(
-          fromEvent(
-            window,
-            "popstate",
-            _ => getCurrentLocation(),
-            priority,
-          ),
+          fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
         Observable.lift(
