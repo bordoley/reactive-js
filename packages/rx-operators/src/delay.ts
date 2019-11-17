@@ -2,15 +2,20 @@ import {
   DelegatingSubscriber,
   Operator,
   SubscriberLike,
+  next,
+  notify,
+  complete,
   Notification,
-  Notifications,
 } from "@reactive-js/rx-core";
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
-  private readonly queue: Array<[number, Notification, T | Error | void]> = [];
+  private readonly queue: Array<[number, Notification<T>]> = [];
+  private isComplete = false;
+  private error: Error | void = undefined;
+
 
   constructor(delegate: SubscriberLike<T>, delay: number) {
     super(delegate);
@@ -20,11 +25,11 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private doWork: SchedulerContinuation = shouldYield => {
     const now = this.scheduler.now;
     while (this.queue.length > 0) {
-      const [nextDueTime, notif, data] = this.queue[0];
+      const [nextDueTime, notification] = this.queue[0];
 
       if (now >= nextDueTime) {
         this.queue.shift();
-        this.delegate.notify(notif, data);
+        notify(this.delegate, notification);
       } else {
         const delay = nextDueTime - now;
         return [this.doWork, delay];
@@ -37,22 +42,22 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   };
 
-  private doSchedule(notif: Notification, data: T | Error | void) {
+  private doSchedule(notification: Notification<T>) {
     const now = this.scheduler.now;
     const dueTime = now + this.delay;
-    this.queue.push([dueTime, notif, data]);
+    this.queue.push([dueTime, notification]);
 
     if (this.queue.length === 1) {
       this.scheduler.schedule(this.doWork, this.delay);
     }
   }
 
-  protected onComplete(data: Error | void) {
-    this.doSchedule(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.doSchedule([complete, error || undefined]);
   }
 
   protected onNext(data: T) {
-    this.doSchedule(Notifications.next, data);
+    this.doSchedule([next, data]);
   }
 }
 

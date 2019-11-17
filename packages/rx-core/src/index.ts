@@ -1,9 +1,9 @@
-export {
-  ObserverLike,
-  NotifyNext,
-  NotifyComplete,
+export { 
+  next,
+  notify,
+  complete,
   Notification,
-  Notifications,
+  ObserverLike 
 } from "./observer";
 export {
   observe,

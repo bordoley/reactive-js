@@ -2,8 +2,6 @@ import {
   connect,
   observe,
   DelegatingSubscriber,
-  Notification,
-  Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
@@ -25,16 +23,13 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
       this.parent = parent;
     }
 
-    notify(notif: Notification, data: TB | Error | void) {
-      switch (notif) {
-        case Notifications.next:
-          this.parent.otherLatest = data as TB;
-          break;
-        case Notifications.complete:
-          if (data !== undefined) {
-            this.parent.notify(Notifications.complete, data as Error);
-          }
-          break;
+    next(data: TB) {
+      this.parent.otherLatest = data;
+    }
+
+    complete(error: Error | void) {
+      if (error !== undefined) {
+        this.parent.complete(error);
       }
     }
   };
@@ -61,12 +56,12 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   protected onNext(data: TA) {
     if (this.otherLatest !== undefined) {
       const result = this.selector(data, this.otherLatest);
-      this.delegate.notify(Notifications.next, result);
+      this.delegate.next(result);
     }
   }
 
   protected onComplete(error: Error | void) {
-    this.delegate.notify(Notifications.complete, error);
+    this.delegate.complete(error);
   }
 }
 

@@ -1,14 +1,14 @@
+
 import { Subject, SubjectLike } from "./subject";
 
-import { Notification, SubscriberLike } from "@reactive-js/rx-core";
+import { next, complete, Notification, SubscriberLike, notify } from "@reactive-js/rx-core";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
   private readonly subject: SubjectLike<T> = Subject.create();
   private readonly scheduler: SchedulerLike;
-  private event: Notification | void = undefined;
-  private data: T | Error | void = undefined;
+  private last: Notification<T> | undefined;
 
   constructor(scheduler: SchedulerLike) {
     this.scheduler = scheduler;
@@ -22,21 +22,26 @@ class ReplayLastSubjectImpl<T> implements SubjectLike<T> {
     this.subject.dispose;
   }
 
-  notify(event: Notification, data: T | Error | void): void {
+  next(data: T) {
     if (!this.isDisposed) {
-      this.event = event;
-      this.data = data;
+      this.last = [next, data];
+      this.subject.next(data);
     }
-
-    this.subject.notify(event, data);
   }
+
+  complete(error: Error) {
+    if (!this.isDisposed) {
+      this.last = [complete, error];
+      this.subject.complete(error);
+    }
+  }
+
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {
       const innerSubscription = this.scheduler.schedule((_: () => boolean) => {
-        const { data, event } = this;
-        if (event !== undefined) {
-          subscriber.notify(event, data);
+        if (this.last !== undefined) {
+          notify(subscriber, this.last);
         }
         subscriber.subscription.remove(innerSubscription);
         this.subject.subscribe(subscriber);

@@ -2,7 +2,6 @@ import {
   connect,
   Observable,
   DelegatingSubscriber,
-  Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
@@ -41,7 +40,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
 
     protected onNext(data: T) {
-      this.parent.delegate.notify(Notifications.next, data);
+      this.parent.delegate.next(data);
     }
 
     protected onComplete(error: Error | void) {
@@ -49,7 +48,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent.subscription.remove(this.subscription);
 
       if (error !== undefined) {
-        this.parent.notify(Notifications.complete, error);
+        this.parent.complete(error);
       } else {
         this.parent.connectNext();
       }
@@ -74,7 +73,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
           ),
         );
       } else if (this.isCompleted) {
-        this.delegate.notify(Notifications.complete);
+        this.delegate.complete();
       }
     }
   }
@@ -93,7 +92,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.isCompleted = true;
 
     if (error !== undefined || this.queue.length + this.activeCount === 0) {
-      this.delegate.notify(Notifications.complete, error);
+      this.delegate.complete(error);
     }
   }
 }

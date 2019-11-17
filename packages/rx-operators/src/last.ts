@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -17,11 +16,11 @@ class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.last = data;
   }
 
-  protected onComplete(data: Error | void) {
+  protected onComplete(error: Error | void) {
     if (this.last !== undefined) {
-      this.delegate.notify(Notifications.next, this.last);
+      this.delegate.next(this.last);
     }
-    this.delegate.notify(Notifications.complete, data);
+    this.delegate.complete(error);
   }
 }
 

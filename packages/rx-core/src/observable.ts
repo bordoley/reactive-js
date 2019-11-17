@@ -5,11 +5,7 @@ import {
   Operator,
   SubscriberLike,
 } from "./subscriber";
-import {
-  SchedulerLike,
-  SchedulerContinuationResult,
-} from "@reactive-js/scheduler";
-import { Notifications } from "./observer";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
@@ -265,7 +261,7 @@ const create = <T>(
         try {
           onSubscribe(subscriber);
         } catch (error) {
-          subscriber.notify(Notifications.complete, error);
+          subscriber.complete(error);
         }
         subscriber.subscription.remove(schedulerSubscription);
       },

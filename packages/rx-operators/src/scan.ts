@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -24,11 +23,11 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     const nextAcc = this.scanner(prevAcc, next);
     this.acc = nextAcc;
 
-    this.delegate.notify(Notifications.next, nextAcc);
+    this.delegate.next(nextAcc);
   }
 
-  protected onComplete(data: Error | void) {
-    this.delegate.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.delegate.complete(error);
   }
 }
 

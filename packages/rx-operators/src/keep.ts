@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -16,12 +15,12 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   protected onNext(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
-      this.delegate.notify(Notifications.next, data);
+      this.delegate.next(data);
     }
   }
 
-  protected onComplete(data: Error | void) {
-    this.delegate.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.delegate.complete(error);
   }
 }
 

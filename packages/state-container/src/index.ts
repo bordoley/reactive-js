@@ -4,7 +4,6 @@ import {
   connect,
   Observable,
   DelegatingSubscriber,
-  Notifications,
   ObservableLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -58,7 +57,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
         const hasMoreEvents = this.remainingEvents > 0;
 
         if (!hasMoreEvents || yieldRequest) {
-          this.delegate.notify(Notifications.next, this.acc);
+          this.delegate.next(this.acc);
         }
 
         if (yieldRequest && hasMoreEvents) {
@@ -67,12 +66,12 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       }
     } catch (error) {
       this.nextQueue.length = 0;
-      this.notify(Notifications.complete, error);
+      this.complete(error);
       return;
     }
 
     if (this.isComplete) {
-      this.delegate.notify(Notifications.complete, this.error);
+      this.delegate.complete(this.error);
     }
   };
 

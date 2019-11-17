@@ -1,9 +1,4 @@
-import {
-  Notifications,
-  Observable,
-  ObservableLike,
-  SubscriberLike,
-} from "@reactive-js/rx-core";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
@@ -28,22 +23,22 @@ export const generate = <T>(
         try {
           acc = generator(acc);
         } catch (error) {
-          subscriber.notify(Notifications.complete, error);
+          subscriber.complete(error);
           return;
         }
 
-        subscriber.notify(Notifications.next, acc);
+        subscriber.next(acc);
         return continuationResult;
       } else {
         while (true) {
           try {
             acc = generator(acc);
           } catch (error) {
-            subscriber.notify(Notifications.complete, error);
+            subscriber.complete(error);
             return;
           }
 
-          subscriber.notify(Notifications.next, acc);
+          subscriber.next(acc);
 
           if (shouldYield()) {
             return continuationResult;

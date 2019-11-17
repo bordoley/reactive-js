@@ -1,6 +1,6 @@
 import { CompositeDisposableLike, Disposable } from "@reactive-js/disposables";
 
-import { ObserverLike, Notification, Notifications } from "./observer";
+import { ObserverLike } from "./observer";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface SubscriberLike<T> extends ObserverLike<T> {
@@ -31,30 +31,29 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
     this.subscription = subscription;
   }
 
-  notify(notification: Notification, data: T | Error | void) {
+  next(data: T) {
+    if (__DEV__) {
+      throwIfNotConnected(this);
+    }
+  }
+
+  complete(error: Error | void) {
     if (__DEV__) {
       throwIfNotConnected(this);
     }
 
-    if (!this.subscription.isDisposed) {
-      switch (notification) {
-        case Notifications.next:
-          break;
-        case Notifications.complete:
-          this.subscription.dispose();
-          break;
-      }
-    }
+    this.subscription.dispose();
   }
 }
 
-export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
+export abstract class DelegatingSubscriber<TA, TB>
+  implements SubscriberLike<TA> {
   private isStopped = false;
   private readonly source: SubscriberLike<any>;
 
-  readonly delegate: SubscriberLike<B>;
+  readonly delegate: SubscriberLike<TB>;
 
-  constructor(delegate: SubscriberLike<B>) {
+  constructor(delegate: SubscriberLike<TB>) {
     this.delegate = delegate;
 
     // We track the source to improve the performance
@@ -83,41 +82,44 @@ export abstract class DelegatingSubscriber<A, B> implements SubscriberLike<A> {
     return this.source.subscription;
   }
 
-  protected abstract onNext(data: A): void;
+  protected abstract onNext(data: TA): void;
 
   protected abstract onComplete(error: Error | void): void;
 
-  private tryOnNext(data: A) {
+  private tryOnNext(data: TA) {
     try {
       this.onNext(data);
     } catch (e) {
-      this.notify(Notifications.complete, e);
+      this.complete(e);
     }
   }
 
-  private tryOnComplete(data: Error | void) {
+  private tryOnComplete(error: Error | void) {
     try {
-      this.onComplete(data);
+      this.onComplete(error);
     } catch (e) {
-      this.delegate.notify(Notifications.complete, e);
+      this.delegate.complete(e);
     }
   }
 
-  notify(notification: Notification, data: A | Error | void) {
+  next(data: TA) {
     if (__DEV__) {
       throwIfNotConnected(this);
     }
 
     if (!this.isStopped) {
-      switch (notification) {
-        case Notifications.next:
-          this.tryOnNext(data as A);
-          break;
-        case Notifications.complete:
-          this.isStopped = true;
-          this.tryOnComplete(data as Error | void);
-          break;
-      }
+      this.tryOnNext(data);
+    }
+  }
+
+  complete(error: Error | void) {
+    if (__DEV__) {
+      throwIfNotConnected(this);
+    }
+
+    if (!this.isStopped) {
+      this.isStopped = true;
+      this.tryOnComplete(error);
     }
   }
 }
@@ -131,13 +133,13 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onNext(data: T) {
-    this.observer.notify(Notifications.next, data);
-    this.delegate.notify(Notifications.next, data);
+    this.observer.next(data);
+    this.delegate.next(data);
   }
 
   protected onComplete(error: Error | void) {
-    this.observer.notify(Notifications.complete, error);
-    this.delegate.notify(Notifications.complete, error);
+    this.observer.complete(error);
+    this.delegate.complete(error);
   }
 }
 

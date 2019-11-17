@@ -1,8 +1,6 @@
 import {
   connect,
   observe,
-  Notification,
-  Notifications,
   Observable,
   ObservableLike,
   ObserverLike,
@@ -19,20 +17,18 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.count = count;
   }
 
-  notify(notif: Notification, data: T | Error | void) {
-    switch (notif) {
-      case Notifications.next:
-        this.delegate.notify(notif, data);
-        break;
-      case Notifications.complete:
-        if (data !== undefined) {
-          this.delegate.notify(notif, data);
-        } else {
-          this.completedCount++;
-          if (this.completedCount == this.count) {
-            this.delegate.notify(Notifications.complete);
-          }
-        }
+  next(data: T) {
+    this.delegate.next(data);
+  }
+
+  complete(error: Error | void) {
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      this.completedCount++;
+      if (this.completedCount == this.count) {
+        this.delegate.complete();
+      }
     }
   }
 }

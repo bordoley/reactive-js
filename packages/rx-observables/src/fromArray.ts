@@ -1,9 +1,4 @@
-import {
-  Notifications,
-  Observable,
-  ObservableLike,
-  SubscriberLike,
-} from "@reactive-js/rx-core";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
 import {
   SchedulerContinuation,
@@ -26,20 +21,20 @@ export const fromArray = <T>(
       } else if (index < values.length && delay > 0) {
         const value = values[index];
         index++;
-        subscriber.notify(Notifications.next, value);
+        subscriber.next(value);
         return continuationResult;
       } else {
         while (index < values.length) {
           const value = values[index];
           index++;
-          subscriber.notify(Notifications.next, value);
+          subscriber.next(value);
 
           if (shouldYield()) {
             return continuationResult;
           }
         }
 
-        subscriber.notify(Notifications.complete);
+        subscriber.complete();
       }
     };
 
@@ -77,7 +72,7 @@ export const fromDelayedValues = <T>(
         while (index < delayedValues.length) {
           const [_, value] = delayedValues[index];
           index++;
-          subscriber.notify(Notifications.next, value);
+          subscriber.next(value);
 
           const delay =
             index < delayedValues.length ? delayedValues[index][0] : 0;
@@ -89,7 +84,7 @@ export const fromDelayedValues = <T>(
           }
         }
 
-        subscriber.notify(Notifications.complete);
+        subscriber.complete();
       }
     };
 

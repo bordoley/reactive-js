@@ -2,8 +2,6 @@ import {
   connect,
   observe,
   DelegatingSubscriber,
-  Notification,
-  Notifications,
   ObservableLike,
   Operator,
   SubscriberLike,
@@ -22,16 +20,13 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent = parent;
     }
 
-    notify(notif: Notification, data: T | Error | void) {
-      switch (notif) {
-        case Notifications.next:
-          this.parent.delegate.notify(notif, data);
-          break;
-        case Notifications.complete:
-          if (data !== undefined) {
-            this.parent.delegate.notify(Notifications.complete, data);
-          }
-          break;
+    next(data: T) {
+      this.parent.delegate.next(data);
+    }
+
+    complete(error: Error | void) {
+      if (error !== undefined) {
+        this.parent.delegate.complete(error);
       }
     }
   };
@@ -50,7 +45,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   protected onComplete(error: Error | void) {
     this.innerSubscription.dispose();
-    this.delegate.notify(Notifications.complete, error);
+    this.delegate.complete(error);
   }
 }
 

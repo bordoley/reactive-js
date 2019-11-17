@@ -2,8 +2,6 @@ import {
   connect,
   observe,
   DelegatingSubscriber,
-  Notification,
-  Notifications,
   ObservableLike,
   ObserverLike,
   Observable,
@@ -45,25 +43,26 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       }
     }
 
-    notify(notif: Notification, data: T | Error | void) {
-      switch (notif) {
-        case Notifications.next:
-          this.parent.delegate.notify(Notifications.next, data);
-          break;
-        case Notifications.complete:
-          let shouldComplete = false;
-          try {
-            shouldComplete = !this.parent.shouldRepeat(data as Error | void);
-          } catch (error) {
-            shouldComplete = true;
-            data = error;
-          }
+    next(data: T) {
+      this.parent.delegate.next(data);
+    }
 
-          if (shouldComplete) {
-            this.parent.delegate.notify(Notifications.complete, data);
-          } else {
-            this.setupSubscription();
-          }
+    complete(error: Error | void) {
+      let shouldComplete = false;
+      try {
+        shouldComplete = !this.parent.shouldRepeat(error);
+      } catch (repeatError) {
+        shouldComplete = true;
+
+        // FIXME: Add a custom error type that includes the error that
+        // caused should repeat to fail
+        error = repeatError;
+      }
+
+      if (shouldComplete) {
+        this.parent.delegate.complete(error);
+      } else {
+        this.setupSubscription();
       }
     }
   };
@@ -83,11 +82,11 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onNext(data: T) {
-    this.observer.notify(Notifications.next, data);
+    this.observer.next(data);
   }
 
-  protected onComplete(data: Error | void) {
-    this.observer.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.observer.complete(error);
   }
 }
 

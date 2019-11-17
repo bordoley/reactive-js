@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -24,7 +23,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     if (this.value != undefined) {
       const value = this.value;
       this.value = undefined;
-      this.delegate.notify(Notifications.next, value);
+      this.delegate.next(value);
     }
   }
 
@@ -32,14 +31,14 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.innerSubscription.innerDisposable = Disposable.disposed;
   }
 
-  protected onComplete(data: Error | void) {
-    if (data !== undefined) {
+  protected onComplete(error: Error | void) {
+    if (error !== undefined) {
       this.clearDebounce();
     } else {
       this.debounceNext();
     }
 
-    this.delegate.notify(Notifications.complete, data);
+    this.delegate.complete(error);
   }
 
   private schedulerContinuation: SchedulerContinuation = _shouldYield => {

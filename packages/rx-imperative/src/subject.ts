@@ -3,7 +3,6 @@ import { Disposable } from "@reactive-js/disposables";
 import {
   ObservableResourceLike,
   ObserverLike,
-  Notification,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
@@ -13,7 +12,7 @@ export interface SubjectLike<T>
 
 class SubjectImpl<T> implements SubjectLike<T> {
   private _isDisposed = false;
-  private subscribers: Array<SubscriberLike<T>> = [];
+  private subscribers: Array<ObserverLike<T>> = [];
 
   dispose() {
     this._isDisposed = true;
@@ -24,17 +23,28 @@ class SubjectImpl<T> implements SubjectLike<T> {
     return this._isDisposed;
   }
 
-  notify(notification: Notification, data: T | Error | void): void {
+  next(data: T) {
     if (!this.isDisposed) {
       const subscribers = this.subscribers.slice();
       for (let subscriber of subscribers) {
-        subscriber.notify(notification, data);
+        subscriber.next(data);
+      }
+    }
+  }
+
+  complete(error: Error | void) {
+    if (!this.isDisposed) {
+      const subscribers = this.subscribers.slice();
+      for (let subscriber of subscribers) {
+        subscriber.complete(error);
       }
     }
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {
+      // FIXME: Wrap the subscriber in an observeOn observer to ensure 
+      // we're on the right scheduler.
       this.subscribers.push(subscriber);
 
       const disposable = Disposable.create(() => {
@@ -42,6 +52,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
         if (index !== -1) {
           this.subscribers.splice(index, 1);
         }
+        // FIXME: Remove the disposable from the subscriber after dispose
       });
 
       subscriber.subscription.add(disposable);

@@ -3,8 +3,6 @@ import { Disposable } from "@reactive-js/disposables";
 import {
   connect,
   observe,
-  Notification,
-  Notifications,
   Observable,
   ObservableLike,
   ObserverLike,
@@ -20,17 +18,15 @@ class ConcatObserver<T> implements ObserverLike<T> {
     this.continuation = continuation;
   }
 
-  notify(notif: Notification, data: T | Error | void) {
-    switch (notif) {
-      case Notifications.next:
-        this.delegate.notify(notif, data);
-        break;
-      case Notifications.complete:
-        if (data !== undefined) {
-          this.delegate.notify(notif, data);
-        } else if (!this.continuation()) {
-          this.delegate.notify(Notifications.complete);
-        }
+  next(data: T) {
+    this.delegate.next(data);
+  }
+
+  complete(error: Error | void) {
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else if (!this.continuation()) {
+      this.delegate.complete();
     }
   }
 }
