@@ -9,6 +9,8 @@ import {
 
 export const use = <T>(
   factory: () => ObservableResourceLike<T>,
+  delay?: number,
+  priority?: number,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const resource = factory();
@@ -30,5 +32,5 @@ export const use = <T>(
     subscriber.subscription.add(innerSubscription).add(resource.disposable);
   };
 
-  return Observable.create(subscribe);
+  return Observable.create(subscribe, delay, priority);
 };

@@ -6,7 +6,7 @@
 
 *`useAsyncIterator<TReq, T>(factory: () => AsyncIteratorLike<TReq, T>, deps: readonly any[] | undefined, scheduler?: SchedulerLike): [T | undefined, (req: TReq) => void]`*
 
-*`useDisposableResource<T extends DisposableLike>(factory: () => T, deps: readonly any[] | undefined): T `*
+*`useDisposable<T extends DisposableLike>(factory: () => T, deps: readonly any[] | undefined): T `*
 
 *`useObservable<T>(factory: () => ObservableLike<T>, deps: readonly any[] | undefined,, scheduler?: SchedulerLike): T | undefined`*
 
