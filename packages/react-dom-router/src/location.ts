@@ -24,7 +24,7 @@ class DomLocationStateContainerResourceImpl
   readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
-  constructor(scheduler: SchedulerLike, delay?: number, priority?: number) {
+  constructor(scheduler: SchedulerLike, priority?: number) {
     const initialState = getCurrentLocation();
     const stateContainer = StateContainerResource.create(
       initialState,
@@ -40,7 +40,7 @@ class DomLocationStateContainerResourceImpl
             window,
             "popstate",
             _ => getCurrentLocation(),
-            delay,
+            undefined,
             priority,
           ),
           onNext((state: string) => stateContainer.dispatch(_ => state)),

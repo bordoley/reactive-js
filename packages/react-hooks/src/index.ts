@@ -12,7 +12,7 @@ import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
-const useDisposable = (
+const useDispose = (
   disposable: DisposableLike
 ) => {
   useEffect(
@@ -23,12 +23,12 @@ const useDisposable = (
   );
 };
 
-export const useDisposableResource = <T extends DisposableLike>(
+export const useDisposable = <T extends DisposableLike>(
   factory: () => T,
   deps: readonly any[] | undefined,
 ): T => {
   const resource = useMemo(factory, deps);
-  useDisposable(resource);
+  useDispose(resource);
   return resource;
 };
 
@@ -54,7 +54,7 @@ export const useObservable = <T>(
 
   const observable = useMemo(factory, deps);
 
-  useDisposableResource(
+  useDisposable(
     () =>
       connect(makeObservable(observable, updateState, updateError), scheduler),
     [updateState, updateError, scheduler],
@@ -72,7 +72,7 @@ export const useObservableResource = <T>(
   deps: readonly any[] | undefined,
 ): T | undefined => {
   const observableResource = useMemo(factory, deps);
-  useDisposable(observableResource.disposable);
+  useDispose(observableResource.disposable);
   return useObservable(() => observableResource, [observableResource]);
 };
 
@@ -81,7 +81,7 @@ export const useAsyncIterator = <TReq, T>(
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator =  useMemo(factory, deps);
-  useDisposable(iterator.disposable);
+  useDispose(iterator.disposable);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
   const value = useObservable(() => iterator, [iterator]);
   return [value, dispatch];

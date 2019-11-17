@@ -10,7 +10,7 @@
 
 *`empty<T>(delay?: number, priority?: number): ObservableLike<T>`*
 
-*`fromArray<T>(values: ReadonlyArray<T>, values: ReadonlyArray<T>, delay?: number, priority?: number): ObservableLike<T>`*
+*`fromArray<T>(values: ReadonlyArray<T>, delay?: number, priority?: number): ObservableLike<T>`*
 
 *`fromPromiseFactory<T>(factory: () => Promise<T>, delay?: number, priority?: number): ObservableLike<T>`*
 
@@ -30,4 +30,4 @@
 
 *`throws<T>(error: Error, delay?: number, priority?: number): ObservableLike<T>`*
 
-*`use<T>(factory: () => ObservableResourceLike<T>): ObservableLike<T>`*
+*`use =<T>(factory: () => ObservableResourceLike<T>, delay?: number, priority?: number): ObservableLike<T>`*
