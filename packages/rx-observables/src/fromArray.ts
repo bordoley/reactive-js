@@ -15,6 +15,8 @@ export const fromArray = <T>(
     let index = 0;
 
     let continuationResult: SchedulerContinuationResult;
+    let schedulerSubscription = Disposable.disposed;
+
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
@@ -37,15 +39,14 @@ export const fromArray = <T>(
         }
 
         subscriber.complete();
-        // FIXME: Remove the inner subscription frm the subscrier.
+        subscriber.subscription.remove(schedulerSubscription);
       }
     };
 
     continuationResult = { continuation, delay, priority };
-
-    subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay, priority),
-    );
+    
+    schedulerSubscription = subscriber.scheduler.schedule(continuation, delay, priority);
+    subscriber.subscription.add(schedulerSubscription);
   };
 
   return { subscribe };
