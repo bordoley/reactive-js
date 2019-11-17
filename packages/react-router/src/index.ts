@@ -24,7 +24,7 @@ export const RelativeURI = {
     query: "",
     fragment: "",
   },
-  equals: (a: RelativeURI, b: RelativeURI) =>
+  equals: (a: RelativeURI, b: RelativeURI): boolean =>
    (a === b) || (a.path === b.path && a.query === b.query && a.fragment === b.fragment),
 };
 
