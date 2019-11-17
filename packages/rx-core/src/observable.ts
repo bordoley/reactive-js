@@ -253,7 +253,8 @@ export const ObservableResource = {
 
 const create = <T>(
   onSubscribe: (subscriber: SubscriberLike<T>) => void,
-  delay: number = 0,
+  delay?: number,
+  priority?: number
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const schedulerSubscription = subscriber.scheduler.schedule(
@@ -266,6 +267,7 @@ const create = <T>(
         subscriber.subscription.remove(schedulerSubscription);
       },
       delay,
+      priority,
     );
 
     subscriber.subscription.add(schedulerSubscription);

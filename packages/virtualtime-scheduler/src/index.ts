@@ -62,13 +62,13 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return false;
   }
 
-  private async executeContinuation(ctx: SchedulerCtx) {
+  private executeContinuation(ctx: SchedulerCtx) {
     const { continuation, shouldYield } = ctx;
     ctx.microtaskCount = 0;
     const result = continuation(shouldYield);
 
    if (result !== undefined) {
-      const [resultContinuation, resultDelay] = result;
+      const { continuation: resultContinuation, delay: resultDelay = 0} = result;
 
       ctx.continuation = resultContinuation;
       ctx.delay = Math.max(resultDelay, 0);
@@ -90,7 +90,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   schedule(
     continuation: SchedulerContinuation,
     delay: number = 0,
-    _priority: number = 3,
+    _priority?: number,
   ): DisposableLike {
     throwIfDisposed(this);
 

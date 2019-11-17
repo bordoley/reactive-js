@@ -37,14 +37,16 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   T
 > {
   private readonly nextQueue: Array<StateUpdater<T>> = [];
+  private readonly priority: number | undefined;
   private isComplete = false;
   private error: Error | undefined;
 
   private acc: T;
 
-  constructor(delegate: SubscriberLike<T>, initialValue: T) {
+  constructor(delegate: SubscriberLike<T>, initialValue: T, priority?: number) {
     super(delegate);
     this.acc = initialValue;
+    this.priority = priority;
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -61,7 +63,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
         }
 
         if (yieldRequest && hasMoreEvents) {
-          return [this.drainQueue, 0, undefined];
+          return { continuation: this.drainQueue, delay: 0, priority: this.priority };
         }
       }
     } catch (error) {
@@ -97,9 +99,9 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   }
 }
 
-const batchScanOnScheduler = <T>(initialState: T) => (
+const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
   subscriber: SubscriberLike<T>,
-) => new BatchScanOnSchedulerSubscriber(subscriber, initialState);
+) => new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
@@ -110,12 +112,13 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     initialState: T,
     scheduler: SchedulerLike,
     equals: (a: T, b: T) => boolean,
+    priority?: number
   ) {
     this.dispatcher = EventResource.create();
     this.delegate = shareReplayLast(
       Observable.lift(
         this.dispatcher,
-        batchScanOnScheduler(initialState),
+        batchScanOnScheduler(initialState, priority),
         distinctUntilChanged(equals),
       ),
       scheduler,
@@ -146,13 +149,13 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
-// FIXME take priority as a n arbument
 const create = <T>(
   initialState: T,
   scheduler: SchedulerLike,
   equals: (a: T, b: T) => boolean = referenceEquality,
+  priority?: number,
 ): StateContainerResourceLike<T> =>
-  new StateContainerResourceImpl(initialState, scheduler, equals);
+  new StateContainerResourceImpl(initialState, scheduler, equals, priority);
 
 export const StateContainerResource = {
   create,
