@@ -146,6 +146,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
+// FIXME take priority as a n arbument
 const create = <T>(
   initialState: T,
   scheduler: SchedulerLike,
