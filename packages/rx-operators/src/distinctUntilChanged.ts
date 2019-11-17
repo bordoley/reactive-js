@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -18,12 +17,12 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
     const shouldEmit = this.prev == undefined || !this.equals(this.prev, data);
     if (shouldEmit) {
       this.prev = data;
-      this.delegate.notify(Notifications.next, data);
+      this.delegate.next(data);
     }
   }
 
-  protected onComplete(data: Error | void) {
-    this.delegate.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.delegate.complete(error);
   }
 }
 

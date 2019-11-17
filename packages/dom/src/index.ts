@@ -1,8 +1,4 @@
-import {
-  Notifications,
-  Observable,
-  ObservableLike,
-} from "@reactive-js/rx-core";
+import { Observable, ObservableLike } from "@reactive-js/rx-core";
 
 import { Disposable } from "@reactive-js/disposables";
 
@@ -15,9 +11,10 @@ export const fromEvent = <T>(
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        subscriber.notify(Notifications.next, result);
+        subscriber.next(result);
       } catch (error) {
-        subscriber.notify(Notifications.complete, error);
+        subscriber.complete(error);
+        // FIXME: Dispose the inner subscription here
       }
     };
 

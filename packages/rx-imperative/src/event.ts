@@ -1,6 +1,5 @@
 import { Subject, SubjectLike } from "./subject";
 import {
-  Notifications,
   ObservableLike,
   ObservableResourceLike,
   SubscriberLike,
@@ -30,7 +29,7 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
   }
 
   dispatch(event: T) {
-    this.subject.notify(Notifications.next, event);
+    this.subject.next(event);
   }
 }
 

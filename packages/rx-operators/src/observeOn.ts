@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -21,7 +20,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
       const next = this.nextQueue.shift();
-      this.delegate.notify(Notifications.next, next);
+      this.delegate.next(next as T);
 
       const yieldRequest = shouldYield();
       const hasMoreEvents = this.remainingEvents > 0;
@@ -32,7 +31,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
 
     if (this.isComplete) {
-      this.delegate.notify(Notifications.complete, this.error);
+      this.delegate.complete(this.error);
     }
   };
 

@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -15,11 +14,11 @@ class MapSubscriber<A, B> extends DelegatingSubscriber<A, B> {
 
   protected onNext(data: A) {
     const mappedData = this.mapper(data);
-    this.delegate.notify(Notifications.next, mappedData);
+    this.delegate.next(mappedData);
   }
 
-  protected onComplete(data: Error | void) {
-    this.delegate.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.delegate.complete(error);
   }
 }
 

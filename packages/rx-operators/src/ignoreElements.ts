@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -12,8 +11,8 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
   onNext(data: TA) {}
 
-  protected onComplete(data: Error | void) {
-    this.delegate.notify(Notifications.complete, data);
+  protected onComplete(error: Error | void) {
+    this.delegate.complete(error);
   }
 }
 

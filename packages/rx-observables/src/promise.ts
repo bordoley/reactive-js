@@ -2,7 +2,6 @@ import {
   Observable,
   ObservableLike,
   SubscriberLike,
-  Notifications,
 } from "@reactive-js/rx-core";
 
 export const fromPromiseFactory = <T>(
@@ -12,8 +11,8 @@ export const fromPromiseFactory = <T>(
   const onSubscribe = async (subscriber: SubscriberLike<T>) => {
     if (!subscriber.subscription.isDisposed) {
       const result = await factory();
-      subscriber.notify(Notifications.next, result);
-      subscriber.notify(Notifications.complete);
+      subscriber.next(result);
+      subscriber.complete();
     }
   };
 

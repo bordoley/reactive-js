@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  Notifications,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
@@ -16,11 +15,11 @@ class UseSchedulerSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onNext(data: T) {
-    this.delegate.notify(Notifications.next, data);
+    this.delegate.next(data);
   }
 
   protected onComplete(error: Error | void) {
-    this.delegate.notify(Notifications.complete, error);
+    this.delegate.complete(error);
   }
 }
 

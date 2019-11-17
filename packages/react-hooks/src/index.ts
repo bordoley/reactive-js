@@ -2,8 +2,6 @@ import { useMemo, useEffect, useState, useCallback } from "react";
 import {
   connect,
   observe,
-  Notification,
-  Notifications,
   Observable,
   ObservableLike,
   ObservableResourceLike,
@@ -39,18 +37,8 @@ const makeObservable = <T>(
   Observable.lift(
     observable,
     observe({
-      notify: (event: Notification, data: T | Error | void) => {
-        switch (event) {
-          case Notifications.next:
-            updateState(_ => data as T);
-            break;
-          case Notifications.complete:
-            if (data != undefined) {
-              updateError(_ => data as Error | undefined);
-            }
-            break;
-        }
-      },
+      next: (data: T) => updateState(_ => data),
+      complete: (error: Error | void) => updateError(_ => error || undefined),
     }),
   );
 

@@ -1,10 +1,6 @@
-import {
-  Notifications,
-  Observable,
-  ObservableLike,
-} from "@reactive-js/rx-core";
+import { Observable, ObservableLike } from "@reactive-js/rx-core";
 
 export const throws = <T>(error: Error, delay: number = 0): ObservableLike<T> =>
   Observable.create(subscriber => {
-    subscriber.notify(Notifications.complete, error);
+    subscriber.complete(error);
   }, delay);
