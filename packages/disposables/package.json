@@ -15,5 +15,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
