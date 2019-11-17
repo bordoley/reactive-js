@@ -23,7 +23,7 @@ class LastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onComplete(error?: Error) {
     if (this.last !== undefined) {
-      const [ last ] = this.last;
+      const [last] = this.last;
       this.delegate.next(last);
     }
     this.delegate.complete(error);

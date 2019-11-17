@@ -44,8 +44,12 @@ export const fromArray = <T>(
     };
 
     continuationResult = { continuation, delay, priority };
-    
-    schedulerSubscription = subscriber.scheduler.schedule(continuation, delay, priority);
+
+    schedulerSubscription = subscriber.scheduler.schedule(
+      continuation,
+      delay,
+      priority,
+    );
     subscriber.subscription.add(schedulerSubscription);
   };
 

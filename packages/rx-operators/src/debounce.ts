@@ -55,8 +55,8 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     this.clearDebounce();
-    if(this.value !== undefined) {
-      this.value[0] = data;;
+    if (this.value !== undefined) {
+      this.value[0] = data;
     } else {
       this.value = [data];
     }

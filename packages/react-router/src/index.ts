@@ -8,6 +8,7 @@ import { useAsyncIterator } from "@reactive-js/react-hooks";
 import { createElement, useCallback, useMemo } from "react";
 import { AsyncIterator } from "@reactive-js/ix-core";
 import { scan } from "@reactive-js/rx-operators";
+import { bool } from "prop-types";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
@@ -23,6 +24,8 @@ export const RelativeURI = {
     query: "",
     fragment: "",
   },
+  equals: (a: RelativeURI, b: RelativeURI) =>
+    a.path === b.path && a.query === b.query && a.fragment === b.fragment,
 };
 
 export interface RoutableComponentProps {

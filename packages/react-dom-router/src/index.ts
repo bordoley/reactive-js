@@ -48,9 +48,7 @@ const createRelativeURILocation = (priority?: number) => {
   return AsyncIterator.mapRequest(lifted, requestMapper);
 };
 
-const create = (
-  priority?: number,
-): React.ComponentType<RouterProps> =>
+const create = (priority?: number): React.ComponentType<RouterProps> =>
   ReactRouter.create(() => createRelativeURILocation(priority));
 
 export const Router = {

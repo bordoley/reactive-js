@@ -33,7 +33,8 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
   }
 }
 
-const create = <T>(priority?: number): EventResourceLike<T> => new EventResourceImpl(priority);
+const create = <T>(priority?: number): EventResourceLike<T> =>
+  new EventResourceImpl(priority);
 
 export const EventResource = {
   create,

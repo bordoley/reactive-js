@@ -56,7 +56,10 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = Disposable.compose(subscription, stateContainer.disposable);
+    this.disposable = Disposable.compose(
+      subscription,
+      stateContainer.disposable,
+    );
     this.stateContainer = stateContainer;
   }
 

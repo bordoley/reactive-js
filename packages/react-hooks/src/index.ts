@@ -12,9 +12,7 @@ import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
-const useDispose = (
-  disposable: DisposableLike
-) => {
+const useDispose = (disposable: DisposableLike) => {
   useEffect(
     () => () => {
       disposable.dispose();
@@ -80,7 +78,7 @@ export const useAsyncIterator = <TReq, T>(
   factory: () => AsyncIteratorLike<TReq, T>,
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
-  const iterator =  useMemo(factory, deps);
+  const iterator = useMemo(factory, deps);
   useDispose(iterator.disposable);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
   const value = useObservable(() => iterator, [iterator]);
