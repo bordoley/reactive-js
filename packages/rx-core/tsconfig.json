@@ -3,5 +3,9 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"
-  }
+  },
+  "exclude": [
+    "dist",
+    "**/*.spec.ts"
+  ]
 }
