@@ -6,8 +6,8 @@ export {
 } from "./observer";
 export {
   observe,
-  observeOn,
   Operator,
+  Subscriber,
   SubscriberLike,
   DelegatingSubscriber,
 } from "./subscriber";

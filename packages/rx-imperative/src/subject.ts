@@ -3,8 +3,8 @@ import { Disposable } from "@reactive-js/disposables";
 import {
   ObservableResourceLike,
   ObserverLike,
+  Subscriber,
   SubscriberLike,
-  observeOn,
 } from "@reactive-js/rx-core";
 
 export interface SubjectLike<T>
@@ -47,7 +47,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.disposable.isDisposed) {
-      const observer = observeOn(subscriber);
+      const observer = Subscriber.toSafeObserver(subscriber);
       this.observers.push(observer);
 
       const disposable = Disposable.create(() => {

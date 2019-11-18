@@ -1,12 +1,15 @@
 import {
+  connect,
   notify,
   observe,
   Notification,
   NotificationKind,
   Observable,
   ObserverLike,
+  Subscriber,
   SubscriberLike,
-  observeOn,
+  ObservableLike,
+  Operator,
 } from "../src/index";
 import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -163,38 +166,133 @@ describe("observe", () => {
   });
 });
 
-describe("observeOn", () => {
-  test("next", () => {
-    const scheduler = VirtualTimeScheduler.create(2);
-    const subscriber = {
-      isConnected: true,
-      scheduler,
-      subscription: CompositeDisposable.create(),
-      next: jest.fn(),
-      complete: jest.fn(),
+describe("Subscriber", () => {
+  describe("toSafeObserver", () => {
+    test("next", () => {
+      const scheduler = VirtualTimeScheduler.create(2);
+      const subscriber = {
+        isConnected: true,
+        scheduler,
+        subscription: CompositeDisposable.create(),
+        next: jest.fn(),
+        complete: jest.fn(),
+      };
+
+      const observer = Subscriber.toSafeObserver(subscriber);
+
+      const notifications: Notification<number>[] = [
+        [NotificationKind.Next, 0],
+        [NotificationKind.Next, 1],
+        [NotificationKind.Next, 2],
+        [NotificationKind.Next, 3],
+        [NotificationKind.Next, 4],
+        [NotificationKind.Next, 5],
+        [NotificationKind.Complete, undefined],
+        [NotificationKind.Next, 6],
+      ];
+
+      for (let nofification of notifications) {
+        notify(observer, nofification);
+      }
+
+      scheduler.run();
+
+      expect(subscriber.next).toBeCalledTimes(6);
+      expect(subscriber.complete).toBeCalledTimes(1);
+      expect(subscriber.next).toHaveBeenLastCalledWith(5);
+    });
+  });
+});
+
+describe("connect", () => {
+  test("throws with serial observable", () => {
+    const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
+      subscribe: subscriber => subscriber.next(1),
     };
 
-    const observer = observeOn(subscriber);
+    const seriallyCallsCompleteOnSubscribe: ObservableLike<number> = {
+      subscribe: subscriber => subscriber.complete(),
+    };
 
-    const notifications: Notification<number>[] = [
-      [NotificationKind.Next, 0],
-      [NotificationKind.Next, 1],
-      [NotificationKind.Next, 2],
-      [NotificationKind.Next, 3],
-      [NotificationKind.Next, 4],
-      [NotificationKind.Next, 5],
-      [NotificationKind.Complete, undefined],
-      [NotificationKind.Next, 6],
-    ];
+    expect(() =>
+      connect(seriallyCallsNextOnSubscribe, VirtualTimeScheduler.create()),
+    ).toThrow();
+    expect(() =>
+      connect(seriallyCallsCompleteOnSubscribe, VirtualTimeScheduler.create()),
+    ).toThrow();
+  });
 
-    for (let nofification of notifications) {
-      notify(observer, nofification);
-    }
+  test("auto-disposes the subscription on complete", () => {
+    const observable = Observable.create(observer => observer.complete());
+    const scheduler = VirtualTimeScheduler.create();
+
+    const subscription = connect(observable, scheduler);
+    expect(subscription.isDisposed).toBeFalsy();
 
     scheduler.run();
+    expect(subscription.isDisposed).toBeTruthy();
+  });
+});
 
-    expect(subscriber.next).toBeCalledTimes(6);
-    expect(subscriber.complete).toBeCalledTimes(1);
-    expect(subscriber.next).toHaveBeenLastCalledWith(5);
+describe("Observable", () => {
+  describe("create", () => {
+    test("completes the subscriber if onSubscribe throws", () => {
+      const error = new Error();
+      const observer = createMockObserver();
+      const observable = Observable.lift(
+        Observable.create(_ => {
+          throw error;
+        }),
+        observe(observer),
+      );
+      const scheduler = VirtualTimeScheduler.create();
+      connect(observable, scheduler);
+      scheduler.run();
+
+      expect(observer.complete).toBeCalledWith(error);
+    });
+
+    test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
+      const scheduler = VirtualTimeScheduler.create();
+      const disposable = Disposable.create();
+
+      const subscription = connect(
+        Observable.create(_ => disposable),
+        scheduler,
+      );
+      scheduler.run();
+
+      expect(disposable.isDisposed).toBeFalsy();
+      subscription.dispose();
+      expect(disposable.isDisposed).toBeTruthy();
+    });
+  });
+
+  test("lift", () => {
+    const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
+      observe({
+        next: onNext,
+        complete: _ => {},
+      });
+    const scheduler = VirtualTimeScheduler.create();
+    const result: number[] = [];
+
+    const liftedObservable =  Observable.lift(
+      Observable.create(observer => observer.next(1)),
+      onNext(_ => result.push(1)),
+      onNext(_ => result.push(2)),
+    );
+
+    const subscription = connect(
+      Observable.lift(
+        liftedObservable,
+        onNext(_ => result.push(3)),
+        onNext(_ => result.push(4)),
+      ),
+      scheduler,
+    );
+    scheduler.run();
+
+    expect(result).toEqual([1,2,3,4]);
   });
 });
