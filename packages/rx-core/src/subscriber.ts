@@ -108,6 +108,8 @@ export abstract class DelegatingSubscriber<TA, TB>
     try {
       this.onComplete(error);
     } catch (e) {
+      // FIXME: if error isn't null the delegate error should
+      // reference both exceptions so that we don't swallow them.
       this.delegate.complete(e);
     }
   }
