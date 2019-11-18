@@ -238,5 +238,7 @@ class ObserveOnObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const observeOn = <T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T> =>
-  new ObserveOnObserver(subscriber, priority);
+export const observeOn = <T>(
+  subscriber: SubscriberLike<T>,
+  priority?: number,
+): ObserverLike<T> => new ObserveOnObserver(subscriber, priority);

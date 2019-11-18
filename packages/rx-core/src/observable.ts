@@ -260,7 +260,7 @@ const create = <T>(
         try {
           const onSubscribeSubscription = onSubscribe(observer);
           if (onSubscribeSubscription !== undefined) {
-            subscriber.subscription.add(onSubscribeSubscription)
+            subscriber.subscription.add(onSubscribeSubscription);
           }
         } catch (error) {
           subscriber.complete(error);
