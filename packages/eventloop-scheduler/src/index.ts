@@ -73,7 +73,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         this.scheduleInternal(ctx);
       }
     } else {
-      ctx.disposable.innerDisposable.dispose();
+      ctx.disposable.disposable.dispose();
     }
   }
 
@@ -90,7 +90,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   }
 
   private scheduleInternal(ctx: SchedulerCtx) {
-    ctx.disposable.innerDisposable.dispose();
+    ctx.disposable.disposable.dispose();
 
     if (this.isDisposed) {
       return;
@@ -116,13 +116,13 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         ctx.delay,
         ctx,
       );
-      ctx.disposable.innerDisposable = Disposable.create(() =>
+      ctx.disposable.disposable = Disposable.create(() =>
         clearInterval(timeout),
       );
     } else {
       // FIXME: Shim setImmediate for the browser case or require a polyfill.
       const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
-      ctx.disposable.innerDisposable = Disposable.create(() =>
+      ctx.disposable.disposable = Disposable.create(() =>
         clearImmediate(immediate),
       );
     }

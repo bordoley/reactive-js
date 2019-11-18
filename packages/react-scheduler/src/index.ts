@@ -40,7 +40,7 @@ class ReactSchedulerImpl implements SchedulerLike {
     const innerDisposable = Disposable.create(() =>
       unstable_cancelCallback(callbackNode),
     );
-    disposable.innerDisposable = innerDisposable;
+    disposable.disposable = innerDisposable;
   }
 
   private createFrameCallback(

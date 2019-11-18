@@ -1,15 +1,15 @@
 import { DisposableLike, Disposable } from "./disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
-  innerDisposable: DisposableLike;
+  disposable: DisposableLike;
 }
 
 class SerialDisposableImpl implements SerialDisposableLike {
-  private _innerDisposable: DisposableLike;
+  private _disposable: DisposableLike;
   private _isDisposed = false;
 
-  constructor(innerDisposable: DisposableLike) {
-    this._innerDisposable = innerDisposable;
+  constructor(disposable: DisposableLike) {
+    this._disposable = disposable;
   }
 
   get isDisposed(): boolean {
@@ -19,17 +19,17 @@ class SerialDisposableImpl implements SerialDisposableLike {
   dispose() {
     if (!this.isDisposed) {
       this._isDisposed = true;
-      this.innerDisposable.dispose();
+      this.disposable.dispose();
     }
   }
 
-  get innerDisposable(): DisposableLike {
-    return this._innerDisposable;
+  get disposable(): DisposableLike {
+    return this._disposable;
   }
 
-  set innerDisposable(newDisposable: DisposableLike) {
-    const oldDisposable = this.innerDisposable;
-    this._innerDisposable = newDisposable;
+  set disposable(newDisposable: DisposableLike) {
+    const oldDisposable = this.disposable;
+    this._disposable = newDisposable;
 
     if (oldDisposable !== newDisposable) {
       oldDisposable.dispose();

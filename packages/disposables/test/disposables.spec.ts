@@ -71,52 +71,71 @@ describe("CompositeDisposable", () => {
     expect(disposable.isDisposed).toBeTruthy();
   });
 
-  describe("add", () => {
-    test("when not disposed", () => {
-      const compositeDisposable = CompositeDisposable.create();
+  test("add", () => {
+    const compositeDisposable = CompositeDisposable.create();
 
-      const children = [
-        Disposable.create(),
-        Disposable.create(),
-        Disposable.create(),
-        Disposable.create(),
-      ];
+    const children = [
+      Disposable.create(),
+      Disposable.create(),
+      Disposable.create(),
+      Disposable.create(),
+    ];
 
-      for (let child of children) {
-        compositeDisposable.add(child);
-      }
-
-      for (let child of children) {
-        expect(child.isDisposed).toBeFalsy();
-      }
-
-      compositeDisposable.dispose();
-
-      for (let child of children) {
-        expect(child.isDisposed).toBeTruthy();
-      }
-    });
-
-    test("when disposed", () => {
-      const compositeDisposable = CompositeDisposable.create();
-      compositeDisposable.dispose();
-
-      const child = Disposable.create();
+    for (let child of children) {
       compositeDisposable.add(child);
+    }
+
+    for (let child of children) {
+      expect(child.isDisposed).toBeFalsy();
+    }
+
+    compositeDisposable.dispose();
+
+    for (let child of children) {
       expect(child.isDisposed).toBeTruthy();
-    });
+    }
+
+    const anotherDisposable = Disposable.create();
+    compositeDisposable.add(anotherDisposable);
+    expect(anotherDisposable.isDisposed).toBeTruthy();
   });
 
-  describe("remove", () => {
-    test("when not disposed", () => {
-      const compositeDisposable = CompositeDisposable.create();
-      const child = Disposable.create();
+  test("remove", () => {
+    const compositeDisposable = CompositeDisposable.create();
+    const child = Disposable.create();
 
-      compositeDisposable.add(child);
-      compositeDisposable.remove(child);
-      expect(child.isDisposed).toBeTruthy();
-    });
+    compositeDisposable.add(child);
+    compositeDisposable.remove(child);
+    expect(child.isDisposed).toBeTruthy();
   });
 });
 
-describe("SerialDisposable", () => {});
+describe("SerialDisposable", () => {
+  test("create", () => {
+    const serialDisposable = SerialDisposable.create();
+    expect(serialDisposable.isDisposed).toBeFalsy();
+    serialDisposable.dispose();
+    expect(serialDisposable.isDisposed).toBeTruthy();
+  });
+
+  test("set disposable", () => {
+    const serialDisposable = SerialDisposable.create();
+    const disposable = Disposable.create();
+
+    serialDisposable.disposable = disposable;
+    expect(serialDisposable.disposable).toEqual(disposable);
+
+    const anotherDisposable = Disposable.create();
+    serialDisposable.disposable = anotherDisposable;
+    expect(serialDisposable.disposable).toEqual(anotherDisposable);
+    expect(disposable.isDisposed).toBeTruthy();
+
+    expect(anotherDisposable.isDisposed).toBeFalsy();
+    serialDisposable.dispose();
+    expect(anotherDisposable.isDisposed).toBeTruthy();
+
+    const yetAnotherDisposable = Disposable.create();
+    serialDisposable.disposable = yetAnotherDisposable;
+    expect(yetAnotherDisposable.isDisposed).toBeTruthy();
+  });
+});

@@ -104,12 +104,12 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       this.subscription.remove(this.queueClearDisposable);
     }
 
-    this.schedulerSubscription.innerDisposable = Disposable.disposed;
+    this.schedulerSubscription.disposable = Disposable.disposed;
   };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.innerDisposable = this.scheduler.schedule(
+      this.schedulerSubscription.disposable = this.scheduler.schedule(
         this.drainQueue,
         0,
         this.priority,
