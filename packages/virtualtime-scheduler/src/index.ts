@@ -31,9 +31,14 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   });
   private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
   private _now = -1;
+  private _inScheduledContinuation = false;
 
   constructor(maxMicroTaskCount: number) {
     this.maxMicroTaskCount = maxMicroTaskCount;
+  }
+
+  public get inScheduledContinuation(): boolean {
+    return this._inScheduledContinuation;
   }
 
   get isDisposed() {
@@ -44,28 +49,17 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return this._now;
   }
 
-  private get next() {
-    const now = this.now;
-    return this.timeQueue[now] || [];
-  }
-
   dispose() {
     this.disposable.dispose();
-  }
-
-  private moveNext() {
-    delete this.timeQueue[this.now];
-    this._now++;
-    for (let key in this.timeQueue) {
-      if (this.timeQueue.hasOwnProperty(key)) return true;
-    }
-    return false;
   }
 
   private executeContinuation(ctx: SchedulerCtx) {
     const { continuation, shouldYield } = ctx;
     ctx.microtaskCount = 0;
+
+    this._inScheduledContinuation = true;
     const result = continuation(shouldYield);
+    this._inScheduledContinuation = false;
 
     if (result !== undefined) {
       const {
@@ -116,6 +110,20 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     const scheduledTime = now + delay;
     this.schedulWorkAtTime(ctx, scheduledTime);
     return ctx.disposable;
+  }
+
+  private get next() {
+    const now = this.now;
+    return this.timeQueue[now] || [];
+  }
+
+  private moveNext() {
+    delete this.timeQueue[this.now];
+    this._now++;
+    for (let key in this.timeQueue) {
+      if (this.timeQueue.hasOwnProperty(key)) return true;
+    }
+    return false;
   }
 
   run() {

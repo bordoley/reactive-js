@@ -11,7 +11,10 @@ export type SchedulerContinuationResult = {
 };
 
 export interface SchedulerLike {
+  readonly inScheduledContinuation: boolean;
+
   now: number;
+
   schedule(
     continuation: SchedulerContinuation,
     delay?: number,

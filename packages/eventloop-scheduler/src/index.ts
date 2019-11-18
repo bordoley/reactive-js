@@ -32,6 +32,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private readonly disposable: DisposableLike;
   private readonly workqueue: SchedulerCtx[] = [];
   private readonly timeout: number;
+  private _inScheduledContinuation = false;
   private startTime: number = this.now;
 
   constructor(timeout: number) {
@@ -39,6 +40,10 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     this.disposable = Disposable.create(() => {
       this.workqueue.length = 0;
     });
+  }
+
+  public get inScheduledContinuation(): boolean {
+    return this._inScheduledContinuation;
   }
 
   get isDisposed() {
@@ -57,7 +62,9 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     const { continuation, shouldYield } = ctx;
 
     this.startTime = this.now;
+    this._inScheduledContinuation = true;
     const result = continuation(shouldYield);
+    this._inScheduledContinuation = false;
 
     if (result !== undefined) {
       const {
