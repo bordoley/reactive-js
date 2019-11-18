@@ -194,6 +194,7 @@ describe("observeOn", () => {
     scheduler.run();
 
     expect(subscriber.next).toBeCalledTimes(6);
+    expect(subscriber.complete).toBeCalledTimes(1);
     expect(subscriber.next).toHaveBeenLastCalledWith(5);
   });
 });
