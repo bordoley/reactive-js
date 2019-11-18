@@ -7,7 +7,8 @@
     "example": "node ./packages/example/dist/index.js",
     "format": "prettier --write packages/**/src/** packages/**/test/**/*",
     "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "test-coverage": "lerna run test-coverage"
   },
   "devDependencies": {
     "lerna": "^3.18.4",

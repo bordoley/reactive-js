@@ -3,18 +3,22 @@ export interface DisposableLike {
   dispose(): void;
 }
 
-export abstract class AbstractDisposable implements DisposableLike {
+class TeardownDisposable implements DisposableLike {
+  private readonly teardown: () => void;
+
   private _isDisposed = false;
 
   get isDisposed(): boolean {
     return this._isDisposed;
   }
 
-  protected abstract onDispose(): void;
+  constructor(teardown: () => void) {
+    this.teardown = teardown;
+  }
 
-  private tryOnDispose() {
+  private tryTeardown() {
     try {
-      this.onDispose();
+      this.teardown();
     } catch (e) {
       /* Proactively catch exceptions thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected exceptions.
@@ -25,21 +29,8 @@ export abstract class AbstractDisposable implements DisposableLike {
   dispose() {
     if (!this.isDisposed) {
       this._isDisposed = true;
-      this.tryOnDispose();
+      this.tryTeardown();
     }
-  }
-}
-
-class TeardownDisposable extends AbstractDisposable {
-  private teardown: () => void;
-
-  constructor(teardown: () => void) {
-    super();
-    this.teardown = teardown;
-  }
-
-  onDispose() {
-    this.teardown();
   }
 }
 
@@ -72,8 +63,10 @@ class EmptyDisposable implements DisposableLike {
 
 const empty = (): DisposableLike => new EmptyDisposable();
 
-const disposed: DisposableLike = new EmptyDisposable();
-disposed.dispose();
+const disposed: DisposableLike = {
+  isDisposed: true,
+  dispose: () => {},
+};
 
 export const Disposable = {
   compose,
