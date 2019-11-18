@@ -188,6 +188,10 @@ class ObserveOnObserver<T> implements ObserverLike<T> {
       .add(this.queueClearDisposable);
   }
 
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  }
+
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
       const next = this.nextQueue.shift() as T;
@@ -218,10 +222,6 @@ class ObserveOnObserver<T> implements ObserverLike<T> {
         this.priority,
       );
     }
-  }
-
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
   }
 
   next(data: T) {
