@@ -55,10 +55,10 @@ subscription.dispose();
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
-*`observeOn<T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T>`*
+*`Subscriber.toSafeObserver<T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T>`*
 
-*`Observable.create = <T>(onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void, delay?: number): ObservableLike<T>`*
+*`Observable.create = <T>(onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void, priority?: number): ObservableLike<T>`*
 
-*`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
+*`Observable.lift(source: ObservableLike<any>, operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
 *`ObservableResource.lift(source: ObservableResourceLike<any>, operator: Operator<any, any>, ...operators: Array<Operator<any, any>>): ObservableResourceLike<any>`*

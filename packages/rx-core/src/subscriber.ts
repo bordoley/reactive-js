@@ -163,7 +163,7 @@ export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
   subscriber: SubscriberLike<T>,
 ) => new ObserveSubscriber(subscriber, observer);
 
-class ObserveOnObserver<T> implements ObserverLike<T> {
+class SafeObserver<T> implements ObserverLike<T> {
   private readonly delegate: SubscriberLike<T>;
   private readonly continuation: SchedulerContinuationResult;
   private readonly priority?: number;
@@ -244,7 +244,11 @@ class ObserveOnObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const observeOn = <T>(
+export const toSafeObserver = <T>(
   subscriber: SubscriberLike<T>,
   priority?: number,
-): ObserverLike<T> => new ObserveOnObserver(subscriber, priority);
+): ObserverLike<T> => new SafeObserver(subscriber, priority);
+
+export const Subscriber = {
+  toSafeObserver,
+};

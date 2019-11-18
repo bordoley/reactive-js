@@ -8,23 +8,19 @@ export const fromEvent = <T>(
   selector: (ev: Event) => T,
   priority?: number,
 ): ObservableLike<T> =>
-  Observable.create(
-    observer => {
-      const listener = (event: Event) => {
-        try {
-          const result = selector(event);
-          observer.next(result);
-        } catch (error) {
-          observer.complete(error);
-        }
-      };
+  Observable.create(observer => {
+    const listener = (event: Event) => {
+      try {
+        const result = selector(event);
+        observer.next(result);
+      } catch (error) {
+        observer.complete(error);
+      }
+    };
 
-      target.addEventListener(eventName, listener, { passive: true });
+    target.addEventListener(eventName, listener, { passive: true });
 
-      return Disposable.create(() => {
-        target.removeEventListener(eventName, listener);
-      });
-    },
-    undefined,
-    priority,
-  );
+    return Disposable.create(() => {
+      target.removeEventListener(eventName, listener);
+    });
+  }, priority);
