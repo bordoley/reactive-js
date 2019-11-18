@@ -12,6 +12,8 @@ import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
+import { maxHeaderSize } from "http";
+import { thisExpression } from "@babel/types";
 
 export interface SubscriberLike<T> extends ObserverLike<T> {
   readonly isConnected: boolean;
@@ -155,7 +157,8 @@ export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
   subscriber: SubscriberLike<T>,
 ) => new ObserveSubscriber(subscriber, observer);
 
-class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
+class ObserveOnObserver<T> implements ObserverLike<T> {
+  private readonly delegate: SubscriberLike<T>;
   private readonly continuation: SchedulerContinuationResult;
   private readonly priority?: number;
   private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
@@ -170,7 +173,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
   private error: Error | undefined;
 
   constructor(delegate: SubscriberLike<T>, priority?: number) {
-    super(delegate);
+    this.delegate = delegate;
 
     this.priority = priority;
     this.continuation = {
@@ -178,7 +181,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
       priority: this.priority,
     };
 
-    this.subscription
+    this.delegate.subscription
       .add(this.schedulerSubscription)
       .add(this.queueClearDisposable);
   }
@@ -198,8 +201,8 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
 
     if (this.isComplete) {
       this.delegate.complete(this.error);
-      this.subscription.remove(this.schedulerSubscription);
-      this.subscription.remove(this.queueClearDisposable);
+      this.delegate.subscription.remove(this.schedulerSubscription);
+      this.delegate.subscription.remove(this.queueClearDisposable);
     }
 
     this.schedulerSubscription.disposable = Disposable.disposed;
@@ -207,7 +210,7 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.disposable = this.scheduler.schedule(
+      this.schedulerSubscription.disposable = this.delegate.scheduler.schedule(
         this.drainQueue,
         0,
         this.priority,
@@ -219,17 +222,21 @@ class ObserveOnSubscriber<T> extends DelegatingSubscriber<T, T> {
     return this.nextQueue.length + (this.isComplete ? 1 : 0);
   }
 
-  protected onNext(data: T) {
-    this.nextQueue.push(data);
-    this.scheduleDrainQueue();
+  next(data: T) {
+    if (!this.isComplete) {
+      this.nextQueue.push(data);
+      this.scheduleDrainQueue();
+    }
   }
 
-  protected onComplete(error?: Error) {
-    this.isComplete = true;
-    this.error = error;
-    this.scheduleDrainQueue();
+  complete(error?: Error) {
+    if (!this.isComplete) {
+      this.isComplete = true;
+      this.error = error;
+      this.scheduleDrainQueue();
+    }
   }
 }
 
-export const observeOn = <T>(priority?: number): Operator<T, T> => subscriber =>
-  new ObserveOnSubscriber(subscriber, priority);
+export const observeOn = <T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T> =>
+  new ObserveOnObserver(subscriber, priority);

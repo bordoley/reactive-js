@@ -13,11 +13,11 @@ export interface SubjectLike<T>
 
 class SubjectImpl<T> implements SubjectLike<T> {
   readonly disposable = Disposable.create(() => {
-    this.subscribers = [];
+    this.observers = [];
   });
   private readonly priority?: number;
 
-  private subscribers: Array<SubscriberLike<T>> = [];
+  private observers: Array<ObserverLike<T>> = [];
 
   constructor(priority?: number) {
     this.priority = priority;
@@ -28,7 +28,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
       return;
     }
 
-    const subscribers = this.subscribers.slice();
+    const subscribers = this.observers.slice();
     for (let subscriber of subscribers) {
       subscriber.next(data);
     }
@@ -39,7 +39,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
       return;
     }
 
-    const subscribers = this.subscribers.slice();
+    const subscribers = this.observers.slice();
     for (let subscriber of subscribers) {
       subscriber.complete(error);
     }
@@ -47,13 +47,13 @@ class SubjectImpl<T> implements SubjectLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.disposable.isDisposed) {
-      const scheduledSubscriber = observeOn()(subscriber);
-      this.subscribers.push(scheduledSubscriber);
+      const observer = observeOn(subscriber);
+      this.observers.push(observer);
 
       const disposable = Disposable.create(() => {
-        const index = this.subscribers.indexOf(scheduledSubscriber);
+        const index = this.observers.indexOf(observer);
         if (index !== -1) {
-          this.subscribers.splice(index, 1);
+          this.observers.splice(index, 1);
         }
       });
 

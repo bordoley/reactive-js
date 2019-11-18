@@ -14,7 +14,7 @@ const observable = Observable.lift(
     subscriber.next( "hello");
     subscriber.complete();
   }),
-  observe({ 
+  observe({
     next: next => console.log("next: " + next),
     complete: err => console.log("complete: " + err),
   }),
@@ -55,9 +55,9 @@ subscription.dispose();
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
-*`observeOn<T>(priority?: number): Operator<T, T>`*
+*`observeOn<T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T>`*
 
-*`Observable.create = <T>(onSubscribe: (subscriber: SubscriberLike<T>) => void, delay?: number): ObservableLike<T>`*
+*`Observable.create = <T>(onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void, delay?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>,operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 

@@ -29,5 +29,3 @@
 *`retry<T>(observable: ObservableLike<T>, predicate?: (error: Error) => boolean): ObservableLike<T>`*
 
 *`throws<T>(error: Error, delay?: number, priority?: number): ObservableLike<T>`*
-
-*`use =<T>(factory: () => ObservableResourceLike<T>, delay?: number, priority?: number): ObservableLike<T>`*
