@@ -43,11 +43,11 @@ A disposable that can hold onto multiple other disposables.
 
 A DisposableLike container that allows updating/replacing the contained DisposableLike with another DisposableLike, disposing the old one when updating plus handling the disposition when the container itself is disposed.
 
-* `get innerDisposable: DisposableLike`
+* `get disposable: DisposableLike`
 
 Returns the currently contained DisposableLike.
 
-* `set innerDisposable(disposable: DisposableLike)`
+* `set disposable(disposable: DisposableLike)`
 
 Set the next DisposableLike on this container and dispose the previous one. Dispose the next DisposableLike if the container has been disposed.
 
