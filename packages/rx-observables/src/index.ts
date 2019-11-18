@@ -6,4 +6,3 @@ export { empty, fromArray, fromScheduledValues, ofValue } from "./fromArray";
 export { fromPromiseFactory } from "./promise";
 export { repeat, retry } from "./repeat";
 export { throws } from "./throws";
-export { use } from "./use";

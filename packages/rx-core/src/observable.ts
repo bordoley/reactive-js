@@ -6,6 +6,9 @@ import {
   Operator,
   SubscriberLike,
 } from "./subscriber";
+
+import { ObserverLike } from "./observer";
+
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
@@ -242,20 +245,23 @@ export const ObservableResource = {
 };
 
 const create = <T>(
-  onSubscribe: (subscriber: SubscriberLike<T>) => void,
+  onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void,
   delay?: number,
   priority?: number,
 ): ObservableLike<T> => {
-  const subscribe = (delegate: SubscriberLike<T>) => {
+  const subscribe = (subscriber: SubscriberLike<T>) => {
     // The idea here is that an onSubscribe function may
     // call onNext from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const subscriber = observeOn(priority)(delegate);
+    const observer = observeOn(subscriber, priority);
 
     const schedulerSubscription = subscriber.scheduler.schedule(
       (_: () => boolean) => {
         try {
-          onSubscribe(subscriber);
+          const onSubscribeSubscription = onSubscribe(observer);
+          if (onSubscribeSubscription !== undefined) {
+            subscriber.subscription.add(onSubscribeSubscription)
+          }
         } catch (error) {
           subscriber.complete(error);
         }
