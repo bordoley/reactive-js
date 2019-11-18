@@ -5,24 +5,24 @@ export interface CompositeDisposableLike extends DisposableLike {
   remove(disposable: DisposableLike): CompositeDisposableLike;
 }
 
-class CompositeDisposableImpl
-  implements CompositeDisposableLike {
-
-  
+class CompositeDisposableImpl implements CompositeDisposableLike {
+  private readonly disposables: Array<DisposableLike> = [];
   private _isDisposed = false;
 
   get isDisposed(): boolean {
     return this._isDisposed;
   }
 
-  private readonly disposables: Array<DisposableLike> = [];
+  dispose() {
+    if (!this.isDisposed) {
+      this._isDisposed = true;
 
-  protected onDispose() {
-    const disposables = this.disposables;
-    this.disposables = [];
+      const disposables = this.disposables;
+      this.disposables.length = 0;
 
-    for (let disposable of disposables) {
-      disposable.dispose();
+      for (let disposable of disposables) {
+        disposable.dispose();
+      }
     }
   }
 
