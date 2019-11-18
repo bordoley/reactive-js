@@ -25,8 +25,12 @@ export interface Operator<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
-const throwIfNotConnected = <T>(subscriber: SubscriberLike<T>) => {
-  if (!subscriber.isConnected) {
+const checkState = <T>(subscriber: SubscriberLike<T>) => {
+  if (!subscriber.scheduler.inScheduledContinuation) {
+    throw new Error(
+      "Attempted to notify subscriber from outside of it's scheduler",
+    );
+  } else if (!subscriber.isConnected) {
     throw new Error("Attempted to notify subscriber before it is connected");
   }
 };
@@ -45,13 +49,13 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
 
   next(data: T) {
     if (__DEV__) {
-      throwIfNotConnected(this);
+      checkState(this);
     }
   }
 
   complete(_error?: Error) {
     if (__DEV__) {
-      throwIfNotConnected(this);
+      checkState(this);
     }
 
     this.subscription.dispose();
@@ -116,7 +120,7 @@ export abstract class DelegatingSubscriber<TA, TB>
 
   next(data: TA) {
     if (__DEV__) {
-      throwIfNotConnected(this);
+      checkState(this);
     }
 
     if (!this.isStopped) {
@@ -126,7 +130,7 @@ export abstract class DelegatingSubscriber<TA, TB>
 
   complete(error?: Error) {
     if (__DEV__) {
-      throwIfNotConnected(this);
+      checkState(this);
     }
 
     if (!this.isStopped) {

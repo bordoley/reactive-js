@@ -11,10 +11,8 @@ const shouldYield = () => false;
 // apples to apples comparison vs other synchronous implementations
 class PerfTestScheduler implements SchedulerLike {
   private readonly queue: SchedulerContinuation[] = [];
-
-  get now() {
-    return 0;
-  }
+  readonly now = 0;
+  readonly inScheduledContinuation = true;
 
   schedule(
     continuation: SchedulerContinuation,

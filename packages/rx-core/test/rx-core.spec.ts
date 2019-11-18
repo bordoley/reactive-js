@@ -13,20 +13,19 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
-const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const scheduler: SchedulerLike = {
-    now: 0,
-    schedule: (c, d?, p?) => Disposable.disposed,
-  };
+const createMockScheduler = (): SchedulerLike => ({
+  inScheduledContinuation: true,
+  now: 0,
+  schedule: (c, d?, p?) => Disposable.disposed,
+});
 
-  return {
-    isConnected: true,
-    scheduler,
-    subscription: CompositeDisposable.create(),
-    next: jest.fn(),
-    complete: jest.fn(),
-  };
-};
+const createMockSubscriber = <T>(): SubscriberLike<T> => ({
+  isConnected: true,
+  scheduler: createMockScheduler(),
+  subscription: CompositeDisposable.create(),
+  next: jest.fn(),
+  complete: jest.fn(),
+});
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),
@@ -48,55 +47,99 @@ test("notify", () => {
 });
 
 describe("observe", () => {
-  test("next", () => {
-    const subscriber = createMockSubscriber();
-    const observer = createMockObserver();
-    const delegatedSubscriber = observe(observer)(subscriber);
+  describe("next", () => {
+    test("with value", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
 
-    delegatedSubscriber.next("a");
-    expect(observer.next).toBeCalledWith("a");
-    expect(observer.next).toBeCalledWith("a");
+      delegatedSubscriber.next("a");
+      expect(observer.next).toBeCalledWith("a");
+      expect(subscriber.next).toBeCalledWith("a");
+    });
+
+    test("when observer throws Error", () => {
+      const subscriber = createMockSubscriber();
+      const error = new Error();
+      const observer: ObserverLike<any> = {
+        next: _ => {
+          throw error;
+        },
+        complete: _ => {},
+      };
+      const delegatedSubscriber = observe(observer)(subscriber);
+
+      delegatedSubscriber.next("a");
+      expect(subscriber.complete).toBeCalledWith(error);
+    });
+
+    test("throws if not connected", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
+
+      (subscriber as any).isConnected = false;
+
+      expect(() => delegatedSubscriber.next("a")).toThrow();
+    });
+
+    test("throws if not executing in SchedulerContinuation", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
+
+      (subscriber.scheduler as any).inScheduledContinuation = false;
+
+      expect(() => delegatedSubscriber.next("a")).toThrow();
+    });
   });
 
-  test("next when observer throws Error", () => {
-    const subscriber = createMockSubscriber();
-    const error = new Error();
-    const observer: ObserverLike<any> = {
-      next: _ => {
-        throw error;
-      },
-      complete: _ => {},
-    };
-    const delegatedSubscriber = observe(observer)(subscriber);
+  describe("complete", () => {
+    test("with error", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
 
-    delegatedSubscriber.next("a");
-    expect(subscriber.complete).toBeCalledWith(error);
-  });
+      const error = new Error();
+      delegatedSubscriber.complete(error);
+      expect(observer.complete).toBeCalledWith(error);
+      expect(subscriber.complete).toBeCalledWith(error);
+    });
 
-  test("complete", () => {
-    const subscriber = createMockSubscriber();
-    const observer = createMockObserver();
-    const delegatedSubscriber = observe(observer)(subscriber);
+    test("when observer throws Error", () => {
+      const subscriber = createMockSubscriber();
+      const error = new Error();
+      const observer: ObserverLike<any> = {
+        next: _ => {},
+        complete: _ => {
+          throw error;
+        },
+      };
+      const delegatedSubscriber = observe(observer)(subscriber);
 
-    const error = new Error();
-    delegatedSubscriber.complete(error);
-    expect(observer.complete).toBeCalledWith(error);
-    expect(subscriber.complete).toBeCalledWith(error);
-  });
+      delegatedSubscriber.complete();
+      expect(subscriber.complete).toBeCalledWith(error);
+    });
 
-  test("complete when observer throws Error", () => {
-    const subscriber = createMockSubscriber();
-    const error = new Error();
-    const observer: ObserverLike<any> = {
-      next: _ => { },
-      complete: _ => {
-        throw error;
-      },
-    };
-    const delegatedSubscriber = observe(observer)(subscriber);
+    test("throws if not connected", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
 
-    delegatedSubscriber.complete()
-    expect(subscriber.complete).toBeCalledWith(error);
+      (subscriber as any).isConnected = false;
+
+      expect(() => delegatedSubscriber.complete()).toThrow();
+    });
+
+    test("throws if not executing in SchedulerContinuation", () => {
+      const subscriber = createMockSubscriber();
+      const observer = createMockObserver();
+      const delegatedSubscriber = observe(observer)(subscriber);
+
+      (subscriber.scheduler as any).inScheduledContinuation = false;
+
+      expect(() => delegatedSubscriber.complete()).toThrow();
+    });
   });
 
   test("disposing the subscriber blocks further notifications", () => {
@@ -119,7 +162,6 @@ describe("observe", () => {
     expect(observer.next).toBeCalledTimes(0);
   });
 });
-
 
 describe("observeOn", () => {
   test("next", () => {
@@ -154,7 +196,4 @@ describe("observeOn", () => {
     expect(subscriber.next).toBeCalledTimes(6);
     expect(subscriber.next).toHaveBeenLastCalledWith(5);
   });
-
-
-
 });

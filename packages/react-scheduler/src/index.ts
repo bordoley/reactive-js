@@ -21,6 +21,12 @@ import {
 } from "@reactive-js/disposables";
 
 class ReactSchedulerImpl implements SchedulerLike {
+  private _inScheduledContinuation = false;
+
+  public get inScheduledContinuation(): boolean {
+    return this._inScheduledContinuation;
+  }
+
   get now() {
     return unstable_now();
   }
@@ -54,7 +60,10 @@ class ReactSchedulerImpl implements SchedulerLike {
         return;
       }
 
+      this._inScheduledContinuation = true;
       const result = continuation(shouldYield);
+      this._inScheduledContinuation = false;
+
       if (result === undefined) {
         return;
       }
