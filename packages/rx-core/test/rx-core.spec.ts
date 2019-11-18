@@ -1,13 +1,37 @@
 import {
   notify,
   observe,
+  Notification,
   NotificationKind,
   Observable,
   ObserverLike,
   SubscriberLike,
+  observeOn,
 } from "../src/index";
 import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
 import { SchedulerLike } from "@reactive-js/scheduler";
+
+import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
+
+const createMockSubscriber = <T>(): SubscriberLike<T> => {
+  const scheduler: SchedulerLike = {
+    now: 0,
+    schedule: (c, d?, p?) => Disposable.disposed,
+  };
+
+  return {
+    isConnected: true,
+    scheduler,
+    subscription: CompositeDisposable.create(),
+    next: jest.fn(),
+    complete: jest.fn(),
+  };
+};
+
+const createMockObserver = <T>(): ObserverLike<T> => ({
+  next: jest.fn(),
+  complete: jest.fn(),
+});
 
 test("notify", () => {
   const observer = {
@@ -24,29 +48,9 @@ test("notify", () => {
 });
 
 describe("observe", () => {
-  const createSubscriber = <T>(): SubscriberLike<T> => {
-    const scheduler: SchedulerLike = {
-      now: 0,
-      schedule: (c, d?, p?) => Disposable.disposed,
-    };
-
-    return {
-      isConnected: true,
-      scheduler,
-      subscription: CompositeDisposable.create(),
-      next: jest.fn(),
-      complete: jest.fn(),
-    };
-  };
-
-  const createObserver = <T>(): ObserverLike<T> => ({
-    next: jest.fn(),
-    complete: jest.fn(),
-  });
-
   test("next", () => {
-    const subscriber = createSubscriber();
-    const observer = createObserver();
+    const subscriber = createMockSubscriber();
+    const observer = createMockObserver();
     const delegatedSubscriber = observe(observer)(subscriber);
 
     delegatedSubscriber.next("a");
@@ -55,7 +59,7 @@ describe("observe", () => {
   });
 
   test("next when observer throws Error", () => {
-    const subscriber = createSubscriber();
+    const subscriber = createMockSubscriber();
     const error = new Error();
     const observer: ObserverLike<any> = {
       next: _ => {
@@ -70,8 +74,8 @@ describe("observe", () => {
   });
 
   test("complete", () => {
-    const subscriber = createSubscriber();
-    const observer = createObserver();
+    const subscriber = createMockSubscriber();
+    const observer = createMockObserver();
     const delegatedSubscriber = observe(observer)(subscriber);
 
     const error = new Error();
@@ -81,7 +85,7 @@ describe("observe", () => {
   });
 
   test("complete when observer throws Error", () => {
-    const subscriber = createSubscriber();
+    const subscriber = createMockSubscriber();
     const error = new Error();
     const observer: ObserverLike<any> = {
       next: _ => { },
@@ -96,8 +100,8 @@ describe("observe", () => {
   });
 
   test("disposing the subscriber blocks further notifications", () => {
-    const subscriber = createSubscriber();
-    const observer = createObserver();
+    const subscriber = createMockSubscriber();
+    const observer = createMockObserver();
     const delegatedSubscriber = observe(observer)(subscriber);
 
     subscriber.subscription.dispose();
@@ -106,12 +110,51 @@ describe("observe", () => {
   });
 
   test("completing the subscriber blocks further notifications", () => {
-    const subscriber = createSubscriber();
-    const observer = createObserver();
+    const subscriber = createMockSubscriber();
+    const observer = createMockObserver();
     const delegatedSubscriber = observe(observer)(subscriber);
 
     delegatedSubscriber.complete();
     delegatedSubscriber.next("a");
     expect(observer.next).toBeCalledTimes(0);
   });
+});
+
+
+describe("observeOn", () => {
+  test("next", () => {
+    const scheduler = VirtualTimeScheduler.create(2);
+    const subscriber = {
+      isConnected: true,
+      scheduler,
+      subscription: CompositeDisposable.create(),
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    const observer = observeOn(subscriber);
+
+    const notifications: Notification<number>[] = [
+      [NotificationKind.Next, 0],
+      [NotificationKind.Next, 1],
+      [NotificationKind.Next, 2],
+      [NotificationKind.Next, 3],
+      [NotificationKind.Next, 4],
+      [NotificationKind.Next, 5],
+      [NotificationKind.Complete, undefined],
+      [NotificationKind.Next, 6],
+    ];
+
+    for (let nofification of notifications) {
+      notify(observer, nofification);
+    }
+
+    scheduler.run();
+
+    expect(subscriber.next).toBeCalledTimes(6);
+    expect(subscriber.next).toHaveBeenLastCalledWith(5);
+  });
+
+
+
 });
