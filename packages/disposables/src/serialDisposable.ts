@@ -1,8 +1,4 @@
-import {
-  AbstractDisposable,
-  DisposableLike,
-  Disposable,
-} from './disposable';
+import { AbstractDisposable, DisposableLike, Disposable } from "./disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
   innerDisposable: DisposableLike;

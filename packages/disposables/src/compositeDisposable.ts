@@ -1,16 +1,21 @@
-import {
-  AbstractDisposable,
-  DisposableLike,
-} from './disposable';
+import { DisposableLike } from "./disposable";
 
 export interface CompositeDisposableLike extends DisposableLike {
   add(disposable: DisposableLike): CompositeDisposableLike;
   remove(disposable: DisposableLike): CompositeDisposableLike;
 }
 
-class CompositeDisposableImpl extends AbstractDisposable
+class CompositeDisposableImpl
   implements CompositeDisposableLike {
-  private disposables: Array<DisposableLike> = [];
+
+  
+  private _isDisposed = false;
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
+  }
+
+  private readonly disposables: Array<DisposableLike> = [];
 
   protected onDispose() {
     const disposables = this.disposables;
