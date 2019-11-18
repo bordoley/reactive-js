@@ -1,24 +1,30 @@
-import { AbstractDisposable, DisposableLike, Disposable } from "./disposable";
+import { DisposableLike, Disposable } from "./disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
   innerDisposable: DisposableLike;
 }
 
-class SerialDisposableImpl extends AbstractDisposable
-  implements SerialDisposableLike {
+class SerialDisposableImpl implements SerialDisposableLike {
   private _innerDisposable: DisposableLike;
+  private _isDisposed = false;
 
   constructor(innerDisposable: DisposableLike) {
-    super();
     this._innerDisposable = innerDisposable;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
+  }
+
+  dispose() {
+    if (!this.isDisposed) {
+      this._isDisposed = true;
+      this.innerDisposable.dispose();
+    }
   }
 
   get innerDisposable(): DisposableLike {
     return this._innerDisposable;
-  }
-
-  protected onDispose() {
-    this.innerDisposable.dispose();
   }
 
   set innerDisposable(newDisposable: DisposableLike) {
