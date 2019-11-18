@@ -97,7 +97,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   ): DisposableLike {
     throwIfDisposed(this);
 
-    const disposable = Disposable.empty();
+    const disposable = Disposable.create();
 
     const ctx = {
       continuation,

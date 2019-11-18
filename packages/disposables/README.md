@@ -22,7 +22,7 @@ Represents a managed resource.
 * `get isDisposed: boolean`
 
   Returns whether the resource has already been disposed or not.
-  
+
 * `dispose()`
 
   Releases the managed resource. Implementations must be idempotent, eg. it must safe to call dispose multiple times on a given resource.
@@ -45,7 +45,7 @@ A DisposableLike container that allows updating/replacing the contained Disposab
 
 * `get innerDisposable: DisposableLike`
 
-Returns the currently contained DisposableLike. 
+Returns the currently contained DisposableLike.
 
 * `set innerDisposable(disposable: DisposableLike)`
 
@@ -53,19 +53,15 @@ Set the next DisposableLike on this container and dispose the previous one. Disp
 
 ### Static Functions
 
-`Disposable.compose(disposable: DisposableLike, ...disposables: DisposableLike[]): DisposableLike`
+`Disposable.compose(disposable1: DisposableLike, disposable2: DisposableLike, ...disposables: DisposableLike[]): DisposableLike`
 
 Creates a new DisposableLike that disposes the provided DisposableLikes when disposed.
 
-`Disposable.create(teardown: () => void): DisposableLike`
+`Disposable.create(teardown?: () => void): DisposableLike`
 
 Creates a new DisposableLike that calls the teardown function exactly once when initially disposed.
 
-`Disposable.empty(): DisposableLike`
-
-Creates a new DisposableLike that does nothing when disposed.
-
-`Disposable.disposed: DisposableLike` 
+`Disposable.disposed: DisposableLike`
 
 A DisposableLike instance that is disposed.
 

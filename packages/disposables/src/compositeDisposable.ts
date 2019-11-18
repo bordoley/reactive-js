@@ -17,12 +17,11 @@ class CompositeDisposableImpl implements CompositeDisposableLike {
     if (!this.isDisposed) {
       this._isDisposed = true;
 
-      const disposables = this.disposables;
-      this.disposables.length = 0;
-
-      for (let disposable of disposables) {
+      for (let disposable of this.disposables) {
         disposable.dispose();
       }
+
+      this.disposables.length = 0;
     }
   }
 

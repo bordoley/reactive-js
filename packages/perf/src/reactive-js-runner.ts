@@ -22,7 +22,7 @@ class PerfTestScheduler implements SchedulerLike {
     priority: number = 0,
   ): DisposableLike {
     this.queue.push(continuation);
-    return Disposable.empty();
+    return Disposable.create();
   }
 
   run() {

@@ -5,15 +5,14 @@ export interface DisposableLike {
 
 class TeardownDisposable implements DisposableLike {
   private readonly teardown: () => void;
-
   private _isDisposed = false;
-
-  get isDisposed(): boolean {
-    return this._isDisposed;
-  }
 
   constructor(teardown: () => void) {
     this.teardown = teardown;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
   }
 
   private tryTeardown() {
@@ -34,21 +33,6 @@ class TeardownDisposable implements DisposableLike {
   }
 }
 
-const create = (teardown: () => void): DisposableLike =>
-  new TeardownDisposable(teardown);
-
-const compose = (
-  disposable: DisposableLike,
-  ...disposables: DisposableLike[]
-): DisposableLike =>
-  create(() => {
-    disposable.dispose();
-
-    for (let disp of disposables) {
-      disp.dispose();
-    }
-  });
-
 class EmptyDisposable implements DisposableLike {
   private _isDisposed = false;
 
@@ -61,7 +45,38 @@ class EmptyDisposable implements DisposableLike {
   }
 }
 
-const empty = (): DisposableLike => new EmptyDisposable();
+const create = (teardown?: () => void): DisposableLike =>
+  teardown !== undefined
+    ? new TeardownDisposable(teardown)
+    : new EmptyDisposable();
+
+class ComposedDisposable implements DisposableLike {
+  private readonly disposables: DisposableLike[];
+  private _isDisposed = false;
+
+  constructor(disposables: DisposableLike[]) {
+    this.disposables = disposables;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
+  }
+
+  dispose() {
+    if (!this.isDisposed) {
+      this._isDisposed = true;
+      for (let disp of this.disposables) {
+        disp.dispose();
+      }
+    }
+  }
+}
+const compose = (
+  disposable1: DisposableLike,
+  disposable2: DisposableLike,
+  ...disposables: DisposableLike[]
+): DisposableLike =>
+  new ComposedDisposable([disposable1, disposable2, ...disposables]);
 
 const disposed: DisposableLike = {
   isDisposed: true,
@@ -71,7 +86,6 @@ const disposed: DisposableLike = {
 export const Disposable = {
   compose,
   create,
-  empty,
   disposed,
 };
 
