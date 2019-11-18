@@ -28,7 +28,7 @@ class CompositeDisposableImpl implements CompositeDisposableLike {
   add(disposable: DisposableLike) {
     if (this.isDisposed) {
       disposable.dispose();
-    } else {
+    } else if (this.disposables.indexOf(disposable) < 0) {
       this.disposables.push(disposable);
     }
     return this;
@@ -37,7 +37,7 @@ class CompositeDisposableImpl implements CompositeDisposableLike {
   remove(disposable: DisposableLike) {
     if (!this.isDisposed) {
       const index = this.disposables.indexOf(disposable);
-      if (index !== -1) {
+      if (index > -1) {
         const [old] = this.disposables.splice(index, 1);
         old.dispose();
       }
