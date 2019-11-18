@@ -22,4 +22,6 @@ export interface SchedulerLike {
   ): DisposableLike;
 }
 
-export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}
+export interface SchedulerResourceLike extends SchedulerLike {
+  disposable: DisposableLike;
+}
