@@ -56,12 +56,6 @@ export const fromArray = <T>(
   return { subscribe };
 };
 
-export const ofValue = <T>(
-  value: T,
-  delay?: number,
-  priority?: number,
-): ObservableLike<T> => fromArray([value], delay, priority);
-
 export const fromScheduledValues = <T>(
   value: [number | undefined, number | undefined, T],
   ...values: Array<[number | undefined, number | undefined, T]>
