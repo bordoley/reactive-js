@@ -21,7 +21,7 @@ type SchedulerCtx = {
 
 class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private static callback(ctx: SchedulerCtx) {
-    if (!ctx.scheduler.isDisposed) {
+    if (!ctx.scheduler.disposable.isDisposed) {
       ctx.scheduler.workqueue.push(ctx);
       if (ctx.scheduler.workqueue.length === 1) {
         ctx.scheduler.drainQueue();
@@ -29,7 +29,8 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     }
   }
 
-  private readonly disposable: DisposableLike;
+  readonly disposable: DisposableLike;
+
   private readonly workqueue: SchedulerCtx[] = [];
   private readonly timeout: number;
   private _inScheduledContinuation = false;
@@ -44,14 +45,6 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   public get inScheduledContinuation(): boolean {
     return this._inScheduledContinuation;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  dispose() {
-    this.disposable.dispose();
   }
 
   get now() {
@@ -85,7 +78,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   }
 
   private async drainQueue() {
-    while (this.workqueue.length > 0 && !this.isDisposed) {
+    while (this.workqueue.length > 0 && !this.disposable.isDisposed) {
       const ctx = this.workqueue.shift();
       this.executeContinuation(ctx as SchedulerCtx);
 
@@ -99,7 +92,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   private scheduleInternal(ctx: SchedulerCtx) {
     ctx.disposable.disposable.dispose();
 
-    if (this.isDisposed) {
+    if (this.disposable.isDisposed) {
       return;
     }
 
@@ -140,7 +133,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     delay: number = 0,
     _priority?: number,
   ): DisposableLike {
-    throwIfDisposed(this);
+    throwIfDisposed(this.disposable);
 
     const disposable = SerialDisposable.create();
     const shouldYield = (): boolean =>

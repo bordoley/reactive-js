@@ -22,15 +22,19 @@ type SchedulerCtx = {
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private readonly maxMicroTaskCount: number;
-  private readonly disposable = Disposable.create(() => {
+
+  readonly disposable = Disposable.create(() => {
     for (let key in this.timeQueue) {
       if (this.timeQueue.hasOwnProperty(key)) {
         delete this.timeQueue[key];
       }
     }
   });
+
   private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
+
   private _now = -1;
+
   private _inScheduledContinuation = false;
 
   constructor(maxMicroTaskCount: number) {
@@ -41,16 +45,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return this._inScheduledContinuation;
   }
 
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
   get now(): number {
     return this._now;
-  }
-
-  dispose() {
-    this.disposable.dispose();
   }
 
   private executeContinuation(ctx: SchedulerCtx) {
@@ -89,7 +85,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     delay: number = 0,
     _priority?: number,
   ): DisposableLike {
-    throwIfDisposed(this);
+    throwIfDisposed(this.disposable);
 
     const disposable = Disposable.create();
 
@@ -127,7 +123,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   }
 
   run() {
-    throwIfDisposed(this);
+    throwIfDisposed(this.disposable);
 
     while (this.moveNext()) {
       const workQueue = this.next;
@@ -138,14 +134,49 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
       }
     }
 
-    this.dispose();
+    this.disposable.dispose();
   }
 }
 
-const create = (
-  maxMicroTaskCount: number = Number.MAX_SAFE_INTEGER,
-): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskCount);
-
 export const VirtualTimeScheduler = {
-  create,
+  create: (
+    maxMicroTaskCount: number = Number.MAX_SAFE_INTEGER,
+  ): VirtualTimeSchedulerLike =>
+    new VirtualTimeSchedulerImpl(maxMicroTaskCount),
+};
+
+class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
+  readonly disposable = Disposable.create(() => {
+    this.queue.length = 0;
+  });
+
+  private readonly queue: SchedulerContinuation[] = [];
+  readonly now = 0;
+  readonly inScheduledContinuation = true;
+
+  static shouldYield = () => false;
+
+  schedule(
+    continuation: SchedulerContinuation,
+    delay: number = 0,
+    priority: number = 0,
+  ): DisposableLike {
+    this.queue.push(continuation);
+    return Disposable.create();
+  }
+
+  run() {
+    throwIfDisposed(this.disposable);
+
+    let next;
+    while ((next = this.queue.shift()) !== undefined) {
+      next(PerfTestingSchedulerImpl.shouldYield);
+    }
+
+    this.disposable.dispose();
+  }
+}
+
+export const PerfTestingScheduler = {
+  create: (): VirtualTimeSchedulerLike => new PerfTestingSchedulerImpl(),
 };
