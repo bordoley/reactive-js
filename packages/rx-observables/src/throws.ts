@@ -1,4 +1,4 @@
-import { Observable, ObservableLike } from "@reactive-js/rx-core";
+import { ObserverLike, Observable, ObservableLike } from "@reactive-js/rx-core";
 
 export const throws = <T>(
   error: Error,
@@ -6,8 +6,8 @@ export const throws = <T>(
   priority?: number,
 ): ObservableLike<T> =>
   Observable.create(
-    subscriber => {
-      subscriber.complete(error);
+    (observer: ObserverLike<T>) => {
+      observer.complete(error);
     },
     delay,
     priority,

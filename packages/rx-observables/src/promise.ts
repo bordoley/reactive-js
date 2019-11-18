@@ -1,8 +1,4 @@
-import {
-  Observable,
-  ObservableLike,
-  ObserverLike,
-} from "@reactive-js/rx-core";
+import { Observable, ObservableLike, ObserverLike } from "@reactive-js/rx-core";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
