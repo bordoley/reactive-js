@@ -1,6 +1,7 @@
 import {
   DisposableLike,
   Disposable,
+  DisposableOrTeardown,
   SerialDisposableLike,
   SerialDisposable,
 } from "@reactive-js/disposables";
@@ -48,11 +49,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   private readonly continuation: SchedulerContinuationResult;
   private readonly priority?: number;
   private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
-  private readonly queueClearDisposable: DisposableLike = Disposable.create(
-    () => {
-      this.nextQueue.length = 0;
-    },
-  );
+  private readonly queueClearDisposable: DisposableLike;
 
   private readonly nextQueue: Array<StateUpdater<T>> = [];
   private isComplete = false;
@@ -68,6 +65,13 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       continuation: this.drainQueue,
       priority: this.priority,
     };
+
+    this.queueClearDisposable = Disposable.create()
+    this.queueClearDisposable.add(
+      () => {
+        this.nextQueue.length = 0;
+      },
+    );
 
     this.add(this.schedulerSubscription);
     this.add(this.queueClearDisposable);
@@ -139,7 +143,7 @@ const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
   private readonly delegate: ObservableLike<T>;
-  readonly disposable: DisposableLike;
+  private readonly disposable: DisposableLike;
 
   constructor(
     initialState: T,
@@ -158,10 +162,9 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
       priority,
     );
 
-    this.disposable = Disposable.compose(
-      this.dispatcher.disposable,
-      connect(this.delegate, scheduler),
-    );
+    this.disposable = Disposable.create();
+    this.disposable.add(this.dispatcher);
+    this.disposable.add(connect(this.delegate, scheduler));
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -170,6 +173,23 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
   dispatch(updater: StateUpdater<T>) {
     this.dispatcher.dispatch(updater);
+  }
+
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 }
 

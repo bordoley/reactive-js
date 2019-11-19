@@ -1,4 +1,4 @@
-import { CompositeDisposable, DisposableLike } from "@reactive-js/disposables";
+import { Disposable, DisposableLike, DisposableOrTeardown} from "@reactive-js/disposables";
 
 import {
   AutoDisposingSubscriber,
@@ -19,7 +19,7 @@ export const connect = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
 ): DisposableLike => {
-  const subscription = CompositeDisposable.create();
+  const subscription = Disposable.create();
   const subscriber = AutoDisposingSubscriber.create(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.isConnected = true;
@@ -136,9 +136,7 @@ function lift(
   return new LiftedObservable(sourceSource, allOperators);
 }
 
-export interface ObservableResourceLike<T> extends ObservableLike<T> {
-  readonly disposable: DisposableLike;
-}
+export interface ObservableResourceLike<T> extends ObservableLike<T>, DisposableLike {}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   readonly observable: ObservableLike<T>;
@@ -147,6 +145,22 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
     this.observable = observable;
     this.disposable = disposable;
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {
@@ -237,7 +251,9 @@ function liftResource(
     ...operators,
   ] as any);
 
-  return new LiftedObservableResource(observable, source.disposable);
+  const disposable = source instanceof LiftedObservableResource ? source.disposable : source;
+
+  return new LiftedObservableResource(observable, disposable);
 }
 
 export const ObservableResource = {
@@ -245,7 +261,7 @@ export const ObservableResource = {
 };
 
 const create = <T>(
-  onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void,
+  onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
   priority?: number,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {

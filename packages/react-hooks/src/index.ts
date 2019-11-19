@@ -70,7 +70,7 @@ export const useObservableResource = <T>(
   deps: readonly any[] | undefined,
 ): T | undefined => {
   const observableResource = useMemo(factory, deps);
-  useDispose(observableResource.disposable);
+  useDispose(observableResource);
   return useObservable(() => observableResource, [observableResource]);
 };
 
@@ -79,7 +79,7 @@ export const useAsyncIterator = <TReq, T>(
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useMemo(factory, deps);
-  useDispose(iterator.disposable);
+  useDispose(iterator);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
   const value = useObservable(() => iterator, [iterator]);
   return [value, dispatch];

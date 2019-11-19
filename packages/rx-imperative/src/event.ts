@@ -5,6 +5,8 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
+import { DisposableOrTeardown} from "@reactive-js/disposables";
+
 export interface EventLike<T> extends ObservableLike<T> {
   dispatch(event: T): void;
 }
@@ -20,8 +22,20 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
     this.subject = Subject.create(priority);
   }
 
-  get disposable() {
-    return this.subject.disposable;
+  get isDisposed() {
+    return this.subject.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.subject.add(disposable);
+  }
+
+  dispose() {
+    this.subject.dispose();
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.subject.remove(disposable);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

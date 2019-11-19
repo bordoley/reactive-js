@@ -5,6 +5,7 @@ import {
 import {
   Disposable,
   DisposableLike,
+  DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposables";
 
@@ -23,13 +24,7 @@ type SchedulerCtx = {
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private readonly maxMicroTaskCount: number;
 
-  private readonly disposable = Disposable.create(() => {
-    for (let key in this.timeQueue) {
-      if (this.timeQueue.hasOwnProperty(key)) {
-        delete this.timeQueue[key];
-      }
-    }
-  });
+  private readonly disposable: DisposableLike;
 
   private readonly timeQueue: { [key: number]: Array<SchedulerCtx> } = {};
 
@@ -39,6 +34,15 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   constructor(maxMicroTaskCount: number) {
     this.maxMicroTaskCount = maxMicroTaskCount;
+
+    this.disposable = Disposable.create();
+    this.disposable.add(() => {
+      for (let key in this.timeQueue) {
+        if (this.timeQueue.hasOwnProperty(key)) {
+          delete this.timeQueue[key];
+        }
+      }
+    });
   }
 
   dispose() {
@@ -55,6 +59,14 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   get now(): number {
     return this._now;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 
   private executeContinuation(ctx: SchedulerCtx) {
@@ -154,18 +166,30 @@ export const VirtualTimeScheduler = {
 };
 
 class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
-  readonly disposable = Disposable.create(() => {
-    this.queue.length = 0;
-  });
-
+  private readonly disposable: DisposableLike;
   private readonly queue: SchedulerContinuation[] = [];
   readonly now = 0;
   readonly inScheduledContinuation = true;
+
+  constructor() {
+    this.disposable = Disposable.create();
+    this.disposable.add(() => {
+      this.queue.length = 0;
+    });
+  }
 
   static shouldYield = () => false;
 
   get isDisposed() {
     return this.disposable.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 
   dispose() {

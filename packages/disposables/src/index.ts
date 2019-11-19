@@ -1,8 +1,3 @@
-export { DisposableLike, Disposable, throwIfDisposed } from "./disposable";
-
-export {
-  CompositeDisposableLike,
-  CompositeDisposable,
-} from "./compositeDisposable";
+export { DisposableLike, Disposable, DisposableOrTeardown, throwIfDisposed } from "./disposable";
 
 export { SerialDisposableLike, SerialDisposable } from "./serialDisposable";

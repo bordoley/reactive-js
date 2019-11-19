@@ -7,6 +7,7 @@ import {
   Disposable,
   SerialDisposable,
   DisposableLike,
+  DisposableOrTeardown,
   SerialDisposableLike,
   throwIfDisposed,
 } from "@reactive-js/disposables";
@@ -37,9 +38,18 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   constructor(timeout: number) {
     this.timeout = timeout;
-    this.disposable = Disposable.create(() => {
+    this.disposable = Disposable.create()
+    this.disposable.add(() => {
       this.workqueue.length = 0;
     });
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 
   dispose() {
@@ -123,13 +133,15 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         ctx.delay,
         ctx,
       );
-      ctx.disposable.disposable = Disposable.create(() =>
+      ctx.disposable.disposable = Disposable.create();
+      ctx.disposable.disposable.add(() =>
         clearInterval(timeout),
       );
     } else {
       // FIXME: Shim setImmediate for the browser case or require a polyfill.
       const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
-      ctx.disposable.disposable = Disposable.create(() =>
+      ctx.disposable.disposable = Disposable.create();
+      ctx.disposable.disposable.add(() =>
         clearImmediate(immediate),
       );
     }

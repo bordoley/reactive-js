@@ -1,25 +1,21 @@
-import { DisposableLike, Disposable } from "./disposable";
+import { DisposableLike, DisposableOrTeardown, Disposable } from "./disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
   disposable: DisposableLike;
 }
 
 class SerialDisposableImpl implements SerialDisposableLike {
-  private _disposable: DisposableLike;
-  private _isDisposed = false;
-
-  constructor(disposable: DisposableLike) {
-    this._disposable = disposable;
-  }
+  private _disposable: DisposableLike = Disposable.disposed;
+  private readonly delegate = Disposable.create();
 
   get isDisposed(): boolean {
-    return this._isDisposed;
+    return this.delegate.isDisposed;
   }
 
   dispose() {
     if (!this.isDisposed) {
-      this._isDisposed = true;
       this.disposable.dispose();
+      this.delegate.dispose()
     }
   }
 
@@ -28,19 +24,28 @@ class SerialDisposableImpl implements SerialDisposableLike {
   }
 
   set disposable(newDisposable: DisposableLike) {
-    const oldDisposable = this.disposable;
-    this._disposable = newDisposable;
-
-    if (oldDisposable !== newDisposable) {
-      oldDisposable.dispose();
-    }
-
     if (this.isDisposed) {
       newDisposable.dispose();
+    } else {
+      const oldDisposable = this.disposable;
+      this._disposable = newDisposable;
+
+      if (oldDisposable !== newDisposable) {
+        this.add(newDisposable);
+        this.remove(oldDisposable);
+      }
     }
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.delegate.add(disposable);
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.delegate.remove(disposable);
   }
 }
 
 export const SerialDisposable = {
-  create: () => new SerialDisposableImpl(Disposable.disposed),
+  create: () => new SerialDisposableImpl(),
 };

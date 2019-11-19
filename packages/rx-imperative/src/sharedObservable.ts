@@ -41,7 +41,7 @@ class SharedObservable<T> implements ObservableLike<T> {
       if (this.refCount === 0) {
         this.sourceSubscription.dispose();
         this.sourceSubscription = Disposable.disposed;
-        (this.subject as SubjectLike<T>).disposable.dispose();
+        (this.subject as SubjectLike<T>).dispose();
         this.subject = undefined;
       }
     };
@@ -64,7 +64,7 @@ class SharedObservable<T> implements ObservableLike<T> {
       subscriber,
     );
 
-    subscriber.add(Disposable.create(this.teardown));
+    subscriber.add(this.teardown);
     subscriber.add(innerSubscription);
   }
 }

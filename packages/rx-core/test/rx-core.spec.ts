@@ -11,11 +11,11 @@ import {
   ObservableLike,
   Operator,
 } from "../src/index";
-import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
+import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = CompositeDisposable.create();
+  const subscription = Disposable.create();
 
   return {
     get isDisposed() {
@@ -173,7 +173,7 @@ describe("Subscriber", () => {
   describe("toSafeObserver", () => {
     test("next", () => {
       const scheduler = VirtualTimeScheduler.create(2);
-      const subscription = CompositeDisposable.create();
+      const subscription = Disposable.create();
       const subscriber: SubscriberLike<number> = {
         get isDisposed() {
           return subscription.isDisposed;

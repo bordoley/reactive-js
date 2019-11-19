@@ -26,9 +26,9 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.maxConcurrency = maxConcurrency;
 
     this.add(
-      Disposable.create(() => {
+      () => {
         this.queue.length = 0;
-      }),
+      },
     );
   }
 
