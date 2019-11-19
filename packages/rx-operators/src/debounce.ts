@@ -45,8 +45,8 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.debounceNext();
     }
 
-    this.delegate.complete(error);
     this.remove(this.innerSubscription);
+    this.delegate.complete(error);
   }
 
   private schedulerContinuation: SchedulerContinuation = _shouldYield => {
