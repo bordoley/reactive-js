@@ -1,4 +1,8 @@
-import { Disposable, DisposableLike, DisposableOrTeardown} from "@reactive-js/disposables";
+import {
+  Disposable,
+  DisposableLike,
+  DisposableOrTeardown,
+} from "@reactive-js/disposables";
 
 import {
   AutoDisposingSubscriber,
@@ -136,7 +140,9 @@ function lift(
   return new LiftedObservable(sourceSource, allOperators);
 }
 
-export interface ObservableResourceLike<T> extends ObservableLike<T>, DisposableLike {}
+export interface ObservableResourceLike<T>
+  extends ObservableLike<T>,
+    DisposableLike {}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   readonly observable: ObservableLike<T>;
@@ -251,7 +257,8 @@ function liftResource(
     ...operators,
   ] as any);
 
-  const disposable = source instanceof LiftedObservableResource ? source.disposable : source;
+  const disposable =
+    source instanceof LiftedObservableResource ? source.disposable : source;
 
   return new LiftedObservableResource(observable, disposable);
 }

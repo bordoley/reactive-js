@@ -1,8 +1,4 @@
-import {
-  Disposable,
-  SerialDisposable,
-  throwIfDisposed,
-} from "../src/index";
+import { Disposable, SerialDisposable, throwIfDisposed } from "../src/index";
 
 test("throwIfDisposed", () => {
   expect(() => throwIfDisposed(Disposable.disposed)).toThrow();

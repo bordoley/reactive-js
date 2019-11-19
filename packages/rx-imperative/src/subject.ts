@@ -1,11 +1,14 @@
-import { Disposable, DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
+import {
+  Disposable,
+  DisposableLike,
+  DisposableOrTeardown,
+} from "@reactive-js/disposables";
 
 import {
   ObservableResourceLike,
   ObserverLike,
   Subscriber,
   SubscriberLike,
-
 } from "@reactive-js/rx-core";
 
 export interface SubjectLike<T>

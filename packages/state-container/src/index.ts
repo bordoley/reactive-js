@@ -107,11 +107,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedule(
-        this.drainQueue,
-        0,
-        this.priority,
-      );
+      this.schedule(this.drainQueue, 0, this.priority);
     }
   }
 
@@ -165,7 +161,6 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   dispatch(updater: StateUpdater<T>) {
     this.dispatcher.dispatch(updater);
   }
-
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;

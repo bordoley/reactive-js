@@ -76,7 +76,11 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
     delay?: number,
     priority?: number,
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(continuation, delay, priority);
+    const schedulerSubscription = this.scheduler.schedule(
+      continuation,
+      delay,
+      priority,
+    );
     this.add(schedulerSubscription);
     schedulerSubscription.add(() => this.remove(schedulerSubscription));
     return schedulerSubscription;
@@ -114,34 +118,36 @@ export const AutoDisposingSubscriber = {
     new AutoDisposingSubscriberImpl(scheduler, subscription),
 };
 
-export abstract class DelegatingSubscriber<TA, TB>
-  extends AbstractSubjectImpl<TA>  {
+export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
+  TA
+> {
   private readonly source: SubscriberLike<any>;
   readonly delegate: ObserverLike<TB>;
 
   private isStopped = false;
 
   constructor(delegate: SubscriberLike<TB>) {
-    super(delegate instanceof DelegatingSubscriber
-      ? delegate.scheduler
-      : delegate instanceof AutoDisposingSubscriberImpl
-      ? delegate.scheduler
-      : delegate,
+    super(
+      delegate instanceof DelegatingSubscriber
+        ? delegate.scheduler
+        : delegate instanceof AutoDisposingSubscriberImpl
+        ? delegate.scheduler
+        : delegate,
 
       delegate instanceof DelegatingSubscriber
-      ? delegate.subscription
-      : delegate instanceof AutoDisposingSubscriberImpl
-      ? delegate.subscription
-      : delegate);
+        ? delegate.subscription
+        : delegate instanceof AutoDisposingSubscriberImpl
+        ? delegate.subscription
+        : delegate,
+    );
     this.delegate = delegate;
 
     this.source =
       delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
 
     this.add(() => {
-        this.isStopped = true;
-      },
-    );
+      this.isStopped = true;
+    });
   }
 
   get isConnected() {
@@ -264,11 +270,7 @@ class SafeObserver<T> implements ObserverLike<T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.subscriber.schedule(
-        this.drainQueue,
-        0,
-        this.priority,
-      );
+      this.subscriber.schedule(this.drainQueue, 0, this.priority);
     }
   }
 
