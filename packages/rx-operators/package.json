@@ -16,9 +16,22 @@
     "type": "git",
     "url": "https://github.com/bordoley/rx-min.git"
   },
+  "jest": {
+    "preset": "ts-jest"
+  },
   "dependencies": {
     "@reactive-js/disposables": "0.0.0",
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/scheduler": "0.0.0"
+  },
+  "devDependencies": {
+    "@reactive-js/virtualtime-scheduler": "0.0.0",
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test-coverage": "jest --coverage"
   }
 }

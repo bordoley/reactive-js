@@ -17,8 +17,6 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
     const shouldEmit =
       this.prev === undefined || !this.equals(this.prev[0], data);
     if (shouldEmit) {
-      this.prev = [data];
-
       if (this.prev === undefined) {
         this.prev = [data];
       } else {
