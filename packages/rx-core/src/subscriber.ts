@@ -103,7 +103,6 @@ export const AutoDisposingSubscriber = {
 
 export abstract class DelegatingSubscriber<TA, TB>
   implements SubscriberLike<TA> {
-
   private readonly scheduler: SchedulerLike;
   private readonly subscription: CompositeDisposableLike;
   private readonly source: SubscriberLike<any>;

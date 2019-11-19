@@ -175,6 +175,45 @@ test("scan", () => {
   expect(subscriber.complete).toBeCalledWith(error);
 });
 
+test("switch", () => {
+  const scheduler = VirtualTimeScheduler.create();
+
+  const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+  const switchObserver = Subscriber.toSafeObserver(switch_()(subscriber));
+
+  const innerObservable = Observable.create(observer => {
+    observer.next(1);
+    observer.next(2);
+  });
+
+  const error = new Error();
+
+  scheduler.schedule(_ => switchObserver.next(innerObservable), 1);
+  scheduler.schedule(_ => switchObserver.next(innerObservable), 2);
+
+  const innerObservableWithError = Observable.create(observer => {
+    observer.next(1);
+    observer.next(2);
+    observer.complete(error);
+  });
+
+  scheduler.schedule(_ => switchObserver.next(innerObservableWithError), 3);
+
+  scheduler.run();
+
+  expect(subscriber.next).toBeCalledTimes(6);
+  expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
+  expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
+  expect(subscriber.next).toHaveBeenNthCalledWith(3, 1);
+  expect(subscriber.next).toHaveBeenNthCalledWith(4, 2);
+  expect(subscriber.next).toHaveBeenNthCalledWith(5, 1);
+  expect(subscriber.next).toHaveBeenNthCalledWith(6, 2);
+
+  expect(subscriber.complete).toBeCalledTimes(1);
+  expect(subscriber.complete).toBeCalledWith(error);
+});
+
 test("withLatestFrom", () => {
   const scheduler = VirtualTimeScheduler.create();
   const error = new Error();
