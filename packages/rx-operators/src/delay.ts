@@ -9,7 +9,7 @@ import {
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
-import { Disposable, SerialDisposable } from "@reactive-js/disposables";
+import { SerialDisposable } from "@reactive-js/disposables";
 
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;

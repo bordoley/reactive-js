@@ -101,8 +101,10 @@ export const merge = <T>(
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 };
 
-export const concat = <T>(): Operator<ObservableLike<T>, T> =>
-  merge({ maxConcurrency: 1 });
+export const concat = <T>(
+  maxBufferSize = Number.MAX_SAFE_INTEGER,
+): Operator<ObservableLike<T>, T> =>
+  merge({ maxBufferSize, maxConcurrency: 1 });
 
 export const exhaust = <T>(): Operator<ObservableLike<T>, T> =>
   merge({ maxBufferSize: 1, maxConcurrency: 1 });

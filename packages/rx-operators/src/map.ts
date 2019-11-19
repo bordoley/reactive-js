@@ -24,15 +24,6 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): Operator<TA, TB> => subscriber => {
-  if (subscriber instanceof MapSubscriber) {
-    const delegate = subscriber.delegate;
-    const subscriberMapper = subscriber.mapper;
-    const fusionMapper = (data: TA) => subscriberMapper(mapper(data));
-    return new MapSubscriber(delegate, fusionMapper);
-  } else {
-    return new MapSubscriber(subscriber, mapper);
-  }
-};
+): Operator<TA, TB> => subscriber => new MapSubscriber(subscriber, mapper);
 
 export const mapTo = <TA, TB>(value: TB): Operator<TA, TB> => map(_ => value);
