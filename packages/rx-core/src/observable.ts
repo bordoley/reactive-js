@@ -257,7 +257,7 @@ const create = <T>(
     try {
       const onSubscribeSubscription = onSubscribe(observer);
       if (onSubscribeSubscription !== undefined) {
-        subscriber.subscription.add(onSubscribeSubscription);
+        subscriber.add(onSubscribeSubscription);
       }
     } catch (error) {
       observer.complete(error);

@@ -16,19 +16,22 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
-const createMockScheduler = (): SchedulerLike => ({
-  inScheduledContinuation: true,
-  now: 0,
-  schedule: (c, d?, p?) => Disposable.disposed,
-});
+const createMockSubscriber = <T>(): SubscriberLike<T> => {
+  const subscription = CompositeDisposable.create();
 
-const createMockSubscriber = <T>(): SubscriberLike<T> => ({
-  isConnected: true,
-  scheduler: createMockScheduler(),
-  subscription: CompositeDisposable.create(),
-  next: jest.fn(),
-  complete: jest.fn(),
-});
+  return  {
+    get isDisposed() { return subscription.isDisposed },
+    add: disp => subscription.add(disp),
+    dispose: () => subscription.dispose(),
+    remove: disp => subscription.remove(disp),
+    isConnected: true,
+    inScheduledContinuation: true,
+    now: 0,
+    schedule: (c, d?, p?) => Disposable.disposed,
+    next: jest.fn(),
+    complete: jest.fn(),
+  };
+};
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),
@@ -91,7 +94,7 @@ describe("observe", () => {
       const observer = createMockObserver();
       const delegatedSubscriber = observe(observer)(subscriber);
 
-      (subscriber.scheduler as any).inScheduledContinuation = false;
+      (subscriber as any).inScheduledContinuation = false;
 
       expect(() => delegatedSubscriber.next("a")).toThrow();
     });
@@ -139,7 +142,7 @@ describe("observe", () => {
       const observer = createMockObserver();
       const delegatedSubscriber = observe(observer)(subscriber);
 
-      (subscriber.scheduler as any).inScheduledContinuation = false;
+      (subscriber as any).inScheduledContinuation = false;
 
       expect(() => delegatedSubscriber.complete()).toThrow();
     });
@@ -150,7 +153,7 @@ describe("observe", () => {
     const observer = createMockObserver();
     const delegatedSubscriber = observe(observer)(subscriber);
 
-    subscriber.subscription.dispose();
+    subscriber.dispose();
     delegatedSubscriber.next("a");
     expect(observer.next).toBeCalledTimes(0);
   });
@@ -170,10 +173,16 @@ describe("Subscriber", () => {
   describe("toSafeObserver", () => {
     test("next", () => {
       const scheduler = VirtualTimeScheduler.create(2);
-      const subscriber = {
+      const subscription = CompositeDisposable.create();
+      const subscriber: SubscriberLike<number> = {
+        get isDisposed() { return subscription.isDisposed },
+        add: disp => subscription.add(disp),
+        dispose: () => subscription.dispose(),
+        remove: disp => subscription.remove(disp),
         isConnected: true,
-        scheduler,
-        subscription: CompositeDisposable.create(),
+        get inScheduledContinuation() { return scheduler.inScheduledContinuation },
+        get now() { return scheduler.now; },
+        schedule: (c, d?, p?) => scheduler.schedule(c,d,p),
         next: jest.fn(),
         complete: jest.fn(),
       };

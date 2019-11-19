@@ -1,8 +1,8 @@
 import { DisposableLike } from "./disposable";
 
 export interface CompositeDisposableLike extends DisposableLike {
-  add(disposable: DisposableLike): CompositeDisposableLike;
-  remove(disposable: DisposableLike): CompositeDisposableLike;
+  add(disposable: DisposableLike): void;
+  remove(disposable: DisposableLike): void;
 }
 
 class CompositeDisposableImpl implements CompositeDisposableLike {

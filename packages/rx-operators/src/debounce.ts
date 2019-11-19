@@ -22,7 +22,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
     this.dueTime = dueTime;
     this.priority = priority;
-    this.subscription.add(this.innerSubscription);
+    this.add(this.innerSubscription);
   }
 
   private debounceNext() {
@@ -46,7 +46,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
 
     this.delegate.complete(error);
-    this.subscription.remove(this.innerSubscription);
+    this.remove(this.innerSubscription);
   }
 
   private schedulerContinuation: SchedulerContinuation = _shouldYield => {
@@ -61,7 +61,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.value = [data];
     }
 
-    this.innerSubscription.disposable = this.scheduler.schedule(
+    this.innerSubscription.disposable = this.schedule(
       this.schedulerContinuation,
       this.dueTime,
       this.priority,

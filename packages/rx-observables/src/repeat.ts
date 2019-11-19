@@ -38,7 +38,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
       this.parent.innerSubscription.disposable = connect(
         Observable.lift(this.parent.observable, observe(this.parent.observer)),
-        this.parent.scheduler,
+        this.parent,
       );
     }
 
@@ -61,7 +61,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
       if (shouldComplete) {
         this.parent.delegate.complete(error);
-        this.parent.subscription.remove(this.parent.innerSubscription);
+        this.parent.remove(this.parent.innerSubscription);
       } else {
         this.setupSubscription();
       }
@@ -78,7 +78,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.shouldRepeat = shouldRepeat;
 
     this.innerSubscription = SerialDisposable.create();
-    this.subscription.add(this.innerSubscription);
+    this.add(this.innerSubscription);
     this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 

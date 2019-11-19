@@ -56,12 +56,11 @@ class SharedObservable<T> implements ObservableLike<T> {
 
     const innerSubscription = connect(
       Observable.lift(subject, observe(subscriber)),
-      subscriber.scheduler,
+      subscriber,
     );
 
-    subscriber.subscription
-      .add(Disposable.create(this.teardown))
-      .add(innerSubscription);
+    subscriber.add(Disposable.create(this.teardown));
+    subscriber.add(innerSubscription);
 
     if (this.refCount === 1) {
       this.sourceSubscription = connect(

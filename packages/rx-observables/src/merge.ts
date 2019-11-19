@@ -56,7 +56,7 @@ export const merge = <T>(
     for (let observable of observables) {
       let innerSubscription = Disposable.disposed;
       const onComplete = () => {
-        subscriber.subscription.remove(innerSubscription);
+        subscriber.remove(innerSubscription);
       };
 
       const observer = new MergeObserver(
@@ -68,10 +68,10 @@ export const merge = <T>(
 
       innerSubscription = connect(
         Observable.lift(observable, observe(observer)),
-        subscriber.scheduler,
+        subscriber,
       );
 
-      subscriber.subscription.add(innerSubscription);
+      subscriber.add(innerSubscription);
     }
   };
 

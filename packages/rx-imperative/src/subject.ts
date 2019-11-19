@@ -73,7 +73,7 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
         }
       });
 
-      subscriber.subscription.add(disposable);
+      subscriber.add(disposable);
 
       this.onSubscribe(observer);
     }

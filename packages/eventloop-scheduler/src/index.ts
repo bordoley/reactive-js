@@ -29,8 +29,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     }
   }
 
-  readonly disposable: DisposableLike;
-
+  private readonly disposable: DisposableLike;
   private readonly workqueue: SchedulerCtx[] = [];
   private readonly timeout: number;
   private _inScheduledContinuation = false;
@@ -43,7 +42,15 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     });
   }
 
-  public get inScheduledContinuation(): boolean {
+  dispose() {
+    return this.disposable.dispose();
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  get inScheduledContinuation(): boolean {
     return this._inScheduledContinuation;
   }
 

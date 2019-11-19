@@ -23,7 +23,7 @@ type SchedulerCtx = {
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   private readonly maxMicroTaskCount: number;
 
-  readonly disposable = Disposable.create(() => {
+  private readonly disposable = Disposable.create(() => {
     for (let key in this.timeQueue) {
       if (this.timeQueue.hasOwnProperty(key)) {
         delete this.timeQueue[key];
@@ -41,8 +41,16 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     this.maxMicroTaskCount = maxMicroTaskCount;
   }
 
-  public get inScheduledContinuation(): boolean {
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  get inScheduledContinuation(): boolean {
     return this._inScheduledContinuation;
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
 
   get now(): number {
@@ -155,6 +163,14 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
   readonly inScheduledContinuation = true;
 
   static shouldYield = () => false;
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
 
   schedule(
     continuation: SchedulerContinuation,
