@@ -45,11 +45,7 @@ export const fromArray = <T>(
 
     continuationResult = { continuation, delay, priority };
 
-    schedulerSubscription = subscriber.schedule(
-      continuation,
-      delay,
-      priority,
-    );
+    schedulerSubscription = subscriber.schedule(continuation, delay, priority);
     subscriber.add(schedulerSubscription);
   };
 
@@ -95,11 +91,7 @@ export const fromScheduledValues = <T>(
     };
 
     const [delay, priority, _] = delayedValues[index];
-    innerSubscription = subscriber.schedule(
-      continuation,
-      delay,
-      priority,
-    );
+    innerSubscription = subscriber.schedule(continuation, delay, priority);
 
     subscriber.add(innerSubscription);
   };

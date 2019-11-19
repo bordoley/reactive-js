@@ -12,15 +12,15 @@ import {
   Operator,
 } from "../src/index";
 import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
-import { SchedulerLike } from "@reactive-js/scheduler";
-
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
   const subscription = CompositeDisposable.create();
 
-  return  {
-    get isDisposed() { return subscription.isDisposed },
+  return {
+    get isDisposed() {
+      return subscription.isDisposed;
+    },
     add: disp => subscription.add(disp),
     dispose: () => subscription.dispose(),
     remove: disp => subscription.remove(disp),
@@ -175,14 +175,20 @@ describe("Subscriber", () => {
       const scheduler = VirtualTimeScheduler.create(2);
       const subscription = CompositeDisposable.create();
       const subscriber: SubscriberLike<number> = {
-        get isDisposed() { return subscription.isDisposed },
+        get isDisposed() {
+          return subscription.isDisposed;
+        },
         add: disp => subscription.add(disp),
         dispose: () => subscription.dispose(),
         remove: disp => subscription.remove(disp),
         isConnected: true,
-        get inScheduledContinuation() { return scheduler.inScheduledContinuation },
-        get now() { return scheduler.now; },
-        schedule: (c, d?, p?) => scheduler.schedule(c,d,p),
+        get inScheduledContinuation() {
+          return scheduler.inScheduledContinuation;
+        },
+        get now() {
+          return scheduler.now;
+        },
+        schedule: (c, d?, p?) => scheduler.schedule(c, d, p),
         next: jest.fn(),
         complete: jest.fn(),
       };

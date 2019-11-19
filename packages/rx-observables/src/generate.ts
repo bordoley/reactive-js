@@ -50,9 +50,7 @@ export const generate = <T>(
 
     continuationResult = { continuation, delay, priority };
 
-    subscriber.add(
-      subscriber.schedule(continuation, delay, priority),
-    );
+    subscriber.add(subscriber.schedule(continuation, delay, priority));
   };
 
   return { subscribe };
