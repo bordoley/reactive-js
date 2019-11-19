@@ -38,9 +38,9 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
-export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  readonly scheduler: SchedulerLike;
-  readonly subscription: CompositeDisposableLike;
+class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
+  scheduler: SchedulerLike;
+  subscription: CompositeDisposableLike;
 
   isConnected = false;
 
@@ -96,20 +96,41 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
   }
 }
 
+export const AutoDisposingSubscriber = {
+  create: (scheduler: SchedulerLike, subscription: CompositeDisposableLike) =>
+    new AutoDisposingSubscriberImpl(scheduler, subscription),
+};
+
 export abstract class DelegatingSubscriber<TA, TB>
   implements SubscriberLike<TA> {
-  private isStopped = false;
+
+  private readonly scheduler: SchedulerLike;
+  private readonly subscription: CompositeDisposableLike;
   private readonly source: SubscriberLike<any>;
 
   readonly delegate: SubscriberLike<TB>;
 
+  private isStopped = false;
+
   constructor(delegate: SubscriberLike<TB>) {
     this.delegate = delegate;
 
-    // We track the source to improve the performance
-    // of the isConnected lookup that happens in notify.
     this.source =
       delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
+
+    this.scheduler =
+      delegate instanceof DelegatingSubscriber
+        ? delegate.scheduler
+        : delegate instanceof AutoDisposingSubscriberImpl
+        ? delegate.scheduler
+        : delegate;
+
+    this.subscription =
+      delegate instanceof DelegatingSubscriber
+        ? delegate.subscription
+        : delegate instanceof AutoDisposingSubscriberImpl
+        ? delegate.subscription
+        : delegate;
 
     this.source.add(
       Disposable.create(() => {
@@ -119,7 +140,7 @@ export abstract class DelegatingSubscriber<TA, TB>
   }
 
   get inScheduledContinuation(): boolean {
-    return this.source.inScheduledContinuation;
+    return this.scheduler.inScheduledContinuation;
   }
 
   get isConnected() {
@@ -127,23 +148,23 @@ export abstract class DelegatingSubscriber<TA, TB>
   }
 
   get isDisposed() {
-    return this.source.isDisposed;
+    return this.subscription.isDisposed;
   }
 
   get now() {
-    return this.source.now;
+    return this.scheduler.now;
   }
 
   add(disposable: DisposableLike) {
-    this.source.add(disposable);
+    this.subscription.add(disposable);
   }
 
   dispose() {
-    this.source.dispose();
+    this.subscription.dispose();
   }
 
   remove(disposable: DisposableLike) {
-    this.source.remove(disposable);
+    this.subscription.remove(disposable);
   }
 
   schedule(
@@ -151,7 +172,7 @@ export abstract class DelegatingSubscriber<TA, TB>
     delay?: number,
     priority?: number,
   ): DisposableLike {
-    return this.source.schedule(continuation, delay, priority);
+    return this.scheduler.schedule(continuation, delay, priority);
   }
 
   protected abstract onNext(data: TA): void;

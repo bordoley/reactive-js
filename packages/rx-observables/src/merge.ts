@@ -9,21 +9,20 @@ import {
 import { Disposable, DisposableLike } from "@reactive-js/disposables";
 
 class MergeObserver<T> implements ObserverLike<T> {
-  private readonly delegate: ObserverLike<T>;
+  private readonly delegate: SubscriberLike<T>;
   private readonly totalCount: number;
   private readonly countRef: [number];
-  private readonly onComplete: () => void;
+
+  innerSubscription: DisposableLike = Disposable.disposed;
 
   constructor(
-    delegate: ObserverLike<T>,
+    delegate: SubscriberLike<T>,
     totalCount: number,
     countRef: [number],
-    onComplete: () => void,
   ) {
     this.delegate = delegate;
     this.totalCount = totalCount;
     this.countRef = countRef;
-    this.onComplete = onComplete;
   }
 
   next(data: T) {
@@ -40,7 +39,7 @@ class MergeObserver<T> implements ObserverLike<T> {
       }
     }
 
-    this.onComplete();
+    this.delegate.remove(this.innerSubscription);
   }
 }
 
@@ -54,24 +53,18 @@ export const merge = <T>(
     const countRef: [number] = [0];
 
     for (let observable of observables) {
-      let innerSubscription = Disposable.disposed;
-      const onComplete = () => {
-        subscriber.remove(innerSubscription);
-      };
-
       const observer = new MergeObserver(
         subscriber,
         observables.length,
         countRef,
-        onComplete,
       );
 
-      innerSubscription = connect(
+      observer.innerSubscription = connect(
         Observable.lift(observable, observe(observer)),
         subscriber,
       );
 
-      subscriber.add(innerSubscription);
+      subscriber.add(observer.innerSubscription);
     }
   };
 

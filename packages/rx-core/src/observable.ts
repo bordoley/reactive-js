@@ -20,7 +20,7 @@ export const connect = <T>(
   scheduler: SchedulerLike,
 ): DisposableLike => {
   const subscription = CompositeDisposable.create();
-  const subscriber = new AutoDisposingSubscriber(scheduler, subscription);
+  const subscriber = AutoDisposingSubscriber.create(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.isConnected = true;
   return subscription;
