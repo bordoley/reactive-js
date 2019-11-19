@@ -10,9 +10,10 @@ import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;
-  private readonly innerSubscription = SerialDisposable.create();
   private readonly priority: number | undefined;
+
   private value: [T] | undefined;
+  private innerSubscription = Disposable.disposed;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -22,11 +23,9 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
     this.dueTime = dueTime;
     this.priority = priority;
-    this.add(this.innerSubscription);
   }
 
-  private debounceNext() {
-    this.clearDebounce();
+  private notifyNext() {
     if (this.value != undefined) {
       const [value] = this.value;
       this.value = undefined;
@@ -35,22 +34,21 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   private clearDebounce() {
-    this.innerSubscription.disposable = Disposable.disposed;
+    this.innerSubscription.dispose();
+    this.innerSubscription = Disposable.disposed;
   }
 
   protected onComplete(error?: Error) {
-    if (error !== undefined) {
-      this.clearDebounce();
-    } else {
-      this.debounceNext();
+    this.clearDebounce();
+    if (error === undefined) {
+      this.notifyNext();
     }
 
-    this.remove(this.innerSubscription);
     this.delegate.complete(error);
   }
 
   private schedulerContinuation: SchedulerContinuation = _shouldYield => {
-    this.debounceNext();
+    this.notifyNext();
   };
 
   protected onNext(data: T) {
@@ -61,7 +59,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.value = [data];
     }
 
-    this.innerSubscription.disposable = this.schedule(
+    this.innerSubscription = this.schedule(
       this.schedulerContinuation,
       this.dueTime,
       this.priority,

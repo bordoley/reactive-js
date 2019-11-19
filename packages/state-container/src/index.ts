@@ -46,35 +46,33 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   StateUpdater<T>,
   T
 > {
+  private readonly clearQueue: DisposableOrTeardown = () => {
+    this.nextQueue.length = 0;
+  };
   private readonly continuation: SchedulerContinuationResult;
-  private readonly priority?: number;
-  private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
-  private readonly queueClearDisposable: DisposableLike;
-
   private readonly nextQueue: Array<StateUpdater<T>> = [];
+  private readonly priority?: number;
+
   private isComplete = false;
   private error: Error | undefined;
-
   private acc: T;
 
   constructor(delegate: SubscriberLike<T>, initialValue: T, priority?: number) {
     super(delegate);
+
     this.acc = initialValue;
     this.priority = priority;
+
     this.continuation = {
       continuation: this.drainQueue,
       priority: this.priority,
     };
 
-    this.queueClearDisposable = Disposable.create()
-    this.queueClearDisposable.add(
-      () => {
-        this.nextQueue.length = 0;
-      },
-    );
+    this.add(this.clearQueue);
+  }
 
-    this.add(this.schedulerSubscription);
-    this.add(this.queueClearDisposable);
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -96,32 +94,25 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
         }
       }
     } catch (error) {
-      this.nextQueue.length = 0;
+      this.remove(this.clearQueue);
       this.complete(error);
       return;
     }
 
     if (this.isComplete) {
+      this.remove(this.clearQueue);
       this.delegate.complete(this.error);
-      this.remove(this.schedulerSubscription);
-      this.remove(this.queueClearDisposable);
     }
-
-    this.schedulerSubscription.disposable = Disposable.disposed;
   };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.disposable = this.schedule(
+      this.schedule(
         this.drainQueue,
         0,
         this.priority,
       );
     }
-  }
-
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
   }
 
   protected onNext(data: StateUpdater<T>) {

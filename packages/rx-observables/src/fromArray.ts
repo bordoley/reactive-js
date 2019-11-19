@@ -13,9 +13,7 @@ export const fromArray = <T>(
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
-
     let continuationResult: SchedulerContinuationResult;
-    let schedulerSubscription = Disposable.disposed;
 
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
@@ -39,14 +37,12 @@ export const fromArray = <T>(
         }
 
         subscriber.complete();
-        subscriber.remove(schedulerSubscription);
       }
     };
 
     continuationResult = { continuation, delay, priority };
 
-    schedulerSubscription = subscriber.schedule(continuation, delay, priority);
-    subscriber.add(schedulerSubscription);
+    subscriber.schedule(continuation, delay, priority);
   };
 
   return { subscribe };
@@ -61,7 +57,6 @@ export const fromScheduledValues = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
-    let innerSubscription = Disposable.disposed;
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
@@ -87,13 +82,10 @@ export const fromScheduledValues = <T>(
       }
 
       subscriber.complete();
-      subscriber.remove(innerSubscription);
     };
 
     const [delay, priority, _] = delayedValues[index];
-    innerSubscription = subscriber.schedule(continuation, delay, priority);
-
-    subscriber.add(innerSubscription);
+    subscriber.schedule(continuation, delay, priority);
   };
 
   return { subscribe };
