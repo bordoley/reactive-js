@@ -3,6 +3,7 @@ import {
   Observable,
   ObserverLike,
   SubscriberLike,
+  Subscriber,
 } from "@reactive-js/rx-core";
 import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
@@ -27,6 +28,7 @@ import {
   switch_,
   withLatestFrom,
 } from "../src/index";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
   const subscription = CompositeDisposable.create();
@@ -42,6 +44,31 @@ const createMockSubscriber = <T>(): SubscriberLike<T> => {
     inScheduledContinuation: true,
     now: 0,
     schedule: (c, d?, p?) => Disposable.disposed,
+    next: jest.fn(),
+    complete: jest.fn(),
+  };
+};
+
+const createMockSubscriberWithScheduler = <T>(
+  scheduler: SchedulerLike,
+): SubscriberLike<T> => {
+  const subscription = CompositeDisposable.create();
+
+  return {
+    get isDisposed() {
+      return subscription.isDisposed;
+    },
+    add: disp => subscription.add(disp),
+    dispose: () => subscription.dispose(),
+    remove: disp => subscription.remove(disp),
+    isConnected: true,
+    get inScheduledContinuation() {
+      return scheduler.inScheduledContinuation;
+    },
+    get now() {
+      return scheduler.now;
+    },
+    schedule: (c, d?, p?) => scheduler.schedule(c, d, p),
     next: jest.fn(),
     complete: jest.fn(),
   };
@@ -145,5 +172,54 @@ test("scan", () => {
   expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
   expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
   expect(subscriber.next).toHaveBeenNthCalledWith(3, 6);
+  expect(subscriber.complete).toBeCalledWith(error);
+});
+
+test("withLatestFrom", () => {
+  const scheduler = VirtualTimeScheduler.create();
+  const error = new Error();
+
+  const otherObservable = Observable.create(observer => {
+    observer.next(1);
+    observer.next(2);
+
+    scheduler.schedule(_ => {
+      observer.next(3);
+      return {
+        continuation: _ => observer.complete(error),
+        delay: 4,
+      };
+    }, 3);
+  });
+
+  const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+  const withLatestFromObserver = Subscriber.toSafeObserver(
+    withLatestFrom(otherObservable, (a, b) => [a, b])(subscriber),
+  );
+
+  withLatestFromObserver.next(1);
+  withLatestFromObserver.next(2);
+  withLatestFromObserver.next(3);
+
+  scheduler.schedule(_ => {
+    withLatestFromObserver.next(1);
+    withLatestFromObserver.next(2);
+    withLatestFromObserver.next(3);
+
+    return {
+      continuation: _ => withLatestFromObserver.next(4),
+      delay: 2,
+    };
+  }, 3);
+
+  scheduler.run();
+
+  expect(subscriber.next).toHaveBeenNthCalledWith(1, [1, 2]);
+  expect(subscriber.next).toHaveBeenNthCalledWith(2, [2, 2]);
+  expect(subscriber.next).toHaveBeenNthCalledWith(3, [3, 2]);
+  expect(subscriber.next).toHaveBeenNthCalledWith(4, [1, 3]);
+  expect(subscriber.next).toHaveBeenNthCalledWith(5, [2, 3]);
+  expect(subscriber.next).toHaveBeenNthCalledWith(6, [3, 3]);
   expect(subscriber.complete).toBeCalledWith(error);
 });
