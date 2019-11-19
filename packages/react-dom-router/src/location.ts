@@ -1,4 +1,4 @@
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import { Disposable, DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
 import { connect, Observable, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { keep, onNext } from "@reactive-js/rx-operators";
@@ -21,7 +21,7 @@ const getCurrentLocation = () => {
 
 class DomLocationStateContainerResourceImpl
   implements StateContainerResourceLike<string> {
-  readonly disposable: DisposableLike;
+  private readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
   constructor(scheduler: SchedulerLike, priority?: number) {
@@ -50,10 +50,10 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = Disposable.compose(
-      subscription,
-      stateContainer.disposable,
-    );
+    this.disposable = Disposable.create();
+    this.disposable.add(subscription);
+    this.disposable.add(stateContainer);
+
     this.stateContainer = stateContainer;
   }
 
@@ -63,6 +63,23 @@ class DomLocationStateContainerResourceImpl
 
   dispatch(updater: StateUpdater<string>) {
     this.stateContainer.dispatch(updater);
+  }
+
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 }
 

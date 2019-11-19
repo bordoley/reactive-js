@@ -20,7 +20,7 @@ export const fromEvent = <T>(
 
     target.addEventListener(eventName, listener, { passive: true });
 
-    return Disposable.create(() => {
+    return () => {
       target.removeEventListener(eventName, listener);
-    });
+    };
   }, priority);

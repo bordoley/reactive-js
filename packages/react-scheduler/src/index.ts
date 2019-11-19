@@ -1,10 +1,6 @@
 import {
   FrameCallbackType,
-  unstable_ImmediatePriority,
-  unstable_UserBlockingPriority,
   unstable_NormalPriority,
-  unstable_IdlePriority,
-  unstable_LowPriority,
   unstable_cancelCallback,
   unstable_now,
   unstable_shouldYield,
@@ -43,9 +39,11 @@ class ReactSchedulerImpl implements SchedulerLike {
       delay > 0 ? { delay } : undefined,
     );
 
-    const innerDisposable = Disposable.create(() =>
+    const innerDisposable = Disposable.create();
+    innerDisposable.add(() =>
       unstable_cancelCallback(callbackNode),
     );
+
     disposable.disposable = innerDisposable;
   }
 

@@ -5,7 +5,7 @@ import {
   SubscriberLike,
   Subscriber,
 } from "@reactive-js/rx-core";
-import { CompositeDisposable, Disposable } from "@reactive-js/disposables";
+import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
 import {
@@ -31,7 +31,7 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = CompositeDisposable.create();
+  const subscription = Disposable.create();
 
   return {
     get isDisposed() {
@@ -52,7 +52,7 @@ const createMockSubscriber = <T>(): SubscriberLike<T> => {
 const createMockSubscriberWithScheduler = <T>(
   scheduler: SchedulerLike,
 ): SubscriberLike<T> => {
-  const subscription = CompositeDisposable.create();
+  const subscription = Disposable.create();
 
   return {
     get isDisposed() {

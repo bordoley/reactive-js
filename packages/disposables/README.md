@@ -27,15 +27,12 @@ Represents a managed resource.
 
   Releases the managed resource. Implementations must be idempotent, eg. it must safe to call dispose multiple times on a given resource.
 
-*CompositeDisposableLike*
 
-A disposable that can hold onto multiple other disposables.
-
-* `add(disposable: DisposableLike): CompositeDisposableLike`
+* `add(disposable: DisposableLike): void`
 
   Adds a DisposableLike to this container or disposes it if the container has been disposed.
 
-* `remove(disposable: DisposableLike):CompositeDisposableLike`
+* `remove(disposable: DisposableLike): void`
 
   Removes and disposes the given DisposableLike if it is part of this container.
 
@@ -53,21 +50,15 @@ Set the next DisposableLike on this container and dispose the previous one. Disp
 
 ### Static Functions
 
-`Disposable.compose(disposable1: DisposableLike, disposable2: DisposableLike, ...disposables: DisposableLike[]): DisposableLike`
-
-Creates a new DisposableLike that disposes the provided DisposableLikes when disposed.
-
-`Disposable.create(teardown?: () => void): DisposableLike`
-
 Creates a new DisposableLike that calls the teardown function exactly once when initially disposed.
 
 `Disposable.disposed: DisposableLike`
 
 A DisposableLike instance that is disposed.
 
-`CompositeDisposable.create(): CompositeDisposableLike`
+`Disposable.create(): DisposableLike`
 
-Creates a new CompositeDisposableLike instance.
+Creates a new DisposableLike instance.
 
 `SerialDisposable.create(): SerialDisposableLike`
 

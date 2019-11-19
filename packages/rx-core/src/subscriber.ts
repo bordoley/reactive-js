@@ -1,6 +1,6 @@
 import {
-  CompositeDisposableLike,
   Disposable,
+  DisposableOrTeardown,
   SerialDisposableLike,
   SerialDisposable,
   DisposableLike,
@@ -17,7 +17,7 @@ import { createSecurePair } from "tls";
 
 export interface SubscriberLike<T>
   extends ObserverLike<T>,
-    CompositeDisposableLike,
+    DisposableLike,
     SchedulerResourceLike {
   readonly isConnected: boolean;
 }
@@ -40,11 +40,11 @@ const __DEV__ = process.env.NODE_ENV !== "production";
 
 class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
   scheduler: SchedulerLike;
-  subscription: CompositeDisposableLike;
+  subscription: DisposableLike;
 
   isConnected = false;
 
-  constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
+  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     this.scheduler = scheduler;
     this.subscription = subscription;
   }
@@ -61,7 +61,7 @@ class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  add(disposable: DisposableLike) {
+  add(disposable: DisposableOrTeardown) {
     this.subscription.add(disposable);
   }
 
@@ -83,7 +83,7 @@ class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
     }
   }
 
-  remove(disposable: DisposableLike) {
+  remove(disposable: DisposableOrTeardown) {
     this.subscription.remove(disposable);
   }
 
@@ -97,14 +97,14 @@ class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
 }
 
 export const AutoDisposingSubscriber = {
-  create: (scheduler: SchedulerLike, subscription: CompositeDisposableLike) =>
+  create: (scheduler: SchedulerLike, subscription: DisposableLike) =>
     new AutoDisposingSubscriberImpl(scheduler, subscription),
 };
 
 export abstract class DelegatingSubscriber<TA, TB>
   implements SubscriberLike<TA> {
   private readonly scheduler: SchedulerLike;
-  private readonly subscription: CompositeDisposableLike;
+  private readonly subscription: DisposableLike;
   private readonly source: SubscriberLike<any>;
 
   readonly delegate: SubscriberLike<TB>;
@@ -131,10 +131,9 @@ export abstract class DelegatingSubscriber<TA, TB>
         ? delegate.subscription
         : delegate;
 
-    this.source.add(
-      Disposable.create(() => {
+    this.source.add(() => {
         this.isStopped = true;
-      }),
+      },
     );
   }
 
@@ -154,7 +153,7 @@ export abstract class DelegatingSubscriber<TA, TB>
     return this.scheduler.now;
   }
 
-  add(disposable: DisposableLike) {
+  add(disposable: DisposableOrTeardown) {
     this.subscription.add(disposable);
   }
 
@@ -162,7 +161,7 @@ export abstract class DelegatingSubscriber<TA, TB>
     this.subscription.dispose();
   }
 
-  remove(disposable: DisposableLike) {
+  remove(disposable: DisposableOrTeardown) {
     this.subscription.remove(disposable);
   }
 
@@ -246,11 +245,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   private readonly continuation: SchedulerContinuationResult;
   private readonly priority?: number;
   private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
-  private readonly queueClearDisposable: DisposableLike = Disposable.create(
-    () => {
-      this.nextQueue.length = 0;
-    },
-  );
+  private readonly queueClearDisposable: DisposableLike;
 
   private readonly nextQueue: Array<T> = [];
   private isComplete = false;
@@ -264,6 +259,13 @@ class SafeObserver<T> implements ObserverLike<T> {
       continuation: this.drainQueue,
       priority: this.priority,
     };
+
+    this.queueClearDisposable = Disposable.create();
+    this.queueClearDisposable.add(
+      () => {
+        this.nextQueue.length = 0;
+      },
+    );
 
     this.delegate.add(this.schedulerSubscription);
     this.delegate.add(this.queueClearDisposable);

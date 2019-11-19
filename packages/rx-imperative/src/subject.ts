@@ -1,12 +1,11 @@
-import { Disposable } from "@reactive-js/disposables";
+import { Disposable, DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
 
 import {
   ObservableResourceLike,
   ObserverLike,
   Subscriber,
   SubscriberLike,
-  ObservableLike,
-  Observable,
+
 } from "@reactive-js/rx-core";
 
 export interface SubjectLike<T>
@@ -14,10 +13,7 @@ export interface SubjectLike<T>
     ObservableResourceLike<T> {}
 
 export abstract class AbstractSubject<T> implements SubjectLike<T> {
-  readonly disposable = Disposable.create(() => {
-    this.isCompleted = true;
-    this.observers.length = 0;
-  });
+  private readonly disposable: DisposableLike;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly priority?: number;
 
@@ -25,6 +21,27 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
 
   constructor(priority?: number) {
     this.priority = priority;
+    this.disposable = Disposable.create();
+    this.disposable.add(() => {
+      this.isCompleted = true;
+      this.observers.length = 0;
+    });
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  add(disposable: DisposableOrTeardown) {
+    this.disposable.add(disposable);
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(disposable: DisposableOrTeardown) {
+    this.disposable.remove(disposable);
   }
 
   protected abstract onNext(data: T): void;
@@ -66,7 +83,8 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
       const observer = Subscriber.toSafeObserver(subscriber, this.priority);
       this.observers.push(observer);
 
-      const disposable = Disposable.create(() => {
+      const disposable = Disposable.create();
+      disposable.add(() => {
         const index = this.observers.indexOf(observer);
         if (index !== -1) {
           this.observers.splice(index, 1);
