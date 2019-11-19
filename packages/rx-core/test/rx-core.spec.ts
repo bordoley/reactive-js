@@ -277,7 +277,7 @@ describe("Observable", () => {
     const scheduler = VirtualTimeScheduler.create();
     const result: number[] = [];
 
-    const liftedObservable =  Observable.lift(
+    const liftedObservable = Observable.lift(
       Observable.create(observer => observer.next(1)),
       onNext(_ => result.push(1)),
       onNext(_ => result.push(2)),
@@ -293,6 +293,6 @@ describe("Observable", () => {
     );
     scheduler.run();
 
-    expect(result).toEqual([1,2,3,4]);
+    expect(result).toEqual([1, 2, 3, 4]);
   });
 });
