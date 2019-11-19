@@ -69,8 +69,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   }
 
   protected onComplete(error?: Error) {
-    this.delegate.complete(error);
     this.remove(this.otherSubscription);
+    this.delegate.complete(error);
   }
 }
 
