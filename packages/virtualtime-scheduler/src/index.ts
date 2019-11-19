@@ -88,6 +88,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
       const scheduledTime = this.now + ctx.delay;
       this.schedulWorkAtTime(ctx, scheduledTime);
+    } else {
+      ctx.disposable.dispose();
     }
   }
 

@@ -63,6 +63,7 @@ class ReactSchedulerImpl implements SchedulerLike {
       this._inScheduledContinuation = false;
 
       if (result === undefined) {
+        disposable.dispose();
         return;
       }
 

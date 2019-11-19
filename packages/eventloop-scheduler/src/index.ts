@@ -90,7 +90,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         this.scheduleInternal(ctx);
       }
     } else {
-      ctx.disposable.disposable.dispose();
+      ctx.disposable.dispose();
     }
   }
 

@@ -9,13 +9,10 @@ import {
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
-import { SerialDisposable } from "@reactive-js/disposables";
-
 class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly delay: number;
   private readonly priority: number | undefined;
   private readonly queue: Array<[number, Notification<T>]> = [];
-  private readonly innerSubscription = SerialDisposable.create();
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -25,8 +22,6 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
     this.delay = delay;
     this.priority = priority;
-
-    this.add(this.innerSubscription);
   }
 
   private doWork: SchedulerContinuation = shouldYield => {
@@ -37,10 +32,6 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
       if (now >= nextDueTime) {
         this.queue.shift();
         notify(this.delegate, notification);
-
-        if ((notification[0] = NotificationKind.Complete)) {
-          this.remove(this.innerSubscription);
-        }
       } else {
         const delay = nextDueTime - now;
         return { continuation: this.doWork, delay, priority: this.priority };

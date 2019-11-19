@@ -216,34 +216,27 @@ export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
 ) => new ObserveSubscriber(subscriber, observer);
 
 class SafeObserver<T> implements ObserverLike<T> {
-  private readonly delegate: SubscriberLike<T>;
+  private readonly clearQueue: DisposableOrTeardown = () => {
+    this.nextQueue.length = 0;
+  };
   private readonly continuation: SchedulerContinuationResult;
-  private readonly priority?: number;
-  private readonly schedulerSubscription: SerialDisposableLike = SerialDisposable.create();
-  private readonly queueClearDisposable: DisposableLike;
-
   private readonly nextQueue: Array<T> = [];
+  private readonly priority?: number;
+  private readonly subscriber: SubscriberLike<T>;
+
   private isComplete = false;
   private error: Error | undefined;
 
-  constructor(delegate: SubscriberLike<T>, priority?: number) {
-    this.delegate = delegate;
-
+  constructor(subscriber: SubscriberLike<T>, priority?: number) {
+    this.subscriber = subscriber;
     this.priority = priority;
+
     this.continuation = {
       continuation: this.drainQueue,
       priority: this.priority,
     };
 
-    this.queueClearDisposable = Disposable.create();
-    this.queueClearDisposable.add(
-      () => {
-        this.nextQueue.length = 0;
-      },
-    );
-
-    this.delegate.add(this.schedulerSubscription);
-    this.delegate.add(this.queueClearDisposable);
+    this.subscriber.add(this.clearQueue);
   }
 
   private get remainingEvents() {
@@ -253,7 +246,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
       const next = this.nextQueue.shift() as T;
-      this.delegate.next(next);
+      this.subscriber.next(next);
 
       const yieldRequest = shouldYield();
       const hasMoreEvents = this.remainingEvents > 0;
@@ -264,17 +257,14 @@ class SafeObserver<T> implements ObserverLike<T> {
     }
 
     if (this.isComplete) {
-      this.delegate.complete(this.error);
-      this.delegate.remove(this.schedulerSubscription);
-      this.delegate.remove(this.queueClearDisposable);
+      this.subscriber.remove(this.clearQueue);
+      this.subscriber.complete(this.error);
     }
-
-    this.schedulerSubscription.disposable = Disposable.disposed;
   };
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.disposable = this.delegate.schedule(
+      this.subscriber.schedule(
         this.drainQueue,
         0,
         this.priority,
