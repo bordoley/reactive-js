@@ -38,11 +38,9 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
-class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
+abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
   scheduler: SchedulerLike;
   subscription: DisposableLike;
-
-  isConnected = false;
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     this.scheduler = scheduler;
@@ -65,22 +63,8 @@ class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
     this.subscription.add(disposable);
   }
 
-  complete(_error?: Error) {
-    if (__DEV__) {
-      checkState(this);
-    }
-
-    this.dispose();
-  }
-
   dispose() {
     this.subscription.dispose();
-  }
-
-  next(data: T) {
-    if (__DEV__) {
-      checkState(this);
-    }
   }
 
   remove(disposable: DisposableOrTeardown) {
@@ -92,7 +76,36 @@ class AutoDisposingSubscriberImpl<T> implements SubscriberLike<T> {
     delay?: number,
     priority?: number,
   ): DisposableLike {
-    return this.scheduler.schedule(continuation, delay, priority);
+    const schedulerSubscription = this.scheduler.schedule(continuation, delay, priority);
+    this.add(schedulerSubscription);
+    schedulerSubscription.add(() => this.remove(schedulerSubscription));
+    return schedulerSubscription;
+  }
+
+  abstract get isConnected(): boolean;
+  abstract complete(_error?: Error): void;
+  abstract next(data: T): void;
+}
+
+class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> {
+  isConnected = false;
+
+  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
+    super(scheduler, subscription);
+  }
+
+  complete(_error?: Error) {
+    if (__DEV__) {
+      checkState(this);
+    }
+
+    this.dispose();
+  }
+
+  next(data: T) {
+    if (__DEV__) {
+      checkState(this);
+    }
   }
 }
 
@@ -102,75 +115,37 @@ export const AutoDisposingSubscriber = {
 };
 
 export abstract class DelegatingSubscriber<TA, TB>
-  implements SubscriberLike<TA> {
-  private readonly scheduler: SchedulerLike;
-  private readonly subscription: DisposableLike;
+  extends AbstractSubjectImpl<TA>  {
   private readonly source: SubscriberLike<any>;
-
-  readonly delegate: SubscriberLike<TB>;
+  readonly delegate: ObserverLike<TB>;
 
   private isStopped = false;
 
   constructor(delegate: SubscriberLike<TB>) {
+    super(delegate instanceof DelegatingSubscriber
+      ? delegate.scheduler
+      : delegate instanceof AutoDisposingSubscriberImpl
+      ? delegate.scheduler
+      : delegate,
+
+      delegate instanceof DelegatingSubscriber
+      ? delegate.subscription
+      : delegate instanceof AutoDisposingSubscriberImpl
+      ? delegate.subscription
+      : delegate);
     this.delegate = delegate;
 
     this.source =
       delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
 
-    this.scheduler =
-      delegate instanceof DelegatingSubscriber
-        ? delegate.scheduler
-        : delegate instanceof AutoDisposingSubscriberImpl
-        ? delegate.scheduler
-        : delegate;
-
-    this.subscription =
-      delegate instanceof DelegatingSubscriber
-        ? delegate.subscription
-        : delegate instanceof AutoDisposingSubscriberImpl
-        ? delegate.subscription
-        : delegate;
-
-    this.source.add(() => {
+    this.add(() => {
         this.isStopped = true;
       },
     );
   }
 
-  get inScheduledContinuation(): boolean {
-    return this.scheduler.inScheduledContinuation;
-  }
-
   get isConnected() {
     return this.source.isConnected;
-  }
-
-  get isDisposed() {
-    return this.subscription.isDisposed;
-  }
-
-  get now() {
-    return this.scheduler.now;
-  }
-
-  add(disposable: DisposableOrTeardown) {
-    this.subscription.add(disposable);
-  }
-
-  dispose() {
-    this.subscription.dispose();
-  }
-
-  remove(disposable: DisposableOrTeardown) {
-    this.subscription.remove(disposable);
-  }
-
-  schedule(
-    continuation: SchedulerContinuation,
-    delay?: number,
-    priority?: number,
-  ): DisposableLike {
-    return this.scheduler.schedule(continuation, delay, priority);
   }
 
   protected abstract onNext(data: TA): void;
