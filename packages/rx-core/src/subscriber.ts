@@ -9,6 +9,7 @@ import {
 import { ObserverLike } from "./observer";
 import {
   SchedulerLike,
+  SchedulerResourceLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
@@ -17,7 +18,7 @@ import { createSecurePair } from "tls";
 export interface SubscriberLike<T>
   extends ObserverLike<T>,
     CompositeDisposableLike,
-    SchedulerLike {
+    SchedulerResourceLike {
   readonly isConnected: boolean;
 }
 
