@@ -1,4 +1,8 @@
-import { Disposable, DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
+import {
+  Disposable,
+  DisposableLike,
+  DisposableOrTeardown,
+} from "@reactive-js/disposables";
 import { connect, Observable, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { keep, onNext } from "@reactive-js/rx-operators";
@@ -64,7 +68,6 @@ class DomLocationStateContainerResourceImpl
   dispatch(updater: StateUpdater<string>) {
     this.stateContainer.dispatch(updater);
   }
-
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;

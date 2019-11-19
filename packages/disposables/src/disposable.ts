@@ -59,15 +59,13 @@ const create = (): DisposableLike => new DisposableImpl();
 class DisposedDisposableImpl implements DisposableLike {
   readonly isDisposed = true;
 
-
-  dispose() { }
+  dispose() {}
 
   add(disposable: DisposableOrTeardown) {
     doDispose(disposable);
   }
 
-  remove(disposable: DisposableOrTeardown) {
-  }
+  remove(disposable: DisposableOrTeardown) {}
 }
 
 const disposed: DisposableLike = new DisposedDisposableImpl();

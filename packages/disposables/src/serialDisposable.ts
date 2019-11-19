@@ -15,7 +15,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
   dispose() {
     if (!this.isDisposed) {
       this.disposable.dispose();
-      this.delegate.dispose()
+      this.delegate.dispose();
     }
   }
 

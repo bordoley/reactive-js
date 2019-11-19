@@ -25,11 +25,9 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.maxBufferSize = maxBufferSize;
     this.maxConcurrency = maxConcurrency;
 
-    this.add(
-      () => {
-        this.queue.length = 0;
-      },
-    );
+    this.add(() => {
+      this.queue.length = 0;
+    });
   }
 
   private connectNext() {

@@ -38,7 +38,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   constructor(timeout: number) {
     this.timeout = timeout;
-    this.disposable = Disposable.create()
+    this.disposable = Disposable.create();
     this.disposable.add(() => {
       this.workqueue.length = 0;
     });
@@ -134,16 +134,12 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         ctx,
       );
       ctx.disposable.disposable = Disposable.create();
-      ctx.disposable.disposable.add(() =>
-        clearInterval(timeout),
-      );
+      ctx.disposable.disposable.add(() => clearInterval(timeout));
     } else {
       // FIXME: Shim setImmediate for the browser case or require a polyfill.
       const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
       ctx.disposable.disposable = Disposable.create();
-      ctx.disposable.disposable.add(() =>
-        clearImmediate(immediate),
-      );
+      ctx.disposable.disposable.add(() => clearImmediate(immediate));
     }
   }
 
