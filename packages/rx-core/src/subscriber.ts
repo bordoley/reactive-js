@@ -14,7 +14,10 @@ import {
 } from "@reactive-js/scheduler";
 import { createSecurePair } from "tls";
 
-export interface SubscriberLike<T> extends ObserverLike<T>, CompositeDisposableLike, SchedulerLike {
+export interface SubscriberLike<T>
+  extends ObserverLike<T>,
+    CompositeDisposableLike,
+    SchedulerLike {
   readonly isConnected: boolean;
 }
 
@@ -55,7 +58,7 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
 
   get now() {
     return this.scheduler.now;
-  };
+  }
 
   add(disposable: DisposableLike) {
     this.subscription.add(disposable);
@@ -92,7 +95,8 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
   }
 }
 
-export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA>{
+export abstract class DelegatingSubscriber<TA, TB>
+  implements SubscriberLike<TA> {
   private isStopped = false;
   private readonly source: SubscriberLike<any>;
 
@@ -127,7 +131,7 @@ export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA>
 
   get now() {
     return this.source.now;
-  };
+  }
 
   add(disposable: DisposableLike) {
     this.source.add(disposable);

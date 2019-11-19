@@ -50,7 +50,12 @@ class SharedObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void {
     if (this.refCount === 0) {
       this.subject = this.factory(this.priority);
+      this.sourceSubscription = connect(
+        Observable.lift(this.source, observe(this.subject)),
+        this.scheduler,
+      );
     }
+    this.refCount++;
 
     const subject = this.subject as SubjectLike<T>;
 
@@ -61,13 +66,6 @@ class SharedObservable<T> implements ObservableLike<T> {
 
     subscriber.add(Disposable.create(this.teardown));
     subscriber.add(innerSubscription);
-
-    if (this.refCount === 1) {
-      this.sourceSubscription = connect(
-        Observable.lift(this.source, observe(subject)),
-        this.scheduler,
-      );
-    }
   }
 }
 

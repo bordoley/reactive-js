@@ -16,6 +16,9 @@
     "type": "git",
     "url": "https://github.com/bordoley/rx-min.git"
   },
+  "jest": {
+    "preset": "ts-jest"
+  },
   "dependencies": {
     "@reactive-js/disposables": "0.0.0",
     "@reactive-js/rx-core": "0.0.0",
