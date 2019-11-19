@@ -12,13 +12,10 @@ import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
-import { maxHeaderSize } from "http";
-import { thisExpression } from "@babel/types";
+import { createSecurePair } from "tls";
 
-export interface SubscriberLike<T> extends ObserverLike<T> {
+export interface SubscriberLike<T> extends ObserverLike<T>, CompositeDisposableLike, SchedulerLike {
   readonly isConnected: boolean;
-  readonly scheduler: SchedulerLike;
-  readonly subscription: CompositeDisposableLike;
 }
 
 export interface Operator<A, B> {
@@ -26,7 +23,7 @@ export interface Operator<A, B> {
 }
 
 const checkState = <T>(subscriber: SubscriberLike<T>) => {
-  if (!subscriber.scheduler.inScheduledContinuation) {
+  if (!subscriber.inScheduledContinuation) {
     throw new Error(
       "Attempted to notify subscriber from outside of it's scheduler",
     );
@@ -38,13 +35,42 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
-  readonly subscription: CompositeDisposableLike;
   readonly scheduler: SchedulerLike;
+  readonly subscription: CompositeDisposableLike;
+
   isConnected = false;
 
   constructor(scheduler: SchedulerLike, subscription: CompositeDisposableLike) {
     this.scheduler = scheduler;
     this.subscription = subscription;
+  }
+
+  get inScheduledContinuation(): boolean {
+    return this.scheduler.inScheduledContinuation;
+  }
+
+  get isDisposed() {
+    return this.subscription.isDisposed;
+  }
+
+  get now() {
+    return this.scheduler.now;
+  };
+
+  add(disposable: DisposableLike) {
+    this.subscription.add(disposable);
+  }
+
+  complete(_error?: Error) {
+    if (__DEV__) {
+      checkState(this);
+    }
+
+    this.dispose();
+  }
+
+  dispose() {
+    this.subscription.dispose();
   }
 
   next(data: T) {
@@ -53,17 +79,20 @@ export class AutoDisposingSubscriber<T> implements SubscriberLike<T> {
     }
   }
 
-  complete(_error?: Error) {
-    if (__DEV__) {
-      checkState(this);
-    }
+  remove(disposable: DisposableLike) {
+    this.subscription.remove(disposable);
+  }
 
-    this.subscription.dispose();
+  schedule(
+    continuation: SchedulerContinuation,
+    delay?: number,
+    priority?: number,
+  ): DisposableLike {
+    return this.scheduler.schedule(continuation, delay, priority);
   }
 }
 
-export abstract class DelegatingSubscriber<TA, TB>
-  implements SubscriberLike<TA> {
+export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA>{
   private isStopped = false;
   private readonly source: SubscriberLike<any>;
 
@@ -77,23 +106,47 @@ export abstract class DelegatingSubscriber<TA, TB>
     this.source =
       delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
 
-    delegate.subscription.add(
+    this.source.add(
       Disposable.create(() => {
         this.isStopped = true;
       }),
     );
   }
 
+  get inScheduledContinuation(): boolean {
+    return this.source.inScheduledContinuation;
+  }
+
   get isConnected() {
     return this.source.isConnected;
   }
 
-  get scheduler() {
-    return this.source.scheduler;
+  get isDisposed() {
+    return this.source.isDisposed;
   }
 
-  get subscription() {
-    return this.source.subscription;
+  get now() {
+    return this.source.now;
+  };
+
+  add(disposable: DisposableLike) {
+    this.source.add(disposable);
+  }
+
+  dispose() {
+    this.source.dispose();
+  }
+
+  remove(disposable: DisposableLike) {
+    this.source.remove(disposable);
+  }
+
+  schedule(
+    continuation: SchedulerContinuation,
+    delay?: number,
+    priority?: number,
+  ): DisposableLike {
+    return this.source.schedule(continuation, delay, priority);
   }
 
   protected abstract onNext(data: TA): void;
@@ -187,9 +240,8 @@ class SafeObserver<T> implements ObserverLike<T> {
       priority: this.priority,
     };
 
-    this.delegate.subscription
-      .add(this.schedulerSubscription)
-      .add(this.queueClearDisposable);
+    this.delegate.add(this.schedulerSubscription);
+    this.delegate.add(this.queueClearDisposable);
   }
 
   private get remainingEvents() {
@@ -211,8 +263,8 @@ class SafeObserver<T> implements ObserverLike<T> {
 
     if (this.isComplete) {
       this.delegate.complete(this.error);
-      this.delegate.subscription.remove(this.schedulerSubscription);
-      this.delegate.subscription.remove(this.queueClearDisposable);
+      this.delegate.remove(this.schedulerSubscription);
+      this.delegate.remove(this.queueClearDisposable);
     }
 
     this.schedulerSubscription.disposable = Disposable.disposed;
@@ -220,7 +272,7 @@ class SafeObserver<T> implements ObserverLike<T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.disposable = this.delegate.scheduler.schedule(
+      this.schedulerSubscription.disposable = this.delegate.schedule(
         this.drainQueue,
         0,
         this.priority,

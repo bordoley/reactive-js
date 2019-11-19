@@ -18,7 +18,7 @@ export const generate = <T>(
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.subscription.isDisposed) {
+      if (subscriber.isDisposed) {
         return;
       } else if (delay > 0) {
         try {
@@ -50,8 +50,8 @@ export const generate = <T>(
 
     continuationResult = { continuation, delay, priority };
 
-    subscriber.subscription.add(
-      subscriber.scheduler.schedule(continuation, delay, priority),
+    subscriber.add(
+      subscriber.schedule(continuation, delay, priority),
     );
   };
 

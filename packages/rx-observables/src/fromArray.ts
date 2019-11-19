@@ -20,7 +20,7 @@ export const fromArray = <T>(
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.subscription.isDisposed) {
+      if (subscriber.isDisposed) {
         return;
       } else if (index < values.length && delay > 0) {
         const value = values[index];
@@ -39,18 +39,18 @@ export const fromArray = <T>(
         }
 
         subscriber.complete();
-        subscriber.subscription.remove(schedulerSubscription);
+        subscriber.remove(schedulerSubscription);
       }
     };
 
     continuationResult = { continuation, delay, priority };
 
-    schedulerSubscription = subscriber.scheduler.schedule(
+    schedulerSubscription = subscriber.schedule(
       continuation,
       delay,
       priority,
     );
-    subscriber.subscription.add(schedulerSubscription);
+    subscriber.add(schedulerSubscription);
   };
 
   return { subscribe };
@@ -69,7 +69,7 @@ export const fromScheduledValues = <T>(
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.subscription.isDisposed) {
+      if (subscriber.isDisposed) {
         return;
       }
 
@@ -91,17 +91,17 @@ export const fromScheduledValues = <T>(
       }
 
       subscriber.complete();
-      subscriber.subscription.remove(innerSubscription);
+      subscriber.remove(innerSubscription);
     };
 
     const [delay, priority, _] = delayedValues[index];
-    innerSubscription = subscriber.scheduler.schedule(
+    innerSubscription = subscriber.schedule(
       continuation,
       delay,
       priority,
     );
 
-    subscriber.subscription.add(innerSubscription);
+    subscriber.add(innerSubscription);
   };
 
   return { subscribe };

@@ -33,20 +33,20 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
-    this.subscription.add(this.innerSubscription);
+    this.add(this.innerSubscription);
   }
 
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.disposable = Disposable.disposed;
     this.innerSubscription.disposable = connect(
       Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
-      this.scheduler,
+      this,
     );
   }
 
   protected onComplete(error?: Error) {
     this.delegate.complete(error);
-    this.subscription.remove(this.innerSubscription);
+    this.remove(this.innerSubscription);
   }
 }
 

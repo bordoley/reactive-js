@@ -46,16 +46,16 @@ export const concat = <T>(
         let innerSubscription = Disposable.disposed;
 
         const continuation = () => {
-          subscriber.subscription.remove(innerSubscription);
+          subscriber.remove(innerSubscription);
           return subscribeNext();
         };
         const observer = new ConcatObserver(subscriber, continuation);
 
         innerSubscription = connect(
           Observable.lift(head, observe(observer)),
-          subscriber.scheduler,
+          subscriber,
         );
-        subscriber.subscription.add(innerSubscription);
+        subscriber.add(innerSubscription);
       }
 
       return head !== undefined;

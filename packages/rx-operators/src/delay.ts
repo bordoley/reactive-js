@@ -26,11 +26,11 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     this.delay = delay;
     this.priority = priority;
 
-    this.subscription.add(this.innerSubscription);
+    this.add(this.innerSubscription);
   }
 
   private doWork: SchedulerContinuation = shouldYield => {
-    const now = this.scheduler.now;
+    const now = this.now;
     while (this.queue.length > 0) {
       const [nextDueTime, notification] = this.queue[0];
 
@@ -39,7 +39,7 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
         notify(this.delegate, notification);
 
         if ((notification[0] = NotificationKind.Complete)) {
-          this.subscription.remove(this.innerSubscription);
+          this.remove(this.innerSubscription);
         }
       } else {
         const delay = nextDueTime - now;
@@ -54,12 +54,12 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
   };
 
   private doSchedule(notification: Notification<T>) {
-    const now = this.scheduler.now;
+    const now = this.now;
     const dueTime = now + this.delay;
     this.queue.push([dueTime, notification]);
 
     if (this.queue.length === 1) {
-      this.scheduler.schedule(this.doWork, this.delay, this.priority);
+      this.schedule(this.doWork, this.delay, this.priority);
     }
   }
 

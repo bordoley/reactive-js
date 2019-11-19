@@ -54,10 +54,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
         other,
         observe(new WithLatestFromSubscriber.InnerObserver(this)),
       ),
-      this.scheduler,
+      this,
     );
 
-    this.subscription.add(this.otherSubscription);
+    this.add(this.otherSubscription);
   }
 
   protected onNext(data: TA) {
@@ -70,7 +70,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 
   protected onComplete(error?: Error) {
     this.delegate.complete(error);
-    this.subscription.remove(this.otherSubscription);
+    this.remove(this.otherSubscription);
   }
 }
 

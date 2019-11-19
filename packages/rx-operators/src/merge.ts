@@ -25,7 +25,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.maxBufferSize = maxBufferSize;
     this.maxConcurrency = maxConcurrency;
 
-    this.subscription.add(
+    this.add(
       Disposable.create(() => {
         this.queue.length = 0;
       }),
@@ -54,14 +54,14 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
                 } else {
                   this.connectNext();
                 }
-                this.subscription.remove(nextObsSubscription);
+                this.remove(nextObsSubscription);
               },
             }),
           ),
-          this.scheduler,
+          this,
         );
 
-        this.subscription.add(nextObsSubscription);
+        this.add(nextObsSubscription);
       } else if (this.isCompleted) {
         this.delegate.complete();
       }

@@ -69,9 +69,8 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       priority: this.priority,
     };
 
-    this.subscription
-      .add(this.schedulerSubscription)
-      .add(this.queueClearDisposable);
+    this.add(this.schedulerSubscription);
+    this.add(this.queueClearDisposable);
   }
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
@@ -100,8 +99,8 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
 
     if (this.isComplete) {
       this.delegate.complete(this.error);
-      this.subscription.remove(this.schedulerSubscription);
-      this.subscription.remove(this.queueClearDisposable);
+      this.remove(this.schedulerSubscription);
+      this.remove(this.queueClearDisposable);
     }
 
     this.schedulerSubscription.disposable = Disposable.disposed;
@@ -109,7 +108,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.schedulerSubscription.disposable = this.scheduler.schedule(
+      this.schedulerSubscription.disposable = this.schedule(
         this.drainQueue,
         0,
         this.priority,
