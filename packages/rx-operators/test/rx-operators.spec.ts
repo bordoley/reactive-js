@@ -1,8 +1,4 @@
-import {
-  Observable,
-  SubscriberLike,
-  Subscriber,
-} from "@reactive-js/rx-core";
+import { Observable, SubscriberLike, Subscriber } from "@reactive-js/rx-core";
 import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 

@@ -53,7 +53,10 @@ export const useObservable = <T>(
 
   useDisposable(
     () =>
-      Observable.connect(makeObservable(observable, updateState, updateError), scheduler),
+      Observable.connect(
+        makeObservable(observable, updateState, updateError),
+        scheduler,
+      ),
     [updateState, updateError, scheduler],
   );
 
