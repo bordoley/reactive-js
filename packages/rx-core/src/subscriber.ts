@@ -15,6 +15,10 @@ export interface SubscriberLike<T>
   readonly isConnected: boolean;
 }
 
+export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
+  isConnected: boolean;
+}
+
 export interface Operator<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
@@ -84,7 +88,7 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
   abstract next(data: T): void;
 }
 
-class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> {
+class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> implements ConnectableSubscriberLike<T> {
   isConnected = false;
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
@@ -107,7 +111,7 @@ class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> {
 }
 
 export const AutoDisposingSubscriber = {
-  create: (scheduler: SchedulerLike, subscription: DisposableLike) =>
+  create: <T>(scheduler: SchedulerLike, subscription: DisposableLike): ConnectableSubscriberLike<T> =>
     new AutoDisposingSubscriberImpl(scheduler, subscription),
 };
 
@@ -293,7 +297,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const toSafeObserver = <T>(
+const toSafeObserver = <T>(
   subscriber: SubscriberLike<T>,
   priority?: number,
 ): ObserverLike<T> => new SafeObserver(subscriber, priority);
