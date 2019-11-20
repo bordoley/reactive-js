@@ -6,7 +6,7 @@ import {
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
-import { Disposable, SerialDisposable } from "@reactive-js/disposables";
+import { Disposable } from "@reactive-js/disposables";
 
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;

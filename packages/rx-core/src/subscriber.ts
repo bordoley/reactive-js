@@ -1,8 +1,5 @@
 import {
-  Disposable,
   DisposableOrTeardown,
-  SerialDisposableLike,
-  SerialDisposable,
   DisposableLike,
 } from "@reactive-js/disposables";
 
@@ -13,7 +10,6 @@ import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
-import { createSecurePair } from "tls";
 
 export interface SubscriberLike<T>
   extends ObserverLike<T>,
