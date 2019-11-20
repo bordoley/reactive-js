@@ -1,5 +1,4 @@
 import {
-  connect,
   observe,
   DelegatingSubscriber,
   ObservableLike,
@@ -38,7 +37,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.disposable = Disposable.disposed;
-    this.innerSubscription.disposable = connect(
+    this.innerSubscription.disposable = Observable.connect(
       Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
       this,
     );

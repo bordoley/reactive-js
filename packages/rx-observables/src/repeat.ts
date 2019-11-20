@@ -1,5 +1,4 @@
 import {
-  connect,
   observe,
   DelegatingSubscriber,
   ObservableLike,
@@ -36,7 +35,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
       this.parent.innerSubscription.disposable.dispose();
 
-      this.parent.innerSubscription.disposable = connect(
+      this.parent.innerSubscription.disposable = Observable.connect(
         Observable.lift(this.parent.observable, observe(this.parent.observer)),
         this.parent,
       );

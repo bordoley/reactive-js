@@ -1,4 +1,4 @@
-import { connect, Observable } from "@reactive-js/rx-core";
+import { Observable } from "@reactive-js/rx-core";
 import {
   fromScheduledValues,
   generate,
@@ -18,7 +18,7 @@ import {
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 const scheduler = EventLoopScheduler.create(500);
 /*
-connect(
+Observable.connect(
   Observable.lift(
     fromDelayedValues([1000, 1], [2000, 2], [3000, 3], [3000, 4]),
     onNext(next => {
@@ -44,7 +44,7 @@ connect(
 */
 
 /*
-connect(
+Observable.connect(
   Observable.lift(
     generate(x => x + 1, 0, 500),
     map(x =>
@@ -65,7 +65,7 @@ connect(
 );*/
 
 /*
-connect(
+Observable.connect(
   Observable.lift(
     generate(x => x + 1, 0, 500),
     map(x => generate(x => x, x, 100)),
@@ -76,7 +76,7 @@ connect(
 );
 */
 
-connect(
+Observable.connect(
   Observable.lift(
     generate(x => x + 1, 0),
     map(x => fromArray([x, x, x, x])),

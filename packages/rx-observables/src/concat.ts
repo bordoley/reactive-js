@@ -1,7 +1,6 @@
 import { Disposable } from "@reactive-js/disposables";
 
 import {
-  connect,
   observe,
   Observable,
   ObservableLike,
@@ -51,7 +50,7 @@ export const concat = <T>(
         };
         const observer = new ConcatObserver(subscriber, continuation);
 
-        innerSubscription = connect(
+        innerSubscription = Observable.connect(
           Observable.lift(head, observe(observer)),
           subscriber,
         );

@@ -1,5 +1,4 @@
 import {
-  connect,
   observe,
   DelegatingSubscriber,
   ObservableLike,
@@ -49,7 +48,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     super(delegate);
     this.selector = selector;
 
-    this.otherSubscription = connect(
+    this.otherSubscription = Observable.connect(
       Observable.lift(
         other,
         observe(new WithLatestFromSubscriber.InnerObserver(this)),

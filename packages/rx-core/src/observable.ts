@@ -19,7 +19,7 @@ export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
-export const connect = <T>(
+const connect = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike,
 ): DisposableLike => {
@@ -291,6 +291,7 @@ const create = <T>(
 };
 
 export const Observable = {
+  connect,
   create,
   lift,
 };

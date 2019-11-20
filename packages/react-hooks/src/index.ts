@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState, useCallback } from "react";
 import {
-  connect,
   observe,
   Observable,
   ObservableLike,
@@ -54,7 +53,7 @@ export const useObservable = <T>(
 
   useDisposable(
     () =>
-      connect(makeObservable(observable, updateState, updateError), scheduler),
+      Observable.connect(makeObservable(observable, updateState, updateError), scheduler),
     [updateState, updateError, scheduler],
   );
 
