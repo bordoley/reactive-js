@@ -1,7 +1,4 @@
-import {
-  DisposableOrTeardown,
-  DisposableLike,
-} from "@reactive-js/disposables";
+import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposables";
 
 import { ObserverLike } from "./observer";
 import {
@@ -114,6 +111,24 @@ export const AutoDisposingSubscriber = {
     new AutoDisposingSubscriberImpl(scheduler, subscription),
 };
 
+const getSubscriberScheduler = <T>(
+  delegate: SubscriberLike<T>,
+): SchedulerLike =>
+  delegate instanceof DelegatingSubscriber
+    ? delegate.scheduler
+    : delegate instanceof AutoDisposingSubscriberImpl
+    ? delegate.scheduler
+    : delegate;
+
+const getSubscriberSubscription = <T>(
+  delegate: SubscriberLike<T>,
+): DisposableLike =>
+  delegate instanceof DelegatingSubscriber
+    ? delegate.subscription
+    : delegate instanceof AutoDisposingSubscriberImpl
+    ? delegate.subscription
+    : delegate;
+
 export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
   TA
 > {
@@ -124,18 +139,10 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
 
   constructor(delegate: SubscriberLike<TB>) {
     super(
-      delegate instanceof DelegatingSubscriber
-        ? delegate.scheduler
-        : delegate instanceof AutoDisposingSubscriberImpl
-        ? delegate.scheduler
-        : delegate,
-
-      delegate instanceof DelegatingSubscriber
-        ? delegate.subscription
-        : delegate instanceof AutoDisposingSubscriberImpl
-        ? delegate.subscription
-        : delegate,
+      getSubscriberScheduler(delegate),
+      getSubscriberSubscription(delegate),
     );
+
     this.delegate = delegate;
 
     this.source =

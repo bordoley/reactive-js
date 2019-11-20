@@ -230,10 +230,16 @@ describe("Observable", () => {
       };
 
       expect(() =>
-      Observable.connect(seriallyCallsNextOnSubscribe, VirtualTimeScheduler.create()),
+        Observable.connect(
+          seriallyCallsNextOnSubscribe,
+          VirtualTimeScheduler.create(),
+        ),
       ).toThrow();
       expect(() =>
-      Observable.connect(seriallyCallsCompleteOnSubscribe, VirtualTimeScheduler.create()),
+        Observable.connect(
+          seriallyCallsCompleteOnSubscribe,
+          VirtualTimeScheduler.create(),
+        ),
       ).toThrow();
     });
 
