@@ -39,8 +39,8 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
-  scheduler: SchedulerLike;
-  subscription: DisposableLike;
+  readonly scheduler: SchedulerLike;
+  readonly subscription: DisposableLike;
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     this.scheduler = scheduler;
