@@ -29,6 +29,8 @@ class MergeObserver<T> implements ObserverLike<T> {
   }
 
   complete(error?: Error) {
+    this.delegate.remove(this.innerSubscription);
+
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {
@@ -37,8 +39,6 @@ class MergeObserver<T> implements ObserverLike<T> {
         this.delegate.complete();
       }
     }
-
-    this.delegate.remove(this.innerSubscription);
   }
 }
 
