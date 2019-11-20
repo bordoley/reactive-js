@@ -2,8 +2,6 @@ import {
   DisposableLike,
   Disposable,
   DisposableOrTeardown,
-  SerialDisposableLike,
-  SerialDisposable,
 } from "@reactive-js/disposables";
 
 import {
