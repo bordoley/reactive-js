@@ -5,7 +5,6 @@ import {
 } from "@reactive-js/disposables";
 
 import {
-  connect,
   Observable,
   DelegatingSubscriber,
   ObservableLike,
@@ -149,7 +148,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
     this.disposable = Disposable.create();
     this.disposable.add(this.dispatcher);
-    this.disposable.add(connect(this.delegate, scheduler));
+    this.disposable.add(Observable.connect(this.delegate, scheduler));
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

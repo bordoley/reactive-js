@@ -3,7 +3,7 @@ import {
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposables";
-import { connect, Observable, SubscriberLike } from "@reactive-js/rx-core";
+import { Observable, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { keep, onNext } from "@reactive-js/rx-operators";
 import { merge } from "@reactive-js/rx-observables";
@@ -37,7 +37,7 @@ class DomLocationStateContainerResourceImpl
       priority,
     );
 
-    const subscription = connect(
+    const subscription = Observable.connect(
       merge(
         Observable.lift(
           fromEvent(window, "popstate", _ => getCurrentLocation(), priority),

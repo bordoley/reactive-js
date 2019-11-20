@@ -1,7 +1,5 @@
 import {
-  connect,
   Observable,
-  ObserverLike,
   SubscriberLike,
   Subscriber,
 } from "@reactive-js/rx-core";

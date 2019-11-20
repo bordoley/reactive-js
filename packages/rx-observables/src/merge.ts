@@ -1,5 +1,4 @@
 import {
-  connect,
   observe,
   Observable,
   ObservableLike,
@@ -59,7 +58,7 @@ export const merge = <T>(
         countRef,
       );
 
-      observer.innerSubscription = connect(
+      observer.innerSubscription = Observable.connect(
         Observable.lift(observable, observe(observer)),
         subscriber,
       );

@@ -5,7 +5,7 @@ Core interfaces for reactive programming in reactive-js.
 ## Usage
 
 ```typescript
-import { connect, observe, Observable } from "@reactive-js/rx-core";
+import { observe, Observable } from "@reactive-js/rx-core";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
 const scheduler = EventLoopScheduler.create(1);
@@ -19,7 +19,7 @@ const observable = Observable.lift(
     complete: err => console.log("complete: " + err),
   }),
 );
-const subscription = connect(observable, scheduler);
+const subscription = Observable.connect(observable, scheduler);
 subscription.dispose();
 ```
 
@@ -49,16 +49,18 @@ subscription.dispose();
 
 ### Static Functions
 
-*`connect<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): DisposableLike`*
+
 
 *`notify<T>(observer: ObserverLike<T>, notification: Notification<T>)`*
 
 *`observe<T>(observer: ObserverLike<T>): Operator<T, T>`*
 
-*`Subscriber.toSafeObserver<T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T>`*
+*`Observable.connect<T>(observable: ObservableLike<T>, scheduler: SchedulerLike): DisposableLike`*
 
 *`Observable.create = <T>(onSubscribe: (observer: ObserverLike<T>) => DisposableLike | void, priority?: number): ObservableLike<T>`*
 
 *`Observable.lift(source: ObservableLike<any>, operator: Operator<any, any>,...operators: Array<Operator<any, any>>): ObservableLike<any>`*
 
 *`ObservableResource.lift(source: ObservableResourceLike<any>, operator: Operator<any, any>, ...operators: Array<Operator<any, any>>): ObservableResourceLike<any>`*
+
+*`Subscriber.toSafeObserver<T>(subscriber: SubscriberLike<T>, priority?: number): ObserverLike<T>`*

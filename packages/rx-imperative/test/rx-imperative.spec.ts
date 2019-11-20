@@ -1,5 +1,4 @@
 import {
-  connect,
   observe,
   Observable,
   ObserverLike,
@@ -26,12 +25,12 @@ test("shareReplayLast", () => {
   });
 
   const replayed = shareReplayLast(source, scheduler);
-  const replayedSubscription = connect(replayed, scheduler);
+  const replayedSubscription = Observable.connect(replayed, scheduler);
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = Disposable.disposed;
   scheduler.schedule(_ => {
-    liftedSubscription = connect(
+    liftedSubscription = Observable.connect(
       Observable.lift(replayed, observe(liftedObserver)),
       scheduler,
     );
@@ -43,7 +42,7 @@ test("shareReplayLast", () => {
     replayedSubscription.dispose();
     liftedSubscription.dispose();
 
-    anotherLiftedSubscription = connect(
+    anotherLiftedSubscription = Observable.connect(
       Observable.lift(replayed, observe(anotherLiftedSubscriptionObserver)),
       scheduler,
     );
@@ -66,7 +65,7 @@ test("EventResource", () => {
   const scheduler = VirtualTimeScheduler.create();
 
   const observer = createMockObserver();
-  connect(Observable.lift(event, observe(observer)), scheduler);
+  Observable.connect(Observable.lift(event, observe(observer)), scheduler);
 
   scheduler.schedule(_ => {
     event.dispatch(1);

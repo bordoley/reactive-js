@@ -1,5 +1,4 @@
 import {
-  connect,
   Observable,
   DelegatingSubscriber,
   ObservableLike,
@@ -37,7 +36,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       if (nextObs !== undefined) {
         this.activeCount++;
 
-        const nextObsSubscription = connect(
+        const nextObsSubscription = Observable.connect(
           Observable.lift(
             nextObs,
             observe({

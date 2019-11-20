@@ -12,7 +12,6 @@ export {
   DelegatingSubscriber,
 } from "./subscriber";
 export {
-  connect,
   Observable,
   ObservableResource,
   ObservableLike,

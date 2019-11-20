@@ -1,5 +1,4 @@
 import {
-  connect,
   notify,
   observe,
   Notification,
@@ -219,37 +218,37 @@ describe("Subscriber", () => {
   });
 });
 
-describe("connect", () => {
-  test("throws with serial observable", () => {
-    const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
-      subscribe: subscriber => subscriber.next(1),
-    };
-
-    const seriallyCallsCompleteOnSubscribe: ObservableLike<number> = {
-      subscribe: subscriber => subscriber.complete(),
-    };
-
-    expect(() =>
-      connect(seriallyCallsNextOnSubscribe, VirtualTimeScheduler.create()),
-    ).toThrow();
-    expect(() =>
-      connect(seriallyCallsCompleteOnSubscribe, VirtualTimeScheduler.create()),
-    ).toThrow();
-  });
-
-  test("auto-disposes the subscription on complete", () => {
-    const observable = Observable.create(observer => observer.complete());
-    const scheduler = VirtualTimeScheduler.create();
-
-    const subscription = connect(observable, scheduler);
-    expect(subscription.isDisposed).toBeFalsy();
-
-    scheduler.run();
-    expect(subscription.isDisposed).toBeTruthy();
-  });
-});
-
 describe("Observable", () => {
+  describe("connect", () => {
+    test("throws with serial observable", () => {
+      const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
+        subscribe: subscriber => subscriber.next(1),
+      };
+
+      const seriallyCallsCompleteOnSubscribe: ObservableLike<number> = {
+        subscribe: subscriber => subscriber.complete(),
+      };
+
+      expect(() =>
+      Observable.connect(seriallyCallsNextOnSubscribe, VirtualTimeScheduler.create()),
+      ).toThrow();
+      expect(() =>
+      Observable.connect(seriallyCallsCompleteOnSubscribe, VirtualTimeScheduler.create()),
+      ).toThrow();
+    });
+
+    test("auto-disposes the subscription on complete", () => {
+      const observable = Observable.create(observer => observer.complete());
+      const scheduler = VirtualTimeScheduler.create();
+
+      const subscription = Observable.connect(observable, scheduler);
+      expect(subscription.isDisposed).toBeFalsy();
+
+      scheduler.run();
+      expect(subscription.isDisposed).toBeTruthy();
+    });
+  });
+
   describe("create", () => {
     test("completes the subscriber if onSubscribe throws", () => {
       const error = new Error();
@@ -261,7 +260,7 @@ describe("Observable", () => {
         observe(observer),
       );
       const scheduler = VirtualTimeScheduler.create();
-      connect(observable, scheduler);
+      Observable.connect(observable, scheduler);
       scheduler.run();
 
       expect(observer.complete).toBeCalledWith(error);
@@ -271,7 +270,7 @@ describe("Observable", () => {
       const scheduler = VirtualTimeScheduler.create();
       const disposable = Disposable.create();
 
-      const subscription = connect(
+      const subscription = Observable.connect(
         Observable.create(_ => disposable),
         scheduler,
       );
@@ -298,7 +297,7 @@ describe("Observable", () => {
       onNext(_ => result.push(2)),
     );
 
-    const subscription = connect(
+    const subscription = Observable.connect(
       Observable.lift(
         liftedObservable,
         onNext(_ => result.push(3)),
