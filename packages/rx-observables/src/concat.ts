@@ -31,10 +31,11 @@ class ConcatObserver<T> implements ObserverLike<T> {
 }
 
 export const concat = <T>(
-  head: ObservableLike<T>,
+  fst: ObservableLike<T>,
+  snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T> => {
-  const observables = [head, ...tail];
+  const observables = [fst, snd, ...tail];
 
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const queue = [...observables];

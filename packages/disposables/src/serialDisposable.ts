@@ -47,5 +47,5 @@ class SerialDisposableImpl implements SerialDisposableLike {
 }
 
 export const SerialDisposable = {
-  create: () => new SerialDisposableImpl(),
+  create: (): SerialDisposableLike => new SerialDisposableImpl(),
 };

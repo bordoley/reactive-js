@@ -18,12 +18,14 @@ export interface RelativeURI {
   readonly fragment: string;
 }
 
+const emptyRelativeURI: RelativeURI = {
+  path: "",
+  query: "",
+  fragment: "",
+};
+
 export const RelativeURI = {
-  empty: {
-    path: "",
-    query: "",
-    fragment: "",
-  },
+  empty: emptyRelativeURI,
   equals: (a: RelativeURI, b: RelativeURI): boolean =>
     a === b ||
     (a.path === b.path && a.query === b.query && a.fragment === b.fragment),
