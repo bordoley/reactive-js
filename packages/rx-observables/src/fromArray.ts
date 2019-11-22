@@ -18,9 +18,7 @@ export const fromArray = <T>(
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.isDisposed) {
-        return;
-      } else if (index < values.length && delay > 0) {
+      if (index < values.length && delay > 0) {
         const value = values[index];
         index++;
         subscriber.next(value);
@@ -60,10 +58,6 @@ export const fromScheduledValues = <T>(
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.isDisposed) {
-        return;
-      }
-
       while (index < delayedValues.length) {
         const [_d, _p, value] = delayedValues[index];
         index++;
