@@ -16,7 +16,10 @@ import {
   switch_,
 } from "@reactive-js/rx-operators";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
+import { defaultScheduler } from "@reactive-js/scheduler";
 const scheduler = EventLoopScheduler.create(500);
+defaultScheduler.register(scheduler);
+
 /*
 Observable.connect(
   Observable.lift(
@@ -83,5 +86,4 @@ Observable.connect(
     exhaust(),
     onNext(console.log),
   ),
-  scheduler,
 );
