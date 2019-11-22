@@ -42,6 +42,7 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
         return { continuation: this.doWork, delay: 0, priority: this.priority };
       }
     }
+    return;
   };
 
   private doSchedule(notification: Notification<T>) {

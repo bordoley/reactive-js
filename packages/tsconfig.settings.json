@@ -8,6 +8,8 @@
     "module": "commonjs",
     "newLine": "LF",
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "strict": true,
