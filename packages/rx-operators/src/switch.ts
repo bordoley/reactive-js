@@ -1,13 +1,13 @@
+import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 import {
-  observe,
   DelegatingSubscriber,
+  Observable,
   ObservableLike,
+  observe,
+  ObserverLike,
   Operator,
   SubscriberLike,
-  Observable,
-  ObserverLike,
 } from "@reactive-js/rx-core";
-import { Disposable, SerialDisposable } from "@reactive-js/disposables";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly innerSubscription = SerialDisposable.create();
@@ -49,5 +49,6 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 }
 
+// tslint:disable-next-line variable-name
 export const switch_ = <T>(): Operator<ObservableLike<T>, T> => subscriber =>
   new SwitchSubscriber(subscriber);

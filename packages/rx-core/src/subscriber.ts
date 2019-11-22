@@ -1,12 +1,12 @@
-import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposables";
+import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
 
-import { ObserverLike } from "./observer";
 import {
-  SchedulerLike,
-  SchedulerResourceLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
+  SchedulerLike,
+  SchedulerResourceLike,
 } from "@reactive-js/scheduler";
+import { ObserverLike } from "./observer";
 
 export interface SubscriberLike<T>
   extends ObserverLike<T>,

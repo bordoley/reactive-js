@@ -2,5 +2,9 @@
   "extends": [
     "tslint-config-standard",
     "tslint-config-prettier"
-  ]
+  ],
+  "rules": {
+    "no-empty": [true, "allow-empty-functions"],
+    "ordered-imports": true
+  }
 }

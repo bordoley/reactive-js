@@ -1,5 +1,5 @@
 const Benchmark = require("benchmark");
-import { add1, even, odd, sum, createArray } from "./utils";
+import { add1, createArray, even, odd, sum } from "./utils";
 
 export const run = (n: number) => {
   const src = createArray(n);

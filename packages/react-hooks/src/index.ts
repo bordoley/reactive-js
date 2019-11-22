@@ -1,13 +1,13 @@
-import { useMemo, useEffect, useState, useCallback } from "react";
 import {
-  observe,
   Observable,
   ObservableLike,
   ObservableResourceLike,
+  observe,
 } from "@reactive-js/rx-core";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { Disposable, DisposableLike } from "@reactive-js/disposables";
 import { scheduler } from "@reactive-js/react-scheduler";
-import { DisposableLike, Disposable } from "@reactive-js/disposables";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
 

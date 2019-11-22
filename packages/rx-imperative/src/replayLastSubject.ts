@@ -3,8 +3,8 @@ import { AbstractSubject, SubjectLike } from "./subject";
 import {
   Notification,
   NotificationKind,
-  ObserverLike,
   notify,
+  ObserverLike,
 } from "@reactive-js/rx-core";
 
 class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {

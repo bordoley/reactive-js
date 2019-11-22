@@ -1,7 +1,8 @@
-import { Observable, SubscriberLike, Subscriber } from "@reactive-js/rx-core";
 import { Disposable } from "@reactive-js/disposables";
+import { Observable, Subscriber, SubscriberLike } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
+import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   concat,
   debounceTime,
@@ -14,14 +15,13 @@ import {
   mapTo,
   merge,
   observe,
-  onNext,
   onComplete,
   onError,
+  onNext,
   scan,
   switch_,
   withLatestFrom,
 } from "../src/index";
-import { SchedulerLike } from "@reactive-js/scheduler";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
   const subscription = Disposable.create();

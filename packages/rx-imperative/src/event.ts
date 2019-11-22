@@ -1,9 +1,9 @@
-import { Subject, SubjectLike } from "./subject";
 import {
   ObservableLike,
   ObservableResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
+import { Subject, SubjectLike } from "./subject";
 
 import { DisposableOrTeardown } from "@reactive-js/disposables";
 

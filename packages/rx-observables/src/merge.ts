@@ -1,11 +1,11 @@
+import { Disposable, DisposableLike } from "@reactive-js/disposables";
 import {
-  observe,
   Observable,
   ObservableLike,
+  observe,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
 
 class MergeObserver<T> implements ObserverLike<T> {
   private readonly delegate: SubscriberLike<T>;

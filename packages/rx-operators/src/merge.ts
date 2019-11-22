@@ -1,12 +1,12 @@
+import { Disposable } from "@reactive-js/disposables";
 import {
-  Observable,
   DelegatingSubscriber,
+  Observable,
   ObservableLike,
+  observe,
   Operator,
   SubscriberLike,
-  observe,
 } from "@reactive-js/rx-core";
-import { Disposable } from "@reactive-js/disposables";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly maxBufferSize: number;

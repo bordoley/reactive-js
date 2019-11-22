@@ -1,13 +1,13 @@
+import { DisposableLike } from "@reactive-js/disposables";
 import {
-  observe,
   DelegatingSubscriber,
+  Observable,
   ObservableLike,
+  observe,
+  ObserverLike,
   Operator,
   SubscriberLike,
-  Observable,
-  ObserverLike,
 } from "@reactive-js/rx-core";
-import { DisposableLike } from "@reactive-js/disposables";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,

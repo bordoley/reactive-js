@@ -1,10 +1,10 @@
 import {
   DelegatingSubscriber,
-  Operator,
-  SubscriberLike,
-  notify,
   Notification,
   NotificationKind,
+  notify,
+  Operator,
+  SubscriberLike,
 } from "@reactive-js/rx-core";
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";

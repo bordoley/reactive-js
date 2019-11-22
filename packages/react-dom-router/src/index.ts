@@ -1,6 +1,6 @@
 import {
-  Router as ReactRouter,
   RelativeURI,
+  Router as ReactRouter,
   RouterProps,
 } from "@reactive-js/react-router";
 import { StateUpdater } from "@reactive-js/state-container";
@@ -8,8 +8,8 @@ import { StateUpdater } from "@reactive-js/state-container";
 import { AsyncIterator } from "@reactive-js/ix-core";
 import { distinctUntilChanged, map } from "@reactive-js/rx-operators";
 
-import { LocationState } from "./location";
 import { scheduler } from "@reactive-js/react-scheduler";
+import { LocationState } from "./location";
 
 const mapper = (v: string): RelativeURI => {
   const parsedAccURL = new URL(v);
