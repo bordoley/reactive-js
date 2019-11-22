@@ -42,7 +42,7 @@ export const concat = <T>(
 
       if (error !== undefined) {
         subscriber.complete(error);
-      } else if(!subscribeNext()) {
+      } else if (!subscribeNext()) {
         subscriber.complete();
       }
     };
