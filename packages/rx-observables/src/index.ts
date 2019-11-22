@@ -1,3 +1,4 @@
+export { combineLatest } from "./combineLatest";
 export { concat } from "./concat";
 export { empty } from "./empty";
 export { fromArray, fromScheduledValues } from "./fromArray";

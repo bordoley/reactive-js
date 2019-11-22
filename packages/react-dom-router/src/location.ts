@@ -56,7 +56,7 @@ class DomLocationStateContainerResourceImpl
 
     this.disposable = Disposable.create();
     this.disposable.add(subscription, stateContainer);
-    
+
     this.stateContainer = stateContainer;
   }
 
