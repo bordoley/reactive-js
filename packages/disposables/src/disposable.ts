@@ -1,8 +1,14 @@
 export type DisposableOrTeardown = DisposableLike | (() => void);
 
 export interface DisposableLike {
-  add(disposable: DisposableOrTeardown): void;
-  remove(disposable: DisposableOrTeardown): void;
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ): void;
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ): void;
   readonly isDisposed: boolean;
   dispose(): void;
 }
@@ -41,20 +47,45 @@ class DisposableImpl implements DisposableLike {
     }
   }
 
-  add(disposable: DisposableOrTeardown) {
-    if (this.isDisposed) {
-      doDispose(disposable);
-    } else if (this.disposables.indexOf(disposable) < 0) {
+  private doAdd(disposable: DisposableOrTeardown) {
+    if (this.disposables.indexOf(disposable) < 0) {
       this.disposables.push(disposable);
     }
   }
 
-  remove(disposable: DisposableOrTeardown) {
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    if (this.isDisposed) {
+      doDispose(disposable);
+      for (let d of disposables) {
+        doDispose(d);
+      }
+    } else {
+      this.doAdd(disposable);
+      for (let d of disposables) {
+        this.doAdd(d);
+      }
+    }
+  }
+
+  private doRemove(disposable: DisposableOrTeardown) {
+    const index = this.disposables.indexOf(disposable);
+    if (index > -1) {
+      const [old] = this.disposables.splice(index, 1);
+      doDispose(old);
+    }
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
     if (!this.isDisposed) {
-      const index = this.disposables.indexOf(disposable);
-      if (index > -1) {
-        const [old] = this.disposables.splice(index, 1);
-        doDispose(old);
+      this.doRemove(disposable);
+      for (let d of disposables) {
+        this.doRemove(d);
       }
     }
   }
@@ -67,11 +98,21 @@ class DisposedDisposableImpl implements DisposableLike {
 
   dispose() {}
 
-  add(disposable: DisposableOrTeardown) {
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
     doDispose(disposable);
+
+    for (let d of disposables) {
+      doDispose(d);
+    }
   }
 
-  remove(disposable: DisposableOrTeardown) {}
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {}
 }
 
 const disposed: DisposableLike = new DisposedDisposableImpl();

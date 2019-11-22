@@ -56,16 +56,28 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.subscription.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subscription.add.apply(this.subscription, [
+      disposable,
+      ...disposables,
+    ]);
   }
 
   dispose() {
     this.subscription.dispose();
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.subscription.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subscription.remove.apply(this.subscription, [
+      disposable,
+      ...disposables,
+    ]);
   }
 
   schedule(
@@ -88,7 +100,8 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
   abstract next(data: T): void;
 }
 
-class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> implements ConnectableSubscriberLike<T> {
+class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T>
+  implements ConnectableSubscriberLike<T> {
   isConnected = false;
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
@@ -111,7 +124,10 @@ class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T> implements C
 }
 
 export const AutoDisposingSubscriber = {
-  create: <T>(scheduler: SchedulerLike, subscription: DisposableLike): ConnectableSubscriberLike<T> =>
+  create: <T>(
+    scheduler: SchedulerLike,
+    subscription: DisposableLike,
+  ): ConnectableSubscriberLike<T> =>
     new AutoDisposingSubscriberImpl(scheduler, subscription),
 };
 

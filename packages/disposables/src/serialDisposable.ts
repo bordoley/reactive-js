@@ -37,12 +37,18 @@ class SerialDisposableImpl implements SerialDisposableLike {
     }
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.delegate.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.delegate.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.delegate.remove.apply(this.delegate, [disposable, ...disposables]);
   }
 }
 

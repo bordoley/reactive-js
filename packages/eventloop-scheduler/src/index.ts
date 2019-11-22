@@ -44,12 +44,18 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     });
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.disposable.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.disposable.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
   }
 
   dispose() {

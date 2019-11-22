@@ -26,16 +26,22 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
     return this.subject.isDisposed;
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.subject.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.add.apply(this.subject, [disposable, ...disposables]);
   }
 
   dispose() {
     this.subject.dispose();
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.subject.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.remove.apply(this.subject, [disposable, ...disposables]);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
