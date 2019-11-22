@@ -10,18 +10,21 @@ import { Disposable, DisposableLike } from "@reactive-js/disposables";
 class MergeObserver<T> implements ObserverLike<T> {
   private readonly delegate: SubscriberLike<T>;
   private readonly totalCount: number;
-  private readonly countRef: [number];
+  private readonly completedCountRef: [number];
+  private readonly allSubscriptions: DisposableLike;
 
   innerSubscription: DisposableLike = Disposable.disposed;
 
   constructor(
     delegate: SubscriberLike<T>,
     totalCount: number,
-    countRef: [number],
+    completedCountRef: [number],
+    allSubscriptions: DisposableLike,
   ) {
     this.delegate = delegate;
     this.totalCount = totalCount;
-    this.countRef = countRef;
+    this.completedCountRef = completedCountRef;
+    this.allSubscriptions = allSubscriptions;
   }
 
   next(data: T) {
@@ -29,15 +32,13 @@ class MergeObserver<T> implements ObserverLike<T> {
   }
 
   complete(error?: Error) {
-    this.delegate.remove(this.innerSubscription);
+    this.completedCountRef[0]++;
 
-    if (error !== undefined) {
+    if (error !== undefined || this.completedCountRef[0] === this.totalCount) {
+      this.delegate.remove(this.allSubscriptions);
       this.delegate.complete(error);
     } else {
-      this.countRef[0] = this.countRef[0]++;
-      if (this.countRef[0] === this.totalCount) {
-        this.delegate.complete();
-      }
+      this.allSubscriptions.remove(this.innerSubscription);
     }
   }
 }
@@ -50,13 +51,17 @@ export const merge = <T>(
   const observables = [fst, snd, ...tail];
 
   const subscribe = (subscriber: SubscriberLike<T>) => {
-    const countRef: [number] = [0];
+    const completedCountRef: [number] = [0];
+
+    const allSubscriptions: DisposableLike = Disposable.create();
+    subscriber.add(allSubscriptions);
 
     for (let observable of observables) {
       const observer = new MergeObserver(
         subscriber,
         observables.length,
-        countRef,
+        completedCountRef,
+        allSubscriptions,
       );
 
       observer.innerSubscription = Observable.connect(
@@ -64,7 +69,7 @@ export const merge = <T>(
         subscriber,
       );
 
-      subscriber.add(observer.innerSubscription);
+      allSubscriptions.add(observer.innerSubscription);
     }
   };
 

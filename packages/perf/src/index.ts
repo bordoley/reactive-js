@@ -1,3 +1,4 @@
+import { run as runCombine } from "./combine";
 import { run as runFilterMapFusion } from "./filter-map-fusion";
 import { run as runFilterMapReduce } from "./filter-map-reduce";
 import { run as runFold } from "./fold";
@@ -55,3 +56,4 @@ runSuite(runFilterMapFusion(1000000));
 runSuite(runFilterMapReduce(1000000));
 runSuite(runMerge(1000, 1000));
 runSuite(runFold(1000000));
+runSuite(runCombine(500000));

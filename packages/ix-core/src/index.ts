@@ -27,7 +27,10 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     return this.delegate.isDisposed;
   }
 
-  add(disposable: DisposableOrTeardown, ...disposables: DisposableOrTeardown[]) {
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
     this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
   }
 
@@ -35,7 +38,10 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     this.delegate.dispose();
   }
 
-  remove(disposable: DisposableOrTeardown, ...disposables: DisposableOrTeardown[]) {
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
     this.delegate.remove.apply(this.delegate, [disposable, ...disposables]);
   }
 
