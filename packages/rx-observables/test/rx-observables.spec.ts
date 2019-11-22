@@ -7,8 +7,17 @@ import {
 } from "@reactive-js/rx-core";
 import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
+import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
-import { throws, ofValue, never, concat, empty } from "../src/index";
+import {
+  throws,
+  ofValue,
+  never,
+  concat,
+  empty,
+  fromPromiseFactory,
+  toPromise,
+} from "../src/index";
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
@@ -34,7 +43,7 @@ describe("concat", () => {
     expect(observer.complete).toHaveBeenCalledTimes(1);
   });
 
-  test("completes immediate when one observable completes with an error", () =>{
+  test("completes immediate when one observable completes with an error", () => {
     const scheduler = VirtualTimeScheduler.create();
     const err = new Error();
 
@@ -58,7 +67,7 @@ describe("concat", () => {
 
     expect(observer.complete).toHaveBeenCalledTimes(1);
     expect(observer.complete).toHaveBeenCalledWith(err);
-  })
+  });
 });
 
 describe("empty", () => {
@@ -79,6 +88,31 @@ describe("empty", () => {
     expect(observer.next).toHaveBeenCalledTimes(0);
     expect(observer.complete).toHaveBeenCalledTimes(1);
     expect(observer.complete).toHaveBeenCalledWith(undefined);
+  });
+});
+
+describe("fromPromiseFactory", () => {
+  test("when the promise resolves", async () => {
+    const scheduler = EventLoopScheduler.create();
+    const factory = () => Promise.resolve(1);
+    const result = await toPromise(fromPromiseFactory(factory), scheduler);
+    expect(result).toEqual(1);
+  });
+
+  test("when the promise throws", () => {
+    const scheduler = EventLoopScheduler.create();
+    const error = new Error();
+    const factory = () => Promise.reject(error);
+    const promise = toPromise(fromPromiseFactory(factory), scheduler);
+    return expect(promise).rejects.toThrow(error);
+  });
+});
+
+describe("toPromise", () => {
+  test("when the observable produces no values", () => {
+    const scheduler = EventLoopScheduler.create();
+    const promise = toPromise(empty(), scheduler);
+    return expect(promise).rejects.toThrow();
   });
 });
 
