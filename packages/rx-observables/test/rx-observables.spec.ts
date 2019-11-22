@@ -14,6 +14,7 @@ import {
   fromArray,
   fromPromiseFactory,
   fromScheduledValues,
+  merge,
   toPromise,
 } from "../src/index";
 
@@ -101,37 +102,38 @@ describe("fromArray", () => {
     );
     scheduler.run();
 
-    expect(observer.next).toHaveBeenNthCalledWith(1,1);
-    expect(observer.next).toHaveBeenNthCalledWith(2,2);
-    expect(observer.next).toHaveBeenNthCalledWith(3,3);
-    expect(observer.next).toHaveBeenNthCalledWith(4,4);
-    expect(observer.next).toHaveBeenNthCalledWith(5,5);
-    expect(observer.next).toHaveBeenNthCalledWith(6,6);
+    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
+    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
+    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
+    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
+    expect(observer.next).toHaveBeenNthCalledWith(5, 5);
+    expect(observer.next).toHaveBeenNthCalledWith(6, 6);
   });
 
   test("with delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
     const scheduler = VirtualTimeScheduler.create(1);
-    const accumulator: Array<[number, number]> = [];
-    const observer: ObserverLike<number> = {
-      next: v => accumulator.push([scheduler.now, v]),
+    const observer: ObserverLike<[number, number]> = {
+      next: jest.fn(),
       complete: jest.fn(),
     };
 
     Observable.connect(
-      Observable.lift(observable, observe(observer)),
+      Observable.lift(
+        observable,
+        map(v => [scheduler.now, v]),
+        observe(observer),
+      ),
       scheduler,
     );
     scheduler.run();
 
-    expect(accumulator).toEqual([
-      [3, 1],
-      [6, 2],
-      [9, 3],
-      [12, 4],
-      [15, 5],
-      [18, 6],
-    ]);
+    expect(observer.next).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(observer.next).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(observer.next).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(observer.next).toHaveBeenNthCalledWith(6, [18, 6]);
   });
 });
 
@@ -164,24 +166,27 @@ test("fromScheduledValues", () => {
 
   const scheduler = VirtualTimeScheduler.create(1);
 
-  const accumulator: Array<[number, number]> = [];
-
-  const observer: ObserverLike<number> = {
-    next: v => accumulator.push([scheduler.now, v]),
+  const observer: ObserverLike<[number, number]> = {
+    next: jest.fn(),
     complete: jest.fn(),
   };
 
-  Observable.connect(Observable.lift(observable, observe(observer)), scheduler);
+  Observable.connect(
+    Observable.lift(
+      observable,
+      map(v => [scheduler.now, v]),
+      observe(observer),
+    ),
+    scheduler,
+  );
   scheduler.run();
 
-  expect(accumulator).toEqual([
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [1, 2],
-    [3, 3],
-    [6, 4],
-  ]);
+  expect(observer.next).toHaveBeenNthCalledWith(1, [0, 1]);
+  expect(observer.next).toHaveBeenNthCalledWith(2, [0, 1]);
+  expect(observer.next).toHaveBeenNthCalledWith(3, [0, 1]);
+  expect(observer.next).toHaveBeenNthCalledWith(4, [1, 2]);
+  expect(observer.next).toHaveBeenNthCalledWith(5, [3, 3]);
+  expect(observer.next).toHaveBeenNthCalledWith(6, [6, 4]);
 });
 
 describe("generate", () => {
@@ -197,15 +202,17 @@ describe("generate", () => {
         generate(i => i + 1, 0),
         take(5),
         observe(observer),
-      ), scheduler);
+      ),
+      scheduler,
+    );
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(5);
-    expect(observer.next).toHaveBeenNthCalledWith(1,1);
-    expect(observer.next).toHaveBeenNthCalledWith(2,2);
-    expect(observer.next).toHaveBeenNthCalledWith(3,3);
-    expect(observer.next).toHaveBeenNthCalledWith(4,4);
-    expect(observer.next).toHaveBeenNthCalledWith(5,5);
+    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
+    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
+    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
+    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
+    expect(observer.next).toHaveBeenNthCalledWith(5, 5);
   });
 
   test("without delay, generate throws", () => {
@@ -226,17 +233,15 @@ describe("generate", () => {
     };
 
     Observable.connect(
-      Observable.lift(
-        generate(generator, 0),
-        take(5),
-        observe(observer),
-      ), scheduler);
+      Observable.lift(generate(generator, 0), take(5), observe(observer)),
+      scheduler,
+    );
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(3);
-    expect(observer.next).toHaveBeenNthCalledWith(1,1);
-    expect(observer.next).toHaveBeenNthCalledWith(2,2);
-    expect(observer.next).toHaveBeenNthCalledWith(3,3);
+    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
+    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
+    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
     expect(observer.complete).toBeCalledWith(error);
   });
 
@@ -253,15 +258,17 @@ describe("generate", () => {
         map(x => [scheduler.now, x]),
         take(5),
         observe(observer),
-      ), scheduler);
+      ),
+      scheduler,
+    );
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(5);
-    expect(observer.next).toHaveBeenNthCalledWith(1,[5, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2,[10, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3,[15, 3]);
-    expect(observer.next).toHaveBeenNthCalledWith(4,[20, 4]);
-    expect(observer.next).toHaveBeenNthCalledWith(5,[25, 5]);
+    expect(observer.next).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3, [15, 3]);
+    expect(observer.next).toHaveBeenNthCalledWith(4, [20, 4]);
+    expect(observer.next).toHaveBeenNthCalledWith(5, [25, 5]);
   });
 
   test("with delay, generate throws", () => {
@@ -287,16 +294,45 @@ describe("generate", () => {
         map(x => [scheduler.now, x]),
         take(5),
         observe(observer),
-      ), scheduler);
+      ),
+      scheduler,
+    );
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(3);
-    expect(observer.next).toHaveBeenNthCalledWith(1,[5, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2,[10, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3,[15, 3]);
+    expect(observer.next).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3, [15, 3]);
     expect(observer.complete).toBeCalledWith(error);
   });
+});
 
+describe("merge", () => {
+  test("", () => {
+    const scheduler = VirtualTimeScheduler.create(1);
+    const observer: ObserverLike<number> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    Observable.connect(
+      Observable.lift(
+        merge(
+          Observable.lift(generate(i => i + 2, 1, 2), take(3)),
+          Observable.lift(generate(i => i + 2, 0, 3), take(2)),
+        ),
+        observe(observer),
+      ),
+      scheduler,
+    );
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenNthCalledWith(1, 3);
+    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
+    expect(observer.next).toHaveBeenNthCalledWith(3, 5);
+    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
+    expect(observer.next).toHaveBeenNthCalledWith(5, 7);
+  });
 });
 
 describe("toPromise", () => {

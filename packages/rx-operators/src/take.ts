@@ -5,8 +5,6 @@ import {
 } from "@reactive-js/rx-core";
 
 import {
-  SchedulerLike,
-  SchedulerResourceLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
