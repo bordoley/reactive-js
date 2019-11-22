@@ -5,6 +5,7 @@ import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 import { delay, map, take } from "@reactive-js/rx-operators";
 
 import {
+  combineLatest,
   generate,
   throws,
   ofValue,
@@ -17,6 +18,40 @@ import {
   merge,
   toPromise,
 } from "../src/index";
+
+test("combineLatest", () => {
+  const scheduler = VirtualTimeScheduler.create(1);
+  const observer: ObserverLike<[number, number]> = {
+    next: jest.fn(),
+    complete: jest.fn(),
+  };
+
+  const error = new Error();
+
+  Observable.connect(
+    Observable.lift(
+      combineLatest(
+        Observable.lift(
+          generate(i => i + 2, 1, 2),
+          take(3),
+        ),
+        Observable.lift(
+          generate(i => i + 2, 0, 3),
+          take(2),
+        ),
+      ),
+      observe(observer),
+    ),
+    scheduler,
+  );
+  scheduler.run();
+
+  expect(observer.next).toHaveBeenNthCalledWith(1, [3, 2]);
+  expect(observer.next).toHaveBeenNthCalledWith(2, [5, 2]);
+  expect(observer.next).toHaveBeenNthCalledWith(3, [5, 4]);
+  expect(observer.next).toHaveBeenNthCalledWith(4, [7, 4]);
+  expect(observer.complete).toBeCalledWith(undefined);
+});
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
