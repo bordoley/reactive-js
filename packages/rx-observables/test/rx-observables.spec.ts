@@ -2,7 +2,10 @@ import { observe, ObserverLike, Observable } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
+import { map, take } from "@reactive-js/rx-operators";
+
 import {
+  generate,
   throws,
   ofValue,
   never,
@@ -29,7 +32,6 @@ describe("concat", () => {
       ),
       scheduler,
     );
-
     scheduler.run();
 
     expect(observer.next).toHaveBeenNthCalledWith(1, 1);
@@ -53,7 +55,6 @@ describe("concat", () => {
       ),
       scheduler,
     );
-
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(2);
@@ -77,7 +78,6 @@ describe("empty", () => {
     const value = 1;
 
     Observable.connect(Observable.lift(empty(), observe(observer)), scheduler);
-
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(0);
@@ -90,9 +90,8 @@ describe("fromArray", () => {
   test("with no delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6]);
     const scheduler = VirtualTimeScheduler.create(1);
-    const accumulator: Array<number> = [];
     const observer: ObserverLike<number> = {
-      next: v => accumulator.push(v),
+      next: jest.fn(),
       complete: jest.fn(),
     };
 
@@ -100,10 +99,14 @@ describe("fromArray", () => {
       Observable.lift(observable, observe(observer)),
       scheduler,
     );
-
     scheduler.run();
 
-    expect(accumulator).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(observer.next).toHaveBeenNthCalledWith(1,1);
+    expect(observer.next).toHaveBeenNthCalledWith(2,2);
+    expect(observer.next).toHaveBeenNthCalledWith(3,3);
+    expect(observer.next).toHaveBeenNthCalledWith(4,4);
+    expect(observer.next).toHaveBeenNthCalledWith(5,5);
+    expect(observer.next).toHaveBeenNthCalledWith(6,6);
   });
 
   test("with delay", () => {
@@ -119,10 +122,16 @@ describe("fromArray", () => {
       Observable.lift(observable, observe(observer)),
       scheduler,
     );
-
     scheduler.run();
 
-    expect(accumulator).toEqual([[3, 1], [6,2], [9,3], [12, 4], [15, 5], [18, 6]]);
+    expect(accumulator).toEqual([
+      [3, 1],
+      [6, 2],
+      [9, 3],
+      [12, 4],
+      [15, 5],
+      [18, 6],
+    ]);
   });
 });
 
@@ -163,7 +172,6 @@ test("fromScheduledValues", () => {
   };
 
   Observable.connect(Observable.lift(observable, observe(observer)), scheduler);
-
   scheduler.run();
 
   expect(accumulator).toEqual([
@@ -174,6 +182,121 @@ test("fromScheduledValues", () => {
     [3, 3],
     [6, 4],
   ]);
+});
+
+describe("generate", () => {
+  test("without delay", () => {
+    const scheduler = VirtualTimeScheduler.create(1);
+    const observer: ObserverLike<number> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    Observable.connect(
+      Observable.lift(
+        generate(i => i + 1, 0),
+        take(5),
+        observe(observer),
+      ), scheduler);
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenCalledTimes(5);
+    expect(observer.next).toHaveBeenNthCalledWith(1,1);
+    expect(observer.next).toHaveBeenNthCalledWith(2,2);
+    expect(observer.next).toHaveBeenNthCalledWith(3,3);
+    expect(observer.next).toHaveBeenNthCalledWith(4,4);
+    expect(observer.next).toHaveBeenNthCalledWith(5,5);
+  });
+
+  test("without delay, generate throws", () => {
+    const scheduler = VirtualTimeScheduler.create(1);
+    const observer: ObserverLike<number> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    const error = new Error();
+
+    const generator = (i: number) => {
+      if (i > 2) {
+        throw error;
+      }
+
+      return i + 1;
+    };
+
+    Observable.connect(
+      Observable.lift(
+        generate(generator, 0),
+        take(5),
+        observe(observer),
+      ), scheduler);
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenCalledTimes(3);
+    expect(observer.next).toHaveBeenNthCalledWith(1,1);
+    expect(observer.next).toHaveBeenNthCalledWith(2,2);
+    expect(observer.next).toHaveBeenNthCalledWith(3,3);
+    expect(observer.complete).toBeCalledWith(error);
+  });
+
+  test("with delay", () => {
+    const scheduler = VirtualTimeScheduler.create(1);
+    const observer: ObserverLike<[number, number]> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    Observable.connect(
+      Observable.lift(
+        generate(i => i + 1, 0, 5),
+        map(x => [scheduler.now, x]),
+        take(5),
+        observe(observer),
+      ), scheduler);
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenCalledTimes(5);
+    expect(observer.next).toHaveBeenNthCalledWith(1,[5, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2,[10, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3,[15, 3]);
+    expect(observer.next).toHaveBeenNthCalledWith(4,[20, 4]);
+    expect(observer.next).toHaveBeenNthCalledWith(5,[25, 5]);
+  });
+
+  test("with delay, generate throws", () => {
+    const scheduler = VirtualTimeScheduler.create(1);
+    const observer: ObserverLike<[number, number]> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    const error = new Error();
+
+    const generator = (i: number) => {
+      if (i > 2) {
+        throw error;
+      }
+
+      return i + 1;
+    };
+
+    Observable.connect(
+      Observable.lift(
+        generate(generator, 0, 5),
+        map(x => [scheduler.now, x]),
+        take(5),
+        observe(observer),
+      ), scheduler);
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenCalledTimes(3);
+    expect(observer.next).toHaveBeenNthCalledWith(1,[5, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2,[10, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3,[15, 3]);
+    expect(observer.complete).toBeCalledWith(error);
+  });
+
 });
 
 describe("toPromise", () => {
@@ -193,10 +316,7 @@ describe("never", () => {
       complete: jest.fn(),
     };
 
-    const value = 1;
-
     Observable.connect(Observable.lift(never(), observe(observer)), scheduler);
-
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(0);
@@ -219,7 +339,6 @@ describe("ofValue", () => {
       Observable.lift(ofValue(1), observe(observer)),
       scheduler,
     );
-
     scheduler.run();
 
     expect(observer.next).toHaveBeenCalledTimes(1);
@@ -242,7 +361,6 @@ describe("throws", () => {
       Observable.lift(throws(err), observe(observer)),
       scheduler,
     );
-
     scheduler.run();
 
     expect(observer.next).toBeCalledTimes(0);
