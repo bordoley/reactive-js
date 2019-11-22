@@ -25,8 +25,6 @@
 
 *`keep<T>(predicate: (data: T) => boolean): Operator<T, T>`*
 
-*`last<T>(): Operator<T, T>`*
-
 *`map<A, B>(mapper: (data: A) => B): Operator<A, B>`*
 
 *`mapTo<A, B>(value: B): Operator<A, B>`*
