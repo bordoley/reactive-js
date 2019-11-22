@@ -2,7 +2,7 @@ import { observe, ObserverLike, Observable } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
-import { map, take } from "@reactive-js/rx-operators";
+import { delay, map, take } from "@reactive-js/rx-operators";
 
 import {
   generate,
@@ -307,32 +307,40 @@ describe("generate", () => {
   });
 });
 
-describe("merge", () => {
-  test("", () => {
-    const scheduler = VirtualTimeScheduler.create(1);
-    const observer: ObserverLike<number> = {
-      next: jest.fn(),
-      complete: jest.fn(),
-    };
+test("merge", () => {
+  const scheduler = VirtualTimeScheduler.create(1);
+  const observer: ObserverLike<number> = {
+    next: jest.fn(),
+    complete: jest.fn(),
+  };
 
-    Observable.connect(
-      Observable.lift(
-        merge(
-          Observable.lift(generate(i => i + 2, 1, 2), take(3)),
-          Observable.lift(generate(i => i + 2, 0, 3), take(2)),
+  const error = new Error();
+
+  Observable.connect(
+    Observable.lift(
+      merge(
+        Observable.lift(
+          generate(i => i + 2, 1, 2),
+          take(3),
         ),
-        observe(observer),
+        Observable.lift(
+          generate(i => i + 2, 0, 3),
+          take(2),
+        ),
+        Observable.lift(throws(error), delay(10)),
       ),
-      scheduler,
-    );
-    scheduler.run();
+      observe(observer),
+    ),
+    scheduler,
+  );
+  scheduler.run();
 
-    expect(observer.next).toHaveBeenNthCalledWith(1, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 5);
-    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
-    expect(observer.next).toHaveBeenNthCalledWith(5, 7);
-  });
+  expect(observer.next).toHaveBeenNthCalledWith(1, 3);
+  expect(observer.next).toHaveBeenNthCalledWith(2, 2);
+  expect(observer.next).toHaveBeenNthCalledWith(3, 5);
+  expect(observer.next).toHaveBeenNthCalledWith(4, 4);
+  expect(observer.next).toHaveBeenNthCalledWith(5, 7);
+  expect(observer.complete).toBeCalledWith(error);
 });
 
 describe("toPromise", () => {
