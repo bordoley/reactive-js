@@ -10,12 +10,16 @@ import {
 } from "@reactive-js/scheduler";
 
 class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly maxCount: number;
   private count = 0;
+  private readonly maxCount: number;
 
   constructor(delegate: SubscriberLike<T>, maxCount: number) {
     super(delegate);
     this.maxCount = maxCount;
+  }
+
+  protected onComplete(error?: Error) {
+    this.delegate.complete(error);
   }
 
   protected onNext(data: T) {
@@ -26,10 +30,6 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.delegate.complete();
     }
   }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
-  }
 }
 
 export const take = <T>(count: number): Operator<T, T> => subscriber =>
@@ -37,9 +37,9 @@ export const take = <T>(count: number): Operator<T, T> => subscriber =>
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly continuation: SchedulerContinuationResult;
+  private last: T[] = [];
   private readonly maxCount: number;
   private readonly priority?: number;
-  private last: T[] = [];
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -54,6 +54,14 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
       continuation: this.drainQueue,
       priority: this.priority,
     };
+  }
+
+  protected onComplete(error?: Error) {
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      this.schedule(this.drainQueue, this.priority);
+    }
   }
 
   protected onNext(data: T) {
@@ -79,14 +87,6 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.delegate.complete();
     return;
   };
-
-  protected onComplete(error?: Error) {
-    if (error !== undefined) {
-      this.delegate.complete(error);
-    } else {
-      this.schedule(this.drainQueue, this.priority);
-    }
-  }
 }
 
 export const takeLast = <T>(

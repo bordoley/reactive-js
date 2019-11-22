@@ -36,17 +36,11 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
-  readonly scheduler: SchedulerLike;
-  readonly subscription: DisposableLike;
-
-  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
-    this.scheduler = scheduler;
-    this.subscription = subscription;
-  }
-
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
   }
+
+  abstract get isConnected(): boolean;
 
   get isDisposed() {
     return this.subscription.isDisposed;
@@ -54,6 +48,13 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
 
   get now() {
     return this.scheduler.now;
+  }
+  readonly scheduler: SchedulerLike;
+  readonly subscription: DisposableLike;
+
+  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
+    this.scheduler = scheduler;
+    this.subscription = subscription;
   }
 
   add(
@@ -65,10 +66,12 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
       ...disposables,
     ]);
   }
+  abstract complete(_error?: Error): void;
 
   dispose() {
     this.subscription.dispose();
   }
+  abstract next(data: T): void;
 
   remove(
     disposable: DisposableOrTeardown,
@@ -94,10 +97,6 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
     schedulerSubscription.add(() => this.remove(schedulerSubscription));
     return schedulerSubscription;
   }
-
-  abstract get isConnected(): boolean;
-  abstract complete(_error?: Error): void;
-  abstract next(data: T): void;
 }
 
 class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T>
@@ -152,10 +151,13 @@ const getSubscriberSubscription = <T>(
 export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
   TA
 > {
-  private readonly source: SubscriberLike<any>;
+  get isConnected() {
+    return this.source.isConnected;
+  }
   readonly delegate: ObserverLike<TB>;
 
   private isStopped = false;
+  private readonly source: SubscriberLike<any>;
 
   constructor(delegate: SubscriberLike<TB>) {
     super(
@@ -173,29 +175,14 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
     });
   }
 
-  get isConnected() {
-    return this.source.isConnected;
-  }
-
-  protected abstract onNext(data: TA): void;
-
-  protected abstract onComplete(error?: Error): void;
-
-  private tryOnNext(data: TA) {
-    try {
-      this.onNext(data);
-    } catch (e) {
-      this.complete(e);
+  complete(error?: Error) {
+    if (__DEV__) {
+      checkState(this);
     }
-  }
 
-  private tryOnComplete(error?: Error) {
-    try {
-      this.onComplete(error);
-    } catch (e) {
-      // FIXME: if error isn't null the delegate error should
-      // reference both exceptions so that we don't swallow them.
-      this.delegate.complete(e);
+    if (!this.isStopped) {
+      this.isStopped = true;
+      this.tryOnComplete(error);
     }
   }
 
@@ -209,14 +196,25 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
     }
   }
 
-  complete(error?: Error) {
-    if (__DEV__) {
-      checkState(this);
-    }
+  protected abstract onComplete(error?: Error): void;
 
-    if (!this.isStopped) {
-      this.isStopped = true;
-      this.tryOnComplete(error);
+  protected abstract onNext(data: TA): void;
+
+  private tryOnComplete(error?: Error) {
+    try {
+      this.onComplete(error);
+    } catch (e) {
+      // FIXME: if error isn't null the delegate error should
+      // reference both exceptions so that we don't swallow them.
+      this.delegate.complete(e);
+    }
+  }
+
+  private tryOnNext(data: TA) {
+    try {
+      this.onNext(data);
+    } catch (e) {
+      this.complete(e);
     }
   }
 }
@@ -229,14 +227,14 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observer = observer;
   }
 
-  protected onNext(data: T) {
-    this.observer.next(data);
-    this.delegate.next(data);
-  }
-
   protected onComplete(error?: Error) {
     this.observer.complete(error);
     this.delegate.complete(error);
+  }
+
+  protected onNext(data: T) {
+    this.observer.next(data);
+    this.delegate.next(data);
   }
 }
 
@@ -245,16 +243,16 @@ export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
 ) => new ObserveSubscriber(subscriber, observer);
 
 class SafeObserver<T> implements ObserverLike<T> {
-  private readonly clearQueue: DisposableOrTeardown = () => {
-    this.nextQueue.length = 0;
-  };
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  }
   private readonly continuation: SchedulerContinuationResult;
+  private error: Error | undefined;
+
+  private isComplete = false;
   private readonly nextQueue: Array<T> = [];
   private readonly priority?: number;
   private readonly subscriber: SubscriberLike<T>;
-
-  private isComplete = false;
-  private error: Error | undefined;
 
   constructor(subscriber: SubscriberLike<T>, priority?: number) {
     this.subscriber = subscriber;
@@ -268,9 +266,23 @@ class SafeObserver<T> implements ObserverLike<T> {
     this.subscriber.add(this.clearQueue);
   }
 
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  complete(error?: Error) {
+    if (!this.isComplete) {
+      this.isComplete = true;
+      this.error = error;
+      this.scheduleDrainQueue();
+    }
   }
+
+  next(data: T) {
+    if (!this.isComplete) {
+      this.nextQueue.push(data);
+      this.scheduleDrainQueue();
+    }
+  }
+  private readonly clearQueue: DisposableOrTeardown = () => {
+    this.nextQueue.length = 0;
+  };
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
@@ -295,21 +307,6 @@ class SafeObserver<T> implements ObserverLike<T> {
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
       this.subscriber.schedule(this.drainQueue, 0, this.priority);
-    }
-  }
-
-  next(data: T) {
-    if (!this.isComplete) {
-      this.nextQueue.push(data);
-      this.scheduleDrainQueue();
-    }
-  }
-
-  complete(error?: Error) {
-    if (!this.isComplete) {
-      this.isComplete = true;
-      this.error = error;
-      this.scheduleDrainQueue();
     }
   }
 }

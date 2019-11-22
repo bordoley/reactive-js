@@ -31,8 +31,8 @@ const connect = <T>(
 };
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
-  readonly source: ObservableLike<TSrc>;
   readonly operators: ReadonlyArray<Operator<any, any>>;
+  readonly source: ObservableLike<TSrc>;
 
   constructor(
     source: ObservableLike<TSrc>,
@@ -42,13 +42,13 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
     this.operators = operators;
   }
 
-  private liftSubscriber(subscriber: SubscriberLike<any>) {
-    return this.operators.reduceRight((acc, next) => next(acc), subscriber);
-  }
-
   subscribe(subscriber: SubscriberLike<T>) {
     const liftedSubscrber = this.liftSubscriber(subscriber);
     this.source.subscribe(liftedSubscrber);
+  }
+
+  private liftSubscriber(subscriber: SubscriberLike<any>) {
+    return this.operators.reduceRight((acc, next) => next(acc), subscriber);
   }
 }
 
@@ -145,16 +145,15 @@ export interface ObservableResourceLike<T>
     DisposableLike {}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
-  readonly observable: ObservableLike<T>;
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
   readonly disposable: DisposableLike;
+  readonly observable: ObservableLike<T>;
 
   constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
     this.observable = observable;
     this.disposable = disposable;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
   }
 
   add(

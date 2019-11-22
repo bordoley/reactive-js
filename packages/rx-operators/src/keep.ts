@@ -12,15 +12,15 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.predicate = predicate;
   }
 
+  protected onComplete(error?: Error) {
+    this.delegate.complete(error);
+  }
+
   protected onNext(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
       this.delegate.next(data);
     }
-  }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
   }
 }
 

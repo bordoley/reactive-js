@@ -16,14 +16,13 @@ export interface EventResourceLike<T>
     ObservableResourceLike<T> {}
 
 class EventResourceImpl<T> implements EventResourceLike<T> {
+  get isDisposed() {
+    return this.subject.isDisposed;
+  }
   private readonly subject: SubjectLike<T>;
 
   constructor(priority?: number) {
     this.subject = Subject.create(priority);
-  }
-
-  get isDisposed() {
-    return this.subject.isDisposed;
   }
 
   add(
@@ -31,6 +30,10 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.subject.add.apply(this.subject, [disposable, ...disposables]);
+  }
+
+  dispatch(event: T) {
+    this.subject.next(event);
   }
 
   dispose() {
@@ -46,10 +49,6 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subject.subscribe(subscriber);
-  }
-
-  dispatch(event: T) {
-    this.subject.next(event);
   }
 }
 

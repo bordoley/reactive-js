@@ -25,6 +25,9 @@ const getCurrentLocation = () => {
 
 class DomLocationStateContainerResourceImpl
   implements StateContainerResourceLike<string> {
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
   private readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
@@ -60,23 +63,15 @@ class DomLocationStateContainerResourceImpl
     this.stateContainer = stateContainer;
   }
 
-  subscribe(subscriber: SubscriberLike<string>) {
-    this.stateContainer.subscribe(subscriber);
-  }
-
-  dispatch(updater: StateUpdater<string>) {
-    this.stateContainer.dispatch(updater);
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+  }
+
+  dispatch(updater: StateUpdater<string>) {
+    this.stateContainer.dispatch(updater);
   }
 
   dispose() {
@@ -88,6 +83,10 @@ class DomLocationStateContainerResourceImpl
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+  }
+
+  subscribe(subscriber: SubscriberLike<string>) {
+    this.stateContainer.subscribe(subscriber);
   }
 }
 

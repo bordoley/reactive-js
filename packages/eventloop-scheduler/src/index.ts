@@ -21,20 +21,23 @@ type SchedulerCtx = {
 };
 
 class EventLoopSchedulerImpl implements SchedulerResourceLike {
-  private static callback(ctx: SchedulerCtx) {
-    if (!ctx.scheduler.disposable.isDisposed) {
-      ctx.scheduler.workqueue.push(ctx);
-      if (ctx.scheduler.workqueue.length === 1) {
-        ctx.scheduler.drainQueue();
-      }
-    }
+  get inScheduledContinuation(): boolean {
+    return this._inScheduledContinuation;
   }
 
-  private readonly disposable: DisposableLike;
-  private readonly workqueue: SchedulerCtx[] = [];
-  private readonly timeout: number;
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  get now() {
+    return Date.now();
+  }
   private _inScheduledContinuation = false;
+
+  private readonly disposable: DisposableLike;
   private startTime: number = this.now;
+  private readonly timeout: number;
+  private readonly workqueue: SchedulerCtx[] = [];
 
   constructor(timeout: number) {
     this.timeout = timeout;
@@ -51,6 +54,10 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
   }
 
+  dispose() {
+    return this.disposable.dispose();
+  }
+
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
@@ -58,20 +65,39 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
   }
 
-  dispose() {
-    return this.disposable.dispose();
+  schedule(
+    continuation: SchedulerContinuation,
+    delay: number = 0,
+    _priority?: number,
+  ): DisposableLike {
+    throwIfDisposed(this.disposable);
+
+    const disposable = SerialDisposable.create();
+    const shouldYield = (): boolean =>
+      disposable.isDisposed || this.startTime + this.timeout < this.now;
+
+    const ctx = {
+      continuation,
+      delay: Math.max(delay, 0),
+      disposable,
+      scheduler: this,
+      shouldYield,
+    };
+
+    this.scheduleInternal(ctx);
+    return ctx.disposable;
   }
 
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
+  private async drainQueue() {
+    while (this.workqueue.length > 0 && !this.disposable.isDisposed) {
+      const ctx = this.workqueue.shift();
+      this.executeContinuation(ctx as SchedulerCtx);
 
-  get inScheduledContinuation(): boolean {
-    return this._inScheduledContinuation;
-  }
-
-  get now() {
-    return Date.now();
+      // Not sure this is really necessary, but let's yield back
+      // to the JS microtask queue between continuation executions
+      // to avoid hogging too much cpu.
+      await Promise.resolve();
+    }
   }
 
   private async executeContinuation(ctx: SchedulerCtx) {
@@ -97,18 +123,6 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       }
     } else {
       ctx.disposable.dispose();
-    }
-  }
-
-  private async drainQueue() {
-    while (this.workqueue.length > 0 && !this.disposable.isDisposed) {
-      const ctx = this.workqueue.shift();
-      this.executeContinuation(ctx as SchedulerCtx);
-
-      // Not sure this is really necessary, but let's yield back
-      // to the JS microtask queue between continuation executions
-      // to avoid hogging too much cpu.
-      await Promise.resolve();
     }
   }
 
@@ -148,28 +162,13 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
       ctx.disposable.disposable.add(() => clearImmediate(immediate));
     }
   }
-
-  schedule(
-    continuation: SchedulerContinuation,
-    delay: number = 0,
-    _priority?: number,
-  ): DisposableLike {
-    throwIfDisposed(this.disposable);
-
-    const disposable = SerialDisposable.create();
-    const shouldYield = (): boolean =>
-      disposable.isDisposed || this.startTime + this.timeout < this.now;
-
-    const ctx = {
-      continuation,
-      delay: Math.max(delay, 0),
-      disposable,
-      scheduler: this,
-      shouldYield,
-    };
-
-    this.scheduleInternal(ctx);
-    return ctx.disposable;
+  private static callback(ctx: SchedulerCtx) {
+    if (!ctx.scheduler.disposable.isDisposed) {
+      ctx.scheduler.workqueue.push(ctx);
+      if (ctx.scheduler.workqueue.length === 1) {
+        ctx.scheduler.drainQueue();
+      }
+    }
   }
 }
 

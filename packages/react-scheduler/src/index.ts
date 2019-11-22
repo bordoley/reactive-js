@@ -17,8 +17,6 @@ import {
 } from "@reactive-js/disposables";
 
 class ReactSchedulerImpl implements SchedulerLike {
-  private _inScheduledContinuation = false;
-
   public get inScheduledContinuation(): boolean {
     return this._inScheduledContinuation;
   }
@@ -26,23 +24,28 @@ class ReactSchedulerImpl implements SchedulerLike {
   get now() {
     return unstable_now();
   }
+  private _inScheduledContinuation = false;
 
-  private scheduleCallback(
-    disposable: SerialDisposableLike,
-    callback: FrameCallbackType,
-    delay: number,
-    priority: number,
-  ) {
-    const callbackNode = unstable_scheduleCallback(
+  schedule(
+    continuation: SchedulerContinuation,
+    delay: number = 0,
+    priority: number = unstable_NormalPriority,
+  ): DisposableLike {
+    const disposable = SerialDisposable.create();
+
+    const shouldYield = () => {
+      const isDisposed = disposable.isDisposed;
+      return isDisposed || unstable_shouldYield();
+    };
+
+    this.scheduleCallback(
+      disposable,
+      this.createFrameCallback(disposable, shouldYield, continuation, priority),
+      delay,
       priority,
-      callback,
-      delay > 0 ? { delay } : undefined,
     );
 
-    const innerDisposable = Disposable.create();
-    innerDisposable.add(() => unstable_cancelCallback(callbackNode));
-
-    disposable.disposable = innerDisposable;
+    return disposable;
   }
 
   private createFrameCallback(
@@ -91,26 +94,22 @@ class ReactSchedulerImpl implements SchedulerLike {
     return continuationCallback;
   }
 
-  schedule(
-    continuation: SchedulerContinuation,
-    delay: number = 0,
-    priority: number = unstable_NormalPriority,
-  ): DisposableLike {
-    const disposable = SerialDisposable.create();
-
-    const shouldYield = () => {
-      const isDisposed = disposable.isDisposed;
-      return isDisposed || unstable_shouldYield();
-    };
-
-    this.scheduleCallback(
-      disposable,
-      this.createFrameCallback(disposable, shouldYield, continuation, priority),
-      delay,
+  private scheduleCallback(
+    disposable: SerialDisposableLike,
+    callback: FrameCallbackType,
+    delay: number,
+    priority: number,
+  ) {
+    const callbackNode = unstable_scheduleCallback(
       priority,
+      callback,
+      delay > 0 ? { delay } : undefined,
     );
 
-    return disposable;
+    const innerDisposable = Disposable.create();
+    innerDisposable.add(() => unstable_cancelCallback(callbackNode));
+
+    disposable.disposable = innerDisposable;
   }
 }
 

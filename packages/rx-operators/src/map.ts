@@ -12,13 +12,13 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
     this.mapper = mapper;
   }
 
+  protected onComplete(error?: Error) {
+    this.delegate.complete(error);
+  }
+
   protected onNext(data: TA) {
     const mappedData = this.mapper(data);
     this.delegate.next(mappedData);
-  }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
   }
 }
 

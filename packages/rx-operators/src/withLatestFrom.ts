@@ -13,16 +13,17 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,
   TC
 > {
-  private readonly selector: (a: TA, b: TB) => TC;
-  private readonly otherSubscription: DisposableLike;
-
-  private otherLatest: [TB] | undefined;
-
   static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
     private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
 
     constructor(parent: WithLatestFromSubscriber<TA, TB, TC>) {
       this.parent = parent;
+    }
+
+    complete(error?: Error) {
+      if (error !== undefined) {
+        this.parent.complete(error);
+      }
     }
 
     next(data: TB) {
@@ -32,13 +33,11 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
         this.parent.otherLatest[0] = data;
       }
     }
-
-    complete(error?: Error) {
-      if (error !== undefined) {
-        this.parent.complete(error);
-      }
-    }
   };
+
+  private otherLatest: [TB] | undefined;
+  private readonly otherSubscription: DisposableLike;
+  private readonly selector: (a: TA, b: TB) => TC;
 
   constructor(
     delegate: SubscriberLike<TC>,
@@ -59,17 +58,17 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     this.add(this.otherSubscription);
   }
 
+  protected onComplete(error?: Error) {
+    this.remove(this.otherSubscription);
+    this.delegate.complete(error);
+  }
+
   protected onNext(data: TA) {
     if (this.otherLatest !== undefined) {
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);
       this.delegate.next(result);
     }
-  }
-
-  protected onComplete(error?: Error) {
-    this.remove(this.otherSubscription);
-    this.delegate.complete(error);
   }
 }
 

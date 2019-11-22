@@ -8,12 +8,11 @@ import {
 } from "@reactive-js/rx-core";
 
 class MergeObserver<T> implements ObserverLike<T> {
+  innerSubscription: DisposableLike = Disposable.disposed;
+  private readonly allSubscriptions: DisposableLike;
+  private readonly completedCountRef: [number];
   private readonly delegate: SubscriberLike<T>;
   private readonly totalCount: number;
-  private readonly completedCountRef: [number];
-  private readonly allSubscriptions: DisposableLike;
-
-  innerSubscription: DisposableLike = Disposable.disposed;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -27,10 +26,6 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.allSubscriptions = allSubscriptions;
   }
 
-  next(data: T) {
-    this.delegate.next(data);
-  }
-
   complete(error?: Error) {
     this.completedCountRef[0]++;
 
@@ -40,6 +35,10 @@ class MergeObserver<T> implements ObserverLike<T> {
     } else {
       this.allSubscriptions.remove(this.innerSubscription);
     }
+  }
+
+  next(data: T) {
+    this.delegate.next(data);
   }
 }
 

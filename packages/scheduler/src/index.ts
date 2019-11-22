@@ -43,6 +43,6 @@ class DefaultScheduler {
 }
 
 export const defaultScheduler: {
-  readonly register: (scheduler: SchedulerLike) => void;
   readonly instance: SchedulerLike;
+  readonly register: (scheduler: SchedulerLike) => void;
 } = new DefaultScheduler();

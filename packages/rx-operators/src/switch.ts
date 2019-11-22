@@ -10,8 +10,6 @@ import {
 } from "@reactive-js/rx-core";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
-  private readonly innerSubscription = SerialDisposable.create();
-
   static InnerObserver = class<T> implements ObserverLike<T> {
     private readonly parent: SwitchSubscriber<T>;
 
@@ -19,20 +17,26 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent = parent;
     }
 
-    next(data: T) {
-      this.parent.delegate.next(data);
-    }
-
     complete(error?: Error) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
     }
+
+    next(data: T) {
+      this.parent.delegate.next(data);
+    }
   };
+  private readonly innerSubscription = SerialDisposable.create();
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
     this.add(this.innerSubscription);
+  }
+
+  protected onComplete(error?: Error) {
+    this.remove(this.innerSubscription);
+    this.delegate.complete(error);
   }
 
   protected onNext(data: ObservableLike<T>) {
@@ -41,11 +45,6 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
       this,
     );
-  }
-
-  protected onComplete(error?: Error) {
-    this.remove(this.innerSubscription);
-    this.delegate.complete(error);
   }
 }
 

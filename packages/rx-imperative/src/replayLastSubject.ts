@@ -9,12 +9,12 @@ import {
 
 class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   private last: Notification<T> | undefined;
+  protected onComplete(error?: Error) {
+    this.last = [NotificationKind.Complete, error];
+  }
 
   protected onNext(data: T) {
     this.last = [NotificationKind.Next, data];
-  }
-  protected onComplete(error?: Error) {
-    this.last = [NotificationKind.Complete, error];
   }
   protected onSubscribe(observer: ObserverLike<T>) {
     if (this.last !== undefined) {

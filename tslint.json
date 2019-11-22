@@ -4,6 +4,13 @@
     "tslint-config-prettier"
   ],
   "rules": {
+    "member-ordering": [
+      true,
+      {
+        "order": "instance-sandwich",
+        "alphabetize": true
+      }
+    ],
     "no-empty": [true, "allow-empty-functions"],
     "ordered-imports": true
   }
