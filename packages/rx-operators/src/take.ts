@@ -77,6 +77,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
 
     this.delegate.complete();
+    return;
   };
 
   protected onComplete(error?: Error) {

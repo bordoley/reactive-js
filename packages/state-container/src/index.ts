@@ -100,6 +100,7 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       this.remove(this.clearQueue);
       this.delegate.complete(this.error);
     }
+    return;
   };
 
   private scheduleDrainQueue() {

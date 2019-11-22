@@ -289,6 +289,7 @@ class SafeObserver<T> implements ObserverLike<T> {
       this.subscriber.remove(this.clearQueue);
       this.subscriber.complete(this.error);
     }
+    return;
   };
 
   private scheduleDrainQueue() {

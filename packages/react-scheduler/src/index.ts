@@ -86,6 +86,7 @@ class ReactSchedulerImpl implements SchedulerLike {
       }
 
       this.scheduleCallback(disposable, callback, delay, resultPriority);
+      return;
     };
     return continuationCallback;
   }

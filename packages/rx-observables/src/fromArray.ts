@@ -35,6 +35,7 @@ export const fromArray = <T>(
         }
 
         subscriber.complete();
+        return;
       }
     };
 
@@ -76,6 +77,7 @@ export const fromScheduledValues = <T>(
       }
 
       subscriber.complete();
+      return;
     };
 
     const [delay, priority, _] = delayedValues[index];
