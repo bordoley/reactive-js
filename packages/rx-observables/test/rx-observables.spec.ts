@@ -8,7 +8,7 @@ import {
 import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
-import { throws, ofValue, never, concat } from "../src/index";
+import { throws, ofValue, never, concat, empty } from "../src/index";
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
@@ -59,6 +59,27 @@ describe("concat", () => {
     expect(observer.complete).toHaveBeenCalledTimes(1);
     expect(observer.complete).toHaveBeenCalledWith(err);
   })
+});
+
+describe("empty", () => {
+  test("produces no values and completes", () => {
+    const scheduler = VirtualTimeScheduler.create();
+
+    const observer: ObserverLike<number> = {
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
+
+    const value = 1;
+
+    Observable.connect(Observable.lift(empty(), observe(observer)), scheduler);
+
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenCalledTimes(0);
+    expect(observer.complete).toHaveBeenCalledTimes(1);
+    expect(observer.complete).toHaveBeenCalledWith(undefined);
+  });
 });
 
 describe("never", () => {
