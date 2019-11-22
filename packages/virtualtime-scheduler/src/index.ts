@@ -222,8 +222,11 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
   run() {
     throwIfDisposed(this.disposable);
 
-    let next;
-    while ((next = this.queue.shift()) !== undefined) {
+    for (
+      let next = this.queue.shift();
+      next !== undefined;
+      next = this.queue.shift()
+    ) {
       next(PerfTestingSchedulerImpl.shouldYield);
     }
 
