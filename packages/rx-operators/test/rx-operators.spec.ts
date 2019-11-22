@@ -10,7 +10,6 @@ import {
   exhaust,
   ignoreElements,
   keep,
-  last,
   map,
   mapTo,
   merge,
