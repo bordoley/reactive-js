@@ -28,12 +28,12 @@ function logComplete() {
 }
 
 const logResults = (e: any) => {
-  var t = e.target;
+  const t = e.target;
 
   if (t.failure) {
     console.error(padl(10, t.name) + "FAILED: " + e.target.failure);
   } else {
-    var result =
+    const result =
       padl(10, t.name) +
       padr(13, t.hz.toFixed(2) + " op/s") +
       " \xb1" +

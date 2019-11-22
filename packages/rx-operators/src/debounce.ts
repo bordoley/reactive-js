@@ -26,7 +26,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   private notifyNext() {
-    if (this.value != undefined) {
+    if (this.value !== undefined) {
       const [value] = this.value;
       this.value = undefined;
       this.delegate.next(value);

@@ -1,10 +1,10 @@
 import {
   ObservableResource,
   ObservableResourceLike,
+  Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { Operator } from "@reactive-js/rx-core";
 import { DisposableOrTeardown } from "@reactive-js/disposables";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
