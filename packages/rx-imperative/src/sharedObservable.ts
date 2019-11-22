@@ -63,8 +63,7 @@ class SharedObservable<T> implements ObservableLike<T> {
       subscriber,
     );
 
-    subscriber.add(this.teardown);
-    subscriber.add(innerSubscription);
+    subscriber.add(this.teardown, innerSubscription);
   }
 }
 

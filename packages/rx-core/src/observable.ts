@@ -157,16 +157,22 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.disposable.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
   }
 
   dispose() {
     this.disposable.dispose();
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.disposable.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {

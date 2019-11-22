@@ -147,8 +147,10 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     );
 
     this.disposable = Disposable.create();
-    this.disposable.add(this.dispatcher);
-    this.disposable.add(Observable.connect(this.delegate, scheduler));
+    this.disposable.add(
+      this.dispatcher,
+      Observable.connect(this.delegate, scheduler),
+    );
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -163,16 +165,22 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add(disposable: DisposableOrTeardown) {
-    this.disposable.add(disposable);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
   }
 
   dispose() {
     this.disposable.dispose();
   }
 
-  remove(disposable: DisposableOrTeardown) {
-    this.disposable.remove(disposable);
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
   }
 }
 
