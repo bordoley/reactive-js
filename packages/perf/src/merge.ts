@@ -4,15 +4,15 @@ import { sum } from "./utils";
 
 const createSrcData = (m: number, n: number) => {
   const a = new Array(n);
-  for (var i = 0; i < a.length; ++i) {
+  for (let i = 0; i < a.length; ++i) {
     a[i] = buildArray(i * 1000, m);
   }
   return a;
 };
 
 const buildArray = (base: number, n: number) => {
-  var a = new Array(n);
-  for (var i = 0; i < a.length; ++i) {
+  const a = new Array(n);
+  for (let i = 0; i < a.length; ++i) {
     a[i] = base + i;
   }
   return a;

@@ -9,7 +9,7 @@ export const sum = (x: number, y: number): number => x + y;
 
 export const createArray = (n: number): ReadonlyArray<number> => {
   const src = new Array(n);
-  for (var i = 0; i < src.length; ++i) {
+  for (let i = 0; i < src.length; ++i) {
     src[i] = i;
   }
   return src;
