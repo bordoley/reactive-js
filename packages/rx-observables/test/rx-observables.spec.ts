@@ -1,11 +1,4 @@
-import {
-  observe,
-  ObserverLike,
-  Observable,
-  SubscriberLike,
-  Subscriber,
-} from "@reactive-js/rx-core";
-import { Disposable } from "@reactive-js/disposables";
+import { observe, ObserverLike, Observable } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 
@@ -15,7 +8,9 @@ import {
   never,
   concat,
   empty,
+  fromArray,
   fromPromiseFactory,
+  fromScheduledValues,
   toPromise,
 } from "../src/index";
 
@@ -91,6 +86,46 @@ describe("empty", () => {
   });
 });
 
+describe("fromArray", () => {
+  test("with no delay", () => {
+    const observable = fromArray([1, 2, 3, 4, 5, 6]);
+    const scheduler = VirtualTimeScheduler.create(1);
+    const accumulator: Array<number> = [];
+    const observer: ObserverLike<number> = {
+      next: v => accumulator.push(v),
+      complete: jest.fn(),
+    };
+
+    Observable.connect(
+      Observable.lift(observable, observe(observer)),
+      scheduler,
+    );
+
+    scheduler.run();
+
+    expect(accumulator).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  test("with delay", () => {
+    const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
+    const scheduler = VirtualTimeScheduler.create(1);
+    const accumulator: Array<[number, number]> = [];
+    const observer: ObserverLike<number> = {
+      next: v => accumulator.push([scheduler.now, v]),
+      complete: jest.fn(),
+    };
+
+    Observable.connect(
+      Observable.lift(observable, observe(observer)),
+      scheduler,
+    );
+
+    scheduler.run();
+
+    expect(accumulator).toEqual([[3, 1], [6,2], [9,3], [12, 4], [15, 5], [18, 6]]);
+  });
+});
+
 describe("fromPromiseFactory", () => {
   test("when the promise resolves", async () => {
     const scheduler = EventLoopScheduler.create();
@@ -106,6 +141,39 @@ describe("fromPromiseFactory", () => {
     const promise = toPromise(fromPromiseFactory(factory), scheduler);
     return expect(promise).rejects.toThrow(error);
   });
+});
+
+test("fromScheduledValues", () => {
+  const observable = fromScheduledValues(
+    [0, undefined, 1],
+    [0, undefined, 1],
+    [0, undefined, 1],
+    [1, undefined, 2],
+    [2, undefined, 3],
+    [3, undefined, 4],
+  );
+
+  const scheduler = VirtualTimeScheduler.create(1);
+
+  const accumulator: Array<[number, number]> = [];
+
+  const observer: ObserverLike<number> = {
+    next: v => accumulator.push([scheduler.now, v]),
+    complete: jest.fn(),
+  };
+
+  Observable.connect(Observable.lift(observable, observe(observer)), scheduler);
+
+  scheduler.run();
+
+  expect(accumulator).toEqual([
+    [0, 1],
+    [0, 1],
+    [0, 1],
+    [1, 2],
+    [3, 3],
+    [6, 4],
+  ]);
 });
 
 describe("toPromise", () => {
