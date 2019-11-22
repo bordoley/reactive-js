@@ -13,7 +13,7 @@ import {
 
 import { ObserverLike } from "./observer";
 
-import { SchedulerLike } from "@reactive-js/scheduler";
+import { SchedulerLike, defaultScheduler } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
@@ -21,7 +21,7 @@ export interface ObservableLike<T> {
 
 const connect = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike,
+  scheduler: SchedulerLike = defaultScheduler.instance,
 ): DisposableLike => {
   const subscription = Disposable.create();
   const subscriber = AutoDisposingSubscriber.create(scheduler, subscription);
