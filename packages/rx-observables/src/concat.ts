@@ -1,9 +1,9 @@
 import { Disposable } from "@reactive-js/disposables";
 
 import {
-  observe,
   Observable,
   ObservableLike,
+  observe,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";

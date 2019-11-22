@@ -1,4 +1,4 @@
-import { DisposableLike, DisposableOrTeardown, Disposable } from "./disposable";
+import { Disposable, DisposableLike, DisposableOrTeardown } from "./disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
   disposable: DisposableLike;

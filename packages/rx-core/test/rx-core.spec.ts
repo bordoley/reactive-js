@@ -1,17 +1,17 @@
-import {
-  notify,
-  observe,
-  Notification,
-  NotificationKind,
-  Observable,
-  ObserverLike,
-  Subscriber,
-  SubscriberLike,
-  ObservableLike,
-  Operator,
-} from "../src/index";
 import { Disposable } from "@reactive-js/disposables";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
+import {
+  Notification,
+  NotificationKind,
+  notify,
+  Observable,
+  ObservableLike,
+  observe,
+  ObserverLike,
+  Operator,
+  Subscriber,
+  SubscriberLike,
+} from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
   const subscription = Disposable.create();

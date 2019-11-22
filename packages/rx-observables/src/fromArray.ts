@@ -1,10 +1,10 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
+import { Disposable } from "@reactive-js/disposables";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
-import { Disposable } from "@reactive-js/disposables";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,

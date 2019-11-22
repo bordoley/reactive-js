@@ -1,15 +1,15 @@
 import { Disposable } from "@reactive-js/disposables";
 import {
-  observe,
   Observable,
   ObservableLike,
+  observe,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-import { Subject, SubjectLike } from "./subject";
 import { ReplayLastSubject } from "./replayLastSubject";
+import { Subject, SubjectLike } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: (priority?: number) => SubjectLike<T>;

@@ -1,21 +1,21 @@
+import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 import { Observable } from "@reactive-js/rx-core";
 import {
+  fromArray,
   fromScheduledValues,
   generate,
-  fromArray,
 } from "@reactive-js/rx-observables";
 import {
-  keep,
+  concat,
   exhaust,
+  ignoreElements,
+  keep,
   map,
   merge,
-  concat,
-  onNext,
-  ignoreElements,
   onComplete,
+  onNext,
   switch_,
 } from "@reactive-js/rx-operators";
-import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 import { defaultScheduler } from "@reactive-js/scheduler";
 const scheduler = EventLoopScheduler.create(500);
 defaultScheduler.register(scheduler);

@@ -1,14 +1,14 @@
 import {
-  StateUpdater,
   StateContainerResourceLike,
+  StateUpdater,
 } from "@reactive-js/state-container";
 
 import { useAsyncIterator } from "@reactive-js/react-hooks";
 
-import { createElement, useCallback, useMemo } from "react";
 import { AsyncIterator } from "@reactive-js/ix-core";
 import { scan } from "@reactive-js/rx-operators";
 import { bool } from "prop-types";
+import { createElement, useCallback, useMemo } from "react";
 
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around

@@ -1,21 +1,21 @@
-import { observe, ObserverLike, Observable } from "@reactive-js/rx-core";
-import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
+import { Observable, observe, ObserverLike } from "@reactive-js/rx-core";
+import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
 import { delay, map, take } from "@reactive-js/rx-operators";
 
 import {
   combineLatest,
-  generate,
-  throws,
-  ofValue,
-  never,
   concat,
   empty,
   fromArray,
   fromPromiseFactory,
   fromScheduledValues,
+  generate,
   merge,
+  never,
+  ofValue,
+  throws,
   toPromise,
 } from "../src/index";
 

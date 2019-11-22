@@ -4,9 +4,9 @@ import {
   DisposableOrTeardown,
 } from "@reactive-js/disposables";
 import { Observable, SubscriberLike } from "@reactive-js/rx-core";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { keep, onNext } from "@reactive-js/rx-operators";
 import { merge } from "@reactive-js/rx-observables";
+import { keep, onNext } from "@reactive-js/rx-operators";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   StateContainerLike,
   StateContainerResource,

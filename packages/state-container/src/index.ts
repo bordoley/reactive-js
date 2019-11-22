@@ -1,20 +1,20 @@
 import {
-  DisposableLike,
   Disposable,
+  DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposables";
 
 import {
-  Observable,
   DelegatingSubscriber,
+  Observable,
   ObservableLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
 import {
-  SchedulerLike,
   SchedulerContinuation,
   SchedulerContinuationResult,
+  SchedulerLike,
 } from "@reactive-js/scheduler";
 
 import { distinctUntilChanged } from "@reactive-js/rx-operators";

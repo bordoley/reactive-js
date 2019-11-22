@@ -13,7 +13,7 @@ import {
 
 import { ObserverLike } from "./observer";
 
-import { SchedulerLike, defaultScheduler } from "@reactive-js/scheduler";
+import { defaultScheduler, SchedulerLike } from "@reactive-js/scheduler";
 
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;

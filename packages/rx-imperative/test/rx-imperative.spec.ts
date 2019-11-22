@@ -1,8 +1,8 @@
-import { observe, Observable, ObserverLike } from "@reactive-js/rx-core";
 import { Disposable } from "@reactive-js/disposables";
+import { Observable, observe, ObserverLike } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
-import { shareReplayLast, EventResource } from "../src/index";
+import { EventResource, shareReplayLast } from "../src/index";
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),

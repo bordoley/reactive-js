@@ -1,9 +1,9 @@
 import {
-  observe,
   DelegatingSubscriber,
-  ObservableLike,
-  ObserverLike,
   Observable,
+  ObservableLike,
+  observe,
+  ObserverLike,
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";

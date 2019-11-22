@@ -1,18 +1,18 @@
 import {
   FrameCallbackType,
-  unstable_NormalPriority,
   unstable_cancelCallback,
+  unstable_NormalPriority,
   unstable_now,
-  unstable_shouldYield,
   unstable_scheduleCallback,
+  unstable_shouldYield,
 } from "scheduler";
 
 import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   Disposable,
-  SerialDisposable,
   DisposableLike,
+  SerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposables";
 

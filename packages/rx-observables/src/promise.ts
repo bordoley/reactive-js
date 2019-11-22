@@ -1,7 +1,7 @@
 import {
-  observe,
   Observable,
   ObservableLike,
+  observe,
   ObserverLike,
 } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
