@@ -10,20 +10,19 @@ import { Disposable, DisposableLike } from "@reactive-js/disposables";
 
 type CombineLatestContext = {
   completedCount: number;
-  producedCount: number;
   latest: Array<any>;
+  producedCount: number;
 };
 
 class CombineLatestObserver implements ObserverLike<any> {
-  private readonly delegate: SubscriberLike<any>;
-  private readonly totalCount: number;
+  innerSubscription: DisposableLike = Disposable.disposed;
   private readonly allSubscriptions: DisposableLike;
   private readonly ctx: CombineLatestContext;
-  private readonly index: number;
+  private readonly delegate: SubscriberLike<any>;
 
   private hasProducedValue = false;
-
-  innerSubscription: DisposableLike = Disposable.disposed;
+  private readonly index: number;
+  private readonly totalCount: number;
 
   constructor(
     delegate: SubscriberLike<any>,
@@ -39,6 +38,17 @@ class CombineLatestObserver implements ObserverLike<any> {
     this.index = index;
   }
 
+  complete(error?: Error) {
+    this.ctx.completedCount++;
+
+    if (error !== undefined || this.ctx.completedCount === this.totalCount) {
+      this.delegate.remove(this.allSubscriptions);
+      this.delegate.complete(error);
+    } else {
+      this.allSubscriptions.remove(this.innerSubscription);
+    }
+  }
+
   next(data: any) {
     if (!this.hasProducedValue) {
       this.ctx.producedCount++;
@@ -50,17 +60,6 @@ class CombineLatestObserver implements ObserverLike<any> {
     if (this.ctx.producedCount === this.totalCount) {
       const latest = [...this.ctx.latest];
       this.delegate.next(latest);
-    }
-  }
-
-  complete(error?: Error) {
-    this.ctx.completedCount++;
-
-    if (error !== undefined || this.ctx.completedCount === this.totalCount) {
-      this.delegate.remove(this.allSubscriptions);
-      this.delegate.complete(error);
-    } else {
-      this.allSubscriptions.remove(this.innerSubscription);
     }
   }
 }

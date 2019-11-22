@@ -14,35 +14,11 @@ import {
 } from "@reactive-js/disposables";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly innerSubscription: SerialDisposableLike;
-  private readonly observable: ObservableLike<T>;
-  private readonly shouldRepeat: (error?: Error) => boolean;
-  private readonly observer: ObserverLike<T>;
-
   static RepeatObserver = class<T> implements ObserverLike<T> {
     private readonly parent: RepeatSubscriber<T>;
 
     constructor(parent: RepeatSubscriber<T>) {
       this.parent = parent;
-    }
-
-    private setupSubscription() {
-      const alreadyDisposed = this.parent.innerSubscription.isDisposed;
-
-      if (alreadyDisposed) {
-        return;
-      }
-
-      this.parent.innerSubscription.disposable.dispose();
-
-      this.parent.innerSubscription.disposable = Observable.connect(
-        Observable.lift(this.parent.observable, observe(this.parent.observer)),
-        this.parent,
-      );
-    }
-
-    next(data: T) {
-      this.parent.delegate.next(data);
     }
 
     complete(error?: Error) {
@@ -65,7 +41,30 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
         this.setupSubscription();
       }
     }
+
+    next(data: T) {
+      this.parent.delegate.next(data);
+    }
+
+    private setupSubscription() {
+      const alreadyDisposed = this.parent.innerSubscription.isDisposed;
+
+      if (alreadyDisposed) {
+        return;
+      }
+
+      this.parent.innerSubscription.disposable.dispose();
+
+      this.parent.innerSubscription.disposable = Observable.connect(
+        Observable.lift(this.parent.observable, observe(this.parent.observer)),
+        this.parent,
+      );
+    }
   };
+  private readonly innerSubscription: SerialDisposableLike;
+  private readonly observable: ObservableLike<T>;
+  private readonly observer: ObserverLike<T>;
+  private readonly shouldRepeat: (error?: Error) => boolean;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -81,12 +80,12 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 
-  protected onNext(data: T) {
-    this.observer.next(data);
-  }
-
   protected onComplete(error?: Error) {
     this.observer.complete(error);
+  }
+
+  protected onNext(data: T) {
+    this.observer.next(data);
   }
 }
 

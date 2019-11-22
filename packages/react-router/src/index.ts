@@ -13,9 +13,9 @@ import { createElement, useCallback, useMemo } from "react";
 // React Native doesn't use a standard URI library so define
 // a minimal type that can be passed around
 export interface RelativeURI {
+  readonly fragment: string;
   readonly path: string;
   readonly query: string;
-  readonly fragment: string;
 }
 
 const emptyRelativeURI: RelativeURI = {
@@ -38,11 +38,11 @@ export interface RoutableComponentProps {
 }
 
 export interface RoutableStateComponentProps<TState> {
-  readonly uri: RelativeURI;
-  readonly referer: RelativeURI | undefined;
-  readonly goTo: (uri: RelativeURI) => void;
-  readonly state: TState;
   readonly dispatch: (updater: StateUpdater<TState>) => void;
+  readonly goTo: (uri: RelativeURI) => void;
+  readonly referer: RelativeURI | undefined;
+  readonly state: TState;
+  readonly uri: RelativeURI;
 }
 
 const createRoutableStateComponent = <TState>(

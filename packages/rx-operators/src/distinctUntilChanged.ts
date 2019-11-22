@@ -13,6 +13,10 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.equals = equals;
   }
 
+  protected onComplete(error?: Error) {
+    this.delegate.complete(error);
+  }
+
   protected onNext(data: T) {
     const shouldEmit =
       this.prev === undefined || !this.equals(this.prev[0], data);
@@ -25,10 +29,6 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
 
       this.delegate.next(data);
     }
-  }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
   }
 }
 

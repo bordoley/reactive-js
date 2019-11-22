@@ -5,8 +5,8 @@ import {
 } from "@reactive-js/rx-core";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
-  private scanner: (acc: TAcc, next: T) => TAcc;
   private acc: TAcc;
+  private scanner: (acc: TAcc, next: T) => TAcc;
 
   constructor(
     delegate: SubscriberLike<TAcc>,
@@ -18,16 +18,16 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     this.acc = initialValue;
   }
 
+  protected onComplete(error?: Error) {
+    this.delegate.complete(error);
+  }
+
   protected onNext(next: T) {
     const prevAcc = this.acc;
     const nextAcc = this.scanner(prevAcc, next);
     this.acc = nextAcc;
 
     this.delegate.next(nextAcc);
-  }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
   }
 }
 

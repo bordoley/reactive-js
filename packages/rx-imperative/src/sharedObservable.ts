@@ -13,15 +13,15 @@ import { Subject, SubjectLike } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: (priority?: number) => SubjectLike<T>;
-  private readonly source: ObservableLike<T>;
-  private readonly scheduler: SchedulerLike;
   private readonly priority?: number;
 
-  private readonly teardown: () => void;
-
   private refCount: number = 0;
-  private subject?: SubjectLike<T>;
+  private readonly scheduler: SchedulerLike;
+  private readonly source: ObservableLike<T>;
   private sourceSubscription = Disposable.disposed;
+  private subject?: SubjectLike<T>;
+
+  private readonly teardown: () => void;
 
   constructor(
     factory: (priority?: number) => SubjectLike<T>,

@@ -43,16 +43,16 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
   StateUpdater<T>,
   T
 > {
-  private readonly clearQueue: DisposableOrTeardown = () => {
-    this.nextQueue.length = 0;
-  };
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  }
+  private acc: T;
   private readonly continuation: SchedulerContinuationResult;
-  private readonly nextQueue: Array<StateUpdater<T>> = [];
-  private readonly priority?: number;
+  private error: Error | undefined;
 
   private isComplete = false;
-  private error: Error | undefined;
-  private acc: T;
+  private readonly nextQueue: Array<StateUpdater<T>> = [];
+  private readonly priority?: number;
 
   constructor(delegate: SubscriberLike<T>, initialValue: T, priority?: number) {
     super(delegate);
@@ -68,9 +68,19 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
     this.add(this.clearQueue);
   }
 
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  protected onComplete(error?: Error) {
+    this.isComplete = true;
+    this.error = error;
+    this.scheduleDrainQueue();
   }
+
+  protected onNext(data: StateUpdater<T>) {
+    this.nextQueue.push(data);
+    this.scheduleDrainQueue();
+  }
+  private readonly clearQueue: DisposableOrTeardown = () => {
+    this.nextQueue.length = 0;
+  };
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     try {
@@ -108,17 +118,6 @@ class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
       this.schedule(this.drainQueue, 0, this.priority);
     }
   }
-
-  protected onNext(data: StateUpdater<T>) {
-    this.nextQueue.push(data);
-    this.scheduleDrainQueue();
-  }
-
-  protected onComplete(error?: Error) {
-    this.isComplete = true;
-    this.error = error;
-    this.scheduleDrainQueue();
-  }
 }
 
 const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
@@ -126,8 +125,11 @@ const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
 ) => new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
-  private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
   private readonly delegate: ObservableLike<T>;
+  private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
   private readonly disposable: DisposableLike;
 
   constructor(
@@ -154,23 +156,15 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     );
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.delegate.subscribe(subscriber);
-  }
-
-  dispatch(updater: StateUpdater<T>) {
-    this.dispatcher.dispatch(updater);
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+  }
+
+  dispatch(updater: StateUpdater<T>) {
+    this.dispatcher.dispatch(updater);
   }
 
   dispose() {
@@ -182,6 +176,10 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.delegate.subscribe(subscriber);
   }
 }
 

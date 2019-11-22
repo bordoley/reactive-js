@@ -12,6 +12,9 @@ export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
 }
 
 class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
+  get isDisposed(): boolean {
+    return this.delegate.isDisposed;
+  }
   readonly delegate: ObservableResourceLike<T>;
   readonly dispatcher: (req: TReq) => void;
 
@@ -23,15 +26,15 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     this.dispatcher = dispatcher;
   }
 
-  get isDisposed(): boolean {
-    return this.delegate.isDisposed;
-  }
-
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
     this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
+  }
+
+  dispatch(req: TReq) {
+    this.dispatcher(req);
   }
 
   dispose() {
@@ -43,10 +46,6 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.delegate.remove.apply(this.delegate, [disposable, ...disposables]);
-  }
-
-  dispatch(req: TReq) {
-    this.dispatcher(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

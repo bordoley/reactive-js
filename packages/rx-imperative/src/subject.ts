@@ -16,11 +16,14 @@ export interface SubjectLike<T>
     ObservableResourceLike<T> {}
 
 export abstract class AbstractSubject<T> implements SubjectLike<T> {
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
   private readonly disposable: DisposableLike;
-  private readonly observers: Array<ObserverLike<T>> = [];
-  private readonly priority?: number;
 
   private isCompleted = false;
+  private readonly observers: Array<ObserverLike<T>> = [];
+  private readonly priority?: number;
 
   constructor(priority?: number) {
     this.priority = priority;
@@ -31,43 +34,11 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
     });
   }
 
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
-  }
-
-  protected abstract onNext(data: T): void;
-  protected abstract onComplete(error?: Error): void;
-  protected abstract onSubscribe(observer: ObserverLike<T>): void;
-
-  next(data: T) {
-    if (this.isCompleted) {
-      return;
-    }
-
-    this.onNext(data);
-
-    const subscribers = this.observers.slice();
-    for (let subscriber of subscribers) {
-      subscriber.next(data);
-    }
   }
 
   complete(error?: Error) {
@@ -82,6 +53,30 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
     for (let subscriber of subscribers) {
       subscriber.complete(error);
     }
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  next(data: T) {
+    if (this.isCompleted) {
+      return;
+    }
+
+    this.onNext(data);
+
+    const subscribers = this.observers.slice();
+    for (let subscriber of subscribers) {
+      subscriber.next(data);
+    }
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -105,11 +100,15 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
       this.onSubscribe(observer);
     }
   }
+  protected abstract onComplete(error?: Error): void;
+
+  protected abstract onNext(data: T): void;
+  protected abstract onSubscribe(observer: ObserverLike<T>): void;
 }
 
 class SubjectImpl<T> extends AbstractSubject<T> {
-  protected onNext(data: T) {}
   protected onComplete(error?: Error) {}
+  protected onNext(data: T) {}
   protected onSubscribe(observer: ObserverLike<T>) {}
 }
 

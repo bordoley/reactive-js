@@ -24,6 +24,24 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     this.priority = priority;
   }
 
+  protected onComplete(error?: Error) {
+    this.doSchedule([NotificationKind.Complete, error]);
+  }
+
+  protected onNext(data: T) {
+    this.doSchedule([NotificationKind.Next, data]);
+  }
+
+  private doSchedule(notification: Notification<T>) {
+    const now = this.now;
+    const dueTime = now + this.delay;
+    this.queue.push([dueTime, notification]);
+
+    if (this.queue.length === 1) {
+      this.schedule(this.doWork, this.delay, this.priority);
+    }
+  }
+
   private doWork: SchedulerContinuation = shouldYield => {
     const now = this.now;
     while (this.queue.length > 0) {
@@ -44,24 +62,6 @@ class DelaySubscriber<T> extends DelegatingSubscriber<T, T> {
     }
     return;
   };
-
-  private doSchedule(notification: Notification<T>) {
-    const now = this.now;
-    const dueTime = now + this.delay;
-    this.queue.push([dueTime, notification]);
-
-    if (this.queue.length === 1) {
-      this.schedule(this.doWork, this.delay, this.priority);
-    }
-  }
-
-  protected onComplete(error?: Error) {
-    this.doSchedule([NotificationKind.Complete, error]);
-  }
-
-  protected onNext(data: T) {
-    this.doSchedule([NotificationKind.Next, data]);
-  }
 }
 
 export const delay = <T>(

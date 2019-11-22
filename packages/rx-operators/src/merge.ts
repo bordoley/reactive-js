@@ -9,11 +9,11 @@ import {
 } from "@reactive-js/rx-core";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
+  private activeCount: number = 0;
+  private isCompleted = false;
   private readonly maxBufferSize: number;
   private readonly maxConcurrency: number;
   private readonly queue: Array<ObservableLike<T>> = [];
-  private activeCount: number = 0;
-  private isCompleted = false;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -27,6 +27,24 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.add(() => {
       this.queue.length = 0;
     });
+  }
+
+  protected onComplete(error?: Error) {
+    this.isCompleted = true;
+
+    if (error !== undefined || this.queue.length + this.activeCount === 0) {
+      this.delegate.complete(error);
+    }
+  }
+
+  protected onNext(next: ObservableLike<T>) {
+    if (
+      this.queue.length + this.activeCount < this.maxBufferSize &&
+      !this.isCompleted
+    ) {
+      this.queue.push(next);
+      this.connectNext();
+    }
   }
 
   private connectNext() {
@@ -62,24 +80,6 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       } else if (this.isCompleted) {
         this.delegate.complete();
       }
-    }
-  }
-
-  protected onNext(next: ObservableLike<T>) {
-    if (
-      this.queue.length + this.activeCount < this.maxBufferSize &&
-      !this.isCompleted
-    ) {
-      this.queue.push(next);
-      this.connectNext();
-    }
-  }
-
-  protected onComplete(error?: Error) {
-    this.isCompleted = true;
-
-    if (error !== undefined || this.queue.length + this.activeCount === 0) {
-      this.delegate.complete(error);
     }
   }
 }

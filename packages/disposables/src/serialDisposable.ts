@@ -5,20 +5,6 @@ export interface SerialDisposableLike extends DisposableLike {
 }
 
 class SerialDisposableImpl implements SerialDisposableLike {
-  private _disposable: DisposableLike = Disposable.disposed;
-  private readonly delegate = Disposable.create();
-
-  get isDisposed(): boolean {
-    return this.delegate.isDisposed;
-  }
-
-  dispose() {
-    if (!this.isDisposed) {
-      this.disposable.dispose();
-      this.delegate.dispose();
-    }
-  }
-
   get disposable(): DisposableLike {
     return this._disposable;
   }
@@ -37,11 +23,26 @@ class SerialDisposableImpl implements SerialDisposableLike {
     }
   }
 
+  get isDisposed(): boolean {
+    return this.delegate.isDisposed;
+  }
+
+  private _disposable: DisposableLike = Disposable.disposed;
+
+  private readonly delegate = Disposable.create();
+
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
     this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
+  }
+
+  dispose() {
+    if (!this.isDisposed) {
+      this.disposable.dispose();
+      this.delegate.dispose();
+    }
   }
 
   remove(
