@@ -17,7 +17,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "scheduler": "0.17.0",
+    "scheduler": "^0.17.0",
     "@reactive-js/disposables": "0.0.0",
     "@reactive-js/scheduler": "0.0.0"
   },

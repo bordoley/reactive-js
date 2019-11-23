@@ -1,0 +1,48 @@
+{
+  "name": "@reactive-js/example-react",
+  "version": "0.0.0",
+  "description": "Rx example react",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "dependencies": {
+    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/dom": "0.0.0",
+    "@reactive-js/ix-core": "0.0.0",
+    "@reactive-js/react-dom-router": "0.0.0",
+    "@reactive-js/react-hooks": "0.0.0",
+    "@reactive-js/react-router": "0.0.0",
+    "@reactive-js/react-scheduler": "0.0.0",
+    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-imperative": "0.0.0",
+    "@reactive-js/rx-observables": "0.0.0",
+    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0",
+    "@reactive-js/state-container": "0.0.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "^2.2.1",
+    "@types/react": "^16.9.4",
+    "@types/react-dom": "^16.9.4",
+    "rollup": "^1.27.4",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "rollup": "rollup -c"
+  }
+}
