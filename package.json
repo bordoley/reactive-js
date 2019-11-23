@@ -8,6 +8,7 @@
     "format": "prettier --write packages/**/src/** packages/**/test/**/*",
     "lint": "tslint --fix -t codeFrame 'packages/**/src/**' 'packages/**/test/**/*'",
     "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
+    "rollup": "lerna run rollup",
     "test": "lerna run test",
     "test-coverage": "lerna run test-coverage"
   },
