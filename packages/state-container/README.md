@@ -12,7 +12,7 @@
 
 ### Static Functions
 
-*`StateContainerResource.create<T>(initialState: T, scheduler: SchedulerLike, equals?: (a: T, b: T) => boolean, priority?: number): StateContainerResourceLike<T>`*
+*`StateContainerResource.create<T>(initialState: T, equals?: (a: T, b: T) => boolean, scheduler?: SchedulerLike, priority?: number): StateContainerResourceLike<T>`*
 
 
 

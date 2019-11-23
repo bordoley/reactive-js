@@ -14,9 +14,9 @@
 
 ### Static Functions
 
-*`share<T>(observable: ObservableLike<T>, scheduler: SchedulerLike, priority?: number): ObservableLike<T>`*
+*`share<T>(observable: ObservableLike<T>, scheduler?: SchedulerLike, priority?: number): ObservableLike<T>`*
 
-*`shareReplayLast<T>(observable: ObservableLike<T>, scheduler: SchedulerLike, priority?: number): ObservableLike<T>`*
+*`shareReplayLast<T>(observable: ObservableLike<T>, scheduler?: SchedulerLike, priority?: number): ObservableLike<T>`*
 
 *`EventResource.create<T>(priority?: number): EventResourceLike<T>`*
 

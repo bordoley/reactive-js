@@ -16,7 +16,7 @@ class SharedObservable<T> implements ObservableLike<T> {
   private readonly priority?: number;
 
   private refCount: number = 0;
-  private readonly scheduler: SchedulerLike;
+  private readonly scheduler?: SchedulerLike;
   private readonly source: ObservableLike<T>;
   private sourceSubscription = Disposable.disposed;
   private subject?: SubjectLike<T>;
@@ -26,7 +26,7 @@ class SharedObservable<T> implements ObservableLike<T> {
   constructor(
     factory: (priority?: number) => SubjectLike<T>,
     source: ObservableLike<T>,
-    scheduler: SchedulerLike,
+    scheduler?: SchedulerLike,
     priority?: number,
   ) {
     this.factory = factory;
@@ -69,14 +69,14 @@ class SharedObservable<T> implements ObservableLike<T> {
 
 export const share = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike,
+  scheduler?: SchedulerLike,
   priority?: number,
 ): ObservableLike<T> =>
   new SharedObservable(Subject.create, observable, scheduler, priority);
 
 export const shareReplayLast = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike,
+  scheduler?: SchedulerLike,
   priority?: number,
 ): ObservableLike<T> =>
   new SharedObservable(
