@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "@reactive-js/disposables": "0.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

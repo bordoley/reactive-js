@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "@reactive-js/rx-core": "0.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

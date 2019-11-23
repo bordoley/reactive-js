@@ -24,5 +24,8 @@
     "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3",
     "benchmark": "^2.1.4"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

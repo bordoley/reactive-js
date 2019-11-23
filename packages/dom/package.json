@@ -19,5 +19,8 @@
   "dependencies": {
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/disposables": "0.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

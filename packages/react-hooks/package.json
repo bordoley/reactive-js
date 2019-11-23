@@ -26,5 +26,8 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.11"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

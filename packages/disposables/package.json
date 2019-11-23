@@ -25,6 +25,7 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
+    "build": "tsc",
     "test": "jest",
     "test-coverage": "jest --coverage"
   }
