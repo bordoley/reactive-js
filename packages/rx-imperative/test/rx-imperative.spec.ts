@@ -1,4 +1,4 @@
-import { Disposable } from "@reactive-js/disposables";
+import { disposed } from "@reactive-js/disposable";
 import { Observable, observe, ObserverLike } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
@@ -24,7 +24,7 @@ test("shareReplayLast", () => {
   const replayedSubscription = Observable.connect(replayed, scheduler);
 
   const liftedObserver = createMockObserver();
-  let liftedSubscription = Disposable.disposed;
+  let liftedSubscription = disposed;
   scheduler.schedule(_ => {
     liftedSubscription = Observable.connect(
       Observable.lift(replayed, observe(liftedObserver)),
@@ -33,7 +33,7 @@ test("shareReplayLast", () => {
   }, 1);
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
-  let anotherLiftedSubscription = Disposable.disposed;
+  let anotherLiftedSubscription = disposed;
   scheduler.schedule(_ => {
     replayedSubscription.dispose();
     liftedSubscription.dispose();

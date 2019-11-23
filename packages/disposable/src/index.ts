@@ -90,15 +90,10 @@ class DisposableImpl implements DisposableLike {
   }
 }
 
-const create = (): DisposableLike => new DisposableImpl();
+export const create = (): DisposableLike => new DisposableImpl();
 
-const disposed: DisposableLike = create();
+export const disposed: DisposableLike = create();
 disposed.dispose();
-
-export const Disposable = {
-  create,
-  disposed,
-};
 
 export const throwIfDisposed = (disposable: DisposableLike) => {
   if (disposable.isDisposed) {

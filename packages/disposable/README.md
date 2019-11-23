@@ -1,11 +1,11 @@
-# @reactive-js/disposables
+# @reactive-js/disposable
 
 Utilities for managing the lifetimes of resources.
 
 ## Usage
 
 ```typescript
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import { Disposable, DisposableLike } from "@reactive-js/disposable";
 
 const disposable: DisposableLike = Disposable.create();
 disposable.dispose();

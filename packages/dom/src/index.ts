@@ -1,7 +1,5 @@
 import { Observable, ObservableLike } from "@reactive-js/rx-core";
 
-import { Disposable } from "@reactive-js/disposables";
-
 export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,

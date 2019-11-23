@@ -1,4 +1,4 @@
-import { Disposable } from "@reactive-js/disposables";
+import { disposed } from "@reactive-js/disposable";
 import {
   Observable,
   ObservableLike,
@@ -18,7 +18,7 @@ class SharedObservable<T> implements ObservableLike<T> {
   private refCount: number = 0;
   private readonly scheduler?: SchedulerLike;
   private readonly source: ObservableLike<T>;
-  private sourceSubscription = Disposable.disposed;
+  private sourceSubscription = disposed;
   private subject?: SubjectResourceLike<T>;
 
   private readonly teardown: () => void;
@@ -39,7 +39,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
       if (this.refCount === 0) {
         this.sourceSubscription.dispose();
-        this.sourceSubscription = Disposable.disposed;
+        this.sourceSubscription = disposed;
         (this.subject as SubjectResourceLike<T>).dispose();
         this.subject = undefined;
       }

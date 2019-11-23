@@ -1,4 +1,4 @@
-import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposables";
+import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 
 import {
   SchedulerContinuation,

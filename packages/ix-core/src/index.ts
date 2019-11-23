@@ -5,7 +5,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { DisposableOrTeardown } from "@reactive-js/disposables";
+import { DisposableOrTeardown } from "@reactive-js/disposable";
 
 export interface AsyncIteratorLike<TReq, T> extends ObservableResourceLike<T> {
   dispatch(request: TReq): void;

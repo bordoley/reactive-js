@@ -1,9 +1,9 @@
 import {
-  Disposable,
+  create as disposableCreate,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
-} from "@reactive-js/disposables";
+} from "@reactive-js/disposable";
 import {
   SchedulerContinuation,
   SchedulerResourceLike,
@@ -51,7 +51,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   constructor(maxMicroTaskCount: number) {
     this.maxMicroTaskCount = maxMicroTaskCount;
 
-    this.disposable = Disposable.create();
+    this.disposable = disposableCreate();
     this.disposable.add(() => {
       for (let key in this.timeQueue) {
         if (this.timeQueue.hasOwnProperty(key)) {
@@ -101,7 +101,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
-    const disposable = Disposable.create();
+    const disposable = disposableCreate();
 
     const ctx = {
       continuation,
@@ -182,7 +182,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
   private readonly queue: SchedulerContinuation[] = [];
 
   constructor() {
-    this.disposable = Disposable.create();
+    this.disposable = disposableCreate();
     this.disposable.add(() => {
       this.queue.length = 0;
     });
@@ -226,7 +226,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
     priority: number = 0,
   ): DisposableLike {
     this.queue.push(continuation);
-    return Disposable.create();
+    return disposableCreate();
   }
 
   static shouldYield = () => false;

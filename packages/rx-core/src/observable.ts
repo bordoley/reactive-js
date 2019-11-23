@@ -1,8 +1,8 @@
 import {
-  Disposable,
+  create as disposableCreate,
   DisposableLike,
   DisposableOrTeardown,
-} from "@reactive-js/disposables";
+} from "@reactive-js/disposable";
 
 import {
   AutoDisposingSubscriber,
@@ -23,7 +23,7 @@ const connect = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike = defaultScheduler.instance,
 ): DisposableLike => {
-  const subscription = Disposable.create();
+  const subscription = disposableCreate();
   const subscriber = AutoDisposingSubscriber.create(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.isConnected = true;

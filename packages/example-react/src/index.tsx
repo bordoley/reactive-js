@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
+import { Observable } from "@reactive-js/rx-core";
 import { generate } from "@reactive-js/rx-observables";
 import { onNext } from "@reactive-js/rx-operators";
-import { Observable } from "@reactive-js/rx-core";
 import { defaultScheduler } from "@reactive-js/scheduler";
-import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
-//import { scheduler } from "@reactive-js/react-scheduler";
+import React from "react";
+import ReactDOM from "react-dom";
+// import { scheduler } from "@reactive-js/react-scheduler";
 
 const scheduler = EventLoopScheduler.create();
 defaultScheduler.register(scheduler);
@@ -27,4 +27,4 @@ Observable.connect(
   ),
 );
 
-//ReactDOM.render(element, document.getElementById("root") as HTMLElement);
+// ReactDOM.render(element, document.getElementById("root") as HTMLElement);

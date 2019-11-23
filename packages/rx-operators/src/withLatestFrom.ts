@@ -1,4 +1,4 @@
-import { DisposableLike } from "@reactive-js/disposables";
+import { DisposableLike } from "@reactive-js/disposable";
 import {
   DelegatingSubscriber,
   Observable,

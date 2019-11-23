@@ -1,4 +1,4 @@
-import { Disposable, SerialDisposable } from "@reactive-js/disposables";
+import { disposed } from "@reactive-js/disposable";
 import {
   DelegatingSubscriber,
   Observable,
@@ -8,6 +8,7 @@ import {
   Operator,
   SubscriberLike,
 } from "@reactive-js/rx-core";
+import { create as serialDisposableCreate } from "@reactive-js/serial-disposable";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   static InnerObserver = class<T> implements ObserverLike<T> {
@@ -27,7 +28,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent.delegate.next(data);
     }
   };
-  private readonly innerSubscription = SerialDisposable.create();
+  private readonly innerSubscription = serialDisposableCreate();
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
@@ -40,7 +41,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 
   protected onNext(data: ObservableLike<T>) {
-    this.innerSubscription.disposable = Disposable.disposed;
+    this.innerSubscription.disposable = disposed;
     this.innerSubscription.disposable = Observable.connect(
       Observable.lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
       this,

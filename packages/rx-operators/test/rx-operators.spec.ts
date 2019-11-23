@@ -1,4 +1,4 @@
-import { Disposable } from "@reactive-js/disposables";
+import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { Observable, Subscriber, SubscriberLike } from "@reactive-js/rx-core";
 import { VirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
@@ -24,7 +24,7 @@ import {
 } from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = Disposable.create();
+  const subscription = disposableCreate();
 
   return {
     get isDisposed() {
@@ -36,7 +36,7 @@ const createMockSubscriber = <T>(): SubscriberLike<T> => {
     isConnected: true,
     inScheduledContinuation: true,
     now: 0,
-    schedule: (c, d?, p?) => Disposable.disposed,
+    schedule: (c, d?, p?) => disposed,
     next: jest.fn(),
     complete: jest.fn(),
   };
@@ -45,7 +45,7 @@ const createMockSubscriber = <T>(): SubscriberLike<T> => {
 const createMockSubscriberWithScheduler = <T>(
   scheduler: SchedulerLike,
 ): SubscriberLike<T> => {
-  const subscription = Disposable.create();
+  const subscription = disposableCreate();
 
   return {
     get isDisposed() {

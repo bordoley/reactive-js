@@ -1,8 +1,8 @@
 import {
-  Disposable,
+  create as disposableCreate,
   DisposableLike,
   DisposableOrTeardown,
-} from "@reactive-js/disposables";
+} from "@reactive-js/disposable";
 
 import {
   DelegatingSubscriber,
@@ -150,7 +150,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
       priority,
     );
 
-    this.disposable = Disposable.create();
+    this.disposable = disposableCreate();
     this.disposable.add(
       this.dispatcher,
       Observable.connect(this.delegate, scheduler),
