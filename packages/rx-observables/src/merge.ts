@@ -1,4 +1,8 @@
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import {
+  create as disposableCreate,
+  DisposableLike,
+  disposed,
+} from "@reactive-js/disposable";
 import {
   Observable,
   ObservableLike,
@@ -8,7 +12,7 @@ import {
 } from "@reactive-js/rx-core";
 
 class MergeObserver<T> implements ObserverLike<T> {
-  innerSubscription: DisposableLike = Disposable.disposed;
+  innerSubscription: DisposableLike = disposed;
   private readonly allSubscriptions: DisposableLike;
   private readonly completedCountRef: [number];
   private readonly delegate: SubscriberLike<T>;
@@ -52,7 +56,7 @@ export const merge = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const completedCountRef: [number] = [0];
 
-    const allSubscriptions: DisposableLike = Disposable.create();
+    const allSubscriptions: DisposableLike = disposableCreate();
     subscriber.add(allSubscriptions);
 
     for (let observable of observables) {

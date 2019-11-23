@@ -6,7 +6,11 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import {
+  create as disposableCreate,
+  DisposableLike,
+  disposed,
+} from "@reactive-js/disposable";
 
 type CombineLatestContext = {
   completedCount: number;
@@ -15,7 +19,7 @@ type CombineLatestContext = {
 };
 
 class CombineLatestObserver implements ObserverLike<any> {
-  innerSubscription: DisposableLike = Disposable.disposed;
+  innerSubscription: DisposableLike = disposed;
   private readonly allSubscriptions: DisposableLike;
   private readonly ctx: CombineLatestContext;
   private readonly delegate: SubscriberLike<any>;
@@ -138,7 +142,7 @@ export function combineLatest(
       latest: new Array(observables.length),
     };
 
-    const allSubscriptions = Disposable.create();
+    const allSubscriptions = disposableCreate();
     subscriber.add(allSubscriptions);
 
     for (let index = 0; index < observables.length; index++) {

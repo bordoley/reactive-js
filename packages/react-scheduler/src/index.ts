@@ -10,11 +10,14 @@ import {
 import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 
 import {
-  Disposable,
+  create as disposableCreate,
   DisposableLike,
-  SerialDisposable,
+} from "@reactive-js/disposable";
+
+import {
+  create as serialDisposableCreate,
   SerialDisposableLike,
-} from "@reactive-js/disposables";
+} from "@reactive-js/serial-disposable";
 
 class ReactSchedulerImpl implements SchedulerLike {
   public get inScheduledContinuation(): boolean {
@@ -31,7 +34,7 @@ class ReactSchedulerImpl implements SchedulerLike {
     delay: number = 0,
     priority: number = unstable_NormalPriority,
   ): DisposableLike {
-    const disposable = SerialDisposable.create();
+    const disposable = serialDisposableCreate();
 
     const shouldYield = () => {
       const isDisposed = disposable.isDisposed;
@@ -106,7 +109,7 @@ class ReactSchedulerImpl implements SchedulerLike {
       delay > 0 ? { delay } : undefined,
     );
 
-    const innerDisposable = Disposable.create();
+    const innerDisposable = disposableCreate();
     innerDisposable.add(() => unstable_cancelCallback(callbackNode));
 
     disposable.disposable = innerDisposable;

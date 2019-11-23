@@ -5,7 +5,7 @@ import {
 } from "@reactive-js/rx-core";
 import { Subject, SubjectResourceLike } from "./subject";
 
-import { DisposableOrTeardown } from "@reactive-js/disposables";
+import { DisposableOrTeardown } from "@reactive-js/disposable";
 
 export interface EventLike<T> extends ObservableLike<T> {
   dispatch(event: T): void;

@@ -1,4 +1,4 @@
-import { Disposable } from "@reactive-js/disposables";
+import { disposed } from "@reactive-js/disposable";
 
 import {
   Observable,
@@ -18,7 +18,7 @@ export const concat = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const queue = [...observables];
 
-    let innerSubscription = Disposable.disposed;
+    let innerSubscription = disposed;
 
     const subscribeNext = () => {
       const head = queue.shift();

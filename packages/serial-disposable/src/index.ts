@@ -1,4 +1,9 @@
-import { Disposable, DisposableLike, DisposableOrTeardown } from "./disposable";
+import {
+  create as disposableCreate,
+  DisposableLike,
+  DisposableOrTeardown,
+  disposed,
+} from "@reactive-js/disposable";
 
 export interface SerialDisposableLike extends DisposableLike {
   disposable: DisposableLike;
@@ -27,9 +32,9 @@ class SerialDisposableImpl implements SerialDisposableLike {
     return this.delegate.isDisposed;
   }
 
-  private _disposable: DisposableLike = Disposable.disposed;
+  private _disposable: DisposableLike = disposed;
 
-  private readonly delegate = Disposable.create();
+  private readonly delegate = disposableCreate();
 
   add(
     disposable: DisposableOrTeardown,
@@ -53,6 +58,4 @@ class SerialDisposableImpl implements SerialDisposableLike {
   }
 }
 
-export const SerialDisposable = {
-  create: (): SerialDisposableLike => new SerialDisposableImpl(),
-};
+export const create = (): SerialDisposableLike => new SerialDisposableImpl();

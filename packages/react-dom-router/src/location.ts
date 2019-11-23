@@ -1,8 +1,8 @@
 import {
-  Disposable,
+  create as disposableCreate,
   DisposableLike,
   DisposableOrTeardown,
-} from "@reactive-js/disposables";
+} from "@reactive-js/disposable";
 import { Observable, SubscriberLike } from "@reactive-js/rx-core";
 import { merge } from "@reactive-js/rx-observables";
 import { keep, onNext } from "@reactive-js/rx-operators";
@@ -57,7 +57,7 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = Disposable.create();
+    this.disposable = disposableCreate();
     this.disposable.add(subscription, stateContainer);
 
     this.stateContainer = stateContainer;

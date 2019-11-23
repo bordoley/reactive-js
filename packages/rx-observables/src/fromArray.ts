@@ -1,6 +1,5 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
-import { Disposable } from "@reactive-js/disposables";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,

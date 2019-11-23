@@ -19,7 +19,7 @@
   "dependencies": {
     "react": "^16.11.0",
     "@reactive-js/ix-core": "0.0.0",
-    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/disposable": "0.0.0",
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/react-scheduler": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",

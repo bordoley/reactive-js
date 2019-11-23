@@ -17,7 +17,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/disposables": "0.0.0",
+    "@reactive-js/disposable": "0.0.0",
     "@reactive-js/dom": "0.0.0",
     "@reactive-js/eventloop-scheduler": "0.0.0",
     "@reactive-js/ix-core": "0.0.0",

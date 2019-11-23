@@ -6,11 +6,11 @@ import {
 
 import { SchedulerContinuation } from "@reactive-js/scheduler";
 
-import { Disposable } from "@reactive-js/disposables";
+import { disposed } from "@reactive-js/disposable";
 
 class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly dueTime: number;
-  private innerSubscription = Disposable.disposed;
+  private innerSubscription = disposed;
   private readonly priority: number | undefined;
 
   private value: [T] | undefined;
@@ -51,7 +51,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   private clearDebounce() {
     this.innerSubscription.dispose();
-    this.innerSubscription = Disposable.disposed;
+    this.innerSubscription = disposed;
   }
 
   private notifyNext() {
