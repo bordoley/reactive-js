@@ -160,7 +160,7 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispose() {
@@ -171,7 +171,7 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {

@@ -61,10 +61,7 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subscription.add.apply(this.subscription, [
-      disposable,
-      ...disposables,
-    ]);
+    this.subscription.add(disposable, ...disposables);
   }
   abstract complete(_error?: Error): void;
 
@@ -77,10 +74,7 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subscription.remove.apply(this.subscription, [
-      disposable,
-      ...disposables,
-    ]);
+    this.subscription.remove(disposable, ...disposables);
   }
 
   schedule(

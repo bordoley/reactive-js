@@ -30,7 +30,7 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
+    this.delegate.add(disposable, ...disposables);
   }
 
   dispatch(req: TReq) {
@@ -45,7 +45,7 @@ class DelegatingAsyncIterator<TReq, T> implements AsyncIteratorLike<TReq, T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.delegate.remove.apply(this.delegate, [disposable, ...disposables]);
+    this.delegate.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
