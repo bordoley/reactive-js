@@ -12,6 +12,7 @@ import {
 } from "@reactive-js/rx-core";
 
 import {
+  defaultScheduler,
   SchedulerContinuation,
   SchedulerContinuationResult,
   SchedulerLike,
@@ -134,8 +135,8 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
   constructor(
     initialState: T,
-    scheduler: SchedulerLike,
     equals: (a: T, b: T) => boolean,
+    scheduler?: SchedulerLike,
     priority?: number,
   ) {
     this.dispatcher = EventResource.create();
@@ -187,11 +188,11 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
 const create = <T>(
   initialState: T,
-  scheduler: SchedulerLike,
   equals: (a: T, b: T) => boolean = referenceEquality,
+  scheduler?: SchedulerLike,
   priority?: number,
 ): StateContainerResourceLike<T> =>
-  new StateContainerResourceImpl(initialState, scheduler, equals, priority);
+  new StateContainerResourceImpl(initialState, equals, scheduler, priority);
 
 export const StateContainerResource = {
   create,

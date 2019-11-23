@@ -1810,7 +1810,6 @@ var ExampleReact = (function (react, reactDom) {
 	        var _b = dist$4.useAsyncIterator(function () {
 	            return dist$5.AsyncIterator.lift(locationResourceFactory(), dist$6.scan(pairify, [undefined, exports.RelativeURI.empty]));
 	        }, []), route = _b[0], uriUpdater = _b[1];
-	        console.log(route);
 	        var child = route !== undefined
 	            ? react.createElement(routeMap[route[1].path] || notFoundComponent, {
 	                referer: route[0],
@@ -2836,7 +2835,7 @@ var ExampleReact = (function (react, reactDom) {
 	}(dist$2.DelegatingSubscriber));
 	var batchScanOnScheduler = function (initialState, priority) { return function (subscriber) { return new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority); }; };
 	var StateContainerResourceImpl = /** @class */ (function () {
-	    function StateContainerResourceImpl(initialState, scheduler, equals, priority) {
+	    function StateContainerResourceImpl(initialState, equals, scheduler, priority) {
 	        this.dispatcher = dist$9.EventResource.create();
 	        this.delegate = dist$9.shareReplayLast(dist$2.Observable.lift(this.dispatcher, batchScanOnScheduler(initialState, priority), dist$6.distinctUntilChanged(equals)), scheduler, priority);
 	        this.disposable = dist.Disposable.create();
@@ -2877,9 +2876,9 @@ var ExampleReact = (function (react, reactDom) {
 	    return StateContainerResourceImpl;
 	}());
 	var referenceEquality = function (a, b) { return a === b; };
-	var create = function (initialState, scheduler, equals, priority) {
+	var create = function (initialState, equals, scheduler, priority) {
 	    if (equals === void 0) { equals = referenceEquality; }
-	    return new StateContainerResourceImpl(initialState, scheduler, equals, priority);
+	    return new StateContainerResourceImpl(initialState, equals, scheduler, priority);
 	};
 	exports.StateContainerResource = {
 	    create: create,
@@ -2940,7 +2939,7 @@ var ExampleReact = (function (react, reactDom) {
 	var DomLocationStateContainerResourceImpl = /** @class */ (function () {
 	    function DomLocationStateContainerResourceImpl(scheduler, priority) {
 	        var initialState = getCurrentLocation();
-	        var stateContainer = dist$a.StateContainerResource.create(initialState, scheduler, undefined, priority);
+	        var stateContainer = dist$a.StateContainerResource.create(initialState, undefined, scheduler, priority);
 	        var subscription = dist$2.Observable.connect(dist$8.merge(dist$2.Observable.lift(dist$b.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$6.onNext(function (state) { return stateContainer.dispatch(function (_) { return state; }); })), dist$2.Observable.lift(stateContainer, dist$6.keep(function (location) { return location !== getCurrentLocation(); }), dist$6.onNext(function (next) {
 	            return window.history.pushState(undefined, "", next);
 	        }))), scheduler);

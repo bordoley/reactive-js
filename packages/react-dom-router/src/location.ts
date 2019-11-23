@@ -31,12 +31,12 @@ class DomLocationStateContainerResourceImpl
   private readonly disposable: DisposableLike;
   private readonly stateContainer: StateContainerLike<string>;
 
-  constructor(scheduler: SchedulerLike, priority?: number) {
+  constructor(scheduler?: SchedulerLike, priority?: number) {
     const initialState = getCurrentLocation();
     const stateContainer = StateContainerResource.create(
       initialState,
-      scheduler,
       undefined,
+      scheduler,
       priority,
     );
 
@@ -91,7 +91,7 @@ class DomLocationStateContainerResourceImpl
 }
 
 const create = (
-  scheduler: SchedulerLike,
+  scheduler?: SchedulerLike,
   priority?: number,
 ): StateContainerResourceLike<string> =>
   new DomLocationStateContainerResourceImpl(scheduler, priority);
