@@ -5,6 +5,7 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "module": "commonjs",
     "newLine": "LF",
     "noImplicitAny": true,

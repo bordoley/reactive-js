@@ -28,5 +28,8 @@
     "build": "tsc",
     "test": "jest",
     "test-coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
   }
 }
