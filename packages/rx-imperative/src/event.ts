@@ -3,7 +3,7 @@ import {
   ObservableResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
-import { Subject, SubjectLike } from "./subject";
+import { Subject, SubjectResourceLike } from "./subject";
 
 import { DisposableOrTeardown } from "@reactive-js/disposables";
 
@@ -19,7 +19,7 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
   get isDisposed() {
     return this.subject.isDisposed;
   }
-  private readonly subject: SubjectLike<T>;
+  private readonly subject: SubjectResourceLike<T>;
 
   constructor(priority?: number) {
     this.subject = Subject.create(priority);

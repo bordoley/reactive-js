@@ -9,22 +9,22 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { ReplayLastSubject } from "./replayLastSubject";
-import { Subject, SubjectLike } from "./subject";
+import { Subject, SubjectResourceLike } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
-  private readonly factory: (priority?: number) => SubjectLike<T>;
+  private readonly factory: (priority?: number) => SubjectResourceLike<T>;
   private readonly priority?: number;
 
   private refCount: number = 0;
   private readonly scheduler?: SchedulerLike;
   private readonly source: ObservableLike<T>;
   private sourceSubscription = Disposable.disposed;
-  private subject?: SubjectLike<T>;
+  private subject?: SubjectResourceLike<T>;
 
   private readonly teardown: () => void;
 
   constructor(
-    factory: (priority?: number) => SubjectLike<T>,
+    factory: (priority?: number) => SubjectResourceLike<T>,
     source: ObservableLike<T>,
     scheduler?: SchedulerLike,
     priority?: number,
@@ -40,7 +40,7 @@ class SharedObservable<T> implements ObservableLike<T> {
       if (this.refCount === 0) {
         this.sourceSubscription.dispose();
         this.sourceSubscription = Disposable.disposed;
-        (this.subject as SubjectLike<T>).dispose();
+        (this.subject as SubjectResourceLike<T>).dispose();
         this.subject = undefined;
       }
     };
@@ -56,7 +56,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     }
     this.refCount++;
 
-    const subject = this.subject as SubjectLike<T>;
+    const subject = this.subject as SubjectResourceLike<T>;
 
     const innerSubscription = Observable.connect(
       Observable.lift(subject, observe(subscriber)),

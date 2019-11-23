@@ -5,17 +5,20 @@ import {
 } from "@reactive-js/disposables";
 
 import {
+  ObservableLike,
   ObservableResourceLike,
   ObserverLike,
   Subscriber,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 
-export interface SubjectLike<T>
-  extends ObserverLike<T>,
+export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
+
+export interface SubjectResourceLike<T>
+  extends SubjectLike<T>,
     ObservableResourceLike<T> {}
 
-export abstract class AbstractSubject<T> implements SubjectLike<T> {
+export abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
   get isDisposed() {
     return this.disposable.isDisposed;
   }
@@ -112,7 +115,7 @@ class SubjectImpl<T> extends AbstractSubject<T> {
   protected onSubscribe(observer: ObserverLike<T>) {}
 }
 
-const create = <T>(priority?: number): SubjectLike<T> =>
+const create = <T>(priority?: number): SubjectResourceLike<T> =>
   new SubjectImpl(priority);
 
 export const Subject = {
