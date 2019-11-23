@@ -19,7 +19,8 @@
   "dependencies": {
     "scheduler": "^0.17.0",
     "@reactive-js/disposables": "0.0.0",
-    "@reactive-js/scheduler": "0.0.0"
+    "@reactive-js/scheduler": "0.0.0",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@types/scheduler": "^0.16.1"
