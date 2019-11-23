@@ -5,7 +5,7 @@ Fast modern reactive Javascript programming library
 ## Packages
 
 ### Core
-* [@reactive-js/disposables](./packages/disposables)
+* [@reactive-js/disposable](./packages/disposable)
 * [@reactive-js/scheduler](./packages/scheduler)
 
 ### Reactive Programming (RX)

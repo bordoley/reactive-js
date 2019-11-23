@@ -175,9 +175,5 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   }
 }
 
-const create = (timeout: number = 500): SchedulerResourceLike =>
+export const create = (timeout: number = 500): SchedulerResourceLike =>
   new EventLoopSchedulerImpl(timeout);
-
-export const EventLoopScheduler = {
-  create,
-};

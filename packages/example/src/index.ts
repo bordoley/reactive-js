@@ -1,4 +1,4 @@
-import { EventLoopScheduler } from "@reactive-js/eventloop-scheduler";
+import EventLoopScheduler from "@reactive-js/eventloop-scheduler";
 import { Observable } from "@reactive-js/rx-core";
 import {
   fromArray,
