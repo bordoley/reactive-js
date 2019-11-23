@@ -38,7 +38,7 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   complete(error?: Error) {
@@ -76,7 +76,7 @@ export abstract class AbstractSubject<T> implements SubjectLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

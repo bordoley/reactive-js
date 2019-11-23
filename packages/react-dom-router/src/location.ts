@@ -67,7 +67,7 @@ class DomLocationStateContainerResourceImpl
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispatch(updater: StateUpdater<string>) {
@@ -82,7 +82,7 @@ class DomLocationStateContainerResourceImpl
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<string>) {

@@ -160,7 +160,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispatch(updater: StateUpdater<T>) {
@@ -175,7 +175,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

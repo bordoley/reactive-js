@@ -51,7 +51,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispose() {
@@ -62,7 +62,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   schedule(

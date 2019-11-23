@@ -65,7 +65,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispose() {
@@ -76,7 +76,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   run() {
@@ -192,7 +192,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.add(disposable, ...disposables);
   }
 
   dispose() {
@@ -203,7 +203,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove.apply(this.disposable, [disposable, ...disposables]);
+    this.disposable.remove(disposable, ...disposables);
   }
 
   run() {

@@ -35,7 +35,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.delegate.add.apply(this.delegate, [disposable, ...disposables]);
+    this.delegate.add(disposable, ...disposables);
   }
 
   dispose() {
@@ -49,7 +49,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.delegate.remove.apply(this.delegate, [disposable, ...disposables]);
+    this.delegate.remove(disposable, ...disposables);
   }
 }
 

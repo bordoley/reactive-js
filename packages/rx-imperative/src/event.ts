@@ -29,7 +29,7 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subject.add.apply(this.subject, [disposable, ...disposables]);
+    this.subject.add(disposable, ...disposables);
   }
 
   dispatch(event: T) {
@@ -44,7 +44,7 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subject.remove.apply(this.subject, [disposable, ...disposables]);
+    this.subject.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
