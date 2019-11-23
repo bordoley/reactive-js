@@ -92,29 +92,8 @@ class DisposableImpl implements DisposableLike {
 
 const create = (): DisposableLike => new DisposableImpl();
 
-class DisposedDisposableImpl implements DisposableLike {
-  readonly isDisposed = true;
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    doDispose(disposable);
-
-    for (let d of disposables) {
-      doDispose(d);
-    }
-  }
-
-  dispose() {}
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {}
-}
-
-const disposed: DisposableLike = new DisposedDisposableImpl();
+const disposed: DisposableLike = create();
+disposed.dispose();
 
 export const Disposable = {
   create,

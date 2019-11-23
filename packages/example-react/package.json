@@ -19,6 +19,7 @@
   "dependencies": {
     "@reactive-js/disposables": "0.0.0",
     "@reactive-js/dom": "0.0.0",
+    "@reactive-js/eventloop-scheduler": "0.0.0",
     "@reactive-js/ix-core": "0.0.0",
     "@reactive-js/react-dom-router": "0.0.0",
     "@reactive-js/react-hooks": "0.0.0",
