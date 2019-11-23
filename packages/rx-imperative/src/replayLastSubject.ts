@@ -1,4 +1,4 @@
-import { AbstractSubject, SubjectLike } from "./subject";
+import { AbstractSubject, SubjectResourceLike } from "./subject";
 
 import {
   Notification,
@@ -23,7 +23,7 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-const create = <T>(priority?: number): SubjectLike<T> =>
+const create = <T>(priority?: number): SubjectResourceLike<T> =>
   new ReplayLastSubjectImpl(priority);
 
 export const ReplayLastSubject = {
