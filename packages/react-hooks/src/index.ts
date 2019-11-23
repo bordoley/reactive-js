@@ -6,7 +6,7 @@ import {
 } from "@reactive-js/rx-core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { Disposable, DisposableLike } from "@reactive-js/disposables";
+import { DisposableLike } from "@reactive-js/disposables";
 import { scheduler } from "@reactive-js/react-scheduler";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
