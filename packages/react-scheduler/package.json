@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "@types/scheduler": "^0.16.1"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }
