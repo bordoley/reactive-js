@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/react-router",
   "version": "0.0.0",
-  "description": "Rx React Component router",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -18,19 +17,27 @@
   },
   "dependencies": {
     "react": "^16.11.0",
-    "@reactive-js/ix-core": "0.0.0",
     "@reactive-js/disposable": "0.0.0",
-    "@reactive-js/rx-operators": "0.0.0",
-    "@reactive-js/rx-observables": "0.0.0",
-    "@reactive-js/state-container": "0.0.0",
+    "@reactive-js/ix-async-iterator-resource": "0.0.0",
     "@reactive-js/react-hooks": "0.0.0",
-    "@reactive-js/scheduler": "0.0.0",
+    "@reactive-js/react-router-relative-uri": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
+    "@reactive-js/rx-observable-resource": "0.0.0",
+    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/state-container": "0.0.0",
+    "@reactive-js/rx-subscriber": "0.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11"
+    "@types/react": "^16.9.11",
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
   }
 }

@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/state-container",
   "version": "0.0.0",
-  "description": "Rx observable state",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,16 +16,29 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/ix-core": "0.0.0",
-    "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/disposable": "0.0.0",
-    "@reactive-js/rx-imperative": "0.0.0",
+    "@reactive-js/ix-async-iterator": "0.0.0",
+    "@reactive-js/ix-async-iterator-resource": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
+    "@reactive-js/rx-subscriber": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",
     "tslib": "^1.10.0"
   },
+  "devDependencies": {
+    "@reactive-js/virtualtime-scheduler": "0.0.0",
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }

@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/react-scheduler",
   "version": "0.0.0",
-  "description": "Scheduler bindings for RX",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -27,6 +26,9 @@
     "@types/scheduler": "^0.16.1"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
   }
 }

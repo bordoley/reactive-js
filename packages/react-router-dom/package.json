@@ -1,0 +1,42 @@
+{
+  "name": "@reactive-js/react-router-dom",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/rx-min.git"
+  },
+  "dependencies": {
+    "@reactive-js/dom": "0.0.0",
+    "@reactive-js/ix-async-iterator-resource": "0.0.0",
+    "@reactive-js/react-router": "0.0.0",
+    "@reactive-js/react-router-relative-uri": "0.0.0",
+    "@reactive-js/react-scheduler": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
+    "@reactive-js/rx-subscriber": "0.0.0",
+    "@reactive-js/state-container": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
+  }
+}

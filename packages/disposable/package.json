@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/disposable",
   "version": "0.0.0",
-  "description": "Disposables",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -16,8 +15,8 @@
     "type": "git",
     "url": "https://github.com/bordoley/rx-min.git"
   },
-  "jest": {
-    "preset": "ts-jest"
+  "dependencies": {
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -26,10 +25,11 @@
   },
   "scripts": {
     "build": "tsc",
+    "docs": "typedoc",
     "test": "jest",
     "test-coverage": "jest --coverage"
   },
-  "dependencies": {
-    "tslib": "^1.10.0"
+  "jest": {
+    "preset": "ts-jest"
   }
 }

@@ -1,14 +1,14 @@
-import EventLoopScheduler from "@reactive-js/eventloop-scheduler";
-import { Observable } from "@reactive-js/rx-core";
+import { create as eventLoopsSchedulerCreate } from "@reactive-js/eventloop-scheduler";
+import { connect, lift } from "@reactive-js/rx-observable";
 import { generate } from "@reactive-js/rx-observables";
 import { onNext } from "@reactive-js/rx-operators";
-import { defaultScheduler } from "@reactive-js/scheduler";
-import React from "react";
-import ReactDOM from "react-dom";
+import { registerDefaultScheduler } from "@reactive-js/scheduler";
+// import React from "react";
+// import ReactDOM from "react-dom";
 // import { scheduler } from "@reactive-js/react-scheduler";
 
-const scheduler = EventLoopScheduler.create();
-defaultScheduler.register(scheduler);
+const scheduler = eventLoopsSchedulerCreate();
+registerDefaultScheduler(scheduler);
 /*
 const Router = DomRouter.create();
 
@@ -20,8 +20,8 @@ const element = (
   <Router notFoundComponent={NotFound} routes={[["", Component1]]} />
 );*/
 
-Observable.connect(
-  Observable.lift(
+connect(
+  lift(
     generate(x => x + 1, 0, 3000),
     onNext(console.log),
   ),

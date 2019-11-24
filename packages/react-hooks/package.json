@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/react-hooks",
   "version": "0.0.0",
-  "description": "React bindings for RX",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -18,10 +17,12 @@
   },
   "dependencies": {
     "react": "^16.11.0",
-    "@reactive-js/ix-core": "0.0.0",
     "@reactive-js/disposable": "0.0.0",
-    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/ix-async-iterator-resource": "0.0.0",
     "@reactive-js/react-scheduler": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
+    "@reactive-js/rx-observable-resource": "0.0.0",
+    "@reactive-js/rx-subscriber": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",
     "tslib": "^1.10.0"
   },
@@ -29,6 +30,9 @@
     "@types/react": "^16.9.11"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
   }
 }

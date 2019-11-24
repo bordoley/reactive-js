@@ -1,0 +1,78 @@
+import { DisposableLike } from "@reactive-js/disposable";
+
+import { ObserverLike } from "@reactive-js/rx-observer";
+
+import {
+  DelegatingSubscriber,
+  observe,
+  Operator,
+  SubscriberLike,
+} from "@reactive-js/rx-subscriber";
+
+import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+
+class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
+  TA,
+  TC
+> {
+  static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
+    private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
+
+    constructor(parent: WithLatestFromSubscriber<TA, TB, TC>) {
+      this.parent = parent;
+    }
+
+    complete(error?: Error) {
+      if (error !== undefined) {
+        this.parent.complete(error);
+      }
+    }
+
+    next(data: TB) {
+      if (this.parent.otherLatest === undefined) {
+        this.parent.otherLatest = [data];
+      } else {
+        this.parent.otherLatest[0] = data;
+      }
+    }
+  };
+
+  private otherLatest: [TB] | undefined;
+  private readonly otherSubscription: DisposableLike;
+  private readonly selector: (a: TA, b: TB) => TC;
+
+  constructor(
+    delegate: SubscriberLike<TC>,
+    other: ObservableLike<TB>,
+    selector: (a: TA, b: TB) => TC,
+  ) {
+    super(delegate);
+    this.selector = selector;
+
+    this.otherSubscription = connect(
+      lift(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
+      this,
+    );
+
+    this.add(this.otherSubscription);
+  }
+
+  protected onComplete(error?: Error) {
+    this.remove(this.otherSubscription);
+    this.delegate.complete(error);
+  }
+
+  protected onNext(data: TA) {
+    if (this.otherLatest !== undefined) {
+      const [otherLatest] = this.otherLatest;
+      const result = this.selector(data, otherLatest);
+      this.delegate.next(result);
+    }
+  }
+}
+
+export const withLatestFrom = <TA, TB, TC>(
+  other: ObservableLike<TB>,
+  selector: (a: TA, b: TB) => TC,
+): Operator<TA, TC> => subscriber =>
+  new WithLatestFromSubscriber(subscriber, other, selector);

@@ -4,11 +4,13 @@ import {
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
+
 import {
   SchedulerContinuation,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
+/** @noInheritDoc */
 export interface VirtualTimeSchedulerLike extends SchedulerResourceLike {
   run(): void;
 }
@@ -165,73 +167,6 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   }
 }
 
-export const VirtualTimeScheduler = {
-  create: (
-    maxMicroTaskCount: number = Number.MAX_SAFE_INTEGER,
-  ): VirtualTimeSchedulerLike =>
-    new VirtualTimeSchedulerImpl(maxMicroTaskCount),
-};
-
-class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-  readonly inScheduledContinuation = true;
-  readonly now = 0;
-  private readonly disposable: DisposableLike;
-  private readonly queue: SchedulerContinuation[] = [];
-
-  constructor() {
-    this.disposable = disposableCreate();
-    this.disposable.add(() => {
-      this.queue.length = 0;
-    });
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-  }
-
-  run() {
-    throwIfDisposed(this.disposable);
-
-    for (
-      let next = this.queue.shift();
-      next !== undefined;
-      next = this.queue.shift()
-    ) {
-      next(PerfTestingSchedulerImpl.shouldYield);
-    }
-
-    this.disposable.dispose();
-  }
-
-  schedule(
-    continuation: SchedulerContinuation,
-    delay: number = 0,
-    priority: number = 0,
-  ): DisposableLike {
-    this.queue.push(continuation);
-    return disposableCreate();
-  }
-
-  static shouldYield = () => false;
-}
-
-export const PerfTestingScheduler = {
-  create: (): VirtualTimeSchedulerLike => new PerfTestingSchedulerImpl(),
-};
+export const create = (
+  maxMicroTaskCount: number = Number.MAX_SAFE_INTEGER,
+): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskCount);

@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/dom",
   "version": "0.0.0",
-  "description": "Rx dom hooks",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,10 +16,16 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
     "tslib": "^1.10.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }

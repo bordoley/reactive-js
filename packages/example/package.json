@@ -1,9 +1,6 @@
 {
   "name": "@reactive-js/example",
   "version": "0.0.0",
-  "description": "Rx example",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "keywords": [
     "rx"
   ],
@@ -18,7 +15,7 @@
   },
   "dependencies": {
     "@reactive-js/eventloop-scheduler": "0.0.0",
-    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",

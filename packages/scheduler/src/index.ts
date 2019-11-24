@@ -22,27 +22,21 @@ export interface SchedulerLike {
   ): DisposableLike;
 }
 
+/** @noInheritDoc */
 export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}
 
-class DefaultScheduler {
-  private _instance: SchedulerLike | undefined;
+let instance: SchedulerLike | undefined;
 
-  register(scheduler: SchedulerLike) {
-    if (this._instance !== undefined && scheduler !== this._instance) {
-      throw new Error("Default scheduler already registered");
-    }
-    this._instance = scheduler;
+export const registerDefaultScheduler = (scheduler: SchedulerLike) => {
+  if (instance !== undefined && scheduler !== instance) {
+    throw new Error("Default scheduler already registered");
   }
+  instance = scheduler;
+};
 
-  get instance() {
-    if (this._instance === undefined) {
-      throw new Error("No default scheduler registered");
-    }
-    return this._instance;
+export const getDefaultScheduler = () => {
+  if (instance === undefined) {
+    throw new Error("No default scheduler registered");
   }
-}
-
-export const defaultScheduler: {
-  readonly instance: SchedulerLike;
-  readonly register: (scheduler: SchedulerLike) => void;
-} = new DefaultScheduler();
+  return instance;
+};

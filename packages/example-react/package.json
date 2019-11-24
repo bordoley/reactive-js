@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/example-react",
   "version": "0.0.0",
-  "description": "Rx example react",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -17,20 +16,11 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "0.0.0",
-    "@reactive-js/dom": "0.0.0",
     "@reactive-js/eventloop-scheduler": "0.0.0",
-    "@reactive-js/ix-core": "0.0.0",
-    "@reactive-js/react-dom-router": "0.0.0",
-    "@reactive-js/react-hooks": "0.0.0",
-    "@reactive-js/react-router": "0.0.0",
-    "@reactive-js/react-scheduler": "0.0.0",
-    "@reactive-js/rx-core": "0.0.0",
-    "@reactive-js/rx-imperative": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",
-    "@reactive-js/state-container": "0.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "tslib": "^1.10.0"

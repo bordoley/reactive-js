@@ -8,17 +8,17 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { Observable } = require("@reactive-js/rx-core");
+      const { lift } = require("@reactive-js/rx-observable");
       const {
         combineLatest,
         fromArray,
       } = require("@reactive-js/rx-observables");
-      const { keep, map, scan } = require("@reactive-js/rx-operators");
+      const { keep, map } = require("@reactive-js/rx-operators");
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray(src);
 
-      const observable = Observable.lift(
+      const observable = lift(
         combineLatest(arrayObs, arrayObs, arrayObs),
         map(add3Arr),
         keep(even),
