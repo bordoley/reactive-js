@@ -31,6 +31,7 @@ Fast modern reactive Javascript programming library
 * [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler)
 
 ### React JS Integration
+* [@reactive-js/react-hooks](./packages/react-hooks)
 * [@reactive-js/react-router-dom](./packages/react-router-dom)
 * [@reactive-js/react-router-relative-uri](./packages/react-router-relative-uri)
 * [@reactive-js/react-router-state-component](./packages/react-router-state-component)
