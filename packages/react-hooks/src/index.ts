@@ -1,15 +1,13 @@
-import {
-  Observable,
-  ObservableLike,
-  ObservableResourceLike,
-  observe,
-} from "@reactive-js/rx-core";
+import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import { observe } from "@reactive-js/rx-subscriber";
+
+import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { DisposableLike } from "@reactive-js/disposable";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
-
-import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
 const useDispose = (disposable: DisposableLike) => {
   useEffect(
@@ -34,7 +32,7 @@ const makeObservable = <T>(
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
 ) =>
-  Observable.lift(
+  lift(
     observable,
     observe({
       next: (data: T) => updateState(_ => data),
@@ -53,10 +51,7 @@ export const useObservable = <T>(
 
   useDisposable(
     () =>
-      Observable.connect(
-        makeObservable(observable, updateState, updateError),
-        scheduler,
-      ),
+      connect(makeObservable(observable, updateState, updateError), scheduler),
     [updateState, updateError, scheduler],
   );
 
@@ -76,8 +71,8 @@ export const useObservableResource = <T>(
   return useObservable(() => observableResource, [observableResource]);
 };
 
-export const useAsyncIterator = <TReq, T>(
-  factory: () => AsyncIteratorLike<TReq, T>,
+export const useAsyncIteratorResource = <TReq, T>(
+  factory: () => AsyncIteratorResourceLike<TReq, T>,
   deps: readonly any[] | undefined,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useMemo(factory, deps);

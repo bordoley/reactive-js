@@ -5,6 +5,7 @@ import {
   disposed,
 } from "@reactive-js/disposable";
 
+/** @noInheritDoc */
 export interface SerialDisposableLike extends DisposableLike {
   disposable: DisposableLike;
 }

@@ -1,118 +1,21 @@
+import { lift } from "@reactive-js/ix-async-iterator-resource";
+import { useAsyncIteratorResource } from "@reactive-js/react-hooks";
+import {
+  empty as emptyRelativeURI,
+  RelativeURI,
+} from "@reactive-js/react-router-relative-uri";
+import { scan } from "@reactive-js/rx-operators";
 import {
   StateContainerResourceLike,
   StateUpdater,
 } from "@reactive-js/state-container";
-
-import { useAsyncIterator } from "@reactive-js/react-hooks";
-
-import { AsyncIterator } from "@reactive-js/ix-core";
-import { scan } from "@reactive-js/rx-operators";
-import { bool } from "prop-types";
 import { createElement, useCallback, useMemo } from "react";
-
-// React Native doesn't use a standard URI library so define
-// a minimal type that can be passed around
-export interface RelativeURI {
-  readonly fragment: string;
-  readonly path: string;
-  readonly query: string;
-}
-
-const emptyRelativeURI: RelativeURI = {
-  path: "",
-  query: "",
-  fragment: "",
-};
-
-export const RelativeURI = {
-  empty: emptyRelativeURI,
-  equals: (a: RelativeURI, b: RelativeURI): boolean =>
-    a === b ||
-    (a.path === b.path && a.query === b.query && a.fragment === b.fragment),
-};
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
   readonly uri: RelativeURI;
   readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
 }
-
-export interface RoutableStateComponentProps<TState> {
-  readonly dispatch: (updater: StateUpdater<TState>) => void;
-  readonly goTo: (uri: RelativeURI) => void;
-  readonly referer: RelativeURI | undefined;
-  readonly state: TState;
-  readonly uri: RelativeURI;
-}
-
-const createRoutableStateComponent = <TState>(
-  component: React.ComponentType<RoutableStateComponentProps<TState>>,
-  parseState: (fragment: string) => TState,
-  serialize: (state: TState) => string,
-  stateIsQuery = false,
-): React.ComponentType<RoutableComponentProps> => {
-  const createURIStateUpdater = (stateUpdater: StateUpdater<TState>) => (
-    oldURI: RelativeURI,
-  ) => {
-    const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
-
-    const oldState = parseState(oldSerialized);
-    const newState = stateUpdater(oldState);
-
-    if (oldState === newState) {
-      return oldURI;
-    } else if (stateIsQuery) {
-      const query = serialize(newState);
-      return {
-        ...oldURI,
-        query,
-      };
-    } else {
-      const fragment = serialize(newState);
-      return {
-        ...oldURI,
-        fragment,
-      };
-    }
-  };
-
-  const RoutableStateComponent = ({
-    referer,
-    uri,
-    uriUpdater,
-  }: RoutableComponentProps) => {
-    const state = useMemo(() => {
-      const serialized = stateIsQuery ? uri.query : uri.fragment;
-      return parseState(serialized);
-    }, [uri]);
-
-    const goTo: (uri: RelativeURI) => void = useCallback(
-      uri => uriUpdater(_ => uri),
-      [uri, uriUpdater],
-    );
-
-    const dispatch: (updater: StateUpdater<TState>) => void = useCallback(
-      stateUpdater => {
-        uriUpdater(createURIStateUpdater(stateUpdater));
-      },
-      [uriUpdater],
-    );
-
-    return createElement(component, {
-      uri,
-      referer,
-      goTo,
-      state,
-      dispatch,
-    });
-  };
-
-  return RoutableStateComponent;
-};
-
-export const RoutableStateComponent = {
-  create: createRoutableStateComponent,
-};
 
 type RouteMap = {
   [key: string]: React.ComponentType<RoutableComponentProps>;
@@ -130,24 +33,27 @@ const pairify = (
   [_, oldState]: [RelativeURI | undefined, RelativeURI],
   next: RelativeURI,
 ): [RelativeURI | undefined, RelativeURI] =>
-  oldState === RelativeURI.empty ? [undefined, next] : [oldState, next];
+  oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
 
-export type RouterProps = {
-  notFoundComponent: React.ComponentType<RoutableComponentProps>;
-  routes: readonly [string, React.ComponentType<RoutableComponentProps>][];
-};
+export interface RouterProps {
+  readonly notFoundComponent: React.ComponentType<RoutableComponentProps>;
+  readonly routes: readonly [
+    string,
+    React.ComponentType<RoutableComponentProps>,
+  ][];
+}
 
-const create = (
+export const create = (
   locationResourceFactory: () => StateContainerResourceLike<RelativeURI>,
 ): React.ComponentType<RouterProps> => {
   const ReactRouter = ({ notFoundComponent, routes }: RouterProps) => {
     const routeMap = useMemo(() => routes.reduce(routesReducer, {}), [routes]);
 
-    const [route, uriUpdater] = useAsyncIterator(
+    const [route, uriUpdater] = useAsyncIteratorResource(
       () =>
-        AsyncIterator.lift(
+        lift(
           locationResourceFactory(),
-          scan(pairify, [undefined, RelativeURI.empty]),
+          scan(pairify, [undefined, emptyRelativeURI]),
         ),
       [],
     );
@@ -166,5 +72,3 @@ const create = (
 
   return ReactRouter;
 };
-
-export const Router = { create };

@@ -1,8 +1,8 @@
-import { Observable, ObservableLike } from "@reactive-js/rx-core";
-import { PerfTestingScheduler } from "@reactive-js/virtualtime-scheduler";
+import { create as perfTestingSchedulerCreate } from "@reactive-js/perf-testing-scheduler";
+import { connect, ObservableLike } from "@reactive-js/rx-observable";
 
 export const run = <T>(observable: ObservableLike<T>) => {
-  const scheduler = PerfTestingScheduler.create();
-  Observable.connect(observable, scheduler);
+  const scheduler = perfTestingSchedulerCreate();
+  connect(observable, scheduler);
   scheduler.run();
 };

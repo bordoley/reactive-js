@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/eventloop-scheduler",
   "version": "0.0.0",
-  "description": "Node.js scheduler",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
@@ -23,6 +22,9 @@
     "tslib": "^1.10.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
   }
 }

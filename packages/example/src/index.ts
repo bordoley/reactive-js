@@ -1,5 +1,5 @@
-import EventLoopScheduler from "@reactive-js/eventloop-scheduler";
-import { Observable } from "@reactive-js/rx-core";
+import { create as eventLoopSchedulerCreate } from "@reactive-js/eventloop-scheduler";
+import { connect, lift } from "@reactive-js/rx-observable";
 import {
   fromArray,
   fromScheduledValues,
@@ -16,13 +16,13 @@ import {
   onNext,
   switch_,
 } from "@reactive-js/rx-operators";
-import { defaultScheduler } from "@reactive-js/scheduler";
-const scheduler = EventLoopScheduler.create(500);
-defaultScheduler.register(scheduler);
+import { registerDefaultScheduler } from "@reactive-js/scheduler";
+const scheduler = eventLoopSchedulerCreate(500);
+registerDefaultScheduler(scheduler);
 
 /*
-Observable.connect(
-  Observable.lift(
+connect(
+  lift(
     fromDelayedValues([1000, 1], [2000, 2], [3000, 3], [3000, 4]),
     onNext(next => {
       const time = Date.now();
@@ -47,8 +47,8 @@ Observable.connect(
 */
 
 /*
-Observable.connect(
-  Observable.lift(
+connect(
+  lift(
     generate(x => x + 1, 0, 500),
     map(x =>
       fromArray(
@@ -68,8 +68,8 @@ Observable.connect(
 );*/
 
 /*
-Observable.connect(
-  Observable.lift(
+connect(
+  lift(
     generate(x => x + 1, 0, 500),
     map(x => generate(x => x, x, 100)),
     switch_(),
@@ -79,8 +79,8 @@ Observable.connect(
 );
 */
 
-Observable.connect(
-  Observable.lift(
+connect(
+  lift(
     generate(x => x + 1, 0),
     map(x => fromArray([x, x, x, x])),
     exhaust(),

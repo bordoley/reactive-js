@@ -1,9 +1,6 @@
 {
   "name": "@reactive-js/perf",
   "version": "0.0.0",
-  "description": "interactive extensions",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "keywords": [
     "rx"
   ],
@@ -17,10 +14,10 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/rx-core": "0.0.0",
+    "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
     "@reactive-js/rx-operators": "0.0.0",
-    "@reactive-js/virtualtime-scheduler": "0.0.0",
+    "@reactive-js/perf-testing-scheduler": "0.0.0",
     "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3",
     "benchmark": "^2.1.4",

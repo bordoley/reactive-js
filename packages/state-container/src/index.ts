@@ -6,38 +6,40 @@ import {
 
 import {
   DelegatingSubscriber,
-  Observable,
-  ObservableLike,
   SubscriberLike,
-} from "@reactive-js/rx-core";
+} from "@reactive-js/rx-subscriber";
+
+import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
 
 import {
-  defaultScheduler,
   SchedulerContinuation,
   SchedulerContinuationResult,
   SchedulerLike,
 } from "@reactive-js/scheduler";
 
+import { shareReplayLast } from "@reactive-js/rx-observables";
+
 import { distinctUntilChanged } from "@reactive-js/rx-operators";
 
 import {
-  EventResource,
+  create as eventResourceCreate,
   EventResourceLike,
-  shareReplayLast,
-} from "@reactive-js/rx-imperative";
+} from "@reactive-js/rx-event";
 
-import { AsyncIteratorLike } from "@reactive-js/ix-core";
+import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 
 export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
-export interface StateContainerLike<T> extends ObservableLike<T> {
-  dispatch(request: StateUpdater<T>): void;
-}
+/** @noInheritDoc */
+export interface StateContainerLike<T>
+  extends AsyncIteratorLike<StateUpdater<T>, T> {}
 
+/** @noInheritDoc */
 export interface StateContainerResourceLike<T>
-  extends AsyncIteratorLike<StateUpdater<T>, T>,
+  extends AsyncIteratorResourceLike<StateUpdater<T>, T>,
     StateContainerLike<T> {}
 
 class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
@@ -139,9 +141,9 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     scheduler?: SchedulerLike,
     priority?: number,
   ) {
-    this.dispatcher = EventResource.create();
+    this.dispatcher = eventResourceCreate();
     this.delegate = shareReplayLast(
-      Observable.lift(
+      lift(
         this.dispatcher,
         batchScanOnScheduler(initialState, priority),
         distinctUntilChanged(equals),
@@ -151,10 +153,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     );
 
     this.disposable = disposableCreate();
-    this.disposable.add(
-      this.dispatcher,
-      Observable.connect(this.delegate, scheduler),
-    );
+    this.disposable.add(this.dispatcher, connect(this.delegate, scheduler));
   }
 
   add(
@@ -186,14 +185,10 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
-const create = <T>(
+export const create = <T>(
   initialState: T,
   equals: (a: T, b: T) => boolean = referenceEquality,
   scheduler?: SchedulerLike,
   priority?: number,
 ): StateContainerResourceLike<T> =>
   new StateContainerResourceImpl(initialState, equals, scheduler, priority);
-
-export const StateContainerResource = {
-  create,
-};
