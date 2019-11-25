@@ -7,9 +7,10 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
-const throwWithDelay = <T>(
+
+export const throws = <T>(
   error: Error,
-  delay: number,
+  delay?: number,
   priority?: number,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
@@ -22,14 +23,3 @@ const throwWithDelay = <T>(
 
   return { subscribe };
 };
-
-export const throws = <T>(
-  error: Error,
-  delay?: number,
-  priority?: number,
-): ObservableLike<T> =>
-  delay !== undefined
-    ? throwWithDelay(error, delay, priority)
-    : observableCreate((observer: ObserverLike<T>) => {
-        observer.complete(error);
-      }, priority);
