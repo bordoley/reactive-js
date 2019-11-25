@@ -37,7 +37,7 @@ const checkState = <T>(subscriber: SubscriberLike<T>) => {
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
-abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
+abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
   }
@@ -95,7 +95,7 @@ abstract class AbstractSubjectImpl<T> implements SubscriberLike<T> {
   }
 }
 
-class AutoDisposingSubscriberImpl<T> extends AbstractSubjectImpl<T>
+class AutoDisposingSubscriberImpl<T> extends AbstractSubscriberImpl<T>
   implements ConnectableSubscriberLike<T> {
   isConnected = false;
 
@@ -144,9 +144,10 @@ const getSubscriberSubscription = <T>(
 
 /** @noInheritDoc */
 
-export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
+export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriberImpl<
   TA
 > {
+  /** @ignore */
   get isConnected() {
     return this.source.isConnected;
   }
@@ -171,6 +172,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
     });
   }
 
+  /** @ignore */
   complete(error?: Error) {
     if (__DEV__) {
       checkState(this);
@@ -182,6 +184,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubjectImpl<
     }
   }
 
+  /** @ignore */
   next(data: TA) {
     if (__DEV__) {
       checkState(this);
