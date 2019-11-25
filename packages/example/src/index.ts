@@ -1,11 +1,11 @@
 import { create as eventLoopSchedulerCreate } from "@reactive-js/eventloop-scheduler";
 import { connect, pipe } from "@reactive-js/rx-observable";
 import {
+  concatAll,
+  exhaust,
   fromArray,
   fromScheduledValues,
   generate,
-  concatAll,
-  exhaust,
   ignoreElements,
   keep,
   map,

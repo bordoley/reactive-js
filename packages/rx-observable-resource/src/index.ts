@@ -213,9 +213,9 @@ export function pipe(
   source: ObservableResourceLike<any>,
   ...operators: Array<ObservableOperator<any, any>>
 ): ObservableResourceLike<any> {
-
-  const obsSource = source instanceof LiftedObservableResource ? source.observable : source;
-  const observable = operators.reduce((acc, next) => next(acc), obsSource)
+  const obsSource =
+    source instanceof LiftedObservableResource ? source.observable : source;
+  const observable = operators.reduce((acc, next) => next(acc), obsSource);
 
   const disposable =
     source instanceof LiftedObservableResource ? source.disposable : source;

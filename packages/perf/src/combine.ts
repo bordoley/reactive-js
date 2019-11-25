@@ -13,8 +13,8 @@ export const run = (n: number) => {
         combineLatest,
         fromArray,
         keep,
-        map
-      } = require("@reactive-js/rx-observables");;
+        map,
+      } = require("@reactive-js/rx-observables");
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray(src);

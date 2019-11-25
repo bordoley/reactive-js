@@ -93,7 +93,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    if (!this.disposable.isDisposed) {
+    if (!this.disposable.isDisposed && !this.isCompleted) {
       // The idea here is that an onSubscribe function may
       // call onNext from unscheduled sources such as event handlers.
       // So we marshall those events back to the scheduler.
@@ -113,6 +113,8 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
         });
         subscriber.add(disposable);
       }
+    } else {
+      subscriber.dispose();
     }
   }
 
