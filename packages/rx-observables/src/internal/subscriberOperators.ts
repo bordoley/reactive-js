@@ -102,6 +102,7 @@ export const scan = <T, TAcc>(
     scanSubscriberOperator(scanner, initialValue),
   );
 
+// tslint:disable-next-line variable-name
 export const switch_ = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   subscriberOperatorToObservableOperator(switchSubscriberOperator());
 
