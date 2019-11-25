@@ -1,24 +1,40 @@
-import { create as eventLoopsSchedulerCreate } from "@reactive-js/eventloop-scheduler";
 import { connect, lift } from "@reactive-js/rx-observable";
 import { generate } from "@reactive-js/rx-observables";
 import { onNext } from "@reactive-js/rx-operators";
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import { scheduler } from "@reactive-js/react-scheduler";
+import React from "react";
+import ReactDOM from "react-dom";
+import { scheduler } from "@reactive-js/react-scheduler";
+import { create as routerCreate } from "@reactive-js/react-router-dom";
+import { RoutableComponentProps } from "@reactive-js/react-router";
 
-const scheduler = eventLoopsSchedulerCreate();
 registerDefaultScheduler(scheduler);
-/*
-const Router = DomRouter.create();
 
-const NotFound = (props: RoutableComponentProps) => <div>{"Not Found"}</div>;
+import { useEffect } from "react";
+
+const Router = routerCreate();
+const NotFound = ({uriUpdater}: RoutableComponentProps) => {
+  useEffect(
+    () => {
+      uriUpdater(state => ({
+        ...state,
+        path: "/route1",
+      }));
+    },
+    [uriUpdater],
+  );
+  return <div>{"Not Found"}</div>;
+};
 
 const Component1 = (props: RoutableComponentProps) => <div>{"Component1"}</div>;
 
 const element = (
-  <Router notFoundComponent={NotFound} routes={[["", Component1]]} />
-);*/
+  <Router notFoundComponent={NotFound} routes={[[
+    "/route1", Component1]]} />
+);
+
+ReactDOM.render(element, document.getElementById("root") as HTMLElement);
+
 
 connect(
   lift(
@@ -27,4 +43,3 @@ connect(
   ),
 );
 
-// ReactDOM.render(element, document.getElementById("root") as HTMLElement);

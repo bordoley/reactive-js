@@ -2,7 +2,7 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 
 import { Operator, SubscriberLike } from "@reactive-js/rx-subscriber";
 
-import { ObservableLike } from "@reactive-js/rx-observable";
+import { lift as liftObservable, ObservableLike } from "@reactive-js/rx-observable";
 
 /** @noInheritDoc */
 export interface ObservableResourceLike<T>
@@ -121,7 +121,7 @@ export function lift(
   operator: Operator<any, any>,
   ...operators: Array<Operator<any, any>>
 ): ObservableResourceLike<any> {
-  const observable = lift.apply(undefined, [
+  const observable = liftObservable.apply(undefined, [
     source instanceof LiftedObservableResource ? source.observable : source,
     operator,
     ...operators,

@@ -31,6 +31,7 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { fromEvent } from "@reactive-js/dom";
+import { relative } from 'path';
 
 const getCurrentLocation = () => {
   const path = window.location.pathname;
@@ -48,9 +49,8 @@ class DomLocationStateContainerResourceImpl
   private readonly stateContainer: StateContainerLike<string>;
 
   constructor(scheduler?: SchedulerLike, priority?: number) {
-    const initialState = getCurrentLocation();
     const stateContainer = stateContainerCreate(
-      initialState,
+      "",
       undefined,
       scheduler,
       priority,
@@ -77,6 +77,8 @@ class DomLocationStateContainerResourceImpl
     this.disposable.add(subscription, stateContainer);
 
     this.stateContainer = stateContainer;
+
+    stateContainer.dispatch(_ => getCurrentLocation());
   }
 
   add(
@@ -106,8 +108,10 @@ class DomLocationStateContainerResourceImpl
   }
 }
 
+const fakeURLBase = new URL("http://example.com"); 
+
 const mapper = (v: string): RelativeURI => {
-  const parsedAccURL = new URL(v);
+  const parsedAccURL = new URL(v, fakeURLBase);
   return {
     path: parsedAccURL.pathname,
     query: parsedAccURL.search,
@@ -119,7 +123,7 @@ const reducer = (
   acc: string,
   stateUpdater: StateUpdater<RelativeURI>,
 ): string => {
-  const parsedAccURL = new URL(acc);
+  const parsedAccURL = new URL(acc, fakeURLBase);
   const accRelativeURI = {
     path: parsedAccURL.pathname,
     query: parsedAccURL.search,
@@ -138,6 +142,10 @@ const createRelativeURILocation = (priority?: number) => {
     new DomLocationStateContainerResourceImpl(scheduler, priority),
     map(mapper),
     distinctUntilChanged(),
+    onNext(({ path, query, fragment }) => {
+      const uri = path + query + fragment;
+      history.pushState(undefined, "", uri);
+    })
   );
 
   return asyncIteratorMap(lifted, requestMapper);
