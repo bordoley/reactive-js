@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* AbstractSubjectImpl‹TA›
+* AbstractSubscriberImpl‹TA›
 
   ↳ **DelegatingSubscriber**
 
@@ -28,14 +28,8 @@
 
 * [delegate](delegatingsubscriber.md#delegate)
 
-### Accessors
-
-* [isConnected](delegatingsubscriber.md#isconnected)
-
 ### Methods
 
-* [complete](delegatingsubscriber.md#complete)
-* [next](delegatingsubscriber.md#next)
 * [onComplete](delegatingsubscriber.md#protected-abstract-oncomplete)
 * [onNext](delegatingsubscriber.md#protected-abstract-onnext)
 
@@ -61,49 +55,7 @@ Name | Type |
 
 • **delegate**: *ObserverLike‹TB›*
 
-## Accessors
-
-###  isConnected
-
-• **get isConnected**(): *boolean*
-
-*Overrides void*
-
-**Returns:** *boolean*
-
 ## Methods
-
-###  complete
-
-▸ **complete**(`error?`: Error): *void*
-
-*Overrides void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error?` | Error |
-
-**Returns:** *void*
-
-___
-
-###  next
-
-▸ **next**(`data`: TA): *void*
-
-*Overrides void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | TA |
-
-**Returns:** *void*
-
-___
 
 ### `Protected` `Abstract` onComplete
 
