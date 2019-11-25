@@ -1,4 +1,3 @@
-export { debounceTime } from "./internal/debounce";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
