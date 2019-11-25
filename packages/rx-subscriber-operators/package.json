@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/rx-operators",
+  "name": "@reactive-js/rx-subscriber-operators",
   "version": "0.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

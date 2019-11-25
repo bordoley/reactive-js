@@ -25,13 +25,12 @@ export const run = (m: number, n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { lift } = require("@reactive-js/rx-observable");
-      const { merge, fromArray } = require("@reactive-js/rx-observables");
-      const { scan } = require("@reactive-js/rx-operators");
+      const { pipe } = require("@reactive-js/rx-observable");
+      const { fromArray,  merge, scan } = require("@reactive-js/rx-observables");
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray(x));
-      const observable = lift(merge.apply(undefined, streams), scan(sum, 0));
+      const observable = pipe(merge.apply(undefined, streams), scan(sum, 0));
 
       run(observable);
     })

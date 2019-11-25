@@ -1,7 +1,7 @@
 import {
   DelegatingSubscriber,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {

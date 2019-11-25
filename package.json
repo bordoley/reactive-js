@@ -7,7 +7,7 @@
     "docs": "lerna run docs",
     "example": "node ./packages/example/dist/index.js",
     "format": "prettier --write packages/**/src/** packages/**/src/**/** packages/**/test/**",
-    "lint": "tslint --fix -t codeFrame 'packages/*/src/**' 'packages/*/src/**/**' 'packages/**/test/**'",
+    "lint": "tslint --fix -t codeFrame 'packages/*/src/**' 'packages/*/src/internal/**' 'packages/**/test/**'",
     "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
     "rollup": "lerna run rollup",
     "test": "lerna run test",

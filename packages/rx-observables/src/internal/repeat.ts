@@ -1,12 +1,17 @@
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  connect,
+  lift,
+  ObservableLike,
+  ObservableOperator,
+} from "@reactive-js/rx-observable";
 
 import {
   DelegatingSubscriber,
   observe,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 import {
@@ -101,9 +106,8 @@ const alwaysTrue = () => true;
 const defaultRepeatPredicate = (error?: Error): boolean => error === undefined;
 
 export const repeat = <T>(
-  observable: ObservableLike<T>,
   predicate: () => boolean = alwaysTrue,
-): ObservableLike<T> => {
+): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
   const repeatPredicate =
     predicate === alwaysTrue
       ? defaultRepeatPredicate
@@ -117,9 +121,8 @@ const alwaysTrue1 = <T>(_: T) => true;
 const defaultRetryPredicate = (error?: Error): boolean => error !== undefined;
 
 export const retry = <T>(
-  observable: ObservableLike<T>,
   predicate: (error: Error) => boolean = alwaysTrue1,
-): ObservableLike<T> => {
+): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
   const retryPredicate =
     predicate === alwaysTrue1
       ? defaultRetryPredicate

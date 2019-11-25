@@ -17,3 +17,23 @@ export {
   shareReplayLast,
 } from "./internal/sharedObservable";
 export { throws } from "./internal/throws";
+
+export {
+  concatAll,
+  distinctUntilChanged,
+  exhaust,
+  ignoreElements,
+  keep,
+  map,
+  mapTo,
+  mergeAll,
+  observe,
+  onComplete,
+  onError,
+  onNext,
+  scan,
+  switch_,
+  take,
+  takeLast,
+  withLatestFrom,
+} from "./internal/subscriberOperators";

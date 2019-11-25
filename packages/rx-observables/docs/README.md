@@ -8,21 +8,38 @@
 
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#const-concat)
+* [concatAll](README.md#const-concatall)
+* [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
+* [exhaust](README.md#const-exhaust)
 * [fromArray](README.md#const-fromarray)
 * [fromPromiseFactory](README.md#const-frompromisefactory)
 * [fromScheduledValues](README.md#const-fromscheduledvalues)
 * [generate](README.md#const-generate)
+* [ignoreElements](README.md#const-ignoreelements)
+* [keep](README.md#const-keep)
+* [map](README.md#const-map)
+* [mapTo](README.md#const-mapto)
 * [merge](README.md#const-merge)
+* [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
+* [observe](README.md#const-observe)
 * [ofValue](README.md#const-ofvalue)
+* [onComplete](README.md#const-oncomplete)
+* [onError](README.md#const-onerror)
+* [onNext](README.md#const-onnext)
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
+* [scan](README.md#const-scan)
 * [share](README.md#const-share)
 * [shareReplay](README.md#const-sharereplay)
 * [shareReplayLast](README.md#const-sharereplaylast)
+* [switch_](README.md#const-switch_)
+* [take](README.md#const-take)
+* [takeLast](README.md#const-takelast)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
+* [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
 
@@ -270,6 +287,42 @@ Name | Type |
 
 ___
 
+### `Const` concatAll
+
+▸ **concatAll**<**T**>(`maxBufferSize?`: undefined | number): *ObservableOperator‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`maxBufferSize?` | undefined &#124; number |
+
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+
+___
+
+### `Const` distinctUntilChanged
+
+▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`equals?` | undefined &#124; function |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
 ### `Const` empty
 
 ▸ **empty**<**T**>(`delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
@@ -286,6 +339,18 @@ Name | Type |
 `priority?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
+
+___
+
+### `Const` exhaust
+
+▸ **exhaust**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
 ___
 
@@ -378,6 +443,88 @@ Name | Type |
 
 ___
 
+### `Const` ignoreElements
+
+▸ **ignoreElements**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+
+___
+
+### `Const` keep
+
+▸ **keep**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`data`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` map
+
+▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableOperator‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`data`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | TA |
+
+**Returns:** *ObservableOperator‹TA, TB›*
+
+___
+
+### `Const` mapTo
+
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *ObservableOperator‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | TB |
+
+**Returns:** *ObservableOperator‹TA, TB›*
+
+___
+
 ### `Const` merge
 
 ▸ **merge**<**T**>(`fst`: ObservableLike‹T›, `snd`: ObservableLike‹T›, ...`tail`: Array‹ObservableLike‹T››): *ObservableLike‹T›*
@@ -398,6 +545,24 @@ Name | Type |
 
 ___
 
+### `Const` mergeAll
+
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableOperator‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options?` | undefined &#124; object |
+
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+
+___
+
 ### `Const` never
 
 ▸ **never**<**T**>(): *ObservableLike‹T›*
@@ -407,6 +572,24 @@ ___
 ▪ **T**
 
 **Returns:** *ObservableLike‹T›*
+
+___
+
+### `Const` observe
+
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observer` | ObserverLike‹T› |
+
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -430,9 +613,9 @@ Name | Type |
 
 ___
 
-### `Const` repeat
+### `Const` onComplete
 
-▸ **repeat**<**T**>(`observable`: ObservableLike‹T›, `predicate`: function): *ObservableLike‹T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -440,27 +623,95 @@ ___
 
 **Parameters:**
 
-▪ **observable**: *ObservableLike‹T›*
+▪ **onComplete**: *function*
+
+▸ (`err?`: Error): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err?` | Error |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` onError
+
+▸ **onError**<**T**>(`onError`: function): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onError**: *function*
+
+▸ (`err`: Error): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | Error |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` onNext
+
+▸ **onNext**<**T**>(`onNext`: function): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onNext**: *function*
+
+▸ (`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` repeat
+
+▸ **repeat**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
 
 ▪`Default value`  **predicate**: *function*=  alwaysTrue
 
 ▸ (): *boolean*
 
-**Returns:** *ObservableLike‹T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`observable`: ObservableLike‹T›, `predicate`: function): *ObservableLike‹T›*
+▸ **retry**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
-
-▪ **observable**: *ObservableLike‹T›*
 
 ▪`Default value`  **predicate**: *function*=  alwaysTrue1
 
@@ -472,13 +723,42 @@ Name | Type |
 ------ | ------ |
 `error` | Error |
 
-**Returns:** *ObservableLike‹T›*
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` scan
+
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableOperator‹T, TAcc›*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **scanner**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initialValue**: *TAcc*
+
+**Returns:** *ObservableOperator‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`observable`: ObservableLike‹T›, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **share**<**T**>(`scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -488,17 +768,16 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | ObservableLike‹T› |
 `scheduler?` | SchedulerLike |
 `priority?` | undefined &#124; number |
 
-**Returns:** *ObservableLike‹T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` shareReplay
 
-▸ **shareReplay**<**T**>(`observable`: ObservableLike‹T›, `count`: number, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **shareReplay**<**T**>(`count`: number, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -508,18 +787,17 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | ObservableLike‹T› |
 `count` | number |
 `scheduler?` | SchedulerLike |
 `priority?` | undefined &#124; number |
 
-**Returns:** *ObservableLike‹T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` shareReplayLast
 
-▸ **shareReplayLast**<**T**>(`observable`: ObservableLike‹T›, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **shareReplayLast**<**T**>(`scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -529,11 +807,59 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | ObservableLike‹T› |
 `scheduler?` | SchedulerLike |
 `priority?` | undefined &#124; number |
 
-**Returns:** *ObservableLike‹T›*
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` switch_
+
+▸ **switch_**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+
+___
+
+### `Const` take
+
+▸ **take**<**T**>(`count`: number): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`count` | number |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` takeLast
+
+▸ **takeLast**<**T**>(`count`: number, `priority?`: undefined | number): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`count` | number |
+`priority?` | undefined &#124; number |
+
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -559,7 +885,7 @@ ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler?`: SchedulerLike): *Promise‹unknown›*
+▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler?`: SchedulerLike): *Promise‹T›*
 
 **Type parameters:**
 
@@ -572,4 +898,35 @@ Name | Type |
 `observable` | ObservableLike‹T› |
 `scheduler?` | SchedulerLike |
 
-**Returns:** *Promise‹unknown›*
+**Returns:** *Promise‹T›*
+
+___
+
+### `Const` withLatestFrom
+
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableOperator‹TA, TC›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+**Parameters:**
+
+▪ **other**: *ObservableLike‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *TC*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *ObservableOperator‹TA, TC›*

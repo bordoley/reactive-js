@@ -16,7 +16,7 @@
   "dependencies": {
     "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
-    "@reactive-js/rx-operators": "0.0.0",
+    "@reactive-js/rx-subscriber-operators": "0.0.0",
     "@reactive-js/perf-testing-scheduler": "0.0.0",
     "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3",

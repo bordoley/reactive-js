@@ -9,7 +9,7 @@ import {
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import { connect, lift, ObservableLike, pipe } from "@reactive-js/rx-observable";
 
 import {
   SchedulerContinuation,
@@ -17,9 +17,7 @@ import {
   SchedulerLike,
 } from "@reactive-js/scheduler";
 
-import { shareReplayLast } from "@reactive-js/rx-observables";
-
-import { distinctUntilChanged } from "@reactive-js/rx-operators";
+import { distinctUntilChanged, shareReplayLast } from "@reactive-js/rx-observables";
 
 import {
   create as eventResourceCreate,
@@ -142,14 +140,13 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     priority?: number,
   ) {
     this.dispatcher = eventResourceCreate();
-    this.delegate = shareReplayLast(
+    this.delegate = pipe(
       lift(
         this.dispatcher,
         batchScanOnScheduler(initialState, priority),
-        distinctUntilChanged(equals),
       ),
-      scheduler,
-      priority,
+      distinctUntilChanged(equals),
+      shareReplayLast(scheduler, priority),
     );
 
     this.disposable = disposableCreate();

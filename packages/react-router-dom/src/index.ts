@@ -16,7 +16,7 @@ import {
   keep,
   map,
   onNext,
-} from "@reactive-js/rx-operators";
+} from "@reactive-js/rx-subscriber-operators";
 
 import { scheduler } from "@reactive-js/react-scheduler";
 

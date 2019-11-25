@@ -21,10 +21,6 @@ export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
   isConnected: boolean;
 }
 
-export interface SubscriberOperator<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
-}
-
 const checkState = <T>(subscriber: SubscriberLike<T>) => {
   if (!subscriber.inScheduledContinuation) {
     throw new Error(
@@ -238,9 +234,14 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const observe = <T>(observer: ObserverLike<T>): SubscriberOperator<T, T> => (
-  subscriber: SubscriberLike<T>,
-) => new ObserveSubscriber(subscriber, observer);
+export interface SubscriberOperator<A, B> {
+  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
+}
+
+export const observe = <T>(
+  observer: ObserverLike<T>,
+): SubscriberOperator<T, T> => (subscriber: SubscriberLike<T>) =>
+  new ObserveSubscriber(subscriber, observer);
 
 class SafeObserver<T> implements ObserverLike<T> {
   private get remainingEvents() {

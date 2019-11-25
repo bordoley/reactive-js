@@ -1,7 +1,7 @@
 import {
   DelegatingSubscriber,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 import {
@@ -32,7 +32,9 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const take = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
+export const take = <T>(
+  count: number,
+): SubscriberOperator<T, T> => subscriber =>
   new TakeSubscriber(subscriber, count);
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {

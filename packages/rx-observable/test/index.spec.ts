@@ -1,6 +1,10 @@
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { observe, SubscriberOperator, SubscriberLike } from "@reactive-js/rx-subscriber";
+import {
+  observe,
+  SubscriberLike,
+  SubscriberOperator,
+} from "@reactive-js/rx-subscriber";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 import {
   connect,

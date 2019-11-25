@@ -35,7 +35,7 @@ export const fromPromiseFactory = <T>(
 export const toPromise = <T>(
   observable: ObservableLike<T>,
   scheduler?: SchedulerLike,
-) =>
+): Promise<T> =>
   new Promise((resolve, reject) => {
     let result: T | undefined = undefined;
     const subscription = connect(

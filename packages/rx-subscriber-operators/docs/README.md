@@ -1,6 +1,6 @@
-[@reactive-js/rx-operators](README.md)
+[@reactive-js/rx-subscriber-operators](README.md)
 
-# @reactive-js/rx-operators
+# @reactive-js/rx-subscriber-operators
 
 ## Index
 

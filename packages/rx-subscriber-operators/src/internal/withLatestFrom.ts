@@ -5,8 +5,8 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   DelegatingSubscriber,
   observe,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";

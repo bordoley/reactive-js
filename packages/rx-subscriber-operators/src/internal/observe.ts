@@ -3,7 +3,9 @@ export { observe } from "@reactive-js/rx-subscriber";
 
 const ignore = <T>(data: T) => {};
 
-export const onNext = <T>(onNext: (data: T) => void): SubscriberOperator<T, T> =>
+export const onNext = <T>(
+  onNext: (data: T) => void,
+): SubscriberOperator<T, T> =>
   observe({
     next: onNext,
     complete: ignore,
@@ -17,7 +19,9 @@ export const onComplete = <T>(
     complete: onComplete,
   });
 
-export const onError = <T>(onError: (error: Error) => void): SubscriberOperator<T, T> =>
+export const onError = <T>(
+  onError: (error: Error) => void,
+): SubscriberOperator<T, T> =>
   observe({
     next: ignore,
     complete: (error?: Error) => {
