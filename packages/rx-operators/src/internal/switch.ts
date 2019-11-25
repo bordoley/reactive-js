@@ -5,7 +5,7 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   DelegatingSubscriber,
   observe,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -53,5 +53,5 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 }
 
 // tslint:disable-next-line variable-name
-export const switch_ = <T>(): Operator<ObservableLike<T>, T> => subscriber =>
+export const switch_ = <T>(): SubscriberOperator<ObservableLike<T>, T> => subscriber =>
   new SwitchSubscriber(subscriber);

@@ -17,7 +17,7 @@
 
 ###  lift
 
-▸ **lift**<**TReq**, **T**, **TA**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TA›*
+▸ **lift**<**TReq**, **T**, **TA**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TA›*
 
 **Type parameters:**
 
@@ -32,11 +32,11 @@
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
+`op1` | SubscriberOperator‹T, TA› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TA›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TB›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TB›*
 
 **Type parameters:**
 
@@ -53,12 +53,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TB›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TC›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TC›*
 
 **Type parameters:**
 
@@ -77,13 +77,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TC›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TD›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TD›*
 
 **Type parameters:**
 
@@ -104,14 +104,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TD›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TE›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TE›*
 
 **Type parameters:**
 
@@ -134,15 +134,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TE›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TF›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TF›*
 
 **Type parameters:**
 
@@ -167,16 +167,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TF›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TG›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TG›*
 
 **Type parameters:**
 
@@ -203,17 +203,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TG›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›, `op8`: Operator‹TG, TH›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TH›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›, `op8`: SubscriberOperator‹TG, TH›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TH›*
 
 **Type parameters:**
 
@@ -242,18 +242,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
-`op8` | Operator‹TG, TH› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
+`op8` | SubscriberOperator‹TG, TH› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TH›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›, `op8`: Operator‹TG, TH›, `op9`: Operator‹TH, TI›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TI›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`src`: [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›, `op8`: SubscriberOperator‹TG, TH›, `op9`: SubscriberOperator‹TH, TI›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TI›*
 
 **Type parameters:**
 
@@ -284,15 +284,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
-`op8` | Operator‹TG, TH› |
-`op9` | Operator‹TH, TI› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
+`op8` | SubscriberOperator‹TG, TH› |
+`op9` | SubscriberOperator‹TH, TI› |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, TI›*
 

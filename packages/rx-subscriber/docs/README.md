@@ -11,8 +11,8 @@
 ### Interfaces
 
 * [ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)
-* [Operator](interfaces/operator.md)
 * [SubscriberLike](interfaces/subscriberlike.md)
+* [SubscriberOperator](interfaces/subscriberoperator.md)
 
 ### Functions
 
@@ -44,7 +44,7 @@ ___
 
 ### `Const` observe
 
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[Operator](interfaces/operator.md)‹T, T›*
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
 
 **Type parameters:**
 
@@ -56,13 +56,13 @@ Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
 
-**Returns:** *[Operator](interfaces/operator.md)‹T, T›*
+**Returns:** *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›): *[SubscriberLike](interfaces/subscriberlike.md)‹A›*
+▸ **pipe**<**T**, **A**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›): *[SubscriberLike](interfaces/subscriberlike.md)‹A›*
 
 **Type parameters:**
 
@@ -75,11 +75,11 @@ ___
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›): *[SubscriberLike](interfaces/subscriberlike.md)‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›): *[SubscriberLike](interfaces/subscriberlike.md)‹B›*
 
 **Type parameters:**
 
@@ -94,12 +94,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›): *[SubscriberLike](interfaces/subscriberlike.md)‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›): *[SubscriberLike](interfaces/subscriberlike.md)‹C›*
 
 **Type parameters:**
 
@@ -116,13 +116,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›): *[SubscriberLike](interfaces/subscriberlike.md)‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›): *[SubscriberLike](interfaces/subscriberlike.md)‹D›*
 
 **Type parameters:**
 
@@ -141,14 +141,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›, `op5`: [Operator](interfaces/operator.md)‹D, E›): *[SubscriberLike](interfaces/subscriberlike.md)‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›, `op5`: [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E›): *[SubscriberLike](interfaces/subscriberlike.md)‹E›*
 
 **Type parameters:**
 
@@ -169,15 +169,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
-`op5` | [Operator](interfaces/operator.md)‹D, E› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
+`op5` | [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›, `op5`: [Operator](interfaces/operator.md)‹D, E›, `op6`: [Operator](interfaces/operator.md)‹E, F›): *[SubscriberLike](interfaces/subscriberlike.md)‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›, `op5`: [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E›, `op6`: [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F›): *[SubscriberLike](interfaces/subscriberlike.md)‹F›*
 
 **Type parameters:**
 
@@ -200,16 +200,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
-`op5` | [Operator](interfaces/operator.md)‹D, E› |
-`op6` | [Operator](interfaces/operator.md)‹E, F› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
+`op5` | [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E› |
+`op6` | [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›, `op5`: [Operator](interfaces/operator.md)‹D, E›, `op6`: [Operator](interfaces/operator.md)‹E, F›, `op7`: [Operator](interfaces/operator.md)‹F, G›): *[SubscriberLike](interfaces/subscriberlike.md)‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›, `op5`: [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E›, `op6`: [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F›, `op7`: [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G›): *[SubscriberLike](interfaces/subscriberlike.md)‹G›*
 
 **Type parameters:**
 
@@ -234,17 +234,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
-`op5` | [Operator](interfaces/operator.md)‹D, E› |
-`op6` | [Operator](interfaces/operator.md)‹E, F› |
-`op7` | [Operator](interfaces/operator.md)‹F, G› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
+`op5` | [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E› |
+`op6` | [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F› |
+`op7` | [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›, `op5`: [Operator](interfaces/operator.md)‹D, E›, `op6`: [Operator](interfaces/operator.md)‹E, F›, `op7`: [Operator](interfaces/operator.md)‹F, G›, `op8`: [Operator](interfaces/operator.md)‹G, H›): *[SubscriberLike](interfaces/subscriberlike.md)‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›, `op5`: [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E›, `op6`: [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F›, `op7`: [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G›, `op8`: [SubscriberOperator](interfaces/subscriberoperator.md)‹G, H›): *[SubscriberLike](interfaces/subscriberlike.md)‹H›*
 
 **Type parameters:**
 
@@ -271,18 +271,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
-`op5` | [Operator](interfaces/operator.md)‹D, E› |
-`op6` | [Operator](interfaces/operator.md)‹E, F› |
-`op7` | [Operator](interfaces/operator.md)‹F, G› |
-`op8` | [Operator](interfaces/operator.md)‹G, H› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
+`op5` | [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E› |
+`op6` | [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F› |
+`op7` | [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G› |
+`op8` | [SubscriberOperator](interfaces/subscriberoperator.md)‹G, H› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [Operator](interfaces/operator.md)‹T, A›, `op2`: [Operator](interfaces/operator.md)‹A, B›, `op3`: [Operator](interfaces/operator.md)‹B, C›, `op4`: [Operator](interfaces/operator.md)‹C, D›, `op5`: [Operator](interfaces/operator.md)‹D, E›, `op6`: [Operator](interfaces/operator.md)‹E, F›, `op7`: [Operator](interfaces/operator.md)‹F, G›, `op8`: [Operator](interfaces/operator.md)‹G, H›, `op9`: [Operator](interfaces/operator.md)‹H, I›): *[SubscriberLike](interfaces/subscriberlike.md)‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `op1`: [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A›, `op2`: [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B›, `op3`: [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C›, `op4`: [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D›, `op5`: [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E›, `op6`: [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F›, `op7`: [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G›, `op8`: [SubscriberOperator](interfaces/subscriberoperator.md)‹G, H›, `op9`: [SubscriberOperator](interfaces/subscriberoperator.md)‹H, I›): *[SubscriberLike](interfaces/subscriberlike.md)‹I›*
 
 **Type parameters:**
 
@@ -311,15 +311,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`op1` | [Operator](interfaces/operator.md)‹T, A› |
-`op2` | [Operator](interfaces/operator.md)‹A, B› |
-`op3` | [Operator](interfaces/operator.md)‹B, C› |
-`op4` | [Operator](interfaces/operator.md)‹C, D› |
-`op5` | [Operator](interfaces/operator.md)‹D, E› |
-`op6` | [Operator](interfaces/operator.md)‹E, F› |
-`op7` | [Operator](interfaces/operator.md)‹F, G› |
-`op8` | [Operator](interfaces/operator.md)‹G, H› |
-`op9` | [Operator](interfaces/operator.md)‹H, I› |
+`op1` | [SubscriberOperator](interfaces/subscriberoperator.md)‹T, A› |
+`op2` | [SubscriberOperator](interfaces/subscriberoperator.md)‹A, B› |
+`op3` | [SubscriberOperator](interfaces/subscriberoperator.md)‹B, C› |
+`op4` | [SubscriberOperator](interfaces/subscriberoperator.md)‹C, D› |
+`op5` | [SubscriberOperator](interfaces/subscriberoperator.md)‹D, E› |
+`op6` | [SubscriberOperator](interfaces/subscriberoperator.md)‹E, F› |
+`op7` | [SubscriberOperator](interfaces/subscriberoperator.md)‹F, G› |
+`op8` | [SubscriberOperator](interfaces/subscriberoperator.md)‹G, H› |
+`op9` | [SubscriberOperator](interfaces/subscriberoperator.md)‹H, I› |
 
 **Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹I›*
 

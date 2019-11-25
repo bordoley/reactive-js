@@ -21,7 +21,7 @@
 
 ###  lift
 
-▸ **lift**<**TReq**, **T**, **TA**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TA›*
+▸ **lift**<**TReq**, **T**, **TA**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TA›*
 
 **Type parameters:**
 
@@ -36,11 +36,11 @@
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
+`op1` | SubscriberOperator‹T, TA› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TA›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TB›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TB›*
 
 **Type parameters:**
 
@@ -57,12 +57,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TB›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TC›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TC›*
 
 **Type parameters:**
 
@@ -81,13 +81,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TC›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TD›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TD›*
 
 **Type parameters:**
 
@@ -108,14 +108,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TD›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TE›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TE›*
 
 **Type parameters:**
 
@@ -138,15 +138,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TE›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TF›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TF›*
 
 **Type parameters:**
 
@@ -171,16 +171,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TF›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TG›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TG›*
 
 **Type parameters:**
 
@@ -207,17 +207,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TG›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›, `op8`: Operator‹TG, TH›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TH›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›, `op8`: SubscriberOperator‹TG, TH›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TH›*
 
 **Type parameters:**
 
@@ -246,18 +246,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
-`op8` | Operator‹TG, TH› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
+`op8` | SubscriberOperator‹TG, TH› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TH›*
 
-▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: Operator‹T, TA›, `op2`: Operator‹TA, TB›, `op3`: Operator‹TB, TC›, `op4`: Operator‹TC, TD›, `op5`: Operator‹TD, TE›, `op6`: Operator‹TE, TF›, `op7`: Operator‹TF, TG›, `op8`: Operator‹TG, TH›, `op9`: Operator‹TH, TI›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TI›*
+▸ **lift**<**TReq**, **T**, **TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`src`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T›, `op1`: SubscriberOperator‹T, TA›, `op2`: SubscriberOperator‹TA, TB›, `op3`: SubscriberOperator‹TB, TC›, `op4`: SubscriberOperator‹TC, TD›, `op5`: SubscriberOperator‹TD, TE›, `op6`: SubscriberOperator‹TE, TF›, `op7`: SubscriberOperator‹TF, TG›, `op8`: SubscriberOperator‹TG, TH›, `op9`: SubscriberOperator‹TH, TI›): *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TI›*
 
 **Type parameters:**
 
@@ -288,15 +288,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, T› |
-`op1` | Operator‹T, TA› |
-`op2` | Operator‹TA, TB› |
-`op3` | Operator‹TB, TC› |
-`op4` | Operator‹TC, TD› |
-`op5` | Operator‹TD, TE› |
-`op6` | Operator‹TE, TF› |
-`op7` | Operator‹TF, TG› |
-`op8` | Operator‹TG, TH› |
-`op9` | Operator‹TH, TI› |
+`op1` | SubscriberOperator‹T, TA› |
+`op2` | SubscriberOperator‹TA, TB› |
+`op3` | SubscriberOperator‹TB, TC› |
+`op4` | SubscriberOperator‹TC, TD› |
+`op5` | SubscriberOperator‹TD, TE› |
+`op6` | SubscriberOperator‹TE, TF› |
+`op7` | SubscriberOperator‹TF, TG› |
+`op8` | SubscriberOperator‹TG, TH› |
+`op9` | SubscriberOperator‹TH, TI› |
 
 **Returns:** *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹TReq, TI›*
 

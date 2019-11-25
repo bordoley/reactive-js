@@ -1,6 +1,6 @@
 import {
   DelegatingSubscriber,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -36,5 +36,5 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
 export const distinctUntilChanged = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
-): Operator<T, T> => subscriber =>
+): SubscriberOperator<T, T> => subscriber =>
   new DistinctUntilChangedSubscriber(subscriber, equals);
