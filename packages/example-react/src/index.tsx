@@ -11,28 +11,23 @@ import ReactDOM from "react-dom";
 registerDefaultScheduler(scheduler);
 
 const Router = routerCreate();
-const NotFound = ({uriUpdater}: RoutableComponentProps) => {
-  useEffect(
-    () => {
-      uriUpdater(state => ({
-        ...state,
-        path: "/route1",
-      }));
-    },
-    [uriUpdater],
-  );
+const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
+  useEffect(() => {
+    uriUpdater(state => ({
+      ...state,
+      path: "/route1",
+    }));
+  }, [uriUpdater]);
   return <div>{"Not Found"}</div>;
 };
 
 const Component1 = (props: RoutableComponentProps) => <div>{"Component1"}</div>;
 
 const element = (
-  <Router notFoundComponent={NotFound} routes={[[
-    "/route1", Component1]]} />
+  <Router notFoundComponent={NotFound} routes={[["/route1", Component1]]} />
 );
 
 ReactDOM.render(element, document.getElementById("root") as HTMLElement);
-
 
 connect(
   lift(
@@ -40,4 +35,3 @@ connect(
     onNext(console.log),
   ),
 );
-
