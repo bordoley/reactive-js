@@ -146,7 +146,7 @@ export function lift(
 }
 
 export interface ObservableOperator<A, B> {
-  (subscriber: ObservableLike<A>): ObservableLike<B>;
+  (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
 export function pipe<T, A>(

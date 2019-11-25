@@ -14,12 +14,12 @@
 
 ## Callable
 
-▸ (`subscriber`: [ObservableLike](observablelike.md)‹A›): *[ObservableLike](observablelike.md)‹B›*
+▸ (`observable`: [ObservableLike](observablelike.md)‹A›): *[ObservableLike](observablelike.md)‹B›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`subscriber` | [ObservableLike](observablelike.md)‹A› |
+`observable` | [ObservableLike](observablelike.md)‹A› |
 
 **Returns:** *[ObservableLike](observablelike.md)‹B›*
