@@ -1,16 +1,14 @@
+import { RoutableComponentProps } from "@reactive-js/react-router";
+import { create as routerCreate } from "@reactive-js/react-router-dom";
+import { scheduler } from "@reactive-js/react-scheduler";
 import { connect, lift } from "@reactive-js/rx-observable";
 import { generate } from "@reactive-js/rx-observables";
 import { onNext } from "@reactive-js/rx-operators";
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
-import React from "react";
+import { default as React, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { scheduler } from "@reactive-js/react-scheduler";
-import { create as routerCreate } from "@reactive-js/react-router-dom";
-import { RoutableComponentProps } from "@reactive-js/react-router";
 
 registerDefaultScheduler(scheduler);
-
-import { useEffect } from "react";
 
 const Router = routerCreate();
 const NotFound = ({uriUpdater}: RoutableComponentProps) => {
