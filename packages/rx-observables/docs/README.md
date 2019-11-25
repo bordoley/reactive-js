@@ -272,7 +272,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`priority?`: undefined | number): *ObservableLike‹T›*
+▸ **empty**<**T**>(`delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -282,6 +282,7 @@ ___
 
 Name | Type |
 ------ | ------ |
+`delay?` | undefined &#124; number |
 `priority?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
@@ -411,7 +412,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -422,6 +423,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
+`delay?` | undefined &#124; number |
 `priority?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
@@ -537,7 +539,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -548,6 +550,7 @@ ___
 Name | Type |
 ------ | ------ |
 `error` | Error |
+`delay?` | undefined &#124; number |
 `priority?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*

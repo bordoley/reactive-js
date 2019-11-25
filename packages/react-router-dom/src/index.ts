@@ -31,7 +31,7 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { fromEvent } from "@reactive-js/dom";
-import { relative } from 'path';
+import { relative } from "path";
 
 const getCurrentLocation = () => {
   const path = window.location.pathname;
@@ -108,7 +108,7 @@ class DomLocationStateContainerResourceImpl
   }
 }
 
-const fakeURLBase = new URL("http://example.com"); 
+const fakeURLBase = new URL("http://example.com");
 
 const mapper = (v: string): RelativeURI => {
   const parsedAccURL = new URL(v, fakeURLBase);
@@ -145,7 +145,7 @@ const createRelativeURILocation = (priority?: number) => {
     onNext(({ path, query, fragment }) => {
       const uri = path + query + fragment;
       history.pushState(undefined, "", uri);
-    })
+    }),
   );
 
   return asyncIteratorMap(lifted, requestMapper);

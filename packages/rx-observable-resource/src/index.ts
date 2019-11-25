@@ -2,7 +2,10 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 
 import { Operator, SubscriberLike } from "@reactive-js/rx-subscriber";
 
-import { lift as liftObservable, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  lift as liftObservable,
+  ObservableLike,
+} from "@reactive-js/rx-observable";
 
 /** @noInheritDoc */
 export interface ObservableResourceLike<T>
