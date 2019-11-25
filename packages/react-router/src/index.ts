@@ -4,7 +4,7 @@ import {
   empty as emptyRelativeURI,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { scan } from "@reactive-js/rx-operators";
+import { scan } from "@reactive-js/rx-subscriber-operators";
 import {
   StateContainerResourceLike,
   StateUpdater,

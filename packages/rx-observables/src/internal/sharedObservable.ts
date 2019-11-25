@@ -2,9 +2,9 @@ import { disposed } from "@reactive-js/disposable";
 
 import {
   connect,
-  create as observableCreate,
   lift,
   ObservableLike,
+  ObservableOperator,
 } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -74,25 +74,22 @@ class SharedObservable<T> implements ObservableLike<T> {
 }
 
 export const share = <T>(
-  observable: ObservableLike<T>,
   scheduler?: SchedulerLike,
   priority?: number,
-): ObservableLike<T> =>
+): ObservableOperator<T, T> => (observable: ObservableLike<T>) =>
   new SharedObservable(subjectCreate, observable, scheduler, priority);
 
 export const shareReplay = <T>(
-  observable: ObservableLike<T>,
   count: number,
   scheduler?: SchedulerLike,
   priority?: number,
-): ObservableLike<T> => {
+): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
   const factory = (priority?: number) =>
     subjectCreateWithReplay(count, priority);
   return new SharedObservable(factory, observable, scheduler, priority);
 };
 
 export const shareReplayLast = <T>(
-  observable: ObservableLike<T>,
   scheduler?: SchedulerLike,
   priority?: number,
-): ObservableLike<T> => shareReplay(observable, 1, scheduler, priority);
+): ObservableOperator<T, T> => shareReplay(1, scheduler, priority);

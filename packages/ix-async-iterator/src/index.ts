@@ -2,7 +2,7 @@ import {
   lift as observableLift,
   ObservableLike,
 } from "@reactive-js/rx-observable";
-import { SubscriberOperator, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {

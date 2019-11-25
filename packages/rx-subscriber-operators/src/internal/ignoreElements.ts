@@ -1,7 +1,7 @@
 import {
   DelegatingSubscriber,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {

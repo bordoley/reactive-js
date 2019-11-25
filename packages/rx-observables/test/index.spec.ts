@@ -4,9 +4,10 @@ import {
   connect,
   create as observableCreate,
   lift,
+  pipe,
 } from "@reactive-js/rx-observable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { map, observe, take } from "@reactive-js/rx-operators";
+import { map, observe, take } from "@reactive-js/rx-subscriber-operators";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 
 import {
@@ -449,15 +450,16 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
 test("shareReplayLast", () => {
   const scheduler = virtualTimeSchedulerCreate();
 
-  const source = observableCreate(observer => {
-    observer.next(0);
-    observer.next(1);
-    observer.next(2);
+  const replayed = pipe(
+    observableCreate(observer => {
+      observer.next(0);
+      observer.next(1);
+      observer.next(2);
 
-    return scheduler.schedule(_ => observer.complete(), 2);
-  });
-
-  const replayed = shareReplayLast(source, scheduler);
+      return scheduler.schedule(_ => observer.complete(), 2);
+    }),
+    shareReplayLast(scheduler),
+  );
   const replayedSubscription = connect(replayed, scheduler);
 
   const liftedObserver = createMockObserver();

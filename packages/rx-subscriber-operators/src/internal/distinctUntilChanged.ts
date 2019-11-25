@@ -1,7 +1,7 @@
 import {
   DelegatingSubscriber,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {

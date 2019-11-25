@@ -140,7 +140,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
     // from hogging the scheduler and preventing other users of delays etc.
     // from scheduling work. For instance consider this pathological example:
     //
-    //   Observable.lift(
+    //   Observable.pipe(
     //     generate(x => x + 1, 0),
     //     map(x => fromArray([x, x, x, x])),
     //     exhaust(),

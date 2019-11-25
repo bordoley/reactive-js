@@ -1,7 +1,7 @@
 import {
   DelegatingSubscriber,
-  SubscriberOperator,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -26,4 +26,5 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): SubscriberOperator<T, T> => subscriber => new KeepSubscriber(subscriber, predicate);
+): SubscriberOperator<T, T> => subscriber =>
+  new KeepSubscriber(subscriber, predicate);
