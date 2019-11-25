@@ -7,6 +7,7 @@ import {
 import {
   create as subscriberCreate,
   Operator,
+  pipe as subscriberPipe,
   SubscriberLike,
   toSafeObserver,
 } from "@reactive-js/rx-subscriber";
@@ -44,12 +45,11 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const liftedSubscrber = this.liftSubscriber(subscriber);
+    const liftedSubscrber = subscriberPipe.apply(undefined, [
+      subscriber,
+      ...this.operators,
+    ] as any);
     this.source.subscribe(liftedSubscrber);
-  }
-
-  private liftSubscriber(subscriber: SubscriberLike<any>) {
-    return this.operators.reduceRight((acc, next) => next(acc), subscriber);
   }
 }
 

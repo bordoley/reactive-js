@@ -7,7 +7,6 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
-
 export const throws = <T>(
   error: Error,
   delay?: number,
