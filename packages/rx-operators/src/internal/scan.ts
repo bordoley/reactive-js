@@ -1,6 +1,6 @@
 import {
   DelegatingSubscriber,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -34,5 +34,5 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): Operator<T, TAcc> => subscriber =>
+): SubscriberOperator<T, TAcc> => subscriber =>
   new ScanSubscriber(subscriber, scanner, initialValue);

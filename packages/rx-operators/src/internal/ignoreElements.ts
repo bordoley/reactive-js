@@ -1,6 +1,6 @@
 import {
   DelegatingSubscriber,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -16,6 +16,6 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   }
 }
 
-export const ignoreElements = <TA, TB>(): Operator<TA, TB> => (
+export const ignoreElements = <TA, TB>(): SubscriberOperator<TA, TB> => (
   subscriber: SubscriberLike<TB>,
 ) => new IgnoreElementsSubscriber<TA, TB>(subscriber);

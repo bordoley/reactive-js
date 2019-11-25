@@ -1,6 +1,6 @@
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { observe, Operator, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { observe, SubscriberOperator, SubscriberLike } from "@reactive-js/rx-subscriber";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 import {
   connect,
@@ -98,7 +98,7 @@ describe("Observable", () => {
   });
 
   test("lift", () => {
-    const onNext = <T>(onNext: (data: T) => void): Operator<T, T> =>
+    const onNext = <T>(onNext: (data: T) => void): SubscriberOperator<T, T> =>
       observe({
         next: onNext,
         complete: _ => {},

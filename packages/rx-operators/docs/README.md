@@ -28,7 +28,7 @@
 
 ### `Const` concat
 
-▸ **concat**<**T**>(`maxBufferSize`: number): *Operator‹ObservableLike‹T›, T›*
+▸ **concat**<**T**>(`maxBufferSize`: number): *SubscriberOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -40,13 +40,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *Operator‹ObservableLike‹T›, T›*
+**Returns:** *SubscriberOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` debounceTime
 
-▸ **debounceTime**<**T**>(`dueTime`: number, `priority?`: undefined | number): *Operator‹T, T›*
+▸ **debounceTime**<**T**>(`dueTime`: number, `priority?`: undefined | number): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -59,13 +59,13 @@ Name | Type |
 `dueTime` | number |
 `priority?` | undefined &#124; number |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals`: function): *Operator‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals`: function): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -84,25 +84,25 @@ Name | Type |
 `a` | T |
 `b` | T |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *Operator‹ObservableLike‹T›, T›*
+▸ **exhaust**<**T**>(): *SubscriberOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *Operator‹ObservableLike‹T›, T›*
+**Returns:** *SubscriberOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *Operator‹TA, TB›*
+▸ **ignoreElements**<**TA**, **TB**>(): *SubscriberOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -110,13 +110,13 @@ ___
 
 ▪ **TB**
 
-**Returns:** *Operator‹TA, TB›*
+**Returns:** *SubscriberOperator‹TA, TB›*
 
 ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *Operator‹T, T›*
+▸ **keep**<**T**>(`predicate`: function): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -134,13 +134,13 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *Operator‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *SubscriberOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -160,13 +160,13 @@ Name | Type |
 ------ | ------ |
 `data` | TA |
 
-**Returns:** *Operator‹TA, TB›*
+**Returns:** *SubscriberOperator‹TA, TB›*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`value`: TB): *Operator‹TA, TB›*
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *SubscriberOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -180,13 +180,13 @@ Name | Type |
 ------ | ------ |
 `value` | TB |
 
-**Returns:** *Operator‹TA, TB›*
+**Returns:** *SubscriberOperator‹TA, TB›*
 
 ___
 
 ### `Const` merge
 
-▸ **merge**<**T**>(`options`: object): *Operator‹ObservableLike‹T›, T›*
+▸ **merge**<**T**>(`options`: object): *SubscriberOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -198,13 +198,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | object |  {} |
 
-**Returns:** *Operator‹ObservableLike‹T›, T›*
+**Returns:** *SubscriberOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` onComplete
 
-▸ **onComplete**<**T**>(`onComplete`: function): *Operator‹T, T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -222,13 +222,13 @@ Name | Type |
 ------ | ------ |
 `err?` | Error |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` onError
 
-▸ **onError**<**T**>(`onError`: function): *Operator‹T, T›*
+▸ **onError**<**T**>(`onError`: function): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -246,13 +246,13 @@ Name | Type |
 ------ | ------ |
 `error` | Error |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` onNext
 
-▸ **onNext**<**T**>(`onNext`: function): *Operator‹T, T›*
+▸ **onNext**<**T**>(`onNext`: function): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -270,13 +270,13 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *Operator‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *SubscriberOperator‹T, TAcc›*
 
 **Type parameters:**
 
@@ -299,25 +299,25 @@ Name | Type |
 
 ▪ **initialValue**: *TAcc*
 
-**Returns:** *Operator‹T, TAcc›*
+**Returns:** *SubscriberOperator‹T, TAcc›*
 
 ___
 
 ### `Const` switch_
 
-▸ **switch_**<**T**>(): *Operator‹ObservableLike‹T›, T›*
+▸ **switch_**<**T**>(): *SubscriberOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *Operator‹ObservableLike‹T›, T›*
+**Returns:** *SubscriberOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` take
 
-▸ **take**<**T**>(`count`: number): *Operator‹T, T›*
+▸ **take**<**T**>(`count`: number): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -329,13 +329,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number, `priority?`: undefined | number): *Operator‹T, T›*
+▸ **takeLast**<**T**>(`count`: number, `priority?`: undefined | number): *SubscriberOperator‹T, T›*
 
 **Type parameters:**
 
@@ -348,13 +348,13 @@ Name | Type |
 `count` | number |
 `priority?` | undefined &#124; number |
 
-**Returns:** *Operator‹T, T›*
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *Operator‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *SubscriberOperator‹TA, TC›*
 
 **Type parameters:**
 
@@ -379,4 +379,4 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *Operator‹TA, TC›*
+**Returns:** *SubscriberOperator‹TA, TC›*

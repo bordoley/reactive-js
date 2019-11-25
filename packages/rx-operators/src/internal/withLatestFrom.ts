@@ -5,7 +5,7 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   DelegatingSubscriber,
   observe,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -74,5 +74,5 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): Operator<TA, TC> => subscriber =>
+): SubscriberOperator<TA, TC> => subscriber =>
   new WithLatestFromSubscriber(subscriber, other, selector);

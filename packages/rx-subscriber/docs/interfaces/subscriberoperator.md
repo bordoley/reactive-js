@@ -1,6 +1,6 @@
-[@reactive-js/rx-subscriber](../README.md) › [Operator](operator.md)
+[@reactive-js/rx-subscriber](../README.md) › [SubscriberOperator](subscriberoperator.md)
 
-# Interface: Operator <**A, B**>
+# Interface: SubscriberOperator <**A, B**>
 
 ## Type parameters
 
@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* **Operator**
+* **SubscriberOperator**
 
 ## Callable
 

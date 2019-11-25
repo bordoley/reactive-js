@@ -5,7 +5,7 @@ import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
 import {
   DelegatingSubscriber,
   observe,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -93,7 +93,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
   shouldRepeat: (error?: Error) => boolean,
-): Operator<T, T> => (subscriber: SubscriberLike<T>) =>
+): SubscriberOperator<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
 const alwaysTrue = () => true;

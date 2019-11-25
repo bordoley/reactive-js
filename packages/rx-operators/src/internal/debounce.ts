@@ -1,6 +1,6 @@
 import {
   DelegatingSubscriber,
-  Operator,
+  SubscriberOperator,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -70,7 +70,7 @@ class DebounceTimeSubscriber<T> extends DelegatingSubscriber<T, T> {
 export const debounceTime = <T>(
   dueTime: number,
   priority?: number,
-): Operator<T, T> => {
+): SubscriberOperator<T, T> => {
   if (dueTime <= 0) {
     throw new Error("dueTime must be greater than 0");
   }

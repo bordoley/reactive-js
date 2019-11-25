@@ -21,7 +21,7 @@ export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
   isConnected: boolean;
 }
 
-export interface Operator<A, B> {
+export interface SubscriberOperator<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
@@ -238,7 +238,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const observe = <T>(observer: ObserverLike<T>): Operator<T, T> => (
+export const observe = <T>(observer: ObserverLike<T>): SubscriberOperator<T, T> => (
   subscriber: SubscriberLike<T>,
 ) => new ObserveSubscriber(subscriber, observer);
 
@@ -318,79 +318,79 @@ export const toSafeObserver = <T>(
 
 export function pipe<T, A>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
+  op1: SubscriberOperator<T, A>,
 ): SubscriberLike<A>;
 export function pipe<T, A, B>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
 ): SubscriberLike<B>;
 export function pipe<T, A, B, C>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
 ): SubscriberLike<C>;
 export function pipe<T, A, B, C, D>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
 ): SubscriberLike<D>;
 export function pipe<T, A, B, C, D, E>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
-  op5: Operator<D, E>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
+  op5: SubscriberOperator<D, E>,
 ): SubscriberLike<E>;
 export function pipe<T, A, B, C, D, E, F>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
-  op5: Operator<D, E>,
-  op6: Operator<E, F>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
+  op5: SubscriberOperator<D, E>,
+  op6: SubscriberOperator<E, F>,
 ): SubscriberLike<F>;
 export function pipe<T, A, B, C, D, E, F, G>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
-  op5: Operator<D, E>,
-  op6: Operator<E, F>,
-  op7: Operator<F, G>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
+  op5: SubscriberOperator<D, E>,
+  op6: SubscriberOperator<E, F>,
+  op7: SubscriberOperator<F, G>,
 ): SubscriberLike<G>;
 export function pipe<T, A, B, C, D, E, F, G, H>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
-  op5: Operator<D, E>,
-  op6: Operator<E, F>,
-  op7: Operator<F, G>,
-  op8: Operator<G, H>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
+  op5: SubscriberOperator<D, E>,
+  op6: SubscriberOperator<E, F>,
+  op7: SubscriberOperator<F, G>,
+  op8: SubscriberOperator<G, H>,
 ): SubscriberLike<H>;
 export function pipe<T, A, B, C, D, E, F, G, H, I>(
   src: SubscriberLike<T>,
-  op1: Operator<T, A>,
-  op2: Operator<A, B>,
-  op3: Operator<B, C>,
-  op4: Operator<C, D>,
-  op5: Operator<D, E>,
-  op6: Operator<E, F>,
-  op7: Operator<F, G>,
-  op8: Operator<G, H>,
-  op9: Operator<H, I>,
+  op1: SubscriberOperator<T, A>,
+  op2: SubscriberOperator<A, B>,
+  op3: SubscriberOperator<B, C>,
+  op4: SubscriberOperator<C, D>,
+  op5: SubscriberOperator<D, E>,
+  op6: SubscriberOperator<E, F>,
+  op7: SubscriberOperator<F, G>,
+  op8: SubscriberOperator<G, H>,
+  op9: SubscriberOperator<H, I>,
 ): SubscriberLike<I>;
 export function pipe(
   subscriber: SubscriberLike<any>,
-  ...operators: Operator<any, any>[]
+  ...operators: SubscriberOperator<any, any>[]
 ): SubscriberLike<any> {
   return operators.reduceRight((acc, next) => next(acc), subscriber);
 }

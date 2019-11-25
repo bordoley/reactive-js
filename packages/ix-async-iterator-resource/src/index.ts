@@ -7,7 +7,7 @@ import {
   lift as observableResourceLift,
   ObservableResourceLike,
 } from "@reactive-js/rx-observable-resource";
-import { Operator, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberOperator, SubscriberLike } from "@reactive-js/rx-subscriber";
 
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>
@@ -52,80 +52,80 @@ class DelegatingAsyncIteratorResource<TReq, T>
 
 export function lift<TReq, T, TA>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
+  op1: SubscriberOperator<T, TA>,
 ): AsyncIteratorResourceLike<TReq, TA>;
 export function lift<TReq, T, TA, TB>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
 ): AsyncIteratorResourceLike<TReq, TB>;
 export function lift<TReq, T, TA, TB, TC>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
 ): AsyncIteratorResourceLike<TReq, TC>;
 export function lift<TReq, T, TA, TB, TC, TD>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
 ): AsyncIteratorResourceLike<TReq, TD>;
 export function lift<TReq, T, TA, TB, TC, TD, TE>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
-  op5: Operator<TD, TE>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
+  op5: SubscriberOperator<TD, TE>,
 ): AsyncIteratorResourceLike<TReq, TE>;
 export function lift<TReq, T, TA, TB, TC, TD, TE, TF>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
-  op5: Operator<TD, TE>,
-  op6: Operator<TE, TF>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
+  op5: SubscriberOperator<TD, TE>,
+  op6: SubscriberOperator<TE, TF>,
 ): AsyncIteratorResourceLike<TReq, TF>;
 export function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
-  op5: Operator<TD, TE>,
-  op6: Operator<TE, TF>,
-  op7: Operator<TF, TG>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
+  op5: SubscriberOperator<TD, TE>,
+  op6: SubscriberOperator<TE, TF>,
+  op7: SubscriberOperator<TF, TG>,
 ): AsyncIteratorResourceLike<TReq, TG>;
 export function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG, TH>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
-  op5: Operator<TD, TE>,
-  op6: Operator<TE, TF>,
-  op7: Operator<TF, TG>,
-  op8: Operator<TG, TH>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
+  op5: SubscriberOperator<TD, TE>,
+  op6: SubscriberOperator<TE, TF>,
+  op7: SubscriberOperator<TF, TG>,
+  op8: SubscriberOperator<TG, TH>,
 ): AsyncIteratorResourceLike<TReq, TH>;
 export function lift<TReq, T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   src: AsyncIteratorResourceLike<TReq, T>,
-  op1: Operator<T, TA>,
-  op2: Operator<TA, TB>,
-  op3: Operator<TB, TC>,
-  op4: Operator<TC, TD>,
-  op5: Operator<TD, TE>,
-  op6: Operator<TE, TF>,
-  op7: Operator<TF, TG>,
-  op8: Operator<TG, TH>,
-  op9: Operator<TH, TI>,
+  op1: SubscriberOperator<T, TA>,
+  op2: SubscriberOperator<TA, TB>,
+  op3: SubscriberOperator<TB, TC>,
+  op4: SubscriberOperator<TC, TD>,
+  op5: SubscriberOperator<TD, TE>,
+  op6: SubscriberOperator<TE, TF>,
+  op7: SubscriberOperator<TF, TG>,
+  op8: SubscriberOperator<TG, TH>,
+  op9: SubscriberOperator<TH, TI>,
 ): AsyncIteratorResourceLike<TReq, TI>;
 export function lift<TReq>(
   iterator: AsyncIteratorResourceLike<TReq, any>,
-  operator: Operator<any, any>,
-  ...operators: readonly Operator<any, any>[]
+  operator: SubscriberOperator<any, any>,
+  ...operators: readonly SubscriberOperator<any, any>[]
 ): AsyncIteratorResourceLike<TReq, any> {
   const [delegate, dispatcher] =
     iterator instanceof DelegatingAsyncIteratorResource
