@@ -6,7 +6,7 @@ import {
   lift,
 } from "@reactive-js/rx-observable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { delay, map, observe, take } from "@reactive-js/rx-operators";
+import { map, observe, take } from "@reactive-js/rx-operators";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 
 import {
@@ -362,7 +362,7 @@ test("merge", () => {
           generate(i => i + 2, 0, 3),
           take(2),
         ),
-        lift(throws(error), delay(10)),
+        throws(error, 10),
       ),
       observe(observer),
     ),
