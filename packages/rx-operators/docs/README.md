@@ -8,7 +8,6 @@
 
 * [concat](README.md#const-concat)
 * [debounceTime](README.md#const-debouncetime)
-* [delay](README.md#const-delay)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [exhaust](README.md#const-exhaust)
 * [ignoreElements](README.md#const-ignoreelements)
@@ -48,25 +47,6 @@ ___
 ### `Const` debounceTime
 
 ▸ **debounceTime**<**T**>(`dueTime`: number, `priority?`: undefined | number): *Operator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`dueTime` | number |
-`priority?` | undefined &#124; number |
-
-**Returns:** *Operator‹T, T›*
-
-___
-
-### `Const` delay
-
-▸ **delay**<**T**>(`dueTime`: number, `priority?`: undefined | number): *Operator‹T, T›*
 
 **Type parameters:**
 
