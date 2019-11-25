@@ -28,13 +28,13 @@
 
 ▪ **parseState**: *function*
 
-▸ (`fragment`: string): *TState*
+▸ (`serialized`: string): *TState*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`fragment` | string |
+`serialized` | string |
 
 ▪ **serialize**: *function*
 

@@ -13,7 +13,7 @@ export interface RoutableStateComponentProps<TState> {
 
 export const create = <TState>(
   component: React.ComponentType<RoutableStateComponentProps<TState>>,
-  parseState: (fragment: string) => TState,
+  parseState: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery = false,
 ): React.ComponentType<RoutableComponentProps> => {
