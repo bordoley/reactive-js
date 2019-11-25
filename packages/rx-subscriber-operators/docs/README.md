@@ -7,7 +7,6 @@
 ### Functions
 
 * [concat](README.md#const-concat)
-* [debounceTime](README.md#const-debouncetime)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [exhaust](README.md#const-exhaust)
 * [ignoreElements](README.md#const-ignoreelements)
@@ -41,25 +40,6 @@ Name | Type | Default |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *SubscriberOperator‹ObservableLike‹T›, T›*
-
-___
-
-### `Const` debounceTime
-
-▸ **debounceTime**<**T**>(`dueTime`: number, `priority?`: undefined | number): *SubscriberOperator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`dueTime` | number |
-`priority?` | undefined &#124; number |
-
-**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 
