@@ -12,14 +12,11 @@ import {
   pipe,
 } from "@reactive-js/rx-observable";
 
-import {
-  SchedulerContinuation,
-  SchedulerContinuationResult,
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   distinctUntilChanged,
+  scan,
   shareReplayLast,
   startWith,
 } from "@reactive-js/rx-observables";
@@ -44,91 +41,6 @@ export interface StateContainerLike<T>
 export interface StateContainerResourceLike<T>
   extends AsyncIteratorResourceLike<StateUpdater<T>, T>,
     StateContainerLike<T> {}
-
-class BatchScanOnSchedulerSubscriber<T> extends DelegatingSubscriber<
-  StateUpdater<T>,
-  T
-> {
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
-  }
-  private acc: T;
-  private readonly continuation: SchedulerContinuationResult;
-  private error: Error | undefined;
-
-  private isComplete = false;
-  private readonly nextQueue: Array<StateUpdater<T>> = [];
-  private readonly priority?: number;
-
-  constructor(delegate: SubscriberLike<T>, initialValue: T, priority?: number) {
-    super(delegate);
-
-    this.acc = initialValue;
-    this.priority = priority;
-
-    this.continuation = {
-      continuation: this.drainQueue,
-      priority: this.priority,
-    };
-
-    this.add(this.clearQueue);
-  }
-
-  protected onComplete(error?: Error) {
-    this.isComplete = true;
-    this.error = error;
-    this.scheduleDrainQueue();
-  }
-
-  protected onNext(data: StateUpdater<T>) {
-    this.nextQueue.push(data);
-    this.scheduleDrainQueue();
-  }
-  private readonly clearQueue: DisposableOrTeardown = () => {
-    this.nextQueue.length = 0;
-  };
-
-  private readonly drainQueue: SchedulerContinuation = shouldYield => {
-    try {
-      while (this.nextQueue.length > 0) {
-        const stateUpdater = this.nextQueue.shift() as StateUpdater<T>;
-
-        this.acc = stateUpdater(this.acc);
-
-        const yieldRequest = shouldYield();
-        const hasMoreEvents = this.remainingEvents > 0;
-
-        if (!hasMoreEvents || yieldRequest) {
-          this.delegate.next(this.acc);
-        }
-
-        if (yieldRequest && hasMoreEvents) {
-          return this.continuation;
-        }
-      }
-    } catch (error) {
-      this.remove(this.clearQueue);
-      this.complete(error);
-      return;
-    }
-
-    if (this.isComplete) {
-      this.remove(this.clearQueue);
-      this.delegate.complete(this.error);
-    }
-    return;
-  };
-
-  private scheduleDrainQueue() {
-    if (this.remainingEvents === 1) {
-      this.schedule(this.drainQueue, 0, this.priority);
-    }
-  }
-}
-
-const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
-  subscriber: SubscriberLike<T>,
-) => new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority);
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   get isDisposed(): boolean {
@@ -159,7 +71,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   dispose() {
     this.dispatcher.dispose();
   }
-  
+
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
@@ -180,9 +92,10 @@ export const create = <T>(
   scheduler?: SchedulerLike,
   priority?: number,
 ): StateContainerResourceLike<T> => {
-  const dispatcher = eventResourceCreate();
+  const dispatcher: EventResourceLike<StateUpdater<T>> = eventResourceCreate();
   const delegate = pipe(
-    lift(dispatcher, batchScanOnScheduler(initialState, priority)),
+    dispatcher,
+    scan((acc, next) => next(acc), initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
     shareReplayLast(scheduler, priority),
