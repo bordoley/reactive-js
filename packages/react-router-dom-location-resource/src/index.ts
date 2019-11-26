@@ -51,12 +51,12 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
 };
 
 export const create = (priority?: number) => {
-    const stateContainer = stateContainerCreate(
-      getCurrentLocation(),
-      relativeURIEquals,
-      scheduler,
-      priority,
-    );
+  const stateContainer = stateContainerCreate(
+    getCurrentLocation(),
+    relativeURIEquals,
+    scheduler,
+    priority,
+  );
 
   const setURI = (uri: RelativeURI) => stateContainer.dispatch(_ => uri);
 

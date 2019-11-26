@@ -18,7 +18,7 @@ export interface SubscriberLike<T>
 
 /** @noInheritDoc */
 export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
-  isConnected: boolean;
+  connect(): void;
 }
 
 const checkState = <T>(subscriber: SubscriberLike<T>) => {
@@ -93,7 +93,11 @@ abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
 
 class AutoDisposingSubscriberImpl<T> extends AbstractSubscriberImpl<T>
   implements ConnectableSubscriberLike<T> {
-  isConnected = false;
+  private _isConnected = false;
+
+  get isConnected() {
+    return this._isConnected;
+  }
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     super(scheduler, subscription);
@@ -105,6 +109,10 @@ class AutoDisposingSubscriberImpl<T> extends AbstractSubscriberImpl<T>
     }
 
     this.dispose();
+  }
+
+  connect() {
+    this._isConnected = true;
   }
 
   next(data: T) {

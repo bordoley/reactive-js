@@ -55,7 +55,7 @@ export const Router: React.ComponentType<RouterProps> = ({
     const routeMap = routes.reduce(routesReducer, {});
     const locationResource = locationResourceFactory();
 
-    const uriUpdater = (updater: StateUpdater<RelativeURI>) =>{
+    const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
       console.log("hmm");
       locationResource.dispatch(updater);
     };
