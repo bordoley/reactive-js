@@ -25,6 +25,7 @@ import {
 import {
   distinctUntilChanged,
   shareReplayLast,
+  startWith,
 } from "@reactive-js/rx-observables";
 
 import {
@@ -150,6 +151,7 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     this.dispatcher = eventResourceCreate();
     this.delegate = pipe(
       lift(this.dispatcher, batchScanOnScheduler(initialState, priority)),
+      startWith(initialState),
       distinctUntilChanged(equals),
       shareReplayLast(scheduler, priority),
     );

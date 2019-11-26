@@ -34,7 +34,7 @@
 * [share](README.md#const-share)
 * [shareReplay](README.md#const-sharereplay)
 * [shareReplayLast](README.md#const-sharereplaylast)
-* [startWith](README.md#const-startwith)
+* [startWith](README.md#startwith)
 * [switch_](README.md#const-switch_)
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
@@ -819,9 +819,9 @@ Name | Type |
 
 ___
 
-### `Const` startWith
+###  startWith
 
-▸ **startWith**<**T**>(`obs1`: ObservableLike‹T›): *ObservableOperator‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -831,7 +831,8 @@ ___
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹T› |
+`value` | T |
+`...values` | T[] |
 
 **Returns:** *ObservableOperator‹T, T›*
 

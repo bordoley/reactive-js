@@ -48,14 +48,13 @@ const getCurrentLocation = () => {
 class DomLocationStateContainerResourceImpl
   implements StateContainerResourceLike<string> {
   get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+    return this.stateContainer.isDisposed;
   }
-  private readonly disposable: DisposableLike;
-  private readonly stateContainer: StateContainerLike<string>;
+  private readonly stateContainer: StateContainerResourceLike<string>;
 
   constructor(scheduler?: SchedulerLike, priority?: number) {
-    const stateContainer = stateContainerCreate(
-      "",
+    this.stateContainer = stateContainerCreate(
+      getCurrentLocation(),
       undefined,
       scheduler,
       priority,
@@ -65,10 +64,10 @@ class DomLocationStateContainerResourceImpl
       merge(
         observablePipe(
           fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
-          onNext((state: string) => stateContainer.dispatch(_ => state)),
+          onNext((state: string) => this.stateContainer.dispatch(_ => state)),
         ),
         observablePipe(
-          stateContainer,
+          this.stateContainer,
           keep(location => location !== getCurrentLocation()),
           onNext((next: string) =>
             window.history.pushState(undefined, "", next),
@@ -78,19 +77,14 @@ class DomLocationStateContainerResourceImpl
       scheduler,
     );
 
-    this.disposable = disposableCreate();
-    this.disposable.add(subscription, stateContainer);
-
-    this.stateContainer = stateContainer;
-
-    stateContainer.dispatch(_ => getCurrentLocation());
+    this.stateContainer.add(subscription);
   }
 
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add(disposable, ...disposables);
+    this.stateContainer.add(disposable, ...disposables);
   }
 
   dispatch(updater: StateUpdater<string>) {
@@ -98,14 +92,14 @@ class DomLocationStateContainerResourceImpl
   }
 
   dispose() {
-    this.disposable.dispose();
+    this.stateContainer.dispose();
   }
 
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove(disposable, ...disposables);
+    this.stateContainer.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<string>) {
