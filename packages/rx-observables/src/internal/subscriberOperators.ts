@@ -2,6 +2,7 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observableOperatorFrom,
 } from "@reactive-js/rx-observable";
 
 import { ObserverLike } from "@reactive-js/rx-observer";
@@ -28,97 +29,82 @@ import {
   withLatestFrom as withLatestFromSubscriberOperator,
 } from "@reactive-js/rx-subscriber-operators";
 
-const subscriberOperatorToObservableOperator = <TA, TB>(
-  operator: SubscriberOperator<TA, TB>,
-): ObservableOperator<TA, TB> => (observable: ObservableLike<TA>) =>
-  lift(observable, operator);
-
 export const concatAll = <T>(
   maxBufferSize?: number,
 ): ObservableOperator<ObservableLike<T>, T> =>
-  subscriberOperatorToObservableOperator(
-    concactSubscriberOperator(maxBufferSize),
-  );
+  observableOperatorFrom(concactSubscriberOperator(maxBufferSize));
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(
-    distinctUntilChangedSubscriberOperator(equals),
-  );
+  observableOperatorFrom(distinctUntilChangedSubscriberOperator(equals));
 
 export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
-  subscriberOperatorToObservableOperator(exhaustSubscriberOperator());
+  observableOperatorFrom(exhaustSubscriberOperator());
 
 export const ignoreElements = <T>(): ObservableOperator<ObservableLike<T>, T> =>
-  subscriberOperatorToObservableOperator(ignoreElementsSubscriberOperator());
+  observableOperatorFrom(ignoreElementsSubscriberOperator());
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(keepSubscriberOperator(predicate));
+  observableOperatorFrom(keepSubscriberOperator(predicate));
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
 ): ObservableOperator<TA, TB> =>
-  subscriberOperatorToObservableOperator(mapSubscriberOperator(mapper));
+  observableOperatorFrom(mapSubscriberOperator(mapper));
 
 export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
-  subscriberOperatorToObservableOperator(mapToSubscriberOperator(value));
+  observableOperatorFrom(mapToSubscriberOperator(value));
 
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
 }): ObservableOperator<ObservableLike<T>, T> =>
-  subscriberOperatorToObservableOperator(mergeSubscriberOperator(options));
+  observableOperatorFrom(mergeSubscriberOperator(options));
 
 export const observe = <T>(
   observer: ObserverLike<T>,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(observeSubscriberOperator(observer));
+  observableOperatorFrom(observeSubscriberOperator(observer));
 
 export const onComplete = <T>(
   onComplete: (err?: Error) => void,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(
-    onCompleteSubscriberOperator(onComplete),
-  );
+  observableOperatorFrom(onCompleteSubscriberOperator(onComplete));
 
 export const onError = <T>(
   onError: (err: Error) => void,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(onErrorSubscriberOperator(onError));
+  observableOperatorFrom(onErrorSubscriberOperator(onError));
 
 export const onNext = <T>(
   onNext: (next: T) => void,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(onNextSubscriberOperator(onNext));
+  observableOperatorFrom(onNextSubscriberOperator(onNext));
 
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
 ): ObservableOperator<T, TAcc> =>
-  subscriberOperatorToObservableOperator(
-    scanSubscriberOperator(scanner, initialValue),
-  );
+  observableOperatorFrom(scanSubscriberOperator(scanner, initialValue));
 
 // tslint:disable-next-line variable-name
 export const switch_ = <T>(): ObservableOperator<ObservableLike<T>, T> =>
-  subscriberOperatorToObservableOperator(switchSubscriberOperator());
+  observableOperatorFrom(switchSubscriberOperator());
 
 export const take = <T>(count: number): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(takeSubscriberOperator(count));
+  observableOperatorFrom(takeSubscriberOperator(count));
 
 export const takeLast = <T>(
   count: number,
   priority?: number,
 ): ObservableOperator<T, T> =>
-  subscriberOperatorToObservableOperator(takeLastSubscriberOperator(count));
+  observableOperatorFrom(takeLastSubscriberOperator(count));
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
 ): ObservableOperator<TA, TC> =>
-  subscriberOperatorToObservableOperator(
-    withLatestFromSubscriberOperator(other, selector),
-  );
+  observableOperatorFrom(withLatestFromSubscriberOperator(other, selector));

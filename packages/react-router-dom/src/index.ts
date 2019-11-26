@@ -12,12 +12,17 @@ import {
   mapDispatch,
   pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
-import { pipe as observablePipe } from "@reactive-js/rx-observable";
+import {
+  connect,
+  lift,
+  pipe as observablePipe,
+} from "@reactive-js/rx-observable";
 
 import {
   distinctUntilChanged,
   keep,
   map,
+  merge,
   onNext,
 } from "@reactive-js/rx-observables";
 
@@ -28,8 +33,6 @@ import {
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
-import { connect, lift } from "@reactive-js/rx-observable";
-import { merge } from "@reactive-js/rx-observables";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 

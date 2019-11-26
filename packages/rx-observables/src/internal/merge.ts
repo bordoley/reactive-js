@@ -50,7 +50,7 @@ export function merge<T>(
   snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T>;
-export function merge <T>(
+export function merge<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
   const subscribe = (subscriber: SubscriberLike<T>) => {
@@ -77,4 +77,4 @@ export function merge <T>(
   };
 
   return { subscribe };
-};
+}

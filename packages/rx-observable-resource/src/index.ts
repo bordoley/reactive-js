@@ -4,9 +4,9 @@ import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 
 import {
   lift as liftObservable,
-  pipe as pipeObservable,
   ObservableLike,
   ObservableOperator,
+  pipe as pipeObservable,
 } from "@reactive-js/rx-observable";
 
 /** @noInheritDoc */
@@ -214,7 +214,10 @@ export function pipe(
 ): ObservableResourceLike<any> {
   const obsSource =
     source instanceof LiftedObservableResource ? source.observable : source;
-  const observable = pipeObservable.apply(undefined, [obsSource, ...operators] as any)
+  const observable = pipeObservable.apply(undefined, [
+    obsSource,
+    ...operators,
+  ] as any);
 
   operators.reduce((acc, next) => next(acc), obsSource);
 

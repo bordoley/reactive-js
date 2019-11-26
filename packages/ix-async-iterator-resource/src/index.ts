@@ -5,8 +5,8 @@ import {
 } from "@reactive-js/ix-async-iterator";
 import { ObservableOperator } from "@reactive-js/rx-observable";
 import {
-  pipe as observableResourcePipe,
   ObservableResourceLike,
+  pipe as observableResourcePipe,
 } from "@reactive-js/rx-observable-resource";
 import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 
