@@ -73,9 +73,102 @@ const createMockSubscriberWithScheduler = <T>(
   };
 };
 
+describe("concat", () => {
+  test("concats observables", () => {
+    const observableA = observableCreate(observer => {
+      observer.next(1);
+      observer.next(2);
+      observer.complete();
+    });
+
+    const observableB = observableCreate(observer => {
+      observer.next(3);
+      observer.next(4);
+      observer.complete();
+    });
+
+    const scheduler = virtualTimeSchedulerCreate(2);
+    const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+    const concatObserver = toSafeObserver(pipe(subscriber, concat()));
+
+    concatObserver.next(observableA);
+    concatObserver.next(observableB);
+    concatObserver.next(observableB);
+    concatObserver.next(observableA);
+    concatObserver.complete();
+
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
+    expect(subscriber.next).toHaveBeenNthCalledWith(3, 3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(4, 4);
+    expect(subscriber.next).toHaveBeenNthCalledWith(5, 3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(6, 4);
+    expect(subscriber.next).toHaveBeenNthCalledWith(7, 1);
+    expect(subscriber.next).toHaveBeenNthCalledWith(8, 2);
+    expect(subscriber.next).toHaveBeenCalledTimes(8);
+    expect(subscriber.complete).toHaveBeenCalled();
+  });
+
+  test("immediately completes when completed with an error", () => {
+    const observableA = observableCreate(observer => {
+      observer.next(1);
+      observer.next(2);
+    });
+
+    const scheduler = virtualTimeSchedulerCreate(2);
+    const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+    const concatObserver = toSafeObserver(pipe(subscriber, concat()));
+    const error = new Error();
+
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+    concatObserver.complete(error);
+
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
+    expect(subscriber.next).toHaveBeenCalledTimes(2);
+    expect(subscriber.complete).toHaveBeenCalledWith(error);
+  });
+
+  test("immediately completes when inner observable completes with an error", () => {
+    const error = new Error();
+
+    const observableA = observableCreate(observer => {
+      observer.next(1);
+      observer.next(2);
+      observer.complete(error);
+    });
+
+    const scheduler = virtualTimeSchedulerCreate(2);
+    const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+    const concatObserver = toSafeObserver(pipe(subscriber, concat()));
+
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+    concatObserver.next(observableA);
+
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
+    expect(subscriber.next).toHaveBeenCalledTimes(2);
+    expect(subscriber.complete).toHaveBeenCalledWith(error);
+  });
+});
+
 test("distinctUntilChanged", () => {
   const subscriber = createMockSubscriber();
-  const distinctUntilChangedSubscriber = distinctUntilChanged()(subscriber);
+  const distinctUntilChangedSubscriber = pipe(subscriber, distinctUntilChanged());
   const error = new Error();
 
   distinctUntilChangedSubscriber.next(1);
@@ -100,7 +193,7 @@ test("distinctUntilChanged", () => {
 
 test("keep", () => {
   const subscriber = createMockSubscriber();
-  const keepSubscriber = keep((x: number) => x % 2 === 0)(subscriber);
+  const keepSubscriber = pipe(subscriber, keep((x: number) => x % 2 === 0));
   const error = new Error();
 
   keepSubscriber.next(1);
@@ -115,7 +208,7 @@ test("keep", () => {
 
 test("ignoreElement", () => {
   const subscriber = createMockSubscriber();
-  const ignoreSubscriber = ignoreElements()(subscriber);
+  const ignoreSubscriber = pipe(subscriber, ignoreElements());
   const error = new Error();
 
   ignoreSubscriber.next(1);
@@ -128,7 +221,7 @@ test("ignoreElement", () => {
 
 test("map", () => {
   const subscriber = createMockSubscriber();
-  const mappedSubscriber = map((x: number) => x * 2)(subscriber);
+  const mappedSubscriber = pipe(subscriber, map((x: number) => x * 2));
   const error = new Error();
 
   mappedSubscriber.next(1);
@@ -143,7 +236,7 @@ test("map", () => {
 
 test("mapTo", () => {
   const subscriber = createMockSubscriber();
-  const mappedSubscriber = mapTo(5)(subscriber);
+  const mappedSubscriber = pipe(subscriber, mapTo(5));
   const error = new Error();
 
   mappedSubscriber.next(1);
@@ -158,10 +251,10 @@ test("mapTo", () => {
 
 test("scan", () => {
   const subscriber = createMockSubscriber();
-  const scanSubscriber = scan(
+  const scanSubscriber = pipe(subscriber, scan(
     (acc: number, x: number) => acc + x,
     0,
-  )(subscriber);
+  ));
   const error = new Error();
 
   scanSubscriber.next(1);
@@ -179,7 +272,7 @@ test("switch", () => {
 
   const subscriber = createMockSubscriberWithScheduler(scheduler);
 
-  const switchObserver = toSafeObserver(switch_()(subscriber));
+  const switchObserver = toSafeObserver(pipe(subscriber, switch_()));
 
   const innerObservable = observableCreate(observer => {
     observer.next(1);
@@ -215,7 +308,7 @@ test("switch", () => {
 
 test("take", () => {
   const subscriber = createMockSubscriber();
-  const takeSubscriber = take(2)(subscriber);
+  const takeSubscriber = pipe(subscriber, take(2));
 
   takeSubscriber.next(1);
   takeSubscriber.next(2);
@@ -234,16 +327,14 @@ describe("takeLast", () => {
     const scheduler = virtualTimeSchedulerCreate(2);
     const subscriber = createMockSubscriberWithScheduler(scheduler);
 
-    const takeSubscriber = pipe(subscriber, takeLast(3));
+    const takeObserver = toSafeObserver(pipe(subscriber, takeLast(3)));
 
-    scheduler.schedule(_ => {
-      takeSubscriber.next(1);
-      takeSubscriber.next(2);
-      takeSubscriber.next(3);
-      takeSubscriber.next(4);
-      takeSubscriber.complete();
-      takeSubscriber.next(5);
-    });
+    takeObserver.next(1);
+    takeObserver.next(2);
+    takeObserver.next(3);
+    takeObserver.next(4);
+    takeObserver.complete();
+    takeObserver.next(5);
 
     scheduler.run();
 
@@ -258,17 +349,15 @@ describe("takeLast", () => {
     const scheduler = virtualTimeSchedulerCreate();
     const subscriber = createMockSubscriberWithScheduler(scheduler);
 
-    const takeSubscriber = pipe(subscriber, takeLast(2));
+    const takeObserver = toSafeObserver(pipe(subscriber, takeLast(2)));
     const error = new Error();
 
-    scheduler.schedule(_ => {
-      takeSubscriber.next(1);
-      takeSubscriber.next(2);
-      takeSubscriber.next(3);
-      takeSubscriber.next(4);
-      takeSubscriber.complete(error);
-      takeSubscriber.next(5);
-    });
+    takeObserver.next(1);
+    takeObserver.next(2);
+    takeObserver.next(3);
+    takeObserver.next(4);
+    takeObserver.complete(error);
+    takeObserver.next(5);
 
     scheduler.run();
 
