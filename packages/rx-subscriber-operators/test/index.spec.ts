@@ -249,6 +249,50 @@ test("mapTo", () => {
   expect(subscriber.complete).toBeCalledWith(error);
 });
 
+
+test("onComplete", () => {
+  const subscriber = createMockSubscriber();
+  const cb = jest.fn();
+  const onCompleteSubscriber = pipe(subscriber, onComplete(cb));
+
+  onCompleteSubscriber.complete();
+  expect(subscriber.complete).toHaveBeenCalledWith(undefined);
+  expect(cb).toHaveBeenCalledWith(undefined);
+})
+
+describe("onError", () => {
+  test("when completed with error", () => {
+    const subscriber = createMockSubscriber();
+    const cb = jest.fn();
+    const onCompleteSubscriber = pipe(subscriber, onError(cb));
+    const error = new Error();
+
+    onCompleteSubscriber.complete(error);
+    expect(subscriber.complete).toHaveBeenCalledWith(error);
+    expect(cb).toHaveBeenCalledWith(error);
+  });
+
+  test("when completed without error", () => {
+    const subscriber = createMockSubscriber();
+    const cb = jest.fn();
+    const onCompleteSubscriber = pipe(subscriber, onError(cb));;
+
+    onCompleteSubscriber.complete();
+    expect(subscriber.complete).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledTimes(0);
+  });
+})
+
+test("onNext", () => {
+  const subscriber = createMockSubscriber();
+  const cb = jest.fn();
+  const onNextSubscriber = pipe(subscriber, onNext(cb));
+
+  onNextSubscriber.next(1);
+  expect(subscriber.next).toHaveBeenCalledWith(1);
+  expect(cb).toHaveBeenCalledWith(1);
+})
+
 test("scan", () => {
   const subscriber = createMockSubscriber();
   const scanSubscriber = pipe(subscriber, scan(
