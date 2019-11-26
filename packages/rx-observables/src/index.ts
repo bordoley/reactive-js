@@ -1,5 +1,5 @@
 export { combineLatest } from "./internal/combineLatest";
-export { concat } from "./internal/concat";
+export { concat, startWith } from "./internal/concat";
 export {
   empty,
   fromArray,

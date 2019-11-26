@@ -7,7 +7,7 @@
 ### Functions
 
 * [combineLatest](README.md#combinelatest)
-* [concat](README.md#const-concat)
+* [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
@@ -34,6 +34,7 @@
 * [share](README.md#const-share)
 * [shareReplay](README.md#const-sharereplay)
 * [shareReplayLast](README.md#const-sharereplaylast)
+* [startWith](README.md#const-startwith)
 * [switch_](README.md#const-switch_)
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
@@ -267,7 +268,7 @@ Name | Type |
 
 ___
 
-### `Const` concat
+###  concat
 
 ▸ **concat**<**T**>(`fst`: ObservableLike‹T›, `snd`: ObservableLike‹T›, ...`tail`: Array‹ObservableLike‹T››): *ObservableLike‹T›*
 
@@ -809,6 +810,24 @@ Name | Type |
 ------ | ------ |
 `scheduler?` | SchedulerLike |
 `priority?` | undefined &#124; number |
+
+**Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` startWith
+
+▸ **startWith**<**T**>(`obs1`: ObservableLike‹T›): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`obs1` | ObservableLike‹T› |
 
 **Returns:** *ObservableOperator‹T, T›*
 
