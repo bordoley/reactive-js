@@ -1,16 +1,8 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 
-import {
-  DelegatingSubscriber,
-  SubscriberLike,
-} from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
-import {
-  connect,
-  lift,
-  ObservableLike,
-  pipe,
-} from "@reactive-js/rx-observable";
+import { connect, ObservableLike, pipe } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
