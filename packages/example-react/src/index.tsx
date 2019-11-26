@@ -1,5 +1,5 @@
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
-import { create as locationResourceCreate } from "@reactive-js/react-router-dom";
+import { create as locationResourceCreate } from "@reactive-js/react-router-dom-location-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
 import { ComponentType, default as React, useEffect } from "react";

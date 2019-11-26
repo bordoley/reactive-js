@@ -32,7 +32,7 @@ Fast modern reactive Javascript programming library
 
 ### React JS Integration
 * [@reactive-js/react-hooks](./packages/react-hooks)
-* [@reactive-js/react-router-dom](./packages/react-router-dom)
+* [@reactive-js/react-router-dom-location-resource](./packages/react-router-dom-location-resource)
 * [@reactive-js/react-router-relative-uri](./packages/react-router-relative-uri)
 * [@reactive-js/react-router-state-component](./packages/react-router-state-component)
 * [@reactive-js/react-router](./packages/react-router)
