@@ -14,6 +14,7 @@
 * [connect](README.md#const-connect)
 * [create](README.md#const-create)
 * [lift](README.md#lift)
+* [observableOperatorFrom](README.md#const-observableoperatorfrom)
 * [pipe](README.md#pipe)
 
 ## Functions
@@ -325,6 +326,26 @@ Name | Type |
 `op9` | SubscriberOperator‹H, I› |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹I›*
+
+___
+
+### `Const` observableOperatorFrom
+
+▸ **observableOperatorFrom**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`operator` | SubscriberOperator‹TA, TB› |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
 ___
 

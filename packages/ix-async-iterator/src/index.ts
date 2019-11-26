@@ -198,7 +198,7 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), src);
 }
 
-export const mapDispatch= <TSrcReq, TReq, T>(
+export const mapDispatch = <TSrcReq, TReq, T>(
   mapper: (v: TReq) => TSrcReq,
 ): AsyncIteratorOperator<TSrcReq, T, TReq, T> => (
   iterator: AsyncIteratorLike<TSrcReq, T>,

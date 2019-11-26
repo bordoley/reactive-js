@@ -228,6 +228,11 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), source);
 }
 
+export const observableOperatorFrom = <TA, TB>(
+  operator: SubscriberOperator<TA, TB>,
+): ObservableOperator<TA, TB> => (observable: ObservableLike<TA>) =>
+  lift(observable, operator);
+
 export const create = <T>(
   onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
   priority?: number,
