@@ -10,7 +10,7 @@ import {
 } from "@reactive-js/scheduler";
 
 class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private count = 0;
+  private count = -1;
   private readonly maxCount: number;
 
   constructor(delegate: SubscriberLike<T>, maxCount: number) {
@@ -24,9 +24,9 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     this.count++;
-    this.delegate.next(data);
-
-    if (this.count >= this.maxCount) {
+    if (this.count < this.maxCount) {
+      this.delegate.next(data);
+    } else if (this.count === this.maxCount) {
       this.delegate.complete();
     }
   }
