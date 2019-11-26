@@ -1,6 +1,6 @@
-[@reactive-js/react-router-dom](README.md)
+[@reactive-js/react-router-dom-location-resource](README.md)
 
-# @reactive-js/react-router-dom
+# @reactive-js/react-router-dom-location-resource
 
 ## Index
 

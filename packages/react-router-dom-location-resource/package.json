@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/react-router-dom",
+  "name": "@reactive-js/react-router-dom-location-resource",
   "version": "0.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -18,7 +18,6 @@
   "dependencies": {
     "@reactive-js/dom": "0.0.0",
     "@reactive-js/ix-async-iterator-resource": "0.0.0",
-    "@reactive-js/react-router": "0.0.0",
     "@reactive-js/react-router-relative-uri": "0.0.0",
     "@reactive-js/react-scheduler": "0.0.0",
     "@reactive-js/rx-observable": "0.0.0",

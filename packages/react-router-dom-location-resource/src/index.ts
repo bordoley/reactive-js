@@ -58,10 +58,10 @@ export const create = (priority?: number) => {
       priority,
     );
 
-    const setURI = (uri: RelativeURI) => stateContainer.dispatch(_ => uri);
+  const setURI = (uri: RelativeURI) => stateContainer.dispatch(_ => uri);
 
-    return asyncIteratorResourcePipe(
-      stateContainer,
-      asyncIteratorResourceOperatorFrom(operator(setURI, priority)),
-    );
-  };
+  return asyncIteratorResourcePipe(
+    stateContainer,
+    asyncIteratorResourceOperatorFrom(operator(setURI, priority)),
+  );
+};
