@@ -1,4 +1,4 @@
-[@reactive-js/state-container](../README.md) › [StateContainerResourceLike](statecontainerresourcelike.md)
+[@reactive-js/ix-state-container](../README.md) › [StateContainerResourceLike](statecontainerresourcelike.md)
 
 # Interface: StateContainerResourceLike <**T**>
 

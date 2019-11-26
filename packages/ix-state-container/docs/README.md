@@ -1,6 +1,6 @@
-[@reactive-js/state-container](README.md)
+[@reactive-js/ix-state-container](README.md)
 
-# @reactive-js/state-container
+# @reactive-js/ix-state-container
 
 ## Index
 

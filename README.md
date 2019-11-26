@@ -22,7 +22,7 @@ Fast modern reactive Javascript programming library
 ### Asynchronous Interactive Programming (IX)
 * [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource)
 * [@reactive-js/ix-async-iterator](./packages/ix-async-iterator)
-* [@reactive-js/state-container](./packages/state-container)
+* [@reactive-js/ix-state-container](./packages/ix-state-container)
 
 ### Schedulers
 * [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler)

@@ -1,6 +1,6 @@
+import { StateUpdater } from "@reactive-js/ix-state-container";
 import { RoutableComponentProps } from "@reactive-js/react-router";
 import { RelativeURI } from "@reactive-js/react-router-relative-uri";
-import { StateUpdater } from "@reactive-js/state-container";
 import { createElement, useCallback, useMemo } from "react";
 
 export interface RoutableStateComponentProps<TState> {

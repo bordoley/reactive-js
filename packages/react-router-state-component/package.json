@@ -19,7 +19,7 @@
     "react": "^16.11.0",
     "@reactive-js/react-router-relative-uri": "0.0.0",
     "@reactive-js/react-router": "0.0.0",
-    "@reactive-js/state-container": "0.0.0",
+    "@reactive-js/ix-state-container": "0.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
