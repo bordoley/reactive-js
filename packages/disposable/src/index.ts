@@ -34,17 +34,12 @@ class DisposableImpl implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Array<DisposableOrTeardown> = [];
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
+  add(...disposables: DisposableOrTeardown[]) {
     if (this.isDisposed) {
-      doDispose(disposable);
       for (let d of disposables) {
         doDispose(d);
       }
     } else {
-      this.doAdd(disposable);
       for (let d of disposables) {
         this.doAdd(d);
       }
@@ -63,12 +58,8 @@ class DisposableImpl implements DisposableLike {
     }
   }
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
+  remove(...disposables: DisposableOrTeardown[]) {
     if (!this.isDisposed) {
-      this.doRemove(disposable);
       for (let d of disposables) {
         this.doRemove(d);
       }

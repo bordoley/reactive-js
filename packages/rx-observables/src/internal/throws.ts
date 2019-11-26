@@ -1,6 +1,4 @@
-import {
-  ObservableLike,
-} from "@reactive-js/rx-observable";
+import { ObservableLike } from "@reactive-js/rx-observable";
 
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 

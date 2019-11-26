@@ -48,4 +48,12 @@ describe("Disposable", () => {
   test("disposed", () => {
     expect(disposed.isDisposed).toBeTruthy();
   });
+
+  test("dispose when teardown throws an exception", () => {
+    const disposable = create();
+    disposable.add(() => {
+      throw new Error();
+    });
+    disposable.dispose();
+  });
 });
