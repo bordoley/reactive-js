@@ -730,7 +730,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableOperator‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableOperator‹T, TAcc›*
 
 **Type parameters:**
 
@@ -752,6 +752,10 @@ Name | Type |
 `next` | T |
 
 ▪ **initialValue**: *TAcc*
+
+▪`Optional`  **delay**: *undefined | number*
+
+▪`Optional`  **priority**: *undefined | number*
 
 **Returns:** *ObservableOperator‹T, TAcc›*
 
