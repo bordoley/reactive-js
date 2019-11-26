@@ -1,4 +1,4 @@
-[@reactive-js/rx-event](../README.md) › [EventLike](eventlike.md)
+[@reactive-js/ix-event](../README.md) › [EventLike](eventlike.md)
 
 # Interface: EventLike <**T**>
 

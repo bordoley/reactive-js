@@ -10,7 +10,6 @@ Fast modern reactive Javascript programming library
 * [@reactive-js/scheduler](./packages/scheduler)
 
 ### Reactive Programming (RX)
-* [@reactive-js/rx-event](./packages/rx-event)
 * [@reactive-js/rx-observable-resource](./packages/rx-observable-resource)
 * [@reactive-js/rx-observable](./packages/rx-observable)
 * [@reactive-js/rx-observables](./packages/rx-observables)
@@ -22,6 +21,7 @@ Fast modern reactive Javascript programming library
 ### Asynchronous Interactive Programming (IX)
 * [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource)
 * [@reactive-js/ix-async-iterator](./packages/ix-async-iterator)
+* [@reactive-js/ix-event](./packages/ix-event)
 * [@reactive-js/ix-state-container](./packages/ix-state-container)
 
 ### Schedulers

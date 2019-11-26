@@ -16,7 +16,7 @@ import {
 import {
   create as eventResourceCreate,
   EventResourceLike,
-} from "@reactive-js/rx-event";
+} from "@reactive-js/ix-event";
 
 import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
