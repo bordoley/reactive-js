@@ -11,18 +11,18 @@
 
 ### Functions
 
-* [create](README.md#const-create)
+* [Router](README.md#const-router)
 
 ## Functions
 
-### `Const` create
+### `Const` Router
 
-▸ **create**(`locationResourceFactory`: function): *React.ComponentType‹[RouterProps](interfaces/routerprops.md)›*
+▸ **Router**(`__namedParameters`: object): *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
 
 **Parameters:**
 
-▪ **locationResourceFactory**: *function*
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
-▸ (): *StateContainerResourceLike‹RelativeURI›*
-
-**Returns:** *React.ComponentType‹[RouterProps](interfaces/routerprops.md)›*
+**Returns:** *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*

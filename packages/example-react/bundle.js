@@ -674,198 +674,6 @@ var ExampleReact = (function (react, reactDom) {
 	var dist_4$1 = dist$3.observableOperatorFrom;
 	var dist_5$1 = dist$3.create;
 
-	var dist$4 = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-	/** @noInheritDoc */
-	var DelegatingAsyncIterator = /** @class */ (function () {
-	    function DelegatingAsyncIterator(observable, dispatcher) {
-	        this.observable = observable;
-	        this.dispatcher = dispatcher;
-	    }
-	    DelegatingAsyncIterator.prototype.dispatch = function (req) {
-	        this.dispatcher(req);
-	    };
-	    DelegatingAsyncIterator.prototype.subscribe = function (subscriber) {
-	        this.observable.subscribe(subscriber);
-	    };
-	    return DelegatingAsyncIterator;
-	}());
-	exports.DelegatingAsyncIterator = DelegatingAsyncIterator;
-	function pipe(src) {
-	    var operators = [];
-	    for (var _i = 1; _i < arguments.length; _i++) {
-	        operators[_i - 1] = arguments[_i];
-	    }
-	    return operators.reduce(function (acc, next) { return next(acc); }, src);
-	}
-	exports.pipe = pipe;
-	exports.mapDispatch = function (mapper) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIterator
-	        ? [iterator.observable, iterator.dispatcher]
-	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
-	    var mappedDispatcher = function (req) { return dispatcher(mapper(req)); };
-	    return new DelegatingAsyncIterator(delegate, mappedDispatcher);
-	}; };
-	exports.asyncIteratorOperatorFrom = function (operator) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIterator
-	        ? [iterator.observable, iterator.dispatcher]
-	        : [iterator, function (req) { return iterator.dispatch(req); }], observable = _a[0], dispatcher = _a[1];
-	    var pipedObservable = dist$3.pipe(observable, operator);
-	    return new DelegatingAsyncIterator(pipedObservable, dispatcher);
-	}; };
-
-	});
-
-	unwrapExports(dist$4);
-	var dist_1$4 = dist$4.DelegatingAsyncIterator;
-	var dist_2$4 = dist$4.pipe;
-	var dist_3$3 = dist$4.mapDispatch;
-	var dist_4$2 = dist$4.asyncIteratorOperatorFrom;
-
-	var dist$5 = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-
-	var LiftedObservableResource = /** @class */ (function () {
-	    function LiftedObservableResource(observable, disposable) {
-	        this.observable = observable;
-	        this.disposable = disposable;
-	    }
-	    Object.defineProperty(LiftedObservableResource.prototype, "isDisposed", {
-	        get: function () {
-	            return this.disposable.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    LiftedObservableResource.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    LiftedObservableResource.prototype.dispose = function () {
-	        this.disposable.dispose();
-	    };
-	    LiftedObservableResource.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    LiftedObservableResource.prototype.subscribe = function (subscriber) {
-	        this.observable.subscribe(subscriber);
-	    };
-	    return LiftedObservableResource;
-	}());
-	function lift(source) {
-	    var operators = [];
-	    for (var _i = 1; _i < arguments.length; _i++) {
-	        operators[_i - 1] = arguments[_i];
-	    }
-	    var observable = dist$3.lift.apply(undefined, tslib_es6.__spreadArrays([
-	        source instanceof LiftedObservableResource ? source.observable : source
-	    ], operators));
-	    var disposable = source instanceof LiftedObservableResource ? source.disposable : source;
-	    return new LiftedObservableResource(observable, disposable);
-	}
-	exports.lift = lift;
-	function pipe(source) {
-	    var operators = [];
-	    for (var _i = 1; _i < arguments.length; _i++) {
-	        operators[_i - 1] = arguments[_i];
-	    }
-	    var obsSource = source instanceof LiftedObservableResource ? source.observable : source;
-	    var observable = dist$3.pipe.apply(undefined, tslib_es6.__spreadArrays([
-	        obsSource
-	    ], operators));
-	    operators.reduce(function (acc, next) { return next(acc); }, obsSource);
-	    var disposable = source instanceof LiftedObservableResource ? source.disposable : source;
-	    return new LiftedObservableResource(observable, disposable);
-	}
-	exports.pipe = pipe;
-
-	});
-
-	unwrapExports(dist$5);
-	var dist_1$5 = dist$5.lift;
-	var dist_2$5 = dist$5.pipe;
-
-	var dist$6 = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-	var DelegatingAsyncIteratorResource = /** @class */ (function (_super) {
-	    tslib_es6.__extends(DelegatingAsyncIteratorResource, _super);
-	    function DelegatingAsyncIteratorResource(observable, dispatcher) {
-	        var _this = _super.call(this, observable, dispatcher) || this;
-	        _this.disposable = observable;
-	        return _this;
-	    }
-	    Object.defineProperty(DelegatingAsyncIteratorResource.prototype, "isDisposed", {
-	        get: function () {
-	            return this.disposable.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    DelegatingAsyncIteratorResource.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    DelegatingAsyncIteratorResource.prototype.dispose = function () {
-	        this.disposable.dispose();
-	    };
-	    DelegatingAsyncIteratorResource.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    return DelegatingAsyncIteratorResource;
-	}(dist$4.DelegatingAsyncIterator));
-	function pipe(src) {
-	    var operators = [];
-	    for (var _i = 1; _i < arguments.length; _i++) {
-	        operators[_i - 1] = arguments[_i];
-	    }
-	    return operators.reduce(function (acc, next) { return next(acc); }, src);
-	}
-	exports.pipe = pipe;
-	exports.mapDispatch = function (mapper) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIteratorResource
-	        ? [iterator.disposable, iterator.dispatcher]
-	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
-	    var mappedDispatcher = function (req) { return dispatcher(mapper(req)); };
-	    return new DelegatingAsyncIteratorResource(delegate, mappedDispatcher);
-	}; };
-	exports.asyncIteratorResourceOperatorFrom = function (operator) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIteratorResource
-	        ? [iterator.disposable, iterator.dispatcher]
-	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
-	    var liftedObservableResource = dist$5.pipe(delegate, operator);
-	    return new DelegatingAsyncIteratorResource(liftedObservableResource, dispatcher);
-	}; };
-
-	});
-
-	unwrapExports(dist$6);
-	var dist_1$6 = dist$6.pipe;
-	var dist_2$6 = dist$6.mapDispatch;
-	var dist_3$4 = dist$6.asyncIteratorResourceOperatorFrom;
-
 	var scheduler_production_min = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports,"__esModule",{value:!0});var f,g,h,k,l;
 	if("undefined"===typeof window||"function"!==typeof MessageChannel){var p=null,q=null,t=function(){if(null!==p)try{var a=exports.unstable_now();p(!0,a);p=null;}catch(b){throw setTimeout(t,0),b;}},u=Date.now();exports.unstable_now=function(){return Date.now()-u};f=function(a){null!==p?setTimeout(f,0,a):(p=a,setTimeout(t,0));};g=function(a,b){q=setTimeout(a,b);};h=function(){clearTimeout(q);};k=function(){return !1};l=exports.unstable_forceFrameRate=function(){};}else{var w=window.performance,x=window.Date,
@@ -934,7 +742,7 @@ var ExampleReact = (function (react, reactDom) {
 	}
 	});
 
-	var dist$7 = createCommonjsModule(function (module, exports) {
+	var dist$4 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -998,10 +806,10 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$7);
-	var dist_1$7 = dist$7.create;
+	unwrapExports(dist$4);
+	var dist_1$4 = dist$4.create;
 
-	var dist$8 = createCommonjsModule(function (module, exports) {
+	var dist$5 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -1027,7 +835,7 @@ var ExampleReact = (function (react, reactDom) {
 	    ReactSchedulerImpl.prototype.schedule = function (continuation, delay, priority) {
 	        if (delay === void 0) { delay = 0; }
 	        if (priority === void 0) { priority = scheduler.unstable_NormalPriority; }
-	        var disposable = dist$7.create();
+	        var disposable = dist$4.create();
 	        var shouldYield = function () {
 	            var isDisposed = disposable.isDisposed;
 	            return isDisposed || scheduler.unstable_shouldYield();
@@ -1072,10 +880,10 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$8);
-	var dist_1$8 = dist$8.scheduler;
+	unwrapExports(dist$5);
+	var dist_1$5 = dist$5.scheduler;
 
-	var dist$9 = createCommonjsModule(function (module, exports) {
+	var dist$6 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -1102,8 +910,8 @@ var ExampleReact = (function (react, reactDom) {
 	    var _b = react.useState(undefined), error = _b[0], updateError = _b[1];
 	    var observable = react.useMemo(factory, deps);
 	    exports.useDisposable(function () {
-	        return dist$3.connect(makeObservable(observable, updateState, updateError), dist$8.scheduler);
-	    }, [updateState, updateError, dist$8.scheduler]);
+	        return dist$3.connect(makeObservable(observable, updateState, updateError), dist$5.scheduler);
+	    }, [updateState, updateError, dist$5.scheduler]);
 	    if (error !== undefined) {
 	        throw error;
 	    }
@@ -1124,13 +932,13 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$9);
-	var dist_1$9 = dist$9.useDisposable;
-	var dist_2$7 = dist$9.useObservable;
-	var dist_3$5 = dist$9.useObservableResource;
-	var dist_4$3 = dist$9.useAsyncIteratorResource;
+	unwrapExports(dist$6);
+	var dist_1$6 = dist$6.useDisposable;
+	var dist_2$4 = dist$6.useObservable;
+	var dist_3$3 = dist$6.useObservableResource;
+	var dist_4$2 = dist$6.useAsyncIteratorResource;
 
-	var dist$a = createCommonjsModule(function (module, exports) {
+	var dist$7 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.empty = {
 	    path: "",
@@ -1144,9 +952,82 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$a);
-	var dist_1$a = dist$a.empty;
-	var dist_2$8 = dist$a.equals;
+	unwrapExports(dist$7);
+	var dist_1$7 = dist$7.empty;
+	var dist_2$5 = dist$7.equals;
+
+	var dist$8 = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+
+	var LiftedObservableResource = /** @class */ (function () {
+	    function LiftedObservableResource(observable, disposable) {
+	        this.observable = observable;
+	        this.disposable = disposable;
+	    }
+	    Object.defineProperty(LiftedObservableResource.prototype, "isDisposed", {
+	        get: function () {
+	            return this.disposable.isDisposed;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    LiftedObservableResource.prototype.add = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    LiftedObservableResource.prototype.dispose = function () {
+	        this.disposable.dispose();
+	    };
+	    LiftedObservableResource.prototype.remove = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    LiftedObservableResource.prototype.subscribe = function (subscriber) {
+	        this.observable.subscribe(subscriber);
+	    };
+	    return LiftedObservableResource;
+	}());
+	function lift(source) {
+	    var operators = [];
+	    for (var _i = 1; _i < arguments.length; _i++) {
+	        operators[_i - 1] = arguments[_i];
+	    }
+	    var observable = dist$3.lift.apply(undefined, tslib_es6.__spreadArrays([
+	        source instanceof LiftedObservableResource ? source.observable : source
+	    ], operators));
+	    var disposable = source instanceof LiftedObservableResource ? source.disposable : source;
+	    return new LiftedObservableResource(observable, disposable);
+	}
+	exports.lift = lift;
+	function pipe(source) {
+	    var operators = [];
+	    for (var _i = 1; _i < arguments.length; _i++) {
+	        operators[_i - 1] = arguments[_i];
+	    }
+	    var obsSource = source instanceof LiftedObservableResource ? source.observable : source;
+	    var observable = dist$3.pipe.apply(undefined, tslib_es6.__spreadArrays([
+	        obsSource
+	    ], operators));
+	    operators.reduce(function (acc, next) { return next(acc); }, obsSource);
+	    var disposable = source instanceof LiftedObservableResource ? source.disposable : source;
+	    return new LiftedObservableResource(observable, disposable);
+	}
+	exports.pipe = pipe;
+
+	});
+
+	unwrapExports(dist$8);
+	var dist_1$8 = dist$8.lift;
+	var dist_2$6 = dist$8.pipe;
 
 	var combineLatest_1 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -1535,7 +1416,7 @@ var ExampleReact = (function (react, reactDom) {
 	        var _this = _super.call(this, delegate) || this;
 	        _this.observable = observable;
 	        _this.shouldRepeat = shouldRepeat;
-	        _this.innerSubscription = dist$7.create();
+	        _this.innerSubscription = dist$4.create();
 	        _this.add(_this.innerSubscription);
 	        _this.observer = new RepeatSubscriber.RepeatObserver(_this);
 	        return _this;
@@ -1617,7 +1498,7 @@ var ExampleReact = (function (react, reactDom) {
 	var repeat_1 = repeat.repeat;
 	var repeat_2 = repeat.retry;
 
-	var dist$b = createCommonjsModule(function (module, exports) {
+	var dist$9 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var NotificationKind;
 	(function (NotificationKind) {
@@ -1637,11 +1518,11 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$b);
-	var dist_1$b = dist$b.NotificationKind;
-	var dist_2$9 = dist$b.notify;
+	unwrapExports(dist$9);
+	var dist_1$9 = dist$9.NotificationKind;
+	var dist_2$7 = dist$9.notify;
 
-	var dist$c = createCommonjsModule(function (module, exports) {
+	var dist$a = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -1758,15 +1639,15 @@ var ExampleReact = (function (react, reactDom) {
 	        return _this;
 	    }
 	    ReplayLastSubjectImpl.prototype.onComplete = function (error) {
-	        this.pushNotification([dist$b.NotificationKind.Complete, error]);
+	        this.pushNotification([dist$9.NotificationKind.Complete, error]);
 	    };
 	    ReplayLastSubjectImpl.prototype.onNext = function (data) {
-	        this.pushNotification([dist$b.NotificationKind.Next, data]);
+	        this.pushNotification([dist$9.NotificationKind.Next, data]);
 	    };
 	    ReplayLastSubjectImpl.prototype.onSubscribe = function (observer) {
 	        for (var _i = 0, _a = this.replayed; _i < _a.length; _i++) {
 	            var notif = _a[_i];
-	            dist$b.notify(observer, notif);
+	            dist$9.notify(observer, notif);
 	        }
 	    };
 	    ReplayLastSubjectImpl.prototype.pushNotification = function (notif) {
@@ -1784,9 +1665,9 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$c);
-	var dist_1$c = dist$c.create;
-	var dist_2$a = dist$c.createWithReplay;
+	unwrapExports(dist$a);
+	var dist_1$a = dist$a.create;
+	var dist_2$8 = dist$a.createWithReplay;
 
 	var sharedObservable = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -1826,11 +1707,11 @@ var ExampleReact = (function (react, reactDom) {
 	    return SharedObservable;
 	}());
 	exports.share = function (scheduler, priority) { return function (observable) {
-	    return new SharedObservable(dist$c.create, observable, scheduler, priority);
+	    return new SharedObservable(dist$a.create, observable, scheduler, priority);
 	}; };
 	exports.shareReplay = function (count, scheduler, priority) { return function (observable) {
 	    var factory = function (priority) {
-	        return dist$c.createWithReplay(count, priority);
+	        return dist$a.createWithReplay(count, priority);
 	    };
 	    return new SharedObservable(factory, observable, scheduler, priority);
 	}; };
@@ -2150,7 +2031,7 @@ var ExampleReact = (function (react, reactDom) {
 	    tslib_es6.__extends(SwitchSubscriber, _super);
 	    function SwitchSubscriber(delegate) {
 	        var _this = _super.call(this, delegate) || this;
-	        _this.innerSubscription = dist$7.create();
+	        _this.innerSubscription = dist$4.create();
 	        _this.add(_this.innerSubscription);
 	        return _this;
 	    }
@@ -2320,7 +2201,7 @@ var ExampleReact = (function (react, reactDom) {
 	unwrapExports(withLatestFrom);
 	var withLatestFrom_1 = withLatestFrom.withLatestFrom;
 
-	var dist$d = createCommonjsModule(function (module, exports) {
+	var dist$b = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 	exports.distinctUntilChanged = distinctUntilChanged.distinctUntilChanged;
@@ -2352,24 +2233,24 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$d);
-	var dist_1$d = dist$d.distinctUntilChanged;
-	var dist_2$b = dist$d.ignoreElements;
-	var dist_3$6 = dist$d.keep;
-	var dist_4$4 = dist$d.map;
-	var dist_5$2 = dist$d.mapTo;
-	var dist_6 = dist$d.concat;
-	var dist_7 = dist$d.exhaust;
-	var dist_8 = dist$d.merge;
-	var dist_9 = dist$d.observe;
-	var dist_10 = dist$d.onNext;
-	var dist_11 = dist$d.onComplete;
-	var dist_12 = dist$d.onError;
-	var dist_13 = dist$d.scan;
-	var dist_14 = dist$d.switch_;
-	var dist_15 = dist$d.take;
-	var dist_16 = dist$d.takeLast;
-	var dist_17 = dist$d.withLatestFrom;
+	unwrapExports(dist$b);
+	var dist_1$b = dist$b.distinctUntilChanged;
+	var dist_2$9 = dist$b.ignoreElements;
+	var dist_3$4 = dist$b.keep;
+	var dist_4$3 = dist$b.map;
+	var dist_5$2 = dist$b.mapTo;
+	var dist_6 = dist$b.concat;
+	var dist_7 = dist$b.exhaust;
+	var dist_8 = dist$b.merge;
+	var dist_9 = dist$b.observe;
+	var dist_10 = dist$b.onNext;
+	var dist_11 = dist$b.onComplete;
+	var dist_12 = dist$b.onError;
+	var dist_13 = dist$b.scan;
+	var dist_14 = dist$b.switch_;
+	var dist_15 = dist$b.take;
+	var dist_16 = dist$b.takeLast;
+	var dist_17 = dist$b.withLatestFrom;
 
 	var subscriberOperators = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -2378,56 +2259,56 @@ var ExampleReact = (function (react, reactDom) {
 
 
 	exports.concatAll = function (maxBufferSize) {
-	    return dist$3.observableOperatorFrom(dist$d.concat(maxBufferSize));
+	    return dist$3.observableOperatorFrom(dist$b.concat(maxBufferSize));
 	};
 	exports.distinctUntilChanged = function (equals) {
-	    return dist$3.observableOperatorFrom(dist$d.distinctUntilChanged(equals));
+	    return dist$3.observableOperatorFrom(dist$b.distinctUntilChanged(equals));
 	};
 	exports.exhaust = function () {
-	    return dist$3.observableOperatorFrom(dist$d.exhaust());
+	    return dist$3.observableOperatorFrom(dist$b.exhaust());
 	};
 	exports.ignoreElements = function () {
-	    return dist$3.observableOperatorFrom(dist$d.ignoreElements());
+	    return dist$3.observableOperatorFrom(dist$b.ignoreElements());
 	};
 	exports.keep = function (predicate) {
-	    return dist$3.observableOperatorFrom(dist$d.keep(predicate));
+	    return dist$3.observableOperatorFrom(dist$b.keep(predicate));
 	};
 	exports.map = function (mapper) {
-	    return dist$3.observableOperatorFrom(dist$d.map(mapper));
+	    return dist$3.observableOperatorFrom(dist$b.map(mapper));
 	};
 	exports.mapTo = function (value) {
-	    return dist$3.observableOperatorFrom(dist$d.mapTo(value));
+	    return dist$3.observableOperatorFrom(dist$b.mapTo(value));
 	};
 	exports.mergeAll = function (options) {
-	    return dist$3.observableOperatorFrom(dist$d.merge(options));
+	    return dist$3.observableOperatorFrom(dist$b.merge(options));
 	};
 	exports.observe = function (observer) {
-	    return dist$3.observableOperatorFrom(dist$d.observe(observer));
+	    return dist$3.observableOperatorFrom(dist$b.observe(observer));
 	};
 	exports.onComplete = function (onComplete) {
-	    return dist$3.observableOperatorFrom(dist$d.onComplete(onComplete));
+	    return dist$3.observableOperatorFrom(dist$b.onComplete(onComplete));
 	};
 	exports.onError = function (onError) {
-	    return dist$3.observableOperatorFrom(dist$d.onError(onError));
+	    return dist$3.observableOperatorFrom(dist$b.onError(onError));
 	};
 	exports.onNext = function (onNext) {
-	    return dist$3.observableOperatorFrom(dist$d.onNext(onNext));
+	    return dist$3.observableOperatorFrom(dist$b.onNext(onNext));
 	};
 	exports.scan = function (scanner, initialValue, delay, priority) { return function (obs) {
-	    return concat_1.concat(fromArray.ofValue(initialValue, delay, priority), dist$3.lift(obs, dist$d.scan(scanner, initialValue)));
+	    return concat_1.concat(fromArray.ofValue(initialValue, delay, priority), dist$3.lift(obs, dist$b.scan(scanner, initialValue)));
 	}; };
 	// tslint:disable-next-line variable-name
 	exports.switch_ = function () {
-	    return dist$3.observableOperatorFrom(dist$d.switch_());
+	    return dist$3.observableOperatorFrom(dist$b.switch_());
 	};
 	exports.take = function (count) {
-	    return dist$3.observableOperatorFrom(dist$d.take(count));
+	    return dist$3.observableOperatorFrom(dist$b.take(count));
 	};
 	exports.takeLast = function (count, priority) {
-	    return dist$3.observableOperatorFrom(dist$d.takeLast(count, priority));
+	    return dist$3.observableOperatorFrom(dist$b.takeLast(count, priority));
 	};
 	exports.withLatestFrom = function (other, selector) {
-	    return dist$3.observableOperatorFrom(dist$d.withLatestFrom(other, selector));
+	    return dist$3.observableOperatorFrom(dist$b.withLatestFrom(other, selector));
 	};
 
 	});
@@ -2451,7 +2332,7 @@ var ExampleReact = (function (react, reactDom) {
 	var subscriberOperators_16 = subscriberOperators.takeLast;
 	var subscriberOperators_17 = subscriberOperators.withLatestFrom;
 
-	var dist$e = createCommonjsModule(function (module, exports) {
+	var dist$c = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 	exports.combineLatest = combineLatest_1.combineLatest;
@@ -2502,43 +2383,43 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$e);
-	var dist_1$e = dist$e.combineLatest;
-	var dist_2$c = dist$e.concat;
-	var dist_3$7 = dist$e.startWith;
-	var dist_4$5 = dist$e.empty;
-	var dist_5$3 = dist$e.fromArray;
-	var dist_6$1 = dist$e.fromScheduledValues;
-	var dist_7$1 = dist$e.ofValue;
-	var dist_8$1 = dist$e.fromPromiseFactory;
-	var dist_9$1 = dist$e.toPromise;
-	var dist_10$1 = dist$e.generate;
-	var dist_11$1 = dist$e.merge;
-	var dist_12$1 = dist$e.never;
-	var dist_13$1 = dist$e.repeat;
-	var dist_14$1 = dist$e.retry;
-	var dist_15$1 = dist$e.share;
-	var dist_16$1 = dist$e.shareReplay;
-	var dist_17$1 = dist$e.shareReplayLast;
-	var dist_18 = dist$e.concatAll;
-	var dist_19 = dist$e.distinctUntilChanged;
-	var dist_20 = dist$e.exhaust;
-	var dist_21 = dist$e.ignoreElements;
-	var dist_22 = dist$e.keep;
-	var dist_23 = dist$e.map;
-	var dist_24 = dist$e.mapTo;
-	var dist_25 = dist$e.mergeAll;
-	var dist_26 = dist$e.observe;
-	var dist_27 = dist$e.onComplete;
-	var dist_28 = dist$e.onError;
-	var dist_29 = dist$e.onNext;
-	var dist_30 = dist$e.scan;
-	var dist_31 = dist$e.switch_;
-	var dist_32 = dist$e.take;
-	var dist_33 = dist$e.takeLast;
-	var dist_34 = dist$e.withLatestFrom;
+	unwrapExports(dist$c);
+	var dist_1$c = dist$c.combineLatest;
+	var dist_2$a = dist$c.concat;
+	var dist_3$5 = dist$c.startWith;
+	var dist_4$4 = dist$c.empty;
+	var dist_5$3 = dist$c.fromArray;
+	var dist_6$1 = dist$c.fromScheduledValues;
+	var dist_7$1 = dist$c.ofValue;
+	var dist_8$1 = dist$c.fromPromiseFactory;
+	var dist_9$1 = dist$c.toPromise;
+	var dist_10$1 = dist$c.generate;
+	var dist_11$1 = dist$c.merge;
+	var dist_12$1 = dist$c.never;
+	var dist_13$1 = dist$c.repeat;
+	var dist_14$1 = dist$c.retry;
+	var dist_15$1 = dist$c.share;
+	var dist_16$1 = dist$c.shareReplay;
+	var dist_17$1 = dist$c.shareReplayLast;
+	var dist_18 = dist$c.concatAll;
+	var dist_19 = dist$c.distinctUntilChanged;
+	var dist_20 = dist$c.exhaust;
+	var dist_21 = dist$c.ignoreElements;
+	var dist_22 = dist$c.keep;
+	var dist_23 = dist$c.map;
+	var dist_24 = dist$c.mapTo;
+	var dist_25 = dist$c.mergeAll;
+	var dist_26 = dist$c.observe;
+	var dist_27 = dist$c.onComplete;
+	var dist_28 = dist$c.onError;
+	var dist_29 = dist$c.onNext;
+	var dist_30 = dist$c.scan;
+	var dist_31 = dist$c.switch_;
+	var dist_32 = dist$c.take;
+	var dist_33 = dist$c.takeLast;
+	var dist_34 = dist$c.withLatestFrom;
 
-	var dist$f = createCommonjsModule(function (module, exports) {
+	var dist$d = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -2552,39 +2433,186 @@ var ExampleReact = (function (react, reactDom) {
 	};
 	var pairify = function (_a, next) {
 	    var _ = _a[0], oldState = _a[1];
-	    return oldState === dist$a.empty ? [undefined, next] : [oldState, next];
+	    return oldState === dist$7.empty ? [undefined, next] : [oldState, next];
 	};
-	exports.create = function (locationResourceFactory) {
-	    var ReactRouter = function (_a) {
-	        var notFoundComponent = _a.notFoundComponent, routes = _a.routes;
-	        var routeMap = react.useMemo(function () { return routes.reduce(routesReducer, {}); }, [routes]);
-	        var _b = dist$9.useAsyncIteratorResource(function () {
-	            return dist$6.pipe(locationResourceFactory(), dist$6.asyncIteratorResourceOperatorFrom(dist$e.scan(pairify, [undefined, dist$a.empty])));
-	        }, []), route = _b[0], uriUpdater = _b[1];
-	        var child = route !== undefined
-	            ? react.createElement(routeMap[route[1].path] || notFoundComponent, {
-	                referer: route[0],
-	                uri: route[1],
+	exports.Router = function (_a) {
+	    var locationResourceFactory = _a.locationResourceFactory, notFound = _a.notFound, routes = _a.routes;
+	    var element = dist$6.useObservableResource(function () {
+	        var routeMap = routes.reduce(routesReducer, {});
+	        var locationResource = locationResourceFactory();
+	        var uriUpdater = function (updater) {
+	            console.log("hmm");
+	            locationResource.dispatch(updater);
+	        };
+	        return dist$8.pipe(locationResource, dist$c.scan(pairify, [undefined, dist$7.empty]), dist$c.map(function (_a) {
+	            var referer = _a[0], uri = _a[1];
+	            return react.createElement(routeMap[uri.path] || notFound, {
+	                referer: referer,
+	                uri: uri,
 	                uriUpdater: uriUpdater,
-	            })
-	            : null;
-	        return child;
-	    };
-	    return ReactRouter;
+	            });
+	        }));
+	    }, [locationResourceFactory, routes]);
+	    return element || null;
 	};
 
 	});
 
+	unwrapExports(dist$d);
+	var dist_1$d = dist$d.Router;
+
+	var dist$e = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+	exports.fromEvent = function (target, eventName, selector, priority) {
+	    return dist$3.create(function (observer) {
+	        var listener = function (event) {
+	            try {
+	                var result = selector(event);
+	                observer.next(result);
+	            }
+	            catch (error) {
+	                observer.complete(error);
+	            }
+	        };
+	        target.addEventListener(eventName, listener, { passive: true });
+	        return function () {
+	            target.removeEventListener(eventName, listener);
+	        };
+	    }, priority);
+	};
+
+	});
+
+	unwrapExports(dist$e);
+	var dist_1$e = dist$e.fromEvent;
+
+	var dist$f = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+	/** @noInheritDoc */
+	var DelegatingAsyncIterator = /** @class */ (function () {
+	    function DelegatingAsyncIterator(observable, dispatcher) {
+	        this.observable = observable;
+	        this.dispatcher = dispatcher;
+	    }
+	    DelegatingAsyncIterator.prototype.dispatch = function (req) {
+	        this.dispatcher(req);
+	    };
+	    DelegatingAsyncIterator.prototype.subscribe = function (subscriber) {
+	        this.observable.subscribe(subscriber);
+	    };
+	    return DelegatingAsyncIterator;
+	}());
+	exports.DelegatingAsyncIterator = DelegatingAsyncIterator;
+	function pipe(src) {
+	    var operators = [];
+	    for (var _i = 1; _i < arguments.length; _i++) {
+	        operators[_i - 1] = arguments[_i];
+	    }
+	    return operators.reduce(function (acc, next) { return next(acc); }, src);
+	}
+	exports.pipe = pipe;
+	exports.mapDispatch = function (mapper) { return function (iterator) {
+	    var _a = iterator instanceof DelegatingAsyncIterator
+	        ? [iterator.observable, iterator.dispatcher]
+	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
+	    var mappedDispatcher = function (req) { return dispatcher(mapper(req)); };
+	    return new DelegatingAsyncIterator(delegate, mappedDispatcher);
+	}; };
+	exports.asyncIteratorOperatorFrom = function (operator) { return function (iterator) {
+	    var _a = iterator instanceof DelegatingAsyncIterator
+	        ? [iterator.observable, iterator.dispatcher]
+	        : [iterator, function (req) { return iterator.dispatch(req); }], observable = _a[0], dispatcher = _a[1];
+	    var pipedObservable = dist$3.pipe(observable, operator);
+	    return new DelegatingAsyncIterator(pipedObservable, dispatcher);
+	}; };
+
+	});
+
 	unwrapExports(dist$f);
-	var dist_1$f = dist$f.create;
+	var dist_1$f = dist$f.DelegatingAsyncIterator;
+	var dist_2$b = dist$f.pipe;
+	var dist_3$6 = dist$f.mapDispatch;
+	var dist_4$5 = dist$f.asyncIteratorOperatorFrom;
 
 	var dist$g = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
+
+	var DelegatingAsyncIteratorResource = /** @class */ (function (_super) {
+	    tslib_es6.__extends(DelegatingAsyncIteratorResource, _super);
+	    function DelegatingAsyncIteratorResource(observable, dispatcher) {
+	        var _this = _super.call(this, observable, dispatcher) || this;
+	        _this.disposable = observable;
+	        return _this;
+	    }
+	    Object.defineProperty(DelegatingAsyncIteratorResource.prototype, "isDisposed", {
+	        get: function () {
+	            return this.disposable.isDisposed;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    DelegatingAsyncIteratorResource.prototype.add = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    DelegatingAsyncIteratorResource.prototype.dispose = function () {
+	        this.disposable.dispose();
+	    };
+	    DelegatingAsyncIteratorResource.prototype.remove = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    return DelegatingAsyncIteratorResource;
+	}(dist$f.DelegatingAsyncIterator));
+	function pipe(src) {
+	    var operators = [];
+	    for (var _i = 1; _i < arguments.length; _i++) {
+	        operators[_i - 1] = arguments[_i];
+	    }
+	    return operators.reduce(function (acc, next) { return next(acc); }, src);
+	}
+	exports.pipe = pipe;
+	exports.mapDispatch = function (mapper) { return function (iterator) {
+	    var _a = iterator instanceof DelegatingAsyncIteratorResource
+	        ? [iterator.disposable, iterator.dispatcher]
+	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
+	    var mappedDispatcher = function (req) { return dispatcher(mapper(req)); };
+	    return new DelegatingAsyncIteratorResource(delegate, mappedDispatcher);
+	}; };
+	exports.asyncIteratorResourceOperatorFrom = function (operator) { return function (iterator) {
+	    var _a = iterator instanceof DelegatingAsyncIteratorResource
+	        ? [iterator.disposable, iterator.dispatcher]
+	        : [iterator, function (req) { return iterator.dispatch(req); }], delegate = _a[0], dispatcher = _a[1];
+	    var liftedObservableResource = dist$8.pipe(delegate, operator);
+	    return new DelegatingAsyncIteratorResource(liftedObservableResource, dispatcher);
+	}; };
+
+	});
+
+	unwrapExports(dist$g);
+	var dist_1$g = dist$g.pipe;
+	var dist_2$c = dist$g.mapDispatch;
+	var dist_3$7 = dist$g.asyncIteratorResourceOperatorFrom;
+
+	var dist$h = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+
 	var EventResourceImpl = /** @class */ (function () {
 	    function EventResourceImpl(priority) {
-	        this.subject = dist$c.create(priority);
+	        this.subject = dist$a.create(priority);
 	    }
 	    Object.defineProperty(EventResourceImpl.prototype, "isDisposed", {
 	        get: function () {
@@ -2626,10 +2654,10 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$g);
-	var dist_1$g = dist$g.create;
+	unwrapExports(dist$h);
+	var dist_1$h = dist$h.create;
 
-	var dist$h = createCommonjsModule(function (module, exports) {
+	var dist$i = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -2677,46 +2705,19 @@ var ExampleReact = (function (react, reactDom) {
 	var referenceEquality = function (a, b) { return a === b; };
 	exports.create = function (initialState, equals, scheduler, priority) {
 	    if (equals === void 0) { equals = referenceEquality; }
-	    var dispatcher = dist$g.create();
-	    var delegate = dist$3.pipe(dispatcher, dist$e.scan(function (acc, next) { return next(acc); }, initialState), dist$e.startWith(initialState), dist$e.distinctUntilChanged(equals), dist$e.shareReplayLast(scheduler, priority));
+	    var dispatcher = dist$h.create();
+	    var delegate = dist$3.pipe(dispatcher, dist$c.scan(function (acc, next) { return next(acc); }, initialState), dist$c.startWith(initialState), dist$c.distinctUntilChanged(equals), dist$c.shareReplayLast(scheduler, priority));
 	    dispatcher.add(dist$3.connect(delegate, scheduler));
 	    return new StateContainerResourceImpl(delegate, dispatcher);
 	};
 
 	});
 
-	unwrapExports(dist$h);
-	var dist_1$h = dist$h.create;
-
-	var dist$i = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-	exports.fromEvent = function (target, eventName, selector, priority) {
-	    return dist$3.create(function (observer) {
-	        var listener = function (event) {
-	            try {
-	                var result = selector(event);
-	                observer.next(result);
-	            }
-	            catch (error) {
-	                observer.complete(error);
-	            }
-	        };
-	        target.addEventListener(eventName, listener, { passive: true });
-	        return function () {
-	            target.removeEventListener(eventName, listener);
-	        };
-	    }, priority);
-	};
-
-	});
-
 	unwrapExports(dist$i);
-	var dist_1$i = dist$i.fromEvent;
+	var dist_1$i = dist$i.create;
 
 	var dist$j = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-
 
 
 
@@ -2731,20 +2732,18 @@ var ExampleReact = (function (react, reactDom) {
 	    return { path: path, query: query, fragment: fragment };
 	};
 	var operator = function (setURI, priority) { return function (obs) {
-	    var onPopstateUpdateURIObs = dist$3.pipe(dist$i.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$e.onNext(setURI), dist$e.ignoreElements());
-	    var onStateChangeUpdateHistoryObs = dist$3.pipe(obs, dist$e.keep(function (location) { return !dist$a.equals(location, getCurrentLocation()); }), dist$e.onNext(function (_a) {
+	    var onPopstateUpdateURIObs = dist$3.pipe(dist$e.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$c.onNext(setURI), dist$c.ignoreElements());
+	    var onStateChangeUpdateHistoryObs = dist$3.pipe(obs, dist$c.keep(function (location) { return !dist$7.equals(location, getCurrentLocation()); }), dist$c.onNext(function (_a) {
 	        var path = _a.path, query = _a.query, fragment = _a.fragment;
 	        var uri = path + query + fragment;
 	        window.history.pushState(undefined, "", uri);
-	    }), dist$e.ignoreElements());
-	    return dist$3.pipe(dist$e.merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs), dist$e.shareReplayLast(dist$8.scheduler, priority));
+	    }), dist$c.ignoreElements());
+	    return dist$3.pipe(dist$c.merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs), dist$c.shareReplayLast(dist$5.scheduler, priority));
 	}; };
 	exports.create = function (priority) {
-	    return dist$f.create(function () {
-	        var stateContainer = dist$h.create(getCurrentLocation(), dist$a.equals, dist$8.scheduler, priority);
-	        var setURI = function (uri) { return stateContainer.dispatch(function (_) { return uri; }); };
-	        return dist$6.pipe(stateContainer, dist$6.asyncIteratorResourceOperatorFrom(operator(setURI, priority)));
-	    });
+	    var stateContainer = dist$i.create(getCurrentLocation(), dist$7.equals, dist$5.scheduler, priority);
+	    var setURI = function (uri) { return stateContainer.dispatch(function (_) { return uri; }); };
+	    return dist$g.pipe(stateContainer, dist$g.asyncIteratorResourceOperatorFrom(operator(setURI, priority)));
 	};
 
 	});
@@ -2759,11 +2758,9 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-
 	var react_1 = tslib_es6.__importStar(react);
-	var react_dom_1 = tslib_es6.__importDefault(reactDom);
-	dist$2.registerDefaultScheduler(dist$8.scheduler);
-	var Router = dist$j.create();
+
+	dist$2.registerDefaultScheduler(dist$5.scheduler);
 	var NotFound = function (_a) {
 	    var uriUpdater = _a.uriUpdater;
 	    react_1.useEffect(function () {
@@ -2772,9 +2769,10 @@ var ExampleReact = (function (react, reactDom) {
 	    return react_1.default.createElement("div", null, "Not Found");
 	};
 	var Component1 = function (props) { return react_1.default.createElement("div", null, "Component1"); };
-	var element = (react_1.default.createElement(Router, { notFoundComponent: NotFound, routes: [["/route1", Component1]] }));
-	react_dom_1.default.render(element, document.getElementById("root"));
-	dist$3.connect(dist$3.pipe(dist$e.generate(function (x) { return x + 1; }, 0, 3000), dist$e.onNext(console.log)));
+	var routes = [
+	    ["/route1", Component1],
+	];
+	reactDom.render(react_1.default.createElement(dist$d.Router, { locationResourceFactory: dist$j.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
 
 	});
 

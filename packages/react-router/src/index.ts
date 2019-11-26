@@ -1,18 +1,15 @@
 import {
-  asyncIteratorResourceOperatorFrom,
-  pipe,
-} from "@reactive-js/ix-async-iterator-resource";
-import {
   StateContainerResourceLike,
   StateUpdater,
 } from "@reactive-js/ix-state-container";
-import { useAsyncIteratorResource } from "@reactive-js/react-hooks";
+import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { scan } from "@reactive-js/rx-observables";
-import { createElement, useMemo } from "react";
+import { pipe } from "@reactive-js/rx-observable-resource";
+import { map, scan } from "@reactive-js/rx-observables";
+import { createElement } from "react";
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
@@ -39,41 +36,42 @@ const pairify = (
   oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
 
 export interface RouterProps {
-  readonly notFoundComponent: React.ComponentType<RoutableComponentProps>;
+  readonly locationResourceFactory: () => StateContainerResourceLike<
+    RelativeURI
+  >;
+  readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,
     React.ComponentType<RoutableComponentProps>,
   ][];
 }
 
-export const create = (
-  locationResourceFactory: () => StateContainerResourceLike<RelativeURI>,
-): React.ComponentType<RouterProps> => {
-  const ReactRouter = ({ notFoundComponent, routes }: RouterProps) => {
-    const routeMap = useMemo(() => routes.reduce(routesReducer, {}), [routes]);
+export const Router: React.ComponentType<RouterProps> = ({
+  locationResourceFactory,
+  notFound,
+  routes,
+}) => {
+  const element = useObservableResource(() => {
+    const routeMap = routes.reduce(routesReducer, {});
+    const locationResource = locationResourceFactory();
 
-    const [route, uriUpdater] = useAsyncIteratorResource(
-      () =>
-        pipe(
-          locationResourceFactory(),
-          asyncIteratorResourceOperatorFrom(
-            scan(pairify, [undefined, emptyRelativeURI]),
-          ),
-        ),
-      [],
+    const uriUpdater = (updater: StateUpdater<RelativeURI>) =>{
+      console.log("hmm");
+      locationResource.dispatch(updater);
+    };
+
+    return pipe(
+      locationResource,
+      scan(pairify, [undefined, emptyRelativeURI]),
+      map(([referer, uri]) =>
+        createElement(routeMap[uri.path] || notFound, {
+          referer,
+          uri,
+          uriUpdater,
+        }),
+      ),
     );
+  }, [locationResourceFactory, routes]);
 
-    const child =
-      route !== undefined
-        ? createElement(routeMap[route[1].path] || notFoundComponent, {
-            referer: route[0],
-            uri: route[1],
-            uriUpdater,
-          })
-        : null;
-
-    return child;
-  };
-
-  return ReactRouter;
+  return element || null;
 };
