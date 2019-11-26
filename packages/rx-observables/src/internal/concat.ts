@@ -9,6 +9,8 @@ import {
 
 import { observe, SubscriberLike } from "@reactive-js/rx-subscriber";
 
+import { fromArray } from "./fromArray";
+
 export function concat<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
@@ -54,6 +56,12 @@ export function concat<T>(
   return { subscribe };
 }
 
-export const startWith = <T>(
-  obs1: ObservableLike<T>,
-): ObservableOperator<T, T> => obs2 => concat(obs1, obs2);
+export function startWith<T>(
+  value: T,
+  ...values: T[]
+): ObservableOperator<T, T>;
+export function startWith<T>(
+  ...values: T[]
+): ObservableOperator<T, T> {
+  return obs2 => concat(fromArray(values), obs2);
+};
