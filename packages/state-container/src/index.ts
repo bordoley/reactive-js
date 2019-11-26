@@ -1,8 +1,4 @@
-import {
-  create as disposableCreate,
-  DisposableLike,
-  DisposableOrTeardown,
-} from "@reactive-js/disposable";
+import { DisposableOrTeardown } from "@reactive-js/disposable";
 
 import {
   DelegatingSubscriber,
@@ -136,35 +132,24 @@ const batchScanOnScheduler = <T>(initialState: T, priority?: number) => (
 
 class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+    return this.dispatcher.isDisposed;
   }
   private readonly delegate: ObservableLike<T>;
   private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
-  private readonly disposable: DisposableLike;
 
   constructor(
-    initialState: T,
-    equals: (a: T, b: T) => boolean,
-    scheduler?: SchedulerLike,
-    priority?: number,
+    delegate: ObservableLike<T>,
+    dispatcher: EventResourceLike<StateUpdater<T>>,
   ) {
-    this.dispatcher = eventResourceCreate();
-    this.delegate = pipe(
-      lift(this.dispatcher, batchScanOnScheduler(initialState, priority)),
-      startWith(initialState),
-      distinctUntilChanged(equals),
-      shareReplayLast(scheduler, priority),
-    );
-
-    this.disposable = disposableCreate();
-    this.disposable.add(this.dispatcher, connect(this.delegate, scheduler));
+    this.delegate = delegate;
+    this.dispatcher = dispatcher;
   }
 
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add(disposable, ...disposables);
+    this.dispatcher.add(disposable, ...disposables);
   }
 
   dispatch(updater: StateUpdater<T>) {
@@ -172,14 +157,14 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
   }
 
   dispose() {
-    this.disposable.dispose();
+    this.dispatcher.dispose();
   }
-
+  
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove(disposable, ...disposables);
+    this.dispatcher.remove(disposable, ...disposables);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -194,5 +179,15 @@ export const create = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
   scheduler?: SchedulerLike,
   priority?: number,
-): StateContainerResourceLike<T> =>
-  new StateContainerResourceImpl(initialState, equals, scheduler, priority);
+): StateContainerResourceLike<T> => {
+  const dispatcher = eventResourceCreate();
+  const delegate = pipe(
+    lift(dispatcher, batchScanOnScheduler(initialState, priority)),
+    startWith(initialState),
+    distinctUntilChanged(equals),
+    shareReplayLast(scheduler, priority),
+  );
+
+  dispatcher.add(connect(delegate, scheduler));
+  return new StateContainerResourceImpl(delegate, dispatcher);
+};

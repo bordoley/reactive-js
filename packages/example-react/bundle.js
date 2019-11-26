@@ -2636,7 +2636,6 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-
 	var BatchScanOnSchedulerSubscriber = /** @class */ (function (_super) {
 	    tslib_es6.__extends(BatchScanOnSchedulerSubscriber, _super);
 	    function BatchScanOnSchedulerSubscriber(delegate, initialValue, priority) {
@@ -2706,15 +2705,13 @@ var ExampleReact = (function (react, reactDom) {
 	}(dist$1.DelegatingSubscriber));
 	var batchScanOnScheduler = function (initialState, priority) { return function (subscriber) { return new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority); }; };
 	var StateContainerResourceImpl = /** @class */ (function () {
-	    function StateContainerResourceImpl(initialState, equals, scheduler, priority) {
-	        this.dispatcher = dist$g.create();
-	        this.delegate = dist$3.pipe(dist$3.lift(this.dispatcher, batchScanOnScheduler(initialState, priority)), dist$e.startWith(initialState), dist$e.distinctUntilChanged(equals), dist$e.shareReplayLast(scheduler, priority));
-	        this.disposable = dist.create();
-	        this.disposable.add(this.dispatcher, dist$3.connect(this.delegate, scheduler));
+	    function StateContainerResourceImpl(delegate, dispatcher) {
+	        this.delegate = delegate;
+	        this.dispatcher = dispatcher;
 	    }
 	    Object.defineProperty(StateContainerResourceImpl.prototype, "isDisposed", {
 	        get: function () {
-	            return this.disposable.isDisposed;
+	            return this.dispatcher.isDisposed;
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -2725,13 +2722,13 @@ var ExampleReact = (function (react, reactDom) {
 	        for (var _i = 1; _i < arguments.length; _i++) {
 	            disposables[_i - 1] = arguments[_i];
 	        }
-	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	        (_a = this.dispatcher).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
 	    StateContainerResourceImpl.prototype.dispatch = function (updater) {
 	        this.dispatcher.dispatch(updater);
 	    };
 	    StateContainerResourceImpl.prototype.dispose = function () {
-	        this.disposable.dispose();
+	        this.dispatcher.dispose();
 	    };
 	    StateContainerResourceImpl.prototype.remove = function (disposable) {
 	        var _a;
@@ -2739,7 +2736,7 @@ var ExampleReact = (function (react, reactDom) {
 	        for (var _i = 1; _i < arguments.length; _i++) {
 	            disposables[_i - 1] = arguments[_i];
 	        }
-	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	        (_a = this.dispatcher).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
 	    StateContainerResourceImpl.prototype.subscribe = function (subscriber) {
 	        this.delegate.subscribe(subscriber);
@@ -2749,7 +2746,10 @@ var ExampleReact = (function (react, reactDom) {
 	var referenceEquality = function (a, b) { return a === b; };
 	exports.create = function (initialState, equals, scheduler, priority) {
 	    if (equals === void 0) { equals = referenceEquality; }
-	    return new StateContainerResourceImpl(initialState, equals, scheduler, priority);
+	    var dispatcher = dist$g.create();
+	    var delegate = dist$3.pipe(dist$3.lift(dispatcher, batchScanOnScheduler(initialState, priority)), dist$e.startWith(initialState), dist$e.distinctUntilChanged(equals), dist$e.shareReplayLast(scheduler, priority));
+	    dispatcher.add(dist$3.connect(delegate, scheduler));
+	    return new StateContainerResourceImpl(delegate, dispatcher);
 	};
 
 	});
@@ -2792,87 +2792,24 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-
 	var getCurrentLocation = function () {
 	    var path = window.location.pathname;
 	    var query = window.location.search;
 	    var fragment = window.location.hash;
-	    return path + query + fragment;
+	    return { path: path, query: query, fragment: fragment };
 	};
-	var DomLocationStateContainerResourceImpl = /** @class */ (function () {
-	    function DomLocationStateContainerResourceImpl(scheduler, priority) {
-	        var _this = this;
-	        this.stateContainer = dist$h.create(getCurrentLocation(), undefined, scheduler, priority);
-	        var subscription = dist$3.connect(dist$e.merge(dist$3.pipe(dist$i.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$e.onNext(function (state) { return _this.stateContainer.dispatch(function (_) { return state; }); })), dist$3.pipe(this.stateContainer, dist$e.keep(function (location) { return location !== getCurrentLocation(); }), dist$e.onNext(function (next) {
-	            return window.history.pushState(undefined, "", next);
-	        }))), scheduler);
-	        this.stateContainer.add(subscription);
-	    }
-	    Object.defineProperty(DomLocationStateContainerResourceImpl.prototype, "isDisposed", {
-	        get: function () {
-	            return this.stateContainer.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    DomLocationStateContainerResourceImpl.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.stateContainer).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    DomLocationStateContainerResourceImpl.prototype.dispatch = function (updater) {
-	        this.stateContainer.dispatch(updater);
-	    };
-	    DomLocationStateContainerResourceImpl.prototype.dispose = function () {
-	        this.stateContainer.dispose();
-	    };
-	    DomLocationStateContainerResourceImpl.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.stateContainer).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    DomLocationStateContainerResourceImpl.prototype.subscribe = function (subscriber) {
-	        this.stateContainer.subscribe(subscriber);
-	    };
-	    return DomLocationStateContainerResourceImpl;
-	}());
-	var fakeURLBase = new URL("http://example.com");
-	var mapper = function (v) {
-	    var parsedAccURL = new URL(v, fakeURLBase);
-	    return {
-	        path: parsedAccURL.pathname,
-	        query: parsedAccURL.search,
-	        fragment: parsedAccURL.hash,
-	    };
-	};
-	var reducer = function (acc, stateUpdater) {
-	    var parsedAccURL = new URL(acc, fakeURLBase);
-	    var accRelativeURI = {
-	        path: parsedAccURL.pathname,
-	        query: parsedAccURL.search,
-	        fragment: parsedAccURL.hash,
-	    };
-	    var _a = stateUpdater(accRelativeURI), path = _a.path, query = _a.query, fragment = _a.fragment;
-	    return path + query + fragment;
-	};
-	var requestMapper = function (updater) { return function (acc) {
-	    return reducer(acc, updater);
-	}; };
-	var createRelativeURILocation = function (priority) {
-	    return dist$6.pipe(new DomLocationStateContainerResourceImpl(dist$8.scheduler, priority), dist$6.asyncIteratorResourceOperatorFrom(dist$e.map(mapper)), dist$6.asyncIteratorResourceOperatorFrom(dist$e.distinctUntilChanged()), dist$6.asyncIteratorResourceOperatorFrom(dist$e.onNext(function (_a) {
+	var createDomLocationStateContainerResource = function (scheduler, priority) {
+	    var stateContainer = dist$h.create(getCurrentLocation(), dist$a.equals, scheduler, priority);
+	    var subscription = dist$3.connect(dist$e.merge(dist$3.pipe(dist$i.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$e.onNext(function (state) { return stateContainer.dispatch(function (_) { return state; }); })), dist$3.pipe(stateContainer, dist$e.keep(function (location) { return !dist$a.equals(location, getCurrentLocation()); }), dist$e.onNext(function (_a) {
 	        var path = _a.path, query = _a.query, fragment = _a.fragment;
 	        var uri = path + query + fragment;
-	        history.pushState(undefined, "", uri);
-	    })), dist$6.mapDispatch(requestMapper));
+	        window.history.pushState(undefined, "", uri);
+	    }))), scheduler);
+	    stateContainer.add(subscription);
+	    return stateContainer;
 	};
 	exports.create = function (priority) {
-	    return dist$f.create(function () { return createRelativeURILocation(priority); });
+	    return dist$f.create(function () { return createDomLocationStateContainerResource(dist$8.scheduler, priority); });
 	};
 
 	});
