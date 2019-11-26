@@ -1,6 +1,6 @@
-[@reactive-js/rx-event](README.md)
+[@reactive-js/ix-event](README.md)
 
-# @reactive-js/rx-event
+# @reactive-js/ix-event
 
 ## Index
 
