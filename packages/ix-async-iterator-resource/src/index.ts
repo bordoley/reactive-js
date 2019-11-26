@@ -8,7 +8,6 @@ import {
   ObservableResourceLike,
   pipe as observableResourcePipe,
 } from "@reactive-js/rx-observable-resource";
-import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>

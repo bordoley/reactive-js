@@ -2635,75 +2635,6 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-
-	var BatchScanOnSchedulerSubscriber = /** @class */ (function (_super) {
-	    tslib_es6.__extends(BatchScanOnSchedulerSubscriber, _super);
-	    function BatchScanOnSchedulerSubscriber(delegate, initialValue, priority) {
-	        var _this = _super.call(this, delegate) || this;
-	        _this.isComplete = false;
-	        _this.nextQueue = [];
-	        _this.clearQueue = function () {
-	            _this.nextQueue.length = 0;
-	        };
-	        _this.drainQueue = function (shouldYield) {
-	            try {
-	                while (_this.nextQueue.length > 0) {
-	                    var stateUpdater = _this.nextQueue.shift();
-	                    _this.acc = stateUpdater(_this.acc);
-	                    var yieldRequest = shouldYield();
-	                    var hasMoreEvents = _this.remainingEvents > 0;
-	                    if (!hasMoreEvents || yieldRequest) {
-	                        _this.delegate.next(_this.acc);
-	                    }
-	                    if (yieldRequest && hasMoreEvents) {
-	                        return _this.continuation;
-	                    }
-	                }
-	            }
-	            catch (error) {
-	                _this.remove(_this.clearQueue);
-	                _this.complete(error);
-	                return;
-	            }
-	            if (_this.isComplete) {
-	                _this.remove(_this.clearQueue);
-	                _this.delegate.complete(_this.error);
-	            }
-	            return;
-	        };
-	        _this.acc = initialValue;
-	        _this.priority = priority;
-	        _this.continuation = {
-	            continuation: _this.drainQueue,
-	            priority: _this.priority,
-	        };
-	        _this.add(_this.clearQueue);
-	        return _this;
-	    }
-	    Object.defineProperty(BatchScanOnSchedulerSubscriber.prototype, "remainingEvents", {
-	        get: function () {
-	            return this.nextQueue.length + (this.isComplete ? 1 : 0);
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    BatchScanOnSchedulerSubscriber.prototype.onComplete = function (error) {
-	        this.isComplete = true;
-	        this.error = error;
-	        this.scheduleDrainQueue();
-	    };
-	    BatchScanOnSchedulerSubscriber.prototype.onNext = function (data) {
-	        this.nextQueue.push(data);
-	        this.scheduleDrainQueue();
-	    };
-	    BatchScanOnSchedulerSubscriber.prototype.scheduleDrainQueue = function () {
-	        if (this.remainingEvents === 1) {
-	            this.schedule(this.drainQueue, 0, this.priority);
-	        }
-	    };
-	    return BatchScanOnSchedulerSubscriber;
-	}(dist$1.DelegatingSubscriber));
-	var batchScanOnScheduler = function (initialState, priority) { return function (subscriber) { return new BatchScanOnSchedulerSubscriber(subscriber, initialState, priority); }; };
 	var StateContainerResourceImpl = /** @class */ (function () {
 	    function StateContainerResourceImpl(delegate, dispatcher) {
 	        this.delegate = delegate;
@@ -2747,7 +2678,7 @@ var ExampleReact = (function (react, reactDom) {
 	exports.create = function (initialState, equals, scheduler, priority) {
 	    if (equals === void 0) { equals = referenceEquality; }
 	    var dispatcher = dist$g.create();
-	    var delegate = dist$3.pipe(dist$3.lift(dispatcher, batchScanOnScheduler(initialState, priority)), dist$e.startWith(initialState), dist$e.distinctUntilChanged(equals), dist$e.shareReplayLast(scheduler, priority));
+	    var delegate = dist$3.pipe(dispatcher, dist$e.scan(function (acc, next) { return next(acc); }, initialState), dist$e.startWith(initialState), dist$e.distinctUntilChanged(equals), dist$e.shareReplayLast(scheduler, priority));
 	    dispatcher.add(dist$3.connect(delegate, scheduler));
 	    return new StateContainerResourceImpl(delegate, dispatcher);
 	};
@@ -2792,24 +2723,28 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
+
 	var getCurrentLocation = function () {
 	    var path = window.location.pathname;
 	    var query = window.location.search;
 	    var fragment = window.location.hash;
 	    return { path: path, query: query, fragment: fragment };
 	};
-	var createDomLocationStateContainerResource = function (scheduler, priority) {
-	    var stateContainer = dist$h.create(getCurrentLocation(), dist$a.equals, scheduler, priority);
-	    var subscription = dist$3.connect(dist$e.merge(dist$3.pipe(dist$i.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$e.onNext(function (state) { return stateContainer.dispatch(function (_) { return state; }); })), dist$3.pipe(stateContainer, dist$e.keep(function (location) { return !dist$a.equals(location, getCurrentLocation()); }), dist$e.onNext(function (_a) {
+	var operator = function (setURI, priority) { return function (obs) {
+	    var onPopstateUpdateURIObs = dist$3.pipe(dist$i.fromEvent(window, "popstate", function (_) { return getCurrentLocation(); }, priority), dist$e.onNext(setURI), dist$e.ignoreElements());
+	    var onStateChangeUpdateHistoryObs = dist$3.pipe(obs, dist$e.keep(function (location) { return !dist$a.equals(location, getCurrentLocation()); }), dist$e.onNext(function (_a) {
 	        var path = _a.path, query = _a.query, fragment = _a.fragment;
 	        var uri = path + query + fragment;
 	        window.history.pushState(undefined, "", uri);
-	    }))), scheduler);
-	    stateContainer.add(subscription);
-	    return stateContainer;
-	};
+	    }), dist$e.ignoreElements());
+	    return dist$3.pipe(dist$e.merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs), dist$e.shareReplayLast(dist$8.scheduler, priority));
+	}; };
 	exports.create = function (priority) {
-	    return dist$f.create(function () { return createDomLocationStateContainerResource(dist$8.scheduler, priority); });
+	    return dist$f.create(function () {
+	        var stateContainer = dist$h.create(getCurrentLocation(), dist$a.equals, dist$8.scheduler, priority);
+	        var setURI = function (uri) { return stateContainer.dispatch(function (_) { return uri; }); };
+	        return dist$6.pipe(stateContainer, dist$6.asyncIteratorResourceOperatorFrom(operator(setURI, priority)));
+	    });
 	};
 
 	});
