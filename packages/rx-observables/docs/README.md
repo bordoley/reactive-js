@@ -20,7 +20,7 @@
 * [keep](README.md#const-keep)
 * [map](README.md#const-map)
 * [mapTo](README.md#const-mapto)
-* [merge](README.md#const-merge)
+* [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
 * [observe](README.md#const-observe)
@@ -525,7 +525,7 @@ Name | Type |
 
 ___
 
-### `Const` merge
+###  merge
 
 ▸ **merge**<**T**>(`fst`: ObservableLike‹T›, `snd`: ObservableLike‹T›, ...`tail`: Array‹ObservableLike‹T››): *ObservableLike‹T›*
 

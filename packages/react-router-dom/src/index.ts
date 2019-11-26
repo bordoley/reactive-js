@@ -8,15 +8,18 @@ import {
 } from "@reactive-js/state-container";
 
 import {
-  lift as liftIterator,
-  map as asyncIteratorMap,
+  asyncIteratorResourceOperatorFrom,
+  mapDispatch,
+  pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
+import { pipe as observablePipe } from "@reactive-js/rx-observable";
+
 import {
   distinctUntilChanged,
   keep,
   map,
   onNext,
-} from "@reactive-js/rx-subscriber-operators";
+} from "@reactive-js/rx-observables";
 
 import { scheduler } from "@reactive-js/react-scheduler";
 
@@ -31,7 +34,6 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { fromEvent } from "@reactive-js/dom";
-import { relative } from "path";
 
 const getCurrentLocation = () => {
   const path = window.location.pathname;
@@ -58,11 +60,11 @@ class DomLocationStateContainerResourceImpl
 
     const subscription = connect(
       merge(
-        lift(
+        observablePipe(
           fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
           onNext((state: string) => stateContainer.dispatch(_ => state)),
         ),
-        lift(
+        observablePipe(
           stateContainer,
           keep(location => location !== getCurrentLocation()),
           onNext((next: string) =>
@@ -137,19 +139,19 @@ const reducer = (
 const requestMapper = (updater: StateUpdater<RelativeURI>) => (acc: string) =>
   reducer(acc, updater);
 
-const createRelativeURILocation = (priority?: number) => {
-  const lifted = liftIterator(
+const createRelativeURILocation = (priority?: number) =>
+  asyncIteratorResourcePipe(
     new DomLocationStateContainerResourceImpl(scheduler, priority),
-    map(mapper),
-    distinctUntilChanged(),
-    onNext(({ path, query, fragment }) => {
-      const uri = path + query + fragment;
-      history.pushState(undefined, "", uri);
-    }),
+    asyncIteratorResourceOperatorFrom(map(mapper)),
+    asyncIteratorResourceOperatorFrom(distinctUntilChanged()),
+    asyncIteratorResourceOperatorFrom(
+      onNext(({ path, query, fragment }) => {
+        const uri = path + query + fragment;
+        history.pushState(undefined, "", uri);
+      }),
+    ),
+    mapDispatch(requestMapper),
   );
-
-  return asyncIteratorMap(lifted, requestMapper);
-};
 
 export const create = (priority?: number): React.ComponentType<RouterProps> =>
   createRouter(() => createRelativeURILocation(priority));
