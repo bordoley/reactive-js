@@ -4,7 +4,6 @@ import {
   pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
 import { create as stateContainerCreate } from "@reactive-js/ix-state-container";
-import { create as createRouter, RouterProps } from "@reactive-js/react-router";
 import {
   equals as relativeURIEquals,
   RelativeURI,
@@ -51,8 +50,7 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
   );
 };
 
-export const create = (priority?: number): React.ComponentType<RouterProps> =>
-  createRouter(() => {
+export const create = (priority?: number) => {
     const stateContainer = stateContainerCreate(
       getCurrentLocation(),
       relativeURIEquals,
@@ -66,4 +64,4 @@ export const create = (priority?: number): React.ComponentType<RouterProps> =>
       stateContainer,
       asyncIteratorResourceOperatorFrom(operator(setURI, priority)),
     );
-  });
+  };

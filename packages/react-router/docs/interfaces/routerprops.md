@@ -10,14 +10,25 @@
 
 ### Properties
 
-* [notFoundComponent](routerprops.md#notfoundcomponent)
+* [locationResourceFactory](routerprops.md#locationresourcefactory)
+* [notFound](routerprops.md#notfound)
 * [routes](routerprops.md#routes)
 
 ## Properties
 
-###  notFoundComponent
+###  locationResourceFactory
 
-• **notFoundComponent**: *React.ComponentType‹[RoutableComponentProps](routablecomponentprops.md)›*
+• **locationResourceFactory**: *function*
+
+#### Type declaration:
+
+▸ (): *StateContainerResourceLike‹RelativeURI›*
+
+___
+
+###  notFound
+
+• **notFound**: *React.ComponentType‹[RoutableComponentProps](routablecomponentprops.md)›*
 
 ___
 

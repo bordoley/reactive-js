@@ -12,7 +12,7 @@
 
 ### `Const` create
 
-▸ **create**(`priority?`: undefined | number): *React.ComponentType‹RouterProps›*
+▸ **create**(`priority?`: undefined | number): *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
 
 **Parameters:**
 
@@ -20,4 +20,4 @@ Name | Type |
 ------ | ------ |
 `priority?` | undefined &#124; number |
 
-**Returns:** *React.ComponentType‹RouterProps›*
+**Returns:** *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
