@@ -1,14 +1,16 @@
+import { fromEvent } from "@reactive-js/dom";
+import {
+  asyncIteratorResourceOperatorFrom,
+  pipe as asyncIteratorResourcePipe,
+} from "@reactive-js/ix-async-iterator-resource";
+import { create as stateContainerCreate } from "@reactive-js/ix-state-container";
 import { create as createRouter, RouterProps } from "@reactive-js/react-router";
 import {
   equals as relativeURIEquals,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { create as stateContainerCreate } from "@reactive-js/state-container";
-import { pipe, ObservableLike } from "@reactive-js/rx-observable";
-import {
-  asyncIteratorResourceOperatorFrom,
-  pipe as asyncIteratorResourcePipe,
-} from "@reactive-js/ix-async-iterator-resource";
+import { scheduler } from "@reactive-js/react-scheduler";
+import { ObservableLike, pipe } from "@reactive-js/rx-observable";
 import {
   ignoreElements,
   keep,
@@ -16,8 +18,6 @@ import {
   onNext,
   shareReplayLast,
 } from "@reactive-js/rx-observables";
-import { scheduler } from "@reactive-js/react-scheduler";
-import { fromEvent } from "@reactive-js/dom";
 
 const getCurrentLocation = (): RelativeURI => {
   const path = window.location.pathname;
@@ -37,9 +37,7 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
 
   const onStateChangeUpdateHistoryObs = pipe(
     obs,
-    keep(
-      location => !relativeURIEquals(location, getCurrentLocation()),
-    ),
+    keep(location => !relativeURIEquals(location, getCurrentLocation())),
     onNext(({ path, query, fragment }: RelativeURI) => {
       const uri = path + query + fragment;
       window.history.pushState(undefined, "", uri);
@@ -48,11 +46,7 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
   );
 
   return pipe(
-    merge(
-      onPopstateUpdateURIObs,
-      onStateChangeUpdateHistoryObs,
-      obs,
-    ),
+    merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs),
     shareReplayLast(scheduler, priority),
   );
 };

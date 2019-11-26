@@ -2,16 +2,16 @@ import {
   asyncIteratorResourceOperatorFrom,
   pipe,
 } from "@reactive-js/ix-async-iterator-resource";
+import {
+  StateContainerResourceLike,
+  StateUpdater,
+} from "@reactive-js/ix-state-container";
 import { useAsyncIteratorResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
 import { scan } from "@reactive-js/rx-observables";
-import {
-  StateContainerResourceLike,
-  StateUpdater,
-} from "@reactive-js/state-container";
 import { createElement, useMemo } from "react";
 
 export interface RoutableComponentProps {

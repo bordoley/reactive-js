@@ -1,4 +1,4 @@
-[@reactive-js/state-container](../README.md) › [StateUpdater](stateupdater.md)
+[@reactive-js/ix-state-container](../README.md) › [StateUpdater](stateupdater.md)
 
 # Interface: StateUpdater <**T**>
 
