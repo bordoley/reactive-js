@@ -45,13 +45,14 @@ class MergeObserver<T> implements ObserverLike<T> {
   }
 }
 
-export const merge = <T>(
+export function merge<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
-): ObservableLike<T> => {
-  const observables = [fst, snd, ...tail];
-
+): ObservableLike<T>;
+export function merge <T>(
+  ...observables: Array<ObservableLike<T>>
+): ObservableLike<T> {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const completedCountRef: [number] = [0];
 

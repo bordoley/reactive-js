@@ -1,15 +1,18 @@
-import { lift } from "@reactive-js/ix-async-iterator-resource";
+import {
+  asyncIteratorResourceOperatorFrom,
+  pipe,
+} from "@reactive-js/ix-async-iterator-resource";
 import { useAsyncIteratorResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { scan } from "@reactive-js/rx-subscriber-operators";
+import { scan } from "@reactive-js/rx-observables";
 import {
   StateContainerResourceLike,
   StateUpdater,
 } from "@reactive-js/state-container";
-import { createElement, useCallback, useMemo } from "react";
+import { createElement, useMemo } from "react";
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
@@ -51,9 +54,11 @@ export const create = (
 
     const [route, uriUpdater] = useAsyncIteratorResource(
       () =>
-        lift(
+        pipe(
           locationResourceFactory(),
-          scan(pairify, [undefined, emptyRelativeURI]),
+          asyncIteratorResourceOperatorFrom(
+            scan(pairify, [undefined, emptyRelativeURI]),
+          ),
         ),
       [],
     );

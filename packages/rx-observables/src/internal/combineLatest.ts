@@ -127,12 +127,8 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   obs9: ObservableLike<TI>,
 ): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 export function combineLatest(
-  obs1: ObservableLike<any>,
-  obs2: ObservableLike<any>,
-  ...tail: ObservableLike<any>[]
+  ...observables: ObservableLike<any>[]
 ): ObservableLike<any> {
-  const observables = [obs1, obs2, ...tail];
-
   const subscribe = (subscriber: SubscriberLike<any>) => {
     const ctx: CombineLatestContext = {
       completedCount: 0,
