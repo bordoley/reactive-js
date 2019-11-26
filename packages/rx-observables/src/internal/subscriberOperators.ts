@@ -1,13 +1,10 @@
 import {
-  lift,
   ObservableLike,
   ObservableOperator,
   observableOperatorFrom,
 } from "@reactive-js/rx-observable";
 
 import { ObserverLike } from "@reactive-js/rx-observer";
-
-import { SubscriberOperator } from "@reactive-js/rx-subscriber";
 
 import {
   concat as concactSubscriberOperator,
@@ -101,7 +98,7 @@ export const takeLast = <T>(
   count: number,
   priority?: number,
 ): ObservableOperator<T, T> =>
-  observableOperatorFrom(takeLastSubscriberOperator(count));
+  observableOperatorFrom(takeLastSubscriberOperator(count, priority));
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
