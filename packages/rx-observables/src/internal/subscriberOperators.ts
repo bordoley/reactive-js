@@ -43,7 +43,7 @@ export const distinctUntilChanged = <T>(
 export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   observableOperatorFrom(exhaustSubscriberOperator());
 
-export const ignoreElements = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+export const ignoreElements = <TA, TB>(): ObservableOperator<TA, TB> =>
   observableOperatorFrom(ignoreElementsSubscriberOperator());
 
 export const keep = <T>(

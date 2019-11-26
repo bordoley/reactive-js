@@ -446,13 +446,15 @@ ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **ignoreElements**<**TA**, **TB**>(): *ObservableOperator‹TA, TB›*
 
 **Type parameters:**
 
-▪ **T**
+▪ **TA**
 
-**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+▪ **TB**
+
+**Returns:** *ObservableOperator‹TA, TB›*
 
 ___
 

@@ -4,8 +4,18 @@ import {
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
 import { create as stateContainerCreate } from "@reactive-js/state-container";
-import { connect, pipe } from "@reactive-js/rx-observable";
-import { keep, merge, onNext } from "@reactive-js/rx-observables";
+import { pipe, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  asyncIteratorResourceOperatorFrom,
+  pipe as asyncIteratorResourcePipe,
+} from "@reactive-js/ix-async-iterator-resource";
+import {
+  ignoreElements,
+  keep,
+  merge,
+  onNext,
+  shareReplayLast,
+} from "@reactive-js/rx-observables";
 import { scheduler } from "@reactive-js/react-scheduler";
 import { fromEvent } from "@reactive-js/dom";
 
@@ -14,6 +24,37 @@ const getCurrentLocation = (): RelativeURI => {
   const query = window.location.search;
   const fragment = window.location.hash;
   return { path, query, fragment };
+};
+
+const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
+  obs: ObservableLike<RelativeURI>,
+): ObservableLike<RelativeURI> => {
+  const onPopstateUpdateURIObs = pipe(
+    fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
+    onNext(setURI),
+    ignoreElements(),
+  );
+
+  const onStateChangeUpdateHistoryObs = pipe(
+    obs,
+    keep(
+      location => !relativeURIEquals(location, getCurrentLocation()),
+    ),
+    onNext(({ path, query, fragment }: RelativeURI) => {
+      const uri = path + query + fragment;
+      window.history.pushState(undefined, "", uri);
+    }),
+    ignoreElements(),
+  );
+
+  return pipe(
+    merge(
+      onPopstateUpdateURIObs,
+      onStateChangeUpdateHistoryObs,
+      obs,
+    ),
+    shareReplayLast(scheduler, priority),
+  );
 };
 
 export const create = (priority?: number): React.ComponentType<RouterProps> =>
@@ -25,27 +66,10 @@ export const create = (priority?: number): React.ComponentType<RouterProps> =>
       priority,
     );
 
-    stateContainer.add(
-      connect(
-        merge(
-          pipe(
-            fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
-            onNext((state: RelativeURI) => stateContainer.dispatch(_ => state)),
-          ),
-          pipe(
-            stateContainer,
-            keep(
-              location => !relativeURIEquals(location, getCurrentLocation()),
-            ),
-            onNext(({ path, query, fragment }: RelativeURI) => {
-              const uri = path + query + fragment;
-              window.history.pushState(undefined, "", uri);
-            }),
-          ),
-        ),
-        scheduler,
-      ),
-    );
+    const setURI = (uri: RelativeURI) => stateContainer.dispatch(_ => uri);
 
-    return stateContainer;
+    return asyncIteratorResourcePipe(
+      stateContainer,
+      asyncIteratorResourceOperatorFrom(operator(setURI, priority)),
+    );
   });
