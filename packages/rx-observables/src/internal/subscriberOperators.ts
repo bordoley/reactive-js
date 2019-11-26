@@ -1,4 +1,5 @@
 import {
+  lift,
   ObservableLike,
   ObservableOperator,
   observableOperatorFrom,
@@ -25,6 +26,9 @@ import {
   takeLast as takeLastSubscriberOperator,
   withLatestFrom as withLatestFromSubscriberOperator,
 } from "@reactive-js/rx-subscriber-operators";
+
+import { concat } from "./concat";
+import { ofValue } from "./fromArray";
 
 export const concatAll = <T>(
   maxBufferSize?: number,
@@ -84,8 +88,13 @@ export const onNext = <T>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): ObservableOperator<T, TAcc> =>
-  observableOperatorFrom(scanSubscriberOperator(scanner, initialValue));
+  delay?: number,
+  priority?: number,
+): ObservableOperator<T, TAcc> => obs =>
+  concat(
+    ofValue(initialValue, delay, priority),
+    lift(obs, scanSubscriberOperator(scanner, initialValue)),
+  );
 
 // tslint:disable-next-line variable-name
 export const switch_ = <T>(): ObservableOperator<ObservableLike<T>, T> =>
