@@ -8,7 +8,13 @@ import {
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 
-import { observe, SubscriberLike, toSafeObserver } from "../src/index";
+import {
+  create as subscriberCreate,
+  observe,
+  pipe,
+  SubscriberLike,
+  toSafeObserver,
+} from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
   const subscription = disposableCreate();
@@ -34,12 +40,55 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
   complete: jest.fn(),
 });
 
+describe("create", () => {
+  test("is not connected when created", () => {
+    const subscription = disposableCreate();
+    const scheduler = virtualTimeSchedulerCreate();
+    const subscriber = subscriberCreate(scheduler, subscription);
+
+    expect(subscriber.isConnected).toBeFalsy();
+  });
+  test("calling next and complete throws if not connected", () => {
+    const subscription = disposableCreate();
+    const scheduler = virtualTimeSchedulerCreate();
+    const subscriber = subscriberCreate(scheduler, subscription);
+
+    expect(() => subscriber.next(1)).toThrow();
+    expect(() => subscriber.complete()).toThrow();
+  });
+  test("calling next and complete throws if not scheduled", () => {
+    const subscription = disposableCreate();
+    const scheduler = virtualTimeSchedulerCreate();
+    const subscriber = subscriberCreate(scheduler, subscription);
+    subscriber.connect();
+
+    expect(() => subscriber.next(1)).toThrow();
+    expect(() => subscriber.complete()).toThrow();
+  });
+  test("completing a connected subscriber disposes it", () => {
+    const subscription = disposableCreate();
+    const scheduler = virtualTimeSchedulerCreate();
+    const subscriber = subscriberCreate(scheduler, subscription);
+    subscriber.connect();
+
+    expect(subscriber.isConnected).toBeTruthy();
+    expect(subscriber.isDisposed).toBeFalsy();
+    const schedulerSubscription = subscriber.schedule(_ =>
+      subscriber.complete(),
+    );
+    expect(schedulerSubscription.isDisposed).toBeFalsy();
+    scheduler.run();
+    expect(subscriber.isDisposed).toBeTruthy();
+    expect(schedulerSubscription.isDisposed).toBeTruthy();
+  });
+});
+
 describe("observe", () => {
   describe("next", () => {
     test("with value", () => {
       const subscriber = createMockSubscriber();
       const observer = createMockObserver();
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       delegatedSubscriber.next("a");
       expect(observer.next).toBeCalledWith("a");
@@ -55,7 +104,7 @@ describe("observe", () => {
         },
         complete: _ => {},
       };
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       delegatedSubscriber.next("a");
       expect(subscriber.complete).toBeCalledWith(error);
@@ -64,7 +113,7 @@ describe("observe", () => {
     test("throws if not connected", () => {
       const subscriber = createMockSubscriber();
       const observer = createMockObserver();
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       (subscriber as any).isConnected = false;
 
@@ -74,7 +123,7 @@ describe("observe", () => {
     test("throws if not executing in SchedulerContinuation", () => {
       const subscriber = createMockSubscriber();
       const observer = createMockObserver();
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       (subscriber as any).inScheduledContinuation = false;
 
@@ -86,7 +135,7 @@ describe("observe", () => {
     test("with error", () => {
       const subscriber = createMockSubscriber();
       const observer = createMockObserver();
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       const error = new Error();
       delegatedSubscriber.complete(error);
@@ -103,7 +152,7 @@ describe("observe", () => {
           throw error;
         },
       };
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       delegatedSubscriber.complete();
       expect(subscriber.complete).toBeCalledWith(error);
@@ -122,7 +171,7 @@ describe("observe", () => {
     test("throws if not executing in SchedulerContinuation", () => {
       const subscriber = createMockSubscriber();
       const observer = createMockObserver();
-      const delegatedSubscriber = observe(observer)(subscriber);
+      const delegatedSubscriber = pipe(subscriber, observe(observer));
 
       (subscriber as any).inScheduledContinuation = false;
 
@@ -133,7 +182,7 @@ describe("observe", () => {
   test("disposing the subscriber blocks further notifications", () => {
     const subscriber = createMockSubscriber();
     const observer = createMockObserver();
-    const delegatedSubscriber = observe(observer)(subscriber);
+    const delegatedSubscriber = pipe(subscriber, observe(observer));
 
     subscriber.dispose();
     delegatedSubscriber.next("a");
@@ -143,7 +192,7 @@ describe("observe", () => {
   test("completing the subscriber blocks further notifications", () => {
     const subscriber = createMockSubscriber();
     const observer = createMockObserver();
-    const delegatedSubscriber = observe(observer)(subscriber);
+    const delegatedSubscriber = pipe(subscriber, observe(observer));
 
     delegatedSubscriber.complete();
     delegatedSubscriber.next("a");
@@ -151,52 +200,74 @@ describe("observe", () => {
   });
 });
 
-describe("Subscriber", () => {
-  describe("toSafeObserver", () => {
-    test("next", () => {
-      const scheduler = virtualTimeSchedulerCreate(2);
-      const subscription = disposableCreate();
-      const subscriber: SubscriberLike<number> = {
-        get isDisposed() {
-          return subscription.isDisposed;
-        },
-        add: disp => subscription.add(disp),
-        dispose: () => subscription.dispose(),
-        remove: disp => subscription.remove(disp),
-        isConnected: true,
-        get inScheduledContinuation() {
-          return scheduler.inScheduledContinuation;
-        },
-        get now() {
-          return scheduler.now;
-        },
-        schedule: (c, d?, p?) => scheduler.schedule(c, d, p),
-        next: jest.fn(),
-        complete: jest.fn(),
-      };
+test("pipe", () => {
+  const result: number[] = [];
+  const subscriber = createMockSubscriber();
+  const delegatedSubscriber = pipe(
+    subscriber,
+    observe({
+      next: (i: number) => {
+        result.push(i + 1);
+      },
+      complete: _ => {},
+    }),
+    observe({
+      next: (i: number) => {
+        result.push(i + 2);
+      },
+      complete: _ => {},
+    }),
+  );
 
-      const observer = toSafeObserver(subscriber);
+  delegatedSubscriber.next(0);
 
-      const notifications: Notification<number>[] = [
-        [NotificationKind.Next, 0],
-        [NotificationKind.Next, 1],
-        [NotificationKind.Next, 2],
-        [NotificationKind.Next, 3],
-        [NotificationKind.Next, 4],
-        [NotificationKind.Next, 5],
-        [NotificationKind.Complete, undefined],
-        [NotificationKind.Next, 6],
-      ];
+  expect(result).toEqual([1, 2]);
+});
 
-      for (let nofification of notifications) {
-        notify(observer, nofification);
-      }
+describe("toSafeObserver", () => {
+  test("next", () => {
+    const scheduler = virtualTimeSchedulerCreate(2);
+    const subscription = disposableCreate();
+    const subscriber: SubscriberLike<number> = {
+      get isDisposed() {
+        return subscription.isDisposed;
+      },
+      add: disp => subscription.add(disp),
+      dispose: () => subscription.dispose(),
+      remove: disp => subscription.remove(disp),
+      isConnected: true,
+      get inScheduledContinuation() {
+        return scheduler.inScheduledContinuation;
+      },
+      get now() {
+        return scheduler.now;
+      },
+      schedule: (c, d?, p?) => scheduler.schedule(c, d, p),
+      next: jest.fn(),
+      complete: jest.fn(),
+    };
 
-      scheduler.run();
+    const observer = toSafeObserver(subscriber);
 
-      expect(subscriber.next).toBeCalledTimes(6);
-      expect(subscriber.complete).toBeCalledTimes(1);
-      expect(subscriber.next).toHaveBeenLastCalledWith(5);
-    });
+    const notifications: Notification<number>[] = [
+      [NotificationKind.Next, 0],
+      [NotificationKind.Next, 1],
+      [NotificationKind.Next, 2],
+      [NotificationKind.Next, 3],
+      [NotificationKind.Next, 4],
+      [NotificationKind.Next, 5],
+      [NotificationKind.Complete, undefined],
+      [NotificationKind.Next, 6],
+    ];
+
+    for (let nofification of notifications) {
+      notify(observer, nofification);
+    }
+
+    scheduler.run();
+
+    expect(subscriber.next).toBeCalledTimes(6);
+    expect(subscriber.complete).toBeCalledTimes(1);
+    expect(subscriber.next).toHaveBeenLastCalledWith(5);
   });
 });

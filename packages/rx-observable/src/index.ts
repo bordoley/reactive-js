@@ -28,7 +28,7 @@ export const connect = <T>(
   const subscription = disposableCreate();
   const subscriber = subscriberCreate(scheduler, subscription);
   observable.subscribe(subscriber);
-  subscriber.isConnected = true;
+  subscriber.connect();
   return subscription;
 };
 
