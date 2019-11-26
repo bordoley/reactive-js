@@ -19,6 +19,7 @@ import {
   onNext,
   scan,
   switch_,
+  take,
   withLatestFrom,
 } from "../src/index";
 
@@ -204,6 +205,22 @@ test("switch", () => {
 
   expect(subscriber.complete).toBeCalledTimes(1);
   expect(subscriber.complete).toBeCalledWith(error);
+});
+
+test("take", () => {
+  const subscriber = createMockSubscriber();
+  const takeSubscriber = take(2)(subscriber);
+
+  takeSubscriber.next(1);
+  takeSubscriber.next(2);
+  takeSubscriber.next(3);
+  takeSubscriber.next(4);
+  takeSubscriber.complete();
+
+  expect(subscriber.next).toHaveBeenCalledTimes(2);
+  expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
+  expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
+  expect(subscriber.complete).toBeCalledWith(undefined);
 });
 
 test("withLatestFrom", () => {
