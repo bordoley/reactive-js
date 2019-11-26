@@ -68,7 +68,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     this.last.push(data);
-    if (this.last.length >= this.maxCount) {
+    if (this.last.length > this.maxCount) {
       this.last.shift();
     }
   }
