@@ -168,7 +168,10 @@ describe("concat", () => {
 
 test("distinctUntilChanged", () => {
   const subscriber = createMockSubscriber();
-  const distinctUntilChangedSubscriber = pipe(subscriber, distinctUntilChanged());
+  const distinctUntilChangedSubscriber = pipe(
+    subscriber,
+    distinctUntilChanged(),
+  );
   const error = new Error();
 
   distinctUntilChangedSubscriber.next(1);
@@ -193,7 +196,10 @@ test("distinctUntilChanged", () => {
 
 test("keep", () => {
   const subscriber = createMockSubscriber();
-  const keepSubscriber = pipe(subscriber, keep((x: number) => x % 2 === 0));
+  const keepSubscriber = pipe(
+    subscriber,
+    keep((x: number) => x % 2 === 0),
+  );
   const error = new Error();
 
   keepSubscriber.next(1);
@@ -221,7 +227,10 @@ test("ignoreElement", () => {
 
 test("map", () => {
   const subscriber = createMockSubscriber();
-  const mappedSubscriber = pipe(subscriber, map((x: number) => x * 2));
+  const mappedSubscriber = pipe(
+    subscriber,
+    map((x: number) => x * 2),
+  );
   const error = new Error();
 
   mappedSubscriber.next(1);
@@ -249,7 +258,6 @@ test("mapTo", () => {
   expect(subscriber.complete).toBeCalledWith(error);
 });
 
-
 test("onComplete", () => {
   const subscriber = createMockSubscriber();
   const cb = jest.fn();
@@ -258,7 +266,7 @@ test("onComplete", () => {
   onCompleteSubscriber.complete();
   expect(subscriber.complete).toHaveBeenCalledWith(undefined);
   expect(cb).toHaveBeenCalledWith(undefined);
-})
+});
 
 describe("onError", () => {
   test("when completed with error", () => {
@@ -275,13 +283,13 @@ describe("onError", () => {
   test("when completed without error", () => {
     const subscriber = createMockSubscriber();
     const cb = jest.fn();
-    const onCompleteSubscriber = pipe(subscriber, onError(cb));;
+    const onCompleteSubscriber = pipe(subscriber, onError(cb));
 
     onCompleteSubscriber.complete();
     expect(subscriber.complete).toHaveBeenCalledTimes(1);
     expect(cb).toHaveBeenCalledTimes(0);
   });
-})
+});
 
 test("onNext", () => {
   const subscriber = createMockSubscriber();
@@ -291,14 +299,14 @@ test("onNext", () => {
   onNextSubscriber.next(1);
   expect(subscriber.next).toHaveBeenCalledWith(1);
   expect(cb).toHaveBeenCalledWith(1);
-})
+});
 
 test("scan", () => {
   const subscriber = createMockSubscriber();
-  const scanSubscriber = pipe(subscriber, scan(
-    (acc: number, x: number) => acc + x,
-    0,
-  ));
+  const scanSubscriber = pipe(
+    subscriber,
+    scan((acc: number, x: number) => acc + x, 0),
+  );
   const error = new Error();
 
   scanSubscriber.next(1);
