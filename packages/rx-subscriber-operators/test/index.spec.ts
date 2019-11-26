@@ -1,6 +1,11 @@
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { create as observableCreate } from "@reactive-js/rx-observable";
-import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
+import {
+  create as subscriptionCreate,
+  pipe,
+  SubscriberLike,
+  toSafeObserver,
+} from "@reactive-js/rx-subscriber";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -20,6 +25,7 @@ import {
   scan,
   switch_,
   take,
+  takeLast,
   withLatestFrom,
 } from "../src/index";
 
@@ -221,6 +227,54 @@ test("take", () => {
   expect(subscriber.next).toHaveBeenNthCalledWith(1, 1);
   expect(subscriber.next).toHaveBeenNthCalledWith(2, 2);
   expect(subscriber.complete).toBeCalledWith(undefined);
+});
+
+describe("takeLast", () => {
+  test("publishes the last n values when completed", () => {
+    const scheduler = virtualTimeSchedulerCreate(2);
+    const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+    const takeSubscriber = pipe(subscriber, takeLast(3));
+
+    scheduler.schedule(_ => {
+      takeSubscriber.next(1);
+      takeSubscriber.next(2);
+      takeSubscriber.next(3);
+      takeSubscriber.next(4);
+      takeSubscriber.complete();
+      takeSubscriber.next(5);
+    });
+
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenCalledTimes(3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
+    expect(subscriber.complete).toBeCalled();
+  });
+
+  test("immediately completes with an error if completed with an error", () => {
+    const scheduler = virtualTimeSchedulerCreate();
+    const subscriber = createMockSubscriberWithScheduler(scheduler);
+
+    const takeSubscriber = pipe(subscriber, takeLast(2));
+    const error = new Error();
+
+    scheduler.schedule(_ => {
+      takeSubscriber.next(1);
+      takeSubscriber.next(2);
+      takeSubscriber.next(3);
+      takeSubscriber.next(4);
+      takeSubscriber.complete(error);
+      takeSubscriber.next(5);
+    });
+
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenCalledTimes(0);
+    expect(subscriber.complete).toBeCalledWith(error);
+  });
 });
 
 test("withLatestFrom", () => {
