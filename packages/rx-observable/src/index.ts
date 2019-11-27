@@ -46,16 +46,12 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const liftedSubscrber = this.liftSubscriber(subscriber);
-    this.source.subscribe(liftedSubscrber);
-  }
-
-  private liftSubscriber(subscriber: SubscriberLike<any>) {
-    return subscriberPipe.apply(undefined, [
+    const liftedSubscrber = subscriberPipe.apply(undefined, [
       subscriber,
       ...this.operators,
     ] as any);
-    // return this.operators.reduceRight((acc, next) => next(acc), subscriber);
+    
+    this.source.subscribe(liftedSubscrber);
   }
 }
 
