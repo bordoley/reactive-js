@@ -9,9 +9,12 @@ import { render } from "react-dom";
 
 registerDefaultScheduler(scheduler);
 
-const makeCallbacks = (uriUpdater: (updater: StateUpdater<RelativeURI>) => void) => {
-  const liftUpdater = (updater: StateUpdater<RelativeURI>) => () => uriUpdater(updater);
-  const goToPath = (path: string) =>  liftUpdater(state => ({...state, path }));
+const makeCallbacks = (
+  uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
+) => {
+  const liftUpdater = (updater: StateUpdater<RelativeURI>) => () =>
+    uriUpdater(updater);
+  const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
 
   const goToRoute1 = goToPath("/route1");
   const goToRoute2 = goToPath("/route2");
