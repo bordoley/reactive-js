@@ -14,10 +14,6 @@
 
   ↳ **AsyncIteratorLike**
 
-## Implemented by
-
-* [DelegatingAsyncIterator](../classes/delegatingasynciterator.md)
-
 ## Index
 
 ### Methods

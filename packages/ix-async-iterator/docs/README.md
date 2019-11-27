@@ -4,10 +4,6 @@
 
 ## Index
 
-### Classes
-
-* [DelegatingAsyncIterator](classes/delegatingasynciterator.md)
-
 ### Interfaces
 
 * [AsyncIteratorLike](interfaces/asynciteratorlike.md)

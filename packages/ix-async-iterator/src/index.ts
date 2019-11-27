@@ -10,9 +10,7 @@ export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {
   dispatch(request: TReq): void;
 }
 
-/** @noInheritDoc */
-export class DelegatingAsyncIterator<TReq, T>
-  implements AsyncIteratorLike<TReq, T> {
+class AsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;
   readonly observable: ObservableLike<T>;
 
@@ -38,18 +36,19 @@ export const lift = <TReq, T, TReqA, TA>(
   operator?: ObservableOperator<T, TA>,
   mapper?: (req: TReqA) => TReq,
 ): AsyncIteratorOperator<TReq, T, TReqA, TA> => iterator => {
-  const [observable, dispatcher] =
-    iterator instanceof DelegatingAsyncIterator
-      ? [iterator.observable, iterator.dispatcher]
-      : [iterator, (req: any) => iterator.dispatch(req)];
+  // Cheat here. AsyncIteratorResourceImpl follows the same protocol, so 
+  // dynamically pull properties off of it.
+  const observable: ObservableLike<any> =
+    (iterator as any).observable || iterator;
+  const dispatcher: (req: TReq) => void =
+    (iterator as any).dispatcher || ((req: TReq) => iterator.dispatch(req));
 
   const pipedObservable =
     operator !== undefined ? observablePipe(observable, operator) : observable;
-
   const mappedDispatcher: (req: TReqA) => void =
-    mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
+    mapper !== undefined ? req => dispatcher(mapper(req)) : (dispatcher as any);
 
-  return new DelegatingAsyncIterator(pipedObservable, mappedDispatcher);
+  return new AsyncIteratorImpl(pipedObservable, mappedDispatcher);
 };
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
