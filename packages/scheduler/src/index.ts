@@ -51,9 +51,9 @@ export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}
 let instance: SchedulerLike | undefined;
 
 /**
- * Registers a default scheduler for the current process. This calling this
- * function more than once with a different scheduler instance is a runtime
- * error and results in an error being thrown.
+ * Registers a default scheduler for the current process. Calling this
+ * function more than once with a different scheduler instance
+ * results in an error being thrown.
  *
  * @param scheduler
  */
