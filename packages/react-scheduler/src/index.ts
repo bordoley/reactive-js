@@ -87,9 +87,13 @@ class ReactSchedulerImpl implements SchedulerLike {
               priority,
             );
 
-      if (callback === continuationCallback && delay === 0) {
-        return callback;
-      }
+
+      // FIXME: React's scheduler doesn't seem to deal well with abusive sources
+      // that aggressive continue via a returned called, so just explicitly reschedule
+      // work for now.
+      //if (callback === continuationCallback && delay === 0) {
+      //  return callback;
+      //}
 
       this.scheduleCallback(disposable, callback, delay, resultPriority);
       return;

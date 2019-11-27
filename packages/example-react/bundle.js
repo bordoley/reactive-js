@@ -530,9 +530,9 @@ var ExampleReact = (function (react, reactDom) {
 	            var callback = resultContinuation === continuation && resultPriority === priority
 	                ? continuationCallback
 	                : _this.createFrameCallback(disposable, shouldYield, continuation, priority);
-	            if (callback === continuationCallback && delay === 0) {
-	                return callback;
-	            }
+	            //if (callback === continuationCallback && delay === 0) {
+	            //  return callback;
+	            //}
 	            _this.scheduleCallback(disposable, callback, delay, resultPriority);
 	            return;
 	        };
@@ -2711,7 +2711,7 @@ var ExampleReact = (function (react, reactDom) {
 	        react_1.default.createElement("button", { onClick: goToRoute1 }, "Go to route1"),
 	        react_1.default.createElement("button", { onClick: goToRoute2 }, "Go to route2")));
 	};
-	var src = dist$b.generate(function (x) { return x + 1; }, 0, 2, 4);
+	var src = dist$b.generate(function (x) { return x + 1; }, 0, undefined, 0);
 	var Component1 = function (props) {
 	    var value = dist$6.useObservable(function () { return src; }, []);
 	    return react_1.default.createElement(react_1.default.Fragment, null,
@@ -2723,7 +2723,7 @@ var ExampleReact = (function (react, reactDom) {
 	    ["/route2", Component1],
 	];
 	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$f.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
-	dist$5.connect(dist$5.pipe(dist$b.generate(function (x) { return x + 1; }, 0, undefined, 5), dist$b.map(function (x) { return dist$b.fromArray([x, x, x, x]); }), dist$b.exhaust(), dist$b.onNext(console.log)));
+	dist$5.connect(dist$5.pipe(dist$b.generate(function (x) { return x + 1; }, 0, undefined, 0), dist$b.map(function (x) { return dist$b.fromArray([x, x, x, x]); }), dist$b.exhaust(), dist$b.onNext(console.log)));
 
 	});
 
