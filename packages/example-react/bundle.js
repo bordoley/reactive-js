@@ -619,7 +619,7 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return AutoDisposingSubscriberImpl;
 	}(AbstractSubscriberImpl));
-	exports.create = function (scheduler, subscription) {
+	exports.createAutoDisposing = function (scheduler, subscription) {
 	    return new AutoDisposingSubscriberImpl(scheduler, subscription);
 	};
 	var getSubscriberScheduler = function (delegate) {
@@ -784,7 +784,7 @@ var ExampleReact = (function (react, reactDom) {
 	});
 
 	unwrapExports(dist$3);
-	var dist_1$3 = dist$3.create;
+	var dist_1$3 = dist$3.createAutoDisposing;
 	var dist_2$1 = dist$3.DelegatingSubscriber;
 	var dist_3$1 = dist$3.observe;
 	var dist_4 = dist$3.toSafeObserver;
@@ -821,7 +821,7 @@ var ExampleReact = (function (react, reactDom) {
 	exports.connect = function (observable, scheduler) {
 	    scheduler = scheduler || dist$4.getDefaultScheduler();
 	    var subscription = dist.create();
-	    var subscriber = dist$3.create(scheduler, subscription);
+	    var subscriber = dist$3.createAutoDisposing(scheduler, subscription);
 	    observable.subscribe(subscriber);
 	    subscriber.connect();
 	    return subscription;
