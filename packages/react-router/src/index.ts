@@ -21,20 +21,6 @@ type RouteMap = {
   [key: string]: React.ComponentType<RoutableComponentProps>;
 };
 
-const routesReducer = (
-  acc: RouteMap,
-  [path, component]: [string, React.ComponentType<RoutableComponentProps>],
-): RouteMap => {
-  acc[path] = component;
-  return acc;
-};
-
-const pairify = (
-  [_, oldState]: [RelativeURI | undefined, RelativeURI],
-  next: RelativeURI,
-): [RelativeURI | undefined, RelativeURI] =>
-  oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
-
 export interface RouterProps {
   readonly locationResourceFactory: () => AsyncIteratorResourceLike<
     StateUpdater<RelativeURI>,
@@ -53,16 +39,26 @@ export const Router: React.ComponentType<RouterProps> = ({
   routes,
 }) => {
   const element = useObservableResource(() => {
-    const routeMap = routes.reduce(routesReducer, {});
+    const routeMap: RouteMap = {};
+    for(let [path, component] of routes) {
+      routeMap[path] = component;
+    }
+    
     const locationResource = locationResourceFactory();
 
     const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
       locationResource.dispatch(updater);
     };
 
+    const pairify = (
+      [_, oldState]: [RelativeURI | undefined, RelativeURI],
+      next: RelativeURI,
+    ): [RelativeURI | undefined, RelativeURI] =>
+      oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
+
     return pipe(
       locationResource,
-      lift(scan(pairify, [undefined, emptyRelativeURI])),
+      lift(scan((pairify), [undefined, emptyRelativeURI])),
       lift(
         map(([referer, uri]) =>
           createElement(routeMap[uri.path] || notFound, {
