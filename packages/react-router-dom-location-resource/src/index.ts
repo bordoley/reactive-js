@@ -3,7 +3,7 @@ import {
   lift,
   pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
-import { create as stateContainerCreate } from "@reactive-js/ix-state-container-resource";
+import { create as stateContainerCreate } from "@reactive-js/ix-state-container";
 import {
   equals as relativeURIEquals,
   RelativeURI,

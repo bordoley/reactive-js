@@ -29,7 +29,9 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const Component1 = (props: RoutableComponentProps) => <div>{props.uri.path}</div>;
+const Component1 = (props: RoutableComponentProps) => (
+  <div>{props.uri.path}</div>
+);
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route1", Component1],

@@ -22,7 +22,7 @@
     "@reactive-js/rx-observables": "0.0.0",
     "@reactive-js/rx-observable-resource": "0.0.0",
     "@reactive-js/ix-state-container": "0.0.0",
-    "@reactive-js/ix-state-container-resource": "0.0.0",
+    "@reactive-js/ix-state-container": "0.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
