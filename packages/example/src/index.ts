@@ -12,7 +12,7 @@ import {
   mergeAll,
   onComplete,
   onNext,
-  switch_,
+  switchAll,
 } from "@reactive-js/rx-observables";
 
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
@@ -71,7 +71,7 @@ connect(
   pipe(
     generate(x => x + 1, 0, 500),
     map(x => generate(x => x, x, 100)),
-    switch_(),
+    switchAll(),
     onNext(console.log),
   ),
   scheduler,

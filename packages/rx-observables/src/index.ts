@@ -26,7 +26,7 @@ export {
   shareReplayLast,
 } from "./internal/sharedObservable";
 export { scan } from "./internal/scan";
-export { switch_ } from "./internal/switch";
+export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
 export { throws } from "./internal/throws";

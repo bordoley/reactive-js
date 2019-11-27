@@ -2070,15 +2070,14 @@ var ExampleReact = (function (react, reactDom) {
 	var operator = function (subscriber) {
 	    return new SwitchSubscriber(subscriber);
 	};
-	// tslint:disable-next-line variable-name
-	exports.switch_ = function () {
+	exports.switchAll = function () {
 	    return dist$5.lift(operator);
 	};
 
 	});
 
 	unwrapExports(_switch);
-	var _switch_1 = _switch.switch_;
+	var _switch_1 = _switch.switchAll;
 
 	var take = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -2300,7 +2299,7 @@ var ExampleReact = (function (react, reactDom) {
 
 	exports.scan = scan.scan;
 
-	exports.switch_ = _switch.switch_;
+	exports.switchAll = _switch.switchAll;
 
 	exports.take = take.take;
 
@@ -2343,7 +2342,7 @@ var ExampleReact = (function (react, reactDom) {
 	var dist_28 = dist$b.shareReplay;
 	var dist_29 = dist$b.shareReplayLast;
 	var dist_30 = dist$b.scan;
-	var dist_31 = dist$b.switch_;
+	var dist_31 = dist$b.switchAll;
 	var dist_32 = dist$b.take;
 	var dist_33 = dist$b.takeLast;
 	var dist_34 = dist$b.withLatestFrom;
@@ -2355,24 +2354,23 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-	var routesReducer = function (acc, _a) {
-	    var path = _a[0], component = _a[1];
-	    acc[path] = component;
-	    return acc;
-	};
-	var pairify = function (_a, next) {
-	    var _ = _a[0], oldState = _a[1];
-	    return oldState === dist$7.empty ? [undefined, next] : [oldState, next];
-	};
 	exports.Router = function (_a) {
 	    var locationResourceFactory = _a.locationResourceFactory, notFound = _a.notFound, routes = _a.routes;
 	    var element = dist$6.useObservableResource(function () {
-	        var routeMap = routes.reduce(routesReducer, {});
+	        var routeMap = {};
+	        for (var _i = 0, routes_1 = routes; _i < routes_1.length; _i++) {
+	            var _a = routes_1[_i], path = _a[0], component = _a[1];
+	            routeMap[path] = component;
+	        }
 	        var locationResource = locationResourceFactory();
 	        var uriUpdater = function (updater) {
 	            locationResource.dispatch(updater);
 	        };
-	        return dist$8.pipe(locationResource, dist$8.lift(dist$b.scan(pairify, [undefined, dist$7.empty])), dist$8.lift(dist$b.map(function (_a) {
+	        var pairify = function (_a, next) {
+	            var _ = _a[0], oldState = _a[1];
+	            return oldState === dist$7.empty ? [undefined, next] : [oldState, next];
+	        };
+	        return dist$8.pipe(locationResource, dist$8.lift(dist$b.scan((pairify), [undefined, dist$7.empty])), dist$8.lift(dist$b.map(function (_a) {
 	            var referer = _a[0], uri = _a[1];
 	            return react.createElement(routeMap[uri.path] || notFound, {
 	                referer: referer,
@@ -2418,58 +2416,14 @@ var ExampleReact = (function (react, reactDom) {
 	var dist$e = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
-	/** @noInheritDoc */
-	var DelegatingAsyncIterator = /** @class */ (function () {
-	    function DelegatingAsyncIterator(observable, dispatcher) {
-	        this.observable = observable;
+
+
+
+	var AsyncIteratorResourceImpl = /** @class */ (function () {
+	    function AsyncIteratorResourceImpl(dispatcher, disposable, observable) {
 	        this.dispatcher = dispatcher;
-	    }
-	    DelegatingAsyncIterator.prototype.dispatch = function (req) {
-	        this.dispatcher(req);
-	    };
-	    DelegatingAsyncIterator.prototype.subscribe = function (subscriber) {
-	        this.observable.subscribe(subscriber);
-	    };
-	    return DelegatingAsyncIterator;
-	}());
-	exports.DelegatingAsyncIterator = DelegatingAsyncIterator;
-	exports.lift = function (operator, mapper) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIterator
-	        ? [iterator.observable, iterator.dispatcher]
-	        : [iterator, function (req) { return iterator.dispatch(req); }], observable = _a[0], dispatcher = _a[1];
-	    var pipedObservable = operator !== undefined ? dist$5.pipe(observable, operator) : observable;
-	    var mappedDispatcher = mapper !== undefined ? function (req) { return dispatcher(mapper(req)); } : dispatcher;
-	    return new DelegatingAsyncIterator(pipedObservable, mappedDispatcher);
-	}; };
-	function pipe(src) {
-	    var operators = [];
-	    for (var _i = 1; _i < arguments.length; _i++) {
-	        operators[_i - 1] = arguments[_i];
-	    }
-	    return operators.reduce(function (acc, next) { return next(acc); }, src);
-	}
-	exports.pipe = pipe;
-
-	});
-
-	unwrapExports(dist$e);
-	var dist_1$e = dist$e.DelegatingAsyncIterator;
-	var dist_2$a = dist$e.lift;
-	var dist_3$5 = dist$e.pipe;
-
-	var dist$f = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
-
-	var AsyncIteratorResourceImpl = /** @class */ (function (_super) {
-	    tslib_es6.__extends(AsyncIteratorResourceImpl, _super);
-	    function AsyncIteratorResourceImpl(observable, dispatcher, disposable) {
-	        var _this = _super.call(this, observable, dispatcher) || this;
-	        _this.disposable = disposable;
-	        return _this;
+	        this.disposable = disposable;
+	        this.observable = observable;
 	    }
 	    Object.defineProperty(AsyncIteratorResourceImpl.prototype, "isDisposed", {
 	        get: function () {
@@ -2486,6 +2440,9 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
+	    AsyncIteratorResourceImpl.prototype.dispatch = function (req) {
+	        this.dispatcher(req);
+	    };
 	    AsyncIteratorResourceImpl.prototype.dispose = function () {
 	        this.disposable.dispose();
 	    };
@@ -2497,15 +2454,18 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
+	    AsyncIteratorResourceImpl.prototype.subscribe = function (subscriber) {
+	        this.observable.subscribe(subscriber);
+	    };
 	    return AsyncIteratorResourceImpl;
-	}(dist$e.DelegatingAsyncIterator));
+	}());
 	exports.lift = function (operator, mapper) { return function (iterator) {
 	    var _a = iterator instanceof AsyncIteratorResourceImpl
 	        ? [iterator.observable, iterator.dispatcher, iterator.disposable]
 	        : [iterator, function (req) { return iterator.dispatch(req); }, iterator], observable = _a[0], dispatcher = _a[1], disposable = _a[2];
 	    var pipedObservable = operator !== undefined ? dist$5.pipe(observable, operator) : observable;
 	    var mappedDispatcher = mapper !== undefined ? function (req) { return dispatcher(mapper(req)); } : dispatcher;
-	    return new AsyncIteratorResourceImpl(pipedObservable, mappedDispatcher, disposable);
+	    return new AsyncIteratorResourceImpl(mappedDispatcher, disposable, pipedObservable);
 	}; };
 	function pipe(src) {
 	    var operators = [];
@@ -2518,25 +2478,25 @@ var ExampleReact = (function (react, reactDom) {
 	exports.createEvent = function (priority) {
 	    var subject = dist$a.create(priority);
 	    var dispatcher = function (req) { return subject.next(req); };
-	    return new AsyncIteratorResourceImpl(subject, dispatcher, subject);
+	    return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
 	};
 	exports.createStateStore = function (initialState, equals, scheduler, priority) {
 	    var subject = dist$a.create(priority);
 	    var dispatcher = function (req) { return subject.next(req); };
 	    var observable = dist$5.pipe(subject, dist$b.scan(function (acc, next) { return next(acc); }, initialState), dist$b.startWith(initialState), dist$b.distinctUntilChanged(equals), dist$b.shareReplayLast(scheduler, priority));
 	    subject.add(dist$5.connect(observable, scheduler));
-	    return new AsyncIteratorResourceImpl(observable, dispatcher, subject);
+	    return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
 	};
 
 	});
 
-	unwrapExports(dist$f);
-	var dist_1$f = dist$f.lift;
-	var dist_2$b = dist$f.pipe;
-	var dist_3$6 = dist$f.createEvent;
-	var dist_4$4 = dist$f.createStateStore;
+	unwrapExports(dist$e);
+	var dist_1$e = dist$e.lift;
+	var dist_2$a = dist$e.pipe;
+	var dist_3$5 = dist$e.createEvent;
+	var dist_4$4 = dist$e.createStateStore;
 
-	var dist$g = createCommonjsModule(function (module, exports) {
+	var dist$f = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -2560,17 +2520,17 @@ var ExampleReact = (function (react, reactDom) {
 	    return dist$5.pipe(dist$b.merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs), dist$b.shareReplayLast(dist$2.scheduler, priority));
 	}; };
 	exports.create = function (priority) {
-	    var stateStore = dist$f.createStateStore(getCurrentLocation(), dist$7.equals, dist$2.scheduler, priority);
+	    var stateStore = dist$e.createStateStore(getCurrentLocation(), dist$7.equals, dist$2.scheduler, priority);
 	    var setURI = function (uri) { return stateStore.dispatch(function (_) { return uri; }); };
-	    return dist$f.pipe(stateStore, dist$f.lift(operator(setURI, priority)));
+	    return dist$e.pipe(stateStore, dist$e.lift(operator(setURI, priority)));
 	};
 
 	});
 
-	unwrapExports(dist$g);
-	var dist_1$g = dist$g.create;
+	unwrapExports(dist$f);
+	var dist_1$f = dist$f.create;
 
-	var dist$h = createCommonjsModule(function (module, exports) {
+	var dist$g = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
@@ -2604,11 +2564,11 @@ var ExampleReact = (function (react, reactDom) {
 	    ["/route1", Component1],
 	    ["/route2", Component1],
 	];
-	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$g.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
+	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$f.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
 
 	});
 
-	var index = unwrapExports(dist$h);
+	var index = unwrapExports(dist$g);
 
 	return index;
 

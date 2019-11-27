@@ -60,6 +60,5 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
 
-// tslint:disable-next-line variable-name
-export const switch_ = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   lift(operator);

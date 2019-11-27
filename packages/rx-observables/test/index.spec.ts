@@ -30,7 +30,7 @@ import {
   onNext,
   scan,
   shareReplayLast,
-  switch_,
+  switchAll,
   take,
   takeLast,
   throws,
@@ -652,7 +652,7 @@ test("scan", () => {
   expect(observer.complete).toBeCalledWith(error);
 });
 
-test("switch", () => {
+test("switchAll", () => {
   const scheduler = virtualTimeSchedulerCreate();
   const observer = createMockObserver();
 
@@ -660,7 +660,7 @@ test("switch", () => {
   const error = new Error();
   const src = fromArray([innerObservable, innerObservable, throws(error)], 1);
 
-  connect(pipe(src, switch_(), observe(observer)), scheduler);
+  connect(pipe(src, switchAll(), observe(observer)), scheduler);
   scheduler.run();
 
   expect(observer.next).toBeCalledTimes(4);
