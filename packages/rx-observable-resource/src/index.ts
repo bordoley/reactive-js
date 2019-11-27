@@ -51,87 +51,15 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
 
 export function lift<T, A>(
   src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-): ObservableResourceLike<A>;
-export function lift<T, A, B>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-): ObservableResourceLike<B>;
-export function lift<T, A, B, C>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-): ObservableResourceLike<C>;
-export function lift<T, A, B, C, D>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-): ObservableResourceLike<D>;
-export function lift<T, A, B, C, D, E>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-): ObservableResourceLike<E>;
-export function lift<T, A, B, C, D, E, F>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-): ObservableResourceLike<F>;
-export function lift<T, A, B, C, D, E, F, G>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-): ObservableResourceLike<G>;
-export function lift<T, A, B, C, D, E, F, G, H>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-  op8: SubscriberOperator<G, H>,
-): ObservableResourceLike<H>;
-export function lift<T, A, B, C, D, E, F, G, H, I>(
-  src: ObservableResourceLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-  op8: SubscriberOperator<G, H>,
-  op9: SubscriberOperator<H, I>,
-): ObservableResourceLike<I>;
-export function lift(
-  source: ObservableResourceLike<any>,
-  ...operators: Array<SubscriberOperator<any, any>>
-): ObservableResourceLike<any> {
-  const observable = liftObservable.apply(undefined, [
-    source instanceof LiftedObservableResource ? source.observable : source,
-    ...operators,
-  ] as any);
+  operator: SubscriberOperator<T, A>,
+): ObservableResourceLike<A> {
+  const observable = liftObservable(
+    src instanceof LiftedObservableResource ? src.observable : src,
+    operator,
+  );
 
   const disposable =
-    source instanceof LiftedObservableResource ? source.disposable : source;
+    src instanceof LiftedObservableResource ? src.disposable : src;
 
   return new LiftedObservableResource(observable, disposable);
 }
@@ -218,8 +146,6 @@ export function pipe(
     obsSource,
     ...operators,
   ] as any);
-
-  operators.reduce((acc, next) => next(acc), obsSource);
 
   const disposable =
     source instanceof LiftedObservableResource ? source.disposable : source;
