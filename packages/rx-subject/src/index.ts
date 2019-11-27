@@ -10,7 +10,7 @@ import { ObservableLike } from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
 
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
@@ -37,7 +37,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
 
   constructor(priority?: number) {
     this.priority = priority;
-    this.disposable = disposableCreate();
+    this.disposable = createDisposable();
     this.disposable.add(() => {
       this.isCompleted = true;
       this.observers.length = 0;
@@ -102,7 +102,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
       if (!this.isCompleted) {
         this.observers.push(observer);
 
-        const disposable = disposableCreate();
+        const disposable = createDisposable();
         disposable.add(() => {
           const index = this.observers.indexOf(observer);
           if (index !== -1) {

@@ -1,4 +1,4 @@
-import { create as disposableCreate } from "@reactive-js/disposable";
+import { create as createDisposable } from "@reactive-js/disposable";
 import { create } from "../src/index";
 
 describe("SerialDisposable", () => {
@@ -11,12 +11,12 @@ describe("SerialDisposable", () => {
 
   test("set disposable", () => {
     const serialDisposable = create();
-    const disposable = disposableCreate();
+    const disposable = createDisposable();
 
     serialDisposable.disposable = disposable;
     expect(serialDisposable.disposable).toEqual(disposable);
 
-    const anotherDisposable = disposableCreate();
+    const anotherDisposable = createDisposable();
     serialDisposable.disposable = anotherDisposable;
     expect(serialDisposable.disposable).toEqual(anotherDisposable);
     expect(disposable.isDisposed).toBeTruthy();
@@ -25,7 +25,7 @@ describe("SerialDisposable", () => {
     serialDisposable.dispose();
     expect(anotherDisposable.isDisposed).toBeTruthy();
 
-    const yetAnotherDisposable = disposableCreate();
+    const yetAnotherDisposable = createDisposable();
     serialDisposable.disposable = yetAnotherDisposable;
     expect(yetAnotherDisposable.isDisposed).toBeTruthy();
   });

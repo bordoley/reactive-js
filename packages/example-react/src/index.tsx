@@ -1,7 +1,7 @@
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { RelativeURI } from "@reactive-js/react-router-relative-uri";
-import { create as locationResourceCreate } from "@reactive-js/react-router-dom-location-resource";
+import { create as createLocationResource } from "@reactive-js/react-router-dom-location-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
 import { ComponentType, default as React, useMemo } from "react";
@@ -47,7 +47,7 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
 
 render(
   <Router
-    locationResourceFactory={locationResourceCreate}
+    locationResourceFactory={createLocationResource}
     notFound={NotFound}
     routes={routes}
   />,

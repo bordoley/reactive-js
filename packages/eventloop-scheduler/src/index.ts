@@ -4,14 +4,14 @@ import {
 } from "@reactive-js/scheduler";
 
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
 
 import {
-  create as serialDisposableCreate,
+  create as createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/serial-disposable";
 
@@ -44,7 +44,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   constructor(timeout: number) {
     this.timeout = timeout;
-    this.disposable = disposableCreate();
+    this.disposable = createDisposable();
     this.disposable.add(() => {
       this.workqueue.length = 0;
     });
@@ -75,7 +75,7 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
-    const disposable = serialDisposableCreate();
+    const disposable = createSerialDisposable();
     const shouldYield = (): boolean =>
       disposable.isDisposed || this.startTime + this.timeout < this.now;
 
@@ -156,12 +156,12 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
         ctx.delay,
         ctx,
       );
-      ctx.disposable.disposable = disposableCreate();
+      ctx.disposable.disposable = createDisposable();
       ctx.disposable.disposable.add(() => clearInterval(timeout));
     } else {
       // FIXME: Shim setImmediate for the browser case or require a polyfill.
       const immediate = setImmediate(EventLoopSchedulerImpl.callback, ctx);
-      ctx.disposable.disposable = disposableCreate();
+      ctx.disposable.disposable = createDisposable();
       ctx.disposable.disposable.add(() => clearImmediate(immediate));
     }
   }

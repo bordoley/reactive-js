@@ -14,8 +14,8 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
-  create as subjectCreate,
-  createWithReplay as subjectCreateWithReplay,
+  create as createSubject,
+  createWithReplay as createSubjectWithReplay,
   SubjectResourceLike,
 } from "@reactive-js/rx-subject";
 
@@ -79,7 +79,7 @@ export const share = <T>(
   scheduler?: SchedulerLike,
   priority?: number,
 ): ObservableOperator<T, T> => (observable: ObservableLike<T>) =>
-  new SharedObservable(subjectCreate, observable, scheduler, priority);
+  new SharedObservable(createSubject, observable, scheduler, priority);
 
 export const shareReplay = <T>(
   count: number,
@@ -87,7 +87,7 @@ export const shareReplay = <T>(
   priority?: number,
 ): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
   const factory = (priority?: number) =>
-    subjectCreateWithReplay(count, priority);
+    createSubjectWithReplay(count, priority);
   return new SharedObservable(factory, observable, scheduler, priority);
 };
 

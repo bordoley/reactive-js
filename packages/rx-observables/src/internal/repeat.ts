@@ -16,7 +16,7 @@ import {
 } from "@reactive-js/rx-subscriber";
 
 import {
-  create as serialDisposableCreate,
+  create as createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/serial-disposable";
 
@@ -82,7 +82,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observable = observable;
     this.shouldRepeat = shouldRepeat;
 
-    this.innerSubscription = serialDisposableCreate();
+    this.innerSubscription = createSerialDisposable();
     this.add(this.innerSubscription);
     this.observer = new RepeatSubscriber.RepeatObserver(this);
   }

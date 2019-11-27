@@ -1,5 +1,5 @@
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
@@ -61,7 +61,7 @@ export function merge<T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const completedCountRef: [number] = [0];
 
-    const allSubscriptions: DisposableLike = disposableCreate();
+    const allSubscriptions: DisposableLike = createDisposable();
     subscriber.add(allSubscriptions);
 
     for (let observable of observables) {

@@ -2,7 +2,7 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 
 import {
   connect,
-  create as observableCreate,
+  create,
   ObservableLike,
   observe,
   pipe,
@@ -28,7 +28,7 @@ export const fromPromiseFactory = <T>(
     doSubscribe(observer);
   };
 
-  return observableCreate(onSubscribe, priority);
+  return create(onSubscribe, priority);
 };
 
 export const toPromise = <T>(

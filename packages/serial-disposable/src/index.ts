@@ -1,5 +1,5 @@
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
   disposed,
@@ -35,7 +35,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
 
   private _disposable: DisposableLike = disposed;
 
-  private readonly delegate = disposableCreate();
+  private readonly delegate = createDisposable();
 
   add(
     disposable: DisposableOrTeardown,
