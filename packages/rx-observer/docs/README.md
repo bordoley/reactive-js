@@ -26,11 +26,15 @@
 
 Ƭ **Notification**: *[[Next](enums/notificationkind.md#next), T] | [[Complete](enums/notificationkind.md#complete), Error | undefined]*
 
+Materialized notification
+
 ## Functions
 
 ### `Const` notify
 
 ▸ **notify**<**T**>(`observer`: [ObserverLike](interfaces/observerlike.md)‹T›, `notification`: [Notification](README.md#notification)‹T›): *void*
+
+Notifies the observer with the materialized notification.
 
 **Type parameters:**
 
@@ -38,9 +42,9 @@
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`observer` | [ObserverLike](interfaces/observerlike.md)‹T› |
-`notification` | [Notification](README.md#notification)‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`observer` | [ObserverLike](interfaces/observerlike.md)‹T› | - |
+`notification` | [Notification](README.md#notification)‹T› |   |
 
 **Returns:** *void*
