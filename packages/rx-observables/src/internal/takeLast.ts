@@ -9,33 +9,7 @@ import {
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
 
-class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private count = -1;
-  private readonly maxCount: number;
-
-  constructor(delegate: SubscriberLike<T>, maxCount: number) {
-    super(delegate);
-    this.maxCount = maxCount;
-  }
-
-  protected onComplete(error?: Error) {
-    this.delegate.complete(error);
-  }
-
-  protected onNext(data: T) {
-    this.count++;
-    if (this.count < this.maxCount) {
-      this.delegate.next(data);
-    } else if (this.count === this.maxCount) {
-      this.delegate.complete();
-    }
-  }
-}
-
-export const take = <T>(
-  count: number,
-): SubscriberOperator<T, T> => subscriber =>
-  new TakeSubscriber(subscriber, count);
+import { lift, ObservableOperator } from "@reactive-js/rx-observable";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly continuation: SchedulerContinuationResult;
@@ -91,8 +65,14 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   };
 }
 
-export const takeLast = <T>(
+const operator = <T>(
   count: number,
   priority?: number,
 ): SubscriberOperator<T, T> => subscriber =>
   new TakeLastSubscriber(subscriber, count, priority);
+
+export const takeLast = <T>(
+  count: number,
+  priority?: number,
+): ObservableOperator<T, T> => observable =>
+  lift(observable, operator(count, priority));

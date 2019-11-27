@@ -14,14 +14,14 @@
 
 ## Index
 
-### Properties
+### Methods
 
-* [isConnected](connectablesubscriberlike.md#isconnected)
+* [connect](connectablesubscriberlike.md#connect)
 
-## Properties
+## Methods
 
-###  isConnected
+###  connect
 
-• **isConnected**: *boolean*
+▸ **connect**(): *void*
 
-*Overrides [SubscriberLike](subscriberlike.md).[isConnected](subscriberlike.md#isconnected)*
+**Returns:** *void*

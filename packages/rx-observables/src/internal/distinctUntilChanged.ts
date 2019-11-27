@@ -4,6 +4,8 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
+import { lift, ObservableOperator } from "@reactive-js/rx-observable";
+
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;
   private prev: [T] | undefined;
@@ -34,7 +36,11 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
-export const distinctUntilChanged = <T>(
+export const operator = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): SubscriberOperator<T, T> => subscriber =>
   new DistinctUntilChangedSubscriber(subscriber, equals);
+
+export const distinctUntilChanged = <T>(
+  equals?: (a: T, b: T) => boolean,
+): ObservableOperator<T, T> => observable => lift(observable, operator(equals));

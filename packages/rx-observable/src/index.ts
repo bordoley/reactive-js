@@ -6,6 +6,7 @@ import {
 
 import {
   create as subscriberCreate,
+  observe as subscriberObserveOperator,
   pipe as subscriberPipe,
   SubscriberLike,
   SubscriberOperator,
@@ -58,92 +59,20 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 }
 
-export function lift<T, A>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-): ObservableLike<A>;
-export function lift<T, A, B>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-): ObservableLike<B>;
-export function lift<T, A, B, C>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-): ObservableLike<C>;
-export function lift<T, A, B, C, D>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-): ObservableLike<D>;
-export function lift<T, A, B, C, D, E>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-): ObservableLike<E>;
-export function lift<T, A, B, C, D, E, F>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-): ObservableLike<F>;
-export function lift<T, A, B, C, D, E, F, G>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-): ObservableLike<G>;
-export function lift<T, A, B, C, D, E, F, G, H>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-  op8: SubscriberOperator<G, H>,
-): ObservableLike<H>;
-export function lift<T, A, B, C, D, E, F, G, H, I>(
-  src: ObservableLike<T>,
-  op1: SubscriberOperator<T, A>,
-  op2: SubscriberOperator<A, B>,
-  op3: SubscriberOperator<B, C>,
-  op4: SubscriberOperator<C, D>,
-  op5: SubscriberOperator<D, E>,
-  op6: SubscriberOperator<E, F>,
-  op7: SubscriberOperator<F, G>,
-  op8: SubscriberOperator<G, H>,
-  op9: SubscriberOperator<H, I>,
-): ObservableLike<I>;
-export function lift(
-  source: ObservableLike<any>,
-  ...operators: Array<SubscriberOperator<any, any>>
-): ObservableLike<any> {
+export const lift = <TA, TB>(
+  source: ObservableLike<TA>,
+  operator: SubscriberOperator<TA, TB>,
+): ObservableLike<TB> => {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;
 
   const allOperators =
     source instanceof LiftedObservable
-      ? [...source.operators, ...operators]
-      : operators;
+      ? [...source.operators, operator]
+      : [operator];
 
   return new LiftedObservable(sourceSource, allOperators);
-}
+};
 
 export interface ObservableOperator<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
@@ -228,11 +157,6 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), source);
 }
 
-export const observableOperatorFrom = <TA, TB>(
-  operator: SubscriberOperator<TA, TB>,
-): ObservableOperator<TA, TB> => (observable: ObservableLike<TA>) =>
-  lift(observable, operator);
-
 export const create = <T>(
   onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
   priority?: number,
@@ -255,3 +179,8 @@ export const create = <T>(
 
   return { subscribe };
 };
+
+export const observe = <T>(
+  observer: ObserverLike<T>,
+): ObservableOperator<T, T> => (observable: ObservableLike<T>) =>
+  lift(observable, subscriberObserveOperator(observer));

@@ -6,10 +6,14 @@ import {
   DelegatingSubscriber,
   observe,
   SubscriberLike,
-  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  connect,
+  lift,
+  ObservableLike,
+  ObservableOperator,
+} from "@reactive-js/rx-observable";
 
 import { create as serialDisposableCreate } from "@reactive-js/serial-disposable";
 
@@ -52,8 +56,11 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 }
 
+const operator = <T>(subscriber: SubscriberLike<T>) =>
+  new SwitchSubscriber(subscriber);
+
 // tslint:disable-next-line variable-name
-export const switch_ = <T>(): SubscriberOperator<
+export const switch_ = <T>(): ObservableOperator<
   ObservableLike<T>,
   T
-> => subscriber => new SwitchSubscriber(subscriber);
+> => observable => lift(observable, operator);

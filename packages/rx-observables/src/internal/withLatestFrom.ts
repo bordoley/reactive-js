@@ -9,7 +9,12 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  connect,
+  lift,
+  ObservableLike,
+  ObservableOperator,
+} from "@reactive-js/rx-observable";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,
@@ -71,8 +76,14 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   }
 }
 
-export const withLatestFrom = <TA, TB, TC>(
+const operator = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
 ): SubscriberOperator<TA, TC> => subscriber =>
   new WithLatestFromSubscriber(subscriber, other, selector);
+
+export const withLatestFrom = <TA, TB, TC>(
+  other: ObservableLike<TB>,
+  selector: (a: TA, b: TB) => TC,
+): ObservableOperator<TA, TC> => observable =>
+  lift(observable, operator(other, selector));
