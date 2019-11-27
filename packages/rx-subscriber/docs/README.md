@@ -16,16 +16,16 @@
 
 ### Functions
 
-* [create](README.md#const-create)
+* [createAutoDisposing](README.md#const-createautodisposing)
 * [observe](README.md#const-observe)
 * [pipe](README.md#pipe)
 * [toSafeObserver](README.md#const-tosafeobserver)
 
 ## Functions
 
-### `Const` create
+### `Const` createAutoDisposing
 
-▸ **create**<**T**>(`scheduler`: SchedulerLike, `subscription`: DisposableLike): *[ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)‹T›*
+▸ **createAutoDisposing**<**T**>(`scheduler`: SchedulerLike, `subscription`: DisposableLike): *[ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)‹T›*
 
 **Type parameters:**
 

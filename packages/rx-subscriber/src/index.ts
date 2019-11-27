@@ -122,7 +122,7 @@ class AutoDisposingSubscriberImpl<T> extends AbstractSubscriberImpl<T>
   }
 }
 
-export const create = <T>(
+export const createAutoDisposing = <T>(
   scheduler: SchedulerLike,
   subscription: DisposableLike,
 ): ConnectableSubscriberLike<T> =>
