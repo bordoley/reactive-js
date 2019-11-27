@@ -1,5 +1,4 @@
 import { StateUpdater } from "@reactive-js/ix-state-container";
-import { StateContainerResourceLike } from "@reactive-js/ix-state-container-resource";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
@@ -8,6 +7,7 @@ import {
 import { lift, pipe } from "@reactive-js/rx-observable-resource";
 import { map, scan } from "@reactive-js/rx-observables";
 import { createElement } from "react";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
@@ -34,7 +34,8 @@ const pairify = (
   oldState === emptyRelativeURI ? [undefined, next] : [oldState, next];
 
 export interface RouterProps {
-  readonly locationResourceFactory: () => StateContainerResourceLike<
+  readonly locationResourceFactory: () => AsyncIteratorResourceLike<
+    StateUpdater<RelativeURI>,
     RelativeURI
   >;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
