@@ -23,11 +23,11 @@
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
-* [observe](README.md#const-observe)
 * [ofValue](README.md#const-ofvalue)
 * [onComplete](README.md#const-oncomplete)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
+* [operator](README.md#const-operator)
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
@@ -290,7 +290,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize?`: undefined | number): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -298,9 +298,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`maxBufferSize?` | undefined &#124; number |
+Name | Type | Default |
+------ | ------ | ------ |
+`maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
@@ -578,24 +578,6 @@ ___
 
 ___
 
-### `Const` observe
-
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableOperator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observer` | ObserverLike‹T› |
-
-**Returns:** *ObservableOperator‹T, T›*
-
-___
-
 ### `Const` ofValue
 
 ▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
@@ -685,6 +667,31 @@ Name | Type |
 `next` | T |
 
 **Returns:** *ObservableOperator‹T, T›*
+
+___
+
+### `Const` operator
+
+▸ **operator**<**T**>(`equals`: function): *SubscriberOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **equals**: *function*=  referenceEquality
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 

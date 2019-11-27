@@ -1,8 +1,13 @@
+import { lift, ObservableOperator } from "@reactive-js/rx-observable";
+
 import {
   DelegatingSubscriber,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
+
+import { concat } from "./concat";
+import { ofValue } from "./fromArray";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private acc: TAcc;
@@ -31,8 +36,19 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   }
 }
 
-export const scan = <T, TAcc>(
+const operator = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
 ): SubscriberOperator<T, TAcc> => subscriber =>
   new ScanSubscriber(subscriber, scanner, initialValue);
+
+export const scan = <T, TAcc>(
+  scanner: (acc: TAcc, next: T) => TAcc,
+  initialValue: TAcc,
+  delay?: number,
+  priority?: number,
+): ObservableOperator<T, TAcc> => obs =>
+  concat(
+    ofValue(initialValue, delay, priority),
+    lift(obs, operator(scanner, initialValue)),
+  );

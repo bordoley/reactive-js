@@ -4,6 +4,8 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
+import { lift, ObservableOperator } from "@reactive-js/rx-observable";
+
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   private predicate: (data: T) => boolean;
 
@@ -24,7 +26,12 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-export const keep = <T>(
+const operator = <T>(
   predicate: (data: T) => boolean,
 ): SubscriberOperator<T, T> => subscriber =>
   new KeepSubscriber(subscriber, predicate);
+
+export const keep = <T>(
+  predicate: (data: T) => boolean,
+): ObservableOperator<T, T> => observable =>
+  lift(observable, operator(predicate));

@@ -5,7 +5,12 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import {
+  connect,
+  lift,
+  ObservableLike,
+  ObservableOperator,
+} from "@reactive-js/rx-observable";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount: number = 0;
@@ -62,13 +67,15 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
               },
               complete: (error?: Error) => {
                 this.activeCount--;
+                this.remove(nextObsSubscription);
 
                 if (error !== undefined) {
-                  this.complete(error);
+                  this.isCompleted = true;
+                  this.delegate.complete(error);
                 } else {
                   this.connectNext();
                 }
-                this.remove(nextObsSubscription);
+
               },
             }),
           ),
@@ -76,14 +83,14 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
         );
 
         this.add(nextObsSubscription);
-      } else if (this.isCompleted) {
+      } else if(this.isCompleted) {
         this.delegate.complete();
       }
     }
   }
 }
 
-export const merge = <T>(
+const operator = <T>(
   options: {
     maxBufferSize?: number;
     maxConcurrency?: number;
@@ -97,10 +104,16 @@ export const merge = <T>(
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 };
 
-export const concat = <T>(
-  maxBufferSize = Number.MAX_SAFE_INTEGER,
-): SubscriberOperator<ObservableLike<T>, T> =>
-  merge({ maxBufferSize, maxConcurrency: 1 });
+export const mergeAll = <T>(options?: {
+  maxBufferSize?: number;
+  maxConcurrency?: number;
+}): ObservableOperator<ObservableLike<T>, T> => observable =>
+  lift(observable, operator(options));
 
-export const exhaust = <T>(): SubscriberOperator<ObservableLike<T>, T> =>
-  merge({ maxBufferSize: 1, maxConcurrency: 1 });
+export const concatAll = <T>(
+  maxBufferSize = Number.MAX_SAFE_INTEGER,
+): ObservableOperator<ObservableLike<T>, T> =>
+  mergeAll({ maxBufferSize, maxConcurrency: 1 });
+
+export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+  mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });

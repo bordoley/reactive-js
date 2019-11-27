@@ -4,6 +4,8 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
+import { lift, ObservableOperator } from "@reactive-js/rx-observable";
+
 class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   mapper: (data: TA) => TB;
 
@@ -22,10 +24,15 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   }
 }
 
-export const map = <TA, TB>(
+const operator = <TA, TB>(
   mapper: (data: TA) => TB,
 ): SubscriberOperator<TA, TB> => subscriber =>
   new MapSubscriber(subscriber, mapper);
 
-export const mapTo = <TA, TB>(value: TB): SubscriberOperator<TA, TB> =>
+export const map = <TA, TB>(
+  mapper: (data: TA) => TB,
+): ObservableOperator<TA, TB> => observable =>
+  lift(observable, operator(mapper));
+
+export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
   map(_ => value);

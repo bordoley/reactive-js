@@ -13,8 +13,8 @@
 
 * [connect](README.md#const-connect)
 * [create](README.md#const-create)
-* [lift](README.md#lift)
-* [observableOperatorFrom](README.md#const-observableoperatorfrom)
+* [lift](README.md#const-lift)
+* [observe](README.md#const-observe)
 * [pipe](README.md#pipe)
 
 ## Functions
@@ -64,274 +64,9 @@ Name | Type |
 
 ___
 
-###  lift
+### `Const` lift
 
-▸ **lift**<**T**, **A**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›): *[ObservableLike](interfaces/observablelike.md)‹A›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹A›*
-
-▸ **lift**<**T**, **A**, **B**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›): *[ObservableLike](interfaces/observablelike.md)‹B›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹B›*
-
-▸ **lift**<**T**, **A**, **B**, **C**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›): *[ObservableLike](interfaces/observablelike.md)‹C›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹C›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›): *[ObservableLike](interfaces/observablelike.md)‹D›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹D›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›, `op5`: SubscriberOperator‹D, E›): *[ObservableLike](interfaces/observablelike.md)‹E›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-▪ **E**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-`op5` | SubscriberOperator‹D, E› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹E›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›, `op5`: SubscriberOperator‹D, E›, `op6`: SubscriberOperator‹E, F›): *[ObservableLike](interfaces/observablelike.md)‹F›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-▪ **E**
-
-▪ **F**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-`op5` | SubscriberOperator‹D, E› |
-`op6` | SubscriberOperator‹E, F› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹F›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›, `op5`: SubscriberOperator‹D, E›, `op6`: SubscriberOperator‹E, F›, `op7`: SubscriberOperator‹F, G›): *[ObservableLike](interfaces/observablelike.md)‹G›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-▪ **E**
-
-▪ **F**
-
-▪ **G**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-`op5` | SubscriberOperator‹D, E› |
-`op6` | SubscriberOperator‹E, F› |
-`op7` | SubscriberOperator‹F, G› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹G›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›, `op5`: SubscriberOperator‹D, E›, `op6`: SubscriberOperator‹E, F›, `op7`: SubscriberOperator‹F, G›, `op8`: SubscriberOperator‹G, H›): *[ObservableLike](interfaces/observablelike.md)‹H›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-▪ **E**
-
-▪ **F**
-
-▪ **G**
-
-▪ **H**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-`op5` | SubscriberOperator‹D, E› |
-`op6` | SubscriberOperator‹E, F› |
-`op7` | SubscriberOperator‹F, G› |
-`op8` | SubscriberOperator‹G, H› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹H›*
-
-▸ **lift**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: SubscriberOperator‹T, A›, `op2`: SubscriberOperator‹A, B›, `op3`: SubscriberOperator‹B, C›, `op4`: SubscriberOperator‹C, D›, `op5`: SubscriberOperator‹D, E›, `op6`: SubscriberOperator‹E, F›, `op7`: SubscriberOperator‹F, G›, `op8`: SubscriberOperator‹G, H›, `op9`: SubscriberOperator‹H, I›): *[ObservableLike](interfaces/observablelike.md)‹I›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **A**
-
-▪ **B**
-
-▪ **C**
-
-▪ **D**
-
-▪ **E**
-
-▪ **F**
-
-▪ **G**
-
-▪ **H**
-
-▪ **I**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`op1` | SubscriberOperator‹T, A› |
-`op2` | SubscriberOperator‹A, B› |
-`op3` | SubscriberOperator‹B, C› |
-`op4` | SubscriberOperator‹C, D› |
-`op5` | SubscriberOperator‹D, E› |
-`op6` | SubscriberOperator‹E, F› |
-`op7` | SubscriberOperator‹F, G› |
-`op8` | SubscriberOperator‹G, H› |
-`op9` | SubscriberOperator‹H, I› |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹I›*
-
-___
-
-### `Const` observableOperatorFrom
-
-▸ **observableOperatorFrom**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`source`: [ObservableLike](interfaces/observablelike.md)‹TA›, `operator`: SubscriberOperator‹TA, TB›): *[ObservableLike](interfaces/observablelike.md)‹TB›*
 
 **Type parameters:**
 
@@ -343,9 +78,28 @@ ___
 
 Name | Type |
 ------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹TA› |
 `operator` | SubscriberOperator‹TA, TB› |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+___
+
+### `Const` observe
+
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observer` | ObserverLike‹T› |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 ___
 
