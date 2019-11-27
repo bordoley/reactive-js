@@ -2462,6 +2462,8 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
+
+
 	var DelegatingAsyncIteratorResource = /** @class */ (function (_super) {
 	    tslib_es6.__extends(DelegatingAsyncIteratorResource, _super);
 	    function DelegatingAsyncIteratorResource(observable, dispatcher, disposable) {
@@ -2513,17 +2515,6 @@ var ExampleReact = (function (react, reactDom) {
 	    return operators.reduce(function (acc, next) { return next(acc); }, src);
 	}
 	exports.pipe = pipe;
-
-	});
-
-	unwrapExports(dist$f);
-	var dist_1$f = dist$f.lift;
-	var dist_2$b = dist$f.pipe;
-
-	var dist$g = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-
 	var EventResourceImpl = /** @class */ (function () {
 	    function EventResourceImpl(priority) {
 	        this.subject = dist$a.create(priority);
@@ -2562,21 +2553,7 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return EventResourceImpl;
 	}());
-	exports.create = function (priority) {
-	    return new EventResourceImpl(priority);
-	};
-
-	});
-
-	unwrapExports(dist$g);
-	var dist_1$g = dist$g.create;
-
-	var dist$h = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, "__esModule", { value: true });
-
-
-
-
+	exports.createEvent = function (priority) { return new EventResourceImpl(priority); };
 	var StateContainerImpl = /** @class */ (function () {
 	    function StateContainerImpl(delegate, dispatcher) {
 	        this.delegate = delegate;
@@ -2617,9 +2594,9 @@ var ExampleReact = (function (react, reactDom) {
 	    return StateContainerImpl;
 	}());
 	var referenceEquality = function (a, b) { return a === b; };
-	exports.create = function (initialState, equals, scheduler, priority) {
+	exports.createStateStore = function (initialState, equals, scheduler, priority) {
 	    if (equals === void 0) { equals = referenceEquality; }
-	    var dispatcher = dist$g.create();
+	    var dispatcher = exports.createEvent();
 	    var delegate = dist$5.pipe(dispatcher, dist$b.scan(function (acc, next) { return next(acc); }, initialState), dist$b.startWith(initialState), dist$b.distinctUntilChanged(equals), dist$b.shareReplayLast(scheduler, priority));
 	    dispatcher.add(dist$5.connect(delegate, scheduler));
 	    return new StateContainerImpl(delegate, dispatcher);
@@ -2627,12 +2604,14 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
-	unwrapExports(dist$h);
-	var dist_1$h = dist$h.create;
+	unwrapExports(dist$f);
+	var dist_1$f = dist$f.lift;
+	var dist_2$b = dist$f.pipe;
+	var dist_3$6 = dist$f.createEvent;
+	var dist_4$4 = dist$f.createStateStore;
 
-	var dist$i = createCommonjsModule(function (module, exports) {
+	var dist$g = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-
 
 
 
@@ -2655,34 +2634,38 @@ var ExampleReact = (function (react, reactDom) {
 	    return dist$5.pipe(dist$b.merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs), dist$b.shareReplayLast(dist$2.scheduler, priority));
 	}; };
 	exports.create = function (priority) {
-	    var stateContainer = dist$h.create(getCurrentLocation(), dist$7.equals, dist$2.scheduler, priority);
-	    var setURI = function (uri) { return stateContainer.dispatch(function (_) { return uri; }); };
-	    return dist$f.pipe(stateContainer, dist$f.lift(operator(setURI, priority)));
+	    var stateStore = dist$f.createStateStore(getCurrentLocation(), dist$7.equals, dist$2.scheduler, priority);
+	    var setURI = function (uri) { return stateStore.dispatch(function (_) { return uri; }); };
+	    return dist$f.pipe(stateStore, dist$f.lift(operator(setURI, priority)));
 	};
 
 	});
 
-	unwrapExports(dist$i);
-	var dist_1$i = dist$i.create;
+	unwrapExports(dist$g);
+	var dist_1$g = dist$g.create;
 
-	var dist$j = createCommonjsModule(function (module, exports) {
+	var dist$h = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 
 
 
 
-	var react_1 = tslib_es6.__importDefault(react);
+	var react_1 = tslib_es6.__importStar(react);
 
 	dist$4.registerDefaultScheduler(dist$2.scheduler);
+	var makeCallbacks = function (uriUpdater) {
+	    var liftUpdater = function (updater) { return function () { return uriUpdater(updater); }; };
+	    var goToPath = function (path) { return liftUpdater(function (state) { return (tslib_es6.__assign(tslib_es6.__assign({}, state), { path: path })); }); };
+	    var goToRoute1 = goToPath("/route1");
+	    var goToRoute2 = goToPath("/route2");
+	    return { goToRoute1: goToRoute1, goToRoute2: goToRoute2 };
+	};
 	var NotFound = function (_a) {
 	    var uriUpdater = _a.uriUpdater;
-	    var goToRoute1 = function () {
-	        return uriUpdater(function (state) { return (tslib_es6.__assign(tslib_es6.__assign({}, state), { path: "/route1" })); });
-	    };
-	    var goToRoute2 = function () {
-	        return uriUpdater(function (state) { return (tslib_es6.__assign(tslib_es6.__assign({}, state), { path: "/route2" })); });
-	    };
+	    var _b = react_1.useMemo(function () { return makeCallbacks(uriUpdater); }, [
+	        uriUpdater,
+	    ]), goToRoute1 = _b.goToRoute1, goToRoute2 = _b.goToRoute2;
 	    return (react_1.default.createElement("div", null,
 	        "Not Found",
 	        react_1.default.createElement("button", { onClick: goToRoute1 }, "Go to route1"),
@@ -2691,12 +2674,13 @@ var ExampleReact = (function (react, reactDom) {
 	var Component1 = function (props) { return (react_1.default.createElement("div", null, props.uri.path)); };
 	var routes = [
 	    ["/route1", Component1],
+	    ["/route2", Component1],
 	];
-	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$i.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
+	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$g.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
 
 	});
 
-	var index = unwrapExports(dist$j);
+	var index = unwrapExports(dist$h);
 
 	return index;
 

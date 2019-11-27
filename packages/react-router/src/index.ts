@@ -1,4 +1,3 @@
-import { StateUpdater } from "@reactive-js/ix-state-container";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
@@ -7,7 +6,10 @@ import {
 import { lift, pipe } from "@reactive-js/rx-observable-resource";
 import { map, scan } from "@reactive-js/rx-observables";
 import { createElement } from "react";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
+import {
+  AsyncIteratorResourceLike,
+  StateUpdater,
+} from "@reactive-js/ix-async-iterator-resource";
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
