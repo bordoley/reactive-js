@@ -2,6 +2,8 @@
 
 # Interface: ObservableOperator <**A, B**>
 
+A function which converts an ObservableLike<A> to an ObservableLike<B>
+
 ## Type parameters
 
 ▪ **A**
@@ -15,6 +17,8 @@
 ## Callable
 
 ▸ (`observable`: [ObservableLike](observablelike.md)‹A›): *[ObservableLike](observablelike.md)‹B›*
+
+A function which converts an ObservableLike<A> to an ObservableLike<B>
 
 **Parameters:**
 

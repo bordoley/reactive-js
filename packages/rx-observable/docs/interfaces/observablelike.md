@@ -2,6 +2,8 @@
 
 # Interface: ObservableLike <**T**>
 
+The source of notifications which may be observed by a SubscriberLike instance.
+
 ## Type parameters
 
 ▪ **T**
