@@ -4,11 +4,25 @@ import {
   DelegatingAsyncIterator,
 } from "@reactive-js/ix-async-iterator";
 import {
+  connect,
   ObservableLike,
   ObservableOperator,
   pipe as observablePipe,
 } from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
+import {
+  distinctUntilChanged,
+  scan,
+  shareReplayLast,
+  startWith,
+} from "@reactive-js/rx-observables";
+import { SchedulerLike } from "@reactive-js/scheduler";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
+
+import {
+  create as subjectCreate,
+  SubjectResourceLike,
+} from "@reactive-js/rx-subject";
 
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>
@@ -243,3 +257,118 @@ export function pipe(
 ) {
   return operators.reduce((acc, next) => next(acc), src);
 }
+
+class EventResourceImpl<T> implements AsyncIteratorResourceLike<T, T> {
+  get isDisposed() {
+    return this.subject.isDisposed;
+  }
+  private readonly subject: SubjectResourceLike<T>;
+
+  constructor(priority?: number) {
+    this.subject = subjectCreate(priority);
+  }
+
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.add(disposable, ...disposables);
+  }
+
+  dispatch(event: T) {
+    this.subject.next(event);
+  }
+
+  dispose() {
+    this.subject.dispose();
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.remove(disposable, ...disposables);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subject.subscribe(subscriber);
+  }
+}
+
+export const createEvent = <T>(
+  priority?: number,
+): AsyncIteratorResourceLike<T, T> => new EventResourceImpl(priority);
+
+export interface StateUpdater<T> {
+  (oldState: T): T;
+}
+
+class StateStoreImpl<T>
+  implements AsyncIteratorResourceLike<StateUpdater<T>, T> {
+  get isDisposed(): boolean {
+    return this.dispatcher.isDisposed;
+  }
+  private readonly delegate: ObservableLike<T>;
+  private readonly dispatcher: AsyncIteratorResourceLike<
+    StateUpdater<T>,
+    StateUpdater<T>
+  >;
+
+  constructor(
+    delegate: ObservableLike<T>,
+    dispatcher: AsyncIteratorResourceLike<StateUpdater<T>, StateUpdater<T>>,
+  ) {
+    this.delegate = delegate;
+    this.dispatcher = dispatcher;
+  }
+
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.dispatcher.add(disposable, ...disposables);
+  }
+
+  dispatch(updater: StateUpdater<T>) {
+    this.dispatcher.dispatch(updater);
+  }
+
+  dispose() {
+    this.dispatcher.dispose();
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.dispatcher.remove(disposable, ...disposables);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.delegate.subscribe(subscriber);
+  }
+}
+
+const referenceEquality = <T>(a: T, b: T): boolean => a === b;
+
+export const createStateStore = <T>(
+  initialState: T,
+  equals: (a: T, b: T) => boolean = referenceEquality,
+  scheduler?: SchedulerLike,
+  priority?: number,
+): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
+  const dispatcher: AsyncIteratorResourceLike<
+    StateUpdater<T>,
+    StateUpdater<T>
+  > = createEvent();
+  const delegate = observablePipe(
+    dispatcher,
+    scan((acc: T, next) => next(acc), initialState),
+    startWith(initialState),
+    distinctUntilChanged(equals),
+    shareReplayLast(scheduler, priority),
+  );
+
+  dispatcher.add(connect(delegate, scheduler));
+  return new StateStoreImpl(delegate, dispatcher);
+};

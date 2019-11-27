@@ -1,9 +1,9 @@
 import { fromEvent } from "@reactive-js/dom";
 import {
+  createStateStore,
   lift,
   pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
-import { create as stateContainerCreate } from "@reactive-js/ix-state-container";
 import {
   equals as relativeURIEquals,
   RelativeURI,
@@ -51,17 +51,17 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
 };
 
 export const create = (priority?: number) => {
-  const stateContainer = stateContainerCreate(
+  const stateStore = createStateStore(
     getCurrentLocation(),
     relativeURIEquals,
     scheduler,
     priority,
   );
 
-  const setURI = (uri: RelativeURI) => stateContainer.dispatch(_ => uri);
+  const setURI = (uri: RelativeURI) => stateStore.dispatch(_ => uri);
 
   return asyncIteratorResourcePipe(
-    stateContainer,
+    stateStore,
     lift(operator(setURI, priority)),
   );
 };

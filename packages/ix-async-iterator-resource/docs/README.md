@@ -8,13 +8,65 @@
 
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)
+* [StateUpdater](interfaces/stateupdater.md)
 
 ### Functions
 
+* [createEvent](README.md#const-createevent)
+* [createStateStore](README.md#const-createstatestore)
 * [lift](README.md#const-lift)
 * [pipe](README.md#pipe)
 
 ## Functions
+
+### `Const` createEvent
+
+▸ **createEvent**<**T**>(`priority?`: undefined | number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`priority?` | undefined &#124; number |
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+
+___
+
+### `Const` createStateStore
+
+▸ **createStateStore**<**T**>(`initialState`: T, `equals`: function, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **initialState**: *T*
+
+▪`Default value`  **equals**: *function*=  referenceEquality
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+▪`Optional`  **scheduler**: *SchedulerLike*
+
+▪`Optional`  **priority**: *undefined | number*
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+
+___
 
 ### `Const` lift
 
