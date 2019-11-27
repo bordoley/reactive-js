@@ -17,5 +17,5 @@ const operator = <T>(
 
 export const onError = <T>(
   onError: (err: Error) => void,
-): ObservableOperator<T, T> => observable =>
-  lift(observable, operator(onError));
+): ObservableOperator<T, T> =>
+  lift(operator(onError));

@@ -53,9 +53,8 @@ export function lift<T, A>(
   src: ObservableResourceLike<T>,
   operator: SubscriberOperator<T, A>,
 ): ObservableResourceLike<A> {
-  const observable = liftObservable(
+  const observable = liftObservable(operator)(
     src instanceof LiftedObservableResource ? src.observable : src,
-    operator,
   );
 
   const disposable =

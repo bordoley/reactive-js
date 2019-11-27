@@ -116,8 +116,8 @@ describe("concatAll", () => {
   test("concats observables", () => {
     const scheduler = virtualTimeSchedulerCreate();
     const observer = createMockObserver();
-    const observableA = fromArray([1,2]);
-    const observableB = fromArray([3,4]);
+    const observableA = fromArray([1, 2]);
+    const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB, observableB, observableA]);
 
     connect(pipe(src, concatAll(), observe(observer)), scheduler);
@@ -139,11 +139,11 @@ describe("concatAll", () => {
     const scheduler = virtualTimeSchedulerCreate();
     const observer = createMockObserver();
     const error = new Error();
-    const observableA = fromArray([1,2]);
-    const observableB = fromArray([3,4]);
+    const observableA = fromArray([1, 2]);
+    const observableB = fromArray([3, 4]);
     const src = concat(
-      ofValue(observableA), 
-      throws(error), 
+      ofValue(observableA),
+      throws(error),
       ofValue(observableB),
     );
 
@@ -160,8 +160,8 @@ describe("concatAll", () => {
     const scheduler = virtualTimeSchedulerCreate();
     const observer = createMockObserver();
     const error = new Error();
-    const observableA = concat(fromArray([1,2]), throws(error));
-    const observableB = fromArray([3,4]);
+    const observableA = concat(fromArray([1, 2]), throws(error));
+    const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB]);
 
     connect(pipe(src, concatAll(), observe(observer)), scheduler);
@@ -434,10 +434,7 @@ test("ignoreElements", () => {
   const scheduler = virtualTimeSchedulerCreate(1);
   const observer = createMockObserver();
   const error = new Error();
-  const src = concat(
-    fromArray([1,2,3]),
-    throws(error),
-  );
+  const src = concat(fromArray([1, 2, 3]), throws(error));
 
   connect(pipe(src, ignoreElements(), observe(observer)), scheduler);
   scheduler.run();
@@ -450,12 +447,16 @@ test("keep", () => {
   const scheduler = virtualTimeSchedulerCreate(1);
   const observer = createMockObserver();
   const error = new Error();
-  const src = concat(
-    fromArray([1,2,3]),
-    throws(error),
-  );
+  const src = concat(fromArray([1, 2, 3]), throws(error));
 
-  connect(pipe(src, keep(x => x % 2 === 0), observe(observer)), scheduler);
+  connect(
+    pipe(
+      src,
+      keep(x => x % 2 === 0),
+      observe(observer),
+    ),
+    scheduler,
+  );
   scheduler.run();
 
   expect(observer.next).toHaveBeenNthCalledWith(1, 2);
@@ -540,7 +541,7 @@ describe("onError", () => {
     const observer = createMockObserver();
     const error = new Error();
     const cb = jest.fn();
-    
+
     connect(pipe(throws(error), onError(cb), observe(observer)), scheduler);
     scheduler.run();
 
@@ -552,7 +553,7 @@ describe("onError", () => {
     const scheduler = virtualTimeSchedulerCreate();
     const observer = createMockObserver();
     const cb = jest.fn();
-    
+
     connect(pipe(empty(), onError(cb), observe(observer)), scheduler);
     scheduler.run();
 
@@ -565,7 +566,7 @@ test("onNext", () => {
   const scheduler = virtualTimeSchedulerCreate();
   const observer = createMockObserver();
   const cb = jest.fn();
-    
+
   connect(pipe(ofValue(1), onNext(cb), observe(observer)), scheduler);
   scheduler.run();
 

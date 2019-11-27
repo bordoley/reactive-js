@@ -13,7 +13,6 @@ import {
   create as disposableCreate,
   DisposableLike,
   DisposableOrTeardown,
-  disposed,
 } from "@reactive-js/disposable";
 
 import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";

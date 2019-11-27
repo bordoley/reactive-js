@@ -8,7 +8,7 @@ export interface SchedulerContinuationResult {
   readonly continuation: SchedulerContinuation;
   readonly delay?: number;
   readonly priority?: number;
-};
+}
 
 export interface SchedulerLike {
   readonly inScheduledContinuation: boolean;

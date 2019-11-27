@@ -11,4 +11,4 @@ const operator = <T>(onNext: (data: T) => void): SubscriberOperator<T, T> =>
 
 export const onNext = <T>(
   onNext: (next: T) => void,
-): ObservableOperator<T, T> => observable => lift(observable, operator(onNext));
+): ObservableOperator<T, T> => lift(operator(onNext));

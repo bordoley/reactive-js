@@ -13,5 +13,5 @@ const operator = <T>(
 
 export const onComplete = <T>(
   onComplete: (err?: Error) => void,
-): ObservableOperator<T, T> => observable =>
-  lift(observable, operator(onComplete));
+): ObservableOperator<T, T> => 
+  lift(operator(onComplete));

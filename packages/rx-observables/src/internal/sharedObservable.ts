@@ -5,11 +5,13 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observe,
+  pipe,
 } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-import { observe, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
   create as subjectCreate,
@@ -56,7 +58,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     if (this.refCount === 0) {
       this.subject = this.factory(this.priority);
       this.sourceSubscription = connect(
-        lift(this.source, observe(this.subject)),
+        pipe(this.source, observe(this.subject)),
         this.scheduler,
       );
     }
@@ -65,7 +67,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     const subject = this.subject as SubjectResourceLike<T>;
 
     const innerSubscription = connect(
-      lift(subject, observe(subscriber)),
+      pipe(subject, observe(subscriber)),
       subscriber,
     );
 

@@ -1,5 +1,4 @@
-import { connect, lift } from "@reactive-js/rx-observable";
-import { observe } from "@reactive-js/rx-subscriber";
+import { connect, observe, pipe } from "@reactive-js/rx-observable";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 import { createWithReplay } from "../src/index";
 
@@ -17,7 +16,7 @@ describe("replay", () => {
       next: jest.fn(),
       complete: jest.fn(),
     };
-    connect(lift(subject, observe(observer)), scheduler);
+    connect(pipe(subject, observe(observer)), scheduler);
     scheduler.run();
 
     expect(observer.next).toHaveBeenNthCalledWith(1, 3);
@@ -35,7 +34,7 @@ describe("replay", () => {
       next: jest.fn(),
       complete: jest.fn(),
     };
-    connect(lift(subject, observe(observer)), scheduler);
+    connect(pipe(subject, observe(observer)), scheduler);
     scheduler.schedule(_ => {
       subject.next(4);
       subject.complete();
@@ -61,7 +60,7 @@ describe("replay", () => {
       complete: jest.fn(),
     };
 
-    const subscription = connect(lift(subject, observe(observer)), scheduler);
+    const subscription = connect(pipe(subject, observe(observer)), scheduler);
     subscription.dispose();
     scheduler.run();
 

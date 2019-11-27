@@ -4,7 +4,6 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 
 import {
   DelegatingSubscriber,
-  observe,
   SubscriberLike,
 } from "@reactive-js/rx-subscriber";
 
@@ -13,6 +12,8 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observe,
+  pipe,
 } from "@reactive-js/rx-observable";
 
 import { create as serialDisposableCreate } from "@reactive-js/serial-disposable";
@@ -50,7 +51,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.disposable = disposed;
     this.innerSubscription.disposable = connect(
-      lift(data, observe(new SwitchSubscriber.InnerObserver(this))),
+      pipe(data, observe(new SwitchSubscriber.InnerObserver(this))),
       this,
     );
   }
@@ -63,4 +64,4 @@ const operator = <T>(subscriber: SubscriberLike<T>) =>
 export const switch_ = <T>(): ObservableOperator<
   ObservableLike<T>,
   T
-> => observable => lift(observable, operator);
+> => lift(operator);

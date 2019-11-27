@@ -33,5 +33,4 @@ const operator = <T>(
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): ObservableOperator<T, T> => observable =>
-  lift(observable, operator(predicate));
+): ObservableOperator<T, T> => lift(operator(predicate));

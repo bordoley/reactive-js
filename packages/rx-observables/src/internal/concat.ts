@@ -2,12 +2,13 @@ import { disposed } from "@reactive-js/disposable";
 
 import {
   connect,
-  lift,
+  observe,
   ObservableLike,
   ObservableOperator,
+  pipe,
 } from "@reactive-js/rx-observable";
 
-import { observe, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import { fromArray } from "./fromArray";
 
@@ -28,7 +29,7 @@ export function concat<T>(
       const head = queue.shift();
 
       if (head !== undefined) {
-        innerSubscription = connect(lift(head, observe(observer)), subscriber);
+        innerSubscription = connect(pipe(head, observe(observer)), subscriber);
 
         subscriber.add(innerSubscription);
       }

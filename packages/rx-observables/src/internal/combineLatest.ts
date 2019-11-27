@@ -1,8 +1,8 @@
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import { connect, observe, ObservableLike, pipe } from "@reactive-js/rx-observable";
 
-import { observe, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
   create as disposableCreate,
@@ -149,7 +149,7 @@ export function combineLatest(
       );
 
       observer.innerSubscription = connect(
-        lift(observables[index], observe(observer)),
+        pipe(observables[index], observe(observer)),
         subscriber,
       );
 
