@@ -50,7 +50,7 @@ ___
 
 ▸ **throwIfDisposed**(`disposable`: [DisposableLike](interfaces/disposablelike.md)): *void*
 
-Throws an exception if [[disposable]] is disposed.
+Throws an exception if the given disposable is disposed.
 
 **Parameters:**
 

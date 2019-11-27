@@ -111,7 +111,7 @@ export const disposed: DisposableLike = create();
 disposed.dispose();
 
 /**
- * Throws an exception if [[disposable]] is disposed.
+ * Throws an exception if the given disposable is disposed.
  * @param disposable
  */
 export const throwIfDisposed = (disposable: DisposableLike) => {
