@@ -1,7 +1,6 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   AsyncIteratorLike,
-  DelegatingAsyncIterator,
 } from "@reactive-js/ix-async-iterator";
 import {
   connect,
@@ -30,21 +29,23 @@ export interface AsyncIteratorResourceLike<TReq, T>
     ObservableResourceLike<T> {}
 
 class AsyncIteratorResourceImpl<TReq, T>
-  extends DelegatingAsyncIterator<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
   readonly disposable: DisposableLike;
+  readonly dispatcher: (req: TReq) => void;
+  readonly observable: ObservableLike<T>;
 
   constructor(
-    observable: ObservableLike<T>,
     dispatcher: (req: TReq) => void,
     disposable: DisposableLike,
+    observable: ObservableLike<T>,
   ) {
-    super(observable, dispatcher);
+    this.dispatcher = dispatcher;
     this.disposable = disposable;
+    this.observable = observable;
   }
 
   add(
@@ -52,6 +53,10 @@ class AsyncIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add(disposable, ...disposables);
+  }
+
+  dispatch(req: TReq) {
+    this.dispatcher(req);
   }
 
   dispose() {
@@ -63,6 +68,10 @@ class AsyncIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove(disposable, ...disposables);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.observable.subscribe(subscriber);
   }
 }
 
@@ -89,9 +98,9 @@ export const lift = <TReq, T, TReqA, TA>(
     mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
 
   return new AsyncIteratorResourceImpl(
-    pipedObservable,
     mappedDispatcher,
     disposable,
+    pipedObservable,
   );
 };
 
@@ -265,7 +274,7 @@ export const createEvent = <T>(
   const subject = subjectCreate(priority);
   const dispatcher = (req: T) => subject.next(req);
 
-  return new AsyncIteratorResourceImpl(subject, dispatcher, subject);
+  return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
 };
 
 export interface StateUpdater<T> {
@@ -290,5 +299,5 @@ export const createStateStore = <T>(
 
   subject.add(connect(observable, scheduler));
 
-  return new AsyncIteratorResourceImpl(observable, dispatcher, subject);
+  return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
 };
