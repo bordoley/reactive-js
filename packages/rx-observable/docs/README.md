@@ -23,6 +23,10 @@
 
 ▸ **connect**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler?`: SchedulerLike): *DisposableLike*
 
+Safely connects an ObservableLike to a SubscriberLike, optionally
+using the provided scheduler, otherwise falling back to the default
+scheduler. The returned DisposableLike may used to cancel the subscription.
+
 **Type parameters:**
 
 ▪ **T**
@@ -41,6 +45,15 @@ ___
 ### `Const` create
 
 ▸ **create**<**T**>(`onSubscribe`: function, `priority?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Factory for safely creating new ObservableLikes. The onSubscribe function
+is called with an observer which may be notified from any context,
+queueing notifications for notification on the underlying SubscriberLike's
+scheduler. The onSubscribe function may return a DisposableOrTeardown instance
+which will be disposed when the underlying subscription is disposed.
+
+Note, implementations should not do significant blocking work in
+the onSubscribe function.
 
 **Type parameters:**
 
@@ -68,6 +81,8 @@ ___
 
 ▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
+Converts a SubscriberOperator to an ObservableOperator.
+
 **Type parameters:**
 
 ▪ **TA**
@@ -76,9 +91,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`operator` | SubscriberOperator‹TA, TB› |
+Name | Type | Description |
+------ | ------ | ------ |
+`operator` | SubscriberOperator‹TA, TB› |   |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
@@ -88,15 +103,17 @@ ___
 
 ▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
+Returns a ObservableOperator which forwards notifications to the provided observer.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`observer` | ObserverLike‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`observer` | ObserverLike‹T› |   |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
