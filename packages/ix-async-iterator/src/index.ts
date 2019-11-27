@@ -36,7 +36,7 @@ export const lift = <TReq, T, TReqA, TA>(
   operator?: ObservableOperator<T, TA>,
   mapper?: (req: TReqA) => TReq,
 ): AsyncIteratorOperator<TReq, T, TReqA, TA> => iterator => {
-  // Cheat here. AsyncIteratorResourceImpl follows the same protocol, so 
+  // Cheat here. AsyncIteratorResourceImpl follows the same protocol, so
   // dynamically pull properties off of it.
   const observable: ObservableLike<any> =
     (iterator as any).observable || iterator;

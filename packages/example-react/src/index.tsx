@@ -1,7 +1,7 @@
-import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
-import { RelativeURI } from "@reactive-js/react-router-relative-uri";
+import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { create as createLocationResource } from "@reactive-js/react-router-dom-location-resource";
+import { RelativeURI } from "@reactive-js/react-router-relative-uri";
 import { scheduler } from "@reactive-js/react-scheduler";
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
 import { ComponentType, default as React, useMemo } from "react";

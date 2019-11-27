@@ -27,16 +27,18 @@
 
 ▸ **createAutoDisposing**<**T**>(`scheduler`: SchedulerLike, `subscription`: DisposableLike): *[ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)‹T›*
 
+Returns a new subscriber which disposes it's underlying subscription when completed.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`scheduler` | SchedulerLike |
-`subscription` | DisposableLike |
+Name | Type | Description |
+------ | ------ | ------ |
+`scheduler` | SchedulerLike | - |
+`subscription` | DisposableLike |   |
 
 **Returns:** *[ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)‹T›*
 
@@ -46,15 +48,17 @@ ___
 
 ▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
 
+Returns a SubscriberOperator which forwards notifications to the provided observer when notified.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`observer` | ObserverLike‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`observer` | ObserverLike‹T› |   |
 
 **Returns:** *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
 
@@ -329,15 +333,19 @@ ___
 
 ▸ **toSafeObserver**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `priority?`: undefined | number): *ObserverLike‹T›*
 
+Returns an observer that may be safely notified from any context.
+The underlying implementation queues notifications and notifies
+the subscriber on it's scheduler.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-`priority?` | undefined &#124; number |
+Name | Type | Description |
+------ | ------ | ------ |
+`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› | - |
+`priority?` | undefined &#124; number |   |
 
 **Returns:** *ObserverLike‹T›*

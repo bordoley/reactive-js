@@ -1,9 +1,6 @@
 import { disposed } from "@reactive-js/disposable";
 import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
-import {
-  connect,
-  pipe,
-} from "@reactive-js/rx-observable";
+import { connect, pipe } from "@reactive-js/rx-observable";
 import { ObserverLike } from "@reactive-js/rx-observer";
 import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 

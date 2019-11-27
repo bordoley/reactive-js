@@ -1,3 +1,7 @@
+import {
+  AsyncIteratorResourceLike,
+  StateUpdater,
+} from "@reactive-js/ix-async-iterator-resource";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
@@ -6,10 +10,6 @@ import {
 import { lift, pipe } from "@reactive-js/rx-observable-resource";
 import { map, scan } from "@reactive-js/rx-observables";
 import { createElement } from "react";
-import {
-  AsyncIteratorResourceLike,
-  StateUpdater,
-} from "@reactive-js/ix-async-iterator-resource";
 
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
@@ -40,10 +40,10 @@ export const Router: React.ComponentType<RouterProps> = ({
 }) => {
   const element = useObservableResource(() => {
     const routeMap: RouteMap = {};
-    for(let [path, component] of routes) {
+    for (let [path, component] of routes) {
       routeMap[path] = component;
     }
-    
+
     const locationResource = locationResourceFactory();
 
     const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
@@ -58,7 +58,7 @@ export const Router: React.ComponentType<RouterProps> = ({
 
     return pipe(
       locationResource,
-      lift(scan((pairify), [undefined, emptyRelativeURI])),
+      lift(scan(pairify, [undefined, emptyRelativeURI])),
       lift(
         map(([referer, uri]) =>
           createElement(routeMap[uri.path] || notFound, {

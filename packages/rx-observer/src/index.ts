@@ -30,12 +30,12 @@ export type Notification<T> =
   | [NotificationKind.Next, T]
   | [NotificationKind.Complete, Error | undefined];
 
- /**
-  * Notifies the observer with the materialized notification.
-  *
-  * @param observer
-  * @param notification
-  */
+/**
+ * Notifies the observer with the materialized notification.
+ *
+ * @param observer
+ * @param notification
+ */
 export const notify = <T>(
   observer: ObserverLike<T>,
   notification: Notification<T>,
