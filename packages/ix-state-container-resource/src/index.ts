@@ -8,12 +8,12 @@ import {
   shareReplayLast,
   startWith,
 } from "@reactive-js/rx-observables";
-import {
-  create as eventResourceCreate,
-  EventResourceLike,
-} from "@reactive-js/ix-event";
+import { create as eventResourceCreate } from "@reactive-js/ix-event";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
-import { StateContainerLike, StateUpdater } from "@reactive-js/ix-state-container";
+import {
+  StateContainerLike,
+  StateUpdater,
+} from "@reactive-js/ix-state-container";
 
 /** @noInheritDoc */
 export interface StateContainerResourceLike<T>
@@ -25,11 +25,14 @@ class StateContainerResourceImpl<T> implements StateContainerResourceLike<T> {
     return this.dispatcher.isDisposed;
   }
   private readonly delegate: ObservableLike<T>;
-  private readonly dispatcher: EventResourceLike<StateUpdater<T>>;
+  private readonly dispatcher: AsyncIteratorResourceLike<
+    StateUpdater<T>,
+    StateUpdater<T>
+  >;
 
   constructor(
     delegate: ObservableLike<T>,
-    dispatcher: EventResourceLike<StateUpdater<T>>,
+    dispatcher: AsyncIteratorResourceLike<StateUpdater<T>, StateUpdater<T>>,
   ) {
     this.delegate = delegate;
     this.dispatcher = dispatcher;
@@ -70,7 +73,10 @@ export const create = <T>(
   scheduler?: SchedulerLike,
   priority?: number,
 ): StateContainerResourceLike<T> => {
-  const dispatcher: EventResourceLike<StateUpdater<T>> = eventResourceCreate();
+  const dispatcher: AsyncIteratorResourceLike<
+    StateUpdater<T>,
+    StateUpdater<T>
+  > = eventResourceCreate();
   const delegate = pipe(
     dispatcher,
     scan((acc, next) => next(acc), initialState),

@@ -4,11 +4,6 @@
 
 ## Index
 
-### Interfaces
-
-* [EventLike](interfaces/eventlike.md)
-* [EventResourceLike](interfaces/eventresourcelike.md)
-
 ### Functions
 
 * [create](README.md#const-create)
@@ -17,7 +12,7 @@
 
 ### `Const` create
 
-▸ **create**<**T**>(`priority?`: undefined | number): *[EventResourceLike](interfaces/eventresourcelike.md)‹T›*
+▸ **create**<**T**>(`priority?`: undefined | number): *AsyncIteratorResourceLike‹T, T›*
 
 **Type parameters:**
 
@@ -29,4 +24,4 @@ Name | Type |
 ------ | ------ |
 `priority?` | undefined &#124; number |
 
-**Returns:** *[EventResourceLike](interfaces/eventresourcelike.md)‹T›*
+**Returns:** *AsyncIteratorResourceLike‹T, T›*

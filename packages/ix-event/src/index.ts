@@ -15,15 +15,7 @@ import {
 
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 
-/** @noInheritDoc */
-export interface EventLike<T> extends AsyncIteratorLike<T, T> {}
-
-/** @noInheritDoc */
-export interface EventResourceLike<T>
-  extends EventLike<T>,
-    AsyncIteratorResourceLike<T, T> {}
-
-class EventResourceImpl<T> implements EventResourceLike<T> {
+class EventResourceImpl<T> implements AsyncIteratorResourceLike<T, T> {
   get isDisposed() {
     return this.subject.isDisposed;
   }
@@ -60,5 +52,5 @@ class EventResourceImpl<T> implements EventResourceLike<T> {
   }
 }
 
-export const create = <T>(priority?: number): EventResourceLike<T> =>
+export const create = <T>(priority?: number): AsyncIteratorResourceLike<T, T> =>
   new EventResourceImpl(priority);
