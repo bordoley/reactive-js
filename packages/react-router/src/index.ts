@@ -1,9 +1,5 @@
-import {
-  StateUpdater,
-} from "@reactive-js/ix-state-container";
-import {
-  StateContainerResourceLike,
-} from "@reactive-js/ix-state-container-resource";
+import { StateUpdater } from "@reactive-js/ix-state-container";
+import { StateContainerResourceLike } from "@reactive-js/ix-state-container-resource";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
