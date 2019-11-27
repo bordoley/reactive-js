@@ -21,7 +21,6 @@ export interface SubscriberLike<T>
   extends ObserverLike<T>,
     DisposableLike,
     SchedulerResourceLike {
-
   /** Returns true if the subscriber is connected. */
   readonly isConnected: boolean;
 }
@@ -45,7 +44,7 @@ export interface SubscriberOperator<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
- /** @ignore */
+/** @ignore */
 export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
@@ -104,7 +103,7 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   }
 }
 
- /** @ignore */
+/** @ignore */
 export const checkState = <T>(subscriber: SubscriberLike<T>) => {
   if (!subscriber.inScheduledContinuation) {
     throw new Error(

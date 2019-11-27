@@ -7,6 +7,10 @@ import { registerDefaultScheduler } from "@reactive-js/scheduler";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
+import { connect, pipe } from "@reactive-js/rx-observable";
+import { onNext, exhaust, fromArray, generate, map } from "@reactive-js/rx-observables";
+import { useObservable } from "@reactive-js/react-hooks";
+
 registerDefaultScheduler(scheduler);
 
 const makeCallbacks = (
@@ -36,9 +40,16 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const Component1 = (props: RoutableComponentProps) => (
-  <div>{props.uri.path}</div>
-);
+const src = generate(x => x + 1, 0, 2, 4);
+
+const Component1 = (props: RoutableComponentProps) => {
+  const value = useObservable(() => src, []);
+
+  return <>
+    <div>{props.uri.path}</div>
+    <div>{value}</div>
+  </>
+};
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route1", Component1],
@@ -53,3 +64,11 @@ render(
   />,
   document.getElementById("root") as HTMLElement,
 );
+
+
+connect(pipe(
+  generate(x => x + 1, 0, undefined, 5),
+  map(x => fromArray([x, x, x, x])),
+  exhaust(),
+  onNext(console.log),
+));
