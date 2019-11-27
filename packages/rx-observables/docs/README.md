@@ -27,7 +27,6 @@
 * [onComplete](README.md#const-oncomplete)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
-* [operator](README.md#const-operator)
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
@@ -667,31 +666,6 @@ Name | Type |
 `next` | T |
 
 **Returns:** *ObservableOperator‹T, T›*
-
-___
-
-### `Const` operator
-
-▸ **operator**<**T**>(`equals`: function): *SubscriberOperator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪`Default value`  **equals**: *function*=  referenceEquality
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
-
-**Returns:** *SubscriberOperator‹T, T›*
 
 ___
 

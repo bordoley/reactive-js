@@ -4,7 +4,7 @@ export interface SchedulerContinuation {
   (shouldYield: () => boolean): SchedulerContinuationResult | void;
 }
 
-export type SchedulerContinuationResult = {
+export interface SchedulerContinuationResult {
   readonly continuation: SchedulerContinuation;
   readonly delay?: number;
   readonly priority?: number;
