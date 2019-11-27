@@ -2,6 +2,33 @@
 
 Fast modern reactive Javascript programming library
 
+## Example Usage
+
+```typescript
+import { connect, pipe } from "@reactive-js/rx-observable";
+import {
+  exhaust,
+  fromArray,
+  generate,
+  map,
+  onNext,
+} from "@reactive-js/rx-observables";
+
+import { scheduler } from "@reactive-js/react-scheduler";
+import { registerDefaultScheduler } from "@reactive-js/scheduler";
+
+registerDefaultScheduler(scheduler);
+
+const subscription = connect(
+  pipe(
+    generate(x => x + 1, 0),
+    map(x => fromArray([x, x, x, x])),
+    exhaust(),
+    onNext(console.log),
+  ),
+);
+```
+
 ## Packages
 
 ### Core
