@@ -11,35 +11,50 @@ export interface RoutableStateComponentProps<TState> {
   readonly uri: RelativeURI;
 }
 
+const createURIStateUpdater = <TState>(
+  stateUpdater: StateUpdater<TState>, 
+  parse: (serialized: string) => TState,
+  serialize: (state: TState) => string,
+  stateIsQuery: boolean,
+) => (
+  oldURI: RelativeURI,
+) => {
+  const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
+
+  const oldState = parse(oldSerialized);
+  const newState = stateUpdater(oldState);
+
+  if (oldState === newState) {
+    return oldURI;
+  } else if (stateIsQuery) {
+    const query = serialize(newState);
+    return {
+      ...oldURI,
+      query,
+    };
+  } else {
+    const fragment = serialize(newState);
+    return {
+      ...oldURI,
+      fragment,
+    };
+  }
+};
+
 export const create = <TState>(
   component: React.ComponentType<RoutableStateComponentProps<TState>>,
-  parseState: (serialized: string) => TState,
+  parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery = false,
 ): React.ComponentType<RoutableComponentProps> => {
-  const createURIStateUpdater = (stateUpdater: StateUpdater<TState>) => (
-    oldURI: RelativeURI,
-  ) => {
-    const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
+  const createCallbacks = (uriUpdater: (updater: StateUpdater<RelativeURI>) => void) => {
+    const goTo = (uri: RelativeURI) => uriUpdater(_ => uri);
 
-    const oldState = parseState(oldSerialized);
-    const newState = stateUpdater(oldState);
+    const dispatch = (stateUpdater: StateUpdater<TState>) => {
+      uriUpdater(createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery));
+    };
 
-    if (oldState === newState) {
-      return oldURI;
-    } else if (stateIsQuery) {
-      const query = serialize(newState);
-      return {
-        ...oldURI,
-        query,
-      };
-    } else {
-      const fragment = serialize(newState);
-      return {
-        ...oldURI,
-        fragment,
-      };
-    }
+    return { goTo, dispatch };
   };
 
   const RoutableStateComponent = ({
@@ -49,20 +64,10 @@ export const create = <TState>(
   }: RoutableComponentProps) => {
     const state = useMemo(() => {
       const serialized = stateIsQuery ? uri.query : uri.fragment;
-      return parseState(serialized);
+      return parse(serialized);
     }, [uri]);
 
-    const goTo: (uri: RelativeURI) => void = useCallback(
-      uri => uriUpdater(_ => uri),
-      [uri, uriUpdater],
-    );
-
-    const dispatch: (updater: StateUpdater<TState>) => void = useCallback(
-      stateUpdater => {
-        uriUpdater(createURIStateUpdater(stateUpdater));
-      },
-      [uriUpdater],
-    );
+    const { goTo, dispatch } = useMemo(() => createCallbacks(uriUpdater), [uriUpdater]);
 
     return createElement(component, {
       uri,
