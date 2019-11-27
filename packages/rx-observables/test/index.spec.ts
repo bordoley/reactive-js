@@ -645,10 +645,9 @@ test("scan", () => {
   );
   scheduler.run();
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, 0);
-  expect(observer.next).toHaveBeenNthCalledWith(2, 1);
-  expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-  expect(observer.next).toHaveBeenNthCalledWith(4, 6);
+  expect(observer.next).toHaveBeenNthCalledWith(1, 1);
+  expect(observer.next).toHaveBeenNthCalledWith(2, 3);
+  expect(observer.next).toHaveBeenNthCalledWith(3, 6);
   expect(observer.complete).toBeCalledWith(error);
 });
 

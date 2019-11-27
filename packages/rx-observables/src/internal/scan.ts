@@ -45,10 +45,5 @@ const operator = <T, TAcc>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-  delay?: number,
-  priority?: number,
 ): ObservableOperator<T, TAcc> => obs =>
-  concat(
-    ofValue(initialValue, delay, priority),
-    lift(obs, operator(scanner, initialValue)),
-  );
+  lift(obs, operator(scanner, initialValue));
