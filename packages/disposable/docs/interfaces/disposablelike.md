@@ -37,10 +37,10 @@ Adds the given disposables to this container or disposes them if the container h
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) |
-`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |
+Name | Type | Description |
+------ | ------ | ------ |
+`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
+`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
 
 **Returns:** *void*
 
@@ -64,9 +64,9 @@ Removes and disposes the given disposables if they are part of this container.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) |
-`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |
+Name | Type | Description |
+------ | ------ | ------ |
+`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
+`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
 
 **Returns:** *void*
