@@ -909,7 +909,7 @@ var ExampleReact = (function (react, reactDom) {
 	    var observable = react.useMemo(factory, deps);
 	    exports.useDisposable(function () {
 	        return dist$5.connect(makeObservable(observable, updateState, updateError), dist$2.scheduler);
-	    }, [updateState, updateError, dist$2.scheduler]);
+	    }, [updateState, updateError]);
 	    if (error !== undefined) {
 	        throw error;
 	    }
@@ -919,6 +919,12 @@ var ExampleReact = (function (react, reactDom) {
 	    var observableResource = react.useMemo(factory, deps);
 	    useDispose(observableResource);
 	    return exports.useObservable(function () { return observableResource; }, [observableResource]);
+	};
+	exports.useAsyncIterator = function (factory, deps) {
+	    var iterator = react.useMemo(factory, deps);
+	    var dispatch = react.useCallback(function (req) { return iterator.dispatch(req); }, [iterator]);
+	    var value = exports.useObservable(function () { return iterator; }, [iterator]);
+	    return [value, dispatch];
 	};
 	exports.useAsyncIteratorResource = function (factory, deps) {
 	    var iterator = react.useMemo(factory, deps);
@@ -934,7 +940,8 @@ var ExampleReact = (function (react, reactDom) {
 	var dist_1$6 = dist$6.useDisposable;
 	var dist_2$4 = dist$6.useObservable;
 	var dist_3$3 = dist$6.useObservableResource;
-	var dist_4$2 = dist$6.useAsyncIteratorResource;
+	var dist_4$2 = dist$6.useAsyncIterator;
+	var dist_5$2 = dist$6.useAsyncIteratorResource;
 
 	var dist$7 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -2310,7 +2317,7 @@ var ExampleReact = (function (react, reactDom) {
 	var dist_2$9 = dist$b.concat;
 	var dist_3$4 = dist$b.startWith;
 	var dist_4$3 = dist$b.distinctUntilChanged;
-	var dist_5$2 = dist$b.empty;
+	var dist_5$3 = dist$b.empty;
 	var dist_6 = dist$b.fromArray;
 	var dist_7 = dist$b.fromScheduledValues;
 	var dist_8 = dist$b.ofValue;
@@ -2570,19 +2577,19 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-	var StateContainerResourceImpl = /** @class */ (function () {
-	    function StateContainerResourceImpl(delegate, dispatcher) {
+	var StateContainerImpl = /** @class */ (function () {
+	    function StateContainerImpl(delegate, dispatcher) {
 	        this.delegate = delegate;
 	        this.dispatcher = dispatcher;
 	    }
-	    Object.defineProperty(StateContainerResourceImpl.prototype, "isDisposed", {
+	    Object.defineProperty(StateContainerImpl.prototype, "isDisposed", {
 	        get: function () {
 	            return this.dispatcher.isDisposed;
 	        },
 	        enumerable: true,
 	        configurable: true
 	    });
-	    StateContainerResourceImpl.prototype.add = function (disposable) {
+	    StateContainerImpl.prototype.add = function (disposable) {
 	        var _a;
 	        var disposables = [];
 	        for (var _i = 1; _i < arguments.length; _i++) {
@@ -2590,13 +2597,13 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.dispatcher).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
-	    StateContainerResourceImpl.prototype.dispatch = function (updater) {
+	    StateContainerImpl.prototype.dispatch = function (updater) {
 	        this.dispatcher.dispatch(updater);
 	    };
-	    StateContainerResourceImpl.prototype.dispose = function () {
+	    StateContainerImpl.prototype.dispose = function () {
 	        this.dispatcher.dispose();
 	    };
-	    StateContainerResourceImpl.prototype.remove = function (disposable) {
+	    StateContainerImpl.prototype.remove = function (disposable) {
 	        var _a;
 	        var disposables = [];
 	        for (var _i = 1; _i < arguments.length; _i++) {
@@ -2604,10 +2611,10 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.dispatcher).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
-	    StateContainerResourceImpl.prototype.subscribe = function (subscriber) {
+	    StateContainerImpl.prototype.subscribe = function (subscriber) {
 	        this.delegate.subscribe(subscriber);
 	    };
-	    return StateContainerResourceImpl;
+	    return StateContainerImpl;
 	}());
 	var referenceEquality = function (a, b) { return a === b; };
 	exports.create = function (initialState, equals, scheduler, priority) {
@@ -2615,7 +2622,7 @@ var ExampleReact = (function (react, reactDom) {
 	    var dispatcher = dist$g.create();
 	    var delegate = dist$5.pipe(dispatcher, dist$b.scan(function (acc, next) { return next(acc); }, initialState), dist$b.startWith(initialState), dist$b.distinctUntilChanged(equals), dist$b.shareReplayLast(scheduler, priority));
 	    dispatcher.add(dist$5.connect(delegate, scheduler));
-	    return new StateContainerResourceImpl(delegate, dispatcher);
+	    return new StateContainerImpl(delegate, dispatcher);
 	};
 
 	});
@@ -2681,7 +2688,7 @@ var ExampleReact = (function (react, reactDom) {
 	        react_1.default.createElement("button", { onClick: goToRoute1 }, "Go to route1"),
 	        react_1.default.createElement("button", { onClick: goToRoute2 }, "Go to route2")));
 	};
-	var Component1 = function (props) { return react_1.default.createElement("div", null, props.uri.path); };
+	var Component1 = function (props) { return (react_1.default.createElement("div", null, props.uri.path)); };
 	var routes = [
 	    ["/route1", Component1],
 	];
