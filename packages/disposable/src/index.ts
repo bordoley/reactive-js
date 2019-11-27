@@ -1,12 +1,30 @@
 export type DisposableOrTeardown = DisposableLike | (() => void);
 
+/**
+ * Represents an unmanaged resource that can be disposed.
+ */
 export interface DisposableLike {
+  /**
+   * Returns true if this resource has been disposed.
+   */
   readonly isDisposed: boolean;
+
+  /**
+   * Adds the given disposables to this container or disposes them if the container has been disposed.
+   */
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): void;
+
+  /**
+   * Dispose the resource, the operation should be idempotent.
+   */
   dispose(): void;
+
+  /**
+   * Removes and disposes the given disposables if they are part of this container.
+   */
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
@@ -81,11 +99,21 @@ class DisposableImpl implements DisposableLike {
   }
 }
 
+/**
+ * Creates an empty DisposableLike instance.
+ */
 export const create = (): DisposableLike => new DisposableImpl();
 
+/**
+ * A disposed DisposableLike instance.
+ */
 export const disposed: DisposableLike = create();
 disposed.dispose();
 
+/**
+ * Throws an exception if [[disposable]] is disposed.
+ * @param disposable
+ */
 export const throwIfDisposed = (disposable: DisposableLike) => {
   if (disposable.isDisposed) {
     throw new Error("Disposed");
