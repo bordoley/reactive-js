@@ -61,7 +61,5 @@ const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
 
 // tslint:disable-next-line variable-name
-export const switch_ = <T>(): ObservableOperator<
-  ObservableLike<T>,
-  T
-> => lift(operator);
+export const switch_ = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+  lift(operator);

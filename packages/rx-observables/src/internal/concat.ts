@@ -2,9 +2,9 @@ import { disposed } from "@reactive-js/disposable";
 
 import {
   connect,
-  observe,
   ObservableLike,
   ObservableOperator,
+  observe,
   pipe,
 } from "@reactive-js/rx-observable";
 

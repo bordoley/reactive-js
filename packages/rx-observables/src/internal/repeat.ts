@@ -6,7 +6,7 @@ import {
   ObservableLike,
   ObservableOperator,
   observe,
-  pipe
+  pipe,
 } from "@reactive-js/rx-observable";
 
 import {

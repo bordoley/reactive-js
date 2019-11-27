@@ -74,5 +74,4 @@ const operator = <T>(
 export const takeLast = <T>(
   count: number,
   priority?: number,
-): ObservableOperator<T, T> =>
-  lift(operator(count, priority));
+): ObservableOperator<T, T> => lift(operator(count, priority));

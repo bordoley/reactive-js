@@ -1,9 +1,8 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 
-import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
-  lift as liftObservable,
   ObservableLike,
   ObservableOperator,
   pipe as pipeObservable,
@@ -49,105 +48,103 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   }
 }
 
-export function lift<T, A>(
-  src: ObservableResourceLike<T>,
-  operator: SubscriberOperator<T, A>,
-): ObservableResourceLike<A> {
-  const observable = liftObservable(operator)(
-    src instanceof LiftedObservableResource ? src.observable : src,
+export interface ObservableResourceOperator<A, B> {
+  (observable: ObservableResourceLike<A>): ObservableResourceLike<B>;
+}
+
+export const lift = <A, B>(
+  operator: ObservableOperator<A, B>,
+): ObservableResourceOperator<A, B> => observableResource => {
+  const observable = pipeObservable(
+    observableResource instanceof LiftedObservableResource
+      ? observableResource.observable
+      : observableResource,
+    operator,
   );
 
   const disposable =
-    src instanceof LiftedObservableResource ? src.disposable : src;
+    observableResource instanceof LiftedObservableResource
+      ? observableResource.disposable
+      : observableResource;
 
   return new LiftedObservableResource(observable, disposable);
-}
+};
 
 export function pipe<T, A>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
+  op1: ObservableResourceOperator<T, A>,
 ): ObservableResourceLike<A>;
 export function pipe<T, A, B>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
 ): ObservableResourceLike<B>;
 export function pipe<T, A, B, C>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
 ): ObservableResourceLike<C>;
 export function pipe<T, A, B, C, D>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
 ): ObservableResourceLike<D>;
 export function pipe<T, A, B, C, D, E>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
+  op5: ObservableResourceOperator<D, E>,
 ): ObservableResourceLike<E>;
 export function pipe<T, A, B, C, D, E, F>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
+  op5: ObservableResourceOperator<D, E>,
+  op6: ObservableResourceOperator<E, F>,
 ): ObservableResourceLike<F>;
 export function pipe<T, A, B, C, D, E, F, G>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
+  op5: ObservableResourceOperator<D, E>,
+  op6: ObservableResourceOperator<E, F>,
+  op7: ObservableResourceOperator<F, G>,
 ): ObservableResourceLike<G>;
 export function pipe<T, A, B, C, D, E, F, G, H>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
+  op5: ObservableResourceOperator<D, E>,
+  op6: ObservableResourceOperator<E, F>,
+  op7: ObservableResourceOperator<F, G>,
+  op8: ObservableResourceOperator<G, H>,
 ): ObservableResourceLike<H>;
 export function pipe<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableResourceLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
+  op1: ObservableResourceOperator<T, A>,
+  op2: ObservableResourceOperator<A, B>,
+  op3: ObservableResourceOperator<B, C>,
+  op4: ObservableResourceOperator<C, D>,
+  op5: ObservableResourceOperator<D, E>,
+  op6: ObservableResourceOperator<E, F>,
+  op7: ObservableResourceOperator<F, G>,
+  op8: ObservableResourceOperator<G, H>,
+  op9: ObservableResourceOperator<H, I>,
 ): ObservableResourceLike<I>;
 export function pipe(
   source: ObservableResourceLike<any>,
-  ...operators: Array<ObservableOperator<any, any>>
+  ...operators: Array<ObservableResourceOperator<any, any>>
 ): ObservableResourceLike<any> {
-  const obsSource =
-    source instanceof LiftedObservableResource ? source.observable : source;
-  const observable = pipeObservable.apply(undefined, [
-    obsSource,
-    ...operators,
-  ] as any);
-
-  const disposable =
-    source instanceof LiftedObservableResource ? source.disposable : source;
-
-  return new LiftedObservableResource(observable, disposable);
+  return operators.reduce((acc, next) => next(acc), source);
 }

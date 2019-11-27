@@ -55,11 +55,13 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   }
 }
 
+export interface ObservableOperator<A, B> {
+  (observable: ObservableLike<A>): ObservableLike<B>;
+}
+
 export const lift = <TA, TB>(
   operator: SubscriberOperator<TA, TB>,
-): ObservableOperator<TA, TB> => (
-  source: ObservableLike<TA>,
-): ObservableLike<TB> => {
+): ObservableOperator<TA, TB> => source => {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;
 
@@ -70,10 +72,6 @@ export const lift = <TA, TB>(
 
   return new LiftedObservable(sourceSource, allOperators);
 };
-
-export interface ObservableOperator<A, B> {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-}
 
 export function pipe<T, A>(
   src: ObservableLike<T>,

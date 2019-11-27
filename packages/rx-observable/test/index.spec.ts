@@ -1,15 +1,12 @@
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import {
-  SubscriberLike,
-  SubscriberOperator,
-} from "@reactive-js/rx-subscriber";
+import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 import {
   connect,
   create as observableCreate,
-  observe,
   ObservableLike,
+  observe,
   pipe,
 } from "../src/index";
 
@@ -102,10 +99,11 @@ describe("Observable", () => {
   });
 
   test("lift", () => {
-    const onNext = <T>(onNext: (data: T) => void) => observe({
-      next: onNext,
-      complete: _ => {},
-    });
+    const onNext = <T>(onNext: (data: T) => void) =>
+      observe({
+        next: onNext,
+        complete: _ => {},
+      });
     const scheduler = virtualTimeSchedulerCreate();
     const result: number[] = [];
 

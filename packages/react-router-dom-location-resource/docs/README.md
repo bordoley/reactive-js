@@ -12,7 +12,7 @@
 
 ### `Const` create
 
-▸ **create**(`priority?`: undefined | number): *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
+▸ **create**(`priority?`: undefined | number): *AsyncIteratorResourceLike‹unknown, RelativeURI›*
 
 **Parameters:**
 
@@ -20,4 +20,4 @@ Name | Type |
 ------ | ------ |
 `priority?` | undefined &#124; number |
 
-**Returns:** *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
+**Returns:** *AsyncIteratorResourceLike‹unknown, RelativeURI›*
