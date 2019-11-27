@@ -1,7 +1,4 @@
-import {
-  create,
-  ObservableLike,
-} from "@reactive-js/rx-observable";
+import { create, ObservableLike } from "@reactive-js/rx-observable";
 
 export const fromEvent = <T>(
   target: EventTarget,

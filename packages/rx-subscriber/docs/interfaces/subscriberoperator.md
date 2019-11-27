@@ -2,6 +2,8 @@
 
 # Interface: SubscriberOperator <**A, B**>
 
+A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
+
 ## Type parameters
 
 ▪ **A**
@@ -15,6 +17,8 @@
 ## Callable
 
 ▸ (`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
+
+A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 **Parameters:**
 

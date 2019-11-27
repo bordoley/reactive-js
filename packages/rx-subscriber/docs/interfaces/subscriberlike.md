@@ -33,3 +33,5 @@
 ###  isConnected
 
 • **isConnected**: *boolean*
+
+Returns true if the subscriber is connected.

@@ -2,6 +2,8 @@
 
 # Interface: ConnectableSubscriberLike <**T**>
 
+A SubscriberLike that can have it's connected state set.
+
 ## Type parameters
 
 ▪ **T**
@@ -23,5 +25,7 @@
 ###  connect
 
 ▸ **connect**(): *void*
+
+Set the connected state of the subscriber to true.
 
 **Returns:** *void*

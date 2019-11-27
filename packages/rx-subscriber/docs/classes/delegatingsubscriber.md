@@ -61,11 +61,14 @@ Name | Type |
 
 ▸ **onComplete**(`error?`: Error): *void*
 
+Override to handle complete notification. Implementations
+may throw errors which will be caught and propogated.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`error?` | Error |
+Name | Type | Description |
+------ | ------ | ------ |
+`error?` | Error |   |
 
 **Returns:** *void*
 
@@ -75,10 +78,13 @@ ___
 
 ▸ **onNext**(`data`: TA): *void*
 
+Overried to handle incoming next notifications. Implementations
+may throw errors which will be caught and propogated.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`data` | TA |
+Name | Type | Description |
+------ | ------ | ------ |
+`data` | TA |   |
 
 **Returns:** *void*

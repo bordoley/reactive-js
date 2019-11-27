@@ -1,7 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import {
-  AsyncIteratorLike,
-} from "@reactive-js/ix-async-iterator";
+import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
 import {
   connect,
   ObservableLike,
@@ -15,8 +13,8 @@ import {
   shareReplayLast,
   startWith,
 } from "@reactive-js/rx-observables";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   create as createSubject,
@@ -33,9 +31,9 @@ class AsyncIteratorResourceImpl<TReq, T>
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
+  readonly dispatcher: (req: TReq) => void;
 
   readonly disposable: DisposableLike;
-  readonly dispatcher: (req: TReq) => void;
   readonly observable: ObservableLike<T>;
 
   constructor(
