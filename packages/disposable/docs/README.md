@@ -32,11 +32,15 @@
 
 • **disposed**: *[DisposableLike](interfaces/disposablelike.md)* =  create()
 
+A disposed DisposableLike instance.
+
 ## Functions
 
 ### `Const` create
 
 ▸ **create**(): *[DisposableLike](interfaces/disposablelike.md)*
+
+Creates an empty DisposableLike instance.
 
 **Returns:** *[DisposableLike](interfaces/disposablelike.md)*
 
@@ -46,10 +50,12 @@ ___
 
 ▸ **throwIfDisposed**(`disposable`: [DisposableLike](interfaces/disposablelike.md)): *void*
 
+Throws an exception if [[disposable]] is disposed.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`disposable` | [DisposableLike](interfaces/disposablelike.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`disposable` | [DisposableLike](interfaces/disposablelike.md) |   |
 
 **Returns:** *void*
