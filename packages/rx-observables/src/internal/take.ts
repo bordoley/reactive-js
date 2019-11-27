@@ -32,6 +32,5 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
 const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
   new TakeSubscriber(subscriber, count);
 
-export const take = <T>(
-  count: number,
-): ObservableOperator<T, T> => lift(operator(count));
+export const take = <T>(count: number): ObservableOperator<T, T> =>
+  lift(operator(count));

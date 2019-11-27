@@ -6,7 +6,12 @@ import {
 
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import { connect, pipe, ObservableLike, observe } from "@reactive-js/rx-observable";
+import {
+  connect,
+  ObservableLike,
+  observe,
+  pipe,
+} from "@reactive-js/rx-observable";
 
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 

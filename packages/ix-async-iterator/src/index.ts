@@ -34,6 +34,24 @@ export interface AsyncIteratorOperator<TSrcReq, TSrc, TReq, T> {
   (iter: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
 }
 
+export const lift = <TReq, T, TReqA, TA>(
+  operator?: ObservableOperator<T, TA>,
+  mapper?: (req: TReqA) => TReq,
+): AsyncIteratorOperator<TReq, T, TReqA, TA> => iterator => {
+  const [observable, dispatcher] =
+    iterator instanceof DelegatingAsyncIterator
+      ? [iterator.observable, iterator.dispatcher]
+      : [iterator, (req: any) => iterator.dispatch(req)];
+
+  const pipedObservable =
+    operator !== undefined ? observablePipe(observable, operator) : observable;
+
+  const mappedDispatcher: (req: TReqA) => void =
+    mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
+
+  return new DelegatingAsyncIterator(pipedObservable, mappedDispatcher);
+};
+
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorLike<TSrcReq, TSrc>,
   op1: AsyncIteratorOperator<TSrcReq, TSrc, TReqA, TA>,
@@ -197,32 +215,3 @@ export function pipe(
 ) {
   return operators.reduce((acc, next) => next(acc), src);
 }
-
-export const mapDispatch = <TSrcReq, TReq, T>(
-  mapper: (v: TReq) => TSrcReq,
-): AsyncIteratorOperator<TSrcReq, T, TReq, T> => (
-  iterator: AsyncIteratorLike<TSrcReq, T>,
-) => {
-  const [delegate, dispatcher] =
-    iterator instanceof DelegatingAsyncIterator
-      ? [iterator.observable, iterator.dispatcher]
-      : [iterator, (req: TSrcReq) => iterator.dispatch(req)];
-  const mappedDispatcher = (req: TReq) => dispatcher(mapper(req));
-
-  return new DelegatingAsyncIterator(delegate, mappedDispatcher);
-};
-
-export const asyncIteratorOperatorFrom = <TReq, T, TA>(
-  operator: ObservableOperator<T, TA>,
-): AsyncIteratorOperator<TReq, T, TReq, TA> => (
-  iterator: AsyncIteratorLike<TReq, T>,
-) => {
-  const [observable, dispatcher] =
-    iterator instanceof DelegatingAsyncIterator
-      ? [iterator.observable, iterator.dispatcher]
-      : [iterator, (req: any) => iterator.dispatch(req)];
-
-  const pipedObservable = observablePipe(observable, operator);
-
-  return new DelegatingAsyncIterator(pipedObservable, dispatcher);
-};

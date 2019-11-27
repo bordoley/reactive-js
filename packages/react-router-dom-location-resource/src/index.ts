@@ -1,6 +1,6 @@
 import { fromEvent } from "@reactive-js/dom";
 import {
-  asyncIteratorResourceOperatorFrom,
+  lift,
   pipe as asyncIteratorResourcePipe,
 } from "@reactive-js/ix-async-iterator-resource";
 import { create as stateContainerCreate } from "@reactive-js/ix-state-container";
@@ -62,6 +62,6 @@ export const create = (priority?: number) => {
 
   return asyncIteratorResourcePipe(
     stateContainer,
-    asyncIteratorResourceOperatorFrom(operator(setURI, priority)),
+    lift(operator(setURI, priority)),
   );
 };

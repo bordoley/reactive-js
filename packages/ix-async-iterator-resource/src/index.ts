@@ -1,13 +1,14 @@
-import { DisposableOrTeardown } from "@reactive-js/disposable";
+import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   AsyncIteratorLike,
   DelegatingAsyncIterator,
 } from "@reactive-js/ix-async-iterator";
-import { ObservableOperator } from "@reactive-js/rx-observable";
 import {
-  ObservableResourceLike,
-  pipe as observableResourcePipe,
-} from "@reactive-js/rx-observable-resource";
+  ObservableLike,
+  ObservableOperator,
+  pipe as observablePipe,
+} from "@reactive-js/rx-observable";
+import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
 
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>
@@ -20,14 +21,15 @@ class DelegatingAsyncIteratorResource<TReq, T>
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
-  readonly disposable: ObservableResourceLike<T>;
+  readonly disposable: DisposableLike;
 
   constructor(
-    observable: ObservableResourceLike<T>,
+    observable: ObservableLike<T>,
     dispatcher: (req: TReq) => void,
+    disposable: DisposableLike,
   ) {
     super(observable, dispatcher);
-    this.disposable = observable;
+    this.disposable = disposable;
   }
 
   add(
@@ -55,6 +57,28 @@ export interface AsyncIteratorResourceOperator<TSrcReq, TSrc, TReq, T> {
     T
   >;
 }
+
+export const lift = <TReq, T, TReqA, TA>(
+  operator?: ObservableOperator<T, TA>,
+  mapper?: (req: TReqA) => TReq,
+): AsyncIteratorResourceOperator<TReq, T, TReqA, TA> => iterator => {
+  const [observable, dispatcher, disposable] =
+    iterator instanceof DelegatingAsyncIteratorResource
+      ? [iterator.observable, iterator.dispatcher, iterator.disposable]
+      : [iterator, (req: any) => iterator.dispatch(req), iterator];
+
+  const pipedObservable =
+    operator !== undefined ? observablePipe(observable, operator) : observable;
+
+  const mappedDispatcher: (req: TReqA) => void =
+    mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
+
+  return new DelegatingAsyncIteratorResource(
+    pipedObservable,
+    mappedDispatcher,
+    disposable,
+  );
+};
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
@@ -219,35 +243,3 @@ export function pipe(
 ) {
   return operators.reduce((acc, next) => next(acc), src);
 }
-
-export const mapDispatch = <TSrcReq, TReq, T>(
-  mapper: (v: TReq) => TSrcReq,
-): AsyncIteratorResourceOperator<TSrcReq, T, TReq, T> => (
-  iterator: AsyncIteratorResourceLike<TSrcReq, T>,
-) => {
-  const [delegate, dispatcher] =
-    iterator instanceof DelegatingAsyncIteratorResource
-      ? [iterator.disposable, iterator.dispatcher]
-      : [iterator, (req: TSrcReq) => iterator.dispatch(req)];
-  const mappedDispatcher = (req: TReq) => dispatcher(mapper(req));
-
-  return new DelegatingAsyncIteratorResource(delegate, mappedDispatcher);
-};
-
-export const asyncIteratorResourceOperatorFrom = <TReq, T, TA>(
-  operator: ObservableOperator<T, TA>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, TA> => (
-  iterator: AsyncIteratorResourceLike<TReq, T>,
-) => {
-  const [delegate, dispatcher] =
-    iterator instanceof DelegatingAsyncIteratorResource
-      ? [iterator.disposable, iterator.dispatcher]
-      : [iterator, (req: TReq) => iterator.dispatch(req)];
-
-  const liftedObservableResource = observableResourcePipe(delegate, operator);
-
-  return new DelegatingAsyncIteratorResource(
-    liftedObservableResource,
-    dispatcher,
-  );
-};

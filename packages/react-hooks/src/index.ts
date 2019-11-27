@@ -1,9 +1,14 @@
-import { connect, ObservableLike, observe, pipe } from "@reactive-js/rx-observable";
-import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { DisposableLike } from "@reactive-js/disposable";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
+import {
+  connect,
+  ObservableLike,
+  observe,
+  pipe,
+} from "@reactive-js/rx-observable";
+import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useDispose = (disposable: DisposableLike) => {
   useEffect(

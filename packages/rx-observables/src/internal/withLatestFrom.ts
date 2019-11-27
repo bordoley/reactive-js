@@ -86,5 +86,4 @@ const operator = <TA, TB, TC>(
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperator<TA, TC> =>
-  lift(operator(other, selector));
+): ObservableOperator<TA, TC> => lift(operator(other, selector));

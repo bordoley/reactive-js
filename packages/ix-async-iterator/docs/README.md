@@ -15,21 +15,22 @@
 
 ### Functions
 
-* [asyncIteratorOperatorFrom](README.md#const-asynciteratoroperatorfrom)
-* [mapDispatch](README.md#const-mapdispatch)
+* [lift](README.md#const-lift)
 * [pipe](README.md#pipe)
 
 ## Functions
 
-### `Const` asyncIteratorOperatorFrom
+### `Const` lift
 
-▸ **asyncIteratorOperatorFrom**<**TReq**, **T**, **TA**>(`operator`: ObservableOperator‹T, TA›): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TA›*
+▸ **lift**<**TReq**, **T**, **TReqA**, **TA**>(`operator?`: ObservableOperator‹T, TA›, `mapper?`: undefined | function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, TA›*
 
 **Type parameters:**
 
 ▪ **TReq**
 
 ▪ **T**
+
+▪ **TReqA**
 
 ▪ **TA**
 
@@ -37,37 +38,10 @@
 
 Name | Type |
 ------ | ------ |
-`operator` | ObservableOperator‹T, TA› |
+`operator?` | ObservableOperator‹T, TA› |
+`mapper?` | undefined &#124; function |
 
-**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TA›*
-
-___
-
-### `Const` mapDispatch
-
-▸ **mapDispatch**<**TSrcReq**, **TReq**, **T**>(`mapper`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TSrcReq, T, TReq, T›*
-
-**Type parameters:**
-
-▪ **TSrcReq**
-
-▪ **TReq**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **mapper**: *function*
-
-▸ (`v`: TReq): *TSrcReq*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`v` | TReq |
-
-**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TSrcReq, T, TReq, T›*
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, TA›*
 
 ___
 
