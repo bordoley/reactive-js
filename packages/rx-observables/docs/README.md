@@ -34,7 +34,7 @@
 * [shareReplay](README.md#const-sharereplay)
 * [shareReplayLast](README.md#const-sharereplaylast)
 * [startWith](README.md#startwith)
-* [switch_](README.md#const-switch_)
+* [switchAll](README.md#const-switchall)
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
 * [throws](README.md#const-throws)
@@ -817,9 +817,9 @@ Name | Type |
 
 ___
 
-### `Const` switch_
+### `Const` switchAll
 
-▸ **switch_**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **switchAll**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
