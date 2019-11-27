@@ -8,7 +8,7 @@
 
 ## Callable
 
-▸ (`shouldYield`: function): *[SchedulerContinuationResult](../README.md#schedulercontinuationresult) | void*
+▸ (`shouldYield`: function): *[SchedulerContinuationResult](schedulercontinuationresult.md) | void*
 
 **Parameters:**
 
@@ -16,4 +16,4 @@
 
 ▸ (): *boolean*
 
-**Returns:** *[SchedulerContinuationResult](../README.md#schedulercontinuationresult) | void*
+**Returns:** *[SchedulerContinuationResult](schedulercontinuationresult.md) | void*

@@ -36,7 +36,7 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
-export const operator = <T>(
+const operator = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): SubscriberOperator<T, T> => subscriber =>
   new DistinctUntilChangedSubscriber(subscriber, equals);

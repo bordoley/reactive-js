@@ -7,25 +7,14 @@
 ### Interfaces
 
 * [SchedulerContinuation](interfaces/schedulercontinuation.md)
+* [SchedulerContinuationResult](interfaces/schedulercontinuationresult.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [SchedulerResourceLike](interfaces/schedulerresourcelike.md)
-
-### Type aliases
-
-* [SchedulerContinuationResult](README.md#schedulercontinuationresult)
 
 ### Functions
 
 * [getDefaultScheduler](README.md#const-getdefaultscheduler)
 * [registerDefaultScheduler](README.md#const-registerdefaultscheduler)
-
-## Type aliases
-
-###  SchedulerContinuationResult
-
-Ƭ **SchedulerContinuationResult**: *object*
-
-#### Type declaration:
 
 ## Functions
 
