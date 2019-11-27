@@ -2,6 +2,8 @@
 
 # Enumeration: NotificationKind
 
+Enumeration of valid notification types.
+
 ## Index
 
 ### Enumeration members
