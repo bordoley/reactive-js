@@ -6,8 +6,7 @@ import {
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
-/** @noInheritDoc
- *
+/**
  * A SubscriberLike represents the underlying mechanism for receiving notifications from
  * an ObservableLike. A SubscriberLike composes an observer with a
  * scheduler and disposable subscription. Subscribers may only be notified
@@ -15,6 +14,8 @@ import {
  * executing on the subscriber's scheduler. Not doing so is a runtime error and will
  * result in errors being throw in DEV mode (these checks are disabled in production mode
  * for performance reasons).
+ *
+ * @noInheritDoc
  */
 export interface SubscriberLike<T>
   extends ObserverLike<T>,
