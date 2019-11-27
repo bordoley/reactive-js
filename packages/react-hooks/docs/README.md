@@ -6,12 +6,35 @@
 
 ### Functions
 
+* [useAsyncIterator](README.md#const-useasynciterator)
 * [useAsyncIteratorResource](README.md#const-useasynciteratorresource)
 * [useDisposable](README.md#const-usedisposable)
 * [useObservable](README.md#const-useobservable)
 * [useObservableResource](README.md#const-useobservableresource)
 
 ## Functions
+
+### `Const` useAsyncIterator
+
+▸ **useAsyncIterator**<**TReq**, **T**>(`factory`: function, `deps`: keyof any[] | undefined): *[T | undefined, function]*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *AsyncIteratorLike‹TReq, T›*
+
+▪ **deps**: *keyof any[] | undefined*
+
+**Returns:** *[T | undefined, function]*
+
+___
 
 ### `Const` useAsyncIteratorResource
 

@@ -1,4 +1,5 @@
 import { DisposableLike } from "@reactive-js/disposable";
+import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
 import {
@@ -53,7 +54,7 @@ export const useObservable = <T>(
   useDisposable(
     () =>
       connect(makeObservable(observable, updateState, updateError), scheduler),
-    [updateState, updateError, scheduler],
+    [updateState, updateError],
   );
 
   if (error !== undefined) {
@@ -70,6 +71,16 @@ export const useObservableResource = <T>(
   const observableResource = useMemo(factory, deps);
   useDispose(observableResource);
   return useObservable(() => observableResource, [observableResource]);
+};
+
+export const useAsyncIterator = <TReq, T>(
+  factory: () => AsyncIteratorLike<TReq, T>,
+  deps: readonly any[] | undefined,
+): [T | undefined, (req: TReq) => void] => {
+  const iterator = useMemo(factory, deps);
+  const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
+  const value = useObservable(() => iterator, [iterator]);
+  return [value, dispatch];
 };
 
 export const useAsyncIteratorResource = <TReq, T>(
