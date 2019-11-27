@@ -39,6 +39,6 @@
   "scripts": {
     "build": "tsc",
     "rollup": "rollup -c",
-    "server": "http-server"
+    "server": "http-server -c-1"
   }
 }

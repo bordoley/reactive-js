@@ -8,16 +8,28 @@ import { render } from "react-dom";
 registerDefaultScheduler(scheduler);
 
 const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
-  useEffect(() => {
+  const goToRoute1 = () =>
     uriUpdater(state => ({
       ...state,
       path: "/route1",
     }));
-  }, [uriUpdater]);
-  return <div>{"Not Found"}</div>;
+
+  const goToRoute2 = () =>
+    uriUpdater(state => ({
+      ...state,
+      path: "/route2",
+    }));
+
+  return (
+    <div>
+      {"Not Found"}
+      <button onClick={goToRoute1}>Go to route1</button>
+      <button onClick={goToRoute2}>Go to route2</button>
+    </div>
+  );
 };
 
-const Component1 = (props: RoutableComponentProps) => <div>{"Component1"}</div>;
+const Component1 = (props: RoutableComponentProps) => <div>{props.uri.path}</div>;
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route1", Component1],
