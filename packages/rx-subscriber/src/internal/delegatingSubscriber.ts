@@ -18,9 +18,9 @@ const getSubscriberSubscription = <T>(
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 /**
- * @noInheritDoc
- *
  * Abstract base class for implementing SubscriberOperators.
+ *
+ * @noInheritDoc
  */
 export abstract class DelegatingSubscriber<
   TA,
