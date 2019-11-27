@@ -4,7 +4,6 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 
 import {
   DelegatingSubscriber,
-  observe,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
@@ -14,6 +13,8 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observe,
+  pipe,
 } from "@reactive-js/rx-observable";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
@@ -55,7 +56,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     this.selector = selector;
 
     this.otherSubscription = connect(
-      lift(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
+      pipe(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
       this,
     );
 
@@ -85,5 +86,5 @@ const operator = <TA, TB, TC>(
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperator<TA, TC> => observable =>
-  lift(observable, operator(other, selector));
+): ObservableOperator<TA, TC> =>
+  lift(operator(other, selector));

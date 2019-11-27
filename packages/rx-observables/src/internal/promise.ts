@@ -3,11 +3,10 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   connect,
   create as observableCreate,
-  lift,
   ObservableLike,
+  observe,
+  pipe,
 } from "@reactive-js/rx-observable";
-
-import { observe } from "@reactive-js/rx-subscriber";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -39,7 +38,7 @@ export const toPromise = <T>(
   new Promise((resolve, reject) => {
     let result: T | undefined = undefined;
     const subscription = connect(
-      lift(
+      pipe(
         observable,
         observe({
           next: v => {

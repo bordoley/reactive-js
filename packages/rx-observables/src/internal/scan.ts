@@ -45,5 +45,5 @@ const operator = <T, TAcc>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): ObservableOperator<T, TAcc> => obs =>
-  lift(obs, operator(scanner, initialValue));
+): ObservableOperator<T, TAcc> =>
+  lift(operator(scanner, initialValue));

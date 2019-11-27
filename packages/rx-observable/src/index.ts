@@ -50,14 +50,15 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
       subscriber,
       ...this.operators,
     ] as any);
-    
+
     this.source.subscribe(liftedSubscrber);
   }
 }
 
 export const lift = <TA, TB>(
-  source: ObservableLike<TA>,
   operator: SubscriberOperator<TA, TB>,
+): ObservableOperator<TA, TB> => (
+  source: ObservableLike<TA>,
 ): ObservableLike<TB> => {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;
@@ -178,5 +179,4 @@ export const create = <T>(
 
 export const observe = <T>(
   observer: ObserverLike<T>,
-): ObservableOperator<T, T> => (observable: ObservableLike<T>) =>
-  lift(observable, subscriberObserveOperator(observer));
+): ObservableOperator<T, T> => lift(subscriberObserveOperator(observer));

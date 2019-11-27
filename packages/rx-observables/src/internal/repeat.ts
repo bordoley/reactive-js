@@ -5,11 +5,12 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observe,
+  pipe
 } from "@reactive-js/rx-observable";
 
 import {
   DelegatingSubscriber,
-  observe,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
@@ -62,7 +63,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.parent.innerSubscription.disposable.dispose();
 
       this.parent.innerSubscription.disposable = connect(
-        lift(this.parent.observable, observe(this.parent.observer)),
+        pipe(this.parent.observable, observe(this.parent.observer)),
         this.parent,
       );
     }
@@ -107,13 +108,13 @@ const defaultRepeatPredicate = (error?: Error): boolean => error === undefined;
 
 export const repeat = <T>(
   predicate: () => boolean = alwaysTrue,
-): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
+): ObservableOperator<T, T> => {
   const repeatPredicate =
     predicate === alwaysTrue
       ? defaultRepeatPredicate
       : (error?: Error) => error === undefined && predicate();
 
-  return lift(observable, repeatOperator(observable, repeatPredicate));
+  return obs => lift(repeatOperator(obs, repeatPredicate))(obs);
 };
 
 const alwaysTrue1 = <T>(_: T) => true;
@@ -122,11 +123,11 @@ const defaultRetryPredicate = (error?: Error): boolean => error !== undefined;
 
 export const retry = <T>(
   predicate: (error: Error) => boolean = alwaysTrue1,
-): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
+): ObservableOperator<T, T> => {
   const retryPredicate =
     predicate === alwaysTrue1
       ? defaultRetryPredicate
       : (error?: Error) => error !== undefined && predicate(error);
 
-  return lift(observable, repeatOperator(observable, retryPredicate));
+  return obs => lift(repeatOperator(obs, retryPredicate))(obs);
 };

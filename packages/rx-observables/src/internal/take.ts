@@ -34,4 +34,4 @@ const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
 
 export const take = <T>(
   count: number,
-): ObservableOperator<T, T> => observable => lift(observable, operator(count));
+): ObservableOperator<T, T> => lift(operator(count));

@@ -1,10 +1,6 @@
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
-import { observe } from "@reactive-js/rx-subscriber";
-
+import { connect, ObservableLike, observe, pipe } from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
-
 import { useCallback, useEffect, useMemo, useState } from "react";
-
 import { DisposableLike } from "@reactive-js/disposable";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
 import { scheduler } from "@reactive-js/react-scheduler";
@@ -32,7 +28,7 @@ const makeObservable = <T>(
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
 ) =>
-  lift(
+  pipe(
     observable,
     observe({
       next: (data: T) => updateState(_ => data),

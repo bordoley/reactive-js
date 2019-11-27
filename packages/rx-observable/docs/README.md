@@ -66,7 +66,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`source`: [ObservableLike](interfaces/observablelike.md)‹TA›, `operator`: SubscriberOperator‹TA, TB›): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
 **Type parameters:**
 
@@ -78,10 +78,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹TA› |
 `operator` | SubscriberOperator‹TA, TB› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹TB›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
 ___
 

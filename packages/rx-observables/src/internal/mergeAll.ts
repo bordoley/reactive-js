@@ -1,6 +1,5 @@
 import {
   DelegatingSubscriber,
-  observe,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
@@ -10,6 +9,8 @@ import {
   lift,
   ObservableLike,
   ObservableOperator,
+  observe,
+  pipe,
 } from "@reactive-js/rx-observable";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
@@ -59,7 +60,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
         this.activeCount++;
 
         const nextObsSubscription = connect(
-          lift(
+          pipe(
             nextObs,
             observe({
               next: (data: T) => {
@@ -75,7 +76,6 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
                 } else {
                   this.connectNext();
                 }
-
               },
             }),
           ),
@@ -83,7 +83,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
         );
 
         this.add(nextObsSubscription);
-      } else if(this.isCompleted) {
+      } else if (this.isCompleted) {
         this.delegate.complete();
       }
     }
@@ -107,8 +107,7 @@ const operator = <T>(
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): ObservableOperator<ObservableLike<T>, T> => observable =>
-  lift(observable, operator(options));
+}): ObservableOperator<ObservableLike<T>, T> => lift(operator(options));
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,

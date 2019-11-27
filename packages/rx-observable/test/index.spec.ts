@@ -1,7 +1,6 @@
 import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
 import {
-  observe,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
@@ -9,8 +8,9 @@ import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-s
 import {
   connect,
   create as observableCreate,
-  lift,
+  observe,
   ObservableLike,
+  pipe,
 } from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
@@ -72,7 +72,7 @@ describe("Observable", () => {
     test("completes the subscriber if onSubscribe throws", () => {
       const error = new Error();
       const observer = createMockObserver();
-      const observable = lift(
+      const observable = pipe(
         observableCreate(_ => {
           throw error;
         }),
@@ -102,21 +102,20 @@ describe("Observable", () => {
   });
 
   test("lift", () => {
-    const onNext = <T>(onNext: (data: T) => void): SubscriberOperator<T, T> =>
-      observe({
-        next: onNext,
-        complete: _ => {},
-      });
+    const onNext = <T>(onNext: (data: T) => void) => observe({
+      next: onNext,
+      complete: _ => {},
+    });
     const scheduler = virtualTimeSchedulerCreate();
     const result: number[] = [];
 
-    const liftedObservable = lift(
+    const liftedObservable = pipe(
       observableCreate(observer => observer.next(1)),
       onNext(_ => result.push(1)),
     );
 
     const subscription = connect(
-      lift(
+      pipe(
         liftedObservable,
         onNext(_ => result.push(3)),
       ),

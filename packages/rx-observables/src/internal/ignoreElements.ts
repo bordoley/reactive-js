@@ -24,4 +24,4 @@ const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>
 export const ignoreElements = <TA, TB>(): ObservableOperator<
   TA,
   TB
-> => observable => lift(observable, operator);
+> => lift(operator);

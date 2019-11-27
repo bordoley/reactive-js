@@ -6,9 +6,9 @@ import {
 
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import { connect, lift, ObservableLike } from "@reactive-js/rx-observable";
+import { connect, pipe, ObservableLike, observe } from "@reactive-js/rx-observable";
 
-import { observe, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 class MergeObserver<T> implements ObserverLike<T> {
   innerSubscription: DisposableLike = disposed;
@@ -68,7 +68,7 @@ export function merge<T>(
       );
 
       observer.innerSubscription = connect(
-        lift(observable, observe(observer)),
+        pipe(observable, observe(observer)),
         subscriber,
       );
 

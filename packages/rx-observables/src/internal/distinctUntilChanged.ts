@@ -43,4 +43,4 @@ const operator = <T>(
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
-): ObservableOperator<T, T> => observable => lift(observable, operator(equals));
+): ObservableOperator<T, T> => lift(operator(equals));
