@@ -2464,21 +2464,21 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
-	var DelegatingAsyncIteratorResource = /** @class */ (function (_super) {
-	    tslib_es6.__extends(DelegatingAsyncIteratorResource, _super);
-	    function DelegatingAsyncIteratorResource(observable, dispatcher, disposable) {
+	var AsyncIteratorResourceImpl = /** @class */ (function (_super) {
+	    tslib_es6.__extends(AsyncIteratorResourceImpl, _super);
+	    function AsyncIteratorResourceImpl(observable, dispatcher, disposable) {
 	        var _this = _super.call(this, observable, dispatcher) || this;
 	        _this.disposable = disposable;
 	        return _this;
 	    }
-	    Object.defineProperty(DelegatingAsyncIteratorResource.prototype, "isDisposed", {
+	    Object.defineProperty(AsyncIteratorResourceImpl.prototype, "isDisposed", {
 	        get: function () {
 	            return this.disposable.isDisposed;
 	        },
 	        enumerable: true,
 	        configurable: true
 	    });
-	    DelegatingAsyncIteratorResource.prototype.add = function (disposable) {
+	    AsyncIteratorResourceImpl.prototype.add = function (disposable) {
 	        var _a;
 	        var disposables = [];
 	        for (var _i = 1; _i < arguments.length; _i++) {
@@ -2486,10 +2486,10 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.disposable).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
-	    DelegatingAsyncIteratorResource.prototype.dispose = function () {
+	    AsyncIteratorResourceImpl.prototype.dispose = function () {
 	        this.disposable.dispose();
 	    };
-	    DelegatingAsyncIteratorResource.prototype.remove = function (disposable) {
+	    AsyncIteratorResourceImpl.prototype.remove = function (disposable) {
 	        var _a;
 	        var disposables = [];
 	        for (var _i = 1; _i < arguments.length; _i++) {
@@ -2497,15 +2497,15 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.disposable).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
-	    return DelegatingAsyncIteratorResource;
+	    return AsyncIteratorResourceImpl;
 	}(dist$e.DelegatingAsyncIterator));
 	exports.lift = function (operator, mapper) { return function (iterator) {
-	    var _a = iterator instanceof DelegatingAsyncIteratorResource
+	    var _a = iterator instanceof AsyncIteratorResourceImpl
 	        ? [iterator.observable, iterator.dispatcher, iterator.disposable]
 	        : [iterator, function (req) { return iterator.dispatch(req); }, iterator], observable = _a[0], dispatcher = _a[1], disposable = _a[2];
 	    var pipedObservable = operator !== undefined ? dist$5.pipe(observable, operator) : observable;
 	    var mappedDispatcher = mapper !== undefined ? function (req) { return dispatcher(mapper(req)); } : dispatcher;
-	    return new DelegatingAsyncIteratorResource(pipedObservable, mappedDispatcher, disposable);
+	    return new AsyncIteratorResourceImpl(pipedObservable, mappedDispatcher, disposable);
 	}; };
 	function pipe(src) {
 	    var operators = [];
@@ -2515,91 +2515,17 @@ var ExampleReact = (function (react, reactDom) {
 	    return operators.reduce(function (acc, next) { return next(acc); }, src);
 	}
 	exports.pipe = pipe;
-	var EventResourceImpl = /** @class */ (function () {
-	    function EventResourceImpl(priority) {
-	        this.subject = dist$a.create(priority);
-	    }
-	    Object.defineProperty(EventResourceImpl.prototype, "isDisposed", {
-	        get: function () {
-	            return this.subject.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    EventResourceImpl.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.subject).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    EventResourceImpl.prototype.dispatch = function (event) {
-	        this.subject.next(event);
-	    };
-	    EventResourceImpl.prototype.dispose = function () {
-	        this.subject.dispose();
-	    };
-	    EventResourceImpl.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.subject).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    EventResourceImpl.prototype.subscribe = function (subscriber) {
-	        this.subject.subscribe(subscriber);
-	    };
-	    return EventResourceImpl;
-	}());
-	exports.createEvent = function (priority) { return new EventResourceImpl(priority); };
-	var StateContainerImpl = /** @class */ (function () {
-	    function StateContainerImpl(delegate, dispatcher) {
-	        this.delegate = delegate;
-	        this.dispatcher = dispatcher;
-	    }
-	    Object.defineProperty(StateContainerImpl.prototype, "isDisposed", {
-	        get: function () {
-	            return this.dispatcher.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    StateContainerImpl.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.dispatcher).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    StateContainerImpl.prototype.dispatch = function (updater) {
-	        this.dispatcher.dispatch(updater);
-	    };
-	    StateContainerImpl.prototype.dispose = function () {
-	        this.dispatcher.dispose();
-	    };
-	    StateContainerImpl.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.dispatcher).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    StateContainerImpl.prototype.subscribe = function (subscriber) {
-	        this.delegate.subscribe(subscriber);
-	    };
-	    return StateContainerImpl;
-	}());
-	var referenceEquality = function (a, b) { return a === b; };
+	exports.createEvent = function (priority) {
+	    var subject = dist$a.create(priority);
+	    var dispatcher = function (req) { return subject.next(req); };
+	    return new AsyncIteratorResourceImpl(subject, dispatcher, subject);
+	};
 	exports.createStateStore = function (initialState, equals, scheduler, priority) {
-	    if (equals === void 0) { equals = referenceEquality; }
-	    var dispatcher = exports.createEvent();
-	    var delegate = dist$5.pipe(dispatcher, dist$b.scan(function (acc, next) { return next(acc); }, initialState), dist$b.startWith(initialState), dist$b.distinctUntilChanged(equals), dist$b.shareReplayLast(scheduler, priority));
-	    dispatcher.add(dist$5.connect(delegate, scheduler));
-	    return new StateContainerImpl(delegate, dispatcher);
+	    var subject = dist$a.create(priority);
+	    var dispatcher = function (req) { return subject.next(req); };
+	    var observable = dist$5.pipe(subject, dist$b.scan(function (acc, next) { return next(acc); }, initialState), dist$b.startWith(initialState), dist$b.distinctUntilChanged(equals), dist$b.shareReplayLast(scheduler, priority));
+	    subject.add(dist$5.connect(observable, scheduler));
+	    return new AsyncIteratorResourceImpl(observable, dispatcher, subject);
 	};
 
 	});
@@ -2655,7 +2581,9 @@ var ExampleReact = (function (react, reactDom) {
 
 	dist$4.registerDefaultScheduler(dist$2.scheduler);
 	var makeCallbacks = function (uriUpdater) {
-	    var liftUpdater = function (updater) { return function () { return uriUpdater(updater); }; };
+	    var liftUpdater = function (updater) { return function () {
+	        return uriUpdater(updater);
+	    }; };
 	    var goToPath = function (path) { return liftUpdater(function (state) { return (tslib_es6.__assign(tslib_es6.__assign({}, state), { path: path })); }); };
 	    var goToRoute1 = goToPath("/route1");
 	    var goToRoute2 = goToPath("/route2");
