@@ -16,7 +16,7 @@
 
 ### `Const` create
 
-▸ **create**<**TState**>(`component`: React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››, `parseState`: function, `serialize`: function, `stateIsQuery`: boolean): *React.ComponentType‹RoutableComponentProps›*
+▸ **create**<**TState**>(`component`: React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››, `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *React.ComponentType‹RoutableComponentProps›*
 
 **Type parameters:**
 
@@ -26,7 +26,7 @@
 
 ▪ **component**: *React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››*
 
-▪ **parseState**: *function*
+▪ **parse**: *function*
 
 ▸ (`serialized`: string): *TState*
 

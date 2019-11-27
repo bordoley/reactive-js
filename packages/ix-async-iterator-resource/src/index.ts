@@ -29,12 +29,13 @@ export interface AsyncIteratorResourceLike<TReq, T>
   extends AsyncIteratorLike<TReq, T>,
     ObservableResourceLike<T> {}
 
-class DelegatingAsyncIteratorResource<TReq, T>
+class AsyncIteratorResourceImpl<TReq, T>
   extends DelegatingAsyncIterator<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
+
   readonly disposable: DisposableLike;
 
   constructor(
@@ -77,7 +78,7 @@ export const lift = <TReq, T, TReqA, TA>(
   mapper?: (req: TReqA) => TReq,
 ): AsyncIteratorResourceOperator<TReq, T, TReqA, TA> => iterator => {
   const [observable, dispatcher, disposable] =
-    iterator instanceof DelegatingAsyncIteratorResource
+    iterator instanceof AsyncIteratorResourceImpl
       ? [iterator.observable, iterator.dispatcher, iterator.disposable]
       : [iterator, (req: any) => iterator.dispatch(req), iterator];
 
@@ -87,7 +88,7 @@ export const lift = <TReq, T, TReqA, TA>(
   const mappedDispatcher: (req: TReqA) => void =
     mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
 
-  return new DelegatingAsyncIteratorResource(
+  return new AsyncIteratorResourceImpl(
     pipedObservable,
     mappedDispatcher,
     disposable,
@@ -258,117 +259,36 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), src);
 }
 
-class EventResourceImpl<T> implements AsyncIteratorResourceLike<T, T> {
-  get isDisposed() {
-    return this.subject.isDisposed;
-  }
-  private readonly subject: SubjectResourceLike<T>;
-
-  constructor(priority?: number) {
-    this.subject = subjectCreate(priority);
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.subject.add(disposable, ...disposables);
-  }
-
-  dispatch(event: T) {
-    this.subject.next(event);
-  }
-
-  dispose() {
-    this.subject.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.subject.remove(disposable, ...disposables);
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.subject.subscribe(subscriber);
-  }
-}
-
 export const createEvent = <T>(
   priority?: number,
-): AsyncIteratorResourceLike<T, T> => new EventResourceImpl(priority);
+): AsyncIteratorResourceLike<T, T> => {
+  const subject = subjectCreate(priority);
+  const dispatcher = (req: T) => subject.next(req);
+
+  return new AsyncIteratorResourceImpl(subject, dispatcher, subject);
+};
 
 export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
-class StateStoreImpl<T>
-  implements AsyncIteratorResourceLike<StateUpdater<T>, T> {
-  get isDisposed(): boolean {
-    return this.dispatcher.isDisposed;
-  }
-  private readonly delegate: ObservableLike<T>;
-  private readonly dispatcher: AsyncIteratorResourceLike<
-    StateUpdater<T>,
-    StateUpdater<T>
-  >;
-
-  constructor(
-    delegate: ObservableLike<T>,
-    dispatcher: AsyncIteratorResourceLike<StateUpdater<T>, StateUpdater<T>>,
-  ) {
-    this.delegate = delegate;
-    this.dispatcher = dispatcher;
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.dispatcher.add(disposable, ...disposables);
-  }
-
-  dispatch(updater: StateUpdater<T>) {
-    this.dispatcher.dispatch(updater);
-  }
-
-  dispose() {
-    this.dispatcher.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.dispatcher.remove(disposable, ...disposables);
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.delegate.subscribe(subscriber);
-  }
-}
-
-const referenceEquality = <T>(a: T, b: T): boolean => a === b;
-
 export const createStateStore = <T>(
   initialState: T,
-  equals: (a: T, b: T) => boolean = referenceEquality,
+  equals?: (a: T, b: T) => boolean,
   scheduler?: SchedulerLike,
   priority?: number,
 ): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
-  const dispatcher: AsyncIteratorResourceLike<
-    StateUpdater<T>,
-    StateUpdater<T>
-  > = createEvent();
-  const delegate = observablePipe(
-    dispatcher,
+  const subject: SubjectResourceLike<StateUpdater<T>> = subjectCreate(priority);
+  const dispatcher = (req: StateUpdater<T>) => subject.next(req);
+  const observable = observablePipe(
+    subject,
     scan((acc: T, next) => next(acc), initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
     shareReplayLast(scheduler, priority),
   );
 
-  dispatcher.add(connect(delegate, scheduler));
-  return new StateStoreImpl(delegate, dispatcher);
+  subject.add(connect(observable, scheduler));
+
+  return new AsyncIteratorResourceImpl(observable, dispatcher, subject);
 };
