@@ -148,6 +148,9 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
     this.pushNotification([NotificationKind.Next, data]);
   }
   protected onSubscribe(observer: ObserverLike<T>) {
+    // The observer is a safe observer, an queues all notifications
+    // until a drain is scheduled. Hence there is no need to
+    // copy the replayed notifications before publishing via notify.
     for (let notif of this.replayed) {
       notify(observer, notif);
     }
