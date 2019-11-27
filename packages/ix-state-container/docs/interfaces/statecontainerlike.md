@@ -11,5 +11,3 @@
 * AsyncIteratorLike‹[StateUpdater](stateupdater.md)‹T›, T›
 
   ↳ **StateContainerLike**
-
-  ↳ [StateContainerResourceLike](statecontainerresourcelike.md)
