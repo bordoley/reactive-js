@@ -5,37 +5,37 @@ Fast modern reactive Javascript programming library
 ## Packages
 
 ### Core
-* [@reactive-js/disposable](./packages/disposable)
-* [@reactive-js/serial-disposable](./packages/serial-disposable)
-* [@reactive-js/scheduler](./packages/scheduler)
+* [@reactive-js/disposable](./packages/disposable/docs)
+* [@reactive-js/serial-disposable](./packages/serial-disposable/docs)
+* [@reactive-js/scheduler](./packages/scheduler/docs)
 
 ### Reactive Programming (RX)
-* [@reactive-js/rx-observable-resource](./packages/rx-observable-resource)
-* [@reactive-js/rx-observable](./packages/rx-observable)
-* [@reactive-js/rx-observables](./packages/rx-observables)
-* [@reactive-js/rx-observer](./packages/rx-observer)
-* [@reactive-js/rx-subject](./packages/rx-subject)
-* [@reactive-js/rx-subscriber](./packages/rx-subscriber)
+* [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
+* [@reactive-js/rx-observable](./packages/rx-observable/docs)
+* [@reactive-js/rx-observables](./packages/rx-observables/docs)
+* [@reactive-js/rx-observer](./packages/rx-observer/docs)
+* [@reactive-js/rx-subject](./packages/rx-subject/docs)
+* [@reactive-js/rx-subscriber](./packages/rx-subscriber/docs)
 
 ### Asynchronous Interactive Programming (IX)
-* [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource)
-* [@reactive-js/ix-async-iterator](./packages/ix-async-iterator)
+* [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
+* [@reactive-js/ix-async-iterator](./packages/ix-async-iterator/docs)
 
 ### Schedulers
-* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler)
-* [@reactive-js/perf-testing-scheduler](./packages/perf-testing-scheduler)
-* [@reactive-js/react-scheduler](./packages/react-scheduler)
-* [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler)
+* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler/docs)
+* [@reactive-js/perf-testing-scheduler](./packages/perf-testing-scheduler/docs)
+* [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
+* [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler/docs)
 
 ### React JS Integration
-* [@reactive-js/react-hooks](./packages/react-hooks)
-* [@reactive-js/react-router-dom-location-resource](./packages/react-router-dom-location-resource)
-* [@reactive-js/react-router-relative-uri](./packages/react-router-relative-uri)
-* [@reactive-js/react-router-state-component](./packages/react-router-state-component)
+* [@reactive-js/react-hooks](./packages/react-hooks/docs)
+* [@reactive-js/react-router-dom-location-resource](./packages/react-router-dom-location-resource/docs)
+* [@reactive-js/react-router-relative-uri](./packages/react-router-relative-uri/docs)
+* [@reactive-js/react-router-state-component](./packages/react-router-state-component/docs)
 * [@reactive-js/react-router](./packages/react-router)
 
 ### Browser Integration
-* [@reactive-js/dom](./packages/dom)
+* [@reactive-js/dom](./packages/dom/docs)
 
 ## RxJS/TC39 Comparison
 
