@@ -9,7 +9,7 @@ import { create as disposableCreate, disposed } from "@reactive-js/disposable";
 import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
 
 import {
-  create as subscriberCreate,
+  createAutoDisposing,
   observe,
   pipe,
   SubscriberLike,
@@ -40,18 +40,18 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
   complete: jest.fn(),
 });
 
-describe("create", () => {
+describe("createAutoDisposing", () => {
   test("is not connected when created", () => {
     const subscription = disposableCreate();
     const scheduler = virtualTimeSchedulerCreate();
-    const subscriber = subscriberCreate(scheduler, subscription);
+    const subscriber = createAutoDisposing(scheduler, subscription);
 
     expect(subscriber.isConnected).toBeFalsy();
   });
   test("calling next and complete throws if not connected", () => {
     const subscription = disposableCreate();
     const scheduler = virtualTimeSchedulerCreate();
-    const subscriber = subscriberCreate(scheduler, subscription);
+    const subscriber = createAutoDisposing(scheduler, subscription);
 
     expect(() => subscriber.next(1)).toThrow();
     expect(() => subscriber.complete()).toThrow();
@@ -59,7 +59,7 @@ describe("create", () => {
   test("calling next and complete throws if not scheduled", () => {
     const subscription = disposableCreate();
     const scheduler = virtualTimeSchedulerCreate();
-    const subscriber = subscriberCreate(scheduler, subscription);
+    const subscriber = createAutoDisposing(scheduler, subscription);
     subscriber.connect();
 
     expect(() => subscriber.next(1)).toThrow();
@@ -68,7 +68,7 @@ describe("create", () => {
   test("completing a connected subscriber disposes it", () => {
     const subscription = disposableCreate();
     const scheduler = virtualTimeSchedulerCreate();
-    const subscriber = subscriberCreate(scheduler, subscription);
+    const subscriber = createAutoDisposing(scheduler, subscription);
     subscriber.connect();
 
     expect(subscriber.isConnected).toBeTruthy();
