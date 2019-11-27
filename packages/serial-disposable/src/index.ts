@@ -5,8 +5,15 @@ import {
   disposed,
 } from "@reactive-js/disposable";
 
-/** @noInheritDoc */
+/**
+ * A Disposable container that allows replacing a contained Disposable with another,
+ * disposing the previously contained disposable in the process. Disposing the
+ * container also disposes the contained disposable.
+ *
+ * @noInheritDoc
+ */
 export interface SerialDisposableLike extends DisposableLike {
+  /** The inner disposable that may be get or set. */
   disposable: DisposableLike;
 }
 
@@ -59,4 +66,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
   }
 }
 
+/**
+ * Creates a new SerialDisposableLike instance containing a disposed instance.
+ */
 export const create = (): SerialDisposableLike => new SerialDisposableImpl();
