@@ -1,5 +1,5 @@
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
@@ -53,7 +53,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   constructor(maxMicroTaskCount: number) {
     this.maxMicroTaskCount = maxMicroTaskCount;
 
-    this.disposable = disposableCreate();
+    this.disposable = createDisposable();
     this.disposable.add(() => {
       for (let key in this.timeQueue) {
         if (this.timeQueue.hasOwnProperty(key)) {
@@ -103,7 +103,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
-    const disposable = disposableCreate();
+    const disposable = createDisposable();
 
     const ctx = {
       continuation,

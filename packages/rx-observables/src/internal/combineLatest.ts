@@ -10,7 +10,7 @@ import {
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
@@ -141,7 +141,7 @@ export function combineLatest(
       latest: new Array(observables.length),
     };
 
-    const allSubscriptions = disposableCreate();
+    const allSubscriptions = createDisposable();
     subscriber.add(allSubscriptions);
 
     for (let index = 0; index < observables.length; index++) {

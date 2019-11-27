@@ -19,7 +19,7 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 import {
-  create as subjectCreate,
+  create as createSubject,
   SubjectResourceLike,
 } from "@reactive-js/rx-subject";
 
@@ -271,7 +271,7 @@ export function pipe(
 export const createEvent = <T>(
   priority?: number,
 ): AsyncIteratorResourceLike<T, T> => {
-  const subject = subjectCreate(priority);
+  const subject = createSubject(priority);
   const dispatcher = (req: T) => subject.next(req);
 
   return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
@@ -287,7 +287,7 @@ export const createStateStore = <T>(
   scheduler?: SchedulerLike,
   priority?: number,
 ): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
-  const subject: SubjectResourceLike<StateUpdater<T>> = subjectCreate(priority);
+  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject(priority);
   const dispatcher = (req: StateUpdater<T>) => subject.next(req);
   const observable = observablePipe(
     subject,

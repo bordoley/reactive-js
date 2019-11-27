@@ -1,5 +1,5 @@
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
@@ -26,7 +26,7 @@ export const connect = <T>(
   scheduler?: SchedulerLike,
 ): DisposableLike => {
   scheduler = scheduler || getDefaultScheduler();
-  const subscription = disposableCreate();
+  const subscription = createDisposable();
   const subscriber = createAutoDisposing(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.connect();

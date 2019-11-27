@@ -1,5 +1,5 @@
 import {
-  create as disposableCreate,
+  create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
@@ -25,7 +25,7 @@ class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
   private readonly queue: SchedulerContinuation[] = [];
 
   constructor() {
-    this.disposable = disposableCreate();
+    this.disposable = createDisposable();
     this.disposable.add(() => {
       this.queue.length = 0;
     });
@@ -69,7 +69,7 @@ class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
     priority: number = 0,
   ): DisposableLike {
     this.queue.push(continuation);
-    return disposableCreate();
+    return createDisposable();
   }
 
   static shouldYield = () => false;

@@ -1,4 +1,4 @@
-import { create as eventLoopSchedulerCreate } from "@reactive-js/eventloop-scheduler";
+import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 import { connect, pipe } from "@reactive-js/rx-observable";
 import {
   concatAll,
@@ -16,7 +16,7 @@ import {
 } from "@reactive-js/rx-observables";
 
 import { registerDefaultScheduler } from "@reactive-js/scheduler";
-const scheduler = eventLoopSchedulerCreate(500);
+const scheduler = createEventLoopScheduler(500);
 registerDefaultScheduler(scheduler);
 
 /*

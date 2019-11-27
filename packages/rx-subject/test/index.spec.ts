@@ -1,5 +1,5 @@
 import { connect, observe, pipe } from "@reactive-js/rx-observable";
-import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
+import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import { createWithReplay } from "../src/index";
 
 describe("replay", () => {
@@ -11,7 +11,7 @@ describe("replay", () => {
     subject.next(3);
     subject.complete();
 
-    const scheduler = virtualTimeSchedulerCreate();
+    const scheduler = createVirtualTimeScheduler();
     const observer = {
       next: jest.fn(),
       complete: jest.fn(),
@@ -29,7 +29,7 @@ describe("replay", () => {
     subject.next(2);
     subject.next(3);
 
-    const scheduler = virtualTimeSchedulerCreate();
+    const scheduler = createVirtualTimeScheduler();
     const observer = {
       next: jest.fn(),
       complete: jest.fn(),
@@ -54,7 +54,7 @@ describe("replay", () => {
     subject.next(2);
     subject.next(3);
 
-    const scheduler = virtualTimeSchedulerCreate();
+    const scheduler = createVirtualTimeScheduler();
     const observer = {
       next: jest.fn(),
       complete: jest.fn(),

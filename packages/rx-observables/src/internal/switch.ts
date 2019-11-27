@@ -16,7 +16,7 @@ import {
   pipe,
 } from "@reactive-js/rx-observable";
 
-import { create as serialDisposableCreate } from "@reactive-js/serial-disposable";
+import { create as createSerialDisposable } from "@reactive-js/serial-disposable";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   static InnerObserver = class<T> implements ObserverLike<T> {
@@ -36,7 +36,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent.delegate.next(data);
     }
   };
-  private readonly innerSubscription = serialDisposableCreate();
+  private readonly innerSubscription = createSerialDisposable();
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);

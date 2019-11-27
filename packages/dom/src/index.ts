@@ -1,5 +1,5 @@
 import {
-  create as observableCreate,
+  create,
   ObservableLike,
 } from "@reactive-js/rx-observable";
 
@@ -9,7 +9,7 @@ export const fromEvent = <T>(
   selector: (ev: Event) => T,
   priority?: number,
 ): ObservableLike<T> =>
-  observableCreate(observer => {
+  create(observer => {
     const listener = (event: Event) => {
       try {
         const result = selector(event);

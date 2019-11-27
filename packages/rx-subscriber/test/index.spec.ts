@@ -5,8 +5,8 @@ import {
   ObserverLike,
 } from "@reactive-js/rx-observer";
 
-import { create as disposableCreate, disposed } from "@reactive-js/disposable";
-import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
+import { create as createDisposable, disposed } from "@reactive-js/disposable";
+import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 
 import {
   createAutoDisposing,
@@ -17,7 +17,7 @@ import {
 } from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = disposableCreate();
+  const subscription = createDisposable();
 
   return {
     get isDisposed() {
@@ -42,23 +42,23 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
 
 describe("createAutoDisposing", () => {
   test("is not connected when created", () => {
-    const subscription = disposableCreate();
-    const scheduler = virtualTimeSchedulerCreate();
+    const subscription = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
     const subscriber = createAutoDisposing(scheduler, subscription);
 
     expect(subscriber.isConnected).toBeFalsy();
   });
   test("calling next and complete throws if not connected", () => {
-    const subscription = disposableCreate();
-    const scheduler = virtualTimeSchedulerCreate();
+    const subscription = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
     const subscriber = createAutoDisposing(scheduler, subscription);
 
     expect(() => subscriber.next(1)).toThrow();
     expect(() => subscriber.complete()).toThrow();
   });
   test("calling next and complete throws if not scheduled", () => {
-    const subscription = disposableCreate();
-    const scheduler = virtualTimeSchedulerCreate();
+    const subscription = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
     const subscriber = createAutoDisposing(scheduler, subscription);
     subscriber.connect();
 
@@ -66,8 +66,8 @@ describe("createAutoDisposing", () => {
     expect(() => subscriber.complete()).toThrow();
   });
   test("completing a connected subscriber disposes it", () => {
-    const subscription = disposableCreate();
-    const scheduler = virtualTimeSchedulerCreate();
+    const subscription = createDisposable();
+    const scheduler = createVirtualTimeScheduler();
     const subscriber = createAutoDisposing(scheduler, subscription);
     subscriber.connect();
 
@@ -226,8 +226,8 @@ test("pipe", () => {
 
 describe("toSafeObserver", () => {
   test("next", () => {
-    const scheduler = virtualTimeSchedulerCreate(2);
-    const subscription = disposableCreate();
+    const scheduler = createVirtualTimeScheduler(2);
+    const subscription = createDisposable();
     const subscriber: SubscriberLike<number> = {
       get isDisposed() {
         return subscription.isDisposed;

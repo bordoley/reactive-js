@@ -1,17 +1,17 @@
-import { create as disposableCreate, disposed } from "@reactive-js/disposable";
+import { create as createDisposable, disposed } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
-import { create as virtualTimeSchedulerCreate } from "@reactive-js/virtualtime-scheduler";
+import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import {
   connect,
-  create as observableCreate,
+  create as createObservable,
   ObservableLike,
   observe,
   pipe,
 } from "../src/index";
 
 const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = disposableCreate();
+  const subscription = createDisposable();
 
   return {
     get isDisposed() {
@@ -46,16 +46,16 @@ describe("Observable", () => {
       };
 
       expect(() =>
-        connect(seriallyCallsNextOnSubscribe, virtualTimeSchedulerCreate()),
+        connect(seriallyCallsNextOnSubscribe, createVirtualTimeScheduler()),
       ).toThrow();
       expect(() =>
-        connect(seriallyCallsCompleteOnSubscribe, virtualTimeSchedulerCreate()),
+        connect(seriallyCallsCompleteOnSubscribe, createVirtualTimeScheduler()),
       ).toThrow();
     });
 
     test("auto-disposes the subscription on complete", () => {
-      const observable = observableCreate(observer => observer.complete());
-      const scheduler = virtualTimeSchedulerCreate();
+      const observable = createObservable(observer => observer.complete());
+      const scheduler = createVirtualTimeScheduler();
 
       const subscription = connect(observable, scheduler);
       expect(subscription.isDisposed).toBeFalsy();
@@ -70,12 +70,12 @@ describe("Observable", () => {
       const error = new Error();
       const observer = createMockObserver();
       const observable = pipe(
-        observableCreate(_ => {
+        createObservable(_ => {
           throw error;
         }),
         observe(observer),
       );
-      const scheduler = virtualTimeSchedulerCreate();
+      const scheduler = createVirtualTimeScheduler();
       connect(observable, scheduler);
       scheduler.run();
 
@@ -83,11 +83,11 @@ describe("Observable", () => {
     });
 
     test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
-      const scheduler = virtualTimeSchedulerCreate();
-      const disposable = disposableCreate();
+      const scheduler = createVirtualTimeScheduler();
+      const disposable = createDisposable();
 
       const subscription = connect(
-        observableCreate(_ => disposable),
+        createObservable(_ => disposable),
         scheduler,
       );
       scheduler.run();
@@ -104,11 +104,11 @@ describe("Observable", () => {
         next: onNext,
         complete: _ => {},
       });
-    const scheduler = virtualTimeSchedulerCreate();
+    const scheduler = createVirtualTimeScheduler();
     const result: number[] = [];
 
     const liftedObservable = pipe(
-      observableCreate(observer => observer.next(1)),
+      createObservable(observer => observer.next(1)),
       onNext(_ => result.push(1)),
     );
 
