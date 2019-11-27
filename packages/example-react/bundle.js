@@ -382,9 +382,20 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return DisposableImpl;
 	}());
+	/**
+	 * Creates an empty DisposableLike instance.
+	 */
 	exports.create = function () { return new DisposableImpl(); };
+	/**
+	 * A disposed DisposableLike instance.
+	 */
 	exports.disposed = exports.create();
 	exports.disposed.dispose();
+	/**
+	 * Throws an exception if the given disposable is disposed.
+	 *
+	 * @param disposable
+	 */
 	exports.throwIfDisposed = function (disposable) {
 	    if (disposable.isDisposed) {
 	        throw new Error("Disposed");
@@ -458,6 +469,9 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return SerialDisposableImpl;
 	}());
+	/**
+	 * Creates a new SerialDisposableLike instance containing a disposed instance.
+	 */
 	exports.create = function () { return new SerialDisposableImpl(); };
 
 	});
@@ -539,179 +553,8 @@ var ExampleReact = (function (react, reactDom) {
 	unwrapExports(dist$2);
 	var dist_1$2 = dist$2.scheduler;
 
-	var dist$3 = createCommonjsModule(function (module, exports) {
+	var safeObserver = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var AbstractSubscriberImpl = /** @class */ (function () {
-	    function AbstractSubscriberImpl(scheduler, subscription) {
-	        this.scheduler = scheduler;
-	        this.subscription = subscription;
-	    }
-	    Object.defineProperty(AbstractSubscriberImpl.prototype, "inScheduledContinuation", {
-	        get: function () {
-	            return this.scheduler.inScheduledContinuation;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    Object.defineProperty(AbstractSubscriberImpl.prototype, "isDisposed", {
-	        get: function () {
-	            return this.subscription.isDisposed;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    Object.defineProperty(AbstractSubscriberImpl.prototype, "now", {
-	        get: function () {
-	            return this.scheduler.now;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    AbstractSubscriberImpl.prototype.add = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.subscription).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    AbstractSubscriberImpl.prototype.dispose = function () {
-	        this.subscription.dispose();
-	    };
-	    AbstractSubscriberImpl.prototype.remove = function (disposable) {
-	        var _a;
-	        var disposables = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            disposables[_i - 1] = arguments[_i];
-	        }
-	        (_a = this.subscription).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
-	    };
-	    AbstractSubscriberImpl.prototype.schedule = function (continuation, delay, priority) {
-	        var _this = this;
-	        var schedulerSubscription = this.scheduler.schedule(continuation, delay, priority);
-	        this.add(schedulerSubscription);
-	        schedulerSubscription.add(function () { return _this.remove(schedulerSubscription); });
-	        return schedulerSubscription;
-	    };
-	    return AbstractSubscriberImpl;
-	}());
-	var AutoDisposingSubscriberImpl = /** @class */ (function (_super) {
-	    tslib_es6.__extends(AutoDisposingSubscriberImpl, _super);
-	    function AutoDisposingSubscriberImpl(scheduler, subscription) {
-	        var _this = _super.call(this, scheduler, subscription) || this;
-	        _this._isConnected = false;
-	        return _this;
-	    }
-	    Object.defineProperty(AutoDisposingSubscriberImpl.prototype, "isConnected", {
-	        get: function () {
-	            return this._isConnected;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    AutoDisposingSubscriberImpl.prototype.complete = function (_error) {
-	        this.dispose();
-	    };
-	    AutoDisposingSubscriberImpl.prototype.connect = function () {
-	        this._isConnected = true;
-	    };
-	    AutoDisposingSubscriberImpl.prototype.next = function (data) {
-	    };
-	    return AutoDisposingSubscriberImpl;
-	}(AbstractSubscriberImpl));
-	exports.createAutoDisposing = function (scheduler, subscription) {
-	    return new AutoDisposingSubscriberImpl(scheduler, subscription);
-	};
-	var getSubscriberScheduler = function (delegate) {
-	    return delegate instanceof DelegatingSubscriber
-	        ? delegate.scheduler
-	        : delegate instanceof AutoDisposingSubscriberImpl
-	            ? delegate.scheduler
-	            : delegate;
-	};
-	var getSubscriberSubscription = function (delegate) {
-	    return delegate instanceof DelegatingSubscriber
-	        ? delegate.subscription
-	        : delegate instanceof AutoDisposingSubscriberImpl
-	            ? delegate.subscription
-	            : delegate;
-	};
-	/** @noInheritDoc */
-	var DelegatingSubscriber = /** @class */ (function (_super) {
-	    tslib_es6.__extends(DelegatingSubscriber, _super);
-	    function DelegatingSubscriber(delegate) {
-	        var _this = _super.call(this, getSubscriberScheduler(delegate), getSubscriberSubscription(delegate)) || this;
-	        _this.isStopped = false;
-	        _this.delegate = delegate;
-	        _this.source =
-	            delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
-	        _this.add(function () {
-	            _this.isStopped = true;
-	        });
-	        return _this;
-	    }
-	    Object.defineProperty(DelegatingSubscriber.prototype, "isConnected", {
-	        /** @ignore */
-	        get: function () {
-	            return this.source.isConnected;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    /** @ignore */
-	    DelegatingSubscriber.prototype.complete = function (error) {
-	        if (!this.isStopped) {
-	            this.isStopped = true;
-	            this.tryOnComplete(error);
-	        }
-	    };
-	    /** @ignore */
-	    DelegatingSubscriber.prototype.next = function (data) {
-	        if (!this.isStopped) {
-	            this.tryOnNext(data);
-	        }
-	    };
-	    DelegatingSubscriber.prototype.tryOnComplete = function (error) {
-	        try {
-	            this.onComplete(error);
-	        }
-	        catch (e) {
-	            // FIXME: if error isn't null the delegate error should
-	            // reference both exceptions so that we don't swallow them.
-	            this.delegate.complete(e);
-	        }
-	    };
-	    DelegatingSubscriber.prototype.tryOnNext = function (data) {
-	        try {
-	            this.onNext(data);
-	        }
-	        catch (e) {
-	            this.complete(e);
-	        }
-	    };
-	    return DelegatingSubscriber;
-	}(AbstractSubscriberImpl));
-	exports.DelegatingSubscriber = DelegatingSubscriber;
-	var ObserveSubscriber = /** @class */ (function (_super) {
-	    tslib_es6.__extends(ObserveSubscriber, _super);
-	    function ObserveSubscriber(delegate, observer) {
-	        var _this = _super.call(this, delegate) || this;
-	        _this.observer = observer;
-	        return _this;
-	    }
-	    ObserveSubscriber.prototype.onComplete = function (error) {
-	        this.observer.complete(error);
-	        this.delegate.complete(error);
-	    };
-	    ObserveSubscriber.prototype.onNext = function (data) {
-	        this.observer.next(data);
-	        this.delegate.next(data);
-	    };
-	    return ObserveSubscriber;
-	}(DelegatingSubscriber));
-	exports.observe = function (observer) { return function (subscriber) {
-	    return new ObserveSubscriber(subscriber, observer);
-	}; };
 	var SafeObserver = /** @class */ (function () {
 	    function SafeObserver(subscriber, priority) {
 	        var _this = this;
@@ -771,7 +614,246 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return SafeObserver;
 	}());
+	/**
+	 * Returns an observer that may be safely notified from any context.
+	 * The underlying implementation queues notifications and notifies
+	 * the subscriber on it's scheduler.
+	 *
+	 * @param subscriber
+	 * @param priority
+	 */
 	exports.toSafeObserver = function (subscriber, priority) { return new SafeObserver(subscriber, priority); };
+
+	});
+
+	unwrapExports(safeObserver);
+	var safeObserver_1 = safeObserver.toSafeObserver;
+
+	var subscriber = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+	/** @ignore */
+	var AbstractSubscriberImpl = /** @class */ (function () {
+	    function AbstractSubscriberImpl(scheduler, subscription) {
+	        this.scheduler = scheduler;
+	        this.subscription = subscription;
+	    }
+	    Object.defineProperty(AbstractSubscriberImpl.prototype, "inScheduledContinuation", {
+	        get: function () {
+	            return this.scheduler.inScheduledContinuation;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(AbstractSubscriberImpl.prototype, "isDisposed", {
+	        get: function () {
+	            return this.subscription.isDisposed;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(AbstractSubscriberImpl.prototype, "now", {
+	        get: function () {
+	            return this.scheduler.now;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    AbstractSubscriberImpl.prototype.add = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.subscription).add.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    AbstractSubscriberImpl.prototype.dispose = function () {
+	        this.subscription.dispose();
+	    };
+	    AbstractSubscriberImpl.prototype.remove = function (disposable) {
+	        var _a;
+	        var disposables = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            disposables[_i - 1] = arguments[_i];
+	        }
+	        (_a = this.subscription).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
+	    };
+	    AbstractSubscriberImpl.prototype.schedule = function (continuation, delay, priority) {
+	        var _this = this;
+	        var schedulerSubscription = this.scheduler.schedule(continuation, delay, priority);
+	        this.add(schedulerSubscription);
+	        schedulerSubscription.add(function () { return _this.remove(schedulerSubscription); });
+	        return schedulerSubscription;
+	    };
+	    return AbstractSubscriberImpl;
+	}());
+	exports.AbstractSubscriberImpl = AbstractSubscriberImpl;
+	/** @ignore */
+	exports.checkState = function (subscriber) {
+	    if (!subscriber.inScheduledContinuation) {
+	        throw new Error("Attempted to notify subscriber from outside of it's scheduler");
+	    }
+	    else if (!subscriber.isConnected) {
+	        throw new Error("Attempted to notify subscriber before it is connected");
+	    }
+	};
+
+	});
+
+	unwrapExports(subscriber);
+	var subscriber_1 = subscriber.AbstractSubscriberImpl;
+	var subscriber_2 = subscriber.checkState;
+
+	var autoDisposingSubscriber = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var AutoDisposingSubscriberImpl = /** @class */ (function (_super) {
+	    tslib_es6.__extends(AutoDisposingSubscriberImpl, _super);
+	    function AutoDisposingSubscriberImpl(scheduler, subscription) {
+	        var _this = _super.call(this, scheduler, subscription) || this;
+	        _this._isConnected = false;
+	        return _this;
+	    }
+	    Object.defineProperty(AutoDisposingSubscriberImpl.prototype, "isConnected", {
+	        get: function () {
+	            return this._isConnected;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    AutoDisposingSubscriberImpl.prototype.complete = function (_error) {
+	        this.dispose();
+	    };
+	    AutoDisposingSubscriberImpl.prototype.connect = function () {
+	        this._isConnected = true;
+	    };
+	    AutoDisposingSubscriberImpl.prototype.next = function (data) {
+	    };
+	    return AutoDisposingSubscriberImpl;
+	}(subscriber.AbstractSubscriberImpl));
+	/**
+	 * Returns a new subscriber which disposes it's underlying subscription when completed.
+	 *
+	 * @param scheduler
+	 * @param subscription
+	 */
+	exports.createAutoDisposing = function (scheduler, subscription) {
+	    return new AutoDisposingSubscriberImpl(scheduler, subscription);
+	};
+
+	});
+
+	unwrapExports(autoDisposingSubscriber);
+	var autoDisposingSubscriber_1 = autoDisposingSubscriber.createAutoDisposing;
+
+	var delegatingSubscriber = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+
+	var getSubscriberScheduler = function (delegate) { return delegate.scheduler || delegate; };
+	var getSubscriberSubscription = function (delegate) { return delegate.subscription || delegate; };
+	/**
+	 * Abstract base class for implementing SubscriberOperators.
+	 *
+	 * @noInheritDoc
+	 */
+	var DelegatingSubscriber = /** @class */ (function (_super) {
+	    tslib_es6.__extends(DelegatingSubscriber, _super);
+	    function DelegatingSubscriber(delegate) {
+	        var _this = _super.call(this, getSubscriberScheduler(delegate), getSubscriberSubscription(delegate)) || this;
+	        _this.isStopped = false;
+	        _this.delegate = delegate;
+	        _this.source =
+	            delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
+	        _this.add(function () {
+	            _this.isStopped = true;
+	        });
+	        return _this;
+	    }
+	    Object.defineProperty(DelegatingSubscriber.prototype, "isConnected", {
+	        /** @ignore */
+	        get: function () {
+	            return this.source.isConnected;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    /** @ignore */
+	    DelegatingSubscriber.prototype.complete = function (error) {
+	        if (!this.isStopped) {
+	            this.isStopped = true;
+	            this.tryOnComplete(error);
+	        }
+	    };
+	    /** @ignore */
+	    DelegatingSubscriber.prototype.next = function (data) {
+	        if (!this.isStopped) {
+	            this.tryOnNext(data);
+	        }
+	    };
+	    DelegatingSubscriber.prototype.tryOnComplete = function (error) {
+	        try {
+	            this.onComplete(error);
+	        }
+	        catch (e) {
+	            // FIXME: if error isn't null the delegate error should
+	            // reference both exceptions so that we don't swallow them.
+	            this.delegate.complete(e);
+	        }
+	    };
+	    DelegatingSubscriber.prototype.tryOnNext = function (data) {
+	        try {
+	            this.onNext(data);
+	        }
+	        catch (e) {
+	            this.complete(e);
+	        }
+	    };
+	    return DelegatingSubscriber;
+	}(subscriber.AbstractSubscriberImpl));
+	exports.DelegatingSubscriber = DelegatingSubscriber;
+
+	});
+
+	unwrapExports(delegatingSubscriber);
+	var delegatingSubscriber_1 = delegatingSubscriber.DelegatingSubscriber;
+
+	var observe = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+
+	var ObserveSubscriber = /** @class */ (function (_super) {
+	    tslib_es6.__extends(ObserveSubscriber, _super);
+	    function ObserveSubscriber(delegate, observer) {
+	        var _this = _super.call(this, delegate) || this;
+	        _this.observer = observer;
+	        return _this;
+	    }
+	    ObserveSubscriber.prototype.onComplete = function (error) {
+	        this.observer.complete(error);
+	        this.delegate.complete(error);
+	    };
+	    ObserveSubscriber.prototype.onNext = function (data) {
+	        this.observer.next(data);
+	        this.delegate.next(data);
+	    };
+	    return ObserveSubscriber;
+	}(delegatingSubscriber.DelegatingSubscriber));
+	/**
+	 * Returns a SubscriberOperator which forwards notifications to the provided observer when notified.
+	 *
+	 * @param observer
+	 */
+	exports.observe = function (observer) { return function (subscriber) {
+	    return new ObserveSubscriber(subscriber, observer);
+	}; };
+
+	});
+
+	unwrapExports(observe);
+	var observe_1 = observe.observe;
+
+	var pipe_1 = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
 	function pipe(subscriber) {
 	    var operators = [];
 	    for (var _i = 1; _i < arguments.length; _i++) {
@@ -783,22 +865,50 @@ var ExampleReact = (function (react, reactDom) {
 
 	});
 
+	unwrapExports(pipe_1);
+	var pipe_2 = pipe_1.pipe;
+
+	var dist$3 = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, "__esModule", { value: true });
+
+	exports.toSafeObserver = safeObserver.toSafeObserver;
+
+	exports.createAutoDisposing = autoDisposingSubscriber.createAutoDisposing;
+
+	exports.DelegatingSubscriber = delegatingSubscriber.DelegatingSubscriber;
+
+	exports.observe = observe.observe;
+
+	exports.pipe = pipe_1.pipe;
+
+	});
+
 	unwrapExports(dist$3);
-	var dist_1$3 = dist$3.createAutoDisposing;
-	var dist_2$1 = dist$3.DelegatingSubscriber;
-	var dist_3$1 = dist$3.observe;
-	var dist_4 = dist$3.toSafeObserver;
+	var dist_1$3 = dist$3.toSafeObserver;
+	var dist_2$1 = dist$3.createAutoDisposing;
+	var dist_3$1 = dist$3.DelegatingSubscriber;
+	var dist_4 = dist$3.observe;
 	var dist_5 = dist$3.pipe;
 
 	var dist$4 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var instance;
+	/**
+	 * Registers a default scheduler for the current process. Calling this
+	 * function more than once with a different scheduler instance
+	 * results in an error being thrown.
+	 *
+	 * @param scheduler
+	 */
 	exports.registerDefaultScheduler = function (scheduler) {
 	    if (instance !== undefined && scheduler !== instance) {
 	        throw new Error("Default scheduler already registered");
 	    }
 	    instance = scheduler;
 	};
+	/**
+	 * Returns the default scheduler, if registered, otherwise throws an error.
+	 */
 	exports.getDefaultScheduler = function () {
 	    if (instance === undefined) {
 	        throw new Error("No default scheduler registered");
@@ -818,6 +928,11 @@ var ExampleReact = (function (react, reactDom) {
 
 
 
+	/**
+	 * Safely connects an ObservableLike to a SubscriberLike, optionally
+	 * using the provided scheduler, otherwise falling back to the default
+	 * scheduler. The returned DisposableLike may used to cancel the subscription.
+	 */
 	exports.connect = function (observable, scheduler) {
 	    scheduler = scheduler || dist$4.getDefaultScheduler();
 	    var subscription = dist.create();
@@ -839,6 +954,10 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return LiftedObservable;
 	}());
+	/**
+	 * Converts a SubscriberOperator to an ObservableOperator.
+	 * @param operator
+	 */
 	exports.lift = function (operator) { return function (source) {
 	    var sourceSource = source instanceof LiftedObservable ? source.source : source;
 	    var allOperators = source instanceof LiftedObservable
@@ -853,6 +972,19 @@ var ExampleReact = (function (react, reactDom) {
 	    return operators.reduce(function (acc, next) { return next(acc); }, source);
 	}
 	exports.pipe = pipe;
+	/**
+	 * Factory for safely creating new ObservableLikes. The onSubscribe function
+	 * is called with an observer which may be notified from any context,
+	 * queueing notifications for notification on the underlying SubscriberLike's
+	 * scheduler. The onSubscribe function may return a DisposableOrTeardown instance
+	 * which will be disposed when the underlying subscription is disposed.
+	 *
+	 * Note, implementations should not do significant blocking work in
+	 * the onSubscribe function.
+	 *
+	 * @param onSubscribe
+	 * @param priority
+	 */
 	exports.create = function (onSubscribe, priority) {
 	    var subscribe = function (subscriber) {
 	        // The idea here is that an onSubscribe function may
@@ -871,6 +1003,11 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    return { subscribe: subscribe };
 	};
+	/**
+	 * Returns a ObservableOperator which forwards notifications to the provided observer.
+	 *
+	 * @param observer
+	 */
 	exports.observe = function (observer) { return exports.lift(dist$3.observe(observer)); };
 
 	});
@@ -1771,11 +1908,20 @@ var ExampleReact = (function (react, reactDom) {
 
 	var dist$9 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
+	/**
+	 * Enumeration of valid notification types.
+	 */
 	var NotificationKind;
 	(function (NotificationKind) {
 	    NotificationKind[NotificationKind["Next"] = 1] = "Next";
 	    NotificationKind[NotificationKind["Complete"] = 2] = "Complete";
 	})(NotificationKind = exports.NotificationKind || (exports.NotificationKind = {}));
+	/**
+	 * Notifies the observer with the materialized notification.
+	 *
+	 * @param observer
+	 * @param notification
+	 */
 	exports.notify = function (observer, notification) {
 	    switch (notification[0]) {
 	        case NotificationKind.Next:
@@ -1916,6 +2062,9 @@ var ExampleReact = (function (react, reactDom) {
 	        this.pushNotification([dist$9.NotificationKind.Next, data]);
 	    };
 	    ReplayLastSubjectImpl.prototype.onSubscribe = function (observer) {
+	        // The observer is a safe observer, an queues all notifications
+	        // until a drain is scheduled. Hence there is no need to
+	        // copy the replayed notifications before publishing via notify.
 	        for (var _i = 0, _a = this.replayed; _i < _a.length; _i++) {
 	            var notif = _a[_i];
 	            dist$9.notify(observer, notif);
@@ -2370,7 +2519,7 @@ var ExampleReact = (function (react, reactDom) {
 	            var _ = _a[0], oldState = _a[1];
 	            return oldState === dist$7.empty ? [undefined, next] : [oldState, next];
 	        };
-	        return dist$8.pipe(locationResource, dist$8.lift(dist$b.scan((pairify), [undefined, dist$7.empty])), dist$8.lift(dist$b.map(function (_a) {
+	        return dist$8.pipe(locationResource, dist$8.lift(dist$b.scan(pairify, [undefined, dist$7.empty])), dist$8.lift(dist$b.map(function (_a) {
 	            var referer = _a[0], uri = _a[1];
 	            return react.createElement(routeMap[uri.path] || notFound, {
 	                referer: referer,
@@ -2539,6 +2688,9 @@ var ExampleReact = (function (react, reactDom) {
 
 	var react_1 = tslib_es6.__importStar(react);
 
+
+
+
 	dist$4.registerDefaultScheduler(dist$2.scheduler);
 	var makeCallbacks = function (uriUpdater) {
 	    var liftUpdater = function (updater) { return function () {
@@ -2559,12 +2711,19 @@ var ExampleReact = (function (react, reactDom) {
 	        react_1.default.createElement("button", { onClick: goToRoute1 }, "Go to route1"),
 	        react_1.default.createElement("button", { onClick: goToRoute2 }, "Go to route2")));
 	};
-	var Component1 = function (props) { return (react_1.default.createElement("div", null, props.uri.path)); };
+	var src = dist$b.generate(function (x) { return x + 1; }, 0, 2, 4);
+	var Component1 = function (props) {
+	    var value = dist$6.useObservable(function () { return src; }, []);
+	    return react_1.default.createElement(react_1.default.Fragment, null,
+	        react_1.default.createElement("div", null, props.uri.path),
+	        react_1.default.createElement("div", null, value));
+	};
 	var routes = [
 	    ["/route1", Component1],
 	    ["/route2", Component1],
 	];
 	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$f.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
+	dist$5.connect(dist$5.pipe(dist$b.generate(function (x) { return x + 1; }, 0, undefined, 5), dist$b.map(function (x) { return dist$b.fromArray([x, x, x, x]); }), dist$b.exhaust(), dist$b.onNext(console.log)));
 
 	});
 
