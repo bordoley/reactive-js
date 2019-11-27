@@ -22,6 +22,8 @@
 
 ▸ **getDefaultScheduler**(): *[SchedulerLike](interfaces/schedulerlike.md)*
 
+Returns the default scheduler, if registered, otherwise throws an error.
+
 **Returns:** *[SchedulerLike](interfaces/schedulerlike.md)*
 
 ___
@@ -30,10 +32,14 @@ ___
 
 ▸ **registerDefaultScheduler**(`scheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *void*
 
+Registers a default scheduler for the current process. This calling this
+function more than once with a different scheduler instance is a runtime
+error and results in an error being thrown.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](interfaces/schedulerlike.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`scheduler` | [SchedulerLike](interfaces/schedulerlike.md) |   |
 
 **Returns:** *void*

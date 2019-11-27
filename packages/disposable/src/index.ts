@@ -11,6 +11,9 @@ export interface DisposableLike {
 
   /**
    * Adds the given disposables to this container or disposes them if the container has been disposed.
+   *
+   * @param disposable
+   * @param disposables
    */
   add(
     disposable: DisposableOrTeardown,
@@ -24,6 +27,9 @@ export interface DisposableLike {
 
   /**
    * Removes and disposes the given disposables if they are part of this container.
+   *
+   * @param disposable
+   * @param disposables
    */
   remove(
     disposable: DisposableOrTeardown,
@@ -112,6 +118,7 @@ disposed.dispose();
 
 /**
  * Throws an exception if the given disposable is disposed.
+ *
  * @param disposable
  */
 export const throwIfDisposed = (disposable: DisposableLike) => {
