@@ -12,13 +12,11 @@ export interface RoutableStateComponentProps<TState> {
 }
 
 const createURIStateUpdater = <TState>(
-  stateUpdater: StateUpdater<TState>, 
+  stateUpdater: StateUpdater<TState>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery: boolean,
-) => (
-  oldURI: RelativeURI,
-) => {
+) => (oldURI: RelativeURI) => {
   const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
 
   const oldState = parse(oldSerialized);
@@ -47,11 +45,15 @@ export const create = <TState>(
   serialize: (state: TState) => string,
   stateIsQuery = false,
 ): React.ComponentType<RoutableComponentProps> => {
-  const createCallbacks = (uriUpdater: (updater: StateUpdater<RelativeURI>) => void) => {
+  const createCallbacks = (
+    uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
+  ) => {
     const goTo = (uri: RelativeURI) => uriUpdater(_ => uri);
 
     const dispatch = (stateUpdater: StateUpdater<TState>) => {
-      uriUpdater(createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery));
+      uriUpdater(
+        createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
+      );
     };
 
     return { goTo, dispatch };
@@ -67,7 +69,9 @@ export const create = <TState>(
       return parse(serialized);
     }, [uri]);
 
-    const { goTo, dispatch } = useMemo(() => createCallbacks(uriUpdater), [uriUpdater]);
+    const { goTo, dispatch } = useMemo(() => createCallbacks(uriUpdater), [
+      uriUpdater,
+    ]);
 
     return createElement(component, {
       uri,
