@@ -40,7 +40,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const src = generate(x => x + 1, 0, 2, 4);
+const src = generate(x => x + 1, 0, undefined, 5);
 
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(() => src, []);
