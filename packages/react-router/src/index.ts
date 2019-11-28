@@ -33,11 +33,11 @@ export interface RouterProps {
   ][];
 }
 
-export const Router: React.ComponentType<RouterProps> = ({
-  locationResourceFactory,
-  notFound,
-  routes,
-}) => {
+export const Router = (
+  props: RouterProps,
+) => {
+  const { locationResourceFactory, notFound, routes } = props;
+
   const element = useObservableResource(() => {
     const routeMap: RouteMap = {};
     for (let [path, component] of routes) {

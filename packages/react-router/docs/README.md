@@ -17,12 +17,12 @@
 
 ### `Const` Router
 
-▸ **Router**(`__namedParameters`: object): *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
+▸ **Router**(`props`: [RouterProps](interfaces/routerprops.md)): *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`__namedParameters` | object |
+`props` | [RouterProps](interfaces/routerprops.md) |
 
 **Returns:** *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
