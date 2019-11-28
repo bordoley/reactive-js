@@ -1,5 +1,3 @@
-import { ObserverLike } from "@reactive-js/rx-observer";
-
 import {
   connect,
   create,
@@ -7,12 +5,12 @@ import {
   observe,
   pipe,
 } from "@reactive-js/rx-observable";
-
-import { SchedulerLike } from "@reactive-js/scheduler";
+import { ObserverLike } from "@reactive-js/rx-observer";
+import { SchedulerLike, SchedulerOptions } from "@reactive-js/scheduler";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
-  priority?: number,
+  options?: SchedulerOptions,
 ): ObservableLike<T> => {
   const doSubscribe = async (observer: ObserverLike<T>) => {
     try {
@@ -28,7 +26,7 @@ export const fromPromiseFactory = <T>(
     doSubscribe(observer);
   };
 
-  return create(onSubscribe, priority);
+  return create(onSubscribe, options);
 };
 
 export const toPromise = <T>(

@@ -33,9 +33,7 @@ export interface RouterProps {
   ][];
 }
 
-export const Router = (
-  props: RouterProps,
-) => {
+export const Router = (props: RouterProps) => {
   const { locationResourceFactory, notFound, routes } = props;
 
   const element = useObservableResource(() => {

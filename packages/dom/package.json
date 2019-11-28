@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@reactive-js/rx-observable": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0",
     "tslib": "^1.10.0"
   },
   "scripts": {

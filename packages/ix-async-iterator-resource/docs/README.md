@@ -21,7 +21,7 @@
 
 ### `Const` createEvent
 
-▸ **createEvent**<**T**>(`priority?`: undefined | number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+▸ **createEvent**<**T**>(`options?`: SchedulerOptions): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -31,7 +31,7 @@
 
 Name | Type |
 ------ | ------ |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
 
@@ -39,7 +39,7 @@ ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: T, `equals?`: undefined | function, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: T, `equals?`: undefined | function, `scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -52,7 +52,7 @@ Name | Type |
 `initialState` | T |
 `equals?` | undefined &#124; function |
 `scheduler?` | SchedulerLike |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 

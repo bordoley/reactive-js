@@ -17,6 +17,7 @@ import {
   onNext,
   shareReplayLast,
 } from "@reactive-js/rx-observables";
+import { SchedulerOptions } from "@reactive-js/scheduler";
 
 const getCurrentLocation = (): RelativeURI => {
   const path = window.location.pathname;
@@ -25,11 +26,12 @@ const getCurrentLocation = (): RelativeURI => {
   return { path, query, fragment };
 };
 
-const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
-  obs: ObservableLike<RelativeURI>,
-): ObservableLike<RelativeURI> => {
+const operator = (
+  setURI: (state: RelativeURI) => void,
+  options?: SchedulerOptions,
+) => (obs: ObservableLike<RelativeURI>): ObservableLike<RelativeURI> => {
   const onPopstateUpdateURIObs = pipe(
-    fromEvent(window, "popstate", _ => getCurrentLocation(), priority),
+    fromEvent(window, "popstate", _ => getCurrentLocation(), options),
     onNext(setURI),
     ignoreElements(),
   );
@@ -46,22 +48,19 @@ const operator = (setURI: (state: RelativeURI) => void, priority?: number) => (
 
   return pipe(
     merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs),
-    shareReplayLast(scheduler, priority),
+    shareReplayLast(scheduler, options),
   );
 };
 
-export const create = (priority?: number) => {
+export const create = (options?: SchedulerOptions) => {
   const stateStore = createStateStore(
     getCurrentLocation(),
     relativeURIEquals,
     scheduler,
-    priority,
+    options,
   );
 
   const setURI = (uri: RelativeURI) => stateStore.dispatch(_ => uri);
 
-  return asyncIteratorResourcePipe(
-    stateStore,
-    lift(operator(setURI, priority)),
-  );
+  return asyncIteratorResourcePipe(stateStore, lift(operator(setURI, options)));
 };

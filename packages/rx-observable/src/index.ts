@@ -15,7 +15,11 @@ import {
 
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import { getDefaultScheduler, SchedulerLike } from "@reactive-js/scheduler";
+import {
+  getDefaultScheduler,
+  SchedulerLike,
+  SchedulerOptions,
+} from "@reactive-js/scheduler";
 
 /**
  * The source of notifications which may be observed by a SubscriberLike instance.
@@ -176,17 +180,17 @@ export function pipe(
  * the onSubscribe function.
  *
  * @param onSubscribe
- * @param priority
+ * @param options
  */
 export const create = <T>(
   onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
-  priority?: number,
+  options?: SchedulerOptions,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     // The idea here is that an onSubscribe function may
     // call onNext from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const observer = toSafeObserver(subscriber, priority);
+    const observer = toSafeObserver(subscriber, options);
 
     try {
       const onSubscribeSubscription = onSubscribe(observer);

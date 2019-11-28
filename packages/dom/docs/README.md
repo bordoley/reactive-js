@@ -12,7 +12,7 @@
 
 ### `Const` fromEvent
 
-▸ **fromEvent**<**T**>(`target`: EventTarget, `eventName`: string, `selector`: function, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **fromEvent**<**T**>(`target`: EventTarget, `eventName`: string, `selector`: function, `options?`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -34,6 +34,6 @@ Name | Type |
 ------ | ------ |
 `ev` | Event |
 
-▪`Optional`  **priority**: *undefined | number*
+▪`Optional`  **options**: *SchedulerOptions*
 
 **Returns:** *ObservableLike‹T›*

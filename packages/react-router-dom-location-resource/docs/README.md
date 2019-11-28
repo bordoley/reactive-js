@@ -12,12 +12,12 @@
 
 ### `Const` create
 
-▸ **create**(`priority?`: undefined | number): *AsyncIteratorResourceLike‹unknown, RelativeURI›*
+▸ **create**(`options?`: SchedulerOptions): *AsyncIteratorResourceLike‹unknown, RelativeURI›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *AsyncIteratorResourceLike‹unknown, RelativeURI›*
