@@ -9,13 +9,13 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { pipe } = require("@reactive-js/rx-observable");
       const {
         fromArray,
         keep,
         map,
+        pipe,
         scan,
-      } = require("@reactive-js/rx-observables");
+      } = require("@reactive-js/rx-observable");
       const { run } = require("./reactive-js-runner");
 
       const observable = pipe(
