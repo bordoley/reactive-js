@@ -31,3 +31,4 @@ export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
 export { throws } from "./internal/throws";
 export { withLatestFrom } from "./internal/withLatestFrom";
+export { subscribeOn } from "./internal/subscribeOn";

@@ -41,6 +41,7 @@
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
 * [startWith](README.md#startwith)
+* [subscribeOn](README.md#const-subscribeon)
 * [switchAll](README.md#const-switchall)
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
@@ -1119,6 +1120,25 @@ Name | Type |
 `...values` | T[] |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` subscribeOn
+
+▸ **subscribeOn**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`scheduler` | SchedulerLike |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ___
 
