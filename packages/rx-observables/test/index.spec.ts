@@ -589,7 +589,7 @@ test("shareReplayLast", () => {
 
   const replayed = pipe(
     concat(fromScheduledValues([, , 0], [, , 1], [, , 2]), empty({ delay: 2 })),
-    shareReplayLast(scheduler),
+    shareReplayLast({scheduler}),
   );
   const replayedSubscription = connect(replayed, scheduler);
 

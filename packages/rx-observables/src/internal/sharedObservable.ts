@@ -72,23 +72,40 @@ class SharedObservable<T> implements ObservableLike<T> {
   }
 }
 
+export interface SharedObservableOptions extends SchedulerOptions {
+  readonly scheduler?: SchedulerLike;
+}
 export const share = <T>(
-  scheduler?: SchedulerLike,
-  options?: SchedulerOptions,
-): ObservableOperator<T, T> => (observable: ObservableLike<T>) =>
-  new SharedObservable(createSubject, observable, scheduler, options);
+  options: SharedObservableOptions = {},
+): ObservableOperator<T, T> => {
+  const { scheduler, ...schedulerOptions } = options;
+  return (observable: ObservableLike<T>) =>
+    new SharedObservable(
+      createSubject,
+      observable,
+      scheduler,
+      schedulerOptions,
+    );
+};
 
 export const shareReplay = <T>(
   count: number,
-  scheduler?: SchedulerLike,
-  options?: SchedulerOptions,
-): ObservableOperator<T, T> => (observable: ObservableLike<T>) => {
+  options: SharedObservableOptions = {},
+): ObservableOperator<T, T> => {
   const factory = (options?: SchedulerOptions) =>
     createSubjectWithReplay(count, options);
-  return new SharedObservable(factory, observable, scheduler, options);
+  const { scheduler, ...schedulerOptions } = options;
+
+  return (observable: ObservableLike<T>) => {
+    return new SharedObservable(
+      factory,
+      observable,
+      scheduler,
+      schedulerOptions,
+    );
+  };
 };
 
 export const shareReplayLast = <T>(
-  scheduler?: SchedulerLike,
-  options?: SchedulerOptions,
-): ObservableOperator<T, T> => shareReplay(1, scheduler, options);
+  options?: SharedObservableOptions,
+): ObservableOperator<T, T> => shareReplay(1, options);
