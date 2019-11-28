@@ -41,16 +41,15 @@ The scheduler's current time in ms.
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [SchedulerContinuation](schedulercontinuation.md), `delay?`: undefined | number, `priority?`: undefined | number): *DisposableLike*
+▸ **schedule**(`continuation`: [SchedulerContinuation](schedulercontinuation.md), `config?`: undefined | object): *DisposableLike*
 
 Schedules a continuation to be execute on the scheduler.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [SchedulerContinuation](schedulercontinuation.md) | - |
-`delay?` | undefined &#124; number | The delay in ms after which to execute the continuation. |
-`priority?` | undefined &#124; number | The scheduling priority of the continuation.  |
+Name | Type |
+------ | ------ |
+`continuation` | [SchedulerContinuation](schedulercontinuation.md) |
+`config?` | undefined &#124; object |
 
 **Returns:** *DisposableLike*

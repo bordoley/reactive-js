@@ -37,8 +37,10 @@ export interface SchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuation,
-    delay?: number,
-    priority?: number,
+    config?: {
+      delay?: number;
+      priority?: number;
+    },
   ): DisposableLike;
 }
 

@@ -325,7 +325,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **empty**<**T**>(`config?`: undefined | object): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -335,8 +335,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`delay?` | undefined &#124; number |
-`priority?` | undefined &#124; number |
+`config?` | undefined &#124; object |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -356,7 +355,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `delay`: number, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `config`: object): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -367,8 +366,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `values` | ReadonlyArray‹T› | - |
-`delay` | number | 0 |
-`priority?` | undefined &#124; number | - |
+`config` | object |  {} |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -415,7 +413,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `delay`: number, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `config`: object): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -435,9 +433,7 @@ Name | Type |
 
 ▪ **initialValue**: *T*
 
-▪`Default value`  **delay**: *number*= 0
-
-▪`Optional`  **priority**: *undefined | number*
+▪`Default value`  **config**: *object*=  {}
 
 **Returns:** *ObservableLike‹T›*
 
@@ -579,7 +575,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **ofValue**<**T**>(`value`: T, `config?`: undefined | object): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -590,8 +586,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
-`delay?` | undefined &#124; number |
-`priority?` | undefined &#124; number |
+`config?` | undefined &#124; object |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -868,7 +863,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **throws**<**T**>(`error`: Error, `config?`: undefined | object): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -879,8 +874,7 @@ ___
 Name | Type |
 ------ | ------ |
 `error` | Error |
-`delay?` | undefined &#124; number |
-`priority?` | undefined &#124; number |
+`config?` | undefined &#124; object |
 
 **Returns:** *ObservableLike‹T›*
 

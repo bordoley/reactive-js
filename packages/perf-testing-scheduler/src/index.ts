@@ -65,8 +65,10 @@ class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number = 0,
-    priority: number = 0,
+    config?: {
+      delay?: number;
+      priority?: number;
+    },
   ): DisposableLike {
     this.queue.push(continuation);
     return createDisposable();

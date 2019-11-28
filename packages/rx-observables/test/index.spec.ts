@@ -47,11 +47,11 @@ test("combineLatest", () => {
     pipe(
       combineLatest(
         pipe(
-          generate(i => i + 2, 1, 2),
+          generate(i => i + 2, 1, { delay: 2 }),
           take(3),
         ),
         pipe(
-          generate(i => i + 2, 0, 3),
+          generate(i => i + 2, 0, { delay: 3 }),
           take(2),
         ),
       ),
@@ -252,7 +252,7 @@ describe("fromArray", () => {
   });
 
   test("with delay", () => {
-    const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
+    const observable = fromArray([1, 2, 3, 4, 5, 6], { delay: 3 });
     const scheduler = createVirtualTimeScheduler(1);
     const observer = createMockObserver();
 
@@ -377,7 +377,7 @@ describe("generate", () => {
 
     connect(
       pipe(
-        generate(i => i + 1, 0, 5),
+        generate(i => i + 1, 0, { delay: 5 }),
         map(x => [scheduler.now, x]),
         take(5),
         observe(observer),
@@ -409,7 +409,7 @@ describe("generate", () => {
 
     connect(
       pipe(
-        generate(generator, 0, 5),
+        generate(generator, 0, { delay: 5 }),
         map(x => [scheduler.now, x]),
         take(5),
         observe(observer),
@@ -469,14 +469,14 @@ test("merge", () => {
     pipe(
       merge(
         pipe(
-          generate(i => i + 2, 1, 2),
+          generate(i => i + 2, 1, { delay: 2 }),
           take(3),
         ),
         pipe(
-          generate(i => i + 2, 0, 3),
+          generate(i => i + 2, 0, { delay: 3 }),
           take(2),
         ),
-        throws(error, 10),
+        throws(error, { delay: 10 }),
       ),
       observe(observer),
     ),
@@ -588,31 +588,37 @@ test("shareReplayLast", () => {
   const scheduler = createVirtualTimeScheduler();
 
   const replayed = pipe(
-    concat(fromScheduledValues([, , 0], [, , 1], [, , 2]), empty(2)),
+    concat(fromScheduledValues([, , 0], [, , 1], [, , 2]), empty({ delay: 2 })),
     shareReplayLast(scheduler),
   );
   const replayedSubscription = connect(replayed, scheduler);
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
-  scheduler.schedule(_ => {
-    liftedSubscription = connect(
-      pipe(replayed, observe(liftedObserver)),
-      scheduler,
-    );
-  }, 1);
+  scheduler.schedule(
+    _ => {
+      liftedSubscription = connect(
+        pipe(replayed, observe(liftedObserver)),
+        scheduler,
+      );
+    },
+    { delay: 1 },
+  );
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
-  scheduler.schedule(_ => {
-    replayedSubscription.dispose();
-    liftedSubscription.dispose();
+  scheduler.schedule(
+    _ => {
+      replayedSubscription.dispose();
+      liftedSubscription.dispose();
 
-    anotherLiftedSubscription = connect(
-      pipe(replayed, observe(anotherLiftedSubscriptionObserver)),
-      scheduler,
-    );
-  }, 3);
+      anotherLiftedSubscription = connect(
+        pipe(replayed, observe(anotherLiftedSubscriptionObserver)),
+        scheduler,
+      );
+    },
+    { delay: 3 },
+  );
 
   scheduler.run();
 
@@ -654,7 +660,9 @@ test("switchAll", () => {
 
   const innerObservable = fromArray([1, 2]);
   const error = new Error();
-  const src = fromArray([innerObservable, innerObservable, throws(error)], 1);
+  const src = fromArray([innerObservable, innerObservable, throws(error)], {
+    delay: 1,
+  });
 
   connect(pipe(src, switchAll(), observe(observer)), scheduler);
   scheduler.run();
@@ -689,7 +697,10 @@ describe("takeLast", () => {
     const scheduler = createVirtualTimeScheduler();
     const observer = createMockObserver();
     const error = new Error();
-    const src = merge(fromArray([1, 2, 3, 4], 4), throws(error, 2));
+    const src = merge(
+      fromArray([1, 2, 3, 4], { delay: 4 }),
+      throws(error, { delay: 2 }),
+    );
 
     connect(pipe(src, takeLast(3), observe(observer)), scheduler);
     scheduler.run();

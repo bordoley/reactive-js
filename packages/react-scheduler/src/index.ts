@@ -31,11 +31,13 @@ class ReactSchedulerImpl implements SchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number = 0,
-    priority: number = unstable_NormalPriority,
+    config: {
+      delay?: number;
+      priority?: number;
+    } = {},
   ): DisposableLike {
     const disposable = createSerialDisposable();
-
+    const { delay = 0, priority = unstable_NormalPriority } = config;
     const shouldYield = () => {
       const isDisposed = disposable.isDisposed;
       return isDisposed || unstable_shouldYield();
@@ -86,7 +88,6 @@ class ReactSchedulerImpl implements SchedulerLike {
               continuation,
               priority,
             );
-
 
       // FIXME: React's scheduler doesn't seem to deal well with abusive sources
       // that aggressive continue via a returned called, so just explicitly reschedule

@@ -36,7 +36,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {
-      this.schedule(this.drainQueue, this.priority);
+      this.schedule(this.drainQueue, { priority: this.priority });
     }
   }
 
