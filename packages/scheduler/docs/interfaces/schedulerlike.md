@@ -41,7 +41,7 @@ The scheduler's current time in ms.
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [SchedulerContinuation](schedulercontinuation.md), `config?`: undefined | object): *DisposableLike*
+▸ **schedule**(`continuation`: [SchedulerContinuation](schedulercontinuation.md), `options?`: [SchedulerOptions](scheduleroptions.md)): *DisposableLike*
 
 Schedules a continuation to be execute on the scheduler.
 
@@ -50,6 +50,6 @@ Schedules a continuation to be execute on the scheduler.
 Name | Type |
 ------ | ------ |
 `continuation` | [SchedulerContinuation](schedulercontinuation.md) |
-`config?` | undefined &#124; object |
+`options?` | [SchedulerOptions](scheduleroptions.md) |
 
 **Returns:** *DisposableLike*

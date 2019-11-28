@@ -502,10 +502,10 @@ var ExampleReact = (function (react, reactDom) {
 	        enumerable: true,
 	        configurable: true
 	    });
-	    ReactSchedulerImpl.prototype.schedule = function (continuation, delay, priority) {
-	        if (delay === void 0) { delay = 0; }
-	        if (priority === void 0) { priority = scheduler.unstable_NormalPriority; }
+	    ReactSchedulerImpl.prototype.schedule = function (continuation, config) {
+	        if (config === void 0) { config = {}; }
 	        var disposable = dist$1.create();
+	        var _a = config.delay, delay = _a === void 0 ? 0 : _a, _b = config.priority, priority = _b === void 0 ? scheduler.unstable_NormalPriority : _b;
 	        var shouldYield = function () {
 	            var isDisposed = disposable.isDisposed;
 	            return isDisposed || scheduler.unstable_shouldYield();
@@ -530,6 +530,9 @@ var ExampleReact = (function (react, reactDom) {
 	            var callback = resultContinuation === continuation && resultPriority === priority
 	                ? continuationCallback
 	                : _this.createFrameCallback(disposable, shouldYield, continuation, priority);
+	            // FIXME: React's scheduler doesn't seem to deal well with abusive sources
+	            // that aggressive continue via a returned called, so just explicitly reschedule
+	            // work for now.
 	            //if (callback === continuationCallback && delay === 0) {
 	            //  return callback;
 	            //}
@@ -609,7 +612,10 @@ var ExampleReact = (function (react, reactDom) {
 	    };
 	    SafeObserver.prototype.scheduleDrainQueue = function () {
 	        if (this.remainingEvents === 1) {
-	            this.subscriber.schedule(this.drainQueue, 0, this.priority);
+	            this.subscriber.schedule(this.drainQueue, {
+	                delay: 0,
+	                priority: this.priority,
+	            });
 	        }
 	    };
 	    return SafeObserver;
@@ -678,9 +684,9 @@ var ExampleReact = (function (react, reactDom) {
 	        }
 	        (_a = this.subscription).remove.apply(_a, tslib_es6.__spreadArrays([disposable], disposables));
 	    };
-	    AbstractSubscriberImpl.prototype.schedule = function (continuation, delay, priority) {
+	    AbstractSubscriberImpl.prototype.schedule = function (continuation, config) {
 	        var _this = this;
-	        var schedulerSubscription = this.scheduler.schedule(continuation, delay, priority);
+	        var schedulerSubscription = this.scheduler.schedule(continuation, config);
 	        this.add(schedulerSubscription);
 	        schedulerSubscription.add(function () { return _this.remove(schedulerSubscription); });
 	        return schedulerSubscription;
@@ -1231,8 +1237,9 @@ var ExampleReact = (function (react, reactDom) {
 	var fromArray = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
 
-	exports.fromArray = function (values, delay, priority) {
-	    if (delay === void 0) { delay = 0; }
+	exports.fromArray = function (values, config) {
+	    if (config === void 0) { config = {}; }
+	    var _a = config.delay, delay = _a === void 0 ? 0 : _a, priority = config.priority;
 	    var subscribe = function (subscriber) {
 	        var index = 0;
 	        var continuationResult;
@@ -1257,12 +1264,12 @@ var ExampleReact = (function (react, reactDom) {
 	            }
 	        };
 	        continuationResult = { continuation: continuation, delay: delay, priority: priority };
-	        subscriber.schedule(continuation, delay, priority);
+	        subscriber.schedule(continuation, config);
 	    };
 	    return { subscribe: subscribe };
 	};
-	exports.empty = function (delay, priority) { return exports.fromArray([], delay, priority); };
-	exports.ofValue = function (value, delay, priority) { return exports.fromArray([value], delay, priority); };
+	exports.empty = function (config) { return exports.fromArray([], config); };
+	exports.ofValue = function (value, config) { return exports.fromArray([value], config); };
 	exports.fromScheduledValues = function (value) {
 	    var values = [];
 	    for (var _i = 1; _i < arguments.length; _i++) {
@@ -1291,7 +1298,7 @@ var ExampleReact = (function (react, reactDom) {
 	            return;
 	        };
 	        var _a = delayedValues[index], delay = _a[0], priority = _a[1], _ = _a[2];
-	        subscriber.schedule(continuation, delay, priority);
+	        subscriber.schedule(continuation, { delay: delay, priority: priority });
 	    };
 	    return { subscribe: subscribe };
 	};
@@ -1461,8 +1468,9 @@ var ExampleReact = (function (react, reactDom) {
 
 	var generate = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.generate = function (generator, initialValue, delay, priority) {
-	    if (delay === void 0) { delay = 0; }
+	exports.generate = function (generator, initialValue, config) {
+	    if (config === void 0) { config = {}; }
+	    var _a = config.delay, delay = _a === void 0 ? 0 : _a, priority = config.priority;
 	    var subscribe = function (subscriber) {
 	        var acc = initialValue;
 	        var continuationResult;
@@ -1498,7 +1506,7 @@ var ExampleReact = (function (react, reactDom) {
 	            }
 	        };
 	        continuationResult = { continuation: continuation, delay: delay, priority: priority };
-	        subscriber.schedule(continuation, delay, priority);
+	        subscriber.schedule(continuation, config);
 	    };
 	    return { subscribe: subscribe };
 	};
@@ -2303,7 +2311,7 @@ var ExampleReact = (function (react, reactDom) {
 	            this.delegate.complete(error);
 	        }
 	        else {
-	            this.schedule(this.drainQueue, this.priority);
+	            this.schedule(this.drainQueue, { priority: this.priority });
 	        }
 	    };
 	    TakeLastSubscriber.prototype.onNext = function (data) {
@@ -2326,12 +2334,12 @@ var ExampleReact = (function (react, reactDom) {
 
 	var throws_1 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.throws = function (error, delay, priority) {
+	exports.throws = function (error, config) {
 	    var subscribe = function (subscriber) {
 	        var continuation = function (_) {
 	            subscriber.complete(error);
 	        };
-	        subscriber.schedule(continuation, delay, priority);
+	        subscriber.schedule(continuation, config);
 	    };
 	    return { subscribe: subscribe };
 	};
@@ -2711,19 +2719,19 @@ var ExampleReact = (function (react, reactDom) {
 	        react_1.default.createElement("button", { onClick: goToRoute1 }, "Go to route1"),
 	        react_1.default.createElement("button", { onClick: goToRoute2 }, "Go to route2")));
 	};
-	var src = dist$b.generate(function (x) { return x + 1; }, 0, undefined, 0);
+	var src = dist$b.generate(function (x) { return x + 1; }, 0, { priority: 5 });
 	var Component1 = function (props) {
 	    var value = dist$6.useObservable(function () { return src; }, []);
-	    return react_1.default.createElement(react_1.default.Fragment, null,
+	    return (react_1.default.createElement(react_1.default.Fragment, null,
 	        react_1.default.createElement("div", null, props.uri.path),
-	        react_1.default.createElement("div", null, value));
+	        react_1.default.createElement("div", null, value)));
 	};
 	var routes = [
 	    ["/route1", Component1],
 	    ["/route2", Component1],
 	];
 	reactDom.render(react_1.default.createElement(dist$c.Router, { locationResourceFactory: dist$f.create, notFound: NotFound, routes: routes }), document.getElementById("root"));
-	dist$5.connect(dist$5.pipe(dist$b.generate(function (x) { return x + 1; }, 0, undefined, 0), dist$b.map(function (x) { return dist$b.fromArray([x, x, x, x]); }), dist$b.exhaust(), dist$b.onNext(console.log)));
+	dist$5.connect(dist$5.pipe(dist$b.generate(function (x) { return x + 1; }, 0, { priority: 5 }), dist$b.map(function (x) { return dist$b.fromArray([x, x, x, x]); }), dist$b.exhaust(), dist$b.onNext(console.log)));
 
 	});
 

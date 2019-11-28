@@ -325,7 +325,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`config?`: undefined | object): *ObservableLike‹T›*
+▸ **empty**<**T**>(`options?`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -335,7 +335,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`config?` | undefined &#124; object |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -355,7 +355,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `config`: object): *ObservableLike‹T›*
+▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `options`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -366,7 +366,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `values` | ReadonlyArray‹T› | - |
-`config` | object |  {} |
+`options` | SchedulerOptions |  {} |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -413,7 +413,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `config`: object): *ObservableLike‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `options`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -433,7 +433,7 @@ Name | Type |
 
 ▪ **initialValue**: *T*
 
-▪`Default value`  **config**: *object*=  {}
+▪`Default value`  **options**: *SchedulerOptions*=  {}
 
 **Returns:** *ObservableLike‹T›*
 
@@ -575,7 +575,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T, `config?`: undefined | object): *ObservableLike‹T›*
+▸ **ofValue**<**T**>(`value`: T, `options?`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -586,7 +586,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
-`config?` | undefined &#124; object |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -863,7 +863,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `config?`: undefined | object): *ObservableLike‹T›*
+▸ **throws**<**T**>(`error`: Error, `options?`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -874,7 +874,7 @@ ___
 Name | Type |
 ------ | ------ |
 `error` | Error |
-`config?` | undefined &#124; object |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableLike‹T›*
 

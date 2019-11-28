@@ -16,6 +16,11 @@ export interface SchedulerContinuationResult {
   readonly priority?: number;
 }
 
+export interface SchedulerOptions {
+  readonly delay?: number;
+  readonly priority?: number;
+}
+
 /**
  * An object that schedules units of work on a runloop.
  */
@@ -37,10 +42,7 @@ export interface SchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuation,
-    config?: {
-      delay?: number;
-      priority?: number;
-    },
+    options?: SchedulerOptions,
   ): DisposableLike;
 }
 

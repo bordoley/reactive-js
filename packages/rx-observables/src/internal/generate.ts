@@ -5,17 +5,15 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
+  SchedulerOptions,
 } from "@reactive-js/scheduler";
 
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: T,
-  config: {
-    delay?: number;
-    priority?: number;
-  } = {},
+  options: SchedulerOptions = {},
 ): ObservableLike<T> => {
-  const { delay = 0, priority } = config;
+  const { delay = 0, priority } = options;
 
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let acc = initialValue;
@@ -56,7 +54,7 @@ export const generate = <T>(
 
     continuationResult = { continuation, delay, priority };
 
-    subscriber.schedule(continuation, config);
+    subscriber.schedule(continuation, options);
   };
 
   return { subscribe };

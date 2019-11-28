@@ -242,7 +242,7 @@ describe("toSafeObserver", () => {
       get now() {
         return scheduler.now;
       },
-      schedule: (c, config) => scheduler.schedule(c, config),
+      schedule: (c, options) => scheduler.schedule(c, options),
       next: jest.fn(),
       complete: jest.fn(),
     };

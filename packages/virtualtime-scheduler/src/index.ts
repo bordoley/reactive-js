@@ -7,6 +7,7 @@ import {
 
 import {
   SchedulerContinuation,
+  SchedulerOptions,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
@@ -98,15 +99,12 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    config: {
-      delay?: number;
-      priority?: number;
-    } = {},
+    options: SchedulerOptions = {},
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
     const disposable = createDisposable();
-    const { delay = 0, priority } = config;
+    const { delay = 0, priority } = options;
 
     const ctx = {
       continuation,
