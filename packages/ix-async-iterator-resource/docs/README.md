@@ -39,7 +39,7 @@ ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: T, `equals?`: undefined | function, `scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: T, `options`: object): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -47,12 +47,10 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`initialState` | T |
-`equals?` | undefined &#124; function |
-`scheduler?` | SchedulerLike |
-`options?` | SchedulerOptions |
+Name | Type | Default |
+------ | ------ | ------ |
+`initialState` | T | - |
+`options` | object |  {} |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
