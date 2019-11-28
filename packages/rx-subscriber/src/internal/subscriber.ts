@@ -3,6 +3,7 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   SchedulerContinuation,
   SchedulerLike,
+  SchedulerOptions,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
@@ -29,7 +30,7 @@ export interface SubscriberLike<T>
  * A SubscriberLike that can have it's connected state set.
  *
  * @noInheritDoc
- * */
+ */
 export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
   /**
    * Set the connected state of the subscriber to true.
@@ -89,12 +90,12 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
 
   schedule(
     continuation: SchedulerContinuation,
-    config?: {
-      delay?: number;
-      priority?: number;
-    },
+    options?: SchedulerOptions,
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(continuation, config);
+    const schedulerSubscription = this.scheduler.schedule(
+      continuation,
+      options,
+    );
     this.add(schedulerSubscription);
     schedulerSubscription.add(() => this.remove(schedulerSubscription));
     return schedulerSubscription;

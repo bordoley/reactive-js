@@ -7,7 +7,11 @@ import {
   unstable_shouldYield,
 } from "scheduler";
 
-import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuation,
+  SchedulerLike,
+  SchedulerOptions,
+} from "@reactive-js/scheduler";
 
 import {
   create as createDisposable,
@@ -31,13 +35,10 @@ class ReactSchedulerImpl implements SchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    config: {
-      delay?: number;
-      priority?: number;
-    } = {},
+    options: SchedulerOptions = {},
   ): DisposableLike {
     const disposable = createSerialDisposable();
-    const { delay = 0, priority = unstable_NormalPriority } = config;
+    const { delay = 0, priority = unstable_NormalPriority } = options;
     const shouldYield = () => {
       const isDisposed = disposable.isDisposed;
       return isDisposed || unstable_shouldYield();
@@ -92,9 +93,9 @@ class ReactSchedulerImpl implements SchedulerLike {
       // FIXME: React's scheduler doesn't seem to deal well with abusive sources
       // that aggressive continue via a returned called, so just explicitly reschedule
       // work for now.
-      //if (callback === continuationCallback && delay === 0) {
+      // if (callback === continuationCallback && delay === 0) {
       //  return callback;
-      //}
+      // }
 
       this.scheduleCallback(disposable, callback, delay, resultPriority);
       return;

@@ -1,20 +1,16 @@
 import { ObservableLike } from "@reactive-js/rx-observable";
-
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
-
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
+  SchedulerOptions,
 } from "@reactive-js/scheduler";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
-  config: {
-    delay?: number;
-    priority?: number;
-  } = {},
+  options: SchedulerOptions = {},
 ): ObservableLike<T> => {
-  const { delay = 0, priority } = config;
+  const { delay = 0, priority } = options;
 
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
@@ -45,24 +41,19 @@ export const fromArray = <T>(
     };
 
     continuationResult = { continuation, delay, priority };
-    subscriber.schedule(continuation, config);
+    subscriber.schedule(continuation, options);
   };
 
   return { subscribe };
 };
 
-export const empty = <T>(config?: {
-  delay?: number;
-  priority?: number;
-}): ObservableLike<T> => fromArray([], config);
+export const empty = <T>(options?: SchedulerOptions): ObservableLike<T> =>
+  fromArray([], options);
 
 export const ofValue = <T>(
   value: T,
-  config?: {
-    delay?: number;
-    priority?: number;
-  },
-): ObservableLike<T> => fromArray([value], config);
+  options?: SchedulerOptions,
+): ObservableLike<T> => fromArray([value], options);
 
 export const fromScheduledValues = <T>(
   value: [number | undefined, number | undefined, T],

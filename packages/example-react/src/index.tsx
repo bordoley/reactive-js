@@ -7,15 +7,15 @@ import { registerDefaultScheduler } from "@reactive-js/scheduler";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
+import { useObservable } from "@reactive-js/react-hooks";
 import { connect, pipe } from "@reactive-js/rx-observable";
 import {
-  onNext,
   exhaust,
   fromArray,
   generate,
   map,
+  onNext,
 } from "@reactive-js/rx-observables";
-import { useObservable } from "@reactive-js/react-hooks";
 
 registerDefaultScheduler(scheduler);
 

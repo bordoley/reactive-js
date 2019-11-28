@@ -9,6 +9,7 @@
 * [SchedulerContinuation](interfaces/schedulercontinuation.md)
 * [SchedulerContinuationResult](interfaces/schedulercontinuationresult.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
+* [SchedulerOptions](interfaces/scheduleroptions.md)
 * [SchedulerResourceLike](interfaces/schedulerresourcelike.md)
 
 ### Functions
