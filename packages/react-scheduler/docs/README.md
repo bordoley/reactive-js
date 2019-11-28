@@ -6,10 +6,48 @@
 
 ### Variables
 
-* [scheduler](README.md#const-scheduler)
+* [idlePriority](README.md#const-idlepriority)
+* [immediatePriority](README.md#const-immediatepriority)
+* [lowPriority](README.md#const-lowpriority)
+* [normalPriority](README.md#const-normalpriority)
+* [userBlockingPriority](README.md#const-userblockingpriority)
 
 ## Variables
 
-### `Const` scheduler
+### `Const` idlePriority
 
-• **scheduler**: *SchedulerLike* =  new ReactSchedulerImpl()
+• **idlePriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+  unstable_IdlePriority,
+)
+
+___
+
+### `Const` immediatePriority
+
+• **immediatePriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+  unstable_ImmediatePriority,
+)
+
+___
+
+### `Const` lowPriority
+
+• **lowPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+  unstable_LowPriority,
+)
+
+___
+
+### `Const` normalPriority
+
+• **normalPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+  unstable_NormalPriority,
+)
+
+___
+
+### `Const` userBlockingPriority
+
+• **userBlockingPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+  unstable_UserBlockingPriority,
+)

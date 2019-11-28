@@ -7,7 +7,6 @@ import {
 
 import {
   SchedulerContinuation,
-  SchedulerOptions,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
@@ -66,7 +65,7 @@ class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    options?: SchedulerOptions,
+    delay?: number,
   ): DisposableLike {
     this.queue.push(continuation);
     return createDisposable();

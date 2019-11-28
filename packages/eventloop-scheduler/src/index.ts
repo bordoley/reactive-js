@@ -1,6 +1,5 @@
 import {
   SchedulerContinuation,
-  SchedulerOptions,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
@@ -71,14 +70,13 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    options: SchedulerOptions = {},
+    delay: number = 0,
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
     const disposable = createSerialDisposable();
     const shouldYield = (): boolean =>
       disposable.isDisposed || this.startTime + this.timeout < this.now;
-    const { delay = 0 } = options;
 
     const ctx = {
       continuation,

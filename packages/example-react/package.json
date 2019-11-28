@@ -20,10 +20,8 @@
     "@reactive-js/react-router": "0.0.0",
     "@reactive-js/react-router-dom-location-resource": "0.0.0",
     "@reactive-js/react-router-relative-uri": "0.0.0",
-    "@reactive-js/react-scheduler": "0.0.0",
     "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observables": "0.0.0",
-    "@reactive-js/scheduler": "0.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "tslib": "^1.10.0"

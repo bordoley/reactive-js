@@ -3,15 +3,12 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
-  SchedulerOptions,
 } from "@reactive-js/scheduler";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
-  options: SchedulerOptions = {},
+  delay: number = 0,
 ): ObservableLike<T> => {
-  const { delay = 0, priority } = options;
-
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
     let continuationResult: SchedulerContinuationResult;
@@ -40,24 +37,22 @@ export const fromArray = <T>(
       }
     };
 
-    continuationResult = { continuation, delay, priority };
-    subscriber.schedule(continuation, options);
+    continuationResult = { continuation, delay };
+    subscriber.schedule(continuation, delay);
   };
 
   return { subscribe };
 };
 
-export const empty = <T>(options?: SchedulerOptions): ObservableLike<T> =>
-  fromArray([], options);
+export const empty = <T>(delay?: number): ObservableLike<T> =>
+  fromArray([], delay);
 
-export const ofValue = <T>(
-  value: T,
-  options?: SchedulerOptions,
-): ObservableLike<T> => fromArray([value], options);
+export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
+  fromArray([value], delay);
 
 export const fromScheduledValues = <T>(
-  value: [number | undefined, number | undefined, T],
-  ...values: Array<[number | undefined, number | undefined, T]>
+  value: [number | undefined, T],
+  ...values: Array<[number | undefined, T]>
 ): ObservableLike<T> => {
   const delayedValues = [value, ...values];
 
@@ -68,7 +63,7 @@ export const fromScheduledValues = <T>(
       shouldYield: () => boolean,
     ) => {
       while (index < delayedValues.length) {
-        const [_d, _p, value] = delayedValues[index];
+        const [_d, value] = delayedValues[index];
         index++;
         subscriber.next(value);
 
@@ -88,8 +83,8 @@ export const fromScheduledValues = <T>(
       return;
     };
 
-    const [delay, priority, _] = delayedValues[index];
-    subscriber.schedule(continuation, { delay, priority });
+    const [delay, _] = delayedValues[index];
+    subscriber.schedule(continuation, delay);
   };
 
   return { subscribe };

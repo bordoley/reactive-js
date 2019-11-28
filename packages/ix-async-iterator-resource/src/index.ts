@@ -10,11 +10,11 @@ import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
 import {
   distinctUntilChanged,
   scan,
-  shareReplayLast,
+  share,
   startWith,
 } from "@reactive-js/rx-observables";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
-import { SchedulerLike, SchedulerOptions } from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   create as createSubject,
@@ -104,12 +104,12 @@ const liftImpl = <TReq, T, TReqA, TA>(
 
 export const lift = <TReq, T, TA>(
   operator: ObservableOperator<T, TA>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, TA> => 
-  liftImpl(operator,undefined);
+): AsyncIteratorResourceOperator<TReq, T, TReq, TA> =>
+  liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
   mapper: (req: TReqA) => TReq,
-): AsyncIteratorResourceOperator<TReq, T, TReqA, T> => 
+): AsyncIteratorResourceOperator<TReq, T, TReqA, T> =>
   liftImpl(undefined, mapper);
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
@@ -276,10 +276,8 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), src);
 }
 
-export const createEvent = <T>(
-  options?: SchedulerOptions,
-): AsyncIteratorResourceLike<T, T> => {
-  const subject = createSubject(options);
+export const createEvent = <T>(): AsyncIteratorResourceLike<T, T> => {
+  const subject = createSubject();
   const dispatcher = (req: T) => subject.next(req);
 
   return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
@@ -289,28 +287,19 @@ export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
-export interface StateStoreOptions<T> extends SchedulerOptions {
-  readonly delay?: number;
-  readonly equals?: (a: T, b: T) => boolean;
-  readonly priority?: number;
-  readonly scheduler?: SchedulerLike;
-}
-
 export const createStateStore = <T>(
   initialState: T,
-  options: StateStoreOptions<T> = {},
+  scheduler: SchedulerLike,
+  equals?: (a: T, b: T) => boolean,
 ): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
-  const { equals, scheduler, ...schedulerOptions } = options;
-  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject(
-    schedulerOptions,
-  );
+  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject();
   const dispatcher = (req: StateUpdater<T>) => subject.next(req);
   const observable = observablePipe(
     subject,
     scan((acc: T, next) => next(acc), initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
-    shareReplayLast({scheduler, ...schedulerOptions}),
+    share(scheduler, 1),
   );
 
   subject.add(connect(observable, scheduler));

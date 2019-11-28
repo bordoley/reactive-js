@@ -1,23 +1,11 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
+import { useObservable } from "@reactive-js/react-hooks";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { create as createLocationResource } from "@reactive-js/react-router-dom-location-resource";
 import { RelativeURI } from "@reactive-js/react-router-relative-uri";
-import { scheduler } from "@reactive-js/react-scheduler";
-import { registerDefaultScheduler } from "@reactive-js/scheduler";
+import { generate } from "@reactive-js/rx-observables";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
-
-import { useObservable } from "@reactive-js/react-hooks";
-import { connect, pipe } from "@reactive-js/rx-observable";
-import {
-  exhaust,
-  fromArray,
-  generate,
-  map,
-  onNext,
-} from "@reactive-js/rx-observables";
-
-registerDefaultScheduler(scheduler);
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
@@ -46,7 +34,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const src = generate(x => x + 1, 0, { priority: 5 });
+const src = generate(x => x + 1, 0);
 
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(() => src, []);
@@ -71,13 +59,4 @@ render(
     routes={routes}
   />,
   document.getElementById("root") as HTMLElement,
-);
-
-connect(
-  pipe(
-    generate(x => x + 1, 0, { priority: 5 }),
-    map(x => fromArray([x, x, x, x])),
-    exhaust(),
-    onNext(console.log),
-  ),
 );

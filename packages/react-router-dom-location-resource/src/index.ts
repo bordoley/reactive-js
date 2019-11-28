@@ -8,16 +8,16 @@ import {
   equals as relativeURIEquals,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { scheduler } from "@reactive-js/react-scheduler";
+import { normalPriority } from "@reactive-js/react-scheduler";
 import { ObservableLike, pipe } from "@reactive-js/rx-observable";
 import {
   ignoreElements,
   keep,
   merge,
   onNext,
-  shareReplayLast,
+  share,
 } from "@reactive-js/rx-observables";
-import { SchedulerOptions } from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 const getCurrentLocation = (): RelativeURI => {
   const path = window.location.pathname;
@@ -28,10 +28,10 @@ const getCurrentLocation = (): RelativeURI => {
 
 const operator = (
   setURI: (state: RelativeURI) => void,
-  options: SchedulerOptions = {},
+  scheduler: SchedulerLike,
 ) => (obs: ObservableLike<RelativeURI>): ObservableLike<RelativeURI> => {
   const onPopstateUpdateURIObs = pipe(
-    fromEvent(window, "popstate", _ => getCurrentLocation(), options),
+    fromEvent(window, "popstate", _ => getCurrentLocation()),
     onNext(setURI),
     ignoreElements(),
   );
@@ -48,18 +48,21 @@ const operator = (
 
   return pipe(
     merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs),
-    shareReplayLast({scheduler, ...options}),
+    share(scheduler),
   );
 };
 
-export const create = (options?: SchedulerOptions) => {
-  const stateStore = createStateStore(getCurrentLocation(), {
-    equals: relativeURIEquals,
+export const create = (scheduler: SchedulerLike = normalPriority) => {
+  const stateStore = createStateStore(
+    getCurrentLocation(),
     scheduler,
-    ...options,
-  });
+    relativeURIEquals,
+  );
 
   const setURI = (uri: RelativeURI) => stateStore.dispatch(_ => uri);
 
-  return asyncIteratorResourcePipe(stateStore, lift(operator(setURI, options)));
+  return asyncIteratorResourcePipe(
+    stateStore,
+    lift(operator(setURI, scheduler)),
+  );
 };

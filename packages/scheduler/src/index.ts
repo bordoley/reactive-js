@@ -13,18 +13,6 @@ export interface SchedulerContinuation {
 export interface SchedulerContinuationResult {
   readonly continuation: SchedulerContinuation;
   readonly delay?: number;
-  readonly priority?: number;
-}
-
-export interface SchedulerOptions {
-  /**
-   * The delay in ms after which to execute the continuation.
-   */
-  readonly delay?: number;
-  /**
-   * The scheduling priority of the continuation.
-   */
-  readonly priority?: number;
 }
 
 /**
@@ -43,12 +31,9 @@ export interface SchedulerLike {
    * Schedules a continuation to be execute on the scheduler.
    *
    * @param continuation
-   * @param options
+   * @param delay The delay in ms after which to execute the continuation.
    */
-  schedule(
-    continuation: SchedulerContinuation,
-    options?: SchedulerOptions,
-  ): DisposableLike;
+  schedule(continuation: SchedulerContinuation, delay?: number): DisposableLike;
 }
 
 /**
@@ -56,29 +41,3 @@ export interface SchedulerLike {
  * @noInheritDoc
  */
 export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}
-
-let instance: SchedulerLike | undefined;
-
-/**
- * Registers a default scheduler for the current process. Calling this
- * function more than once with a different scheduler instance
- * results in an error being thrown.
- *
- * @param scheduler
- */
-export const registerDefaultScheduler = (scheduler: SchedulerLike) => {
-  if (instance !== undefined && scheduler !== instance) {
-    throw new Error("Default scheduler already registered");
-  }
-  instance = scheduler;
-};
-
-/**
- * Returns the default scheduler, if registered, otherwise throws an error.
- */
-export const getDefaultScheduler = () => {
-  if (instance === undefined) {
-    throw new Error("No default scheduler registered");
-  }
-  return instance;
-};

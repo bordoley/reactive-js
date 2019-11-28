@@ -12,7 +12,6 @@
 
 * [continuation](schedulercontinuationresult.md#continuation)
 * [delay](schedulercontinuationresult.md#optional-delay)
-* [priority](schedulercontinuationresult.md#optional-priority)
 
 ## Properties
 
@@ -25,9 +24,3 @@ ___
 ### `Optional` delay
 
 • **delay**? : *undefined | number*
-
-___
-
-### `Optional` priority
-
-• **priority**? : *undefined | number*

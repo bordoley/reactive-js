@@ -12,12 +12,12 @@
 
 ### `Const` create
 
-▸ **create**(`options?`: SchedulerOptions): *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
+▸ **create**(`scheduler`: SchedulerLike): *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`options?` | SchedulerOptions |
+Name | Type | Default |
+------ | ------ | ------ |
+`scheduler` | SchedulerLike |  normalPriority |
 
 **Returns:** *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*

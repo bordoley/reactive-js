@@ -21,11 +21,11 @@
 
 ### `Const` connect
 
-▸ **connect**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler?`: SchedulerLike): *DisposableLike*
+▸ **connect**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *DisposableLike*
 
-Safely connects an ObservableLike to a SubscriberLike, optionally
-using the provided scheduler, otherwise falling back to the default
-scheduler. The returned DisposableLike may used to cancel the subscription.
+Safely connects an ObservableLike to a SubscriberLike,
+using the provided scheduler. The returned DisposableLike
+may used to cancel the subscription.
 
 **Type parameters:**
 
@@ -36,7 +36,7 @@ scheduler. The returned DisposableLike may used to cancel the subscription.
 Name | Type |
 ------ | ------ |
 `observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`scheduler?` | SchedulerLike |
+`scheduler` | SchedulerLike |
 
 **Returns:** *DisposableLike*
 
@@ -44,7 +44,7 @@ ___
 
 ### `Const` create
 
-▸ **create**<**T**>(`onSubscribe`: function, `options?`: SchedulerOptions): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **create**<**T**>(`onSubscribe`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Factory for safely creating new ObservableLikes. The onSubscribe function
 is called with an observer which may be notified from any context,
@@ -70,8 +70,6 @@ the onSubscribe function.
 Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
-
-▪`Optional`  **options**: *SchedulerOptions*
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

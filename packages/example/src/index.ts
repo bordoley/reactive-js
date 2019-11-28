@@ -8,10 +8,8 @@ import {
 } from "@reactive-js/rx-observables";
 
 import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
-import { registerDefaultScheduler } from "@reactive-js/scheduler";
 
 const scheduler = createEventLoopScheduler(500);
-registerDefaultScheduler(scheduler);
 
 const subscription = connect(
   pipe(
@@ -20,4 +18,5 @@ const subscription = connect(
     exhaust(),
     onNext(console.log),
   ),
+  scheduler,
 );

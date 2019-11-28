@@ -8,7 +8,6 @@
 
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)
-* [StateStoreOptions](interfaces/statestoreoptions.md)
 * [StateUpdater](interfaces/stateupdater.md)
 
 ### Functions
@@ -23,7 +22,19 @@
 
 ### `Const` createEvent
 
-▸ **createEvent**<**T**>(`options?`: SchedulerOptions): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+▸ **createEvent**<**T**>(): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
+
+___
+
+### `Const` createStateStore
+
+▸ **createStateStore**<**T**>(`initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -33,26 +44,9 @@
 
 Name | Type |
 ------ | ------ |
-`options?` | SchedulerOptions |
-
-**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹T, T›*
-
-___
-
-### `Const` createStateStore
-
-▸ **createStateStore**<**T**>(`initialState`: T, `options`: [StateStoreOptions](interfaces/statestoreoptions.md)‹T›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`initialState` | T | - |
-`options` | [StateStoreOptions](interfaces/statestoreoptions.md)‹T› |  {} |
+`initialState` | T |
+`scheduler` | SchedulerLike |
+`equals?` | undefined &#124; function |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
