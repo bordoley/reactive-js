@@ -17,7 +17,13 @@ export interface SchedulerContinuationResult {
 }
 
 export interface SchedulerOptions {
+  /**
+   * The delay in ms after which to execute the continuation.
+   */
   readonly delay?: number;
+  /**
+   * The scheduling priority of the continuation.
+   */
   readonly priority?: number;
 }
 
@@ -37,8 +43,7 @@ export interface SchedulerLike {
    * Schedules a continuation to be execute on the scheduler.
    *
    * @param continuation
-   * @param delay The delay in ms after which to execute the continuation.
-   * @param priority The scheduling priority of the continuation.
+   * @param options
    */
   schedule(
     continuation: SchedulerContinuation,

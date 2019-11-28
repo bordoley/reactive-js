@@ -1,21 +1,18 @@
 import {
+  create as createDisposable,
+  DisposableLike,
+  DisposableOrTeardown,
+} from "@reactive-js/disposable";
+import { ObservableLike } from "@reactive-js/rx-observable";
+import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
+import {
   Notification,
   NotificationKind,
   notify,
   ObserverLike,
 } from "@reactive-js/rx-observer";
-
-import { ObservableLike } from "@reactive-js/rx-observable";
-
-import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
-
-import {
-  create as createDisposable,
-  DisposableLike,
-  DisposableOrTeardown,
-} from "@reactive-js/disposable";
-
 import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
+import { SchedulerOptions } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
@@ -33,10 +30,10 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
 
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
-  private readonly priority?: number;
+  private readonly options?: SchedulerOptions;
 
-  constructor(priority?: number) {
-    this.priority = priority;
+  constructor(options?: SchedulerOptions) {
+    this.options = options;
     this.disposable = createDisposable();
     this.disposable.add(() => {
       this.isCompleted = true;
@@ -96,7 +93,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
       // The idea here is that an onSubscribe function may
       // call onNext from unscheduled sources such as event handlers.
       // So we marshall those events back to the scheduler.
-      const observer = toSafeObserver(subscriber, this.priority);
+      const observer = toSafeObserver(subscriber, this.options);
       this.onSubscribe(observer);
 
       if (!this.isCompleted) {
@@ -132,8 +129,8 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   private readonly count: number;
   private replayed: Notification<T>[] = [];
 
-  constructor(count: number, priority?: number) {
-    super(priority);
+  constructor(count: number, options?: SchedulerOptions) {
+    super(options);
     this.count = count;
     this.add(() => {
       this.replayed.length = 0;
@@ -164,10 +161,10 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-export const create = <T>(priority?: number): SubjectResourceLike<T> =>
-  new SubjectImpl(priority);
+export const create = <T>(options?: SchedulerOptions): SubjectResourceLike<T> =>
+  new SubjectImpl(options);
 
 export const createWithReplay = <T>(
   count: number,
-  priority?: number,
-): SubjectResourceLike<T> => new ReplayLastSubjectImpl(count, priority);
+  options?: SchedulerOptions,
+): SubjectResourceLike<T> => new ReplayLastSubjectImpl(count, options);

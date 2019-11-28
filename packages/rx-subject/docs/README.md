@@ -18,7 +18,7 @@
 
 ### `Const` create
 
-▸ **create**<**T**>(`priority?`: undefined | number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **create**<**T**>(`options?`: SchedulerOptions): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -28,7 +28,7 @@
 
 Name | Type |
 ------ | ------ |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
@@ -36,7 +36,7 @@ ___
 
 ### `Const` createWithReplay
 
-▸ **createWithReplay**<**T**>(`count`: number, `priority?`: undefined | number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **createWithReplay**<**T**>(`count`: number, `options?`: SchedulerOptions): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -47,6 +47,6 @@ ___
 Name | Type |
 ------ | ------ |
 `count` | number |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*

@@ -374,7 +374,7 @@ ___
 
 ### `Const` fromPromiseFactory
 
-▸ **fromPromiseFactory**<**T**>(`factory`: function, `priority?`: undefined | number): *ObservableLike‹T›*
+▸ **fromPromiseFactory**<**T**>(`factory`: function, `options?`: SchedulerOptions): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -386,7 +386,7 @@ ___
 
 ▸ (): *Promise‹T›*
 
-▪`Optional`  **priority**: *undefined | number*
+▪`Optional`  **options**: *SchedulerOptions*
 
 **Returns:** *ObservableLike‹T›*
 
@@ -737,7 +737,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
+▸ **share**<**T**>(`scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -748,7 +748,7 @@ ___
 Name | Type |
 ------ | ------ |
 `scheduler?` | SchedulerLike |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -756,7 +756,7 @@ ___
 
 ### `Const` shareReplay
 
-▸ **shareReplay**<**T**>(`count`: number, `scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
+▸ **shareReplay**<**T**>(`count`: number, `scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -768,7 +768,7 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 `scheduler?` | SchedulerLike |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -776,7 +776,7 @@ ___
 
 ### `Const` shareReplayLast
 
-▸ **shareReplayLast**<**T**>(`scheduler?`: SchedulerLike, `priority?`: undefined | number): *ObservableOperator‹T, T›*
+▸ **shareReplayLast**<**T**>(`scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -787,7 +787,7 @@ ___
 Name | Type |
 ------ | ------ |
 `scheduler?` | SchedulerLike |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableOperator‹T, T›*
 

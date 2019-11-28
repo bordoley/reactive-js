@@ -47,9 +47,9 @@ Schedules a continuation to be execute on the scheduler.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`continuation` | [SchedulerContinuation](schedulercontinuation.md) |
-`options?` | [SchedulerOptions](scheduleroptions.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`continuation` | [SchedulerContinuation](schedulercontinuation.md) | - |
+`options?` | [SchedulerOptions](scheduleroptions.md) |   |
 
 **Returns:** *DisposableLike*

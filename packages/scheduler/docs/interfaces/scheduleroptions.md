@@ -19,8 +19,12 @@
 
 • **delay**? : *undefined | number*
 
+The delay in ms after which to execute the continuation.
+
 ___
 
 ### `Optional` priority
 
 • **priority**? : *undefined | number*
+
+The scheduling priority of the continuation.

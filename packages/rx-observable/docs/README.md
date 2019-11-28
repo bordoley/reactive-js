@@ -44,7 +44,7 @@ ___
 
 ### `Const` create
 
-▸ **create**<**T**>(`onSubscribe`: function, `priority?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **create**<**T**>(`onSubscribe`: function, `options?`: SchedulerOptions): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Factory for safely creating new ObservableLikes. The onSubscribe function
 is called with an observer which may be notified from any context,
@@ -71,7 +71,7 @@ Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
 
-▪`Optional`  **priority**: *undefined | number*
+▪`Optional`  **options**: *SchedulerOptions*
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

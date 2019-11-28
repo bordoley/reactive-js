@@ -1,10 +1,11 @@
 import { create, ObservableLike } from "@reactive-js/rx-observable";
+import { SchedulerOptions } from "@reactive-js/scheduler";
 
 export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
   selector: (ev: Event) => T,
-  priority?: number,
+  options?: SchedulerOptions,
 ): ObservableLike<T> =>
   create(observer => {
     const listener = (event: Event) => {
@@ -21,4 +22,4 @@ export const fromEvent = <T>(
     return () => {
       target.removeEventListener(eventName, listener);
     };
-  }, priority);
+  }, options);
