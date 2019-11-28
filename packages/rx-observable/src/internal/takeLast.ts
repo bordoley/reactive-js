@@ -3,13 +3,12 @@ import {
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
-
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
-
-import { lift, ObservableOperator } from "@reactive-js/rx-observable";
+import { lift } from "./lift";
+import { ObservableOperator } from "./observable";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly continuation: SchedulerContinuationResult;

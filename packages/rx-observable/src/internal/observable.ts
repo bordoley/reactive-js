@@ -1,4 +1,3 @@
-
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 /**

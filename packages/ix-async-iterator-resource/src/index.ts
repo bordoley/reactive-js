@@ -2,22 +2,20 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
 import {
   connect,
+  distinctUntilChanged,
   ObservableLike,
   ObservableOperator,
   pipe as observablePipe,
+  scan,
+  startWith,
 } from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
-import {
-  distinctUntilChanged,
-  scan,
-  share,
-  startWith,
-} from "@reactive-js/rx-observables";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   create as createSubject,
+  share,
   SubjectResourceLike,
 } from "@reactive-js/rx-subject";
 

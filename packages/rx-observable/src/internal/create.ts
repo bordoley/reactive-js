@@ -1,6 +1,6 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { toSafeObserver, SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
 import { ObservableLike } from "./observable";
 
 /**
@@ -36,4 +36,3 @@ export const create = <T>(
 
   return { subscribe };
 };
-
