@@ -18,7 +18,7 @@
 
 ### `Const` create
 
-▸ **create**<**T**>(`count`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **create**<**T**>(`replayCount`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -28,7 +28,7 @@
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`count` | number | 0 |
+`replayCount` | number | 0 |
 
 **Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
@@ -36,7 +36,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *ObservableOperator‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -44,9 +44,9 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`scheduler` | SchedulerLike | - |
-`replayCount` | number | 0 |
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
 
 **Returns:** *ObservableOperator‹T, T›*

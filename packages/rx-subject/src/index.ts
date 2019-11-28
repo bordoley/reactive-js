@@ -166,8 +166,8 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-export const create = <T>(count: number = 0): SubjectResourceLike<T> =>
-  count > 0 ? new ReplayLastSubjectImpl(count) : new SubjectImpl();
+export const create = <T>(replayCount: number = 0): SubjectResourceLike<T> =>
+  replayCount > 0 ? new ReplayLastSubjectImpl(replayCount) : new SubjectImpl();
 
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: () => SubjectResourceLike<T>;
@@ -224,7 +224,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
 export const share = <T>(
   scheduler: SchedulerLike,
-  replayCount: number = 0,
+  replayCount?: number,
 ): ObservableOperator<T, T> => {
   const factory = () => create(replayCount);
   return observable => new SharedObservable(factory, observable, scheduler);
