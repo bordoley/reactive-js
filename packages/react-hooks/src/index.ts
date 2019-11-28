@@ -30,17 +30,21 @@ export const useDisposable = <T extends DisposableLike>(
   return resource;
 };
 
-const makeObservable = <T>(
+const connectObservable = <T>(
   observable: ObservableLike<T>,
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
+  scheduler: SchedulerLike,
 ) =>
-  pipe(
-    observable,
-    observe({
-      next: (data: T) => updateState(_ => data),
-      complete: (error?: Error) => updateError(_ => error),
-    }),
+  connect(
+    pipe(
+      observable,
+      observe({
+        next: (data: T) => updateState(_ => data),
+        complete: (error?: Error) => updateError(_ => error),
+      }),
+    ),
+    scheduler,
   );
 
 export const useObservable = <T>(
@@ -54,9 +58,8 @@ export const useObservable = <T>(
   const observable = useMemo(factory, deps);
 
   useDisposable(
-    () =>
-      connect(makeObservable(observable, updateState, updateError), scheduler),
-    [updateState, updateError],
+    () => connectObservable(observable, updateState, updateError, scheduler),
+    [observable, updateState, updateError, scheduler],
   );
 
   if (error !== undefined) {
