@@ -80,7 +80,7 @@ export interface AsyncIteratorResourceOperator<TSrcReq, TSrc, TReq, T> {
   >;
 }
 
-export const lift = <TReq, T, TReqA, TA>(
+const liftImpl = <TReq, T, TReqA, TA>(
   operator?: ObservableOperator<T, TA>,
   mapper?: (req: TReqA) => TReq,
 ): AsyncIteratorResourceOperator<TReq, T, TReqA, TA> => iterator => {
@@ -101,6 +101,16 @@ export const lift = <TReq, T, TReqA, TA>(
     pipedObservable,
   );
 };
+
+export const lift = <TReq, T, TA>(
+  operator: ObservableOperator<T, TA>,
+): AsyncIteratorResourceOperator<TReq, T, TReq, TA> => 
+  liftImpl(operator,undefined);
+
+export const liftReq = <TReq, T, TReqA>(
+  mapper: (req: TReqA) => TReq,
+): AsyncIteratorResourceOperator<TReq, T, TReqA, T> => 
+  liftImpl(undefined, mapper);
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,

@@ -12,13 +12,36 @@
 ### Functions
 
 * [lift](README.md#const-lift)
+* [liftReq](README.md#const-liftreq)
 * [pipe](README.md#pipe)
 
 ## Functions
 
 ### `Const` lift
 
-▸ **lift**<**TReq**, **T**, **TReqA**, **TA**>(`operator?`: ObservableOperator‹T, TA›, `mapper?`: undefined | function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, TA›*
+▸ **lift**<**TReq**, **T**, **TA**>(`operator`: ObservableOperator‹T, TA›): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TA›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+▪ **TA**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`operator` | ObservableOperator‹T, TA› |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TA›*
+
+___
+
+### `Const` liftReq
+
+▸ **liftReq**<**TReq**, **T**, **TReqA**>(`mapper`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, T›*
 
 **Type parameters:**
 
@@ -28,16 +51,19 @@
 
 ▪ **TReqA**
 
-▪ **TA**
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`req`: TReqA): *TReq*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`operator?` | ObservableOperator‹T, TA› |
-`mapper?` | undefined &#124; function |
+`req` | TReqA |
 
-**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, TA›*
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, T›*
 
 ___
 
