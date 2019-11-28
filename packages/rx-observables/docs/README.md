@@ -4,6 +4,10 @@
 
 ## Index
 
+### Interfaces
+
+* [SharedObservableOptions](interfaces/sharedobservableoptions.md)
+
 ### Functions
 
 * [combineLatest](README.md#combinelatest)
@@ -737,7 +741,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
+▸ **share**<**T**>(`options`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -745,10 +749,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`scheduler?` | SchedulerLike |
-`options?` | SchedulerOptions |
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |  {} |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -756,7 +759,7 @@ ___
 
 ### `Const` shareReplay
 
-▸ **shareReplay**<**T**>(`count`: number, `scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
+▸ **shareReplay**<**T**>(`count`: number, `options`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -764,11 +767,10 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`count` | number |
-`scheduler?` | SchedulerLike |
-`options?` | SchedulerOptions |
+Name | Type | Default |
+------ | ------ | ------ |
+`count` | number | - |
+`options` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |  {} |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -776,7 +778,7 @@ ___
 
 ### `Const` shareReplayLast
 
-▸ **shareReplayLast**<**T**>(`scheduler?`: SchedulerLike, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
+▸ **shareReplayLast**<**T**>(`options?`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -786,8 +788,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`scheduler?` | SchedulerLike |
-`options?` | SchedulerOptions |
+`options?` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |
 
 **Returns:** *ObservableOperator‹T, T›*
 

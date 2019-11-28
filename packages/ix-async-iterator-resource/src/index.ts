@@ -300,7 +300,7 @@ export const createStateStore = <T>(
     scan((acc: T, next) => next(acc), initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
-    shareReplayLast(scheduler, schedulerOptions),
+    shareReplayLast({scheduler, ...schedulerOptions}),
   );
 
   subject.add(connect(observable, scheduler));

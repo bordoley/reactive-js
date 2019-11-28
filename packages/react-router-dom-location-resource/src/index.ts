@@ -28,7 +28,7 @@ const getCurrentLocation = (): RelativeURI => {
 
 const operator = (
   setURI: (state: RelativeURI) => void,
-  options?: SchedulerOptions,
+  options: SchedulerOptions = {},
 ) => (obs: ObservableLike<RelativeURI>): ObservableLike<RelativeURI> => {
   const onPopstateUpdateURIObs = pipe(
     fromEvent(window, "popstate", _ => getCurrentLocation(), options),
@@ -48,7 +48,7 @@ const operator = (
 
   return pipe(
     merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs),
-    shareReplayLast(scheduler, options),
+    shareReplayLast({scheduler, ...options}),
   );
 };
 
