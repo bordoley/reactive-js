@@ -53,13 +53,11 @@ const liftImpl = <TReq, T, TReqA, TA>(
 
 export const lift = <TReq, T, TA>(
   operator: ObservableOperator<T, TA>,
-): AsyncIteratorOperator<TReq, T, TReq, TA> => 
-  liftImpl(operator,undefined);
+): AsyncIteratorOperator<TReq, T, TReq, TA> => liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
   mapper: (req: TReqA) => TReq,
-): AsyncIteratorOperator<TReq, T, TReqA, T> => 
-  liftImpl(undefined, mapper);
+): AsyncIteratorOperator<TReq, T, TReqA, T> => liftImpl(undefined, mapper);
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorLike<TSrcReq, TSrc>,

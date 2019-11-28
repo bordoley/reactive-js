@@ -20,11 +20,7 @@ export { onComplete } from "./internal/onComplete";
 export { onError } from "./internal/onError";
 export { onNext } from "./internal/onNext";
 export { repeat, retry } from "./internal/repeat";
-export {
-  share,
-  shareReplay,
-  shareReplayLast,
-} from "./internal/sharedObservable";
+export { share } from "./internal/sharedObservable";
 export { scan } from "./internal/scan";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";

@@ -12,7 +12,6 @@ import {
   ObserverLike,
 } from "@reactive-js/rx-observer";
 import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
-import { SchedulerOptions } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
@@ -30,10 +29,8 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
 
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
-  private readonly options?: SchedulerOptions;
 
-  constructor(options?: SchedulerOptions) {
-    this.options = options;
+  constructor() {
     this.disposable = createDisposable();
     this.disposable.add(() => {
       this.isCompleted = true;
@@ -93,7 +90,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
       // The idea here is that an onSubscribe function may
       // call onNext from unscheduled sources such as event handlers.
       // So we marshall those events back to the scheduler.
-      const observer = toSafeObserver(subscriber, this.options);
+      const observer = toSafeObserver(subscriber);
       this.onSubscribe(observer);
 
       if (!this.isCompleted) {
@@ -129,8 +126,8 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   private readonly count: number;
   private replayed: Notification<T>[] = [];
 
-  constructor(count: number, options?: SchedulerOptions) {
-    super(options);
+  constructor(count: number) {
+    super();
     this.count = count;
     this.add(() => {
       this.replayed.length = 0;
@@ -161,10 +158,7 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-export const create = <T>(options?: SchedulerOptions): SubjectResourceLike<T> =>
-  new SubjectImpl(options);
+export const create = <T>(): SubjectResourceLike<T> => new SubjectImpl();
 
-export const createWithReplay = <T>(
-  count: number,
-  options?: SchedulerOptions,
-): SubjectResourceLike<T> => new ReplayLastSubjectImpl(count, options);
+export const createWithReplay = <T>(count: number): SubjectResourceLike<T> =>
+  new ReplayLastSubjectImpl(count);

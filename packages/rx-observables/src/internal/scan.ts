@@ -6,9 +6,6 @@ import {
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
-import { concat } from "./concat";
-import { ofValue } from "./fromArray";
-
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private acc: TAcc;
   private scanner: (acc: TAcc, next: T) => TAcc;

@@ -7,7 +7,6 @@ import {
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
-  SchedulerOptions,
 } from "@reactive-js/scheduler";
 
 import { lift, ObservableOperator } from "@reactive-js/rx-observable";
@@ -16,20 +15,13 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly continuation: SchedulerContinuationResult;
   private readonly last: T[] = [];
   private readonly maxCount: number;
-  private readonly options?: SchedulerOptions;
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    maxCount: number,
-    options?: SchedulerOptions,
-  ) {
+  constructor(delegate: SubscriberLike<T>, maxCount: number) {
     super(delegate);
     this.maxCount = maxCount;
-    this.options = options || {};
 
     this.continuation = {
       continuation: this.drainQueue,
-      ...this.options,
     };
   }
 
@@ -37,7 +29,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {
-      this.schedule(this.drainQueue, this.options);
+      this.schedule(this.drainQueue);
     }
   }
 
@@ -66,13 +58,8 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   };
 }
 
-const operator = <T>(
-  count: number,
-  options?: SchedulerOptions,
-): SubscriberOperator<T, T> => subscriber =>
-  new TakeLastSubscriber(subscriber, count, options);
+const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
+  new TakeLastSubscriber(subscriber, count);
 
-export const takeLast = <T>(
-  count: number,
-  options?: SchedulerOptions,
-): ObservableOperator<T, T> => lift(operator(count, options));
+export const takeLast = <T>(count: number): ObservableOperator<T, T> =>
+  lift(operator(count));

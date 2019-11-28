@@ -3,7 +3,6 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   SchedulerContinuation,
   SchedulerLike,
-  SchedulerOptions,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
@@ -90,12 +89,9 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
 
   schedule(
     continuation: SchedulerContinuation,
-    options?: SchedulerOptions,
+    delay?: number,
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(
-      continuation,
-      options,
-    );
+    const schedulerSubscription = this.scheduler.schedule(continuation, delay);
     this.add(schedulerSubscription);
     schedulerSubscription.add(() => this.remove(schedulerSubscription));
     return schedulerSubscription;

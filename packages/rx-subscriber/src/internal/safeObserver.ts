@@ -3,7 +3,6 @@ import { ObserverLike } from "@reactive-js/rx-observer";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
-  SchedulerOptions,
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./subscriber";
 
@@ -16,16 +15,13 @@ class SafeObserver<T> implements ObserverLike<T> {
 
   private isComplete = false;
   private readonly nextQueue: Array<T> = [];
-  private readonly options?: SchedulerOptions;
   private readonly subscriber: SubscriberLike<T>;
 
-  constructor(subscriber: SubscriberLike<T>, options?: SchedulerOptions) {
+  constructor(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    this.options = options;
 
     this.continuation = {
       continuation: this.drainQueue,
-      ...options,
     };
 
     this.subscriber.add(this.clearQueue);
@@ -71,7 +67,7 @@ class SafeObserver<T> implements ObserverLike<T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.subscriber.schedule(this.drainQueue, this.options);
+      this.subscriber.schedule(this.drainQueue);
     }
   }
 }
@@ -82,9 +78,7 @@ class SafeObserver<T> implements ObserverLike<T> {
  * the subscriber on it's scheduler.
  *
  * @param subscriber
- * @param options
  */
 export const toSafeObserver = <T>(
   subscriber: SubscriberLike<T>,
-  options?: SchedulerOptions,
-): ObserverLike<T> => new SafeObserver(subscriber, options);
+): ObserverLike<T> => new SafeObserver(subscriber);

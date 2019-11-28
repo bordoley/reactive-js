@@ -15,11 +15,7 @@ import {
 
 import { ObserverLike } from "@reactive-js/rx-observer";
 
-import {
-  getDefaultScheduler,
-  SchedulerLike,
-  SchedulerOptions,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
  * The source of notifications which may be observed by a SubscriberLike instance.
@@ -29,15 +25,14 @@ export interface ObservableLike<T> {
 }
 
 /**
- * Safely connects an ObservableLike to a SubscriberLike, optionally
- * using the provided scheduler, otherwise falling back to the default
- * scheduler. The returned DisposableLike may used to cancel the subscription.
+ * Safely connects an ObservableLike to a SubscriberLike,
+ * using the provided scheduler. The returned DisposableLike
+ * may used to cancel the subscription.
  */
 export const connect = <T>(
   observable: ObservableLike<T>,
-  scheduler?: SchedulerLike,
+  scheduler: SchedulerLike,
 ): DisposableLike => {
-  scheduler = scheduler || getDefaultScheduler();
   const subscription = createDisposable();
   const subscriber = createAutoDisposing(scheduler, subscription);
   observable.subscribe(subscriber);
@@ -180,17 +175,15 @@ export function pipe(
  * the onSubscribe function.
  *
  * @param onSubscribe
- * @param options
  */
 export const create = <T>(
   onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
-  options?: SchedulerOptions,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     // The idea here is that an onSubscribe function may
     // call onNext from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const observer = toSafeObserver(subscriber, options);
+    const observer = toSafeObserver(subscriber);
 
     try {
       const onSubscribeSubscription = onSubscribe(observer);

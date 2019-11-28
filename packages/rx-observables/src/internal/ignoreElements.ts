@@ -1,7 +1,6 @@
 import {
   DelegatingSubscriber,
   SubscriberLike,
-  SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
 
 import { lift, ObservableOperator } from "@reactive-js/rx-observable";
@@ -11,7 +10,7 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
     super(delegate);
   }
 
-  onNext(data: TA) {}
+  onNext(_: TA) {}
 
   protected onComplete(error?: Error) {
     this.delegate.complete(error);

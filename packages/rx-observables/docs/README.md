@@ -4,10 +4,6 @@
 
 ## Index
 
-### Interfaces
-
-* [SharedObservableOptions](interfaces/sharedobservableoptions.md)
-
 ### Functions
 
 * [combineLatest](README.md#combinelatest)
@@ -35,8 +31,6 @@
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
 * [share](README.md#const-share)
-* [shareReplay](README.md#const-sharereplay)
-* [shareReplayLast](README.md#const-sharereplaylast)
 * [startWith](README.md#startwith)
 * [switchAll](README.md#const-switchall)
 * [take](README.md#const-take)
@@ -329,7 +323,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`options?`: SchedulerOptions): *ObservableLike‹T›*
+▸ **empty**<**T**>(`delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -339,7 +333,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`options?` | SchedulerOptions |
+`delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -359,7 +353,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `options`: SchedulerOptions): *ObservableLike‹T›*
+▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -370,7 +364,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `values` | ReadonlyArray‹T› | - |
-`options` | SchedulerOptions |  {} |
+`delay` | number | 0 |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -378,7 +372,7 @@ ___
 
 ### `Const` fromPromiseFactory
 
-▸ **fromPromiseFactory**<**T**>(`factory`: function, `options?`: SchedulerOptions): *ObservableLike‹T›*
+▸ **fromPromiseFactory**<**T**>(`factory`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -390,15 +384,13 @@ ___
 
 ▸ (): *Promise‹T›*
 
-▪`Optional`  **options**: *SchedulerOptions*
-
 **Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` fromScheduledValues
 
-▸ **fromScheduledValues**<**T**>(`value`: [number | undefined, number | undefined, T], ...`values`: Array‹[number | undefined, number | undefined, T]›): *ObservableLike‹T›*
+▸ **fromScheduledValues**<**T**>(`value`: [number | undefined, T], ...`values`: Array‹[number | undefined, T]›): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -408,8 +400,8 @@ ___
 
 Name | Type |
 ------ | ------ |
-`value` | [number &#124; undefined, number &#124; undefined, T] |
-`...values` | Array‹[number &#124; undefined, number &#124; undefined, T]› |
+`value` | [number &#124; undefined, T] |
+`...values` | Array‹[number &#124; undefined, T]› |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -417,7 +409,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `options`: SchedulerOptions): *ObservableLike‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -437,7 +429,7 @@ Name | Type |
 
 ▪ **initialValue**: *T*
 
-▪`Default value`  **options**: *SchedulerOptions*=  {}
+▪`Default value`  **delay**: *number*= 0
 
 **Returns:** *ObservableLike‹T›*
 
@@ -579,7 +571,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T, `options?`: SchedulerOptions): *ObservableLike‹T›*
+▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -590,7 +582,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
-`options?` | SchedulerOptions |
+`delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -741,7 +733,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`options`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -751,44 +743,8 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`options` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |  {} |
-
-**Returns:** *ObservableOperator‹T, T›*
-
-___
-
-### `Const` shareReplay
-
-▸ **shareReplay**<**T**>(`count`: number, `options`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`count` | number | - |
-`options` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |  {} |
-
-**Returns:** *ObservableOperator‹T, T›*
-
-___
-
-### `Const` shareReplayLast
-
-▸ **shareReplayLast**<**T**>(`options?`: [SharedObservableOptions](interfaces/sharedobservableoptions.md)): *ObservableOperator‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`options?` | [SharedObservableOptions](interfaces/sharedobservableoptions.md) |
+`scheduler` | SchedulerLike | - |
+`replayCount` | number | 0 |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -845,7 +801,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -856,7 +812,6 @@ ___
 Name | Type |
 ------ | ------ |
 `count` | number |
-`options?` | SchedulerOptions |
 
 **Returns:** *ObservableOperator‹T, T›*
 
@@ -864,7 +819,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `options?`: SchedulerOptions): *ObservableLike‹T›*
+▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -875,7 +830,7 @@ ___
 Name | Type |
 ------ | ------ |
 `error` | Error |
-`options?` | SchedulerOptions |
+`delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
 
@@ -883,7 +838,7 @@ ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler?`: SchedulerLike): *Promise‹T›*
+▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *Promise‹T›*
 
 **Type parameters:**
 
@@ -894,7 +849,7 @@ ___
 Name | Type |
 ------ | ------ |
 `observable` | ObservableLike‹T› |
-`scheduler?` | SchedulerLike |
+`scheduler` | SchedulerLike |
 
 **Returns:** *Promise‹T›*
 

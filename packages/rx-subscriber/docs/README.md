@@ -331,7 +331,7 @@ ___
 
 ### `Const` toSafeObserver
 
-▸ **toSafeObserver**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›, `options?`: SchedulerOptions): *ObserverLike‹T›*
+▸ **toSafeObserver**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *ObserverLike‹T›*
 
 Returns an observer that may be safely notified from any context.
 The underlying implementation queues notifications and notifies
@@ -345,7 +345,6 @@ the subscriber on it's scheduler.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› | - |
-`options?` | SchedulerOptions |   |
+`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |   |
 
 **Returns:** *ObserverLike‹T›*

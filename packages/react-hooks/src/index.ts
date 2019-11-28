@@ -1,7 +1,7 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
-import { scheduler } from "@reactive-js/react-scheduler";
+import { normalPriority } from "@reactive-js/react-scheduler";
 import {
   connect,
   ObservableLike,
@@ -9,6 +9,7 @@ import {
   pipe,
 } from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useDispose = (disposable: DisposableLike) => {
@@ -45,6 +46,7 @@ const makeObservable = <T>(
 export const useObservable = <T>(
   factory: () => ObservableLike<T>,
   deps: readonly any[] | undefined,
+  scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
   const [error, updateError] = useState<Error | undefined>(undefined);
@@ -67,29 +69,36 @@ export const useObservable = <T>(
 export const useObservableResource = <T>(
   factory: () => ObservableResourceLike<T>,
   deps: readonly any[] | undefined,
+  scheduler?: SchedulerLike,
 ): T | undefined => {
   const observableResource = useMemo(factory, deps);
   useDispose(observableResource);
-  return useObservable(() => observableResource, [observableResource]);
+  return useObservable(
+    () => observableResource,
+    [observableResource],
+    scheduler,
+  );
 };
 
 export const useAsyncIterator = <TReq, T>(
   factory: () => AsyncIteratorLike<TReq, T>,
   deps: readonly any[] | undefined,
+  scheduler?: SchedulerLike,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useMemo(factory, deps);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
-  const value = useObservable(() => iterator, [iterator]);
+  const value = useObservable(() => iterator, [iterator], scheduler);
   return [value, dispatch];
 };
 
 export const useAsyncIteratorResource = <TReq, T>(
   factory: () => AsyncIteratorResourceLike<TReq, T>,
   deps: readonly any[] | undefined,
+  scheduler?: SchedulerLike,
 ): [T | undefined, (req: TReq) => void] => {
   const iterator = useMemo(factory, deps);
   useDispose(iterator);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
-  const value = useObservable(() => iterator, [iterator]);
+  const value = useObservable(() => iterator, [iterator], scheduler);
   return [value, dispatch];
 };
