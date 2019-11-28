@@ -279,14 +279,16 @@ export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
+export interface StateStoreOptions<T> {
+  readonly delay?: number;
+  readonly equals?: (a: T, b: T) => boolean;
+  readonly priority?: number;
+  readonly scheduler?: SchedulerLike;
+}
+
 export const createStateStore = <T>(
   initialState: T,
-  options: {
-    equals?: (a: T, b: T) => boolean;
-    scheduler?: SchedulerLike;
-    delay?: number;
-    priority?: number;
-  } = {},
+  options: StateStoreOptions<T> = {},
 ): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
   const { equals, scheduler, ...schedulerOptions } = options;
   const subject: SubjectResourceLike<StateUpdater<T>> = createSubject(

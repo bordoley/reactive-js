@@ -8,6 +8,7 @@
 
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)
+* [StateStoreOptions](interfaces/statestoreoptions.md)
 * [StateUpdater](interfaces/stateupdater.md)
 
 ### Functions
@@ -39,7 +40,7 @@ ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: T, `options`: object): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: T, `options`: [StateStoreOptions](interfaces/statestoreoptions.md)‹T›): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -50,7 +51,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `initialState` | T | - |
-`options` | object |  {} |
+`options` | [StateStoreOptions](interfaces/statestoreoptions.md)‹T› |  {} |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
 
