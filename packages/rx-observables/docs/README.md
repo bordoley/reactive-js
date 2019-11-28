@@ -844,7 +844,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number, `priority?`: undefined | number): *ObservableOperator‹T, T›*
+▸ **takeLast**<**T**>(`count`: number, `options?`: SchedulerOptions): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -855,7 +855,7 @@ ___
 Name | Type |
 ------ | ------ |
 `count` | number |
-`priority?` | undefined &#124; number |
+`options?` | SchedulerOptions |
 
 **Returns:** *ObservableOperator‹T, T›*
 
