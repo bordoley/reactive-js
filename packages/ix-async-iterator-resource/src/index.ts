@@ -279,7 +279,7 @@ export interface StateUpdater<T> {
   (oldState: T): T;
 }
 
-export interface StateStoreOptions<T> {
+export interface StateStoreOptions<T> extends SchedulerOptions {
   readonly delay?: number;
   readonly equals?: (a: T, b: T) => boolean;
   readonly priority?: number;

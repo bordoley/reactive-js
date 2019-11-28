@@ -8,7 +8,9 @@
 
 ## Hierarchy
 
-* **StateStoreOptions**
+* SchedulerOptions
+
+  ↳ **StateStoreOptions**
 
 ## Index
 
@@ -25,6 +27,8 @@
 
 • **delay**? : *undefined | number*
 
+*Overrides void*
+
 ___
 
 ### `Optional` equals
@@ -36,6 +40,8 @@ ___
 ### `Optional` priority
 
 • **priority**? : *undefined | number*
+
+*Overrides void*
 
 ___
 
