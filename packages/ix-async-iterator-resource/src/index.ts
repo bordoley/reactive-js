@@ -281,18 +281,24 @@ export interface StateUpdater<T> {
 
 export const createStateStore = <T>(
   initialState: T,
-  equals?: (a: T, b: T) => boolean,
-  scheduler?: SchedulerLike,
-  options?: SchedulerOptions,
+  options: {
+    equals?: (a: T, b: T) => boolean;
+    scheduler?: SchedulerLike;
+    delay?: number;
+    priority?: number;
+  } = {},
 ): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
-  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject(options);
+  const { equals, scheduler, ...schedulerOptions } = options;
+  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject(
+    schedulerOptions,
+  );
   const dispatcher = (req: StateUpdater<T>) => subject.next(req);
   const observable = observablePipe(
     subject,
     scan((acc: T, next) => next(acc), initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
-    shareReplayLast(scheduler, options),
+    shareReplayLast(scheduler, schedulerOptions),
   );
 
   subject.add(connect(observable, scheduler));

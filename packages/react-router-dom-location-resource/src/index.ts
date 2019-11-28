@@ -53,12 +53,11 @@ const operator = (
 };
 
 export const create = (options?: SchedulerOptions) => {
-  const stateStore = createStateStore(
-    getCurrentLocation(),
-    relativeURIEquals,
+  const stateStore = createStateStore(getCurrentLocation(), {
+    equals: relativeURIEquals,
     scheduler,
-    options,
-  );
+    ...options,
+  });
 
   const setURI = (uri: RelativeURI) => stateStore.dispatch(_ => uri);
 
