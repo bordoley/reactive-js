@@ -12,7 +12,7 @@
 
 ### `Const` create
 
-▸ **create**(`options?`: SchedulerOptions): *AsyncIteratorResourceLike‹unknown, RelativeURI›*
+▸ **create**(`options?`: SchedulerOptions): *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
 
 **Parameters:**
 
@@ -20,4 +20,4 @@ Name | Type |
 ------ | ------ |
 `options?` | SchedulerOptions |
 
-**Returns:** *AsyncIteratorResourceLike‹unknown, RelativeURI›*
+**Returns:** *AsyncIteratorResourceLike‹StateUpdater‹RelativeURI›, RelativeURI›*
