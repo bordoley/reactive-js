@@ -89,14 +89,12 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay?: number,
-    priority?: number,
+    config?: {
+      delay?: number;
+      priority?: number;
+    },
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(
-      continuation,
-      delay,
-      priority,
-    );
+    const schedulerSubscription = this.scheduler.schedule(continuation, config);
     this.add(schedulerSubscription);
     schedulerSubscription.add(() => this.remove(schedulerSubscription));
     return schedulerSubscription;

@@ -10,9 +10,13 @@ import {
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: T,
-  delay: number = 0,
-  priority?: number,
+  config: {
+    delay?: number;
+    priority?: number;
+  } = {},
 ): ObservableLike<T> => {
+  const { delay = 0, priority } = config;
+
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let acc = initialValue;
 
@@ -52,7 +56,7 @@ export const generate = <T>(
 
     continuationResult = { continuation, delay, priority };
 
-    subscriber.schedule(continuation, delay, priority);
+    subscriber.schedule(continuation, config);
   };
 
   return { subscribe };

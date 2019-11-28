@@ -8,7 +8,13 @@ import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
 import { connect, pipe } from "@reactive-js/rx-observable";
-import { onNext, exhaust, fromArray, generate, map } from "@reactive-js/rx-observables";
+import {
+  onNext,
+  exhaust,
+  fromArray,
+  generate,
+  map,
+} from "@reactive-js/rx-observables";
 import { useObservable } from "@reactive-js/react-hooks";
 
 registerDefaultScheduler(scheduler);
@@ -40,15 +46,17 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const src = generate(x => x + 1, 0, undefined, 5);
+const src = generate(x => x + 1, 0, { priority: 5 });
 
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(() => src, []);
 
-  return <>
-    <div>{props.uri.path}</div>
-    <div>{value}</div>
-  </>
+  return (
+    <>
+      <div>{props.uri.path}</div>
+      <div>{value}</div>
+    </>
+  );
 };
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
@@ -65,10 +73,11 @@ render(
   document.getElementById("root") as HTMLElement,
 );
 
-
-connect(pipe(
-  generate(x => x + 1, 0, undefined, 5),
-  map(x => fromArray([x, x, x, x])),
-  exhaust(),
-  onNext(console.log),
-));
+connect(
+  pipe(
+    generate(x => x + 1, 0, { priority: 5 }),
+    map(x => fromArray([x, x, x, x])),
+    exhaust(),
+    onNext(console.log),
+  ),
+);

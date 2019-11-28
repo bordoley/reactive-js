@@ -98,12 +98,15 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number = 0,
-    _priority?: number,
+    config: {
+      delay?: number;
+      priority?: number;
+    } = {},
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
     const disposable = createDisposable();
+    const { delay = 0, priority } = config;
 
     const ctx = {
       continuation,

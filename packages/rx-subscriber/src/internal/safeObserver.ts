@@ -70,7 +70,10 @@ class SafeObserver<T> implements ObserverLike<T> {
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.subscriber.schedule(this.drainQueue, 0, this.priority);
+      this.subscriber.schedule(this.drainQueue, {
+        delay: 0,
+        priority: this.priority,
+      });
     }
   }
 }

@@ -70,14 +70,17 @@ class EventLoopSchedulerImpl implements SchedulerResourceLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay: number = 0,
-    _priority?: number,
+    config: {
+      delay?: number;
+      priority?: number;
+    } = {},
   ): DisposableLike {
     throwIfDisposed(this.disposable);
 
     const disposable = createSerialDisposable();
     const shouldYield = (): boolean =>
       disposable.isDisposed || this.startTime + this.timeout < this.now;
+    const { delay = 0 } = config;
 
     const ctx = {
       continuation,
