@@ -1,12 +1,9 @@
-import {
-  connect,
-  create,
-  ObservableLike,
-  observe,
-  pipe,
-} from "@reactive-js/rx-observable";
 import { ObserverLike } from "@reactive-js/rx-observer";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { connect } from "./connect";
+import { create } from "./create";
+import { ObservableLike, pipe } from "./observable";
+import { observe } from "./observe";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,

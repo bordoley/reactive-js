@@ -1,11 +1,12 @@
-import { connect, pipe } from "@reactive-js/rx-observable";
 import {
+  connect,
   exhaust,
   fromArray,
   generate,
   map,
   onNext,
-} from "@reactive-js/rx-observables";
+  pipe,
+} from "@reactive-js/rx-observable";
 
 import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 

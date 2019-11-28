@@ -1,10 +1,19 @@
-import { connect, observe, pipe } from "@reactive-js/rx-observable";
+import { disposed } from "@reactive-js/disposable";
+import {
+  concat,
+  connect,
+  empty,
+  fromScheduledValues,
+  observe,
+  pipe,
+} from "@reactive-js/rx-observable";
+import { ObserverLike } from "@reactive-js/rx-observer";
 import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
-import { createWithReplay } from "../src/index";
+import { create, share } from "../src/index";
 
-describe("replay", () => {
+describe("create", () => {
   test("when subject is completed", () => {
-    const subject = createWithReplay(2);
+    const subject = create(2);
 
     subject.next(1);
     subject.next(2);
@@ -23,7 +32,7 @@ describe("replay", () => {
     expect(observer.complete).toHaveBeenCalled();
   });
   test("when subject is not completed", () => {
-    const subject = createWithReplay(2);
+    const subject = create(2);
 
     subject.next(1);
     subject.next(2);
@@ -48,7 +57,7 @@ describe("replay", () => {
   });
 
   test("subscribe and dispose the subscription remove the observer", () => {
-    const subject = createWithReplay(2);
+    const subject = create(2);
 
     subject.next(1);
     subject.next(2);
@@ -66,4 +75,51 @@ describe("replay", () => {
 
     expect(observer.next).toHaveBeenCalledTimes(0);
   });
+});
+
+const createMockObserver = <T>(): ObserverLike<T> => ({
+  next: jest.fn(),
+  complete: jest.fn(),
+});
+
+test("share", () => {
+  const scheduler = createVirtualTimeScheduler();
+
+  const replayed = pipe(
+    concat(fromScheduledValues([, 0], [, 1], [, 2]), empty(2)),
+    share(scheduler, 1),
+  );
+  const replayedSubscription = connect(replayed, scheduler);
+
+  const liftedObserver = createMockObserver();
+  let liftedSubscription = disposed;
+  scheduler.schedule(_ => {
+    liftedSubscription = connect(
+      pipe(replayed, observe(liftedObserver)),
+      scheduler,
+    );
+  }, 1);
+
+  const anotherLiftedSubscriptionObserver = createMockObserver();
+  let anotherLiftedSubscription = disposed;
+  scheduler.schedule(_ => {
+    replayedSubscription.dispose();
+    liftedSubscription.dispose();
+
+    anotherLiftedSubscription = connect(
+      pipe(replayed, observe(anotherLiftedSubscriptionObserver)),
+      scheduler,
+    );
+  }, 3);
+
+  scheduler.run();
+
+  anotherLiftedSubscription.dispose();
+
+  expect(liftedObserver.next).toBeCalledTimes(1);
+  expect(liftedObserver.next).toBeCalledWith(2);
+  expect(liftedObserver.complete).toBeCalledTimes(1);
+
+  expect(anotherLiftedSubscriptionObserver.next).toBeCalledTimes(3);
+  expect(anotherLiftedSubscriptionObserver.complete).toBeCalledTimes(1);
 });

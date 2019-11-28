@@ -2,8 +2,15 @@ import {
   create as createDisposable,
   DisposableLike,
   DisposableOrTeardown,
+  disposed,
 } from "@reactive-js/disposable";
-import { ObservableLike } from "@reactive-js/rx-observable";
+import {
+  connect,
+  ObservableLike,
+  ObservableOperator,
+  observe,
+  pipe,
+} from "@reactive-js/rx-observable";
 import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
 import {
   Notification,
@@ -12,6 +19,7 @@ import {
   ObserverLike,
 } from "@reactive-js/rx-observer";
 import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
@@ -158,7 +166,66 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-export const create = <T>(): SubjectResourceLike<T> => new SubjectImpl();
+export const create = <T>(count: number = 0): SubjectResourceLike<T> =>
+  count > 0 ? new ReplayLastSubjectImpl(count) : new SubjectImpl();
 
-export const createWithReplay = <T>(count: number): SubjectResourceLike<T> =>
-  new ReplayLastSubjectImpl(count);
+class SharedObservable<T> implements ObservableLike<T> {
+  private readonly factory: () => SubjectResourceLike<T>;
+
+  private refCount: number = 0;
+  private readonly scheduler: SchedulerLike;
+  private readonly source: ObservableLike<T>;
+  private sourceSubscription = disposed;
+  private subject?: SubjectResourceLike<T>;
+
+  private readonly teardown: () => void;
+
+  constructor(
+    factory: () => SubjectResourceLike<T>,
+    source: ObservableLike<T>,
+    scheduler: SchedulerLike,
+  ) {
+    this.factory = factory;
+    this.source = source;
+    this.scheduler = scheduler;
+
+    this.teardown = () => {
+      this.refCount--;
+
+      if (this.refCount === 0) {
+        this.sourceSubscription.dispose();
+        this.sourceSubscription = disposed;
+        (this.subject as SubjectResourceLike<T>).dispose();
+        this.subject = undefined;
+      }
+    };
+  }
+
+  subscribe(subscriber: SubscriberLike<T>): void {
+    if (this.refCount === 0) {
+      this.subject = this.factory();
+      this.sourceSubscription = connect(
+        pipe(this.source, observe(this.subject)),
+        this.scheduler,
+      );
+    }
+    this.refCount++;
+
+    const subject = this.subject as SubjectResourceLike<T>;
+
+    const innerSubscription = connect(
+      pipe(subject, observe(subscriber)),
+      subscriber,
+    );
+
+    subscriber.add(this.teardown, innerSubscription);
+  }
+}
+
+export const share = <T>(
+  scheduler: SchedulerLike,
+  replayCount: number = 0,
+): ObservableOperator<T, T> => {
+  const factory = () => create(replayCount);
+  return observable => new SharedObservable(factory, observable, scheduler);
+};

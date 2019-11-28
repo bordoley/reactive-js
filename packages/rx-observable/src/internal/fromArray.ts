@@ -1,9 +1,9 @@
-import { ObservableLike } from "@reactive-js/rx-observable";
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
+import { ObservableLike } from "./observable";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,

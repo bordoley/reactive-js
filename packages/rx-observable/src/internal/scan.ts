@@ -1,10 +1,10 @@
-import { lift, ObservableOperator } from "@reactive-js/rx-observable";
-
 import {
   DelegatingSubscriber,
   SubscriberLike,
   SubscriberOperator,
 } from "@reactive-js/rx-subscriber";
+import { lift } from "./lift";
+import { ObservableOperator } from "./observable";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private acc: TAcc;

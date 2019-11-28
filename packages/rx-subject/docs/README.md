@@ -12,25 +12,13 @@
 ### Functions
 
 * [create](README.md#const-create)
-* [createWithReplay](README.md#const-createwithreplay)
+* [share](README.md#const-share)
 
 ## Functions
 
 ### `Const` create
 
-▸ **create**<**T**>(): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
-
-___
-
-### `Const` createWithReplay
-
-▸ **createWithReplay**<**T**>(`count`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **create**<**T**>(`count`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -38,8 +26,27 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`count` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`count` | number | 0 |
 
 **Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+
+___
+
+### `Const` share
+
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *ObservableOperator‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`scheduler` | SchedulerLike | - |
+`replayCount` | number | 0 |
+
+**Returns:** *ObservableOperator‹T, T›*

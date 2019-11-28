@@ -9,14 +9,15 @@ import {
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { ObservableLike, pipe } from "@reactive-js/rx-observable";
 import {
   ignoreElements,
   keep,
   merge,
+  ObservableLike,
   onNext,
-  share,
-} from "@reactive-js/rx-observables";
+  pipe,
+} from "@reactive-js/rx-observable";
+import { share } from "@reactive-js/rx-subject";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 const getCurrentLocation = (): RelativeURI => {

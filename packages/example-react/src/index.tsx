@@ -3,7 +3,7 @@ import { useObservable } from "@reactive-js/react-hooks";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { create as createLocationResource } from "@reactive-js/react-router-dom-location-resource";
 import { RelativeURI } from "@reactive-js/react-router-relative-uri";
-import { generate } from "@reactive-js/rx-observables";
+import { generate } from "@reactive-js/rx-observable";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
