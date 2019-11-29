@@ -1,10 +1,6 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import {
-  SchedulerContinuation,
-  SchedulerLike,
-  SchedulerResourceLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuation, SchedulerContinuationResult, SchedulerLike, SchedulerResourceLike } from "@reactive-js/scheduler";
 
 /**
  * A SubscriberLike represents the underlying mechanism for receiving notifications from
@@ -23,25 +19,6 @@ export interface SubscriberLike<T>
     SchedulerResourceLike {
   /** Returns true if the subscriber is connected. */
   readonly isConnected: boolean;
-}
-
-/**
- * A SubscriberLike that can have it's connected state set.
- *
- * @noInheritDoc
- */
-export interface ConnectableSubscriberLike<T> extends SubscriberLike<T> {
-  /**
-   * Set the connected state of the subscriber to true.
-   */
-  connect(): void;
-}
-
-/**
- * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
- */
-export interface SubscriberOperator<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
 /** @ignore */
@@ -108,3 +85,81 @@ export const checkState = <T>(subscriber: SubscriberLike<T>) => {
     throw new Error("Attempted to notify subscriber before it is connected");
   }
 };
+
+class SafeObserver<T> implements ObserverLike<T> {
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  }
+  private readonly continuation: SchedulerContinuationResult;
+  private error: Error | undefined;
+
+  private isComplete = false;
+  private readonly nextQueue: Array<T> = [];
+  private readonly subscriber: SubscriberLike<T>;
+
+  constructor(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+
+    this.continuation = {
+      continuation: this.drainQueue,
+    };
+
+    this.subscriber.add(this.clearQueue);
+  }
+
+  complete(error?: Error) {
+    if (!this.isComplete) {
+      this.isComplete = true;
+      this.error = error;
+      this.scheduleDrainQueue();
+    }
+  }
+
+  next(data: T) {
+    if (!this.isComplete) {
+      this.nextQueue.push(data);
+      this.scheduleDrainQueue();
+    }
+  }
+  private readonly clearQueue: DisposableOrTeardown = () => {
+    this.nextQueue.length = 0;
+  };
+
+  private readonly drainQueue: SchedulerContinuation = shouldYield => {
+    while (this.nextQueue.length > 0) {
+      const next = this.nextQueue.shift() as T;
+      this.subscriber.next(next);
+
+      const yieldRequest = shouldYield();
+      const hasMoreEvents = this.remainingEvents > 0;
+
+      if (yieldRequest && hasMoreEvents) {
+        return this.continuation;
+      }
+    }
+
+    if (this.isComplete) {
+      this.subscriber.remove(this.clearQueue);
+      this.subscriber.complete(this.error);
+    }
+    return;
+  };
+
+  private scheduleDrainQueue() {
+    if (this.remainingEvents === 1) {
+      this.subscriber.schedule(this.drainQueue);
+    }
+  }
+}
+
+/**
+ * Returns an observer that may be safely notified from any context.
+ * The underlying implementation queues notifications and notifies
+ * the subscriber on it's scheduler.
+ *
+ * @param subscriber
+ */
+export const toSafeObserver = <T>(
+  subscriber: SubscriberLike<T>,
+): ObserverLike<T> => new SafeObserver(subscriber);
+

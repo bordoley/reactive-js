@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "./subscriber";
 import { ObservableLike } from "./observable";
 
 class NeverObservable<T> implements ObservableLike<T> {

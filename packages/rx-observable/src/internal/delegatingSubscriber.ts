@@ -1,19 +1,9 @@
-import { DisposableLike } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   AbstractSubscriberImpl,
   checkState,
   SubscriberLike,
 } from "./subscriber";
-
-const getSubscriberScheduler = <T>(
-  delegate: SubscriberLike<T>,
-): SchedulerLike => (delegate as any).scheduler || delegate;
-
-const getSubscriberSubscription = <T>(
-  delegate: SubscriberLike<T>,
-): DisposableLike => (delegate as any).subscription || delegate;
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
@@ -37,8 +27,8 @@ export abstract class DelegatingSubscriber<
 
   constructor(delegate: SubscriberLike<TB>) {
     super(
-      getSubscriberScheduler(delegate),
-      getSubscriberSubscription(delegate),
+      (delegate as any).scheduler || delegate,
+      (delegate as any).subscription || delegate,
     );
 
     this.delegate = delegate;

@@ -12,8 +12,8 @@ import {
   share,
   startWith,
   SubjectResourceLike,
+  SubscriberLike,
 } from "@reactive-js/rx-observable";
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */

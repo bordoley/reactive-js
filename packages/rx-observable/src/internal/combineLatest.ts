@@ -1,10 +1,8 @@
 import { ObserverLike } from "@reactive-js/rx-observer";
-
 import { connect } from "./connect";
 import { ObservableLike, pipe } from "./observable";
 import { observe } from "./observe";
-
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "./subscriber";
 
 import {
   create as createDisposable,

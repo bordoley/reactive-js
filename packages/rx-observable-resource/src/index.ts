@@ -1,12 +1,11 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
-
 import {
   ObservableLike,
   ObservableOperator,
   ObservableResourceLike,
   pipe as pipeObservable,
+  SubscriberLike,
 } from "@reactive-js/rx-observable";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {

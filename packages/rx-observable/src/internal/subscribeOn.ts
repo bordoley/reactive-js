@@ -1,4 +1,3 @@
-import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
 import { ObservableOperator, pipe } from "./observable";

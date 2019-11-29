@@ -1,12 +1,9 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import {
-  DelegatingSubscriber,
-  SubscriberLike,
-  SubscriberOperator,
-} from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "./subscriber";
+import { DelegatingSubscriber } from "./delegatingSubscriber";
+import { lift, SubscriberOperator } from "./lift";
 import { connect } from "./connect";
-import { lift } from "./lift";
 import { ObservableLike, ObservableOperator, pipe } from "./observable";
 import { observe } from "./observe";
 

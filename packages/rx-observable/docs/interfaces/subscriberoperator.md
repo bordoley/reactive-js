@@ -1,4 +1,4 @@
-[@reactive-js/rx-subscriber](../README.md) › [SubscriberOperator](subscriberoperator.md)
+[@reactive-js/rx-observable](../README.md) › [SubscriberOperator](subscriberoperator.md)
 
 # Interface: SubscriberOperator <**A, B**>
 

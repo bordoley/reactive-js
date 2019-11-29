@@ -1,6 +1,6 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike, toSafeObserver } from "@reactive-js/rx-subscriber";
+import { SubscriberLike, toSafeObserver } from "./subscriber";
 import { ObservableLike } from "./observable";
 
 /**

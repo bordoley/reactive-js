@@ -2,8 +2,8 @@ import {
   ObservableLike,
   ObservableOperator,
   pipe as observablePipe,
+  SubscriberLike,
 } from "@reactive-js/rx-observable";
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {

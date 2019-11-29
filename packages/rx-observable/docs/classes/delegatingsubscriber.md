@@ -1,4 +1,4 @@
-[@reactive-js/rx-subscriber](../README.md) › [DelegatingSubscriber](delegatingsubscriber.md)
+[@reactive-js/rx-observable](../README.md) › [DelegatingSubscriber](delegatingsubscriber.md)
 
 # Class: DelegatingSubscriber <**TA, TB**>
 
