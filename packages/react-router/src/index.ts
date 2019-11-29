@@ -67,7 +67,7 @@ export const Router = (props: RouterProps) => {
         ),
       ),
     );
-  }, [locationResourceFactory, routes]);
+  }, [locationResourceFactory, notFound, routes]);
 
   return element || null;
 };

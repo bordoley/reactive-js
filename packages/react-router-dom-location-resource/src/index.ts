@@ -14,6 +14,7 @@ import {
   keep,
   merge,
   ObservableLike,
+  ObservableOperator,
   onNext,
   pipe,
 } from "@reactive-js/rx-observable";
@@ -30,7 +31,7 @@ const getCurrentLocation = (): RelativeURI => {
 const operator = (
   setURI: (state: RelativeURI) => void,
   scheduler: SchedulerLike,
-) => (obs: ObservableLike<RelativeURI>): ObservableLike<RelativeURI> => {
+): ObservableOperator<RelativeURI, RelativeURI> => obs => {
   const onPopstateUpdateURIObs = pipe(
     fromEvent(window, "popstate", _ => getCurrentLocation()),
     onNext(setURI),
