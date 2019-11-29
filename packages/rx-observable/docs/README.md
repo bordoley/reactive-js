@@ -27,7 +27,6 @@
 * [keep](README.md#const-keep)
 * [lift](README.md#const-lift)
 * [map](README.md#const-map)
-* [mapTo](README.md#const-mapto)
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
@@ -582,26 +581,6 @@ ___
 Name | Type |
 ------ | ------ |
 `data` | TA |
-
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
-
-___
-
-### `Const` mapTo
-
-▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | TB |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 

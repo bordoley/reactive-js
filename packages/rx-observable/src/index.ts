@@ -20,7 +20,7 @@ export { fromPromiseFactory, toPromise } from "./internal/promise";
 export { generate } from "./internal/generate";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
-export { map, mapTo } from "./internal/map";
+export { map } from "./internal/map";
 export { merge } from "./internal/merge";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
