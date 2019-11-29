@@ -1,7 +1,6 @@
 import { create as createDisposable, disposed } from "@reactive-js/disposable";
 import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
 import {
   combineLatest,
@@ -30,6 +29,7 @@ import {
   pipe,
   scan,
   share,
+  SubscriberLike,
   switchAll,
   take,
   takeLast,

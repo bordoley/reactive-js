@@ -1,6 +1,5 @@
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import { DisposableLike } from "@reactive-js/disposable";
-
+import { SubscriberLike } from "./subscriber";
 
 /**
  * The source of notifications which may be observed by a SubscriberLike instance.

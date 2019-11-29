@@ -1,13 +1,10 @@
-import {
-  DelegatingSubscriber,
-  SubscriberLike,
-  SubscriberOperator,
-} from "@reactive-js/rx-subscriber";
-import { lift } from "./lift";
+import { SubscriberLike } from "./subscriber";
+import { DelegatingSubscriber } from "./delegatingSubscriber";
+import { lift, SubscriberOperator } from "./lift";
 
 class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly predicate: (next: T) => boolean;
-  
+
   constructor(delegate: SubscriberLike<T>, predicate: (next: T) => boolean) {
     super(delegate);
     this.predicate = predicate;
@@ -18,7 +15,7 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onNext(data: T) {
-    if (this.predicate(data)){
+    if (this.predicate(data)) {
       this.delegate.next(data);
     } else {
       this.complete();
@@ -26,7 +23,10 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(predicate: (next: T) => boolean): SubscriberOperator<T, T> => subscriber =>
+const operator = <T>(
+  predicate: (next: T) => boolean,
+): SubscriberOperator<T, T> => subscriber =>
   new TakeWhileSubscriber(subscriber, predicate);
 
-export const takeWhile = <T>(predicate: (next: T) => boolean) => lift(operator(predicate));
+export const takeWhile = <T>(predicate: (next: T) => boolean) =>
+  lift(operator(predicate));

@@ -1,4 +1,4 @@
-[@reactive-js/rx-subscriber](../README.md) › [SubscriberLike](subscriberlike.md)
+[@reactive-js/rx-observable](../README.md) › [SubscriberLike](subscriberlike.md)
 
 # Interface: SubscriberLike <**T**>
 
@@ -23,8 +23,6 @@ for performance reasons).
 * SchedulerResourceLike
 
   ↳ **SubscriberLike**
-
-  ↳ [ConnectableSubscriberLike](connectablesubscriberlike.md)
 
 ## Implemented by
 

@@ -91,7 +91,7 @@ ___
 
 ###  subscribe
 
-▸ **subscribe**(`subscriber`: SubscriberLike‹T›): *void*
+▸ **subscribe**(`subscriber`: [SubscriberLike](subscriberlike.md)‹T›): *void*
 
 *Inherited from [ObservableLike](observablelike.md).[subscribe](observablelike.md#subscribe)*
 
@@ -99,6 +99,6 @@ ___
 
 Name | Type |
 ------ | ------ |
-`subscriber` | SubscriberLike‹T› |
+`subscriber` | [SubscriberLike](subscriberlike.md)‹T› |
 
 **Returns:** *void*

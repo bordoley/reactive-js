@@ -4,6 +4,10 @@
 
 ## Index
 
+### Classes
+
+* [DelegatingSubscriber](classes/delegatingsubscriber.md)
+
 ### Interfaces
 
 * [ObservableLike](interfaces/observablelike.md)
@@ -11,6 +15,8 @@
 * [ObservableResourceLike](interfaces/observableresourcelike.md)
 * [SubjectLike](interfaces/subjectlike.md)
 * [SubjectResourceLike](interfaces/subjectresourcelike.md)
+* [SubscriberLike](interfaces/subscriberlike.md)
+* [SubscriberOperator](interfaces/subscriberoperator.md)
 
 ### Functions
 
@@ -52,6 +58,7 @@
 * [takeWhile](README.md#const-takewhile)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
+* [toSafeObserver](README.md#const-tosafeobserver)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -564,7 +571,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperator](interfaces/subscriberoperator.md)‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
 Converts a SubscriberOperator to an ObservableOperator.
 
@@ -578,7 +585,7 @@ Converts a SubscriberOperator to an ObservableOperator.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`operator` | SubscriberOperator‹TA, TB› |   |
+`operator` | [SubscriberOperator](interfaces/subscriberoperator.md)‹TA, TB› |   |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
 
@@ -1270,6 +1277,28 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *Promise‹T›*
+
+___
+
+### `Const` toSafeObserver
+
+▸ **toSafeObserver**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *ObserverLike‹T›*
+
+Returns an observer that may be safely notified from any context.
+The underlying implementation queues notifications and notifies
+the subscriber on it's scheduler.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |   |
+
+**Returns:** *ObserverLike‹T›*
 
 ___
 

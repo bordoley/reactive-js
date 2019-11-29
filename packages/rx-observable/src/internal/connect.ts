@@ -2,10 +2,42 @@ import {
   create as createDisposable,
   DisposableLike,
 } from "@reactive-js/disposable";
-
-import { createAutoDisposing } from "@reactive-js/rx-subscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike } from "./observable";
+import { AbstractSubscriberImpl, checkState, SubscriberLike } from "./subscriber"
+
+const __DEV__ = process.env.NODE_ENV !== "production";
+
+class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
+  implements SubscriberLike<T> {
+  private _isConnected = false;
+
+  get isConnected() {
+    return this._isConnected;
+  }
+
+  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
+    super(scheduler, subscription);
+  }
+
+  complete(_error?: Error) {
+    if (__DEV__) {
+      checkState(this);
+    }
+
+    this.dispose();
+  }
+
+  connect() {
+    this._isConnected = true;
+  }
+
+  next(data: T) {
+    if (__DEV__) {
+      checkState(this);
+    }
+  }
+}
 
 /**
  * Safely connects an ObservableLike to a SubscriberLike,
@@ -17,7 +49,7 @@ export const connect = <T>(
   scheduler: SchedulerLike,
 ): DisposableLike => {
   const subscription = createDisposable();
-  const subscriber = createAutoDisposing(scheduler, subscription);
+  const subscriber = new AutoDisposingSubscriber(scheduler, subscription);
   observable.subscribe(subscriber);
   subscriber.connect();
   return subscription;

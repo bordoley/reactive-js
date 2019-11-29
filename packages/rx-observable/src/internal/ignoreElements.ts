@@ -1,7 +1,5 @@
-import {
-  DelegatingSubscriber,
-  SubscriberLike,
-} from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "./subscriber";
+import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 import { ObservableOperator } from "./observable";
 

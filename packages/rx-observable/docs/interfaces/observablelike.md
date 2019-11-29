@@ -26,12 +26,12 @@ The source of notifications which may be observed by a SubscriberLike instance.
 
 ###  subscribe
 
-▸ **subscribe**(`subscriber`: SubscriberLike‹T›): *void*
+▸ **subscribe**(`subscriber`: [SubscriberLike](subscriberlike.md)‹T›): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`subscriber` | SubscriberLike‹T› |
+`subscriber` | [SubscriberLike](subscriberlike.md)‹T› |
 
 **Returns:** *void*

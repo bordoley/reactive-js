@@ -1,5 +1,5 @@
 import { disposed } from "@reactive-js/disposable";
-import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { SubscriberLike } from "./subscriber";
 import { connect } from "./connect";
 import { fromArray } from "./fromArray";
 import { ObservableLike, ObservableOperator, pipe } from "./observable";

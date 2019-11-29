@@ -13,7 +13,6 @@ import {
   ignoreElements,
   keep,
   merge,
-  ObservableLike,
   ObservableOperator,
   onNext,
   pipe,
