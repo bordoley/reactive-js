@@ -58,7 +58,6 @@
 * [takeWhile](README.md#const-takewhile)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
-* [toSafeObserver](README.md#const-tosafeobserver)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -1277,28 +1276,6 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *Promise‹T›*
-
-___
-
-### `Const` toSafeObserver
-
-▸ **toSafeObserver**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *ObserverLike‹T›*
-
-Returns an observer that may be safely notified from any context.
-The underlying implementation queues notifications and notifies
-the subscriber on it's scheduler.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |   |
-
-**Returns:** *ObserverLike‹T›*
 
 ___
 

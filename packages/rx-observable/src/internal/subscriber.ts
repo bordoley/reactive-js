@@ -152,13 +152,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 }
 
-/**
- * Returns an observer that may be safely notified from any context.
- * The underlying implementation queues notifications and notifies
- * the subscriber on it's scheduler.
- *
- * @param subscriber
- */
+/** @ignore */
 export const toSafeObserver = <T>(
   subscriber: SubscriberLike<T>,
 ): ObserverLike<T> => new SafeObserver(subscriber);
