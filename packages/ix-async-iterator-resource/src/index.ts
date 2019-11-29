@@ -1,6 +1,10 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
-import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ObservableLike,
+  ObserverLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import {
   concatAll as concatAllObs,
   connect,
@@ -353,11 +357,13 @@ export const mergeAll = <TReq, T>(options?: {
 
 export const observe = <TReq, T>(
   observer: ObserverLike<T>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(observeObs(observer));
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(observeObs(observer));
 
 export const onComplete = <TReq, T>(
   onComplete: (err?: Error) => void,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(onCompleteObs(onComplete));
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(onCompleteObs(onComplete));
 
 export const onError = <TReq, T>(
   onError: (err: Error) => void,
@@ -369,7 +375,8 @@ export const onNext = <TReq, T>(
 
 export const repeat = <TReq, T>(
   predicate?: () => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(repeatObs(predicate));
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(repeatObs(predicate));
 
 export const retry = <TReq, T>(
   predicate?: (error: Error) => boolean,
@@ -395,7 +402,8 @@ export const startWith = <TReq, T>(
 
 export const subscribeOn = <TReq, T>(
   scheduler: SchedulerLike,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(subscribeOnObs(scheduler));
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(subscribeOnObs(scheduler));
 
 export const switchAll = <TReq, T>(): AsyncIteratorResourceOperator<
   TReq,
@@ -414,7 +422,8 @@ export const takeLast = <TReq, T>(
 
 export const takeWhile = <TReq, T>(
   predicate: (next: T) => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(takeWhileObs(predicate));
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(takeWhileObs(predicate));
 
 export const withLatestFrom = <TReq, TA, TB, TC>(
   other: ObservableLike<TB>,
