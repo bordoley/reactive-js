@@ -1,5 +1,5 @@
 import {
-  create as createDisposable,
+  createDisposable,
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";

@@ -1,5 +1,5 @@
 import {
-  create as createDisposable,
+  createDisposable,
   DisposableLike,
 } from "@reactive-js/disposable";
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";

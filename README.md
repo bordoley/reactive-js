@@ -62,7 +62,6 @@ const subscription = connect(observable, normalPriority);
 
 ### Resource Management
 * [@reactive-js/disposable](./packages/disposable/docs)
-* [@reactive-js/serial-disposable](./packages/serial-disposable/docs)
 
 ### React JS Integration
 * [@reactive-js/react-hooks](./packages/react-hooks/docs)

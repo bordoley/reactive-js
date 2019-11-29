@@ -1,4 +1,4 @@
-import { create, disposed, throwIfDisposed } from "../src/index";
+import { createDisposable, createSerialDisposable, disposed, throwIfDisposed } from "../src/index";
 
 test("throwIfDisposed", () => {
   expect(() => throwIfDisposed(disposed)).toThrow();
@@ -6,16 +6,16 @@ test("throwIfDisposed", () => {
 
 describe("Disposable", () => {
   test("create", () => {
-    const disposable = create();
+    const disposable = createDisposable();
     expect(disposable.isDisposed).toBeFalsy();
     disposable.dispose();
     expect(disposable.isDisposed).toBeTruthy();
   });
 
   test("add", () => {
-    const disposable = create();
+    const disposable = createDisposable();
 
-    const children = [create(), create(), create(), create()];
+    const children = [createDisposable(), createDisposable(), createDisposable(), createDisposable()];
 
     for (let child of children) {
       disposable.add(child);
@@ -31,14 +31,14 @@ describe("Disposable", () => {
       expect(child.isDisposed).toBeTruthy();
     }
 
-    const anotherDisposable = create();
+    const anotherDisposable = createDisposable();
     disposable.add(anotherDisposable);
     expect(anotherDisposable.isDisposed).toBeTruthy();
   });
 
   test("remove", () => {
-    const disposable = create();
-    const child = create();
+    const disposable = createDisposable();
+    const child = createDisposable();
 
     disposable.add(child);
     disposable.remove(child);
@@ -50,10 +50,41 @@ describe("Disposable", () => {
   });
 
   test("dispose when teardown throws an exception", () => {
-    const disposable = create();
+    const disposable = createDisposable();
     disposable.add(() => {
       throw new Error();
     });
     disposable.dispose();
+  });
+});
+
+
+describe("SerialDisposable", () => {
+  test("create", () => {
+    const serialDisposable = createSerialDisposable();
+    expect(serialDisposable.isDisposed).toBeFalsy();
+    serialDisposable.dispose();
+    expect(serialDisposable.isDisposed).toBeTruthy();
+  });
+
+  test("set disposable", () => {
+    const serialDisposable = createSerialDisposable();
+    const disposable = createDisposable();
+
+    serialDisposable.disposable = disposable;
+    expect(serialDisposable.disposable).toEqual(disposable);
+
+    const anotherDisposable = createDisposable();
+    serialDisposable.disposable = anotherDisposable;
+    expect(serialDisposable.disposable).toEqual(anotherDisposable);
+    expect(disposable.isDisposed).toBeTruthy();
+
+    expect(anotherDisposable.isDisposed).toBeFalsy();
+    serialDisposable.dispose();
+    expect(anotherDisposable.isDisposed).toBeTruthy();
+
+    const yetAnotherDisposable = createDisposable();
+    serialDisposable.disposable = yetAnotherDisposable;
+    expect(yetAnotherDisposable.isDisposed).toBeTruthy();
   });
 });
