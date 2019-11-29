@@ -43,26 +43,26 @@ const subscription = connect(observable, normalPriority);
 
 ## Packages
 
-### Core
-* [@reactive-js/disposable](./packages/disposable/docs)
-* [@reactive-js/serial-disposable](./packages/serial-disposable/docs)
-* [@reactive-js/scheduler](./packages/scheduler/docs)
-
-### Reactive Programming (RX)
+### Reactive Asynchronous Programming (RX)
 * [@reactive-js/rx-core](./packages/rx-core/docs)
 * [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
 * [@reactive-js/rx-observable](./packages/rx-observable/docs)
 
-### Asynchronous Interactive Programming (IX)
+### Interactive Asynchronous Programming (IX)
 * [@reactive-js/ix-core](./packages/ix-core/docs)
 * [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
 * [@reactive-js/ix-async-iterator](./packages/ix-async-iterator/docs)
 
 ### Schedulers
+* [@reactive-js/scheduler](./packages/scheduler/docs)
 * [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler/docs)
 * [@reactive-js/perf-testing-scheduler](./packages/perf-testing-scheduler/docs)
 * [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
 * [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler/docs)
+
+### Resource Management
+* [@reactive-js/disposable](./packages/disposable/docs)
+* [@reactive-js/serial-disposable](./packages/serial-disposable/docs)
 
 ### React JS Integration
 * [@reactive-js/react-hooks](./packages/react-hooks/docs)
