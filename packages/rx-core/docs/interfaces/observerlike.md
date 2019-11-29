@@ -1,4 +1,4 @@
-[@reactive-js/rx-observer](../README.md) › [ObserverLike](observerlike.md)
+[@reactive-js/rx-core](../README.md) › [ObserverLike](observerlike.md)
 
 # Interface: ObserverLike <**T**>
 
@@ -11,6 +11,8 @@ An observer of push-based notifications.
 ## Hierarchy
 
 * **ObserverLike**
+
+  ↳ [SubscriberLike](subscriberlike.md)
 
 ## Index
 

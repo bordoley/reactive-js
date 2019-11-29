@@ -1,5 +1,4 @@
-import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike } from "./subscriber";
+import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import {
@@ -7,7 +6,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/serial-disposable";
 import { connect } from "./connect";
-import { ObservableLike, ObservableOperator, pipe } from "./observable";
+import { ObservableOperator, pipe } from "./pipe";
 import { observe } from "./observe";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {

@@ -1,5 +1,5 @@
-import { SubscriberLike } from "./subscriber";
-import { ObservableLike, ObservableOperator } from "./observable";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ObservableOperator } from "./pipe";
 
 /**
  * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.

@@ -1,7 +1,7 @@
-import { SubscriberLike } from "./subscriber";
+import { SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
-import { ObservableOperator } from "./observable";
+import { ObservableOperator } from "./pipe";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;

@@ -1,8 +1,8 @@
-import { create as createDisposable, disposed } from "@reactive-js/disposable";
+import { disposed } from "@reactive-js/disposable";
 import { connect } from "./connect";
 import { observe } from "./observe";
-import { ObservableLike, ObservableOperator, pipe } from "./observable";
-import { SubscriberLike } from "./subscriber";
+import { ObservableOperator, pipe } from "./pipe";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createSubject, SubjectResourceLike } from "./subject";
 

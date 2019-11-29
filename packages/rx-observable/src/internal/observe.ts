@@ -1,8 +1,7 @@
-import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike } from "./subscriber";
+import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
-import { ObservableOperator } from "./observable";
+import { ObservableOperator } from "./pipe";
 
 class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   private observer: ObserverLike<T>;

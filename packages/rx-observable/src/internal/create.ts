@@ -1,7 +1,6 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
-import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike, toSafeObserver } from "./subscriber";
-import { ObservableLike } from "./observable";
+import { create as createSafeObserver } from "./safeObserver";
+import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 
 /**
  * Factory for safely creating new ObservableLikes. The onSubscribe function
@@ -22,7 +21,7 @@ export const create = <T>(
     // The idea here is that an onSubscribe function may
     // call onNext from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const observer = toSafeObserver(subscriber);
+    const observer = createSafeObserver(subscriber);
 
     try {
       const onSubscribeSubscription = onSubscribe(observer);

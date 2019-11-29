@@ -1,5 +1,4 @@
-import { SubscriberLike } from "./subscriber";
-import { ObservableLike } from "./observable";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
 export const throws = <T>(error: Error, delay?: number): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {

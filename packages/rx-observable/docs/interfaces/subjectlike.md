@@ -10,7 +10,7 @@
 
 * ObserverLike‹T›
 
-* [ObservableLike](observablelike.md)‹T›
+* ObservableLike‹T›
 
   ↳ **SubjectLike**
 

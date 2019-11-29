@@ -1,7 +1,7 @@
-import { SubscriberLike } from "./subscriber";
+import { SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
-import { ObservableOperator } from "./observable";
+import { ObservableOperator } from "./pipe";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly predicate: (data: T) => boolean;
