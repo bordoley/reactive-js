@@ -17,7 +17,6 @@
 ### Functions
 
 * [createAutoDisposing](README.md#const-createautodisposing)
-* [observe](README.md#const-observe)
 * [pipe](README.md#pipe)
 * [toSafeObserver](README.md#const-tosafeobserver)
 
@@ -41,26 +40,6 @@ Name | Type | Description |
 `subscription` | DisposableLike |   |
 
 **Returns:** *[ConnectableSubscriberLike](interfaces/connectablesubscriberlike.md)‹T›*
-
-___
-
-### `Const` observe
-
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
-
-Returns a SubscriberOperator which forwards notifications to the provided observer when notified.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`observer` | ObserverLike‹T› |   |
-
-**Returns:** *[SubscriberOperator](interfaces/subscriberoperator.md)‹T, T›*
 
 ___
 

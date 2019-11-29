@@ -1,7 +1,31 @@
 import { ObserverLike } from "@reactive-js/rx-observer";
-import { observe as subscriberObserveOperator } from "@reactive-js/rx-subscriber";
+import { DelegatingSubscriber, SubscriberLike, SubscriberOperator } from "@reactive-js/rx-subscriber";
 import { lift } from "./lift";
 import { ObservableOperator } from "./observable";
+
+class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
+  private observer: ObserverLike<T>;
+
+  constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {
+    super(delegate);
+    this.observer = observer;
+  }
+
+  protected onComplete(error?: Error) {
+    this.observer.complete(error);
+    this.delegate.complete(error);
+  }
+
+  protected onNext(data: T) {
+    this.observer.next(data);
+    this.delegate.next(data);
+  }
+}
+
+const operator = <T>(
+  observer: ObserverLike<T>,
+): SubscriberOperator<T, T> => (subscriber: SubscriberLike<T>) =>
+  new ObserveSubscriber(subscriber, observer);
 
 /**
  * Returns a ObservableOperator which forwards notifications to the provided observer.
@@ -10,7 +34,7 @@ import { ObservableOperator } from "./observable";
  */
 export const observe = <T>(
   observer: ObserverLike<T>,
-): ObservableOperator<T, T> => lift(subscriberObserveOperator(observer));
+): ObservableOperator<T, T> => lift(operator(observer));
 
 const ignore = <T>(data: T) => {};
 
