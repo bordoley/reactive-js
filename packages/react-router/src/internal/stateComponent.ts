@@ -1,6 +1,6 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
-import { RelativeURI, RoutableComponentProps } from "./router";
 import { createElement, useMemo } from "react";
+import { RelativeURI, RoutableComponentProps } from "./router";
 
 export interface RoutableStateComponentProps<TState> {
   readonly dispatch: (updater: StateUpdater<TState>) => void;
