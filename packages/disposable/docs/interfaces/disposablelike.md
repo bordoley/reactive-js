@@ -7,6 +7,8 @@ Represents an unmanaged resource that can be disposed.
 
 * **DisposableLike**
 
+  ↳ [SerialDisposableLike](serialdisposablelike.md)
+
 ## Index
 
 ### Properties

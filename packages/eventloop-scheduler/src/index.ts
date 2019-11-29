@@ -4,16 +4,13 @@ import {
 } from "@reactive-js/scheduler";
 
 import {
-  create as createDisposable,
+  createDisposable,
+  createSerialDisposable,
+  SerialDisposableLike,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-
-import {
-  create as createSerialDisposable,
-  SerialDisposableLike,
-} from "@reactive-js/serial-disposable";
 
 type SchedulerCtx = {
   continuation: SchedulerContinuation;

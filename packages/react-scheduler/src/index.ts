@@ -14,14 +14,11 @@ import {
 import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 
 import {
-  create as createDisposable,
+  createDisposable,
   DisposableLike,
-} from "@reactive-js/disposable";
-
-import {
-  create as createSerialDisposable,
+  createSerialDisposable,
   SerialDisposableLike,
-} from "@reactive-js/serial-disposable";
+} from "@reactive-js/disposable";
 
 class ReactSchedulerImpl implements SchedulerLike {
   public get inScheduledContinuation(): boolean {

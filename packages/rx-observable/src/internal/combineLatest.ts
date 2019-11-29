@@ -8,7 +8,7 @@ import { observe } from "./observe";
 import { pipe } from "./pipe";
 
 import {
-  create as createDisposable,
+  createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";

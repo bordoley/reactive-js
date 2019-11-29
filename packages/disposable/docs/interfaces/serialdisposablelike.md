@@ -1,4 +1,3 @@
-[@reactive-js/serial-disposable](../README.md) › [SerialDisposableLike](serialdisposablelike.md)
 
 # Interface: SerialDisposableLike
 
@@ -8,7 +7,7 @@ container also disposes the contained disposable.
 
 ## Hierarchy
 
-* DisposableLike
+* [DisposableLike](disposablelike.md)
 
   ↳ **SerialDisposableLike**
 
@@ -22,6 +21,6 @@ container also disposes the contained disposable.
 
 ###  disposable
 
-• **disposable**: *DisposableLike*
+• **disposable**: *[DisposableLike](disposablelike.md)*
 
 The inner disposable that may be get or set.

@@ -6,6 +6,7 @@
 ### Interfaces
 
 * [DisposableLike](interfaces/disposablelike.md)
+* [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
 ### Type aliases
 
@@ -17,7 +18,8 @@
 
 ### Functions
 
-* [create](README.md#const-create)
+* [createDisposable](README.md#const-createdisposable)
+* [createSerialDisposable](README.md#const-createserialdisposable)
 * [throwIfDisposed](README.md#const-throwifdisposed)
 
 ## Type aliases
@@ -30,19 +32,29 @@
 
 ### `Const` disposed
 
-• **disposed**: *[DisposableLike](interfaces/disposablelike.md)* =  create()
+• **disposed**: *[DisposableLike](interfaces/disposablelike.md)* =  createDisposable()
 
 A disposed DisposableLike instance.
 
 ## Functions
 
-### `Const` create
+### `Const` createDisposable
 
-▸ **create**(): *[DisposableLike](interfaces/disposablelike.md)*
+▸ **createDisposable**(): *[DisposableLike](interfaces/disposablelike.md)*
 
 Creates an empty DisposableLike instance.
 
 **Returns:** *[DisposableLike](interfaces/disposablelike.md)*
+
+___
+
+### `Const` createSerialDisposable
+
+▸ **createSerialDisposable**(): *[SerialDisposableLike](interfaces/serialdisposablelike.md)*
+
+Creates a new SerialDisposableLike instance containing a disposed instance.
+
+**Returns:** *[SerialDisposableLike](interfaces/serialdisposablelike.md)*
 
 ___
 
