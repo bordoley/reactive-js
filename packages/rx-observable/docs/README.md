@@ -1104,7 +1104,7 @@ ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1114,10 +1114,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
 `scheduler` | SchedulerLike |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 ___
 
