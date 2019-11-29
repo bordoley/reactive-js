@@ -1,5 +1,5 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
-import { RelativeURI, RoutableComponentProps } from "@reactive-js/react-router";
+import { RelativeURI, RoutableComponentProps } from "./router";
 import { createElement, useMemo } from "react";
 
 export interface RoutableStateComponentProps<TState> {
@@ -38,7 +38,7 @@ const createURIStateUpdater = <TState>(
   }
 };
 
-export const create = <TState>(
+export const createRoutableStateComponent = <TState>(
   component: React.ComponentType<RoutableStateComponentProps<TState>>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,

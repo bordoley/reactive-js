@@ -1,4 +1,4 @@
-[@reactive-js/react-router-state-component](../README.md) › [RoutableStateComponentProps](routablestatecomponentprops.md)
+[@reactive-js/react-router](../README.md) › [RoutableStateComponentProps](routablestatecomponentprops.md)
 
 # Interface: RoutableStateComponentProps <**TState**>
 
@@ -44,19 +44,19 @@ ___
 
 #### Type declaration:
 
-▸ (`uri`: RelativeURI): *void*
+▸ (`uri`: [RelativeURI](relativeuri.md)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`uri` | RelativeURI |
+`uri` | [RelativeURI](relativeuri.md) |
 
 ___
 
 ###  referer
 
-• **referer**: *RelativeURI | undefined*
+• **referer**: *[RelativeURI](relativeuri.md) | undefined*
 
 ___
 
@@ -68,4 +68,4 @@ ___
 
 ###  uri
 
-• **uri**: *RelativeURI*
+• **uri**: *[RelativeURI](relativeuri.md)*
