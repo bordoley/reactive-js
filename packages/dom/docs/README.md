@@ -4,11 +4,30 @@
 
 ## Index
 
+### Interfaces
+
+* [Location](interfaces/location.md)
+
 ### Functions
 
+* [createLocationStore](README.md#const-createlocationstore)
 * [fromEvent](README.md#const-fromevent)
 
 ## Functions
+
+### `Const` createLocationStore
+
+▸ **createLocationStore**(`scheduler`: SchedulerLike): *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+
+**Returns:** *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+
+___
 
 ### `Const` fromEvent
 

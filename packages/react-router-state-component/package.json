@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@reactive-js/ix-async-iterator-resource": "0.0.0",
-    "@reactive-js/react-router-relative-uri": "0.0.0",
     "@reactive-js/react-router": "0.0.0",
     "react": "^16.11.0",
     "tslib": "^1.10.0"
