@@ -5,10 +5,10 @@ import { normalPriority } from "@reactive-js/react-scheduler";
 import {
   connect,
   ObservableLike,
+  ObservableResourceLike,
   observe,
   pipe,
 } from "@reactive-js/rx-observable";
-import { ObservableResourceLike } from "@reactive-js/rx-observable-resource";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

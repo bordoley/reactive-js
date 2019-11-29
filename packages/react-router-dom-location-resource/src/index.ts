@@ -17,8 +17,8 @@ import {
   ObservableOperator,
   onNext,
   pipe,
+  share,
 } from "@reactive-js/rx-observable";
-import { share } from "@reactive-js/rx-subject";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 const getCurrentLocation = (): RelativeURI => {

@@ -21,7 +21,6 @@
     "@reactive-js/rx-observable": "0.0.0",
     "@reactive-js/rx-observable-resource": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",
-    "@reactive-js/rx-subject": "0.0.0",
     "@reactive-js/rx-subscriber": "0.0.0",
     "tslib": "^1.10.0"
   },

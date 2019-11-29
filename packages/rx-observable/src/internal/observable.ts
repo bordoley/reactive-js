@@ -1,4 +1,6 @@
 import { SubscriberLike } from "@reactive-js/rx-subscriber";
+import { DisposableLike } from "@reactive-js/disposable";
+
 
 /**
  * The source of notifications which may be observed by a SubscriberLike instance.
@@ -6,6 +8,10 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
+
+export interface ObservableResourceLike<T>
+  extends ObservableLike<T>,
+    DisposableLike {}
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B> */
 export interface ObservableOperator<A, B> {

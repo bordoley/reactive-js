@@ -8,6 +8,9 @@
 
 * [ObservableLike](interfaces/observablelike.md)
 * [ObservableOperator](interfaces/observableoperator.md)
+* [ObservableResourceLike](interfaces/observableresourcelike.md)
+* [SubjectLike](interfaces/subjectlike.md)
+* [SubjectResourceLike](interfaces/subjectresourcelike.md)
 
 ### Functions
 
@@ -16,6 +19,7 @@
 * [concatAll](README.md#const-concatall)
 * [connect](README.md#const-connect)
 * [create](README.md#const-create)
+* [createSubject](README.md#const-createsubject)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
 * [exhaust](README.md#const-exhaust)
@@ -39,6 +43,7 @@
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
+* [share](README.md#const-share)
 * [startWith](README.md#startwith)
 * [subscribeOn](README.md#const-subscribeon)
 * [switchAll](README.md#const-switchall)
@@ -366,6 +371,24 @@ Name | Type |
 `observer` | ObserverLike‹T› |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` createSubject
+
+▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`replayCount` | number | 0 |
+
+**Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
 
 ___
 
@@ -1081,6 +1104,25 @@ Name | Type |
 ▪ **initialValue**: *TAcc*
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, TAcc›*
+
+___
+
+### `Const` share
+
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 ___
 

@@ -1,6 +1,7 @@
 export {
   ObservableLike,
   ObservableOperator,
+  ObservableResourceLike,
   pipe,
 } from "./internal/observable";
 export { connect } from "./internal/connect";
@@ -26,6 +27,7 @@ export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
+export { createSubject, SubjectLike, SubjectResourceLike } from "./internal/subject";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
@@ -33,3 +35,4 @@ export { takeWhile } from "./internal/takeWhile";
 export { throws } from "./internal/throws";
 export { withLatestFrom } from "./internal/withLatestFrom";
 export { subscribeOn } from "./internal/subscribeOn";
+export { share } from "./internal/share";

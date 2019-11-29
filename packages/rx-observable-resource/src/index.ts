@@ -5,13 +5,9 @@ import { SubscriberLike } from "@reactive-js/rx-subscriber";
 import {
   ObservableLike,
   ObservableOperator,
+  ObservableResourceLike,
   pipe as pipeObservable,
 } from "@reactive-js/rx-observable";
-
-/** @noInheritDoc */
-export interface ObservableResourceLike<T>
-  extends ObservableLike<T>,
-    DisposableLike {}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   get isDisposed() {
