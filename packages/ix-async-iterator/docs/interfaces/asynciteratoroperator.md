@@ -18,12 +18,12 @@
 
 ## Callable
 
-▸ (`iter`: [AsyncIteratorLike](asynciteratorlike.md)‹TSrcReq, TSrc›): *[AsyncIteratorLike](asynciteratorlike.md)‹TReq, T›*
+▸ (`iter`: AsyncIteratorLike‹TSrcReq, TSrc›): *AsyncIteratorLike‹TReq, T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`iter` | [AsyncIteratorLike](asynciteratorlike.md)‹TSrcReq, TSrc› |
+`iter` | AsyncIteratorLike‹TSrcReq, TSrc› |
 
-**Returns:** *[AsyncIteratorLike](asynciteratorlike.md)‹TReq, T›*
+**Returns:** *AsyncIteratorLike‹TReq, T›*

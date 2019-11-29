@@ -3,11 +3,7 @@ import {
   ObservableOperator,
   pipe as observablePipe,
 } from "@reactive-js/rx-observable";
-
-/** @noInheritDoc */
-export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {
-  dispatch(request: TReq): void;
-}
+import { AsyncIteratorLike } from "@reactive-js/ix-core";
 
 class AsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;

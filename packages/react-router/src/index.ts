@@ -1,7 +1,5 @@
-import {
-  AsyncIteratorResourceLike,
-  StateUpdater,
-} from "@reactive-js/ix-async-iterator-resource";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
+import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import {
   empty as emptyRelativeURI,
