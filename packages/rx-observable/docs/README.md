@@ -10,12 +10,9 @@
 
 ### Interfaces
 
-* [ObservableLike](interfaces/observablelike.md)
 * [ObservableOperator](interfaces/observableoperator.md)
-* [ObservableResourceLike](interfaces/observableresourcelike.md)
 * [SubjectLike](interfaces/subjectlike.md)
 * [SubjectResourceLike](interfaces/subjectresourcelike.md)
-* [SubscriberLike](interfaces/subscriberlike.md)
 * [SubscriberOperator](interfaces/subscriberoperator.md)
 
 ### Functions
@@ -64,7 +61,7 @@
 
 ###  combineLatest
 
-▸ **combineLatest**<**TA**, **TB**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB]›*
+▸ **combineLatest**<**TA**, **TB**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›): *ObservableLike‹[TA, TB]›*
 
 **Type parameters:**
 
@@ -76,12 +73,12 @@
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB]›*
+**Returns:** *ObservableLike‹[TA, TB]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›): *ObservableLike‹[TA, TB, TC]›*
 
 **Type parameters:**
 
@@ -95,13 +92,13 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC]›*
+**Returns:** *ObservableLike‹[TA, TB, TC]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›): *ObservableLike‹[TA, TB, TC, TD]›*
 
 **Type parameters:**
 
@@ -117,14 +114,14 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›, `obs5`: [ObservableLike](interfaces/observablelike.md)‹TE›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›): *ObservableLike‹[TA, TB, TC, TD, TE]›*
 
 **Type parameters:**
 
@@ -142,15 +139,15 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
-`obs5` | [ObservableLike](interfaces/observablelike.md)‹TE› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
+`obs5` | ObservableLike‹TE› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›, `obs5`: [ObservableLike](interfaces/observablelike.md)‹TE›, `obs6`: [ObservableLike](interfaces/observablelike.md)‹TF›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›): *ObservableLike‹[TA, TB, TC, TD, TE, TF]›*
 
 **Type parameters:**
 
@@ -170,16 +167,16 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
-`obs5` | [ObservableLike](interfaces/observablelike.md)‹TE› |
-`obs6` | [ObservableLike](interfaces/observablelike.md)‹TF› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
+`obs5` | ObservableLike‹TE› |
+`obs6` | ObservableLike‹TF› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›, `obs5`: [ObservableLike](interfaces/observablelike.md)‹TE›, `obs6`: [ObservableLike](interfaces/observablelike.md)‹TF›, `obs7`: [ObservableLike](interfaces/observablelike.md)‹TG›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG]›*
 
 **Type parameters:**
 
@@ -201,17 +198,17 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
-`obs5` | [ObservableLike](interfaces/observablelike.md)‹TE› |
-`obs6` | [ObservableLike](interfaces/observablelike.md)‹TF› |
-`obs7` | [ObservableLike](interfaces/observablelike.md)‹TG› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
+`obs5` | ObservableLike‹TE› |
+`obs6` | ObservableLike‹TF› |
+`obs7` | ObservableLike‹TG› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›, `obs5`: [ObservableLike](interfaces/observablelike.md)‹TE›, `obs6`: [ObservableLike](interfaces/observablelike.md)‹TF›, `obs7`: [ObservableLike](interfaces/observablelike.md)‹TG›, `obs8`: [ObservableLike](interfaces/observablelike.md)‹TH›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›, `obs8`: ObservableLike‹TH›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
 **Type parameters:**
 
@@ -235,18 +232,18 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
-`obs5` | [ObservableLike](interfaces/observablelike.md)‹TE› |
-`obs6` | [ObservableLike](interfaces/observablelike.md)‹TF› |
-`obs7` | [ObservableLike](interfaces/observablelike.md)‹TG› |
-`obs8` | [ObservableLike](interfaces/observablelike.md)‹TH› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
+`obs5` | ObservableLike‹TE› |
+`obs6` | ObservableLike‹TF› |
+`obs7` | ObservableLike‹TG› |
+`obs8` | ObservableLike‹TH› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`obs1`: [ObservableLike](interfaces/observablelike.md)‹TA›, `obs2`: [ObservableLike](interfaces/observablelike.md)‹TB›, `obs3`: [ObservableLike](interfaces/observablelike.md)‹TC›, `obs4`: [ObservableLike](interfaces/observablelike.md)‹TD›, `obs5`: [ObservableLike](interfaces/observablelike.md)‹TE›, `obs6`: [ObservableLike](interfaces/observablelike.md)‹TF›, `obs7`: [ObservableLike](interfaces/observablelike.md)‹TG›, `obs8`: [ObservableLike](interfaces/observablelike.md)‹TH›, `obs9`: [ObservableLike](interfaces/observablelike.md)‹TI›): *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›, `obs8`: ObservableLike‹TH›, `obs9`: ObservableLike‹TI›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
 
 **Type parameters:**
 
@@ -272,23 +269,23 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`obs1` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-`obs2` | [ObservableLike](interfaces/observablelike.md)‹TB› |
-`obs3` | [ObservableLike](interfaces/observablelike.md)‹TC› |
-`obs4` | [ObservableLike](interfaces/observablelike.md)‹TD› |
-`obs5` | [ObservableLike](interfaces/observablelike.md)‹TE› |
-`obs6` | [ObservableLike](interfaces/observablelike.md)‹TF› |
-`obs7` | [ObservableLike](interfaces/observablelike.md)‹TG› |
-`obs8` | [ObservableLike](interfaces/observablelike.md)‹TH› |
-`obs9` | [ObservableLike](interfaces/observablelike.md)‹TI› |
+`obs1` | ObservableLike‹TA› |
+`obs2` | ObservableLike‹TB› |
+`obs3` | ObservableLike‹TC› |
+`obs4` | ObservableLike‹TD› |
+`obs5` | ObservableLike‹TE› |
+`obs6` | ObservableLike‹TF› |
+`obs7` | ObservableLike‹TG› |
+`obs8` | ObservableLike‹TH› |
+`obs9` | ObservableLike‹TI› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
 
 ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **concat**<**T**>(`fst`: ObservableLike‹T›, `snd`: ObservableLike‹T›, ...`tail`: Array‹ObservableLike‹T››): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -298,17 +295,17 @@ ___
 
 Name | Type |
 ------ | ------ |
-`fst` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`snd` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`...tail` | Array‹[ObservableLike](interfaces/observablelike.md)‹T›› |
+`fst` | ObservableLike‹T› |
+`snd` | ObservableLike‹T› |
+`...tail` | Array‹ObservableLike‹T›› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -320,13 +317,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` connect
 
-▸ **connect**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *DisposableLike*
+▸ **connect**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *DisposableLike*
 
 Safely connects an ObservableLike to a SubscriberLike,
 using the provided scheduler. The returned DisposableLike
@@ -340,7 +337,7 @@ may used to cancel the subscription.
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`observable` | ObservableLike‹T› |
 `scheduler` | SchedulerLike |
 
 **Returns:** *DisposableLike*
@@ -349,7 +346,7 @@ ___
 
 ### `Const` create
 
-▸ **create**<**T**>(`onSubscribe`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **create**<**T**>(`onSubscribe`: function): *ObservableLike‹T›*
 
 Factory for safely creating new ObservableLikes. The onSubscribe function
 is called with an observer which may be notified from any context,
@@ -376,7 +373,7 @@ Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
@@ -418,7 +415,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`delay?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **empty**<**T**>(`delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -430,25 +427,25 @@ Name | Type |
 ------ | ------ |
 `delay?` | undefined &#124; number |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **exhaust**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -461,13 +458,13 @@ Name | Type | Default |
 `values` | ReadonlyArray‹T› | - |
 `delay` | number | 0 |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` fromPromiseFactory
 
-▸ **fromPromiseFactory**<**T**>(`factory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromPromiseFactory**<**T**>(`factory`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -479,13 +476,13 @@ ___
 
 ▸ (): *Promise‹T›*
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` fromScheduledValues
 
-▸ **fromScheduledValues**<**T**>(`value`: [number | undefined, T], ...`values`: Array‹[number | undefined, T]›): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromScheduledValues**<**T**>(`value`: [number | undefined, T], ...`values`: Array‹[number | undefined, T]›): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -498,13 +495,13 @@ Name | Type |
 `value` | [number &#124; undefined, T] |
 `...values` | Array‹[number &#124; undefined, T]› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -526,7 +523,7 @@ Name | Type |
 
 ▪`Default value`  **delay**: *number*= 0
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
@@ -618,7 +615,7 @@ ___
 
 ###  merge
 
-▸ **merge**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **merge**<**T**>(`fst`: ObservableLike‹T›, `snd`: ObservableLike‹T›, ...`tail`: Array‹ObservableLike‹T››): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -628,17 +625,17 @@ ___
 
 Name | Type |
 ------ | ------ |
-`fst` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`snd` | [ObservableLike](interfaces/observablelike.md)‹T› |
-`...tail` | Array‹[ObservableLike](interfaces/observablelike.md)‹T›› |
+`fst` | ObservableLike‹T› |
+`snd` | ObservableLike‹T› |
+`...tail` | Array‹ObservableLike‹T›› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options?`: undefined | object): *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -650,19 +647,19 @@ Name | Type |
 ------ | ------ |
 `options?` | undefined &#124; object |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` never
 
-▸ **never**<**T**>(): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **never**<**T**>(): *ObservableLike‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
@@ -688,7 +685,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **ofValue**<**T**>(`value`: T, `delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -701,7 +698,7 @@ Name | Type |
 `value` | T |
 `delay?` | undefined &#124; number |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
@@ -779,7 +776,7 @@ ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›): *[ObservableLike](interfaces/observablelike.md)‹A›*
+▸ **pipe**<**T**, **A**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›): *ObservableLike‹A›*
 
 **Type parameters:**
 
@@ -791,12 +788,12 @@ ___
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹A›*
+**Returns:** *ObservableLike‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›): *[ObservableLike](interfaces/observablelike.md)‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›): *ObservableLike‹B›*
 
 **Type parameters:**
 
@@ -810,13 +807,13 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹B›*
+**Returns:** *ObservableLike‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›): *[ObservableLike](interfaces/observablelike.md)‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›): *ObservableLike‹C›*
 
 **Type parameters:**
 
@@ -832,14 +829,14 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹C›*
+**Returns:** *ObservableLike‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›): *[ObservableLike](interfaces/observablelike.md)‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›): *ObservableLike‹D›*
 
 **Type parameters:**
 
@@ -857,15 +854,15 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
 `op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹D›*
+**Returns:** *ObservableLike‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›): *[ObservableLike](interfaces/observablelike.md)‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›): *ObservableLike‹E›*
 
 **Type parameters:**
 
@@ -885,16 +882,16 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
 `op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
 `op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹E›*
+**Returns:** *ObservableLike‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›): *[ObservableLike](interfaces/observablelike.md)‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›): *ObservableLike‹F›*
 
 **Type parameters:**
 
@@ -916,7 +913,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
@@ -924,9 +921,9 @@ Name | Type |
 `op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
 `op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹F›*
+**Returns:** *ObservableLike‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›): *[ObservableLike](interfaces/observablelike.md)‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›): *ObservableLike‹G›*
 
 **Type parameters:**
 
@@ -950,7 +947,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
@@ -959,9 +956,9 @@ Name | Type |
 `op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
 `op7` | [ObservableOperator](interfaces/observableoperator.md)‹F, G› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹G›*
+**Returns:** *ObservableLike‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›): *[ObservableLike](interfaces/observablelike.md)‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›): *ObservableLike‹H›*
 
 **Type parameters:**
 
@@ -987,7 +984,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
@@ -997,9 +994,9 @@ Name | Type |
 `op7` | [ObservableOperator](interfaces/observableoperator.md)‹F, G› |
 `op8` | [ObservableOperator](interfaces/observableoperator.md)‹G, H› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹H›*
+**Returns:** *ObservableLike‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: [ObservableLike](interfaces/observablelike.md)‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›, `op9`: [ObservableOperator](interfaces/observableoperator.md)‹H, I›): *[ObservableLike](interfaces/observablelike.md)‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›, `op9`: [ObservableOperator](interfaces/observableoperator.md)‹H, I›): *ObservableLike‹I›*
 
 **Type parameters:**
 
@@ -1027,7 +1024,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`src` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`src` | ObservableLike‹T› |
 `op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
 `op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
 `op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
@@ -1038,7 +1035,7 @@ Name | Type |
 `op8` | [ObservableOperator](interfaces/observableoperator.md)‹G, H› |
 `op9` | [ObservableOperator](interfaces/observableoperator.md)‹H, I› |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹I›*
+**Returns:** *ObservableLike‹I›*
 
 ___
 
@@ -1171,13 +1168,13 @@ ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **switchAll**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
 
 ___
 
@@ -1243,7 +1240,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -1256,13 +1253,13 @@ Name | Type |
 `error` | Error |
 `delay?` | undefined &#124; number |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *Promise‹T›*
+▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *Promise‹T›*
 
 **Type parameters:**
 
@@ -1272,7 +1269,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
+`observable` | ObservableLike‹T› |
 `scheduler` | SchedulerLike |
 
 **Returns:** *Promise‹T›*
@@ -1281,7 +1278,7 @@ ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: [ObservableLike](interfaces/observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TC›*
 
 **Type parameters:**
 
@@ -1293,7 +1290,7 @@ ___
 
 **Parameters:**
 
-▪ **other**: *[ObservableLike](interfaces/observablelike.md)‹TB›*
+▪ **other**: *ObservableLike‹TB›*
 
 ▪ **selector**: *function*
 

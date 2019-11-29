@@ -18,7 +18,7 @@ Abstract base class for implementing SubscriberOperators.
 
 ## Implements
 
-* [SubscriberLike](../interfaces/subscriberlike.md)‹TA›
+* SubscriberLike‹TA›
 
 ## Index
 
@@ -39,7 +39,7 @@ Abstract base class for implementing SubscriberOperators.
 
 ###  constructor
 
-\+ **new DelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[DelegatingSubscriber](delegatingsubscriber.md)*
+\+ **new DelegatingSubscriber**(`delegate`: SubscriberLike‹TB›): *[DelegatingSubscriber](delegatingsubscriber.md)*
 
 *Overrides void*
 
@@ -47,7 +47,7 @@ Abstract base class for implementing SubscriberOperators.
 
 Name | Type |
 ------ | ------ |
-`delegate` | [SubscriberLike](../interfaces/subscriberlike.md)‹TB› |
+`delegate` | SubscriberLike‹TB› |
 
 **Returns:** *[DelegatingSubscriber](delegatingsubscriber.md)*
 

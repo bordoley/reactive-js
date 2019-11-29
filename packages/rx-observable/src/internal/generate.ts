@@ -1,6 +1,4 @@
-import { SubscriberLike } from "./subscriber";
-import { ObservableLike } from "./observable";
-
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,

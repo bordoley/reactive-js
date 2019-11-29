@@ -1,9 +1,3 @@
-export {
-  ObservableLike,
-  ObservableOperator,
-  ObservableResourceLike,
-  pipe,
-} from "./internal/observable";
 export { connect } from "./internal/connect";
 export { create } from "./internal/create";
 export { lift, SubscriberOperator } from "./internal/lift";
@@ -26,6 +20,10 @@ export { map } from "./internal/map";
 export { merge } from "./internal/merge";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
+export {
+  ObservableOperator,
+  pipe,
+} from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
 export {
@@ -33,7 +31,6 @@ export {
   SubjectLike,
   SubjectResourceLike,
 } from "./internal/subject";
-export { SubscriberLike } from "./internal/subscriber";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";

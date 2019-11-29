@@ -1,8 +1,7 @@
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
-  ObservableLike,
   ObservableOperator,
   pipe as observablePipe,
-  SubscriberLike,
 } from "@reactive-js/rx-observable";
 
 /** @noInheritDoc */

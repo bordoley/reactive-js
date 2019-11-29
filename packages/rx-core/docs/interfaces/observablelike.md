@@ -1,4 +1,4 @@
-[@reactive-js/rx-observable](../README.md) › [ObservableLike](observablelike.md)
+[@reactive-js/rx-core](../README.md) › [ObservableLike](observablelike.md)
 
 # Interface: ObservableLike <**T**>
 
@@ -13,8 +13,6 @@ The source of notifications which may be observed by a SubscriberLike instance.
 * **ObservableLike**
 
   ↳ [ObservableResourceLike](observableresourcelike.md)
-
-  ↳ [SubjectLike](subjectlike.md)
 
 ## Index
 

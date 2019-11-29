@@ -10,6 +10,6 @@
 
   ↳ [SubjectLike](subjectlike.md)‹T›
 
-* DisposableLike
+* ObservableResourceLike‹T›
 
   ↳ **SubjectResourceLike**

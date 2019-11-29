@@ -16,7 +16,7 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>
 
 ## Callable
 
-▸ (`observable`: [ObservableLike](observablelike.md)‹A›): *[ObservableLike](observablelike.md)‹B›*
+▸ (`observable`: ObservableLike‹A›): *ObservableLike‹B›*
 
 A function which converts an ObservableLike<A> to an ObservableLike<B>
 
@@ -24,6 +24,6 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](observablelike.md)‹A› |
+`observable` | ObservableLike‹A› |
 
-**Returns:** *[ObservableLike](observablelike.md)‹B›*
+**Returns:** *ObservableLike‹B›*

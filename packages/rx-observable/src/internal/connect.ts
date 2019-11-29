@@ -3,8 +3,8 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { ObservableLike } from "./observable";
-import { AbstractSubscriberImpl, checkState, SubscriberLike } from "./subscriber"
+import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber"
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 

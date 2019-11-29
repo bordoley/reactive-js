@@ -1,7 +1,7 @@
-import { SubscriberLike } from "./subscriber";
+import { SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
-import { ObservableOperator } from "./observable";
+import { ObservableOperator } from "./pipe";
 
 class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {

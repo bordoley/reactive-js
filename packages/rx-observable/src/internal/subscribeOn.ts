@@ -1,6 +1,6 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
-import { ObservableOperator, pipe } from "./observable";
+import { ObservableOperator } from "./pipe";
 import { observe } from "./observe";
 import { create } from "./create";
 

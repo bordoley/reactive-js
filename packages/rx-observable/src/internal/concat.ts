@@ -1,8 +1,8 @@
 import { disposed } from "@reactive-js/disposable";
-import { SubscriberLike } from "./subscriber";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import { connect } from "./connect";
 import { fromArray } from "./fromArray";
-import { ObservableLike, ObservableOperator, pipe } from "./observable";
+import { ObservableOperator, pipe } from "./pipe";
 import { observe } from "./observe";
 
 export function concat<T>(

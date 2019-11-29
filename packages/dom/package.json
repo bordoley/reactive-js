@@ -16,6 +16,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
+    "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/rx-observable": "0.0.0",
     "tslib": "^1.10.0"
   },

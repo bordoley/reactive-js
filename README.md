@@ -49,9 +49,9 @@ const subscription = connect(observable, normalPriority);
 * [@reactive-js/scheduler](./packages/scheduler/docs)
 
 ### Reactive Programming (RX)
+* [@reactive-js/rx-core](./packages/rx-core/docs)
 * [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
 * [@reactive-js/rx-observable](./packages/rx-observable/docs)
-* [@reactive-js/rx-observer](./packages/rx-observer/docs)
 
 ### Asynchronous Interactive Programming (IX)
 * [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)

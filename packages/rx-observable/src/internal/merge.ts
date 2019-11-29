@@ -3,10 +3,9 @@ import {
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
-import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike } from "./subscriber";
+import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import { connect } from "./connect";
-import { ObservableLike, pipe } from "./observable";
+import { pipe } from "./pipe";
 import { observe } from "./observe";
 
 class MergeObserver<T> implements ObserverLike<T> {

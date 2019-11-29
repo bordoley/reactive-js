@@ -3,17 +3,15 @@ import {
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
-import { ObservableLike, ObservableResourceLike } from "./observable";
-import { ObserverLike } from "@reactive-js/rx-observer";
-import { SubscriberLike, toSafeObserver } from "./subscriber";
+import { ObservableLike, ObservableResourceLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import { create as createSafeObserver } from "./safeObserver";
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
 
 /** @noInheritDoc */
 export interface SubjectResourceLike<T>
-  extends SubjectLike<T>,
-    DisposableLike {}
+  extends SubjectLike<T>, ObservableResourceLike<T> {}
 
 abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
   get isDisposed() {
@@ -84,7 +82,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
       // The idea here is that an onSubscribe function may
       // call onNext from unscheduled sources such as event handlers.
       // So we marshall those events back to the scheduler.
-      const observer = toSafeObserver(subscriber);
+      const observer = createSafeObserver(subscriber);
       this.onSubscribe(observer);
 
       if (!this.isCompleted) {

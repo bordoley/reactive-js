@@ -1,8 +1,8 @@
-import { SubscriberLike } from "./subscriber";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { connect } from "./connect";
-import { ObservableLike, ObservableOperator, pipe } from "./observable";
+import { ObservableOperator, pipe } from "./pipe";
 import { observe } from "./observe";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {

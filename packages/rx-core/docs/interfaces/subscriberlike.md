@@ -1,4 +1,4 @@
-[@reactive-js/rx-observable](../README.md) › [SubscriberLike](subscriberlike.md)
+[@reactive-js/rx-core](../README.md) › [SubscriberLike](subscriberlike.md)
 
 # Interface: SubscriberLike <**T**>
 
@@ -16,17 +16,13 @@ for performance reasons).
 
 ## Hierarchy
 
-* ObserverLike‹T›
+* [ObserverLike](observerlike.md)‹T›
 
 * DisposableLike
 
 * SchedulerResourceLike
 
   ↳ **SubscriberLike**
-
-## Implemented by
-
-* [DelegatingSubscriber](../classes/delegatingsubscriber.md)
 
 ## Index
 
