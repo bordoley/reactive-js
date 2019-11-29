@@ -5,8 +5,7 @@ import {
   empty as emptyRelativeURI,
   RelativeURI,
 } from "@reactive-js/react-router-relative-uri";
-import { map, scan } from "@reactive-js/rx-observable";
-import { lift, pipe } from "@reactive-js/rx-observable-resource";
+import { map, scan, pipe } from "@reactive-js/rx-observable-resource";
 import { createElement } from "react";
 
 export interface RoutableComponentProps {
@@ -54,15 +53,13 @@ export const Router = (props: RouterProps) => {
 
     return pipe(
       locationResource,
-      lift(scan(pairify, [undefined, emptyRelativeURI])),
-      lift(
+      scan(pairify, [undefined, emptyRelativeURI]),
         map(([referer, uri]) =>
           createElement(routeMap[uri.path] || notFound, {
             referer,
             uri,
             uriUpdater,
           }),
-        ),
       ),
     );
   }, [locationResourceFactory, notFound, routes]);
