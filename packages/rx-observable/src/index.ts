@@ -29,6 +29,7 @@ export { scan } from "./internal/scan";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
+export { takeWhile } from "./internal/takeWhile";
 export { throws } from "./internal/throws";
 export { withLatestFrom } from "./internal/withLatestFrom";
 export { subscribeOn } from "./internal/subscribeOn";
