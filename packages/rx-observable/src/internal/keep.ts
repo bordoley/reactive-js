@@ -7,7 +7,7 @@ import { lift } from "./lift";
 import { ObservableOperator } from "./observable";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private predicate: (data: T) => boolean;
+  private readonly predicate: (data: T) => boolean;
 
   constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {
     super(delegate);
