@@ -52,8 +52,6 @@ const subscription = connect(observable, normalPriority);
 * [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
 * [@reactive-js/rx-observable](./packages/rx-observable/docs)
 * [@reactive-js/rx-observer](./packages/rx-observer/docs)
-* [@reactive-js/rx-subject](./packages/rx-subject/docs)
-* [@reactive-js/rx-subscriber](./packages/rx-subscriber/docs)
 
 ### Asynchronous Interactive Programming (IX)
 * [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
