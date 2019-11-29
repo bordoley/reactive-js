@@ -1,4 +1,4 @@
-import { createLocationStore, Location } from "@reactive-js/dom";
+import { createLocationStore, Location } from "@reactive-js/web";
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react-hooks";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";

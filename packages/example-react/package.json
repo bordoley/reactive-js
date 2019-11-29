@@ -16,7 +16,7 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/dom": "0.0.0",
+    "@reactive-js/web": "0.0.0",
     "@reactive-js/ix-async-iterator-resource": "0.0.0",
     "@reactive-js/react-router": "0.0.0",
     "@reactive-js/react-scheduler": "0.0.0",

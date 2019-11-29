@@ -67,8 +67,8 @@ const subscription = connect(observable, normalPriority);
 * [@reactive-js/react-hooks](./packages/react-hooks/docs)
 * [@reactive-js/react-router](./packages/react-router/docs)
 
-### Browser Integration
-* [@reactive-js/dom](./packages/dom/docs)
+### Web Integration
+* [@reactive-js/web](./packages/web/docs)
 
 ## RxJS/TC39 Comparison
 

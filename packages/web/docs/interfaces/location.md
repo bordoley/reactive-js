@@ -1,4 +1,4 @@
-[@reactive-js/dom](../README.md) › [Location](location.md)
+[@reactive-js/web](../README.md) › [Location](location.md)
 
 # Interface: Location
 
