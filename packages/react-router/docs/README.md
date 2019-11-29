@@ -8,15 +8,13 @@
 
 * [RelativeURI](interfaces/relativeuri.md)
 * [RoutableComponentProps](interfaces/routablecomponentprops.md)
+* [RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)
 * [RouterProps](interfaces/routerprops.md)
 
 ### Functions
 
 * [Router](README.md#const-router)
-
-### Object literals
-
-* [empty](README.md#const-empty)
+* [createRoutableStateComponent](README.md#const-createroutablestatecomponent)
 
 ## Functions
 
@@ -32,20 +30,40 @@ Name | Type |
 
 **Returns:** *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
 
-## Object literals
+___
 
-### `Const` empty
+### `Const` createRoutableStateComponent
 
-### ▪ **empty**: *object*
+▸ **createRoutableStateComponent**<**TState**>(`component`: React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››, `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *React.ComponentType‹[RoutableComponentProps](interfaces/routablecomponentprops.md)›*
 
-###  fragment
+**Type parameters:**
 
-• **fragment**: *string* = ""
+▪ **TState**
 
-###  path
+**Parameters:**
 
-• **path**: *string* = ""
+▪ **component**: *React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››*
 
-###  query
+▪ **parse**: *function*
 
-• **query**: *string* = ""
+▸ (`serialized`: string): *TState*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`serialized` | string |
+
+▪ **serialize**: *function*
+
+▸ (`state`: TState): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`state` | TState |
+
+▪`Default value`  **stateIsQuery**: *boolean*= false
+
+**Returns:** *React.ComponentType‹[RoutableComponentProps](interfaces/routablecomponentprops.md)›*
