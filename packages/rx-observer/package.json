@@ -26,8 +26,8 @@
   "scripts": {
     "build": "tsc",
     "docs": "typedoc",
-    "test": "jest",
-    "test-coverage": "jest --coverage"
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
   },
   "jest": {
     "preset": "ts-jest"
