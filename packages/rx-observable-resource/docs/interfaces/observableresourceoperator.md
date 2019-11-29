@@ -14,12 +14,12 @@
 
 ## Callable
 
-▸ (`observable`: [ObservableResourceLike](observableresourcelike.md)‹A›): *[ObservableResourceLike](observableresourcelike.md)‹B›*
+▸ (`observable`: ObservableResourceLike‹A›): *ObservableResourceLike‹B›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableResourceLike](observableresourcelike.md)‹A› |
+`observable` | ObservableResourceLike‹A› |
 
-**Returns:** *[ObservableResourceLike](observableresourcelike.md)‹B›*
+**Returns:** *ObservableResourceLike‹B›*
