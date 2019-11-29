@@ -2,7 +2,8 @@ import { fromEvent } from "@reactive-js/dom";
 import {
   createStateStore,
   lift,
-  pipe as asyncIteratorResourcePipe,
+  pipe as pipeIter,
+  share,
 } from "@reactive-js/ix-async-iterator-resource";
 import {
   equals as relativeURIEquals,
@@ -11,12 +12,10 @@ import {
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
   ignoreElements,
-  keep,
   merge,
   ObservableOperator,
   onNext,
   pipe,
-  share,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -27,31 +26,35 @@ const getCurrentLocation = (): RelativeURI => {
   return { path, query, fragment };
 };
 
-const operator = (
-  setURI: (state: RelativeURI) => void,
-  scheduler: SchedulerLike,
-): ObservableOperator<RelativeURI, RelativeURI> => obs => {
-  const onPopstateUpdateURIObs = pipe(
+const createOnPopstateUpdateURI = (setURI: (state: RelativeURI) => void) =>
+  pipe(
     fromEvent(window, "popstate", _ => getCurrentLocation()),
     onNext(setURI),
     ignoreElements(),
   );
 
-  const onStateChangeUpdateHistoryObs = pipe(
+const onStateChangeUpdateHistory: ObservableOperator<
+  RelativeURI,
+  RelativeURI
+> = obs =>
+  pipe(
     obs,
-    keep(location => !relativeURIEquals(location, getCurrentLocation())),
-    onNext(({ path, query, fragment }: RelativeURI) => {
-      const uri = path + query + fragment;
-      window.history.pushState(undefined, "", uri);
+    onNext((uri: RelativeURI) => {
+      if (!relativeURIEquals(uri, getCurrentLocation())) {
+        const { path, query, fragment } = uri;
+        const uriString = path + query + fragment;
+        window.history.pushState(undefined, "", uriString);
+      }
     }),
-    ignoreElements(),
   );
 
-  return pipe(
-    merge(onPopstateUpdateURIObs, onStateChangeUpdateHistoryObs, obs),
-    share(scheduler),
+const operator = (
+  setURI: (state: RelativeURI) => void,
+): ObservableOperator<RelativeURI, RelativeURI> => obs =>
+  pipe(
+    merge(createOnPopstateUpdateURI(setURI), obs),
+    onStateChangeUpdateHistory,
   );
-};
 
 export const create = (scheduler: SchedulerLike = normalPriority) => {
   const stateStore = createStateStore(
@@ -61,9 +64,5 @@ export const create = (scheduler: SchedulerLike = normalPriority) => {
   );
 
   const setURI = (uri: RelativeURI) => stateStore.dispatch(_ => uri);
-
-  return asyncIteratorResourcePipe(
-    stateStore,
-    lift(operator(setURI, scheduler)),
-  );
+  return pipeIter(stateStore, lift(operator(setURI)), share(scheduler));
 };
