@@ -16,36 +16,3 @@ export interface ObserverLike<T> {
    */
   next(data: T): void;
 }
-
-/**
- * Enumeration of valid notification types.
- */
-export enum NotificationKind {
-  Next = 1,
-  Complete = 2,
-}
-
-/** Materialized notification */
-export type Notification<T> =
-  | [NotificationKind.Next, T]
-  | [NotificationKind.Complete, Error | undefined];
-
-/**
- * Notifies the observer with the materialized notification.
- *
- * @param observer
- * @param notification
- */
-export const notify = <T>(
-  observer: ObserverLike<T>,
-  notification: Notification<T>,
-) => {
-  switch (notification[0]) {
-    case NotificationKind.Next:
-      observer.next(notification[1]);
-      break;
-    case NotificationKind.Complete:
-      observer.complete(notification[1]);
-      break;
-  }
-};

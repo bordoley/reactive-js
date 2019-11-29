@@ -4,12 +4,7 @@ import {
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
 import { ObservableLike, ObservableResourceLike } from "./observable";
-import {
-  Notification,
-  NotificationKind,
-  notify,
-  ObserverLike,
-} from "@reactive-js/rx-observer";
+import { ObserverLike } from "@reactive-js/rx-observer";
 import { SubscriberLike, toSafeObserver } from "./subscriber";
 
 /** @noInheritDoc */
@@ -120,6 +115,29 @@ class SubjectImpl<T> extends AbstractSubject<T> {
   protected onNext(data: T) {}
   protected onSubscribe(observer: ObserverLike<T>) {}
 }
+
+enum NotificationKind {
+  Next = 1,
+  Complete = 2,
+}
+
+type Notification<T> =
+  | [NotificationKind.Next, T]
+  | [NotificationKind.Complete, Error | undefined];
+
+const notify = <T>(
+  observer: ObserverLike<T>,
+  notification: Notification<T>,
+) => {
+  switch (notification[0]) {
+    case NotificationKind.Next:
+      observer.next(notification[1]);
+      break;
+    case NotificationKind.Complete:
+      observer.complete(notification[1]);
+      break;
+  }
+};
 
 class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   private readonly count: number;
