@@ -44,6 +44,7 @@
 * [switchAll](README.md#const-switchall)
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
+* [takeWhile](README.md#const-takewhile)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -1163,6 +1164,30 @@ ___
 Name | Type |
 ------ | ------ |
 `count` | number |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` takeWhile
+
+▸ **takeWhile**<**T**>(`predicate`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`next`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
