@@ -1,9 +1,36 @@
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
+  ObservableLike,
+  ObserverLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
+import {
+  concatAll as concatAllObs,
+  distinctUntilChanged as distinctUntilChangedObs,
+  exhaust as exhaustObs,
+  ignoreElements as ignoreElementsObs,
+  keep as keepObs,
+  map as mapObs,
+  mergeAll as mergeAllObs,
   ObservableOperator,
-  pipe as observablePipe,
+  observe as observeObs,
+  onComplete as onCompleteObs,
+  onError as onErrorObs,
+  onNext as onNextObs,
+  pipe as pipeObs,
+  repeat as repeatObs,
+  retry as retryObs,
+  scan as scanObs,
+  share as shareObs,
+  startWith as startWithObs,
+  subscribeOn as subscribeOnObs,
+  switchAll as switchAllObs,
+  take as takeObs,
+  takeLast as takeLastObs,
+  takeWhile as takeWhileObs,
+  withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class AsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;
@@ -39,7 +66,7 @@ const liftImpl = <TReq, T, TReqA, TA>(
     (iterator as any).dispatcher || ((req: TReq) => iterator.dispatch(req));
 
   const pipedObservable =
-    operator !== undefined ? observablePipe(observable, operator) : observable;
+    operator !== undefined ? pipeObs(observable, operator) : observable;
   const mappedDispatcher: (req: TReqA) => void =
     mapper !== undefined ? req => dispatcher(mapper(req)) : (dispatcher as any);
 
@@ -217,3 +244,112 @@ export function pipe(
 ) {
   return operators.reduce((acc, next) => next(acc), src);
 }
+
+export const concatAll = <TReq, T>(
+  maxBufferSize = Number.MAX_SAFE_INTEGER,
+): AsyncIteratorOperator<TReq, ObservableLike<T>, TReq, T> =>
+  lift(concatAllObs(maxBufferSize));
+
+export const distinctUntilChanged = <TReq, T>(
+  equals?: (a: T, b: T) => boolean,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(distinctUntilChangedObs(equals));
+
+export const exhaust = <TReq, T>(): AsyncIteratorOperator<
+  TReq,
+  ObservableLike<T>,
+  TReq,
+  T
+> => lift(exhaustObs());
+
+export const ignoreElements = <TReq, TA, TB>(): AsyncIteratorOperator<
+  TReq,
+  TA,
+  TReq,
+  TB
+> => lift(ignoreElementsObs());
+
+export const keep = <TReq, T>(
+  predicate: (data: T) => boolean,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(keepObs(predicate));
+
+export const map = <TReq, TA, TB>(
+  mapper: (data: TA) => TB,
+): AsyncIteratorOperator<TReq, TA, TReq, TB> => lift(mapObs(mapper));
+
+export const mergeAll = <TReq, T>(options?: {
+  maxBufferSize?: number;
+  maxConcurrency?: number;
+}): AsyncIteratorOperator<TReq, ObservableLike<T>, TReq, T> =>
+  lift(mergeAllObs(options));
+
+export const observe = <TReq, T>(
+  observer: ObserverLike<T>,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(observeObs(observer));
+
+export const onComplete = <TReq, T>(
+  onComplete: (err?: Error) => void,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(onCompleteObs(onComplete));
+
+export const onError = <TReq, T>(
+  onError: (err: Error) => void,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(onErrorObs(onError));
+
+export const onNext = <TReq, T>(
+  onNext: (next: T) => void,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(onNextObs(onNext));
+
+export const repeat = <TReq, T>(
+  predicate?: () => boolean,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(repeatObs(predicate));
+
+export const retry = <TReq, T>(
+  predicate?: (error: Error) => boolean,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(retryObs(predicate));
+
+export const scan = <TReq, T, TAcc>(
+  scanner: (acc: TAcc, next: T) => TAcc,
+  initialValue: TAcc,
+): AsyncIteratorOperator<TReq, T, TReq, TAcc> =>
+  lift(scanObs(scanner, initialValue));
+
+export const share = <TReq, T>(
+  scheduler: SchedulerLike,
+  replayCount?: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(shareObs(scheduler, replayCount));
+
+export const startWith = <TReq, T>(
+  value: T,
+  ...values: T[]
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(startWithObs(value, ...values));
+
+export const subscribeOn = <TReq, T>(
+  scheduler: SchedulerLike,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(subscribeOnObs(scheduler));
+
+export const switchAll = <TReq, T>(): AsyncIteratorOperator<
+  TReq,
+  ObservableLike<T>,
+  TReq,
+  T
+> => lift(switchAllObs());
+
+export const take = <TReq, T>(
+  count: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeObs(count));
+
+export const takeLast = <TReq, T>(
+  count: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeLastObs(count));
+
+export const takeWhile = <TReq, T>(
+  predicate: (next: T) => boolean,
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeWhileObs(predicate));
+
+export const withLatestFrom = <TReq, TA, TB, TC>(
+  other: ObservableLike<TB>,
+  selector: (a: TA, b: TB) => TC,
+): AsyncIteratorOperator<TReq, TA, TReq, TC> =>
+  lift(withLatestFromObs(other, selector));

@@ -10,11 +10,129 @@
 
 ### Functions
 
+* [concatAll](README.md#const-concatall)
+* [distinctUntilChanged](README.md#const-distinctuntilchanged)
+* [exhaust](README.md#const-exhaust)
+* [ignoreElements](README.md#const-ignoreelements)
+* [keep](README.md#const-keep)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
+* [map](README.md#const-map)
+* [mergeAll](README.md#const-mergeall)
+* [observe](README.md#const-observe)
+* [onComplete](README.md#const-oncomplete)
+* [onError](README.md#const-onerror)
+* [onNext](README.md#const-onnext)
 * [pipe](README.md#pipe)
+* [repeat](README.md#const-repeat)
+* [retry](README.md#const-retry)
+* [scan](README.md#const-scan)
+* [share](README.md#const-share)
+* [startWith](README.md#const-startwith)
+* [subscribeOn](README.md#const-subscribeon)
+* [switchAll](README.md#const-switchall)
+* [take](README.md#const-take)
+* [takeLast](README.md#const-takelast)
+* [takeWhile](README.md#const-takewhile)
+* [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
+
+### `Const` concatAll
+
+▸ **concatAll**<**TReq**, **T**>(`maxBufferSize`: number): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+___
+
+### `Const` distinctUntilChanged
+
+▸ **distinctUntilChanged**<**TReq**, **T**>(`equals?`: undefined | function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`equals?` | undefined &#124; function |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` exhaust
+
+▸ **exhaust**<**TReq**, **T**>(): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+___
+
+### `Const` ignoreElements
+
+▸ **ignoreElements**<**TReq**, **TA**, **TB**>(): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TB›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TB›*
+
+___
+
+### `Const` keep
+
+▸ **keep**<**TReq**, **T**>(`predicate`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`data`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
 
 ### `Const` lift
 
@@ -63,6 +181,152 @@ Name | Type |
 `req` | TReqA |
 
 **Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReqA, T›*
+
+___
+
+### `Const` map
+
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TB›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`data`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | TA |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TB›*
+
+___
+
+### `Const` mergeAll
+
+▸ **mergeAll**<**TReq**, **T**>(`options?`: undefined | object): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options?` | undefined &#124; object |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+___
+
+### `Const` observe
+
+▸ **observe**<**TReq**, **T**>(`observer`: ObserverLike‹T›): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observer` | ObserverLike‹T› |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` onComplete
+
+▸ **onComplete**<**TReq**, **T**>(`onComplete`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onComplete**: *function*
+
+▸ (`err?`: Error): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err?` | Error |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` onError
+
+▸ **onError**<**TReq**, **T**>(`onError`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onError**: *function*
+
+▸ (`err`: Error): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | Error |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` onNext
+
+▸ **onNext**<**TReq**, **T**>(`onNext`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onNext**: *function*
+
+▸ (`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
 
 ___
 
@@ -436,3 +700,249 @@ Name | Type |
 `op9` | [AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReqH, TH, TReqI, TI› |
 
 **Returns:** *AsyncIteratorLike‹TReqI, TI›*
+
+___
+
+### `Const` repeat
+
+▸ **repeat**<**TReq**, **T**>(`predicate?`: undefined | function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`predicate?` | undefined &#124; function |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` retry
+
+▸ **retry**<**TReq**, **T**>(`predicate?`: undefined | function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`predicate?` | undefined &#124; function |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` scan
+
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TAcc›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **scanner**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initialValue**: *TAcc*
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, TAcc›*
+
+___
+
+### `Const` share
+
+▸ **share**<**TReq**, **T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` startWith
+
+▸ **startWith**<**TReq**, **T**>(`value`: T, ...`values`: T[]): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+`...values` | T[] |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` subscribeOn
+
+▸ **subscribeOn**<**TReq**, **T**>(`scheduler`: SchedulerLike): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` switchAll
+
+▸ **switchAll**<**TReq**, **T**>(): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, ObservableLike‹T›, TReq, T›*
+
+___
+
+### `Const` take
+
+▸ **take**<**TReq**, **T**>(`count`: number): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`count` | number |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` takeLast
+
+▸ **takeLast**<**TReq**, **T**>(`count`: number): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`count` | number |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` takeWhile
+
+▸ **takeWhile**<**TReq**, **T**>(`predicate`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`next`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` withLatestFrom
+
+▸ **withLatestFrom**<**TReq**, **TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TC›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+**Parameters:**
+
+▪ **other**: *ObservableLike‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *TC*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, TA, TReq, TC›*
