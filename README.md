@@ -66,8 +66,6 @@ const subscription = connect(observable, normalPriority);
 
 ### React JS Integration
 * [@reactive-js/react-hooks](./packages/react-hooks/docs)
-* [@reactive-js/react-router-dom-location-resource](./packages/react-router-dom-location-resource/docs)
-* [@reactive-js/react-router-relative-uri](./packages/react-router-relative-uri/docs)
 * [@reactive-js/react-router-state-component](./packages/react-router-state-component/docs)
 * [@reactive-js/react-router](./packages/react-router/docs)
 
