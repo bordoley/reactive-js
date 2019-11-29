@@ -7,7 +7,7 @@ import { lift } from "./lift";
 import { ObservableOperator } from "./observable";
 
 class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
-  mapper: (data: TA) => TB;
+  private readonly mapper: (data: TA) => TB;
 
   constructor(delegate: SubscriberLike<TB>, mapper: (data: TA) => TB) {
     super(delegate);
