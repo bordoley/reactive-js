@@ -2,12 +2,37 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   ObservableLike,
   ObservableResourceLike,
+  ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 import {
+  concatAll as concatAllObs,
+  distinctUntilChanged as distinctUntilChangedObs,
+  exhaust as exhaustObs,
+  ignoreElements as ignoreElementsObs,
+  keep as keepObs,
+  map as mapObs,
+  mergeAll as mergeAllObs,
   ObservableOperator,
-  pipe as pipeObservable,
+  observe as observeObs,
+  onComplete as onCompleteObs,
+  onError as onErrorObs,
+  onNext as onNextObs,
+  pipe as pipeObs,
+  repeat as repeatObs,
+  retry as retryObs,
+  scan as scanObs,
+  share as shareObs,
+  startWith as startWithObs,
+  subscribeOn as subscribeOnObs,
+  switchAll as switchAllObs,
+  take as takeObs,
+  takeLast as takeLastObs,
+  takeWhile as takeWhileObs,
+  withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
+
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   get isDisposed() {
@@ -51,7 +76,7 @@ export interface ObservableResourceOperator<A, B> {
 export const lift = <A, B>(
   operator: ObservableOperator<A, B>,
 ): ObservableResourceOperator<A, B> => observableResource => {
-  const observable = pipeObservable(
+  const observable = pipeObs(
     observableResource instanceof LiftedObservableResource
       ? observableResource.observable
       : observableResource,
@@ -144,3 +169,98 @@ export function pipe(
 ): ObservableResourceLike<any> {
   return operators.reduce((acc, next) => next(acc), source);
 }
+
+export const concatAll = <T>(
+  maxBufferSize = Number.MAX_SAFE_INTEGER,
+): ObservableResourceOperator<ObservableLike<T>, T> =>
+  lift(concatAllObs(maxBufferSize));
+
+export const distinctUntilChanged = <T>(
+  equals?: (a: T, b: T) => boolean,
+): ObservableResourceOperator<T, T> => lift(distinctUntilChangedObs(equals));
+
+export const exhaust = <T>(): ObservableResourceOperator<
+  ObservableLike<T>,
+  T
+> => lift(exhaustObs());
+
+export const ignoreElements = <TA, TB>(): ObservableResourceOperator<TA, TB> =>
+  lift(ignoreElementsObs());
+
+export const keep = <T>(
+  predicate: (data: T) => boolean,
+): ObservableResourceOperator<T, T> => lift(keepObs(predicate));
+
+export const map = <TA, TB>(
+  mapper: (data: TA) => TB,
+): ObservableResourceOperator<TA, TB> => lift(mapObs(mapper));
+
+export const mergeAll = <T>(options?: {
+  maxBufferSize?: number;
+  maxConcurrency?: number;
+}): ObservableResourceOperator<ObservableLike<T>, T> =>
+  lift(mergeAllObs(options));
+
+export const observe = <T>(
+  observer: ObserverLike<T>,
+): ObservableResourceOperator<T, T> => lift(observeObs(observer));
+
+export const onComplete = <T>(
+  onComplete: (err?: Error) => void,
+): ObservableResourceOperator<T, T> => lift(onCompleteObs(onComplete));
+
+export const onError = <T>(
+  onError: (err: Error) => void,
+): ObservableResourceOperator<T, T> => lift(onErrorObs(onError));
+
+export const onNext = <T>(
+  onNext: (next: T) => void,
+): ObservableResourceOperator<T, T> => lift(onNextObs(onNext));
+
+export const repeat = <T>(
+  predicate?: () => boolean,
+): ObservableResourceOperator<T, T> => lift(repeatObs(predicate));
+
+export const retry = <T>(
+  predicate?: (error: Error) => boolean,
+): ObservableResourceOperator<T, T> => lift(retryObs(predicate));
+
+export const scan = <T, TAcc>(
+  scanner: (acc: TAcc, next: T) => TAcc,
+  initialValue: TAcc,
+): ObservableResourceOperator<T, TAcc> => lift(scanObs(scanner, initialValue));
+
+export const share = <T>(
+  scheduler: SchedulerLike,
+  replayCount?: number,
+): ObservableResourceOperator<T, T> => lift(shareObs(scheduler, replayCount));
+
+export const startWith = <T>(
+  value: T,
+  ...values: T[]
+): ObservableResourceOperator<T, T> => lift(startWithObs(value, ...values));
+
+export const subscribeOn = <T>(
+  scheduler: SchedulerLike,
+): ObservableResourceOperator<T, T> => lift(subscribeOnObs(scheduler));
+
+export const switchAll = <T>(): ObservableResourceOperator<
+  ObservableLike<T>,
+  T
+> => lift(switchAllObs());
+
+export const take = <T>(count: number): ObservableResourceOperator<T, T> =>
+  lift(takeObs(count));
+
+export const takeLast = <T>(count: number): ObservableResourceOperator<T, T> =>
+  lift(takeLastObs(count));
+
+export const takeWhile = <T>(
+  predicate: (next: T) => boolean,
+): ObservableResourceOperator<T, T> => lift(takeWhileObs(predicate));
+
+export const withLatestFrom = <TA, TB, TC>(
+  other: ObservableLike<TB>,
+  selector: (a: TA, b: TB) => TC,
+): ObservableResourceOperator<TA, TC> =>
+  lift(withLatestFromObs(other, selector));
