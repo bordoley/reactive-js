@@ -1,4 +1,3 @@
-import { fromEvent } from "./event";
 import {
   createStateStore,
   lift,
@@ -13,6 +12,7 @@ import {
   pipe,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { fromEvent } from "./event";
 
 export interface Location {
   readonly fragment: string;
@@ -45,8 +45,8 @@ const createOnPopstateUpdateURI = (setURI: (state: Location) => void) =>
   );
 
 const onStateChangeUpdateHistory: ObservableOperator<
-Location,
-Location
+  Location,
+  Location
 > = obs =>
   pipe(
     obs,
