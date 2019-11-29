@@ -1,11 +1,15 @@
 import { disposed } from "@reactive-js/disposable";
-import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift } from "./lift";
+import {
+  ObservableLike,
+  ObserverLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { create as createSerialDisposable } from "@reactive-js/serial-disposable";
 import { connect } from "./connect";
-import { ObservableOperator, pipe } from "./pipe";
+import { DelegatingSubscriber } from "./delegatingSubscriber";
+import { lift } from "./lift";
 import { observe } from "./observe";
+import { ObservableOperator, pipe } from "./pipe";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   static InnerObserver = class<T> implements ObserverLike<T> {

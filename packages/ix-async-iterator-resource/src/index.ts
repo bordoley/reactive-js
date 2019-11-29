@@ -1,5 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import {ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
   connect,
   createSubject,
@@ -12,8 +12,8 @@ import {
   SubjectResourceLike,
 } from "@reactive-js/rx-observable";
 
-import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {

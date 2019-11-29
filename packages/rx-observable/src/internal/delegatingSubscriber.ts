@@ -1,8 +1,5 @@
 import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
-import {
-  AbstractSubscriberImpl,
-  checkState,
-} from "./abstractSubscriber";
+import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 

@@ -1,5 +1,9 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import {ObservableLike, ObservableResourceLike,  SubscriberLike, } from "@reactive-js/rx-core";
+import {
+  ObservableLike,
+  ObservableResourceLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import {
   ObservableOperator,
   pipe as pipeObservable,

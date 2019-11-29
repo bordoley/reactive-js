@@ -1,4 +1,4 @@
-import {ObservableLike,  ObservableResourceLike } from "@reactive-js/rx-core";
+import { ObservableLike, ObservableResourceLike } from "@reactive-js/rx-core";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {
