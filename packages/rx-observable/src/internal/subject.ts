@@ -9,7 +9,7 @@ import {
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
-import { create as createSafeObserver } from "./safeObserver";
+import { createSafeObserver } from "./safeObserver";
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}

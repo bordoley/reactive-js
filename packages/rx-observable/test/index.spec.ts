@@ -7,7 +7,7 @@ import {
   concat,
   concatAll,
   connect,
-  create as createObservable,
+  createObservable,
   createSubject,
   distinctUntilChanged,
   empty,

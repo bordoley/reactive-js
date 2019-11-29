@@ -21,6 +21,7 @@
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
 * [connect](README.md#const-connect)
+* [createObservable](README.md#const-createobservable)
 * [createSubject](README.md#const-createsubject)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
@@ -340,6 +341,39 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *DisposableLike*
+
+___
+
+### `Const` createObservable
+
+▸ **createObservable**<**T**>(`onSubscribe`: function): *ObservableLike‹T›*
+
+Factory for safely creating new ObservableLikes. The onSubscribe function
+is called with an observer which may be notified from any context,
+queueing notifications for notification on the underlying SubscriberLike's
+scheduler. The onSubscribe function may return a DisposableOrTeardown instance
+which will be disposed when the underlying subscription is disposed.
+
+Note, implementations should not do significant blocking work in
+the onSubscribe function.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onSubscribe**: *function*
+
+▸ (`observer`: ObserverLike‹T›): *DisposableOrTeardown | void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observer` | ObserverLike‹T› |
+
+**Returns:** *ObservableLike‹T›*
 
 ___
 

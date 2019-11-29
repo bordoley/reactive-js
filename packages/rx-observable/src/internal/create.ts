@@ -4,7 +4,7 @@ import {
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
-import { create as createSafeObserver } from "./safeObserver";
+import { createSafeObserver } from "./safeObserver";
 
 /**
  * Factory for safely creating new ObservableLikes. The onSubscribe function
@@ -18,7 +18,7 @@ import { create as createSafeObserver } from "./safeObserver";
  *
  * @param onSubscribe
  */
-export const create = <T>(
+export const createObservable = <T>(
   onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
