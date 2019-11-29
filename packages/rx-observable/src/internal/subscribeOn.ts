@@ -7,4 +7,6 @@ import { ObservableOperator } from "./pipe";
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,
 ): ObservableOperator<T, T> => observable =>
-  createObservable(observer => connect(observe(observer)(observable), scheduler));
+  createObservable(observer =>
+    connect(observe(observer)(observable), scheduler),
+  );

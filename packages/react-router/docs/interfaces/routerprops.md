@@ -10,15 +10,16 @@
 
 ### Properties
 
-* [locationResourceFactory](routerprops.md#locationresourcefactory)
+* [locationStoreFactory](routerprops.md#locationstorefactory)
 * [notFound](routerprops.md#notfound)
 * [routes](routerprops.md#routes)
+* [scheduler](routerprops.md#optional-scheduler)
 
 ## Properties
 
-###  locationResourceFactory
+###  locationStoreFactory
 
-• **locationResourceFactory**: *function*
+• **locationStoreFactory**: *function*
 
 #### Type declaration:
 
@@ -35,3 +36,9 @@ ___
 ###  routes
 
 • **routes**: *keyof [string, React.ComponentType<RoutableComponentProps>][]*
+
+___
+
+### `Optional` scheduler
+
+• **scheduler**? : *SchedulerLike*

@@ -72,5 +72,6 @@ class SafeObserver<T> implements ObserverLike<T> {
 }
 
 /** @ignore */
-export const createSafeObserver = <T>(subscriber: SubscriberLike<T>): ObserverLike<T> =>
-  new SafeObserver(subscriber);
+export const createSafeObserver = <T>(
+  subscriber: SubscriberLike<T>,
+): ObserverLike<T> => new SafeObserver(subscriber);

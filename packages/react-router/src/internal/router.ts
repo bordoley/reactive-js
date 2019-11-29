@@ -2,6 +2,7 @@ import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
 import { useObservableResource } from "@reactive-js/react-hooks";
 import { map, pipe, scan } from "@reactive-js/rx-observable-resource";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement } from "react";
 
 export interface RelativeURI {
@@ -27,7 +28,7 @@ type RouteMap = {
 };
 
 export interface RouterProps {
-  readonly locationResourceFactory: () => AsyncIteratorResourceLike<
+  readonly locationStoreFactory: () => AsyncIteratorResourceLike<
     StateUpdater<RelativeURI>,
     RelativeURI
   >;
@@ -36,41 +37,46 @@ export interface RouterProps {
     string,
     React.ComponentType<RoutableComponentProps>,
   ][];
+  readonly scheduler?: SchedulerLike;
 }
 
 export const Router = (props: RouterProps) => {
-  const { locationResourceFactory, notFound, routes } = props;
+  const { locationStoreFactory, notFound, routes, scheduler } = props;
 
-  const element = useObservableResource(() => {
-    const routeMap: RouteMap = {};
-    for (let [path, component] of routes) {
-      routeMap[path] = component;
-    }
+  const element = useObservableResource(
+    () => {
+      const routeMap: RouteMap = {};
+      for (let [path, component] of routes) {
+        routeMap[path] = component;
+      }
 
-    const locationResource = locationResourceFactory();
+      const locationResource = locationStoreFactory();
 
-    const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
-      locationResource.dispatch(updater);
-    };
+      const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
+        locationResource.dispatch(updater);
+      };
 
-    const pairify = (
-      [_, oldState]: [RelativeURI | undefined, RelativeURI],
-      next: RelativeURI,
-    ): [RelativeURI | undefined, RelativeURI] =>
-      oldState === empty ? [undefined, next] : [oldState, next];
+      const pairify = (
+        [_, oldState]: [RelativeURI | undefined, RelativeURI],
+        next: RelativeURI,
+      ): [RelativeURI | undefined, RelativeURI] =>
+        oldState === empty ? [undefined, next] : [oldState, next];
 
-    return pipe(
-      locationResource,
-      scan(pairify, [undefined, empty]),
-      map(([referer, uri]) =>
-        createElement(routeMap[uri.path] || notFound, {
-          referer,
-          uri,
-          uriUpdater,
-        }),
-      ),
-    );
-  }, [locationResourceFactory, notFound, routes]);
+      return pipe(
+        locationResource,
+        scan(pairify, [undefined, empty]),
+        map(([referer, uri]) =>
+          createElement(routeMap[uri.path] || notFound, {
+            referer,
+            uri,
+            uriUpdater,
+          }),
+        ),
+      );
+    },
+    [locationStoreFactory, notFound, routes],
+    scheduler,
+  );
 
   return element || null;
 };
