@@ -1,4 +1,4 @@
-[@reactive-js/ix-async-iterator-resource](../README.md) › [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
+[@reactive-js/ix-core](../README.md) › [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
 
 # Interface: AsyncIteratorResourceLike <**TReq, T**>
 
@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* AsyncIteratorLike‹TReq, T›
+  ↳ [AsyncIteratorLike](asynciteratorlike.md)‹TReq, T›
 
 * ObservableResourceLike‹T›
 

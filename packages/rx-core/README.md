@@ -1,3 +1,1 @@
-# @reactive-js/rx-observer
-
-Observer interface defintion.
+# @reactive-js/rx-core

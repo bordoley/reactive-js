@@ -1,6 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import {ObservableLike,  ObservableResourceLike, SubscriberLike } from "@reactive-js/rx-core";
-import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
+import {ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
   connect,
   createSubject,
@@ -14,11 +13,7 @@ import {
 } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
-
-/** @noInheritDoc */
-export interface AsyncIteratorResourceLike<TReq, T>
-  extends AsyncIteratorLike<TReq, T>,
-    ObservableResourceLike<T> {}
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
 
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {

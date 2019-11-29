@@ -1,8 +1,7 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import { AsyncIteratorLike } from "@reactive-js/ix-async-iterator";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix-async-iterator-resource";
+import { AsyncIteratorLike, AsyncIteratorResourceLike } from "@reactive-js/ix-core";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import {  ObservableLike, ObservableResourceLike } from "@reactive-js/rx-core";
+import { ObservableLike, ObservableResourceLike } from "@reactive-js/rx-core";
 import {
   connect,
   observe,

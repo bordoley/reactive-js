@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/react-router",
+  "name": "@reactive-js/ix-core",
   "version": "0.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -16,17 +16,10 @@
     "url": "https://github.com/bordoley/rx-min.git"
   },
   "dependencies": {
-    "@reactive-js/ix-async-iterator-resource": "0.0.0",
-    "@reactive-js/ix-core": "0.0.0",
-    "@reactive-js/react-hooks": "0.0.0",
-    "@reactive-js/react-router-relative-uri": "0.0.0",
-    "@reactive-js/rx-observable": "0.0.0",
-    "@reactive-js/rx-observable-resource": "0.0.0",
-    "react": "^16.11.0",
+    "@reactive-js/rx-core": "0.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11",
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0"
@@ -36,5 +29,8 @@
     "docs": "typedoc",
     "test": "jest --passWithNoTests",
     "test-coverage": "jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }
