@@ -190,4 +190,5 @@ class SerialDisposableImpl implements SerialDisposableLike {
 /**
  * Creates a new SerialDisposableLike instance containing a disposed instance.
  */
-export const createSerialDisposable = (): SerialDisposableLike => new SerialDisposableImpl();
+export const createSerialDisposable = (): SerialDisposableLike =>
+  new SerialDisposableImpl();

@@ -1,4 +1,9 @@
-import { createDisposable, createSerialDisposable, disposed, throwIfDisposed } from "../src/index";
+import {
+  createDisposable,
+  createSerialDisposable,
+  disposed,
+  throwIfDisposed,
+} from "../src/index";
 
 test("throwIfDisposed", () => {
   expect(() => throwIfDisposed(disposed)).toThrow();
@@ -15,7 +20,12 @@ describe("Disposable", () => {
   test("add", () => {
     const disposable = createDisposable();
 
-    const children = [createDisposable(), createDisposable(), createDisposable(), createDisposable()];
+    const children = [
+      createDisposable(),
+      createDisposable(),
+      createDisposable(),
+      createDisposable(),
+    ];
 
     for (let child of children) {
       disposable.add(child);
@@ -57,7 +67,6 @@ describe("Disposable", () => {
     disposable.dispose();
   });
 });
-
 
 describe("SerialDisposable", () => {
   test("create", () => {

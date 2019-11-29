@@ -6,9 +6,9 @@ import {
 import {
   createDisposable,
   createSerialDisposable,
-  SerialDisposableLike,
   DisposableLike,
   DisposableOrTeardown,
+  SerialDisposableLike,
   throwIfDisposed,
 } from "@reactive-js/disposable";
 

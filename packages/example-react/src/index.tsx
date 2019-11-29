@@ -52,11 +52,11 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route2", Component1],
 ];
 
-const locationResourceFactory = () => createLocationStore(normalPriority);
+const locationStoreFactory = () => createLocationStore(normalPriority);
 
 render(
   <Router
-    locationResourceFactory={locationResourceFactory}
+    locationStoreFactory={locationStoreFactory}
     notFound={NotFound}
     routes={routes}
   />,
