@@ -1,6 +1,9 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
-import { SchedulerContinuation, SchedulerContinuationResult } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuation,
+  SchedulerContinuationResult,
+} from "@reactive-js/scheduler";
 
 class SafeObserver<T> implements ObserverLike<T> {
   private get remainingEvents() {
@@ -69,6 +72,5 @@ class SafeObserver<T> implements ObserverLike<T> {
 }
 
 /** @ignore */
-export const create = <T>(
-  subscriber: SubscriberLike<T>,
-): ObserverLike<T> => new SafeObserver(subscriber);
+export const create = <T>(subscriber: SubscriberLike<T>): ObserverLike<T> =>
+  new SafeObserver(subscriber);

@@ -1,8 +1,8 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
-import { ObservableOperator } from "./pipe";
-import { observe } from "./observe";
 import { create } from "./create";
+import { observe } from "./observe";
+import { ObservableOperator } from "./pipe";
 
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,

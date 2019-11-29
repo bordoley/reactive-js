@@ -3,7 +3,12 @@ import {
   DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
-import { ObservableLike, ObservableResourceLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ObservableLike,
+  ObservableResourceLike,
+  ObserverLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { create as createSafeObserver } from "./safeObserver";
 
 /** @noInheritDoc */
@@ -11,7 +16,8 @@ export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
 
 /** @noInheritDoc */
 export interface SubjectResourceLike<T>
-  extends SubjectLike<T>, ObservableResourceLike<T> {}
+  extends SubjectLike<T>,
+    ObservableResourceLike<T> {}
 
 abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
   get isDisposed() {

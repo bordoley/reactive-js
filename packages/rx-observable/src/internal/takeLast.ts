@@ -1,10 +1,10 @@
 import { SubscriberLike } from "@reactive-js/rx-core";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift, SubscriberOperator } from "./lift";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
 } from "@reactive-js/scheduler";
+import { DelegatingSubscriber } from "./delegatingSubscriber";
+import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {

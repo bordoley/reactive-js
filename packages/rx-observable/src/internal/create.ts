@@ -1,6 +1,10 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
+import {
+  ObservableLike,
+  ObserverLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { create as createSafeObserver } from "./safeObserver";
-import { ObservableLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 
 /**
  * Factory for safely creating new ObservableLikes. The onSubscribe function

@@ -1,9 +1,9 @@
 import { disposed } from "@reactive-js/disposable";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
 import { observe } from "./observe";
 import { ObservableOperator, pipe } from "./pipe";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import { createSubject, SubjectResourceLike } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {

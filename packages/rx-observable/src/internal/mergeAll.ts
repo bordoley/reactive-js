@@ -1,9 +1,9 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
-import { connect } from "./connect";
-import { ObservableOperator, pipe } from "./pipe";
 import { observe } from "./observe";
+import { ObservableOperator, pipe } from "./pipe";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount: number = 0;
