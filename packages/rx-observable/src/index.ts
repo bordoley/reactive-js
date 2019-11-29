@@ -1,5 +1,5 @@
 export { connect } from "./internal/connect";
-export { create } from "./internal/create";
+export { createObservable } from "./internal/create";
 export { lift, SubscriberOperator } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";

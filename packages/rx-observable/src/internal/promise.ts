@@ -1,7 +1,7 @@
 import { ObservableLike, ObserverLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
-import { create } from "./create";
+import { createObservable } from "./create";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
 
@@ -22,7 +22,7 @@ export const fromPromiseFactory = <T>(
     doSubscribe(observer);
   };
 
-  return create(onSubscribe);
+  return createObservable(onSubscribe);
 };
 
 export const toPromise = <T>(
