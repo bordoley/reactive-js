@@ -32,6 +32,3 @@ const operator = <TA, TB>(
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
 ): ObservableOperator<TA, TB> => lift(operator(mapper));
-
-export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
-  map(_ => value);
