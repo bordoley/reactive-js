@@ -1,16 +1,16 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react-hooks";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
-import { create as createLocationResource } from "@reactive-js/react-router-dom-location-resource";
-import { RelativeURI } from "@reactive-js/react-router-relative-uri";
+import { createLocationStore, Location } from "@reactive-js/dom";
+import { normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/rx-observable";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
+  uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<RelativeURI>) => () =>
+  const liftUpdater = (updater: StateUpdater<Location>) => () =>
     uriUpdater(updater);
   const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
 
@@ -52,9 +52,11 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route2", Component1],
 ];
 
+const locationResourceFactory = () => createLocationStore(normalPriority);
+
 render(
   <Router
-    locationResourceFactory={createLocationResource}
+    locationResourceFactory={locationResourceFactory}
     notFound={NotFound}
     routes={routes}
   />,

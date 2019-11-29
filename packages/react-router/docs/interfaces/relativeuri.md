@@ -1,4 +1,4 @@
-[@reactive-js/react-router-relative-uri](../README.md) › [RelativeURI](relativeuri.md)
+[@reactive-js/react-router](../README.md) › [RelativeURI](relativeuri.md)
 
 # Interface: RelativeURI
 

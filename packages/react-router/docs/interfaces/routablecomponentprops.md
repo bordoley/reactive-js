@@ -18,13 +18,13 @@
 
 ###  referer
 
-• **referer**: *RelativeURI | undefined*
+• **referer**: *[RelativeURI](relativeuri.md) | undefined*
 
 ___
 
 ###  uri
 
-• **uri**: *RelativeURI*
+• **uri**: *[RelativeURI](relativeuri.md)*
 
 ___
 
@@ -34,10 +34,10 @@ ___
 
 #### Type declaration:
 
-▸ (`updater`: StateUpdater‹RelativeURI›): *void*
+▸ (`updater`: StateUpdater‹[RelativeURI](relativeuri.md)›): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`updater` | StateUpdater‹RelativeURI› |
+`updater` | StateUpdater‹[RelativeURI](relativeuri.md)› |
