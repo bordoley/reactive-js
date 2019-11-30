@@ -31,6 +31,10 @@ export const createObservable = <T>(
       const onSubscribeSubscription = onSubscribe(observer);
       if (onSubscribeSubscription !== undefined) {
         subscriber.add(onSubscribeSubscription);
+
+        if (!(onSubscribeSubscription instanceof Function)) {
+          onSubscribeSubscription.add(subscriber);
+        }
       }
     } catch (error) {
       observer.complete(error);
