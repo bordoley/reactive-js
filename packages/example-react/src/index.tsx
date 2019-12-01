@@ -1,9 +1,9 @@
-import { createLocationStore, Location } from "@reactive-js/web";
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react-hooks";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/rx-observable";
+import { createLocationStore, Location } from "@reactive-js/web";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 

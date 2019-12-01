@@ -5,7 +5,7 @@ import {
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
-import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import {
   combineLatest,
   concat,
