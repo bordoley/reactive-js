@@ -58,7 +58,8 @@ const onStateChangeUpdateHistory: ObservableOperator<
         const { path, query, fragment } = uri;
         let uriString = path;
         uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
-        uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
+        uriString =
+          fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
         window.history.pushState(undefined, "", uriString);
       }
     }),
