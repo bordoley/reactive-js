@@ -29,10 +29,15 @@ import {
   take as takeObs,
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
+  throttleFirst as throttleFirstObs,
+  throttleFirstTime as throttleFirstTimeObs,
+  throttleLast as throttleLastObs,
+  throttleLastTime as throttleLastTimeObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { number } from "prop-types";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   get isDisposed() {
@@ -258,6 +263,22 @@ export const takeLast = <T>(count: number): ObservableResourceOperator<T, T> =>
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
 ): ObservableResourceOperator<T, T> => lift(takeWhileObs(predicate));
+
+export const throttleFirst = <T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): ObservableResourceOperator<T, T> => lift(throttleFirstObs(durationSelector));
+
+export const throttleFirstTime = <T>(
+  duration: number,
+): ObservableResourceOperator<T, T> => lift(throttleFirstTimeObs(duration));
+
+export const throttleLast = <T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): ObservableResourceOperator<T, T> => lift(throttleLastObs(durationSelector));
+
+export const throttleLastTime = <T>(
+  duration: number,
+): ObservableResourceOperator<T, T> => lift(throttleLastTimeObs(duration));
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,

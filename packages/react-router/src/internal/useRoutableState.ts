@@ -41,8 +41,8 @@ export const useRoutableState = <TState>(
   serialize: (state: TState) => string,
   stateIsQuery = false,
 ): [TState, (updater: StateUpdater<TState>) => void] => {
-  const { uri, uriUpdater} = props;
-  
+  const { uri, uriUpdater } = props;
+
   const state = useMemo(() => {
     const serialized = stateIsQuery ? uri.query : uri.fragment;
     return parse(serialized);
