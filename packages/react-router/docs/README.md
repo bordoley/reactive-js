@@ -14,7 +14,7 @@
 ### Functions
 
 * [Router](README.md#const-router)
-* [createRoutableStateComponent](README.md#const-createroutablestatecomponent)
+* [useRoutableState](README.md#const-useroutablestate)
 
 ## Functions
 
@@ -32,9 +32,9 @@ Name | Type |
 
 ___
 
-### `Const` createRoutableStateComponent
+### `Const` useRoutableState
 
-▸ **createRoutableStateComponent**<**TState**>(`component`: React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››, `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *React.ComponentType‹[RoutableComponentProps](interfaces/routablecomponentprops.md)›*
+▸ **useRoutableState**<**TState**>(`__namedParameters`: object, `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
 
 **Type parameters:**
 
@@ -42,7 +42,7 @@ ___
 
 **Parameters:**
 
-▪ **component**: *React.ComponentType‹[RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)‹TState››*
+▪ **__namedParameters**: *object*
 
 ▪ **parse**: *function*
 
@@ -66,4 +66,4 @@ Name | Type |
 
 ▪`Default value`  **stateIsQuery**: *boolean*= false
 
-**Returns:** *React.ComponentType‹[RoutableComponentProps](interfaces/routablecomponentprops.md)›*
+**Returns:** *[TState, function]*

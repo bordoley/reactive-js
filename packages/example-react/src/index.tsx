@@ -1,9 +1,8 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react";
 import {
-  createRoutableStateComponent,
+  useRoutableState,
   RoutableComponentProps,
-  RoutableStateComponentProps,
   Router,
 } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
@@ -53,17 +52,23 @@ const Component1 = (props: RoutableComponentProps) => {
   );
 };
 
-const StatefulComponent = (props: RoutableStateComponentProps<string>) => {
-  const { dispatch, goTo, referer, state, uri } = props;
+const StatefulComponent = (props: RoutableComponentProps) => {
+  const [state, dispatch] = useRoutableState(
+    props,
+    decodeURIComponent,
+    encodeURIComponent
+  );
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = ev.target;
-      dispatch(_ => value)
+      dispatch(_ => value);
     },
     [dispatch],
   );
 
+  // FIXME: In the real world, maintain cursor position:
+  // http://dimafeldman.com/js/maintain-cursor-position-after-changing-an-input-value-programatically/
   return (
     <div>
       <input type="text" onChange={onChange} value={state}></input>
@@ -74,10 +79,7 @@ const StatefulComponent = (props: RoutableStateComponentProps<string>) => {
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route1", Component1],
   ["/route2", Component1],
-  [
-    "/route3",
-    createRoutableStateComponent(StatefulComponent, decodeURIComponent, encodeURIComponent),
-  ],
+  ["/route3", StatefulComponent],
 ];
 
 const locationStoreFactory = () => createLocationStore(normalPriority);

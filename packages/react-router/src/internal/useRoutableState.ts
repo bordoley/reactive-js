@@ -1,13 +1,10 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
-import { createElement, useMemo } from "react";
+import { useMemo } from "react";
 import { RelativeURI, RoutableComponentProps } from "./router";
 
 export interface RoutableStateComponentProps<TState> {
   readonly dispatch: (updater: StateUpdater<TState>) => void;
-  readonly goTo: (uri: RelativeURI) => void;
-  readonly referer: RelativeURI | undefined;
   readonly state: TState;
-  readonly uri: RelativeURI;
 }
 
 const createURIStateUpdater = <TState>(
@@ -38,48 +35,25 @@ const createURIStateUpdater = <TState>(
   }
 };
 
-export const createRoutableStateComponent = <TState>(
-  component: React.ComponentType<RoutableStateComponentProps<TState>>,
+export const useRoutableState = <TState>(
+  { uri, uriUpdater}: RoutableComponentProps,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery = false,
-): React.ComponentType<RoutableComponentProps> => {
-  const createCallbacks = (
-    uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
-  ) => {
-    const goTo = (uri: RelativeURI) => uriUpdater(_ => uri);
+): [TState, (updater: StateUpdater<TState>) => void] => {
+  const state = useMemo(() => {
+    const serialized = stateIsQuery ? uri.query : uri.fragment;
+    return parse(serialized);
+  }, [uri]);
 
-    const dispatch = (stateUpdater: StateUpdater<TState>) => {
+  const dispatch = useMemo(
+    () => (stateUpdater: StateUpdater<TState>) => {
       uriUpdater(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );
-    };
+    },
+    [uriUpdater],
+  );
 
-    return { goTo, dispatch };
-  };
-
-  const RoutableStateComponent = ({
-    referer,
-    uri,
-    uriUpdater,
-  }: RoutableComponentProps) => {
-    const state = useMemo(() => {
-      const serialized = stateIsQuery ? uri.query : uri.fragment;
-      return parse(serialized);
-    }, [uri]);
-
-    const { goTo, dispatch } = useMemo(() => createCallbacks(uriUpdater), [
-      uriUpdater,
-    ]);
-
-    return createElement(component, {
-      uri,
-      referer,
-      goTo,
-      state,
-      dispatch,
-    });
-  };
-
-  return RoutableStateComponent;
+  return [state, dispatch];
 };
