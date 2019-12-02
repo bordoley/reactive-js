@@ -14,6 +14,8 @@ An observer of push-based notifications.
 
   ↳ [SubscriberLike](subscriberlike.md)
 
+  ↳ [SubjectLike](subjectlike.md)
+
 ## Index
 
 ### Methods

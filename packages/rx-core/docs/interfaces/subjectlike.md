@@ -1,4 +1,4 @@
-[@reactive-js/rx-observable](../README.md) › [SubjectLike](subjectlike.md)
+[@reactive-js/rx-core](../README.md) › [SubjectLike](subjectlike.md)
 
 # Interface: SubjectLike <**T**>
 
@@ -8,9 +8,9 @@
 
 ## Hierarchy
 
-* ObserverLike‹T›
+* [ObserverLike](observerlike.md)‹T›
 
-* ObservableLike‹T›
+* [ObservableLike](observablelike.md)‹T›
 
   ↳ **SubjectLike**
 

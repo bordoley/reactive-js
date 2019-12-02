@@ -14,6 +14,8 @@ The source of notifications which may be observed by a SubscriberLike instance.
 
   ↳ [ObservableResourceLike](observableresourcelike.md)
 
+  ↳ [SubjectLike](subjectlike.md)
+
 ## Index
 
 ### Methods

@@ -11,8 +11,6 @@
 ### Interfaces
 
 * [ObservableOperator](interfaces/observableoperator.md)
-* [SubjectLike](interfaces/subjectlike.md)
-* [SubjectResourceLike](interfaces/subjectresourcelike.md)
 * [SubscriberOperator](interfaces/subscriberoperator.md)
 
 ### Functions
@@ -379,7 +377,7 @@ ___
 
 ### `Const` createSubject
 
-▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **createSubject**<**T**>(`replayCount`: number): *SubjectResourceLike‹T›*
 
 **Type parameters:**
 
@@ -391,7 +389,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `replayCount` | number | 0 |
 
-**Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+**Returns:** *SubjectResourceLike‹T›*
 
 ___
 

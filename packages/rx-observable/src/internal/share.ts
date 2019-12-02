@@ -1,10 +1,10 @@
 import { disposed } from "@reactive-js/disposable";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ObservableLike, SubjectResourceLike, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
 import { observe } from "./observe";
 import { ObservableOperator, pipe } from "./pipe";
-import { createSubject, SubjectResourceLike } from "./subject";
+import { createSubject } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: () => SubjectResourceLike<T>;

@@ -3,6 +3,7 @@ import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
 import {
   ObservableLike,
   ObserverLike,
+  SubjectResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 import {
@@ -26,7 +27,6 @@ import {
   scan as scanObs,
   share as shareObs,
   startWith as startWithObs,
-  SubjectResourceLike,
   subscribeOn as subscribeOnObs,
   switchAll as switchAllObs,
   take as takeObs,
