@@ -11,6 +11,7 @@
 ### Functions
 
 * [createLocationStore](README.md#const-createlocationstore)
+* [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [fromEvent](README.md#const-fromevent)
 
 ## Functions
@@ -26,6 +27,20 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+
+___
+
+### `Const` createSchedulerWithPriority
+
+▸ **createSchedulerWithPriority**(`priority`: number): *SchedulerLike*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`priority` | number |
+
+**Returns:** *SchedulerLike*
 
 ___
 
