@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bordoley/rx-min.git"
+    "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
     "@reactive-js/rx-core": "0.0.0",

@@ -30,10 +30,13 @@ const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
   (a.path === b.path && a.query === b.query && a.fragment === b.fragment);
 
+const chopLeadingChar = (str: string) =>
+  str.length > 0 ? str.substring(1) : "";
+
 const getCurrentLocation = (): Location => {
   const path = window.location.pathname;
-  const query = window.location.search;
-  const fragment = window.location.hash;
+  const query = chopLeadingChar(window.location.search);
+  const fragment = chopLeadingChar(window.location.hash);
   return { path, query, fragment };
 };
 
@@ -53,7 +56,9 @@ const onStateChangeUpdateHistory: ObservableOperator<
     onNext((uri: Location) => {
       if (!locationEquals(uri, getCurrentLocation())) {
         const { path, query, fragment } = uri;
-        const uriString = path + query + fragment;
+        let uriString = path;
+        uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
+        uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
         window.history.pushState(undefined, "", uriString);
       }
     }),

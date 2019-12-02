@@ -40,7 +40,7 @@ export interface RouterProps {
   readonly scheduler?: SchedulerLike;
 }
 
-export const Router = (props: RouterProps) => {
+export const Router = function Router(props: RouterProps) {
   const { locationStoreFactory, notFound, routes, scheduler } = props;
 
   const element = useObservableResource(
