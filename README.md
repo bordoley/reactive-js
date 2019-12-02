@@ -61,7 +61,7 @@ const subscription = connect(observable, normalPriority);
 * [@reactive-js/disposable](./packages/disposable/docs)
 
 ### React JS Integration
-* [@reactive-js/react-hooks](./packages/react-hooks/docs)
+* [@reactive-js/react](./packages/react/docs)
 * [@reactive-js/react-router](./packages/react-router/docs)
 * [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
 
