@@ -5,7 +5,7 @@ import {
 } from "@reactive-js/ix-core";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { ObservableLike, ObservableResourceLike } from "@reactive-js/rx-core";
-import { connect, observe, pipe } from "@reactive-js/rx-observable";
+import { connect, observe, pipe, throttleTime } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -36,6 +36,7 @@ const connectObservable = <T>(
   connect(
     pipe(
       observable,
+      throttleTime(16),
       observe({
         next: (data: T) => updateState(_ => data),
         complete: (error?: Error) => updateError(_ => error),
