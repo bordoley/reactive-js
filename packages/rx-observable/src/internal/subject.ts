@@ -4,8 +4,8 @@ import {
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
 import {
-  SubjectResourceLike,
   ObserverLike,
+  SubjectResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx-core";
 import { createSafeObserver } from "./safeObserver";

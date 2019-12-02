@@ -1,5 +1,9 @@
 import { disposed } from "@reactive-js/disposable";
-import { ObservableLike, SubjectResourceLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ObservableLike,
+  SubjectResourceLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
 import { observe } from "./observe";
