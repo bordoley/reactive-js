@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/perf-testing-scheduler",
+  "name": "@reactive-js/schedulers",
   "version": "0.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -20,8 +20,18 @@
     "@reactive-js/scheduler": "0.0.0",
     "tslib": "^1.10.0"
   },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
   "scripts": {
     "build": "tsc",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "test": "jest --passWithNoTests",
+    "test-coverage": "jest --passWithNoTests --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }

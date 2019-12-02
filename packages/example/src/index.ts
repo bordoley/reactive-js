@@ -8,9 +8,9 @@ import {
   pipe,
 } from "@reactive-js/rx-observable";
 
-import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
+import { createSchedulerWithPriority } from "@reactive-js/node";
 
-const scheduler = createEventLoopScheduler(500);
+const scheduler = createSchedulerWithPriority(500);
 
 const subscription = connect(
   pipe(

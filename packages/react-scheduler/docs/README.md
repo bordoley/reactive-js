@@ -16,7 +16,8 @@
 
 ### `Const` idlePriority
 
-• **idlePriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+• **idlePriority**: *SchedulerLike* =  createSchedulerWithPriority(
+  priorityScheduler,
   unstable_IdlePriority,
 )
 
@@ -24,7 +25,8 @@ ___
 
 ### `Const` immediatePriority
 
-• **immediatePriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+• **immediatePriority**: *SchedulerLike* =  createSchedulerWithPriority(
+  priorityScheduler,
   unstable_ImmediatePriority,
 )
 
@@ -32,7 +34,8 @@ ___
 
 ### `Const` lowPriority
 
-• **lowPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+• **lowPriority**: *SchedulerLike* =  createSchedulerWithPriority(
+  priorityScheduler,
   unstable_LowPriority,
 )
 
@@ -40,7 +43,8 @@ ___
 
 ### `Const` normalPriority
 
-• **normalPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+• **normalPriority**: *SchedulerLike* =  createSchedulerWithPriority(
+  priorityScheduler,
   unstable_NormalPriority,
 )
 
@@ -48,6 +52,7 @@ ___
 
 ### `Const` userBlockingPriority
 
-• **userBlockingPriority**: *SchedulerLike* =  new ReactSchedulerImpl(
+• **userBlockingPriority**: *SchedulerLike* =  createSchedulerWithPriority(
+  priorityScheduler,
   unstable_UserBlockingPriority,
 )
