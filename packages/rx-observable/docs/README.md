@@ -51,10 +51,12 @@
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
+* [throttle](README.md#const-throttle)
 * [throttleFirst](README.md#const-throttlefirst)
 * [throttleFirstTime](README.md#const-throttlefirsttime)
 * [throttleLast](README.md#const-throttlelast)
 * [throttleLastTime](README.md#const-throttlelasttime)
+* [throttleTime](README.md#const-throttletime)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -1240,6 +1242,30 @@ Name | Type |
 
 ___
 
+### `Const` throttle
+
+▸ **throttle**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **durationSelector**: *function*
+
+▸ (`next`: T): *ObservableLike‹any›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
 ### `Const` throttleFirst
 
 ▸ **throttleFirst**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
@@ -1309,6 +1335,24 @@ ___
 ### `Const` throttleLastTime
 
 ▸ **throttleLastTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` throttleTime
+
+▸ **throttleTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 **Type parameters:**
 

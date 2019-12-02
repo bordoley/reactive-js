@@ -33,6 +33,8 @@ export {
   throttleFirstTime,
   throttleLast,
   throttleLastTime,
+  throttle,
+  throttleTime,
 } from "./internal/throttle";
 export { throws } from "./internal/throws";
 export { withLatestFrom } from "./internal/withLatestFrom";

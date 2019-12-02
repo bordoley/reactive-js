@@ -29,6 +29,8 @@ import {
   take as takeObs,
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
+  throttle as throttleObs,
+  throttleTime as throttleTimeObs,
   throttleFirst as throttleFirstObs,
   throttleFirstTime as throttleFirstTimeObs,
   throttleLast as throttleLastObs,
@@ -267,6 +269,14 @@ export const takeWhile = <T>(
 export const throttleFirst = <T>(
   durationSelector: (next: T) => ObservableLike<any>,
 ): ObservableResourceOperator<T, T> => lift(throttleFirstObs(durationSelector));
+
+export const throttle = <T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): ObservableResourceOperator<T, T> => lift(throttleObs(durationSelector));
+
+export const throttleTime = <T>(
+  duration: number,
+): ObservableResourceOperator<T, T> => lift(throttleTimeObs(duration));
 
 export const throttleFirstTime = <T>(
   duration: number,
