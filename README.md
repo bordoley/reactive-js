@@ -55,7 +55,7 @@ const subscription = connect(observable, normalPriority);
 
 ### Schedulers
 * [@reactive-js/scheduler](./packages/scheduler/docs)
-* [@reactive-js/schedulers](./packages/eventloop-scheduler/docs)
+* [@reactive-js/schedulers](./packages/schedulers/docs)
 
 ### Resource Management
 * [@reactive-js/disposable](./packages/disposable/docs)
@@ -69,7 +69,7 @@ const subscription = connect(observable, normalPriority);
 * [@reactive-js/web](./packages/web/docs)
 
 ### Node Integration
-* [@reactive-js/web](./packages/node/docs)
+* [@reactive-js/node](./packages/node/docs)
 
 ## RxJS/TC39 Comparison
 
