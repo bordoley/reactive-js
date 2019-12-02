@@ -39,6 +39,7 @@
 * [throttleLast](README.md#const-throttlelast)
 * [throttleLastTime](README.md#const-throttlelasttime)
 * [throttleTime](README.md#const-throttletime)
+* [timeout](README.md#const-timeout)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -852,6 +853,24 @@ ___
 ### `Const` throttleTime
 
 ▸ **throttleTime**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+
+___
+
+### `Const` timeout
+
+▸ **timeout**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 
 **Type parameters:**
 

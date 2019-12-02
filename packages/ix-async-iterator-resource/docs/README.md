@@ -43,6 +43,7 @@
 * [throttleLast](README.md#const-throttlelast)
 * [throttleLastTime](README.md#const-throttlelasttime)
 * [throttleTime](README.md#const-throttletime)
+* [timeout](README.md#const-timeout)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -1078,6 +1079,26 @@ ___
 ### `Const` throttleTime
 
 ▸ **throttleTime**<**TReq**, **T**>(`duration`: number): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` timeout
+
+▸ **timeout**<**TReq**, **T**>(`duration`: number): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
 
 **Type parameters:**
 

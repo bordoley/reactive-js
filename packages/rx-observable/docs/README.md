@@ -58,6 +58,7 @@
 * [throttleLastTime](README.md#const-throttlelasttime)
 * [throttleTime](README.md#const-throttletime)
 * [throws](README.md#const-throws)
+* [timeout](README.md#const-timeout)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
@@ -1384,6 +1385,24 @@ Name | Type |
 `delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
+
+___
+
+### `Const` timeout
+
+▸ **timeout**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 ___
 
