@@ -49,7 +49,7 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
         );
       }
     };
-    
+
     return callback;
   }
 
