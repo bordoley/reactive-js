@@ -55,10 +55,7 @@ const subscription = connect(observable, normalPriority);
 
 ### Schedulers
 * [@reactive-js/scheduler](./packages/scheduler/docs)
-* [@reactive-js/eventloop-scheduler](./packages/eventloop-scheduler/docs)
-* [@reactive-js/perf-testing-scheduler](./packages/perf-testing-scheduler/docs)
-* [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
-* [@reactive-js/virtualtime-scheduler](./packages/virtualtime-scheduler/docs)
+* [@reactive-js/schedulers](./packages/eventloop-scheduler/docs)
 
 ### Resource Management
 * [@reactive-js/disposable](./packages/disposable/docs)
@@ -66,9 +63,13 @@ const subscription = connect(observable, normalPriority);
 ### React JS Integration
 * [@reactive-js/react-hooks](./packages/react-hooks/docs)
 * [@reactive-js/react-router](./packages/react-router/docs)
+* [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
 
 ### Web Integration
 * [@reactive-js/web](./packages/web/docs)
+
+### Node Integration
+* [@reactive-js/web](./packages/node/docs)
 
 ## RxJS/TC39 Comparison
 

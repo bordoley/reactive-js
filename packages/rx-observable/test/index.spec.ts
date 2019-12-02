@@ -1,11 +1,7 @@
 import { createDisposable, disposed } from "@reactive-js/disposable";
-import { create as createEventLoopScheduler } from "@reactive-js/eventloop-scheduler";
-import {
-  ObservableLike,
-  ObserverLike,
-  SubscriberLike,
-} from "@reactive-js/rx-core";
-import { create as createVirtualTimeScheduler } from "@reactive-js/virtualtime-scheduler";
+import { createSchedulerWithPriority } from "@reactive-js/node";
+import { ObservableLike, ObserverLike } from "@reactive-js/rx-core";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import {
   combineLatest,
   concat,
@@ -40,24 +36,7 @@ import {
   withLatestFrom,
 } from "../src/index";
 
-const createMockSubscriber = <T>(): SubscriberLike<T> => {
-  const subscription = createDisposable();
-
-  return {
-    get isDisposed() {
-      return subscription.isDisposed;
-    },
-    add: disp => subscription.add(disp),
-    dispose: () => subscription.dispose(),
-    remove: disp => subscription.remove(disp),
-    isConnected: true,
-    inScheduledContinuation: true,
-    now: 0,
-    schedule: (c, d?, p?) => disposed,
-    next: jest.fn(),
-    complete: jest.fn(),
-  };
-};
+const nodeScheduler = createSchedulerWithPriority(500);
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),
@@ -393,17 +372,15 @@ describe("fromArray", () => {
 
 describe("fromPromiseFactory", () => {
   test("when the promise resolves", async () => {
-    const scheduler = createEventLoopScheduler();
     const factory = () => Promise.resolve(1);
-    const result = await toPromise(fromPromiseFactory(factory), scheduler);
+    const result = await toPromise(fromPromiseFactory(factory), nodeScheduler);
     expect(result).toEqual(1);
   });
 
   test("when the promise throws", () => {
-    const scheduler = createEventLoopScheduler();
     const error = new Error();
     const factory = () => Promise.reject(error);
-    const promise = toPromise(fromPromiseFactory(factory), scheduler);
+    const promise = toPromise(fromPromiseFactory(factory), nodeScheduler);
     return expect(promise).rejects.toThrow(error);
   });
 });
@@ -775,8 +752,7 @@ describe("takeLast", () => {
 
 describe("toPromise", () => {
   test("when the observable produces no values", () => {
-    const scheduler = createEventLoopScheduler();
-    const promise = toPromise(empty(), scheduler);
+    const promise = toPromise(empty(), nodeScheduler);
     return expect(promise).rejects.toThrow();
   });
 });
