@@ -1,4 +1,4 @@
-[@reactive-js/rx-observable](../README.md) › [SubjectResourceLike](subjectresourcelike.md)
+[@reactive-js/rx-core](../README.md) › [SubjectResourceLike](subjectresourcelike.md)
 
 # Interface: SubjectResourceLike <**T**>
 
@@ -10,6 +10,6 @@
 
   ↳ [SubjectLike](subjectlike.md)‹T›
 
-* ObservableResourceLike‹T›
+  ↳ [ObservableResourceLike](observableresourcelike.md)‹T›
 
   ↳ **SubjectResourceLike**

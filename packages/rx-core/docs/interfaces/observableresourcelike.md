@@ -13,3 +13,5 @@
 * DisposableLike
 
   ↳ **ObservableResourceLike**
+
+  ↳ [SubjectResourceLike](subjectresourcelike.md)

@@ -50,3 +50,11 @@ export interface ObservableLike<T> {
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
+
+/** @noInheritDoc */
+export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
+
+/** @noInheritDoc */
+export interface SubjectResourceLike<T>
+  extends SubjectLike<T>,
+    ObservableResourceLike<T> {}

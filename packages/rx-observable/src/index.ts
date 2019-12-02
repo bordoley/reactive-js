@@ -23,11 +23,7 @@ export { never } from "./internal/never";
 export { ObservableOperator, pipe } from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
-export {
-  createSubject,
-  SubjectLike,
-  SubjectResourceLike,
-} from "./internal/subject";
+export { createSubject } from "./internal/subject";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
