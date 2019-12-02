@@ -28,6 +28,8 @@ import {
   take as takeObs,
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
+  throttle as throttleObs,
+  throttleTime as throttleTimeObs,
   throttleFirst as throttleFirstObs,
   throttleFirstTime as throttleFirstTimeObs,
   throttleLast as throttleLastObs,
@@ -351,6 +353,16 @@ export const takeLast = <TReq, T>(
 export const takeWhile = <TReq, T>(
   predicate: (next: T) => boolean,
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeWhileObs(predicate));
+
+export const throttle = <TReq, T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleObs(durationSelector));
+
+export const throttleTime = <TReq, T>(
+  duration: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleTimeObs(duration));
 
 export const throttleFirst = <TReq, T>(
   durationSelector: (next: T) => ObservableLike<any>,

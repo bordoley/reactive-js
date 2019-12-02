@@ -37,10 +37,12 @@
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
+* [throttle](README.md#const-throttle)
 * [throttleFirst](README.md#const-throttlefirst)
 * [throttleFirstTime](README.md#const-throttlefirsttime)
 * [throttleLast](README.md#const-throttlelast)
 * [throttleLastTime](README.md#const-throttlelasttime)
+* [throttleTime](README.md#const-throttletime)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -955,6 +957,32 @@ Name | Type |
 
 ___
 
+### `Const` throttle
+
+▸ **throttle**<**TReq**, **T**>(`durationSelector`: function): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **durationSelector**: *function*
+
+▸ (`next`: T): *ObservableLike‹any›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+___
+
 ### `Const` throttleFirst
 
 ▸ **throttleFirst**<**TReq**, **T**>(`durationSelector`: function): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
@@ -1030,6 +1058,26 @@ ___
 ### `Const` throttleLastTime
 
 ▸ **throttleLastTime**<**TReq**, **T**>(`duration`: number): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` throttleTime
+
+▸ **throttleTime**<**TReq**, **T**>(`duration`: number): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
 
 **Type parameters:**
 

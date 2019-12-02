@@ -31,11 +31,11 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     if (this.durationSubscription.disposable.isDisposed) {
-      this.delegate.next(data);
       this.durationSubscription.disposable = connect(
         this.durationSelector(data),
         this,
       );
+      this.delegate.next(data);
     }
   }
 }
@@ -115,4 +115,64 @@ export const throttleLastTime = <T>(
 ): ObservableOperator<T, T> => {
   const durationSelector = (_: T) => empty(duration);
   return throttleLast(durationSelector);
+};
+
+class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
+  private readonly durationSelector: (next: T) => ObservableLike<any>;
+  private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+  private value: [T] | undefined = undefined;
+
+  constructor(
+    delegate: SubscriberLike<T>,
+    durationSelector: (next: T) => ObservableLike<any>,
+  ) {
+    super(delegate);
+    this.durationSelector = durationSelector;
+
+    this.add(this.durationSubscription);
+  }
+
+  protected onComplete(error?: Error) {
+    this.durationSubscription.dispose();
+    if (error === undefined) {
+      this.notifyNext();
+    }
+    this.delegate.complete(error);
+  }
+
+  protected onNext(data: T) {
+    this.value = [data];
+    if (this.durationSubscription.disposable.isDisposed) {
+      this.notifyNext();
+    }
+  }
+
+  private readonly notifyNext = () => {
+    const value = this.value;
+    if (value !== undefined) {
+      this.value = undefined;
+      const [next] = value;
+
+      this.durationSubscription.disposable = connect(
+        pipe(this.durationSelector(next), onComplete(this.notifyNext)),
+        this,
+      );
+
+      this.delegate.next(next);
+    }
+  };
+}
+
+const throttleOperator = <T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): SubscriberOperator<T, T> => subscriber =>
+  new ThrottleSubscriber(subscriber, durationSelector);
+
+export const throttle = <T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): ObservableOperator<T, T> => lift(throttleOperator(durationSelector));
+
+export const throttleTime = <T>(duration: number): ObservableOperator<T, T> => {
+  const durationSelector = (_: T) => empty(duration);
+  return throttle(durationSelector);
 };
