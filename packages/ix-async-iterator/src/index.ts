@@ -28,6 +28,10 @@ import {
   take as takeObs,
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
+  throttleFirst as throttleFirstObs,
+  throttleFirstTime as throttleFirstTimeObs,
+  throttleLast as throttleLastObs,
+  throttleLastTime as throttleLastTimeObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -347,6 +351,26 @@ export const takeLast = <TReq, T>(
 export const takeWhile = <TReq, T>(
   predicate: (next: T) => boolean,
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeWhileObs(predicate));
+
+export const throttleFirst = <TReq, T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleFirstObs(durationSelector));
+
+export const throttleFirstTime = <TReq, T>(
+  duration: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleFirstTimeObs(duration));
+
+export const throttleLast = <TReq, T>(
+  durationSelector: (next: T) => ObservableLike<any>,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleLastObs(durationSelector));
+
+export const throttleLastTime = <TReq, T>(
+  duration: number,
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(throttleLastTimeObs(duration));
 
 export const withLatestFrom = <TReq, TA, TB, TC>(
   other: ObservableLike<TB>,

@@ -1,9 +1,9 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react";
 import {
-  useRoutableState,
   RoutableComponentProps,
   Router,
+  useRoutableState,
 } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/rx-observable";
@@ -56,7 +56,7 @@ const StatefulComponent = (props: RoutableComponentProps) => {
   const [state, dispatch] = useRoutableState(
     props,
     decodeURIComponent,
-    encodeURIComponent
+    encodeURIComponent,
   );
 
   const onChange = useCallback(

@@ -28,6 +28,12 @@ export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
+export {
+  throttleFirst,
+  throttleFirstTime,
+  throttleLast,
+  throttleLastTime,
+} from "./internal/throttle";
 export { throws } from "./internal/throws";
 export { withLatestFrom } from "./internal/withLatestFrom";
 export { subscribeOn } from "./internal/subscribeOn";

@@ -51,6 +51,10 @@
 * [take](README.md#const-take)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
+* [throttleFirst](README.md#const-throttlefirst)
+* [throttleFirstTime](README.md#const-throttlefirsttime)
+* [throttleLast](README.md#const-throttlelast)
+* [throttleLastTime](README.md#const-throttlelasttime)
 * [throws](README.md#const-throws)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -1231,6 +1235,90 @@ ___
 Name | Type |
 ------ | ------ |
 `next` | T |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` throttleFirst
+
+▸ **throttleFirst**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **durationSelector**: *function*
+
+▸ (`next`: T): *ObservableLike‹any›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` throttleFirstTime
+
+▸ **throttleFirstTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` throttleLast
+
+▸ **throttleLast**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **durationSelector**: *function*
+
+▸ (`next`: T): *ObservableLike‹any›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+___
+
+### `Const` throttleLastTime
+
+▸ **throttleLastTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`duration` | number |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
