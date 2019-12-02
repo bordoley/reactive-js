@@ -34,7 +34,7 @@ ___
 
 ### `Const` useRoutableState
 
-▸ **useRoutableState**<**TState**>(`__namedParameters`: object, `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
+▸ **useRoutableState**<**TState**>(`props`: [RoutableComponentProps](interfaces/routablecomponentprops.md), `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
 
 **Type parameters:**
 
@@ -42,7 +42,7 @@ ___
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **props**: *[RoutableComponentProps](interfaces/routablecomponentprops.md)*
 
 ▪ **parse**: *function*
 
