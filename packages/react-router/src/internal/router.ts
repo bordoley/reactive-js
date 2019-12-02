@@ -1,6 +1,6 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
-import { useObservableResource } from "@reactive-js/react-hooks";
+import { useObservableResource } from "@reactive-js/react";
 import { map, pipe, scan } from "@reactive-js/rx-observable-resource";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement } from "react";

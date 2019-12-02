@@ -1,6 +1,6 @@
-[@reactive-js/react-hooks](README.md)
+[@reactive-js/react](README.md)
 
-# @reactive-js/react-hooks
+# @reactive-js/react
 
 ## Index
 

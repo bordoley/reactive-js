@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/react-hooks",
+  "name": "@reactive-js/react",
   "version": "0.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

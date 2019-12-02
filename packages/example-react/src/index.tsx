@@ -1,5 +1,5 @@
 import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
-import { useObservable } from "@reactive-js/react-hooks";
+import { useObservable } from "@reactive-js/react";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/rx-observable";

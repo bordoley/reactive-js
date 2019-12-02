@@ -46,6 +46,7 @@ export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
+/** @noInheritDoc */
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
