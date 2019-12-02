@@ -60,16 +60,18 @@ const subscription = connect(observable, normalPriority);
 ### Resource Management
 * [@reactive-js/disposable](./packages/disposable/docs)
 
-### React JS Integration
+### Platform Integrations
+
+#### Node.js
+* [@reactive-js/node](./packages/node/docs)
+
+#### React
 * [@reactive-js/react](./packages/react/docs)
 * [@reactive-js/react-router](./packages/react-router/docs)
 * [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
 
-### Web Integration
+#### Web
 * [@reactive-js/web](./packages/web/docs)
-
-### Node Integration
-* [@reactive-js/node](./packages/node/docs)
 
 ## RxJS/TC39 Comparison
 
