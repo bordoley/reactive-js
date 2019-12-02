@@ -28,7 +28,7 @@
   "scripts": {
     "build": "tsc",
     "docs": "typedoc",
-    "test": "node --inspect-brk node_modules/.bin/jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "test-coverage": "jest --passWithNoTests --coverage"
   },
   "jest": {

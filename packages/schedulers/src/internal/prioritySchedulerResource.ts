@@ -3,19 +3,9 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   SerialDisposableLike,
-  throwIfDisposed,
 } from "@reactive-js/disposable";
 
-import {
-  SchedulerContinuation,
-  SchedulerLike,
-  SchedulerResourceLike,
-} from "@reactive-js/scheduler";
-
-import {
-  createSchedulerWithPriority,
-  PrioritySchedulerLike,
-} from "./priorityScheduler";
+import { PrioritySchedulerLike } from "./priorityScheduler";
 
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
@@ -24,11 +14,18 @@ export interface PrioritySchedulerResourceLike
   extends PrioritySchedulerLike,
     DisposableLike {}
 
-export interface PrioritySchedulerHostLike {
+export type HostSchedulerContinuation = () =>
+  | HostSchedulerContinuation
+  | undefined;
+
+export interface HostSchedulerLike {
   readonly now: number;
   readonly shouldYield: boolean;
 
-  schedule(continuation: () => void, delay?: number): DisposableLike;
+  schedule(
+    continuation: HostSchedulerContinuation,
+    delay?: number,
+  ): DisposableLike;
 }
 
 type ScheduledTask = {
@@ -54,35 +51,34 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
   }
 
   get now(): number {
-    return this.hostConfig.now;
+    return this.hostScheduler.now;
   }
 
   get shouldYield(): boolean {
     const now = this.now;
-    const firstTask = this.queue.peek();
+    const nextTask = this.queue.peek();
     return (
-      (firstTask !== this.currentTask &&
-        this.currentTask !== undefined &&
-        firstTask !== undefined &&
-        firstTask.startTime <= now) || // &&
-      // firstTask.expirationTime < currentTask.expirationTime
-      this.hostConfig.shouldYield
+      (this.currentTask !== undefined &&
+        nextTask !== undefined &&
+        this.currentTask !== nextTask &&
+        nextTask.startTime <= now &&
+        nextTask.priority < this.currentTask.priority) ||
+      this.hostScheduler.shouldYield
     );
   }
   private currentTask: ScheduledTask | undefined;
 
   private readonly disposable: SerialDisposableLike;
-
-  private readonly hostConfig: PrioritySchedulerHostLike;
+  private readonly hostScheduler: HostSchedulerLike;
   private readonly queue: PriorityQueueLike<
     ScheduledTask
   > = createPriorityQueue(comparator);
   private taskIDCounter = 0;
 
-  constructor(hostConfig: PrioritySchedulerHostLike) {
+  constructor(hostScheduler: HostSchedulerLike) {
     this.disposable = createSerialDisposable();
     this.disposable.add(() => this.queue.clear());
-    this.hostConfig = hostConfig;
+    this.hostScheduler = hostScheduler;
   }
 
   add(
@@ -119,32 +115,34 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     this.scheduleDrainQueue(task);
   }
 
-  private drainQueue = async () => {
-    while (this.queue.count > 0) {
-      const task = this.queue.peek() as ScheduledTask;
-      if (task.dueTime <= this.now) {
-        this.queue.pop();
+  private readonly drainQueue: HostSchedulerContinuation = () => {
+    const task = this.queue.peek();
+    if (task !== undefined && task.dueTime <= this.now) {
+      this.queue.pop();
 
-        this.currentTask = task;
-        task.continuation();
-        this.currentTask = undefined;
-
-        // Not sure this is really necessary, but let's yield back
-        // to the JS microtask queue between continuation executions
-        // to avoid hogging too much cpu.
-        await Promise.resolve();
-      } else {
-        this.scheduleDrainQueue(task);
-        return;
-      }
+      this.currentTask = task;
+      task.continuation();
+      this.currentTask = undefined;
     }
+
+    const nextTask = this.queue.peek();
+    if (
+      nextTask !== undefined &&
+      (this.hostScheduler.shouldYield || nextTask.dueTime > this.now)
+    ) {
+      this.scheduleDrainQueue(nextTask);
+    }
+
+    return nextTask !== undefined && nextTask.dueTime <= this.now
+      ? this.drainQueue
+      : undefined;
   };
 
   private scheduleDrainQueue(task: ScheduledTask) {
     const head = this.queue.peek();
     if (head === task) {
       const delay = Math.max(task.dueTime - this.now, 0);
-      this.disposable.disposable = this.hostConfig.schedule(
+      this.disposable.disposable = this.hostScheduler.schedule(
         this.drainQueue,
         delay,
       );
@@ -153,66 +151,6 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
 }
 
 export const createPrioritySchedulerResource = (
-  hostConfig: PrioritySchedulerHostLike,
+  hostScheduler: HostSchedulerLike,
 ): PrioritySchedulerResourceLike =>
-  new PrioritySchedulerResourceImpl(hostConfig);
-
-class SchedulerResourceWithPriorityImpl implements SchedulerResourceLike {
-  get inScheduledContinuation(): boolean {
-    return this.scheduler.inScheduledContinuation;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-  get now(): number {
-    return this.scheduler.now;
-  }
-
-  private readonly disposable: DisposableLike;
-  private readonly scheduler: SchedulerLike;
-
-  constructor(scheduler: SchedulerLike, disposable: DisposableLike) {
-    this.scheduler = scheduler;
-    this.disposable = disposable;
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): void {
-    this.disposable.add(disposable, ...disposables);
-  }
-  dispose(): void {
-    this.disposable.dispose();
-  }
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): void {
-    this.disposable.remove(disposable, ...disposables);
-  }
-  schedule(
-    continuation: SchedulerContinuation,
-    delay?: number,
-  ): DisposableLike {
-    throwIfDisposed(this);
-    return this.scheduler.schedule(continuation, delay);
-  }
-}
-
-export const createSchedulerResourceWithPriority = (
-  prioritySchedulerResourceFactory: () => PrioritySchedulerResourceLike,
-  priority: number,
-): SchedulerResourceLike => {
-  const prioritySchedulerResource = prioritySchedulerResourceFactory();
-  const scheduler = createSchedulerWithPriority(
-    prioritySchedulerResource,
-    priority,
-  );
-
-  return new SchedulerResourceWithPriorityImpl(
-    scheduler,
-    prioritySchedulerResource,
-  );
-};
+  new PrioritySchedulerResourceImpl(hostScheduler);

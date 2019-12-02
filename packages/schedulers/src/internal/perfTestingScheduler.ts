@@ -10,12 +10,11 @@ import {
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
-/** @noInheritDoc */
-export interface PerfTestingSchedulerLike extends SchedulerResourceLike {
-  run(): void;
-}
+import {
+  VirtualTimeSchedulerLike
+} from "./virtualTimeScheduler";
 
-class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
+class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
   get isDisposed() {
     return this.disposable.isDisposed;
   }
@@ -74,5 +73,5 @@ class PerfTestingSchedulerImpl implements PerfTestingSchedulerLike {
   static shouldYield = () => false;
 }
 
-export const create = (): PerfTestingSchedulerLike =>
+export const createPerfTestingScheduler = (): VirtualTimeSchedulerLike =>
   new PerfTestingSchedulerImpl();

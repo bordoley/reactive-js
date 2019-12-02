@@ -13,9 +13,10 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
   createSchedulerWithPriority,
+  PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
 
-const priorityScheduler = {
+const priorityScheduler: PrioritySchedulerLike = {
   get now(): number {
     return unstable_now();
   },
@@ -24,36 +25,40 @@ const priorityScheduler = {
     return unstable_shouldYield();
   },
 
-  schedule(continuation: () => void, priority: number, delay: number = 0): void {
+  schedule(
+    continuation: () => void,
+    priority: number,
+    delay: number = 0,
+  ): void {
     unstable_scheduleCallback(
       priority,
       continuation,
       delay > 0 ? { delay } : undefined,
     );
   },
-}
+};
 
 export const idlePriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_IdlePriority,
 );
 
-export const immediatePriority: SchedulerLike =  createSchedulerWithPriority(
+export const immediatePriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_ImmediatePriority,
 );
 
-export const normalPriority: SchedulerLike =  createSchedulerWithPriority(
+export const normalPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_NormalPriority,
 );
 
-export const lowPriority: SchedulerLike =  createSchedulerWithPriority(
+export const lowPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_LowPriority,
 );
 
-export const userBlockingPriority: SchedulerLike =  createSchedulerWithPriority(
+export const userBlockingPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_UserBlockingPriority,
 );

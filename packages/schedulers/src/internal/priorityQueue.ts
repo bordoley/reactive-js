@@ -7,15 +7,6 @@ export interface PriorityQueueLike<T> {
   push(item: T): void;
 }
 
-const swap = <T>(values: Array<T>, fstIndex: number, sndIndex: number) => {
-  const fst = values[fstIndex];
-  const snd = values[sndIndex];
-  values[sndIndex] = fst;
-  values[fstIndex] = snd;
-};
-
-const computeParentIndex = (index: number) => Math.floor(index / 2);
-
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   get count(): number {
     return this.values.length;
@@ -63,21 +54,27 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
     const { values, compare } = this;
     const length = values.length;
 
-    let index = 0;
-    while (index < length) {
+    for (let index = 0; index < length; ) {
       const leftIndex = (index + 1) * 2 - 1;
       const rightIndex = leftIndex + 1;
 
       const left = values[leftIndex];
       const right = values[rightIndex];
 
-      if (right !== undefined && compare(right, item) < 0) {
-        // If you have a right, you have a left...
-        swap(values, index, rightIndex);
+      if (left !== undefined && compare(left, item) < 0) {
+        if (right !== undefined && compare(right, left) < 0) {
+          values[index] = right;
+          values[rightIndex] = item;
+          index = rightIndex;
+        } else {
+          values[index] = left;
+          values[leftIndex] = item;
+          index = leftIndex;
+        }
+      } else if (right !== undefined && compare(right, item) < 0) {
+        values[index] = right;
+        values[rightIndex] = item;
         index = rightIndex;
-      } else if (left !== undefined && compare(left, item) < 0) {
-        swap(values, index, leftIndex);
-        index = leftIndex;
       } else {
         break;
       }
@@ -86,16 +83,20 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
 
   private siftUp(item: T) {
     const { values, compare } = this;
+    let index = values.length - 1;
 
-    for (
-      // tslint:disable-next-line:one-variable-per-declaration
-      let index = values.length - 1, parentIndex = computeParentIndex(index);
-      compare(values[parentIndex], item) > 0;
-      index = parentIndex, parentIndex = computeParentIndex(index)
-    ) {
+    while (true) {
+      const parentIndex = Math.floor((index - 1) / 2);
       const parent = values[parentIndex];
-      values[parentIndex] = item;
-      values[index] = parent;
+      if (parent !== undefined && compare(parent, item) > 0) {
+        // The parent is larger. Swap positions.
+        values[parentIndex] = item;
+        values[index] = parent;
+        index = parentIndex;
+      } else {
+        // The parent is smaller. Exit.
+        return;
+      }
     }
   }
 }

@@ -6,28 +6,35 @@ import {
 } from "@reactive-js/disposable";
 import {
   createPrioritySchedulerResource,
-  PrioritySchedulerHostLike,
+  HostSchedulerContinuation,
+  HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "./prioritySchedulerResource";
 
 import {
-  SchedulerLike,
   SchedulerContinuation,
+  SchedulerLike,
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-import { createSchedulerWithPriority } from "./priorityScheduler";
+import { createSchedulerWithPriority } from "./schedulerWithPriority";
 
-interface VirtualTimePrioritySchedulerResourceLike
-  extends PrioritySchedulerResourceLike {
-  run(): void;
-}
+type VirtualTask = {
+  continuation: HostSchedulerContinuation;
+  disposable: DisposableLike;
+  dueTime: number;
+  id: number;
+};
 
-type VirtualTask = [number, () => void, DisposableLike];
-const comparator = ([tA]: VirtualTask, [tB]: VirtualTask) => tA - tB;
+const comparator = (a: VirtualTask, b: VirtualTask) => {
+  let diff = 0;
+  diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
+  diff = diff !== 0 ? diff : a.id - b.id;
+  return diff;
+};
 
 class VirtualTimeSchedulerHostResource
-  implements PrioritySchedulerHostLike, DisposableLike {
+  implements HostSchedulerLike, DisposableLike {
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
@@ -40,11 +47,12 @@ class VirtualTimeSchedulerHostResource
     this.microTaskTicks++;
     return this.microTaskTicks >= this.maxMicroTaskTicks;
   }
-
   private _now: number = 0;
   private readonly disposable = createDisposable();
   private readonly maxMicroTaskTicks: number;
   private microTaskTicks: number = 0;
+
+  private taskIDCount = 0;
   private readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
@@ -71,22 +79,42 @@ class VirtualTimeSchedulerHostResource
 
   run() {
     while (this.taskQueue.count > 0) {
-      const [now, work, disposable] = (this.taskQueue.pop() as VirtualTask);
-      this._now = now;
+      const {
+        dueTime,
+        continuation,
+        disposable,
+      } = this.taskQueue.pop() as VirtualTask;
+      this._now = dueTime;
       this.microTaskTicks = 0;
 
       if (!disposable.isDisposed) {
-        work();
+        let result: HostSchedulerContinuation | undefined = continuation;
+        while (result !== undefined) {
+          result = continuation();
+        }
       }
     }
   }
 
-  schedule(continuation: () => void, delay: number = 0): DisposableLike {
+  schedule(
+    continuation: HostSchedulerContinuation,
+    delay: number = 0,
+  ): DisposableLike {
     const disposable = createDisposable();
-    const work: VirtualTask = [this.now + delay, continuation, disposable];
+    const work: VirtualTask = {
+      id: this.taskIDCount++,
+      dueTime: this.now + delay,
+      continuation,
+      disposable,
+    };
     this.taskQueue.push(work);
     return disposable;
   }
+}
+
+interface VirtualTimePrioritySchedulerResourceLike
+  extends PrioritySchedulerResourceLike {
+  run(): void;
 }
 
 class VirtualTimePrioritySchedulerResource
@@ -101,15 +129,19 @@ class VirtualTimePrioritySchedulerResource
     return this.priorityScheduler.shouldYield;
   }
 
-  private readonly hostConfig: VirtualTimeSchedulerHostResource;
+  private readonly hostScheduler: VirtualTimeSchedulerHostResource;
   private readonly priorityScheduler: PrioritySchedulerResourceLike;
 
   constructor(maxMicroTaskTicks: number) {
-    this.hostConfig = new VirtualTimeSchedulerHostResource(maxMicroTaskTicks);
-    this.priorityScheduler = createPrioritySchedulerResource(this.hostConfig);
-    this.hostConfig.add(this.priorityScheduler);
+    this.hostScheduler = new VirtualTimeSchedulerHostResource(
+      maxMicroTaskTicks,
+    );
+    this.priorityScheduler = createPrioritySchedulerResource(
+      this.hostScheduler,
+    );
+    this.hostScheduler.add(this.priorityScheduler);
     this.priorityScheduler.add(() =>
-      this.hostConfig.remove(this.priorityScheduler),
+      this.hostScheduler.remove(this.priorityScheduler),
     );
   }
 
@@ -117,23 +149,23 @@ class VirtualTimePrioritySchedulerResource
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): void {
-    this.hostConfig.add(disposable, ...disposables);
+    this.hostScheduler.add(disposable, ...disposables);
   }
 
   dispose(): void {
-    this.hostConfig.dispose();
+    this.hostScheduler.dispose();
   }
 
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): void {
-    this.hostConfig.remove(disposable, ...disposables);
+    this.hostScheduler.remove(disposable, ...disposables);
   }
 
   run(): void {
     throwIfDisposed(this);
-    this.hostConfig.run();
+    this.hostScheduler.run();
     this.dispose();
   }
 
@@ -147,7 +179,6 @@ const createVirtualTimePriorityScheduler = (
 ): VirtualTimePrioritySchedulerResourceLike =>
   new VirtualTimePrioritySchedulerResource(maxMicroTaskTicks);
 
-  
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerLike extends SchedulerResourceLike {
   run(): void;
