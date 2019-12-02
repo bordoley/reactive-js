@@ -2,8 +2,20 @@ import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useObservable } from "@reactive-js/react";
 import { RoutableComponentProps, Router } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { generate, connect, pipe, map, fromArray, exhaust, onNext } from "@reactive-js/rx-observable";
-import { createLocationStore, Location, createSchedulerWithPriority } from "@reactive-js/web";
+import {
+  connect,
+  exhaust,
+  fromArray,
+  generate,
+  map,
+  onNext,
+  pipe,
+} from "@reactive-js/rx-observable";
+import {
+  createLocationStore,
+  createSchedulerWithPriority,
+  Location,
+} from "@reactive-js/web";
 import { ComponentType, default as React, useMemo } from "react";
 import { render } from "react-dom";
 
@@ -62,7 +74,6 @@ render(
   />,
   document.getElementById("root") as HTMLElement,
 );
-
 
 const scheduler = createSchedulerWithPriority(500);
 

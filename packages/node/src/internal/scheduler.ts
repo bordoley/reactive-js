@@ -39,7 +39,7 @@ class NodeSchedulerHost implements HostSchedulerLike {
     };
 
     const disposable = createDisposable();
-    if (delay > 0 ) {
+    if (delay > 0) {
       const timeout = setTimeout(scheduledContinuation, delay);
       disposable.add(() => clearTimeout(timeout));
     } else {

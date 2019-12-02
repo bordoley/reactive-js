@@ -127,17 +127,17 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
 
     const nextTask = this.queue.peek();
     if (nextTask !== undefined) {
-      const shouldScheduleNextTask = 
+      const shouldScheduleNextTask =
         this.hostScheduler.shouldYield || nextTask.dueTime > this.now;
 
       if (shouldScheduleNextTask) {
         this.scheduleDrainQueue(nextTask);
-        return undefined
+        return undefined;
       } else {
         return this.drainQueue;
       }
     } else {
-      return undefined
+      return undefined;
     }
   };
 

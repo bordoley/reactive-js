@@ -10,9 +10,7 @@ import {
   SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
-import {
-  VirtualTimeSchedulerLike
-} from "./virtualTimeScheduler";
+import { VirtualTimeSchedulerLike } from "./virtualTimeScheduler";
 
 class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
   get isDisposed() {
