@@ -14,7 +14,7 @@ const swap = <T>(values: Array<T>, fstIndex: number, sndIndex: number) => {
   values[fstIndex] = snd;
 };
 
-const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
+const computeParentIndex = (index: number) => Math.floor(index / 2);
 
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   get count(): number {
@@ -89,11 +89,13 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
 
     for (
       // tslint:disable-next-line:one-variable-per-declaration
-      let index = values.length, parentIndex = computeParentIndex(index);
+      let index = values.length - 1, parentIndex = computeParentIndex(index);
       compare(values[parentIndex], item) > 0;
       index = parentIndex, parentIndex = computeParentIndex(index)
     ) {
-      swap(values, parentIndex, index);
+      const parent = values[parentIndex];
+      values[parentIndex] = item;
+      values[index] = parent;
     }
   }
 }
