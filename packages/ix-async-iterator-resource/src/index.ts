@@ -38,6 +38,7 @@ import {
   throttleFirstTime as throttleFirstTimeObs,
   throttleLast as throttleLastObs,
   throttleLastTime as throttleLastTimeObs,
+  timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -460,6 +461,11 @@ export const throttleLastTime = <TReq, T>(
   duration: number,
 ): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
   lift(throttleLastTimeObs(duration));
+
+export const timeout = <TReq, T>(
+  duration: number,
+): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+  lift(timeoutObs(duration));
 
 export const withLatestFrom = <TReq, TA, TB, TC>(
   other: ObservableLike<TB>,

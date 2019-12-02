@@ -24,6 +24,8 @@ export { ObservableOperator, pipe } from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
 export { createSubject } from "./internal/subject";
+export { share } from "./internal/share";
+export { subscribeOn } from "./internal/subscribeOn";
 export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
@@ -37,6 +39,5 @@ export {
   throttleTime,
 } from "./internal/throttle";
 export { throws } from "./internal/throws";
+export { timeout } from "./internal/timeout";
 export { withLatestFrom } from "./internal/withLatestFrom";
-export { subscribeOn } from "./internal/subscribeOn";
-export { share } from "./internal/share";
