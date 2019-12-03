@@ -27,7 +27,7 @@ const useDispose = (disposable: DisposableLike) => {
   );
 };
 
-export const useDisposable = <T extends DisposableLike>(
+export const useResource = <T extends DisposableLike>(
   factory: () => T,
   deps: readonly any[] | undefined,
 ): T => {
@@ -64,7 +64,7 @@ export const useObservable = <T>(
 
   const observable = useMemo(factory, deps);
 
-  useDisposable(
+  useResource(
     () => connectObservable(observable, updateState, updateError, scheduler),
     [observable, updateState, updateError, scheduler],
   );
@@ -82,8 +82,7 @@ export const useObservableResource = <T>(
   deps: readonly any[] | undefined,
   scheduler?: SchedulerLike,
 ): T | undefined => {
-  const observableResource = useMemo(factory, deps);
-  useDispose(observableResource);
+  const observableResource = useResource(factory, deps);
   return useObservable(
     () => observableResource,
     [observableResource],
@@ -107,8 +106,7 @@ export const useAsyncIteratorResource = <TReq, T>(
   deps: readonly any[] | undefined,
   scheduler?: SchedulerLike,
 ): [T | undefined, (req: TReq) => void] => {
-  const iterator = useMemo(factory, deps);
-  useDispose(iterator);
+  const iterator = useResource(factory, deps);
   const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
   const value = useObservable(() => iterator, [iterator], scheduler);
   return [value, dispatch];

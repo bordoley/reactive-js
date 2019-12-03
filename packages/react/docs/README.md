@@ -8,9 +8,9 @@
 
 * [useAsyncIterator](README.md#const-useasynciterator)
 * [useAsyncIteratorResource](README.md#const-useasynciteratorresource)
-* [useDisposable](README.md#const-usedisposable)
 * [useObservable](README.md#const-useobservable)
 * [useObservableResource](README.md#const-useobservableresource)
+* [useResource](README.md#const-useresource)
 
 ## Functions
 
@@ -62,26 +62,6 @@ ___
 
 ___
 
-### `Const` useDisposable
-
-▸ **useDisposable**<**T**>(`factory`: function, `deps`: keyof any[] | undefined): *T*
-
-**Type parameters:**
-
-▪ **T**: *DisposableLike*
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-▸ (): *T*
-
-▪ **deps**: *keyof any[] | undefined*
-
-**Returns:** *T*
-
-___
-
 ### `Const` useObservable
 
 ▸ **useObservable**<**T**>(`factory`: function, `deps`: keyof any[] | undefined, `scheduler`: SchedulerLike): *T | undefined*
@@ -123,3 +103,23 @@ ___
 ▪`Optional`  **scheduler**: *SchedulerLike*
 
 **Returns:** *T | undefined*
+
+___
+
+### `Const` useResource
+
+▸ **useResource**<**T**>(`factory`: function, `deps`: keyof any[] | undefined): *T*
+
+**Type parameters:**
+
+▪ **T**: *DisposableLike*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *T*
+
+▪ **deps**: *keyof any[] | undefined*
+
+**Returns:** *T*
