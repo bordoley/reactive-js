@@ -12,6 +12,7 @@
 
 * [concatAll](README.md#const-concatall)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
+* [endWith](README.md#const-endwith)
 * [exhaust](README.md#const-exhaust)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
@@ -80,6 +81,27 @@ ___
 Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
+
+**Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` endWith
+
+▸ **endWith**<**TReq**, **T**>(`value`: T, ...`values`: T[]): *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+`...values` | T[] |
 
 **Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
 

@@ -3,7 +3,7 @@ export { createObservable } from "./internal/create";
 export { lift, SubscriberOperator } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";
-export { concat, startWith } from "./internal/concat";
+export { concat, startWith, endWith } from "./internal/concat";
 export { DelegatingSubscriber } from "./internal/delegatingSubscriber";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export {

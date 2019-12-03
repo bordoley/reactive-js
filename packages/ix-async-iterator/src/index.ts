@@ -8,6 +8,7 @@ import {
 import {
   concatAll as concatAllObs,
   distinctUntilChanged as distinctUntilChangedObs,
+  endWith as endWithObs,
   exhaust as exhaustObs,
   ignoreElements as ignoreElementsObs,
   keep as keepObs,
@@ -262,6 +263,12 @@ export const distinctUntilChanged = <TReq, T>(
   equals?: (a: T, b: T) => boolean,
 ): AsyncIteratorOperator<TReq, T, TReq, T> =>
   lift(distinctUntilChangedObs(equals));
+
+export const endWith = <TReq, T>(
+  value: T,
+  ...values: T[]
+): AsyncIteratorOperator<TReq, T, TReq, T> =>
+  lift(endWithObs(value, ...values));
 
 export const exhaust = <TReq, T>(): AsyncIteratorOperator<
   TReq,

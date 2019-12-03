@@ -12,6 +12,7 @@
 
 * [concatAll](README.md#const-concatall)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
+* [endWith](README.md#const-endwith)
 * [exhaust](README.md#const-exhaust)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
@@ -75,6 +76,25 @@ ___
 Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
+
+**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+
+___
+
+### `Const` endWith
+
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+`...values` | T[] |
 
 **Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 
