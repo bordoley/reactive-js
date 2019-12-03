@@ -15,7 +15,7 @@ const clearTimeout = window.clearTimeout;
 const yieldInterval = 5;
 const maxYieldInterval = 300;
 
-class WebSchedulerHost implements HostSchedulerLike {
+class WebHostScheduler implements HostSchedulerLike {
   get now(): number {
     return this._now();
   }
@@ -61,7 +61,7 @@ class WebSchedulerHost implements HostSchedulerLike {
     const disposable = createDisposable();
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
-    if (delay > 4) {
+    if (delay >= 4) {
       const timeout = setTimeout(scheduledContinuation, delay);
       disposable.add(() => clearTimeout(timeout));
     } else {
@@ -83,7 +83,7 @@ class WebSchedulerHost implements HostSchedulerLike {
   }
 }
 
-const schedulerHost = new WebSchedulerHost();
+const schedulerHost = new WebHostScheduler();
 const priorityScheduler = createPrioritySchedulerResource(schedulerHost);
 
 export const createSchedulerWithPriority = (priority: number): SchedulerLike =>

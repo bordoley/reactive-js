@@ -7,7 +7,7 @@ import {
   HostSchedulerLike,
 } from "@reactive-js/schedulers";
 
-class NodeSchedulerHost implements HostSchedulerLike {
+class NodeHostScheduler implements HostSchedulerLike {
   timeout: number = 500;
   private startTime: number = 0;
 
@@ -50,7 +50,7 @@ class NodeSchedulerHost implements HostSchedulerLike {
   }
 }
 
-const schedulerHost = new NodeSchedulerHost();
+const schedulerHost = new NodeHostScheduler();
 const priorityScheduler = createPrioritySchedulerResource(schedulerHost);
 
 export const setSchedulerTimeout = (timeout: number) => {
