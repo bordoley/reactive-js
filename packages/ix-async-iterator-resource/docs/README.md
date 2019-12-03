@@ -747,7 +747,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**TReq**, **T**>(`predicate?`: undefined | function): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+▸ **repeat**<**TReq**, **T**>(`predicate?`: function | number): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
 
 **Type parameters:**
 
@@ -759,7 +759,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`predicate?` | undefined &#124; function |
+`predicate?` | function &#124; number |
 
 **Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
 

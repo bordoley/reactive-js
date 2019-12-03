@@ -1046,7 +1046,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1054,9 +1054,9 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **predicate**: *function*=  alwaysTrue
-
-▸ (): *boolean*
+Name | Type |
+------ | ------ |
+`predicate?` | function &#124; number |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
@@ -1064,7 +1064,7 @@ ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`predicate`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **retry**<**T**>(`predicate?`: undefined | function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1072,15 +1072,9 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **predicate**: *function*=  alwaysTrue1
-
-▸ (`error`: unknown): *boolean*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`error` | unknown |
+`predicate?` | undefined &#124; function |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
