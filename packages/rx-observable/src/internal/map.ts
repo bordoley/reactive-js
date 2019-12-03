@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
@@ -11,7 +11,7 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
     this.mapper = mapper;
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 

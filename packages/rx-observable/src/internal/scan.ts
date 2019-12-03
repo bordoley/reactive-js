@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
@@ -17,7 +17,7 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     this.acc = initialValue;
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 

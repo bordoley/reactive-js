@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 import { ObservableOperator } from "./pipe";
@@ -10,7 +10,7 @@ class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
   onNext(_: TA) {}
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 }

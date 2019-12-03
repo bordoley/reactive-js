@@ -21,8 +21,8 @@ export const generate = <T>(
       } else if (delay > 0) {
         try {
           acc = generator(acc);
-        } catch (error) {
-          subscriber.complete(error);
+        } catch (cause) {
+          subscriber.complete({ cause });
           return;
         }
 
@@ -32,8 +32,8 @@ export const generate = <T>(
         while (true) {
           try {
             acc = generator(acc);
-          } catch (error) {
-            subscriber.complete(error);
+          } catch (cause) {
+            subscriber.complete({ cause });
             return;
           }
 

@@ -273,13 +273,13 @@ ___
 
 ▪ **onComplete**: *function*
 
-▸ (`err?`: Error): *void*
+▸ (`err?`: ErrorLike): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err?` | Error |
+`err?` | ErrorLike |
 
 **Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
 
@@ -299,13 +299,13 @@ ___
 
 ▪ **onError**: *function*
 
-▸ (`err`: Error): *void*
+▸ (`err`: unknown): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err` | Error |
+`err` | unknown |
 
 **Returns:** *[AsyncIteratorOperator](interfaces/asynciteratoroperator.md)‹TReq, T, TReq, T›*
 
@@ -937,7 +937,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -963,7 +963,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -1009,7 +1009,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 

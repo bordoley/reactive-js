@@ -1,5 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 
 /** @ignore */
@@ -31,7 +31,7 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   ) {
     this.subscription.add(disposable, ...disposables);
   }
-  abstract complete(_error?: Error): void;
+  abstract complete(_error?: ErrorLike): void;
 
   dispose() {
     this.subscription.dispose();

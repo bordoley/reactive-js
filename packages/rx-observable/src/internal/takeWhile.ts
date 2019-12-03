@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 
@@ -10,7 +10,7 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.predicate = predicate;
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 

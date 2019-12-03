@@ -719,13 +719,13 @@ ___
 
 ▪ **onComplete**: *function*
 
-▸ (`err?`: Error): *void*
+▸ (`err?`: ErrorLike): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err?` | Error |
+`err?` | ErrorLike |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
@@ -743,13 +743,13 @@ ___
 
 ▪ **onError**: *function*
 
-▸ (`err`: Error): *void*
+▸ (`err`: unknown): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err` | Error |
+`err` | unknown |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
@@ -1074,13 +1074,13 @@ ___
 
 ▪`Default value`  **predicate**: *function*=  alwaysTrue1
 
-▸ (`error`: Error): *boolean*
+▸ (`error`: unknown): *boolean*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`error` | Error |
+`error` | unknown |
 
 **Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
@@ -1255,7 +1255,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -1279,7 +1279,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -1321,7 +1321,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -1371,7 +1371,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`error`: Error, `delay?`: undefined | number): *ObservableLike‹T›*
+▸ **throws**<**T**>(`cause`: unknown, `delay?`: undefined | number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -1381,7 +1381,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`error` | Error |
+`cause` | unknown |
 `delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
