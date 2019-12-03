@@ -16,8 +16,8 @@ import { ObservableOperator, pipe } from "./pipe";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {
-    private readonly parent: RepeatSubscriber<T>;
     private count: number = 1;
+    private readonly parent: RepeatSubscriber<T>;
 
     constructor(parent: RepeatSubscriber<T>) {
       this.parent = parent;
@@ -96,8 +96,10 @@ export const repeat = <T>(
     predicate === undefined
       ? defaultRepeatPredicate
       : typeof predicate === "number"
-      ? (count: number, error?: ErrorLike) => error === undefined && count < predicate
-      : (count: number, error?: ErrorLike) => error === undefined && predicate(count);
+      ? (count: number, error?: ErrorLike) =>
+          error === undefined && count < predicate
+      : (count: number, error?: ErrorLike) =>
+          error === undefined && predicate(count);
 
   return obs => lift(repeatOperator(obs, repeatPredicate))(obs);
 };
@@ -111,7 +113,8 @@ export const retry = <T>(
   const retryPredicate =
     predicate === undefined
       ? defaultRetryPredicate
-      : (count: number, error?: ErrorLike) => error !== undefined && predicate(count, error.cause);
+      : (count: number, error?: ErrorLike) =>
+          error !== undefined && predicate(count, error.cause);
 
   return obs => lift(repeatOperator(obs, retryPredicate))(obs);
 };
