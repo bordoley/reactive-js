@@ -54,7 +54,7 @@ class WebHostScheduler implements HostSchedulerLike {
 
       let result: HostSchedulerContinuation | undefined = continuation;
       while (result !== undefined) {
-        result = continuation();
+        result = result();
       }
     };
 

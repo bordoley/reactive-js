@@ -29,7 +29,7 @@ class NodeHostScheduler implements HostSchedulerLike {
 
       let result: HostSchedulerContinuation | undefined = continuation;
       while (result !== undefined) {
-        result = continuation();
+        result = result();
 
         // Not sure this is really necessary, but let's yield back
         // to the JS microtask queue between continuation executions
