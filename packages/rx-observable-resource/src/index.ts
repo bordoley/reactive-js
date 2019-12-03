@@ -42,7 +42,6 @@ import {
 } from "@reactive-js/rx-observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { number } from "prop-types";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   get isDisposed() {

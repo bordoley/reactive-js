@@ -4,12 +4,7 @@ import {
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-
-import {
-  SchedulerContinuation,
-  SchedulerResourceLike,
-} from "@reactive-js/scheduler";
-
+import { SchedulerContinuation } from "@reactive-js/scheduler";
 import { VirtualTimeSchedulerLike } from "./virtualTimeScheduler";
 
 class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
@@ -62,7 +57,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
 
   schedule(
     continuation: SchedulerContinuation,
-    delay?: number,
+    _?: number,
   ): DisposableLike {
     this.queue.push(continuation);
     return createDisposable();

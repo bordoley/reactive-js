@@ -27,17 +27,17 @@ describe("Disposable", () => {
       createDisposable(),
     ];
 
-    for (let child of children) {
+    for (const child of children) {
       disposable.add(child);
     }
 
-    for (let child of children) {
+    for (const child of children) {
       expect(child.isDisposed).toBeFalsy();
     }
 
     disposable.dispose();
 
-    for (let child of children) {
+    for (const child of children) {
       expect(child.isDisposed).toBeTruthy();
     }
 

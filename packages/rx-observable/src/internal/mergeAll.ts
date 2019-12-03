@@ -10,7 +10,7 @@ import { observe } from "./observe";
 import { ObservableOperator, pipe } from "./pipe";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
-  private activeCount: number = 0;
+  private activeCount = 0;
   private isCompleted = false;
   private readonly maxBufferSize: number;
   private readonly maxConcurrency: number;

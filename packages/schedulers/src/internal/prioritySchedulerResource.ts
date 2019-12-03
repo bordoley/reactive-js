@@ -28,13 +28,13 @@ export interface HostSchedulerLike {
   ): DisposableLike;
 }
 
-type ScheduledTask = {
+interface ScheduledTask {
   continuation: () => void;
   dueTime: number;
   priority: number;
   startTime: number;
   taskID: number;
-};
+}
 
 const comparator = (a: ScheduledTask, b: ScheduledTask) => {
   let diff = 0;
@@ -99,7 +99,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     this.disposable.remove(disposable, ...disposables);
   }
 
-  schedule(continuation: () => void, priority: number, delay: number = 0) {
+  schedule(continuation: () => void, priority: number, delay = 0) {
     const startTime = this.now;
     const dueTime = startTime + delay;
 

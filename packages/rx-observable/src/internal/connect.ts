@@ -21,7 +21,7 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
     super(scheduler, subscription);
   }
 
-  complete(_error?: ErrorLike) {
+  complete(_?: ErrorLike) {
     if (__DEV__) {
       checkState(this);
     }
@@ -33,7 +33,7 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
     this._isConnected = true;
   }
 
-  next(data: T) {
+  next(_: T) {
     if (__DEV__) {
       checkState(this);
     }

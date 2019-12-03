@@ -60,11 +60,11 @@ class DisposableImpl implements DisposableLike {
 
   add(...disposables: DisposableOrTeardown[]) {
     if (this.isDisposed) {
-      for (let d of disposables) {
+      for (const d of disposables) {
         doDispose(d);
       }
     } else {
-      for (let d of disposables) {
+      for (const d of disposables) {
         this.doAdd(d);
       }
     }
@@ -74,7 +74,7 @@ class DisposableImpl implements DisposableLike {
     if (!this.isDisposed) {
       this._isDisposed = true;
 
-      for (let disposable of this.disposables) {
+      for (const disposable of this.disposables) {
         doDispose(disposable);
       }
 
@@ -84,14 +84,14 @@ class DisposableImpl implements DisposableLike {
 
   remove(...disposables: DisposableOrTeardown[]) {
     if (!this.isDisposed) {
-      for (let d of disposables) {
+      for (const d of disposables) {
         this.doRemove(d);
       }
     }
   }
 
   private doAdd(disposable: DisposableOrTeardown) {
-    if (this.disposables.indexOf(disposable) < 0) {
+    if (!this.disposables.includes(disposable)) {
       this.disposables.push(disposable);
     }
   }

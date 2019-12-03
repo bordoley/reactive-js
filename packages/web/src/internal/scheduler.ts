@@ -43,11 +43,11 @@ class WebHostScheduler implements HostSchedulerLike {
       : () => this.now >= this.startTime + yieldInterval;
   private readonly channel = new MessageChannel();
 
-  private startTime: number = 0;
+  private startTime = 0;
 
   schedule(
     continuation: HostSchedulerContinuation,
-    delay: number = 0,
+    delay = 0,
   ): DisposableLike {
     const scheduledContinuation = () => {
       this.startTime = this.now;

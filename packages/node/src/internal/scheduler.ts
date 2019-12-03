@@ -8,11 +8,12 @@ import {
 } from "@reactive-js/schedulers";
 
 class NodeHostScheduler implements HostSchedulerLike {
-  timeout: number = 500;
-  private startTime: number = 0;
+  timeout = 500;
+  private startTime = 0;
 
   get now(): number {
     const hr = process.hrtime();
+    // eslint-disable-next-line no-mixed-operators
     return hr[0] * 1000 + hr[1] / 1e6;
   }
 
@@ -22,7 +23,7 @@ class NodeHostScheduler implements HostSchedulerLike {
 
   schedule(
     continuation: HostSchedulerContinuation,
-    delay: number = 0,
+    delay = 0,
   ): DisposableLike {
     const scheduledContinuation = async () => {
       this.startTime = this.now;
@@ -40,9 +41,11 @@ class NodeHostScheduler implements HostSchedulerLike {
 
     const disposable = createDisposable();
     if (delay > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const timeout = setTimeout(scheduledContinuation, delay);
       disposable.add(() => clearTimeout(timeout));
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const immediate = setImmediate(scheduledContinuation);
       disposable.add(() => clearImmediate(immediate));
     }

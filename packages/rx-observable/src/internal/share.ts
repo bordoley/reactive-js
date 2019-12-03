@@ -13,7 +13,7 @@ import { createSubject } from "./subject";
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: () => SubjectResourceLike<T>;
 
-  private refCount: number = 0;
+  private refCount = 0;
   private readonly scheduler: SchedulerLike;
   private readonly source: ObservableLike<T>;
   private sourceSubscription = disposed;
