@@ -62,10 +62,7 @@ export function startWith<T>(...values: T[]): ObservableOperator<T, T> {
   return obs => concat(fromArray(values), obs);
 }
 
-export function endWith<T>(
-  value: T,
-  ...values: T[]
-): ObservableOperator<T, T>;
+export function endWith<T>(value: T, ...values: T[]): ObservableOperator<T, T>;
 export function endWith<T>(...values: T[]): ObservableOperator<T, T> {
   return obs => concat(obs, fromArray(values));
 }

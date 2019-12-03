@@ -88,4 +88,4 @@ export function fromScheduledValues<T>(
   };
 
   return { subscribe };
-};
+}
