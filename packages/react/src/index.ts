@@ -18,21 +18,17 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-const useDispose = (disposable: DisposableLike) => {
-  useEffect(
-    () => () => {
-      disposable.dispose();
-    },
-    [disposable],
-  );
-};
-
 export const useResource = <T extends DisposableLike>(
   factory: () => T,
   deps: readonly any[] | undefined,
 ): T => {
   const resource = useMemo(factory, deps);
-  useDispose(resource);
+  useEffect(
+    () => () => {
+      resource.dispose();
+    },
+    [resource],
+  );
   return resource;
 };
 
