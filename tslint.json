@@ -12,7 +12,6 @@
       }
     ],
     "no-empty": [true, "allow-empty-functions"],
-    "ter-no-sparse-arrays": false,
     "ordered-imports": true
   }
 }

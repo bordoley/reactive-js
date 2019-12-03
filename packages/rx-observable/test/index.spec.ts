@@ -762,17 +762,17 @@ test("withLatestFrom", () => {
   const cause = new Error();
 
   const otherObservable = concat(
-    fromScheduledValues([, 1], [, 2], [3, 3]),
+    fromScheduledValues([0, 1], [0, 2], [3, 3]),
     throws(cause),
   );
 
   const observable = fromScheduledValues(
-    [, 1],
-    [, 2],
-    [, 3],
+    [0, 1],
+    [0, 2],
+    [0, 3],
     [3, 1],
-    [, 2],
-    [, 3],
+    [0, 2],
+    [0, 3],
     [2, 4],
   );
 
@@ -867,7 +867,7 @@ test("share", () => {
   const scheduler = createVirtualTimeScheduler();
 
   const replayed = pipe(
-    concat(fromScheduledValues([, 0], [, 1], [, 2]), empty(2)),
+    concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),
     share(scheduler, 1),
   );
   const replayedSubscription = connect(replayed, scheduler);

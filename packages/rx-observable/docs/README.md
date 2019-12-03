@@ -26,7 +26,7 @@
 * [exhaust](README.md#const-exhaust)
 * [fromArray](README.md#const-fromarray)
 * [fromPromiseFactory](README.md#const-frompromisefactory)
-* [fromScheduledValues](README.md#const-fromscheduledvalues)
+* [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#const-generate)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
@@ -485,9 +485,9 @@ ___
 
 ___
 
-### `Const` fromScheduledValues
+###  fromScheduledValues
 
-▸ **fromScheduledValues**<**T**>(`value`: [number | undefined, T], ...`values`: Array‹[number | undefined, T]›): *ObservableLike‹T›*
+▸ **fromScheduledValues**<**T**>(`value`: [number, T], ...`values`: Array‹[number, T]›): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -497,8 +497,8 @@ ___
 
 Name | Type |
 ------ | ------ |
-`value` | [number &#124; undefined, T] |
-`...values` | Array‹[number &#124; undefined, T]› |
+`value` | [number, T] |
+`...values` | Array‹[number, T]› |
 
 **Returns:** *ObservableLike‹T›*
 
