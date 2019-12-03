@@ -23,6 +23,7 @@
 * [createSubject](README.md#const-createsubject)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
+* [endWith](README.md#endwith)
 * [exhaust](README.md#const-exhaust)
 * [fromArray](README.md#const-fromarray)
 * [fromPromiseFactory](README.md#const-frompromisefactory)
@@ -433,6 +434,25 @@ Name | Type |
 `delay?` | undefined &#124; number |
 
 **Returns:** *ObservableLike‹T›*
+
+___
+
+###  endWith
+
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+`...values` | T[] |
+
+**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
 
 ___
 

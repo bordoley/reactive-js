@@ -15,6 +15,7 @@
 * [createEvent](README.md#const-createevent)
 * [createStateStore](README.md#const-createstatestore)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
+* [endWith](README.md#const-endwith)
 * [exhaust](README.md#const-exhaust)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
@@ -115,6 +116,27 @@ ___
 Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
+
+**Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+___
+
+### `Const` endWith
+
+▸ **endWith**<**TReq**, **T**>(`value`: T, ...`values`: T[]): *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+`...values` | T[] |
 
 **Returns:** *[AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)‹TReq, T, TReq, T›*
 
