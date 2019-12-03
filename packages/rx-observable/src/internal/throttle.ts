@@ -2,7 +2,11 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ErrorLike,
+  ObservableLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { empty } from "./fromArray";
@@ -11,12 +15,12 @@ import { onComplete } from "./observe";
 import { ObservableOperator, pipe } from "./pipe";
 
 class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly durationSelector: (next: T) => ObservableLike<any>;
+  private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
     delegate: SubscriberLike<T>,
-    durationSelector: (next: T) => ObservableLike<any>,
+    durationSelector: (next: T) => ObservableLike<unknown>,
   ) {
     super(delegate);
     this.durationSelector = durationSelector;
@@ -24,7 +28,7 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.durationSubscription.dispose();
     this.delegate.complete(error);
   }
@@ -41,12 +45,12 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 const throttleFirstOperator = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): SubscriberOperator<T, T> => subscriber =>
   new ThrottleFirstSubscriber(subscriber, durationSelector);
 
 export const throttleFirst = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableOperator<T, T> => lift(throttleFirstOperator(durationSelector));
 
 export const throttleFirstTime = <T>(
@@ -57,13 +61,13 @@ export const throttleFirstTime = <T>(
 };
 
 class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly durationSelector: (next: T) => ObservableLike<any>;
+  private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
 
   constructor(
     delegate: SubscriberLike<T>,
-    durationSelector: (next: T) => ObservableLike<any>,
+    durationSelector: (next: T) => ObservableLike<unknown>,
   ) {
     super(delegate);
     this.durationSelector = durationSelector;
@@ -71,7 +75,7 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.durationSubscription.dispose();
     if (error === undefined) {
       this.notifyNext();
@@ -102,12 +106,12 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 const throttleLastOperator = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): SubscriberOperator<T, T> => subscriber =>
   new ThrottleLastSubscriber(subscriber, durationSelector);
 
 export const throttleLast = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableOperator<T, T> => lift(throttleLastOperator(durationSelector));
 
 export const throttleLastTime = <T>(
@@ -118,13 +122,13 @@ export const throttleLastTime = <T>(
 };
 
 class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly durationSelector: (next: T) => ObservableLike<any>;
+  private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
 
   constructor(
     delegate: SubscriberLike<T>,
-    durationSelector: (next: T) => ObservableLike<any>,
+    durationSelector: (next: T) => ObservableLike<unknown>,
   ) {
     super(delegate);
     this.durationSelector = durationSelector;
@@ -132,7 +136,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.durationSubscription.dispose();
     if (error === undefined) {
       this.notifyNext();
@@ -164,12 +168,12 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 const throttleOperator = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): SubscriberOperator<T, T> => subscriber =>
   new ThrottleSubscriber(subscriber, durationSelector);
 
 export const throttle = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableOperator<T, T> => lift(throttleOperator(durationSelector));
 
 export const throttleTime = <T>(duration: number): ObservableOperator<T, T> => {

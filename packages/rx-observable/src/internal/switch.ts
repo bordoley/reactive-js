@@ -1,5 +1,6 @@
 import { createSerialDisposable, disposed } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -18,7 +19,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       this.parent = parent;
     }
 
-    complete(error?: Error) {
+    complete(error?: ErrorLike) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
@@ -35,7 +36,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.add(this.innerSubscription);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.remove(this.innerSubscription);
     this.delegate.complete(error);
   }

@@ -1,5 +1,6 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObservableLike,
   ObservableResourceLike,
   ObserverLike,
@@ -30,11 +31,11 @@ import {
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
   throttle as throttleObs,
-  throttleTime as throttleTimeObs,
   throttleFirst as throttleFirstObs,
   throttleFirstTime as throttleFirstTimeObs,
   throttleLast as throttleLastObs,
   throttleLastTime as throttleLastTimeObs,
+  throttleTime as throttleTimeObs,
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
@@ -214,11 +215,11 @@ export const observe = <T>(
 ): ObservableResourceOperator<T, T> => lift(observeObs(observer));
 
 export const onComplete = <T>(
-  onComplete: (err?: Error) => void,
+  onComplete: (err?: ErrorLike) => void,
 ): ObservableResourceOperator<T, T> => lift(onCompleteObs(onComplete));
 
 export const onError = <T>(
-  onError: (err: Error) => void,
+  onError: (err: unknown) => void,
 ): ObservableResourceOperator<T, T> => lift(onErrorObs(onError));
 
 export const onNext = <T>(
@@ -230,7 +231,7 @@ export const repeat = <T>(
 ): ObservableResourceOperator<T, T> => lift(repeatObs(predicate));
 
 export const retry = <T>(
-  predicate?: (error: Error) => boolean,
+  predicate?: (error: unknown) => boolean,
 ): ObservableResourceOperator<T, T> => lift(retryObs(predicate));
 
 export const scan = <T, TAcc>(
@@ -268,11 +269,11 @@ export const takeWhile = <T>(
 ): ObservableResourceOperator<T, T> => lift(takeWhileObs(predicate));
 
 export const throttleFirst = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableResourceOperator<T, T> => lift(throttleFirstObs(durationSelector));
 
 export const throttle = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableResourceOperator<T, T> => lift(throttleObs(durationSelector));
 
 export const throttleTime = <T>(
@@ -284,7 +285,7 @@ export const throttleFirstTime = <T>(
 ): ObservableResourceOperator<T, T> => lift(throttleFirstTimeObs(duration));
 
 export const throttleLast = <T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableResourceOperator<T, T> => lift(throttleLastObs(durationSelector));
 
 export const throttleLastTime = <T>(

@@ -13,8 +13,8 @@ export const fromPromiseFactory = <T>(
       const result = await factory();
       observer.next(result);
       observer.complete();
-    } catch (error) {
-      observer.complete(error);
+    } catch (cause) {
+      observer.complete({ cause });
     }
   };
 
@@ -41,7 +41,8 @@ export const toPromise = <T>(
           complete: err => {
             subscription.dispose();
             if (err !== undefined) {
-              reject(err);
+              const { cause } = err;
+              reject(cause);
             } else if (result === undefined) {
               reject(
                 new Error("Observable completed without producing a value"),

@@ -1,5 +1,9 @@
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ErrorLike,
+  ObservableLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 
@@ -17,7 +21,7 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
     super(scheduler, subscription);
   }
 
-  complete(_error?: Error) {
+  complete(_error?: ErrorLike) {
     if (__DEV__) {
       checkState(this);
     }

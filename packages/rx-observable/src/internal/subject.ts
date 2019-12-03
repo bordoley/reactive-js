@@ -4,6 +4,7 @@ import {
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObserverLike,
   SubjectResourceLike,
   SubscriberLike,
@@ -34,7 +35,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
     this.disposable.add(disposable, ...disposables);
   }
 
-  complete(error?: Error) {
+  complete(error?: ErrorLike) {
     if (this.isCompleted) {
       return;
     }
@@ -100,13 +101,13 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
     }
   }
 
-  protected abstract onComplete(error?: Error): void;
+  protected abstract onComplete(error?: ErrorLike): void;
   protected abstract onNext(data: T): void;
   protected abstract onSubscribe(observer: ObserverLike<T>): void;
 }
 
 class SubjectImpl<T> extends AbstractSubject<T> {
-  protected onComplete(error?: Error) {}
+  protected onComplete(error?: ErrorLike) {}
   protected onNext(data: T) {}
   protected onSubscribe(observer: ObserverLike<T>) {}
 }
@@ -118,7 +119,7 @@ enum NotificationKind {
 
 type Notification<T> =
   | [NotificationKind.Next, T]
-  | [NotificationKind.Complete, Error | undefined];
+  | [NotificationKind.Complete, ErrorLike | undefined];
 
 const notify = <T>(
   observer: ObserverLike<T>,
@@ -146,7 +147,7 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
     });
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.pushNotification([NotificationKind.Complete, error]);
   }
 

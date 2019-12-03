@@ -11,8 +11,8 @@ export const fromEvent = <T>(
       try {
         const result = selector(event);
         observer.next(result);
-      } catch (error) {
-        observer.complete(error);
+      } catch (cause) {
+        observer.complete({ cause });
       }
     };
 

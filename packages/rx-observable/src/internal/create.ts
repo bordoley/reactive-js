@@ -36,8 +36,8 @@ export const createObservable = <T>(
           onSubscribeSubscription.add(subscriber);
         }
       }
-    } catch (error) {
-      observer.complete(error);
+    } catch (cause) {
+      observer.complete({ cause });
     }
   };
 

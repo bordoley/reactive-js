@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+* [ErrorLike](interfaces/errorlike.md)
 * [ObservableLike](interfaces/observablelike.md)
 * [ObservableResourceLike](interfaces/observableresourcelike.md)
 * [ObserverLike](interfaces/observerlike.md)

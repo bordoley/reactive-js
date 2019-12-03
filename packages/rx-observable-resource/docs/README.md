@@ -224,13 +224,13 @@ ___
 
 ▪ **onComplete**: *function*
 
-▸ (`err?`: Error): *void*
+▸ (`err?`: ErrorLike): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err?` | Error |
+`err?` | ErrorLike |
 
 **Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 
@@ -248,13 +248,13 @@ ___
 
 ▪ **onError**: *function*
 
-▸ (`err`: Error): *void*
+▸ (`err`: unknown): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err` | Error |
+`err` | unknown |
 
 **Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 
@@ -754,7 +754,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -778,7 +778,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 
@@ -820,7 +820,7 @@ ___
 
 ▪ **durationSelector**: *function*
 
-▸ (`next`: T): *ObservableLike‹any›*
+▸ (`next`: T): *ObservableLike‹unknown›*
 
 **Parameters:**
 

@@ -1,4 +1,4 @@
-import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
@@ -11,7 +11,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observer = observer;
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.observer.complete(error);
     this.delegate.complete(error);
   }
@@ -38,7 +38,7 @@ export const observe = <T>(
 const ignore = <T>(data: T) => {};
 
 export const onComplete = <T>(
-  onComplete: (err?: Error) => void,
+  onComplete: (err?: ErrorLike) => void,
 ): ObservableOperator<T, T> =>
   observe({
     next: ignore,
@@ -46,13 +46,14 @@ export const onComplete = <T>(
   });
 
 export const onError = <T>(
-  onError: (err: Error) => void,
+  onError: (err: unknown) => void,
 ): ObservableOperator<T, T> =>
   observe({
     next: ignore,
-    complete: (error?: Error) => {
+    complete: (error?: ErrorLike) => {
       if (error !== undefined) {
-        onError(error);
+        const { cause } = error;
+        onError(cause);
       }
     },
   });

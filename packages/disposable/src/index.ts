@@ -41,7 +41,7 @@ const doDispose = (disposable: DisposableOrTeardown) => {
   if (disposable instanceof Function) {
     try {
       disposable();
-    } catch (_error) {
+    } catch (_) {
       /* Proactively catch exceptions thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected exceptions.
        */

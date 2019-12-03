@@ -4,7 +4,11 @@ import {
   AsyncIteratorResourceLike,
 } from "@reactive-js/ix-core";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { ObservableLike, ObservableResourceLike } from "@reactive-js/rx-core";
+import {
+  ErrorLike,
+  ObservableLike,
+  ObservableResourceLike,
+} from "@reactive-js/rx-core";
 import {
   connect,
   observe,
@@ -35,7 +39,7 @@ export const useDisposable = <T extends DisposableLike>(
 const connectObservable = <T>(
   observable: ObservableLike<T>,
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
-  updateError: React.Dispatch<React.SetStateAction<Error | undefined>>,
+  updateError: React.Dispatch<React.SetStateAction<ErrorLike | undefined>>,
   scheduler: SchedulerLike,
 ) =>
   connect(
@@ -44,7 +48,7 @@ const connectObservable = <T>(
       throttleTime(16),
       observe({
         next: (data: T) => updateState(_ => data),
-        complete: (error?: Error) => updateError(_ => error),
+        complete: (error?: ErrorLike) => updateError(_ => error),
       }),
     ),
     scheduler,
@@ -56,7 +60,7 @@ export const useObservable = <T>(
   scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
-  const [error, updateError] = useState<Error | undefined>(undefined);
+  const [error, updateError] = useState<ErrorLike | undefined>(undefined);
 
   const observable = useMemo(factory, deps);
 
@@ -66,7 +70,8 @@ export const useObservable = <T>(
   );
 
   if (error !== undefined) {
-    throw error;
+    const { cause } = error;
+    throw cause;
   }
 
   return state;

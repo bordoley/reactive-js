@@ -3,6 +3,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -21,22 +22,19 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.parent = parent;
     }
 
-    complete(error?: Error) {
+    complete(error?: ErrorLike) {
       let shouldComplete = false;
       try {
         shouldComplete = !this.parent.shouldRepeat(error);
-      } catch (repeatError) {
+      } catch (cause) {
         shouldComplete = true;
 
-        // FIXME: Add a custom error type that includes the error that
-        // caused should repeat to fail
-        // see: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#example
-        error = repeatError;
+        error = { cause, parent: error } as ErrorLike;
       }
 
       if (shouldComplete) {
-        this.parent.delegate.complete(error);
         this.parent.remove(this.parent.innerSubscription);
+        this.parent.delegate.complete(error);
       } else {
         this.setupSubscription();
       }
@@ -64,12 +62,12 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly innerSubscription: SerialDisposableLike;
   private readonly observable: ObservableLike<T>;
   private readonly observer: ObserverLike<T>;
-  private readonly shouldRepeat: (error?: Error) => boolean;
+  private readonly shouldRepeat: (error?: ErrorLike) => boolean;
 
   constructor(
     delegate: SubscriberLike<T>,
     observable: ObservableLike<T>,
-    shouldRepeat: (error?: Error) => boolean,
+    shouldRepeat: (error?: ErrorLike) => boolean,
   ) {
     super(delegate);
     this.observable = observable;
@@ -80,7 +78,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.observer.complete(error);
   }
 
@@ -91,13 +89,14 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
-  shouldRepeat: (error?: Error) => boolean,
+  shouldRepeat: (error?: ErrorLike) => boolean,
 ): SubscriberOperator<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
 const alwaysTrue = () => true;
 
-const defaultRepeatPredicate = (error?: Error): boolean => error === undefined;
+const defaultRepeatPredicate = (error?: ErrorLike): boolean =>
+  error === undefined;
 
 export const repeat = <T>(
   predicate: () => boolean = alwaysTrue,
@@ -105,22 +104,23 @@ export const repeat = <T>(
   const repeatPredicate =
     predicate === alwaysTrue
       ? defaultRepeatPredicate
-      : (error?: Error) => error === undefined && predicate();
+      : (error?: ErrorLike) => error === undefined && predicate();
 
   return obs => lift(repeatOperator(obs, repeatPredicate))(obs);
 };
 
 const alwaysTrue1 = <T>(_: T) => true;
 
-const defaultRetryPredicate = (error?: Error): boolean => error !== undefined;
+const defaultRetryPredicate = (error?: ErrorLike): boolean =>
+  error !== undefined;
 
 export const retry = <T>(
-  predicate: (error: Error) => boolean = alwaysTrue1,
+  predicate: (error: unknown) => boolean = alwaysTrue1,
 ): ObservableOperator<T, T> => {
   const retryPredicate =
     predicate === alwaysTrue1
       ? defaultRetryPredicate
-      : (error?: Error) => error !== undefined && predicate(error);
+      : (error?: ErrorLike) => error !== undefined && predicate(error.cause);
 
   return obs => lift(repeatOperator(obs, retryPredicate))(obs);
 };

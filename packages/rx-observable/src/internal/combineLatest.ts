@@ -1,4 +1,5 @@
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -43,7 +44,7 @@ class CombineLatestObserver implements ObserverLike<any> {
     this.index = index;
   }
 
-  complete(error?: Error) {
+  complete(error?: ErrorLike) {
     this.ctx.completedCount++;
 
     if (error !== undefined || this.ctx.completedCount === this.totalCount) {

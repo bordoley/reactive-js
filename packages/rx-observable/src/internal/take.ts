@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
@@ -12,7 +12,7 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.maxCount = maxCount;
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 

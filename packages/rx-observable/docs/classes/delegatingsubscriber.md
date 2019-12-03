@@ -61,7 +61,7 @@ Name | Type |
 
 ### `Protected` `Abstract` onComplete
 
-▸ **onComplete**(`error?`: Error): *void*
+▸ **onComplete**(`error?`: ErrorLike): *void*
 
 Override to handle complete notification. Implementations
 may throw errors which will be caught and propogated.
@@ -70,7 +70,7 @@ may throw errors which will be caught and propogated.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | Error |   |
+`error?` | ErrorLike |   |
 
 **Returns:** *void*
 
