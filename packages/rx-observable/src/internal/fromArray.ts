@@ -49,26 +49,27 @@ export const empty = <T>(delay?: number): ObservableLike<T> =>
 export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
   fromArray([value], delay);
 
-export const fromScheduledValues = <T>(
-  value: [number | undefined, T],
-  ...values: Array<[number | undefined, T]>
-): ObservableLike<T> => {
-  const delayedValues = [value, ...values];
-
+export function fromScheduledValues<T>(
+  value: [number, T],
+  ...values: Array<[number, T]>
+): ObservableLike<T>;
+export function fromScheduledValues<T>(
+  ...values: Array<[number, T]>
+): ObservableLike<T> {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
     ) => {
-      while (index < delayedValues.length) {
-        const [_d, value] = delayedValues[index];
+      while (index < values.length) {
+        const [_d, value] = values[index];
         index++;
         subscriber.next(value);
 
-        if (index < delayedValues.length) {
-          const delay = delayedValues[index][0] || 0;
-          const priority = delayedValues[index][1];
+        if (index < values.length) {
+          const delay = values[index][0] || 0;
+          const priority = values[index][1];
 
           if (delay > 0) {
             return { continuation, delay, priority };
@@ -82,7 +83,7 @@ export const fromScheduledValues = <T>(
       return;
     };
 
-    const [delay, _] = delayedValues[index];
+    const [delay, _] = values[index];
     subscriber.schedule(continuation, delay);
   };
 
