@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ObservableLike } from "@reactive-js/rx-core";
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B> */
 export interface ObservableOperator<A, B> {

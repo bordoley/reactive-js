@@ -1,5 +1,6 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -21,7 +22,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
       this.parent = parent;
     }
 
-    complete(error?: Error) {
+    complete(error?: ErrorLike) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
@@ -56,7 +57,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     this.add(this.otherSubscription);
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.remove(this.otherSubscription);
     this.delegate.complete(error);
   }

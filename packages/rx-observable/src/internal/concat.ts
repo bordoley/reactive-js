@@ -1,5 +1,9 @@
 import { disposed } from "@reactive-js/disposable";
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ErrorLike,
+  ObservableLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { connect } from "./connect";
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
@@ -32,7 +36,7 @@ export function concat<T>(
 
     const next = (v: T) => subscriber.next(v);
 
-    const complete = (error?: Error) => {
+    const complete = (error?: ErrorLike) => {
       subscriber.remove(innerSubscription);
 
       if (error !== undefined) {

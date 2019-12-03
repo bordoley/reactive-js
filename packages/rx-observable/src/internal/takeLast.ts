@@ -1,4 +1,4 @@
-import { SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
@@ -21,7 +21,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     };
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {

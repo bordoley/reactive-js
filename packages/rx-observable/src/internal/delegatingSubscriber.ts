@@ -1,4 +1,4 @@
-import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
@@ -38,7 +38,7 @@ export abstract class DelegatingSubscriber<
   }
 
   /** @ignore */
-  complete(error?: Error) {
+  complete(error?: ErrorLike) {
     if (__DEV__) {
       checkState(this);
     }
@@ -66,7 +66,7 @@ export abstract class DelegatingSubscriber<
    *
    * @param error
    */
-  protected abstract onComplete(error?: Error): void;
+  protected abstract onComplete(error?: ErrorLike): void;
 
   /**
    * Overried to handle incoming next notifications. Implementations
@@ -76,21 +76,19 @@ export abstract class DelegatingSubscriber<
    */
   protected abstract onNext(data: TA): void;
 
-  private tryOnComplete(error?: Error) {
+  private tryOnComplete(error?: ErrorLike) {
     try {
       this.onComplete(error);
-    } catch (e) {
-      // FIXME: if error isn't null the delegate error should
-      // reference both exceptions so that we don't swallow them.
-      this.delegate.complete(e);
+    } catch (cause) {
+      this.delegate.complete({ cause, parent: error } as ErrorLike);
     }
   }
 
   private tryOnNext(data: TA) {
     try {
       this.onNext(data);
-    } catch (e) {
-      this.complete(e);
+    } catch (cause) {
+      this.complete({ cause });
     }
   }
 }

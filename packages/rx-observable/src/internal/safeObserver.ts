@@ -1,5 +1,5 @@
 import { DisposableOrTeardown } from "@reactive-js/disposable";
-import { ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
+import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx-core";
 import {
   SchedulerContinuation,
   SchedulerContinuationResult,
@@ -10,7 +10,7 @@ class SafeObserver<T> implements ObserverLike<T> {
     return this.nextQueue.length + (this.isComplete ? 1 : 0);
   }
   private readonly continuation: SchedulerContinuationResult;
-  private error: Error | undefined;
+  private error: ErrorLike | undefined;
 
   private isComplete = false;
   private readonly nextQueue: Array<T> = [];
@@ -26,7 +26,7 @@ class SafeObserver<T> implements ObserverLike<T> {
     this.subscriber.add(this.clearQueue);
   }
 
-  complete(error?: Error) {
+  complete(error?: ErrorLike) {
     if (!this.isComplete) {
       this.isComplete = true;
       this.error = error;

@@ -4,6 +4,7 @@ import {
   disposed,
 } from "@reactive-js/disposable";
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -31,7 +32,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.allSubscriptions = allSubscriptions;
   }
 
-  complete(error?: Error) {
+  complete(error?: ErrorLike) {
     this.completedCountRef[0]++;
 
     if (error !== undefined || this.completedCountRef[0] === this.totalCount) {

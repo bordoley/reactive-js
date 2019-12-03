@@ -1,18 +1,20 @@
-import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { SubscriberLike } from "@reactive-js/rx-core";
 import {
-  SerialDisposableLike,
   createSerialDisposable,
+  SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { throws } from "./throws";
+import { ErrorLike, SubscriberLike } from "@reactive-js/rx-core";
 import { connect } from "./connect";
-import { onError } from './observe';
-import { pipe, ObservableOperator } from './pipe';
-import { SubscriberOperator, lift } from './lift';
+import { DelegatingSubscriber } from "./delegatingSubscriber";
+import { lift, SubscriberOperator } from "./lift";
+import { onError } from "./observe";
+import { ObservableOperator, pipe } from "./pipe";
+import { throws } from "./throws";
+
+const timeoutError = Symbol("TimeoutError");
 
 class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private readonly duration: number;
+  private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(delegate: SubscriberLike<T>, duration: number) {
     super(delegate);
@@ -21,17 +23,7 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  private readonly setupTimeout = () => {
-    this.durationSubscription.disposable = connect(
-      pipe(
-        throws(new Error("Timeout"), this.duration),
-        onError(err => this.complete(err)),
-      ), 
-      this
-    );
-  };
-
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.durationSubscription.dispose();
     this.delegate.complete(error);
   }
@@ -40,9 +32,21 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.setupTimeout();
     this.delegate.next(data);
   }
+
+  private readonly setupTimeout = () => {
+    this.durationSubscription.disposable = connect(
+      pipe(
+        throws(timeoutError, this.duration),
+        onError(cause => this.complete({ cause })),
+      ),
+      this,
+    );
+  };
 }
 
-const operator = <T>(duration: number): SubscriberOperator<T, T> => subscriber =>
+const operator = <T>(
+  duration: number,
+): SubscriberOperator<T, T> => subscriber =>
   new TimeoutSubscriber(subscriber, duration);
 
 export const timeout = <T>(duration: number): ObservableOperator<T, T> =>

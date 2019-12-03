@@ -1,5 +1,6 @@
 import { AsyncIteratorLike } from "@reactive-js/ix-core";
 import {
+  ErrorLike,
   ObservableLike,
   ObserverLike,
   SubscriberLike,
@@ -29,11 +30,11 @@ import {
   takeLast as takeLastObs,
   takeWhile as takeWhileObs,
   throttle as throttleObs,
-  throttleTime as throttleTimeObs,
   throttleFirst as throttleFirstObs,
   throttleFirstTime as throttleFirstTimeObs,
   throttleLast as throttleLastObs,
   throttleLastTime as throttleLastTimeObs,
+  throttleTime as throttleTimeObs,
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/rx-observable";
@@ -295,11 +296,11 @@ export const observe = <TReq, T>(
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(observeObs(observer));
 
 export const onComplete = <TReq, T>(
-  onComplete: (err?: Error) => void,
+  onComplete: (err?: ErrorLike) => void,
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(onCompleteObs(onComplete));
 
 export const onError = <TReq, T>(
-  onError: (err: Error) => void,
+  onError: (err: unknown) => void,
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(onErrorObs(onError));
 
 export const onNext = <TReq, T>(
@@ -311,7 +312,7 @@ export const repeat = <TReq, T>(
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(repeatObs(predicate));
 
 export const retry = <TReq, T>(
-  predicate?: (error: Error) => boolean,
+  predicate?: (error: unknown) => boolean,
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(retryObs(predicate));
 
 export const scan = <TReq, T, TAcc>(
@@ -356,7 +357,7 @@ export const takeWhile = <TReq, T>(
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(takeWhileObs(predicate));
 
 export const throttle = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): AsyncIteratorOperator<TReq, T, TReq, T> =>
   lift(throttleObs(durationSelector));
 
@@ -365,7 +366,7 @@ export const throttleTime = <TReq, T>(
 ): AsyncIteratorOperator<TReq, T, TReq, T> => lift(throttleTimeObs(duration));
 
 export const throttleFirst = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): AsyncIteratorOperator<TReq, T, TReq, T> =>
   lift(throttleFirstObs(durationSelector));
 
@@ -375,7 +376,7 @@ export const throttleFirstTime = <TReq, T>(
   lift(throttleFirstTimeObs(duration));
 
 export const throttleLast = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<any>,
+  durationSelector: (next: T) => ObservableLike<unknown>,
 ): AsyncIteratorOperator<TReq, T, TReq, T> =>
   lift(throttleLastObs(durationSelector));
 
@@ -386,8 +387,7 @@ export const throttleLastTime = <TReq, T>(
 
 export const timeout = <TReq, T>(
   duration: number,
-): AsyncIteratorOperator<TReq, T, TReq, T> =>
-  lift(timeoutObs(duration));
+): AsyncIteratorOperator<TReq, T, TReq, T> => lift(timeoutObs(duration));
 
 export const withLatestFrom = <TReq, TA, TB, TC>(
   other: ObservableLike<TB>,

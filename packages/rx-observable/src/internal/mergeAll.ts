@@ -1,4 +1,8 @@
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
+import {
+  ErrorLike,
+  ObservableLike,
+  SubscriberLike,
+} from "@reactive-js/rx-core";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
@@ -26,7 +30,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     });
   }
 
-  protected onComplete(error?: Error) {
+  protected onComplete(error?: ErrorLike) {
     this.isCompleted = true;
 
     if (error !== undefined || this.queue.length + this.activeCount === 0) {
@@ -58,7 +62,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
               next: (data: T) => {
                 this.delegate.next(data);
               },
-              complete: (error?: Error) => {
+              complete: (error?: ErrorLike) => {
                 this.activeCount--;
                 this.remove(nextObsSubscription);
 
