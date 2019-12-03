@@ -2,11 +2,6 @@ import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 import { useMemo } from "react";
 import { RelativeURI, RoutableComponentProps } from "./router";
 
-export interface RoutableStateComponentProps<TState> {
-  readonly dispatch: (updater: StateUpdater<TState>) => void;
-  readonly state: TState;
-}
-
 const createURIStateUpdater = <TState>(
   stateUpdater: StateUpdater<TState>,
   parse: (serialized: string) => TState,
@@ -41,12 +36,12 @@ export const useRoutableState = <TState>(
   serialize: (state: TState) => string,
   stateIsQuery = false,
 ): [TState, (updater: StateUpdater<TState>) => void] => {
-  const { uri, uriUpdater } = props;
+  const { uri: { query, fragment}, uriUpdater } = props;
 
   const state = useMemo(() => {
-    const serialized = stateIsQuery ? uri.query : uri.fragment;
+    const serialized = stateIsQuery ? query : fragment;
     return parse(serialized);
-  }, [uri]);
+  }, [query, fragment]);
 
   const dispatch = useMemo(
     () => (stateUpdater: StateUpdater<TState>) => {

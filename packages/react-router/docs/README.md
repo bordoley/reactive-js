@@ -8,7 +8,6 @@
 
 * [RelativeURI](interfaces/relativeuri.md)
 * [RoutableComponentProps](interfaces/routablecomponentprops.md)
-* [RoutableStateComponentProps](interfaces/routablestatecomponentprops.md)
 * [RouterProps](interfaces/routerprops.md)
 
 ### Functions
