@@ -551,7 +551,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate?`: undefined | function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 
 **Type parameters:**
 
@@ -561,7 +561,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`predicate?` | undefined &#124; function |
+`predicate?` | function &#124; number |
 
 **Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
 

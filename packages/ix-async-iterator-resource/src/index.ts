@@ -382,12 +382,12 @@ export const onNext = <TReq, T>(
 ): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(onNextObs(onNext));
 
 export const repeat = <TReq, T>(
-  predicate?: () => boolean,
+  predicate?: ((count: number) => boolean) | number,
 ): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
   lift(repeatObs(predicate));
 
 export const retry = <TReq, T>(
-  predicate?: (error: unknown) => boolean,
+  predicate?: (count: number, error: unknown) => boolean,
 ): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(retryObs(predicate));
 
 export const scan = <TReq, T, TAcc>(

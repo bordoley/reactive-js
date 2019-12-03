@@ -227,11 +227,11 @@ export const onNext = <T>(
 ): ObservableResourceOperator<T, T> => lift(onNextObs(onNext));
 
 export const repeat = <T>(
-  predicate?: () => boolean,
+  predicate?: ((count: number) => boolean) | number,
 ): ObservableResourceOperator<T, T> => lift(repeatObs(predicate));
 
 export const retry = <T>(
-  predicate?: (error: unknown) => boolean,
+  predicate?: (count: number, error: unknown) => boolean,
 ): ObservableResourceOperator<T, T> => lift(retryObs(predicate));
 
 export const scan = <T, TAcc>(
