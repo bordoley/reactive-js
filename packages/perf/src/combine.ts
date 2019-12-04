@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import { add3Arr, createArray, even } from "./utils";
 
 const Benchmark = require("benchmark");

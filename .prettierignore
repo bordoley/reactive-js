@@ -1,0 +1,11 @@
+yarn.lock
+yarn-error.log
+lerna-debug.log
+node_modules
+coverage
+docs
+tsconfig.tsbuildinfo
+dist
+.DS_Store
+.gitignore
+.prettierignore

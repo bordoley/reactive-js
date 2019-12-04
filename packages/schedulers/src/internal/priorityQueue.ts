@@ -55,7 +55,6 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
     const length = values.length;
 
     for (let index = 0; index < length; ) {
-      // eslint-disable-next-line no-mixed-operators
       const leftIndex = (index + 1) * 2 - 1;
       const rightIndex = leftIndex + 1;
 
@@ -86,8 +85,8 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
     const { values, compare } = this;
     let index = values.length - 1;
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+    let shouldBreak = false;
+    while (!shouldBreak) {
       const parentIndex = Math.floor((index - 1) / 2);
       const parent = values[parentIndex];
       if (parent !== undefined && compare(parent, item) > 0) {
@@ -97,7 +96,7 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
         index = parentIndex;
       } else {
         // The parent is smaller. Exit.
-        return;
+        shouldBreak = true;
       }
     }
   }

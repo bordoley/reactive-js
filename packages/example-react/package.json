@@ -31,12 +31,11 @@
     "@types/react-dom": "^16.9.4",
     "http-server": "^0.11.1",
     "rollup": "^1.27.4",
-    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.2"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc; yarn rollup",
     "rollup": "rollup -c",
     "server": "http-server -c-1 --proxy http://localhost:8080?"
   }

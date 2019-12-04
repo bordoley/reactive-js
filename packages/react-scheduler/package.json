@@ -1,8 +1,9 @@
 {
   "name": "@reactive-js/react-scheduler",
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm5/index.js",
+  "types": "dist/types/index.d.ts",
   "keywords": [
     "rx"
   ],
@@ -17,8 +18,8 @@
   },
   "dependencies": {
     "@reactive-js/disposable": "0.0.0",
-    "@reactive-js/scheduler": "0.0.0", 
-    "@reactive-js/schedulers": "0.0.0", 
+    "@reactive-js/scheduler": "0.0.0",
+    "@reactive-js/schedulers": "0.0.0",
     "scheduler": "^0.17.0",
     "tslib": "^1.10.0"
   },
@@ -26,9 +27,10 @@
     "@types/scheduler": "^0.16.1"
   },
   "scripts": {
-    "build": "tsc",
-    "docs": "typedoc",
-    "test": "jest --passWithNoTests",
-    "test-coverage": "jest --passWithNoTests --coverage"
+    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm5": "tsc -p tsconfig.esm5.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "docs": "typedoc --tsconfig tsconfig.doc.json"
   }
 }
