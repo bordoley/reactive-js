@@ -14,11 +14,11 @@ import {
   disposed,
 } from "@reactive-js/disposable";
 
-type CombineLatestContext = {
+interface CombineLatestContext {
   completedCount: number;
   latest: Array<any>;
   producedCount: number;
-};
+}
 
 class CombineLatestObserver implements ObserverLike<any> {
   innerSubscription: DisposableLike = disposed;

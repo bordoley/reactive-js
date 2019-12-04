@@ -19,12 +19,12 @@ import {
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { createSchedulerWithPriority } from "./schedulerWithPriority";
 
-type VirtualTask = {
+interface VirtualTask {
   continuation: HostSchedulerContinuation;
   disposable: DisposableLike;
   dueTime: number;
   id: number;
-};
+}
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
   let diff = 0;
@@ -47,10 +47,10 @@ class VirtualTimeSchedulerHostResource
     this.microTaskTicks++;
     return this.microTaskTicks >= this.maxMicroTaskTicks;
   }
-  private _now: number = 0;
+  private _now = 0;
   private readonly disposable = createDisposable();
   private readonly maxMicroTaskTicks: number;
-  private microTaskTicks: number = 0;
+  private microTaskTicks = 0;
 
   private taskIDCount = 0;
   private readonly taskQueue: PriorityQueueLike<
@@ -98,7 +98,7 @@ class VirtualTimeSchedulerHostResource
 
   schedule(
     continuation: HostSchedulerContinuation,
-    delay: number = 0,
+    delay = 0,
   ): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {

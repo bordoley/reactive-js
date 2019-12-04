@@ -20,12 +20,6 @@ export interface Location {
   readonly query: string;
 }
 
-const empty: Location = {
-  path: "",
-  query: "",
-  fragment: "",
-};
-
 const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
   (a.path === b.path && a.query === b.query && a.fragment === b.fragment);

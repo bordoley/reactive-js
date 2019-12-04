@@ -1,16 +1,12 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx-core";
-import {
-  SchedulerContinuation,
-  SchedulerContinuationResult,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuation } from "@reactive-js/scheduler";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
-  delay: number = 0,
+  delay = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
-    let continuationResult: SchedulerContinuationResult;
 
     const continuation: SchedulerContinuation = (
       shouldYield: () => boolean,
@@ -36,7 +32,7 @@ export const fromArray = <T>(
       }
     };
 
-    continuationResult = { continuation, delay };
+    const continuationResult = { continuation, delay };
     subscriber.schedule(continuation, delay);
   };
 
@@ -63,7 +59,7 @@ export function fromScheduledValues<T>(
       shouldYield: () => boolean,
     ) => {
       while (index < values.length) {
-        const [_d, value] = values[index];
+        const [, value] = values[index];
         index++;
         subscriber.next(value);
 
@@ -83,7 +79,7 @@ export function fromScheduledValues<T>(
       return;
     };
 
-    const [delay, _] = values[index];
+    const [delay] = values[index];
     subscriber.schedule(continuation, delay);
   };
 

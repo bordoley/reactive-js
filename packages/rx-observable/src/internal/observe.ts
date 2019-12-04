@@ -35,7 +35,7 @@ export const observe = <T>(
   observer: ObserverLike<T>,
 ): ObservableOperator<T, T> => lift(operator(observer));
 
-const ignore = <T>(data: T) => {};
+const ignore = <T>(_: T) => {};
 
 export const onComplete = <T>(
   onComplete: (err?: ErrorLike) => void,

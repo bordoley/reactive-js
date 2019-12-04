@@ -23,9 +23,9 @@ export interface RoutableComponentProps {
   readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
 }
 
-type RouteMap = {
+interface RouteMap {
   [key: string]: React.ComponentType<RoutableComponentProps>;
-};
+}
 
 export interface RouterProps {
   readonly locationStoreFactory: () => AsyncIteratorResourceLike<
@@ -46,7 +46,7 @@ export const Router = function Router(props: RouterProps) {
   const element = useObservableResource(
     () => {
       const routeMap: RouteMap = {};
-      for (let [path, component] of routes) {
+      for (const [path, component] of routes) {
         routeMap[path] = component;
       }
 
@@ -78,5 +78,5 @@ export const Router = function Router(props: RouterProps) {
     scheduler,
   );
 
-  return element || null;
+  return element ?? null;
 };
