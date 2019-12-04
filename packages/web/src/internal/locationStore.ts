@@ -1,18 +1,21 @@
 import {
-  createStateStore,
-  lift,
-  pipe as pipeIter,
-  share,
-} from "@reactive-js/ix-async-iterator-resource";
-import {
-  ignoreElements,
-  merge,
-  ObservableOperator,
-  onNext,
   pipe,
+  createSubject,
+  connect,
+  ignoreElements,
+  share,
+  onNext,
+  merge,
+  scan,
+  map,
+  startWith,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { fromEvent } from "./event";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
+import { DisposableOrTeardown } from "@reactive-js/disposable";
+import { SubscriberLike, ObservableLike } from "@reactive-js/rx-core";
+import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
 
 export interface Location {
   readonly fragment: string;
@@ -34,46 +37,81 @@ const getCurrentLocation = (): Location => {
   return { path, query, fragment };
 };
 
-const createOnPopstateUpdateURI = (setURI: (state: Location) => void) =>
-  pipe(
-    fromEvent(window, "popstate", _ => getCurrentLocation()),
-    onNext(setURI),
-    ignoreElements(),
-  );
+class LocationStoreResourceImpl
+  implements AsyncIteratorResourceLike<StateUpdater<Location>, Location> {
+  private readonly subject = createSubject(1);
+  private readonly observable: ObservableLike<Location>;
 
-const onStateChangeUpdateHistory: ObservableOperator<
-  Location,
-  Location
-> = obs =>
-  pipe(
-    obs,
-    onNext((uri: Location) => {
-      if (!locationEquals(uri, getCurrentLocation())) {
-        const { path, query, fragment } = uri;
-        let uriString = path;
-        uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
-        uriString =
-          fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
-        window.history.pushState(undefined, "", uriString);
-      }
-    }),
-  );
+  get isDisposed(): boolean {
+    return this.subject.isDisposed;
+  }
 
-const operator = (
-  setURI: (state: Location) => void,
-): ObservableOperator<Location, Location> => obs =>
-  pipe(
-    merge(createOnPopstateUpdateURI(setURI), obs),
-    onStateChangeUpdateHistory,
-  );
+  constructor(scheduler: SchedulerLike) {
+    const currentLocation = getCurrentLocation();
+    this.observable = pipe(
+      merge(
+        pipe(
+          fromEvent(window, "popstate", _ => getCurrentLocation()),
+          map(uri => (_: Location) => uri),
+          onNext(next => this.subject.next(next)),
+          ignoreElements(),
+        ),
+        pipe(
+          this.subject,
+          scan(
+            (acc, updater: StateUpdater<Location>) => updater(acc),
+            currentLocation,
+          ),
+          onNext((newLocation: Location) => {
+            const currentLocation = getCurrentLocation();
+            if (!locationEquals(currentLocation, newLocation)) {
+              const { path, query, fragment } = newLocation;
+              let uriString = path;
+              uriString =
+                query.length > 0 ? `${uriString}?${query}` : uriString;
+              uriString =
+                fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
+              window.history.pushState(undefined, "", uriString);
+            }
+          }),
+          startWith(currentLocation),
+        ),
+      ),
+      share(scheduler),
+    );
 
-export const createLocationStore = (scheduler: SchedulerLike) => {
-  const stateStore = createStateStore(
-    getCurrentLocation(),
-    scheduler,
-    locationEquals,
-  );
+    const popStateSubscription = connect(this.observable, scheduler);
+    this.subject.add(popStateSubscription);
+  }
 
-  const setURI = (uri: Location) => stateStore.dispatch(_ => uri);
-  return pipeIter(stateStore, lift(operator(setURI)), share(scheduler));
-};
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.add(disposable, ...disposables);
+  }
+
+  dispatch(updater: StateUpdater<Location>) {
+    this.subject.next(updater);
+  }
+
+  dispose() {
+    this.subject.dispose();
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.subject.remove(disposable, ...disposables);
+  }
+
+  subscribe(subscriber: SubscriberLike<Location>) {
+    this.observable.subscribe(subscriber);
+  }
+}
+
+export const createLocationStoreResource = (
+  scheduler: SchedulerLike,
+): AsyncIteratorResourceLike<StateUpdater<Location>, Location> =>
+  new LocationStoreResourceImpl(scheduler);

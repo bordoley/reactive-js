@@ -7,7 +7,7 @@ import {
 } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/rx-observable";
-import { createLocationStore, Location } from "@reactive-js/web";
+import { createLocationStoreResource, Location } from "@reactive-js/web";
 import { ComponentType, useCallback, useMemo } from "react";
 import { render } from "react-dom";
 import React from "react";
@@ -83,7 +83,7 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route3", StatefulComponent],
 ];
 
-const locationStoreFactory = () => createLocationStore(normalPriority);
+const locationStoreFactory = () => createLocationStoreResource(normalPriority);
 
 render(
   <Router
