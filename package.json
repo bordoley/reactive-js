@@ -2,14 +2,13 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo",
+    "build": "lerna run build & yarn docs",
+    "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo packages/**/coverage",
     "docs": "lerna run docs",
     "example": "node ./packages/example/dist/index.js",
-    "format": "prettier --write packages/**/src/** packages/**/src/**/** packages/**/test/**",
-    "lint": "eslint --fix -f codeFrame 'packages/*/src/**' 'packages/*/src/internal/**' 'packages/**/test/**'",
+    "format": "prettier '**' --write",
+    "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
     "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
-    "rollup": "lerna run rollup",
     "test": "lerna run test",
     "test-coverage": "lerna run test-coverage"
   },
@@ -17,6 +16,7 @@
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-eslint-plugin": "^2.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -32,11 +32,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "prettier": {
-    "bracketSpacing": true,
-    "proseWrap": "never",
-    "singleQuote": false,
-    "trailingComma": "all"
-  }
+  ]
 }

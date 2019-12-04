@@ -13,7 +13,6 @@ class NodeHostScheduler implements HostSchedulerLike {
 
   get now(): number {
     const hr = process.hrtime();
-    // eslint-disable-next-line no-mixed-operators
     return hr[0] * 1000 + hr[1] / 1e6;
   }
 
@@ -21,10 +20,7 @@ class NodeHostScheduler implements HostSchedulerLike {
     return this.now > this.startTime + this.timeout;
   }
 
-  schedule(
-    continuation: HostSchedulerContinuation,
-    delay = 0,
-  ): DisposableLike {
+  schedule(continuation: HostSchedulerContinuation, delay = 0): DisposableLike {
     const scheduledContinuation = async () => {
       this.startTime = this.now;
 
@@ -41,11 +37,9 @@ class NodeHostScheduler implements HostSchedulerLike {
 
     const disposable = createDisposable();
     if (delay > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const timeout = setTimeout(scheduledContinuation, delay);
       disposable.add(() => clearTimeout(timeout));
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const immediate = setImmediate(scheduledContinuation);
       disposable.add(() => clearImmediate(immediate));
     }

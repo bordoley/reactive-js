@@ -1,8 +1,11 @@
 {
-  "extends": "../../tsconfig.settings.json",
+  "extends": "../../tsconfig.compiler.json",
   "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["dom"],
+    "jsx": "react",
+    "module": "es2015",
     "rootDir": "src",
-    "outDir": "dist",
-    "lib": ["dom"]
+    "outDir": "dist/esm5"
   }
 }

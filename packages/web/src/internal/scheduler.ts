@@ -45,10 +45,7 @@ class WebHostScheduler implements HostSchedulerLike {
 
   private startTime = 0;
 
-  schedule(
-    continuation: HostSchedulerContinuation,
-    delay = 0,
-  ): DisposableLike {
+  schedule(continuation: HostSchedulerContinuation, delay = 0): DisposableLike {
     const scheduledContinuation = () => {
       this.startTime = this.now;
 

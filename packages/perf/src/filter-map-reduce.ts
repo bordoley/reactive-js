@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import { add1, createArray, even, sum } from "./utils";
 
 const Benchmark = require("benchmark");

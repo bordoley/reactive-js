@@ -171,7 +171,5 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
   }
 }
 
-export const createSubject = <T>(
-  replayCount = 0,
-): SubjectResourceLike<T> =>
+export const createSubject = <T>(replayCount = 0): SubjectResourceLike<T> =>
   replayCount > 0 ? new ReplayLastSubjectImpl(replayCount) : new SubjectImpl();
