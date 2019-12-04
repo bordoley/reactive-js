@@ -27,12 +27,12 @@ ___
 
 ### `Const` setSchedulerTimeout
 
-▸ **setSchedulerTimeout**(`timeout`: number): *void*
+▸ **setSchedulerTimeout**(`newTimeout`: number): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`timeout` | number |
+`newTimeout` | number |
 
 **Returns:** *void*
