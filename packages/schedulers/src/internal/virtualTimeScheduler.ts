@@ -96,10 +96,7 @@ class VirtualTimeSchedulerHostResource
     }
   }
 
-  schedule(
-    continuation: HostSchedulerContinuation,
-    delay = 0,
-  ): DisposableLike {
+  schedule(continuation: HostSchedulerContinuation, delay = 0): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {
       id: this.taskIDCount++,

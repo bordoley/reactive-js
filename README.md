@@ -37,41 +37,47 @@ const observable = pipe(
 
 // Connect the observable to a scheduler, creating a subscription.
 // In reactive-js, we never directly create a Subscriber, but instead
-// use the connect function. 
+// use the connect function.
 const subscription = connect(observable, normalPriority);
 ```
 
 ## Packages
 
 ### Reactive Asynchronous Programming (RX)
-* [@reactive-js/rx-core](./packages/rx-core/docs)
-* [@reactive-js/rx-observable](./packages/rx-observable/docs)
-* [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
+
+- [@reactive-js/rx-core](./packages/rx-core/docs)
+- [@reactive-js/rx-observable](./packages/rx-observable/docs)
+- [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
 
 ### Interactive Asynchronous Programming (IX)
-* [@reactive-js/ix-core](./packages/ix-core/docs)
-* [@reactive-js/ix-async-iterator](./packages/ix-async-iterator/docs)
-* [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
+
+- [@reactive-js/ix-core](./packages/ix-core/docs)
+- [@reactive-js/ix-async-iterator](./packages/ix-async-iterator/docs)
+- [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
 
 ### Schedulers
-* [@reactive-js/scheduler](./packages/scheduler/docs)
-* [@reactive-js/schedulers](./packages/schedulers/docs)
+
+- [@reactive-js/scheduler](./packages/scheduler/docs)
+- [@reactive-js/schedulers](./packages/schedulers/docs)
 
 ### Resource Management
-* [@reactive-js/disposable](./packages/disposable/docs)
+
+- [@reactive-js/disposable](./packages/disposable/docs)
 
 ### Platform Integrations
 
 #### Node.js
-* [@reactive-js/node](./packages/node/docs)
+
+- [@reactive-js/node](./packages/node/docs)
 
 #### React
-* [@reactive-js/react](./packages/react/docs)
-* [@reactive-js/react-router](./packages/react-router/docs)
-* [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
+
+- [@reactive-js/react](./packages/react/docs)
+- [@reactive-js/react-router](./packages/react-router/docs)
+- [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
 
 #### Web
-* [@reactive-js/web](./packages/web/docs)
+
+- [@reactive-js/web](./packages/web/docs)
 
 ## RxJS/TC39 Comparison
-

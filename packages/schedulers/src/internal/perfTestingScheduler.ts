@@ -55,10 +55,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
     this.disposable.dispose();
   }
 
-  schedule(
-    continuation: SchedulerContinuation,
-    _?: number,
-  ): DisposableLike {
+  schedule(continuation: SchedulerContinuation, _?: number): DisposableLike {
     this.queue.push(continuation);
     return createDisposable();
   }

@@ -26,11 +26,7 @@ const priorityScheduler: PrioritySchedulerLike = {
     return unstable_shouldYield();
   },
 
-  schedule(
-    continuation: () => void,
-    priority: number,
-    delay = 0,
-  ): void {
+  schedule(continuation: () => void, priority: number, delay = 0): void {
     unstable_scheduleCallback(
       priority,
       continuation,
