@@ -148,7 +148,8 @@ export interface SerialDisposableLike extends DisposableLike {
   disposable: DisposableLike;
 }
 
-class SerialDisposableImpl extends DisposableImpl implements SerialDisposableLike {
+class SerialDisposableImpl extends DisposableImpl
+  implements SerialDisposableLike {
   get disposable(): DisposableLike {
     return this._disposable;
   }
