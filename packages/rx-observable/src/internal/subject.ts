@@ -46,7 +46,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
     const subscribers = this.observers.slice();
     this.observers.length = 0;
 
-    for (let subscriber of subscribers) {
+    for (const subscriber of subscribers) {
       subscriber.complete(error);
     }
   }
@@ -63,7 +63,7 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
     this.onNext(data);
 
     const subscribers = this.observers.slice();
-    for (let subscriber of subscribers) {
+    for (const subscriber of subscribers) {
       subscriber.next(data);
     }
   }
@@ -107,9 +107,9 @@ abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
 }
 
 class SubjectImpl<T> extends AbstractSubject<T> {
-  protected onComplete(error?: ErrorLike) {}
-  protected onNext(data: T) {}
-  protected onSubscribe(observer: ObserverLike<T>) {}
+  protected onComplete(_?: ErrorLike) {}
+  protected onNext(_: T) {}
+  protected onSubscribe(_: ObserverLike<T>) {}
 }
 
 enum NotificationKind {
@@ -158,7 +158,7 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
     // The observer is a safe observer, an queues all notifications
     // until a drain is scheduled. Hence there is no need to
     // copy the replayed notifications before publishing via notify.
-    for (let notif of this.replayed) {
+    for (const notif of this.replayed) {
       notify(observer, notif);
     }
   }
@@ -172,6 +172,6 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
 }
 
 export const createSubject = <T>(
-  replayCount: number = 0,
+  replayCount = 0,
 ): SubjectResourceLike<T> =>
   replayCount > 0 ? new ReplayLastSubjectImpl(replayCount) : new SubjectImpl();

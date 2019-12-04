@@ -62,7 +62,7 @@ export function merge<T>(
     const allSubscriptions: DisposableLike = createDisposable();
     subscriber.add(allSubscriptions);
 
-    for (let observable of observables) {
+    for (const observable of observables) {
       const observer = new MergeObserver(
         subscriber,
         observables.length,

@@ -1,5 +1,6 @@
-const Benchmark = require("benchmark");
 import { add3Arr, createArray, even } from "./utils";
+
+const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
   const src = createArray(n);
@@ -29,7 +30,7 @@ export const run = (n: number) => {
     })
     .add("rx-js", () => {
       const { combineLatest, from } = require("rxjs");
-      const { filter, map, scan } = require("rxjs/operators");
+      const { filter, map } = require("rxjs/operators");
       const { run } = require("./rxjs-runner");
 
       const arrayObs = from(src);
@@ -41,7 +42,7 @@ export const run = (n: number) => {
       run(observable);
     })
     .add("callbags", () => {
-      const { combine, map, filter, scan, pipe } = require("callbag-basics");
+      const { combine, map, filter, pipe } = require("callbag-basics");
       const { run } = require("./cb-runner");
 
       const fromArray = <T>(arr: ReadonlyArray<T>) => (t: any, d: any) => {

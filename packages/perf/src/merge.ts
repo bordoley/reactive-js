@@ -1,6 +1,6 @@
-const Benchmark = require("benchmark");
-
 import { sum } from "./utils";
+
+const Benchmark = require("benchmark");
 
 const createSrcData = (m: number, n: number) => {
   const a = new Array(n);
@@ -34,7 +34,7 @@ export const run = (m: number, n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray(x));
-      const observable = pipe(merge.apply(undefined, streams), scan(sum, 0));
+      const observable = pipe(merge(...streams), scan(sum, 0));
 
       run(observable);
     })
@@ -44,7 +44,7 @@ export const run = (m: number, n: number) => {
       const { run } = require("./rxjs-runner");
 
       const streams = src.map(x => from(x));
-      const observable = merge.apply(undefined, streams).pipe(scan(sum, 0));
+      const observable = merge(...streams).pipe(scan(sum, 0));
 
       run(observable);
     })
@@ -64,7 +64,7 @@ export const run = (m: number, n: number) => {
 
       const streams = src.map(fromArray);
 
-      const observable = pipe(merge.apply(void 0, streams), scan(sum, 0));
+      const observable = pipe(merge(...streams), scan(sum, 0));
 
       run(observable);
     });

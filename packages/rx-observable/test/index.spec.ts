@@ -121,7 +121,7 @@ describe("Observable", () => {
       onNext(_ => result.push(1)),
     );
 
-    const subscription = connect(
+    connect(
       pipe(
         liftedObservable,
         onNext(_ => result.push(3)),

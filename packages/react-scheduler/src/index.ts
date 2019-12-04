@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
@@ -28,7 +29,7 @@ const priorityScheduler: PrioritySchedulerLike = {
   schedule(
     continuation: () => void,
     priority: number,
-    delay: number = 0,
+    delay = 0,
   ): void {
     unstable_scheduleCallback(
       priority,
