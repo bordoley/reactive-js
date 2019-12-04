@@ -118,8 +118,7 @@ const _disposed: DisposableLike = {
   },
   isDisposed: true,
   dispose() {},
-  remove(..._: DisposableOrTeardown[]) {
-  },
+  remove(..._: DisposableOrTeardown[]) {},
 };
 
 /**

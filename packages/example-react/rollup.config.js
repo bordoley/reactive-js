@@ -27,9 +27,9 @@ export default {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     terser({
-     output: {
-       comments: false,
-    },
-  }),
+      output: {
+        comments: false,
+      },
+    }),
   ],
 };
