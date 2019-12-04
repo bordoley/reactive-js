@@ -11,107 +11,6 @@ import {
 } from "@reactive-js/rx-core";
 import { createSafeObserver } from "./safeObserver";
 
-abstract class AbstractSubject<T> implements SubjectResourceLike<T> {
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-  private readonly disposable: DisposableLike;
-
-  private isCompleted = false;
-  private readonly observers: Array<ObserverLike<T>> = [];
-
-  constructor() {
-    this.disposable = createDisposable();
-    this.disposable.add(() => {
-      this.isCompleted = true;
-      this.observers.length = 0;
-    });
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-  }
-
-  complete(error?: ErrorLike) {
-    if (this.isCompleted) {
-      return;
-    }
-
-    this.onComplete(error);
-
-    this.isCompleted = true;
-    const subscribers = this.observers.slice();
-    this.observers.length = 0;
-
-    for (const subscriber of subscribers) {
-      subscriber.complete(error);
-    }
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  next(data: T) {
-    if (this.isCompleted) {
-      return;
-    }
-
-    this.onNext(data);
-
-    const subscribers = this.observers.slice();
-    for (const subscriber of subscribers) {
-      subscriber.next(data);
-    }
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    if (!this.disposable.isDisposed) {
-      // The idea here is that an onSubscribe function may
-      // call onNext from unscheduled sources such as event handlers.
-      // So we marshall those events back to the scheduler.
-      const observer = createSafeObserver(subscriber);
-      this.onSubscribe(observer);
-
-      if (!this.isCompleted) {
-        this.observers.push(observer);
-
-        const disposable = createDisposable();
-        disposable.add(() => {
-          const index = this.observers.indexOf(observer);
-          if (index !== -1) {
-            this.observers.splice(index, 1);
-          }
-          subscriber.remove(disposable);
-        });
-        subscriber.add(disposable);
-      }
-    } else {
-      subscriber.dispose();
-    }
-  }
-
-  protected abstract onComplete(error?: ErrorLike): void;
-  protected abstract onNext(data: T): void;
-  protected abstract onSubscribe(observer: ObserverLike<T>): void;
-}
-
-class SubjectImpl<T> extends AbstractSubject<T> {
-  protected onComplete(_?: ErrorLike) {}
-  protected onNext(_: T) {}
-  protected onSubscribe(_: ObserverLike<T>) {}
-}
-
 const enum NotificationKind {
   Next = 1,
   Complete = 2,
@@ -135,31 +34,100 @@ const notify = <T>(
   }
 };
 
-class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
+class SubjectImpl<T> implements SubjectResourceLike<T> {
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+  private readonly disposable: DisposableLike;
+
+  private isCompleted = false;
+  private readonly observers: Array<ObserverLike<T>> = [];
   private readonly count: number;
   private replayed: Notification<T>[] = [];
 
   constructor(count: number) {
-    super();
+    this.disposable = createDisposable();
     this.count = count;
     this.add(() => {
+      this.isCompleted = true;
+      this.observers.length = 0;
       this.replayed.length = 0;
     });
   }
 
-  protected onComplete(error?: ErrorLike) {
-    this.pushNotification([NotificationKind.Complete, error]);
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add(disposable, ...disposables);
   }
 
-  protected onNext(data: T) {
-    this.pushNotification([NotificationKind.Next, data]);
+  complete(error?: ErrorLike) {
+    if (this.isCompleted) {
+      return;
+    }
+
+    this.pushNotification([NotificationKind.Complete, error]);
+
+    this.isCompleted = true;
+    const subscribers = this.observers.slice();
+    this.observers.length = 0;
+
+    for (const subscriber of subscribers) {
+      subscriber.complete(error);
+    }
   }
-  protected onSubscribe(observer: ObserverLike<T>) {
-    // The observer is a safe observer, an queues all notifications
-    // until a drain is scheduled. Hence there is no need to
-    // copy the replayed notifications before publishing via notify.
-    for (const notif of this.replayed) {
-      notify(observer, notif);
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  next(data: T) {
+    if (this.isCompleted) {
+      return;
+    }
+
+    this.pushNotification([NotificationKind.Next, data]);
+
+    const subscribers = this.observers.slice();
+    for (const subscriber of subscribers) {
+      subscriber.next(data);
+    }
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove(disposable, ...disposables);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    if (!this.disposable.isDisposed) {
+      // The idea here is that an onSubscribe function may
+      // call onNext from unscheduled sources such as event handlers.
+      // So we marshall those events back to the scheduler.
+      const observer = createSafeObserver(subscriber);
+
+      // The observer is a safe observer, queues all notifications
+      // until a drain is scheduled. Hence there is no need to
+      // copy the replayed notifications before publishing via notify.
+      for (const notif of this.replayed) {
+        notify(observer, notif);
+      }
+
+      if (!this.isCompleted) {
+        this.observers.push(observer);
+
+        subscriber.add(() => {
+          const index = this.observers.indexOf(observer);
+          if (index !== -1) {
+            this.observers.splice(index, 1);
+          }
+        });
+      }
+    } else {
+      subscriber.dispose();
     }
   }
 
@@ -172,4 +140,4 @@ class ReplayLastSubjectImpl<T> extends AbstractSubject<T> {
 }
 
 export const createSubject = <T>(replayCount = 0): SubjectResourceLike<T> =>
-  replayCount > 0 ? new ReplayLastSubjectImpl(replayCount) : new SubjectImpl();
+  new SubjectImpl(replayCount);
