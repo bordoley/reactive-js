@@ -23,7 +23,7 @@ const now =
 
 let startTime = 0;
 
-const _shouldYield =
+const shouldYield =
   navigator !== undefined &&
   (navigator as any).scheduling !== undefined &&
   (navigator as any).scheduling.isInputPending !== undefined
@@ -40,7 +40,6 @@ const _shouldYield =
       }
     : () => now() >= startTime + yieldInterval;
 
-const shouldYield = () => _shouldYield();
 let channel: MessageChannel | undefined = undefined;
 
 const scheduleImmediate = (
