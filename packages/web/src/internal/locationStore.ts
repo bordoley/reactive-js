@@ -7,7 +7,6 @@ import {
   onNext,
   merge,
   scan,
-  map,
   startWith,
 } from "@reactive-js/rx-observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -37,9 +36,28 @@ const getCurrentLocation = (): Location => {
   return { path, query, fragment };
 };
 
+const historyPushState = (newLocation: Location) => {
+  const currentLocation = getCurrentLocation();
+  if (!locationEquals(currentLocation, newLocation)) {
+    const { path, query, fragment } = newLocation;
+    let uriString = path;
+    uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
+    uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
+    window.history.pushState(undefined, "", uriString);
+  }
+};
+
+const getCurrentLocationStateUpdater = (_: unknown) => {
+  const uri = getCurrentLocation();
+  return (_: Location) => uri;
+};
+
+const applyUpdaterReducer = (acc: Location, updater: StateUpdater<Location>) =>
+  updater(acc);
+
 class LocationStoreResourceImpl
   implements AsyncIteratorResourceLike<StateUpdater<Location>, Location> {
-  private readonly subject = createSubject(1);
+  private readonly subject = createSubject();
   private readonly observable: ObservableLike<Location>;
 
   get isDisposed(): boolean {
@@ -47,41 +65,27 @@ class LocationStoreResourceImpl
   }
 
   constructor(scheduler: SchedulerLike) {
-    const currentLocation = getCurrentLocation();
-    this.observable = pipe(
-      merge(
-        pipe(
-          fromEvent(window, "popstate", _ => getCurrentLocation()),
-          map(uri => (_: Location) => uri),
-          onNext(next => this.subject.next(next)),
-          ignoreElements(),
-        ),
-        pipe(
-          this.subject,
-          scan(
-            (acc, updater: StateUpdater<Location>) => updater(acc),
-            currentLocation,
-          ),
-          onNext((newLocation: Location) => {
-            const currentLocation = getCurrentLocation();
-            if (!locationEquals(currentLocation, newLocation)) {
-              const { path, query, fragment } = newLocation;
-              let uriString = path;
-              uriString =
-                query.length > 0 ? `${uriString}?${query}` : uriString;
-              uriString =
-                fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
-              window.history.pushState(undefined, "", uriString);
-            }
-          }),
-          startWith(currentLocation),
-        ),
-      ),
-      share(scheduler),
+    const initialLocation = getCurrentLocation();
+
+    const popstateObservable = pipe(
+      fromEvent(window, "popstate", getCurrentLocationStateUpdater),
+      onNext(next => this.subject.next(next)),
+      ignoreElements(),
     );
 
-    const popStateSubscription = connect(this.observable, scheduler);
-    this.subject.add(popStateSubscription);
+    const currentLocationObservable = pipe(
+      this.subject,
+      scan(applyUpdaterReducer, initialLocation),
+      onNext(historyPushState),
+      startWith(initialLocation),
+    );
+
+    this.observable = pipe(
+      merge(popstateObservable, currentLocationObservable),
+      share(scheduler, 1),
+    );
+
+    this.subject.add(connect(this.observable, scheduler));
   }
 
   add(
