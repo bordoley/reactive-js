@@ -16,10 +16,12 @@ const now = (): number => {
   return hr[0] * 1000 + hr[1] / 1e6;
 };
 
-const shouldYield = (): boolean =>
-  now() > startTime + timeout;
+const shouldYield = (): boolean => now() > startTime + timeout;
 
-const schedule = (continuation: HostSchedulerContinuation, delay = 0): DisposableLike =>  {
+const schedule = (
+  continuation: HostSchedulerContinuation,
+  delay = 0,
+): DisposableLike => {
   const scheduledContinuation = async () => {
     startTime = now();
 
@@ -43,7 +45,7 @@ const schedule = (continuation: HostSchedulerContinuation, delay = 0): Disposabl
     disposable.add(() => clearImmediate(immediate));
   }
   return disposable;
-}
+};
 
 const schedulerHost: HostSchedulerLike = {
   get now(): number {
@@ -53,7 +55,7 @@ const schedulerHost: HostSchedulerLike = {
     return shouldYield();
   },
   schedule,
-}
+};
 
 let priorityScheduler: PrioritySchedulerResourceLike | undefined = undefined;
 
@@ -61,7 +63,10 @@ export const setSchedulerTimeout = (newTimeout: number) => {
   timeout = newTimeout;
 };
 
-export const createSchedulerWithPriority = (priority: number): SchedulerLike => {
-  priorityScheduler = priorityScheduler || createPrioritySchedulerResource(schedulerHost);
+export const createSchedulerWithPriority = (
+  priority: number,
+): SchedulerLike => {
+  priorityScheduler =
+    priorityScheduler || createPrioritySchedulerResource(schedulerHost);
   return createSchedulerWithPriorityImpl(priorityScheduler, priority);
 };

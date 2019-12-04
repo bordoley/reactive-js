@@ -1,3 +1,6 @@
 export { fromEvent } from "./internal/event";
-export { createLocationStore, Location } from "./internal/locationStore";
+export {
+  createLocationStoreResource,
+  Location,
+} from "./internal/locationStore";
 export { createSchedulerWithPriority } from "./internal/scheduler";

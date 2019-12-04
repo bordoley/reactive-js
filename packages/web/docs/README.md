@@ -10,15 +10,15 @@
 
 ### Functions
 
-* [createLocationStore](README.md#const-createlocationstore)
+* [createLocationStoreResource](README.md#const-createlocationstoreresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [fromEvent](README.md#const-fromevent)
 
 ## Functions
 
-### `Const` createLocationStore
+### `Const` createLocationStoreResource
 
-▸ **createLocationStore**(`scheduler`: SchedulerLike): *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
 
 **Parameters:**
 

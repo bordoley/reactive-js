@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@reactive-js/disposable": "0.0.0",
+    "@reactive-js/ix-core": "0.0.0",
     "@reactive-js/ix-async-iterator-resource": "0.0.0",
     "@reactive-js/rx-core": "0.0.0",
     "@reactive-js/rx-observable": "0.0.0",
