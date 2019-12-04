@@ -110,11 +110,22 @@ class DisposableImpl implements DisposableLike {
  */
 export const createDisposable = (): DisposableLike => new DisposableImpl();
 
+const _disposed: DisposableLike = {
+  add(...disposables: DisposableOrTeardown[]) {
+    for (const d of disposables) {
+      doDispose(d);
+    }
+  },
+  isDisposed: true,
+  dispose() {},
+  remove(..._: DisposableOrTeardown[]) {
+  },
+};
+
 /**
  * A disposed DisposableLike instance.
  */
-export const disposed: DisposableLike = createDisposable();
-disposed.dispose();
+export const disposed: DisposableLike = _disposed;
 
 /**
  * Throws an exception if the given disposable is disposed.

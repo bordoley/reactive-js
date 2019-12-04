@@ -32,7 +32,7 @@
 
 ### `Const` disposed
 
-• **disposed**: *[DisposableLike](interfaces/disposablelike.md)* =  createDisposable()
+• **disposed**: *[DisposableLike](interfaces/disposablelike.md)* =  _disposed
 
 A disposed DisposableLike instance.
 
