@@ -112,7 +112,7 @@ class SubjectImpl<T> extends AbstractSubject<T> {
   protected onSubscribe(_: ObserverLike<T>) {}
 }
 
-enum NotificationKind {
+const enum NotificationKind {
   Next = 1,
   Complete = 2,
 }
