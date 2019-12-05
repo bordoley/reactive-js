@@ -1,12 +1,11 @@
 import {
+  createDisposable,
   createSerialDisposable,
   DisposableLike,
   DisposableOrTeardown,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-
 import { PrioritySchedulerLike } from "./priorityScheduler";
-
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** @noInheritDoc */
@@ -30,6 +29,7 @@ export interface HostSchedulerLike {
 
 interface ScheduledTask {
   readonly continuation: () => void;
+  readonly disposable: DisposableLike;
   readonly dueTime: number;
   readonly priority: number;
   readonly startTime: number;
@@ -102,10 +102,12 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
   schedule(continuation: () => void, priority: number, delay = 0) {
     const startTime = this.now;
     const dueTime = startTime + delay;
+    const disposable = createDisposable();
 
     const task = {
       taskID: this.taskIDCounter++,
       continuation,
+      disposable,
       priority,
       startTime,
       dueTime,
@@ -113,11 +115,16 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
 
     this.queue.push(task);
     this.scheduleDrainQueue(task);
+    return disposable;
   }
 
   private readonly drainQueue: HostSchedulerContinuationLike = () => {
     const task = this.queue.peek();
-    if (task !== undefined && task.dueTime <= this.now) {
+    if (
+      task !== undefined &&
+      task.dueTime <= this.now &&
+      !task.disposable.isDisposed
+    ) {
       this.queue.pop();
 
       this.currentTask = task;

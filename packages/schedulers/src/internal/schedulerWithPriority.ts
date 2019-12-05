@@ -1,4 +1,8 @@
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import {
+  createSerialDisposable,
+  DisposableLike,
+  SerialDisposableLike,
+} from "@reactive-js/disposable";
 import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
 import { PrioritySchedulerLike } from "./priorityScheduler";
 
@@ -23,7 +27,7 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
   createCallback(
     continuation: SchedulerContinuation,
     shouldYield: () => boolean,
-    disposable: DisposableLike,
+    disposable: SerialDisposableLike,
   ): () => void {
     const callback = () => {
       if (disposable.isDisposed) {
@@ -42,7 +46,7 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
             ? callback
             : this.createCallback(result.continuation, shouldYield, disposable);
 
-        this.priorityScheduler.schedule(
+        disposable.disposable = this.priorityScheduler.schedule(
           nextCallback,
           this.priority,
           result.delay,
@@ -57,12 +61,16 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     continuation: SchedulerContinuation,
     delay?: number | undefined,
   ): DisposableLike {
-    const disposable = createDisposable();
+    const disposable = createSerialDisposable();
     const shouldYield = () =>
       this.priorityScheduler.shouldYield || disposable.isDisposed;
     const callback = this.createCallback(continuation, shouldYield, disposable);
 
-    this.priorityScheduler.schedule(callback, this.priority, delay);
+    disposable.disposable = this.priorityScheduler.schedule(
+      callback,
+      this.priority,
+      delay,
+    );
     return disposable;
   }
 }
