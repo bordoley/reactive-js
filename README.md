@@ -13,7 +13,7 @@ import {
   map,
   onNext,
   pipe,
-} from "@reactive-js/rx-observable";
+} from "@reactive-js/observable";
 
 import { normalPriority } from "@reactive-js/react-scheduler";
 
@@ -45,15 +45,15 @@ const subscription = connect(observable, normalPriority);
 
 ### Reactive Asynchronous Programming (RX)
 
-- [@reactive-js/rx-core](./packages/rx-core/docs)
-- [@reactive-js/rx-observable](./packages/rx-observable/docs)
-- [@reactive-js/rx-observable-resource](./packages/rx-observable-resource/docs)
+- [@reactive-js/rx](./packages/rx/docs)
+- [@reactive-js/observable](./packages/observable/docs)
+- [@reactive-js/observable-resource](./packages/observable-resource/docs)
 
 ### Interactive Asynchronous Programming (IX)
 
-- [@reactive-js/ix-core](./packages/ix-core/docs)
-- [@reactive-js/ix-async-iterator](./packages/ix-async-iterator/docs)
-- [@reactive-js/ix-async-iterator-resource](./packages/ix-async-iterator-resource/docs)
+- [@reactive-js/ix](./packages/ix/docs)
+- [@reactive-js/async-iterator](./packages/async-iterator/docs)
+- [@reactive-js/async-iterator-resource](./packages/async-iterator-resource/docs)
 
 ### Schedulers
 

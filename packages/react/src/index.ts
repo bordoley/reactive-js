@@ -1,20 +1,12 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import {
-  AsyncIteratorLike,
-  AsyncIteratorResourceLike,
-} from "@reactive-js/ix-core";
+import { AsyncIteratorLike, AsyncIteratorResourceLike } from "@reactive-js/ix";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
   ErrorLike,
   ObservableLike,
   ObservableResourceLike,
-} from "@reactive-js/rx-core";
-import {
-  connect,
-  observe,
-  pipe,
-  throttleTime,
-} from "@reactive-js/rx-observable";
+} from "@reactive-js/rx";
+import { connect, observe, pipe, throttleTime } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

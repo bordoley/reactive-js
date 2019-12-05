@@ -1,4 +1,4 @@
-import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
+import { StateUpdater } from "@reactive-js/async-iterator-resource";
 import { useMemo } from "react";
 import { RelativeURI, RoutableComponentProps } from "./router";
 

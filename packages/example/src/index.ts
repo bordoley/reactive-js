@@ -6,7 +6,7 @@ import {
   map,
   onNext,
   pipe,
-} from "@reactive-js/rx-observable";
+} from "@reactive-js/observable";
 
 import { createSchedulerWithPriority } from "@reactive-js/node";
 
