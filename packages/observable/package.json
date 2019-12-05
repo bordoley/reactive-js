@@ -23,7 +23,6 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@reactive-js/node": "0.0.0",
     "@reactive-js/schedulers": "0.0.0",
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
