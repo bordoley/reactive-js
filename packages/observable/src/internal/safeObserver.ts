@@ -18,7 +18,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   private readonly tearDown = () => {
     this.nextQueue.length = 0;
     this.isComplete = true;
-  }
+  };
 
   constructor(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

@@ -1,7 +1,15 @@
-import { createDisposable, disposed } from "@reactive-js/disposable";
-import { createSchedulerWithPriority } from "@reactive-js/node";
+import {
+  createDisposable,
+  disposed,
+  DisposableLike,
+} from "@reactive-js/disposable";
 import { ObservableLike, ObserverLike } from "@reactive-js/rx";
-import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
+import {
+  createVirtualTimeScheduler,
+  HostSchedulerContinuation,
+  createPrioritySchedulerResource,
+  createSchedulerWithPriority,
+} from "@reactive-js/schedulers";
 import {
   combineLatest,
   concat,
@@ -36,7 +44,30 @@ import {
   withLatestFrom,
 } from "../src/index";
 
-const nodeScheduler = createSchedulerWithPriority(500);
+const promiseScheduler = createSchedulerWithPriority(
+  createPrioritySchedulerResource({
+    get now(): number {
+      return Date.now();
+    },
+    get shouldYield(): boolean {
+      return false;
+    },
+    schedule(continuation: HostSchedulerContinuation, _): DisposableLike {
+      const scheduledContinuation = async () => {
+        let result: HostSchedulerContinuation | undefined = continuation;
+        while (result !== undefined) {
+          result = result();
+        }
+      };
+
+      const immediate = setImmediate(scheduledContinuation);
+      const disposable = createDisposable();
+      disposable.add(() => clearImmediate(immediate));
+      return disposable;
+    },
+  }),
+  0,
+);
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),
@@ -373,14 +404,17 @@ describe("fromArray", () => {
 describe("fromPromiseFactory", () => {
   test("when the promise resolves", async () => {
     const factory = () => Promise.resolve(1);
-    const result = await toPromise(fromPromiseFactory(factory), nodeScheduler);
+    const result = await toPromise(
+      fromPromiseFactory(factory),
+      promiseScheduler,
+    );
     expect(result).toEqual(1);
   });
 
   test("when the promise throws", () => {
     const cause = new Error();
     const factory = () => Promise.reject(cause);
-    const promise = toPromise(fromPromiseFactory(factory), nodeScheduler);
+    const promise = toPromise(fromPromiseFactory(factory), promiseScheduler);
     return expect(promise).rejects.toThrow(cause);
   });
 });
@@ -752,7 +786,7 @@ describe("takeLast", () => {
 
 describe("toPromise", () => {
   test("when the observable produces no values", () => {
-    const promise = toPromise(empty(), nodeScheduler);
+    const promise = toPromise(empty(), promiseScheduler);
     return expect(promise).rejects.toThrow();
   });
 });
