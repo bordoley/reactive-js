@@ -30,5 +30,8 @@
     "build-esm5": "tsc -p tsconfig.esm5.json",
     "build-types": "tsc -p tsconfig.types.json",
     "docs": "typedoc --tsconfig tsconfig.doc.json"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
