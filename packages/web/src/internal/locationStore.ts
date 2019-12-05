@@ -8,13 +8,13 @@ import {
   merge,
   scan,
   startWith,
-} from "@reactive-js/rx-observable";
+} from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { fromEvent } from "./event";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix-core";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix";
 import { DisposableOrTeardown } from "@reactive-js/disposable";
-import { SubscriberLike, ObservableLike } from "@reactive-js/rx-core";
-import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
+import { SubscriberLike, ObservableLike } from "@reactive-js/rx";
+import { StateUpdater } from "@reactive-js/async-iterator-resource";
 
 export interface Location {
   readonly fragment: string;

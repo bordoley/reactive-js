@@ -1,4 +1,4 @@
-import { StateUpdater } from "@reactive-js/ix-async-iterator-resource";
+import { StateUpdater } from "@reactive-js/async-iterator-resource";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -6,7 +6,7 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { generate } from "@reactive-js/rx-observable";
+import { generate } from "@reactive-js/observable";
 import { createLocationStoreResource, Location } from "@reactive-js/web";
 import { ComponentType, useCallback, useMemo } from "react";
 import { render } from "react-dom";

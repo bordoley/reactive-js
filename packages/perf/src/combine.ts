@@ -17,7 +17,7 @@ export const run = (n: number) => {
         keep,
         map,
         pipe,
-      } = require("@reactive-js/rx-observable");
+      } = require("@reactive-js/observable");
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray(src);

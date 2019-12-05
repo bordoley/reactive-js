@@ -1,5 +1,5 @@
-import { ObservableLike } from "@reactive-js/rx-core";
-import { createObservable } from "@reactive-js/rx-observable";
+import { ObservableLike } from "@reactive-js/rx";
+import { createObservable } from "@reactive-js/observable";
 
 export const fromEvent = <T>(
   target: EventTarget,

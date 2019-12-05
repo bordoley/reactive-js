@@ -17,10 +17,10 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/ix-async-iterator-resource": "0.0.0",
-    "@reactive-js/ix-core": "0.0.0",
+    "@reactive-js/async-iterator-resource": "0.0.0",
+    "@reactive-js/ix": "0.0.0",
     "@reactive-js/react": "0.0.0",
-    "@reactive-js/rx-observable-resource": "0.0.0",
+    "@reactive-js/observable-resource": "0.0.0",
     "@reactive-js/scheduler": "0.0.0",
     "react": "^16.11.0",
     "tslib": "^1.10.0"
