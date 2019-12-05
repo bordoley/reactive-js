@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/ix",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -17,7 +17,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/rx": "0.0.0",
+    "@reactive-js/rx": "^0.0.1",
     "tslib": "^1.10.0"
   },
   "scripts": {

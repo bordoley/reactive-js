@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/react-router",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -17,11 +17,11 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-iterator-resource": "0.0.0",
-    "@reactive-js/ix": "0.0.0",
-    "@reactive-js/react": "0.0.0",
-    "@reactive-js/observable-resource": "0.0.0",
-    "@reactive-js/scheduler": "0.0.0",
+    "@reactive-js/async-iterator-resource": "^0.0.1",
+    "@reactive-js/ix": "^0.0.1",
+    "@reactive-js/observable-resource": "^0.0.1",
+    "@reactive-js/react": "^0.0.1",
+    "@reactive-js/scheduler": "^0.0.1",
     "react": "^16.11.0",
     "tslib": "^1.10.0"
   },
