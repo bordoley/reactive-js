@@ -7,6 +7,8 @@ export interface PriorityQueueLike<T> {
   push(item: T): void;
 }
 
+const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
+
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   get count(): number {
     return this.values.length;
@@ -83,21 +85,18 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
 
   private siftUp(item: T) {
     const { values, compare } = this;
-    let index = values.length - 1;
 
-    let shouldBreak = false;
-    while (!shouldBreak) {
-      const parentIndex = Math.floor((index - 1) / 2);
-      const parent = values[parentIndex];
-      if (parent !== undefined && compare(parent, item) > 0) {
-        // The parent is larger. Swap positions.
-        values[parentIndex] = item;
-        values[index] = parent;
-        index = parentIndex;
-      } else {
-        // The parent is smaller. Exit.
-        shouldBreak = true;
-      }
+    for (
+      let index = values.length - 1,
+        parentIndex = computeParentIndex(index),
+        parent = values[parentIndex];
+      compare(parent, item) > 0;
+      index = parentIndex,
+        parentIndex = computeParentIndex(index),
+        parent = values[parentIndex]
+    ) {
+      values[parentIndex] = item;
+      values[index] = parent;
     }
   }
 }
