@@ -35,7 +35,7 @@ ___
 
 ###  schedule
 
-▸ **schedule**(`continuation`: function, `priority`: number, `delay?`: undefined | number): *void*
+▸ **schedule**(`continuation`: function, `priority`: number, `delay?`: undefined | number): *DisposableLike*
 
 **Parameters:**
 
@@ -47,4 +47,4 @@ ___
 
 ▪`Optional`  **delay**: *undefined | number*
 
-**Returns:** *void*
+**Returns:** *DisposableLike*

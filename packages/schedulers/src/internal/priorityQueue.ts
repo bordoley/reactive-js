@@ -90,7 +90,7 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
       let index = values.length - 1,
         parentIndex = computeParentIndex(index),
         parent = values[parentIndex];
-      compare(parent, item) > 0;
+      parent !== undefined && compare(parent, item) > 0;
       index = parentIndex,
         parentIndex = computeParentIndex(index),
         parent = values[parentIndex]

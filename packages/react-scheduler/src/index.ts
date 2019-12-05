@@ -4,6 +4,7 @@ import {
   unstable_ImmediatePriority,
   unstable_LowPriority,
   unstable_NormalPriority,
+  unstable_cancelCallback,
   unstable_now,
   unstable_scheduleCallback,
   unstable_shouldYield,
@@ -16,6 +17,7 @@ import {
   createSchedulerWithPriority,
   PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
+import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 
 const priorityScheduler: PrioritySchedulerLike = {
   get now(): number {
@@ -26,12 +28,19 @@ const priorityScheduler: PrioritySchedulerLike = {
     return unstable_shouldYield();
   },
 
-  schedule(continuation: () => void, priority: number, delay = 0): void {
-    unstable_scheduleCallback(
+  schedule(
+    continuation: () => void,
+    priority: number,
+    delay = 0,
+  ): DisposableLike {
+    const callbackNode = unstable_scheduleCallback(
       priority,
       continuation,
       delay > 0 ? { delay } : undefined,
     );
+    const disposable = createDisposable();
+    disposable.add(() => unstable_cancelCallback(callbackNode));
+    return disposable;
   },
 };
 

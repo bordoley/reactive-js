@@ -96,7 +96,10 @@ class VirtualTimeSchedulerHostResource
     }
   }
 
-  schedule(continuation: HostSchedulerContinuationLike, delay = 0): DisposableLike {
+  schedule(
+    continuation: HostSchedulerContinuationLike,
+    delay = 0,
+  ): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {
       id: this.taskIDCount++,
@@ -126,8 +129,8 @@ class VirtualTimePrioritySchedulerResource
     return this.priorityScheduler.shouldYield;
   }
 
-  private readonly hostScheduler: VirtualTimeSchedulerHostResource;
   private readonly priorityScheduler: PrioritySchedulerResourceLike;
+  private readonly hostScheduler: VirtualTimeSchedulerHostResource;
 
   constructor(maxMicroTaskTicks: number) {
     this.hostScheduler = new VirtualTimeSchedulerHostResource(
@@ -136,28 +139,26 @@ class VirtualTimePrioritySchedulerResource
     this.priorityScheduler = createPrioritySchedulerResource(
       this.hostScheduler,
     );
-    this.hostScheduler.add(this.priorityScheduler);
-    this.priorityScheduler.add(() =>
-      this.hostScheduler.remove(this.priorityScheduler),
-    );
+
+    this.priorityScheduler.add(this.hostScheduler);
   }
 
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): void {
-    this.hostScheduler.add(disposable, ...disposables);
+    this.priorityScheduler.add(disposable, ...disposables);
   }
 
   dispose(): void {
-    this.hostScheduler.dispose();
+    this.priorityScheduler.dispose();
   }
 
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): void {
-    this.hostScheduler.remove(disposable, ...disposables);
+    this.priorityScheduler.remove(disposable, ...disposables);
   }
 
   run(): void {
@@ -166,8 +167,12 @@ class VirtualTimePrioritySchedulerResource
     this.dispose();
   }
 
-  schedule(continuation: () => void, priority: number, delay?: number): void {
-    this.priorityScheduler.schedule(continuation, priority, delay);
+  schedule(
+    continuation: () => void,
+    priority: number,
+    delay?: number,
+  ): DisposableLike {
+    return this.priorityScheduler.schedule(continuation, priority, delay);
   }
 }
 
