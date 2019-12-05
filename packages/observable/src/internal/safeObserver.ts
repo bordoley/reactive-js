@@ -1,4 +1,3 @@
-import { DisposableOrTeardown } from "@reactive-js/disposable";
 import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx";
 import {
   SchedulerContinuation,
@@ -16,6 +15,11 @@ class SafeObserver<T> implements ObserverLike<T> {
   private readonly nextQueue: Array<T> = [];
   private readonly subscriber: SubscriberLike<T>;
 
+  private readonly tearDown = () => {
+    this.nextQueue.length = 0;
+    this.isComplete = true;
+  }
+
   constructor(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
 
@@ -23,7 +27,7 @@ class SafeObserver<T> implements ObserverLike<T> {
       continuation: this.drainQueue,
     };
 
-    this.subscriber.add(this.clearQueue);
+    this.subscriber.add(this.tearDown);
   }
 
   complete(error?: ErrorLike) {
@@ -40,9 +44,6 @@ class SafeObserver<T> implements ObserverLike<T> {
       this.scheduleDrainQueue();
     }
   }
-  private readonly clearQueue: DisposableOrTeardown = () => {
-    this.nextQueue.length = 0;
-  };
 
   private readonly drainQueue: SchedulerContinuation = shouldYield => {
     while (this.nextQueue.length > 0) {
@@ -58,7 +59,7 @@ class SafeObserver<T> implements ObserverLike<T> {
     }
 
     if (this.isComplete) {
-      this.subscriber.remove(this.clearQueue);
+      this.subscriber.remove(this.tearDown);
       this.subscriber.complete(this.error);
     }
     return;
