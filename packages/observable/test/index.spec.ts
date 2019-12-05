@@ -53,7 +53,7 @@ const promiseScheduler = createSchedulerWithPriority(
       return false;
     },
     schedule(continuation: HostSchedulerContinuation, _): DisposableLike {
-      const scheduledContinuation = async () => {
+      const scheduledContinuation = () => {
         let result: HostSchedulerContinuation | undefined = continuation;
         while (result !== undefined) {
           result = result();

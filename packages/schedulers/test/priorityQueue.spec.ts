@@ -2,21 +2,41 @@ import { createPriorityQueue } from "../src/internal/priorityQueue";
 
 const compare = (a: number, b: number): number => a - b;
 
+const makeSortedArray = (n: number) => {
+  const result = new Array(n);
+  for (let i = 0; i < n; i++) {
+    result[i] = i;
+  }
+  return result;
+};
+
+const makeShuffledArray = (n: number) => {
+  const result = makeSortedArray(n);
+
+  for (let count = n - 1; count >= 0; count--) {
+    const index = Math.floor(Math.random() * (count + 1));
+
+    const temp = result[count];
+    result[count] = result[index];
+    result[index] = temp;
+  }
+
+  return result;
+};
+
 describe("priority queue", () => {
   test("push", () => {
     const queue = createPriorityQueue(compare);
-    queue.push(5);
-    queue.push(1);
-    queue.push(3);
-    queue.push(2);
-    queue.push(4);
+    const shuffledArray = makeShuffledArray(100);
+    for (let i = 0; i < shuffledArray.length; i++) {
+      queue.push(shuffledArray[i]);
+    }
 
     const acc = [];
-
     while (queue.count > 0) {
       acc.push(queue.pop());
     }
 
-    expect(acc).toEqual([1, 2, 3, 4, 5]);
+    expect(acc).toEqual(makeSortedArray(100));
   });
 });
