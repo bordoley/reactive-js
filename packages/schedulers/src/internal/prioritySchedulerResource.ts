@@ -14,16 +14,16 @@ export interface PrioritySchedulerResourceLike
   extends PrioritySchedulerLike,
     DisposableLike {}
 
-export type HostSchedulerContinuation = () =>
-  | HostSchedulerContinuation
-  | undefined;
+export interface HostSchedulerContinuationLike {
+  (): HostSchedulerContinuationLike | undefined;
+}
 
 export interface HostSchedulerLike {
   readonly now: number;
   readonly shouldYield: boolean;
 
   schedule(
-    continuation: HostSchedulerContinuation,
+    continuation: HostSchedulerContinuationLike,
     delay?: number,
   ): DisposableLike;
 }
@@ -115,7 +115,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     this.scheduleDrainQueue(task);
   }
 
-  private readonly drainQueue: HostSchedulerContinuation = () => {
+  private readonly drainQueue: HostSchedulerContinuationLike = () => {
     const task = this.queue.peek();
     if (task !== undefined && task.dueTime <= this.now) {
       this.queue.pop();

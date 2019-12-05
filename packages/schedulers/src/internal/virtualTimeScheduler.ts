@@ -6,7 +6,7 @@ import {
 } from "@reactive-js/disposable";
 import {
   createPrioritySchedulerResource,
-  HostSchedulerContinuation,
+  HostSchedulerContinuationLike,
   HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "./prioritySchedulerResource";
@@ -20,7 +20,7 @@ import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { createSchedulerWithPriority } from "./schedulerWithPriority";
 
 interface VirtualTask {
-  continuation: HostSchedulerContinuation;
+  continuation: HostSchedulerContinuationLike;
   disposable: DisposableLike;
   dueTime: number;
   id: number;
@@ -88,7 +88,7 @@ class VirtualTimeSchedulerHostResource
       this.microTaskTicks = 0;
 
       if (!disposable.isDisposed) {
-        let result: HostSchedulerContinuation | undefined = continuation;
+        let result: HostSchedulerContinuationLike | undefined = continuation;
         while (result !== undefined) {
           result = continuation();
         }
@@ -96,7 +96,7 @@ class VirtualTimeSchedulerHostResource
     }
   }
 
-  schedule(continuation: HostSchedulerContinuation, delay = 0): DisposableLike {
+  schedule(continuation: HostSchedulerContinuationLike, delay = 0): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {
       id: this.taskIDCount++,

@@ -33,13 +33,13 @@ ___
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [HostSchedulerContinuation](../README.md#hostschedulercontinuation), `delay?`: undefined | number): *DisposableLike*
+▸ **schedule**(`continuation`: [HostSchedulerContinuationLike](hostschedulercontinuationlike.md), `delay?`: undefined | number): *DisposableLike*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`continuation` | [HostSchedulerContinuation](../README.md#hostschedulercontinuation) |
+`continuation` | [HostSchedulerContinuationLike](hostschedulercontinuationlike.md) |
 `delay?` | undefined &#124; number |
 
 **Returns:** *DisposableLike*

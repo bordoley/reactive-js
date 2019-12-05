@@ -3,7 +3,7 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
-  HostSchedulerContinuation,
+  HostSchedulerContinuationLike,
   HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "@reactive-js/schedulers";
@@ -57,13 +57,13 @@ const scheduleImmediate = (
 };
 
 const schedule = (
-  continuation: HostSchedulerContinuation,
+  continuation: HostSchedulerContinuationLike,
   delay = 0,
 ): DisposableLike => {
   const scheduledContinuation = () => {
     startTime = now();
 
-    let result: HostSchedulerContinuation | undefined = continuation;
+    let result: HostSchedulerContinuationLike | undefined = continuation;
     while (result !== undefined) {
       result = result();
     }

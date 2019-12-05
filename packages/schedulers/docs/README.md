@@ -6,14 +6,11 @@
 
 ### Interfaces
 
+* [HostSchedulerContinuationLike](interfaces/hostschedulercontinuationlike.md)
 * [HostSchedulerLike](interfaces/hostschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
-
-### Type aliases
-
-* [HostSchedulerContinuation](README.md#hostschedulercontinuation)
 
 ### Functions
 
@@ -21,16 +18,6 @@
 * [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
-
-## Type aliases
-
-###  HostSchedulerContinuation
-
-Ƭ **HostSchedulerContinuation**: *function*
-
-#### Type declaration:
-
-▸ (): *[HostSchedulerContinuation](README.md#hostschedulercontinuation) | undefined*
 
 ## Functions
 
