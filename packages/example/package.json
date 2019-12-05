@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "keywords": [
     "rx"
@@ -15,8 +15,8 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/node": "0.0.0",
-    "@reactive-js/observable": "0.0.0",
+    "@reactive-js/node": "^0.0.1",
+    "@reactive-js/observable": "^0.0.1",
     "tslib": "^1.10.0"
   },
   "scripts": {
