@@ -32,7 +32,7 @@ export const run = (m: number, n: number) => {
         merge,
         pipe,
         scan,
-      } = require("@reactive-js/rx-observable");
+      } = require("@reactive-js/observable");
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray(x));

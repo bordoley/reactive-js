@@ -1,0 +1,34 @@
+{
+  "name": "@reactive-js/async-iterator",
+  "version": "0.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm5/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "rx"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "dependencies": {
+    "@reactive-js/disposable": "0.0.0",
+    "@reactive-js/ix": "0.0.0",
+    "@reactive-js/rx": "0.0.0",
+    "@reactive-js/observable": "0.0.0",
+    "@reactive-js/scheduler": "0.0.0",
+    "tslib": "^1.10.0"
+  },
+  "scripts": {
+    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm5": "tsc -p tsconfig.esm5.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "docs": "typedoc --tsconfig tsconfig.doc.json"
+  }
+}

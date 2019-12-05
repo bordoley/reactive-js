@@ -11,7 +11,7 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { fromArray, pipe, scan } = require("@reactive-js/rx-observable");
+      const { fromArray, pipe, scan } = require("@reactive-js/observable");
       const { run } = require("./reactive-js-runner");
 
       const observable = pipe(
