@@ -42,5 +42,8 @@
         "tsConfig": "./tsconfig.cjs.json"
       }
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
