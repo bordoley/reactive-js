@@ -29,11 +29,11 @@ export interface HostSchedulerLike {
 }
 
 interface ScheduledTask {
-  continuation: () => void;
-  dueTime: number;
-  priority: number;
-  startTime: number;
-  taskID: number;
+  readonly continuation: () => void;
+  readonly dueTime: number;
+  readonly priority: number;
+  readonly startTime: number;
+  readonly taskID: number;
 }
 
 const comparator = (a: ScheduledTask, b: ScheduledTask) => {
