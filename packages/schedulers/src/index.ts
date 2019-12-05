@@ -2,7 +2,7 @@ export { PrioritySchedulerLike } from "./internal/priorityScheduler";
 
 export {
   createPrioritySchedulerResource,
-  HostSchedulerContinuation,
+  HostSchedulerContinuationLike,
   HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "./internal/prioritySchedulerResource";

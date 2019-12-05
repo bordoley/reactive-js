@@ -6,7 +6,7 @@ import {
 import { ObservableLike, ObserverLike } from "@reactive-js/rx";
 import {
   createVirtualTimeScheduler,
-  HostSchedulerContinuation,
+  HostSchedulerContinuationLike,
   createPrioritySchedulerResource,
   createSchedulerWithPriority,
 } from "@reactive-js/schedulers";
@@ -52,9 +52,9 @@ const promiseScheduler = createSchedulerWithPriority(
     get shouldYield(): boolean {
       return false;
     },
-    schedule(continuation: HostSchedulerContinuation, _): DisposableLike {
+    schedule(continuation: HostSchedulerContinuationLike, _): DisposableLike {
       const scheduledContinuation = () => {
-        let result: HostSchedulerContinuation | undefined = continuation;
+        let result: HostSchedulerContinuationLike | undefined = continuation;
         while (result !== undefined) {
           result = result();
         }
