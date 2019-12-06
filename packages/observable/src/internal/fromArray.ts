@@ -1,5 +1,5 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
-import { SchedulerContinuation } from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
 export const fromArray = <T>(
   values: ReadonlyArray<T>,
@@ -8,14 +8,15 @@ export const fromArray = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
-    const continuation: SchedulerContinuation = (
+    const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
       if (index < values.length && delay > 0) {
         const value = values[index];
         index++;
         subscriber.next(value);
-        return continuationResult;
+        subscriber.schedule(continuation, delay);
+        return;
       } else {
         while (index < values.length) {
           const value = values[index];
@@ -23,7 +24,8 @@ export const fromArray = <T>(
           subscriber.next(value);
 
           if (shouldYield()) {
-            return continuationResult;
+            subscriber.schedule(continuation, delay);
+            return;
           }
         }
 
@@ -32,7 +34,6 @@ export const fromArray = <T>(
       }
     };
 
-    const continuationResult = { continuation, delay };
     subscriber.schedule(continuation, delay);
   };
 
@@ -55,7 +56,7 @@ export function fromScheduledValues<T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let index = 0;
 
-    const continuation: SchedulerContinuation = (
+    const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
       while (index < values.length) {
@@ -65,12 +66,13 @@ export function fromScheduledValues<T>(
 
         if (index < values.length) {
           const delay = values[index][0] || 0;
-          const priority = values[index][1];
 
           if (delay > 0) {
-            return { continuation, delay, priority };
+            subscriber.schedule(continuation, delay);
+            return;
           } else if (shouldYield()) {
-            return { continuation, delay: 0, priority };
+            subscriber.schedule(continuation, 0);
+            return;
           }
         }
       }

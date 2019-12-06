@@ -2,14 +2,12 @@ export { PrioritySchedulerLike } from "./internal/priorityScheduler";
 
 export {
   createPrioritySchedulerResource,
-  HostSchedulerContinuationLike,
-  HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "./internal/prioritySchedulerResource";
 
 export {
   createVirtualTimeScheduler,
-  VirtualTimeSchedulerLike,
+  VirtualTimeSchedulerResourceLike,
 } from "./internal/virtualTimeScheduler";
 
 export { createPerfTestingScheduler } from "./internal/perfTestingScheduler";

@@ -4,17 +4,17 @@ import {
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-import { SchedulerContinuation } from "@reactive-js/scheduler";
-import { VirtualTimeSchedulerLike } from "./virtualTimeScheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { VirtualTimeSchedulerResourceLike } from "./virtualTimeScheduler";
 
-class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
+class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
   get isDisposed() {
     return this.disposable.isDisposed;
   }
   readonly inScheduledContinuation = true;
   readonly now = 0;
   private readonly disposable: DisposableLike;
-  private readonly queue: SchedulerContinuation[] = [];
+  private readonly queue: SchedulerContinuationLike[] = [];
 
   constructor() {
     this.disposable = createDisposable();
@@ -55,13 +55,19 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
     this.disposable.dispose();
   }
 
-  schedule(continuation: SchedulerContinuation, _?: number): DisposableLike {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    _?: number,
+  ): DisposableLike {
     this.queue.push(continuation);
-    return createDisposable();
+    const disposable = createDisposable();
+    this.add(disposable);
+    disposable.add(() => this.remove(disposable));
+    return disposable;
   }
 
   static shouldYield = () => false;
 }
 
-export const createPerfTestingScheduler = (): VirtualTimeSchedulerLike =>
+export const createPerfTestingScheduler = (): VirtualTimeSchedulerResourceLike =>
   new PerfTestingSchedulerImpl();

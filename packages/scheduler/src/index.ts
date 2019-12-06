@@ -6,13 +6,8 @@ import { DisposableLike } from "@reactive-js/disposable";
  * a SchedulerContinuationResult if there is additional
  * work to be performed.
  */
-export interface SchedulerContinuation {
-  (shouldYield: () => boolean): SchedulerContinuationResult | void;
-}
-
-export interface SchedulerContinuationResult {
-  readonly continuation: SchedulerContinuation;
-  readonly delay?: number;
+export interface SchedulerContinuationLike {
+  (shouldYield: () => boolean): void;
 }
 
 /**
@@ -33,7 +28,10 @@ export interface SchedulerLike {
    * @param continuation
    * @param delay The delay in ms after which to execute the continuation.
    */
-  schedule(continuation: SchedulerContinuation, delay?: number): DisposableLike;
+  schedule(
+    continuation: SchedulerContinuationLike,
+    delay?: number,
+  ): DisposableLike;
 }
 
 /**

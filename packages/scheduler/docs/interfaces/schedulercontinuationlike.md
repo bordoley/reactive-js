@@ -1,6 +1,6 @@
-[@reactive-js/scheduler](../README.md) › [SchedulerContinuation](schedulercontinuation.md)
+[@reactive-js/scheduler](../README.md) › [SchedulerContinuationLike](schedulercontinuationlike.md)
 
-# Interface: SchedulerContinuation
+# Interface: SchedulerContinuationLike
 
 A unit of work which executes on a scheduler. Implementations should
 periodically check whether they should yield, and return
@@ -9,11 +9,11 @@ work to be performed.
 
 ## Hierarchy
 
-* **SchedulerContinuation**
+* **SchedulerContinuationLike**
 
 ## Callable
 
-▸ (`shouldYield`: function): *[SchedulerContinuationResult](schedulercontinuationresult.md) | void*
+▸ (`shouldYield`: function): *void*
 
 A unit of work which executes on a scheduler. Implementations should
 periodically check whether they should yield, and return
@@ -26,4 +26,4 @@ work to be performed.
 
 ▸ (): *boolean*
 
-**Returns:** *[SchedulerContinuationResult](schedulercontinuationresult.md) | void*
+**Returns:** *void*

@@ -1,10 +1,11 @@
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { SchedulerLike } from "@reactive-js/scheduler";
+import { createDisposable, disposed, DisposableLike } from "@reactive-js/disposable";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
-  HostSchedulerContinuationLike,
-  HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "@reactive-js/schedulers";
 
@@ -22,6 +23,8 @@ const now =
     : () => Date.now();
 
 let startTime = 0;
+let inScheduledContinuation = false;
+let currentDisposable: DisposableLike | undefined = undefined;
 
 const shouldYield =
   navigator !== undefined &&
@@ -34,11 +37,14 @@ const shouldYield =
         const inputPending = (navigator as any).scheduling.isInputPending();
 
         return (
+          ((currentDisposable || disposed).isDisposed) ||
           (currentTime >= deadline && inputPending) ||
           currentTime >= maxDeadline
         );
       }
-    : () => now() >= startTime + yieldInterval;
+    : () =>
+        ((currentDisposable || disposed).isDisposed) ||
+        now() >= startTime + yieldInterval;
 
 let channel: MessageChannel | undefined = undefined;
 
@@ -57,19 +63,23 @@ const scheduleImmediate = (
 };
 
 const schedule = (
-  continuation: HostSchedulerContinuationLike,
+  continuation: SchedulerContinuationLike,
   delay = 0,
 ): DisposableLike => {
-  const scheduledContinuation = () => {
-    startTime = now();
+  const disposable = createDisposable();
 
-    let result: HostSchedulerContinuationLike | undefined = continuation;
-    while (result !== undefined) {
-      result = result();
+  const scheduledContinuation = () => {
+    if (!disposable.isDisposed) {
+      startTime = now();
+      currentDisposable = disposable;
+      inScheduledContinuation = true;
+      continuation(shouldYield);
+      inScheduledContinuation = false;
+      currentDisposable = undefined;
+      disposable.dispose();
     }
   };
 
-  const disposable = createDisposable();
   // setTimeout has a floor of 4ms so for lesser delays
   // just schedule immediately.
   if (delay >= 4) {
@@ -81,12 +91,13 @@ const schedule = (
   return disposable;
 };
 
-const schedulerHost: HostSchedulerLike = {
+const schedulerHost: SchedulerLike = {
+  get inScheduledContinuation(): boolean {
+    return inScheduledContinuation;
+  },
+
   get now(): number {
     return now();
-  },
-  get shouldYield(): boolean {
-    return shouldYield();
   },
   schedule,
 };

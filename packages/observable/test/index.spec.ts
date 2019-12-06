@@ -4,12 +4,11 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { ObservableLike, ObserverLike } from "@reactive-js/rx";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import {
-  createVirtualTimeScheduler,
-  HostSchedulerContinuationLike,
-  createPrioritySchedulerResource,
-  createSchedulerWithPriority,
-} from "@reactive-js/schedulers";
+  SchedulerLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import {
   combineLatest,
   concat,
@@ -44,30 +43,31 @@ import {
   withLatestFrom,
 } from "../src/index";
 
-const promiseScheduler = createSchedulerWithPriority(
-  createPrioritySchedulerResource({
-    get now(): number {
-      return Date.now();
-    },
-    get shouldYield(): boolean {
-      return false;
-    },
-    schedule(continuation: HostSchedulerContinuationLike, _): DisposableLike {
-      const scheduledContinuation = () => {
-        let result: HostSchedulerContinuationLike | undefined = continuation;
-        while (result !== undefined) {
-          result = result();
-        }
-      };
+let inScheduledContinuation = false;
+const promiseScheduler: SchedulerLike = {
+  get inScheduledContinuation(): boolean {
+    return inScheduledContinuation;
+  },
+  get now(): number {
+    return Date.now();
+  },
+  schedule(continuation: SchedulerContinuationLike, _): DisposableLike {
+    const disposable = createDisposable();
 
-      const immediate = setImmediate(scheduledContinuation);
-      const disposable = createDisposable();
-      disposable.add(() => clearImmediate(immediate));
-      return disposable;
-    },
-  }),
-  0,
-);
+    const scheduledContinuation = () => {
+      if (!disposable.isDisposed) {
+        inScheduledContinuation = true;
+        continuation(() => false);
+        inScheduledContinuation = false;
+        disposable.dispose();
+      }
+    };
+
+    const immediate = setImmediate(scheduledContinuation);
+    disposable.add(() => clearImmediate(immediate));
+    return disposable;
+  },
+};
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),

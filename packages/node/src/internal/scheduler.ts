@@ -1,59 +1,71 @@
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { SchedulerLike } from "@reactive-js/scheduler";
+import { createDisposable, disposed, DisposableLike } from "@reactive-js/disposable";
+import {
+  SchedulerContinuationLike,
+  SchedulerLike,
+} from "@reactive-js/scheduler";
 import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
-  HostSchedulerContinuationLike,
-  HostSchedulerLike,
   PrioritySchedulerResourceLike,
 } from "@reactive-js/schedulers";
 
 let timeout = 500;
 let startTime = 0;
+let inScheduledContinuation = false;
+let currentDisposable: DisposableLike | undefined = undefined;
 
 const now = (): number => {
   const hr = process.hrtime();
   return hr[0] * 1000 + hr[1] / 1e6;
 };
 
-const shouldYield = (): boolean => now() > startTime + timeout;
+const shouldYield = (): boolean => {
+  const currentDisposableIsDisposed =
+    (currentDisposable || disposed).isDisposed;
+  const timeoutExpired = now() > startTime + timeout;
+
+  return currentDisposableIsDisposed || timeoutExpired;
+};
 
 const schedule = (
-  continuation: HostSchedulerContinuationLike,
+  continuation: SchedulerContinuationLike,
   delay = 0,
 ): DisposableLike => {
-  const scheduledContinuation = async () => {
-    startTime = now();
+  const disposable = createDisposable();
 
-    let result: HostSchedulerContinuationLike | undefined = continuation;
-    while (result !== undefined) {
-      result = result();
-
-      // Not sure this is really necessary, but let's yield back
-      // to the JS microtask queue between continuation executions
-      // to avoid hogging too much cpu.
-      await Promise.resolve();
+  const scheduledContinuation = () => {
+    if (!disposable.isDisposed) {
+      startTime = now();
+      currentDisposable = disposable;
+      inScheduledContinuation = true;
+      continuation(shouldYield);
+      inScheduledContinuation = false;
+      currentDisposable = undefined;
+      disposable.dispose();
     }
   };
 
-  const disposable = createDisposable();
   if (delay > 0) {
     const timeout = setTimeout(scheduledContinuation, delay);
     disposable.add(() => clearTimeout(timeout));
   } else {
     const immediate = setImmediate(scheduledContinuation);
-    disposable.add(() => clearImmediate(immediate));
+    disposable.add(() => {
+      clearImmediate(immediate);
+    });
   }
   return disposable;
 };
 
-const schedulerHost: HostSchedulerLike = {
+const schedulerHost: SchedulerLike = {
+  get inScheduledContinuation(): boolean {
+    return inScheduledContinuation;
+  },
+
   get now(): number {
     return now();
   },
-  get shouldYield(): boolean {
-    return shouldYield();
-  },
+
   schedule,
 };
 

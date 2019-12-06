@@ -17,28 +17,49 @@ import {
   createSchedulerWithPriority,
   PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import {
+  createDisposable,
+  disposed,
+  DisposableLike,
+} from "@reactive-js/disposable";
+
+let inScheduledContinuation = false;
+const currentDisposable: DisposableLike | undefined = undefined;
+
+const shouldYield = () =>
+  (currentDisposable || disposed).isDisposed || unstable_shouldYield();
 
 const priorityScheduler: PrioritySchedulerLike = {
+  get inScheduledContinuation(): boolean {
+    return inScheduledContinuation;
+  },
+
   get now(): number {
     return unstable_now();
   },
 
-  get shouldYield(): boolean {
-    return unstable_shouldYield();
-  },
-
   schedule(
-    continuation: () => void,
+    continuation: (shouldYield: () => boolean) => void,
     priority: number,
     delay = 0,
   ): DisposableLike {
+    const disposable = createDisposable();
+
+    const callback = () => {
+      if (!disposable.isDisposed) {
+        inScheduledContinuation = true;
+        continuation(shouldYield);
+        inScheduledContinuation = false;
+        disposable.dispose();
+      }
+    };
+
     const callbackNode = unstable_scheduleCallback(
       priority,
-      continuation,
+      callback,
       delay > 0 ? { delay } : undefined,
     );
-    const disposable = createDisposable();
+
     disposable.add(() => unstable_cancelCallback(callbackNode));
     return disposable;
   },
