@@ -4,7 +4,6 @@ import { lift, SubscriberOperator } from "./lift";
 
 class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly predicate: (next: T) => boolean;
-
   constructor(delegate: SubscriberLike<T>, predicate: (next: T) => boolean) {
     super(delegate);
     this.predicate = predicate;

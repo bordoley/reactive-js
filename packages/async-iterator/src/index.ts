@@ -44,7 +44,6 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 class AsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;
   readonly observable: ObservableLike<T>;
-
   constructor(observable: ObservableLike<T>, dispatcher: (req: TReq) => void) {
     this.observable = observable;
     this.dispatcher = dispatcher;

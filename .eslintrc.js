@@ -7,6 +7,7 @@ module.exports = {
     "jest",
     "import",
     "eslint-comments",
+    "sort-class-members",
   ],
   env: {
     es6: true,
@@ -30,6 +31,22 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/unbound-method": "off",
     "comma-dangle": ["error", "always-multiline"],
+    "sort-class-members/sort-class-members": [
+      2,
+      {
+        order: [
+          "[static-properties]",
+          "[static-methods]",
+          "[conventional-private-properties]",
+          "[properties]",
+          "constructor",
+          "[accessor-pairs]",
+          "[methods]",
+          "[conventional-private-methods]",
+        ],
+        accessorPairPositioning: "getThenSet",
+      },
+    ],
   },
   parserOptions: {
     sourceType: "module",

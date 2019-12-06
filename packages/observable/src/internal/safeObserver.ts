@@ -2,40 +2,14 @@ import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
 class SafeObserver<T> implements ObserverLike<T> {
-  private get remainingEvents() {
-    return this.nextQueue.length + (this.isComplete ? 1 : 0);
-  }
   private error: ErrorLike | undefined;
-
   private isComplete = false;
   private readonly nextQueue: Array<T> = [];
   private readonly subscriber: SubscriberLike<T>;
-
   private readonly teardown = () => {
     this.nextQueue.length = 0;
     this.isComplete = true;
   };
-
-  constructor(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    this.subscriber.add(this.teardown);
-  }
-
-  complete(error?: ErrorLike) {
-    if (!this.isComplete) {
-      this.isComplete = true;
-      this.error = error;
-      this.scheduleDrainQueue();
-    }
-  }
-
-  next(data: T) {
-    if (!this.isComplete) {
-      this.nextQueue.push(data);
-      this.scheduleDrainQueue();
-    }
-  }
-
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     while (this.nextQueue.length > 0) {
       const next = this.nextQueue.shift() as T;
@@ -55,8 +29,30 @@ class SafeObserver<T> implements ObserverLike<T> {
     }
     return;
   };
-
   private readonly continuation = { continuation: this.drainQueue };
+  constructor(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+    this.subscriber.add(this.teardown);
+  }
+
+  private get remainingEvents() {
+    return this.nextQueue.length + (this.isComplete ? 1 : 0);
+  }
+
+  complete(error?: ErrorLike) {
+    if (!this.isComplete) {
+      this.isComplete = true;
+      this.error = error;
+      this.scheduleDrainQueue();
+    }
+  }
+
+  next(data: T) {
+    if (!this.isComplete) {
+      this.nextQueue.push(data);
+      this.scheduleDrainQueue();
+    }
+  }
 
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {

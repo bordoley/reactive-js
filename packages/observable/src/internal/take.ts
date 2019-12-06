@@ -6,7 +6,6 @@ import { ObservableOperator } from "./pipe";
 class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private count = -1;
   private readonly maxCount: number;
-
   constructor(delegate: SubscriberLike<T>, maxCount: number) {
     super(delegate);
     this.maxCount = maxCount;

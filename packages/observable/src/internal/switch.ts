@@ -14,7 +14,6 @@ import { ObservableOperator, pipe } from "./pipe";
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   static InnerObserver = class<T> implements ObserverLike<T> {
     private readonly parent: SwitchSubscriber<T>;
-
     constructor(parent: SwitchSubscriber<T>) {
       this.parent = parent;
     }
@@ -30,7 +29,6 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
   };
   private readonly innerSubscription = createSerialDisposable();
-
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
     this.add(this.innerSubscription);

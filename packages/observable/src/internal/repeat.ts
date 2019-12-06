@@ -18,7 +18,6 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {
     private count = 1;
     private readonly parent: RepeatSubscriber<T>;
-
     constructor(parent: RepeatSubscriber<T>) {
       this.parent = parent;
     }
@@ -56,7 +55,6 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly observable: ObservableLike<T>;
   private readonly observer: ObserverLike<T>;
   private readonly shouldRepeat: (count: number, error?: ErrorLike) => boolean;
-
   constructor(
     delegate: SubscriberLike<T>,
     observable: ObservableLike<T>,

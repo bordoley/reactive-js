@@ -15,7 +15,15 @@ const timeoutError = Symbol("TimeoutError");
 class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly duration: number;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-
+  private readonly setupTimeout = () => {
+    this.durationSubscription.disposable = connect(
+      pipe(
+        throws(timeoutError, this.duration),
+        onError(cause => this.complete({ cause })),
+      ),
+      this,
+    );
+  };
   constructor(delegate: SubscriberLike<T>, duration: number) {
     super(delegate);
     this.duration = duration;
@@ -32,16 +40,6 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.setupTimeout();
     this.delegate.next(data);
   }
-
-  private readonly setupTimeout = () => {
-    this.durationSubscription.disposable = connect(
-      pipe(
-        throws(timeoutError, this.duration),
-        onError(cause => this.complete({ cause })),
-      ),
-      this,
-    );
-  };
 }
 
 const operator = <T>(

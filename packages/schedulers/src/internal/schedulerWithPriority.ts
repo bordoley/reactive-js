@@ -8,7 +8,6 @@ import { PrioritySchedulerLike } from "./priorityScheduler";
 class SchedulerWithPriorityImpl implements SchedulerLike {
   private readonly priority: number;
   private readonly priorityScheduler: PrioritySchedulerLike;
-
   constructor(priorityScheduler: PrioritySchedulerLike, priority: number) {
     this.priorityScheduler = priorityScheduler;
     this.priority = priority;

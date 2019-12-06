@@ -9,12 +9,11 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
   implements SubscriberLike<T> {
   private _isConnected = false;
 
-  get isConnected() {
-    return this._isConnected;
-  }
-
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     super(scheduler, subscription);
+  }
+  get isConnected() {
+    return this._isConnected;
   }
 
   complete(_?: ErrorLike) {

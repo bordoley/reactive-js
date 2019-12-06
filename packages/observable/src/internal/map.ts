@@ -5,7 +5,6 @@ import { ObservableOperator } from "./pipe";
 
 class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   private readonly mapper: (data: TA) => TB;
-
   constructor(delegate: SubscriberLike<TB>, mapper: (data: TA) => TB) {
     super(delegate);
     this.mapper = mapper;

@@ -10,14 +10,14 @@ export interface PriorityQueueLike<T> {
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
-  get count(): number {
-    return this.values.length;
-  }
   private readonly compare: (a: T, b: T) => number;
   private readonly values: Array<T> = [];
-
   constructor(compare: (a: T, b: T) => number) {
     this.compare = compare;
+  }
+
+  get count(): number {
+    return this.values.length;
   }
 
   clear() {

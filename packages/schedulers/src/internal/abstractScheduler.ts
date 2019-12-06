@@ -11,10 +11,9 @@ import {
 
 /** @noInheritDoc */
 export abstract class AbstractScheduler implements SchedulerLike {
-  private currentDisposable: DisposableLike = disposed;
   private _inScheduledContinuation = false;
+  private currentDisposable: DisposableLike = disposed;
   private startTime = 0;
-
   private shouldYield = () =>
     this.currentDisposable.isDisposed ||
     this.shouldCallbackYield(this.startTime);

@@ -11,7 +11,6 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private readonly maxBufferSize: number;
   private readonly maxConcurrency: number;
   private readonly queue: Array<ObservableLike<T>> = [];
-
   constructor(
     delegate: SubscriberLike<T>,
     maxBufferSize: number,

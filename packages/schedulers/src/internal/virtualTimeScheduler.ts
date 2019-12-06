@@ -36,14 +36,18 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 class VirtualTimeSchedulerResourceImpl extends AbstractScheduler
   implements VirtualTimeSchedulerResourceLike {
-  private readonly disposable = createDisposable();
   private _now = 0;
+  private readonly disposable = createDisposable();
   private readonly maxMicroTaskTicks: number;
   private microTaskTicks = 0;
   private taskIDCount = 0;
   private readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
+  constructor(maxMicroTaskTicks: number) {
+    super();
+    this.maxMicroTaskTicks = maxMicroTaskTicks;
+  }
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
@@ -51,11 +55,6 @@ class VirtualTimeSchedulerResourceImpl extends AbstractScheduler
 
   get now(): number {
     return this._now;
-  }
-
-  constructor(maxMicroTaskTicks: number) {
-    super();
-    this.maxMicroTaskTicks = maxMicroTaskTicks;
   }
 
   add(

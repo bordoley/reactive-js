@@ -59,11 +59,6 @@ class LocationStoreResourceImpl
   implements AsyncIteratorResourceLike<StateUpdater<Location>, Location> {
   private readonly subject = createSubject();
   private readonly observable: ObservableLike<Location>;
-
-  get isDisposed(): boolean {
-    return this.subject.isDisposed;
-  }
-
   constructor(scheduler: SchedulerLike) {
     const initialLocation = getCurrentLocation();
 
@@ -86,6 +81,10 @@ class LocationStoreResourceImpl
     );
 
     this.subject.add(connect(this.observable, scheduler));
+  }
+
+  get isDisposed(): boolean {
+    return this.subject.isDisposed;
   }
 
   add(

@@ -17,7 +17,6 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 > {
   static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
     private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
-
     constructor(parent: WithLatestFromSubscriber<TA, TB, TC>) {
       this.parent = parent;
     }
@@ -40,7 +39,6 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   private otherLatest: [TB] | undefined;
   private readonly otherSubscription: DisposableLike;
   private readonly selector: (a: TA, b: TB) => TC;
-
   constructor(
     delegate: SubscriberLike<TC>,
     other: ObservableLike<TB>,

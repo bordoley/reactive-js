@@ -25,11 +25,9 @@ class CombineLatestObserver implements ObserverLike<any> {
   private readonly allSubscriptions: DisposableLike;
   private readonly ctx: CombineLatestContext;
   private readonly subscriber: SubscriberLike<any>;
-
   private hasProducedValue = false;
   private readonly index: number;
   private readonly totalCount: number;
-
   constructor(
     delegate: SubscriberLike<any>,
     totalCount: number,

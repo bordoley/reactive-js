@@ -47,79 +47,14 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
 };
 
 class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
-  get inScheduledContinuation(): boolean {
-    return this.currentTask !== undefined;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  get now(): number {
-    return this.hostScheduler.now;
-  }
-
   private readonly disposable: SerialDisposableLike;
   private readonly hostScheduler: SchedulerLike;
   private readonly queue: PriorityQueueLike<
     ScheduledTaskLike
   > = createPriorityQueue(comparator);
-
   private taskIDCounter = 0;
-
-  constructor(hostScheduler: SchedulerLike) {
-    this.disposable = createSerialDisposable();
-    this.hostScheduler = hostScheduler;
-
-    this.disposable.add(() => this.queue.clear());
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-  }
-
-  schedule(
-    continuation: SchedulerContinuationLike,
-    priority: number,
-    delay = 0,
-  ): DisposableLike {
-    const startTime = this.now;
-    const dueTime = startTime + delay;
-
-    const task = {
-      taskID: this.taskIDCounter++,
-      continuation,
-      disposable: createDisposable(),
-      priority,
-      startTime,
-      dueTime,
-    };
-
-    this.queue.push(task);
-    this.scheduleDrainQueue(task);
-
-    this.add(task.disposable);
-    task.disposable.add(() => this.remove(task.disposable));
-    return task.disposable;
-  }
-
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
-
   private shouldYield = () => {
     const currentTaskIsDisposed =
       this.currentTask !== undefined && this.currentTask.disposable.isDisposed;
@@ -140,7 +75,6 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
       currentTaskIsDisposed || nextTaskIsHigherPriority || hostRequestedYield
     );
   };
-
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     for (
       let currentTask = this.queue.peek();
@@ -191,6 +125,67 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     }
     return;
   };
+  constructor(hostScheduler: SchedulerLike) {
+    this.disposable = createSerialDisposable();
+    this.hostScheduler = hostScheduler;
+
+    this.disposable.add(() => this.queue.clear());
+  }
+
+  get inScheduledContinuation(): boolean {
+    return this.currentTask !== undefined;
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
+
+  get now(): number {
+    return this.hostScheduler.now;
+  }
+
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add(disposable, ...disposables);
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove(disposable, ...disposables);
+  }
+
+  schedule(
+    continuation: SchedulerContinuationLike,
+    priority: number,
+    delay = 0,
+  ): DisposableLike {
+    const startTime = this.now;
+    const dueTime = startTime + delay;
+
+    const task = {
+      taskID: this.taskIDCounter++,
+      continuation,
+      disposable: createDisposable(),
+      priority,
+      startTime,
+      dueTime,
+    };
+
+    this.queue.push(task);
+    this.scheduleDrainQueue(task);
+
+    this.add(task.disposable);
+    task.disposable.add(() => this.remove(task.disposable));
+    return task.disposable;
+  }
 
   private scheduleDrainQueue(task: ScheduledTaskLike) {
     const head = this.queue.peek();

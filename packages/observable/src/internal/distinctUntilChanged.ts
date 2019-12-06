@@ -6,7 +6,6 @@ import { ObservableOperator } from "./pipe";
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;
   private prev: [T] | undefined;
-
   constructor(delegate: SubscriberLike<T>, equals: (a: T, b: T) => boolean) {
     super(delegate);
     this.equals = equals;

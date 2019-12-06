@@ -35,16 +35,11 @@ const notify = <T>(
 };
 
 class SubjectImpl<T> implements SubjectResourceLike<T> {
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
   private readonly disposable: DisposableLike;
-
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly count: number;
   private replayed: Notification<T>[] = [];
-
   constructor(count: number) {
     this.disposable = createDisposable();
     this.count = count;
@@ -53,6 +48,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       this.observers.length = 0;
       this.replayed.length = 0;
     });
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 
   add(
