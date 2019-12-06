@@ -4,13 +4,16 @@
 
 ## Index
 
+### Classes
+
+* [AbstractScheduler](classes/abstractscheduler.md)
+
 ### Interfaces
 
-* [HostSchedulerContinuationLike](interfaces/hostschedulercontinuationlike.md)
-* [HostSchedulerLike](interfaces/hostschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
+* [VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)
 
 ### Functions
 
@@ -23,21 +26,21 @@
 
 ### `Const` createPerfTestingScheduler
 
-▸ **createPerfTestingScheduler**(): *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+▸ **createPerfTestingScheduler**(): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
 
-**Returns:** *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
 
 ___
 
 ### `Const` createPrioritySchedulerResource
 
-▸ **createPrioritySchedulerResource**(`hostScheduler`: [HostSchedulerLike](interfaces/hostschedulerlike.md)): *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
+▸ **createPrioritySchedulerResource**(`hostScheduler`: SchedulerLike): *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`hostScheduler` | [HostSchedulerLike](interfaces/hostschedulerlike.md) |
+`hostScheduler` | SchedulerLike |
 
 **Returns:** *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
 
@@ -60,7 +63,7 @@ ___
 
 ### `Const` createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
 
 **Parameters:**
 
@@ -68,4 +71,4 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*

@@ -1,24 +1,19 @@
 import { ErrorLike, SubscriberLike } from "@reactive-js/rx";
 import {
-  SchedulerContinuation,
-  SchedulerContinuationResult,
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift, SubscriberOperator } from "./lift";
 import { ObservableOperator } from "./pipe";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private readonly continuation: SchedulerContinuationResult;
   private readonly last: T[] = [];
   private readonly maxCount: number;
 
   constructor(delegate: SubscriberLike<T>, maxCount: number) {
     super(delegate);
     this.maxCount = maxCount;
-
-    this.continuation = {
-      continuation: this.drainQueue,
-    };
   }
 
   protected onComplete(error?: ErrorLike) {
@@ -36,7 +31,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  private readonly drainQueue: SchedulerContinuation = shouldYield => {
+  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     while (this.last.length > 0) {
       const next = this.last.shift() as T;
       this.delegate.next(next);
@@ -51,6 +46,10 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
     this.delegate.complete();
     return;
+  };
+
+  private readonly continuation: SchedulerContinuationResultLike = {
+    continuation: this.drainQueue,
   };
 }
 

@@ -12,8 +12,8 @@
 
 ### Properties
 
+* [inScheduledContinuation](priorityschedulerlike.md#inscheduledcontinuation)
 * [now](priorityschedulerlike.md#now)
-* [shouldYield](priorityschedulerlike.md#shouldyield)
 
 ### Methods
 
@@ -21,30 +21,28 @@
 
 ## Properties
 
-###  now
+###  inScheduledContinuation
 
-• **now**: *number*
+• **inScheduledContinuation**: *boolean*
 
 ___
 
-###  shouldYield
+###  now
 
-• **shouldYield**: *boolean*
+• **now**: *number*
 
 ## Methods
 
 ###  schedule
 
-▸ **schedule**(`continuation`: function, `priority`: number, `delay?`: undefined | number): *DisposableLike*
+▸ **schedule**(`continuation`: SchedulerContinuationLike, `priority`: number, `delay?`: undefined | number): *DisposableLike*
 
 **Parameters:**
 
-▪ **continuation**: *function*
-
-▸ (): *void*
-
-▪ **priority**: *number*
-
-▪`Optional`  **delay**: *undefined | number*
+Name | Type |
+------ | ------ |
+`continuation` | SchedulerContinuationLike |
+`priority` | number |
+`delay?` | undefined &#124; number |
 
 **Returns:** *DisposableLike*

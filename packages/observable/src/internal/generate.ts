@@ -1,5 +1,8 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
-import { SchedulerContinuation } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
+} from "@reactive-js/scheduler";
 
 export const generate = <T>(
   generator: (acc: T) => T,
@@ -9,7 +12,7 @@ export const generate = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let acc = initialValue;
 
-    const continuation: SchedulerContinuation = (
+    const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
       if (subscriber.isDisposed) {
@@ -39,8 +42,10 @@ export const generate = <T>(
         return continuationResult;
       }
     };
-
-    const continuationResult = { continuation, delay };
+    const continuationResult: SchedulerContinuationResultLike = {
+      continuation,
+      delay,
+    };
 
     subscriber.schedule(continuation, delay);
   };

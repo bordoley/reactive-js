@@ -6,10 +6,9 @@ import {
 import { ObservableLike, ObserverLike } from "@reactive-js/rx";
 import {
   createVirtualTimeScheduler,
-  HostSchedulerContinuationLike,
-  createPrioritySchedulerResource,
-  createSchedulerWithPriority,
+  AbstractScheduler,
 } from "@reactive-js/schedulers";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   combineLatest,
   concat,
@@ -44,30 +43,30 @@ import {
   withLatestFrom,
 } from "../src/index";
 
-const promiseScheduler = createSchedulerWithPriority(
-  createPrioritySchedulerResource({
-    get now(): number {
-      return Date.now();
-    },
-    get shouldYield(): boolean {
-      return false;
-    },
-    schedule(continuation: HostSchedulerContinuationLike, _): DisposableLike {
-      const scheduledContinuation = () => {
-        let result: HostSchedulerContinuationLike | undefined = continuation;
-        while (result !== undefined) {
-          result = result();
-        }
-      };
+const callbackAndDispose = (callback: () => void, disposable: DisposableLike) => {
+  callback();
+  disposable.dispose();
+};
 
-      const immediate = setImmediate(scheduledContinuation);
-      const disposable = createDisposable();
-      disposable.add(() => clearImmediate(immediate));
-      return disposable;
-    },
-  }),
-  0,
-);
+// A simple scheduler for testing promise functions where a VTS cannot be used
+class PromiseTestScheduler extends AbstractScheduler {
+  protected shouldCallbackYield(_: number): boolean {
+    return false;
+  }
+
+  scheduleCallback(callback: () => void, _ = 0): DisposableLike {
+    const disposable = createDisposable();
+    const immediate = setImmediate(callbackAndDispose, callback, disposable);
+    disposable.add(() => clearImmediate(immediate));
+    return disposable;
+  }
+
+  get now(): number {
+    return Date.now();
+  }
+}
+
+const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   next: jest.fn(),

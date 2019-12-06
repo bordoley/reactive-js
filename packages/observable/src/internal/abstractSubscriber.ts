@@ -1,6 +1,9 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import { ErrorLike, SubscriberLike } from "@reactive-js/rx";
-import { SchedulerContinuation, SchedulerLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerLike,
+} from "@reactive-js/scheduler";
 
 /** @ignore */
 export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
@@ -17,6 +20,7 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   get now() {
     return this.scheduler.now;
   }
+
   readonly scheduler: SchedulerLike;
   readonly subscription: DisposableLike;
 
@@ -46,7 +50,7 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
   }
 
   schedule(
-    continuation: SchedulerContinuation,
+    continuation: SchedulerContinuationLike,
     delay?: number,
   ): DisposableLike {
     const schedulerSubscription = this.scheduler.schedule(continuation, delay);
