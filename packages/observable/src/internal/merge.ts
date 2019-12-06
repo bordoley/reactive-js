@@ -19,7 +19,6 @@ class MergeObserver<T> implements ObserverLike<T> {
   private readonly completedCountRef: [number];
   private readonly delegate: SubscriberLike<T>;
   private readonly totalCount: number;
-
   constructor(
     delegate: SubscriberLike<T>,
     totalCount: number,

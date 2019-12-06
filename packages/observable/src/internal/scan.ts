@@ -6,7 +6,6 @@ import { ObservableOperator } from "./pipe";
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private acc: TAcc;
   private scanner: (acc: TAcc, next: T) => TAcc;
-
   constructor(
     delegate: SubscriberLike<TAcc>,
     scanner: (acc: TAcc, next: T) => TAcc,

@@ -13,7 +13,6 @@ import { ObservableOperator, pipe } from "./pipe";
 class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-
   constructor(
     delegate: SubscriberLike<T>,
     durationSelector: (next: T) => ObservableLike<unknown>,
@@ -60,7 +59,15 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
+  private readonly notifyNext = () => {
+    const value = this.value;
+    if (value !== undefined) {
+      this.value = undefined;
+      const [next] = value;
 
+      this.delegate.next(next);
+    }
+  };
   constructor(
     delegate: SubscriberLike<T>,
     durationSelector: (next: T) => ObservableLike<unknown>,
@@ -89,16 +96,6 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
       );
     }
   }
-
-  private readonly notifyNext = () => {
-    const value = this.value;
-    if (value !== undefined) {
-      this.value = undefined;
-      const [next] = value;
-
-      this.delegate.next(next);
-    }
-  };
 }
 
 const throttleLastOperator = <T>(
@@ -121,7 +118,20 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
+  private readonly notifyNext = () => {
+    const value = this.value;
+    if (value !== undefined) {
+      this.value = undefined;
+      const [next] = value;
 
+      this.durationSubscription.disposable = connect(
+        pipe(this.durationSelector(next), onComplete(this.notifyNext)),
+        this,
+      );
+
+      this.delegate.next(next);
+    }
+  };
   constructor(
     delegate: SubscriberLike<T>,
     durationSelector: (next: T) => ObservableLike<unknown>,
@@ -146,21 +156,6 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.notifyNext();
     }
   }
-
-  private readonly notifyNext = () => {
-    const value = this.value;
-    if (value !== undefined) {
-      this.value = undefined;
-      const [next] = value;
-
-      this.durationSubscription.disposable = connect(
-        pipe(this.durationSelector(next), onComplete(this.notifyNext)),
-        this,
-      );
-
-      this.delegate.next(next);
-    }
-  };
 }
 
 const throttleOperator = <T>(

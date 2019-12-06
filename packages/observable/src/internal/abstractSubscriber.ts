@@ -7,6 +7,13 @@ import {
 
 /** @ignore */
 export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
+  readonly scheduler: SchedulerLike;
+  readonly subscription: DisposableLike;
+  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
+    this.scheduler = scheduler;
+    this.subscription = subscription;
+  }
+
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
   }
@@ -19,14 +26,6 @@ export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
 
   get now() {
     return this.scheduler.now;
-  }
-
-  readonly scheduler: SchedulerLike;
-  readonly subscription: DisposableLike;
-
-  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
-    this.scheduler = scheduler;
-    this.subscription = subscription;
   }
 
   add(

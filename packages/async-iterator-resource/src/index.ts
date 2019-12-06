@@ -47,14 +47,9 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
   readonly dispatcher: (req: TReq) => void;
-
   readonly disposable: DisposableLike;
   readonly observable: ObservableLike<T>;
-
   constructor(
     dispatcher: (req: TReq) => void,
     disposable: DisposableLike,
@@ -63,6 +58,10 @@ class AsyncIteratorResourceImpl<TReq, T>
     this.dispatcher = dispatcher;
     this.disposable = disposable;
     this.observable = observable;
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
 
   add(

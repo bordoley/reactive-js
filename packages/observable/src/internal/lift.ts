@@ -11,7 +11,6 @@ export interface SubscriberOperator<A, B> {
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   readonly operators: ReadonlyArray<SubscriberOperator<any, any>>;
   readonly source: ObservableLike<TSrc>;
-
   constructor(
     source: ObservableLike<TSrc>,
     operators: ReadonlyArray<SubscriberOperator<any, any>>,

@@ -10,7 +10,25 @@ import { ObservableOperator } from "./pipe";
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
   private readonly maxCount: number;
+  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
+    while (this.last.length > 0) {
+      const next = this.last.shift() as T;
+      this.delegate.next(next);
 
+      const yieldRequest = shouldYield();
+      const hasMoreEvents = this.last.length > 0;
+
+      if (yieldRequest && hasMoreEvents) {
+        return this.continuation;
+      }
+    }
+
+    this.delegate.complete();
+    return;
+  };
+  private readonly continuation: SchedulerContinuationResultLike = {
+    continuation: this.drainQueue,
+  };
   constructor(delegate: SubscriberLike<T>, maxCount: number) {
     super(delegate);
     this.maxCount = maxCount;
@@ -30,27 +48,6 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.last.shift();
     }
   }
-
-  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
-    while (this.last.length > 0) {
-      const next = this.last.shift() as T;
-      this.delegate.next(next);
-
-      const yieldRequest = shouldYield();
-      const hasMoreEvents = this.last.length > 0;
-
-      if (yieldRequest && hasMoreEvents) {
-        return this.continuation;
-      }
-    }
-
-    this.delegate.complete();
-    return;
-  };
-
-  private readonly continuation: SchedulerContinuationResultLike = {
-    continuation: this.drainQueue,
-  };
 }
 
 const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>

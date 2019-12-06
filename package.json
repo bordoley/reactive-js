@@ -22,6 +22,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.0.4",
     "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-sort-class-members": "^1.6.0",
     "lerna": "^3.18.4",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",

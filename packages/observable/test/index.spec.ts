@@ -43,7 +43,10 @@ import {
   withLatestFrom,
 } from "../src/index";
 
-const callbackAndDispose = (callback: () => void, disposable: DisposableLike) => {
+const callbackAndDispose = (
+  callback: () => void,
+  disposable: DisposableLike,
+) => {
   callback();
   disposable.dispose();
 };

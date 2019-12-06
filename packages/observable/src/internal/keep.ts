@@ -5,7 +5,6 @@ import { ObservableOperator } from "./pipe";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly predicate: (data: T) => boolean;
-
   constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {
     super(delegate);
     this.predicate = predicate;

@@ -44,15 +44,15 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
   readonly disposable: DisposableLike;
   readonly observable: ObservableLike<T>;
-
   constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
     this.observable = observable;
     this.disposable = disposable;
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 
   add(

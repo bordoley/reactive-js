@@ -11,19 +11,18 @@ import { VirtualTimeSchedulerResourceLike } from "./virtualTimeScheduler";
 const shouldYield = () => false;
 
 class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
   readonly inScheduledContinuation = true;
   readonly now = 0;
   private readonly disposable: DisposableLike = createDisposable();
-
   private readonly queue: SchedulerContinuationLike[] = [];
-
   constructor() {
     this.disposable.add(() => {
       this.queue.length = 0;
     });
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 
   add(

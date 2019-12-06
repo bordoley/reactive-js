@@ -12,15 +12,9 @@ export abstract class DelegatingSubscriber<
   TA,
   TB
 > extends AbstractSubscriberImpl<TA> {
-  /** @ignore */
-  get isConnected() {
-    return this.source.isConnected;
-  }
   readonly delegate: ObserverLike<TB>;
-
   private isStopped = false;
   private readonly source: SubscriberLike<any>;
-
   constructor(delegate: SubscriberLike<TB>) {
     super(
       (delegate as any).scheduler || delegate,
@@ -35,6 +29,11 @@ export abstract class DelegatingSubscriber<
     this.add(() => {
       this.isStopped = true;
     });
+  }
+
+  /** @ignore */
+  get isConnected() {
+    return this.source.isConnected;
   }
 
   /** @ignore */

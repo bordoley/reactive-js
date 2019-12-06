@@ -5,7 +5,6 @@ import { ObservableOperator } from "./pipe";
 
 class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   private observer: ObserverLike<T>;
-
   constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {
     super(delegate);
     this.observer = observer;
