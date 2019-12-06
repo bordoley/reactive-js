@@ -57,7 +57,7 @@ const promiseScheduler: SchedulerLike = {
     const scheduledContinuation = () => {
       if (!disposable.isDisposed) {
         inScheduledContinuation = true;
-        continuation(() => false);
+        const result = continuation(() => false);
         inScheduledContinuation = false;
         disposable.dispose();
       }

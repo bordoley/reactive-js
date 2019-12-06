@@ -23,8 +23,7 @@ export const generate = <T>(
         }
 
         subscriber.next(acc);
-        subscriber.schedule(continuation, delay);
-        return;
+        return continuationResult;
       } else {
         do {
           try {
@@ -37,10 +36,10 @@ export const generate = <T>(
           subscriber.next(acc);
         } while (!shouldYield());
 
-        subscriber.schedule(continuation, delay);
-        return;
+        return continuationResult;
       }
     };
+    const continuationResult = [continuation, delay];	
 
     subscriber.schedule(continuation, delay);
   };

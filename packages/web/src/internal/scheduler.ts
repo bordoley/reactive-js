@@ -1,4 +1,4 @@
-import { createDisposable, disposed, DisposableLike } from "@reactive-js/disposable";
+import { createSerialDisposable, disposed, DisposableLike, SerialDisposableLike, createDisposable } from "@reactive-js/disposable";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
@@ -50,44 +50,77 @@ let channel: MessageChannel | undefined = undefined;
 
 const scheduleImmediate = (
   continuation: () => void,
-  disposable: DisposableLike,
-) => {
+): DisposableLike => {
+  const disposable = createDisposable();
   channel = channel || new MessageChannel();
 
   channel.port1.onmessage = () => {
     if (!disposable.isDisposed) {
       continuation();
+      disposable.dispose();
     }
   };
   channel.port2.postMessage(null);
+  return disposable;
 };
+
+const scheduleDelayed = (
+  continuation: () => void,
+  delay = 0,
+): DisposableLike => {
+  const timeout = setTimeout(continuation, delay);
+  const disposable = createDisposable();
+  disposable.add(() => clearTimeout(timeout));
+  return disposable;
+}
+
+const scheduleNative = (
+  continuation: () => void,
+  delay = 0,
+): DisposableLike =>
+  // setTimeout has a floor of 4ms so for lesser delays
+  // just schedule immediately.
+  delay >= 4
+    ? scheduleDelayed(continuation, delay)
+    : scheduleImmediate(continuation);
+
+const createCallback = (
+  continuation: SchedulerContinuationLike,
+  disposable: SerialDisposableLike,
+): (() => void) => {
+  const callback = () => {
+    if (!disposable.isDisposed) {
+      startTime = now();
+      currentDisposable = disposable;
+      inScheduledContinuation = true;
+      const result = continuation(shouldYield);
+      inScheduledContinuation = false;
+      currentDisposable = undefined;
+
+      if (result !== undefined) {
+        const [nextContinuation, delay = 0] = result;
+        const nextCallback = 
+          nextContinuation === continuation
+            ? callback
+            : createCallback(nextContinuation, disposable);
+
+        disposable.disposable = scheduleNative(nextCallback, delay);
+      } else {
+        disposable.dispose();
+      }
+    }
+  };
+  return callback;
+}
 
 const schedule = (
   continuation: SchedulerContinuationLike,
   delay = 0,
 ): DisposableLike => {
-  const disposable = createDisposable();
+  const disposable = createSerialDisposable();
+  const callback = createCallback(continuation, disposable);
 
-  const scheduledContinuation = () => {
-    if (!disposable.isDisposed) {
-      startTime = now();
-      currentDisposable = disposable;
-      inScheduledContinuation = true;
-      continuation(shouldYield);
-      inScheduledContinuation = false;
-      currentDisposable = undefined;
-      disposable.dispose();
-    }
-  };
-
-  // setTimeout has a floor of 4ms so for lesser delays
-  // just schedule immediately.
-  if (delay >= 4) {
-    const timeout = setTimeout(scheduledContinuation, delay);
-    disposable.add(() => clearTimeout(timeout));
-  } else {
-    scheduleImmediate(scheduledContinuation, disposable);
-  }
+  disposable.disposable = scheduleNative(callback, delay);
   return disposable;
 };
 

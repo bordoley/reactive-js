@@ -13,7 +13,7 @@ work to be performed.
 
 ## Callable
 
-▸ (`shouldYield`: function): *void*
+▸ (`shouldYield`: function): *[[SchedulerContinuationLike](schedulercontinuationlike.md), number | void] | undefined*
 
 A unit of work which executes on a scheduler. Implementations should
 periodically check whether they should yield, and return
@@ -26,4 +26,4 @@ work to be performed.
 
 ▸ (): *boolean*
 
-**Returns:** *void*
+**Returns:** *[[SchedulerContinuationLike](schedulercontinuationlike.md), number | void] | undefined*

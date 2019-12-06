@@ -37,15 +37,17 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
       const hasMoreEvents = this.last.length > 0;
 
       if (yieldRequest && hasMoreEvents) {
-        this.schedule(this.drainQueue);
-        return;
+        return this.continuation;
       }
     }
 
     this.delegate.complete();
-    return;
   };
+
+
+  private readonly continuation = [this.drainQueue];
 }
+
 
 const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
   new TakeLastSubscriber(subscriber, count);

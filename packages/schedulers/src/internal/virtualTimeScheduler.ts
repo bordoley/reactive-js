@@ -103,9 +103,21 @@ class VirtualTimeSchedulerResourceImpl
 
       if (!disposable.isDisposed) {
         this._inScheduledContinuation = true;
-        continuation(this.shouldYield);
+        const result = continuation(this.shouldYield);
         this._inScheduledContinuation = false;
-        disposable.dispose();
+
+        if (result !== undefined) {
+          const [nextContinuation, delay = 0] = result;
+          const continuedTask = {
+            continuation: nextContinuation,
+            disposable,
+            dueTime: this.now + delay,
+            id: this.taskIDCount++,
+          }
+          this.taskQueue.push(continuedTask);
+        } else {
+          disposable.dispose();
+        }
       }
     }
     this.dispose();

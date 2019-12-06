@@ -14,6 +14,10 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
   readonly inScheduledContinuation = true;
   readonly now = 0;
   private readonly disposable: DisposableLike;
+  // FIXME: Should really track the disposables and manage them as well i suppose.
+  // OTOH this is meant to be a zero overhead scheduler.
+  //maybe just change VTS to take a shouldYield function as an argument
+  // and kill this.
   private readonly queue: SchedulerContinuationLike[] = [];
 
   constructor() {
@@ -49,7 +53,11 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
       next !== undefined;
       next = this.queue.shift()
     ) {
-      next(PerfTestingSchedulerImpl.shouldYield);
+      const result = next(PerfTestingSchedulerImpl.shouldYield);
+      if (result !== undefined) {
+        const [nextContinuation] = result;
+        this.queue.push(nextContinuation);
+      }
     }
 
     this.disposable.dispose();
@@ -60,6 +68,7 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
     _?: number,
   ): DisposableLike {
     this.queue.push(continuation);
+
     const disposable = createDisposable();
     this.add(disposable);
     disposable.add(() => this.remove(disposable));

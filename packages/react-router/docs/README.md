@@ -19,7 +19,7 @@
 
 ### `Const` Router
 
-▸ **Router**(`props`: [RouterProps](interfaces/routerprops.md)): *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
+▸ **Router**(`props`: [RouterProps](interfaces/routerprops.md)): *any*
 
 **Parameters:**
 
@@ -27,7 +27,7 @@ Name | Type |
 ------ | ------ |
 `props` | [RouterProps](interfaces/routerprops.md) |
 
-**Returns:** *null | ReactElement‹[RoutableComponentProps](interfaces/routablecomponentprops.md), string | function | object›*
+**Returns:** *any*
 
 ___
 

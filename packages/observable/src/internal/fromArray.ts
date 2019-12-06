@@ -15,8 +15,7 @@ export const fromArray = <T>(
         const value = values[index];
         index++;
         subscriber.next(value);
-        subscriber.schedule(continuation, delay);
-        return;
+        return continuationResult;
       } else {
         while (index < values.length) {
           const value = values[index];
@@ -24,15 +23,14 @@ export const fromArray = <T>(
           subscriber.next(value);
 
           if (shouldYield()) {
-            subscriber.schedule(continuation, delay);
-            return;
+            return continuationResult;
           }
         }
 
         subscriber.complete();
-        return;
       }
     };
+    const continuationResult = [continuation, delay];
 
     subscriber.schedule(continuation, delay);
   };
@@ -68,17 +66,14 @@ export function fromScheduledValues<T>(
           const delay = values[index][0] || 0;
 
           if (delay > 0) {
-            subscriber.schedule(continuation, delay);
-            return;
+            return [continuation, delay];
           } else if (shouldYield()) {
-            subscriber.schedule(continuation, 0);
-            return;
+            return [continuation, 0];
           }
         }
       }
 
       subscriber.complete();
-      return;
     };
 
     const [delay] = values[index];

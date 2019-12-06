@@ -111,11 +111,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     };
 
     this.queue.push(task);
-
-    const head = this.queue.peek();
-    if (head === task && this.disposable.disposable.isDisposed) {
-      this.scheduleDrainQueue(task);
-    }
+    this.scheduleDrainQueue(task);
 
     this.add(task.disposable);
     task.disposable.add(() => this.remove(task.disposable));
@@ -148,15 +144,15 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
 
   private readonly drainQueue: SchedulerContinuationLike = (
     shouldYield: () => boolean,
-  ): void => {
+  ) => {
     for (
       let currentTask = this.queue.peek();
       currentTask !== undefined;
       currentTask = this.queue.peek()
     ) {
-      if (currentTask.dueTime > this.now) {
-        this.scheduleDrainQueue(currentTask);
-        return;
+      const delay = currentTask.dueTime - this.now;
+      if (delay > 0) {
+        return [this.drainQueue, delay];
       }
 
       this.queue.pop();
@@ -164,27 +160,47 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
       if (!currentTask.disposable.isDisposed) {
         this.currentTask = currentTask;
         this.currentShouldYield = shouldYield;
-        currentTask.continuation(this.shouldYield);
-        currentTask.disposable.dispose();
+
+        const result = currentTask.continuation(this.shouldYield);
+        
         this.currentShouldYield = undefined;
         this.currentTask = undefined;
+
+        if (result !== undefined) {
+          const [nextContinuation, delay = 0] = result;
+          const now = this.now;
+          const continuedTask = {
+            taskID: this.taskIDCounter++,
+            continuation: nextContinuation,
+            disposable: currentTask.disposable,
+            priority: currentTask.priority,
+            startTime: now,
+            dueTime: now + delay,
+          }
+          this.queue.push(continuedTask);
+        } else {
+          currentTask.disposable.dispose();
+        }
       }
 
       const nextTask = this.queue.peek();
       if (nextTask !== undefined && shouldYield()) {
-        this.scheduleDrainQueue(nextTask);
-        return;
+        const now = this.now;
+        return [this.drainQueue, Math.max(nextTask.dueTime - now, 0)];
       }
     }
   };
 
   private scheduleDrainQueue(task: ScheduledTaskLike) {
-    const delay = Math.max(task.dueTime - this.now, 0);
+    const head = this.queue.peek();
+    if (head === task && this.disposable.disposable.isDisposed) {
+      const delay = Math.max(task.dueTime - this.now, 0);
 
-    this.disposable.disposable = this.hostScheduler.schedule(
-      this.drainQueue,
-      delay,
-    );
+      this.disposable.disposable = this.hostScheduler.schedule(
+        this.drainQueue,
+        delay,
+      );
+    }
   }
 }
 
