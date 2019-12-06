@@ -11,35 +11,99 @@ import {
   unstable_UserBlockingPriority,
 } from "scheduler";
 
-import { SchedulerLike } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 
 import {
   createSchedulerWithPriority,
   PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import {
+  createDisposable,
+  disposed,
+  DisposableLike,
+  SerialDisposableLike,
+  createSerialDisposable,
+} from "@reactive-js/disposable";
+
+let inScheduledContinuation = false;
+let currentDisposable: DisposableLike = disposed;
+
+const shouldYield = () =>
+  currentDisposable.isDisposed || unstable_shouldYield();
+
+const scheduleCallback = (
+  callback: () => void,
+  priority: number,
+  delay = 0,
+): DisposableLike => {
+  const disposable = createDisposable();
+
+  const scheduledCallback = () => {
+    callback();
+    disposable.dispose();
+  };
+
+  const callbackNode = unstable_scheduleCallback(
+    priority,
+    scheduledCallback,
+    delay > 0 ? { delay } : undefined,
+  );
+
+  disposable.add(() => unstable_cancelCallback(callbackNode));
+  return disposable;
+};
+
+const createCallback = (
+  continuation: SchedulerContinuationLike,
+  disposable: SerialDisposableLike,
+  priority: number,
+): (() => void) => {
+  const callback = () => {
+    if (!disposable.isDisposed) {
+      currentDisposable = disposable;
+      inScheduledContinuation = true;
+      const result = continuation(shouldYield) || undefined;
+      inScheduledContinuation = false;
+      currentDisposable = disposed;
+
+      if (result !== undefined) {
+        const { continuation: nextContinuation, delay = 0 } = result;
+        const nextCallback =
+          nextContinuation === continuation
+            ? callback
+            : createCallback(nextContinuation, disposable, priority);
+
+        disposable.disposable = scheduleCallback(nextCallback, priority, delay);
+      } else {
+        disposable.dispose();
+      }
+    }
+  };
+
+  return callback;
+};
 
 const priorityScheduler: PrioritySchedulerLike = {
+  get inScheduledContinuation(): boolean {
+    return inScheduledContinuation;
+  },
+
   get now(): number {
     return unstable_now();
   },
 
-  get shouldYield(): boolean {
-    return unstable_shouldYield();
-  },
-
   schedule(
-    continuation: () => void,
+    continuation: SchedulerContinuationLike,
     priority: number,
     delay = 0,
   ): DisposableLike {
-    const callbackNode = unstable_scheduleCallback(
-      priority,
-      continuation,
-      delay > 0 ? { delay } : undefined,
-    );
-    const disposable = createDisposable();
-    disposable.add(() => unstable_cancelCallback(callbackNode));
+    const disposable = createSerialDisposable();
+    const callback = createCallback(continuation, disposable, priority);
+
+    disposable.disposable = scheduleCallback(callback, priority, delay);
     return disposable;
   },
 };

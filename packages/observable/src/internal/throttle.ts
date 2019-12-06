@@ -25,7 +25,7 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onComplete(error?: ErrorLike) {
-    this.durationSubscription.dispose();
+    this.remove(this.durationSubscription);
     this.delegate.complete(error);
   }
 
@@ -72,7 +72,7 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onComplete(error?: ErrorLike) {
-    this.durationSubscription.dispose();
+    this.remove(this.durationSubscription);
     if (error === undefined) {
       this.notifyNext();
     }
@@ -133,7 +133,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onComplete(error?: ErrorLike) {
-    this.durationSubscription.dispose();
+    this.remove(this.durationSubscription);
     if (error === undefined) {
       this.notifyNext();
     }

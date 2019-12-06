@@ -36,6 +36,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.completedCountRef[0]++;
 
     if (error !== undefined || this.completedCountRef[0] === this.totalCount) {
+      // Dispose the allSubscriptions disposable by removing it from the subscriber;
       this.delegate.remove(this.allSubscriptions);
       this.delegate.complete(error);
     } else {

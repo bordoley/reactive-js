@@ -1,11 +1,10 @@
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
-  HostSchedulerContinuationLike,
-  HostSchedulerLike,
   PrioritySchedulerResourceLike,
+  AbstractScheduler,
 } from "@reactive-js/schedulers";
 
 const performance = window.performance;
@@ -13,21 +12,19 @@ const Date = window.Date;
 const setTimeout = window.setTimeout;
 const clearTimeout = window.clearTimeout;
 
-const yieldInterval = 5;
-const maxYieldInterval = 300;
-
 const now =
   typeof performance === "object" && typeof performance.now === "function"
     ? () => performance.now()
     : () => Date.now();
 
-let startTime = 0;
+const yieldInterval = 5;
+const maxYieldInterval = 300;
 
-const shouldYield =
+const shouldCallbackYield =
   navigator !== undefined &&
   (navigator as any).scheduling !== undefined &&
   (navigator as any).scheduling.isInputPending !== undefined
-    ? () => {
+    ? (startTime: number) => {
         const currentTime = now();
         const deadline = startTime + yieldInterval;
         const maxDeadline = startTime + maxYieldInterval;
@@ -38,64 +35,69 @@ const shouldYield =
           currentTime >= maxDeadline
         );
       }
-    : () => now() >= startTime + yieldInterval;
+    : (startTime: number) => now() >= startTime + yieldInterval;
 
 let channel: MessageChannel | undefined = undefined;
 
-const scheduleImmediate = (
-  continuation: () => void,
-  disposable: DisposableLike,
-) => {
+const scheduleImmediate = (callback: () => void): DisposableLike => {
+  const disposable = createDisposable();
   channel = channel || new MessageChannel();
 
   channel.port1.onmessage = () => {
     if (!disposable.isDisposed) {
-      continuation();
+      callback();
+      disposable.dispose();
     }
   };
   channel.port2.postMessage(null);
-};
-
-const schedule = (
-  continuation: HostSchedulerContinuationLike,
-  delay = 0,
-): DisposableLike => {
-  const scheduledContinuation = () => {
-    startTime = now();
-
-    let result: HostSchedulerContinuationLike | undefined = continuation;
-    while (result !== undefined) {
-      result = result();
-    }
-  };
-
-  const disposable = createDisposable();
-  // setTimeout has a floor of 4ms so for lesser delays
-  // just schedule immediately.
-  if (delay >= 4) {
-    const timeout = setTimeout(scheduledContinuation, delay);
-    disposable.add(() => clearTimeout(timeout));
-  } else {
-    scheduleImmediate(scheduledContinuation, disposable);
-  }
   return disposable;
 };
 
-const schedulerHost: HostSchedulerLike = {
-  get now(): number {
-    return now();
-  },
-  get shouldYield(): boolean {
-    return shouldYield();
-  },
-  schedule,
+const callCallbackAndDispose = (
+  callback: () => void,
+  disposable: DisposableLike,
+) => {
+  callback();
+  disposable.dispose();
 };
 
+const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
+  const disposable = createDisposable();
+  const timeout = setTimeout(
+    callCallbackAndDispose,
+    delay,
+    callback,
+    disposable,
+  );
+  disposable.add(() => clearTimeout(timeout));
+  return disposable;
+};
+
+class WebScheduler extends AbstractScheduler {
+  protected shouldCallbackYield(startTime: number): boolean {
+    return shouldCallbackYield(startTime);
+  }
+
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+    // setTimeout has a floor of 4ms so for lesser delays
+    // just schedule immediately.
+    return delay >= 4
+      ? scheduleDelayed(callback, delay)
+      : scheduleImmediate(callback);
+  }
+
+  get now(): number {
+    return now();
+  }
+}
+
+let schedulerHost: SchedulerLike | undefined = undefined;
 let priorityScheduler: PrioritySchedulerResourceLike | undefined = undefined;
 
 export const createSchedulerWithPriority = (
   priority: number,
 ): SchedulerLike => {
+  schedulerHost = schedulerHost || new WebScheduler();
   priorityScheduler =
     priorityScheduler || createPrioritySchedulerResource(schedulerHost);
 
