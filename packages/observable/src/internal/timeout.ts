@@ -24,7 +24,7 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   protected onComplete(error?: ErrorLike) {
-    this.durationSubscription.dispose();
+    this.remove(this.durationSubscription);
     this.delegate.complete(error);
   }
 

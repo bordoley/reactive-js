@@ -1,23 +1,26 @@
 import {
   createDisposable,
+  disposed,
   DisposableLike,
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-import { SchedulerContinuation } from "@reactive-js/scheduler";
-import { VirtualTimeSchedulerLike } from "./virtualTimeScheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { VirtualTimeSchedulerResourceLike } from "./virtualTimeScheduler";
 
-class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
+const shouldYield = () => false;
+
+class PerfTestingSchedulerImpl implements VirtualTimeSchedulerResourceLike {
   get isDisposed() {
     return this.disposable.isDisposed;
   }
   readonly inScheduledContinuation = true;
   readonly now = 0;
-  private readonly disposable: DisposableLike;
-  private readonly queue: SchedulerContinuation[] = [];
+  private readonly disposable: DisposableLike = createDisposable();
+
+  private readonly queue: SchedulerContinuationLike[] = [];
 
   constructor() {
-    this.disposable = createDisposable();
     this.disposable.add(() => {
       this.queue.length = 0;
     });
@@ -49,19 +52,25 @@ class PerfTestingSchedulerImpl implements VirtualTimeSchedulerLike {
       next !== undefined;
       next = this.queue.shift()
     ) {
-      next(PerfTestingSchedulerImpl.shouldYield);
+      const result = next(shouldYield) || undefined;
+
+      if (result !== undefined) {
+        const { continuation: nextContinuation } = result;
+        this.queue.push(nextContinuation);
+      }
     }
 
     this.disposable.dispose();
   }
 
-  schedule(continuation: SchedulerContinuation, _?: number): DisposableLike {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    _?: number,
+  ): DisposableLike {
     this.queue.push(continuation);
-    return createDisposable();
+    return disposed;
   }
-
-  static shouldYield = () => false;
 }
 
-export const createPerfTestingScheduler = (): VirtualTimeSchedulerLike =>
+export const createPerfTestingScheduler = (): VirtualTimeSchedulerResourceLike =>
   new PerfTestingSchedulerImpl();

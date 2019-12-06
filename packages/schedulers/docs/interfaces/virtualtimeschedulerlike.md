@@ -4,9 +4,11 @@
 
 ## Hierarchy
 
-* SchedulerResourceLike
+* SchedulerLike
 
   ↳ **VirtualTimeSchedulerLike**
+
+  ↳ [VirtualTimeSchedulerResourceLike](virtualtimeschedulerresourcelike.md)
 
 ## Index
 

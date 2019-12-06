@@ -24,7 +24,7 @@ class CombineLatestObserver implements ObserverLike<any> {
   innerSubscription: DisposableLike = disposed;
   private readonly allSubscriptions: DisposableLike;
   private readonly ctx: CombineLatestContext;
-  private readonly delegate: SubscriberLike<any>;
+  private readonly subscriber: SubscriberLike<any>;
 
   private hasProducedValue = false;
   private readonly index: number;
@@ -37,7 +37,7 @@ class CombineLatestObserver implements ObserverLike<any> {
     ctx: CombineLatestContext,
     index: number,
   ) {
-    this.delegate = delegate;
+    this.subscriber = delegate;
     this.totalCount = totalCount;
     this.allSubscriptions = allSubscriptions;
     this.ctx = ctx;
@@ -48,8 +48,9 @@ class CombineLatestObserver implements ObserverLike<any> {
     this.ctx.completedCount++;
 
     if (error !== undefined || this.ctx.completedCount === this.totalCount) {
-      this.delegate.remove(this.allSubscriptions);
-      this.delegate.complete(error);
+      // Dispose the allSubscriptions disposable by removing it from the subscriber;
+      this.subscriber.remove(this.allSubscriptions);
+      this.subscriber.complete(error);
     } else {
       this.allSubscriptions.remove(this.innerSubscription);
     }
@@ -65,7 +66,7 @@ class CombineLatestObserver implements ObserverLike<any> {
 
     if (this.ctx.producedCount === this.totalCount) {
       const latest = [...this.ctx.latest];
-      this.delegate.next(latest);
+      this.subscriber.next(latest);
     }
   }
 }

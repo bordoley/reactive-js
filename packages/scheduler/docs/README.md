@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-* [SchedulerContinuation](interfaces/schedulercontinuation.md)
-* [SchedulerContinuationResult](interfaces/schedulercontinuationresult.md)
+* [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
+* [SchedulerContinuationResultLike](interfaces/schedulercontinuationresultlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [SchedulerResourceLike](interfaces/schedulerresourcelike.md)
