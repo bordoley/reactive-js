@@ -327,7 +327,7 @@ export const createStateStore = <T>(
 };
 
 export const createPersistentStateStore = <T>(
-  dest: AsyncIteratorLike<T, StateUpdater<T>>,
+  persistentStore: AsyncIteratorLike<T, StateUpdater<T>>,
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
@@ -335,8 +335,8 @@ export const createPersistentStateStore = <T>(
   const subject: SubjectResourceLike<StateUpdater<T>> = createSubject();
   const dispatcher = (req: StateUpdater<T>) => subject.next(req);
 
-  const onSrcRequestStream = pipeObs(
-    dest,
+  const onPersistentStoreChangedStream = pipeObs(
+    persistentStore,
     onNextObs(dispatcher),
     ignoreElementsObs(),
   );
@@ -344,13 +344,12 @@ export const createPersistentStateStore = <T>(
   const stateObs = pipeObs(
     subject,
     scanObs((acc: T, next: StateUpdater<T>) => next(acc), initialState),
-    onNextObs(next => dest.dispatch(next)),
-    startWithObs(initialState),
     distinctUntilChangedObs(equals),
+    onNextObs(next => persistentStore.dispatch(next)),
   );
 
   const observable = pipeObs(
-    merge(onSrcRequestStream, stateObs),
+    merge(onPersistentStoreChangedStream, stateObs),
     shareObs(scheduler, 1),
   );
 

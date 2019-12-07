@@ -6,12 +6,19 @@ import {
   StateUpdater,
 } from "@reactive-js/async-iterator-resource";
 import { ObservableLike } from "@reactive-js/rx";
+import { concat, ofValue } from "@reactive-js/observable";
 
 export interface Location {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
 }
+
+const emptyLocation = {
+  fragment: "",
+  path: "",
+  query: "",
+};
 
 const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
@@ -38,15 +45,18 @@ const dispatch = (newLocation: Location) => {
   }
 };
 
-const getCurrentLocationStateUpdater = (_: unknown): StateUpdater<Location> => {
+const getCurrentLocationStateUpdater = (_?: unknown): StateUpdater<Location> => {
   const uri = getCurrentLocation();
   return (_: Location) => uri;
 };
 
-const observable: ObservableLike<StateUpdater<Location>> = fromEvent(
-  window,
-  "popstate",
-  getCurrentLocationStateUpdater,
+const observable: ObservableLike<StateUpdater<Location>> = concat(
+  fromEvent(
+    window,
+    "popstate",
+    getCurrentLocationStateUpdater,
+  ),
+  ofValue(getCurrentLocationStateUpdater())
 );
 
 const historyIterator: AsyncIteratorLike<
@@ -62,7 +72,7 @@ export const createLocationStoreResource = (
 ): AsyncIteratorResourceLike<StateUpdater<Location>, Location> =>
   createPersistentStateStore(
     historyIterator,
-    getCurrentLocation(),
+    emptyLocation,
     scheduler,
     locationEquals,
   );
