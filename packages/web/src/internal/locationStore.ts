@@ -51,12 +51,12 @@ const getCurrentLocationStateUpdater = (_?: unknown): StateUpdater<Location> => 
 };
 
 const observable: ObservableLike<StateUpdater<Location>> = concat(
+  ofValue(getCurrentLocationStateUpdater()),
   fromEvent(
     window,
     "popstate",
     getCurrentLocationStateUpdater,
   ),
-  ofValue(getCurrentLocationStateUpdater())
 );
 
 const historyIterator: AsyncIteratorLike<
