@@ -2,7 +2,12 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { ErrorLike, ObservableOperator, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
+import {
+  ErrorLike,
+  ObservableOperator,
+  SubscriberLike,
+  SubscriberOperator,
+} from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";

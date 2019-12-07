@@ -79,7 +79,6 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   }
 }
 
-
 export const lift = <A, B>(
   operator: ObservableOperator<A, B>,
 ): ObservableResourceOperator<A, B> => observableResource => {

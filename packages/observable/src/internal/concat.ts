@@ -1,5 +1,10 @@
 import { disposed } from "@reactive-js/disposable";
-import { ErrorLike, ObservableLike, ObservableOperator, SubscriberLike } from "@reactive-js/rx";
+import {
+  ErrorLike,
+  ObservableLike,
+  ObservableOperator,
+  SubscriberLike,
+} from "@reactive-js/rx";
 import { connect } from "./connect";
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
