@@ -8,7 +8,7 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { connect } from "./connect";
 import { observe } from "./observe";
-import {  pipe } from "./pipe";
+import { pipe } from "./pipe";
 import { createSubject } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {

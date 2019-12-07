@@ -1,4 +1,9 @@
-import { ErrorLike, ObservableOperator, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
+import {
+  ErrorLike,
+  ObservableOperator,
+  SubscriberLike,
+  SubscriberOperator,
+} from "@reactive-js/rx";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,

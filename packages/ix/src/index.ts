@@ -15,7 +15,7 @@ export interface StateUpdaterLike<T> {
 }
 
 /** @noInheritDoc */
-export interface StateStoreLike<T> extends AsyncIteratorLike<StateUpdaterLike<T>, T>{};
+export type StateStoreLike = AsyncIteratorLike<StateUpdaterLike<T>, T>;
 
 /** @noInheritDoc */
 export interface StateStoreResourceLike<T>
@@ -23,7 +23,7 @@ export interface StateStoreResourceLike<T>
     AsyncIteratorResourceLike<StateUpdaterLike<T>, T> {}
 
 /** @noInheritDoc */
-export interface EventEmitterLike<T> extends AsyncIteratorLike<T, T>{};
+export type EventEmitterLike = AsyncIteratorLike<T, T>;
 
 /** @noInheritDoc */
 export interface EventEmitterResourceLike<T>

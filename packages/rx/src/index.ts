@@ -82,4 +82,3 @@ export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}
 export interface SubjectResourceLike<T>
   extends SubjectLike<T>,
     ObservableResourceLike<T> {}
-
