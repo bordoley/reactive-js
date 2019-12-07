@@ -9,6 +9,7 @@ import {
 import {
   ErrorLike,
   ObservableLike,
+  ObservableOperator,
   ObserverLike,
   SubjectResourceLike,
   SubscriberLike,
@@ -25,7 +26,6 @@ import {
   map as mapObs,
   merge,
   mergeAll as mergeAllObs,
-  ObservableOperator,
   observe as observeObs,
   onComplete as onCompleteObs,
   onError as onErrorObs,

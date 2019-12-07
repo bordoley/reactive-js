@@ -2,7 +2,9 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
+  ObservableOperator,
   ObservableResourceLike,
+  ObservableResourceOperator,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -15,7 +17,6 @@ import {
   keep as keepObs,
   map as mapObs,
   mergeAll as mergeAllObs,
-  ObservableOperator,
   observe as observeObs,
   onComplete as onCompleteObs,
   onError as onErrorObs,
@@ -78,9 +79,6 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   }
 }
 
-export interface ObservableResourceOperator<A, B> {
-  (observable: ObservableResourceLike<A>): ObservableResourceLike<B>;
-}
 
 export const lift = <A, B>(
   operator: ObservableOperator<A, B>,

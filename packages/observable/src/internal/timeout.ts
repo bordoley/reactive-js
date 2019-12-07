@@ -2,12 +2,12 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { ErrorLike, SubscriberLike } from "@reactive-js/rx";
+import { ErrorLike, ObservableOperator, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift, SubscriberOperator } from "./lift";
+import { lift } from "./lift";
 import { onError } from "./observe";
-import { ObservableOperator, pipe } from "./pipe";
+import { pipe } from "./pipe";
 import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");

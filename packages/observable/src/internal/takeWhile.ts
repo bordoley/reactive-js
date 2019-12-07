@@ -1,6 +1,6 @@
-import { ErrorLike, SubscriberLike } from "@reactive-js/rx";
+import { ErrorLike, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift, SubscriberOperator } from "./lift";
+import { lift } from "./lift";
 
 class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly predicate: (next: T) => boolean;

@@ -1,12 +1,4 @@
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
-import { ObservableOperator } from "./pipe";
-
-/**
- * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
- */
-export interface SubscriberOperator<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
-}
+import { ObservableLike, ObservableOperator, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   readonly operators: ReadonlyArray<SubscriberOperator<any, any>>;

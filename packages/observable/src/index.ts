@@ -1,6 +1,6 @@
 export { connect } from "./internal/connect";
 export { createObservable } from "./internal/create";
-export { lift, SubscriberOperator } from "./internal/lift";
+export { lift } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";
 export { concat, startWith, endWith } from "./internal/concat";
@@ -20,7 +20,7 @@ export { map } from "./internal/map";
 export { merge } from "./internal/merge";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
-export { ObservableOperator, pipe } from "./internal/pipe";
+export { pipe } from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
 export { createSubject } from "./internal/subject";

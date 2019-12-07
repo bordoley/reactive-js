@@ -8,11 +8,6 @@
 
 * [DelegatingSubscriber](classes/delegatingsubscriber.md)
 
-### Interfaces
-
-* [ObservableOperator](interfaces/observableoperator.md)
-* [SubscriberOperator](interfaces/subscriberoperator.md)
-
 ### Functions
 
 * [combineLatest](README.md#combinelatest)
@@ -311,7 +306,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -323,7 +318,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
 ___
 
@@ -403,7 +398,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -415,7 +410,7 @@ Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -439,7 +434,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -452,19 +447,19 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+▸ **exhaust**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
 ___
 
@@ -554,7 +549,7 @@ ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+▸ **ignoreElements**<**TA**, **TB**>(): *ObservableOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -562,13 +557,13 @@ ___
 
 ▪ **TB**
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+**Returns:** *ObservableOperator‹TA, TB›*
 
 ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **keep**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -586,13 +581,13 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperator](interfaces/subscriberoperator.md)‹TA, TB›): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *ObservableOperator‹TA, TB›*
 
 Converts a SubscriberOperator to an ObservableOperator.
 
@@ -606,15 +601,15 @@ Converts a SubscriberOperator to an ObservableOperator.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`operator` | [SubscriberOperator](interfaces/subscriberoperator.md)‹TA, TB› |   |
+`operator` | SubscriberOperator‹TA, TB› |   |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+**Returns:** *ObservableOperator‹TA, TB›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -634,7 +629,7 @@ Name | Type |
 ------ | ------ |
 `data` | TA |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TB›*
+**Returns:** *ObservableOperator‹TA, TB›*
 
 ___
 
@@ -660,7 +655,7 @@ ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options?`: undefined | object): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -672,7 +667,7 @@ Name | Type |
 ------ | ------ |
 `options?` | undefined &#124; object |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
 ___
 
@@ -690,7 +685,7 @@ ___
 
 ### `Const` observe
 
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableOperator‹T, T›*
 
 Returns a ObservableOperator which forwards notifications to the provided observer.
 
@@ -704,7 +699,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `observer` | ObserverLike‹T› |   |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -729,7 +724,7 @@ ___
 
 ### `Const` onComplete
 
-▸ **onComplete**<**T**>(`onComplete`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -747,13 +742,13 @@ Name | Type |
 ------ | ------ |
 `err?` | ErrorLike |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` onError
 
-▸ **onError**<**T**>(`onError`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **onError**<**T**>(`onError`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -771,13 +766,13 @@ Name | Type |
 ------ | ------ |
 `err` | unknown |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` onNext
 
-▸ **onNext**<**T**>(`onNext`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **onNext**<**T**>(`onNext`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -795,13 +790,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›): *ObservableLike‹A›*
+▸ **pipe**<**T**, **A**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›): *ObservableLike‹A›*
 
 **Type parameters:**
 
@@ -814,11 +809,11 @@ ___
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
+`op1` | ObservableOperator‹T, A› |
 
 **Returns:** *ObservableLike‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›): *ObservableLike‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›): *ObservableLike‹B›*
 
 **Type parameters:**
 
@@ -833,12 +828,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
 
 **Returns:** *ObservableLike‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›): *ObservableLike‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›): *ObservableLike‹C›*
 
 **Type parameters:**
 
@@ -855,13 +850,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
 
 **Returns:** *ObservableLike‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›): *ObservableLike‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›): *ObservableLike‹D›*
 
 **Type parameters:**
 
@@ -880,14 +875,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
 
 **Returns:** *ObservableLike‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›): *ObservableLike‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›): *ObservableLike‹E›*
 
 **Type parameters:**
 
@@ -908,15 +903,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
-`op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
+`op5` | ObservableOperator‹D, E› |
 
 **Returns:** *ObservableLike‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›): *ObservableLike‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›): *ObservableLike‹F›*
 
 **Type parameters:**
 
@@ -939,16 +934,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
-`op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
-`op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
+`op5` | ObservableOperator‹D, E› |
+`op6` | ObservableOperator‹E, F› |
 
 **Returns:** *ObservableLike‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›): *ObservableLike‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›): *ObservableLike‹G›*
 
 **Type parameters:**
 
@@ -973,17 +968,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
-`op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
-`op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
-`op7` | [ObservableOperator](interfaces/observableoperator.md)‹F, G› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
+`op5` | ObservableOperator‹D, E› |
+`op6` | ObservableOperator‹E, F› |
+`op7` | ObservableOperator‹F, G› |
 
 **Returns:** *ObservableLike‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›): *ObservableLike‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›, `op8`: ObservableOperator‹G, H›): *ObservableLike‹H›*
 
 **Type parameters:**
 
@@ -1010,18 +1005,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
-`op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
-`op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
-`op7` | [ObservableOperator](interfaces/observableoperator.md)‹F, G› |
-`op8` | [ObservableOperator](interfaces/observableoperator.md)‹G, H› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
+`op5` | ObservableOperator‹D, E› |
+`op6` | ObservableOperator‹E, F› |
+`op7` | ObservableOperator‹F, G› |
+`op8` | ObservableOperator‹G, H› |
 
 **Returns:** *ObservableLike‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableLike‹T›, `op1`: [ObservableOperator](interfaces/observableoperator.md)‹T, A›, `op2`: [ObservableOperator](interfaces/observableoperator.md)‹A, B›, `op3`: [ObservableOperator](interfaces/observableoperator.md)‹B, C›, `op4`: [ObservableOperator](interfaces/observableoperator.md)‹C, D›, `op5`: [ObservableOperator](interfaces/observableoperator.md)‹D, E›, `op6`: [ObservableOperator](interfaces/observableoperator.md)‹E, F›, `op7`: [ObservableOperator](interfaces/observableoperator.md)‹F, G›, `op8`: [ObservableOperator](interfaces/observableoperator.md)‹G, H›, `op9`: [ObservableOperator](interfaces/observableoperator.md)‹H, I›): *ObservableLike‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›, `op8`: ObservableOperator‹G, H›, `op9`: ObservableOperator‹H, I›): *ObservableLike‹I›*
 
 **Type parameters:**
 
@@ -1050,15 +1045,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | [ObservableOperator](interfaces/observableoperator.md)‹T, A› |
-`op2` | [ObservableOperator](interfaces/observableoperator.md)‹A, B› |
-`op3` | [ObservableOperator](interfaces/observableoperator.md)‹B, C› |
-`op4` | [ObservableOperator](interfaces/observableoperator.md)‹C, D› |
-`op5` | [ObservableOperator](interfaces/observableoperator.md)‹D, E› |
-`op6` | [ObservableOperator](interfaces/observableoperator.md)‹E, F› |
-`op7` | [ObservableOperator](interfaces/observableoperator.md)‹F, G› |
-`op8` | [ObservableOperator](interfaces/observableoperator.md)‹G, H› |
-`op9` | [ObservableOperator](interfaces/observableoperator.md)‹H, I› |
+`op1` | ObservableOperator‹T, A› |
+`op2` | ObservableOperator‹A, B› |
+`op3` | ObservableOperator‹B, C› |
+`op4` | ObservableOperator‹C, D› |
+`op5` | ObservableOperator‹D, E› |
+`op6` | ObservableOperator‹E, F› |
+`op7` | ObservableOperator‹F, G› |
+`op8` | ObservableOperator‹G, H› |
+`op9` | ObservableOperator‹H, I› |
 
 **Returns:** *ObservableLike‹I›*
 
@@ -1066,7 +1061,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate?`: function | number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1078,13 +1073,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | function &#124; number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`predicate?`: undefined | function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1096,13 +1091,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | undefined &#124; function |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[ObservableOperator](interfaces/observableoperator.md)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableOperator‹T, TAcc›*
 
 **Type parameters:**
 
@@ -1125,13 +1120,13 @@ Name | Type |
 
 ▪ **initialValue**: *TAcc*
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, TAcc›*
+**Returns:** *ObservableOperator‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1144,13 +1139,13 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1163,13 +1158,13 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1181,25 +1176,25 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+▸ **switchAll**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` take
 
-▸ **take**<**T**>(`count`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **take**<**T**>(`count`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1211,13 +1206,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1229,13 +1224,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1253,13 +1248,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttle
 
-▸ **throttle**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttle**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1277,13 +1272,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttleFirst
 
-▸ **throttleFirst**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1301,13 +1296,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttleFirstTime
 
-▸ **throttleFirstTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1319,13 +1314,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttleLast
 
-▸ **throttleLast**<**T**>(`durationSelector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1343,13 +1338,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttleLastTime
 
-▸ **throttleLastTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1361,13 +1356,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
 ### `Const` throttleTime
 
-▸ **throttleTime**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **throttleTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1379,7 +1374,7 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -1404,7 +1399,7 @@ ___
 
 ### `Const` timeout
 
-▸ **timeout**<**T**>(`duration`: number): *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+▸ **timeout**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
 
 **Type parameters:**
 
@@ -1416,7 +1411,7 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹T, T›*
+**Returns:** *ObservableOperator‹T, T›*
 
 ___
 
@@ -1441,7 +1436,7 @@ ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *[ObservableOperator](interfaces/observableoperator.md)‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableOperator‹TA, TC›*
 
 **Type parameters:**
 
@@ -1466,4 +1461,4 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *[ObservableOperator](interfaces/observableoperator.md)‹TA, TC›*
+**Returns:** *ObservableOperator‹TA, TC›*
