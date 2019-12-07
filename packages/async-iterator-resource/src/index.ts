@@ -1,5 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { AsyncIteratorLike, AsyncIteratorResourceLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
@@ -17,6 +17,7 @@ import {
   ignoreElements as ignoreElementsObs,
   keep as keepObs,
   map as mapObs,
+  merge,
   mergeAll as mergeAllObs,
   ObservableOperator,
   observe as observeObs,
@@ -321,6 +322,37 @@ export const createStateStore = <T>(
   );
 
   subject.add(connect(observable, scheduler));
+
+  return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
+};
+
+export const createPersistentStateStore = <T>(
+  dest: AsyncIteratorLike<T, StateUpdater<T>>,
+  initialState: T,
+  scheduler: SchedulerLike,
+  equals?: (a: T, b: T) => boolean,
+) => {
+  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject();
+  const dispatcher = (req: StateUpdater<T>) => subject.next(req);
+
+  const onSrcRequestStream = pipeObs(
+    dest,
+    onNextObs(dispatcher),
+    ignoreElementsObs(),
+  );
+
+  const stateObs = pipeObs(
+    subject,
+    scanObs((acc: T, next: StateUpdater<T>) => next(acc), initialState),
+    onNextObs(next => dest.dispatch(next)),
+    startWithObs(initialState),
+    distinctUntilChangedObs(equals),
+  );
+
+  const observable = pipeObs(
+    merge(onSrcRequestStream, stateObs),
+    shareObs(scheduler, 1),
+  );
 
   return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
 };

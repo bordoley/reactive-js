@@ -13,6 +13,7 @@
 
 * [concatAll](README.md#const-concatall)
 * [createEvent](README.md#const-createevent)
+* [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createStateStore](README.md#const-createstatestore)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [endWith](README.md#const-endwith)
@@ -78,6 +79,27 @@ ___
 ▪ **T**
 
 **Returns:** *AsyncIteratorResourceLike‹T, T›*
+
+___
+
+### `Const` createPersistentStateStore
+
+▸ **createPersistentStateStore**<**T**>(`dest`: AsyncIteratorLike‹T, [StateUpdater](interfaces/stateupdater.md)‹T››, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *AsyncIteratorResourceImpl‹[StateUpdater](interfaces/stateupdater.md)‹T›, unknown›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`dest` | AsyncIteratorLike‹T, [StateUpdater](interfaces/stateupdater.md)‹T›› |
+`initialState` | T |
+`scheduler` | SchedulerLike |
+`equals?` | undefined &#124; function |
+
+**Returns:** *AsyncIteratorResourceImpl‹[StateUpdater](interfaces/stateupdater.md)‹T›, unknown›*
 
 ___
 
