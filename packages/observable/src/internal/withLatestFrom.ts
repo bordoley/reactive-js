@@ -2,14 +2,16 @@ import { DisposableLike } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift, SubscriberOperator } from "./lift";
+import { lift,  } from "./lift";
 import { observe } from "./observe";
-import { ObservableOperator, pipe } from "./pipe";
+import { pipe } from "./pipe";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,

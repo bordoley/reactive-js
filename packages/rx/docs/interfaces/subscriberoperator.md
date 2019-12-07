@@ -1,4 +1,4 @@
-[@reactive-js/observable](../README.md) › [SubscriberOperator](subscriberoperator.md)
+[@reactive-js/rx](../README.md) › [SubscriberOperator](subscriberoperator.md)
 
 # Interface: SubscriberOperator <**A, B**>
 
@@ -16,7 +16,7 @@ A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 ## Callable
 
-▸ (`subscriber`: SubscriberLike‹B›): *SubscriberLike‹A›*
+▸ (`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
 
 A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
@@ -24,6 +24,6 @@ A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 Name | Type |
 ------ | ------ |
-`subscriber` | SubscriberLike‹B› |
+`subscriber` | [SubscriberLike](subscriberlike.md)‹B› |
 
-**Returns:** *SubscriberLike‹A›*
+**Returns:** *[SubscriberLike](subscriberlike.md)‹A›*

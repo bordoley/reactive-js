@@ -1,9 +1,4 @@
-import { ObservableLike } from "@reactive-js/rx";
-
-/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
-export interface ObservableOperator<A, B> {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-}
+import { ObservableLike, ObservableOperator } from "@reactive-js/rx";
 
 export function pipe<T, A>(
   src: ObservableLike<T>,

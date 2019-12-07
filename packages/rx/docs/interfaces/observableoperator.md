@@ -1,4 +1,4 @@
-[@reactive-js/observable](../README.md) › [ObservableOperator](observableoperator.md)
+[@reactive-js/rx](../README.md) › [ObservableOperator](observableoperator.md)
 
 # Interface: ObservableOperator <**A, B**>
 
@@ -16,7 +16,7 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>
 
 ## Callable
 
-▸ (`observable`: ObservableLike‹A›): *ObservableLike‹B›*
+▸ (`observable`: [ObservableLike](observablelike.md)‹A›): *[ObservableLike](observablelike.md)‹B›*
 
 A function which converts an ObservableLike<A> to an ObservableLike<B>
 
@@ -24,6 +24,6 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>
 
 Name | Type |
 ------ | ------ |
-`observable` | ObservableLike‹A› |
+`observable` | [ObservableLike](observablelike.md)‹A› |
 
-**Returns:** *ObservableLike‹B›*
+**Returns:** *[ObservableLike](observablelike.md)‹B›*

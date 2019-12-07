@@ -5,14 +5,16 @@ import {
 import {
   ErrorLike,
   ObservableLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
+  SubscriberOperator,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
-import { lift, SubscriberOperator } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
-import { ObservableOperator, pipe } from "./pipe";
+import { pipe } from "./pipe";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {

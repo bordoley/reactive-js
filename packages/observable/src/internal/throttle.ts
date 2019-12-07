@@ -2,13 +2,13 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { ErrorLike, ObservableLike, SubscriberLike } from "@reactive-js/rx";
+import { ErrorLike, ObservableLike, ObservableOperator, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { empty } from "./fromArray";
-import { lift, SubscriberOperator } from "./lift";
+import { lift,  } from "./lift";
 import { onComplete } from "./observe";
-import { ObservableOperator, pipe } from "./pipe";
+import { pipe } from "./pipe";
 
 class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;

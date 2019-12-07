@@ -2,6 +2,7 @@ import { AsyncIteratorLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -14,7 +15,6 @@ import {
   keep as keepObs,
   map as mapObs,
   mergeAll as mergeAllObs,
-  ObservableOperator,
   observe as observeObs,
   onComplete as onCompleteObs,
   onError as onErrorObs,

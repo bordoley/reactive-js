@@ -4,10 +4,6 @@
 
 ## Index
 
-### Interfaces
-
-* [ObservableResourceOperator](interfaces/observableresourceoperator.md)
-
 ### Functions
 
 * [concatAll](README.md#const-concatall)
@@ -47,7 +43,7 @@
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -59,13 +55,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -77,13 +73,13 @@ Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -96,25 +92,25 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+▸ **exhaust**<**T**>(): *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TB›*
+▸ **ignoreElements**<**TA**, **TB**>(): *ObservableResourceOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -122,13 +118,13 @@ ___
 
 ▪ **TB**
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TB›*
+**Returns:** *ObservableResourceOperator‹TA, TB›*
 
 ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **keep**<**T**>(`predicate`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -146,13 +142,13 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` lift
 
-▸ **lift**<**A**, **B**>(`operator`: ObservableOperator‹A, B›): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›*
+▸ **lift**<**A**, **B**>(`operator`: ObservableOperator‹A, B›): *ObservableResourceOperator‹A, B›*
 
 **Type parameters:**
 
@@ -166,13 +162,13 @@ Name | Type |
 ------ | ------ |
 `operator` | ObservableOperator‹A, B› |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›*
+**Returns:** *ObservableResourceOperator‹A, B›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableResourceOperator‹TA, TB›*
 
 **Type parameters:**
 
@@ -192,13 +188,13 @@ Name | Type |
 ------ | ------ |
 `data` | TA |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TB›*
+**Returns:** *ObservableResourceOperator‹TA, TB›*
 
 ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options?`: undefined | object): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -210,13 +206,13 @@ Name | Type |
 ------ | ------ |
 `options?` | undefined &#124; object |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` observe
 
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -228,13 +224,13 @@ Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` onComplete
 
-▸ **onComplete**<**T**>(`onComplete`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -252,13 +248,13 @@ Name | Type |
 ------ | ------ |
 `err?` | ErrorLike |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` onError
 
-▸ **onError**<**T**>(`onError`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **onError**<**T**>(`onError`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -276,13 +272,13 @@ Name | Type |
 ------ | ------ |
 `err` | unknown |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` onNext
 
-▸ **onNext**<**T**>(`onNext`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **onNext**<**T**>(`onNext`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -300,13 +296,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›): *ObservableResourceLike‹A›*
+▸ **pipe**<**T**, **A**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›): *ObservableResourceLike‹A›*
 
 **Type parameters:**
 
@@ -319,11 +315,11 @@ ___
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
+`op1` | ObservableResourceOperator‹T, A› |
 
 **Returns:** *ObservableResourceLike‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›): *ObservableResourceLike‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›): *ObservableResourceLike‹B›*
 
 **Type parameters:**
 
@@ -338,12 +334,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
 
 **Returns:** *ObservableResourceLike‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›): *ObservableResourceLike‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›): *ObservableResourceLike‹C›*
 
 **Type parameters:**
 
@@ -360,13 +356,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
 
 **Returns:** *ObservableResourceLike‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›): *ObservableResourceLike‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›): *ObservableResourceLike‹D›*
 
 **Type parameters:**
 
@@ -385,14 +381,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
 
 **Returns:** *ObservableResourceLike‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›, `op5`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E›): *ObservableResourceLike‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›): *ObservableResourceLike‹E›*
 
 **Type parameters:**
 
@@ -413,15 +409,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
-`op5` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
+`op5` | ObservableResourceOperator‹D, E› |
 
 **Returns:** *ObservableResourceLike‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›, `op5`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E›, `op6`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F›): *ObservableResourceLike‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›): *ObservableResourceLike‹F›*
 
 **Type parameters:**
 
@@ -444,16 +440,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
-`op5` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E› |
-`op6` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
+`op5` | ObservableResourceOperator‹D, E› |
+`op6` | ObservableResourceOperator‹E, F› |
 
 **Returns:** *ObservableResourceLike‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›, `op5`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E›, `op6`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F›, `op7`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G›): *ObservableResourceLike‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›): *ObservableResourceLike‹G›*
 
 **Type parameters:**
 
@@ -478,17 +474,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
-`op5` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E› |
-`op6` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F› |
-`op7` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
+`op5` | ObservableResourceOperator‹D, E› |
+`op6` | ObservableResourceOperator‹E, F› |
+`op7` | ObservableResourceOperator‹F, G› |
 
 **Returns:** *ObservableResourceLike‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›, `op5`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E›, `op6`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F›, `op7`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G›, `op8`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹G, H›): *ObservableResourceLike‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›, `op8`: ObservableResourceOperator‹G, H›): *ObservableResourceLike‹H›*
 
 **Type parameters:**
 
@@ -515,18 +511,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
-`op5` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E› |
-`op6` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F› |
-`op7` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G› |
-`op8` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹G, H› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
+`op5` | ObservableResourceOperator‹D, E› |
+`op6` | ObservableResourceOperator‹E, F› |
+`op7` | ObservableResourceOperator‹F, G› |
+`op8` | ObservableResourceOperator‹G, H› |
 
 **Returns:** *ObservableResourceLike‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableResourceLike‹T›, `op1`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A›, `op2`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B›, `op3`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C›, `op4`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D›, `op5`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E›, `op6`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F›, `op7`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G›, `op8`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹G, H›, `op9`: [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹H, I›): *ObservableResourceLike‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›, `op8`: ObservableResourceOperator‹G, H›, `op9`: ObservableResourceOperator‹H, I›): *ObservableResourceLike‹I›*
 
 **Type parameters:**
 
@@ -555,15 +551,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, A› |
-`op2` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹A, B› |
-`op3` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹B, C› |
-`op4` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹C, D› |
-`op5` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹D, E› |
-`op6` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹E, F› |
-`op7` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹F, G› |
-`op8` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹G, H› |
-`op9` | [ObservableResourceOperator](interfaces/observableresourceoperator.md)‹H, I› |
+`op1` | ObservableResourceOperator‹T, A› |
+`op2` | ObservableResourceOperator‹A, B› |
+`op3` | ObservableResourceOperator‹B, C› |
+`op4` | ObservableResourceOperator‹C, D› |
+`op5` | ObservableResourceOperator‹D, E› |
+`op6` | ObservableResourceOperator‹E, F› |
+`op7` | ObservableResourceOperator‹F, G› |
+`op8` | ObservableResourceOperator‹G, H› |
+`op9` | ObservableResourceOperator‹H, I› |
 
 **Returns:** *ObservableResourceLike‹I›*
 
@@ -571,7 +567,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate?`: function | number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -583,13 +579,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | function &#124; number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`predicate?`: undefined | function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -601,13 +597,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | undefined &#124; function |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableResourceOperator‹T, TAcc›*
 
 **Type parameters:**
 
@@ -630,13 +626,13 @@ Name | Type |
 
 ▪ **initialValue**: *TAcc*
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, TAcc›*
+**Returns:** *ObservableResourceOperator‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -649,13 +645,13 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -668,13 +664,13 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -686,25 +682,25 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+▸ **switchAll**<**T**>(): *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` take
 
-▸ **take**<**T**>(`count`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **take**<**T**>(`count`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -716,13 +712,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -734,13 +730,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -758,13 +754,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttle
 
-▸ **throttle**<**T**>(`durationSelector`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttle**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -782,13 +778,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttleFirst
 
-▸ **throttleFirst**<**T**>(`durationSelector`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -806,13 +802,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttleFirstTime
 
-▸ **throttleFirstTime**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -824,13 +820,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttleLast
 
-▸ **throttleLast**<**T**>(`durationSelector`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -848,13 +844,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttleLastTime
 
-▸ **throttleLastTime**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -866,13 +862,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` throttleTime
 
-▸ **throttleTime**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **throttleTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -884,13 +880,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` timeout
 
-▸ **timeout**<**T**>(`duration`: number): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+▸ **timeout**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
 
 **Type parameters:**
 
@@ -902,13 +898,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹T, T›*
+**Returns:** *ObservableResourceOperator‹T, T›*
 
 ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableResourceOperator‹TA, TC›*
 
 **Type parameters:**
 
@@ -933,4 +929,4 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *[ObservableResourceOperator](interfaces/observableresourceoperator.md)‹TA, TC›*
+**Returns:** *ObservableResourceOperator‹TA, TC›*
