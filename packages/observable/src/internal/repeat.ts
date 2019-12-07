@@ -5,10 +5,10 @@ import {
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
@@ -83,7 +83,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 const repeatOperator = <T>(
   observable: ObservableLike<T>,
   shouldRepeat: (count: number, error?: ErrorLike) => boolean,
-): SubscriberOperator<T, T> => (subscriber: SubscriberLike<T>) =>
+): SubscriberOperatorLike<T, T> => (subscriber: SubscriberLike<T>) =>
   new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
 const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
@@ -91,7 +91,7 @@ const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
 
 export const repeat = <T>(
   predicate?: ((count: number) => boolean) | number,
-): ObservableOperator<T, T> => {
+): ObservableOperatorLike<T, T> => {
   const repeatPredicate =
     predicate === undefined
       ? defaultRepeatPredicate
@@ -109,7 +109,7 @@ const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
 
 export const retry = <T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableOperator<T, T> => {
+): ObservableOperatorLike<T, T> => {
   const retryPredicate =
     predicate === undefined
       ? defaultRetryPredicate

@@ -1,6 +1,6 @@
-[@reactive-js/rx](../README.md) › [ObservableResourceOperator](observableresourceoperator.md)
+[@reactive-js/rx](../README.md) › [ObservableResourceOperatorLike](observableresourceoperatorlike.md)
 
-# Interface: ObservableResourceOperator <**A, B**>
+# Interface: ObservableResourceOperatorLike <**A, B**>
 
 ## Type parameters
 
@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* **ObservableResourceOperator**
+* **ObservableResourceOperatorLike**
 
 ## Callable
 

@@ -2,7 +2,7 @@ import { disposed } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
@@ -58,12 +58,12 @@ export function concat<T>(
 export function startWith<T>(
   value: T,
   ...values: T[]
-): ObservableOperator<T, T>;
-export function startWith<T>(...values: T[]): ObservableOperator<T, T> {
+): ObservableOperatorLike<T, T>;
+export function startWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
   return obs => concat(fromArray(values), obs);
 }
 
-export function endWith<T>(value: T, ...values: T[]): ObservableOperator<T, T>;
-export function endWith<T>(...values: T[]): ObservableOperator<T, T> {
+export function endWith<T>(value: T, ...values: T[]): ObservableOperatorLike<T, T>;
+export function endWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
   return obs => concat(obs, fromArray(values));
 }

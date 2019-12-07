@@ -1,8 +1,8 @@
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -36,10 +36,10 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
 const operator = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): SubscriberOperator<T, TAcc> => subscriber =>
+): SubscriberOperatorLike<T, TAcc> => subscriber =>
   new ScanSubscriber(subscriber, scanner, initialValue);
 
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): ObservableOperator<T, TAcc> => lift(operator(scanner, initialValue));
+): ObservableOperatorLike<T, TAcc> => lift(operator(scanner, initialValue));

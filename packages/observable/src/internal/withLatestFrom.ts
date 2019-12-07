@@ -2,10 +2,10 @@ import { DisposableLike } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
@@ -74,10 +74,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
 const operator = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): SubscriberOperator<TA, TC> => subscriber =>
+): SubscriberOperatorLike<TA, TC> => subscriber =>
   new WithLatestFromSubscriber(subscriber, other, selector);
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperator<TA, TC> => lift(operator(other, selector));
+): ObservableOperatorLike<TA, TC> => lift(operator(other, selector));

@@ -43,7 +43,7 @@
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableResourceOperator‹ObservableLike‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -55,13 +55,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableResourceOperator‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -73,13 +73,13 @@ Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperator‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -92,25 +92,25 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *ObservableResourceOperator‹ObservableLike‹T›, T›*
+▸ **exhaust**<**T**>(): *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *ObservableResourceOperator‹TA, TB›*
+▸ **ignoreElements**<**TA**, **TB**>(): *ObservableResourceOperatorLike‹TA, TB›*
 
 **Type parameters:**
 
@@ -118,13 +118,13 @@ ___
 
 ▪ **TB**
 
-**Returns:** *ObservableResourceOperator‹TA, TB›*
+**Returns:** *ObservableResourceOperatorLike‹TA, TB›*
 
 ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *ObservableResourceOperator‹T, T›*
+▸ **keep**<**T**>(`predicate`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -142,13 +142,13 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` lift
 
-▸ **lift**<**A**, **B**>(`operator`: ObservableOperator‹A, B›): *ObservableResourceOperator‹A, B›*
+▸ **lift**<**A**, **B**>(`operator`: ObservableOperatorLike‹A, B›): *ObservableResourceOperatorLike‹A, B›*
 
 **Type parameters:**
 
@@ -160,15 +160,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`operator` | ObservableOperator‹A, B› |
+`operator` | ObservableOperatorLike‹A, B› |
 
-**Returns:** *ObservableResourceOperator‹A, B›*
+**Returns:** *ObservableResourceOperatorLike‹A, B›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableResourceOperator‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableResourceOperatorLike‹TA, TB›*
 
 **Type parameters:**
 
@@ -188,13 +188,13 @@ Name | Type |
 ------ | ------ |
 `data` | TA |
 
-**Returns:** *ObservableResourceOperator‹TA, TB›*
+**Returns:** *ObservableResourceOperatorLike‹TA, TB›*
 
 ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableResourceOperator‹ObservableLike‹T›, T›*
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -206,13 +206,13 @@ Name | Type |
 ------ | ------ |
 `options?` | undefined &#124; object |
 
-**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` observe
 
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableResourceOperator‹T, T›*
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -224,13 +224,13 @@ Name | Type |
 ------ | ------ |
 `observer` | ObserverLike‹T› |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` onComplete
 
-▸ **onComplete**<**T**>(`onComplete`: function): *ObservableResourceOperator‹T, T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -248,13 +248,13 @@ Name | Type |
 ------ | ------ |
 `err?` | ErrorLike |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` onError
 
-▸ **onError**<**T**>(`onError`: function): *ObservableResourceOperator‹T, T›*
+▸ **onError**<**T**>(`onError`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -272,13 +272,13 @@ Name | Type |
 ------ | ------ |
 `err` | unknown |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` onNext
 
-▸ **onNext**<**T**>(`onNext`: function): *ObservableResourceOperator‹T, T›*
+▸ **onNext**<**T**>(`onNext`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -296,13 +296,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›): *ObservableResourceLike‹A›*
+▸ **pipe**<**T**, **A**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›): *ObservableResourceLike‹A›*
 
 **Type parameters:**
 
@@ -315,11 +315,11 @@ ___
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
 
 **Returns:** *ObservableResourceLike‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›): *ObservableResourceLike‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›): *ObservableResourceLike‹B›*
 
 **Type parameters:**
 
@@ -334,12 +334,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
 
 **Returns:** *ObservableResourceLike‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›): *ObservableResourceLike‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›): *ObservableResourceLike‹C›*
 
 **Type parameters:**
 
@@ -356,13 +356,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
 
 **Returns:** *ObservableResourceLike‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›): *ObservableResourceLike‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›): *ObservableResourceLike‹D›*
 
 **Type parameters:**
 
@@ -381,14 +381,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
 
 **Returns:** *ObservableResourceLike‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›): *ObservableResourceLike‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›, `op5`: ObservableResourceOperatorLike‹D, E›): *ObservableResourceLike‹E›*
 
 **Type parameters:**
 
@@ -409,15 +409,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
-`op5` | ObservableResourceOperator‹D, E› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
+`op5` | ObservableResourceOperatorLike‹D, E› |
 
 **Returns:** *ObservableResourceLike‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›): *ObservableResourceLike‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›, `op5`: ObservableResourceOperatorLike‹D, E›, `op6`: ObservableResourceOperatorLike‹E, F›): *ObservableResourceLike‹F›*
 
 **Type parameters:**
 
@@ -440,16 +440,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
-`op5` | ObservableResourceOperator‹D, E› |
-`op6` | ObservableResourceOperator‹E, F› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
+`op5` | ObservableResourceOperatorLike‹D, E› |
+`op6` | ObservableResourceOperatorLike‹E, F› |
 
 **Returns:** *ObservableResourceLike‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›): *ObservableResourceLike‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›, `op5`: ObservableResourceOperatorLike‹D, E›, `op6`: ObservableResourceOperatorLike‹E, F›, `op7`: ObservableResourceOperatorLike‹F, G›): *ObservableResourceLike‹G›*
 
 **Type parameters:**
 
@@ -474,17 +474,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
-`op5` | ObservableResourceOperator‹D, E› |
-`op6` | ObservableResourceOperator‹E, F› |
-`op7` | ObservableResourceOperator‹F, G› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
+`op5` | ObservableResourceOperatorLike‹D, E› |
+`op6` | ObservableResourceOperatorLike‹E, F› |
+`op7` | ObservableResourceOperatorLike‹F, G› |
 
 **Returns:** *ObservableResourceLike‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›, `op8`: ObservableResourceOperator‹G, H›): *ObservableResourceLike‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›, `op5`: ObservableResourceOperatorLike‹D, E›, `op6`: ObservableResourceOperatorLike‹E, F›, `op7`: ObservableResourceOperatorLike‹F, G›, `op8`: ObservableResourceOperatorLike‹G, H›): *ObservableResourceLike‹H›*
 
 **Type parameters:**
 
@@ -511,18 +511,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
-`op5` | ObservableResourceOperator‹D, E› |
-`op6` | ObservableResourceOperator‹E, F› |
-`op7` | ObservableResourceOperator‹F, G› |
-`op8` | ObservableResourceOperator‹G, H› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
+`op5` | ObservableResourceOperatorLike‹D, E› |
+`op6` | ObservableResourceOperatorLike‹E, F› |
+`op7` | ObservableResourceOperatorLike‹F, G› |
+`op8` | ObservableResourceOperatorLike‹G, H› |
 
 **Returns:** *ObservableResourceLike‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperator‹T, A›, `op2`: ObservableResourceOperator‹A, B›, `op3`: ObservableResourceOperator‹B, C›, `op4`: ObservableResourceOperator‹C, D›, `op5`: ObservableResourceOperator‹D, E›, `op6`: ObservableResourceOperator‹E, F›, `op7`: ObservableResourceOperator‹F, G›, `op8`: ObservableResourceOperator‹G, H›, `op9`: ObservableResourceOperator‹H, I›): *ObservableResourceLike‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableResourceLike‹T›, `op1`: ObservableResourceOperatorLike‹T, A›, `op2`: ObservableResourceOperatorLike‹A, B›, `op3`: ObservableResourceOperatorLike‹B, C›, `op4`: ObservableResourceOperatorLike‹C, D›, `op5`: ObservableResourceOperatorLike‹D, E›, `op6`: ObservableResourceOperatorLike‹E, F›, `op7`: ObservableResourceOperatorLike‹F, G›, `op8`: ObservableResourceOperatorLike‹G, H›, `op9`: ObservableResourceOperatorLike‹H, I›): *ObservableResourceLike‹I›*
 
 **Type parameters:**
 
@@ -551,15 +551,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableResourceLike‹T› |
-`op1` | ObservableResourceOperator‹T, A› |
-`op2` | ObservableResourceOperator‹A, B› |
-`op3` | ObservableResourceOperator‹B, C› |
-`op4` | ObservableResourceOperator‹C, D› |
-`op5` | ObservableResourceOperator‹D, E› |
-`op6` | ObservableResourceOperator‹E, F› |
-`op7` | ObservableResourceOperator‹F, G› |
-`op8` | ObservableResourceOperator‹G, H› |
-`op9` | ObservableResourceOperator‹H, I› |
+`op1` | ObservableResourceOperatorLike‹T, A› |
+`op2` | ObservableResourceOperatorLike‹A, B› |
+`op3` | ObservableResourceOperatorLike‹B, C› |
+`op4` | ObservableResourceOperatorLike‹C, D› |
+`op5` | ObservableResourceOperatorLike‹D, E› |
+`op6` | ObservableResourceOperatorLike‹E, F› |
+`op7` | ObservableResourceOperatorLike‹F, G› |
+`op8` | ObservableResourceOperatorLike‹G, H› |
+`op9` | ObservableResourceOperatorLike‹H, I› |
 
 **Returns:** *ObservableResourceLike‹I›*
 
@@ -567,7 +567,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableResourceOperator‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -579,13 +579,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | function &#124; number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableResourceOperator‹T, T›*
+▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -597,13 +597,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | undefined &#124; function |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableResourceOperator‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableResourceOperatorLike‹T, TAcc›*
 
 **Type parameters:**
 
@@ -626,13 +626,13 @@ Name | Type |
 
 ▪ **initialValue**: *TAcc*
 
-**Returns:** *ObservableResourceOperator‹T, TAcc›*
+**Returns:** *ObservableResourceOperatorLike‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableResourceOperator‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -645,13 +645,13 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperator‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -664,13 +664,13 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableResourceOperator‹T, T›*
+▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -682,25 +682,25 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *ObservableResourceOperator‹ObservableLike‹T›, T›*
+▸ **switchAll**<**T**>(): *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *ObservableResourceOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableResourceOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` take
 
-▸ **take**<**T**>(`count`: number): *ObservableResourceOperator‹T, T›*
+▸ **take**<**T**>(`count`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -712,13 +712,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *ObservableResourceOperator‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -730,13 +730,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *ObservableResourceOperator‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -754,13 +754,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttle
 
-▸ **throttle**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
+▸ **throttle**<**T**>(`durationSelector`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -778,13 +778,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleFirst
 
-▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
+▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -802,13 +802,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleFirstTime
 
-▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
+▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -820,13 +820,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleLast
 
-▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableResourceOperator‹T, T›*
+▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -844,13 +844,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleLastTime
 
-▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
+▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -862,13 +862,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleTime
 
-▸ **throttleTime**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
+▸ **throttleTime**<**T**>(`duration`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -880,13 +880,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` timeout
 
-▸ **timeout**<**T**>(`duration`: number): *ObservableResourceOperator‹T, T›*
+▸ **timeout**<**T**>(`duration`: number): *ObservableResourceOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -898,13 +898,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableResourceOperator‹T, T›*
+**Returns:** *ObservableResourceOperatorLike‹T, T›*
 
 ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableResourceOperator‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableResourceOperatorLike‹TA, TC›*
 
 **Type parameters:**
 
@@ -929,4 +929,4 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *ObservableResourceOperator‹TA, TC›*
+**Returns:** *ObservableResourceOperatorLike‹TA, TC›*

@@ -1,9 +1,9 @@
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
@@ -92,7 +92,7 @@ const operator = <T>(
     maxBufferSize?: number;
     maxConcurrency?: number;
   } = {},
-): SubscriberOperator<ObservableLike<T>, T> => {
+): SubscriberOperatorLike<ObservableLike<T>, T> => {
   const {
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
@@ -104,12 +104,12 @@ const operator = <T>(
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): ObservableOperator<ObservableLike<T>, T> => lift(operator(options));
+}): ObservableOperatorLike<ObservableLike<T>, T> => lift(operator(options));
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableOperator<ObservableLike<T>, T> =>
+): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
-export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+export const exhaust = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });

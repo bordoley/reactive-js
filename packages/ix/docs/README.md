@@ -7,7 +7,9 @@
 ### Interfaces
 
 * [AsyncIteratorLike](interfaces/asynciteratorlike.md)
+* [AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
+* [AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)
 * [EventEmitterLike](interfaces/eventemitterlike.md)
 * [EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)
 * [StateStoreLike](interfaces/statestorelike.md)

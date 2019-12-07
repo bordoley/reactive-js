@@ -1,6 +1,6 @@
-[@reactive-js/rx](../README.md) › [SubscriberOperator](subscriberoperator.md)
+[@reactive-js/rx](../README.md) › [SubscriberOperatorLike](subscriberoperatorlike.md)
 
-# Interface: SubscriberOperator <**A, B**>
+# Interface: SubscriberOperatorLike <**A, B**>
 
 A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
@@ -12,7 +12,7 @@ A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 ## Hierarchy
 
-* **SubscriberOperator**
+* **SubscriberOperatorLike**
 
 ## Callable
 

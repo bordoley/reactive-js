@@ -1,9 +1,9 @@
 import {
   ErrorLike,
   ObserverLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -26,24 +26,24 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(observer: ObserverLike<T>): SubscriberOperator<T, T> => (
+const operator = <T>(observer: ObserverLike<T>): SubscriberOperatorLike<T, T> => (
   subscriber: SubscriberLike<T>,
 ) => new ObserveSubscriber(subscriber, observer);
 
 /**
- * Returns a ObservableOperator which forwards notifications to the provided observer.
+ * Returns a ObservableOperatorLike which forwards notifications to the provided observer.
  *
  * @param observer
  */
 export const observe = <T>(
   observer: ObserverLike<T>,
-): ObservableOperator<T, T> => lift(operator(observer));
+): ObservableOperatorLike<T, T> => lift(operator(observer));
 
 const ignore = <T>(_: T) => {};
 
 export const onComplete = <T>(
   onComplete: (err?: ErrorLike) => void,
-): ObservableOperator<T, T> =>
+): ObservableOperatorLike<T, T> =>
   observe({
     next: ignore,
     complete: onComplete,
@@ -51,7 +51,7 @@ export const onComplete = <T>(
 
 export const onError = <T>(
   onError: (err: unknown) => void,
-): ObservableOperator<T, T> =>
+): ObservableOperatorLike<T, T> =>
   observe({
     next: ignore,
     complete: (error?: ErrorLike) => {
@@ -64,7 +64,7 @@ export const onError = <T>(
 
 export const onNext = <T>(
   onNext: (next: T) => void,
-): ObservableOperator<T, T> =>
+): ObservableOperatorLike<T, T> =>
   observe({
     next: onNext,
     complete: ignore,

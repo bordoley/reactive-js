@@ -1,8 +1,8 @@
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -38,9 +38,9 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
 const operator = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new DistinctUntilChangedSubscriber(subscriber, equals);
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
-): ObservableOperator<T, T> => lift(operator(equals));
+): ObservableOperatorLike<T, T> => lift(operator(equals));

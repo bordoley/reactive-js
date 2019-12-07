@@ -1,8 +1,8 @@
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -29,8 +29,8 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(count: number): SubscriberOperator<T, T> => subscriber =>
+const operator = <T>(count: number): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeSubscriber(subscriber, count);
 
-export const take = <T>(count: number): ObservableOperator<T, T> =>
+export const take = <T>(count: number): ObservableOperatorLike<T, T> =>
   lift(operator(count));

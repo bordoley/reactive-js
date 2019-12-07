@@ -1,16 +1,16 @@
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
-  readonly operators: ReadonlyArray<SubscriberOperator<any, any>>;
+  readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>;
   readonly source: ObservableLike<TSrc>;
   constructor(
     source: ObservableLike<TSrc>,
-    operators: ReadonlyArray<SubscriberOperator<any, any>>,
+    operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
   ) {
     this.source = source;
     this.operators = operators;
@@ -27,12 +27,12 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
 }
 
 /**
- * Converts a SubscriberOperator to an ObservableOperator.
+ * Converts a SubscriberOperatorLike to an ObservableOperatorLike.
  * @param operator
  */
 export const lift = <TA, TB>(
-  operator: SubscriberOperator<TA, TB>,
-): ObservableOperator<TA, TB> => source => {
+  operator: SubscriberOperatorLike<TA, TB>,
+): ObservableOperatorLike<TA, TB> => source => {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;
 
