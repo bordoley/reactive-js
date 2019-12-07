@@ -18,7 +18,7 @@
 
 ### `Const` createLocationStoreResource
 
-▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *StateStoreResourceLike‹[Location](interfaces/location.md)›*
 
 **Parameters:**
 
@@ -26,7 +26,7 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *AsyncIteratorResourceLike‹StateUpdater‹[Location](interfaces/location.md)›, [Location](interfaces/location.md)›*
+**Returns:** *StateStoreResourceLike‹[Location](interfaces/location.md)›*
 
 ___
 

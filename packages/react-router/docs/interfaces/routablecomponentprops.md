@@ -34,10 +34,10 @@ ___
 
 #### Type declaration:
 
-▸ (`updater`: StateUpdater‹[RelativeURI](relativeuri.md)›): *void*
+▸ (`updater`: StateUpdaterLike‹[RelativeURI](relativeuri.md)›): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`updater` | StateUpdater‹[RelativeURI](relativeuri.md)› |
+`updater` | StateUpdaterLike‹[RelativeURI](relativeuri.md)› |

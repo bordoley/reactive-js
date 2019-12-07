@@ -7,12 +7,11 @@
 ### Interfaces
 
 * [AsyncIteratorResourceOperator](interfaces/asynciteratorresourceoperator.md)
-* [StateUpdater](interfaces/stateupdater.md)
 
 ### Functions
 
 * [concatAll](README.md#const-concatall)
-* [createEvent](README.md#const-createevent)
+* [createEventEmitter](README.md#const-createeventemitter)
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createStateStore](README.md#const-createstatestore)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
@@ -70,21 +69,21 @@ Name | Type | Default |
 
 ___
 
-### `Const` createEvent
+### `Const` createEventEmitter
 
-▸ **createEvent**<**T**>(): *AsyncIteratorResourceLike‹T, T›*
+▸ **createEventEmitter**<**T**>(): *EventEmitterResourceLike‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *AsyncIteratorResourceLike‹T, T›*
+**Returns:** *EventEmitterResourceLike‹T›*
 
 ___
 
 ### `Const` createPersistentStateStore
 
-▸ **createPersistentStateStore**<**T**>(`dest`: AsyncIteratorLike‹T, [StateUpdater](interfaces/stateupdater.md)‹T››, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *AsyncIteratorResourceImpl‹[StateUpdater](interfaces/stateupdater.md)‹T›, unknown›*
+▸ **createPersistentStateStore**<**T**>(`persistentStore`: AsyncIteratorLike‹T, StateUpdaterLike‹T››, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *StateStoreResourceLike‹T›*
 
 **Type parameters:**
 
@@ -94,18 +93,18 @@ ___
 
 Name | Type |
 ------ | ------ |
-`dest` | AsyncIteratorLike‹T, [StateUpdater](interfaces/stateupdater.md)‹T›› |
+`persistentStore` | AsyncIteratorLike‹T, StateUpdaterLike‹T›› |
 `initialState` | T |
 `scheduler` | SchedulerLike |
 `equals?` | undefined &#124; function |
 
-**Returns:** *AsyncIteratorResourceImpl‹[StateUpdater](interfaces/stateupdater.md)‹T›, unknown›*
+**Returns:** *StateStoreResourceLike‹T›*
 
 ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *AsyncIteratorResourceLike‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *StateStoreResourceLike‹T›*
 
 **Type parameters:**
 
@@ -119,7 +118,7 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `equals?` | undefined &#124; function |
 
-**Returns:** *AsyncIteratorResourceLike‹[StateUpdater](interfaces/stateupdater.md)‹T›, T›*
+**Returns:** *StateStoreResourceLike‹T›*
 
 ___
 

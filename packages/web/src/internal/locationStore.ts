@@ -1,10 +1,7 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { fromEvent } from "./event";
-import { AsyncIteratorResourceLike, AsyncIteratorLike } from "@reactive-js/ix";
-import {
-  createPersistentStateStore,
-  StateUpdater,
-} from "@reactive-js/async-iterator-resource";
+import { AsyncIteratorLike, StateStoreResourceLike, StateUpdaterLike } from "@reactive-js/ix";
+import { createPersistentStateStore } from "@reactive-js/async-iterator-resource";
 import { ObservableLike } from "@reactive-js/rx";
 import { concat, ofValue } from "@reactive-js/observable";
 
@@ -45,12 +42,12 @@ const dispatch = (newLocation: Location) => {
   }
 };
 
-const getCurrentLocationStateUpdater = (_?: unknown): StateUpdater<Location> => {
+const getCurrentLocationStateUpdater = (_?: unknown): StateUpdaterLike<Location> => {
   const uri = getCurrentLocation();
   return (_: Location) => uri;
 };
 
-const observable: ObservableLike<StateUpdater<Location>> = concat(
+const observable: ObservableLike<StateUpdaterLike<Location>> = concat(
   ofValue(getCurrentLocationStateUpdater()),
   fromEvent(
     window,
@@ -61,7 +58,7 @@ const observable: ObservableLike<StateUpdater<Location>> = concat(
 
 const historyIterator: AsyncIteratorLike<
   Location,
-  StateUpdater<Location>
+  StateUpdaterLike<Location>
 > = {
   dispatch,
   subscribe: subscriber => observable.subscribe(subscriber),
@@ -69,7 +66,7 @@ const historyIterator: AsyncIteratorLike<
 
 export const createLocationStoreResource = (
   scheduler: SchedulerLike,
-): AsyncIteratorResourceLike<StateUpdater<Location>, Location> =>
+): StateStoreResourceLike<Location> =>
   createPersistentStateStore(
     historyIterator,
     emptyLocation,
