@@ -2,7 +2,7 @@
 
 # Class: DelegatingSubscriber <**TA, TB**>
 
-Abstract base class for implementing SubscriberOperators.
+Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Type parameters
 

@@ -2,7 +2,7 @@ import { createSerialDisposable, disposed } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -52,5 +52,5 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
 
-export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+export const switchAll = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
   lift(operator);

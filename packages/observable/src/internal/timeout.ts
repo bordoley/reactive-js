@@ -4,9 +4,9 @@ import {
 } from "@reactive-js/disposable";
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
@@ -49,8 +49,8 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const operator = <T>(
   duration: number,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new TimeoutSubscriber(subscriber, duration);
 
-export const timeout = <T>(duration: number): ObservableOperator<T, T> =>
+export const timeout = <T>(duration: number): ObservableOperatorLike<T, T> =>
   lift(operator(duration));

@@ -2,9 +2,9 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   ObservableResourceLike,
-  ObservableResourceOperator,
+  ObservableResourceOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -80,8 +80,8 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
 }
 
 export const lift = <A, B>(
-  operator: ObservableOperator<A, B>,
-): ObservableResourceOperator<A, B> => observableResource => {
+  operator: ObservableOperatorLike<A, B>,
+): ObservableResourceOperatorLike<A, B> => observableResource => {
   const observable = pipeObs(
     observableResource instanceof LiftedObservableResource
       ? observableResource.observable
@@ -99,207 +99,207 @@ export const lift = <A, B>(
 
 export function pipe<T, A>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
+  op1: ObservableResourceOperatorLike<T, A>,
 ): ObservableResourceLike<A>;
 export function pipe<T, A, B>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
 ): ObservableResourceLike<B>;
 export function pipe<T, A, B, C>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
 ): ObservableResourceLike<C>;
 export function pipe<T, A, B, C, D>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
 ): ObservableResourceLike<D>;
 export function pipe<T, A, B, C, D, E>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
-  op5: ObservableResourceOperator<D, E>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
+  op5: ObservableResourceOperatorLike<D, E>,
 ): ObservableResourceLike<E>;
 export function pipe<T, A, B, C, D, E, F>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
-  op5: ObservableResourceOperator<D, E>,
-  op6: ObservableResourceOperator<E, F>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
+  op5: ObservableResourceOperatorLike<D, E>,
+  op6: ObservableResourceOperatorLike<E, F>,
 ): ObservableResourceLike<F>;
 export function pipe<T, A, B, C, D, E, F, G>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
-  op5: ObservableResourceOperator<D, E>,
-  op6: ObservableResourceOperator<E, F>,
-  op7: ObservableResourceOperator<F, G>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
+  op5: ObservableResourceOperatorLike<D, E>,
+  op6: ObservableResourceOperatorLike<E, F>,
+  op7: ObservableResourceOperatorLike<F, G>,
 ): ObservableResourceLike<G>;
 export function pipe<T, A, B, C, D, E, F, G, H>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
-  op5: ObservableResourceOperator<D, E>,
-  op6: ObservableResourceOperator<E, F>,
-  op7: ObservableResourceOperator<F, G>,
-  op8: ObservableResourceOperator<G, H>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
+  op5: ObservableResourceOperatorLike<D, E>,
+  op6: ObservableResourceOperatorLike<E, F>,
+  op7: ObservableResourceOperatorLike<F, G>,
+  op8: ObservableResourceOperatorLike<G, H>,
 ): ObservableResourceLike<H>;
 export function pipe<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperator<T, A>,
-  op2: ObservableResourceOperator<A, B>,
-  op3: ObservableResourceOperator<B, C>,
-  op4: ObservableResourceOperator<C, D>,
-  op5: ObservableResourceOperator<D, E>,
-  op6: ObservableResourceOperator<E, F>,
-  op7: ObservableResourceOperator<F, G>,
-  op8: ObservableResourceOperator<G, H>,
-  op9: ObservableResourceOperator<H, I>,
+  op1: ObservableResourceOperatorLike<T, A>,
+  op2: ObservableResourceOperatorLike<A, B>,
+  op3: ObservableResourceOperatorLike<B, C>,
+  op4: ObservableResourceOperatorLike<C, D>,
+  op5: ObservableResourceOperatorLike<D, E>,
+  op6: ObservableResourceOperatorLike<E, F>,
+  op7: ObservableResourceOperatorLike<F, G>,
+  op8: ObservableResourceOperatorLike<G, H>,
+  op9: ObservableResourceOperatorLike<H, I>,
 ): ObservableResourceLike<I>;
 export function pipe(
   source: ObservableResourceLike<any>,
-  ...operators: Array<ObservableResourceOperator<any, any>>
+  ...operators: Array<ObservableResourceOperatorLike<any, any>>
 ): ObservableResourceLike<any> {
   return operators.reduce((acc, next) => next(acc), source);
 }
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableResourceOperator<ObservableLike<T>, T> =>
+): ObservableResourceOperatorLike<ObservableLike<T>, T> =>
   lift(concatAllObs(maxBufferSize));
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
-): ObservableResourceOperator<T, T> => lift(distinctUntilChangedObs(equals));
+): ObservableResourceOperatorLike<T, T> => lift(distinctUntilChangedObs(equals));
 
 export const endWith = <T>(
   value: T,
   ...values: T[]
-): ObservableResourceOperator<T, T> => lift(endWithObs(value, ...values));
+): ObservableResourceOperatorLike<T, T> => lift(endWithObs(value, ...values));
 
-export const exhaust = <T>(): ObservableResourceOperator<
+export const exhaust = <T>(): ObservableResourceOperatorLike<
   ObservableLike<T>,
   T
 > => lift(exhaustObs());
 
-export const ignoreElements = <TA, TB>(): ObservableResourceOperator<TA, TB> =>
+export const ignoreElements = <TA, TB>(): ObservableResourceOperatorLike<TA, TB> =>
   lift(ignoreElementsObs());
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): ObservableResourceOperator<T, T> => lift(keepObs(predicate));
+): ObservableResourceOperatorLike<T, T> => lift(keepObs(predicate));
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): ObservableResourceOperator<TA, TB> => lift(mapObs(mapper));
+): ObservableResourceOperatorLike<TA, TB> => lift(mapObs(mapper));
 
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): ObservableResourceOperator<ObservableLike<T>, T> =>
+}): ObservableResourceOperatorLike<ObservableLike<T>, T> =>
   lift(mergeAllObs(options));
 
 export const observe = <T>(
   observer: ObserverLike<T>,
-): ObservableResourceOperator<T, T> => lift(observeObs(observer));
+): ObservableResourceOperatorLike<T, T> => lift(observeObs(observer));
 
 export const onComplete = <T>(
   onComplete: (err?: ErrorLike) => void,
-): ObservableResourceOperator<T, T> => lift(onCompleteObs(onComplete));
+): ObservableResourceOperatorLike<T, T> => lift(onCompleteObs(onComplete));
 
 export const onError = <T>(
   onError: (err: unknown) => void,
-): ObservableResourceOperator<T, T> => lift(onErrorObs(onError));
+): ObservableResourceOperatorLike<T, T> => lift(onErrorObs(onError));
 
 export const onNext = <T>(
   onNext: (next: T) => void,
-): ObservableResourceOperator<T, T> => lift(onNextObs(onNext));
+): ObservableResourceOperatorLike<T, T> => lift(onNextObs(onNext));
 
 export const repeat = <T>(
   predicate?: ((count: number) => boolean) | number,
-): ObservableResourceOperator<T, T> => lift(repeatObs(predicate));
+): ObservableResourceOperatorLike<T, T> => lift(repeatObs(predicate));
 
 export const retry = <T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableResourceOperator<T, T> => lift(retryObs(predicate));
+): ObservableResourceOperatorLike<T, T> => lift(retryObs(predicate));
 
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): ObservableResourceOperator<T, TAcc> => lift(scanObs(scanner, initialValue));
+): ObservableResourceOperatorLike<T, TAcc> => lift(scanObs(scanner, initialValue));
 
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): ObservableResourceOperator<T, T> => lift(shareObs(scheduler, replayCount));
+): ObservableResourceOperatorLike<T, T> => lift(shareObs(scheduler, replayCount));
 
 export const startWith = <T>(
   value: T,
   ...values: T[]
-): ObservableResourceOperator<T, T> => lift(startWithObs(value, ...values));
+): ObservableResourceOperatorLike<T, T> => lift(startWithObs(value, ...values));
 
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,
-): ObservableResourceOperator<T, T> => lift(subscribeOnObs(scheduler));
+): ObservableResourceOperatorLike<T, T> => lift(subscribeOnObs(scheduler));
 
-export const switchAll = <T>(): ObservableResourceOperator<
+export const switchAll = <T>(): ObservableResourceOperatorLike<
   ObservableLike<T>,
   T
 > => lift(switchAllObs());
 
-export const take = <T>(count: number): ObservableResourceOperator<T, T> =>
+export const take = <T>(count: number): ObservableResourceOperatorLike<T, T> =>
   lift(takeObs(count));
 
-export const takeLast = <T>(count: number): ObservableResourceOperator<T, T> =>
+export const takeLast = <T>(count: number): ObservableResourceOperatorLike<T, T> =>
   lift(takeLastObs(count));
 
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-): ObservableResourceOperator<T, T> => lift(takeWhileObs(predicate));
+): ObservableResourceOperatorLike<T, T> => lift(takeWhileObs(predicate));
 
 export const throttleFirst = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableResourceOperator<T, T> => lift(throttleFirstObs(durationSelector));
+): ObservableResourceOperatorLike<T, T> => lift(throttleFirstObs(durationSelector));
 
 export const throttle = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableResourceOperator<T, T> => lift(throttleObs(durationSelector));
+): ObservableResourceOperatorLike<T, T> => lift(throttleObs(durationSelector));
 
 export const throttleTime = <T>(
   duration: number,
-): ObservableResourceOperator<T, T> => lift(throttleTimeObs(duration));
+): ObservableResourceOperatorLike<T, T> => lift(throttleTimeObs(duration));
 
 export const throttleFirstTime = <T>(
   duration: number,
-): ObservableResourceOperator<T, T> => lift(throttleFirstTimeObs(duration));
+): ObservableResourceOperatorLike<T, T> => lift(throttleFirstTimeObs(duration));
 
 export const throttleLast = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableResourceOperator<T, T> => lift(throttleLastObs(durationSelector));
+): ObservableResourceOperatorLike<T, T> => lift(throttleLastObs(durationSelector));
 
 export const throttleLastTime = <T>(
   duration: number,
-): ObservableResourceOperator<T, T> => lift(throttleLastTimeObs(duration));
+): ObservableResourceOperatorLike<T, T> => lift(throttleLastTimeObs(duration));
 
 export const timeout = <T>(
   duration: number,
-): ObservableResourceOperator<T, T> => lift(timeoutObs(duration));
+): ObservableResourceOperatorLike<T, T> => lift(timeoutObs(duration));
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableResourceOperator<TA, TC> =>
+): ObservableResourceOperatorLike<TA, TC> =>
   lift(withLatestFromObs(other, selector));

@@ -1,8 +1,8 @@
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -28,9 +28,9 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const operator = <T>(
   predicate: (data: T) => boolean,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new KeepSubscriber(subscriber, predicate);
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): ObservableOperator<T, T> => lift(operator(predicate));
+): ObservableOperatorLike<T, T> => lift(operator(predicate));

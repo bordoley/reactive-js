@@ -1,4 +1,4 @@
-import { ErrorLike, SubscriberLike, SubscriberOperator } from "@reactive-js/rx";
+import { ErrorLike, SubscriberLike, SubscriberOperatorLike } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 
@@ -24,7 +24,7 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const operator = <T>(
   predicate: (next: T) => boolean,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeWhileSubscriber(subscriber, predicate);
 
 export const takeWhile = <T>(predicate: (next: T) => boolean) =>

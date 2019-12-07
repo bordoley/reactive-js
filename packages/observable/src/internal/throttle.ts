@@ -5,9 +5,9 @@ import {
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { connect } from "./connect";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
@@ -47,16 +47,16 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const throttleFirstOperator = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new ThrottleFirstSubscriber(subscriber, durationSelector);
 
 export const throttleFirst = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableOperator<T, T> => lift(throttleFirstOperator(durationSelector));
+): ObservableOperatorLike<T, T> => lift(throttleFirstOperator(durationSelector));
 
 export const throttleFirstTime = <T>(
   duration: number,
-): ObservableOperator<T, T> => {
+): ObservableOperatorLike<T, T> => {
   const durationSelector = (_: T) => empty(duration);
   return throttleFirst(durationSelector);
 };
@@ -106,16 +106,16 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const throttleLastOperator = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new ThrottleLastSubscriber(subscriber, durationSelector);
 
 export const throttleLast = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableOperator<T, T> => lift(throttleLastOperator(durationSelector));
+): ObservableOperatorLike<T, T> => lift(throttleLastOperator(durationSelector));
 
 export const throttleLastTime = <T>(
   duration: number,
-): ObservableOperator<T, T> => {
+): ObservableOperatorLike<T, T> => {
   const durationSelector = (_: T) => empty(duration);
   return throttleLast(durationSelector);
 };
@@ -166,14 +166,14 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
 
 const throttleOperator = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): SubscriberOperator<T, T> => subscriber =>
+): SubscriberOperatorLike<T, T> => subscriber =>
   new ThrottleSubscriber(subscriber, durationSelector);
 
 export const throttle = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableOperator<T, T> => lift(throttleOperator(durationSelector));
+): ObservableOperatorLike<T, T> => lift(throttleOperator(durationSelector));
 
-export const throttleTime = <T>(duration: number): ObservableOperator<T, T> => {
+export const throttleTime = <T>(duration: number): ObservableOperatorLike<T, T> => {
   const durationSelector = (_: T) => empty(duration);
   return throttle(durationSelector);
 };

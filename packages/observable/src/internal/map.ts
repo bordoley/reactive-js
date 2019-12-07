@@ -1,8 +1,8 @@
 import {
   ErrorLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
@@ -26,9 +26,9 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
 
 const operator = <TA, TB>(
   mapper: (data: TA) => TB,
-): SubscriberOperator<TA, TB> => subscriber =>
+): SubscriberOperatorLike<TA, TB> => subscriber =>
   new MapSubscriber(subscriber, mapper);
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): ObservableOperator<TA, TB> => lift(operator(mapper));
+): ObservableOperatorLike<TA, TB> => lift(operator(mapper));

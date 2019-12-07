@@ -4,7 +4,7 @@ import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 const __DEV__ = process.env.NODE_ENV !== "production";
 
 /**
- * Abstract base class for implementing SubscriberOperators.
+ * Abstract base class for implementing SubscriberOperatorLikes.
  *
  * @noInheritDoc
  */

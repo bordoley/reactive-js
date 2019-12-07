@@ -306,7 +306,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -318,7 +318,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
@@ -398,7 +398,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableOperator‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals?`: undefined | function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -410,7 +410,7 @@ Name | Type |
 ------ | ------ |
 `equals?` | undefined &#124; function |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperator‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -447,19 +447,19 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **exhaust**<**T**>(): *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
@@ -549,7 +549,7 @@ ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *ObservableOperator‹TA, TB›*
+▸ **ignoreElements**<**TA**, **TB**>(): *ObservableOperatorLike‹TA, TB›*
 
 **Type parameters:**
 
@@ -557,13 +557,13 @@ ___
 
 ▪ **TB**
 
-**Returns:** *ObservableOperator‹TA, TB›*
+**Returns:** *ObservableOperatorLike‹TA, TB›*
 
 ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
+▸ **keep**<**T**>(`predicate`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -581,15 +581,15 @@ Name | Type |
 ------ | ------ |
 `data` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperator‹TA, TB›): *ObservableOperator‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: SubscriberOperatorLike‹TA, TB›): *ObservableOperatorLike‹TA, TB›*
 
-Converts a SubscriberOperator to an ObservableOperator.
+Converts a SubscriberOperatorLike to an ObservableOperatorLike.
 
 **Type parameters:**
 
@@ -601,15 +601,15 @@ Converts a SubscriberOperator to an ObservableOperator.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`operator` | SubscriberOperator‹TA, TB› |   |
+`operator` | SubscriberOperatorLike‹TA, TB› |   |
 
-**Returns:** *ObservableOperator‹TA, TB›*
+**Returns:** *ObservableOperatorLike‹TA, TB›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableOperator‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *ObservableOperatorLike‹TA, TB›*
 
 **Type parameters:**
 
@@ -629,7 +629,7 @@ Name | Type |
 ------ | ------ |
 `data` | TA |
 
-**Returns:** *ObservableOperator‹TA, TB›*
+**Returns:** *ObservableOperatorLike‹TA, TB›*
 
 ___
 
@@ -655,7 +655,7 @@ ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **mergeAll**<**T**>(`options?`: undefined | object): *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
@@ -667,7 +667,7 @@ Name | Type |
 ------ | ------ |
 `options?` | undefined &#124; object |
 
-**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
@@ -685,9 +685,9 @@ ___
 
 ### `Const` observe
 
-▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableOperator‹T, T›*
+▸ **observe**<**T**>(`observer`: ObserverLike‹T›): *ObservableOperatorLike‹T, T›*
 
-Returns a ObservableOperator which forwards notifications to the provided observer.
+Returns a ObservableOperatorLike which forwards notifications to the provided observer.
 
 **Type parameters:**
 
@@ -699,7 +699,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `observer` | ObserverLike‹T› |   |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
@@ -724,7 +724,7 @@ ___
 
 ### `Const` onComplete
 
-▸ **onComplete**<**T**>(`onComplete`: function): *ObservableOperator‹T, T›*
+▸ **onComplete**<**T**>(`onComplete`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -742,13 +742,13 @@ Name | Type |
 ------ | ------ |
 `err?` | ErrorLike |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` onError
 
-▸ **onError**<**T**>(`onError`: function): *ObservableOperator‹T, T›*
+▸ **onError**<**T**>(`onError`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -766,13 +766,13 @@ Name | Type |
 ------ | ------ |
 `err` | unknown |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` onNext
 
-▸ **onNext**<**T**>(`onNext`: function): *ObservableOperator‹T, T›*
+▸ **onNext**<**T**>(`onNext`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -790,13 +790,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›): *ObservableLike‹A›*
+▸ **pipe**<**T**, **A**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›): *ObservableLike‹A›*
 
 **Type parameters:**
 
@@ -809,11 +809,11 @@ ___
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
+`op1` | ObservableOperatorLike‹T, A› |
 
 **Returns:** *ObservableLike‹A›*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›): *ObservableLike‹B›*
+▸ **pipe**<**T**, **A**, **B**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›): *ObservableLike‹B›*
 
 **Type parameters:**
 
@@ -828,12 +828,12 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
 
 **Returns:** *ObservableLike‹B›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›): *ObservableLike‹C›*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›): *ObservableLike‹C›*
 
 **Type parameters:**
 
@@ -850,13 +850,13 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
 
 **Returns:** *ObservableLike‹C›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›): *ObservableLike‹D›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›): *ObservableLike‹D›*
 
 **Type parameters:**
 
@@ -875,14 +875,14 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
 
 **Returns:** *ObservableLike‹D›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›): *ObservableLike‹E›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›, `op5`: ObservableOperatorLike‹D, E›): *ObservableLike‹E›*
 
 **Type parameters:**
 
@@ -903,15 +903,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
-`op5` | ObservableOperator‹D, E› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
+`op5` | ObservableOperatorLike‹D, E› |
 
 **Returns:** *ObservableLike‹E›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›): *ObservableLike‹F›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›, `op5`: ObservableOperatorLike‹D, E›, `op6`: ObservableOperatorLike‹E, F›): *ObservableLike‹F›*
 
 **Type parameters:**
 
@@ -934,16 +934,16 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
-`op5` | ObservableOperator‹D, E› |
-`op6` | ObservableOperator‹E, F› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
+`op5` | ObservableOperatorLike‹D, E› |
+`op6` | ObservableOperatorLike‹E, F› |
 
 **Returns:** *ObservableLike‹F›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›): *ObservableLike‹G›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›, `op5`: ObservableOperatorLike‹D, E›, `op6`: ObservableOperatorLike‹E, F›, `op7`: ObservableOperatorLike‹F, G›): *ObservableLike‹G›*
 
 **Type parameters:**
 
@@ -968,17 +968,17 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
-`op5` | ObservableOperator‹D, E› |
-`op6` | ObservableOperator‹E, F› |
-`op7` | ObservableOperator‹F, G› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
+`op5` | ObservableOperatorLike‹D, E› |
+`op6` | ObservableOperatorLike‹E, F› |
+`op7` | ObservableOperatorLike‹F, G› |
 
 **Returns:** *ObservableLike‹G›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›, `op8`: ObservableOperator‹G, H›): *ObservableLike‹H›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›, `op5`: ObservableOperatorLike‹D, E›, `op6`: ObservableOperatorLike‹E, F›, `op7`: ObservableOperatorLike‹F, G›, `op8`: ObservableOperatorLike‹G, H›): *ObservableLike‹H›*
 
 **Type parameters:**
 
@@ -1005,18 +1005,18 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
-`op5` | ObservableOperator‹D, E› |
-`op6` | ObservableOperator‹E, F› |
-`op7` | ObservableOperator‹F, G› |
-`op8` | ObservableOperator‹G, H› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
+`op5` | ObservableOperatorLike‹D, E› |
+`op6` | ObservableOperatorLike‹E, F› |
+`op7` | ObservableOperatorLike‹F, G› |
+`op8` | ObservableOperatorLike‹G, H› |
 
 **Returns:** *ObservableLike‹H›*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableLike‹T›, `op1`: ObservableOperator‹T, A›, `op2`: ObservableOperator‹A, B›, `op3`: ObservableOperator‹B, C›, `op4`: ObservableOperator‹C, D›, `op5`: ObservableOperator‹D, E›, `op6`: ObservableOperator‹E, F›, `op7`: ObservableOperator‹F, G›, `op8`: ObservableOperator‹G, H›, `op9`: ObservableOperator‹H, I›): *ObservableLike‹I›*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: ObservableLike‹T›, `op1`: ObservableOperatorLike‹T, A›, `op2`: ObservableOperatorLike‹A, B›, `op3`: ObservableOperatorLike‹B, C›, `op4`: ObservableOperatorLike‹C, D›, `op5`: ObservableOperatorLike‹D, E›, `op6`: ObservableOperatorLike‹E, F›, `op7`: ObservableOperatorLike‹F, G›, `op8`: ObservableOperatorLike‹G, H›, `op9`: ObservableOperatorLike‹H, I›): *ObservableLike‹I›*
 
 **Type parameters:**
 
@@ -1045,15 +1045,15 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | ObservableLike‹T› |
-`op1` | ObservableOperator‹T, A› |
-`op2` | ObservableOperator‹A, B› |
-`op3` | ObservableOperator‹B, C› |
-`op4` | ObservableOperator‹C, D› |
-`op5` | ObservableOperator‹D, E› |
-`op6` | ObservableOperator‹E, F› |
-`op7` | ObservableOperator‹F, G› |
-`op8` | ObservableOperator‹G, H› |
-`op9` | ObservableOperator‹H, I› |
+`op1` | ObservableOperatorLike‹T, A› |
+`op2` | ObservableOperatorLike‹A, B› |
+`op3` | ObservableOperatorLike‹B, C› |
+`op4` | ObservableOperatorLike‹C, D› |
+`op5` | ObservableOperatorLike‹D, E› |
+`op6` | ObservableOperatorLike‹E, F› |
+`op7` | ObservableOperatorLike‹F, G› |
+`op8` | ObservableOperatorLike‹G, H› |
+`op9` | ObservableOperatorLike‹H, I› |
 
 **Returns:** *ObservableLike‹I›*
 
@@ -1061,7 +1061,7 @@ ___
 
 ### `Const` repeat
 
-▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableOperator‹T, T›*
+▸ **repeat**<**T**>(`predicate?`: function | number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1073,13 +1073,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | function &#124; number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` retry
 
-▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableOperator‹T, T›*
+▸ **retry**<**T**>(`predicate?`: undefined | function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1091,13 +1091,13 @@ Name | Type |
 ------ | ------ |
 `predicate?` | undefined &#124; function |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableOperator‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *ObservableOperatorLike‹T, TAcc›*
 
 **Type parameters:**
 
@@ -1120,13 +1120,13 @@ Name | Type |
 
 ▪ **initialValue**: *TAcc*
 
-**Returns:** *ObservableOperator‹T, TAcc›*
+**Returns:** *ObservableOperatorLike‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableOperator‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1139,13 +1139,13 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperator‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1158,13 +1158,13 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableOperator‹T, T›*
+▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1176,25 +1176,25 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *ObservableOperator‹ObservableLike‹T›, T›*
+▸ **switchAll**<**T**>(): *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *ObservableOperator‹ObservableLike‹T›, T›*
+**Returns:** *ObservableOperatorLike‹ObservableLike‹T›, T›*
 
 ___
 
 ### `Const` take
 
-▸ **take**<**T**>(`count`: number): *ObservableOperator‹T, T›*
+▸ **take**<**T**>(`count`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1206,13 +1206,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *ObservableOperator‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1224,13 +1224,13 @@ Name | Type |
 ------ | ------ |
 `count` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *ObservableOperator‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1248,13 +1248,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttle
 
-▸ **throttle**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
+▸ **throttle**<**T**>(`durationSelector`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1272,13 +1272,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleFirst
 
-▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
+▸ **throttleFirst**<**T**>(`durationSelector`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1296,13 +1296,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleFirstTime
 
-▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
+▸ **throttleFirstTime**<**T**>(`duration`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1314,13 +1314,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleLast
 
-▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableOperator‹T, T›*
+▸ **throttleLast**<**T**>(`durationSelector`: function): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1338,13 +1338,13 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleLastTime
 
-▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
+▸ **throttleLastTime**<**T**>(`duration`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1356,13 +1356,13 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
 ### `Const` throttleTime
 
-▸ **throttleTime**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
+▸ **throttleTime**<**T**>(`duration`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1374,7 +1374,7 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
@@ -1399,7 +1399,7 @@ ___
 
 ### `Const` timeout
 
-▸ **timeout**<**T**>(`duration`: number): *ObservableOperator‹T, T›*
+▸ **timeout**<**T**>(`duration`: number): *ObservableOperatorLike‹T, T›*
 
 **Type parameters:**
 
@@ -1411,7 +1411,7 @@ Name | Type |
 ------ | ------ |
 `duration` | number |
 
-**Returns:** *ObservableOperator‹T, T›*
+**Returns:** *ObservableOperatorLike‹T, T›*
 
 ___
 
@@ -1436,7 +1436,7 @@ ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableOperator‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: ObservableLike‹TB›, `selector`: function): *ObservableOperatorLike‹TA, TC›*
 
 **Type parameters:**
 
@@ -1461,4 +1461,4 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *ObservableOperator‹TA, TC›*
+**Returns:** *ObservableOperatorLike‹TA, TC›*

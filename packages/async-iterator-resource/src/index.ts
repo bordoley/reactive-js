@@ -2,6 +2,7 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   AsyncIteratorLike,
   AsyncIteratorResourceLike,
+  AsyncIteratorResourceOperatorLike,
   EventEmitterResourceLike,
   StateStoreResourceLike,
   StateUpdaterLike,
@@ -9,7 +10,7 @@ import {
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   ObserverLike,
   SubjectResourceLike,
   SubscriberLike,
@@ -98,17 +99,10 @@ class AsyncIteratorResourceImpl<TReq, T>
   }
 }
 
-export interface AsyncIteratorResourceOperator<TSrcReq, TSrc, TReq, T> {
-  (iter: AsyncIteratorResourceLike<TSrcReq, TSrc>): AsyncIteratorResourceLike<
-    TReq,
-    T
-  >;
-}
-
 const liftImpl = <TReq, T, TReqA, TA>(
-  operator?: ObservableOperator<T, TA>,
+  operator?: ObservableOperatorLike<T, TA>,
   mapper?: (req: TReqA) => TReq,
-): AsyncIteratorResourceOperator<TReq, T, TReqA, TA> => iterator => {
+): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, TA> => iterator => {
   const [observable, dispatcher, disposable] =
     iterator instanceof AsyncIteratorResourceImpl
       ? [iterator.observable, iterator.dispatcher, iterator.disposable]
@@ -128,36 +122,36 @@ const liftImpl = <TReq, T, TReqA, TA>(
 };
 
 export const lift = <TReq, T, TA>(
-  operator: ObservableOperator<T, TA>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, TA> =>
+  operator: ObservableOperatorLike<T, TA>,
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, TA> =>
   liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
   mapper: (req: TReqA) => TReq,
-): AsyncIteratorResourceOperator<TReq, T, TReqA, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, T> =>
   liftImpl(undefined, mapper);
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
 ): AsyncIteratorResourceLike<TReqA, TA>;
 export function pipe<TSrcReq, TSrc, TReqA, TA, TReqB, TB>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
 ): AsyncIteratorResourceLike<TReqB, TB>;
 export function pipe<TSrcReq, TSrc, TReqA, TA, TReqB, TB, TReqC, TC>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
 ): AsyncIteratorResourceLike<TReqC, TC>;
 export function pipe<TSrcReq, TSrc, TReqA, TA, TReqB, TB, TReqC, TC, TReqD, TD>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
 ): AsyncIteratorResourceLike<TReqD, TD>;
 export function pipe<
   TSrcReq,
@@ -174,11 +168,11 @@ export function pipe<
   TE
 >(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
-  op5: AsyncIteratorResourceOperator<TReqD, TD, TReqE, TE>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
+  op5: AsyncIteratorResourceOperatorLike<TReqD, TD, TReqE, TE>,
 ): AsyncIteratorResourceLike<TReqE, TE>;
 export function pipe<
   TSrcReq,
@@ -197,12 +191,12 @@ export function pipe<
   TF
 >(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
-  op5: AsyncIteratorResourceOperator<TReqD, TD, TReqE, TE>,
-  op6: AsyncIteratorResourceOperator<TReqE, TE, TReqF, TF>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
+  op5: AsyncIteratorResourceOperatorLike<TReqD, TD, TReqE, TE>,
+  op6: AsyncIteratorResourceOperatorLike<TReqE, TE, TReqF, TF>,
 ): AsyncIteratorResourceLike<TReqF, TF>;
 export function pipe<
   TSrcReq,
@@ -223,13 +217,13 @@ export function pipe<
   TG
 >(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
-  op5: AsyncIteratorResourceOperator<TReqD, TD, TReqE, TE>,
-  op6: AsyncIteratorResourceOperator<TReqE, TE, TReqF, TF>,
-  op7: AsyncIteratorResourceOperator<TReqF, TF, TReqG, TG>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
+  op5: AsyncIteratorResourceOperatorLike<TReqD, TD, TReqE, TE>,
+  op6: AsyncIteratorResourceOperatorLike<TReqE, TE, TReqF, TF>,
+  op7: AsyncIteratorResourceOperatorLike<TReqF, TF, TReqG, TG>,
 ): AsyncIteratorResourceLike<TReqG, TG>;
 export function pipe<
   TSrcReq,
@@ -252,14 +246,14 @@ export function pipe<
   TH
 >(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
-  op5: AsyncIteratorResourceOperator<TReqD, TD, TReqE, TE>,
-  op6: AsyncIteratorResourceOperator<TReqE, TE, TReqF, TF>,
-  op7: AsyncIteratorResourceOperator<TReqF, TF, TReqG, TG>,
-  op8: AsyncIteratorResourceOperator<TReqG, TG, TReqH, TH>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
+  op5: AsyncIteratorResourceOperatorLike<TReqD, TD, TReqE, TE>,
+  op6: AsyncIteratorResourceOperatorLike<TReqE, TE, TReqF, TF>,
+  op7: AsyncIteratorResourceOperatorLike<TReqF, TF, TReqG, TG>,
+  op8: AsyncIteratorResourceOperatorLike<TReqG, TG, TReqH, TH>,
 ): AsyncIteratorResourceLike<TReqH, TH>;
 export function pipe<
   TSrcReq,
@@ -284,19 +278,19 @@ export function pipe<
   TI
 >(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
-  op1: AsyncIteratorResourceOperator<TSrcReq, TSrc, TReqA, TA>,
-  op2: AsyncIteratorResourceOperator<TReqA, TA, TReqB, TB>,
-  op3: AsyncIteratorResourceOperator<TReqB, TB, TReqC, TC>,
-  op4: AsyncIteratorResourceOperator<TReqC, TC, TReqD, TD>,
-  op5: AsyncIteratorResourceOperator<TReqD, TD, TReqE, TE>,
-  op6: AsyncIteratorResourceOperator<TReqE, TE, TReqF, TF>,
-  op7: AsyncIteratorResourceOperator<TReqF, TF, TReqG, TG>,
-  op8: AsyncIteratorResourceOperator<TReqG, TG, TReqH, TH>,
-  op9: AsyncIteratorResourceOperator<TReqH, TH, TReqI, TI>,
+  op1: AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReqA, TA>,
+  op2: AsyncIteratorResourceOperatorLike<TReqA, TA, TReqB, TB>,
+  op3: AsyncIteratorResourceOperatorLike<TReqB, TB, TReqC, TC>,
+  op4: AsyncIteratorResourceOperatorLike<TReqC, TC, TReqD, TD>,
+  op5: AsyncIteratorResourceOperatorLike<TReqD, TD, TReqE, TE>,
+  op6: AsyncIteratorResourceOperatorLike<TReqE, TE, TReqF, TF>,
+  op7: AsyncIteratorResourceOperatorLike<TReqF, TF, TReqG, TG>,
+  op8: AsyncIteratorResourceOperatorLike<TReqG, TG, TReqH, TH>,
+  op9: AsyncIteratorResourceOperatorLike<TReqH, TH, TReqI, TI>,
 ): AsyncIteratorResourceLike<TReqI, TI>;
 export function pipe(
   src: AsyncIteratorResourceLike<any, any>,
-  ...operators: AsyncIteratorResourceOperator<any, any, any, any>[]
+  ...operators: AsyncIteratorResourceOperatorLike<any, any, any, any>[]
 ) {
   return operators.reduce((acc, next) => next(acc), src);
 }
@@ -360,28 +354,28 @@ export const createPersistentStateStore = <T>(
 
 export const concatAll = <TReq, T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-): AsyncIteratorResourceOperator<TReq, ObservableLike<T>, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, ObservableLike<T>, TReq, T> =>
   lift(concatAllObs(maxBufferSize));
 
 export const distinctUntilChanged = <TReq, T>(
   equals?: (a: T, b: T) => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(distinctUntilChangedObs(equals));
 
 export const endWith = <TReq, T>(
   value: T,
   ...values: T[]
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(endWithObs(value, ...values));
 
-export const exhaust = <TReq, T>(): AsyncIteratorResourceOperator<
+export const exhaust = <TReq, T>(): AsyncIteratorResourceOperatorLike<
   TReq,
   ObservableLike<T>,
   TReq,
   T
 > => lift(exhaustObs());
 
-export const ignoreElements = <TReq, TA, TB>(): AsyncIteratorResourceOperator<
+export const ignoreElements = <TReq, TA, TB>(): AsyncIteratorResourceOperatorLike<
   TReq,
   TA,
   TReq,
@@ -390,69 +384,69 @@ export const ignoreElements = <TReq, TA, TB>(): AsyncIteratorResourceOperator<
 
 export const keep = <TReq, T>(
   predicate: (data: T) => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(keepObs(predicate));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(keepObs(predicate));
 
 export const map = <TReq, TA, TB>(
   mapper: (data: TA) => TB,
-): AsyncIteratorResourceOperator<TReq, TA, TReq, TB> => lift(mapObs(mapper));
+): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> => lift(mapObs(mapper));
 
 export const mergeAll = <TReq, T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): AsyncIteratorResourceOperator<TReq, ObservableLike<T>, TReq, T> =>
+}): AsyncIteratorResourceOperatorLike<TReq, ObservableLike<T>, TReq, T> =>
   lift(mergeAllObs(options));
 
 export const observe = <TReq, T>(
   observer: ObserverLike<T>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(observeObs(observer));
 
 export const onComplete = <TReq, T>(
   onComplete: (err?: ErrorLike) => void,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(onCompleteObs(onComplete));
 
 export const onError = <TReq, T>(
   onError: (err: unknown) => void,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(onErrorObs(onError));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(onErrorObs(onError));
 
 export const onNext = <TReq, T>(
   onNext: (next: T) => void,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(onNextObs(onNext));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(onNextObs(onNext));
 
 export const repeat = <TReq, T>(
   predicate?: ((count: number) => boolean) | number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(repeatObs(predicate));
 
 export const retry = <TReq, T>(
   predicate?: (count: number, error: unknown) => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(retryObs(predicate));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(retryObs(predicate));
 
 export const scan = <TReq, T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): AsyncIteratorResourceOperator<TReq, T, TReq, TAcc> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, TAcc> =>
   lift(scanObs(scanner, initialValue));
 
 export const share = <TReq, T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(shareObs(scheduler, replayCount));
 
 export const startWith = <TReq, T>(
   value: T,
   ...values: T[]
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(startWithObs(value, ...values));
 
 export const subscribeOn = <TReq, T>(
   scheduler: SchedulerLike,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(subscribeOnObs(scheduler));
 
-export const switchAll = <TReq, T>(): AsyncIteratorResourceOperator<
+export const switchAll = <TReq, T>(): AsyncIteratorResourceOperatorLike<
   TReq,
   ObservableLike<T>,
   TReq,
@@ -461,54 +455,54 @@ export const switchAll = <TReq, T>(): AsyncIteratorResourceOperator<
 
 export const take = <TReq, T>(
   count: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(takeObs(count));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(takeObs(count));
 
 export const takeLast = <TReq, T>(
   count: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> => lift(takeLastObs(count));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(takeLastObs(count));
 
 export const takeWhile = <TReq, T>(
   predicate: (next: T) => boolean,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(takeWhileObs(predicate));
 
 export const throttle = <TReq, T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleObs(durationSelector));
 
 export const throttleTime = <TReq, T>(
   duration: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleTimeObs(duration));
 
 export const throttleFirst = <TReq, T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleFirstObs(durationSelector));
 
 export const throttleFirstTime = <TReq, T>(
   duration: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleFirstTimeObs(duration));
 
 export const throttleLast = <TReq, T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleLastObs(durationSelector));
 
 export const throttleLastTime = <TReq, T>(
   duration: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(throttleLastTimeObs(duration));
 
 export const timeout = <TReq, T>(
   duration: number,
-): AsyncIteratorResourceOperator<TReq, T, TReq, T> =>
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
   lift(timeoutObs(duration));
 
 export const withLatestFrom = <TReq, TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): AsyncIteratorResourceOperator<TReq, TA, TReq, TC> =>
+): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TC> =>
   lift(withLatestFromObs(other, selector));

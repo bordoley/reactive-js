@@ -1,80 +1,80 @@
-import { ObservableLike, ObservableOperator } from "@reactive-js/rx";
+import { ObservableLike, ObservableOperatorLike } from "@reactive-js/rx";
 
 export function pipe<T, A>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
+  op1: ObservableOperatorLike<T, A>,
 ): ObservableLike<A>;
 export function pipe<T, A, B>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
 ): ObservableLike<B>;
 export function pipe<T, A, B, C>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
 ): ObservableLike<C>;
 export function pipe<T, A, B, C, D>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
 ): ObservableLike<D>;
 export function pipe<T, A, B, C, D, E>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
+  op5: ObservableOperatorLike<D, E>,
 ): ObservableLike<E>;
 export function pipe<T, A, B, C, D, E, F>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
+  op5: ObservableOperatorLike<D, E>,
+  op6: ObservableOperatorLike<E, F>,
 ): ObservableLike<F>;
 export function pipe<T, A, B, C, D, E, F, G>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
+  op5: ObservableOperatorLike<D, E>,
+  op6: ObservableOperatorLike<E, F>,
+  op7: ObservableOperatorLike<F, G>,
 ): ObservableLike<G>;
 export function pipe<T, A, B, C, D, E, F, G, H>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
+  op5: ObservableOperatorLike<D, E>,
+  op6: ObservableOperatorLike<E, F>,
+  op7: ObservableOperatorLike<F, G>,
+  op8: ObservableOperatorLike<G, H>,
 ): ObservableLike<H>;
 export function pipe<T, A, B, C, D, E, F, G, H, I>(
   src: ObservableLike<T>,
-  op1: ObservableOperator<T, A>,
-  op2: ObservableOperator<A, B>,
-  op3: ObservableOperator<B, C>,
-  op4: ObservableOperator<C, D>,
-  op5: ObservableOperator<D, E>,
-  op6: ObservableOperator<E, F>,
-  op7: ObservableOperator<F, G>,
-  op8: ObservableOperator<G, H>,
-  op9: ObservableOperator<H, I>,
+  op1: ObservableOperatorLike<T, A>,
+  op2: ObservableOperatorLike<A, B>,
+  op3: ObservableOperatorLike<B, C>,
+  op4: ObservableOperatorLike<C, D>,
+  op5: ObservableOperatorLike<D, E>,
+  op6: ObservableOperatorLike<E, F>,
+  op7: ObservableOperatorLike<F, G>,
+  op8: ObservableOperatorLike<G, H>,
+  op9: ObservableOperatorLike<H, I>,
 ): ObservableLike<I>;
 export function pipe(
   source: ObservableLike<any>,
-  ...operators: Array<ObservableOperator<any, any>>
+  ...operators: Array<ObservableOperatorLike<any, any>>
 ): ObservableLike<any> {
   return operators.reduce((acc, next) => next(acc), source);
 }

@@ -50,7 +50,7 @@ export interface SubscriberLike<T>
 /**
  * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
  */
-export interface SubscriberOperator<A, B> {
+export interface SubscriberOperatorLike<A, B> {
   (subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
@@ -62,7 +62,7 @@ export interface ObservableLike<T> {
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B> */
-export interface ObservableOperator<A, B> {
+export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
@@ -71,7 +71,7 @@ export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
 
-export interface ObservableResourceOperator<A, B> {
+export interface ObservableResourceOperatorLike<A, B> {
   (observable: ObservableResourceLike<A>): ObservableResourceLike<B>;
 }
 

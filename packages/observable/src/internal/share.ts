@@ -1,7 +1,7 @@
 import { disposed } from "@reactive-js/disposable";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableOperatorLike,
   SubjectResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -64,7 +64,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): ObservableOperator<T, T> => {
+): ObservableOperatorLike<T, T> => {
   const factory = () => createSubject(replayCount);
   return observable => new SharedObservable(factory, observable, scheduler);
 };
