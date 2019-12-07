@@ -1,6 +1,6 @@
-[@reactive-js/async-iterator-resource](../README.md) › [StateUpdater](stateupdater.md)
+[@reactive-js/ix](../README.md) › [StateUpdaterLike](stateupdaterlike.md)
 
-# Interface: StateUpdater <**T**>
+# Interface: StateUpdaterLike <**T**>
 
 ## Type parameters
 
@@ -8,7 +8,7 @@
 
 ## Hierarchy
 
-* **StateUpdater**
+* **StateUpdaterLike**
 
 ## Callable
 

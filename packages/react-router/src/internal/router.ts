@@ -1,5 +1,4 @@
-import { StateUpdater } from "@reactive-js/async-iterator-resource";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { StateStoreResourceLike, StateUpdaterLike } from "@reactive-js/ix";
 import { useObservableResource } from "@reactive-js/react";
 import { map, pipe, scan } from "@reactive-js/observable-resource";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -20,7 +19,7 @@ const empty: RelativeURI = {
 export interface RoutableComponentProps {
   readonly referer: RelativeURI | undefined;
   readonly uri: RelativeURI;
-  readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
+  readonly uriUpdater: (updater: StateUpdaterLike<RelativeURI>) => void;
 }
 
 interface RouteMap {
@@ -28,10 +27,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStoreFactory: () => AsyncIteratorResourceLike<
-    StateUpdater<RelativeURI>,
-    RelativeURI
-  >;
+  readonly locationStoreFactory: () => StateStoreResourceLike<RelativeURI>;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,
@@ -52,7 +48,7 @@ export const Router = function Router(props: RouterProps) {
 
       const locationResource = locationStoreFactory();
 
-      const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
+      const uriUpdater = (updater: StateUpdaterLike<RelativeURI>) => {
         locationResource.dispatch(updater);
       };
 

@@ -1,9 +1,9 @@
-import { StateUpdater } from "@reactive-js/async-iterator-resource";
+import { StateUpdaterLike } from "@reactive-js/ix";
 import { useMemo } from "react";
 import { RelativeURI, RoutableComponentProps } from "./router";
 
 const createURIStateUpdater = <TState>(
-  stateUpdater: StateUpdater<TState>,
+  stateUpdater: StateUpdaterLike<TState>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery: boolean,
@@ -35,7 +35,7 @@ export const useRoutableState = <TState>(
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery = false,
-): [TState, (updater: StateUpdater<TState>) => void] => {
+): [TState, (updater: StateUpdaterLike<TState>) => void] => {
   const {
     uri: { query, fragment },
     uriUpdater,
@@ -47,7 +47,7 @@ export const useRoutableState = <TState>(
   }, [query, fragment]);
 
   const dispatch = useMemo(
-    () => (stateUpdater: StateUpdater<TState>) => {
+    () => (stateUpdater: StateUpdaterLike<TState>) => {
       uriUpdater(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );

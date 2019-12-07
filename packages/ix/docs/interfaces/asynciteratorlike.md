@@ -16,6 +16,10 @@
 
   ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
 
+  ↳ [StateStoreLike](statestorelike.md)
+
+  ↳ [EventEmitterLike](eventemitterlike.md)
+
 ## Index
 
 ### Methods

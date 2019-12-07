@@ -1,5 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { AsyncIteratorLike, AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { AsyncIteratorLike, AsyncIteratorResourceLike, EventEmitterResourceLike, StateStoreResourceLike, StateUpdaterLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
@@ -295,24 +295,20 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), src);
 }
 
-export const createEvent = <T>(): AsyncIteratorResourceLike<T, T> => {
+export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   const subject = createSubject();
   const dispatcher = (req: T) => subject.next(req);
 
   return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
 };
 
-export interface StateUpdater<T> {
-  (oldState: T): T;
-}
-
 export const createStateStore = <T>(
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
-): AsyncIteratorResourceLike<StateUpdater<T>, T> => {
-  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject();
-  const dispatcher = (req: StateUpdater<T>) => subject.next(req);
+): StateStoreResourceLike<T> => {
+  const subject: SubjectResourceLike<StateUpdaterLike<T>> = createSubject();
+  const dispatcher = (req: StateUpdaterLike<T>) => subject.next(req);
   const observable = pipeObs(
     subject,
     scanObs((acc: T, next) => next(acc), initialState),
@@ -327,13 +323,13 @@ export const createStateStore = <T>(
 };
 
 export const createPersistentStateStore = <T>(
-  persistentStore: AsyncIteratorLike<T, StateUpdater<T>>,
+  persistentStore: AsyncIteratorLike<T, StateUpdaterLike<T>>,
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
-) => {
-  const subject: SubjectResourceLike<StateUpdater<T>> = createSubject();
-  const dispatcher = (req: StateUpdater<T>) => subject.next(req);
+): StateStoreResourceLike<T> => {
+  const subject: SubjectResourceLike<StateUpdaterLike<T>> = createSubject();
+  const dispatcher = (req: StateUpdaterLike<T>) => subject.next(req);
 
   const onPersistentStoreChangedStream = pipeObs(
     persistentStore,
@@ -343,7 +339,7 @@ export const createPersistentStateStore = <T>(
 
   const stateObs = pipeObs(
     subject,
-    scanObs((acc: T, next: StateUpdater<T>) => next(acc), initialState),
+    scanObs((acc: T, next: StateUpdaterLike<T>) => next(acc), initialState),
     distinctUntilChangedObs(equals),
     onNextObs(next => persistentStore.dispatch(next)),
   );

@@ -23,7 +23,7 @@
 
 #### Type declaration:
 
-▸ (): *AsyncIteratorResourceLike‹StateUpdater‹[RelativeURI](relativeuri.md)›, [RelativeURI](relativeuri.md)›*
+▸ (): *StateStoreResourceLike‹[RelativeURI](relativeuri.md)›*
 
 ___
 
