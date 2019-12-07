@@ -15,7 +15,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-iterator-resource": "^0.0.2",
+    "@reactive-js/ix": "^0.0.2",
     "@reactive-js/observable": "^0.0.2",
     "@reactive-js/react": "^0.0.2",
     "@reactive-js/react-router": "^0.0.2",

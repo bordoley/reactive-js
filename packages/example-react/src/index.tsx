@@ -1,21 +1,21 @@
-import { StateUpdater } from "@reactive-js/async-iterator-resource";
+import { StateUpdaterLike } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
 } from "@reactive-js/react-router";
-import { normalPriority } from "@reactive-js/react-scheduler";
+import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/observable";
 import { createLocationStoreResource, Location } from "@reactive-js/web";
 import { ComponentType, useCallback, useMemo } from "react";
-import { render } from "react-dom";
+import { default as ReactDOM } from "react-dom";
 import React from "react";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdater<Location>) => void,
+  uriUpdater: (updater: StateUpdaterLike<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<Location>) => () =>
+  const liftUpdater = (updater: StateUpdaterLike<Location>) => () =>
     uriUpdater(updater);
   const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
 
@@ -42,8 +42,9 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
+const obs = generate(x => x + 1, 0);
 const Component1 = (props: RoutableComponentProps) => {
-  const value = useObservable(() => generate(x => x + 1, 0), []);
+  const value = useObservable(obs, idlePriority);
 
   return (
     <>
@@ -83,13 +84,14 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route3", StatefulComponent],
 ];
 
-const locationStoreFactory = () => createLocationStoreResource(normalPriority);
+const locationStore = createLocationStoreResource(normalPriority);
 
-render(
-  <Router
-    locationStoreFactory={locationStoreFactory}
-    notFound={NotFound}
-    routes={routes}
-  />,
-  document.getElementById("root") as HTMLElement,
-);
+(ReactDOM as any)
+  .createRoot(document.getElementById("root"))
+  .render(
+    <Router
+      locationStore={locationStore}
+      notFound={NotFound}
+      routes={routes}
+    />,
+  );

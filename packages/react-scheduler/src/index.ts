@@ -42,8 +42,10 @@ const scheduleCallback = (
   const disposable = createDisposable();
 
   const scheduledCallback = () => {
-    callback();
-    disposable.dispose();
+    if (!disposable.isDisposed) {
+      callback();
+      disposable.dispose();
+    }
   };
 
   const callbackNode = unstable_scheduleCallback(

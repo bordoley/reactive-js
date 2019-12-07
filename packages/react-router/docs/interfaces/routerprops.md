@@ -10,20 +10,16 @@
 
 ### Properties
 
-* [locationStoreFactory](routerprops.md#locationstorefactory)
+* [locationStore](routerprops.md#locationstore)
 * [notFound](routerprops.md#notfound)
 * [routes](routerprops.md#routes)
 * [scheduler](routerprops.md#optional-scheduler)
 
 ## Properties
 
-###  locationStoreFactory
+###  locationStore
 
-• **locationStoreFactory**: *function*
-
-#### Type declaration:
-
-▸ (): *StateStoreResourceLike‹[RelativeURI](relativeuri.md)›*
+• **locationStore**: *StateStoreLike‹[RelativeURI](relativeuri.md)›*
 
 ___
 
