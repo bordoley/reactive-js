@@ -1,5 +1,11 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { AsyncIteratorLike, AsyncIteratorResourceLike, EventEmitterResourceLike, StateStoreResourceLike, StateUpdaterLike } from "@reactive-js/ix";
+import {
+  AsyncIteratorLike,
+  AsyncIteratorResourceLike,
+  EventEmitterResourceLike,
+  StateStoreResourceLike,
+  StateUpdaterLike,
+} from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,

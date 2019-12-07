@@ -1,6 +1,10 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { fromEvent } from "./event";
-import { AsyncIteratorLike, StateStoreResourceLike, StateUpdaterLike } from "@reactive-js/ix";
+import {
+  AsyncIteratorLike,
+  StateStoreResourceLike,
+  StateUpdaterLike,
+} from "@reactive-js/ix";
 import { createPersistentStateStore } from "@reactive-js/async-iterator-resource";
 import { ObservableLike } from "@reactive-js/rx";
 import { concat, ofValue } from "@reactive-js/observable";
@@ -42,18 +46,16 @@ const dispatch = (newLocation: Location) => {
   }
 };
 
-const getCurrentLocationStateUpdater = (_?: unknown): StateUpdaterLike<Location> => {
+const getCurrentLocationStateUpdater = (
+  _?: unknown,
+): StateUpdaterLike<Location> => {
   const uri = getCurrentLocation();
   return (_: Location) => uri;
 };
 
 const observable: ObservableLike<StateUpdaterLike<Location>> = concat(
   ofValue(getCurrentLocationStateUpdater()),
-  fromEvent(
-    window,
-    "popstate",
-    getCurrentLocationStateUpdater,
-  ),
+  fromEvent(window, "popstate", getCurrentLocationStateUpdater),
 );
 
 const historyIterator: AsyncIteratorLike<
