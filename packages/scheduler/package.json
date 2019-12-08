@@ -38,8 +38,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.4",
-    "tslib": "^1.10.0"
+    "@reactive-js/disposable": "^0.0.4"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",

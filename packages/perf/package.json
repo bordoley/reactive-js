@@ -41,8 +41,7 @@
     "@reactive-js/schedulers": "^0.0.4",
     "benchmark": "^2.1.4",
     "callbag-basics": "^3.2.0",
-    "rxjs": "^6.5.3",
-    "tslib": "^1.10.0"
+    "rxjs": "^6.5.3"
   },
   "scripts": {
     "build": "tsc"
