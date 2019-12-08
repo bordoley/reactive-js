@@ -1,8 +1,5 @@
-import {
-  ObservableLike,
-  SubscriberLike,
-} from "@reactive-js/rx";
-import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
+import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
   readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>;

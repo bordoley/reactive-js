@@ -3,7 +3,7 @@ import {
   ErrorLike,
   SubscriberLike,
 } from "@reactive-js/rx";
-import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
+import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {

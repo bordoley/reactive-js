@@ -8,7 +8,7 @@ import {
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
-import {  ObservableOperatorLike } from "./interfaces";
+import { ObservableOperatorLike } from "./interfaces";
 
 export function concat<T>(
   fst: ObservableLike<T>,

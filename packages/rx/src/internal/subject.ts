@@ -39,7 +39,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly count: number;
-  private replayed: Notification<T>[] = [];
+  private readonly replayed: Notification<T>[] = [];
   constructor(count: number) {
     this.disposable = createDisposable();
     this.count = count;

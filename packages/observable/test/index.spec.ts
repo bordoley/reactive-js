@@ -74,7 +74,6 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
 });
 
 describe("Observable", () => {
-
   test("lift", () => {
     const onNext = <T>(onNext: (data: T) => void) =>
       observe({

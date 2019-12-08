@@ -1,7 +1,5 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import {
-  AsyncIteratorResourceLike
-} from "@reactive-js/ix";
+import { AsyncIteratorResourceLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
@@ -99,9 +97,10 @@ class LiftedIteratorResourceImpl<TReq, T>
 
 const liftImpl = <TReq, T, TReqA, TA>(
   operator?: ObservableOperatorLike<T, TA>,
-  dispatchOperator?: (dispatcher: (req: TReq) => void) => ((req: TReqA) => void),
+  dispatchOperator?: (dispatcher: (req: TReq) => void) => (req: TReqA) => void,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, TA> => iterator => {
-  const observable: ObservableLike<T> = (iterator as any).observable || iterator;
+  const observable: ObservableLike<T> =
+    (iterator as any).observable || iterator;
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
   const disposable: DisposableLike = (iterator as any).disposable || iterator;
@@ -110,7 +109,9 @@ const liftImpl = <TReq, T, TReqA, TA>(
     operator !== undefined ? pipeObs(observable, operator) : observable;
 
   const liftedDispatcher: (req: TReqA) => void =
-    dispatchOperator !== undefined ? dispatchOperator(dispatcher) : (dispatcher as any);
+    dispatchOperator !== undefined
+      ? dispatchOperator(dispatcher)
+      : (dispatcher as any);
 
   return new LiftedIteratorResourceImpl(
     liftedDispatcher,
@@ -125,7 +126,7 @@ export const lift = <TReq, T, TA>(
   liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
-  operator: (dispatcher: (req: TReq) => void) => ((ref: TReqA) => void),
+  operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, T> =>
   liftImpl(undefined, operator);
 

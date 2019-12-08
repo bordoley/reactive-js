@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike} from "@reactive-js/rx";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
 /**
  * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
  */
