@@ -4,10 +4,10 @@ import {
   DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
-  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
+import {  ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "./pipe";

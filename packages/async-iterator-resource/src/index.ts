@@ -6,7 +6,6 @@ import {
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -42,8 +41,16 @@ import {
   throttleTime as throttleTimeObs,
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
+  ObservableOperatorLike,
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
+
+export interface AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReq, T> {
+  (iter: AsyncIteratorResourceLike<TSrcReq, TSrc>): AsyncIteratorResourceLike<
+    TReq,
+    T
+  >;
+}
 
 class LiftedIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {

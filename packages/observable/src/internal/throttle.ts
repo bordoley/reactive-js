@@ -7,11 +7,10 @@ import {
   DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
-  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "@reactive-js/rx";
 import { empty } from "./fromArray";
+import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { onComplete } from "./observe";
 import { pipe } from "./pipe";

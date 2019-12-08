@@ -5,7 +5,6 @@ import {
   ObservableResourceLike,
   SubjectResourceLike,
   SubscriberLike,
-  ObservableOperatorLike,
 } from "@reactive-js/rx";
 
 import {
@@ -17,6 +16,7 @@ import {
   scan,
   share,
   startWith,
+  ObservableOperatorLike,
 } from "@reactive-js/observable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -28,21 +28,10 @@ export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {
   dispatch(request: TReq): void;
 }
 
-export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
-  (iter: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
-}
-
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>
   extends AsyncIteratorLike<TReq, T>,
     ObservableResourceLike<T> {}
-
-export interface AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReq, T> {
-  (iter: AsyncIteratorResourceLike<TSrcReq, TSrc>): AsyncIteratorResourceLike<
-    TReq,
-    T
-  >;
-}
 
 export interface StateUpdaterLike<T> {
   (oldState: T): T;

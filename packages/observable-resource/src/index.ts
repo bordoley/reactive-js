@@ -2,9 +2,7 @@ import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperatorLike,
   ObservableResourceLike,
-  ObservableResourceOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -40,8 +38,13 @@ import {
   throttleTime as throttleTimeObs,
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
+  ObservableOperatorLike,
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
+
+export interface ObservableResourceOperatorLike<A, B> {
+  (observable: ObservableResourceLike<A>): ObservableResourceLike<B>;
+}
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
   readonly disposable: DisposableLike;

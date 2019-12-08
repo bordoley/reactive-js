@@ -3,6 +3,7 @@ export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";
 export { concat, startWith, endWith } from "./internal/concat";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
+export { ObservableOperatorLike, SubscriberOperatorLike } from "./internal/interfaces";
 export {
   empty,
   fromArray,

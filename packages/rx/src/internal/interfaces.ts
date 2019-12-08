@@ -48,32 +48,16 @@ export interface SubscriberLike<T>
 }
 
 /**
- * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
- */
-export interface SubscriberOperatorLike<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
-}
-
-/**
  * The source of notifications which may be observed by a SubscriberLike instance.
  */
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
-/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
-export interface ObservableOperatorLike<A, B> {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-}
-
 /** @noInheritDoc */
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
     DisposableLike {}
-
-export interface ObservableResourceOperatorLike<A, B> {
-  (observable: ObservableResourceLike<A>): ObservableResourceLike<B>;
-}
 
 /** @noInheritDoc */
 export interface SubjectLike<T> extends ObserverLike<T>, ObservableLike<T> {}

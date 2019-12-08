@@ -1,9 +1,9 @@
 import {
   ErrorLike,
-  ObservableOperatorLike,
   SubscriberLike,
   DelegatingSubscriber,
 } from "@reactive-js/rx";
+import {  ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {

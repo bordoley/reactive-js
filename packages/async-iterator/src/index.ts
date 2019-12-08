@@ -2,7 +2,6 @@ import { AsyncIteratorLike, AsyncIteratorOperatorLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
-  ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -38,8 +37,13 @@ import {
   throttleTime as throttleTimeObs,
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
+  ObservableOperatorLike,
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
+
+export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
+  (iter: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
+}
 
 class AsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;

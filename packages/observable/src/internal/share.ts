@@ -1,13 +1,13 @@
 import { disposed } from "@reactive-js/disposable";
 import {
   ObservableLike,
-  ObservableOperatorLike,
   SubjectResourceLike,
   SubscriberLike,
   connect,
   createSubject,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import {  ObservableOperatorLike } from "./interfaces";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
 
