@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/disposable",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -37,7 +37,6 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
