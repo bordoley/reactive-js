@@ -5,8 +5,8 @@ Fast modern reactive Javascript programming library
 ## Example Usage
 
 ```typescript
+import { connect } from "@reactive-js/rx";
 import {
-  connect,
   exhaust,
   fromArray,
   generate,
