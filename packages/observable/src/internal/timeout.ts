@@ -4,12 +4,11 @@ import {
 } from "@reactive-js/disposable";
 import {
   ErrorLike,
-  ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
   connect,
   DelegatingSubscriber,
 } from "@reactive-js/rx";
+import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { onError } from "./observe";
 import { pipe } from "./pipe";

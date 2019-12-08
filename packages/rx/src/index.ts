@@ -2,11 +2,8 @@ export {
   ErrorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
   ObservableLike,
-  ObservableOperatorLike,
   ObservableResourceLike,
-  ObservableResourceOperatorLike,
   SubjectLike,
   SubjectResourceLike,
 } from "./internal/interfaces";
