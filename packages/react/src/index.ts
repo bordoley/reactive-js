@@ -1,8 +1,7 @@
 import { AsyncIteratorLike } from "@reactive-js/ix";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { ErrorLike, ObservableLike } from "@reactive-js/rx";
+import { connect, ErrorLike, ObservableLike } from "@reactive-js/rx";
 import {
-  connect,
   observe,
   pipe,
   throttleTime,

@@ -1,13 +1,13 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { fromEvent } from "./event";
 import {
+  createPersistentStateStore,
   AsyncIteratorLike,
   StateStoreResourceLike,
   StateUpdaterLike,
 } from "@reactive-js/ix";
-import { createPersistentStateStore } from "@reactive-js/async-iterator-resource";
 import { ObservableLike } from "@reactive-js/rx";
 import { concat, ofValue } from "@reactive-js/observable";
+import { fromEvent } from "./event";
 
 export interface Location {
   readonly fragment: string;

@@ -41,7 +41,6 @@ import {
   timeout as timeoutObs,
   withLatestFrom as withLatestFromObs,
 } from "@reactive-js/observable";
-
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
@@ -183,7 +182,8 @@ export const concatAll = <T>(
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
-): ObservableResourceOperatorLike<T, T> => lift(distinctUntilChangedObs(equals));
+): ObservableResourceOperatorLike<T, T> =>
+  lift(distinctUntilChangedObs(equals));
 
 export const endWith = <T>(
   value: T,
@@ -195,8 +195,10 @@ export const exhaust = <T>(): ObservableResourceOperatorLike<
   T
 > => lift(exhaustObs());
 
-export const ignoreElements = <TA, TB>(): ObservableResourceOperatorLike<TA, TB> =>
-  lift(ignoreElementsObs());
+export const ignoreElements = <TA, TB>(): ObservableResourceOperatorLike<
+  TA,
+  TB
+> => lift(ignoreElementsObs());
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
@@ -239,12 +241,14 @@ export const retry = <T>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: TAcc,
-): ObservableResourceOperatorLike<T, TAcc> => lift(scanObs(scanner, initialValue));
+): ObservableResourceOperatorLike<T, TAcc> =>
+  lift(scanObs(scanner, initialValue));
 
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): ObservableResourceOperatorLike<T, T> => lift(shareObs(scheduler, replayCount));
+): ObservableResourceOperatorLike<T, T> =>
+  lift(shareObs(scheduler, replayCount));
 
 export const startWith = <T>(
   value: T,
@@ -263,8 +267,9 @@ export const switchAll = <T>(): ObservableResourceOperatorLike<
 export const take = <T>(count: number): ObservableResourceOperatorLike<T, T> =>
   lift(takeObs(count));
 
-export const takeLast = <T>(count: number): ObservableResourceOperatorLike<T, T> =>
-  lift(takeLastObs(count));
+export const takeLast = <T>(
+  count: number,
+): ObservableResourceOperatorLike<T, T> => lift(takeLastObs(count));
 
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
@@ -272,7 +277,8 @@ export const takeWhile = <T>(
 
 export const throttleFirst = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableResourceOperatorLike<T, T> => lift(throttleFirstObs(durationSelector));
+): ObservableResourceOperatorLike<T, T> =>
+  lift(throttleFirstObs(durationSelector));
 
 export const throttle = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
@@ -288,7 +294,8 @@ export const throttleFirstTime = <T>(
 
 export const throttleLast = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableResourceOperatorLike<T, T> => lift(throttleLastObs(durationSelector));
+): ObservableResourceOperatorLike<T, T> =>
+  lift(throttleLastObs(durationSelector));
 
 export const throttleLastTime = <T>(
   duration: number,

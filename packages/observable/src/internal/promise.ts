@@ -1,7 +1,10 @@
-import { ObservableLike, ObserverLike } from "@reactive-js/rx";
+import {
+  ObservableLike,
+  ObserverLike,
+  connect,
+  createObservable,
+} from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { connect } from "./connect";
-import { createObservable } from "./create";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
 

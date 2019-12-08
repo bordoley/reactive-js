@@ -5,11 +5,11 @@ import {
   DisposableOrTeardown,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
+import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 export interface PrioritySchedulerLike {
   readonly inScheduledContinuation: boolean;

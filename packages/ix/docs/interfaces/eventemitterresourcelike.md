@@ -1,14 +1,16 @@
 [@reactive-js/ix](../README.md) › [EventEmitterResourceLike](eventemitterresourcelike.md)
 
-# Interface: EventEmitterResourceLike <**T**>
+# Interface: EventEmitterResourceLike <**T, T**>
 
 ## Type parameters
 
 ▪ **T**
 
+▪ **T**
+
 ## Hierarchy
 
-  ↳ [EventEmitterLike](eventemitterlike.md)‹T›
+  ↳ [AsyncIteratorLike](asynciteratorlike.md)‹T›
 
   ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)‹T, T›
 

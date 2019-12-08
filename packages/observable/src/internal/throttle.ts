@@ -3,14 +3,14 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
+  connect,
+  DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
 } from "@reactive-js/rx";
-import { connect } from "./connect";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { empty } from "./fromArray";
 import { lift } from "./lift";
 import { onComplete } from "./observe";
@@ -52,7 +52,8 @@ const throttleFirstOperator = <T>(
 
 export const throttleFirst = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
-): ObservableOperatorLike<T, T> => lift(throttleFirstOperator(durationSelector));
+): ObservableOperatorLike<T, T> =>
+  lift(throttleFirstOperator(durationSelector));
 
 export const throttleFirstTime = <T>(
   duration: number,
@@ -173,7 +174,9 @@ export const throttle = <T>(
   durationSelector: (next: T) => ObservableLike<unknown>,
 ): ObservableOperatorLike<T, T> => lift(throttleOperator(durationSelector));
 
-export const throttleTime = <T>(duration: number): ObservableOperatorLike<T, T> => {
+export const throttleTime = <T>(
+  duration: number,
+): ObservableOperatorLike<T, T> => {
   const durationSelector = (_: T) => empty(duration);
   return throttle(durationSelector);
 };

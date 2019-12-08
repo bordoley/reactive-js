@@ -1,4 +1,4 @@
-import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx";
+import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";

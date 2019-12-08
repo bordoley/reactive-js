@@ -1,31 +1,23 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import {
-  AsyncIteratorLike,
   AsyncIteratorResourceLike,
   AsyncIteratorResourceOperatorLike,
-  EventEmitterResourceLike,
-  StateStoreResourceLike,
-  StateUpdaterLike,
 } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,
   ObservableOperatorLike,
   ObserverLike,
-  SubjectResourceLike,
   SubscriberLike,
 } from "@reactive-js/rx";
 import {
   concatAll as concatAllObs,
-  connect,
-  createSubject,
   distinctUntilChanged as distinctUntilChangedObs,
   endWith as endWithObs,
   exhaust as exhaustObs,
   ignoreElements as ignoreElementsObs,
   keep as keepObs,
   map as mapObs,
-  merge,
   mergeAll as mergeAllObs,
   observe as observeObs,
   onComplete as onCompleteObs,
@@ -53,7 +45,7 @@ import {
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-class AsyncIteratorResourceImpl<TReq, T>
+class LiftedIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;
   readonly disposable: DisposableLike;
@@ -103,10 +95,10 @@ const liftImpl = <TReq, T, TReqA, TA>(
   operator?: ObservableOperatorLike<T, TA>,
   mapper?: (req: TReqA) => TReq,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, TA> => iterator => {
-  const [observable, dispatcher, disposable] =
-    iterator instanceof AsyncIteratorResourceImpl
-      ? [iterator.observable, iterator.dispatcher, iterator.disposable]
-      : [iterator, (req: any) => iterator.dispatch(req), iterator];
+  const observable = (iterator as any).observable || iterator;
+  const dispatcher =
+    (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
+  const disposable = (iterator as any).disposable || iterator;
 
   const pipedObservable =
     operator !== undefined ? pipeObs(observable, operator) : observable;
@@ -114,7 +106,7 @@ const liftImpl = <TReq, T, TReqA, TA>(
   const mappedDispatcher: (req: TReqA) => void =
     mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
 
-  return new AsyncIteratorResourceImpl(
+  return new LiftedIteratorResourceImpl(
     mappedDispatcher,
     disposable,
     pipedObservable,
@@ -295,63 +287,6 @@ export function pipe(
   return operators.reduce((acc, next) => next(acc), src);
 }
 
-export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
-  const subject = createSubject();
-  const dispatcher = (req: T) => subject.next(req);
-
-  return new AsyncIteratorResourceImpl(dispatcher, subject, subject);
-};
-
-export const createStateStore = <T>(
-  initialState: T,
-  scheduler: SchedulerLike,
-  equals?: (a: T, b: T) => boolean,
-): StateStoreResourceLike<T> => {
-  const subject: SubjectResourceLike<StateUpdaterLike<T>> = createSubject();
-  const dispatcher = (req: StateUpdaterLike<T>) => subject.next(req);
-  const observable = pipeObs(
-    subject,
-    scanObs((acc: T, next) => next(acc), initialState),
-    startWithObs(initialState),
-    distinctUntilChangedObs(equals),
-    shareObs(scheduler, 1),
-  );
-
-  subject.add(connect(observable, scheduler));
-
-  return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
-};
-
-export const createPersistentStateStore = <T>(
-  persistentStore: AsyncIteratorLike<T, StateUpdaterLike<T>>,
-  initialState: T,
-  scheduler: SchedulerLike,
-  equals?: (a: T, b: T) => boolean,
-): StateStoreResourceLike<T> => {
-  const subject: SubjectResourceLike<StateUpdaterLike<T>> = createSubject();
-  const dispatcher = (req: StateUpdaterLike<T>) => subject.next(req);
-
-  const onPersistentStoreChangedStream = pipeObs(
-    persistentStore,
-    onNextObs(dispatcher),
-    ignoreElementsObs(),
-  );
-
-  const stateObs = pipeObs(
-    subject,
-    scanObs((acc: T, next: StateUpdaterLike<T>) => next(acc), initialState),
-    distinctUntilChangedObs(equals),
-    onNextObs(next => persistentStore.dispatch(next)),
-  );
-
-  const observable = pipeObs(
-    merge(onPersistentStoreChangedStream, stateObs),
-    shareObs(scheduler, 1),
-  );
-
-  return new AsyncIteratorResourceImpl(dispatcher, subject, observable);
-};
-
 export const concatAll = <TReq, T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
 ): AsyncIteratorResourceOperatorLike<TReq, ObservableLike<T>, TReq, T> =>
@@ -375,20 +310,22 @@ export const exhaust = <TReq, T>(): AsyncIteratorResourceOperatorLike<
   T
 > => lift(exhaustObs());
 
-export const ignoreElements = <TReq, TA, TB>(): AsyncIteratorResourceOperatorLike<
+export const ignoreElements = <
   TReq,
   TA,
-  TReq,
   TB
-> => lift(ignoreElementsObs());
+>(): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> =>
+  lift(ignoreElementsObs());
 
 export const keep = <TReq, T>(
   predicate: (data: T) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(keepObs(predicate));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
+  lift(keepObs(predicate));
 
 export const map = <TReq, TA, TB>(
   mapper: (data: TA) => TB,
-): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> => lift(mapObs(mapper));
+): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> =>
+  lift(mapObs(mapper));
 
 export const mergeAll = <TReq, T>(options?: {
   maxBufferSize?: number;
@@ -408,11 +345,13 @@ export const onComplete = <TReq, T>(
 
 export const onError = <TReq, T>(
   onError: (err: unknown) => void,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(onErrorObs(onError));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
+  lift(onErrorObs(onError));
 
 export const onNext = <TReq, T>(
   onNext: (next: T) => void,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(onNextObs(onNext));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
+  lift(onNextObs(onNext));
 
 export const repeat = <TReq, T>(
   predicate?: ((count: number) => boolean) | number,
@@ -421,7 +360,8 @@ export const repeat = <TReq, T>(
 
 export const retry = <TReq, T>(
   predicate?: (count: number, error: unknown) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(retryObs(predicate));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
+  lift(retryObs(predicate));
 
 export const scan = <TReq, T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
@@ -459,7 +399,8 @@ export const take = <TReq, T>(
 
 export const takeLast = <TReq, T>(
   count: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(takeLastObs(count));
+): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
+  lift(takeLastObs(count));
 
 export const takeWhile = <TReq, T>(
   predicate: (next: T) => boolean,

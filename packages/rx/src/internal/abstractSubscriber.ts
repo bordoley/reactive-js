@@ -1,9 +1,9 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { ErrorLike, SubscriberLike } from "@reactive-js/rx";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "@reactive-js/scheduler";
+import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {

@@ -1,5 +1,5 @@
-import { ErrorLike, ObserverLike, SubscriberLike } from "@reactive-js/rx";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 
 class SafeObserver<T> implements ObserverLike<T> {
   private error: ErrorLike | undefined;

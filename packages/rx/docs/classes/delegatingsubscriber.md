@@ -1,4 +1,4 @@
-[@reactive-js/observable](../README.md) › [DelegatingSubscriber](delegatingsubscriber.md)
+[@reactive-js/rx](../README.md) › [DelegatingSubscriber](delegatingsubscriber.md)
 
 # Class: DelegatingSubscriber <**TA, TB**>
 
@@ -18,7 +18,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Implements
 
-* SubscriberLike‹TA›
+* [SubscriberLike](../interfaces/subscriberlike.md)‹TA›
 
 ## Index
 
@@ -39,7 +39,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ###  constructor
 
-\+ **new DelegatingSubscriber**(`delegate`: SubscriberLike‹TB›): *[DelegatingSubscriber](delegatingsubscriber.md)*
+\+ **new DelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[DelegatingSubscriber](delegatingsubscriber.md)*
 
 *Overrides void*
 
@@ -47,7 +47,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 Name | Type |
 ------ | ------ |
-`delegate` | SubscriberLike‹TB› |
+`delegate` | [SubscriberLike](../interfaces/subscriberlike.md)‹TB› |
 
 **Returns:** *[DelegatingSubscriber](delegatingsubscriber.md)*
 
@@ -55,13 +55,13 @@ Name | Type |
 
 ###  delegate
 
-• **delegate**: *ObserverLike‹TB›*
+• **delegate**: *[ObserverLike](../interfaces/observerlike.md)‹TB›*
 
 ## Methods
 
 ### `Protected` `Abstract` onComplete
 
-▸ **onComplete**(`error?`: ErrorLike): *void*
+▸ **onComplete**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
 
 Override to handle complete notification. Implementations
 may throw errors which will be caught and propogated.
@@ -70,7 +70,7 @@ may throw errors which will be caught and propogated.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | ErrorLike |   |
+`error?` | [ErrorLike](../interfaces/errorlike.md) |   |
 
 **Returns:** *void*
 

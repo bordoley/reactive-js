@@ -16,9 +16,9 @@
 
   ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
 
-  ↳ [StateStoreLike](statestorelike.md)
+  ↳ [StateStoreResourceLike](statestoreresourcelike.md)
 
-  ↳ [EventEmitterLike](eventemitterlike.md)
+  ↳ [EventEmitterResourceLike](eventemitterresourcelike.md)
 
 ## Index
 

@@ -3,8 +3,8 @@ import {
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {

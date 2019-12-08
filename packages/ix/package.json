@@ -17,7 +17,10 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
+    "@reactive-js/disposable": "^0.0.3",
+    "@reactive-js/observable": "^0.0.3",
     "@reactive-js/rx": "^0.0.3",
+    "@reactive-js/scheduler": "^0.0.3",
     "tslib": "^1.10.0"
   },
   "scripts": {
