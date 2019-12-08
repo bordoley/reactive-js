@@ -99,23 +99,23 @@ class LiftedIteratorResourceImpl<TReq, T>
 
 const liftImpl = <TReq, T, TReqA, TA>(
   operator?: ObservableOperatorLike<T, TA>,
-  mapper?: (req: TReqA) => TReq,
+  dispatchOperator?: (dispatcher: (req: TReq) => void) => ((req: TReqA) => void),
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, TA> => iterator => {
-  const observable = (iterator as any).observable || iterator;
-  const dispatcher =
+  const observable: ObservableLike<T> = (iterator as any).observable || iterator;
+  const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
-  const disposable = (iterator as any).disposable || iterator;
+  const disposable: DisposableLike = (iterator as any).disposable || iterator;
 
   const pipedObservable =
     operator !== undefined ? pipeObs(observable, operator) : observable;
 
-  const mappedDispatcher: (req: TReqA) => void =
-    mapper !== undefined ? req => dispatcher(mapper(req)) : dispatcher;
+  const liftedDispatcher: (req: TReqA) => void =
+    dispatchOperator !== undefined ? dispatchOperator(dispatcher) : (dispatcher as any);
 
   return new LiftedIteratorResourceImpl(
-    mappedDispatcher,
+    liftedDispatcher,
     disposable,
-    pipedObservable,
+    pipedObservable as ObservableLike<TA>,
   );
 };
 
@@ -125,9 +125,9 @@ export const lift = <TReq, T, TA>(
   liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
-  mapper: (req: TReqA) => TReq,
+  operator: (dispatcher: (req: TReq) => void) => ((ref: TReqA) => void),
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, T> =>
-  liftImpl(undefined, mapper);
+  liftImpl(undefined, operator);
 
 export function pipe<TSrcReq, TSrc, TReqA, TA>(
   src: AsyncIteratorResourceLike<TSrcReq, TSrc>,
