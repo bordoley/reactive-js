@@ -1,5 +1,5 @@
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
-import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
+import { AbstractSubscriber, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
@@ -11,7 +11,7 @@ const __DEV__ = process.env.NODE_ENV !== "production";
 export abstract class DelegatingSubscriber<
   TA,
   TB
-> extends AbstractSubscriberImpl<TA> {
+> extends AbstractSubscriber<TA> {
   readonly delegate: ObserverLike<TB>;
   private isStopped = false;
   private readonly source: SubscriberLike<any>;

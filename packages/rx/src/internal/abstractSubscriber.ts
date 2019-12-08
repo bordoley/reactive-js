@@ -6,7 +6,7 @@ import {
 import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
-export abstract class AbstractSubscriberImpl<T> implements SubscriberLike<T> {
+export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly scheduler: SchedulerLike;
   readonly subscription: DisposableLike;
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
