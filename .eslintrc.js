@@ -30,6 +30,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/unbound-method": "off",
+    "import/no-duplicates": "error",
     "comma-dangle": ["error", "always-multiline"],
     "sort-class-members/sort-class-members": [
       2,

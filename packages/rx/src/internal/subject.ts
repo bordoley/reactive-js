@@ -8,7 +8,7 @@ import {
   ObserverLike,
   SubjectResourceLike,
   SubscriberLike,
-} from "@reactive-js/rx";
+} from "./interfaces";
 import { createSafeObserver } from "./safeObserver";
 
 const enum NotificationKind {

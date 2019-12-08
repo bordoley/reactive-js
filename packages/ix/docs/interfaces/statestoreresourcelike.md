@@ -1,14 +1,16 @@
 [@reactive-js/ix](../README.md) › [StateStoreResourceLike](statestoreresourcelike.md)
 
-# Interface: StateStoreResourceLike <**T**>
+# Interface: StateStoreResourceLike <**T, T**>
 
 ## Type parameters
 
 ▪ **T**
 
+▪ **T**
+
 ## Hierarchy
 
-  ↳ [StateStoreLike](statestorelike.md)‹T›
+  ↳ [AsyncIteratorLike](asynciteratorlike.md)‹T›
 
   ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)‹[StateUpdaterLike](stateupdaterlike.md)‹T›, T›
 

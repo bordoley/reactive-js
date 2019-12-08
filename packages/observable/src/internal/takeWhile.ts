@@ -1,5 +1,9 @@
-import { ErrorLike, SubscriberLike, SubscriberOperatorLike } from "@reactive-js/rx";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
+import {
+  DelegatingSubscriber,
+  ErrorLike,
+  SubscriberLike,
+  SubscriberOperatorLike,
+} from "@reactive-js/rx";
 import { lift } from "./lift";
 
 class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {

@@ -3,16 +3,15 @@ import {
   ObservableLike,
   ObserverLike,
   SubscriberLike,
+  connect,
 } from "@reactive-js/rx";
-import { connect } from "./connect";
-import { observe } from "./observe";
-import { pipe } from "./pipe";
-
 import {
   createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
+import { observe } from "./observe";
+import { pipe } from "./pipe";
 
 interface CombineLatestContext {
   completedCount: number;

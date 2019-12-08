@@ -20,7 +20,6 @@
     "@reactive-js/disposable": "^0.0.3",
     "@reactive-js/ix": "^0.0.3",
     "@reactive-js/observable": "^0.0.3",
-    "@reactive-js/observable-resource": "^0.0.3",
     "@reactive-js/react-scheduler": "^0.0.3",
     "@reactive-js/rx": "^0.0.3",
     "@reactive-js/scheduler": "^0.0.3",

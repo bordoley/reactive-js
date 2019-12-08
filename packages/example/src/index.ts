@@ -1,5 +1,5 @@
+import { connect } from "@reactive-js/rx";
 import {
-  connect,
   exhaust,
   fromArray,
   generate,
@@ -7,7 +7,6 @@ import {
   onNext,
   pipe,
 } from "@reactive-js/observable";
-
 import { createSchedulerWithPriority } from "@reactive-js/node";
 
 const scheduler = createSchedulerWithPriority(500);

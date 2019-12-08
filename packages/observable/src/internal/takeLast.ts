@@ -1,4 +1,5 @@
 import {
+  DelegatingSubscriber,
   ErrorLike,
   ObservableOperatorLike,
   SubscriberLike,
@@ -8,7 +9,6 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -54,7 +54,9 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(count: number): SubscriberOperatorLike<T, T> => subscriber =>
+const operator = <T>(
+  count: number,
+): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeLastSubscriber(subscriber, count);
 
 export const takeLast = <T>(count: number): ObservableOperatorLike<T, T> =>

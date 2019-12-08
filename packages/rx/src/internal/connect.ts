@@ -1,6 +1,6 @@
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { ErrorLike, ObservableLike, SubscriberLike } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";

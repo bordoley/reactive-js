@@ -9,9 +9,9 @@ import {
   ObserverLike,
   SubscriberLike,
   SubscriberOperatorLike,
+  connect,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
-import { connect } from "./connect";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "./pipe";

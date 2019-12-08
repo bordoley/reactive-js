@@ -1,10 +1,7 @@
-export { connect } from "./internal/connect";
-export { createObservable } from "./internal/create";
 export { lift } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";
 export { concat, startWith, endWith } from "./internal/concat";
-export { DelegatingSubscriber } from "./internal/delegatingSubscriber";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export {
   empty,
@@ -23,7 +20,6 @@ export { never } from "./internal/never";
 export { pipe } from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
-export { createSubject } from "./internal/subject";
 export { share } from "./internal/share";
 export { subscribeOn } from "./internal/subscribeOn";
 export { switchAll } from "./internal/switch";

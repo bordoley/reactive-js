@@ -79,7 +79,8 @@ const liftImpl = <TReq, T, TReqA, TA>(
 
 export const lift = <TReq, T, TA>(
   operator: ObservableOperatorLike<T, TA>,
-): AsyncIteratorOperatorLike<TReq, T, TReq, TA> => liftImpl(operator, undefined);
+): AsyncIteratorOperatorLike<TReq, T, TReq, TA> =>
+  liftImpl(operator, undefined);
 
 export const liftReq = <TReq, T, TReqA>(
   mapper: (req: TReqA) => TReq,
@@ -299,7 +300,8 @@ export const observe = <TReq, T>(
 
 export const onComplete = <TReq, T>(
   onComplete: (err?: ErrorLike) => void,
-): AsyncIteratorOperatorLike<TReq, T, TReq, T> => lift(onCompleteObs(onComplete));
+): AsyncIteratorOperatorLike<TReq, T, TReq, T> =>
+  lift(onCompleteObs(onComplete));
 
 export const onError = <TReq, T>(
   onError: (err: unknown) => void,
@@ -337,7 +339,8 @@ export const startWith = <TReq, T>(
 
 export const subscribeOn = <TReq, T>(
   scheduler: SchedulerLike,
-): AsyncIteratorOperatorLike<TReq, T, TReq, T> => lift(subscribeOnObs(scheduler));
+): AsyncIteratorOperatorLike<TReq, T, TReq, T> =>
+  lift(subscribeOnObs(scheduler));
 
 export const switchAll = <TReq, T>(): AsyncIteratorOperatorLike<
   TReq,
@@ -365,7 +368,8 @@ export const throttle = <TReq, T>(
 
 export const throttleTime = <TReq, T>(
   duration: number,
-): AsyncIteratorOperatorLike<TReq, T, TReq, T> => lift(throttleTimeObs(duration));
+): AsyncIteratorOperatorLike<TReq, T, TReq, T> =>
+  lift(throttleTimeObs(duration));
 
 export const throttleFirst = <TReq, T>(
   durationSelector: (next: T) => ObservableLike<unknown>,

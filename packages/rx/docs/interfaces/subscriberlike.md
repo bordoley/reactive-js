@@ -24,6 +24,10 @@ for performance reasons).
 
   ↳ **SubscriberLike**
 
+## Implemented by
+
+* [DelegatingSubscriber](../classes/delegatingsubscriber.md)
+
 ## Index
 
 ### Properties

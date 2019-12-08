@@ -4,8 +4,8 @@ import {
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
-import { DelegatingSubscriber } from "./delegatingSubscriber";
 import { lift } from "./lift";
 
 class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -26,9 +26,10 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(observer: ObserverLike<T>): SubscriberOperatorLike<T, T> => (
-  subscriber: SubscriberLike<T>,
-) => new ObserveSubscriber(subscriber, observer);
+const operator = <T>(
+  observer: ObserverLike<T>,
+): SubscriberOperatorLike<T, T> => (subscriber: SubscriberLike<T>) =>
+  new ObserveSubscriber(subscriber, observer);
 
 /**
  * Returns a ObservableOperatorLike which forwards notifications to the provided observer.

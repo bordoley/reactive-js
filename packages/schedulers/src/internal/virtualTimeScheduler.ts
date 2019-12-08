@@ -4,10 +4,8 @@ import {
   DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-
 import { SchedulerLike, SchedulerResourceLike } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-
 import { AbstractScheduler } from "./abstractScheduler";
 
 /** @noInheritDoc */

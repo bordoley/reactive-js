@@ -4,18 +4,11 @@
 
 ## Index
 
-### Classes
-
-* [DelegatingSubscriber](classes/delegatingsubscriber.md)
-
 ### Functions
 
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
-* [connect](README.md#const-connect)
-* [createObservable](README.md#const-createobservable)
-* [createSubject](README.md#const-createsubject)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
 * [endWith](README.md#endwith)
@@ -319,80 +312,6 @@ Name | Type | Default |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *ObservableOperatorLike‹ObservableLike‹T›, T›*
-
-___
-
-### `Const` connect
-
-▸ **connect**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *DisposableLike*
-
-Safely connects an ObservableLike to a SubscriberLike,
-using the provided scheduler. The returned DisposableLike
-may used to cancel the subscription.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | ObservableLike‹T› |
-`scheduler` | SchedulerLike |
-
-**Returns:** *DisposableLike*
-
-___
-
-### `Const` createObservable
-
-▸ **createObservable**<**T**>(`onSubscribe`: function): *ObservableLike‹T›*
-
-Factory for safely creating new ObservableLikes. The onSubscribe function
-is called with an observer which may be notified from any context,
-queueing notifications for notification on the underlying SubscriberLike's
-scheduler. The onSubscribe function may return a DisposableOrTeardown instance
-which will be disposed when the underlying subscription is disposed.
-
-Note, implementations should not do significant blocking work in
-the onSubscribe function.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **onSubscribe**: *function*
-
-▸ (`observer`: ObserverLike‹T›): *DisposableOrTeardown | void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observer` | ObserverLike‹T› |
-
-**Returns:** *ObservableLike‹T›*
-
-___
-
-### `Const` createSubject
-
-▸ **createSubject**<**T**>(`replayCount`: number): *SubjectResourceLike‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`replayCount` | number | 0 |
-
-**Returns:** *SubjectResourceLike‹T›*
 
 ___
 

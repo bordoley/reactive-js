@@ -8,9 +8,8 @@ import {
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/observable";
 import { createLocationStoreResource, Location } from "@reactive-js/web";
-import { ComponentType, useCallback, useMemo } from "react";
+import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
-import React from "react";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdaterLike<Location>) => void,

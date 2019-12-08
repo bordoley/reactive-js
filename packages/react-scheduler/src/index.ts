@@ -10,12 +10,10 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
-
 import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
-
 import {
   createSchedulerWithPriority,
   PrioritySchedulerLike,

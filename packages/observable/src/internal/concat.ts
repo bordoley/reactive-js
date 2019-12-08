@@ -4,8 +4,8 @@ import {
   ObservableLike,
   ObservableOperatorLike,
   SubscriberLike,
+  connect,
 } from "@reactive-js/rx";
-import { connect } from "./connect";
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
@@ -63,7 +63,10 @@ export function startWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
   return obs => concat(fromArray(values), obs);
 }
 
-export function endWith<T>(value: T, ...values: T[]): ObservableOperatorLike<T, T>;
+export function endWith<T>(
+  value: T,
+  ...values: T[]
+): ObservableOperatorLike<T, T>;
 export function endWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
   return obs => concat(obs, fromArray(values));
 }

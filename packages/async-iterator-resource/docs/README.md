@@ -7,9 +7,6 @@
 ### Functions
 
 * [concatAll](README.md#const-concatall)
-* [createEventEmitter](README.md#const-createeventemitter)
-* [createPersistentStateStore](README.md#const-createpersistentstatestore)
-* [createStateStore](README.md#const-createstatestore)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [endWith](README.md#const-endwith)
 * [exhaust](README.md#const-exhaust)
@@ -62,59 +59,6 @@ Name | Type | Default |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *AsyncIteratorResourceOperatorLike‹TReq, ObservableLike‹T›, TReq, T›*
-
-___
-
-### `Const` createEventEmitter
-
-▸ **createEventEmitter**<**T**>(): *EventEmitterResourceLike‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *EventEmitterResourceLike‹T›*
-
-___
-
-### `Const` createPersistentStateStore
-
-▸ **createPersistentStateStore**<**T**>(`persistentStore`: AsyncIteratorLike‹T, StateUpdaterLike‹T››, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *StateStoreResourceLike‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`persistentStore` | AsyncIteratorLike‹T, StateUpdaterLike‹T›› |
-`initialState` | T |
-`scheduler` | SchedulerLike |
-`equals?` | undefined &#124; function |
-
-**Returns:** *StateStoreResourceLike‹T›*
-
-___
-
-### `Const` createStateStore
-
-▸ **createStateStore**<**T**>(`initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *StateStoreResourceLike‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`initialState` | T |
-`scheduler` | SchedulerLike |
-`equals?` | undefined &#124; function |
-
-**Returns:** *StateStoreResourceLike‹T›*
 
 ___
 
