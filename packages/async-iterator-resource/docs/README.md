@@ -187,7 +187,7 @@ ___
 
 ### `Const` liftReq
 
-▸ **liftReq**<**TReq**, **T**, **TReqA**>(`mapper`: function): *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReqA, T›*
+▸ **liftReq**<**TReq**, **T**, **TReqA**>(`operator`: function): *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReqA, T›*
 
 **Type parameters:**
 
@@ -199,15 +199,29 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
+▪ **operator**: *function*
 
-▸ (`req`: TReqA): *TReq*
+▸ (`dispatcher`: function): *function*
+
+**Parameters:**
+
+▪ **dispatcher**: *function*
+
+▸ (`req`: TReq): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | TReqA |
+`req` | TReq |
+
+▸ (`ref`: TReqA): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ref` | TReqA |
 
 **Returns:** *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReqA, T›*
 
