@@ -46,8 +46,8 @@ const subscription = connect(observable, normalPriority);
 ### Reactive Asynchronous Programming (RX)
 
 - [@reactive-js/rx](./packages/rx)
-- [@reactive-js/observable](./packages/observable/docs)
-- [@reactive-js/observable-resource](./packages/observable-resource/docs)
+- [@reactive-js/observable](./packages/observable)
+- [@reactive-js/observable-resource](./packages/observable-resource)
 
 ### Interactive Asynchronous Programming (IX)
 
