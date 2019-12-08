@@ -45,7 +45,7 @@ const subscription = connect(observable, normalPriority);
 
 ### Reactive Asynchronous Programming (RX)
 
-- [@reactive-js/rx](./packages/rx/docs)
+- [@reactive-js/rx](./packages/rx)
 - [@reactive-js/observable](./packages/observable/docs)
 - [@reactive-js/observable-resource](./packages/observable-resource/docs)
 
@@ -57,12 +57,12 @@ const subscription = connect(observable, normalPriority);
 
 ### Schedulers
 
-- [@reactive-js/scheduler](./packages/scheduler/docs)
+- [@reactive-js/scheduler](./packages/scheduler)
 - [@reactive-js/schedulers](./packages/schedulers/docs)
 
 ### Resource Management
 
-- [@reactive-js/disposable](./packages/disposable/docs)
+- [@reactive-js/disposable](./packages/disposable)
 
 ### Platform Integrations
 
