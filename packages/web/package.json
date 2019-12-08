@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/web",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -17,12 +17,12 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.3",
-    "@reactive-js/ix": "^0.0.3",
-    "@reactive-js/observable": "^0.0.3",
-    "@reactive-js/rx": "^0.0.3",
-    "@reactive-js/scheduler": "^0.0.3",
-    "@reactive-js/schedulers": "^0.0.3",
+    "@reactive-js/disposable": "^0.0.4",
+    "@reactive-js/ix": "^0.0.4",
+    "@reactive-js/observable": "^0.0.4",
+    "@reactive-js/rx": "^0.0.4",
+    "@reactive-js/scheduler": "^0.0.4",
+    "@reactive-js/schedulers": "^0.0.4",
     "tslib": "^1.10.0"
   },
   "scripts": {
