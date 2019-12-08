@@ -5,22 +5,18 @@ import {
   ObservableLike,
 } from "../src/index";
 
-import {
-  createDisposable,
-} from "@reactive-js/disposable";
+import { createDisposable } from "@reactive-js/disposable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-import {
-  createVirtualTimeScheduler,
-} from "@reactive-js/schedulers";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 
-import {AbstractSubscriber} from "../src/internal/abstractSubscriber";
+import { AbstractSubscriber } from "../src/internal/abstractSubscriber";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   readonly isConnected = true;
-  next= jest.fn();
-  complete= jest.fn();
+  next = jest.fn();
+  complete = jest.fn();
 
   constructor(scheduler: SchedulerLike) {
     super(scheduler, createDisposable());
@@ -63,8 +59,10 @@ describe("rx", () => {
       const scheduler = createVirtualTimeScheduler();
       const subscriber = new MockSubscriber(scheduler);
       const cause = new Error();
-      const observable = createObservable(_ => { throw cause; })
-      
+      const observable = createObservable(_ => {
+        throw cause;
+      });
+
       observable.subscribe(subscriber);
       scheduler.run();
 
@@ -90,27 +88,27 @@ describe("rx", () => {
   describe("createSubject", () => {
     test("when subject is completed", () => {
       const subject = createSubject(2);
-  
+
       subject.next(1);
       subject.next(2);
       subject.next(3);
       subject.complete();
-  
+
       const scheduler = createVirtualTimeScheduler();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
       scheduler.run();
-  
+
       expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
       expect(subscriber.complete).toHaveBeenCalled();
     });
     test("when subject is not completed", () => {
       const subject = createSubject(2);
-  
+
       subject.next(1);
       subject.next(2);
       subject.next(3);
-  
+
       const scheduler = createVirtualTimeScheduler();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
@@ -119,26 +117,26 @@ describe("rx", () => {
         subject.complete();
       });
       scheduler.run();
-  
+
       expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
       expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
       expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
       expect(subscriber.complete).toHaveBeenCalled();
     });
-  
+
     test("subscribe and dispose the subscription remove the observer", () => {
       const subject = createSubject(2);
-  
+
       subject.next(1);
       subject.next(2);
       subject.next(3);
-  
+
       const scheduler = createVirtualTimeScheduler();
       const subscriber = new MockSubscriber(scheduler);
-      subject.subscribe(subscriber);;
+      subject.subscribe(subscriber);
       subscriber.dispose();
       scheduler.run();
-  
+
       expect(subscriber.next).toHaveBeenCalledTimes(0);
     });
   });

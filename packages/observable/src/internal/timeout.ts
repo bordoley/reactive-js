@@ -8,7 +8,7 @@ import {
   connect,
   DelegatingSubscriber,
 } from "@reactive-js/rx";
-import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
+import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { onError } from "./observe";
 import { pipe } from "./pipe";

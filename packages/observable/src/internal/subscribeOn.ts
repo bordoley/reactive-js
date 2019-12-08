@@ -1,9 +1,6 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  connect,
-  createObservable,
-} from "@reactive-js/rx";
-import {  ObservableOperatorLike } from "./interfaces";
+import { connect, createObservable } from "@reactive-js/rx";
+import { ObservableOperatorLike } from "./interfaces";
 import { observe } from "./observe";
 
 export const subscribeOn = <T>(

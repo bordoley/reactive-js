@@ -10,7 +10,7 @@ import {
   connect,
   DelegatingSubscriber,
 } from "@reactive-js/rx";
-import {  ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
+import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "./pipe";

@@ -1,5 +1,5 @@
 import { ObservableLike } from "@reactive-js/rx";
-import {  ObservableOperatorLike } from "./interfaces";
+import { ObservableOperatorLike } from "./interfaces";
 
 export function pipe<T, A>(
   src: ObservableLike<T>,

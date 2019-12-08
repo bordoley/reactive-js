@@ -31,5 +31,6 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeWhileSubscriber(subscriber, predicate);
 
-export const takeWhile = <T>(predicate: (next: T) => boolean): ObservableOperatorLike<T, T> =>
-  lift(operator(predicate));
+export const takeWhile = <T>(
+  predicate: (next: T) => boolean,
+): ObservableOperatorLike<T, T> => lift(operator(predicate));

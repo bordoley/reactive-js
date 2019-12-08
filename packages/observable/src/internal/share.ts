@@ -7,7 +7,7 @@ import {
   createSubject,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {  ObservableOperatorLike } from "./interfaces";
+import { ObservableOperatorLike } from "./interfaces";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
 
