@@ -12,7 +12,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Hierarchy
 
-* AbstractSubscriberImpl‹TA›
+* AbstractSubscriber‹TA›
 
   ↳ **DelegatingSubscriber**
 

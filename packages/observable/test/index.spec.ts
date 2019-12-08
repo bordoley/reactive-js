@@ -3,7 +3,7 @@ import {
   disposed,
   DisposableLike,
 } from "@reactive-js/disposable";
-import { ObservableLike, ObserverLike } from "@reactive-js/rx";
+import { connect, createObservable, ObserverLike } from "@reactive-js/rx";
 import {
   createVirtualTimeScheduler,
   AbstractScheduler,
@@ -13,9 +13,6 @@ import {
   combineLatest,
   concat,
   concatAll,
-  connect,
-  createObservable,
-  createSubject,
   distinctUntilChanged,
   empty,
   fromArray,
@@ -77,68 +74,6 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
 });
 
 describe("Observable", () => {
-  describe("connect", () => {
-    test("throws with serial observable", () => {
-      const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
-        subscribe: subscriber => subscriber.next(1),
-      };
-
-      const seriallyCallsCompleteOnSubscribe: ObservableLike<number> = {
-        subscribe: subscriber => subscriber.complete(),
-      };
-
-      expect(() =>
-        connect(seriallyCallsNextOnSubscribe, createVirtualTimeScheduler()),
-      ).toThrow();
-      expect(() =>
-        connect(seriallyCallsCompleteOnSubscribe, createVirtualTimeScheduler()),
-      ).toThrow();
-    });
-
-    test("auto-disposes the subscription on complete", () => {
-      const observable = createObservable(observer => observer.complete());
-      const scheduler = createVirtualTimeScheduler();
-
-      const subscription = connect(observable, scheduler);
-      expect(subscription.isDisposed).toBeFalsy();
-
-      scheduler.run();
-      expect(subscription.isDisposed).toBeTruthy();
-    });
-  });
-
-  describe("create", () => {
-    test("completes the subscriber if onSubscribe throws", () => {
-      const cause = new Error();
-      const observer = createMockObserver();
-      const observable = pipe(
-        createObservable(_ => {
-          throw cause;
-        }),
-        observe(observer),
-      );
-      const scheduler = createVirtualTimeScheduler();
-      connect(observable, scheduler);
-      scheduler.run();
-
-      expect(observer.complete).toBeCalledWith({ cause });
-    });
-
-    test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
-      const scheduler = createVirtualTimeScheduler();
-      const disposable = createDisposable();
-
-      const subscription = connect(
-        createObservable(_ => disposable),
-        scheduler,
-      );
-      scheduler.run();
-
-      expect(disposable.isDisposed).toBeFalsy();
-      subscription.dispose();
-      expect(disposable.isDisposed).toBeTruthy();
-    });
-  });
 
   test("lift", () => {
     const onNext = <T>(onNext: (data: T) => void) =>
@@ -831,72 +766,6 @@ test("withLatestFrom", () => {
   expect(observer.next).toHaveBeenNthCalledWith(5, [2, 3]);
   expect(observer.next).toHaveBeenNthCalledWith(6, [3, 3]);
   expect(observer.complete).toBeCalledWith({ cause });
-});
-
-describe("create", () => {
-  test("when subject is completed", () => {
-    const subject = createSubject(2);
-
-    subject.next(1);
-    subject.next(2);
-    subject.next(3);
-    subject.complete();
-
-    const scheduler = createVirtualTimeScheduler();
-    const observer = {
-      next: jest.fn(),
-      complete: jest.fn(),
-    };
-    connect(pipe(subject, observe(observer)), scheduler);
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 3);
-    expect(observer.complete).toHaveBeenCalled();
-  });
-  test("when subject is not completed", () => {
-    const subject = createSubject(2);
-
-    subject.next(1);
-    subject.next(2);
-    subject.next(3);
-
-    const scheduler = createVirtualTimeScheduler();
-    const observer = {
-      next: jest.fn(),
-      complete: jest.fn(),
-    };
-    connect(pipe(subject, observe(observer)), scheduler);
-    scheduler.schedule(_ => {
-      subject.next(4);
-      subject.complete();
-    });
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 4);
-    expect(observer.complete).toHaveBeenCalled();
-  });
-
-  test("subscribe and dispose the subscription remove the observer", () => {
-    const subject = createSubject(2);
-
-    subject.next(1);
-    subject.next(2);
-    subject.next(3);
-
-    const scheduler = createVirtualTimeScheduler();
-    const observer = {
-      next: jest.fn(),
-      complete: jest.fn(),
-    };
-
-    const subscription = connect(pipe(subject, observe(observer)), scheduler);
-    subscription.dispose();
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(0);
-  });
 });
 
 test("share", () => {

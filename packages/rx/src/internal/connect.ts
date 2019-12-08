@@ -1,11 +1,11 @@
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
-import { AbstractSubscriberImpl, checkState } from "./abstractSubscriber";
+import { AbstractSubscriber, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
 
-class AutoDisposingSubscriber<T> extends AbstractSubscriberImpl<T>
+class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
   implements SubscriberLike<T> {
   private _isConnected = false;
 
