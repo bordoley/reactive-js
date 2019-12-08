@@ -4,22 +4,22 @@ import { map, pipe, scan } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo } from "react";
 
-export interface RelativeURI {
+export interface RelativeURILike {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
 }
 
-const empty: RelativeURI = {
+const empty: RelativeURILike = {
   path: "",
   query: "",
   fragment: "",
 };
 
 export interface RoutableComponentProps {
-  readonly referer: RelativeURI | undefined;
-  readonly uri: RelativeURI;
-  readonly uriUpdater: (updater: StateUpdaterLike<RelativeURI>) => void;
+  readonly referer: RelativeURILike | undefined;
+  readonly uri: RelativeURILike;
+  readonly uriUpdater: (updater: StateUpdaterLike<RelativeURILike>) => void;
 }
 
 interface RouteMap {
@@ -27,7 +27,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStore: StateStoreLike<RelativeURI>;
+  readonly locationStore: StateStoreLike<RelativeURILike>;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,
@@ -45,14 +45,14 @@ export const Router = function Router(props: RouterProps) {
       routeMap[path] = component;
     }
 
-    const uriUpdater = (updater: StateUpdaterLike<RelativeURI>) => {
+    const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
       locationStore.dispatch(updater);
     };
 
     const pairify = (
-      [_, oldState]: [RelativeURI | undefined, RelativeURI],
-      next: RelativeURI,
-    ): [RelativeURI | undefined, RelativeURI] =>
+      [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
+      next: RelativeURILike,
+    ): [RelativeURILike | undefined, RelativeURILike] =>
       oldState === empty ? [undefined, next] : [oldState, next];
 
     return pipe(

@@ -1,13 +1,13 @@
 import { StateUpdaterLike } from "@reactive-js/ix";
 import { useMemo } from "react";
-import { RelativeURI, RoutableComponentProps } from "./router";
+import { RelativeURILike, RoutableComponentProps } from "./router";
 
 const createURIStateUpdater = <TState>(
   stateUpdater: StateUpdaterLike<TState>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery: boolean,
-) => (oldURI: RelativeURI) => {
+) => (oldURI: RelativeURILike) => {
   const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
 
   const oldState = parse(oldSerialized);

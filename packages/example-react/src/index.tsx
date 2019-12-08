@@ -7,14 +7,14 @@ import {
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate } from "@reactive-js/observable";
-import { createLocationStoreResource, Location } from "@reactive-js/web";
+import { createLocationStoreResource, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdaterLike<Location>) => void,
+  uriUpdater: (updater: StateUpdaterLike<LocationLike>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdaterLike<Location>) => () =>
+  const liftUpdater = (updater: StateUpdaterLike<LocationLike>) => () =>
     uriUpdater(updater);
   const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
 

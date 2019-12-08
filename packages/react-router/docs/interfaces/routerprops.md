@@ -19,7 +19,7 @@
 
 ###  locationStore
 
-• **locationStore**: *StateStoreLike‹[RelativeURI](relativeuri.md)›*
+• **locationStore**: *StateStoreLike‹[RelativeURILike](relativeurilike.md)›*
 
 ___
 

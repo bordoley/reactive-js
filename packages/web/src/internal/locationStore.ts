@@ -9,7 +9,7 @@ import { ObservableLike } from "@reactive-js/rx";
 import { concat, ofValue } from "@reactive-js/observable";
 import { fromEvent } from "./event";
 
-export interface Location {
+export interface LocationLike {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
@@ -21,21 +21,21 @@ const emptyLocation = {
   query: "",
 };
 
-const locationEquals = (a: Location, b: Location): boolean =>
+const locationEquals = (a: LocationLike, b: LocationLike): boolean =>
   a === b ||
   (a.path === b.path && a.query === b.query && a.fragment === b.fragment);
 
 const chopLeadingChar = (str: string) =>
   str.length > 0 ? str.substring(1) : "";
 
-const getCurrentLocation = (): Location => {
+const getCurrentLocation = (): LocationLike => {
   const path = window.location.pathname;
   const query = chopLeadingChar(window.location.search);
   const fragment = chopLeadingChar(window.location.hash);
   return { path, query, fragment };
 };
 
-const dispatch = (newLocation: Location) => {
+const dispatch = (newLocation: LocationLike) => {
   const currentLocation = getCurrentLocation();
   if (!locationEquals(currentLocation, newLocation)) {
     const { path, query, fragment } = newLocation;
@@ -48,19 +48,19 @@ const dispatch = (newLocation: Location) => {
 
 const getCurrentLocationStateUpdater = (
   _?: unknown,
-): StateUpdaterLike<Location> => {
+): StateUpdaterLike<LocationLike> => {
   const uri = getCurrentLocation();
-  return (_: Location) => uri;
+  return (_: LocationLike) => uri;
 };
 
-const observable: ObservableLike<StateUpdaterLike<Location>> = concat(
+const observable: ObservableLike<StateUpdaterLike<LocationLike>> = concat(
   ofValue(getCurrentLocationStateUpdater()),
   fromEvent(window, "popstate", getCurrentLocationStateUpdater),
 );
 
 const historyIterator: AsyncIteratorLike<
-  Location,
-  StateUpdaterLike<Location>
+  LocationLike,
+  StateUpdaterLike<LocationLike>
 > = {
   dispatch,
   subscribe: subscriber => observable.subscribe(subscriber),
@@ -68,7 +68,7 @@ const historyIterator: AsyncIteratorLike<
 
 export const createLocationStoreResource = (
   scheduler: SchedulerLike,
-): StateStoreResourceLike<Location> =>
+): StateStoreResourceLike<LocationLike> =>
   createPersistentStateStore(
     historyIterator,
     emptyLocation,
