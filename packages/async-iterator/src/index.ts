@@ -1,4 +1,4 @@
-import { AsyncIteratorLike, AsyncIteratorOperatorLike } from "@reactive-js/ix";
+import { AsyncIteratorLike } from "@reactive-js/ix";
 import {
   ErrorLike,
   ObservableLike,

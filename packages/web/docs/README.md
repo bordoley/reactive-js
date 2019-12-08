@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-* [Location](interfaces/location.md)
+* [LocationLike](interfaces/locationlike.md)
 
 ### Functions
 
@@ -18,7 +18,7 @@
 
 ### `Const` createLocationStoreResource
 
-▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *StateStoreResourceLike‹[Location](interfaces/location.md)›*
+▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *StateStoreResourceLike‹[LocationLike](interfaces/locationlike.md)›*
 
 **Parameters:**
 
@@ -26,7 +26,7 @@ Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
 
-**Returns:** *StateStoreResourceLike‹[Location](interfaces/location.md)›*
+**Returns:** *StateStoreResourceLike‹[LocationLike](interfaces/locationlike.md)›*
 
 ___
 

@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-* [RelativeURI](interfaces/relativeuri.md)
+* [RelativeURILike](interfaces/relativeurilike.md)
 * [RoutableComponentProps](interfaces/routablecomponentprops.md)
 * [RouterProps](interfaces/routerprops.md)
 

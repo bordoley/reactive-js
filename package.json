@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build & yarn docs",
+    "build": "lerna run build",
     "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo packages/**/coverage",
     "docs": "lerna run docs",
     "example": "node ./packages/example/dist/index.js",
