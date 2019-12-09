@@ -9,7 +9,7 @@ module Operator {
 external connect: (t('a), Scheduler.t) => Disposable.t = "connect";
 
 [@bs.module "@reactive-js/rx"]
-external create: (Observer.t('a) => Disposable.t) => t('a) =
+external create: ([@bs.uncurry](Observer.t('a) => Disposable.t)) => t('a) =
   "createObservable";
 
 [@bs.module "@reactive-js/observable"]
