@@ -1,12 +1,11 @@
 import {
   createDisposable,
   DisposableLike,
-  DisposableOrTeardown,
   throwIfDisposed,
 } from "@reactive-js/disposable";
 import { SchedulerLike, SchedulerResourceLike } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-import { AbstractScheduler } from "./abstractScheduler";
+import { AbstractSchedulerResource } from "./abstractScheduler";
 
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
@@ -32,10 +31,9 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl extends AbstractScheduler
+class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
   private _now = 0;
-  private readonly disposable = createDisposable();
   private readonly maxMicroTaskTicks: number;
   private microTaskTicks = 0;
   private taskIDCount = 0;
@@ -47,30 +45,8 @@ class VirtualTimeSchedulerResourceImpl extends AbstractScheduler
     this.maxMicroTaskTicks = maxMicroTaskTicks;
   }
 
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
   get now(): number {
     return this._now;
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): void {
-    this.disposable.add(disposable, ...disposables);
-  }
-
-  dispose(): void {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): void {
-    this.disposable.remove(disposable, ...disposables);
   }
 
   protected shouldCallbackYield(_: number): boolean {
@@ -114,7 +90,7 @@ class VirtualTimeSchedulerResourceImpl extends AbstractScheduler
   }
 }
 
-export const createVirtualTimeScheduler = (
+export const createVirtualTimeSchedulerResource = (
   maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
 ): VirtualTimeSchedulerResourceLike =>
   new VirtualTimeSchedulerResourceImpl(maxMicroTaskTicks);

@@ -5,13 +5,16 @@ export {
 } from "./internal/priorityScheduler";
 
 export {
-  createVirtualTimeScheduler,
+  createVirtualTimeSchedulerResource,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerResourceLike,
 } from "./internal/virtualTimeScheduler";
 
-export { createPerfTestingScheduler } from "./internal/perfTestingScheduler";
+export { createSynchronousSchedulerResource } from "./internal/synchronousScheduler";
 
 export { createSchedulerWithPriority } from "./internal/schedulerWithPriority";
 
-export { AbstractScheduler } from "./internal/abstractScheduler";
+export {
+  AbstractScheduler,
+  AbstractSchedulerResource,
+} from "./internal/abstractScheduler";

@@ -1,12 +1,15 @@
 import {
+  createDisposable,
   createSerialDisposable,
   disposed,
   DisposableLike,
+  DisposableOrTeardown,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
+  SchedulerResourceLike,
 } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
@@ -67,5 +70,36 @@ export abstract class AbstractScheduler implements SchedulerLike {
     const callback = this.createCallback(continuation, disposable);
     disposable.disposable = this.scheduleCallback(callback, delay);
     return disposable;
+  }
+}
+
+export abstract class AbstractSchedulerResource extends AbstractScheduler
+  implements SchedulerResourceLike {
+  private readonly disposable = createDisposable();
+
+  /** @ignore */
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  /** @ignore */
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add(disposable, ...disposables);
+  }
+
+  /** @ignore */
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  /** @ignore */
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove(disposable, ...disposables);
   }
 }

@@ -9,7 +9,7 @@ import { createDisposable } from "@reactive-js/disposable";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
+import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
 
 import { AbstractSubscriber } from "../src/internal/abstractSubscriber";
 
@@ -35,16 +35,22 @@ describe("rx", () => {
       };
 
       expect(() =>
-        connect(seriallyCallsNextOnSubscribe, createVirtualTimeScheduler()),
+        connect(
+          seriallyCallsNextOnSubscribe,
+          createVirtualTimeSchedulerResource(),
+        ),
       ).toThrow();
       expect(() =>
-        connect(seriallyCallsCompleteOnSubscribe, createVirtualTimeScheduler()),
+        connect(
+          seriallyCallsCompleteOnSubscribe,
+          createVirtualTimeSchedulerResource(),
+        ),
       ).toThrow();
     });
 
     test("auto-disposes the subscription on complete", () => {
       const observable = createObservable(observer => observer.complete());
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
 
       const subscription = connect(observable, scheduler);
       expect(subscription.isDisposed).toBeFalsy();
@@ -56,7 +62,7 @@ describe("rx", () => {
 
   describe("createObservable", () => {
     test("completes the subscriber if onSubscribe throws", () => {
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       const cause = new Error();
       const observable = createObservable(_ => {
@@ -70,7 +76,7 @@ describe("rx", () => {
     });
 
     test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
       const disposable = createDisposable();
 
       const subscription = connect(
@@ -94,7 +100,7 @@ describe("rx", () => {
       subject.next(3);
       subject.complete();
 
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
       scheduler.run();
@@ -109,7 +115,7 @@ describe("rx", () => {
       subject.next(2);
       subject.next(3);
 
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
       scheduler.schedule(_ => {
@@ -131,7 +137,7 @@ describe("rx", () => {
       subject.next(2);
       subject.next(3);
 
-      const scheduler = createVirtualTimeScheduler();
+      const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
       subscriber.dispose();
