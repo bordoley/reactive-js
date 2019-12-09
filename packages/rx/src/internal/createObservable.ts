@@ -24,13 +24,9 @@ export const createObservable = <T>(
     const observer = createSafeObserver(subscriber);
 
     try {
-      const onSubscribeSubscription = onSubscribe(observer);
+      const onSubscribeSubscription = onSubscribe(observer) || undefined;
       if (onSubscribeSubscription !== undefined) {
         subscriber.add(onSubscribeSubscription);
-
-        if (!(onSubscribeSubscription instanceof Function)) {
-          onSubscribeSubscription.add(subscriber);
-        }
       }
     } catch (cause) {
       observer.complete({ cause });
