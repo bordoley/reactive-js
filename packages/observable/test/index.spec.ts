@@ -5,7 +5,7 @@ import {
 } from "@reactive-js/disposable";
 import { connect, createObservable, ObserverLike } from "@reactive-js/rx";
 import {
-  createVirtualTimeScheduler,
+  createVirtualTimeSchedulerResource,
   AbstractScheduler,
 } from "@reactive-js/schedulers";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -80,7 +80,7 @@ describe("Observable", () => {
         next: onNext,
         complete: _ => {},
       });
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const result: number[] = [];
 
     const liftedObservable = pipe(
@@ -102,7 +102,7 @@ describe("Observable", () => {
 });
 
 test("combineLatest", () => {
-  const scheduler = createVirtualTimeScheduler(1);
+  const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
 
   connect(
@@ -132,7 +132,7 @@ test("combineLatest", () => {
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
 
     const observer = createMockObserver();
     connect(
@@ -148,7 +148,7 @@ describe("concat", () => {
   });
 
   test("completes immediate when one observable completes with an error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const cause = new Error();
     const observer = createMockObserver();
 
@@ -172,7 +172,7 @@ describe("concat", () => {
 
 describe("concatAll", () => {
   test("concats observables", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const observableA = fromArray([1, 2]);
     const observableB = fromArray([3, 4]);
@@ -194,7 +194,7 @@ describe("concatAll", () => {
   });
 
   test("immediately completes when completed with an error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
     const observableA = fromArray([1, 2]);
@@ -215,7 +215,7 @@ describe("concatAll", () => {
   });
 
   test("immediately completes when inner observable completes with an error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
     const observableA = concat(fromArray([1, 2]), throws(cause));
@@ -233,7 +233,7 @@ describe("concatAll", () => {
 });
 
 test("distinctUntilChanged", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
   const cause = new Error();
   const src = pipe(
@@ -284,7 +284,7 @@ test("distinctUntilChanged", () => {
 
 describe("empty", () => {
   test("produces no values and completes", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
 
     connect(pipe(empty(), observe(observer)), scheduler);
@@ -299,7 +299,7 @@ describe("empty", () => {
 describe("fromArray", () => {
   test("with no delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6]);
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
     connect(pipe(observable, observe(observer)), scheduler);
@@ -315,7 +315,7 @@ describe("fromArray", () => {
 
   test("with delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
     connect(
@@ -356,7 +356,7 @@ describe("fromPromiseFactory", () => {
 });
 
 test("fromScheduledValues", () => {
-  const scheduler = createVirtualTimeScheduler(1);
+  const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
   const observable = fromScheduledValues(
     [0, 1],
@@ -387,7 +387,7 @@ test("fromScheduledValues", () => {
 
 describe("generate", () => {
   test("without delay", () => {
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
     connect(
@@ -409,7 +409,7 @@ describe("generate", () => {
   });
 
   test("without delay, generate throws", () => {
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
     const cause = new Error();
 
@@ -435,7 +435,7 @@ describe("generate", () => {
   });
 
   test("with delay", () => {
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
     connect(
@@ -458,7 +458,7 @@ describe("generate", () => {
   });
 
   test("with delay, generate throws", () => {
-    const scheduler = createVirtualTimeScheduler(1);
+    const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
     const cause = new Error();
 
@@ -490,7 +490,7 @@ describe("generate", () => {
 });
 
 test("ignoreElements", () => {
-  const scheduler = createVirtualTimeScheduler(1);
+  const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
@@ -503,7 +503,7 @@ test("ignoreElements", () => {
 });
 
 test("keep", () => {
-  const scheduler = createVirtualTimeScheduler(1);
+  const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
@@ -524,7 +524,7 @@ test("keep", () => {
 });
 
 test("merge", () => {
-  const scheduler = createVirtualTimeScheduler(1);
+  const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
   const cause = new Error();
 
@@ -557,7 +557,7 @@ test("merge", () => {
 
 describe("never", () => {
   test("produces no values and doesn't complete", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
 
     connect(pipe(never(), observe(observer)), scheduler);
@@ -570,7 +570,7 @@ describe("never", () => {
 
 describe("ofValue", () => {
   test("completes with the value when subscribed", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
 
     connect(pipe(ofValue(1), observe(observer)), scheduler);
@@ -583,7 +583,7 @@ describe("ofValue", () => {
 });
 
 test("onComplete", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
   const cb = jest.fn();
 
@@ -596,7 +596,7 @@ test("onComplete", () => {
 
 describe("onError", () => {
   test("when completed with error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
     const cb = jest.fn();
@@ -609,7 +609,7 @@ describe("onError", () => {
   });
 
   test("when completed without error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cb = jest.fn();
 
@@ -622,7 +622,7 @@ describe("onError", () => {
 });
 
 test("onNext", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
   const cb = jest.fn();
 
@@ -635,7 +635,7 @@ test("onNext", () => {
 
 describe("throws", () => {
   test("completes with an exception when subscribed", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
 
@@ -648,7 +648,7 @@ describe("throws", () => {
 });
 
 test("scan", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
@@ -670,7 +670,7 @@ test("scan", () => {
 });
 
 test("switchAll", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
 
   const innerObservable = fromArray([1, 2]);
@@ -692,7 +692,7 @@ test("switchAll", () => {
 
 describe("takeLast", () => {
   test("publishes the last n values when completed", () => {
-    const scheduler = createVirtualTimeScheduler(2);
+    const scheduler = createVirtualTimeSchedulerResource(2);
     const observer = createMockObserver();
     const src = fromArray([1, 2, 3, 4]);
 
@@ -707,7 +707,7 @@ describe("takeLast", () => {
   });
 
   test("immediately completes with an error if completed with an error", () => {
-    const scheduler = createVirtualTimeScheduler();
+    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
     const src = merge(fromArray([1, 2, 3, 4], 4), throws(cause, 2));
@@ -728,7 +728,7 @@ describe("toPromise", () => {
 });
 
 test("withLatestFrom", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
   const cause = new Error();
 
   const otherObservable = concat(
@@ -768,7 +768,7 @@ test("withLatestFrom", () => {
 });
 
 test("share", () => {
-  const scheduler = createVirtualTimeScheduler();
+  const scheduler = createVirtualTimeSchedulerResource();
 
   const replayed = pipe(
     concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),

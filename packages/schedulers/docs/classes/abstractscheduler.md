@@ -6,6 +6,8 @@
 
 * **AbstractScheduler**
 
+  ↳ [AbstractSchedulerResource](abstractschedulerresource.md)
+
 ## Implements
 
 * SchedulerLike

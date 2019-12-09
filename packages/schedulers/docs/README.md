@@ -7,6 +7,7 @@
 ### Classes
 
 * [AbstractScheduler](classes/abstractscheduler.md)
+* [AbstractSchedulerResource](classes/abstractschedulerresource.md)
 
 ### Interfaces
 
@@ -17,20 +18,12 @@
 
 ### Functions
 
-* [createPerfTestingScheduler](README.md#const-createperftestingscheduler)
 * [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
-* [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
+* [createSynchronousSchedulerResource](README.md#const-createsynchronousschedulerresource)
+* [createVirtualTimeSchedulerResource](README.md#const-createvirtualtimeschedulerresource)
 
 ## Functions
-
-### `Const` createPerfTestingScheduler
-
-▸ **createPerfTestingScheduler**(): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
-
-**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
-
-___
 
 ### `Const` createPrioritySchedulerResource
 
@@ -61,9 +54,17 @@ Name | Type |
 
 ___
 
-### `Const` createVirtualTimeScheduler
+### `Const` createSynchronousSchedulerResource
 
-▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+▸ **createSynchronousSchedulerResource**(): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+
+**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+
+___
+
+### `Const` createVirtualTimeSchedulerResource
+
+▸ **createVirtualTimeSchedulerResource**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
 
 **Parameters:**
 
