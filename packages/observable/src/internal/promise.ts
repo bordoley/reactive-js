@@ -15,21 +15,21 @@ export const fromPromiseFactory = <T>(
   const onSubscribe = (observer: ObserverLike<T>) => {
     const disposable = createDisposable();
 
-    factory().then(
-      v => {
-        console.log("dfkl")
-        if (!disposable.isDisposed) {
-          console.log("dosm");
-          observer.next(v);
-          observer.complete();  
-        }
-      },
-      cause => {
-        if (!disposable.isDisposed) {
-          observer.complete({ cause });
-        }
-      },
-    ).then(_ => disposable.dispose());
+    factory()
+      .then(
+        v => {
+          if (!disposable.isDisposed) {
+            observer.next(v);
+            observer.complete();
+          }
+        },
+        cause => {
+          if (!disposable.isDisposed) {
+            observer.complete({ cause });
+          }
+        },
+      )
+      .finally(() => disposable.dispose());
 
     return disposable;
   };
