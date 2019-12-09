@@ -45,9 +45,7 @@ class NodeScheduler extends AbstractScheduler {
   }
 
   scheduleCallback(callback: () => void, delay = 0): DisposableLike {
-    // setTimeout has a floor of 4ms so for lesser delays
-    // just schedule immediately.
-    return delay >= 4
+    return delay > 0
       ? scheduleDelayed(callback, delay)
       : scheduleImmediate(callback);
   }
