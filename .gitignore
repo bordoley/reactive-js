@@ -9,3 +9,8 @@ yarn-error.log
 
 *.tsbuildinfo
 bundle.js
+
+.merlin
+.bsb.lock
+npm-debug.log
+**/lib/bs
