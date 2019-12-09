@@ -1,6 +1,6 @@
 # @reactive-js/scheduler
 
-Abstract API for a cooperative multi-tasking scheduler in a javascript environment. 
+Abstract API for a cooperative multi-tasking scheduler in a javascript environment.
 
 The Scheduler API is designed to support both immediate and delayed scheduling of work, known as a SchedulerContinuation. Recursively scheduled work is also supported. Cooperative multi-tasking is achieved via periodic polling of the `shouldYield` function within a SchedulerContinuation.
 

@@ -7,22 +7,31 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
 import { pipe } from "./pipe";
+import { createDisposable } from "@reactive-js/disposable";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
 ): ObservableLike<T> => {
-  const doSubscribe = async (observer: ObserverLike<T>) => {
-    try {
-      const result = await factory();
-      observer.next(result);
-      observer.complete();
-    } catch (cause) {
-      observer.complete({ cause });
-    }
-  };
-
   const onSubscribe = (observer: ObserverLike<T>) => {
-    doSubscribe(observer);
+    const disposable = createDisposable();
+
+    factory().then(
+      v => {
+        console.log("dfkl")
+        if (!disposable.isDisposed) {
+          console.log("dosm");
+          observer.next(v);
+          observer.complete();  
+        }
+      },
+      cause => {
+        if (!disposable.isDisposed) {
+          observer.complete({ cause });
+        }
+      },
+    ).then(_ => disposable.dispose());
+
+    return disposable;
   };
 
   return createObservable(onSubscribe);

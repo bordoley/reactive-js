@@ -2,7 +2,7 @@
 
 Utilities for creating, composing and transforming reactive-js Observable streams.
 
-This package consists the of the utilities traditionally considered part of the reactive extensions. The goal of this library is to provide an approximately equivalent API surface to that provided by RxJS, simplified where possible, while removing operators and overloads not commonly used. 
+This package consists the of the utilities traditionally considered part of the reactive extensions. The goal of this library is to provide an approximately equivalent API surface to that provided by RxJS, simplified where possible, while removing operators and overloads not commonly used.
 
 ## Installation
 
@@ -19,6 +19,7 @@ yarn add @reactive-js/observable
 ```
 
 ## Usage
+
 ```typescript
 import { connect } from "@reactive-js/rx";
 import {
@@ -42,7 +43,6 @@ connect(
   ),
   scheduler,
 );
-
 ```
 
 ## Documentation

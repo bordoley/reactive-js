@@ -17,6 +17,7 @@ yarn add @reactive-js/observable-resource
 ```
 
 ## Usage
+
 ```typescript
 import { connect, createSubject } from "@reactive-js/rx";
 import {
@@ -32,9 +33,9 @@ const scheduler = createSchedulerWithPriority(500);
 const subject = createSubject();
 
 // Create a stateful observable resource which shares the subjects
-// underly disposable. eg. disposing observableResource disposes 
+// underly disposable. eg. disposing observableResource disposes
 // subject as well.
-const observableResource =  pipe(
+const observableResource = pipe(
   subject,
   map(x => fromArray([x, x, x, x])),
   exhaust(),
@@ -42,7 +43,6 @@ const observableResource =  pipe(
 );
 
 const subscription = connect(observableResource, scheduler);
-
 ```
 
 ## Documentation

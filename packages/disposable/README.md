@@ -17,11 +17,14 @@ yarn add @reactive-js/disposable
 ```
 
 ## Usage
+
 ```typescript
 import { createDisposable } from "@reactive-js/disposable";
 
-const arr = new Array(1000) ;
-const onDispose = () => { arr.length = 0; };
+const arr = new Array(1000);
+const onDispose = () => {
+  arr.length = 0;
+};
 const disposable = createDisposable();
 disposable.add(onDispose);
 
