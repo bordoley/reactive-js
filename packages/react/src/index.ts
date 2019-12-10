@@ -19,8 +19,8 @@ const connectObservable = <T>(
   connect(
     pipe(
       observable,
+      throttleTime(8),
       subscribeOn(scheduler),
-      throttleTime(15),
       observe({
         next: (data: T) => updateState(_ => data),
         complete: (error?: ErrorLike) => updateError(_ => error),
