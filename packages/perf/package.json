@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@reactive-js/observable": "^0.0.6",
+    "@reactive-js/pipe": "^0.0.6",
     "@reactive-js/rx": "^0.0.6",
     "@reactive-js/schedulers": "^0.0.6",
     "benchmark": "^2.1.4",

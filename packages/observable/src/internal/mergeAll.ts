@@ -8,7 +8,7 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount = 0;
@@ -55,27 +55,25 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       if (nextObs !== undefined) {
         this.activeCount++;
 
-        const nextObsSubscription = connect(
-          pipe(
-            nextObs,
-            observe({
-              next: (data: T) => {
-                this.delegate.next(data);
-              },
-              complete: (error?: ErrorLike) => {
-                this.activeCount--;
-                this.remove(nextObsSubscription);
+        const nextObsSubscription = pipe(
+          nextObs,
+          observe({
+            next: (data: T) => {
+              this.delegate.next(data);
+            },
+            complete: (error?: ErrorLike) => {
+              this.activeCount--;
+              this.remove(nextObsSubscription);
 
-                if (error !== undefined) {
-                  this.isCompleted = true;
-                  this.delegate.complete(error);
-                } else {
-                  this.connectNext();
-                }
-              },
-            }),
-          ),
-          this,
+              if (error !== undefined) {
+                this.isCompleted = true;
+                this.delegate.complete(error);
+              } else {
+                this.connectNext();
+              }
+            },
+          }),
+          connect(this),
         );
 
         this.add(nextObsSubscription);

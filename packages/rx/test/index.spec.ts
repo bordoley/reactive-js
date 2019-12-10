@@ -7,11 +7,14 @@ import {
 
 import { createDisposable } from "@reactive-js/disposable";
 
+import { pipe } from "@reactive-js/pipe";
+
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
 
 import { AbstractSubscriber } from "../src/internal/abstractSubscriber";
+import { ObserverLike } from "../dist/types";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   readonly isConnected = true;
@@ -34,16 +37,16 @@ describe("rx", () => {
         subscribe: subscriber => subscriber.complete(),
       };
 
-      expect(() =>
-        connect(
-          seriallyCallsNextOnSubscribe,
-          createVirtualTimeSchedulerResource(),
-        ),
+      expect(() =>pipe(
+        seriallyCallsNextOnSubscribe,
+        connect( createVirtualTimeSchedulerResource())
+      )
+
       ).toThrow();
       expect(() =>
-        connect(
+        pipe(
           seriallyCallsCompleteOnSubscribe,
-          createVirtualTimeSchedulerResource(),
+          connect(createVirtualTimeSchedulerResource()),
         ),
       ).toThrow();
     });
@@ -52,7 +55,7 @@ describe("rx", () => {
       const observable = createObservable(observer => observer.complete());
       const scheduler = createVirtualTimeSchedulerResource();
 
-      const subscription = connect(observable, scheduler);
+      const subscription = pipe(observable, connect(scheduler));
       expect(subscription.isDisposed).toBeFalsy();
 
       scheduler.run();
@@ -79,9 +82,10 @@ describe("rx", () => {
       const scheduler = createVirtualTimeSchedulerResource();
       const disposable = createDisposable();
 
-      const subscription = connect(
-        createObservable(_ => disposable),
-        scheduler,
+      const subscription = pipe(
+        (_: ObserverLike<unknown>) => disposable,
+        createObservable,
+        connect(scheduler),
       );
       scheduler.run();
 

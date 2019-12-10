@@ -40,8 +40,8 @@
   "dependencies": {
     "@reactive-js/ix": "^0.0.6",
     "@reactive-js/observable": "^0.0.6",
-    "@reactive-js/rx": "^0.0.6",
-    "@reactive-js/scheduler": "^0.0.6"
+    "@reactive-js/scheduler": "^0.0.6",
+    "@reactive-js/rx": "^0.0.6"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",

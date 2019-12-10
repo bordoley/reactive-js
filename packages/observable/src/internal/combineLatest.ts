@@ -11,7 +11,7 @@ import {
   disposed,
 } from "@reactive-js/disposable";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 interface CombineLatestContext {
   completedCount: number;
@@ -150,9 +150,10 @@ export function combineLatest(
         index,
       );
 
-      observer.innerSubscription = connect(
-        pipe(observables[index], observe(observer)),
-        subscriber,
+      observer.innerSubscription = pipe(
+        observables[index],
+        observe(observer),
+        connect(subscriber),
       );
 
       allSubscriptions.add(observer.innerSubscription);

@@ -10,7 +10,7 @@ import {
 import { ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   static InnerObserver = class<T> implements ObserverLike<T> {
@@ -42,9 +42,10 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
   protected onNext(data: ObservableLike<T>) {
     this.innerSubscription.disposable = disposed;
-    this.innerSubscription.disposable = connect(
-      pipe(data, observe(new SwitchSubscriber.InnerObserver(this))),
-      this,
+    this.innerSubscription.disposable = pipe(
+      data,
+      observe(new SwitchSubscriber.InnerObserver(this)),
+      connect(this),
     );
   }
 }

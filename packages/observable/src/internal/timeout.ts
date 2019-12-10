@@ -11,7 +11,7 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { onError } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
@@ -20,12 +20,10 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly duration: number;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private readonly setupTimeout = () => {
-    this.durationSubscription.disposable = connect(
-      pipe(
-        throws(timeoutError, this.duration),
-        onError(cause => this.complete({ cause })),
-      ),
-      this,
+    this.durationSubscription.disposable = pipe(
+      throws(timeoutError, this.duration),
+      onError(cause => this.complete({ cause })),
+      connect(this),
     );
   };
   constructor(delegate: SubscriberLike<T>, duration: number) {

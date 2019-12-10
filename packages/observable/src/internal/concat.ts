@@ -7,7 +7,7 @@ import {
 } from "@reactive-js/rx";
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 import { ObservableOperatorLike } from "./interfaces";
 
 export function concat<T>(
@@ -27,7 +27,7 @@ export function concat<T>(
       const head = queue.shift();
 
       if (head !== undefined) {
-        innerSubscription = connect(pipe(head, observe(observer)), subscriber);
+        innerSubscription = pipe(head, observe(observer), connect(subscriber));
 
         subscriber.add(innerSubscription);
       }

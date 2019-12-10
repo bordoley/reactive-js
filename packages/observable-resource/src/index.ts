@@ -19,7 +19,6 @@ import {
   onComplete as onCompleteObs,
   onError as onErrorObs,
   onNext as onNextObs,
-  pipe as pipeObs,
   repeat as repeatObs,
   retry as retryObs,
   scan as scanObs,
@@ -84,11 +83,10 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
 export const lift = <A, B>(
   operator: ObservableOperatorLike<A, B>,
 ): ObservableResourceOperatorLike<A, B> => observableResource => {
-  const observable = pipeObs(
+  const liftedObservable = operator(
     observableResource instanceof LiftedObservableResource
       ? observableResource.observable
       : observableResource,
-    operator,
   );
 
   const disposable =
@@ -96,87 +94,8 @@ export const lift = <A, B>(
       ? observableResource.disposable
       : observableResource;
 
-  return new LiftedObservableResource(observable, disposable);
+  return new LiftedObservableResource(liftedObservable, disposable);
 };
-
-export function pipe<T, A>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-): ObservableResourceLike<A>;
-export function pipe<T, A, B>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-): ObservableResourceLike<B>;
-export function pipe<T, A, B, C>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-): ObservableResourceLike<C>;
-export function pipe<T, A, B, C, D>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-): ObservableResourceLike<D>;
-export function pipe<T, A, B, C, D, E>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-  op5: ObservableResourceOperatorLike<D, E>,
-): ObservableResourceLike<E>;
-export function pipe<T, A, B, C, D, E, F>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-  op5: ObservableResourceOperatorLike<D, E>,
-  op6: ObservableResourceOperatorLike<E, F>,
-): ObservableResourceLike<F>;
-export function pipe<T, A, B, C, D, E, F, G>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-  op5: ObservableResourceOperatorLike<D, E>,
-  op6: ObservableResourceOperatorLike<E, F>,
-  op7: ObservableResourceOperatorLike<F, G>,
-): ObservableResourceLike<G>;
-export function pipe<T, A, B, C, D, E, F, G, H>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-  op5: ObservableResourceOperatorLike<D, E>,
-  op6: ObservableResourceOperatorLike<E, F>,
-  op7: ObservableResourceOperatorLike<F, G>,
-  op8: ObservableResourceOperatorLike<G, H>,
-): ObservableResourceLike<H>;
-export function pipe<T, A, B, C, D, E, F, G, H, I>(
-  src: ObservableResourceLike<T>,
-  op1: ObservableResourceOperatorLike<T, A>,
-  op2: ObservableResourceOperatorLike<A, B>,
-  op3: ObservableResourceOperatorLike<B, C>,
-  op4: ObservableResourceOperatorLike<C, D>,
-  op5: ObservableResourceOperatorLike<D, E>,
-  op6: ObservableResourceOperatorLike<E, F>,
-  op7: ObservableResourceOperatorLike<F, G>,
-  op8: ObservableResourceOperatorLike<G, H>,
-  op9: ObservableResourceOperatorLike<H, I>,
-): ObservableResourceLike<I>;
-export function pipe(
-  source: ObservableResourceLike<any>,
-  ...operators: Array<ObservableResourceOperatorLike<any, any>>
-): ObservableResourceLike<any> {
-  return operators.reduce((acc, next) => next(acc), source);
-}
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
