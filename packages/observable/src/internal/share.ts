@@ -9,7 +9,7 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableOperatorLike } from "./interfaces";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private readonly factory: () => SubjectResourceLike<T>;
@@ -43,18 +43,20 @@ class SharedObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void {
     if (this.refCount === 0) {
       this.subject = this.factory();
-      this.sourceSubscription = connect(
-        pipe(this.source, observe(this.subject)),
-        this.scheduler,
+      this.sourceSubscription = pipe(
+        this.source,
+        observe(this.subject),
+        connect(this.scheduler),
       );
     }
     this.refCount++;
 
     const subject = this.subject as SubjectResourceLike<T>;
 
-    const innerSubscription = connect(
-      pipe(subject, observe(subscriber)),
-      subscriber,
+    const innerSubscription = pipe(
+      subject,
+      observe(subscriber),
+      connect(subscriber),
     );
 
     subscriber.add(this.teardown, innerSubscription);

@@ -1,7 +1,9 @@
 {
-  "name": "@reactive-js/example",
+  "name": "@reactive-js/pipe",
   "version": "0.0.6",
-  "private": true,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm5/index.js",
+  "types": "dist/types/index.d.ts",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -35,13 +37,15 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
-  "dependencies": {
-    "@reactive-js/node": "^0.0.6",
-    "@reactive-js/observable": "^0.0.6",
-    "@reactive-js/pipe": "^0.0.6",
-    "@reactive-js/rx": "^0.0.6"
-  },
+  "dependencies": {},
   "scripts": {
-    "build": "tsc"
+    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm5": "tsc -p tsconfig.esm5.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "docs": "typedoc --tsconfig tsconfig.doc.json"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

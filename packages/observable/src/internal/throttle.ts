@@ -13,7 +13,7 @@ import { empty } from "./fromArray";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { onComplete } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;
@@ -35,9 +35,9 @@ class ThrottleFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     if (this.durationSubscription.disposable.isDisposed) {
-      this.durationSubscription.disposable = connect(
+      this.durationSubscription.disposable = pipe(
         this.durationSelector(data),
-        this,
+        connect(this),
       );
       this.delegate.next(data);
     }
@@ -96,9 +96,10 @@ class ThrottleLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.value = [data];
 
     if (this.durationSubscription.disposable.isDisposed) {
-      this.durationSubscription.disposable = connect(
-        pipe(this.durationSelector(data), onComplete(this.notifyNext)),
-        this,
+      this.durationSubscription.disposable = pipe(
+        this.durationSelector(data),
+        onComplete(this.notifyNext),
+        connect(this),
       );
     }
   }
@@ -130,9 +131,10 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.value = undefined;
       const [next] = value;
 
-      this.durationSubscription.disposable = connect(
-        pipe(this.durationSelector(next), onComplete(this.notifyNext)),
-        this,
+      this.durationSubscription.disposable = pipe(
+        this.durationSelector(next),
+        onComplete(this.notifyNext),
+        connect(this),
       );
 
       this.delegate.next(next);

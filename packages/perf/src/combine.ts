@@ -15,8 +15,8 @@ export const run = (n: number) => {
         fromArray,
         keep,
         map,
-        pipe,
       } = require("@reactive-js/observable");
+      const { pipe } = require("@reactive-js/pipe");
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray(src);

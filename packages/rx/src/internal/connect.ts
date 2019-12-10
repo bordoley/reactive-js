@@ -1,4 +1,5 @@
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriber, checkState } from "./abstractSubscriber";
@@ -41,8 +42,9 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
  * may used to cancel the subscription.
  */
 export const connect = <T>(
-  observable: ObservableLike<T>,
   scheduler: SchedulerLike,
+): OperatorLike<ObservableLike<T>, DisposableLike> => (
+  observable: ObservableLike<T>,
 ): DisposableLike => {
   const subscription = createDisposable();
   const subscriber = new AutoDisposingSubscriber(scheduler, subscription);

@@ -12,12 +12,13 @@ import {
   ignoreElements,
   merge,
   onNext,
-  pipe,
   scan,
   share,
   startWith,
   ObservableOperatorLike,
 } from "@reactive-js/observable";
+
+import { pipe } from "@reactive-js/pipe";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -123,7 +124,7 @@ export const createReducerStore = <TAction, T>(
       share(scheduler, 1),
     );
   const store = createAsyncIteratorResource(operator);
-  store.add(connect(store, scheduler));
+  pipe(store, connect(scheduler), d => store.add(d));
   return store;
 };
 

@@ -3,6 +3,6 @@ import { createSynchronousSchedulerResource } from "@reactive-js/schedulers";
 
 export const run = <T>(observable: ObservableLike<T>) => {
   const scheduler = createSynchronousSchedulerResource();
-  connect(observable, scheduler);
+  connect(scheduler)(observable);
   scheduler.run();
 };

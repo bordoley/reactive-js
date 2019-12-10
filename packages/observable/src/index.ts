@@ -21,7 +21,6 @@ export { map } from "./internal/map";
 export { merge } from "./internal/merge";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
-export { pipe } from "./internal/pipe";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
 export { share } from "./internal/share";

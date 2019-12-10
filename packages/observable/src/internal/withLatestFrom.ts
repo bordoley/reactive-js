@@ -10,7 +10,7 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   TA,
@@ -48,9 +48,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     super(delegate);
     this.selector = selector;
 
-    this.otherSubscription = connect(
-      pipe(other, observe(new WithLatestFromSubscriber.InnerObserver(this))),
-      this,
+    this.otherSubscription = pipe(
+      other,
+      observe(new WithLatestFromSubscriber.InnerObserver(this)),
+      connect(this),
     );
 
     this.add(this.otherSubscription);

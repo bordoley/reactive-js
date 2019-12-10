@@ -13,7 +13,7 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 
 class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {
@@ -46,9 +46,10 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
 
     private setupSubscription() {
       this.count++;
-      this.parent.innerSubscription.disposable = connect(
-        pipe(this.parent.observable, observe(this.parent.observer)),
-        this.parent,
+      this.parent.innerSubscription.disposable = pipe(
+        this.parent.observable,
+        observe(this.parent.observer),
+        connect(this.parent),
       );
     }
   };

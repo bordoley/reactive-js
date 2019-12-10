@@ -6,7 +6,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
-import { pipe } from "./pipe";
+import { pipe } from "@reactive-js/pipe";
 import { createDisposable } from "@reactive-js/disposable";
 
 export const fromPromiseFactory = <T>(
@@ -43,28 +43,24 @@ export const toPromise = <T>(
 ): Promise<T> =>
   new Promise((resolve, reject) => {
     let result: T | undefined = undefined;
-    const subscription = connect(
-      pipe(
-        observable,
-        observe({
-          next: v => {
-            result = v;
-          },
-          complete: err => {
-            subscription.dispose();
-            if (err !== undefined) {
-              const { cause } = err;
-              reject(cause);
-            } else if (result === undefined) {
-              reject(
-                new Error("Observable completed without producing a value"),
-              );
-            } else {
-              resolve(result);
-            }
-          },
-        }),
-      ),
-      scheduler,
+    const subscription = pipe(
+      observable,
+      observe({
+        next: v => {
+          result = v;
+        },
+        complete: err => {
+          subscription.dispose();
+          if (err !== undefined) {
+            const { cause } = err;
+            reject(cause);
+          } else if (result === undefined) {
+            reject(new Error("Observable completed without producing a value"));
+          } else {
+            resolve(result);
+          }
+        },
+      }),
+      connect(scheduler),
     );
   });
