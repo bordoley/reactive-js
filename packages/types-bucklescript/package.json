@@ -1,0 +1,52 @@
+{
+  "name": "@reactive-js/types-bucklescript",
+  "version": "0.0.8",
+  "keywords": [
+    "asynchronous",
+    "BuckleScript",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "observable",
+    "observables",
+    "ocaml",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "reason",
+    "reasonml",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "devDependencies": {
+    "bs-platform": "^7.0.1"
+  },
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
