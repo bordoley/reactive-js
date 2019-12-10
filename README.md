@@ -59,9 +59,10 @@ const subscription = pipe(
 - [@reactive-js/scheduler](./packages/scheduler)
 - [@reactive-js/schedulers](./packages/schedulers/docs)
 
-### Resource Management
+### Utilities
 
 - [@reactive-js/disposable](./packages/disposable)
+- [@reactive-js/pipe](./packages/pipe/docs)
 
 ### Platform Integrations
 
