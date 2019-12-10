@@ -85,6 +85,9 @@ external never: unit => t('a) = "never";
 external ofValue: 'a => t('a) = "ofValue";
 
 [@bs.module "@reactive-js/observable"]
+external throws: (Error.JsError.t, ~delay: int=?, unit) => t('a) = "throws";
+
+[@bs.module "@reactive-js/observable"]
 external concatAll:
   (~maxBufferSize: int=?, unit) => ObservableOperator.t(t('a), 'a) =
   "concatAll";
@@ -231,9 +234,6 @@ external throttleLastTime: int => ObservableOperator.t('a, 'a) =
 
 [@bs.module "@reactive-js/observable"]
 external throttleTime: int => ObservableOperator.t('a, 'a) = "throttleTime";
-
-[@bs.module "@reactive-js/observable"]
-external throws: (Error.JsError.t, ~delay: int=?, unit) => t('a) = "throws";
 
 [@bs.module "@reactive-js/observable"]
 external timeout: int => ObservableOperator.t('a, 'a) = "timeout";

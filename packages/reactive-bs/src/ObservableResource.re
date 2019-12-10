@@ -19,7 +19,7 @@ module ObservableResourceOperator = {
 
 [@bs.module "@reactive-js/observable-resource"]
 external concatAll:
-  (~maxBufferSize: int=?, unit) => ObservableResourceOperator.t(t('a), 'a) =
+  (~maxBufferSize: int=?, unit) => ObservableResourceOperator.t(Observable.t('a), 'a) =
   "concatAll";
 
 [@bs.module "@reactive-js/observable-resource"]
@@ -32,7 +32,7 @@ external endWith: ('a, array('a)) => ObservableResourceOperator.t('a, 'a) =
   "endWith";
 
 [@bs.module "@reactive-js/observable-resource"]
-external exhaust: unit => ObservableResourceOperator.t(t('a), 'a) = "exhaust";
+external exhaust: unit => ObservableResourceOperator.t(Observable.t('a), 'a) = "exhaust";
 
 [@bs.module "@reactive-js/observable-resource"]
 external ignoreElements: unit => ObservableResourceOperator.t('a, 'b) =
@@ -45,16 +45,8 @@ external keep: ([@bs.uncurry] ('a => bool)) => ObservableResourceOperator.t('a, 
 [@bs.module "@reactive-js/observable-resource"]
 external map: ('a => 'b) => ObservableResourceOperator.t('a, 'b) = "map";
 
-module MergeAllConfig = {
-  type t;
-
-  [@bs.obj]
-  external create: (~maxBufferSize: int=?, ~maxConcurrency: int=?, unit) => t =
-    "";
-};
-
 [@bs.module "@reactive-js/observable-resource"]
-external mergeAll: MergeAllConfig.t => ObservableResourceOperator.t(t('a), 'a) =
+external mergeAll: Observable.MergeAllConfig.t => ObservableResourceOperator.t(Observable.t('a), 'a) =
   "mergeAll";
 
 [@bs.module "@reactive-js/observable-resource"]
@@ -123,7 +115,7 @@ external subscribeOn: Scheduler.t => ObservableResourceOperator.t('a, 'a) =
   "subscribeOn";
 
 [@bs.module "@reactive-js/observable-resource"]
-external switchAll: unit => ObservableResourceOperator.t(t('a), 'a) = "switchAll";
+external switchAll: unit => ObservableResourceOperator.t(Observable.t('a), 'a) = "switchAll";
 
 [@bs.module "@reactive-js/observable-resource"]
 external take: int => ObservableResourceOperator.t('a, 'a) = "take";
@@ -138,12 +130,12 @@ external takeWhile:
 
 [@bs.module "@reactive-js/observable-resource"]
 external throttle:
-  ([@bs.uncurry] ('a => t('any))) => ObservableResourceOperator.t('a, 'a) =
+  ([@bs.uncurry] ('a => Observable.t('any))) => ObservableResourceOperator.t('a, 'a) =
   "throttle";
 
 [@bs.module "@reactive-js/observable-resource"]
 external throttleFirst:
-  ([@bs.uncurry] ('a => t('any))) => ObservableResourceOperator.t('a, 'a) =
+  ([@bs.uncurry] ('a => Observable.t('any))) => ObservableResourceOperator.t('a, 'a) =
   "throttleFirst";
 
 [@bs.module "@reactive-js/observable-resource"]
@@ -152,7 +144,7 @@ external throttleFirstTime: int => ObservableResourceOperator.t('a, 'a) =
 
 [@bs.module "@reactive-js/observable-resource"]
 external throttleLast:
-  ([@bs.uncurry] ('a => t('any))) => ObservableResourceOperator.t('a, 'a) =
+  ([@bs.uncurry] ('a => Observable.t('any))) => ObservableResourceOperator.t('a, 'a) =
   "throttleLast";
 
 [@bs.module "@reactive-js/observable-resource"]
@@ -163,12 +155,9 @@ external throttleLastTime: int => ObservableResourceOperator.t('a, 'a) =
 external throttleTime: int => ObservableResourceOperator.t('a, 'a) = "throttleTime";
 
 [@bs.module "@reactive-js/observable-resource"]
-external throws: (Error.JsError.t, ~delay: int=?, unit) => t('a) = "throws";
-
-[@bs.module "@reactive-js/observable-resource"]
 external timeout: int => ObservableResourceOperator.t('a, 'a) = "timeout";
 
 [@bs.module "@reactive-js/observable-resource"]
 external withLatestFrom:
-  (t('b), ~selector: ('a, 'b) => 'c, unit) => ObservableResourceOperator.t('a, 'c) =
+  (Observable.t('b), ~selector: ('a, 'b) => 'c, unit) => ObservableResourceOperator.t('a, 'c) =
   "withLatestFrom";

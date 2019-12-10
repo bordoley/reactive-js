@@ -3,11 +3,8 @@
 
 var ObservableResourceOperator = { };
 
-var MergeAllConfig = { };
-
 export {
   ObservableResourceOperator ,
-  MergeAllConfig ,
   
 }
 /* No side effect */
