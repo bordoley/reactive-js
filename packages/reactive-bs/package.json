@@ -1,6 +1,6 @@
 {
-  "name": "@reactive-js/reactive-bs",
-  "version": "0.0.6",
+  "name": "@reactive-js/bucklescript",
+  "version": "0.0.8",
   "keywords": [
     "asynchronous",
     "BuckleScript",
@@ -12,12 +12,15 @@
     "ix",
     "observable",
     "observables",
+    "ocaml",
     "react",
     "reactjs",
     "reactive",
     "reactive-extensions",
     "reactive-js",
     "reactive-x",
+    "reason",
+    "reasonml",
     "rx",
     "rxjs",
     "scheduler",
@@ -34,19 +37,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
-  },
-  "dependencies": {
-    "@reactive-js/async-iterator": "^0.0.6",
-    "@reactive-js/async-iterator-resource": "^0.0.6",
-    "@reactive-js/disposable": "^0.0.6",
-    "@reactive-js/ix": "^0.0.6",
-    "@reactive-js/node": "^0.0.6",
-    "@reactive-js/observable": "^0.0.6",
-    "@reactive-js/observable-resource": "^0.0.6",
-    "@reactive-js/rx": "^0.0.6",
-    "@reactive-js/scheduler": "^0.0.6",
-    "@reactive-js/schedulers": "^0.0.6",
-    "@reactive-js/web": "^0.0.6"
   },
   "devDependencies": {
     "bs-platform": "^7.0.1"
