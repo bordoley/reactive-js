@@ -37,11 +37,11 @@ describe("rx", () => {
         subscribe: subscriber => subscriber.complete(),
       };
 
-      expect(() =>pipe(
-        seriallyCallsNextOnSubscribe,
-        connect( createVirtualTimeSchedulerResource())
-      )
-
+      expect(() =>
+        pipe(
+          seriallyCallsNextOnSubscribe,
+          connect(createVirtualTimeSchedulerResource()),
+        ),
       ).toThrow();
       expect(() =>
         pipe(

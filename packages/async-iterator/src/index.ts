@@ -167,7 +167,7 @@ export const retry = <TReq, T>(
 
 export const scan = <TReq, T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
-  initialValue: TAcc,
+  initialValue: () => TAcc,
 ): AsyncIteratorOperatorLike<TReq, T, TReq, TAcc> =>
   lift(scanObs(scanner, initialValue));
 

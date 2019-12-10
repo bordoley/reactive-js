@@ -18,7 +18,7 @@ export const run = (n: number) => {
         fromArray(src),
         keep(even),
         map(add1),
-        scan(sum, 0),
+        scan(sum, () => 0),
       );
 
       run(observable);

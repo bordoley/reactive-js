@@ -414,7 +414,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReq, TAcc›*
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReq, TAcc›*
 
 **Type parameters:**
 
@@ -437,7 +437,9 @@ Name | Type |
 `acc` | TAcc |
 `next` | T |
 
-▪ **initialValue**: *TAcc*
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
 
 **Returns:** *[AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)‹TReq, T, TReq, TAcc›*
 

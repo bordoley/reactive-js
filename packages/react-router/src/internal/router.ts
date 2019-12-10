@@ -58,7 +58,10 @@ export const Router = function Router(props: RouterProps) {
 
     return pipe(
       locationStore,
-      scan(pairify, [undefined, empty]),
+      scan(pairify, (): [RelativeURILike | undefined, RelativeURILike] => [
+        undefined,
+        empty,
+      ]),
       map(([referer, uri]) =>
         createElement(routeMap[uri.path] || notFound, {
           referer,

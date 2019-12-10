@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+* [IteratorResource](interfaces/iteratorresource.md)
 * [ObservableOperatorLike](interfaces/observableoperatorlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
 
@@ -23,6 +24,7 @@
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#const-generate)
 * [ignoreElements](README.md#const-ignoreelements)
+* [iterate](README.md#const-iterate)
 * [keep](README.md#const-keep)
 * [lift](README.md#const-lift)
 * [map](README.md#const-map)
@@ -34,6 +36,7 @@
 * [onComplete](README.md#const-oncomplete)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
+* [reduce](README.md#const-reduce)
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
@@ -52,6 +55,8 @@
 * [throttleTime](README.md#const-throttletime)
 * [throws](README.md#const-throws)
 * [timeout](README.md#const-timeout)
+* [toArray](README.md#const-toarray)
+* [toIterator](README.md#const-toiterator)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
@@ -444,7 +449,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: T, `delay`: number): *ObservableLike‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -462,7 +467,9 @@ Name | Type |
 ------ | ------ |
 `acc` | T |
 
-▪ **initialValue**: *T*
+▪ **initialValue**: *function*
+
+▸ (): *T*
 
 ▪`Default value`  **delay**: *number*= 0
 
@@ -481,6 +488,24 @@ ___
 ▪ **TB**
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+___
+
+### `Const` iterate
+
+▸ **iterate**<**T**>(`schedulerFactory`: function): *OperatorLike‹ObservableLike‹T›, void›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
+
+▸ (): *VirtualTimeSchedulerResourceLike*
+
+**Returns:** *OperatorLike‹ObservableLike‹T›, void›*
 
 ___
 
@@ -717,6 +742,37 @@ Name | Type |
 
 ___
 
+### `Const` reduce
+
+▸ **reduce**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **reducer**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
+
+___
+
 ### `Const` repeat
 
 ▸ **repeat**<**T**>(`predicate?`: function | number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
@@ -755,7 +811,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -776,7 +832,9 @@ Name | Type |
 `acc` | TAcc |
 `next` | T |
 
-▪ **initialValue**: *TAcc*
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
 
@@ -1070,6 +1128,42 @@ Name | Type |
 `duration` | number |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` toArray
+
+▸ **toArray**<**T**>(`schedulerFactory?`: undefined | function): *OperatorLike‹ObservableLike‹T›, keyof T[]›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`schedulerFactory?` | undefined &#124; function |
+
+**Returns:** *OperatorLike‹ObservableLike‹T›, keyof T[]›*
+
+___
+
+### `Const` toIterator
+
+▸ **toIterator**<**T**>(`schedulerFactory`: function): *OperatorLike‹ObservableLike‹T›, [IteratorResource](interfaces/iteratorresource.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
+
+▸ (): *VirtualTimeSchedulerResourceLike*
+
+**Returns:** *OperatorLike‹ObservableLike‹T›, [IteratorResource](interfaces/iteratorresource.md)‹T››*
 
 ___
 

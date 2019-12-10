@@ -341,7 +341,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: TAcc): *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -362,7 +362,9 @@ Name | Type |
 `acc` | TAcc |
 `next` | T |
 
-▪ **initialValue**: *TAcc*
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
 
 **Returns:** *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, TAcc›*
 

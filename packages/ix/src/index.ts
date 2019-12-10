@@ -118,7 +118,7 @@ export const createReducerStore = <TAction, T>(
   const operator: ObservableOperatorLike<TAction, T> = obs =>
     pipe(
       obs,
-      scan(reducer, initialState),
+      scan(reducer, () => initialState),
       startWith(initialState),
       distinctUntilChanged(equals),
       share(scheduler, 1),
@@ -154,7 +154,10 @@ export const createPersistentStateStore = <T>(
 
     const stateObs = pipe(
       obs,
-      scan((acc: T, next: StateUpdaterLike<T>) => next(acc), initialState),
+      scan(
+        (acc: T, next: StateUpdaterLike<T>) => next(acc),
+        () => initialState,
+      ),
       distinctUntilChanged(equals),
       onNext(next => persistentStore.dispatch(next)),
     );

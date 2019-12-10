@@ -1,10 +1,18 @@
 [@reactive-js/schedulers](../README.md) › [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
 
-# Interface: VirtualTimeSchedulerLike
+# Interface: VirtualTimeSchedulerLike <**TReturn, TNext**>
+
+## Type parameters
+
+▪ **TReturn**
+
+▪ **TNext**
 
 ## Hierarchy
 
 * SchedulerLike
+
+* Iterator‹void›
 
   ↳ **VirtualTimeSchedulerLike**
 
