@@ -1208,7 +1208,7 @@ ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *Promise‹T›*
+▸ **toPromise**<**T**>(`scheduler`: SchedulerLike): *OperatorLike‹ObservableLike‹T›, Promise‹T››*
 
 **Type parameters:**
 
@@ -1218,10 +1218,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`observable` | ObservableLike‹T› |
 `scheduler` | SchedulerLike |
 
-**Returns:** *Promise‹T›*
+**Returns:** *OperatorLike‹ObservableLike‹T›, Promise‹T››*
 
 ___
 
