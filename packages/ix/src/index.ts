@@ -127,7 +127,7 @@ export const createStateStore = <T>(
 };
 
 export const createPersistentStateStore = <T>(
-  persistentStore: AsyncIteratorLike<T, StateUpdaterLike<T>>,
+  persistentStore: AsyncIteratorLike<T, T>,
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
@@ -137,7 +137,7 @@ export const createPersistentStateStore = <T>(
   const operator: ObservableOperatorLike<StateUpdaterLike<T>, T> = obs => {
     const onPersistentStoreChangedStream = pipe(
       persistentStore,
-      onNext(dispatch),
+      onNext(v => dispatch(_ => v)),
       ignoreElements(),
     );
 
