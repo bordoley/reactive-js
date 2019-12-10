@@ -20,6 +20,7 @@
 * [endWith](README.md#endwith)
 * [exhaust](README.md#const-exhaust)
 * [fromArray](README.md#const-fromarray)
+* [fromIterable](README.md#const-fromiterable)
 * [fromPromiseFactory](README.md#const-frompromisefactory)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#const-generate)
@@ -405,6 +406,25 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `values` | ReadonlyArray‹T› | - |
+`delay` | number | 0 |
+
+**Returns:** *ObservableLike‹T›*
+
+___
+
+### `Const` fromIterable
+
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`iterable` | Iterable‹T› | - |
 `delay` | number | 0 |
 
 **Returns:** *ObservableLike‹T›*

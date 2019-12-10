@@ -41,6 +41,7 @@ import {
   toArray,
   iterate,
   toIterable,
+  fromIterable,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -251,6 +252,7 @@ describe("empty", () => {
   });
 });
 
+
 describe("fromArray", () => {
   test("with no delay", () => {
     const src = [1, 2, 3, 4, 5, 6];
@@ -264,6 +266,39 @@ describe("fromArray", () => {
 
   test("with delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
+    const scheduler = createVirtualTimeSchedulerResource(1);
+    const observer = createMockObserver();
+
+    pipe(
+      observable,
+      map(v => [scheduler.now, v]),
+      observe(observer),
+      connect(scheduler),
+    );
+    scheduler.run();
+
+    expect(observer.next).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(observer.next).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(observer.next).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(observer.next).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(observer.next).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(observer.next).toHaveBeenNthCalledWith(6, [18, 6]);
+  });
+});
+
+describe("fromIterable", () => {
+  test("with no delay", () => {
+    const src = [1, 2, 3, 4, 5, 6];
+    const observable = fromIterable(src);
+    const result = pipe(
+      observable,
+      toArray(() => createVirtualTimeSchedulerResource(1)),
+    );
+    expect(result).toEqual(src);
+  });
+
+  test("with delay", () => {
+    const observable = fromIterable([1, 2, 3, 4, 5, 6], 3);
     const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
