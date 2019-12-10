@@ -28,7 +28,7 @@
 
 ### `Const` connect
 
-▸ **connect**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›, `scheduler`: SchedulerLike): *DisposableLike*
+▸ **connect**<**T**>(`scheduler`: SchedulerLike): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
 
 Safely connects an ObservableLike to a SubscriberLike,
 using the provided scheduler. The returned DisposableLike
@@ -42,10 +42,9 @@ may used to cancel the subscription.
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
 `scheduler` | SchedulerLike |
 
-**Returns:** *DisposableLike*
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
 
 ___
 
