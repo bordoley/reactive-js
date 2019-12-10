@@ -14,6 +14,7 @@ export {
   fromScheduledValues,
   ofValue,
 } from "./internal/fromArray";
+export { fromIterable } from "./internal/fromIterable";
 export { fromPromiseFactory, toPromise } from "./internal/promise";
 export { generate } from "./internal/generate";
 export { ignoreElements } from "./internal/ignoreElements";
