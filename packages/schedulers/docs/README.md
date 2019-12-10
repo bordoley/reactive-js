@@ -8,6 +8,7 @@
 
 * [AbstractScheduler](classes/abstractscheduler.md)
 * [AbstractSchedulerResource](classes/abstractschedulerresource.md)
+* [AbstractVirtualTimeSchedulerResource](classes/abstractvirtualtimeschedulerresource.md)
 
 ### Interfaces
 

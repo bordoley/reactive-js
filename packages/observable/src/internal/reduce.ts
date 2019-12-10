@@ -6,39 +6,40 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
+class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   private acc: TAcc;
-  private scanner: (acc: TAcc, next: T) => TAcc;
+  private reducer: (acc: TAcc, next: T) => TAcc;
   constructor(
     delegate: SubscriberLike<TAcc>,
-    scanner: (acc: TAcc, next: T) => TAcc,
+    reducer: (acc: TAcc, next: T) => TAcc,
     initialValue: TAcc,
   ) {
     super(delegate);
-    this.scanner = scanner;
+    this.reducer = reducer;
     this.acc = initialValue;
   }
 
   protected onComplete(error?: ErrorLike) {
+    if (error === undefined) {
+      this.delegate.next(this.acc);
+    }
     this.delegate.complete(error);
   }
 
   protected onNext(next: T) {
     const prevAcc = this.acc;
-    const nextAcc = this.scanner(prevAcc, next);
+    const nextAcc = this.reducer(prevAcc, next);
     this.acc = nextAcc;
-
-    this.delegate.next(nextAcc);
   }
 }
 
 const operator = <T, TAcc>(
-  scanner: (acc: TAcc, next: T) => TAcc,
+  reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
 ): SubscriberOperatorLike<T, TAcc> => subscriber =>
-  new ScanSubscriber(subscriber, scanner, initialValue());
+  new ReduceSubscriber(subscriber, reducer, initialValue());
 
-export const scan = <T, TAcc>(
-  scanner: (acc: TAcc, next: T) => TAcc,
+export const reduce = <T, TAcc>(
+  reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => lift(operator(scanner, initialValue));
+): ObservableOperatorLike<T, TAcc> => lift(operator(reducer, initialValue));

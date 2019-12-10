@@ -1,5 +1,7 @@
-import { AbstractSchedulerResource } from "./abstractScheduler";
-import { VirtualTimeSchedulerResourceLike } from "./virtualTimeScheduler";
+import {
+  AbstractVirtualTimeSchedulerResource,
+  VirtualTimeSchedulerResourceLike,
+} from "./virtualTimeScheduler";
 import {
   DisposableLike,
   throwIfDisposed,
@@ -7,17 +9,28 @@ import {
 } from "@reactive-js/disposable";
 
 // Intentionally defined as a module function for perf reasons.
-const shouldYield = () => false;
+const shouldYieldFalse = () => false;
+const shouldYieldTrue = () => false;
+
+const iteratorYield = {
+  done: false,
+  value: undefined,
+};
+
+const iteratorDone = {
+  done: true,
+  value: undefined,
+};
 
 // @ts-ignore override shouldYield for perf
-class SynchronousSchedulerResource extends AbstractSchedulerResource
+class SynchronousSchedulerResource extends AbstractVirtualTimeSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
   readonly now = 0;
 
   private readonly queue: (() => void)[] = [];
 
   // @ts-ignore override shouldYield for perf
-  private shouldYield = shouldYield;
+  private shouldYield = shouldYieldFalse;
 
   protected shouldCallbackYield(_: number): boolean {
     return false;
@@ -28,8 +41,21 @@ class SynchronousSchedulerResource extends AbstractSchedulerResource
     return createDisposable();
   }
 
+  next(): IteratorResult<void> {
+    throwIfDisposed(this);
+
+    this.shouldYield = shouldYieldTrue;
+    if (this.queue.length > 0) {
+      let next = this.queue.shift() as () => void;
+      next();
+    }
+
+    return this.queue.length > 0 ? iteratorYield : iteratorDone;
+  }
+
   run() {
     throwIfDisposed(this);
+    this.shouldYield = shouldYieldFalse;
 
     for (
       let next = this.queue.shift();

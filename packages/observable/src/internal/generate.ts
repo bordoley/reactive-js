@@ -6,11 +6,11 @@ import {
 
 export const generate = <T>(
   generator: (acc: T) => T,
-  initialValue: T,
+  initialValue: () => T,
   delay = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
-    let acc = initialValue;
+    let acc = initialValue();
 
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,

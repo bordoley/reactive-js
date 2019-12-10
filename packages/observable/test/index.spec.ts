@@ -38,6 +38,7 @@ import {
   throws,
   toPromise,
   withLatestFrom,
+  toArray,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -100,30 +101,34 @@ describe("Observable", () => {
 });
 
 test("combineLatest", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
-  const observer = createMockObserver();
-
-  pipe(
+  const result = pipe(
     combineLatest(
       pipe(
-        generate(i => i + 2, 1, 2),
+        generate(
+          i => i + 2,
+          () => 1,
+          2,
+        ),
         take(3),
       ),
       pipe(
-        generate(i => i + 2, 0, 3),
+        generate(
+          i => i + 2,
+          () => 0,
+          3,
+        ),
         take(2),
       ),
     ),
-    observe(observer),
-    connect(scheduler),
+    toArray(() => createVirtualTimeSchedulerResource(1)),
   );
-  scheduler.run();
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, [3, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(2, [5, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(3, [5, 4]);
-  expect(observer.next).toHaveBeenNthCalledWith(4, [7, 4]);
-  expect(observer.complete).toBeCalledWith(undefined);
+  expect(result).toEqual([
+    [3, 2],
+    [5, 2],
+    [5, 4],
+    [7, 4],
+  ])
 });
 
 describe("concat", () => {
@@ -383,7 +388,10 @@ describe("generate", () => {
     const observer = createMockObserver();
 
     pipe(
-      generate(i => i + 1, 0),
+      generate(
+        i => i + 1,
+        () => 0,
+      ),
       take(5),
       observe(observer),
       connect(scheduler),
@@ -413,7 +421,7 @@ describe("generate", () => {
     };
 
     pipe(
-      generate(generator, 0),
+      generate(generator, () => 0),
       take(5),
       observe(observer),
       connect(scheduler),
@@ -432,7 +440,11 @@ describe("generate", () => {
     const observer = createMockObserver();
 
     pipe(
-      generate(i => i + 1, 0, 5),
+      generate(
+        i => i + 1,
+        () => 0,
+        5,
+      ),
       map(x => [scheduler.now, x]),
       take(5),
       observe(observer),
@@ -462,7 +474,7 @@ describe("generate", () => {
     };
 
     pipe(
-      generate(generator, 0, 5),
+      generate(generator, () => 0, 5),
       map(x => [scheduler.now, x]),
       take(5),
       observe(observer),
@@ -518,11 +530,19 @@ test("merge", () => {
   pipe(
     merge(
       pipe(
-        generate(i => i + 2, 1, 2),
+        generate(
+          i => i + 2,
+          () => 1,
+          2,
+        ),
         take(3),
       ),
       pipe(
-        generate(i => i + 2, 0, 3),
+        generate(
+          i => i + 2,
+          () => 0,
+          3,
+        ),
         take(2),
       ),
       throws(cause, 10),
@@ -640,7 +660,10 @@ test("scan", () => {
 
   pipe(
     src,
-    scan((acc, x) => acc + x, 0),
+    scan(
+      (acc, x) => acc + x,
+      () => 0,
+    ),
     observe(observer),
     connect(scheduler),
   );

@@ -41,7 +41,10 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const obs = generate(x => x + 1, 0);
+const obs = generate(
+  x => x + 1,
+  () => 0,
+);
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, idlePriority);
 

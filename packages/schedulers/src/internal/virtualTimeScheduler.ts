@@ -8,7 +8,9 @@ import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerResource } from "./abstractScheduler";
 
 /** @noInheritDoc */
-export interface VirtualTimeSchedulerLike extends SchedulerLike {
+export interface VirtualTimeSchedulerLike
+  extends SchedulerLike,
+    Iterator<void> {
   run(): void;
 }
 
@@ -16,6 +18,40 @@ export interface VirtualTimeSchedulerLike extends SchedulerLike {
 export interface VirtualTimeSchedulerResourceLike
   extends SchedulerResourceLike,
     VirtualTimeSchedulerLike {}
+
+const iteratorYield = {
+  done: false,
+  value: undefined,
+};
+
+const iteratorDone = {
+  done: true,
+  value: undefined,
+};
+
+export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSchedulerResource {
+  abstract step(): boolean;
+
+  next(): IteratorResult<void> {
+    throwIfDisposed(this);
+
+    const hasMore = this.step();
+    return hasMore ? iteratorYield : iteratorDone;
+  }
+
+  return(): IteratorResult<void> {
+    this.dispose();
+    return iteratorDone;
+  }
+
+  throw(e?: any): IteratorResult<void> {
+    this.dispose;
+    if (e !== undefined) {
+      throw e;
+    }
+    return iteratorDone;
+  }
+}
 
 interface VirtualTask {
   callback: () => void;
@@ -69,22 +105,34 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
     return disposable;
   }
 
+  private runNextTask() {
+    const {
+      dueTime,
+      callback,
+      disposable,
+    } = this.taskQueue.pop() as VirtualTask;
+
+    this._now = dueTime;
+    this.microTaskTicks = 0;
+
+    if (!disposable.isDisposed) {
+      callback();
+      disposable.dispose();
+    }
+  }
+
+  next(): IteratorResult<void> {
+    throwIfDisposed(this);
+
+    this.runNextTask();
+
+    return this.taskQueue.count > 0 ? iteratorYield : iteratorDone;
+  }
+
   run() {
     throwIfDisposed(this);
     while (this.taskQueue.count > 0) {
-      const {
-        dueTime,
-        callback,
-        disposable,
-      } = this.taskQueue.pop() as VirtualTask;
-
-      this._now = dueTime;
-      this.microTaskTicks = 0;
-
-      if (!disposable.isDisposed) {
-        callback();
-        disposable.dispose();
-      }
+      this.runNextTask();
     }
     this.dispose();
   }

@@ -162,7 +162,7 @@ export const retry = <T>(
 
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
-  initialValue: TAcc,
+  initialValue: () => TAcc,
 ): ObservableResourceOperatorLike<T, TAcc> =>
   lift(scanObs(scanner, initialValue));
 

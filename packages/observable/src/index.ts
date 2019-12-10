@@ -7,6 +7,7 @@ export {
   ObservableOperatorLike,
   SubscriberOperatorLike,
 } from "./internal/interfaces";
+export { iterate, toArray, toIterator } from "./internal/iterate";
 export {
   empty,
   fromArray,
@@ -21,6 +22,7 @@ export { map } from "./internal/map";
 export { merge } from "./internal/merge";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { never } from "./internal/never";
+export { reduce } from "./internal/reduce";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
 export { share } from "./internal/share";

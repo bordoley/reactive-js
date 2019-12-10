@@ -21,7 +21,7 @@ export const run = (n: number) => {
         map(add1),
         map(add1),
         keep(even),
-        scan(sum, 0),
+        scan(sum, () => 0),
       );
 
       run(observable);
