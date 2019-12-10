@@ -1,3 +1,11 @@
-type t;
+module JsError = {
+  type t;
 
-[@bs.obj] external create: (~cause: 'a, unit) => t = "";
+  external create: 'a => t = "%identity";
+};
+
+type t = {
+  cause: JsError.t,
+};
+
+[@bs.obj] external create: (~cause: JsError.t, unit) => t = "";

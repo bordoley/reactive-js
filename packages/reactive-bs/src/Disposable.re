@@ -2,13 +2,19 @@ type t = {
   isDisposed: bool,
 };
 
-[@bs.send] external add: (t, t) => unit = "add";
-[@bs.send] external addTeardown: (t, unit => unit) => unit = "add";
-[@bs.send] [@bs.variadic] external addAll: (t, array(t)) => unit = "add";
+module DisposableOrTeardown {
+  type t;
+
+  external create: (unit => unit) => t = "%identity";
+}
+
+external asDisposableOrTeardown: t => DisposableOrTeardown.t = "%identity";
+
+[@bs.send] external add: (t, DisposableOrTeardown.t) => unit = "add";
+[@bs.send] [@bs.variadic] external addAll: (t, array(DisposableOrTeardown.t)) => unit = "add";
 [@bs.send] external dispose: t => unit = "dispose";
-[@bs.send] external remove: (t, t) => unit = "remove";
-[@bs.send] external removeTeardown: (t, unit => unit) => unit = "add";
-[@bs.send] [@bs.variadic] external removeAll: (t, array(t)) => unit = "remove";
+[@bs.send] external remove: (t, DisposableOrTeardown.t) => unit = "remove";
+[@bs.send] [@bs.variadic] external removeAll: (t, array(DisposableOrTeardown.t)) => unit = "remove";
 
 [@bs.module "@reactive-js/disposable"]
 external throwIfDisposed: t => unit = "throwIfDisposed";

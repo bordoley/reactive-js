@@ -1,5 +1,4 @@
 type t = {
-  mutable disposable: Disposable.t,
   isDisposed: bool,
 };
 
