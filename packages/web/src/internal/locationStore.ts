@@ -3,7 +3,6 @@ import {
   createPersistentStateStore,
   AsyncIteratorLike,
   StateStoreResourceLike,
-  StateUpdaterLike,
 } from "@reactive-js/ix";
 import { ObservableLike } from "@reactive-js/rx";
 import { concat, ofValue } from "@reactive-js/observable";
@@ -28,7 +27,7 @@ const locationEquals = (a: LocationLike, b: LocationLike): boolean =>
 const chopLeadingChar = (str: string) =>
   str.length > 0 ? str.substring(1) : "";
 
-const getCurrentLocation = (): LocationLike => {
+const getCurrentLocation = (_?: unknown): LocationLike => {
   const path = window.location.pathname;
   const query = chopLeadingChar(window.location.search);
   const fragment = chopLeadingChar(window.location.hash);
@@ -46,21 +45,14 @@ const dispatch = (newLocation: LocationLike) => {
   }
 };
 
-const getCurrentLocationStateUpdater = (
-  _?: unknown,
-): StateUpdaterLike<LocationLike> => {
-  const uri = getCurrentLocation();
-  return (_: LocationLike) => uri;
-};
-
-const observable: ObservableLike<StateUpdaterLike<LocationLike>> = concat(
-  ofValue(getCurrentLocationStateUpdater()),
-  fromEvent(window, "popstate", getCurrentLocationStateUpdater),
+const observable: ObservableLike<LocationLike> = concat(
+  ofValue(getCurrentLocation()),
+  fromEvent(window, "popstate", getCurrentLocation),
 );
 
 const historyIterator: AsyncIteratorLike<
   LocationLike,
-  StateUpdaterLike<LocationLike>
+  LocationLike
 > = {
   dispatch,
   subscribe: subscriber => observable.subscribe(subscriber),
