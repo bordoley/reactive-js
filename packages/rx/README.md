@@ -34,12 +34,13 @@ yarn add @reactive-js/rx
 
 ```typescript
 import { connect } from "@reactive-js/rx";
+import { pipe } from "@reactive-js/pipe";
 
 const observableSource;
 const platformScheduler;
 
 // Setup a subscription to the observableSource using the platform scheduler
-const subscription = connect(observableSource, platformScheduler);
+const subscription = pipe(observableSource, connect(platformScheduler));
 
 // ...later in the future
 
