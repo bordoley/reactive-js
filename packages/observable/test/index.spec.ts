@@ -322,17 +322,23 @@ describe("fromIterable", () => {
 describe("fromPromiseFactory", () => {
   test("when the promise resolves", async () => {
     const factory = () => Promise.resolve(1);
-    const result = await toPromise(
-      fromPromiseFactory(factory),
-      promiseScheduler,
+    const result = await pipe(
+      factory,
+      fromPromiseFactory,
+      toPromise(promiseScheduler),
     );
+    
     expect(result).toEqual(1);
   });
 
   test("when the promise throws", () => {
     const cause = new Error();
     const factory = () => Promise.reject(cause);
-    const promise = toPromise(fromPromiseFactory(factory), promiseScheduler);
+    const promise = pipe(
+      fromPromiseFactory(factory),
+      toPromise(promiseScheduler),
+    );
+    
     return expect(promise).rejects.toThrow(cause);
   });
 });
@@ -697,7 +703,11 @@ test("toIterable", () => {
 
 describe("toPromise", () => {
   test("when the observable produces no values", () => {
-    const promise = toPromise(empty(), promiseScheduler);
+    const promise = pipe(
+      empty(),
+      toPromise(promiseScheduler),
+    );
+    
     return expect(promise).rejects.toThrow();
   });
 });

@@ -6,7 +6,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { createDisposable } from "@reactive-js/disposable";
 
 export const fromPromiseFactory = <T>(
@@ -38,9 +38,8 @@ export const fromPromiseFactory = <T>(
 };
 
 export const toPromise = <T>(
-  observable: ObservableLike<T>,
   scheduler: SchedulerLike,
-): Promise<T> =>
+): OperatorLike<ObservableLike<T>, Promise<T>> => observable =>
   new Promise((resolve, reject) => {
     let result: T | undefined = undefined;
     const subscription = pipe(
