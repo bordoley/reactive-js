@@ -56,6 +56,7 @@
 * [throws](README.md#const-throws)
 * [timeout](README.md#const-timeout)
 * [toArray](README.md#const-toarray)
+* [toIterable](README.md#const-toiterable)
 * [toIterator](README.md#const-toiterator)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -1146,6 +1147,24 @@ Name | Type |
 `schedulerFactory?` | undefined &#124; function |
 
 **Returns:** *OperatorLike‹ObservableLike‹T›, keyof T[]›*
+
+___
+
+### `Const` toIterable
+
+▸ **toIterable**<**T**>(`schedulerFactory`: function): *OperatorLike‹ObservableLike‹T›, Iterable‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
+
+▸ (): *VirtualTimeSchedulerResourceLike*
+
+**Returns:** *OperatorLike‹ObservableLike‹T›, Iterable‹T››*
 
 ___
 
