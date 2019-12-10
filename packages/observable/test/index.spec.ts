@@ -39,6 +39,8 @@ import {
   toPromise,
   withLatestFrom,
   toArray,
+  iterate,
+  toIterable,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -74,30 +76,28 @@ const createMockObserver = <T>(): ObserverLike<T> => ({
   complete: jest.fn(),
 });
 
-describe("Observable", () => {
-  test("lift", () => {
-    const onNext = <T>(onNext: (data: T) => void) =>
-      observe({
-        next: onNext,
-        complete: _ => {},
-      });
-    const scheduler = createVirtualTimeSchedulerResource();
-    const result: number[] = [];
+test("lift", () => {
+  const onNext = <T>(onNext: (data: T) => void) =>
+    observe({
+      next: onNext,
+      complete: _ => {},
+    });
+  const scheduler = createVirtualTimeSchedulerResource();
+  const result: number[] = [];
 
-    const liftedObservable = pipe(
-      createObservable(observer => observer.next(1)),
-      onNext(_ => result.push(1)),
-    );
+  const liftedObservable = pipe(
+    createObservable(observer => observer.next(1)),
+    onNext(_ => result.push(1)),
+  );
 
-    pipe(
-      liftedObservable,
-      onNext(_ => result.push(3)),
-      connect(scheduler),
-    );
-    scheduler.run();
+  pipe(
+    liftedObservable,
+    onNext(_ => result.push(3)),
+    connect(scheduler),
+  );
+  scheduler.run();
 
-    expect(result).toEqual([1, 3]);
-  });
+  expect(result).toEqual([1, 3]);
 });
 
 test("combineLatest", () => {
@@ -128,75 +128,44 @@ test("combineLatest", () => {
     [5, 2],
     [5, 4],
     [7, 4],
-  ])
+  ]);
 });
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-
-    const observer = createMockObserver();
-
-    pipe(
-      concat(ofValue(1), ofValue(2), ofValue(3)),
-      observe(observer),
-      connect(scheduler),
-    );
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-    expect(observer.complete).toHaveBeenCalledTimes(1);
+    const result = pipe(concat(ofValue(1), ofValue(2), ofValue(3)), toArray());
+    expect(result).toEqual([1, 2, 3]);
   });
 
   test("completes immediate when one observable completes with an error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
     const cause = new Error();
-    const observer = createMockObserver();
+    const cb = jest.fn();
 
-    pipe(
-      concat(ofValue(1), ofValue(2), throws(cause), ofValue(3)),
-      observe(observer),
-      connect(scheduler),
-    );
-    scheduler.run();
+    expect(() =>
+      pipe(
+        concat(ofValue(1), ofValue(2), throws(cause), ofValue(3)),
+        onNext(cb),
+        iterate(),
+      ),
+    ).toThrow(cause);
 
-    expect(observer.next).toHaveBeenCalledTimes(2);
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-
-    expect(observer.complete).toHaveBeenCalledTimes(1);
-    expect(observer.complete).toHaveBeenCalledWith({ cause });
+    expect(cb).toHaveBeenCalledTimes(2);
+    expect(cb).toHaveBeenNthCalledWith(1, 1);
+    expect(cb).toHaveBeenNthCalledWith(2, 2);
   });
 });
 
 describe("concatAll", () => {
   test("concats observables", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
     const observableA = fromArray([1, 2]);
     const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB, observableB, observableA]);
-
-    pipe(src, concatAll(), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
-    expect(observer.next).toHaveBeenNthCalledWith(5, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(6, 4);
-    expect(observer.next).toHaveBeenNthCalledWith(7, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(8, 2);
-    expect(observer.next).toHaveBeenCalledTimes(8);
-    expect(observer.complete).toHaveBeenCalled();
+    const result = pipe(src, concatAll(), toArray());
+    expect(result).toEqual([1, 2, 3, 4, 3, 4, 1, 2]);
   });
 
   test("immediately completes when completed with an error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
     const observableA = fromArray([1, 2]);
     const observableB = fromArray([3, 4]);
@@ -206,112 +175,91 @@ describe("concatAll", () => {
       ofValue(observableB),
     );
 
-    pipe(src, concatAll(), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenCalledTimes(2);
-    expect(observer.complete).toHaveBeenCalledWith({ cause });
+    expect(() => pipe(src, concatAll(), onNext(cb), iterate())).toThrow(cause);
+    expect(cb).toHaveBeenNthCalledWith(1, 1);
+    expect(cb).toHaveBeenNthCalledWith(2, 2);
+    expect(cb).toHaveBeenCalledTimes(2);
   });
 
   test("immediately completes when inner observable completes with an error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
     const observableA = concat(fromArray([1, 2]), throws(cause));
     const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB]);
 
-    pipe(src, concatAll(), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenCalledTimes(2);
-    expect(observer.complete).toHaveBeenCalledWith({ cause });
+    expect(() => pipe(src, concatAll(), onNext(cb), iterate())).toThrow(cause);
+    expect(cb).toHaveBeenNthCalledWith(1, 1);
+    expect(cb).toHaveBeenNthCalledWith(2, 2);
+    expect(cb).toHaveBeenCalledTimes(2);
   });
 });
 
 test("distinctUntilChanged", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
-  const observer = createMockObserver();
+  const cb = jest.fn();
   const cause = new Error();
-  const src = pipe(
-    concat(
-      fromArray([
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-        3,
-      ]),
-      throws(cause),
+
+  expect(() =>
+    pipe(
+      concat(
+        fromArray([
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+        ]),
+        throws(cause),
+      ),
+      distinctUntilChanged(),
+      onNext(cb),
+      iterate(),
     ),
-    distinctUntilChanged(),
-  );
-
-  pipe(src, observe(observer), connect(scheduler));
-  scheduler.run();
-
-  expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-  expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-  expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-  expect(observer.next).toHaveBeenCalledTimes(3);
-  expect(observer.complete).toBeCalledWith({ cause });
+  ).toThrow(cause);
+  expect(cb).toHaveBeenNthCalledWith(1, 1);
+  expect(cb).toHaveBeenNthCalledWith(2, 2);
+  expect(cb).toHaveBeenNthCalledWith(3, 3);
+  expect(cb).toHaveBeenCalledTimes(3);
 });
 
 describe("empty", () => {
   test("produces no values and completes", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
-
-    pipe(empty(), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(0);
-    expect(observer.complete).toHaveBeenCalledTimes(1);
-    expect(observer.complete).toHaveBeenCalledWith(undefined);
+    const result = pipe(empty(), toArray());
+    expect(result).toEqual([]);
   });
 });
 
 describe("fromArray", () => {
   test("with no delay", () => {
-    const observable = fromArray([1, 2, 3, 4, 5, 6]);
-    const scheduler = createVirtualTimeSchedulerResource(1);
-    const observer = createMockObserver();
-
-    pipe(observable, observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
-    expect(observer.next).toHaveBeenNthCalledWith(5, 5);
-    expect(observer.next).toHaveBeenNthCalledWith(6, 6);
+    const src = [1, 2, 3, 4, 5, 6];
+    const observable = fromArray(src);
+    const result = pipe(
+      observable,
+      toArray(() => createVirtualTimeSchedulerResource(1)),
+    );
+    expect(result).toEqual(src);
   });
 
   test("with delay", () => {
@@ -384,32 +332,20 @@ test("fromScheduledValues", () => {
 
 describe("generate", () => {
   test("without delay", () => {
-    const scheduler = createVirtualTimeSchedulerResource(1);
-    const observer = createMockObserver();
-
-    pipe(
+    const result = pipe(
       generate(
         i => i + 1,
         () => 0,
       ),
       take(5),
-      observe(observer),
-      connect(scheduler),
+      toArray(() => createVirtualTimeSchedulerResource(1)),
     );
 
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(5);
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(4, 4);
-    expect(observer.next).toHaveBeenNthCalledWith(5, 5);
+    expect(result).toEqual([1, 2, 3, 4, 5]);
   });
 
   test("without delay, generate throws", () => {
-    const scheduler = createVirtualTimeSchedulerResource(1);
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
 
     const generator = (i: number) => {
@@ -420,19 +356,18 @@ describe("generate", () => {
       return i + 1;
     };
 
-    pipe(
-      generate(generator, () => 0),
-      take(5),
-      observe(observer),
-      connect(scheduler),
-    );
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(3);
-    expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 3);
-    expect(observer.complete).toBeCalledWith({ cause });
+    expect(() =>
+      pipe(
+        generate(generator, () => 0),
+        take(5),
+        onNext(cb),
+        iterate(() => createVirtualTimeSchedulerResource(1)),
+      ),
+    ).toThrow(cause);
+    expect(cb).toHaveBeenCalledTimes(3);
+    expect(cb).toHaveBeenNthCalledWith(1, 1);
+    expect(cb).toHaveBeenNthCalledWith(2, 2);
+    expect(cb).toHaveBeenNthCalledWith(3, 3);
   });
 
   test("with delay", () => {
@@ -562,11 +497,9 @@ test("merge", () => {
 
 describe("never", () => {
   test("produces no values and doesn't complete", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
 
-    pipe(never(), observe(observer), connect(scheduler));
-    scheduler.run();
+    pipe(never(), observe(observer), iterate());
 
     expect(observer.next).toHaveBeenCalledTimes(0);
     expect(observer.complete).toHaveBeenCalledTimes(0);
@@ -575,15 +508,8 @@ describe("never", () => {
 
 describe("ofValue", () => {
   test("completes with the value when subscribed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
-
-    pipe(ofValue(1), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(1);
-    expect(observer.next).toBeCalledWith(1);
-    expect(observer.complete).toBeCalledWith(undefined);
+    const result = pipe(ofValue(1), toArray());
+    expect(result).toEqual([1]);
   });
 });
 
@@ -653,21 +579,21 @@ describe("throws", () => {
 });
 
 test("scan", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
 
-  pipe(
-    src,
-    scan(
-      (acc, x) => acc + x,
-      () => 0,
+  expect(() =>
+    pipe(
+      src,
+      scan(
+        (acc, x) => acc + x,
+        () => 0,
+      ),
+      observe(observer),
+      iterate(),
     ),
-    observe(observer),
-    connect(scheduler),
-  );
-  scheduler.run();
+  ).toThrow(cause);
 
   expect(observer.next).toHaveBeenNthCalledWith(1, 1);
   expect(observer.next).toHaveBeenNthCalledWith(2, 3);
@@ -676,54 +602,62 @@ test("scan", () => {
 });
 
 test("switchAll", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
-  const observer = createMockObserver();
-
+  const cb = jest.fn();
   const innerObservable = fromArray([1, 2]);
   const cause = new Error();
   const src = fromArray([innerObservable, innerObservable, throws(cause)], 1);
 
-  pipe(src, switchAll(), observe(observer), connect(scheduler));
-  scheduler.run();
+  expect(() =>
+    pipe(
+      src,
+      switchAll(),
+      onNext(cb),
+      iterate(() => createVirtualTimeSchedulerResource()),
+    ),
+  ).toThrow(cause);
 
-  expect(observer.next).toBeCalledTimes(4);
-  expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-  expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-  expect(observer.next).toHaveBeenNthCalledWith(3, 1);
-  expect(observer.next).toHaveBeenNthCalledWith(4, 2);
-
-  expect(observer.complete).toBeCalledTimes(1);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(cb).toBeCalledTimes(4);
+  expect(cb).toHaveBeenNthCalledWith(1, 1);
+  expect(cb).toHaveBeenNthCalledWith(2, 2);
+  expect(cb).toHaveBeenNthCalledWith(3, 1);
+  expect(cb).toHaveBeenNthCalledWith(4, 2);
 });
 
 describe("takeLast", () => {
   test("publishes the last n values when completed", () => {
-    const scheduler = createVirtualTimeSchedulerResource(2);
-    const observer = createMockObserver();
     const src = fromArray([1, 2, 3, 4]);
-
-    pipe(src, takeLast(3), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toHaveBeenCalledTimes(3);
-    expect(observer.next).toHaveBeenNthCalledWith(1, 2);
-    expect(observer.next).toHaveBeenNthCalledWith(2, 3);
-    expect(observer.next).toHaveBeenNthCalledWith(3, 4);
-    expect(observer.complete).toBeCalled();
+    const result = pipe(
+      src,
+      takeLast(3),
+      toArray(() => createVirtualTimeSchedulerResource(2)),
+    );
+    expect(result).toEqual([2, 3, 4]);
   });
 
   test("immediately completes with an error if completed with an error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
     const observer = createMockObserver();
     const cause = new Error();
     const src = merge(fromArray([1, 2, 3, 4], 4), throws(cause, 2));
 
-    pipe(src, takeLast(3), observe(observer), connect(scheduler));
-    scheduler.run();
-
+    expect(() =>
+      pipe(
+        src,
+        takeLast(3),
+        observe(observer),
+        iterate(() => createVirtualTimeSchedulerResource()),
+      ),
+    ).toThrow(cause);
     expect(observer.next).toHaveBeenCalledTimes(0);
-    expect(observer.complete).toBeCalledWith({ cause });
   });
+});
+
+test("toIterable", () => {
+  const iterable = pipe(fromArray([1,2,3,4]), map(x => x + 1), toIterable());
+  const acc = [];
+  for (const v of iterable) {
+    acc.push(v);
+  }
+  expect(acc).toEqual([2,3,4,5]);
 });
 
 describe("toPromise", () => {
@@ -734,7 +668,6 @@ describe("toPromise", () => {
 });
 
 test("withLatestFrom", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
   const cause = new Error();
 
   const otherObservable = concat(
@@ -752,23 +685,23 @@ test("withLatestFrom", () => {
     [2, 4],
   );
 
-  const observer = createMockObserver();
+  const cb = jest.fn();
 
-  pipe(
-    observable,
-    withLatestFrom(otherObservable, (a, b) => [a, b]),
-    observe(observer),
-    connect(scheduler),
-  );
-  scheduler.run();
+  expect(() =>
+    pipe(
+      observable,
+      withLatestFrom(otherObservable, (a, b) => [a, b]),
+      onNext(cb),
+      iterate(createVirtualTimeSchedulerResource),
+    ),
+  ).toThrow(cause);
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, [1, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(2, [2, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(3, [3, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(4, [1, 3]);
-  expect(observer.next).toHaveBeenNthCalledWith(5, [2, 3]);
-  expect(observer.next).toHaveBeenNthCalledWith(6, [3, 3]);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(cb).toHaveBeenNthCalledWith(1, [1, 2]);
+  expect(cb).toHaveBeenNthCalledWith(2, [2, 2]);
+  expect(cb).toHaveBeenNthCalledWith(3, [3, 2]);
+  expect(cb).toHaveBeenNthCalledWith(4, [1, 3]);
+  expect(cb).toHaveBeenNthCalledWith(5, [2, 3]);
+  expect(cb).toHaveBeenNthCalledWith(6, [3, 3]);
 });
 
 test("share", () => {

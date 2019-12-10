@@ -8,7 +8,7 @@ import {
   createSynchronousSchedulerResource,
   VirtualTimeSchedulerResourceLike,
 } from "@reactive-js/schedulers";
-import { observe } from "./observe";
+import { observe, onComplete, onNext } from "./observe";
 import { reduce } from "./reduce";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import {
@@ -21,35 +21,39 @@ export const iterate = <T>(
   schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
-  const subscription = pipe(observable, connect(scheduler));
+
+  let error: ErrorLike | undefined = undefined;
+  const subscription = pipe(
+    observable,
+    onComplete(e => {
+      error = e;
+    }),
+    connect(scheduler),
+  );
   scheduler.run();
+  scheduler.dispose();
   subscription.dispose();
+
+  if (error !== undefined) {
+    const { cause } = error;
+    throw cause;
+  }
 };
 
 const blockingLast = <T>(
   schedulerFactory?: () => VirtualTimeSchedulerResourceLike,
 ): OperatorLike<ObservableLike<T>, T> => observable => {
   let result: T | undefined = undefined;
-  let error: ErrorLike | undefined = undefined;
 
-  const observer: ObserverLike<T> = {
-    next: (x: T) => {
-      result = x;
-    },
-    complete: e => {
-      error = e;
-    },
+  const observer = (x: T) => {
+    result = x;
   };
 
-  pipe(observable, observe(observer), iterate(schedulerFactory));
+  pipe(observable, onNext(observer), iterate(schedulerFactory));
 
-  if (error !== undefined) {
-    const { cause } = error;
-    throw cause;
-  } else if (result === undefined) {
+  if (result === undefined) {
     throw new Error("Observable did not produce any values");
   }
-
   return result;
 };
 
@@ -166,3 +170,25 @@ export const toIterator = <T>(
   const scheduler = schedulerFactory();
   return new ObservableIteratorResourceImpl(scheduler, observable);
 };
+
+class IterableObservable<T> implements Iterable<T> {
+  private readonly observable: ObservableLike<T>;
+  private readonly schedulerFactory: () => VirtualTimeSchedulerResourceLike;
+
+  constructor(
+    observable: ObservableLike<T>,
+    schedulerFactory: () => VirtualTimeSchedulerResourceLike,
+  ) {
+    this.observable = observable;
+    this.schedulerFactory = schedulerFactory;
+  }
+
+  [Symbol.iterator](): Iterator<T> {
+    return toIterator<T>(this.schedulerFactory)(this.observable);
+  }
+}
+
+export const toIterable = <T>(
+  schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
+): OperatorLike<ObservableLike<T>, Iterable<T>> => observable =>
+  new IterableObservable(observable, schedulerFactory);

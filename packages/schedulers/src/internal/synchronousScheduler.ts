@@ -10,7 +10,7 @@ import {
 
 // Intentionally defined as a module function for perf reasons.
 const shouldYieldFalse = () => false;
-const shouldYieldTrue = () => false;
+const shouldYieldTrue = () => true;
 
 const iteratorYield = {
   done: false,
