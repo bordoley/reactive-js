@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/pipe",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -37,7 +37,6 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
-  "dependencies": {},
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
     "build-cjs": "tsc -p tsconfig.cjs.json",
