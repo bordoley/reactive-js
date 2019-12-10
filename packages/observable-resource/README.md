@@ -25,8 +25,8 @@ import {
   generate,
   map,
   onNext,
-  pipe,
 } from "@reactive-js/observable-resource";
+import { pipe } from "@reactive-js/pipe";
 import { createSchedulerWithPriority } from "@reactive-js/node";
 
 const scheduler = createSchedulerWithPriority(500);
@@ -35,14 +35,13 @@ const subject = createSubject();
 // Create a stateful observable resource which shares the subjects
 // underly disposable. eg. disposing observableResource disposes
 // subject as well.
-const observableResource = pipe(
+const subscription = pipe(
   subject,
   map(x => fromArray([x, x, x, x])),
   exhaust(),
   onNext(console.log),
+  connect(scheduler);
 );
-
-const subscription = connect(observableResource, scheduler);
 ```
 
 ## Documentation
