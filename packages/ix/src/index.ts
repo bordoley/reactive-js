@@ -108,15 +108,16 @@ const createAsyncIteratorResource = <TReq, T>(
 export const createEventEmitter = <T>(): EventEmitterResourceLike<T> =>
   createAsyncIteratorResource(x => x);
 
-export const createStateStore = <T>(
+export const createReducerStore = <TAction, T>(
   initialState: T,
+  reducer: (state: T, action: TAction) => T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
-): StateStoreResourceLike<T> => {
-  const operator: ObservableOperatorLike<StateUpdaterLike<T>, T> = obs =>
+): AsyncIteratorResourceLike<TAction, T> => {
+  const operator: ObservableOperatorLike<TAction, T> = obs =>
     pipe(
       obs,
-      scan((acc: T, next: StateUpdaterLike<T>) => next(acc), initialState),
+      scan(reducer, initialState),
       startWith(initialState),
       distinctUntilChanged(equals),
       share(scheduler, 1),
@@ -125,6 +126,15 @@ export const createStateStore = <T>(
   store.add(connect(store, scheduler));
   return store;
 };
+
+const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
+  action(state);
+export const createStateStore = <T>(
+  initialState: T,
+  scheduler: SchedulerLike,
+  equals?: (a: T, b: T) => boolean,
+): StateStoreResourceLike<T> =>
+  createReducerStore(initialState, stateStoreReducer, scheduler, equals);
 
 export const createPersistentStateStore = <T>(
   persistentStore: AsyncIteratorLike<T, T>,

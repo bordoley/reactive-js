@@ -21,6 +21,7 @@
 
 * [createEventEmitter](README.md#const-createeventemitter)
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
+* [createReducerStore](README.md#const-createreducerstore)
 * [createStateStore](README.md#const-createstatestore)
 
 ## Type aliases
@@ -55,7 +56,7 @@ ___
 
 ### `Const` createPersistentStateStore
 
-▸ **createPersistentStateStore**<**T**>(`persistentStore`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T››, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+▸ **createPersistentStateStore**<**T**>(`persistentStore`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, T›, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -65,12 +66,45 @@ ___
 
 Name | Type |
 ------ | ------ |
-`persistentStore` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›› |
+`persistentStore` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, T› |
 `initialState` | T |
 `scheduler` | SchedulerLike |
 `equals?` | undefined &#124; function |
 
 **Returns:** *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+
+___
+
+### `Const` createReducerStore
+
+▸ **createReducerStore**<**TAction**, **T**>(`initialState`: T, `reducer`: function, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TAction, T›*
+
+**Type parameters:**
+
+▪ **TAction**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **initialState**: *T*
+
+▪ **reducer**: *function*
+
+▸ (`state`: T, `action`: TAction): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`state` | T |
+`action` | TAction |
+
+▪ **scheduler**: *SchedulerLike*
+
+▪`Optional`  **equals**: *undefined | function*
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TAction, T›*
 
 ___
 

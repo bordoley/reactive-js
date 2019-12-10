@@ -50,10 +50,7 @@ const observable: ObservableLike<LocationLike> = concat(
   fromEvent(window, "popstate", getCurrentLocation),
 );
 
-const historyIterator: AsyncIteratorLike<
-  LocationLike,
-  LocationLike
-> = {
+const historyIterator: AsyncIteratorLike<LocationLike, LocationLike> = {
   dispatch,
   subscribe: subscriber => observable.subscribe(subscriber),
 };
