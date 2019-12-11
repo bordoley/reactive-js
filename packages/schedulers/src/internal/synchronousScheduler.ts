@@ -46,7 +46,7 @@ class SynchronousSchedulerResource extends AbstractVirtualTimeSchedulerResource
 
     this.shouldYield = shouldYieldTrue;
     if (this.queue.length > 0) {
-      let next = this.queue.shift() as () => void;
+      const next = this.queue.shift() as () => void;
       next();
     }
 

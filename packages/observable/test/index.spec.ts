@@ -252,7 +252,6 @@ describe("empty", () => {
   });
 });
 
-
 describe("fromArray", () => {
   test("with no delay", () => {
     const src = [1, 2, 3, 4, 5, 6];
@@ -327,7 +326,7 @@ describe("fromPromiseFactory", () => {
       fromPromiseFactory,
       toPromise(promiseScheduler),
     );
-    
+
     expect(result).toEqual(1);
   });
 
@@ -338,7 +337,7 @@ describe("fromPromiseFactory", () => {
       fromPromiseFactory(factory),
       toPromise(promiseScheduler),
     );
-    
+
     return expect(promise).rejects.toThrow(cause);
   });
 });
@@ -693,21 +692,22 @@ describe("takeLast", () => {
 });
 
 test("toIterable", () => {
-  const iterable = pipe(fromArray([1,2,3,4]), map(x => x + 1), toIterable());
+  const iterable = pipe(
+    fromArray([1, 2, 3, 4]),
+    map(x => x + 1),
+    toIterable(),
+  );
   const acc = [];
   for (const v of iterable) {
     acc.push(v);
   }
-  expect(acc).toEqual([2,3,4,5]);
+  expect(acc).toEqual([2, 3, 4, 5]);
 });
 
 describe("toPromise", () => {
   test("when the observable produces no values", () => {
-    const promise = pipe(
-      empty(),
-      toPromise(promiseScheduler),
-    );
-    
+    const promise = pipe(empty(), toPromise(promiseScheduler));
+
     return expect(promise).rejects.toThrow();
   });
 });

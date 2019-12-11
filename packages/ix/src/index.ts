@@ -1,10 +1,10 @@
 import {
   connect,
   createSubject,
-  ObservableLike,
-  ObservableResourceLike,
   SubjectResourceLike,
   SubscriberLike,
+  MulticastObservableLike,
+  MulticastObservableResourceLike,
 } from "@reactive-js/rx";
 
 import {
@@ -15,24 +15,23 @@ import {
   scan,
   share,
   startWith,
-  ObservableOperatorLike,
 } from "@reactive-js/observable";
 
-import { pipe } from "@reactive-js/pipe";
+import { pipe, OperatorLike } from "@reactive-js/pipe";
 
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { DisposableOrTeardown } from "@reactive-js/disposable";
 
 /** @noInheritDoc */
-export interface AsyncIteratorLike<TReq, T> extends ObservableLike<T> {
+export interface AsyncIteratorLike<TReq, T> extends MulticastObservableLike<T> {
   dispatch(request: TReq): void;
 }
 
 /** @noInheritDoc */
 export interface AsyncIteratorResourceLike<TReq, T>
   extends AsyncIteratorLike<TReq, T>,
-    ObservableResourceLike<T> {}
+    MulticastObservableResourceLike<T> {}
 
 export interface StateUpdaterLike<T> {
   (oldState: T): T;
@@ -57,11 +56,11 @@ export interface EventEmitterResourceLike<T>
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   readonly subject: SubjectResourceLike<TReq>;
-  readonly observable: ObservableLike<T>;
+  readonly observable: MulticastObservableLike<T>;
 
   constructor(
     subject: SubjectResourceLike<TReq>,
-    observable: ObservableLike<T>,
+    observable: MulticastObservableLike<T>,
   ) {
     this.subject = subject;
     this.observable = observable;
@@ -69,6 +68,10 @@ class AsyncIteratorResourceImpl<TReq, T>
 
   get isDisposed(): boolean {
     return this.subject.isDisposed;
+  }
+
+  get subscriberCount(): number {
+    return this.observable.subscriberCount;
   }
 
   add(
@@ -99,7 +102,10 @@ class AsyncIteratorResourceImpl<TReq, T>
 }
 
 const createAsyncIteratorResource = <TReq, T>(
-  operator: ObservableOperatorLike<TReq, T>,
+  operator: OperatorLike<
+    MulticastObservableLike<TReq>,
+    MulticastObservableLike<T>
+  >,
 ) => {
   const subject = createSubject();
   const observable = operator(subject);
@@ -115,7 +121,10 @@ export const createReducerStore = <TAction, T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIteratorResourceLike<TAction, T> => {
-  const operator: ObservableOperatorLike<TAction, T> = obs =>
+  const operator: OperatorLike<
+    MulticastObservableLike<TAction>,
+    MulticastObservableLike<T>
+  > = obs =>
     pipe(
       obs,
       scan(reducer, () => initialState),
@@ -145,7 +154,10 @@ export const createPersistentStateStore = <T>(
 ): StateStoreResourceLike<T> => {
   const dispatch = (req: StateUpdaterLike<T>) => store.dispatch(req);
 
-  const operator: ObservableOperatorLike<StateUpdaterLike<T>, T> = obs => {
+  const operator: OperatorLike<
+    MulticastObservableLike<StateUpdaterLike<T>>,
+    MulticastObservableLike<T>
+  > = obs => {
     const onPersistentStoreChangedStream = pipe(
       persistentStore,
       onNext(v => dispatch(_ => v)),

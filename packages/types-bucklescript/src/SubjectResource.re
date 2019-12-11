@@ -1,5 +1,6 @@
 type t('a) = {
   isDisposed: bool,
+  subscriberCount: int,
 };
 
 [@bs.module "@reactive-js/rx"]
@@ -7,6 +8,8 @@ external create: (~replay: int=?, unit) => t('a) = "createSubject";
 
 external asDisposable: t('a) => Disposable.t = "%identity";
 external asDisposableOrTeardown: t('a) => Disposable.DisposableOrTeardown.t = "%identity";
+external asMulticastObservable: t('a) => MulticastObservable.t('a) = "%identity";
+external asMulticastObservableResource: t('a) => MulticastObservableResource.t('a) = "%identity";
 external asObservable: t('a) => Observable.t('a) = "%identity";
 external asObserver: t('a) => Observer.t('a) = "%identity";
 external asSubject: t('a) => Subject.t('a) = "%identity";

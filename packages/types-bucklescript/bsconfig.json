@@ -1,16 +1,15 @@
 {
   "name": "reactive-js",
   "sources": {
-    "dir" : "src"
+    "dir": "src"
   },
   "package-specs": {
     "module": "es6"
   },
   "suffix": ".bs.js",
-  "bs-dependencies": [
-  ],
+  "bs-dependencies": [],
   "warnings": {
-    "error" : "+101"
+    "error": "+101"
   },
   "namespace": true,
   "refmt": 3

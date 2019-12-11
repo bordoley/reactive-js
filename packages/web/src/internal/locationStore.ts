@@ -4,9 +4,10 @@ import {
   AsyncIteratorLike,
   StateStoreResourceLike,
 } from "@reactive-js/ix";
-import { ObservableLike } from "@reactive-js/rx";
-import { concat, ofValue } from "@reactive-js/observable";
+import { MulticastObservableLike } from "@reactive-js/rx";
+import { concat, ofValue, share } from "@reactive-js/observable";
 import { fromEvent } from "./event";
+import { pipe } from "@reactive-js/pipe";
 
 export interface LocationLike {
   readonly fragment: string;
@@ -45,22 +46,29 @@ const dispatch = (newLocation: LocationLike) => {
   }
 };
 
-const observable: ObservableLike<LocationLike> = concat(
-  ofValue(getCurrentLocation()),
-  fromEvent(window, "popstate", getCurrentLocation),
-);
-
-const historyIterator: AsyncIteratorLike<LocationLike, LocationLike> = {
-  dispatch,
-  subscribe: subscriber => observable.subscribe(subscriber),
-};
-
 export const createLocationStoreResource = (
   scheduler: SchedulerLike,
-): StateStoreResourceLike<LocationLike> =>
-  createPersistentStateStore(
+): StateStoreResourceLike<LocationLike> => {
+  const observable: MulticastObservableLike<LocationLike> = pipe(
+    concat(
+      ofValue(getCurrentLocation()),
+      fromEvent(window, "popstate", getCurrentLocation),
+    ),
+    share(scheduler),
+  );
+
+  const historyIterator: AsyncIteratorLike<LocationLike, LocationLike> = {
+    get subscriberCount() {
+      return observable.subscriberCount;
+    },
+    dispatch,
+    subscribe: subscriber => observable.subscribe(subscriber),
+  };
+
+  return createPersistentStateStore(
     historyIterator,
     emptyLocation,
     scheduler,
     locationEquals,
   );
+};

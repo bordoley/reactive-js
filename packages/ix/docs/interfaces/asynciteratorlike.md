@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* ObservableLike‹T›
+* MulticastObservableLike‹T›
 
   ↳ **AsyncIteratorLike**
 

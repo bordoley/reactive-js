@@ -1,45 +1,11 @@
 import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
 import { AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { OperatorLike } from "@reactive-js/pipe";
 import {
-  ErrorLike,
   ObservableLike,
-  ObserverLike,
   SubscriberLike,
+  MulticastObservableLike,
 } from "@reactive-js/rx";
-import {
-  concatAll as concatAllObs,
-  distinctUntilChanged as distinctUntilChangedObs,
-  endWith as endWithObs,
-  exhaust as exhaustObs,
-  ignoreElements as ignoreElementsObs,
-  keep as keepObs,
-  map as mapObs,
-  mergeAll as mergeAllObs,
-  observe as observeObs,
-  onComplete as onCompleteObs,
-  onError as onErrorObs,
-  onNext as onNextObs,
-  repeat as repeatObs,
-  retry as retryObs,
-  scan as scanObs,
-  share as shareObs,
-  startWith as startWithObs,
-  subscribeOn as subscribeOnObs,
-  switchAll as switchAllObs,
-  take as takeObs,
-  takeLast as takeLastObs,
-  takeWhile as takeWhileObs,
-  throttle as throttleObs,
-  throttleFirst as throttleFirstObs,
-  throttleFirstTime as throttleFirstTimeObs,
-  throttleLast as throttleLastObs,
-  throttleLastTime as throttleLastTimeObs,
-  throttleTime as throttleTimeObs,
-  timeout as timeoutObs,
-  withLatestFrom as withLatestFromObs,
-  ObservableOperatorLike,
-} from "@reactive-js/observable";
-import { SchedulerLike } from "@reactive-js/scheduler";
 
 export interface AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReq, T> {
   (iter: AsyncIteratorResourceLike<TSrcReq, TSrc>): AsyncIteratorResourceLike<
@@ -52,11 +18,12 @@ class LiftedIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   readonly dispatcher: (req: TReq) => void;
   readonly disposable: DisposableLike;
-  readonly observable: ObservableLike<T>;
+  readonly observable: MulticastObservableLike<T>;
+
   constructor(
     dispatcher: (req: TReq) => void,
     disposable: DisposableLike,
-    observable: ObservableLike<T>,
+    observable: MulticastObservableLike<T>,
   ) {
     this.dispatcher = dispatcher;
     this.disposable = disposable;
@@ -65,6 +32,10 @@ class LiftedIteratorResourceImpl<TReq, T>
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
+  }
+
+  get subscriberCount(): number {
+    return this.observable.subscriberCount;
   }
 
   add(
@@ -95,10 +66,12 @@ class LiftedIteratorResourceImpl<TReq, T>
 }
 
 const liftImpl = <TReq, T, TReqA, TA>(
-  operator?: ObservableOperatorLike<T, TA>,
+  operator?: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
   dispatchOperator?: (dispatcher: (req: TReq) => void) => (req: TReqA) => void,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, TA> => iterator => {
-  const observable: ObservableLike<T> =
+  // Cheat here. AsyncIteratorImpl follows the same protocol, so
+  // dynamically pull properties off of it.
+  const observable: MulticastObservableLike<T> =
     (iterator as any).observable || iterator;
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
@@ -115,12 +88,12 @@ const liftImpl = <TReq, T, TReqA, TA>(
   return new LiftedIteratorResourceImpl(
     liftedDispatcher,
     disposable,
-    liftedObservable as ObservableLike<TA>,
+    liftedObservable as MulticastObservableLike<TA>,
   );
 };
 
 export const lift = <TReq, T, TA>(
-  operator: ObservableOperatorLike<T, TA>,
+  operator: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReq, TA> =>
   liftImpl(operator, undefined);
 
@@ -128,164 +101,3 @@ export const liftReq = <TReq, T, TReqA>(
   operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReqA, T> =>
   liftImpl(undefined, operator);
-
-export const concatAll = <TReq, T>(
-  maxBufferSize = Number.MAX_SAFE_INTEGER,
-): AsyncIteratorResourceOperatorLike<TReq, ObservableLike<T>, TReq, T> =>
-  lift(concatAllObs(maxBufferSize));
-
-export const distinctUntilChanged = <TReq, T>(
-  equals?: (a: T, b: T) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(distinctUntilChangedObs(equals));
-
-export const endWith = <TReq, T>(
-  value: T,
-  ...values: T[]
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(endWithObs(value, ...values));
-
-export const exhaust = <TReq, T>(): AsyncIteratorResourceOperatorLike<
-  TReq,
-  ObservableLike<T>,
-  TReq,
-  T
-> => lift(exhaustObs());
-
-export const ignoreElements = <
-  TReq,
-  TA,
-  TB
->(): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> =>
-  lift(ignoreElementsObs());
-
-export const keep = <TReq, T>(
-  predicate: (data: T) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(keepObs(predicate));
-
-export const map = <TReq, TA, TB>(
-  mapper: (data: TA) => TB,
-): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TB> =>
-  lift(mapObs(mapper));
-
-export const mergeAll = <TReq, T>(options?: {
-  maxBufferSize?: number;
-  maxConcurrency?: number;
-}): AsyncIteratorResourceOperatorLike<TReq, ObservableLike<T>, TReq, T> =>
-  lift(mergeAllObs(options));
-
-export const observe = <TReq, T>(
-  observer: ObserverLike<T>,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(observeObs(observer));
-
-export const onComplete = <TReq, T>(
-  onComplete: (err?: ErrorLike) => void,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(onCompleteObs(onComplete));
-
-export const onError = <TReq, T>(
-  onError: (err: unknown) => void,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(onErrorObs(onError));
-
-export const onNext = <TReq, T>(
-  onNext: (next: T) => void,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(onNextObs(onNext));
-
-export const repeat = <TReq, T>(
-  predicate?: ((count: number) => boolean) | number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(repeatObs(predicate));
-
-export const retry = <TReq, T>(
-  predicate?: (count: number, error: unknown) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(retryObs(predicate));
-
-export const scan = <TReq, T, TAcc>(
-  scanner: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, TAcc> =>
-  lift(scanObs(scanner, initialValue));
-
-export const share = <TReq, T>(
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(shareObs(scheduler, replayCount));
-
-export const startWith = <TReq, T>(
-  value: T,
-  ...values: T[]
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(startWithObs(value, ...values));
-
-export const subscribeOn = <TReq, T>(
-  scheduler: SchedulerLike,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(subscribeOnObs(scheduler));
-
-export const switchAll = <TReq, T>(): AsyncIteratorResourceOperatorLike<
-  TReq,
-  ObservableLike<T>,
-  TReq,
-  T
-> => lift(switchAllObs());
-
-export const take = <TReq, T>(
-  count: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> => lift(takeObs(count));
-
-export const takeLast = <TReq, T>(
-  count: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(takeLastObs(count));
-
-export const takeWhile = <TReq, T>(
-  predicate: (next: T) => boolean,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(takeWhileObs(predicate));
-
-export const throttle = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleObs(durationSelector));
-
-export const throttleTime = <TReq, T>(
-  duration: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleTimeObs(duration));
-
-export const throttleFirst = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleFirstObs(durationSelector));
-
-export const throttleFirstTime = <TReq, T>(
-  duration: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleFirstTimeObs(duration));
-
-export const throttleLast = <TReq, T>(
-  durationSelector: (next: T) => ObservableLike<unknown>,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleLastObs(durationSelector));
-
-export const throttleLastTime = <TReq, T>(
-  duration: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(throttleLastTimeObs(duration));
-
-export const timeout = <TReq, T>(
-  duration: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(timeoutObs(duration));
-
-export const withLatestFrom = <TReq, TA, TB, TC>(
-  other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC,
-): AsyncIteratorResourceOperatorLike<TReq, TA, TReq, TC> =>
-  lift(withLatestFromObs(other, selector));
