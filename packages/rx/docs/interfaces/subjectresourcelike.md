@@ -10,6 +10,6 @@
 
   ↳ [SubjectLike](subjectlike.md)‹T›
 
-  ↳ [ObservableResourceLike](observableresourcelike.md)‹T›
+  ↳ [MulticastObservableResourceLike](multicastobservableresourcelike.md)‹T›
 
   ↳ **SubjectResourceLike**

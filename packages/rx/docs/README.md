@@ -11,6 +11,8 @@
 ### Interfaces
 
 * [ErrorLike](interfaces/errorlike.md)
+* [MulticastObservableLike](interfaces/multicastobservablelike.md)
+* [MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)
 * [ObservableLike](interfaces/observablelike.md)
 * [ObservableResourceLike](interfaces/observableresourcelike.md)
 * [ObserverLike](interfaces/observerlike.md)
