@@ -56,7 +56,7 @@ export const createLocationStoreResource = (
     ),
     share(scheduler),
   );
-  
+
   const historyIterator: AsyncIteratorLike<LocationLike, LocationLike> = {
     get subscriberCount() {
       return observable.subscriberCount;
@@ -71,4 +71,4 @@ export const createLocationStoreResource = (
     scheduler,
     locationEquals,
   );
-}
+};

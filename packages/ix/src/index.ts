@@ -169,8 +169,7 @@ export const createPersistentStateStore = <T>(
       scan(
         (acc: T, next: StateUpdaterLike<T>) => next(acc),
         () => initialState,
-
-        ),
+      ),
       distinctUntilChanged(equals),
       onNext(next => persistentStore.dispatch(next)),
     );

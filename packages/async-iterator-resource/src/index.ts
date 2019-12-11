@@ -19,7 +19,7 @@ class LiftedIteratorResourceImpl<TReq, T>
   readonly dispatcher: (req: TReq) => void;
   readonly disposable: DisposableLike;
   readonly observable: MulticastObservableLike<T>;
-  
+
   constructor(
     dispatcher: (req: TReq) => void,
     disposable: DisposableLike,
