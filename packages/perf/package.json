@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/perf",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "keywords": [
     "asynchronous",
@@ -36,10 +36,10 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/observable": "^0.0.8",
-    "@reactive-js/pipe": "^0.0.8",
-    "@reactive-js/rx": "^0.0.8",
-    "@reactive-js/schedulers": "^0.0.8",
+    "@reactive-js/observable": "^0.0.9",
+    "@reactive-js/pipe": "^0.0.9",
+    "@reactive-js/rx": "^0.0.9",
+    "@reactive-js/schedulers": "^0.0.9",
     "benchmark": "^2.1.4",
     "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3"
