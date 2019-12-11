@@ -1,5 +1,6 @@
 import { disposed } from "@reactive-js/disposable";
 import {
+  MulticastObservableLike,
   ObservableLike,
   SubjectResourceLike,
   SubscriberLike,
@@ -9,7 +10,6 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
-import { MulticastObservableLike } from "@reactive-js/rx/src";
 
 class SharedObservable<T> implements MulticastObservableLike<T> {
   private readonly factory: () => SubjectResourceLike<T>;

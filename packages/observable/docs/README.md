@@ -863,7 +863,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *OperatorLike‹ObservableLike‹T›, MulticastObservableLike‹T››*
 
 **Type parameters:**
 
@@ -876,7 +876,7 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+**Returns:** *OperatorLike‹ObservableLike‹T›, MulticastObservableLike‹T››*
 
 ___
 

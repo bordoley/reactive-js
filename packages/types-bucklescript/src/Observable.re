@@ -182,11 +182,6 @@ external scan:
   ObservableOperator.t('a, 'acc) =
   "scan";
 
-[@bs.module "@reactive-js/observable"]
-external share:
-  (Scheduler.t, ~replayCount: int=?, unit) => ObservableOperator.t('a, 'a) =
-  "share";
-
 [@bs.module "@reactive-js/observable"] [@bs.variadic]
 external startWith: ('a, array('a)) => ObservableOperator.t('a, 'a) =
   "startWith";

@@ -12,7 +12,7 @@
 
   ↳ [AsyncIteratorLike](asynciteratorlike.md)‹TReq, T›
 
-* ObservableResourceLike‹T›
+* MulticastObservableResourceLike‹T›
 
   ↳ **AsyncIteratorResourceLike**
 

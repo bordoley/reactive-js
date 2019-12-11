@@ -1,5 +1,8 @@
-type t('a);
+type t('a) = {
+  subscriberCount: int,
+}
 
+external asMulticastObservable: t('a) => MulticastObservable.t('a) = "%identity";
 external asObservable: t('a) => Observable.t('a) = "%identity";
 external asObserver: t('a) => Observer.t('a) = "%identity";
 

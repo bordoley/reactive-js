@@ -1,6 +1,7 @@
 export {
   ErrorLike,
   MulticastObservableLike,
+  MulticastObservableResourceLike,
   ObserverLike,
   ObservableLike,
   ObservableResourceLike,

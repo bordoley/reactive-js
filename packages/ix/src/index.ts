@@ -4,6 +4,7 @@ import {
   SubjectResourceLike,
   SubscriberLike,
   MulticastObservableLike,
+  MulticastObservableResourceLike,
 } from "@reactive-js/rx";
 
 import {
@@ -21,7 +22,6 @@ import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import { DisposableOrTeardown } from "@reactive-js/disposable";
-import { MulticastObservableResourceLike } from "@reactive-js/rx/src/internal/interfaces";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends MulticastObservableLike<T> {

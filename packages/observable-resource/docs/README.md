@@ -26,7 +26,6 @@
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
-* [share](README.md#const-share)
 * [startWith](README.md#const-startwith)
 * [subscribeOn](README.md#const-subscribeon)
 * [switchAll](README.md#const-switchall)
@@ -367,25 +366,6 @@ Name | Type |
 ▸ (): *TAcc*
 
 **Returns:** *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, TAcc›*
-
-___
-
-### `Const` share
-
-▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | SchedulerLike |
-`replayCount?` | undefined &#124; number |
-
-**Returns:** *[ObservableResourceOperatorLike](interfaces/observableresourceoperatorlike.md)‹T, T›*
 
 ___
 

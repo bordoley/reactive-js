@@ -101,11 +101,6 @@ external scan:
   ObservableResourceOperator.t('a, 'acc) =
   "scan";
 
-[@bs.module "@reactive-js/observable-resource"]
-external share:
-  (Scheduler.t, ~replayCount: int=?, unit) => ObservableResourceOperator.t('a, 'a) =
-  "share";
-
 [@bs.module "@reactive-js/observable-resource"] [@bs.variadic]
 external startWith: ('a, array('a)) => ObservableResourceOperator.t('a, 'a) =
   "startWith";

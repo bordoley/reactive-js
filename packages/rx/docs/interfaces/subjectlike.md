@@ -10,7 +10,7 @@
 
 * [ObserverLike](observerlike.md)‹T›
 
-* [ObservableLike](observablelike.md)‹T›
+  ↳ [MulticastObservableLike](multicastobservablelike.md)‹T›
 
   ↳ **SubjectLike**
 
