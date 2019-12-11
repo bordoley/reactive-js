@@ -9,3 +9,6 @@ dist
 .DS_Store
 .gitignore
 .prettierignore
+**/lib
+*.re
+.merlin
