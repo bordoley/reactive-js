@@ -22,7 +22,6 @@ import {
   repeat as repeatObs,
   retry as retryObs,
   scan as scanObs,
-  share as shareObs,
   startWith as startWithObs,
   subscribeOn as subscribeOnObs,
   switchAll as switchAllObs,
@@ -210,12 +209,6 @@ export const scan = <TReq, T, TAcc>(
   initialValue: () => TAcc,
 ): AsyncIteratorResourceOperatorLike<TReq, T, TReq, TAcc> =>
   lift(scanObs(scanner, initialValue));
-
-export const share = <TReq, T>(
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncIteratorResourceOperatorLike<TReq, T, TReq, T> =>
-  lift(shareObs(scheduler, replayCount));
 
 export const startWith = <TReq, T>(
   value: T,

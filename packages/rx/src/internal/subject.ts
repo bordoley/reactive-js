@@ -40,6 +40,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly count: number;
   private readonly replayed: Notification<T>[] = [];
+
   constructor(count: number) {
     this.disposable = createDisposable();
     this.count = count;
@@ -48,6 +49,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       this.observers.length = 0;
       this.replayed.length = 0;
     });
+  }
+
+  get subscriberCount() {
+    return this.observers.length;
   }
 
   get isDisposed() {

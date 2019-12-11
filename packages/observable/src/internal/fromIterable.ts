@@ -10,10 +10,12 @@ export const fromIterable = <T>(
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     const iterator: Iterator<T> = iterable[Symbol.iterator]();
-   
+
     subscriber.add(() => {
-      if (iterator.return !== undefined) { iterator.return() };
-    })
+      if (iterator.return !== undefined) {
+        iterator.return();
+      }
+    });
 
     const continuation: SchedulerContinuationLike = shouldYield => {
       let next = iterator.next();
@@ -31,7 +33,7 @@ export const fromIterable = <T>(
           if (shouldYield()) {
             return continuationResult;
           }
-        } 
+        }
 
         subscriber.complete();
         return;

@@ -22,7 +22,6 @@ import {
   repeat as repeatObs,
   retry as retryObs,
   scan as scanObs,
-  share as shareObs,
   startWith as startWithObs,
   subscribeOn as subscribeOnObs,
   switchAll as switchAllObs,
@@ -165,12 +164,6 @@ export const scan = <T, TAcc>(
   initialValue: () => TAcc,
 ): ObservableResourceOperatorLike<T, TAcc> =>
   lift(scanObs(scanner, initialValue));
-
-export const share = <T>(
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): ObservableResourceOperatorLike<T, T> =>
-  lift(shareObs(scheduler, replayCount));
 
 export const startWith = <T>(
   value: T,

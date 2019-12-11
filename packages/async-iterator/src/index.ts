@@ -21,7 +21,6 @@ import {
   repeat as repeatObs,
   retry as retryObs,
   scan as scanObs,
-  share as shareObs,
   startWith as startWithObs,
   subscribeOn as subscribeOnObs,
   switchAll as switchAllObs,
@@ -45,11 +44,17 @@ export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
 }
 
 class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
+  readonly src: AsyncIteratorLike<TReq, T>;
+
   readonly dispatcher: (req: TReq) => void;
   readonly observable: ObservableLike<T>;
   constructor(dispatcher: (req: TReq) => void, observable: ObservableLike<T>) {
     this.dispatcher = dispatcher;
     this.observable = observable;
+  }
+
+  get subscriberCount(): number {
+    return this.src.subscriberCount;
   }
 
   dispatch(req: TReq) {
@@ -170,12 +175,6 @@ export const scan = <TReq, T, TAcc>(
   initialValue: () => TAcc,
 ): AsyncIteratorOperatorLike<TReq, T, TReq, TAcc> =>
   lift(scanObs(scanner, initialValue));
-
-export const share = <TReq, T>(
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncIteratorOperatorLike<TReq, T, TReq, T> =>
-  lift(shareObs(scheduler, replayCount));
 
 export const startWith = <TReq, T>(
   value: T,
