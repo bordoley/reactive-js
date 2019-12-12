@@ -15,9 +15,7 @@ export const generate = <T>(
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
-      if (subscriber.isDisposed) {
-        return;
-      } else if (delay > 0) {
+      do {
         subscriber.next(acc);
 
         try {
@@ -26,22 +24,9 @@ export const generate = <T>(
           subscriber.complete({ cause });
           return;
         }
+      } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
 
-        return continuationResult;
-      } else {
-        do {
-          subscriber.next(acc);
-
-          try {
-            acc = generator(acc);
-          } catch (cause) {
-            subscriber.complete({ cause });
-            return;
-          }
-        } while (!shouldYield() && !subscriber.isDisposed);
-
-        return continuationResult;
-      }
+      return continuationResult;
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,
