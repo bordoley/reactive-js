@@ -19,7 +19,7 @@ export const enum ThrottleMode {
   First = 1,
   Last = 2,
   Interval = 3,
-};
+}
 
 class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSelector: (next: T) => ObservableLike<unknown>;
@@ -73,7 +73,10 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.value = [data];
     }
 
-    if (this.durationSubscription.disposable.isDisposed && this.mode !== ThrottleMode.Last) {
+    if (
+      this.durationSubscription.disposable.isDisposed &&
+      this.mode !== ThrottleMode.Last
+    ) {
       this.notifyNext();
     } else if (this.durationSubscription.disposable.isDisposed) {
       this.setupDurationSubscription(data);
@@ -90,11 +93,10 @@ const throttleOperator = <T>(
 export const throttle = <T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableOperatorLike<T, T> => lift(
-  throttleOperator(
-    typeof duration === "number" 
-      ? _ => empty(duration)
-      : duration,
-    mode,
-  )
-)
+): ObservableOperatorLike<T, T> =>
+  lift(
+    throttleOperator(
+      typeof duration === "number" ? _ => empty(duration) : duration,
+      mode,
+    ),
+  );

@@ -19,7 +19,7 @@ export const fromIterable = <T>(
 
     const continuation: SchedulerContinuationLike = shouldYield => {
       let next = iterator.next();
-      if (subscriber.isDisposed){
+      if (subscriber.isDisposed) {
         return;
       } else if (next.done) {
         subscriber.complete();

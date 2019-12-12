@@ -14,8 +14,7 @@ export const fromArray = <T>(
     const continuation: SchedulerContinuationLike = shouldYield => {
       if (subscriber.isDisposed) {
         return;
-      }
-      else if (index < values.length && delay > 0) {
+      } else if (index < values.length && delay > 0) {
         const value = values[index];
         index++;
         subscriber.next(value);
