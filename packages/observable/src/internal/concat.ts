@@ -27,7 +27,11 @@ export function concat<T>(
       const head = queue.shift();
 
       if (head !== undefined) {
-        innerSubscription = pipe(head, observe(observer), subscribe(subscriber));
+        innerSubscription = pipe(
+          head,
+          observe(observer),
+          subscribe(subscriber),
+        );
 
         subscriber.add(innerSubscription);
       }
