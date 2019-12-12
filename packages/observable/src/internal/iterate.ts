@@ -11,13 +11,9 @@ import {
 import { observe, onComplete, onNext } from "./observe";
 import { reduce } from "./reduce";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
-import {
-  DisposableLike,
-  DisposableOrTeardown,
-  throwIfDisposed,
-} from "@reactive-js/disposable";
+import { throwIfDisposed } from "@reactive-js/disposable";
 
-export const iterate = <T>(
+const iterate = <T>(
   schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
@@ -71,14 +67,12 @@ export const toArray = <T>(
     blockingLast(schedulerFactory),
   );
 
-export interface IteratorResource<T> extends Iterator<T>, DisposableLike {}
-
 const iteratorDone: IteratorReturnResult<any> = {
   done: true,
   value: undefined,
 };
 
-class ObservableIteratorResourceImpl<T> implements IteratorResource<T> {
+class ObservableIteratorImpl<T> implements Iterator<T> {
   private readonly scheduler: VirtualTimeSchedulerResourceLike;
 
   private value: [T] | undefined = undefined;
@@ -106,23 +100,8 @@ class ObservableIteratorResourceImpl<T> implements IteratorResource<T> {
     scheduler.add(subscription);
   }
 
-  get isDisposed(): boolean {
-    return this.scheduler.isDisposed;
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.scheduler.add(disposable, ...disposables);
-  }
-
-  dispose() {
-    this.scheduler.dispose();
-  }
-
   next(): IteratorResult<T> {
-    throwIfDisposed(this);
+    throwIfDisposed(this.scheduler);
 
     let done = false;
 
@@ -136,6 +115,8 @@ class ObservableIteratorResourceImpl<T> implements IteratorResource<T> {
     } while (this.value === undefined && !done);
 
     if (done) {
+      // Cleanup
+      this.scheduler.dispose();
       return iteratorDone;
     } else {
       const [value] = this.value || [];
@@ -144,31 +125,24 @@ class ObservableIteratorResourceImpl<T> implements IteratorResource<T> {
   }
 
   return(): IteratorResult<T> {
-    this.dispose();
+    this.scheduler.dispose();
     return iteratorDone;
   }
 
   throw(e?: any): IteratorResult<T> {
-    this.dispose;
+    this.scheduler.dispose;
     if (e !== undefined) {
       throw e;
     }
     return iteratorDone;
   }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.scheduler.remove(disposable, ...disposables);
-  }
 }
 
-export const toIterator = <T>(
+const toIterator = <T>(
   schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
-): OperatorLike<ObservableLike<T>, IteratorResource<T>> => observable => {
+): OperatorLike<ObservableLike<T>, Iterator<T>> => observable => {
   const scheduler = schedulerFactory();
-  return new ObservableIteratorResourceImpl(scheduler, observable);
+  return new ObservableIteratorImpl(scheduler, observable);
 };
 
 class IterableObservable<T> implements Iterable<T> {
