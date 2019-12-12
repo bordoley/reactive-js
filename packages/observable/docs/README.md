@@ -4,6 +4,10 @@
 
 ## Index
 
+### Enumerations
+
+* [ThrottleMode](enums/throttlemode.md)
+
 ### Interfaces
 
 * [ObservableOperatorLike](interfaces/observableoperatorlike.md)
@@ -47,11 +51,6 @@
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
 * [throttle](README.md#const-throttle)
-* [throttleFirst](README.md#const-throttlefirst)
-* [throttleFirstTime](README.md#const-throttlefirsttime)
-* [throttleLast](README.md#const-throttlelast)
-* [throttleLastTime](README.md#const-throttlelasttime)
-* [throttleTime](README.md#const-throttletime)
 * [throws](README.md#const-throws)
 * [timeout](README.md#const-timeout)
 * [toArray](README.md#const-toarray)
@@ -970,7 +969,7 @@ ___
 
 ### `Const` throttle
 
-▸ **throttle**<**T**>(`durationSelector`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **throttle**<**T**>(`duration`: function | number, `mode`: [ThrottleMode](enums/throttlemode.md)): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -978,117 +977,10 @@ ___
 
 **Parameters:**
 
-▪ **durationSelector**: *function*
-
-▸ (`next`: T): *ObservableLike‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-### `Const` throttleFirst
-
-▸ **throttleFirst**<**T**>(`durationSelector`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **durationSelector**: *function*
-
-▸ (`next`: T): *ObservableLike‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-### `Const` throttleFirstTime
-
-▸ **throttleFirstTime**<**T**>(`duration`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`duration` | number |
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-### `Const` throttleLast
-
-▸ **throttleLast**<**T**>(`durationSelector`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **durationSelector**: *function*
-
-▸ (`next`: T): *ObservableLike‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-### `Const` throttleLastTime
-
-▸ **throttleLastTime**<**T**>(`duration`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`duration` | number |
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-### `Const` throttleTime
-
-▸ **throttleTime**<**T**>(`duration`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`duration` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`duration` | function &#124; number | - |
+`mode` | [ThrottleMode](enums/throttlemode.md) |  ThrottleMode.Interval |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 

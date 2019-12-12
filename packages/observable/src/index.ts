@@ -33,12 +33,8 @@ export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
 export {
-  throttleFirst,
-  throttleFirstTime,
-  throttleLast,
-  throttleLastTime,
+  ThrottleMode,
   throttle,
-  throttleTime,
 } from "./internal/throttle";
 export { throws } from "./internal/throws";
 export { timeout } from "./internal/timeout";
