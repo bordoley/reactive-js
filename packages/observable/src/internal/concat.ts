@@ -3,7 +3,7 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  connect,
+  subscribe,
 } from "@reactive-js/rx";
 import { fromArray } from "./fromArray";
 import { observe } from "./observe";
@@ -18,7 +18,7 @@ export function concat<T>(
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
+  const subscribeImpl = (subscriber: SubscriberLike<T>) => {
     const queue = [...observables];
 
     let innerSubscription = disposed;
@@ -27,7 +27,7 @@ export function concat<T>(
       const head = queue.shift();
 
       if (head !== undefined) {
-        innerSubscription = pipe(head, observe(observer), connect(subscriber));
+        innerSubscription = pipe(head, observe(observer), subscribe(subscriber));
 
         subscriber.add(innerSubscription);
       }
@@ -52,7 +52,7 @@ export function concat<T>(
     subscribeNext();
   };
 
-  return { subscribe };
+  return { subscribe: subscribeImpl };
 }
 
 export function startWith<T>(

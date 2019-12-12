@@ -1,5 +1,5 @@
 import {
-  connect,
+  subscribe,
   createSubject,
   SubjectResourceLike,
   SubscriberLike,
@@ -133,7 +133,7 @@ export const createReducerStore = <TAction, T>(
       share(scheduler, 1),
     );
   const store = createAsyncIteratorResource(operator);
-  pipe(store, connect(scheduler), d => store.add(d));
+  pipe(store, subscribe(scheduler), d => store.add(d));
   return store;
 };
 

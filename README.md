@@ -5,7 +5,7 @@ Fast modern reactive Javascript programming library
 ## Example Usage
 
 ```typescript
-import { connect } from "@reactive-js/rx";
+import { subscribe } from "@reactive-js/rx";
 import {
   exhaust,
   fromArray,
@@ -33,10 +33,8 @@ const subscription = pipe(
   // we use a variation of the observe operator (observe, onNext, onComplete, onError).
   onNext(console.log),
 
-  // Connect the observable to a scheduler, creating a subscription.
-// In reactive-js, we never directly create a Subscriber, but instead
-// use the connect function.
- connect(normalPriority);
+ // Subscribe to the observable using the normal priority scheduler, creating a subscription.
+ subscribe(normalPriority);
 );
 ```
 

@@ -6,9 +6,6 @@ module ObservableOperator = {
 };
 
 [@bs.module "@reactive-js/rx"]
-external connect: Scheduler.t => Operator.t(t('a), Disposable.t) = "connect";
-
-[@bs.module "@reactive-js/rx"]
 external create: ([@bs.uncurry] (Observer.t('a) => Disposable.t)) => t('a) =
   "createObservable";
 
@@ -83,6 +80,9 @@ external never: unit => t('a) = "never";
 
 [@bs.module "@reactive-js/observable"]
 external ofValue: 'a => t('a) = "ofValue";
+
+[@bs.module "@reactive-js/rx"]
+external subscribe: Scheduler.t => Operator.t(t('a), Disposable.t) = "subscribe";
 
 [@bs.module "@reactive-js/observable"]
 external throws: (Error.JsError.t, ~delay: int=?, unit) => t('a) = "throws";

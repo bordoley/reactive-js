@@ -1,6 +1,6 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import {
-  connect,
+  subscribe,
   DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
@@ -51,7 +51,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
     this.otherSubscription = pipe(
       other,
       observe(new WithLatestFromSubscriber.InnerObserver(this)),
-      connect(this),
+      subscribe(this),
     );
 
     this.add(this.otherSubscription);

@@ -1,5 +1,5 @@
 import {
-  connect,
+  subscribe,
   createObservable,
   createSubject,
   ObservableLike,
@@ -17,7 +17,7 @@ import { AbstractSubscriber } from "../src/internal/abstractSubscriber";
 import { ObserverLike } from "../dist/types";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
-  readonly isConnected = true;
+  readonly isSubscribed = true;
   next = jest.fn();
   complete = jest.fn();
 
@@ -27,7 +27,7 @@ class MockSubscriber<T> extends AbstractSubscriber<T> {
 }
 
 describe("rx", () => {
-  describe("connect", () => {
+  describe("subscribe", () => {
     test("throws with serial observable", () => {
       const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
         subscribe: subscriber => subscriber.next(1),
@@ -40,13 +40,13 @@ describe("rx", () => {
       expect(() =>
         pipe(
           seriallyCallsNextOnSubscribe,
-          connect(createVirtualTimeSchedulerResource()),
+          subscribe(createVirtualTimeSchedulerResource()),
         ),
       ).toThrow();
       expect(() =>
         pipe(
           seriallyCallsCompleteOnSubscribe,
-          connect(createVirtualTimeSchedulerResource()),
+          subscribe(createVirtualTimeSchedulerResource()),
         ),
       ).toThrow();
     });
@@ -55,7 +55,7 @@ describe("rx", () => {
       const observable = createObservable(observer => observer.complete());
       const scheduler = createVirtualTimeSchedulerResource();
 
-      const subscription = pipe(observable, connect(scheduler));
+      const subscription = pipe(observable, subscribe(scheduler));
       expect(subscription.isDisposed).toBeFalsy();
 
       scheduler.run();
@@ -85,7 +85,7 @@ describe("rx", () => {
       const subscription = pipe(
         (_: ObserverLike<unknown>) => disposable,
         createObservable,
-        connect(scheduler),
+        subscribe(scheduler),
       );
       scheduler.run();
 

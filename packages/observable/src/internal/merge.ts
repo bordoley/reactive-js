@@ -8,7 +8,7 @@ import {
   ObservableLike,
   ObserverLike,
   SubscriberLike,
-  connect,
+  subscribe,
 } from "@reactive-js/rx";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
@@ -56,7 +56,7 @@ export function merge<T>(
 export function merge<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
+  const subscribeImpl = (subscriber: SubscriberLike<T>) => {
     const completedCountRef: [number] = [0];
 
     const allSubscriptions: DisposableLike = createDisposable();
@@ -73,12 +73,12 @@ export function merge<T>(
       observer.innerSubscription = pipe(
         observable,
         observe(observer),
-        connect(subscriber),
+        subscribe(subscriber),
       );
 
       allSubscriptions.add(observer.innerSubscription);
     }
   };
 
-  return { subscribe };
+  return { subscribe: subscribeImpl };
 }

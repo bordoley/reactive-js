@@ -1,5 +1,5 @@
 import {
-  connect,
+  subscribe,
   ErrorLike,
   ObservableLike,
   SubscriberLike,
@@ -44,11 +44,11 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
       !this.isCompleted
     ) {
       this.queue.push(next);
-      this.connectNext();
+      this.subscribeNext();
     }
   }
 
-  private connectNext() {
+  private subscribeNext() {
     if (this.activeCount < this.maxConcurrency) {
       const nextObs = this.queue.shift();
 
@@ -69,11 +69,11 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
                 this.isCompleted = true;
                 this.delegate.complete(error);
               } else {
-                this.connectNext();
+                this.subscribeNext();
               }
             },
           }),
-          connect(this),
+          subscribe(this),
         );
 
         this.add(nextObsSubscription);

@@ -10,7 +10,7 @@ export {
   SubjectResourceLike,
 } from "./internal/interfaces";
 
-export { connect } from "./internal/connect";
+export { subscribe } from "./internal/subscribe";
 export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
 export { DelegatingSubscriber } from "./internal/delegatingSubscriber";

@@ -4,7 +4,7 @@ import {
   ObservableLike,
   SubjectResourceLike,
   SubscriberLike,
-  connect,
+  subscribe,
   createSubject,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -51,7 +51,7 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
       this.sourceSubscription = pipe(
         this.source,
         observe(this.subject),
-        connect(this.scheduler),
+        subscribe(this.scheduler),
       );
     }
     this.refCount++;
@@ -61,7 +61,7 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
     const innerSubscription = pipe(
       subject,
       observe(subscriber),
-      connect(subscriber),
+      subscribe(subscriber),
     );
 
     subscriber.add(this.teardown, innerSubscription);

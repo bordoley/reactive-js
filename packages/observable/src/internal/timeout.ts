@@ -5,7 +5,7 @@ import {
 import {
   ErrorLike,
   SubscriberLike,
-  connect,
+  subscribe,
   DelegatingSubscriber,
   ObservableLike,
 } from "@reactive-js/rx";
@@ -37,7 +37,7 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.durationSubscription.disposable = pipe(
       this.duration,
       onComplete(error => this.complete(error)),
-      connect(this),
+      subscribe(this),
     );
 
     this.delegate.next(data);

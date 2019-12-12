@@ -18,7 +18,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     return this.scheduler.inScheduledContinuation;
   }
 
-  abstract get isConnected(): boolean;
+  abstract get isSubscribed(): boolean;
 
   get isDisposed() {
     return this.subscription.isDisposed;
@@ -65,7 +65,7 @@ export const checkState = <T>(subscriber: SubscriberLike<T>) => {
     throw new Error(
       "Attempted to notify subscriber from outside of it's scheduler",
     );
-  } else if (!subscriber.isConnected) {
-    throw new Error("Attempted to notify subscriber before it is connected");
+  } else if (!subscriber.isSubscribed) {
+    throw new Error("Attempted to notify subscriber before it is subscribeed");
   }
 };

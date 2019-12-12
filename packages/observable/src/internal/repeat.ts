@@ -7,7 +7,7 @@ import {
   ObservableLike,
   ObserverLike,
   SubscriberLike,
-  connect,
+  subscribe,
   DelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
@@ -49,7 +49,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.parent.innerSubscription.disposable = pipe(
         this.parent.observable,
         observe(this.parent.observer),
-        connect(this.parent),
+        subscribe(this.parent),
       );
     }
   };
