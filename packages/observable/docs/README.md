@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-* [IteratorResource](interfaces/iteratorresource.md)
 * [ObservableOperatorLike](interfaces/observableoperatorlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
 
@@ -25,7 +24,6 @@
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#const-generate)
 * [ignoreElements](README.md#const-ignoreelements)
-* [iterate](README.md#const-iterate)
 * [keep](README.md#const-keep)
 * [lift](README.md#const-lift)
 * [map](README.md#const-map)
@@ -58,7 +56,6 @@
 * [timeout](README.md#const-timeout)
 * [toArray](README.md#const-toarray)
 * [toIterable](README.md#const-toiterable)
-* [toIterator](README.md#const-toiterator)
 * [toPromise](README.md#const-topromise)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
@@ -509,24 +506,6 @@ ___
 ▪ **TB**
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
-
-___
-
-### `Const` iterate
-
-▸ **iterate**<**T**>(`schedulerFactory`: function): *OperatorLike‹ObservableLike‹T›, void›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
-
-▸ (): *VirtualTimeSchedulerResourceLike*
-
-**Returns:** *OperatorLike‹ObservableLike‹T›, void›*
 
 ___
 
@@ -1185,24 +1164,6 @@ ___
 ▸ (): *VirtualTimeSchedulerResourceLike*
 
 **Returns:** *OperatorLike‹ObservableLike‹T›, Iterable‹T››*
-
-___
-
-### `Const` toIterator
-
-▸ **toIterator**<**T**>(`schedulerFactory`: function): *OperatorLike‹ObservableLike‹T›, [IteratorResource](interfaces/iteratorresource.md)‹T››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
-
-▸ (): *VirtualTimeSchedulerResourceLike*
-
-**Returns:** *OperatorLike‹ObservableLike‹T›, [IteratorResource](interfaces/iteratorresource.md)‹T››*
 
 ___
 
