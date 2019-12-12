@@ -26,7 +26,7 @@ export const generate = <T>(
           subscriber.complete({ cause });
           return;
         }
-       
+
         return continuationResult;
       } else {
         do {

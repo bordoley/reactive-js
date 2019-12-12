@@ -32,10 +32,7 @@ export { switchAll } from "./internal/switch";
 export { take } from "./internal/take";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
-export {
-  ThrottleMode,
-  throttle,
-} from "./internal/throttle";
+export { ThrottleMode, throttle } from "./internal/throttle";
 export { throws } from "./internal/throws";
 export { timeout } from "./internal/timeout";
 export { withLatestFrom } from "./internal/withLatestFrom";
