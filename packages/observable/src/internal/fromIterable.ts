@@ -19,15 +19,16 @@ export const fromIterable = <T>(
 
     const continuation: SchedulerContinuationLike = shouldYield => {
       let next = iterator.next();
-
-      if (next.done) {
+      if (subscriber.isDisposed){
+        return;
+      } else if (next.done) {
         subscriber.complete();
         return;
       } else if (delay > 0) {
         subscriber.next(next.value);
         return continuationResult;
       } else {
-        for (; !next.done; next = iterator.next()) {
+        for (; !next.done && !subscriber.isDisposed; next = iterator.next()) {
           subscriber.next(next.value);
 
           if (shouldYield()) {
