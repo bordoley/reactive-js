@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/observable-resource",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,9 +38,9 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.9",
-    "@reactive-js/observable": "^0.0.9",
-    "@reactive-js/rx": "^0.0.9"
+    "@reactive-js/disposable": "^0.0.10",
+    "@reactive-js/observable": "^0.0.10",
+    "@reactive-js/rx": "^0.0.10"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
