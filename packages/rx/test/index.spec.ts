@@ -107,11 +107,14 @@ describe("rx", () => {
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
+      
+      expect(subject.subscriberCount).toEqual(0);
       scheduler.run();
 
       expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
       expect(subscriber.complete).toHaveBeenCalled();
     });
+
     test("when subject is not completed", () => {
       const subject = createSubject(2);
 
@@ -126,6 +129,8 @@ describe("rx", () => {
         subject.next(4);
         subject.complete();
       });
+
+      expect(subject.subscriberCount).toEqual(1);
       scheduler.run();
 
       expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
@@ -143,11 +148,43 @@ describe("rx", () => {
 
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
+      
       subject.subscribe(subscriber);
-      subscriber.dispose();
-      scheduler.run();
+      expect(subject.subscriberCount).toEqual(1);
 
+      subscriber.dispose();
+      expect(subject.subscriberCount).toEqual(0);
+
+      scheduler.run();
+      expect(subscriber.isDisposed).toBeTruthy();
       expect(subscriber.next).toHaveBeenCalledTimes(0);
+    });
+
+    test("disposed subject ignores notifications", () => {
+      const subject = createSubject(2);
+      const scheduler = createVirtualTimeSchedulerResource();
+      const subscriber = new MockSubscriber(scheduler);
+
+      subject.subscribe(subscriber);
+      expect(subject.isDisposed).toBeFalsy();
+
+      subject.dispose();
+      expect(subject.isDisposed).toBeTruthy();
+
+      subject.next(1);
+      subject.complete();
+      expect(subscriber.next).toHaveBeenCalledTimes(0);
+      expect(subscriber.complete).toHaveBeenCalledTimes(0);
+    });
+
+    test("disposes subscriber if disposed", () => {
+      const subject = createSubject(2);
+      const scheduler = createVirtualTimeSchedulerResource();
+      const subscriber = new MockSubscriber(scheduler);
+
+      subject.dispose();
+      subject.subscribe(subscriber);
+      expect(subscriber.isDisposed).toBeTruthy();
     });
   });
 });
