@@ -4,7 +4,7 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { connect, createObservable, ObserverLike } from "@reactive-js/rx";
+import { subscribe, createObservable, ObserverLike } from "@reactive-js/rx";
 import {
   createVirtualTimeSchedulerResource,
   AbstractScheduler,
@@ -98,7 +98,7 @@ test("lift", () => {
   pipe(
     liftedObservable,
     onNext(_ => result.push(3)),
-    connect(scheduler),
+    subscribe(scheduler),
   );
   scheduler.run();
 
@@ -279,7 +279,7 @@ describe("fromArray", () => {
       observable,
       map(v => [scheduler.now, v]),
       observe(observer),
-      connect(scheduler),
+      subscribe(scheduler),
     );
     scheduler.run();
 
@@ -319,7 +319,7 @@ describe("fromIterable", () => {
       observable,
       map(v => [scheduler.now, v]),
       observe(observer),
-      connect(scheduler),
+      subscribe(scheduler),
     );
     scheduler.run();
 
@@ -344,7 +344,7 @@ describe("fromIterable", () => {
     };
 
     const scheduler = createVirtualTimeSchedulerResource(1);
-    const subscription = connect(scheduler)(fromIterable(mockIterable));
+    const subscription = subscribe(scheduler)(fromIterable(mockIterable));
     subscription.dispose();
 
     expect(mockIterable[Symbol.iterator]().return).toHaveBeenCalledTimes(1);
@@ -391,7 +391,7 @@ test("fromScheduledValues", () => {
     observable,
     map(v => [scheduler.now, v]),
     observe(observer),
-    connect(scheduler),
+    subscribe(scheduler),
   );
   scheduler.run();
 
@@ -457,7 +457,7 @@ describe("generate", () => {
       map(x => [scheduler.now, x]),
       take(5),
       observe(observer),
-      connect(scheduler),
+      subscribe(scheduler),
     );
     scheduler.run();
 
@@ -487,7 +487,7 @@ describe("generate", () => {
       map(x => [scheduler.now, x]),
       take(5),
       observe(observer),
-      connect(scheduler),
+      subscribe(scheduler),
     );
     scheduler.run();
 
@@ -505,7 +505,7 @@ test("ignoreElements", () => {
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
 
-  pipe(src, ignoreElements(), observe(observer), connect(scheduler));
+  pipe(src, ignoreElements(), observe(observer), subscribe(scheduler));
   scheduler.run();
 
   expect(observer.next).toBeCalledTimes(0);
@@ -522,7 +522,7 @@ test("keep", () => {
     src,
     keep(x => x % 2 === 0),
     observe(observer),
-    connect(scheduler),
+    subscribe(scheduler),
   );
   scheduler.run();
 
@@ -557,7 +557,7 @@ test("merge", () => {
       throws(cause, 10),
     ),
     observe(observer),
-    connect(scheduler),
+    subscribe(scheduler),
   );
   scheduler.run();
 
@@ -592,7 +592,7 @@ test("onComplete", () => {
   const observer = createMockObserver();
   const cb = jest.fn();
 
-  pipe(empty(), onComplete(cb), observe(observer), connect(scheduler));
+  pipe(empty(), onComplete(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
   expect(observer.complete).toHaveBeenCalledWith(undefined);
@@ -606,7 +606,7 @@ describe("onError", () => {
     const cause = new Error();
     const cb = jest.fn();
 
-    pipe(throws(cause), onError(cb), observe(observer), connect(scheduler));
+    pipe(throws(cause), onError(cb), observe(observer), subscribe(scheduler));
     scheduler.run();
 
     expect(observer.complete).toHaveBeenCalledWith({ cause });
@@ -618,7 +618,7 @@ describe("onError", () => {
     const observer = createMockObserver();
     const cb = jest.fn();
 
-    pipe(empty(), onError(cb), observe(observer), connect(scheduler));
+    pipe(empty(), onError(cb), observe(observer), subscribe(scheduler));
     scheduler.run();
 
     expect(observer.complete).toHaveBeenCalledTimes(1);
@@ -631,7 +631,7 @@ test("onNext", () => {
   const observer = createMockObserver();
   const cb = jest.fn();
 
-  pipe(ofValue(1), onNext(cb), observe(observer), connect(scheduler));
+  pipe(ofValue(1), onNext(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
   expect(observer.next).toHaveBeenCalledWith(1);
@@ -785,7 +785,7 @@ describe("throws", () => {
     const observer = createMockObserver();
     const cause = new Error();
 
-    pipe(throws(cause), observe(observer), connect(scheduler));
+    pipe(throws(cause), observe(observer), subscribe(scheduler));
     scheduler.run();
 
     expect(observer.next).toBeCalledTimes(0);
@@ -916,7 +916,7 @@ test("share", () => {
     concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),
     share(scheduler, 1),
   );
-  const replayedSubscription = connect(scheduler)(replayed);
+  const replayedSubscription = subscribe(scheduler)(replayed);
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
@@ -924,7 +924,7 @@ test("share", () => {
     liftedSubscription = pipe(
       replayed,
       observe(liftedObserver),
-      connect(scheduler),
+      subscribe(scheduler),
     );
   }, 1);
 
@@ -937,7 +937,7 @@ test("share", () => {
     anotherLiftedSubscription = pipe(
       replayed,
       observe(anotherLiftedSubscriptionObserver),
-      connect(scheduler),
+      subscribe(scheduler),
     );
   }, 3);
 

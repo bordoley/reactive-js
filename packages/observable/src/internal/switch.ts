@@ -1,6 +1,6 @@
 import { createSerialDisposable, disposed } from "@reactive-js/disposable";
 import {
-  connect,
+  subscribe,
   DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
@@ -45,7 +45,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.innerSubscription.disposable = pipe(
       data,
       observe(new SwitchSubscriber.InnerObserver(this)),
-      connect(this),
+      subscribe(this),
     );
   }
 }

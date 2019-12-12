@@ -1,12 +1,12 @@
 import { AsyncIteratorLike } from "@reactive-js/ix";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { connect, ErrorLike, ObservableLike } from "@reactive-js/rx";
+import { subscribe, ErrorLike, ObservableLike } from "@reactive-js/rx";
 import { observe, throttle, subscribeOn } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
 
-const connectObservable = <T>(
+const subscribeObservable = <T>(
   observable: ObservableLike<T>,
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
   updateError: React.Dispatch<React.SetStateAction<ErrorLike | undefined>>,
@@ -20,7 +20,7 @@ const connectObservable = <T>(
       next: (data: T) => updateState(_ => data),
       complete: (error?: ErrorLike) => updateError(_ => error),
     }),
-    connect(normalPriority),
+    subscribe(normalPriority),
   );
 
 export const useObservable = <T>(
@@ -31,7 +31,7 @@ export const useObservable = <T>(
   const [error, updateError] = useState<ErrorLike | undefined>(undefined);
 
   useEffect(() => {
-    const subscription = connectObservable(
+    const subscription = subscribeObservable(
       observable,
       updateState,
       updateError,

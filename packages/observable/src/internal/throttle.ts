@@ -3,7 +3,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
-  connect,
+  subscribe,
   DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
@@ -54,7 +54,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.durationSubscription.disposable = pipe(
       this.durationSelector(next),
       onComplete(this.notifyNext),
-      connect(this),
+      subscribe(this),
     );
   }
 

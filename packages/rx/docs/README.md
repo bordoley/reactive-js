@@ -22,33 +22,11 @@
 
 ### Functions
 
-* [connect](README.md#const-connect)
 * [createObservable](README.md#const-createobservable)
 * [createSubject](README.md#const-createsubject)
+* [subscribe](README.md#const-subscribe)
 
 ## Functions
-
-### `Const` connect
-
-▸ **connect**<**T**>(`scheduler`: SchedulerLike): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
-
-Safely connects an ObservableLike to a SubscriberLike,
-using the provided scheduler. The returned DisposableLike
-may used to cancel the subscription.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | SchedulerLike |
-
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
-
-___
 
 ### `Const` createObservable
 
@@ -98,3 +76,25 @@ Name | Type | Default |
 `replayCount` | number | 0 |
 
 **Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+
+___
+
+### `Const` subscribe
+
+▸ **subscribe**<**T**>(`scheduler`: SchedulerLike): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
+
+Safely subscribes an ObservableLike to a SubscriberLike,
+using the provided scheduler. The returned DisposableLike
+may used to cancel the subscription.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*

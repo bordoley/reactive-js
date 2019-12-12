@@ -31,8 +31,8 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
   }
 
   /** @ignore */
-  get isConnected() {
-    return this.source.isConnected;
+  get isSubscribed() {
+    return this.source.isSubscribed;
   }
 
   /** @ignore */

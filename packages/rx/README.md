@@ -6,7 +6,7 @@ This library defines the core interfaces (ObservableLike, ObserverLike, and Subs
 
 Unlike in RxJS, reactive-js Observable streams are always asynchronous. Calling subscribe on an Observable only sets up a subscription, but does not synchronously produce values (doing so is a programming error). Instead, reactive-js deeply integrates scheduling into the Subscriber type. During subscription setup ,Observable sources may schedule work to be done in the future, such as iterating through an iterable source.
 
-Another significant departure from RxJS is the API for subscribing to an Observable. Unlike in RxJS where user code typically directly calls an Observable's subscribe function, in reactive-js user code should use the `connect` function to setup a subscription. The `connect` function requires the user to provide a scheduler. This scheduler is used by the Observable source to schedule both immediate and delayed work, and enables deep integration with platform specific scheduling such as React's internal scheduler.
+Another significant departure from RxJS is the API for subscribing to an Observable. Unlike in RxJS where user code typically directly calls an Observable's subscribe function, in reactive-js user code should use the `subscribe` function to setup a subscription. The `subscribe` function requires the user to provide a scheduler. This scheduler is used by the Observable source to schedule both immediate and delayed work, and enables deep integration with platform specific scheduling such as React's internal scheduler.
 
 ### A note on backpressure
 
@@ -33,14 +33,14 @@ yarn add @reactive-js/rx
 ## Usage
 
 ```typescript
-import { connect } from "@reactive-js/rx";
+import { subscribe } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
 
 const observableSource;
 const platformScheduler;
 
 // Setup a subscription to the observableSource using the platform scheduler
-const subscription = pipe(observableSource, connect(platformScheduler));
+const subscription = pipe(observableSource, subscribe(platformScheduler));
 
 // ...later in the future
 

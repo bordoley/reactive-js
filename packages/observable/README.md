@@ -21,7 +21,7 @@ yarn add @reactive-js/observable
 ## Usage
 
 ```typescript
-import { connect } from "@reactive-js/rx";
+import { subscribe } from "@reactive-js/rx";
 import {
   exhaust,
   fromArray,
@@ -39,7 +39,7 @@ pipe(
   map(x => fromArray([x, x, x, x])),
   exhaust(),
   onNext(console.log),
-  connect(scheduler),
+  subscribe(scheduler),
 );
 ```
 

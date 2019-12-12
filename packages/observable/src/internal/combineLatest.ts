@@ -3,7 +3,7 @@ import {
   ObservableLike,
   ObserverLike,
   SubscriberLike,
-  connect,
+  subscribe,
 } from "@reactive-js/rx";
 import {
   createDisposable,
@@ -131,7 +131,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
 export function combineLatest(
   ...observables: ObservableLike<any>[]
 ): ObservableLike<any> {
-  const subscribe = (subscriber: SubscriberLike<any>) => {
+  const subscribeImpl = (subscriber: SubscriberLike<any>) => {
     const ctx: CombineLatestContext = {
       completedCount: 0,
       producedCount: 0,
@@ -153,12 +153,12 @@ export function combineLatest(
       observer.innerSubscription = pipe(
         observables[index],
         observe(observer),
-        connect(subscriber),
+        subscribe(subscriber),
       );
 
       allSubscriptions.add(observer.innerSubscription);
     }
   };
 
-  return { subscribe };
+  return { subscribe: subscribeImpl };
 }

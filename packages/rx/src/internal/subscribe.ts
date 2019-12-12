@@ -8,13 +8,13 @@ const __DEV__ = process.env.NODE_ENV !== "production";
 
 class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
   implements SubscriberLike<T> {
-  private _isConnected = false;
+  private _isSubscribed = false;
 
   constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
     super(scheduler, subscription);
   }
-  get isConnected() {
-    return this._isConnected;
+  get isSubscribed() {
+    return this._isSubscribed;
   }
 
   complete(_?: ErrorLike) {
@@ -25,8 +25,8 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
     this.dispose();
   }
 
-  connect() {
-    this._isConnected = true;
+  subscribe() {
+    this._isSubscribed = true;
   }
 
   next(_: T) {
@@ -37,11 +37,11 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
 }
 
 /**
- * Safely connects an ObservableLike to a SubscriberLike,
+ * Safely subscribes an ObservableLike to a SubscriberLike,
  * using the provided scheduler. The returned DisposableLike
  * may used to cancel the subscription.
  */
-export const connect = <T>(
+export const subscribe = <T>(
   scheduler: SchedulerLike,
 ): OperatorLike<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
@@ -49,6 +49,6 @@ export const connect = <T>(
   const subscription = createDisposable();
   const subscriber = new AutoDisposingSubscriber(scheduler, subscription);
   observable.subscribe(subscriber);
-  subscriber.connect();
+  subscriber.subscribe();
   return subscription;
 };

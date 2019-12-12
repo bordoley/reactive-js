@@ -1,5 +1,5 @@
 import {
-  connect,
+  subscribe,
   ObservableLike,
   ErrorLike,
   ObserverLike,
@@ -24,7 +24,7 @@ const iterate = <T>(
     onComplete(e => {
       error = e;
     }),
-    connect(scheduler),
+    subscribe(scheduler),
   );
   scheduler.run();
   scheduler.dispose();
@@ -95,7 +95,7 @@ class ObservableIteratorImpl<T> implements Iterator<T> {
     const subscription = pipe(
       observable,
       observe(observer),
-      connect(scheduler),
+      subscribe(scheduler),
     );
     scheduler.add(subscription);
   }
