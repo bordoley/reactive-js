@@ -1115,7 +1115,7 @@ ___
 
 ### `Const` timeout
 
-▸ **timeout**<**T**>(`duration`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **timeout**<**T**>(`duration`: number | ObservableLike‹unknown›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1125,7 +1125,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`duration` | number |
+`duration` | number &#124; ObservableLike‹unknown› |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
