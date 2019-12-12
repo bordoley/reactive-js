@@ -41,6 +41,8 @@ import {
   toArray,
   toIterable,
   fromIterable,
+  repeat,
+  timeout,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -637,18 +639,20 @@ test("onNext", () => {
   expect(cb).toHaveBeenCalledWith(1);
 });
 
-describe("throws", () => {
-  test("completes with an exception when subscribed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const observer = createMockObserver();
-    const cause = new Error();
-
-    pipe(throws(cause), observe(observer), connect(scheduler));
-    scheduler.run();
-
-    expect(observer.next).toBeCalledTimes(0);
-    expect(observer.complete).toBeCalledWith({ cause });
+describe("repeat", () => {
+  test("repeats the observable n times", () => {
+    const result = pipe(ofValue(1), repeat(3), toArray());
+    expect(result).toEqual([1,1,1])
   });
+
+  test("when the repeat functions throws throws", () => {
+    const error = new Error();
+    expect(
+      () => pipe(ofValue(1), repeat(
+        _ => { throw error; },
+      ), toArray())
+    ).toThrow(error);
+  })
 });
 
 test("scan", () => {
@@ -721,6 +725,33 @@ describe("takeLast", () => {
       ),
     ).toThrow(cause);
     expect(observer.next).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe("throws", () => {
+  test("completes with an exception when subscribed", () => {
+    const scheduler = createVirtualTimeSchedulerResource();
+    const observer = createMockObserver();
+    const cause = new Error();
+
+    pipe(throws(cause), observe(observer), connect(scheduler));
+    scheduler.run();
+
+    expect(observer.next).toBeCalledTimes(0);
+    expect(observer.complete).toBeCalledWith({ cause });
+  });
+});
+
+describe("timeout", () => {
+  test("throws when a timeout occurs", () => {
+    expect(
+      () => pipe(ofValue(1, 2), timeout(1), toArray(() => createVirtualTimeSchedulerResource(2)))
+    ).toThrow();
+  });
+
+  test("when timeout is greater than observed time", () => {
+    const result = pipe(ofValue(1, 2), timeout(3), toArray(() => createVirtualTimeSchedulerResource(2)));
+    expect(result).toEqual([1]);
   });
 });
 
