@@ -38,7 +38,7 @@ export const generate = <T>(
             subscriber.complete({ cause });
             return;
           }
-        } while (!shouldYield());
+        } while (!shouldYield() && !subscriber.isDisposed);
 
         return continuationResult;
       }

@@ -45,6 +45,7 @@ import {
   timeout,
   throttle,
   ThrottleMode,
+  takeWhile,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -263,7 +264,7 @@ describe("fromArray", () => {
     const observable = fromArray(src);
     const result = pipe(
       observable,
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(),
     );
     expect(result).toEqual(src);
   });
@@ -412,7 +413,7 @@ describe("generate", () => {
         () => 1,
       ),
       take(5),
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(),
     );
 
     expect(result).toEqual([1, 2, 3, 4, 5]);
@@ -436,7 +437,7 @@ describe("generate", () => {
         take(5),
         onNext(cb),
         ignoreElements(),
-        toArray(() => createVirtualTimeSchedulerResource(1)),
+        toArray(),
       ),
     ).toThrow(cause);
     expect(cb).toHaveBeenCalledTimes(3);
@@ -691,7 +692,7 @@ test("switchAll", () => {
       src,
       switchAll(),
       onNext(cb),
-      toArray(() => createVirtualTimeSchedulerResource()),
+      toArray(),
     ),
   ).toThrow(cause);
 
@@ -708,7 +709,7 @@ describe("takeLast", () => {
     const result = pipe(
       src,
       takeLast(3),
-      toArray(() => createVirtualTimeSchedulerResource(2)),
+      toArray(),
     );
     expect(result).toEqual([2, 3, 4]);
   });
@@ -728,6 +729,16 @@ describe("takeLast", () => {
     ).toThrow(cause);
     expect(observer.next).toHaveBeenCalledTimes(0);
   });
+});
+
+
+test("takeWhile", () => {
+  const result = pipe(
+    generate(x => x + 1, () => 0),
+    takeWhile(x  => x < 3 ),
+    toArray(),
+  );
+  expect(result).toEqual([0,1,2]);  
 });
 
 describe("throttle", () => {
