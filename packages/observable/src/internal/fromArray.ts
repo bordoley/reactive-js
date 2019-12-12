@@ -12,27 +12,18 @@ export const fromArray = <T>(
     let index = 0;
 
     const continuation: SchedulerContinuationLike = shouldYield => {
-      if (subscriber.isDisposed) {
-        return;
-      } else if (index < values.length && delay > 0) {
+      while (index < values.length && !subscriber.isDisposed) {
         const value = values[index];
         index++;
         subscriber.next(value);
-        return continuationResult;
-      } else {
-        while (index < values.length && !subscriber.isDisposed) {
-          const value = values[index];
-          index++;
-          subscriber.next(value);
 
-          if (shouldYield()) {
-            return continuationResult;
-          }
+        if (shouldYield() || delay > 0) {
+          return continuationResult;
         }
-
-        subscriber.complete();
-        return;
       }
+
+      subscriber.complete();
+      return;
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,
