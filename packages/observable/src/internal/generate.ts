@@ -18,25 +18,26 @@ export const generate = <T>(
       if (subscriber.isDisposed) {
         return;
       } else if (delay > 0) {
+        subscriber.next(acc);
+
         try {
           acc = generator(acc);
         } catch (cause) {
           subscriber.complete({ cause });
           return;
         }
-
-        subscriber.next(acc);
+       
         return continuationResult;
       } else {
         do {
+          subscriber.next(acc);
+
           try {
             acc = generator(acc);
           } catch (cause) {
             subscriber.complete({ cause });
             return;
           }
-
-          subscriber.next(acc);
         } while (!shouldYield());
 
         return continuationResult;

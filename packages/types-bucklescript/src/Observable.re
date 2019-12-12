@@ -206,29 +206,33 @@ external takeWhile:
 
 [@bs.module "@reactive-js/observable"]
 external throttle:
-  ([@bs.uncurry] ('a => t('any))) => ObservableOperator.t('a, 'a) =
+  (
+    [@bs.uncurry] ('a => t('any)),
+    ~throttleConfig: [@bs.int] [
+                       | [@bs.as 1] `First
+                       | [@bs.as 2] `Last
+                       | [@bs.as 2] `Interval
+                     ] = ?,
+    unit
+  ) =>
+  ObservableOperator.t('a, 'a) =
   "throttle";
 
 [@bs.module "@reactive-js/observable"]
-external throttleFirst:
-  ([@bs.uncurry] ('a => t('any))) => ObservableOperator.t('a, 'a) =
-  "throttleFirst";
+external throttleTime:
+  (
+    int,
+    ~throttleConfig: [@bs.int] [
+                       | [@bs.as 1] `First
+                       | [@bs.as 2] `Last
+                       | [@bs.as 2] `Interval
+                     ] = ?,
+    unit
+  ) =>
+  ObservableOperator.t('a, 'a) =
+  "throttle";
 
-[@bs.module "@reactive-js/observable"]
-external throttleFirstTime: int => ObservableOperator.t('a, 'a) =
-  "throttleFirstTime";
-
-[@bs.module "@reactive-js/observable"]
-external throttleLast:
-  ([@bs.uncurry] ('a => t('any))) => ObservableOperator.t('a, 'a) =
-  "throttleLast";
-
-[@bs.module "@reactive-js/observable"]
-external throttleLastTime: int => ObservableOperator.t('a, 'a) =
-  "throttleLastTime";
-
-[@bs.module "@reactive-js/observable"]
-external throttleTime: int => ObservableOperator.t('a, 'a) = "throttleTime";
+let x = () => throttleTime(10, ~throttleConfig=`First, ());
 
 [@bs.module "@reactive-js/observable"]
 external timeout: int => ObservableOperator.t('a, 'a) = "timeout";

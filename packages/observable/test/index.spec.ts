@@ -43,6 +43,8 @@ import {
   fromIterable,
   repeat,
   timeout,
+  throttle,
+  ThrottleMode,
 } from "../src/index";
 
 const callbackAndDispose = (
@@ -108,7 +110,7 @@ test("combineLatest", () => {
       pipe(
         generate(
           i => i + 2,
-          () => 1,
+          () => 3,
           2,
         ),
         take(3),
@@ -116,7 +118,7 @@ test("combineLatest", () => {
       pipe(
         generate(
           i => i + 2,
-          () => 0,
+          () => 2,
           3,
         ),
         take(2),
@@ -407,7 +409,7 @@ describe("generate", () => {
     const result = pipe(
       generate(
         i => i + 1,
-        () => 0,
+        () => 1,
       ),
       take(5),
       toArray(() => createVirtualTimeSchedulerResource(1)),
@@ -430,7 +432,7 @@ describe("generate", () => {
 
     expect(() =>
       pipe(
-        generate(generator, () => 0),
+        generate(generator, () => 1),
         take(5),
         onNext(cb),
         ignoreElements(),
@@ -450,7 +452,7 @@ describe("generate", () => {
     pipe(
       generate(
         i => i + 1,
-        () => 0,
+        () => 1,
         5,
       ),
       map(x => [scheduler.now, x]),
@@ -482,7 +484,7 @@ describe("generate", () => {
     };
 
     pipe(
-      generate(generator, () => 0, 5),
+      generate(generator, () => 1, 5),
       map(x => [scheduler.now, x]),
       take(5),
       observe(observer),
@@ -540,7 +542,7 @@ test("merge", () => {
       pipe(
         generate(
           i => i + 2,
-          () => 1,
+          () => 3,
           2,
         ),
         take(3),
@@ -548,7 +550,7 @@ test("merge", () => {
       pipe(
         generate(
           i => i + 2,
-          () => 0,
+          () => 2,
           3,
         ),
         take(2),
@@ -726,6 +728,41 @@ describe("takeLast", () => {
     ).toThrow(cause);
     expect(observer.next).toHaveBeenCalledTimes(0);
   });
+});
+
+describe("throttle", () => {
+  test("first", () => {
+    const result = pipe(
+      generate(x => x + 1, () => 0, 1),
+      take(100),
+      throttle(50, ThrottleMode.First),
+      toArray(() => createVirtualTimeSchedulerResource(1)),
+    );
+
+    expect(result).toEqual([0, 49, 99]);
+  })
+
+  test("last", () => {
+    const result = pipe(
+      generate(x => x + 1, () => 0, 1),
+      take(200),
+      throttle(50, ThrottleMode.Last),
+      toArray(() => createVirtualTimeSchedulerResource(1)),
+    );
+
+    expect(result).toEqual([49, 99, 149, 199]);
+  });
+
+  test("interval", () => {
+    const result = pipe(
+      generate(x => x + 1, () => 0, 1),
+      take(200),
+      throttle(75, ThrottleMode.Interval),
+      toArray(() => createVirtualTimeSchedulerResource(1)),
+    );
+
+    expect(result).toEqual([0, 74, 149, 199]);
+  })
 });
 
 describe("throws", () => {
