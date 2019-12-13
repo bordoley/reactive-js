@@ -8,8 +8,6 @@
 
   ↳ **AbstractSchedulerResource**
 
-  ↳ [AbstractVirtualTimeSchedulerResource](abstractvirtualtimeschedulerresource.md)
-
 ## Implements
 
 * SchedulerLike

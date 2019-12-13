@@ -24,8 +24,9 @@ const iteratorDone = {
   value: undefined,
 };
 
+/** @ignore */
 export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSchedulerResource {
-  abstract step(): boolean;
+  protected abstract step(): boolean;
 
   next(): IteratorResult<void> {
     throwIfDisposed(this);
@@ -46,6 +47,12 @@ export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSched
     }
     return iteratorDone;
   }
+
+  run() {
+    throwIfDisposed(this);
+    while (this.step()) {}
+    this.dispose();
+  }
 }
 
 interface VirtualTask {
@@ -62,7 +69,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
+class VirtualTimeSchedulerResourceImpl extends AbstractVirtualTimeSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
   private _now = 0;
   private readonly maxMicroTaskTicks: number;
@@ -100,36 +107,26 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
     return disposable;
   }
 
-  private runNextTask() {
-    const {
-      dueTime,
-      callback,
-      disposable,
-    } = this.taskQueue.pop() as VirtualTask;
+  protected step(): boolean {
+    const task = this.taskQueue.pop();
 
-    this._now = dueTime;
-    this.microTaskTicks = 0;
+    if (task !== undefined) {
+      const {
+        dueTime,
+        callback,
+        disposable,
+      } = task;
 
-    if (!disposable.isDisposed) {
-      callback();
-      disposable.dispose();
+      this._now = dueTime;
+      this.microTaskTicks = 0;
+
+      if (!disposable.isDisposed) {
+        callback();
+        disposable.dispose();
+      }
     }
-  }
 
-  next(): IteratorResult<void> {
-    throwIfDisposed(this);
-
-    this.runNextTask();
-
-    return this.taskQueue.count > 0 ? iteratorYield : iteratorDone;
-  }
-
-  run() {
-    throwIfDisposed(this);
-    while (this.taskQueue.count > 0) {
-      this.runNextTask();
-    }
-    this.dispose();
+    return this.taskQueue.count > 0;
   }
 }
 
