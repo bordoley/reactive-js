@@ -1,8 +1,7 @@
-type t('a) = {
-  subscriberCount: int,
-};
+type t('a);
 
 external asObservable: t('a) => Observable.t('a) = "%identity";
+[@bs.get] external subscriberCount: t('a) => int = "subscriberCount";
 
 [@bs.module "@reactive-js/observable"]
 external share:

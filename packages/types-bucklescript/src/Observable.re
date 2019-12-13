@@ -232,8 +232,6 @@ external throttleTime:
   ObservableOperator.t('a, 'a) =
   "throttle";
 
-let x = () => throttleTime(10, ~throttleConfig=`First, ());
-
 [@bs.module "@reactive-js/observable"]
 external timeout: int => ObservableOperator.t('a, 'a) = "timeout";
 
