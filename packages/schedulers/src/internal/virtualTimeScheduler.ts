@@ -10,9 +10,9 @@ import { AbstractSchedulerResource } from "./abstractScheduler";
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerResourceLike
   extends SchedulerResourceLike,
-  Iterator<void> {
-    run(): void;
-  }
+    Iterator<void> {
+  run(): void;
+}
 
 const iteratorYield = {
   done: false,
