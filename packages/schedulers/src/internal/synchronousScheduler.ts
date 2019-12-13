@@ -2,10 +2,7 @@ import {
   AbstractVirtualTimeSchedulerResource,
   VirtualTimeSchedulerResourceLike,
 } from "./virtualTimeScheduler";
-import {
-  DisposableLike,
-  createDisposable,
-} from "@reactive-js/disposable";
+import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 
 // Intentionally defined as a module function for perf reasons.
 const shouldYieldFalse = () => false;
