@@ -3,21 +3,16 @@ import {
   DisposableLike,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-import { SchedulerLike, SchedulerResourceLike } from "@reactive-js/scheduler";
+import { SchedulerResourceLike } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerResource } from "./abstractScheduler";
 
 /** @noInheritDoc */
-export interface VirtualTimeSchedulerLike
-  extends SchedulerLike,
-    Iterator<void> {
-  run(): void;
-}
-
-/** @noInheritDoc */
 export interface VirtualTimeSchedulerResourceLike
   extends SchedulerResourceLike,
-    VirtualTimeSchedulerLike {}
+  Iterator<void> {
+    run(): void;
+  }
 
 const iteratorYield = {
   done: false,
