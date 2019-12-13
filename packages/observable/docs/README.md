@@ -56,6 +56,7 @@
 * [toArray](README.md#const-toarray)
 * [toIterable](README.md#const-toiterable)
 * [toPromise](README.md#const-topromise)
+* [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
@@ -1074,6 +1075,160 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *OperatorLike‹ObservableLike‹T›, Promise‹T››*
+
+___
+
+###  using
+
+▸ **using**<**TResource**, **T**>(`resourceFactory`: function, `observableFactory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **TResource**: *DisposableLike*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (): *TResource*
+
+▪ **observableFactory**: *function*
+
+▸ (`resource`: TResource): *ObservableLike‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resource` | TResource |
+
+**Returns:** *ObservableLike‹T›*
+
+▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: function, `observableFactory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **TResource1**: *DisposableLike*
+
+▪ **TResource2**: *DisposableLike*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (): *[TResource1, TResource2]*
+
+▪ **observableFactory**: *function*
+
+▸ (`resource`: [TResource1, TResource2]): *ObservableLike‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resource` | [TResource1, TResource2] |
+
+**Returns:** *ObservableLike‹T›*
+
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: function, `observableFactory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **TResource1**: *DisposableLike*
+
+▪ **TResource2**: *DisposableLike*
+
+▪ **TResource3**: *DisposableLike*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (): *[TResource1, TResource2, TResource3]*
+
+▪ **observableFactory**: *function*
+
+▸ (`resource`: [TResource1, TResource2, TResource3]): *ObservableLike‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resource` | [TResource1, TResource2, TResource3] |
+
+**Returns:** *ObservableLike‹T›*
+
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: function, `observableFactory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **TResource1**: *DisposableLike*
+
+▪ **TResource2**: *DisposableLike*
+
+▪ **TResource3**: *DisposableLike*
+
+▪ **TResource4**: *DisposableLike*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (): *[TResource1, TResource2, TResource3, TResource4]*
+
+▪ **observableFactory**: *function*
+
+▸ (`resource`: [TResource1, TResource2, TResource3, TResource4]): *ObservableLike‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resource` | [TResource1, TResource2, TResource3, TResource4] |
+
+**Returns:** *ObservableLike‹T›*
+
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: function, `observableFactory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **TResource1**: *DisposableLike*
+
+▪ **TResource2**: *DisposableLike*
+
+▪ **TResource3**: *DisposableLike*
+
+▪ **TResource4**: *DisposableLike*
+
+▪ **TResource5**: *DisposableLike*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (): *[TResource1, TResource2, TResource3, TResource4, TResource5]*
+
+▪ **observableFactory**: *function*
+
+▸ (`resource`: [TResource1, TResource2, TResource3, TResource4, TResource5]): *ObservableLike‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resource` | [TResource1, TResource2, TResource3, TResource4, TResource5] |
+
+**Returns:** *ObservableLike‹T›*
 
 ___
 

@@ -35,4 +35,5 @@ export { takeWhile } from "./internal/takeWhile";
 export { ThrottleMode, throttle } from "./internal/throttle";
 export { throws } from "./internal/throws";
 export { timeout } from "./internal/timeout";
+export { using } from "./internal/using";
 export { withLatestFrom } from "./internal/withLatestFrom";
