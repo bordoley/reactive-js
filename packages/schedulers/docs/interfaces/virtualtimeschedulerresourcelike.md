@@ -12,6 +12,20 @@
 
 * SchedulerResourceLike
 
-  ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
+* Iterator‹void›
 
   ↳ **VirtualTimeSchedulerResourceLike**
+
+## Index
+
+### Methods
+
+* [run](virtualtimeschedulerresourcelike.md#run)
+
+## Methods
+
+###  run
+
+▸ **run**(): *void*
+
+**Returns:** *void*

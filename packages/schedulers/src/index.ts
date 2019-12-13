@@ -6,7 +6,6 @@ export {
 
 export {
   createVirtualTimeSchedulerResource,
-  VirtualTimeSchedulerLike,
   VirtualTimeSchedulerResourceLike,
 } from "./internal/virtualTimeScheduler";
 

@@ -14,7 +14,6 @@
 
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
-* [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
 * [VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)
 
 ### Functions
