@@ -69,7 +69,8 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl extends AbstractVirtualTimeSchedulerResource
+class VirtualTimeSchedulerResourceImpl
+  extends AbstractVirtualTimeSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
   private _now = 0;
   private readonly maxMicroTaskTicks: number;
@@ -111,11 +112,7 @@ class VirtualTimeSchedulerResourceImpl extends AbstractVirtualTimeSchedulerResou
     const task = this.taskQueue.pop();
 
     if (task !== undefined) {
-      const {
-        dueTime,
-        callback,
-        disposable,
-      } = task;
+      const { dueTime, callback, disposable } = task;
 
       this._now = dueTime;
       this.microTaskTicks = 0;
