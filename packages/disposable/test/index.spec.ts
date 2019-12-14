@@ -50,8 +50,7 @@ describe("Disposable", () => {
     const disposable = createDisposable();
     const child = createDisposable();
 
-    disposable.add(child);
-    disposable.remove(child);
+    disposable.add(child).remove(child);
     expect(child.isDisposed).toBeTruthy();
   });
 
@@ -60,8 +59,7 @@ describe("Disposable", () => {
   });
 
   test("dispose when teardown throws an exception", () => {
-    const disposable = createDisposable();
-    disposable.add(() => {
+    const disposable = createDisposable(() => {
       throw new Error();
     });
     disposable.dispose();

@@ -33,7 +33,9 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.subscription.add(disposable, ...disposables);
+    return this;
   }
+
   abstract complete(_error?: ErrorLike): void;
 
   dispose() {
@@ -46,6 +48,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.subscription.remove(disposable, ...disposables);
+    return this;
   }
 
   schedule(

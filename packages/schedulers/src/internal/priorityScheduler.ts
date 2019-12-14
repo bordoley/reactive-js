@@ -149,6 +149,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add(disposable, ...disposables);
+    return this;
   }
 
   dispose() {
@@ -160,6 +161,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove(disposable, ...disposables);
+    return this;
   }
 
   schedule(

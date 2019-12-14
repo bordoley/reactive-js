@@ -79,6 +79,7 @@ class AsyncIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.subject.add(disposable, ...disposables);
+    return this;
   }
 
   dispatch(req: TReq) {
@@ -94,6 +95,7 @@ class AsyncIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.subject.remove(disposable, ...disposables);
+    return this;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -133,8 +135,7 @@ export const createReducerStore = <TAction, T>(
       share(scheduler, 1),
     );
   const store = createAsyncIteratorResource(operator);
-  pipe(store, subscribe(scheduler), d => store.add(d));
-  return store;
+  return store.add(pipe(store, subscribe(scheduler)));
 };
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>

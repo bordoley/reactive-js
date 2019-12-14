@@ -37,7 +37,9 @@ const scheduleCallback = (
   priority: number,
   delay = 0,
 ): DisposableLike => {
-  const disposable = createDisposable();
+  const disposable = createDisposable(() =>
+    unstable_cancelCallback(callbackNode),
+  );
 
   const scheduledCallback = () => {
     if (!disposable.isDisposed) {
@@ -52,7 +54,6 @@ const scheduleCallback = (
     delay > 0 ? { delay } : undefined,
   );
 
-  disposable.add(() => unstable_cancelCallback(callbackNode));
   return disposable;
 };
 

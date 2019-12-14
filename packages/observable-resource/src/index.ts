@@ -27,6 +27,7 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add(disposable, ...disposables);
+    return this;
   }
 
   dispose() {
@@ -38,6 +39,7 @@ class LiftedObservableResource<T> implements ObservableResourceLike<T> {
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove(disposable, ...disposables);
+    return this;
   }
 
   subscribe(subscriber: SubscriberLike<T>): void {

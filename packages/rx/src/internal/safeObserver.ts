@@ -24,8 +24,7 @@ class SafeObserver<T> implements ObserverLike<T> {
     }
 
     if (this.isComplete) {
-      this.subscriber.remove(this.teardown);
-      this.subscriber.complete(this.error);
+      this.subscriber.remove(this.teardown).complete(this.error);
     }
     return;
   };

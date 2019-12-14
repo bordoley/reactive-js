@@ -63,9 +63,8 @@ class PromiseTestScheduler extends AbstractScheduler {
   }
 
   scheduleCallback(callback: () => void, _ = 0): DisposableLike {
-    const disposable = createDisposable();
+    const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(callbackAndDispose, callback, disposable);
-    disposable.add(() => clearImmediate(immediate));
     return disposable;
   }
 

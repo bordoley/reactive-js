@@ -33,7 +33,7 @@ Returns true if this resource has been disposed.
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *void*
+▸ **add**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *this*
 
 Adds the given disposables to this container or disposes them if the container has been disposed.
 
@@ -44,7 +44,7 @@ Name | Type | Description |
 `disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
 `...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
 
-**Returns:** *void*
+**Returns:** *this*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 ###  remove
 
-▸ **remove**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *void*
+▸ **remove**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *this*
 
 Removes and disposes the given disposables if they are part of this container.
 
@@ -71,4 +71,4 @@ Name | Type | Description |
 `disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
 `...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
 
-**Returns:** *void*
+**Returns:** *this*
