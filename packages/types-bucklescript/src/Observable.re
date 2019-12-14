@@ -109,9 +109,6 @@ external ignoreElements: unit => ObservableOperator.t('a, 'b) =
   "ignoreElements";
 
 [@bs.module "@reactive-js/observable"]
-external iterate: unit => Operator.t(t('a), unit) = "ignoreElements";
-
-[@bs.module "@reactive-js/observable"]
 external keep: ([@bs.uncurry] ('a => bool)) => ObservableOperator.t('a, 'a) =
   "keep";
 
