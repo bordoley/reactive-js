@@ -12,3 +12,6 @@ external asDisposableOrTeardown: t => Disposable.DisposableOrTeardown.t = "%iden
 
 [@bs.get] external disposable: t => Disposable.t = "disposable";
 [@bs.set] external setDisposable: (t, Disposable.t) => unit = "disposable";
+
+[@bs.module "@reactive-js/disposable"]
+external create: unit => t = "createSerialDisposable";
