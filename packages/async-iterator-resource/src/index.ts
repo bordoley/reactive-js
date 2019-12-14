@@ -1,9 +1,8 @@
-import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
-import { AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { DisposableLike } from "@reactive-js/disposable";
+import { AsyncIteratorResourceLike, createAsyncIteratorResource } from "@reactive-js/ix";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   ObservableLike,
-  SubscriberLike,
   MulticastObservableLike,
 } from "@reactive-js/rx";
 
@@ -12,59 +11,6 @@ export interface AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReq, T> {
     TReq,
     T
   >;
-}
-
-class LiftedIteratorResourceImpl<TReq, T>
-  implements AsyncIteratorResourceLike<TReq, T> {
-  readonly dispatcher: (req: TReq) => void;
-  readonly disposable: DisposableLike;
-  readonly observable: MulticastObservableLike<T>;
-
-  constructor(
-    dispatcher: (req: TReq) => void,
-    disposable: DisposableLike,
-    observable: MulticastObservableLike<T>,
-  ) {
-    this.dispatcher = dispatcher;
-    this.disposable = disposable;
-    this.observable = observable;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  get subscriberCount(): number {
-    return this.observable.subscriberCount;
-  }
-
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
-
-  dispatch(req: TReq) {
-    this.dispatcher(req);
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.observable.subscribe(subscriber);
-  }
 }
 
 const liftImpl = <TReq, T, TReqA, TA>(
@@ -87,10 +33,10 @@ const liftImpl = <TReq, T, TReqA, TA>(
       ? dispatchOperator(dispatcher)
       : (dispatcher as any);
 
-  return new LiftedIteratorResourceImpl(
+  return createAsyncIteratorResource(
     liftedDispatcher,
-    disposable,
     liftedObservable as MulticastObservableLike<TA>,
+    disposable,
   );
 };
 
