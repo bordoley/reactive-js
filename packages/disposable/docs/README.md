@@ -40,9 +40,15 @@ A disposed DisposableLike instance.
 
 ### `Const` createDisposable
 
-▸ **createDisposable**(): *[DisposableLike](interfaces/disposablelike.md)*
+▸ **createDisposable**(`onDispose?`: undefined | function): *[DisposableLike](interfaces/disposablelike.md)*
 
 Creates an empty DisposableLike instance.
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`onDispose?` | undefined &#124; function |
 
 **Returns:** *[DisposableLike](interfaces/disposablelike.md)*
 

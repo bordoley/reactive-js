@@ -8,16 +8,15 @@ external asMulticastObservableResource: t('req, 'resp) => MulticastObservableRes
 external asObservable: t('req, 'resp) => Observable.t('resp) = "%identity";
 external asObservableResource: t('req, 'resp) => ObservableResource.t('resp) = "%identity";
 
-[@bs.send] external add: (t('req, 'resp), Disposable.DisposableOrTeardown.t) => unit = "add";
-[@bs.send] [@bs.variadic] external addAll: (t('req, 'resp), array(Disposable.DisposableOrTeardown.t)) => unit = "add";
+[@bs.send] external add: (t('req, 'resp), Disposable.DisposableOrTeardown.t) => t('req, 'resp) = "add";
+[@bs.send] [@bs.variadic] external addAll: (t('req, 'resp), array(Disposable.DisposableOrTeardown.t)) => t('req, 'resp) = "add";
 [@bs.send] external dispose: t('req, 'resp) => unit = "dispose";
 [@bs.get] external isDisposed: t('req, 'resp) => bool = "isDisposed";
-[@bs.send] external remove: (t('req, 'resp), Disposable.DisposableOrTeardown.t) => unit = "remove";
-[@bs.send] [@bs.variadic] external removeAll: (t('req, 'resp), array(Disposable.DisposableOrTeardown.t)) => unit = "remove";
+[@bs.send] external remove: (t('req, 'resp), Disposable.DisposableOrTeardown.t) => t('req, 'resp) = "remove";
+[@bs.send] [@bs.variadic] external removeAll: (t('req, 'resp), array(Disposable.DisposableOrTeardown.t)) => t('req, 'resp) = "remove";
 
 [@bs.send] external dispatch: (t('req, 'resp), 'resp') => unit = "dispatch";
 [@bs.get] external subscriberCount: t('req, 'resp) => int = "subscriberCount";
-
 
 
 [@bs.module "@reactive-js/ix"]

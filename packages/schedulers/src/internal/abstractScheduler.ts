@@ -88,6 +88,7 @@ export abstract class AbstractSchedulerResource extends AbstractScheduler
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add(disposable, ...disposables);
+    return this;
   }
 
   /** @ignore */
@@ -101,5 +102,6 @@ export abstract class AbstractSchedulerResource extends AbstractScheduler
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove(disposable, ...disposables);
+    return this;
   }
 }

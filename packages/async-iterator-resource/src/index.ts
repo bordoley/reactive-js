@@ -43,6 +43,7 @@ class LiftedIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.add(disposable, ...disposables);
+    return this;
   }
 
   dispatch(req: TReq) {
@@ -58,6 +59,7 @@ class LiftedIteratorResourceImpl<TReq, T>
     ...disposables: DisposableOrTeardown[]
   ) {
     this.disposable.remove(disposable, ...disposables);
+    return this;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

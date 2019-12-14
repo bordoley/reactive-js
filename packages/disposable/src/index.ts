@@ -18,7 +18,7 @@ export interface DisposableLike {
   add(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
-  ): void;
+  ): this;
 
   /**
    * Dispose the resource, the operation should be idempotent.
@@ -34,7 +34,7 @@ export interface DisposableLike {
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
-  ): void;
+  ): this;
 }
 
 const doDispose = (disposable: DisposableOrTeardown) => {
@@ -69,6 +69,7 @@ class DisposableImpl implements DisposableLike {
         this.doAdd(d);
       }
     }
+    return this;
   }
 
   dispose() {
@@ -89,6 +90,7 @@ class DisposableImpl implements DisposableLike {
         this.doRemove(d);
       }
     }
+    return this;
   }
 
   private doAdd(disposable: DisposableOrTeardown) {
@@ -109,17 +111,26 @@ class DisposableImpl implements DisposableLike {
 /**
  * Creates an empty DisposableLike instance.
  */
-export const createDisposable = (): DisposableLike => new DisposableImpl();
+export const createDisposable = (onDispose?: () => void): DisposableLike => {
+  const disposable = new DisposableImpl();
+  if (onDispose !== undefined) {
+    disposable.add(onDispose);
+  }
+  return disposable;
+};
 
 const _disposed: DisposableLike = {
   add(...disposables: DisposableOrTeardown[]) {
     for (const d of disposables) {
       doDispose(d);
     }
+    return _disposed;
   },
   isDisposed: true,
   dispose() {},
-  remove(..._: DisposableOrTeardown[]) {},
+  remove(..._: DisposableOrTeardown[]) {
+    return _disposed;
+  },
 };
 
 /**
@@ -164,8 +175,7 @@ class SerialDisposableImpl extends DisposableImpl
       this._disposable = newDisposable;
 
       if (oldDisposable !== newDisposable) {
-        this.add(newDisposable);
-        this.remove(oldDisposable);
+        this.add(newDisposable).remove(oldDisposable);
       }
     }
   }

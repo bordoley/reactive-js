@@ -21,21 +21,19 @@ const callCallbackAndDispose = (
 };
 
 const scheduleImmediate = (callback: () => void): DisposableLike => {
-  const disposable = createDisposable();
+  const disposable = createDisposable(() => clearImmediate(immediate));
   const immediate = setImmediate(callCallbackAndDispose, callback, disposable);
-  disposable.add(() => clearImmediate(immediate));
   return disposable;
 };
 
 const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
-  const disposable = createDisposable();
+  const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
     callCallbackAndDispose,
     delay,
     callback,
     disposable,
   );
-  disposable.add(() => clearTimeout(timeout));
   return disposable;
 };
 

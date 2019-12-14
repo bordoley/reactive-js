@@ -62,14 +62,13 @@ const callCallbackAndDispose = (
 };
 
 const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
-  const disposable = createDisposable();
+  const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
     callCallbackAndDispose,
     delay,
     callback,
     disposable,
   );
-  disposable.add(() => clearTimeout(timeout));
   return disposable;
 };
 
