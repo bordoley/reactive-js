@@ -13,7 +13,6 @@ TA
 > {
   readonly delegate: ObserverLike<TB>;
   private isStopped = false;
-  private readonly source: SubscriberLike<any>;
 
   constructor(delegate: SubscriberLike<TB>) {
     super(
@@ -23,8 +22,6 @@ TA
 
     this.delegate = delegate;
 
-    this.source = (delegate as any).source || delegate;
-
     this.add(() => {
       this.isStopped = true;
     });
@@ -32,7 +29,7 @@ TA
 
   /** @ignore */
   get isSubscribed() {
-    return this.source.isSubscribed;
+    return (this.delegate as SubscriberLike<unknown>).isSubscribed;
   }
 
   /** @ignore */
