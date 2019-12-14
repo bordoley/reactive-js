@@ -6,7 +6,7 @@ import {
   ErrorLike,
   SubscriberLike,
   subscribe,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
   ObservableLike,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
@@ -17,7 +17,7 @@ import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
 
-class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly duration: ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 

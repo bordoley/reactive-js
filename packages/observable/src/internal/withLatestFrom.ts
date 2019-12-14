@@ -1,7 +1,7 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import {
   subscribe,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
   ErrorLike,
   ObservableLike,
   ObserverLike,
@@ -12,7 +12,7 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
+class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
   TA,
   TC
 > {
@@ -40,6 +40,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<
   private otherLatest: [TB] | undefined;
   private readonly otherSubscription: DisposableLike;
   private readonly selector: (a: TA, b: TB) => TC;
+
   constructor(
     delegate: SubscriberLike<TC>,
     other: ObservableLike<TB>,

@@ -26,7 +26,7 @@ for performance reasons).
 
 ## Implemented by
 
-* [DelegatingSubscriber](../classes/delegatingsubscriber.md)
+* [AbstractDelegatingSubscriber](../classes/abstractdelegatingsubscriber.md)
 
 ## Index
 

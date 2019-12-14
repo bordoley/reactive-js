@@ -8,14 +8,14 @@ import {
   ObserverLike,
   SubscriberLike,
   subscribe,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class RepeatSubscriber<T> extends DelegatingSubscriber<T, T> {
+class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {
     private count = 1;
     private readonly parent: RepeatSubscriber<T>;

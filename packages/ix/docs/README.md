@@ -19,6 +19,7 @@
 
 ### Functions
 
+* [createAsyncIteratorResource](README.md#const-createasynciteratorresource)
 * [createEventEmitter](README.md#const-createeventemitter)
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createReducerStore](README.md#const-createreducerstore)
@@ -41,6 +42,36 @@ ___
 **`noinheritdoc`** 
 
 ## Functions
+
+### `Const` createAsyncIteratorResource
+
+▸ **createAsyncIteratorResource**<**TReq**, **T**>(`dispatch`: function, `observable`: MulticastObservableLike‹T›, `disposable`: DisposableLike): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **dispatch**: *function*
+
+▸ (`req`: TReq): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | TReq |
+
+▪ **observable**: *MulticastObservableLike‹T›*
+
+▪ **disposable**: *DisposableLike*
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+
+___
 
 ### `Const` createEventEmitter
 
