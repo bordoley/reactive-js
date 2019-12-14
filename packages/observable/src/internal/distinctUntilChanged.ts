@@ -1,12 +1,12 @@
 import {
   ErrorLike,
   SubscriberLike,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
 } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
-class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
+class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private equals: (a: T, b: T) => boolean;
   private prev: [T] | undefined;
   constructor(delegate: SubscriberLike<T>, equals: (a: T, b: T) => boolean) {

@@ -3,14 +3,14 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
+class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount = 0;
   private isCompleted = false;
   private readonly maxBufferSize: number;

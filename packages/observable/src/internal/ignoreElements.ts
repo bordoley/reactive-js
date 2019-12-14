@@ -1,17 +1,16 @@
 import {
   ErrorLike,
   SubscriberLike,
-  DelegatingSubscriber,
-} from "@reactive-js/rx";
+  AbstractDelegatingSubscriber} from "@reactive-js/rx";
 import { ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class IgnoreElementsSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
+class IgnoreElementsSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {
     super(delegate);
   }
 
-  onNext(_: TA) {}
+  protected onNext(_: TA) {}
 
   protected onComplete(error?: ErrorLike) {
     this.delegate.complete(error);

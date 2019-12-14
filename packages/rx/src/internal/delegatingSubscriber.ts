@@ -8,12 +8,13 @@ const __DEV__ = process.env.NODE_ENV !== "production";
  *
  * @noInheritDoc
  */
-export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
-  TA
+export abstract class AbstractDelegatingSubscriber<TA, TB> extends AbstractSubscriber<
+TA
 > {
   readonly delegate: ObserverLike<TB>;
   private isStopped = false;
   private readonly source: SubscriberLike<any>;
+
   constructor(delegate: SubscriberLike<TB>) {
     super(
       (delegate as any).scheduler || delegate,
@@ -22,8 +23,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
 
     this.delegate = delegate;
 
-    this.source =
-      delegate instanceof DelegatingSubscriber ? delegate.source : delegate;
+    this.source = (delegate as any).source || delegate;
 
     this.add(() => {
       this.isStopped = true;
@@ -43,7 +43,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
 
     if (!this.isStopped) {
       this.isStopped = true;
-      this.tryOnComplete(error);
+      this.onCompleteUnsafe(error);
     }
   }
 
@@ -54,7 +54,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
     }
 
     if (!this.isStopped) {
-      this.tryOnNext(data);
+      this.onNextUnsafe(data);
     }
   }
 
@@ -74,7 +74,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
    */
   protected abstract onNext(data: TA): void;
 
-  private tryOnComplete(error?: ErrorLike) {
+  private onCompleteUnsafe(error?: ErrorLike) {
     try {
       this.onComplete(error);
     } catch (cause) {
@@ -82,7 +82,7 @@ export abstract class DelegatingSubscriber<TA, TB> extends AbstractSubscriber<
     }
   }
 
-  private tryOnNext(data: TA) {
+  private onNextUnsafe(data: TA) {
     try {
       this.onNext(data);
     } catch (cause) {

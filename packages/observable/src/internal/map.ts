@@ -1,12 +1,12 @@
 import {
   ErrorLike,
   SubscriberLike,
-  DelegatingSubscriber,
+  AbstractDelegatingSubscriber,
 } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
-class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
+class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   private readonly mapper: (data: TA) => TB;
   constructor(delegate: SubscriberLike<TB>, mapper: (data: TA) => TB) {
     super(delegate);

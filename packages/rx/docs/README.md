@@ -6,7 +6,7 @@
 
 ### Classes
 
-* [DelegatingSubscriber](classes/delegatingsubscriber.md)
+* [AbstractDelegatingSubscriber](classes/abstractdelegatingsubscriber.md)
 
 ### Interfaces
 
