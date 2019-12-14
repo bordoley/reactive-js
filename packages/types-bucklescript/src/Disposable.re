@@ -16,4 +16,10 @@ external asDisposableOrTeardown: t => DisposableOrTeardown.t = "%identity";
 [@bs.send] [@bs.variadic] external removeAll: (t, array(DisposableOrTeardown.t)) => unit = "remove";
 
 [@bs.module "@reactive-js/disposable"]
+external create: unit => t = "createDisposable";
+
+[@bs.module "@reactive-js/disposable"]
+external disposed: t = "disposed";
+
+[@bs.module "@reactive-js/disposable"]
 external throwIfDisposed: t => unit = "throwIfDisposed";
