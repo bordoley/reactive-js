@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
+import { ObservableLike, SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
@@ -22,7 +22,7 @@ export const fromArray = <T>(
 
           // Performance: Bypass safety checks and directly
           // sink notifications to the delegate.
-          (subscriber as any).nextUnsafe(value);
+          (subscriber as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(value);
 
           if (shouldYield() || delay > 0) {
             startIndex = index;
@@ -42,7 +42,7 @@ export const fromArray = <T>(
       delay,
     };
 
-    if ((subscriber as any).nextUnsafe !== undefined) {
+    if (subscriber instanceof AbstractDelegatingSubscriber) {
       subscriber.schedule(continuation, delay);
     } else {
       subscriber.schedule(() => {
