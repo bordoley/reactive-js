@@ -56,6 +56,7 @@
 * [toArray](README.md#const-toarray)
 * [toIterable](README.md#const-toiterable)
 * [toPromise](README.md#const-topromise)
+* [toValue](README.md#const-tovalue)
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 
@@ -1075,6 +1076,24 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *OperatorLike‹ObservableLike‹T›, Promise‹T››*
+
+___
+
+### `Const` toValue
+
+▸ **toValue**<**T**>(`schedulerFactory?`: undefined | function): *OperatorLike‹ObservableLike‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`schedulerFactory?` | undefined &#124; function |
+
+**Returns:** *OperatorLike‹ObservableLike‹T›, T›*
 
 ___
 

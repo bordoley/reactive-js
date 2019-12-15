@@ -7,7 +7,7 @@ export {
   ObservableOperatorLike,
   SubscriberOperatorLike,
 } from "./internal/interfaces";
-export { toArray, toIterable } from "./internal/iterate";
+export { toArray, toIterable, toValue } from "./internal/iterate";
 export {
   empty,
   fromArray,

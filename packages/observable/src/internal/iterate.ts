@@ -8,7 +8,7 @@ import {
   createSynchronousSchedulerResource,
   VirtualTimeSchedulerResourceLike,
 } from "@reactive-js/schedulers";
-import { observe, onComplete, onNext } from "./observe";
+import { observe } from "./observe";
 import { reduce } from "./reduce";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { throwIfDisposed } from "@reactive-js/disposable";
@@ -18,39 +18,52 @@ const iterate = <T>(
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
 
-  let error: ErrorLike | undefined = undefined;
   const subscription = pipe(
     observable,
-    onComplete(e => {
-      error = e;
-    }),
     subscribe(scheduler),
   );
   scheduler.run();
   scheduler.dispose();
   subscription.dispose();
-
-  if (error !== undefined) {
-    const { cause } = error;
-    throw cause;
-  }
 };
 
-const blockingLast = <T>(
-  schedulerFactory?: () => VirtualTimeSchedulerResourceLike,
-): OperatorLike<ObservableLike<T>, T> => observable => {
-  let result: T | undefined = undefined;
+class ToValueObserver<T> implements ObserverLike<T> {
+  private _result: [T] | undefined = undefined;
+  private error: ErrorLike | undefined = undefined;
 
-  const observer = (x: T) => {
-    result = x;
+  next(x: T) {
+    if (this._result === undefined) {
+      this._result = [x];
+    } else {
+      this._result[0] = x;
+    }
+  }
+
+  complete(x?: ErrorLike) {
+    this.error = x;
   };
 
-  pipe(observable, onNext(observer), iterate(schedulerFactory));
-
-  if (result === undefined) {
-    throw new Error("Observable did not produce any values");
+  get result(): T {
+    if (this.error !== undefined) {
+      const { cause } = this.error;
+      throw cause;
+    }
+  
+    if (this._result === undefined) {
+      throw new Error("Observable did not produce any values");
+    }
+    return this._result[0];
   }
-  return result;
+}
+
+export const toValue = <T>(
+  schedulerFactory?: () => VirtualTimeSchedulerResourceLike,
+): OperatorLike<ObservableLike<T>, T> => observable => {
+  const observer = new ToValueObserver<T>();
+
+  pipe(observable, observe(observer), iterate(schedulerFactory));
+
+  return observer.result;
 };
 
 const toArrayReducer = <T>(acc: T[], next: T): T[] => {
@@ -64,7 +77,7 @@ export const toArray = <T>(
   pipe(
     observable,
     reduce(toArrayReducer, (): T[] => []),
-    blockingLast(schedulerFactory),
+    toValue(schedulerFactory),
   );
 
 const iteratorDone: IteratorReturnResult<any> = {
