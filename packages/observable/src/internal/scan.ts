@@ -28,7 +28,9 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     const nextAcc = this.scanner(prevAcc, next);
     this.acc = nextAcc;
 
-    this.delegate.next(nextAcc);
+    // Performance: Bypass safety checks and directly
+    // sink notifcations to the delegate.
+    (this.delegate as any).onNext(nextAcc);
   }
 }
 
@@ -36,8 +38,10 @@ const operator = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
 ): SubscriberOperatorLike<T, TAcc> => subscriber =>
-  new ScanSubscriber(subscriber, scanner, initialValue());
-
+  subscriber instanceof AbstractDelegatingSubscriber
+    ? new ScanSubscriber(subscriber, scanner, initialValue())
+    : subscriber as SubscriberLike<any>;
+  
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
