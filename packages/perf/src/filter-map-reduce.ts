@@ -10,7 +10,7 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { fromArray, keep, map, scan } = require("@reactive-js/observable");
+      const { fromArray, keep, map, reduce } = require("@reactive-js/observable");
       const { pipe } = require("@reactive-js/pipe");
       const { run } = require("./reactive-js-runner");
 
@@ -18,17 +18,17 @@ export const run = (n: number) => {
         fromArray(src),
         keep(even),
         map(add1),
-        scan(sum, () => 0),
+        reduce(sum, () => 0),
       );
 
       run(observable);
     })
     .add("rx-js", () => {
       const { from } = require("rxjs");
-      const { filter, map, scan } = require("rxjs/operators");
+      const { filter, map, reduce } = require("rxjs/operators");
       const { run } = require("./rxjs-runner");
 
-      const observable = from(src).pipe(filter(even), map(add1), scan(sum, 0));
+      const observable = from(src).pipe(filter(even), map(add1), reduce(sum, 0));
       run(observable);
     })
     .add("callbags", () => {

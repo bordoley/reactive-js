@@ -19,18 +19,18 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     this.acc = initialValue;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(next: T) {
+  nextUnsafe(next: T) {
     const prevAcc = this.acc;
     const nextAcc = this.scanner(prevAcc, next);
     this.acc = nextAcc;
 
     // Performance: Bypass safety checks and directly
     // sink notifcations to the delegate.
-    (this.delegate as any).onNext(nextAcc);
+    (this.delegate as AbstractDelegatingSubscriber<TAcc, unknown>).nextUnsafe(nextAcc);
   }
 }
 

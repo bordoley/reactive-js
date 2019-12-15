@@ -35,12 +35,12 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>
     this.add(this.innerSubscription);
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.remove(this.innerSubscription);
     this.delegate.complete(error);
   }
 
-  protected onNext(data: ObservableLike<T>) {
+  nextUnsafe(data: ObservableLike<T>) {
     this.innerSubscription.disposable = disposed;
     this.innerSubscription.disposable = pipe(
       data,

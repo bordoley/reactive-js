@@ -71,11 +71,11 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.observer.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     this.observer.next(data);
   }
 }

@@ -14,11 +14,11 @@ class TakeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.maxCount = maxCount;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     this.count++;
     if (this.count < this.maxCount) {
       this.delegate.next(data);

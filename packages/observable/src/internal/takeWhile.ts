@@ -13,11 +13,11 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.predicate = predicate;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     if (this.predicate(data)) {
       this.delegate.next(data);
     } else {

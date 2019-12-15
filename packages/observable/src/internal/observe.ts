@@ -14,18 +14,18 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.observer = observer;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.observer.complete(error);
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     this.observer.next(data);
 
     // Performance: Only sink notifications if there is 
     // another delegate in the subscriber chain.
-    if ((this.delegate as any).onNext !== undefined) {
-      (this.delegate as any).onNext(data);
+    if ((this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe !== undefined) {
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
     }
   }
 }

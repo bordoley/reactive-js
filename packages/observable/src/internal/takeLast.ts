@@ -37,7 +37,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.maxCount = maxCount;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {
@@ -45,7 +45,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     }
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     this.last.push(data);
     if (this.last.length > this.maxCount) {
       this.last.shift();

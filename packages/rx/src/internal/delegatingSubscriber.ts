@@ -40,7 +40,7 @@ TA
 
     if (!this.isStopped) {
       this.isStopped = true;
-      this.onCompleteUnsafe(error);
+      this.tryComplete(error);
     }
   }
 
@@ -51,7 +51,7 @@ TA
     }
 
     if (!this.isStopped) {
-      this.onNextUnsafe(data);
+      this.tryNext(data);
     }
   }
 
@@ -61,7 +61,7 @@ TA
    *
    * @param error
    */
-  protected abstract onComplete(error?: ErrorLike): void;
+  abstract completeUnsafe(error?: ErrorLike): void;
 
   /**
    * Overried to handle incoming next notifications. Implementations
@@ -69,19 +69,19 @@ TA
    *
    * @param data
    */
-  protected abstract onNext(data: TA): void;
+  abstract nextUnsafe(data: TA): void;
 
-  private onCompleteUnsafe(error?: ErrorLike) {
+  private tryComplete(error?: ErrorLike) {
     try {
-      this.onComplete(error);
+      this.completeUnsafe(error);
     } catch (cause) {
       this.delegate.complete({ cause, parent: error } as ErrorLike);
     }
   }
 
-  private onNextUnsafe(data: TA) {
+  private tryNext(data: TA) {
     try {
-      this.onNext(data);
+      this.nextUnsafe(data);
     } catch (cause) {
       this.complete({ cause });
     }

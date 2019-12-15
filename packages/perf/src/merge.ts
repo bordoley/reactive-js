@@ -26,25 +26,25 @@ export const run = (m: number, n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { fromArray, merge, scan } = require("@reactive-js/observable");
+      const { fromArray, merge, reduce } = require("@reactive-js/observable");
       const { pipe } = require("@reactive-js/pipe");
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray(x));
       const observable = pipe(
         merge(...streams),
-        scan(sum, () => 0),
+        reduce(sum, () => 0),
       );
 
       run(observable);
     })
     .add("rx-js", () => {
       const { merge, from } = require("rxjs");
-      const { scan } = require("rxjs/operators");
+      const { reduce } = require("rxjs/operators");
       const { run } = require("./rxjs-runner");
 
       const streams = src.map(x => from(x));
-      const observable = merge(...streams).pipe(scan(sum, 0));
+      const observable = merge(...streams).pipe(reduce(sum, 0));
 
       run(observable);
     })

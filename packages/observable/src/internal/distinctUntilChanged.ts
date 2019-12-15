@@ -14,11 +14,11 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, 
     this.equals = equals;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     const shouldEmit =
       this.prev === undefined || !this.equals(this.prev[0], data);
     if (shouldEmit) {
@@ -30,7 +30,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, 
 
       // Performance: Bypass safety checks and directly
       // sink notifcations to the delegate.
-      (this.delegate as any).onNext(data);
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
     }
   }
 }

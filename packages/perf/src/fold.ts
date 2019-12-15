@@ -24,10 +24,10 @@ export const run = (n: number) => {
     })
     .add("rx-js", () => {
       const { from } = require("rxjs");
-      const { scan } = require("rxjs/operators");
+      const { scan, reduce } = require("rxjs/operators");
       const { run } = require("./rxjs-runner");
 
-      const observable = from(src).pipe(scan(sum, 0), scan(passthrough, 0));
+      const observable = from(src).pipe(scan(sum, 0), reduce(passthrough, 0));
       run(observable);
     })
     .add("callbags", () => {
