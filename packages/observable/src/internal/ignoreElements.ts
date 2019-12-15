@@ -18,7 +18,9 @@ class IgnoreElementsSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, 
 }
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>
-  new IgnoreElementsSubscriber<TA, TB>(subscriber);
-
+  subscriber instanceof AbstractDelegatingSubscriber
+    ? new IgnoreElementsSubscriber<TA, TB>(subscriber)
+    : subscriber;
+  
 export const ignoreElements = <TA, TB>(): ObservableOperatorLike<TA, TB> =>
   lift(operator);

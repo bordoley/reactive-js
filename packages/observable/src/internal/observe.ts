@@ -21,7 +21,12 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   protected onNext(data: T) {
     this.observer.next(data);
-    this.delegate.next(data);
+
+    // Performance: Only sink notifications if there is 
+    // another delegate in the subscriber chain.
+    if ((this.delegate as any).onNext !== undefined) {
+      (this.delegate as any).onNext(data);
+    }
   }
 }
 

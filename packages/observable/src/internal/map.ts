@@ -19,14 +19,19 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 
   protected onNext(data: TA) {
     const mappedData = this.mapper(data);
-    this.delegate.next(mappedData);
+
+    // Performance: Bypass safety checks and directly
+    // sink notifcations to the delegate.
+    (this.delegate as any).onNext(mappedData);
   }
 }
 
 const operator = <TA, TB>(
   mapper: (data: TA) => TB,
 ): SubscriberOperatorLike<TA, TB> => subscriber =>
-  new MapSubscriber(subscriber, mapper);
+  subscriber instanceof AbstractDelegatingSubscriber
+    ? new MapSubscriber(subscriber, mapper)
+    : (subscriber as SubscriberLike<any>);
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,

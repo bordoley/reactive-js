@@ -28,7 +28,9 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, 
         this.prev[0] = data;
       }
 
-      this.delegate.next(data);
+      // Performance: Bypass safety checks and directly
+      // sink notifcations to the delegate.
+      (this.delegate as any).onNext(data);
     }
   }
 }
@@ -38,7 +40,9 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 const operator = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): SubscriberOperatorLike<T, T> => subscriber =>
-  new DistinctUntilChangedSubscriber(subscriber, equals);
+  subscriber instanceof AbstractDelegatingSubscriber
+    ? new DistinctUntilChangedSubscriber(subscriber, equals)
+    : subscriber;
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,

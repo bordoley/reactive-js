@@ -20,7 +20,10 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   protected onNext(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
-      this.delegate.next(data);
+
+      // Performance: Bypass safety checks and directly
+      // sink notifcations to the delegate.
+      (this.delegate as any).onNext(data);
     }
   }
 }
@@ -28,7 +31,9 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 const operator = <T>(
   predicate: (data: T) => boolean,
 ): SubscriberOperatorLike<T, T> => subscriber =>
-  new KeepSubscriber(subscriber, predicate);
+  subscriber instanceof AbstractDelegatingSubscriber
+    ? new KeepSubscriber(subscriber, predicate)
+    : subscriber;
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
