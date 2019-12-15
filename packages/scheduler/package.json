@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/scheduler",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,7 +38,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.11"
+    "@reactive-js/disposable": "^0.0.12"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
