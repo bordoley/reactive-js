@@ -22,7 +22,9 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 
     // Performance: Bypass safety checks and directly
     // sink notifcations to the delegate.
-    (this.delegate as AbstractDelegatingSubscriber<TB, unknown>).nextUnsafe(mappedData);
+    (this.delegate as AbstractDelegatingSubscriber<TB, unknown>).nextUnsafe(
+      mappedData,
+    );
   }
 }
 

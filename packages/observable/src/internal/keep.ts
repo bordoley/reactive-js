@@ -20,10 +20,11 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   nextUnsafe(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
-
       // Performance: Bypass safety checks and directly
       // sink notifcations to the delegate.
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(
+        data,
+      );
     }
   }
 }

@@ -1,10 +1,10 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import { AsyncIteratorResourceLike, createAsyncIteratorResource } from "@reactive-js/ix";
-import { OperatorLike } from "@reactive-js/pipe";
 import {
-  ObservableLike,
-  MulticastObservableLike,
-} from "@reactive-js/rx";
+  AsyncIteratorResourceLike,
+  createAsyncIteratorResource,
+} from "@reactive-js/ix";
+import { OperatorLike } from "@reactive-js/pipe";
+import { ObservableLike, MulticastObservableLike } from "@reactive-js/rx";
 
 export interface AsyncIteratorResourceOperatorLike<TSrcReq, TSrc, TReq, T> {
   (iter: AsyncIteratorResourceLike<TSrcReq, TSrc>): AsyncIteratorResourceLike<
