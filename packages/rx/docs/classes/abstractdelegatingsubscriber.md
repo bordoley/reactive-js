@@ -32,8 +32,8 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ### Methods
 
-* [onComplete](abstractdelegatingsubscriber.md#protected-abstract-oncomplete)
-* [onNext](abstractdelegatingsubscriber.md#protected-abstract-onnext)
+* [completeUnsafe](abstractdelegatingsubscriber.md#abstract-completeunsafe)
+* [nextUnsafe](abstractdelegatingsubscriber.md#abstract-nextunsafe)
 
 ## Constructors
 
@@ -59,9 +59,9 @@ Name | Type |
 
 ## Methods
 
-### `Protected` `Abstract` onComplete
+### `Abstract` completeUnsafe
 
-▸ **onComplete**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
+▸ **completeUnsafe**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
 
 Override to handle complete notification. Implementations
 may throw errors which will be caught and propogated.
@@ -76,9 +76,9 @@ Name | Type | Description |
 
 ___
 
-### `Protected` `Abstract` onNext
+### `Abstract` nextUnsafe
 
-▸ **onNext**(`data`: TA): *void*
+▸ **nextUnsafe**(`data`: TA): *void*
 
 Overried to handle incoming next notifications. Implementations
 may throw errors which will be caught and propogated.
