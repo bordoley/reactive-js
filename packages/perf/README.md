@@ -6,33 +6,33 @@ Run on a Macbook Pro(2017) 2.9 GHz Intel Core i7, running MacOS v10.14.6 and nod
 $ NODE_ENV=production node ./packages/perf/dist/index.js
 filter -> map -> fusion 1000000 integers
 -----------------------------------------------
-reactive-js   61.79 op/s ±  0.97%   (64 samples)
-rx-js        20.13 op/s ±  2.75%   (38 samples)
-callbags     24.26 op/s ±  1.88%   (44 samples)
+reactive-js   50.84 op/s ±  0.72%   (65 samples)
+rx-js        18.70 op/s ±  1.11%   (50 samples)
+callbags     20.84 op/s ±  1.05%   (38 samples)
 -----------------------------------------------
 filter -> map -> reduce 1000000 integers
 -----------------------------------------------
-reactive-js   84.77 op/s ±  0.86%   (73 samples)
-rx-js        28.11 op/s ±  0.85%   (50 samples)
-callbags     33.87 op/s ±  1.10%   (59 samples)
+reactive-js   71.77 op/s ±  0.83%   (73 samples)
+rx-js        36.03 op/s ±  0.68%   (62 samples)
+callbags     29.07 op/s ±  0.85%   (52 samples)
 -----------------------------------------------
 merge 1000 x 1000 streams
 -----------------------------------------------
-reactive-js   84.60 op/s ±  1.39%   (72 samples)
-rx-js        30.14 op/s ±  1.09%   (54 samples)
-callbags     37.82 op/s ±  2.10%   (51 samples)
+reactive-js   87.74 op/s ±  0.65%   (74 samples)
+rx-js        51.81 op/s ±  0.82%   (66 samples)
+callbags     35.37 op/s ±  0.33%   (61 samples)
 -----------------------------------------------
 scan -> scan 1000000 integers
 -----------------------------------------------
-reactive-js   45.06 op/s ±  0.74%   (59 samples)
-rx-js        12.17 op/s ±  1.31%   (35 samples)
-callbags     28.19 op/s ±  1.28%   (51 samples)
+reactive-js   51.53 op/s ±  0.33%   (66 samples)
+rx-js        14.17 op/s ±  0.63%   (39 samples)
+callbags     23.72 op/s ±  0.84%   (43 samples)
 -----------------------------------------------
 combine(add3) -> filter 500000 x 3 integers
 -----------------------------------------------
-reactive-js   20.38 op/s ±  2.55%   (38 samples)
-rx-js        13.01 op/s ±  2.83%   (36 samples)
-callbags     19.86 op/s ±  0.97%   (37 samples)
+reactive-js   24.86 op/s ±  1.29%   (45 samples)
+rx-js         9.51 op/s ±  1.17%   (28 samples)
+callbags     17.30 op/s ±  1.12%   (47 samples)
 -----------------------------------------------
-✨  Done in 84.86s.
+✨  Done in 84.29s.
 ```
