@@ -13,17 +13,17 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.predicate = predicate;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
 
       // Performance: Bypass safety checks and directly
       // sink notifcations to the delegate.
-      (this.delegate as any).onNext(data);
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
     }
   }
 }

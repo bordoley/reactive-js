@@ -13,16 +13,16 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
     this.mapper = mapper;
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 
-  protected onNext(data: TA) {
+  nextUnsafe(data: TA) {
     const mappedData = this.mapper(data);
 
     // Performance: Bypass safety checks and directly
     // sink notifcations to the delegate.
-    (this.delegate as any).onNext(mappedData);
+    (this.delegate as AbstractDelegatingSubscriber<TB, unknown>).nextUnsafe(mappedData);
   }
 }
 

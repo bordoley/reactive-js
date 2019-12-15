@@ -30,7 +30,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>,
     });
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.isCompleted = true;
 
     if (error !== undefined || this.queue.length + this.activeCount === 0) {
@@ -38,7 +38,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>,
     }
   }
 
-  protected onNext(next: ObservableLike<T>) {
+  nextUnsafe(next: ObservableLike<T>) {
     if (
       this.queue.length + this.activeCount < this.maxBufferSize &&
       !this.isCompleted

@@ -28,12 +28,12 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.remove(this.durationSubscription);
     this.delegate.complete(error);
   }
 
-  protected onNext(data: T) {
+  nextUnsafe(data: T) {
     this.durationSubscription.disposable = pipe(
       this.duration,
       onComplete(error => this.complete(error)),

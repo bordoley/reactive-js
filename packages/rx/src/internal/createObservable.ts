@@ -19,7 +19,7 @@ export const createObservable = <T>(
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
     // The idea here is that an onSubscribe function may
-    // call onNext from unscheduled sources such as event handlers.
+    // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
     const observer = createSafeObserver(subscriber);
 

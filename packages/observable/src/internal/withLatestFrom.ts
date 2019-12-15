@@ -58,12 +58,12 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
     this.add(this.otherSubscription);
   }
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.remove(this.otherSubscription);
     this.delegate.complete(error);
   }
 
-  protected onNext(data: TA) {
+  nextUnsafe(data: TA) {
     if (this.otherLatest !== undefined) {
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);

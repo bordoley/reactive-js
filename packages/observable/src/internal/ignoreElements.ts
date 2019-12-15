@@ -10,9 +10,9 @@ class IgnoreElementsSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, 
     super(delegate);
   }
 
-  protected onNext(_: TA) {}
+  nextUnsafe(_: TA) {}
 
-  protected onComplete(error?: ErrorLike) {
+  completeUnsafe(error?: ErrorLike) {
     this.delegate.complete(error);
   }
 }
