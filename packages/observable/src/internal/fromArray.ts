@@ -9,28 +9,46 @@ export const fromArray = <T>(
   delay = 0,
 ): ObservableLike<T> => {
   const subscribe = (subscriber: SubscriberLike<T>) => {
-    let index = 0;
+    let startIndex = 0;
 
     const continuation: SchedulerContinuationLike = shouldYield => {
-      while (index < values.length && !subscriber.isDisposed) {
-        const value = values[index];
-        index++;
-        subscriber.next(value);
+      try {
+        const length = values.length;
 
-        if (shouldYield() || delay > 0) {
-          return continuationResult;
+        let index = startIndex;
+        while (index < length && !subscriber.isDisposed) {
+          const value = values[index];
+          index++;
+
+          // Performance: Bypass safety checks and directly
+          // sink notifications to the delegate.
+          (subscriber as any).nextUnsafe(value);
+
+          if (shouldYield() || delay > 0) {
+            startIndex = index;
+            return continuationResult;
+          }
         }
-      }
 
-      subscriber.complete();
-      return;
+        subscriber.complete();
+        return;
+      } catch (cause) {
+        subscriber.complete({ cause });
+        return;
+      }
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,
       delay,
     };
 
-    subscriber.schedule(continuation, delay);
+    if ((subscriber as any).nextUnsafe !== undefined) {
+      subscriber.schedule(continuation, delay);
+    } else {
+      subscriber.schedule(() => {
+        subscriber.complete();
+      }, delay);
+    }
   };
 
   return { subscribe };
