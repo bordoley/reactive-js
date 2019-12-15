@@ -22,10 +22,15 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   nextUnsafe(data: T) {
     this.observer.next(data);
 
-    // Performance: Only sink notifications if there is 
+    // Performance: Only sink notifications if there is
     // another delegate in the subscriber chain.
-    if ((this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe !== undefined) {
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
+    if (
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe !==
+      undefined
+    ) {
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(
+        data,
+      );
     }
   }
 }

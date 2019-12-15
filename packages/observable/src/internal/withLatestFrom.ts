@@ -69,7 +69,9 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
       const result = this.selector(data, otherLatest);
       // Performance: Bypass safety checks and directly
       // sink notifcations to the delegate.
-      (this.delegate as AbstractDelegatingSubscriber<TC, unknown>).nextUnsafe(result);
+      (this.delegate as AbstractDelegatingSubscriber<TC, unknown>).nextUnsafe(
+        result,
+      );
     }
   }
 }
@@ -80,8 +82,7 @@ const operator = <TA, TB, TC>(
 ): SubscriberOperatorLike<TA, TC> => subscriber =>
   subscriber instanceof AbstractDelegatingSubscriber
     ? new WithLatestFromSubscriber(subscriber, other, selector)
-    : subscriber as SubscriberLike<any>;
-  
+    : (subscriber as SubscriberLike<any>);
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,

@@ -8,7 +8,11 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
-import { createDisposable, DisposableLike, createSerialDisposable } from "@reactive-js/disposable";
+import {
+  createDisposable,
+  DisposableLike,
+  createSerialDisposable,
+} from "@reactive-js/disposable";
 
 export const fromPromiseFactory = <T>(
   factory: () => Promise<T>,
@@ -74,7 +78,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
       const value = this.result[0];
       this.resolve(value);
     }
-  };
+  }
 }
 
 export const toPromise = <T>(

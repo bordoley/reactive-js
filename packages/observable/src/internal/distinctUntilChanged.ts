@@ -6,7 +6,10 @@ import {
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
-class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
+  T,
+  T
+> {
   private equals: (a: T, b: T) => boolean;
   private prev: [T] | undefined;
   constructor(delegate: SubscriberLike<T>, equals: (a: T, b: T) => boolean) {
@@ -30,7 +33,9 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<T, 
 
       // Performance: Bypass safety checks and directly
       // sink notifcations to the delegate.
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(data);
+      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(
+        data,
+      );
     }
   }
 }

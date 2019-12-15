@@ -18,10 +18,7 @@ const iterate = <T>(
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
 
-  const subscription = pipe(
-    observable,
-    subscribe(scheduler),
-  );
+  const subscription = pipe(observable, subscribe(scheduler));
   scheduler.run();
   scheduler.dispose();
   subscription.dispose();
@@ -41,14 +38,14 @@ class ToValueObserver<T> implements ObserverLike<T> {
 
   complete(x?: ErrorLike) {
     this.error = x;
-  };
+  }
 
   get result(): T {
     if (this.error !== undefined) {
       const { cause } = this.error;
       throw cause;
     }
-  
+
     if (this._result === undefined) {
       throw new Error("Observable did not produce any values");
     }

@@ -8,9 +8,10 @@ const __DEV__ = process.env.NODE_ENV !== "production";
  *
  * @noInheritDoc
  */
-export abstract class AbstractDelegatingSubscriber<TA, TB> extends AbstractSubscriber<
-TA
-> {
+export abstract class AbstractDelegatingSubscriber<
+  TA,
+  TB
+> extends AbstractSubscriber<TA> {
   readonly delegate: ObserverLike<TB>;
   private isStopped = false;
 

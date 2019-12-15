@@ -30,7 +30,9 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 
     // Performance: Bypass safety checks and directly
     // sink notifcations to the delegate.
-    (this.delegate as AbstractDelegatingSubscriber<TAcc, unknown>).nextUnsafe(nextAcc);
+    (this.delegate as AbstractDelegatingSubscriber<TAcc, unknown>).nextUnsafe(
+      nextAcc,
+    );
   }
 }
 
@@ -40,8 +42,8 @@ const operator = <T, TAcc>(
 ): SubscriberOperatorLike<T, TAcc> => subscriber =>
   subscriber instanceof AbstractDelegatingSubscriber
     ? new ScanSubscriber(subscriber, scanner, initialValue())
-    : subscriber as SubscriberLike<any>;
-  
+    : (subscriber as SubscriberLike<any>);
+
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
