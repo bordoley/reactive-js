@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/react-router",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,11 +38,11 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/ix": "^0.0.13",
-    "@reactive-js/observable": "^0.0.13",
-    "@reactive-js/pipe": "^0.0.13",
-    "@reactive-js/react": "^0.0.13",
-    "@reactive-js/scheduler": "^0.0.13",
+    "@reactive-js/ix": "^0.0.14",
+    "@reactive-js/observable": "^0.0.14",
+    "@reactive-js/pipe": "^0.0.14",
+    "@reactive-js/react": "^0.0.14",
+    "@reactive-js/scheduler": "^0.0.14",
     "react": "^16.11.0"
   },
   "devDependencies": {

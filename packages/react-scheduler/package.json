@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/react-scheduler",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,9 +38,9 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.13",
-    "@reactive-js/scheduler": "^0.0.13",
-    "@reactive-js/schedulers": "^0.0.13",
+    "@reactive-js/disposable": "^0.0.14",
+    "@reactive-js/scheduler": "^0.0.14",
+    "@reactive-js/schedulers": "^0.0.14",
     "scheduler": "^0.17.0"
   },
   "devDependencies": {
