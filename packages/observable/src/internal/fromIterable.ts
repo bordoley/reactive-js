@@ -18,19 +18,25 @@ export const fromIterable = <T>(
     });
 
     const continuation: SchedulerContinuationLike = shouldYield => {
-      for (
-        let next = iterator.next();
-        !next.done && !subscriber.isDisposed;
-        next = iterator.next()
-      ) {
-        subscriber.next(next.value);
+      let error = undefined;
 
-        if (shouldYield() || delay !== 0) {
-          return continuationResult;
+      try{
+        for (
+          let next = iterator.next();
+          !next.done && !subscriber.isCompleted;
+          next = iterator.next()
+        ) {
+          subscriber.nextUnsafe(next.value);
+
+          if (shouldYield() || delay !== 0) {
+            return continuationResult;
+          }
         }
+      } catch (cause) {
+        error = { cause };
       }
 
-      subscriber.complete();
+      subscriber.complete(error);
       return;
     };
     const continuationResult: SchedulerContinuationResultLike = {

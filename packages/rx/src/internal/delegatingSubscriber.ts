@@ -1,4 +1,4 @@
-import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
+import { ErrorLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriber, checkState } from "./abstractSubscriber";
 
 const __DEV__ = process.env.NODE_ENV !== "production";
@@ -12,25 +12,25 @@ export abstract class AbstractDelegatingSubscriber<
   TA,
   TB
 > extends AbstractSubscriber<TA> {
-  readonly delegate: ObserverLike<TB>;
-  private isStopped = false;
+  readonly delegate: SubscriberLike<TB>;
+  isCompleted = false;
 
   constructor(delegate: SubscriberLike<TB>) {
     super(
       (delegate as any).scheduler || delegate,
-      (delegate as any).subscription || delegate,
+      (delegate as any).disposable || delegate,
     );
 
     this.delegate = delegate;
 
     this.add(() => {
-      this.isStopped = true;
+      this.isCompleted = true;
     });
   }
 
   /** @ignore */
   get isSubscribed() {
-    return (this.delegate as SubscriberLike<unknown>).isSubscribed;
+    return this.delegate.isSubscribed;
   }
 
   /** @ignore */
@@ -39,8 +39,8 @@ export abstract class AbstractDelegatingSubscriber<
       checkState(this);
     }
 
-    if (!this.isStopped) {
-      this.isStopped = true;
+    if (!this.isCompleted) {
+      this.isCompleted = true;
       this.tryComplete(error);
     }
   }
@@ -51,7 +51,7 @@ export abstract class AbstractDelegatingSubscriber<
       checkState(this);
     }
 
-    if (!this.isStopped) {
+    if (!this.isCompleted) {
       this.tryNext(data);
     }
   }
@@ -62,14 +62,9 @@ export abstract class AbstractDelegatingSubscriber<
    *
    * @param error
    */
-  abstract completeUnsafe(error?: ErrorLike): void;
+  protected abstract completeUnsafe(error?: ErrorLike): void;
 
-  /**
-   * Overried to handle incoming next notifications. Implementations
-   * may throw errors which will be caught and propogated.
-   *
-   * @param data
-   */
+  /** @ignore */
   abstract nextUnsafe(data: TA): void;
 
   private tryComplete(error?: ErrorLike) {

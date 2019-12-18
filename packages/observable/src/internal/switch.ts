@@ -22,13 +22,13 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
       this.parent = parent;
     }
 
-    complete(error?: ErrorLike) {
+    onComplete(error?: ErrorLike) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
     }
 
-    next(data: T) {
+    onNext(data: T) {
       this.parent.delegate.next(data);
     }
   };

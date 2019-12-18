@@ -8,21 +8,24 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 /** @ignore */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly scheduler: SchedulerLike;
-  readonly subscription: DisposableLike;
-  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
+  readonly disposable: DisposableLike;
+
+  constructor(scheduler: SchedulerLike, disposable: DisposableLike) {
     this.scheduler = scheduler;
-    this.subscription = subscription;
+    this.disposable = disposable;
   }
 
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
   }
 
-  abstract get isSubscribed(): boolean;
+  abstract get isCompleted(): boolean;
 
   get isDisposed() {
-    return this.subscription.isDisposed;
+    return this.disposable.isDisposed;
   }
+
+  abstract get isSubscribed(): boolean;
 
   get now() {
     return this.scheduler.now;
@@ -32,22 +35,25 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subscription.add(disposable, ...disposables);
+    this.disposable.add(disposable, ...disposables);
     return this;
   }
 
   abstract complete(_error?: ErrorLike): void;
 
   dispose() {
-    this.subscription.dispose();
+    this.disposable.dispose();
   }
+
   abstract next(data: T): void;
+  
+  abstract nextUnsafe(data: T): void;
 
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.subscription.remove(disposable, ...disposables);
+    this.disposable.remove(disposable, ...disposables);
     return this;
   }
 

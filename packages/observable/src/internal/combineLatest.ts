@@ -41,7 +41,7 @@ class CombineLatestObserver implements ObserverLike<any> {
     this.index = index;
   }
 
-  complete(error?: ErrorLike) {
+  onComplete(error?: ErrorLike) {
     this.ctx.completedCount++;
 
     if (error !== undefined || this.ctx.completedCount === this.totalCount) {
@@ -53,7 +53,7 @@ class CombineLatestObserver implements ObserverLike<any> {
     }
   }
 
-  next(data: any) {
+  onNext(data: any) {
     if (!this.hasProducedValue) {
       this.ctx.producedCount++;
     }

@@ -21,7 +21,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 
   completeUnsafe(error?: ErrorLike) {
     if (error === undefined) {
-      this.delegate.next(this.acc);
+      this.delegate.nextUnsafe(this.acc);
     }
     this.delegate.complete(error);
   }

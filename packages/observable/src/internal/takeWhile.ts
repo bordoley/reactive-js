@@ -19,7 +19,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   nextUnsafe(data: T) {
     if (this.predicate(data)) {
-      this.delegate.next(data);
+      this.delegate.nextUnsafe(data);
     } else {
       this.complete();
     }

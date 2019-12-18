@@ -9,9 +9,9 @@ export const fromEvent = <T>(
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        observer.next(result);
+        observer.onNext(result);
       } catch (cause) {
-        observer.complete({ cause });
+        observer.onComplete({ cause });
       }
     };
 

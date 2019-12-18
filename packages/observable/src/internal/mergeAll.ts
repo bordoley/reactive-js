@@ -9,16 +9,23 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
+import { createDisposable } from "@reactive-js/disposable";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ObservableLike<T>,
   T
 > {
   private activeCount = 0;
-  private isCompleted = false;
   private readonly maxBufferSize: number;
   private readonly maxConcurrency: number;
   private readonly queue: Array<ObservableLike<T>> = [];
+
+  private readonly subscriptions = createDisposable().add(
+    () => {
+      this.queue.length = 0;
+    }
+  );
+
   constructor(
     delegate: SubscriberLike<T>,
     maxBufferSize: number,
@@ -28,15 +35,12 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     this.maxBufferSize = maxBufferSize;
     this.maxConcurrency = maxConcurrency;
 
-    this.add(() => {
-      this.queue.length = 0;
-    });
+    this.add(this.subscriptions);
   }
 
   completeUnsafe(error?: ErrorLike) {
-    this.isCompleted = true;
-
     if (error !== undefined || this.queue.length + this.activeCount === 0) {
+      this.subscriptions.dispose();
       this.delegate.complete(error);
     }
   }
@@ -61,16 +65,19 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
         const nextObsSubscription = pipe(
           nextObs,
           observe({
-            next: (data: T) => {
+            onNext: (data: T) => {
               this.delegate.next(data);
             },
-            complete: (error?: ErrorLike) => {
+            onComplete: (error?: ErrorLike) => {
               this.activeCount--;
-              this.remove(nextObsSubscription);
+              this.subscriptions.remove(nextObsSubscription);
 
               if (error !== undefined) {
-                this.isCompleted = true;
-                this.delegate.complete(error);
+                if (!this.isCompleted) {
+                  this.complete(error);
+                } else {
+                  this.completeUnsafe(error);
+                }
               } else {
                 this.subscribeNext();
               }
@@ -79,7 +86,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
           subscribe(this),
         );
 
-        this.add(nextObsSubscription);
+        this.subscriptions.add(nextObsSubscription);
       } else if (this.isCompleted) {
         this.delegate.complete();
       }

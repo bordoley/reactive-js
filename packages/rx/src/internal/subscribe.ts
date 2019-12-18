@@ -10,9 +10,14 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
   implements SubscriberLike<T> {
   private _isSubscribed = false;
 
-  constructor(scheduler: SchedulerLike, subscription: DisposableLike) {
-    super(scheduler, subscription);
+  constructor(scheduler: SchedulerLike, disposable: DisposableLike) {
+    super(scheduler, disposable);
   }
+
+  get isCompleted() {
+    return this.disposable.isDisposed;
+  }
+
   get isSubscribed() {
     return this._isSubscribed;
   }
@@ -34,6 +39,8 @@ class AutoDisposingSubscriber<T> extends AbstractSubscriber<T>
       checkState(this);
     }
   }
+
+  nextUnsafe(_: T){}
 }
 
 /**

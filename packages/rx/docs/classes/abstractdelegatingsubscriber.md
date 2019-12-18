@@ -29,11 +29,11 @@ Abstract base class for implementing SubscriberOperatorLikes.
 ### Properties
 
 * [delegate](abstractdelegatingsubscriber.md#delegate)
+* [isCompleted](abstractdelegatingsubscriber.md#iscompleted)
 
 ### Methods
 
-* [completeUnsafe](abstractdelegatingsubscriber.md#abstract-completeunsafe)
-* [nextUnsafe](abstractdelegatingsubscriber.md#abstract-nextunsafe)
+* [completeUnsafe](abstractdelegatingsubscriber.md#protected-abstract-completeunsafe)
 
 ## Constructors
 
@@ -55,11 +55,21 @@ Name | Type |
 
 ###  delegate
 
-• **delegate**: *[ObserverLike](../interfaces/observerlike.md)‹TB›*
+• **delegate**: *[SubscriberLike](../interfaces/subscriberlike.md)‹TB›*
+
+___
+
+###  isCompleted
+
+• **isCompleted**: *boolean* = false
+
+*Implementation of [SubscriberLike](../interfaces/subscriberlike.md).[isCompleted](../interfaces/subscriberlike.md#iscompleted)*
+
+*Overrides void*
 
 ## Methods
 
-### `Abstract` completeUnsafe
+### `Protected` `Abstract` completeUnsafe
 
 ▸ **completeUnsafe**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
 
@@ -71,22 +81,5 @@ may throw errors which will be caught and propogated.
 Name | Type | Description |
 ------ | ------ | ------ |
 `error?` | [ErrorLike](../interfaces/errorlike.md) |   |
-
-**Returns:** *void*
-
-___
-
-### `Abstract` nextUnsafe
-
-▸ **nextUnsafe**(`data`: TA): *void*
-
-Overried to handle incoming next notifications. Implementations
-may throw errors which will be caught and propogated.
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`data` | TA |   |
 
 **Returns:** *void*

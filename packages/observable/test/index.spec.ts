@@ -76,21 +76,21 @@ class PromiseTestScheduler extends AbstractScheduler {
 const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
-  next: jest.fn(),
-  complete: jest.fn(),
+  onNext: jest.fn(),
+  onComplete: jest.fn(),
 });
 
 test("lift", () => {
   const onNext = <T>(onNext: (data: T) => void) =>
     observe({
-      next: onNext,
-      complete: _ => {},
+      onNext: onNext,
+      onComplete: _ => {},
     });
   const scheduler = createVirtualTimeSchedulerResource();
   const result: number[] = [];
 
   const liftedObservable = pipe(
-    createObservable(observer => observer.next(1)),
+    createObservable(observer => observer.onNext(1)),
     onNext(_ => result.push(1)),
   );
 
@@ -282,12 +282,12 @@ describe("fromArray", () => {
     );
     scheduler.run();
 
-    expect(observer.next).toHaveBeenNthCalledWith(1, [3, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2, [6, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3, [9, 3]);
-    expect(observer.next).toHaveBeenNthCalledWith(4, [12, 4]);
-    expect(observer.next).toHaveBeenNthCalledWith(5, [15, 5]);
-    expect(observer.next).toHaveBeenNthCalledWith(6, [18, 6]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(6, [18, 6]);
   });
 });
 
@@ -322,12 +322,12 @@ describe("fromIterable", () => {
     );
     scheduler.run();
 
-    expect(observer.next).toHaveBeenNthCalledWith(1, [3, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2, [6, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3, [9, 3]);
-    expect(observer.next).toHaveBeenNthCalledWith(4, [12, 4]);
-    expect(observer.next).toHaveBeenNthCalledWith(5, [15, 5]);
-    expect(observer.next).toHaveBeenNthCalledWith(6, [18, 6]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(6, [18, 6]);
   });
 
   test("calls iterator.return when disposed", () => {
@@ -394,12 +394,12 @@ test("fromScheduledValues", () => {
   );
   scheduler.run();
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, [0, 1]);
-  expect(observer.next).toHaveBeenNthCalledWith(2, [0, 1]);
-  expect(observer.next).toHaveBeenNthCalledWith(3, [0, 1]);
-  expect(observer.next).toHaveBeenNthCalledWith(4, [1, 2]);
-  expect(observer.next).toHaveBeenNthCalledWith(5, [3, 3]);
-  expect(observer.next).toHaveBeenNthCalledWith(6, [6, 4]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(1, [0, 1]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(2, [0, 1]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(3, [0, 1]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(4, [1, 2]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(5, [3, 3]);
+  expect(observer.onNext).toHaveBeenNthCalledWith(6, [6, 4]);
 });
 
 describe("generate", () => {
@@ -460,12 +460,12 @@ describe("generate", () => {
     );
     scheduler.run();
 
-    expect(observer.next).toHaveBeenCalledTimes(5);
-    expect(observer.next).toHaveBeenNthCalledWith(1, [5, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2, [10, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3, [15, 3]);
-    expect(observer.next).toHaveBeenNthCalledWith(4, [20, 4]);
-    expect(observer.next).toHaveBeenNthCalledWith(5, [25, 5]);
+    expect(observer.onNext).toHaveBeenCalledTimes(5);
+    expect(observer.onNext).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(3, [15, 3]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(4, [20, 4]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(5, [25, 5]);
   });
 
   test("with delay, generate throws", () => {
@@ -490,11 +490,11 @@ describe("generate", () => {
     );
     scheduler.run();
 
-    expect(observer.next).toHaveBeenCalledTimes(3);
-    expect(observer.next).toHaveBeenNthCalledWith(1, [5, 1]);
-    expect(observer.next).toHaveBeenNthCalledWith(2, [10, 2]);
-    expect(observer.next).toHaveBeenNthCalledWith(3, [15, 3]);
-    expect(observer.complete).toBeCalledWith({ cause });
+    expect(observer.onNext).toHaveBeenCalledTimes(3);
+    expect(observer.onNext).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(observer.onNext).toHaveBeenNthCalledWith(3, [15, 3]);
+    expect(observer.onComplete).toBeCalledWith({ cause });
   });
 });
 
@@ -507,8 +507,8 @@ test("ignoreElements", () => {
   pipe(src, ignoreElements(), observe(observer), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.next).toBeCalledTimes(0);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(observer.onNext).toBeCalledTimes(0);
+  expect(observer.onComplete).toBeCalledWith({ cause });
 });
 
 test("keep", () => {
@@ -525,9 +525,9 @@ test("keep", () => {
   );
   scheduler.run();
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, 2);
-  expect(observer.next).toBeCalledTimes(1);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(observer.onNext).toHaveBeenNthCalledWith(1, 2);
+  expect(observer.onNext).toBeCalledTimes(1);
+  expect(observer.onComplete).toBeCalledWith({ cause });
 });
 
 test("merge", () => {
@@ -560,12 +560,12 @@ test("merge", () => {
   );
   scheduler.run();
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, 3);
-  expect(observer.next).toHaveBeenNthCalledWith(2, 2);
-  expect(observer.next).toHaveBeenNthCalledWith(3, 5);
-  expect(observer.next).toHaveBeenNthCalledWith(4, 4);
-  expect(observer.next).toHaveBeenNthCalledWith(5, 7);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(observer.onNext).toHaveBeenNthCalledWith(1, 3);
+  expect(observer.onNext).toHaveBeenNthCalledWith(2, 2);
+  expect(observer.onNext).toHaveBeenNthCalledWith(3, 5);
+  expect(observer.onNext).toHaveBeenNthCalledWith(4, 4);
+  expect(observer.onNext).toHaveBeenNthCalledWith(5, 7);
+  expect(observer.onComplete).toBeCalledWith({ cause });
 });
 
 describe("never", () => {
@@ -574,8 +574,8 @@ describe("never", () => {
 
     expect(() => pipe(never(), observe(observer), toArray())).toThrow();
 
-    expect(observer.next).toHaveBeenCalledTimes(0);
-    expect(observer.complete).toHaveBeenCalledTimes(0);
+    expect(observer.onNext).toHaveBeenCalledTimes(0);
+    expect(observer.onComplete).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -594,7 +594,7 @@ test("onComplete", () => {
   pipe(empty(), onComplete(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.complete).toHaveBeenCalledWith(undefined);
+  expect(observer.onComplete).toHaveBeenCalledWith(undefined);
   expect(cb).toHaveBeenCalledWith(undefined);
 });
 
@@ -608,7 +608,7 @@ describe("onError", () => {
     pipe(throws(cause), onError(cb), observe(observer), subscribe(scheduler));
     scheduler.run();
 
-    expect(observer.complete).toHaveBeenCalledWith({ cause });
+    expect(observer.onComplete).toHaveBeenCalledWith({ cause });
     expect(cb).toHaveBeenCalledWith(cause);
   });
 
@@ -620,7 +620,7 @@ describe("onError", () => {
     pipe(empty(), onError(cb), observe(observer), subscribe(scheduler));
     scheduler.run();
 
-    expect(observer.complete).toHaveBeenCalledTimes(1);
+    expect(observer.onComplete).toHaveBeenCalledTimes(1);
     expect(cb).toHaveBeenCalledTimes(0);
   });
 });
@@ -633,7 +633,7 @@ test("onNext", () => {
   pipe(ofValue(1), onNext(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.next).toHaveBeenCalledWith(1);
+  expect(observer.onNext).toHaveBeenCalledWith(1);
   expect(cb).toHaveBeenCalledWith(1);
 });
 
@@ -674,10 +674,10 @@ test("scan", () => {
     ),
   ).toThrow(cause);
 
-  expect(observer.next).toHaveBeenNthCalledWith(1, 1);
-  expect(observer.next).toHaveBeenNthCalledWith(2, 3);
-  expect(observer.next).toHaveBeenNthCalledWith(3, 6);
-  expect(observer.complete).toBeCalledWith({ cause });
+  expect(observer.onNext).toHaveBeenNthCalledWith(1, 1);
+  expect(observer.onNext).toHaveBeenNthCalledWith(2, 3);
+  expect(observer.onNext).toHaveBeenNthCalledWith(3, 6);
+  expect(observer.onComplete).toBeCalledWith({ cause });
 });
 
 test("switchAll", () => {
@@ -715,7 +715,7 @@ describe("takeLast", () => {
         toArray(() => createVirtualTimeSchedulerResource()),
       ),
     ).toThrow(cause);
-    expect(observer.next).toHaveBeenCalledTimes(0);
+    expect(observer.onNext).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -787,8 +787,8 @@ describe("throws", () => {
     pipe(throws(cause), observe(observer), subscribe(scheduler));
     scheduler.run();
 
-    expect(observer.next).toBeCalledTimes(0);
-    expect(observer.complete).toBeCalledWith({ cause });
+    expect(observer.onNext).toBeCalledTimes(0);
+    expect(observer.onComplete).toBeCalledWith({ cause });
   });
 });
 
@@ -944,10 +944,10 @@ test("share", () => {
 
   anotherLiftedSubscription.dispose();
 
-  expect(liftedObserver.next).toBeCalledTimes(1);
-  expect(liftedObserver.next).toBeCalledWith(2);
-  expect(liftedObserver.complete).toBeCalledTimes(1);
+  expect(liftedObserver.onNext).toBeCalledTimes(1);
+  expect(liftedObserver.onNext).toBeCalledWith(2);
+  expect(liftedObserver.onComplete).toBeCalledTimes(1);
 
-  expect(anotherLiftedSubscriptionObserver.next).toBeCalledTimes(3);
-  expect(anotherLiftedSubscriptionObserver.complete).toBeCalledTimes(1);
+  expect(anotherLiftedSubscriptionObserver.onNext).toBeCalledTimes(3);
+  expect(anotherLiftedSubscriptionObserver.onComplete).toBeCalledTimes(1);
 });

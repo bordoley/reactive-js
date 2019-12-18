@@ -29,7 +29,7 @@ export const createObservable = <T>(
         subscriber.add(onSubscribeSubscription);
       }
     } catch (cause) {
-      observer.complete({ cause });
+      observer.onComplete({ cause });
     }
   };
 

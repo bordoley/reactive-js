@@ -15,23 +15,16 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   completeUnsafe(error?: ErrorLike) {
-    this.observer.complete(error);
+    this.observer.onComplete(error);
     this.delegate.complete(error);
   }
 
   nextUnsafe(data: T) {
-    this.observer.next(data);
+    this.observer.onNext(data);
 
     // Performance: Only sink notifications if there is
     // another delegate in the subscriber chain.
-    if (
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe !==
-      undefined
-    ) {
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(
-        data,
-      );
-    }
+    this.delegate.nextUnsafe(data);
   }
 }
 
@@ -55,16 +48,16 @@ export const onComplete = <T>(
   onComplete: (err?: ErrorLike) => void,
 ): ObservableOperatorLike<T, T> =>
   observe({
-    next: ignore,
-    complete: onComplete,
+    onNext: ignore,
+    onComplete,
   });
 
 export const onError = <T>(
   onError: (err: unknown) => void,
 ): ObservableOperatorLike<T, T> =>
   observe({
-    next: ignore,
-    complete: (error?: ErrorLike) => {
+    onNext: ignore,
+    onComplete: (error?: ErrorLike) => {
       if (error !== undefined) {
         const { cause } = error;
         onError(cause);
@@ -76,6 +69,6 @@ export const onNext = <T>(
   onNext: (next: T) => void,
 ): ObservableOperatorLike<T, T> =>
   observe({
-    next: onNext,
-    complete: ignore,
+    onNext,
+    onComplete: ignore,
   });

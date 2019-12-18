@@ -18,14 +18,14 @@ export interface ObserverLike<T> {
    *
    * @param error If present, indicates that the provider experienced an error condition.
    */
-  complete(error?: ErrorLike): void;
+  onComplete(error?: ErrorLike): void;
 
   /**
    * Provides the next item to observe.
    *
    * @param data
    */
-  next(data: T): void;
+  onNext(data: T): void;
 }
 
 /**
@@ -40,11 +40,14 @@ export interface ObserverLike<T> {
  * @noInheritDoc
  */
 export interface SubscriberLike<T>
-  extends ObserverLike<T>,
-    DisposableLike,
-    SchedulerResourceLike {
-  /** Returns true if the subscriber has been subscribed to an observable. */
+  extends SchedulerResourceLike {
+
+  readonly isCompleted: boolean;
   readonly isSubscribed: boolean;
+
+  complete(error?: ErrorLike): void;
+  next(data: T): void;
+  nextUnsafe(data: T): void;
 }
 
 /**

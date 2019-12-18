@@ -17,8 +17,8 @@ const subscribeObservable = <T>(
     throttle(8),
     subscribeOn(scheduler),
     observe({
-      next: (data: T) => updateState(_ => data),
-      complete: (error?: ErrorLike) => updateError(_ => error),
+      onNext: (data: T) => updateState(_ => data),
+      onComplete: (error?: ErrorLike) => updateError(_ => error),
     }),
     subscribe(normalPriority),
   );
