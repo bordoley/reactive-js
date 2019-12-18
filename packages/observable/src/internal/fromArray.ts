@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
+import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
@@ -42,14 +42,8 @@ export const fromArray = <T>(
       continuation,
       delay,
     };
-
-    if (subscriber instanceof AbstractDelegatingSubscriber) {
-      subscriber.schedule(continuation, delay);
-    } else {
-      subscriber.schedule(() => {
-        subscriber.complete();
-      }, delay);
-    }
+    
+    subscriber.schedule(continuation, delay);
   };
 
   return { subscribe };

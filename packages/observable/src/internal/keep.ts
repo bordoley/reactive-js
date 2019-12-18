@@ -31,9 +31,7 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 const operator = <T>(
   predicate: (data: T) => boolean,
 ): SubscriberOperatorLike<T, T> => subscriber =>
-  subscriber instanceof AbstractDelegatingSubscriber
-    ? new KeepSubscriber(subscriber, predicate)
-    : subscriber;
+  new KeepSubscriber(subscriber, predicate);
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
