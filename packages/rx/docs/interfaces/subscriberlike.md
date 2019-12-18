@@ -16,10 +16,6 @@ for performance reasons).
 
 ## Hierarchy
 
-* [ObserverLike](observerlike.md)‹T›
-
-* DisposableLike
-
 * SchedulerResourceLike
 
   ↳ **SubscriberLike**
@@ -32,12 +28,65 @@ for performance reasons).
 
 ### Properties
 
+* [isCompleted](subscriberlike.md#iscompleted)
 * [isSubscribed](subscriberlike.md#issubscribed)
 
+### Methods
+
+* [complete](subscriberlike.md#complete)
+* [next](subscriberlike.md#next)
+* [nextUnsafe](subscriberlike.md#nextunsafe)
+
 ## Properties
+
+###  isCompleted
+
+• **isCompleted**: *boolean*
+
+___
 
 ###  isSubscribed
 
 • **isSubscribed**: *boolean*
 
-Returns true if the subscriber has been subscribed to an observable.
+## Methods
+
+###  complete
+
+▸ **complete**(`error?`: [ErrorLike](errorlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`error?` | [ErrorLike](errorlike.md) |
+
+**Returns:** *void*
+
+___
+
+###  next
+
+▸ **next**(`data`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *void*
+
+___
+
+###  nextUnsafe
+
+▸ **nextUnsafe**(`data`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *void*

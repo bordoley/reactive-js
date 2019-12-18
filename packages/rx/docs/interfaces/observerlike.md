@@ -12,22 +12,20 @@ An observer of push-based notifications.
 
 * **ObserverLike**
 
-  ↳ [SubscriberLike](subscriberlike.md)
-
   ↳ [SubjectLike](subjectlike.md)
 
 ## Index
 
 ### Methods
 
-* [complete](observerlike.md#complete)
-* [next](observerlike.md#next)
+* [onComplete](observerlike.md#oncomplete)
+* [onNext](observerlike.md#onnext)
 
 ## Methods
 
-###  complete
+###  onComplete
 
-▸ **complete**(`error?`: [ErrorLike](errorlike.md)): *void*
+▸ **onComplete**(`error?`: [ErrorLike](errorlike.md)): *void*
 
 Called by a provider to indicate that it is done sending push-based notifications.
 
@@ -41,9 +39,9 @@ Name | Type | Description |
 
 ___
 
-###  next
+###  onNext
 
-▸ **next**(`data`: T): *void*
+▸ **onNext**(`data`: T): *void*
 
 Provides the next item to observe.
 

@@ -39,9 +39,9 @@ export function concat<T>(
       return head !== undefined;
     };
 
-    const next = (v: T) => subscriber.next(v);
+    const onNext = (v: T) => subscriber.next(v);
 
-    const complete = (error?: ErrorLike) => {
+    const onComplete = (error?: ErrorLike) => {
       subscriber.remove(innerSubscription);
 
       if (error !== undefined) {
@@ -51,7 +51,7 @@ export function concat<T>(
       }
     };
 
-    const observer = { next, complete };
+    const observer = { onNext, onComplete };
 
     subscribeNext();
   };

@@ -8,6 +8,7 @@ import { lift } from "./lift";
 
 class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly predicate: (data: T) => boolean;
+  
   constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {
     super(delegate);
     this.predicate = predicate;
@@ -21,10 +22,8 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
       // Performance: Bypass safety checks and directly
-      // sink notifcations to the delegate.
-      (this.delegate as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(
-        data,
-      );
+      // sink notifications to the delegate.
+      this.delegate.nextUnsafe(data);
     }
   }
 }

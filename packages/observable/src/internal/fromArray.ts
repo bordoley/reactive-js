@@ -11,31 +11,32 @@ export const fromArray = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let startIndex = 0;
 
-    const continuation: SchedulerContinuationLike = shouldYield => {
-      try {
-        const length = values.length;
+    const continuation: SchedulerContinuationLike = shouldYield => {      
+      const length = values.length;
 
+      let error = undefined;
+    
+      try {
         let index = startIndex;
-        while (index < length && !subscriber.isDisposed) {
+        while (index < length && !subscriber.isCompleted) {
           const value = values[index];
           index++;
 
           // Performance: Bypass safety checks and directly
           // sink notifications to the delegate.
-          (subscriber as AbstractDelegatingSubscriber<T, unknown>).nextUnsafe(value);
+          subscriber.nextUnsafe(value);
 
           if (shouldYield() || delay > 0) {
             startIndex = index;
             return continuationResult;
           }
         }
-
-        subscriber.complete();
-        return;
       } catch (cause) {
-        subscriber.complete({ cause });
-        return;
+        error = { cause };
       }
+
+      subscriber.complete(error);
+      return;
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,
@@ -73,7 +74,7 @@ export function fromScheduledValues<T>(
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
-      while (index < values.length && !subscriber.isDisposed) {
+      while (index < values.length && !subscriber.isCompleted) {
         const [, value] = values[index];
         index++;
         subscriber.next(value);

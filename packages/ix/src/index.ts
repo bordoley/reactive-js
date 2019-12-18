@@ -112,7 +112,7 @@ export const createAsyncIteratorResource = <TReq, T>(
 export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   const dispatcher = createSubject();
   return createAsyncIteratorResource(
-    dispatcher.next.bind(dispatcher),
+    dispatcher.onNext.bind(dispatcher),
     dispatcher,
     dispatcher,
   );
@@ -133,7 +133,7 @@ export const createReducerStore = <TAction, T>(
     share(scheduler, 1),
   );
   const store = createAsyncIteratorResource(
-    dispatcher.next.bind(dispatcher),
+    dispatcher.onNext.bind(dispatcher),
     observable,
     dispatcher,
   );
@@ -160,7 +160,7 @@ export const createPersistentStateStore = <T>(
 
   const onPersistentStoreChangedStream = pipe(
     persistentStore,
-    onNext(v => dispatcher.next(_ => v)),
+    onNext(v => dispatcher.onNext(_ => v)),
     ignoreElements(),
   );
 
@@ -180,7 +180,7 @@ export const createPersistentStateStore = <T>(
   );
 
   return createAsyncIteratorResource(
-    dispatcher.next.bind(dispatcher),
+    dispatcher.onNext.bind(dispatcher),
     observable,
     dispatcher,
   );

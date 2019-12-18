@@ -31,7 +31,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     this.allSubscriptions = allSubscriptions;
   }
 
-  complete(error?: ErrorLike) {
+  onComplete(error?: ErrorLike) {
     this.completedCountRef[0]++;
 
     if (error !== undefined || this.completedCountRef[0] === this.totalCount) {
@@ -43,7 +43,7 @@ class MergeObserver<T> implements ObserverLike<T> {
     }
   }
 
-  next(data: T) {
+  onNext(data: T) {
     this.delegate.next(data);
   }
 }

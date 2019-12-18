@@ -23,7 +23,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       this.parent = parent;
     }
 
-    complete(error?: ErrorLike) {
+    onComplete(error?: ErrorLike) {
       let shouldComplete = false;
       try {
         shouldComplete = !this.parent.shouldRepeat(this.count, error);
@@ -40,7 +40,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       }
     }
 
-    next(data: T) {
+    onNext(data: T) {
       this.parent.delegate.next(data);
     }
 
@@ -57,6 +57,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly observable: ObservableLike<T>;
   private readonly observer: ObserverLike<T>;
   private readonly shouldRepeat: (count: number, error?: ErrorLike) => boolean;
+
   constructor(
     delegate: SubscriberLike<T>,
     observable: ObservableLike<T>,
@@ -72,11 +73,11 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   completeUnsafe(error?: ErrorLike) {
-    this.observer.complete(error);
+    this.observer.onComplete(error);
   }
 
   nextUnsafe(data: T) {
-    this.observer.next(data);
+    this.observer.onNext(data);
   }
 }
 

@@ -24,13 +24,13 @@ export const fromPromiseFactory = <T>(
       .then(
         v => {
           if (!disposable.isDisposed) {
-            observer.next(v);
-            observer.complete();
+            observer.onNext(v);
+            observer.onComplete();
           }
         },
         cause => {
           if (!disposable.isDisposed) {
-            observer.complete({ cause });
+            observer.onComplete({ cause });
           }
         },
       )
@@ -59,7 +59,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     this.reject = reject;
   }
 
-  next(x: T) {
+  onNext(x: T) {
     if (this.result === undefined) {
       this.result = [x];
     } else {
@@ -67,7 +67,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     }
   }
 
-  complete(err?: ErrorLike) {
+  onComplete(err?: ErrorLike) {
     this.subscription.dispose();
     if (err !== undefined) {
       const { cause } = err;

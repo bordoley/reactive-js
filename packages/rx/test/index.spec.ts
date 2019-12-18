@@ -18,7 +18,10 @@ import { ObserverLike } from "../dist/types";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   readonly isSubscribed = true;
+  readonly isCompleted = false;
+
   next = jest.fn();
+  nextUnsafe = jest.fn();
   complete = jest.fn();
 
   constructor(scheduler: SchedulerLike) {
@@ -52,7 +55,7 @@ describe("rx", () => {
     });
 
     test("auto-disposes the subscription on complete", () => {
-      const observable = createObservable(observer => observer.complete());
+      const observable = createObservable(observer => observer.onComplete());
       const scheduler = createVirtualTimeSchedulerResource();
 
       const subscription = pipe(observable, subscribe(scheduler));
@@ -99,10 +102,10 @@ describe("rx", () => {
     test("when subject is completed", () => {
       const subject = createSubject(2);
 
-      subject.next(1);
-      subject.next(2);
-      subject.next(3);
-      subject.complete();
+      subject.onNext(1);
+      subject.onNext(2);
+      subject.onNext(3);
+      subject.onComplete();
 
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
@@ -118,16 +121,16 @@ describe("rx", () => {
     test("when subject is not completed", () => {
       const subject = createSubject(2);
 
-      subject.next(1);
-      subject.next(2);
-      subject.next(3);
+      subject.onNext(1);
+      subject.onNext(2);
+      subject.onNext(3);
 
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
       scheduler.schedule(_ => {
-        subject.next(4);
-        subject.complete();
+        subject.onNext(4);
+        subject.onComplete();
       });
 
       expect(subject.subscriberCount).toEqual(1);
@@ -142,9 +145,9 @@ describe("rx", () => {
     test("subscribe and dispose the subscription remove the observer", () => {
       const subject = createSubject(2);
 
-      subject.next(1);
-      subject.next(2);
-      subject.next(3);
+      subject.onNext(1);
+      subject.onNext(2);
+      subject.onNext(3);
 
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
@@ -171,8 +174,8 @@ describe("rx", () => {
       subject.dispose();
       expect(subject.isDisposed).toBeTruthy();
 
-      subject.next(1);
-      subject.complete();
+      subject.onNext(1);
+      subject.onComplete();
       expect(subscriber.next).toHaveBeenCalledTimes(0);
       expect(subscriber.complete).toHaveBeenCalledTimes(0);
     });

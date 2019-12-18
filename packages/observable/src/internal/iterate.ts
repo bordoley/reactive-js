@@ -28,7 +28,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
   private _result: [T] | undefined = undefined;
   private error: ErrorLike | undefined = undefined;
 
-  next(x: T) {
+  onNext(x: T) {
     if (this._result === undefined) {
       this._result = [x];
     } else {
@@ -36,7 +36,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
     }
   }
 
-  complete(x?: ErrorLike) {
+  onComplete(x?: ErrorLike) {
     this.error = x;
   }
 
@@ -95,10 +95,10 @@ class ObservableIteratorImpl<T> implements Iterator<T> {
     this.scheduler = scheduler;
 
     const observer: ObserverLike<T> = {
-      next: (value: T) => {
+      onNext: (value: T) => {
         this.value = [value];
       },
-      complete: e => {
+      onComplete: e => {
         this.error = e;
       },
     };

@@ -14,7 +14,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
   private readonly maxCount: number;
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
-    while (this.last.length > 0) {
+    while (this.last.length > 0 && !this.delegate.isCompleted) {
       const next = this.last.shift() as T;
       this.delegate.next(next);
 

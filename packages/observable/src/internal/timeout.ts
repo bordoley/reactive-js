@@ -40,7 +40,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       subscribe(this),
     );
 
-    this.delegate.next(data);
+    this.delegate.nextUnsafe(data);
   }
 }
 

@@ -22,13 +22,13 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
       this.parent = parent;
     }
 
-    complete(error?: ErrorLike) {
+    onComplete(error?: ErrorLike) {
       if (error !== undefined) {
         this.parent.complete(error);
       }
     }
 
-    next(data: TB) {
+    onNext(data: TB) {
       if (this.parent.otherLatest === undefined) {
         this.parent.otherLatest = [data];
       } else {
@@ -67,11 +67,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
     if (this.otherLatest !== undefined) {
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);
+
       // Performance: Bypass safety checks and directly
-      // sink notifcations to the delegate.
-      (this.delegate as AbstractDelegatingSubscriber<TC, unknown>).nextUnsafe(
-        result,
-      );
+      // sink notifications to the delegate.
+      this.delegate.nextUnsafe(result);
     }
   }
 }
@@ -80,9 +79,7 @@ const operator = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
 ): SubscriberOperatorLike<TA, TC> => subscriber =>
-  subscriber instanceof AbstractDelegatingSubscriber
-    ? new WithLatestFromSubscriber(subscriber, other, selector)
-    : (subscriber as SubscriberLike<any>);
+  new WithLatestFromSubscriber(subscriber, other, selector);
 
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,

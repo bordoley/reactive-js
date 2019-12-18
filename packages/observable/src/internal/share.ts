@@ -58,13 +58,8 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
 
     const subject = this.subject as SubjectResourceLike<T>;
 
-    const innerSubscription = pipe(
-      subject,
-      observe(subscriber),
-      subscribe(subscriber),
-    );
-
-    subscriber.add(this.teardown, innerSubscription);
+    subject.subscribe(subscriber)
+    subscriber.add(this.teardown);
   }
 }
 

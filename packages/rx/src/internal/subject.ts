@@ -26,10 +26,10 @@ const notify = <T>(
 ) => {
   switch (notification[0]) {
     case NotificationKind.Next:
-      observer.next(notification[1]);
+      observer.onNext(notification[1]);
       break;
     case NotificationKind.Complete:
-      observer.complete(notification[1]);
+      observer.onComplete(notification[1]);
       break;
   }
 };
@@ -67,7 +67,11 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     return this;
   }
 
-  complete(error?: ErrorLike) {
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  onComplete(error?: ErrorLike) {
     if (this.isCompleted) {
       return;
     }
@@ -75,30 +79,27 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     this.pushNotification([NotificationKind.Complete, error]);
 
     this.isCompleted = true;
-    const subscribers = this.observers.slice();
+    const observers = this.observers.slice();
     this.observers.length = 0;
 
-    for (const subscriber of subscribers) {
-      subscriber.complete(error);
+    for (const observer of observers) {
+      observer.onComplete(error);
     }
   }
 
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  next(data: T) {
+  onNext(data: T) {
     if (this.isCompleted) {
       return;
     }
 
     this.pushNotification([NotificationKind.Next, data]);
 
-    const subscribers = this.observers.slice();
-    for (const subscriber of subscribers) {
-      subscriber.next(data);
+    const observers = this.observers.slice();
+    for (const observer of observers) {
+      observer.onNext(data);
     }
   }
+
 
   remove(
     disposable: DisposableOrTeardown,
