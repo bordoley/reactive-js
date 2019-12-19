@@ -39,9 +39,7 @@ export interface ObserverLike<T> {
  *
  * @noInheritDoc
  */
-export interface SubscriberLike<T>
-  extends SchedulerResourceLike {
-
+export interface SubscriberLike<T> extends SchedulerResourceLike {
   readonly isCompleted: boolean;
   readonly isSubscribed: boolean;
 

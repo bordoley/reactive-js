@@ -2,14 +2,6 @@ import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 
 class SafeObserver<T> implements ObserverLike<T> {
-  private error: ErrorLike | undefined;
-  private isCompleted = false;
-  private readonly nextQueue: Array<T> = [];
-  private readonly subscriber: SubscriberLike<T>;
-  private readonly teardown = () => {
-    this.nextQueue.length = 0;
-    this.isCompleted = true;
-  };
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     try {
       while (this.nextQueue.length > 0 && !this.subscriber.isCompleted) {
@@ -29,15 +21,21 @@ class SafeObserver<T> implements ObserverLike<T> {
     }
 
     if (this.isCompleted) {
-      this.subscriber.remove(this.teardown).complete(this.error);
+      this.subscriber.complete(this.error);
     }
     return;
   };
   private readonly continuation = { continuation: this.drainQueue };
-  
-  constructor(subscriber: SubscriberLike<T>) {
+  private error: ErrorLike | undefined;
+  private isCompleted = false;
+  private readonly nextQueue: Array<T> = [];
+
+  constructor(private readonly subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    this.subscriber.add(this.teardown);
+    this.subscriber.add(() => {
+      this.nextQueue.length = 0;
+      this.isCompleted = true;
+    });
   }
 
   private get remainingEvents() {

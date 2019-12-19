@@ -38,10 +38,9 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   private readonly disposable: DisposableLike;
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
-  private readonly count: number;
   private readonly replayed: Notification<T>[] = [];
 
-  constructor(count: number) {
+  constructor(private readonly count: number) {
     this.disposable = createDisposable();
     this.count = count;
     this.add(() => {
@@ -99,7 +98,6 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       observer.onNext(data);
     }
   }
-
 
   remove(
     disposable: DisposableOrTeardown,
