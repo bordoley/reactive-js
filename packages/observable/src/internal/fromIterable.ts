@@ -20,7 +20,7 @@ export const fromIterable = <T>(
     const continuation: SchedulerContinuationLike = shouldYield => {
       let error = undefined;
 
-      try{
+      try {
         for (
           let next = iterator.next();
           !next.done && !subscriber.isCompleted;

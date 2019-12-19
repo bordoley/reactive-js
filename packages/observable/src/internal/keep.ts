@@ -8,7 +8,7 @@ import { lift } from "./lift";
 
 class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly predicate: (data: T) => boolean;
-  
+
   constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {
     super(delegate);
     this.predicate = predicate;

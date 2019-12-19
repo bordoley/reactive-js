@@ -30,9 +30,7 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 
     // Performance: Bypass safety checks and directly
     // sink notifications to the delegate.
-    this.delegate.nextUnsafe(
-      nextAcc,
-    );
+    this.delegate.nextUnsafe(nextAcc);
   }
 }
 

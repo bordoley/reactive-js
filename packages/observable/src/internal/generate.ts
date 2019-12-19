@@ -23,10 +23,8 @@ export const generate = <T>(
           subscriber.complete({ cause });
         }
       } while (!shouldYield() && !subscriber.isCompleted && delay === 0);
-    
-      return subscriber.isCompleted
-        ? undefined
-        : continuationResult;
+
+      return subscriber.isCompleted ? undefined : continuationResult;
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,

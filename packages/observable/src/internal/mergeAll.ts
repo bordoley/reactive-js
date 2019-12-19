@@ -20,11 +20,9 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   private readonly maxConcurrency: number;
   private readonly queue: Array<ObservableLike<T>> = [];
 
-  private readonly subscriptions = createDisposable().add(
-    () => {
-      this.queue.length = 0;
-    }
-  );
+  private readonly subscriptions = createDisposable().add(() => {
+    this.queue.length = 0;
+  });
 
   constructor(
     delegate: SubscriberLike<T>,
