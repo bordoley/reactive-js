@@ -55,19 +55,11 @@ export interface EventEmitterResourceLike<T>
 
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-  readonly dispatch: (req: TReq) => void;
-  private readonly observable: MulticastObservableLike<T>;
-  private readonly disposable: DisposableLike;
-
   constructor(
-    dispatch: (req: TReq) => void,
-    observable: MulticastObservableLike<T>,
-    disposable: DisposableLike,
-  ) {
-    this.dispatch = dispatch;
-    this.observable = observable;
-    this.disposable = disposable;
-  }
+    readonly dispatch: (req: TReq) => void,
+    private readonly observable: MulticastObservableLike<T>,
+    private readonly disposable: DisposableLike,
+  ) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;

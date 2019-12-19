@@ -83,17 +83,13 @@ const iteratorDone: IteratorReturnResult<any> = {
 };
 
 class ObservableIteratorImpl<T> implements Iterator<T> {
-  private readonly scheduler: VirtualTimeSchedulerResourceLike;
-
   private value: [T] | undefined = undefined;
   private error: ErrorLike | undefined = undefined;
 
   constructor(
-    scheduler: VirtualTimeSchedulerResourceLike,
+    private readonly scheduler: VirtualTimeSchedulerResourceLike,
     observable: ObservableLike<T>,
   ) {
-    this.scheduler = scheduler;
-
     const observer: ObserverLike<T> = {
       onNext: (value: T) => {
         this.value = [value];
@@ -156,16 +152,10 @@ const toIterator = <T>(
 };
 
 class IterableObservable<T> implements Iterable<T> {
-  private readonly observable: ObservableLike<T>;
-  private readonly schedulerFactory: () => VirtualTimeSchedulerResourceLike;
-
   constructor(
-    observable: ObservableLike<T>,
-    schedulerFactory: () => VirtualTimeSchedulerResourceLike,
-  ) {
-    this.observable = observable;
-    this.schedulerFactory = schedulerFactory;
-  }
+    private readonly observable: ObservableLike<T>,
+    private readonly schedulerFactory: () => VirtualTimeSchedulerResourceLike,
+  ) {}
 
   [Symbol.iterator](): Iterator<T> {
     return toIterator<T>(this.schedulerFactory)(this.observable);

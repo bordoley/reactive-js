@@ -10,11 +10,13 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
   T
 > {
-  private equals: (a: T, b: T) => boolean;
   private prev: [T] | undefined;
-  constructor(delegate: SubscriberLike<T>, equals: (a: T, b: T) => boolean) {
+
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly equals: (a: T, b: T) => boolean,
+  ) {
     super(delegate);
-    this.equals = equals;
   }
 
   completeUnsafe(error?: ErrorLike) {
@@ -30,9 +32,6 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
       } else {
         this.prev[0] = data;
       }
-
-      // Performance: Bypass safety checks and directly
-      // sink notifications to the delegate.
       this.delegate.nextUnsafe(data);
     }
   }

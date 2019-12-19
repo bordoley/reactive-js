@@ -17,10 +17,9 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
   TC
 > {
   static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
-    private readonly parent: WithLatestFromSubscriber<TA, TB, TC>;
-    constructor(parent: WithLatestFromSubscriber<TA, TB, TC>) {
-      this.parent = parent;
-    }
+    constructor(
+      private readonly parent: WithLatestFromSubscriber<TA, TB, TC>,
+    ) {}
 
     onComplete(error?: ErrorLike) {
       if (error !== undefined) {
@@ -39,12 +38,11 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
 
   private otherLatest: [TB] | undefined;
   private readonly otherSubscription: DisposableLike;
-  private readonly selector: (a: TA, b: TB) => TC;
 
   constructor(
     delegate: SubscriberLike<TC>,
     other: ObservableLike<TB>,
-    selector: (a: TA, b: TB) => TC,
+    private readonly selector: (a: TA, b: TB) => TC,
   ) {
     super(delegate);
     this.selector = selector;
@@ -67,9 +65,6 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
     if (this.otherLatest !== undefined) {
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);
-
-      // Performance: Bypass safety checks and directly
-      // sink notifications to the delegate.
       this.delegate.nextUnsafe(result);
     }
   }

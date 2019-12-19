@@ -45,19 +45,11 @@ export const fromPromiseFactory = <T>(
 class ToPromiseObserver<T> implements ObserverLike<T> {
   private result: [T] | undefined = undefined;
 
-  private readonly subscription: DisposableLike;
-  private readonly resolve: (value?: T | PromiseLike<T>) => void;
-  private readonly reject: (reason?: any) => void;
-
   constructor(
-    subscription: DisposableLike,
-    resolve: (value?: T | PromiseLike<T>) => void,
-    reject: (reason?: any) => void,
-  ) {
-    this.subscription = subscription;
-    this.resolve = resolve;
-    this.reject = reject;
-  }
+    private readonly subscription: DisposableLike,
+    private readonly resolve: (value?: T | PromiseLike<T>) => void,
+    private readonly reject: (reason?: any) => void,
+  ) {}
 
   onNext(x: T) {
     if (this.result === undefined) {

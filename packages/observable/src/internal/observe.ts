@@ -8,10 +8,11 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private observer: ObserverLike<T>;
-  constructor(delegate: SubscriberLike<T>, observer: ObserverLike<T>) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly observer: ObserverLike<T>,
+  ) {
     super(delegate);
-    this.observer = observer;
   }
 
   completeUnsafe(error?: ErrorLike) {

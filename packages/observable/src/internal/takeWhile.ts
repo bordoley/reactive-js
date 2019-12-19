@@ -7,10 +7,11 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private readonly predicate: (next: T) => boolean;
-  constructor(delegate: SubscriberLike<T>, predicate: (next: T) => boolean) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly predicate: (next: T) => boolean,
+  ) {
     super(delegate);
-    this.predicate = predicate;
   }
 
   completeUnsafe(error?: ErrorLike) {

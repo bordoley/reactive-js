@@ -1,7 +1,4 @@
-import {
-  createSerialDisposable,
-  SerialDisposableLike,
-} from "@reactive-js/disposable";
+import { createSerialDisposable } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
@@ -18,10 +15,8 @@ import { pipe } from "@reactive-js/pipe";
 class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   static RepeatObserver = class<T> implements ObserverLike<T> {
     private count = 1;
-    private readonly parent: RepeatSubscriber<T>;
-    constructor(parent: RepeatSubscriber<T>) {
-      this.parent = parent;
-    }
+
+    constructor(private readonly parent: RepeatSubscriber<T>) {}
 
     onComplete(error?: ErrorLike) {
       let shouldComplete = false;
@@ -53,23 +48,23 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       );
     }
   };
-  private readonly innerSubscription: SerialDisposableLike;
-  private readonly observable: ObservableLike<T>;
-  private readonly observer: ObserverLike<T>;
-  private readonly shouldRepeat: (count: number, error?: ErrorLike) => boolean;
+
+  private readonly innerSubscription = createSerialDisposable();
+  private readonly observer: ObserverLike<
+    T
+  > = new RepeatSubscriber.RepeatObserver(this);
 
   constructor(
     delegate: SubscriberLike<T>,
-    observable: ObservableLike<T>,
-    shouldRepeat: (count: number, error?: ErrorLike) => boolean,
+    private readonly observable: ObservableLike<T>,
+    private readonly shouldRepeat: (
+      count: number,
+      error?: ErrorLike,
+    ) => boolean,
   ) {
     super(delegate);
-    this.observable = observable;
-    this.shouldRepeat = shouldRepeat;
 
-    this.innerSubscription = createSerialDisposable();
     this.add(this.innerSubscription);
-    this.observer = new RepeatSubscriber.RepeatObserver(this);
   }
 
   completeUnsafe(error?: ErrorLike) {

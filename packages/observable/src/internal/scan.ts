@@ -7,16 +7,12 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
-  private acc: TAcc;
-  private scanner: (acc: TAcc, next: T) => TAcc;
   constructor(
     delegate: SubscriberLike<TAcc>,
-    scanner: (acc: TAcc, next: T) => TAcc,
-    initialValue: TAcc,
+    private readonly scanner: (acc: TAcc, next: T) => TAcc,
+    private acc: TAcc,
   ) {
     super(delegate);
-    this.scanner = scanner;
-    this.acc = initialValue;
   }
 
   completeUnsafe(error?: ErrorLike) {
@@ -28,8 +24,6 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     const nextAcc = this.scanner(prevAcc, next);
     this.acc = nextAcc;
 
-    // Performance: Bypass safety checks and directly
-    // sink notifications to the delegate.
     this.delegate.nextUnsafe(nextAcc);
   }
 }
