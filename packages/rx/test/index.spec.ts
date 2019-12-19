@@ -114,7 +114,7 @@ describe("rx", () => {
       expect(subject.subscriberCount).toEqual(0);
       scheduler.run();
 
-      expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
+      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(1, 3);
       expect(subscriber.complete).toHaveBeenCalled();
     });
 
@@ -136,9 +136,9 @@ describe("rx", () => {
       expect(subject.subscriberCount).toEqual(1);
       scheduler.run();
 
-      expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
-      expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
-      expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
+      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(1, 2);
+      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(2, 3);
+      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(3, 4);
       expect(subscriber.complete).toHaveBeenCalled();
     });
 
