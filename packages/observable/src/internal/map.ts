@@ -29,7 +29,7 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 const operator = <TA, TB>(
   mapper: (data: TA) => TB,
 ): SubscriberOperatorLike<TA, TB> => subscriber =>
-   new MapSubscriber(subscriber, mapper);
+  new MapSubscriber(subscriber, mapper);
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,

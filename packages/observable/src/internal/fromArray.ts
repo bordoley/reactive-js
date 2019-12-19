@@ -11,11 +11,11 @@ export const fromArray = <T>(
   const subscribe = (subscriber: SubscriberLike<T>) => {
     let startIndex = 0;
 
-    const continuation: SchedulerContinuationLike = shouldYield => {      
+    const continuation: SchedulerContinuationLike = shouldYield => {
       const length = values.length;
 
       let error = undefined;
-    
+
       try {
         let index = startIndex;
         while (index < length && !subscriber.isCompleted) {
@@ -42,7 +42,7 @@ export const fromArray = <T>(
       continuation,
       delay,
     };
-    
+
     subscriber.schedule(continuation, delay);
   };
 

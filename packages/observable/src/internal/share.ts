@@ -58,7 +58,7 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
 
     const subject = this.subject as SubjectResourceLike<T>;
 
-    subject.subscribe(subscriber)
+    subject.subscribe(subscriber);
     subscriber.add(this.teardown);
   }
 }
