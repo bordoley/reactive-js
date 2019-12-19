@@ -6,12 +6,10 @@ import {
 import { PrioritySchedulerLike } from "./priorityScheduler";
 
 class SchedulerWithPriorityImpl implements SchedulerLike {
-  private readonly priority: number;
-  private readonly priorityScheduler: PrioritySchedulerLike;
-  constructor(priorityScheduler: PrioritySchedulerLike, priority: number) {
-    this.priorityScheduler = priorityScheduler;
-    this.priority = priority;
-  }
+  constructor(
+    private readonly priorityScheduler: PrioritySchedulerLike,
+    private readonly priority: number,
+  ) {}
 
   public get inScheduledContinuation(): boolean {
     return this.priorityScheduler.inScheduledContinuation;

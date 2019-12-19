@@ -8,10 +8,9 @@ import { lift } from "./lift";
 
 class TakeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = -1;
-  private readonly maxCount: number;
-  constructor(delegate: SubscriberLike<T>, maxCount: number) {
+
+  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
-    this.maxCount = maxCount;
   }
 
   completeUnsafe(error?: ErrorLike) {

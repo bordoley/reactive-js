@@ -32,7 +32,9 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
       this.parent.delegate.next(data);
     }
   };
+
   private readonly innerSubscription = createSerialDisposable();
+
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
     this.add(this.innerSubscription);

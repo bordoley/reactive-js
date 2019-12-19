@@ -15,21 +15,13 @@ import { pipe } from "@reactive-js/pipe";
 
 class MergeObserver<T> implements ObserverLike<T> {
   innerSubscription: DisposableLike = disposed;
-  private readonly allSubscriptions: DisposableLike;
-  private readonly completedCountRef: [number];
-  private readonly delegate: SubscriberLike<T>;
-  private readonly totalCount: number;
+
   constructor(
-    delegate: SubscriberLike<T>,
-    totalCount: number,
-    completedCountRef: [number],
-    allSubscriptions: DisposableLike,
-  ) {
-    this.delegate = delegate;
-    this.totalCount = totalCount;
-    this.completedCountRef = completedCountRef;
-    this.allSubscriptions = allSubscriptions;
-  }
+    private readonly delegate: SubscriberLike<T>,
+    private readonly totalCount: number,
+    private readonly completedCountRef: [number],
+    private readonly allSubscriptions: DisposableLike,
+  ) {}
 
   onComplete(error?: ErrorLike) {
     this.completedCountRef[0]++;

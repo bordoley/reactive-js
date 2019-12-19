@@ -7,11 +7,11 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private readonly predicate: (data: T) => boolean;
-
-  constructor(delegate: SubscriberLike<T>, predicate: (data: T) => boolean) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly predicate: (data: T) => boolean,
+  ) {
     super(delegate);
-    this.predicate = predicate;
   }
 
   completeUnsafe(error?: ErrorLike) {
@@ -21,8 +21,6 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   nextUnsafe(data: T) {
     const shouldKeep = this.predicate(data);
     if (shouldKeep) {
-      // Performance: Bypass safety checks and directly
-      // sink notifications to the delegate.
       this.delegate.nextUnsafe(data);
     }
   }

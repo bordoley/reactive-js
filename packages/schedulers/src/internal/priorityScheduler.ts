@@ -47,8 +47,9 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
 };
 
 class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
-  private readonly disposable: SerialDisposableLike;
-  private readonly hostScheduler: SchedulerLike;
+  private readonly disposable: SerialDisposableLike = createSerialDisposable().add(
+    () => this.queue.clear(),
+  );
   private readonly queue: PriorityQueueLike<
     ScheduledTaskLike
   > = createPriorityQueue(comparator);
@@ -125,12 +126,8 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     }
     return;
   };
-  constructor(hostScheduler: SchedulerLike) {
-    this.disposable = createSerialDisposable();
-    this.hostScheduler = hostScheduler;
 
-    this.disposable.add(() => this.queue.clear());
-  }
+  constructor(private readonly hostScheduler: SchedulerLike) {}
 
   get inScheduledContinuation(): boolean {
     return this.currentTask !== undefined;

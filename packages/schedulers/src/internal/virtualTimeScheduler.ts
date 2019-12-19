@@ -73,15 +73,14 @@ class VirtualTimeSchedulerResourceImpl
   extends AbstractVirtualTimeSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
   private _now = 0;
-  private readonly maxMicroTaskTicks: number;
   private microTaskTicks = 0;
   private taskIDCount = 0;
   private readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
-  constructor(maxMicroTaskTicks: number) {
+
+  constructor(private readonly maxMicroTaskTicks: number) {
     super();
-    this.maxMicroTaskTicks = maxMicroTaskTicks;
   }
 
   get now(): number {

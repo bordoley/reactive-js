@@ -11,16 +11,10 @@ export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
 }
 
 class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
-  readonly dispatcher: (req: TReq) => void;
-  readonly observable: MulticastObservableLike<T>;
-
   constructor(
-    dispatcher: (req: TReq) => void,
-    observable: MulticastObservableLike<T>,
-  ) {
-    this.dispatcher = dispatcher;
-    this.observable = observable;
-  }
+    readonly dispatcher: (req: TReq) => void,
+    readonly observable: MulticastObservableLike<T>,
+  ) {}
 
   get subscriberCount(): number {
     return this.observable.subscriberCount;

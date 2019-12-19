@@ -18,13 +18,13 @@ import { throws } from "./throws";
 const timeoutError = Symbol("TimeoutError");
 
 class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private readonly duration: ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
-  constructor(delegate: SubscriberLike<T>, duration: ObservableLike<unknown>) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly duration: ObservableLike<unknown>,
+  ) {
     super(delegate);
-    this.duration = duration;
-
     this.add(this.durationSubscription);
   }
 

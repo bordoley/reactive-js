@@ -7,16 +7,12 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
-  private acc: TAcc;
-  private reducer: (acc: TAcc, next: T) => TAcc;
   constructor(
     delegate: SubscriberLike<TAcc>,
-    reducer: (acc: TAcc, next: T) => TAcc,
-    initialValue: TAcc,
+    private readonly reducer: (acc: TAcc, next: T) => TAcc,
+    private acc: TAcc,
   ) {
     super(delegate);
-    this.reducer = reducer;
-    this.acc = initialValue;
   }
 
   completeUnsafe(error?: ErrorLike) {

@@ -11,12 +11,10 @@ export interface ObservableResourceOperatorLike<A, B> {
 }
 
 class LiftedObservableResource<T> implements ObservableResourceLike<T> {
-  readonly disposable: DisposableLike;
-  readonly observable: ObservableLike<T>;
-  constructor(observable: ObservableLike<T>, disposable: DisposableLike) {
-    this.observable = observable;
-    this.disposable = disposable;
-  }
+  constructor(
+    readonly observable: ObservableLike<T>,
+    readonly disposable: DisposableLike,
+  ) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;

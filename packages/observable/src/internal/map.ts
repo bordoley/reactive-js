@@ -7,10 +7,11 @@ import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
-  readonly mapper: (data: TA) => TB;
-  constructor(delegate: SubscriberLike<TB>, mapper: (data: TA) => TB) {
+  constructor(
+    delegate: SubscriberLike<TB>,
+    private readonly mapper: (data: TA) => TB,
+  ) {
     super(delegate);
-    this.mapper = mapper;
   }
 
   completeUnsafe(error?: ErrorLike) {
@@ -19,9 +20,6 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 
   nextUnsafe(data: TA) {
     const mappedData = this.mapper(data);
-
-    // Performance: Bypass safety checks and directly
-    // sink notifications to the delegate.
     this.delegate.nextUnsafe(mappedData);
   }
 }

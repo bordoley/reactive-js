@@ -12,7 +12,6 @@ import { lift } from "./lift";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
-  private readonly maxCount: number;
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     while (this.last.length > 0 && !this.delegate.isCompleted) {
       const next = this.last.shift() as T;
@@ -32,9 +31,9 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly continuation: SchedulerContinuationResultLike = {
     continuation: this.drainQueue,
   };
-  constructor(delegate: SubscriberLike<T>, maxCount: number) {
+
+  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
-    this.maxCount = maxCount;
   }
 
   completeUnsafe(error?: ErrorLike) {

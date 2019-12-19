@@ -2,15 +2,10 @@ import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
 class LiftedObservable<TSrc, T> implements ObservableLike<T> {
-  readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>;
-  readonly source: ObservableLike<TSrc>;
   constructor(
-    source: ObservableLike<TSrc>,
-    operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
-  ) {
-    this.source = source;
-    this.operators = operators;
-  }
+    readonly source: ObservableLike<TSrc>,
+    readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
+  ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     const liftedSubscrber: SubscriberLike<any> = this.operators.reduceRight(

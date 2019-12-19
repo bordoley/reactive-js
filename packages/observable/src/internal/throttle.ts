@@ -22,9 +22,7 @@ export const enum ThrottleMode {
 }
 
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private readonly durationSelector: (next: T) => ObservableLike<unknown>;
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-  private readonly mode: ThrottleMode;
   private value: [T] | undefined = undefined;
   private readonly notifyNext = () => {
     const value = this.value;
@@ -40,12 +38,10 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   constructor(
     delegate: SubscriberLike<T>,
-    durationSelector: (next: T) => ObservableLike<unknown>,
-    mode: ThrottleMode,
+    private readonly durationSelector: (next: T) => ObservableLike<unknown>,
+    private readonly mode: ThrottleMode,
   ) {
     super(delegate);
-    this.durationSelector = durationSelector;
-    this.mode = mode;
 
     this.add(this.durationSubscription);
   }
