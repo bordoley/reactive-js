@@ -25,7 +25,7 @@ export interface SchedulerLike {
   readonly inScheduledContinuation: boolean;
 
   /** The scheduler's current time in ms. */
-  now: number;
+  readonly now: number;
 
   /**
    * Schedules a continuation to be execute on the scheduler.
