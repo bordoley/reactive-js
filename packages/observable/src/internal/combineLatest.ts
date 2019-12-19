@@ -21,24 +21,15 @@ interface CombineLatestContext {
 
 class CombineLatestObserver implements ObserverLike<any> {
   innerSubscription: DisposableLike = disposed;
-  private readonly allSubscriptions: DisposableLike;
-  private readonly ctx: CombineLatestContext;
-  private readonly subscriber: SubscriberLike<any>;
   private hasProducedValue = false;
-  private readonly index: number;
-  private readonly totalCount: number;
+
   constructor(
-    delegate: SubscriberLike<any>,
-    totalCount: number,
-    allSubscriptions: DisposableLike,
-    ctx: CombineLatestContext,
-    index: number,
+    private readonly subscriber: SubscriberLike<any>,
+    private readonly totalCount: number,
+    private readonly allSubscriptions: DisposableLike,
+    private readonly ctx: CombineLatestContext,
+    private readonly index: number,
   ) {
-    this.subscriber = delegate;
-    this.totalCount = totalCount;
-    this.allSubscriptions = allSubscriptions;
-    this.ctx = ctx;
-    this.index = index;
   }
 
   onComplete(error?: ErrorLike) {
