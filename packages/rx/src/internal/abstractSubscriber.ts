@@ -7,13 +7,10 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
-  readonly scheduler: SchedulerLike;
-  readonly disposable: DisposableLike;
-
-  constructor(scheduler: SchedulerLike, disposable: DisposableLike) {
-    this.scheduler = scheduler;
-    this.disposable = disposable;
-  }
+  constructor(
+    readonly scheduler: SchedulerLike,
+    readonly disposable: DisposableLike,
+  ) {}
 
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
@@ -46,7 +43,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   }
 
   abstract next(data: T): void;
-  
+
   abstract nextUnsafe(data: T): void;
 
   remove(

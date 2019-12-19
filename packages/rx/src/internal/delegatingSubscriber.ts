@@ -12,16 +12,13 @@ export abstract class AbstractDelegatingSubscriber<
   TA,
   TB
 > extends AbstractSubscriber<TA> {
-  readonly delegate: SubscriberLike<TB>;
   isCompleted = false;
 
-  constructor(delegate: SubscriberLike<TB>) {
+  constructor(readonly delegate: SubscriberLike<TB>) {
     super(
       (delegate as any).scheduler || delegate,
       (delegate as any).disposable || delegate,
     );
-
-    this.delegate = delegate;
 
     this.add(() => {
       this.isCompleted = true;
