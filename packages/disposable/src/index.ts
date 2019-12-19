@@ -52,12 +52,8 @@ const doDispose = (disposable: DisposableOrTeardown) => {
 };
 
 class DisposableImpl implements DisposableLike {
-  private _isDisposed = false;
+  isDisposed = false;
   private readonly disposables: Array<DisposableOrTeardown> = [];
-
-  get isDisposed(): boolean {
-    return this._isDisposed;
-  }
 
   add(...disposables: DisposableOrTeardown[]) {
     if (this.isDisposed) {
@@ -74,7 +70,7 @@ class DisposableImpl implements DisposableLike {
 
   dispose() {
     if (!this.isDisposed) {
-      this._isDisposed = true;
+      this.isDisposed = true;
 
       for (const disposable of this.disposables) {
         doDispose(disposable);
@@ -163,6 +159,7 @@ export interface SerialDisposableLike extends DisposableLike {
 class SerialDisposableImpl extends DisposableImpl
   implements SerialDisposableLike {
   private _disposable: DisposableLike = disposed;
+
   get disposable(): DisposableLike {
     return this._disposable;
   }
