@@ -29,8 +29,7 @@ class CombineLatestObserver implements ObserverLike<any> {
     private readonly allSubscriptions: DisposableLike,
     private readonly ctx: CombineLatestContext,
     private readonly index: number,
-  ) {
-  }
+  ) {}
 
   onComplete(error?: ErrorLike) {
     this.ctx.completedCount++;

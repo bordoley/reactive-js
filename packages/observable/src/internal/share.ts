@@ -12,13 +12,13 @@ import { observe } from "./observe";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 
 class SharedObservable<T> implements MulticastObservableLike<T> {
-  private refCount = 0;
+  subscriberCount = 0;
   private sourceSubscription = disposed;
   private subject?: SubjectResourceLike<T>;
   private readonly teardown = () => {
-    this.refCount--;
+    this.subscriberCount--;
 
-    if (this.refCount === 0) {
+    if (this.subscriberCount === 0) {
       this.sourceSubscription.dispose();
       this.sourceSubscription = disposed;
       (this.subject as SubjectResourceLike<T>).dispose();
@@ -32,12 +32,8 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
     private readonly scheduler: SchedulerLike,
   ) {}
 
-  get subscriberCount() {
-    return this.refCount;
-  }
-
   subscribe(subscriber: SubscriberLike<T>): void {
-    if (this.refCount === 0) {
+    if (this.subscriberCount === 0) {
       this.subject = this.factory();
       this.sourceSubscription = pipe(
         this.source,
@@ -45,7 +41,7 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
         subscribe(this.scheduler),
       );
     }
-    this.refCount++;
+    this.subscriberCount++;
 
     const subject = this.subject as SubjectResourceLike<T>;
 
