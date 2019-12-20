@@ -1,8 +1,4 @@
-import {
-  AbstractDelegatingSubscriber,
-  ErrorLike,
-  SubscriberLike,
-} from "@reactive-js/rx";
+import { AbstractDelegatingSubscriber, SubscriberLike } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
@@ -13,16 +9,14 @@ class TakeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.delegate.complete(error);
-  }
-
-  nextUnsafe(data: T) {
-    this.count++;
-    if (this.count < this.maxCount) {
-      this.delegate.nextUnsafe(data);
-    } else if (this.count === this.maxCount) {
-      this.complete();
+  next(data: T) {
+    if (!this.isDisposed) {
+      this.count++;
+      if (this.count < this.maxCount) {
+        this.delegate.next(data);
+      } else if (this.count === this.maxCount) {
+        this.complete();
+      }
     }
   }
 }

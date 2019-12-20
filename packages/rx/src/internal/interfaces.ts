@@ -33,19 +33,13 @@ export interface ObserverLike<T> {
  * an ObservableLike. A SubscriberLike composes an observer with a
  * scheduler and disposable subscription. Subscribers may only be notified
  * after they have been subscribeed and must be notified from a SchedulerContinuation
- * executing on the subscriber's scheduler. Not doing so is a runtime error and will
- * result in errors being throw in DEV mode (these checks are disabled in production mode
- * for performance reasons).
+ * executing on the subscriber's scheduler.
  *
  * @noInheritDoc
  */
 export interface SubscriberLike<T> extends SchedulerResourceLike {
-  readonly isCompleted: boolean;
-  readonly isSubscribed: boolean;
-
   complete(error?: ErrorLike): void;
   next(data: T): void;
-  nextUnsafe(data: T): void;
 }
 
 /**

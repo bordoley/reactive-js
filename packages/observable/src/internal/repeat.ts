@@ -67,12 +67,16 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.add(this.innerSubscription);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.observer.onComplete(error);
+  complete(error?: ErrorLike) {
+    if (!this.isDisposed) {
+      this.observer.onComplete(error);
+    }
   }
 
-  nextUnsafe(data: T) {
-    this.observer.onNext(data);
+  next(data: T) {
+    if (!this.isDisposed) {
+      this.observer.onNext(data);
+    }
   }
 }
 

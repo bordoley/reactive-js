@@ -23,10 +23,10 @@ export const fromIterable = <T>(
       try {
         for (
           let next = iterator.next();
-          !next.done && !subscriber.isCompleted;
+          !next.done && !subscriber.isDisposed;
           next = iterator.next()
         ) {
-          subscriber.nextUnsafe(next.value);
+          subscriber.next(next.value);
 
           if (shouldYield() || delay !== 0) {
             return continuationResult;

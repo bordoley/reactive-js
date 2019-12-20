@@ -13,19 +13,25 @@ import { lift } from "./lift";
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
-    while (this.last.length > 0 && !this.delegate.isCompleted) {
-      const next = this.last.shift() as T;
-      this.delegate.next(next);
+    let error = undefined;
 
-      const yieldRequest = shouldYield();
-      const hasMoreEvents = this.last.length > 0;
+    try {
+      while (this.last.length > 0 && !this.delegate.isDisposed) {
+        const next = this.last.shift() as T;
+        this.delegate.next(next);
 
-      if (yieldRequest && hasMoreEvents) {
-        return this.continuation;
+        const yieldRequest = shouldYield();
+        const hasMoreEvents = this.last.length > 0;
+
+        if (yieldRequest && hasMoreEvents) {
+          return this.continuation;
+        }
       }
+    } catch (cause) {
+      error = { cause };
     }
 
-    this.delegate.complete();
+    this.delegate.complete(error);
     return;
   };
   private readonly continuation: SchedulerContinuationResultLike = {
@@ -36,18 +42,21 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
+  complete(error?: ErrorLike) {
     if (error !== undefined) {
       this.delegate.complete(error);
     } else {
-      this.schedule(this.drainQueue);
+      this.dispose();
+      this.delegate.schedule(this.drainQueue);
     }
   }
 
-  nextUnsafe(data: T) {
-    this.last.push(data);
-    if (this.last.length > this.maxCount) {
-      this.last.shift();
+  next(data: T) {
+    if (!this.isDisposed) {
+      this.last.push(data);
+      if (this.last.length > this.maxCount) {
+        this.last.shift();
+      }
     }
   }
 }

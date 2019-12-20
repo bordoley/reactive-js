@@ -16,15 +16,15 @@ export const generate = <T>(
       shouldYield: () => boolean,
     ) => {
       do {
-        subscriber.nextUnsafe(acc);
+        subscriber.next(acc);
         try {
           acc = generator(acc);
         } catch (cause) {
           subscriber.complete({ cause });
         }
-      } while (!shouldYield() && !subscriber.isCompleted && delay === 0);
+      } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
 
-      return subscriber.isCompleted ? undefined : continuationResult;
+      return subscriber.isDisposed ? undefined : continuationResult;
     };
     const continuationResult: SchedulerContinuationResultLike = {
       continuation,

@@ -1,4 +1,8 @@
-import { DisposableLike, DisposableOrTeardown } from "@reactive-js/disposable";
+import {
+  DisposableLike,
+  DisposableOrTeardown,
+  createDisposable,
+} from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -7,22 +11,17 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
-  constructor(
-    readonly scheduler: SchedulerLike,
-    readonly disposable: DisposableLike,
-  ) {}
+  readonly disposable: DisposableLike = createDisposable();
+
+  constructor(readonly scheduler: SchedulerLike) {}
 
   get inScheduledContinuation(): boolean {
     return this.scheduler.inScheduledContinuation;
   }
 
-  abstract get isCompleted(): boolean;
-
   get isDisposed() {
     return this.disposable.isDisposed;
   }
-
-  abstract get isSubscribed(): boolean;
 
   get now() {
     return this.scheduler.now;
@@ -36,15 +35,13 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     return this;
   }
 
-  abstract complete(_error?: ErrorLike): void;
+  abstract complete(error?: ErrorLike): void;
 
   dispose() {
     this.disposable.dispose();
   }
 
   abstract next(data: T): void;
-
-  abstract nextUnsafe(data: T): void;
 
   remove(
     disposable: DisposableOrTeardown,
@@ -65,13 +62,22 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   }
 }
 
-/** @ignore */
-export const checkState = <T>(subscriber: SubscriberLike<T>) => {
-  if (!subscriber.inScheduledContinuation) {
-    throw new Error(
-      "Attempted to notify subscriber from outside of it's scheduler",
-    );
-  } else if (!subscriber.isSubscribed) {
-    throw new Error("Attempted to notify subscriber before it is subscribeed");
+/**
+ * Abstract base class for implementing SubscriberOperatorLikes.
+ *
+ * @noInheritDoc
+ */
+export abstract class AbstractDelegatingSubscriber<
+  TA,
+  TB
+> extends AbstractSubscriber<TA> {
+  constructor(readonly delegate: SubscriberLike<TB>) {
+    super((delegate as any).scheduler || delegate);
+
+    this.delegate.add(this);
   }
-};
+
+  complete(error?: ErrorLike) {
+    this.delegate.complete(error);
+  }
+}

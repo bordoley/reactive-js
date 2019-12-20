@@ -1,8 +1,4 @@
-import {
-  ErrorLike,
-  SubscriberLike,
-  AbstractDelegatingSubscriber,
-} from "@reactive-js/rx";
+import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
@@ -14,13 +10,9 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.delegate.complete(error);
-  }
-
-  nextUnsafe(data: TA) {
+  next(data: TA) {
     const mappedData = this.mapper(data);
-    this.delegate.nextUnsafe(mappedData);
+    this.delegate.next(mappedData);
   }
 }
 

@@ -28,19 +28,23 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.add(this.durationSubscription);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.remove(this.durationSubscription);
-    this.delegate.complete(error);
+  complete(error?: ErrorLike) {
+    if (!this.isDisposed) {
+      this.remove(this.durationSubscription);
+      this.delegate.complete(error);
+    }
   }
 
-  nextUnsafe(data: T) {
-    this.durationSubscription.disposable = pipe(
-      this.duration,
-      onComplete(error => this.complete(error)),
-      subscribe(this),
-    );
+  next(data: T) {
+    if (!this.isDisposed) {
+      this.durationSubscription.disposable = pipe(
+        this.duration,
+        onComplete(error => this.complete(error)),
+        subscribe(this),
+      );
 
-    this.delegate.nextUnsafe(data);
+      this.delegate.next(data);
+    }
   }
 }
 

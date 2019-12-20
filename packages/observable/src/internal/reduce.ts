@@ -15,14 +15,14 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
+  complete(error?: ErrorLike) {
     if (error === undefined) {
-      this.delegate.nextUnsafe(this.acc);
+      this.delegate.next(this.acc);
     }
     this.delegate.complete(error);
   }
 
-  nextUnsafe(next: T) {
+  next(next: T) {
     const prevAcc = this.acc;
     const nextAcc = this.reducer(prevAcc, next);
     this.acc = nextAcc;
