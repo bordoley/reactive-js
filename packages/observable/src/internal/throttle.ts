@@ -54,28 +54,32 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     );
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.remove(this.durationSubscription);
-    if (error === undefined && this.mode !== ThrottleMode.First) {
-      this.notifyNext();
+  complete(error?: ErrorLike) {
+    if (!this.isDisposed) {
+      this.remove(this.durationSubscription);
+      if (error === undefined && this.mode !== ThrottleMode.First) {
+        this.notifyNext();
+      }
+      this.delegate.complete(error);
     }
-    this.delegate.complete(error);
   }
 
-  nextUnsafe(data: T) {
-    if (this.value !== undefined) {
-      this.value[0] = data;
-    } else {
-      this.value = [data];
-    }
+  next(data: T) {
+    if (!this.isDisposed) {
+      if (this.value !== undefined) {
+        this.value[0] = data;
+      } else {
+        this.value = [data];
+      }
 
-    if (
-      this.durationSubscription.disposable.isDisposed &&
-      this.mode !== ThrottleMode.Last
-    ) {
-      this.notifyNext();
-    } else if (this.durationSubscription.disposable.isDisposed) {
-      this.setupDurationSubscription(data);
+      if (
+        this.durationSubscription.disposable.isDisposed &&
+        this.mode !== ThrottleMode.Last
+      ) {
+        this.notifyNext();
+      } else if (this.durationSubscription.disposable.isDisposed) {
+        this.setupDurationSubscription(data);
+      }
     }
   }
 }

@@ -1,9 +1,4 @@
-import {
-  subscribe,
-  createObservable,
-  createSubject,
-  ObservableLike,
-} from "../src/index";
+import { subscribe, createObservable, createSubject } from "../src/index";
 
 import { createDisposable } from "@reactive-js/disposable";
 
@@ -18,42 +13,17 @@ import { ObserverLike } from "../dist/types";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   readonly isSubscribed = true;
-  readonly isCompleted = false;
 
   next = jest.fn();
-  nextUnsafe = jest.fn();
   complete = jest.fn();
 
   constructor(scheduler: SchedulerLike) {
-    super(scheduler, createDisposable());
+    super(scheduler);
   }
 }
 
 describe("rx", () => {
   describe("subscribe", () => {
-    test("throws with serial observable", () => {
-      const seriallyCallsNextOnSubscribe: ObservableLike<number> = {
-        subscribe: subscriber => subscriber.next(1),
-      };
-
-      const seriallyCallsCompleteOnSubscribe: ObservableLike<number> = {
-        subscribe: subscriber => subscriber.complete(),
-      };
-
-      expect(() =>
-        pipe(
-          seriallyCallsNextOnSubscribe,
-          subscribe(createVirtualTimeSchedulerResource()),
-        ),
-      ).toThrow();
-      expect(() =>
-        pipe(
-          seriallyCallsCompleteOnSubscribe,
-          subscribe(createVirtualTimeSchedulerResource()),
-        ),
-      ).toThrow();
-    });
-
     test("auto-disposes the subscription on complete", () => {
       const observable = createObservable(observer => observer.onComplete());
       const scheduler = createVirtualTimeSchedulerResource();
@@ -114,7 +84,7 @@ describe("rx", () => {
       expect(subject.subscriberCount).toEqual(0);
       scheduler.run();
 
-      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(1, 3);
+      expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
       expect(subscriber.complete).toHaveBeenCalled();
     });
 
@@ -136,9 +106,9 @@ describe("rx", () => {
       expect(subject.subscriberCount).toEqual(1);
       scheduler.run();
 
-      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(1, 2);
-      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(2, 3);
-      expect(subscriber.nextUnsafe).toHaveBeenNthCalledWith(3, 4);
+      expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
+      expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
+      expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
       expect(subscriber.complete).toHaveBeenCalled();
     });
 

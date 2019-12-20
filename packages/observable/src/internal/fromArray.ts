@@ -18,13 +18,11 @@ export const fromArray = <T>(
 
       try {
         let index = startIndex;
-        while (index < length && !subscriber.isCompleted) {
+        while (index < length && !subscriber.isDisposed) {
           const value = values[index];
           index++;
 
-          // Performance: Bypass safety checks and directly
-          // sink notifications to the delegate.
-          subscriber.nextUnsafe(value);
+          subscriber.next(value);
 
           if (shouldYield() || delay > 0) {
             startIndex = index;
@@ -68,7 +66,7 @@ export function fromScheduledValues<T>(
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
-      while (index < values.length && !subscriber.isCompleted) {
+      while (index < values.length && !subscriber.isDisposed) {
         const [, value] = values[index];
         index++;
         subscriber.next(value);

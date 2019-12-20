@@ -13,4 +13,4 @@ export {
 export { subscribe } from "./internal/subscribe";
 export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
-export { AbstractDelegatingSubscriber } from "./internal/delegatingSubscriber";
+export { AbstractDelegatingSubscriber } from "./internal/abstractSubscriber";

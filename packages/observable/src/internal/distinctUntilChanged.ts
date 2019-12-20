@@ -1,8 +1,4 @@
-import {
-  ErrorLike,
-  SubscriberLike,
-  AbstractDelegatingSubscriber,
-} from "@reactive-js/rx";
+import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
@@ -19,20 +15,18 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.delegate.complete(error);
-  }
-
-  nextUnsafe(data: T) {
+  next(data: T) {
     const shouldEmit =
-      this.prev === undefined || !this.equals(this.prev[0], data);
+      !this.isDisposed &&
+      (this.prev === undefined || !this.equals(this.prev[0], data));
+
     if (shouldEmit) {
       if (this.prev === undefined) {
         this.prev = [data];
       } else {
         this.prev[0] = data;
       }
-      this.delegate.nextUnsafe(data);
+      this.delegate.next(data);
     }
   }
 }

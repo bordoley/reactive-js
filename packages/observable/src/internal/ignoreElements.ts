@@ -1,8 +1,4 @@
-import {
-  ErrorLike,
-  SubscriberLike,
-  AbstractDelegatingSubscriber,
-} from "@reactive-js/rx";
+import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
 import { ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
@@ -14,11 +10,7 @@ class IgnoreElementsSubscriber<TA, TB> extends AbstractDelegatingSubscriber<
     super(delegate);
   }
 
-  nextUnsafe(_: TA) {}
-
-  completeUnsafe(error?: ErrorLike) {
-    this.delegate.complete(error);
-  }
+  next(_: TA) {}
 }
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>

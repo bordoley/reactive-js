@@ -9,7 +9,6 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
-import { createDisposable } from "@reactive-js/disposable";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ObservableLike<T>,
@@ -18,10 +17,6 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   private activeCount = 0;
   private readonly queue: Array<ObservableLike<T>> = [];
 
-  private readonly subscriptions = createDisposable(() => {
-    this.queue.length = 0;
-  });
-
   constructor(
     delegate: SubscriberLike<T>,
     private readonly maxBufferSize: number,
@@ -29,20 +24,26 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ) {
     super(delegate);
 
-    this.add(this.subscriptions);
+    this.delegate.add(() => {
+      this.queue.length = 0;
+    });
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    if (error !== undefined || this.queue.length + this.activeCount === 0) {
-      this.subscriptions.dispose();
+  complete(error?: ErrorLike) {
+    if (
+      !this.isDisposed &&
+      (error !== undefined || this.queue.length + this.activeCount === 0)
+    ) {
       this.delegate.complete(error);
+    } else {
+      this.dispose();
     }
   }
 
-  nextUnsafe(next: ObservableLike<T>) {
+  next(next: ObservableLike<T>) {
     if (
-      this.queue.length + this.activeCount < this.maxBufferSize &&
-      !this.isCompleted
+      !this.isDisposed &&
+      this.queue.length + this.activeCount < this.maxBufferSize
     ) {
       this.queue.push(next);
       this.subscribeNext();
@@ -64,24 +65,26 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
             },
             onComplete: (error?: ErrorLike) => {
               this.activeCount--;
-              this.subscriptions.remove(nextObsSubscription);
+              this.delegate.remove(nextObsSubscription);
 
-              if (error !== undefined) {
-                if (!this.isCompleted) {
-                  this.complete(error);
-                } else {
-                  this.completeUnsafe(error);
-                }
+              if (error !== undefined && !this.isDisposed) {
+                debugger;
+                this.complete(error);
+              } else if (error !== undefined) {
+                debugger;
+                this.delegate.complete(error);
               } else {
                 this.subscribeNext();
               }
             },
           }),
-          subscribe(this),
+          subscribe(this.delegate),
         );
 
-        this.subscriptions.add(nextObsSubscription);
-      } else if (this.isCompleted) {
+        this.delegate.add(nextObsSubscription);
+      } else if (!this.isDisposed) {
+        this.complete();
+      } else {
         this.delegate.complete();
       }
     }

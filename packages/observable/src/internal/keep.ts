@@ -1,8 +1,4 @@
-import {
-  ErrorLike,
-  SubscriberLike,
-  AbstractDelegatingSubscriber,
-} from "@reactive-js/rx";
+import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
@@ -14,14 +10,10 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.delegate.complete(error);
-  }
-
-  nextUnsafe(data: T) {
-    const shouldKeep = this.predicate(data);
+  next(data: T) {
+    const shouldKeep = !this.isDisposed && this.predicate(data);
     if (shouldKeep) {
-      this.delegate.nextUnsafe(data);
+      this.delegate.next(data);
     }
   }
 }

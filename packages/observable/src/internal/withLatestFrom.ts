@@ -56,16 +56,18 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
     this.add(this.otherSubscription);
   }
 
-  completeUnsafe(error?: ErrorLike) {
-    this.remove(this.otherSubscription);
-    this.delegate.complete(error);
+  complete(error?: ErrorLike) {
+    if (!this.isDisposed) {
+      this.remove(this.otherSubscription);
+      this.delegate.complete(error);
+    }
   }
 
-  nextUnsafe(data: TA) {
-    if (this.otherLatest !== undefined) {
+  next(data: TA) {
+    if (!this.isDisposed && this.otherLatest !== undefined) {
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);
-      this.delegate.nextUnsafe(result);
+      this.delegate.next(result);
     }
   }
 }

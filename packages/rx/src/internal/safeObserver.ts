@@ -4,9 +4,9 @@ import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 class SafeObserver<T> implements ObserverLike<T> {
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     try {
-      while (this.nextQueue.length > 0 && !this.subscriber.isCompleted) {
+      while (this.nextQueue.length > 0 && !this.subscriber.isDisposed) {
         const next = this.nextQueue.shift() as T;
-        this.subscriber.nextUnsafe(next);
+        this.subscriber.next(next);
 
         const yieldRequest = shouldYield();
         const hasMoreEvents = this.remainingEvents > 0;
@@ -34,7 +34,6 @@ class SafeObserver<T> implements ObserverLike<T> {
     this.subscriber = subscriber;
     this.subscriber.add(() => {
       this.nextQueue.length = 0;
-      this.isCompleted = true;
     });
   }
 
@@ -43,7 +42,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 
   onComplete(error?: ErrorLike) {
-    if (!this.isCompleted) {
+    if (!(this.isCompleted && this.subscriber.isDisposed)) {
       this.isCompleted = true;
       this.error = error;
       this.scheduleDrainQueue();
@@ -51,7 +50,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 
   onNext(data: T) {
-    if (!this.isCompleted) {
+    if (!(this.isCompleted && this.subscriber.isDisposed)) {
       this.nextQueue.push(data);
       this.scheduleDrainQueue();
     }

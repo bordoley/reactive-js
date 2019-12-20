@@ -1,4 +1,4 @@
-import { createSerialDisposable } from "@reactive-js/disposable";
+import { disposed } from "@reactive-js/disposable";
 import {
   subscribe,
   AbstractDelegatingSubscriber,
@@ -33,24 +33,20 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
     }
   };
 
-  private readonly innerSubscription = createSerialDisposable();
+  private innerSubscription = disposed;
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
-    this.add(this.innerSubscription);
   }
 
-  completeUnsafe(error?: ErrorLike) {
+  next(data: ObservableLike<T>) {
     this.remove(this.innerSubscription);
-    this.delegate.complete(error);
-  }
-
-  nextUnsafe(data: ObservableLike<T>) {
-    this.innerSubscription.disposable = pipe(
+    this.innerSubscription = pipe(
       data,
       observe(new SwitchSubscriber.InnerObserver(this)),
       subscribe(this),
     );
+    this.add(this.innerSubscription);
   }
 }
 
