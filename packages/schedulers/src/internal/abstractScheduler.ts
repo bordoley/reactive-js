@@ -14,7 +14,9 @@ import {
 
 /** @noInheritDoc */
 export abstract class AbstractScheduler implements SchedulerLike {
+  /** @ignore */
   inScheduledContinuation = false;
+
   private currentDisposable: DisposableLike = disposed;
   private startTime = 0;
   private shouldYield = () =>
