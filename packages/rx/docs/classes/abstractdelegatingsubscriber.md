@@ -29,11 +29,10 @@ Abstract base class for implementing SubscriberOperatorLikes.
 ### Properties
 
 * [delegate](abstractdelegatingsubscriber.md#delegate)
-* [isCompleted](abstractdelegatingsubscriber.md#iscompleted)
 
 ### Methods
 
-* [completeUnsafe](abstractdelegatingsubscriber.md#protected-abstract-completeunsafe)
+* [complete](abstractdelegatingsubscriber.md#complete)
 
 ## Constructors
 
@@ -57,29 +56,20 @@ Name | Type |
 
 • **delegate**: *[SubscriberLike](../interfaces/subscriberlike.md)‹TB›*
 
-___
+## Methods
 
-###  isCompleted
+###  complete
 
-• **isCompleted**: *boolean* = false
+▸ **complete**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
 
-*Implementation of [SubscriberLike](../interfaces/subscriberlike.md).[isCompleted](../interfaces/subscriberlike.md#iscompleted)*
+*Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
 
 *Overrides void*
 
-## Methods
-
-### `Protected` `Abstract` completeUnsafe
-
-▸ **completeUnsafe**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
-
-Override to handle complete notification. Implementations
-may throw errors which will be caught and propogated.
-
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`error?` | [ErrorLike](../interfaces/errorlike.md) |   |
+Name | Type |
+------ | ------ |
+`error?` | [ErrorLike](../interfaces/errorlike.md) |
 
 **Returns:** *void*
