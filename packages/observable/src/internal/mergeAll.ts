@@ -82,9 +82,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
         );
 
         this.delegate.add(nextObsSubscription);
-      } else if (!this.isDisposed) {
-        this.complete();
-      } else {
+      } else if (this.isDisposed) {
         this.delegate.complete();
       }
     }
