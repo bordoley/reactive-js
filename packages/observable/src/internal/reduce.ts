@@ -16,7 +16,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   }
 
   complete(error?: ErrorLike) {
-    if (error === undefined) {
+    if (!this.isDisposed && error === undefined) {
       this.delegate.next(this.acc);
     }
     this.delegate.complete(error);
