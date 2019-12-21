@@ -15,15 +15,14 @@ export const generate = <T>(
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
-      do {
-        subscriber.next(acc);
-        try {
+      try {
+        do {
+          subscriber.next(acc);
           acc = generator(acc);
-        } catch (cause) {
-          subscriber.complete({ cause });
-        }
-      } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
-
+        } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
+      } catch (cause) {
+        subscriber.complete({ cause });
+      }
       return subscriber.isDisposed ? undefined : continuationResult;
     };
     const continuationResult: SchedulerContinuationResultLike = {
