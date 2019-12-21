@@ -1,5 +1,4 @@
 import {
-  createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
@@ -17,26 +16,23 @@ class MergeObserver<T> implements ObserverLike<T> {
   innerSubscription: DisposableLike = disposed;
 
   constructor(
-    private readonly delegate: SubscriberLike<T>,
+    private readonly subscriber: SubscriberLike<T>,
     private readonly totalCount: number,
     private readonly completedCountRef: [number],
-    private readonly allSubscriptions: DisposableLike,
   ) {}
 
   onComplete(error?: ErrorLike) {
     this.completedCountRef[0]++;
 
     if (error !== undefined || this.completedCountRef[0] === this.totalCount) {
-      // Dispose the allSubscriptions disposable by removing it from the subscriber;
-      this.delegate.remove(this.allSubscriptions);
-      this.delegate.complete(error);
+      this.subscriber.complete(error);
     } else {
-      this.allSubscriptions.remove(this.innerSubscription);
+      this.subscriber.remove(this.innerSubscription);
     }
   }
 
   onNext(data: T) {
-    this.delegate.next(data);
+    this.subscriber.next(data);
   }
 }
 
@@ -51,15 +47,11 @@ export function merge<T>(
   const subscribeImpl = (subscriber: SubscriberLike<T>) => {
     const completedCountRef: [number] = [0];
 
-    const allSubscriptions: DisposableLike = createDisposable();
-    subscriber.add(allSubscriptions);
-
     for (const observable of observables) {
       const observer = new MergeObserver(
         subscriber,
         observables.length,
         completedCountRef,
-        allSubscriptions,
       );
 
       observer.innerSubscription = pipe(
@@ -68,7 +60,7 @@ export function merge<T>(
         subscribe(subscriber),
       );
 
-      allSubscriptions.add(observer.innerSubscription);
+      subscriber.add(observer.innerSubscription);
     }
   };
 
