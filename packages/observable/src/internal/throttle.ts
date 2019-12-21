@@ -55,13 +55,14 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   complete(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.remove(this.durationSubscription);
-      if (error === undefined && this.mode !== ThrottleMode.First) {
-        this.notifyNext();
-      }
-      this.delegate.complete(error);
+    if (
+      !this.isDisposed &&
+      error === undefined &&
+      this.mode !== ThrottleMode.First
+    ) {
+      this.notifyNext();
     }
+    this.delegate.complete(error);
   }
 
   next(data: T) {
