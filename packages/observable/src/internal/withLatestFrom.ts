@@ -1,43 +1,20 @@
-import { DisposableLike } from "@reactive-js/disposable";
 import {
   subscribe,
   AbstractDelegatingSubscriber,
   ErrorLike,
   ObservableLike,
-  ObserverLike,
   SubscriberLike,
+  ObserverLike,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
-  TA,
-  TC
-> {
-  static InnerObserver = class<TA, TB, TC> implements ObserverLike<TB> {
-    constructor(
-      private readonly parent: WithLatestFromSubscriber<TA, TB, TC>,
-    ) {}
-
-    onComplete(error?: ErrorLike) {
-      if (error !== undefined) {
-        this.parent.complete(error);
-      }
-    }
-
-    onNext(data: TB) {
-      if (this.parent.otherLatest === undefined) {
-        this.parent.otherLatest = [data];
-      } else {
-        this.parent.otherLatest[0] = data;
-      }
-    }
-  };
-
+class WithLatestFromSubscriber<TA, TB, TC>
+  extends AbstractDelegatingSubscriber<TA, TC>
+  implements ObserverLike<TB> {
   private otherLatest: [TB] | undefined;
-  private readonly otherSubscription: DisposableLike;
 
   constructor(
     delegate: SubscriberLike<TC>,
@@ -47,20 +24,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
     super(delegate);
     this.selector = selector;
 
-    this.otherSubscription = pipe(
-      other,
-      observe(new WithLatestFromSubscriber.InnerObserver(this)),
-      subscribe(this),
-    );
-
-    this.add(this.otherSubscription);
-  }
-
-  complete(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.remove(this.otherSubscription);
-      this.delegate.complete(error);
-    }
+    this.add(pipe(other, observe(this), subscribe(this)));
   }
 
   next(data: TA) {
@@ -68,6 +32,20 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
       const [otherLatest] = this.otherLatest;
       const result = this.selector(data, otherLatest);
       this.delegate.next(result);
+    }
+  }
+
+  onComplete(error?: ErrorLike) {
+    if (error !== undefined) {
+      this.complete(error);
+    }
+  }
+
+  onNext(data: TB) {
+    if (this.otherLatest === undefined) {
+      this.otherLatest = [data];
+    } else {
+      this.otherLatest[0] = data;
     }
   }
 }
