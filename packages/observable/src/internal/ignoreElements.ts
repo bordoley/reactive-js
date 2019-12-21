@@ -6,10 +6,6 @@ class IgnoreElementsSubscriber<TA, TB> extends AbstractDelegatingSubscriber<
   TA,
   TB
 > {
-  constructor(delegate: SubscriberLike<TB>) {
-    super(delegate);
-  }
-
   next(_: TA) {}
 }
 
