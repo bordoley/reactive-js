@@ -2,6 +2,7 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   createDisposable,
+  disposed,
 } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
@@ -56,10 +57,14 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     continuation: SchedulerContinuationLike,
     delay?: number,
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(continuation, delay);
-    this.add(schedulerSubscription);
-    schedulerSubscription.add(() => this.remove(schedulerSubscription));
-    return schedulerSubscription;
+    if(!this.isDisposed) {
+      const schedulerSubscription = this.scheduler.schedule(continuation, delay);
+      this.add(schedulerSubscription);
+      schedulerSubscription.add(() => this.remove(schedulerSubscription));
+      return schedulerSubscription;
+    } else {
+      return disposed;
+    }
   }
 }
 
