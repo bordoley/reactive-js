@@ -32,7 +32,11 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
       this.setupDurationSubscription(next);
 
-      this.delegate.next(next);
+      try {
+        this.delegate.next(next);
+      } catch(cause){
+        this.delegate.complete({cause});
+      }
     }
   };
 
