@@ -40,7 +40,6 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   private readonly replayed: Notification<T>[] = [];
 
   constructor(private readonly count: number) {
-    this.count = count;
     this.add(() => {
       this.isCompleted = true;
       this.observers.length = 0;
@@ -73,7 +72,9 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       return;
     }
 
-    this.pushNotification([NotificationKind.Complete, error]);
+    if (this.count > 0) {
+      this.pushNotification(NotificationKind.Complete, error);
+    }
 
     this.isCompleted = true;
     const observers = this.observers.slice();
@@ -89,7 +90,9 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       return;
     }
 
-    this.pushNotification([NotificationKind.Next, data]);
+    if (this.count > 0) {
+      this.pushNotification(NotificationKind.Next, data);
+    }
 
     const observers = this.observers.slice();
     for (const observer of observers) {
@@ -137,8 +140,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     }
   }
 
-  private pushNotification(notif: Notification<T>) {
-    this.replayed.push(notif);
+  private pushNotification(notif: NotificationKind.Complete, error?: ErrorLike): void;
+  private pushNotification(notif: NotificationKind.Next, value: T): void;
+  private pushNotification(notif: NotificationKind, value: any) {
+    this.replayed.push([notif, value] as Notification<T>);
     if (this.replayed.length > this.count) {
       this.replayed.shift();
     }
