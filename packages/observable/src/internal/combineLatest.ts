@@ -5,10 +5,7 @@ import {
   SubscriberLike,
   subscribe,
 } from "@reactive-js/rx";
-import {
-  DisposableLike,
-  disposed,
-} from "@reactive-js/disposable";
+import { DisposableLike, disposed } from "@reactive-js/disposable";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 

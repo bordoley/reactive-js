@@ -1,7 +1,4 @@
-import {
-  DisposableLike,
-  disposed,
-} from "@reactive-js/disposable";
+import { DisposableLike, disposed } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,

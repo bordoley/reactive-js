@@ -19,8 +19,8 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     if (!this.isDisposed) {
       try {
         this.observer.onComplete(error);
-      } catch(cause) {
-        error = { cause, parent: error} as ErrorLike;
+      } catch (cause) {
+        error = { cause, parent: error } as ErrorLike;
       }
       this.delegate.complete(error);
     }
