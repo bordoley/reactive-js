@@ -31,7 +31,6 @@ class SafeObserver<T> implements ObserverLike<T> {
   private readonly nextQueue: Array<T> = [];
 
   constructor(private readonly subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
     this.subscriber.add(() => {
       this.nextQueue.length = 0;
     });

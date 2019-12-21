@@ -1,6 +1,5 @@
 import {
   createDisposable,
-  DisposableLike,
   DisposableOrTeardown,
 } from "@reactive-js/disposable";
 import {
@@ -35,13 +34,12 @@ const notify = <T>(
 };
 
 class SubjectImpl<T> implements SubjectResourceLike<T> {
-  private readonly disposable: DisposableLike;
+  private readonly disposable = createDisposable();
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly replayed: Notification<T>[] = [];
 
   constructor(private readonly count: number) {
-    this.disposable = createDisposable();
     this.count = count;
     this.add(() => {
       this.isCompleted = true;
