@@ -3,7 +3,6 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
-  ErrorLike,
   SubscriberLike,
   subscribe,
   AbstractDelegatingSubscriber,
@@ -26,13 +25,6 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   ) {
     super(delegate);
     this.add(this.durationSubscription);
-  }
-
-  complete(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.remove(this.durationSubscription);
-      this.delegate.complete(error);
-    }
   }
 
   next(data: T) {
