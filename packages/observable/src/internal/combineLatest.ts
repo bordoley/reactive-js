@@ -6,7 +6,6 @@ import {
   subscribe,
 } from "@reactive-js/rx";
 import {
-  createDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
@@ -26,7 +25,6 @@ class CombineLatestObserver implements ObserverLike<any> {
   constructor(
     private readonly subscriber: SubscriberLike<any>,
     private readonly totalCount: number,
-    private readonly allSubscriptions: DisposableLike,
     private readonly ctx: CombineLatestContext,
     private readonly index: number,
   ) {}
@@ -35,11 +33,9 @@ class CombineLatestObserver implements ObserverLike<any> {
     this.ctx.completedCount++;
 
     if (error !== undefined || this.ctx.completedCount === this.totalCount) {
-      // Dispose the allSubscriptions disposable by removing it from the subscriber;
-      this.subscriber.remove(this.allSubscriptions);
       this.subscriber.complete(error);
     } else {
-      this.allSubscriptions.remove(this.innerSubscription);
+      this.subscriber.remove(this.innerSubscription);
     }
   }
 
@@ -128,14 +124,10 @@ export function combineLatest(
       latest: new Array(observables.length),
     };
 
-    const allSubscriptions = createDisposable();
-    subscriber.add(allSubscriptions);
-
     for (let index = 0; index < observables.length; index++) {
       const observer = new CombineLatestObserver(
         subscriber,
         observables.length,
-        allSubscriptions,
         ctx,
         index,
       );
@@ -146,7 +138,7 @@ export function combineLatest(
         subscribe(subscriber),
       );
 
-      allSubscriptions.add(observer.innerSubscription);
+      subscriber.add(observer.innerSubscription);
     }
   };
 
