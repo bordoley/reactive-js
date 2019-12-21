@@ -75,6 +75,9 @@ export abstract class AbstractDelegatingSubscriber<
     super((delegate as any).scheduler || delegate);
 
     this.delegate.add(this);
+    this.add(() => {
+      this.delegate.remove(this);
+    });
   }
 
   complete(error?: ErrorLike) {
