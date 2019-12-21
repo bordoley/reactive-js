@@ -12,47 +12,10 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  static RepeatObserver = class<T> implements ObserverLike<T> {
-    private count = 1;
-
-    constructor(private readonly parent: RepeatSubscriber<T>) {}
-
-    onComplete(error?: ErrorLike) {
-      let shouldComplete = false;
-      try {
-        shouldComplete = !this.parent.shouldRepeat(this.count, error);
-      } catch (cause) {
-        shouldComplete = true;
-        error = { cause, parent: error } as ErrorLike;
-      }
-
-      if (shouldComplete) {
-        this.parent.remove(this.parent.innerSubscription);
-        this.parent.delegate.complete(error);
-      } else {
-        this.setupSubscription();
-      }
-    }
-
-    onNext(data: T) {
-      this.parent.delegate.next(data);
-    }
-
-    private setupSubscription() {
-      this.count++;
-      this.parent.innerSubscription.disposable = pipe(
-        this.parent.observable,
-        observe(this.parent.observer),
-        subscribe(this.parent),
-      );
-    }
-  };
-
+class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
+  implements ObserverLike<T> {
   private readonly innerSubscription = createSerialDisposable();
-  private readonly observer: ObserverLike<
-    T
-  > = new RepeatSubscriber.RepeatObserver(this);
+  private count = 1;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -63,20 +26,45 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     ) => boolean,
   ) {
     super(delegate);
-
-    this.add(this.innerSubscription);
+    this.delegate.add(this.innerSubscription);
   }
 
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.observer.onComplete(error);
+      this.dispose();
+      this.onComplete(error);
     }
   }
 
   next(data: T) {
     if (!this.isDisposed) {
-      this.observer.onNext(data);
+      this.delegate.next(data);
     }
+  }
+
+  onComplete(error?: ErrorLike) {
+    let shouldComplete = false;
+    try {
+      shouldComplete = !this.shouldRepeat(this.count, error);
+    } catch (cause) {
+      shouldComplete = true;
+      error = { cause, parent: error } as ErrorLike;
+    }
+
+    if (shouldComplete) {
+      this.delegate.complete(error);
+    } else {
+      this.count++;
+      this.innerSubscription.disposable = pipe(
+        this.observable,
+        observe(this),
+        subscribe(this.delegate),
+      );
+    }
+  }
+
+  onNext(data: T) {
+    this.delegate.next(data);
   }
 }
 
