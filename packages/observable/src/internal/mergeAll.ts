@@ -30,13 +30,12 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   complete(error?: ErrorLike) {
-    if (
-      !this.isDisposed &&
-      (error !== undefined || this.queue.length + this.activeCount === 0)
-    ) {
-      this.delegate.complete(error);
-    } else {
-      this.dispose();
+    if (!this.isDisposed) {
+      if (error !== undefined || this.queue.length + this.activeCount === 0) {
+        this.delegate.complete(error);
+      } else {
+        this.dispose();
+      }
     }
   }
 
@@ -50,6 +49,20 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     }
   }
 
+  onNext(data: T) {
+    this.delegate.next(data);
+  }
+
+  onComplete(error?: ErrorLike) {
+    this.activeCount--;
+
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      this.subscribeNext();
+    }
+  }
+
   private subscribeNext() {
     if (this.activeCount < this.maxConcurrency) {
       const nextObs = this.queue.shift();
@@ -59,29 +72,14 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
 
         const nextObsSubscription = pipe(
           nextObs,
-          observe({
-            onNext: (data: T) => {
-              this.delegate.next(data);
-            },
-            onComplete: (error?: ErrorLike) => {
-              this.activeCount--;
-              this.delegate.remove(nextObsSubscription);
-
-              if (error !== undefined && !this.isDisposed) {
-                debugger;
-                this.complete(error);
-              } else if (error !== undefined) {
-                debugger;
-                this.delegate.complete(error);
-              } else {
-                this.subscribeNext();
-              }
-            },
-          }),
+          observe(this),
           subscribe(this.delegate),
         );
 
         this.delegate.add(nextObsSubscription);
+        nextObsSubscription.add(() =>
+          this.delegate.remove(nextObsSubscription),
+        );
       } else if (this.isDisposed) {
         this.delegate.complete();
       }
