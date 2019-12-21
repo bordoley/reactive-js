@@ -12,7 +12,7 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
-  readonly disposable: DisposableLike = createDisposable();
+  private readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
   constructor(readonly scheduler: SchedulerLike) {
