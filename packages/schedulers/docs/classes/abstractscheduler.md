@@ -16,7 +16,6 @@
 
 ### Properties
 
-* [inScheduledContinuation](abstractscheduler.md#inscheduledcontinuation)
 * [now](abstractscheduler.md#abstract-now)
 
 ### Methods
@@ -25,12 +24,6 @@
 * [shouldCallbackYield](abstractscheduler.md#protected-abstract-shouldcallbackyield)
 
 ## Properties
-
-###  inScheduledContinuation
-
-• **inScheduledContinuation**: *boolean* = false
-
-___
 
 ### `Abstract` now
 
