@@ -15,7 +15,6 @@ export const fromArray = <T>(
       const length = values.length;
 
       let error = undefined;
-
       try {
         let index = startIndex;
         while (index < length && !subscriber.isDisposed) {
@@ -66,23 +65,28 @@ export function fromScheduledValues<T>(
     const continuation: SchedulerContinuationLike = (
       shouldYield: () => boolean,
     ) => {
-      while (index < values.length && !subscriber.isDisposed) {
-        const [, value] = values[index];
-        index++;
-        subscriber.next(value);
+      let error = undefined;
+      try {
+        while (index < values.length && !subscriber.isDisposed) {
+          const [, value] = values[index];
+          index++;
+          subscriber.next(value);
 
-        if (index < values.length) {
-          const delay = values[index][0] || 0;
+          if (index < values.length) {
+            const delay = values[index][0] || 0;
 
-          if (delay > 0) {
-            return { continuation, delay };
-          } else if (shouldYield()) {
-            return { continuation, delay: 0 };
+            if (delay > 0) {
+              return { continuation, delay };
+            } else if (shouldYield()) {
+              return { continuation, delay: 0 };
+            }
           }
         }
+      } catch (cause) {
+        error = { cause };
       }
 
-      subscriber.complete();
+      subscriber.complete(error);
       return;
     };
 
