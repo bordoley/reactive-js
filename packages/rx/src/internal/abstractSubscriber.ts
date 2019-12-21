@@ -15,7 +15,9 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   isDisposed = false;
 
   constructor(readonly scheduler: SchedulerLike) {
-    this.disposable.add(() => { this.isDisposed = true });
+    this.disposable.add(() => {
+      this.isDisposed = true;
+    });
   }
 
   get inScheduledContinuation(): boolean {
