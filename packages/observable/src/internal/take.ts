@@ -14,7 +14,7 @@ class TakeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       this.count++;
       if (this.count < this.maxCount) {
         this.delegate.next(data);
-      } else if (this.count === this.maxCount) {
+      } else {
         this.complete();
       }
     }
