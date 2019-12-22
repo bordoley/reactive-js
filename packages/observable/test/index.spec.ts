@@ -107,22 +107,25 @@ test("lift", () => {
 test("combineLatest", () => {
   const result = pipe(
     combineLatest(
-      pipe(
-        generate(
-          i => i + 2,
-          () => 3,
-          2,
+      [
+        pipe(
+          generate(
+            i => i + 2,
+            () => 3,
+            2,
+          ),
+          take(3),
         ),
-        take(3),
-      ),
-      pipe(
-        generate(
-          i => i + 2,
-          () => 2,
-          3,
+        pipe(
+          generate(
+            i => i + 2,
+            () => 2,
+            3,
+          ),
+          take(2),
         ),
-        take(2),
-      ),
+      ],
+      (a, b) => [a, b],
     ),
     toArray(() => createVirtualTimeSchedulerResource(1)),
   );

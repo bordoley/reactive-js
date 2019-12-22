@@ -55,8 +55,11 @@ export class Subscriber<T> implements SubscriberLike<T> {
     continuation: SchedulerContinuationLike,
     delay?: number,
   ): DisposableLike {
-    if(!this.isDisposed) {
-      const schedulerSubscription = this.scheduler.schedule(continuation, delay);
+    if (!this.isDisposed) {
+      const schedulerSubscription = this.scheduler.schedule(
+        continuation,
+        delay,
+      );
       this.add(schedulerSubscription);
       schedulerSubscription.add(() => this.remove(schedulerSubscription));
       return schedulerSubscription;
@@ -71,10 +74,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export class DelegatingSubscriber<
-  TA,
-  TB
-> extends Subscriber<TA> {
+export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   constructor(readonly delegate: SubscriberLike<TB>) {
     super((delegate as any).scheduler || delegate);
 

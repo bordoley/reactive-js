@@ -2,10 +2,7 @@ import { SubscriberLike, DelegatingSubscriber } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
-class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<
-  T,
-  T
-> {
+class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   private prev: [T] | undefined;
 
   constructor(

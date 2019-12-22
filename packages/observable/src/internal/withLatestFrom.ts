@@ -11,8 +11,7 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class WithLatestFromSubscriber<TA, TB, TC>
-  extends DelegatingSubscriber<TA, TC>
+class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
   private otherLatest: [TB] | undefined;
 

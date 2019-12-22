@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { add3Arr, createArray, even } from "./utils";
+import { add3, add3Arr, createArray, even } from "./utils";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
@@ -14,7 +14,6 @@ export const run = (n: number) => {
         combineLatest,
         fromArray,
         keep,
-        map,
       } = require("@reactive-js/observable");
       const { pipe } = require("@reactive-js/pipe");
       const { run } = require("./reactive-js-runner");
@@ -22,8 +21,7 @@ export const run = (n: number) => {
       const arrayObs = fromArray(src);
 
       const observable = pipe(
-        combineLatest(arrayObs, arrayObs, arrayObs),
-        map(add3Arr),
+        combineLatest([arrayObs, arrayObs, arrayObs], add3),
         keep(even),
       );
 

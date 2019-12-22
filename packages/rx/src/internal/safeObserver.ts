@@ -43,7 +43,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 
   onComplete(error?: ErrorLike) {
-    if(this.isCompleted || this.subscriber.isDisposed) {
+    if (this.isCompleted || this.subscriber.isDisposed) {
       return;
     }
 
@@ -55,7 +55,7 @@ class SafeObserver<T> implements ObserverLike<T> {
   onNext(data: T) {
     if (this.isCompleted || this.subscriber.isDisposed) {
       return;
-    }    
+    }
 
     this.nextQueue.push(data);
     this.scheduleDrainQueue();
