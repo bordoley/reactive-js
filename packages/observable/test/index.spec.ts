@@ -33,7 +33,7 @@ import {
   scan,
   share,
   switchAll,
-  take,
+  takeFirst,
   takeLast,
   throws,
   toPromise,
@@ -114,7 +114,7 @@ test("combineLatest", () => {
             () => 3,
             2,
           ),
-          take(3),
+          takeFirst(3),
         ),
         pipe(
           generate(
@@ -122,7 +122,7 @@ test("combineLatest", () => {
             () => 2,
             3,
           ),
-          take(2),
+          takeFirst(2),
         ),
       ],
       (a, b) => [a, b],
@@ -412,7 +412,7 @@ describe("generate", () => {
         i => i + 1,
         () => 1,
       ),
-      take(5),
+      takeFirst(5),
       toArray(),
     );
 
@@ -434,7 +434,7 @@ describe("generate", () => {
     expect(() =>
       pipe(
         generate(generator, () => 1),
-        take(5),
+        takeFirst(5),
         onNext(cb),
         ignoreElements(),
         toArray(),
@@ -457,7 +457,7 @@ describe("generate", () => {
         5,
       ),
       map(x => [scheduler.now, x]),
-      take(5),
+      takeFirst(5),
       observe(observer),
       subscribe(scheduler),
     );
@@ -487,7 +487,7 @@ describe("generate", () => {
     pipe(
       generate(generator, () => 1, 5),
       map(x => [scheduler.now, x]),
-      take(5),
+      takeFirst(5),
       observe(observer),
       subscribe(scheduler),
     );
@@ -546,7 +546,7 @@ test("merge", () => {
           () => 3,
           2,
         ),
-        take(3),
+        takeFirst(3),
       ),
       pipe(
         generate(
@@ -554,7 +554,7 @@ test("merge", () => {
           () => 2,
           3,
         ),
-        take(2),
+        takeFirst(2),
       ),
       throws(cause, 10),
     ),
@@ -742,7 +742,7 @@ describe("throttle", () => {
         () => 0,
         1,
       ),
-      take(100),
+      takeFirst(100),
       throttle(50, ThrottleMode.First),
       toArray(() => createVirtualTimeSchedulerResource(1)),
     );
@@ -757,7 +757,7 @@ describe("throttle", () => {
         () => 0,
         1,
       ),
-      take(200),
+      takeFirst(200),
       throttle(50, ThrottleMode.Last),
       toArray(() => createVirtualTimeSchedulerResource(1)),
     );
@@ -772,7 +772,7 @@ describe("throttle", () => {
         () => 0,
         1,
       ),
-      take(200),
+      takeFirst(200),
       throttle(75, ThrottleMode.Interval),
       toArray(() => createVirtualTimeSchedulerResource(1)),
     );

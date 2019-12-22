@@ -66,5 +66,5 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeLastSubscriber(subscriber, count);
 
-export const takeLast = <T>(count: number): ObservableOperatorLike<T, T> =>
+export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> =>
   lift(operator(count));

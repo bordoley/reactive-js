@@ -29,7 +29,7 @@ export { scan } from "./internal/scan";
 export { share } from "./internal/share";
 export { subscribeOn } from "./internal/subscribeOn";
 export { switchAll } from "./internal/switch";
-export { take } from "./internal/take";
+export { takeFirst } from "./internal/takeFirst";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
 export { ThrottleMode, throttle } from "./internal/throttle";
