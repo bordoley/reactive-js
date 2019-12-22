@@ -34,8 +34,8 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
       try {
         this.delegate.next(next);
-      } catch(cause){
-        this.delegate.complete({cause});
+      } catch (cause) {
+        this.delegate.complete({ cause });
       }
     }
   };

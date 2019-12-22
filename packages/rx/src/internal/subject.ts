@@ -140,7 +140,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     }
   }
 
-  private pushNotification(notif: NotificationKind.Complete, error?: ErrorLike): void;
+  private pushNotification(
+    notif: NotificationKind.Complete,
+    error?: ErrorLike,
+  ): void;
   private pushNotification(notif: NotificationKind.Next, value: T): void;
   private pushNotification(notif: NotificationKind, value: any) {
     this.replayed.push([notif, value] as Notification<T>);
