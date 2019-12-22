@@ -66,18 +66,16 @@ describe("rx", () => {
         }
       }
 
-      const observable = createObservable(
-        observer => {
-          observer.onNext(1);
-        }
-      );
+      const observable = createObservable(observer => {
+        observer.onNext(1);
+      });
 
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new ThrowingSubscriber(scheduler);
       observable.subscribe(subscriber);
       scheduler.run();
-      expect(subscriber.complete).toBeCalledWith({cause});
-    })
+      expect(subscriber.complete).toBeCalledWith({ cause });
+    });
   });
 
   describe("createSubject", () => {

@@ -12,8 +12,7 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class SwitchSubscriber<T>
-  extends DelegatingSubscriber<ObservableLike<T>, T>
+class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
   implements ObserverLike<T> {
   private innerSubscription = disposed;
 
