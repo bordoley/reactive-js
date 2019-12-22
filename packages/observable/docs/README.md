@@ -47,7 +47,7 @@
 * [startWith](README.md#startwith)
 * [subscribeOn](README.md#const-subscribeon)
 * [switchAll](README.md#const-switchall)
-* [take](README.md#const-take)
+* [takeFirst](README.md#const-takefirst)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
 * [throttle](README.md#const-throttle)
@@ -64,7 +64,7 @@
 
 ###  combineLatest
 
-▸ **combineLatest**<**TA**, **TB**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›): *ObservableLike‹[TA, TB]›*
+▸ **combineLatest**<**TA**, **TB**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -72,16 +72,26 @@
 
 ▪ **TB**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
+`a` | TA |
+`b` | TB |
 
-**Returns:** *ObservableLike‹[TA, TB]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›): *ObservableLike‹[TA, TB, TC]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -91,17 +101,27 @@ Name | Type |
 
 ▪ **TC**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
 
-**Returns:** *ObservableLike‹[TA, TB, TC]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›): *ObservableLike‹[TA, TB, TC, TD]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -113,18 +133,28 @@ Name | Type |
 
 ▪ **TD**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›): *ObservableLike‹[TA, TB, TC, TD, TE]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -138,19 +168,29 @@ Name | Type |
 
 ▪ **TE**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
-`obs5` | ObservableLike‹TE› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›): *ObservableLike‹[TA, TB, TC, TD, TE, TF]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -166,20 +206,30 @@ Name | Type |
 
 ▪ **TF**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
-`obs5` | ObservableLike‹TE› |
-`obs6` | ObservableLike‹TF› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -197,21 +247,31 @@ Name | Type |
 
 ▪ **TG**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
-`obs5` | ObservableLike‹TE› |
-`obs6` | ObservableLike‹TF› |
-`obs7` | ObservableLike‹TG› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›, `obs8`: ObservableLike‹TH›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›, ObservableLike‹TH›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -231,22 +291,32 @@ Name | Type |
 
 ▪ **TH**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›, ObservableLike‹TH›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
-`obs5` | ObservableLike‹TE› |
-`obs6` | ObservableLike‹TF› |
-`obs7` | ObservableLike‹TG› |
-`obs8` | ObservableLike‹TH› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+**Returns:** *ObservableLike‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`obs1`: ObservableLike‹TA›, `obs2`: ObservableLike‹TB›, `obs3`: ObservableLike‹TC›, `obs4`: ObservableLike‹TD›, `obs5`: ObservableLike‹TE›, `obs6`: ObservableLike‹TF›, `obs7`: ObservableLike‹TG›, `obs8`: ObservableLike‹TH›, `obs9`: ObservableLike‹TI›): *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›, ObservableLike‹TH›, ObservableLike‹TI›], `selector`: function): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -268,21 +338,31 @@ Name | Type |
 
 ▪ **TI**
 
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[ObservableLike‹TA›, ObservableLike‹TB›, ObservableLike‹TC›, ObservableLike‹TD›, ObservableLike‹TE›, ObservableLike‹TF›, ObservableLike‹TG›, ObservableLike‹TH›, ObservableLike‹TI›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`obs1` | ObservableLike‹TA› |
-`obs2` | ObservableLike‹TB› |
-`obs3` | ObservableLike‹TC› |
-`obs4` | ObservableLike‹TD› |
-`obs5` | ObservableLike‹TE› |
-`obs6` | ObservableLike‹TF› |
-`obs7` | ObservableLike‹TG› |
-`obs8` | ObservableLike‹TH› |
-`obs9` | ObservableLike‹TI› |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
+`i` | TI |
 
-**Returns:** *ObservableLike‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+**Returns:** *ObservableLike‹T›*
 
 ___
 
@@ -909,9 +989,9 @@ ___
 
 ___
 
-### `Const` take
+### `Const` takeFirst
 
-▸ **take**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **takeFirst**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -919,9 +999,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`count` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`count` | number | 1 |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
@@ -937,9 +1017,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`count` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`count` | number | 1 |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 

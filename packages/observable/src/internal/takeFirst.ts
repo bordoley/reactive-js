@@ -26,5 +26,5 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeSubscriber(subscriber, count);
 
-export const take = <T>(count: number): ObservableOperatorLike<T, T> =>
+export const takeFirst = <T>(count = 1): ObservableOperatorLike<T, T> =>
   lift(operator(count));
