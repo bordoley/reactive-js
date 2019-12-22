@@ -33,6 +33,8 @@ class SafeObserver<T> implements ObserverLike<T> {
   constructor(private readonly subscriber: SubscriberLike<T>) {
     this.subscriber.add(() => {
       this.nextQueue.length = 0;
+      this.isCompleted = false;
+      this.error = undefined;
     });
   }
 
@@ -41,18 +43,22 @@ class SafeObserver<T> implements ObserverLike<T> {
   }
 
   onComplete(error?: ErrorLike) {
-    if (!(this.isCompleted && this.subscriber.isDisposed)) {
-      this.isCompleted = true;
-      this.error = error;
-      this.scheduleDrainQueue();
+    if(this.isCompleted || this.subscriber.isDisposed) {
+      return;
     }
+
+    this.isCompleted = true;
+    this.error = error;
+    this.scheduleDrainQueue();
   }
 
   onNext(data: T) {
-    if (!(this.isCompleted && this.subscriber.isDisposed)) {
-      this.nextQueue.push(data);
-      this.scheduleDrainQueue();
-    }
+    if (this.isCompleted || this.subscriber.isDisposed) {
+      return;
+    }    
+
+    this.nextQueue.push(data);
+    this.scheduleDrainQueue();
   }
 
   private scheduleDrainQueue() {
