@@ -12,8 +12,6 @@ import {
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 export interface PrioritySchedulerLike {
-  readonly inScheduledContinuation: boolean;
-
   readonly now: number;
 
   schedule(
@@ -128,10 +126,6 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
   };
 
   constructor(private readonly hostScheduler: SchedulerLike) {}
-
-  get inScheduledContinuation(): boolean {
-    return this.currentTask !== undefined;
-  }
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;

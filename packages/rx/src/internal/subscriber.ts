@@ -21,10 +21,6 @@ export class Subscriber<T> implements SubscriberLike<T> {
     });
   }
 
-  get inScheduledContinuation(): boolean {
-    return this.scheduler.inScheduledContinuation;
-  }
-
   get now() {
     return this.scheduler.now;
   }

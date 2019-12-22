@@ -12,7 +12,6 @@
 
 ### Properties
 
-* [inScheduledContinuation](priorityschedulerlike.md#inscheduledcontinuation)
 * [now](priorityschedulerlike.md#now)
 
 ### Methods
@@ -20,12 +19,6 @@
 * [schedule](priorityschedulerlike.md#schedule)
 
 ## Properties
-
-###  inScheduledContinuation
-
-• **inScheduledContinuation**: *boolean*
-
-___
 
 ###  now
 
