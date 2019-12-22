@@ -1,12 +1,12 @@
 import {
   ErrorLike,
   SubscriberLike,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
+class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly reducer: (acc: TAcc, next: T) => TAcc,

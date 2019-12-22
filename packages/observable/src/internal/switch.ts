@@ -1,7 +1,7 @@
 import { disposed } from "@reactive-js/disposable";
 import {
   subscribe,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
   ObserverLike,
@@ -13,7 +13,7 @@ import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
 class SwitchSubscriber<T>
-  extends AbstractDelegatingSubscriber<ObservableLike<T>, T>
+  extends DelegatingSubscriber<ObservableLike<T>, T>
   implements ObserverLike<T> {
   private innerSubscription = disposed;
 

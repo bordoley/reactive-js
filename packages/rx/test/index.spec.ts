@@ -1,25 +1,13 @@
 import { subscribe, createObservable, createSubject } from "../src/index";
-
 import { createDisposable } from "@reactive-js/disposable";
-
 import { pipe } from "@reactive-js/pipe";
-
-import { SchedulerLike } from "@reactive-js/scheduler";
-
 import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
-
-import { AbstractSubscriber } from "../src/internal/abstractSubscriber";
+import { Subscriber } from "../src/internal/subscriber";
 import { ObserverLike } from "../dist/types";
 
-class MockSubscriber<T> extends AbstractSubscriber<T> {
-  readonly isSubscribed = true;
-
+class MockSubscriber<T> extends Subscriber<T> {
   next = jest.fn();
   complete = jest.fn();
-
-  constructor(scheduler: SchedulerLike) {
-    super(scheduler);
-  }
 }
 
 describe("rx", () => {
@@ -66,6 +54,30 @@ describe("rx", () => {
       subscription.dispose();
       expect(disposable.isDisposed).toBeTruthy();
     });
+
+    test("when subscriber throws", () => {
+      const cause = new Error();
+
+      class ThrowingSubscriber<T> extends Subscriber<T> {
+        complete = jest.fn();
+
+        next(_: T) {
+          throw cause;
+        }
+      }
+
+      const observable = createObservable(
+        observer => {
+          observer.onNext(1);
+        }
+      );
+
+      const scheduler = createVirtualTimeSchedulerResource();
+      const subscriber = new ThrowingSubscriber(scheduler);
+      observable.subscribe(subscriber);
+      scheduler.run();
+      expect(subscriber.complete).toBeCalledWith({cause});
+    })
   });
 
   describe("createSubject", () => {
@@ -77,7 +89,7 @@ describe("rx", () => {
       subject.onNext(3);
       subject.onComplete();
 
-      const scheduler = createVirtualTimeSchedulerResource();
+      const scheduler = createVirtualTimeSchedulerResource(1);
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
 

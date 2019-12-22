@@ -1,6 +1,6 @@
 import {
   subscribe,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
   SubscriberLike,
@@ -12,7 +12,7 @@ import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
 class WithLatestFromSubscriber<TA, TB, TC>
-  extends AbstractDelegatingSubscriber<TA, TC>
+  extends DelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
   private otherLatest: [TB] | undefined;
 

@@ -3,14 +3,14 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
+class MergeSubscriber<T> extends DelegatingSubscriber<
   ObservableLike<T>,
   T
 > {

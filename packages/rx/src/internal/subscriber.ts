@@ -11,11 +11,11 @@ import {
 import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
-export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
+export class Subscriber<T> implements SubscriberLike<T> {
   private readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
-  constructor(readonly scheduler: SchedulerLike) {
+  constructor(private readonly scheduler: SchedulerLike) {
     this.disposable.add(() => {
       this.isDisposed = true;
     });
@@ -37,13 +37,15 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     return this;
   }
 
-  abstract complete(error?: ErrorLike): void;
+  complete(_?: ErrorLike) {
+    this.dispose();
+  }
 
   dispose() {
     this.disposable.dispose();
   }
 
-  abstract next(data: T): void;
+  next(_: T): void {}
 
   remove(
     disposable: DisposableOrTeardown,
@@ -73,10 +75,10 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export abstract class AbstractDelegatingSubscriber<
+export class DelegatingSubscriber<
   TA,
   TB
-> extends AbstractSubscriber<TA> {
+> extends Subscriber<TA> {
   constructor(readonly delegate: SubscriberLike<TB>) {
     super((delegate as any).scheduler || delegate);
 
