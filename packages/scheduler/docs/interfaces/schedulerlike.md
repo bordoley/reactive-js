@@ -14,7 +14,6 @@ An object that schedules units of work on a runloop.
 
 ### Properties
 
-* [inScheduledContinuation](schedulerlike.md#inscheduledcontinuation)
 * [now](schedulerlike.md#now)
 
 ### Methods
@@ -22,14 +21,6 @@ An object that schedules units of work on a runloop.
 * [schedule](schedulerlike.md#schedule)
 
 ## Properties
-
-###  inScheduledContinuation
-
-• **inScheduledContinuation**: *boolean*
-
-Returns true if the scheduler is currently executing a SchedulerContinuation.
-
-___
 
 ###  now
 

@@ -61,9 +61,7 @@ const createCallback = (
   const callback = () => {
     if (!disposable.isDisposed) {
       currentDisposable = disposable;
-      priorityScheduler.inScheduledContinuation = true;
       const result = continuation(shouldYield) || undefined;
-      priorityScheduler.inScheduledContinuation = false;
       currentDisposable = disposed;
 
       if (result !== undefined) {
@@ -84,8 +82,6 @@ const createCallback = (
 };
 
 const priorityScheduler = {
-  inScheduledContinuation: false,
-
   get now(): number {
     return unstable_now();
   },

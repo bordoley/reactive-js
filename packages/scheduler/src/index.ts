@@ -19,11 +19,6 @@ export interface SchedulerContinuationResultLike {
  * An object that schedules units of work on a runloop.
  */
 export interface SchedulerLike {
-  /**
-   * Returns true if the scheduler is currently executing a SchedulerContinuation.
-   */
-  readonly inScheduledContinuation: boolean;
-
   /** The scheduler's current time in ms. */
   readonly now: number;
 

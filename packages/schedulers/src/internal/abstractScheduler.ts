@@ -14,9 +14,6 @@ import {
 
 /** @noInheritDoc */
 export abstract class AbstractScheduler implements SchedulerLike {
-  /** @ignore */
-  inScheduledContinuation = false;
-
   private currentDisposable: DisposableLike = disposed;
   private startTime = 0;
   private shouldYield = () =>
@@ -40,9 +37,7 @@ export abstract class AbstractScheduler implements SchedulerLike {
       if (!disposable.isDisposed) {
         this.startTime = this.now;
         this.currentDisposable = disposable;
-        this.inScheduledContinuation = true;
         const result = continuation(this.shouldYield) || undefined;
-        this.inScheduledContinuation = false;
         this.currentDisposable = disposed;
 
         if (result !== undefined) {
