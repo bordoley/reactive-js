@@ -1,8 +1,8 @@
-import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
+import { SubscriberLike, DelegatingSubscriber } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly predicate: (data: T) => boolean,

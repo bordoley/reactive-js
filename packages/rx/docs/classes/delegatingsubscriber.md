@@ -1,6 +1,6 @@
-[@reactive-js/rx](../README.md) › [AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)
+[@reactive-js/rx](../README.md) › [DelegatingSubscriber](delegatingsubscriber.md)
 
-# Class: AbstractDelegatingSubscriber <**TA, TB**>
+# Class: DelegatingSubscriber <**TA, TB**>
 
 Abstract base class for implementing SubscriberOperatorLikes.
 
@@ -12,9 +12,9 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Hierarchy
 
-* AbstractSubscriber‹TA›
+* Subscriber‹TA›
 
-  ↳ **AbstractDelegatingSubscriber**
+  ↳ **DelegatingSubscriber**
 
 ## Implements
 
@@ -24,21 +24,21 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ### Constructors
 
-* [constructor](abstractdelegatingsubscriber.md#constructor)
+* [constructor](delegatingsubscriber.md#constructor)
 
 ### Properties
 
-* [delegate](abstractdelegatingsubscriber.md#delegate)
+* [delegate](delegatingsubscriber.md#delegate)
 
 ### Methods
 
-* [complete](abstractdelegatingsubscriber.md#complete)
+* [complete](delegatingsubscriber.md#complete)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new AbstractDelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)*
+\+ **new DelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[DelegatingSubscriber](delegatingsubscriber.md)*
 
 *Overrides void*
 
@@ -48,7 +48,7 @@ Name | Type |
 ------ | ------ |
 `delegate` | [SubscriberLike](../interfaces/subscriberlike.md)‹TB› |
 
-**Returns:** *[AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)*
+**Returns:** *[DelegatingSubscriber](delegatingsubscriber.md)*
 
 ## Properties
 

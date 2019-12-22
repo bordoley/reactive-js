@@ -1,8 +1,8 @@
-import { AbstractDelegatingSubscriber, SubscriberLike } from "@reactive-js/rx";
+import { DelegatingSubscriber, SubscriberLike } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class TakeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private count = -1;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {

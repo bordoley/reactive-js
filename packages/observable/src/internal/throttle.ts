@@ -4,7 +4,7 @@ import {
 } from "@reactive-js/disposable";
 import {
   subscribe,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
   ErrorLike,
   ObservableLike,
   SubscriberLike,
@@ -21,7 +21,7 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
-class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
   private readonly notifyNext = () => {

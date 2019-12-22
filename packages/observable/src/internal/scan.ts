@@ -1,8 +1,8 @@
-import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
+import { SubscriberLike, DelegatingSubscriber } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
+class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly scanner: (acc: TAcc, next: T) => TAcc,

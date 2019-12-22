@@ -1,5 +1,5 @@
 import {
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
   ErrorLike,
   SubscriberLike,
 } from "@reactive-js/rx";
@@ -10,7 +10,7 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
   private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
     let error = undefined;

@@ -5,14 +5,14 @@ import {
   ObserverLike,
   SubscriberLike,
   subscribe,
-  AbstractDelegatingSubscriber,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
-class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
+class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
   implements ObserverLike<T> {
   private readonly innerSubscription = createSerialDisposable();
   private count = 1;

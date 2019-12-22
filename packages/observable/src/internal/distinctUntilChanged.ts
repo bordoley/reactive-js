@@ -1,8 +1,8 @@
-import { SubscriberLike, AbstractDelegatingSubscriber } from "@reactive-js/rx";
+import { SubscriberLike, DelegatingSubscriber } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 
-class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
+class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<
   T,
   T
 > {
