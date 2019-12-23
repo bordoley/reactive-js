@@ -1,16 +1,19 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
-import { SchedulerContinuationLike, SchedulerContinuationResultLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
+} from "@reactive-js/scheduler";
 import { defer } from "./defer";
 
 class FromScheduledValuesObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;
   private index = 0;
 
-  constructor(
-    private readonly values: ReadonlyArray<[number, T]>,
-  ) {}
+  constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
-  private loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+  private loop(
+    shouldYield: () => boolean,
+  ): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const values = this.values;
 
@@ -26,7 +29,7 @@ class FromScheduledValuesObservable<T> implements ObservableLike<T> {
         if (delay > 0 || shouldYield()) {
           this.index = index;
           return { continuation: this.continuation, delay };
-        } 
+        }
       }
     }
     return;
@@ -52,7 +55,7 @@ class FromScheduledValuesObservable<T> implements ObservableLike<T> {
 
     const [delay] = this.values[0];
     subscriber.schedule(this.continuation, delay);
-  };
+  }
 }
 
 export function fromScheduledValues<T>(
@@ -62,5 +65,5 @@ export function fromScheduledValues<T>(
 export function fromScheduledValues<T>(
   ...values: Array<[number, T]>
 ): ObservableLike<T> {
- return defer(() => new FromScheduledValuesObservable(values));
+  return defer(() => new FromScheduledValuesObservable(values));
 }

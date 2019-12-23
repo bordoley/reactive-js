@@ -14,7 +14,9 @@ class FromArrayObservable<T> implements ObservableLike<T> {
     private readonly delay: number,
   ) {}
 
-  private loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void  {
+  private loop(
+    shouldYield: () => boolean,
+  ): SchedulerContinuationResultLike | void {
     const values = this.values;
     const delay = this.delay;
     const length = values.length;
