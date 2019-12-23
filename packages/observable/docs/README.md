@@ -18,6 +18,7 @@
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
+* [defer](README.md#const-defer)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#const-empty)
 * [endWith](README.md#endwith)
@@ -401,6 +402,24 @@ Name | Type | Default |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹ObservableLike‹T›, T›*
+
+___
+
+### `Const` defer
+
+▸ **defer**<**T**>(`factory`: function): *ObservableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *ObservableLike‹T›*
+
+**Returns:** *ObservableLike‹T›*
 
 ___
 
