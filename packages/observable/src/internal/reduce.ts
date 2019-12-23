@@ -19,7 +19,7 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     if (!this.isDisposed && error === undefined) {
       try {
         this.delegate.next(this.acc);
-      } catch(cause) {
+      } catch (cause) {
         error = { cause };
       }
     }
