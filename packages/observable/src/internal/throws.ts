@@ -15,10 +15,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
   };
 }
 
-export const throws = <T>(
-  cause: unknown,
-  delay = 0,
-): ObservableLike<T> => {
+export const throws = <T>(cause: unknown, delay = 0): ObservableLike<T> => {
   const error = { cause };
   return new ThrowsObservable(error, delay);
 };
