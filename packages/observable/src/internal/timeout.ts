@@ -7,16 +7,18 @@ import {
   subscribe,
   DelegatingSubscriber,
   ObservableLike,
+  ObserverLike,
+  ErrorLike,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
-import { onComplete } from "./observe";
+import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
 
-class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> implements ObserverLike<unknown>{
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
@@ -31,13 +33,19 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> {
     if (!this.isDisposed) {
       this.durationSubscription.disposable = pipe(
         this.duration,
-        onComplete(error => this.complete(error)),
+        observe(this),
         subscribe(this),
       );
 
       this.delegate.next(data);
     }
   }
+
+  onComplete(error?: ErrorLike){
+    this.complete(error);
+  }
+
+  onNext(_: unknown){}
 }
 
 const operator = <T>(

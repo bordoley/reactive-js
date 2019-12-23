@@ -4,15 +4,16 @@ import {
   ObservableLike,
   subscribe,
   ErrorLike,
+  ObserverLike,
 } from "@reactive-js/rx";
 import { lift } from "./lift";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { createSerialDisposable } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { onComplete } from "./observe";
+import { observe } from "./observe";
 import { empty } from "./fromArray";
 
-class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]> {
+class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]> implements ObserverLike<unknown> {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
 
@@ -58,11 +59,21 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]> {
     } else if (durationSubscription.disposable.isDisposed) {
       durationSubscription.disposable = pipe(
         this.durationSelector(data),
-        onComplete(this.notifyNext),
+        observe(this),
         subscribe(this),
       );
     }
   }
+
+  onComplete(error?: ErrorLike) {
+    if(error !== undefined) {
+      this.complete(error);
+    } else {
+      this.notifyNext();
+    }
+  }
+
+  onNext(_: unknown){}
 }
 
 const operator = <T>(
