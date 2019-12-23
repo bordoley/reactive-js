@@ -1,3 +1,4 @@
+export { buffer } from "./internal/buffer";
 export { lift } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";

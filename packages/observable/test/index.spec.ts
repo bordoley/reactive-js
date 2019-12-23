@@ -11,6 +11,7 @@ import {
 } from "@reactive-js/schedulers";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
+  buffer,
   combineLatest,
   concat,
   concatAll,
@@ -102,6 +103,29 @@ test("lift", () => {
   scheduler.run();
 
   expect(result).toEqual([1, 3]);
+});
+
+test("buffer", () => {
+  const result = pipe(
+    fromScheduledValues(
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
+    ),
+    buffer(4, 3),
+    toArray(createVirtualTimeSchedulerResource),
+  );
+
+  expect(result).toEqual([
+    [1, 2, 3],
+    [4, 1, 2],
+    [3, 4],
+  ]);
 });
 
 test("combineLatest", () => {

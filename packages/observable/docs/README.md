@@ -15,6 +15,7 @@
 
 ### Functions
 
+* [buffer](README.md#const-buffer)
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
@@ -62,6 +63,25 @@
 * [withLatestFrom](README.md#const-withlatestfrom)
 
 ## Functions
+
+### `Const` buffer
+
+▸ **buffer**<**T**>(`duration`: function | number, `maxBufferSize`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`duration` | function &#124; number | - |
+`maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
+
+___
 
 ###  combineLatest
 
@@ -492,7 +512,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: ReadonlyArray‹T›, `delay`: number): *ObservableLike‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -502,7 +522,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`values` | ReadonlyArray‹T› | - |
+`values` | keyof T[] | - |
 `delay` | number | 0 |
 
 **Returns:** *ObservableLike‹T›*
@@ -1089,7 +1109,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`cause`: unknown, `delay?`: undefined | number): *ObservableLike‹T›*
+▸ **throws**<**T**>(`cause`: unknown, `delay`: number): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -1097,10 +1117,10 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`cause` | unknown |
-`delay?` | undefined &#124; number |
+Name | Type | Default |
+------ | ------ | ------ |
+`cause` | unknown | - |
+`delay` | number | 0 |
 
 **Returns:** *ObservableLike‹T›*
 
