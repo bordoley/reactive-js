@@ -12,10 +12,9 @@ class GenerateObservable<T> implements ObservableLike<T> {
     private readonly generator: (acc: T) => T,
     private acc: T,
     private readonly delay = 0,
-  ) {
-  }
+  ) {}
 
-  private continuation: SchedulerContinuationLike = (
+  private readonly continuation: SchedulerContinuationLike = (
     shouldYield: () => boolean,
   ) => {
     const delay = this.delay;
@@ -36,22 +35,20 @@ class GenerateObservable<T> implements ObservableLike<T> {
     return subscriber.isDisposed ? undefined : this.continuationResult;
   };
 
-  private continuationResult: SchedulerContinuationResultLike = {
+  private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this.continuation,
     delay: this.delay,
   };
 
   subscribe(subscriber: SubscriberLike<T>) {
-   this.subscriber = subscriber;
+    this.subscriber = subscriber;
     subscriber.schedule(this.continuation, this.delay);
-  };
+  }
 }
 
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
   delay = 0,
-): ObservableLike<T> => defer(
-  () => new GenerateObservable(generator, initialValue(), delay)
-);
-  
+): ObservableLike<T> =>
+  defer(() => new GenerateObservable(generator, initialValue(), delay));

@@ -1,9 +1,7 @@
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
 
 class DeferObservable<T> implements ObservableLike<T> {
-  constructor(
-    private readonly factory: () => ObservableLike<T>
-  ) {}
+  constructor(private readonly factory: () => ObservableLike<T>) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.factory().subscribe(subscriber);
