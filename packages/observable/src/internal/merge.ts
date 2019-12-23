@@ -1,35 +1,40 @@
-import { DisposableLike, disposed } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
-  ObserverLike,
   SubscriberLike,
-  subscribe,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
-import { observe } from "./observe";
-import { pipe } from "@reactive-js/pipe";
 
-class MergeObserver<T> implements ObserverLike<T> {
-  innerSubscription: DisposableLike = disposed;
+class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
+  private completedCount = 0;
 
-  constructor(
-    private readonly subscriber: SubscriberLike<T>,
-    private readonly totalCount: number,
-    private readonly completedCountRef: [number],
-  ) {}
+  constructor(delegate: SubscriberLike<T>, private readonly totalCount: number) {
+    super(delegate);
+  }
 
-  onComplete(error?: ErrorLike) {
-    this.completedCountRef[0]++;
+  complete(error?: ErrorLike) {
+    this.completedCount++;
 
-    if (error !== undefined || this.completedCountRef[0] === this.totalCount) {
-      this.subscriber.complete(error);
-    } else {
-      this.subscriber.remove(this.innerSubscription);
+    if (error !== undefined || this.completedCount === this.totalCount) {
+      this.delegate.complete(error);
     }
   }
 
-  onNext(data: T) {
-    this.subscriber.next(data);
+  next(data: T) {
+    this.delegate.next(data);
+  }
+}
+
+class MergeObservable<T> implements ObservableLike<T> {
+  constructor(private readonly observables: readonly ObservableLike<T>[]) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const mergeSubscriber = new MergeSubscriber(subscriber, this.observables.length);
+    const observables = this.observables;
+
+    for (const observable of observables) {
+      observable.subscribe(mergeSubscriber);
+    }
   }
 }
 
@@ -41,25 +46,5 @@ export function merge<T>(
 export function merge<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  const subscribeImpl = (subscriber: SubscriberLike<T>) => {
-    const completedCountRef: [number] = [0];
-
-    for (const observable of observables) {
-      const observer = new MergeObserver(
-        subscriber,
-        observables.length,
-        completedCountRef,
-      );
-
-      observer.innerSubscription = pipe(
-        observable,
-        observe(observer),
-        subscribe(subscriber),
-      );
-
-      subscriber.add(observer.innerSubscription);
-    }
-  };
-
-  return { subscribe: subscribeImpl };
+  return new MergeObservable(observables);
 }
