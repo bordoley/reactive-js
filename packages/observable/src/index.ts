@@ -9,11 +9,7 @@ export {
   SubscriberOperatorLike,
 } from "./internal/interfaces";
 export { toArray, toIterable, toValue } from "./internal/iterate";
-export {
-  empty,
-  fromArray,
-  ofValue,
-} from "./internal/fromArray";
+export { empty, fromArray, ofValue } from "./internal/fromArray";
 export { fromScheduledValues } from "./internal/fromScheduledValues";
 export { fromIterable } from "./internal/fromIterable";
 export { fromPromiseFactory, toPromise } from "./internal/promise";

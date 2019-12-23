@@ -8,7 +8,10 @@ import {
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private completedCount = 0;
 
-  constructor(delegate: SubscriberLike<T>, private readonly totalCount: number) {
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly totalCount: number,
+  ) {
     super(delegate);
   }
 
@@ -29,7 +32,10 @@ class MergeObservable<T> implements ObservableLike<T> {
   constructor(private readonly observables: readonly ObservableLike<T>[]) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const mergeSubscriber = new MergeSubscriber(subscriber, this.observables.length);
+    const mergeSubscriber = new MergeSubscriber(
+      subscriber,
+      this.observables.length,
+    );
     const observables = this.observables;
 
     for (const observable of observables) {

@@ -1,6 +1,29 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import { ObservableLike, SubscriberLike } from "@reactive-js/rx";
 
+class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
+  implements ObservableLike<T> {
+  constructor(
+    private readonly resourceFactory: () => TResource,
+    private readonly observableFactory: (
+      resource: TResource,
+    ) => ObservableLike<T>,
+  ) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const resources = this.resourceFactory();
+
+    // FIXME: Playing a little loose with the typing here.
+    if (Array.isArray(resources)) {
+      subscriber.add.apply(subscriber, resources as any);
+    } else {
+      subscriber.add(resources as DisposableLike);
+    }
+
+    this.observableFactory(resources).subscribe(subscriber);
+  }
+}
+
 export function using<TResource extends DisposableLike, T>(
   resourceFactory: () => TResource,
   observableFactory: (resource: TResource) => ObservableLike<T>,
@@ -59,23 +82,9 @@ export function using<
     resource: [TResource1, TResource2, TResource3, TResource4, TResource5],
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
-
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(
   resourceFactory: () => TResource,
   observableFactory: (resource: TResource) => ObservableLike<T>,
 ): ObservableLike<T> {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
-    const resources = resourceFactory();
-
-    // FIXME: Playing a little loose with the typing here.
-    if (Array.isArray(resources)) {
-      subscriber.add.apply(subscriber, resources as any);
-    } else {
-      subscriber.add(resources as DisposableLike);
-    }
-
-    observableFactory(resources).subscribe(subscriber);
-  };
-
-  return { subscribe };
+  return new UsingObservable(resourceFactory, observableFactory);
 }
