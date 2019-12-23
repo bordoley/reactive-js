@@ -82,7 +82,7 @@ const iteratorDone: IteratorReturnResult<any> = {
   value: undefined,
 };
 
-class ObservableIteratorImpl<T> implements Iterator<T> {
+class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
   private value: [T] | undefined = undefined;
   private error: ErrorLike | undefined = undefined;
 
@@ -90,21 +90,25 @@ class ObservableIteratorImpl<T> implements Iterator<T> {
     private readonly scheduler: VirtualTimeSchedulerResourceLike,
     observable: ObservableLike<T>,
   ) {
-    const observer: ObserverLike<T> = {
-      onNext: (value: T) => {
-        this.value = [value];
-      },
-      onComplete: e => {
-        this.error = e;
-      },
-    };
     const subscription = pipe(
       observable,
-      observe(observer),
+      observe(this),
       subscribe(scheduler),
     );
     scheduler.add(subscription);
   }
+
+  onNext(value: T) {
+    if (this.value === undefined) {
+      this.value = [value];
+    } else {
+      this.value[0] = value;
+    }
+  }
+
+  onComplete(error?: ErrorLike) {
+    this.error = error;
+  };
 
   next(): IteratorResult<T> {
     throwIfDisposed(this.scheduler);
@@ -121,7 +125,6 @@ class ObservableIteratorImpl<T> implements Iterator<T> {
     } while (this.value === undefined && !done);
 
     if (done) {
-      // Cleanup
       this.scheduler.dispose();
       return iteratorDone;
     } else {
@@ -135,7 +138,7 @@ class ObservableIteratorImpl<T> implements Iterator<T> {
     return iteratorDone;
   }
 
-  throw(e?: any): IteratorResult<T> {
+  throw(e?: unknown): IteratorResult<T> {
     this.scheduler.dispose;
     if (e !== undefined) {
       throw e;

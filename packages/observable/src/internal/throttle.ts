@@ -8,11 +8,12 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
+  ObserverLike,
 } from "@reactive-js/rx";
 import { empty } from "./fromArray";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
-import { onComplete } from "./observe";
+import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 
 export const enum ThrottleMode {
@@ -21,10 +22,21 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
-class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
+class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
-  private readonly notifyNext = () => {
+
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly durationSelector: (next: T) => ObservableLike<unknown>,
+    private readonly mode: ThrottleMode,
+  ) {
+    super(delegate);
+
+    this.add(this.durationSubscription);
+  }
+
+  private notifyNext() {
     const value = this.value;
     if (value !== undefined) {
       this.value = undefined;
@@ -40,20 +52,10 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   };
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    private readonly durationSelector: (next: T) => ObservableLike<unknown>,
-    private readonly mode: ThrottleMode,
-  ) {
-    super(delegate);
-
-    this.add(this.durationSubscription);
-  }
-
   private setupDurationSubscription(next: T) {
     this.durationSubscription.disposable = pipe(
       this.durationSelector(next),
-      onComplete(this.notifyNext),
+      observe(this),
       subscribe(this),
     );
   }
@@ -87,6 +89,16 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> {
       }
     }
   }
+
+  onComplete(error?: ErrorLike) {
+    if (error !== undefined) {
+      this.complete(error);
+    } else {
+      this.notifyNext();
+    }
+  }
+
+  onNext(_: unknown) {};
 }
 
 const throttleOperator = <T>(
