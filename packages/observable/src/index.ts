@@ -2,6 +2,7 @@ export { lift } from "./internal/lift";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
 export { combineLatest } from "./internal/combineLatest";
 export { concat, startWith, endWith } from "./internal/concat";
+export { defer } from "./internal/defer";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export {
   ObservableOperatorLike,
