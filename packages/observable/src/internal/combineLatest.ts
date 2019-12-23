@@ -40,7 +40,7 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
     }
 
     if (ctx.producedCount === ctx.totalCount) {
-      const result = this.ctx.selector(...latest);
+      const result = ctx.selector(...latest);
       this.delegate.next(result);
     }
   }
