@@ -1,51 +1,47 @@
 import {
   ErrorLike,
   ObservableLike,
-  ObserverLike,
   SubscriberLike,
-  subscribe,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
-import { DisposableLike, disposed } from "@reactive-js/disposable";
-import { observe } from "./observe";
-import { pipe } from "@reactive-js/pipe";
 import { defer } from "./defer";
 
-class CombineLatestObserver<T> implements ObserverLike<any> {
-  innerSubscription: DisposableLike = disposed;
+class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
   private hasProducedValue = false;
 
   constructor(
+    delegate: SubscriberLike<T>,
     private readonly ctx: CombineLatestObservable<T>,
     private readonly index: number,
-  ) {}
+  ) {
+    super(delegate);
+  }
 
-  onComplete(error?: ErrorLike) {
+  complete(error?: ErrorLike) {
     const ctx = this.ctx;
-    const subscriber = ctx.subscriber as SubscriberLike<T>;
 
     ctx.completedCount++;
 
     if (error !== undefined || ctx.completedCount === ctx.totalCount) {
-      subscriber.complete(error);
+      this.delegate.complete(error);
     } else {
-      subscriber.remove(this.innerSubscription);
+      this.dispose();
     }
   }
 
-  onNext(data: any) {
+  next(data: unknown) {
     const ctx = this.ctx;
+    const latest = ctx.latest;
+    latest[this.index] = data;
 
     if (!this.hasProducedValue) {
       ctx.producedCount++;
       this.hasProducedValue = true;
     }
-    
-    const latest = ctx.latest;
-    latest[this.index] = data;
 
     if (ctx.producedCount === ctx.totalCount) {
       const result = this.ctx.selector(...latest);
-      (ctx.subscriber as SubscriberLike<T>).next(result);
+      this.delegate.next(result);
     }
   }
 }
@@ -53,7 +49,6 @@ class CombineLatestObserver<T> implements ObserverLike<any> {
 class CombineLatestObservable<T> implements ObservableLike<T> {
   completedCount = 0;
   producedCount = 0;
-  subscriber: SubscriberLike<T> | undefined;
 
   readonly latest: Array<unknown>;
   readonly totalCount: number;
@@ -67,26 +62,18 @@ class CombineLatestObservable<T> implements ObservableLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-
     const observables = this.observables;
-    const totalCount = observables.length;
+    const totalCount = this.totalCount;
 
     for (let index = 0; index < totalCount; index++) {
-      const observer = new CombineLatestObserver(
+      const innerSubscriber = new CombineLatestSubscriber(
+        subscriber,
         this,
         index,
       );
-
-      observer.innerSubscription = pipe(
-        observables[index],
-        observe(observer),
-        subscribe(subscriber),
-      );
-
-      subscriber.add(observer.innerSubscription);
+      observables[index].subscribe(innerSubscriber);
     }
-  };
+  }
 }
 
 export function combineLatest<TA, TB, T>(
