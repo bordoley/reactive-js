@@ -32,11 +32,11 @@ class GenerateObservable<T> implements ObservableLike<T> {
   ) => {
     const subscriber = this.subscriber as SubscriberLike<T>;
     try {
-     this.loop(shouldYield)
+      this.loop(shouldYield);
     } catch (cause) {
       subscriber.complete({ cause });
     }
-   
+
     return subscriber.isDisposed ? undefined : this.continuationResult;
   };
 
