@@ -3,48 +3,67 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
+import { defer } from "./defer";
 
-export const fromArray = <T>(
-  values: ReadonlyArray<T>,
-  delay = 0,
-): ObservableLike<T> => {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
-    let startIndex = 0;
+class FromArrayObservable<T> implements ObservableLike<T> {
+  private subscriber: SubscriberLike<T> | undefined;
+  private index = 0;
 
-    const continuation: SchedulerContinuationLike = shouldYield => {
-      const length = values.length;
+  constructor(
+    private readonly values: readonly T[],
+    private readonly delay: number,
+  ) {}
 
-      let error = undefined;
-      try {
-        let index = startIndex;
-        while (index < length && !subscriber.isDisposed) {
-          const value = values[index];
-          index++;
+  private loop(shouldYield: () => boolean) {
+    const values = this.values;
+    const delay = this.delay;
+    const length = values.length;
+    const subscriber = this.subscriber as SubscriberLike<T>;
 
-          subscriber.next(value);
+    for (let index = this.index; index < length && !subscriber.isDisposed; ) {
+      const value = values[index];
+      index++;
 
-          if (shouldYield() || delay > 0) {
-            startIndex = index;
-            return continuationResult;
-          }
-        }
-      } catch (cause) {
-        error = { cause };
+      subscriber.next(value);
+
+      if (shouldYield() || delay > 0) {
+        this.index = index;
+        return this.continuationResult;
       }
+    }
+    return;
+  }
 
-      subscriber.complete(error);
-      return;
-    };
-    const continuationResult: SchedulerContinuationResultLike = {
-      continuation,
-      delay,
-    };
+  private readonly continuation: SchedulerContinuationLike = shouldYield => {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
 
-    subscriber.schedule(continuation, delay);
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
   };
 
-  return { subscribe };
-};
+  private readonly continuationResult: SchedulerContinuationResultLike = {
+    continuation: this.continuation,
+    delay: this.delay,
+  };
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+    subscriber.schedule(this.continuation, this.delay);
+  }
+}
+
+export const fromArray = <T>(
+  values: readonly T[],
+  delay = 0,
+): ObservableLike<T> => defer(() => new FromArrayObservable(values, delay));
 
 export const empty = <T>(delay?: number): ObservableLike<T> =>
   fromArray([], delay);
