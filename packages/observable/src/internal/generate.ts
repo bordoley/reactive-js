@@ -14,24 +14,29 @@ class GenerateObservable<T> implements ObservableLike<T> {
     private readonly delay = 0,
   ) {}
 
-  private readonly continuation: SchedulerContinuationLike = (
-    shouldYield: () => boolean,
-  ) => {
+  private loop(shouldYield: () => boolean) {
     const delay = this.delay;
     const generator = this.generator;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
     let acc = this.acc;
+    do {
+      subscriber.next(acc);
+      acc = generator(acc);
+    } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
+    this.acc = acc;
+  }
+
+  private readonly continuation: SchedulerContinuationLike = (
+    shouldYield: () => boolean,
+  ) => {
+    const subscriber = this.subscriber as SubscriberLike<T>;
     try {
-      do {
-        subscriber.next(acc);
-        acc = generator(acc);
-      } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
+     this.loop(shouldYield)
     } catch (cause) {
       subscriber.complete({ cause });
     }
-    this.acc = acc;
-
+   
     return subscriber.isDisposed ? undefined : this.continuationResult;
   };
 
