@@ -3,49 +3,71 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
+import { defer } from "./defer";
 
-export const fromIterable = <T>(
-  iterable: Iterable<T>,
-  delay = 0,
-): ObservableLike<T> => {
-  const subscribe = (subscriber: SubscriberLike<T>) => {
-    const iterator: Iterator<T> = iterable[Symbol.iterator]();
+class FromIteratorObservable<T> implements ObservableLike<T> {
+  private subscriber: SubscriberLike<T> | undefined;
 
+  constructor(
+    private readonly iterator: Iterator<T>,
+    private readonly delay: number,
+  ) {}
+
+  private loop(
+    shouldYield: () => boolean,
+  ): SchedulerContinuationResultLike | void {
+    const iterator = this.iterator;
+    const subscriber = this.subscriber as SubscriberLike<T>;
+    const delay = this.delay;
+
+    for (
+      let next = iterator.next();
+      !next.done && !subscriber.isDisposed;
+      next = iterator.next()
+    ) {
+      subscriber.next(next.value);
+
+      if (shouldYield() || delay !== 0) {
+        return this.continuationResult;
+      }
+    }
+  }
+
+  private readonly continuation: SchedulerContinuationLike = shouldYield => {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  };
+
+  private readonly continuationResult: SchedulerContinuationResultLike = {
+    continuation: this.continuation,
+    delay: this.delay,
+  };
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
     subscriber.add(() => {
+      const iterator = this.iterator;
       if (iterator.return !== undefined) {
         iterator.return();
       }
     });
 
-    const continuation: SchedulerContinuationLike = shouldYield => {
-      let error = undefined;
+    subscriber.schedule(this.continuation, this.delay);
+  }
+}
 
-      try {
-        for (
-          let next = iterator.next();
-          !next.done && !subscriber.isDisposed;
-          next = iterator.next()
-        ) {
-          subscriber.next(next.value);
-
-          if (shouldYield() || delay !== 0) {
-            return continuationResult;
-          }
-        }
-      } catch (cause) {
-        error = { cause };
-      }
-
-      subscriber.complete(error);
-      return;
-    };
-    const continuationResult: SchedulerContinuationResultLike = {
-      continuation,
-      delay,
-    };
-
-    subscriber.schedule(continuation, delay);
-  };
-
-  return { subscribe };
-};
+export const fromIterable = <T>(
+  iterable: Iterable<T>,
+  delay = 0,
+): ObservableLike<T> =>
+  defer(() => new FromIteratorObservable(iterable[Symbol.iterator](), delay));
