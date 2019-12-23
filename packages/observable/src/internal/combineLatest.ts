@@ -8,48 +8,85 @@ import {
 import { DisposableLike, disposed } from "@reactive-js/disposable";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
-
-interface CombineLatestContext {
-  completedCount: number;
-  producedCount: number;
-}
+import { defer } from "./defer";
 
 class CombineLatestObserver<T> implements ObserverLike<any> {
   innerSubscription: DisposableLike = disposed;
   private hasProducedValue = false;
 
   constructor(
-    private readonly subscriber: SubscriberLike<T>,
-    private readonly totalCount: number,
-    private readonly latest: any[],
-    private readonly ctx: CombineLatestContext,
+    private readonly ctx: CombineLatestObservable<T>,
     private readonly index: number,
-    private readonly selector: (...values: unknown[]) => T,
   ) {}
 
   onComplete(error?: ErrorLike) {
-    this.ctx.completedCount++;
+    const ctx = this.ctx;
+    const subscriber = ctx.subscriber as SubscriberLike<T>;
 
-    if (error !== undefined || this.ctx.completedCount === this.totalCount) {
-      this.subscriber.complete(error);
+    ctx.completedCount++;
+
+    if (error !== undefined || ctx.completedCount === ctx.totalCount) {
+      subscriber.complete(error);
     } else {
-      this.subscriber.remove(this.innerSubscription);
+      subscriber.remove(this.innerSubscription);
     }
   }
 
   onNext(data: any) {
+    const ctx = this.ctx;
+
     if (!this.hasProducedValue) {
-      this.ctx.producedCount++;
+      ctx.producedCount++;
+      this.hasProducedValue = true;
     }
-    this.hasProducedValue = true;
+    
+    const latest = ctx.latest;
+    latest[this.index] = data;
 
-    this.latest[this.index] = data;
-
-    if (this.ctx.producedCount === this.totalCount) {
-      const latest = this.selector(...this.latest);
-      this.subscriber.next(latest);
+    if (ctx.producedCount === ctx.totalCount) {
+      const result = this.ctx.selector(...latest);
+      (ctx.subscriber as SubscriberLike<T>).next(result);
     }
   }
+}
+
+class CombineLatestObservable<T> implements ObservableLike<T> {
+  completedCount = 0;
+  producedCount = 0;
+  subscriber: SubscriberLike<T> | undefined;
+
+  readonly latest: Array<unknown>;
+  readonly totalCount: number;
+
+  constructor(
+    private readonly observables: readonly ObservableLike<any>[],
+    readonly selector: (...values: unknown[]) => T,
+  ) {
+    this.totalCount = observables.length;
+    this.latest = new Array(this.totalCount);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+
+    const observables = this.observables;
+    const totalCount = observables.length;
+
+    for (let index = 0; index < totalCount; index++) {
+      const observer = new CombineLatestObserver(
+        this,
+        index,
+      );
+
+      observer.innerSubscription = pipe(
+        observables[index],
+        observe(observer),
+        subscribe(subscriber),
+      );
+
+      subscriber.add(observer.innerSubscription);
+    }
+  };
 }
 
 export function combineLatest<TA, TB, T>(
@@ -143,33 +180,5 @@ export function combineLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  const subscribeImpl = (subscriber: SubscriberLike<T>) => {
-    const ctx: CombineLatestContext = {
-      completedCount: 0,
-      producedCount: 0,
-    };
-
-    const latest = new Array(observables.length);
-
-    for (let index = 0; index < observables.length; index++) {
-      const observer = new CombineLatestObserver(
-        subscriber,
-        observables.length,
-        latest,
-        ctx,
-        index,
-        selector,
-      );
-
-      observer.innerSubscription = pipe(
-        observables[index],
-        observe(observer),
-        subscribe(subscriber),
-      );
-
-      subscriber.add(observer.innerSubscription);
-    }
-  };
-
-  return { subscribe: subscribeImpl };
+  return defer(() => new CombineLatestObservable(observables, selector));
 }
