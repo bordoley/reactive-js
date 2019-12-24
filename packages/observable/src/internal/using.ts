@@ -15,6 +15,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
 
     // FIXME: Playing a little loose with the typing here.
     if (Array.isArray(resources)) {
+      // eslint-disable-next-line prefer-spread
       subscriber.add.apply(subscriber, resources as any);
     } else {
       subscriber.add(resources as DisposableLike);

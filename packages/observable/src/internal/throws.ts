@@ -6,13 +6,13 @@ class ThrowsObservable<T> implements ObservableLike<T> {
     private readonly delay: number,
   ) {}
 
-  subscribe = (subscriber: SubscriberLike<T>) => {
+  subscribe(subscriber: SubscriberLike<T>) {
     const continuation = (_: () => boolean) => {
       subscriber.complete(this.error);
     };
 
     subscriber.schedule(continuation, this.delay);
-  };
+  }
 }
 
 export const throws = <T>(cause: unknown, delay = 0): ObservableLike<T> => {

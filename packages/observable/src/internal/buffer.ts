@@ -13,7 +13,8 @@ import { pipe } from "@reactive-js/pipe";
 import { observe } from "./observe";
 import { empty } from "./fromArray";
 
-class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]> implements ObserverLike<unknown> {
+class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
+  implements ObserverLike<unknown> {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
 
@@ -66,14 +67,14 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]> implemen
   }
 
   onComplete(error?: ErrorLike) {
-    if(error !== undefined) {
+    if (error !== undefined) {
       this.complete(error);
     } else {
       this.notifyNext();
     }
   }
 
-  onNext(_: unknown){}
+  onNext(_: unknown) {}
 }
 
 const operator = <T>(

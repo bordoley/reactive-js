@@ -73,8 +73,7 @@ class OnErrorObserver<T> implements ObserverLike<T> {
 
 export const onError = <T>(
   onError: (err: unknown) => void,
-): ObservableOperatorLike<T, T> =>
-  observe(new OnErrorObserver(onError));
+): ObservableOperatorLike<T, T> => observe(new OnErrorObserver(onError));
 
 export const onNext = <T>(
   onNext: (next: T) => void,

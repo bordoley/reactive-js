@@ -859,6 +859,7 @@ describe("toIterable", () => {
     const iterable = pipe(throws(error), toIterable());
 
     expect(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
       for (const _ of iterable) {
       }
     }).toThrowError(error);
@@ -878,7 +879,7 @@ describe("toIterable", () => {
       Symbol.iterator
     ]() as any).throw();
 
-    expect((result as any).done).toBeTruthy();
+    expect(result.done).toBeTruthy();
   });
 
   test("calling return, returns done", () => {
@@ -886,7 +887,7 @@ describe("toIterable", () => {
       Symbol.iterator
     ]() as any).return();
 
-    expect((result as any).done).toBeTruthy();
+    expect(result.done).toBeTruthy();
   });
 });
 

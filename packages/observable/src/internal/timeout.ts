@@ -18,7 +18,8 @@ import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
 
-class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> implements ObserverLike<unknown>{
+class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
+  implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
@@ -41,11 +42,11 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T> implements Observe
     }
   }
 
-  onComplete(error?: ErrorLike){
+  onComplete(error?: ErrorLike) {
     this.complete(error);
   }
 
-  onNext(_: unknown){}
+  onNext(_: unknown) {}
 }
 
 const operator = <T>(
