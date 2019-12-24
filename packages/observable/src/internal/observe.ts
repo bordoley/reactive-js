@@ -58,18 +58,23 @@ export const onComplete = <T>(
     onComplete,
   });
 
+class OnErrorObserver<T> implements ObserverLike<T> {
+  constructor(private readonly onError: (err: unknown) => void) {}
+
+  onComplete(error?: ErrorLike) {
+    if (error !== undefined) {
+      const { cause } = error;
+      this.onError(cause);
+    }
+  }
+
+  onNext(_: T) {}
+}
+
 export const onError = <T>(
   onError: (err: unknown) => void,
 ): ObservableOperatorLike<T, T> =>
-  observe({
-    onNext: ignore,
-    onComplete: (error?: ErrorLike) => {
-      if (error !== undefined) {
-        const { cause } = error;
-        onError(cause);
-      }
-    },
-  });
+  observe(new OnErrorObserver(onError));
 
 export const onNext = <T>(
   onNext: (next: T) => void,
