@@ -10,44 +10,66 @@ external create: ([@bs.uncurry] (Observer.t('a) => Disposable.t)) => t('a) =
   "createObservable";
 
 [@bs.module "@reactive-js/observable"]
-external combineLatest2: (t('a), t('b)) => t(('a, 'b)) = "combineLatest";
+external combineLatest2:
+  ((t('a), t('b)), [@bs.uncurry] (('a, 'b) => 'c)) => t('c) =
+  "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
-external combineLatest3: (t('a), t('b), t('c)) => t(('a, 'b, 'c)) =
+external combineLatest3:
+  ((t('a), t('b), t('c)), [@bs.uncurry] (('a, 'b, 'c) => 'd)) => t('d) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
 external combineLatest4:
-  (t('a), t('b), t('c), t('d)) => t(('a, 'b, 'c, 'd)) =
+  (
+    (t('a), t('b), t('c), t('d)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd) => 'e)
+  ) =>
+  t('e) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
 external combineLatest5:
-  (t('a), t('b), t('c), t('d), t('e)) => t(('a, 'b, 'c, 'd, 'e)) =
+  (
+    (t('a), t('b), t('c), t('d), t('e)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd, 'e) => 'f)
+  ) =>
+  t('f) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
 external combineLatest6:
-  (t('a), t('b), t('c), t('d), t('e), t('f)) =>
-  t(('a, 'b, 'c, 'd, 'e, 'f)) =
+  (
+    (t('a), t('b), t('c), t('d), t('e), t('f)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd, 'e, 'f) => 'g)
+  ) =>
+  t('g) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
 external combineLatest7:
-  (t('a), t('b), t('c), t('d), t('e), t('f), t('g)) =>
-  t(('a, 'b, 'c, 'd, 'e, 'f, 'g)) =
+  (
+    (t('a), t('b), t('c), t('d), t('e), t('f), t('g)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd, 'e, 'f, 'g) => 'h)
+  ) =>
+  t('h) =
   "combineLatest";
-
 [@bs.module "@reactive-js/observable"]
 external combineLatest8:
-  (t('a), t('b), t('c), t('d), t('e), t('f), t('g), t('h)) =>
-  t(('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h)) =
+  (
+    (t('a), t('b), t('c), t('d), t('e), t('f), t('g), t('h)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h) => 'i)
+  ) =>
+  t('i) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"]
 external combineLatest9:
-  (t('a), t('b), t('c), t('d), t('e), t('f), t('g), t('h), t('i)) =>
-  t(('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)) =
+  (
+    (t('a), t('b), t('c), t('d), t('e), t('f), t('g), t('h), t('i)),
+    [@bs.uncurry] (('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i) => 'j)
+  ) =>
+  t('j) =
   "combineLatest";
 
 [@bs.module "@reactive-js/observable"] [@bs.variadic]
@@ -82,10 +104,17 @@ external never: unit => t('a) = "never";
 external ofValue: 'a => t('a) = "ofValue";
 
 [@bs.module "@reactive-js/rx"]
-external subscribe: Scheduler.t => Operator.t(t('a), Disposable.t) = "subscribe";
+external subscribe: Scheduler.t => Operator.t(t('a), Disposable.t) =
+  "subscribe";
 
 [@bs.module "@reactive-js/observable"]
 external throws: (Error.JsError.t, ~delay: int=?, unit) => t('a) = "throws";
+
+[@bs.module "@reactive-js/observable"]
+external buffer:
+  (~duration: int, ~maxBufferSize: int=?, unit) =>
+  ObservableOperator.t('a, array('a)) =
+  "buffer";
 
 [@bs.module "@reactive-js/observable"]
 external concatAll:
@@ -209,7 +238,8 @@ external throttle:
                        | [@bs.as 1] `First
                        | [@bs.as 2] `Last
                        | [@bs.as 2] `Interval
-                     ] = ?,
+                     ]
+                       =?,
     unit
   ) =>
   ObservableOperator.t('a, 'a) =
@@ -223,7 +253,8 @@ external throttleTime:
                        | [@bs.as 1] `First
                        | [@bs.as 2] `Last
                        | [@bs.as 2] `Interval
-                     ] = ?,
+                     ]
+                       =?,
     unit
   ) =>
   ObservableOperator.t('a, 'a) =
