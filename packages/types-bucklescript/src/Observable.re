@@ -76,6 +76,9 @@ external combineLatest9:
 external concat: (t('a), t('a), array(t('a))) => t('a) = "concat";
 
 [@bs.module "@reactive-js/observable"]
+external defer: ([@bs.uncurry] (unit => t('a))) => t('a) = "defer";
+
+[@bs.module "@reactive-js/observable"]
 external empty: (~delay: int=?, unit) => t('a) = "empty";
 
 [@bs.module "@reactive-js/observable"]
