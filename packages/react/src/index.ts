@@ -1,10 +1,25 @@
 import { AsyncIteratorLike } from "@reactive-js/ix";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { subscribe, ErrorLike, ObservableLike } from "@reactive-js/rx";
+import { subscribe, ErrorLike, ObservableLike, ObserverLike } from "@reactive-js/rx";
 import { observe, throttle, subscribeOn } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
+
+class UseObservableObserver<T> implements ObserverLike<T> {
+  constructor(
+    private readonly updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
+    private readonly updateError: React.Dispatch<React.SetStateAction<ErrorLike | undefined>>,
+  ) {}
+
+  onComplete(error?: ErrorLike) {
+    this.updateError(_ => error);
+  }
+
+  onNext(data: T) {
+    this.updateState(_ => data);
+  }
+}
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -16,10 +31,7 @@ const subscribeObservable = <T>(
     observable,
     throttle(8),
     subscribeOn(scheduler),
-    observe({
-      onNext: (data: T) => updateState(_ => data),
-      onComplete: (error?: ErrorLike) => updateError(_ => error),
-    }),
+    observe(new UseObservableObserver(updateState, updateError)),
     subscribe(normalPriority),
   );
 
