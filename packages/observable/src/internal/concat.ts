@@ -1,58 +1,49 @@
-import { disposed } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  subscribe,
-  ObserverLike,
+  DelegatingSubscriber,
 } from "@reactive-js/rx";
 import { fromArray } from "./fromArray";
-import { observe } from "./observe";
-import { pipe } from "@reactive-js/pipe";
 import { ObservableOperatorLike } from "./interfaces";
-import { defer } from "./defer";
 
-class ConcatObservable<T> implements ObservableLike<T>, ObserverLike<T> {
-  private subscriber: SubscriberLike<T> | undefined;
-  private innerSubscription = disposed;
+class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private index = 0;
 
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly observables: readonly ObservableLike<T>[],
+  ) {
+    super(delegate);
+  }
+
+  complete(error?: ErrorLike) {
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      const head = this.observables[this.index];
+      const hasNextObservable = head !== undefined;
+
+      if (hasNextObservable) {
+        this.index++;
+        head.subscribe(this);
+      } else {
+        this.delegate.complete();
+      }
+    }
+  }
+
+  next(data: T) {
+    this.delegate.next(data);
+  }
+}
+
+class ConcatObservable<T> implements ObservableLike<T> {
   constructor(private readonly observables: readonly ObservableLike<T>[]) {}
 
-  onNext(v: T) {
-    (this.subscriber as SubscriberLike<T>).next(v);
-  }
-
-  onComplete(error?: ErrorLike) {
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    subscriber.remove(this.innerSubscription);
-
-    if (error !== undefined) {
-      subscriber.complete(error);
-    } else if (!this.subscribeNext()) {
-      subscriber.complete();
-    }
-  }
-
-  subscribeNext() {
-    const head = this.observables[this.index];
-    const hasNextObservable = head !== undefined;
-
-    if (hasNextObservable) {
-      this.index++;
-
-      const subscriber = this.subscriber as SubscriberLike<T>;
-      this.innerSubscription = pipe(head, observe(this), subscribe(subscriber));
-
-      subscriber.add(this.innerSubscription);
-    }
-
-    return hasNextObservable;
-  }
-
   subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    this.subscribeNext();
+    const concatSubscriber = new ConcatSubscriber(subscriber, this.observables);
+    concatSubscriber.complete();
   }
 }
 
@@ -64,7 +55,7 @@ export function concat<T>(
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  return defer(() => new ConcatObservable(observables));
+  return new ConcatObservable(observables);
 }
 
 export function startWith<T>(
