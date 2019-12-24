@@ -22,7 +22,8 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
-class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> implements ObserverLike<unknown> {
+class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
+  implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: [T] | undefined = undefined;
 
@@ -50,7 +51,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> implements Observ
         this.delegate.complete({ cause });
       }
     }
-  };
+  }
 
   private setupDurationSubscription(next: T) {
     this.durationSubscription.disposable = pipe(
@@ -98,7 +99,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T> implements Observ
     }
   }
 
-  onNext(_: unknown) {};
+  onNext(_: unknown) {}
 }
 
 const throttleOperator = <T>(

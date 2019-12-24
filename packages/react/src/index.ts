@@ -1,6 +1,11 @@
 import { AsyncIteratorLike } from "@reactive-js/ix";
 import { normalPriority } from "@reactive-js/react-scheduler";
-import { subscribe, ErrorLike, ObservableLike, ObserverLike } from "@reactive-js/rx";
+import {
+  subscribe,
+  ErrorLike,
+  ObservableLike,
+  ObserverLike,
+} from "@reactive-js/rx";
 import { observe, throttle, subscribeOn } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -8,8 +13,12 @@ import { useCallback, useEffect, useState } from "react";
 
 class UseObservableObserver<T> implements ObserverLike<T> {
   constructor(
-    private readonly updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
-    private readonly updateError: React.Dispatch<React.SetStateAction<ErrorLike | undefined>>,
+    private readonly updateState: React.Dispatch<
+      React.SetStateAction<T | undefined>
+    >,
+    private readonly updateError: React.Dispatch<
+      React.SetStateAction<ErrorLike | undefined>
+    >,
   ) {}
 
   onComplete(error?: ErrorLike) {

@@ -9,6 +9,21 @@ class FromScheduledValuesObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;
   private index = 0;
 
+  private readonly continuation: SchedulerContinuationLike = shouldYield => {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  };
+
   constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
   private loop(
@@ -34,21 +49,6 @@ class FromScheduledValuesObservable<T> implements ObservableLike<T> {
     }
     return;
   }
-
-  private readonly continuation: SchedulerContinuationLike = shouldYield => {
-    let error = undefined;
-    try {
-      const result = this.loop(shouldYield);
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  };
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

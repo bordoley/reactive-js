@@ -90,11 +90,7 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     private readonly scheduler: VirtualTimeSchedulerResourceLike,
     observable: ObservableLike<T>,
   ) {
-    const subscription = pipe(
-      observable,
-      observe(this),
-      subscribe(scheduler),
-    );
+    const subscription = pipe(observable, observe(this), subscribe(scheduler));
     scheduler.add(subscription);
   }
 
@@ -108,7 +104,7 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
 
   onComplete(error?: ErrorLike) {
     this.error = error;
-  };
+  }
 
   next(): IteratorResult<T> {
     throwIfDisposed(this.scheduler);

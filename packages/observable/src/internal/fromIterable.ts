@@ -8,6 +8,26 @@ import { defer } from "./defer";
 class FromIteratorObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;
 
+  private readonly continuation: SchedulerContinuationLike = shouldYield => {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  };
+
+  private readonly continuationResult: SchedulerContinuationResultLike = {
+    continuation: this.continuation,
+    delay: this.delay,
+  };
+
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
@@ -32,26 +52,6 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
       }
     }
   }
-
-  private readonly continuation: SchedulerContinuationLike = shouldYield => {
-    let error = undefined;
-    try {
-      const result = this.loop(shouldYield);
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  };
-
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this.continuation,
-    delay: this.delay,
-  };
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

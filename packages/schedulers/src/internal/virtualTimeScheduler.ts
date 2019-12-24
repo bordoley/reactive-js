@@ -50,6 +50,8 @@ export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSched
 
   run() {
     throwIfDisposed(this);
+
+    // eslint-disable-next-line no-empty
     while (this.step()) {}
     this.dispose();
   }
