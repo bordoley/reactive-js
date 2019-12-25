@@ -1,4 +1,7 @@
-import { SchedulerContinuationLike, SchedulerContinuationResultLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
+} from "@reactive-js/scheduler";
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 
 class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {

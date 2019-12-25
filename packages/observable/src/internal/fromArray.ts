@@ -27,7 +27,8 @@ class FromArrayObservable<T>
     const length = values.length;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
-    for (let index = this.index; index < length && !subscriber.isDisposed; ) {
+    let index = this.index;
+    while (index < length && !subscriber.isDisposed) {
       const value = values[index];
       index++;
 

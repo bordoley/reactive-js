@@ -947,26 +947,36 @@ test("share", () => {
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
-  scheduler.schedule(_ => {
-    liftedSubscription = pipe(
-      replayed,
-      observe(liftedObserver),
-      subscribe(scheduler),
-    );
-  }, 1);
+  scheduler.schedule(
+    {
+      run: _ => {
+        liftedSubscription = pipe(
+          replayed,
+          observe(liftedObserver),
+          subscribe(scheduler),
+        );
+      },
+    },
+    1,
+  );
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
-  scheduler.schedule(_ => {
-    replayedSubscription.dispose();
-    liftedSubscription.dispose();
+  scheduler.schedule(
+    {
+      run: _ => {
+        replayedSubscription.dispose();
+        liftedSubscription.dispose();
 
-    anotherLiftedSubscription = pipe(
-      replayed,
-      observe(anotherLiftedSubscriptionObserver),
-      subscribe(scheduler),
-    );
-  }, 3);
+        anotherLiftedSubscription = pipe(
+          replayed,
+          observe(anotherLiftedSubscriptionObserver),
+          subscribe(scheduler),
+        );
+      },
+    },
+    3,
+  );
 
   scheduler.run();
 

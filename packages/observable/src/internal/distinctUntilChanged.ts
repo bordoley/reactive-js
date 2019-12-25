@@ -13,15 +13,15 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   next(data: T) {
+    const prev = this.prev;
     const shouldEmit =
-      !this.isDisposed &&
-      (this.prev === undefined || !this.equals(this.prev[0], data));
+      !this.isDisposed && (prev === undefined || !this.equals(prev[0], data));
 
     if (shouldEmit) {
-      if (this.prev === undefined) {
+      if (prev === undefined) {
         this.prev = [data];
       } else {
-        this.prev[0] = data;
+        prev[0] = data;
       }
       this.delegate.next(data);
     }

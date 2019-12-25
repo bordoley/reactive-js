@@ -27,9 +27,11 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   }
 
   next(data: TA) {
-    if (!this.isDisposed && this.otherLatest !== undefined) {
-      const [otherLatest] = this.otherLatest;
-      const result = this.selector(data, otherLatest);
+    const otherLatest = this.otherLatest;
+
+    if (!this.isDisposed && otherLatest !== undefined) {
+      const [other] = otherLatest;
+      const result = this.selector(data, other);
       this.delegate.next(result);
     }
   }
@@ -41,10 +43,12 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   }
 
   onNext(data: TB) {
-    if (this.otherLatest === undefined) {
+    const otherLatest = this.otherLatest;
+
+    if (otherLatest === undefined) {
       this.otherLatest = [data];
     } else {
-      this.otherLatest[0] = data;
+      otherLatest[0] = data;
     }
   }
 }

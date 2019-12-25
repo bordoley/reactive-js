@@ -108,9 +108,11 @@ describe("rx", () => {
       const scheduler = createVirtualTimeSchedulerResource();
       const subscriber = new MockSubscriber(scheduler);
       subject.subscribe(subscriber);
-      scheduler.schedule(_ => {
-        subject.onNext(4);
-        subject.onComplete();
+      scheduler.schedule({
+        run: _ => {
+          subject.onNext(4);
+          subject.onComplete();
+        },
       });
 
       expect(subject.subscriberCount).toEqual(1);

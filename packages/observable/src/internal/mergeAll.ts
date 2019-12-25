@@ -37,11 +37,12 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 
   next(next: ObservableLike<T>) {
+    const queue = this.queue;
     if (
       !this.isDisposed &&
-      this.queue.length + this.activeCount < this.maxBufferSize
+      queue.length + this.activeCount < this.maxBufferSize
     ) {
-      this.queue.push(next);
+      queue.push(next);
       this.subscribeNext();
     }
   }

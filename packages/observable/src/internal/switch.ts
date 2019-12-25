@@ -18,8 +18,10 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
 
   next(data: ObservableLike<T>) {
     this.remove(this.innerSubscription);
-    this.innerSubscription = pipe(data, observe(this), subscribe(this));
-    this.add(this.innerSubscription);
+
+    const innerSubscription = pipe(data, observe(this), subscribe(this));
+    this.add(innerSubscription);
+    this.innerSubscription = innerSubscription;
   }
 
   onComplete(error?: ErrorLike) {

@@ -52,22 +52,27 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
   ) {}
 
   onNext(x: T) {
-    if (this.result === undefined) {
+    const result = this.result;
+
+    if (result === undefined) {
       this.result = [x];
     } else {
-      this.result[0] = x;
+      result[0] = x;
     }
   }
 
   onComplete(err?: ErrorLike) {
+    const result = this.result;
+
     this.subscription.dispose();
+
     if (err !== undefined) {
       const { cause } = err;
       this.reject(cause);
-    } else if (this.result === undefined) {
+    } else if (result === undefined) {
       this.reject(new Error("Observable completed without producing a value"));
     } else {
-      const value = this.result[0];
+      const value = result[0];
       this.resolve(value);
     }
   }
