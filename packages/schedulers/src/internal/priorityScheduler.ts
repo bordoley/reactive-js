@@ -179,7 +179,6 @@ class PrioritySchedulerResourceImpl
     this.scheduleDrainQueue(task);
 
     this.add(task.disposable);
-    task.disposable.add(() => this.remove(task.disposable));
     return task.disposable;
   }
 

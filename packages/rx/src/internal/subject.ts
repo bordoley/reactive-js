@@ -133,7 +133,6 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       }
 
       this.add(subscriber);
-      subscriber.add(() => this.remove(subscriber));
     } else {
       subscriber.dispose();
     }

@@ -18,7 +18,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   complete(error?: ErrorLike) {
     this.completedCount++;
 
-    if (error !== undefined || this.completedCount === this.totalCount) {
+    if (error !== undefined || this.completedCount >= this.totalCount) {
       this.delegate.complete(error);
     }
   }
