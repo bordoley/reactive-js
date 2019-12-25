@@ -12,14 +12,19 @@ import { lift } from "./lift";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
   implements SchedulerContinuationLike {
-  private readonly last: T[] = [];
-
   private readonly continuation: SchedulerContinuationResultLike = {
     continuation: this,
   };
 
+  private index = 0;
+
+  private readonly last: T[] = [];
+
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
+    this.delegate.add(() => {
+      this.last.length = 0;
+    });
   }
 
   complete(error?: ErrorLike) {
@@ -33,16 +38,22 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
 
   loop(shouldYield: () => boolean) {
     const last = this.last;
+    const length = last.length;
     const delegate = this.delegate;
 
-    while (last.length > 0 && !delegate.isDisposed) {
-      const next = last.shift() as T;
+    let index = this.index;
+    while (index < length && !delegate.isDisposed) {
+      const next = last[index];
       delegate.next(next);
+      index++;
 
-      if (shouldYield() && last.length > 0) {
+      if (shouldYield() && index < length) {
+        this.index = index;
         return this.continuation;
       }
     }
+
+    last.length = 0;
     return;
   }
 

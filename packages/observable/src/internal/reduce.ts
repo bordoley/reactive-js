@@ -27,9 +27,7 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   }
 
   next(next: T) {
-    const prevAcc = this.acc;
-    const nextAcc = this.reducer(prevAcc, next);
-    this.acc = nextAcc;
+    this.acc = this.reducer(this.acc, next);
   }
 }
 

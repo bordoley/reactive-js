@@ -22,9 +22,8 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.delegate.complete(error);
     } else {
       const head = this.observables[this.index];
-      const hasNextObservable = head !== undefined;
 
-      if (hasNextObservable) {
+      if (head !== undefined) {
         this.index++;
         head.subscribe(this);
       } else {

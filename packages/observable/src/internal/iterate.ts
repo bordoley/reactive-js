@@ -29,10 +29,12 @@ class ToValueObserver<T> implements ObserverLike<T> {
   private error: ErrorLike | undefined = undefined;
 
   onNext(x: T) {
-    if (this._result === undefined) {
+    const result = this._result;
+
+    if (result === undefined) {
       this._result = [x];
     } else {
-      this._result[0] = x;
+      result[0] = x;
     }
   }
 
@@ -46,10 +48,12 @@ class ToValueObserver<T> implements ObserverLike<T> {
       throw cause;
     }
 
-    if (this._result === undefined) {
+    const result = this._result;
+
+    if (result === undefined) {
       throw new Error("Observable did not produce any values");
     }
-    return this._result[0];
+    return result[0];
   }
 }
 
@@ -94,11 +98,13 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     scheduler.add(subscription);
   }
 
-  onNext(value: T) {
-    if (this.value === undefined) {
-      this.value = [value];
+  onNext(data: T) {
+    const value = this.value;
+
+    if (value === undefined) {
+      this.value = [data];
     } else {
-      this.value[0] = value;
+      value[0] = data;
     }
   }
 
@@ -114,8 +120,10 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     do {
       this.value = undefined;
       done = this.scheduler.next().done || false;
-      if (this.error !== undefined) {
-        const { cause } = this.error;
+
+      const error = this.error;
+      if (error !== undefined) {
+        const { cause } = error;
         throw cause;
       }
     } while (this.value === undefined && !done);
