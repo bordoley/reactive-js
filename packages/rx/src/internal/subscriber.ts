@@ -15,11 +15,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
   private readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
-  constructor(private readonly scheduler: SchedulerLike) {
-    this.disposable.add(() => {
-      this.isDisposed = true;
-    });
-  }
+  constructor(private readonly scheduler: SchedulerLike) {}
 
   get now() {
     return this.scheduler.now;
