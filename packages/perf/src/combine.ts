@@ -19,9 +19,10 @@ export const run = (n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray(src);
+      const other = fromArray([0]);
 
       const observable = pipe(
-        combineLatest([arrayObs, arrayObs, arrayObs], add3),
+        combineLatest([other, other, arrayObs], add3),
         keep(even),
       );
 
@@ -33,8 +34,9 @@ export const run = (n: number) => {
       const { run } = require("./rxjs-runner");
 
       const arrayObs = from(src);
+      const other = from([0]);
 
-      const observable = combineLatest(arrayObs, arrayObs, arrayObs).pipe(
+      const observable = combineLatest(other, other, arrayObs).pipe(
         map(add3Arr),
         filter(even),
       );
@@ -55,9 +57,10 @@ export const run = (n: number) => {
       };
 
       const cbArray = fromArray(src);
+      const other = fromArray([0]);
 
       const observable = pipe(
-        combine(cbArray, cbArray, cbArray),
+        combine(other, other, cbArray),
         map(add3Arr),
         filter(even),
       );

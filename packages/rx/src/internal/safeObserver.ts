@@ -1,31 +1,8 @@
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 
-class SafeObserver<T> implements ObserverLike<T> {
-  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
-    try {
-      while (this.nextQueue.length > 0 && !this.subscriber.isDisposed) {
-        const next = this.nextQueue.shift() as T;
-        this.subscriber.next(next);
-
-        const yieldRequest = shouldYield();
-        const hasMoreEvents = this.remainingEvents > 0;
-
-        if (yieldRequest && hasMoreEvents) {
-          return this.continuation;
-        }
-      }
-    } catch (cause) {
-      this.isCompleted = true;
-      this.error = { cause };
-    }
-
-    if (this.isCompleted) {
-      this.subscriber.complete(this.error);
-    }
-    return;
-  };
-  private readonly continuation = { continuation: this.drainQueue };
+class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
+  private readonly continuation = { continuation: this };
   private error: ErrorLike | undefined;
   private isCompleted = false;
   private readonly nextQueue: Array<T> = [];
@@ -61,9 +38,33 @@ class SafeObserver<T> implements ObserverLike<T> {
     this.scheduleDrainQueue();
   }
 
+  run(shouldYield: () => boolean) {
+    try {
+      while (this.nextQueue.length > 0 && !this.subscriber.isDisposed) {
+        const next = this.nextQueue.shift() as T;
+        this.subscriber.next(next);
+
+        const yieldRequest = shouldYield();
+        const hasMoreEvents = this.remainingEvents > 0;
+
+        if (yieldRequest && hasMoreEvents) {
+          return this.continuation;
+        }
+      }
+    } catch (cause) {
+      this.isCompleted = true;
+      this.error = { cause };
+    }
+
+    if (this.isCompleted) {
+      this.subscriber.complete(this.error);
+    }
+    return;
+  }
+
   private scheduleDrainQueue() {
     if (this.remainingEvents === 1) {
-      this.subscriber.schedule(this.drainQueue);
+      this.subscriber.schedule(this);
     }
   }
 }

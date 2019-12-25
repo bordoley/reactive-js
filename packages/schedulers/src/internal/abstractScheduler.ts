@@ -37,7 +37,7 @@ export abstract class AbstractScheduler implements SchedulerLike {
       if (!disposable.isDisposed) {
         this.startTime = this.now;
         this.currentDisposable = disposable;
-        const result = continuation(this.shouldYield) || undefined;
+        const result = continuation.run(this.shouldYield) || undefined;
         this.currentDisposable = disposed;
 
         if (result !== undefined) {

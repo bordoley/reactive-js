@@ -5,29 +5,14 @@ import {
 } from "@reactive-js/scheduler";
 import { defer } from "./defer";
 
-class FromIteratorObservable<T> implements ObservableLike<T> {
+class FromIteratorObservable<T>
+  implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
 
-  private readonly continuation: SchedulerContinuationLike = shouldYield => {
-    let error = undefined;
-    try {
-      const result = this.loop(shouldYield);
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  };
-
   private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this.continuation,
+    continuation: this,
     delay: this.delay,
   };
-
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
@@ -53,6 +38,21 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
     }
   }
 
+  run(shouldYield: () => boolean) {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  }
+
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
     subscriber.add(() => {
@@ -62,7 +62,7 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
       }
     });
 
-    subscriber.schedule(this.continuation, this.delay);
+    subscriber.schedule(this, this.delay);
   }
 }
 

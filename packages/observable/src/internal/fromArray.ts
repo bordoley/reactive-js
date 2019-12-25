@@ -5,30 +5,15 @@ import {
 } from "@reactive-js/scheduler";
 import { defer } from "./defer";
 
-class FromArrayObservable<T> implements ObservableLike<T> {
+class FromArrayObservable<T>
+  implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
   private index = 0;
 
-  private readonly continuation: SchedulerContinuationLike = shouldYield => {
-    let error = undefined;
-    try {
-      const result = this.loop(shouldYield);
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  };
-
   private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this.continuation,
+    continuation: this,
     delay: this.delay,
   };
-
   constructor(
     private readonly values: readonly T[],
     private readonly delay: number,
@@ -56,9 +41,24 @@ class FromArrayObservable<T> implements ObservableLike<T> {
     return;
   }
 
+  run(shouldYield: () => boolean) {
+    let error = undefined;
+    try {
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  }
+
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    subscriber.schedule(this.continuation, this.delay);
+    subscriber.schedule(this, this.delay);
   }
 }
 
