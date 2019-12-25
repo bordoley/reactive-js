@@ -38,7 +38,10 @@ export class Subscriber<T> implements SubscriberLike<T> {
   }
 
   dispose() {
-    this.disposable.dispose();
+    if (!this.isDisposed) {
+      this.isDisposed = true;
+      this.disposable.dispose();
+    }
   }
 
   next(_: T): void {}
@@ -61,7 +64,6 @@ export class Subscriber<T> implements SubscriberLike<T> {
         delay,
       );
       this.add(schedulerSubscription);
-      schedulerSubscription.add(() => this.remove(schedulerSubscription));
       return schedulerSubscription;
     } else {
       return disposed;
@@ -79,9 +81,6 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
     super((delegate as any).scheduler || delegate);
 
     this.delegate.add(this);
-    this.add(() => {
-      this.delegate.remove(this);
-    });
   }
 
   complete(error?: ErrorLike) {

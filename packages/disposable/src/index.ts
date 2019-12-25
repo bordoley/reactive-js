@@ -62,9 +62,16 @@ class DisposableImpl implements DisposableLike {
       }
     } else {
       for (const d of disposables) {
-        this.doAdd(d);
+        if (!this.disposables.includes(d)) {
+          this.disposables.push(d);
+
+          if (!(d instanceof Function)) {
+            d.add(() => { this.doRemove(d) })
+          }
+        }
       }
     }
+
     return this;
   }
 
@@ -72,34 +79,33 @@ class DisposableImpl implements DisposableLike {
     if (!this.isDisposed) {
       this.isDisposed = true;
 
-      for (const disposable of this.disposables) {
+      let disposable = this.disposables.shift();
+      while (disposable !== undefined) {
         doDispose(disposable);
+        disposable = this.disposables.shift();
       }
-
-      this.disposables.length = 0;
     }
   }
 
   remove(...disposables: DisposableOrTeardown[]) {
     if (!this.isDisposed) {
       for (const d of disposables) {
-        this.doRemove(d);
+        if (this.doRemove(d)) {
+          doDispose(d);
+        }
       }
     }
     return this;
   }
 
-  private doAdd(disposable: DisposableOrTeardown) {
-    if (!this.disposables.includes(disposable)) {
-      this.disposables.push(disposable);
-    }
-  }
+  private doRemove(d: DisposableOrTeardown): boolean {
+    const index = this.disposables.indexOf(d);
 
-  private doRemove(disposable: DisposableOrTeardown) {
-    const index = this.disposables.indexOf(disposable);
     if (index > -1) {
-      const [old] = this.disposables.splice(index, 1);
-      doDispose(old);
+      this.disposables.splice(index, 1);
+      return true;
+    } else {
+      return false;
     }
   }
 }
@@ -144,6 +150,7 @@ export const throwIfDisposed = (disposable: DisposableLike) => {
     throw new Error("Disposed");
   }
 };
+
 /**
  * A Disposable container that allows replacing a contained Disposable with another,
  * disposing the previously contained disposable in the process. Disposing the

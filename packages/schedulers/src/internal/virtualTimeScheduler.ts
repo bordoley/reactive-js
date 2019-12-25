@@ -101,7 +101,6 @@ class VirtualTimeSchedulerResourceImpl
     this.taskQueue.push(work);
 
     this.add(disposable);
-    disposable.add(() => this.remove(disposable));
     return disposable;
   }
 

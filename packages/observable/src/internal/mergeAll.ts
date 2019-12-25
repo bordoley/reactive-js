@@ -75,9 +75,6 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
         );
 
         this.delegate.add(nextObsSubscription);
-        nextObsSubscription.add(() =>
-          this.delegate.remove(nextObsSubscription),
-        );
       } else if (this.isDisposed) {
         this.delegate.complete();
       }
