@@ -1,4 +1,4 @@
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { SchedulerContinuationLike, SchedulerContinuationResultLike } from "@reactive-js/scheduler";
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
 
 class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
@@ -17,6 +17,22 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
 
   private get remainingEvents() {
     return this.nextQueue.length + (this.isCompleted ? 1 : 0);
+  }
+
+  private loop(
+    shouldYield: () => boolean,
+  ): SchedulerContinuationResultLike | void {
+    const subscriber = this.subscriber;
+    const nextQueue = this.nextQueue;
+
+    while (nextQueue.length > 0 && !subscriber.isDisposed) {
+      const next = nextQueue.shift() as T;
+      subscriber.next(next);
+
+      if (shouldYield() && this.remainingEvents > 0) {
+        return this.continuation;
+      }
+    }
   }
 
   onComplete(error?: ErrorLike) {
@@ -40,16 +56,9 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
 
   run(shouldYield: () => boolean) {
     try {
-      while (this.nextQueue.length > 0 && !this.subscriber.isDisposed) {
-        const next = this.nextQueue.shift() as T;
-        this.subscriber.next(next);
-
-        const yieldRequest = shouldYield();
-        const hasMoreEvents = this.remainingEvents > 0;
-
-        if (yieldRequest && hasMoreEvents) {
-          return this.continuation;
-        }
+      const result = this.loop(shouldYield);
+      if (result !== undefined) {
+        return result;
       }
     } catch (cause) {
       this.isCompleted = true;
