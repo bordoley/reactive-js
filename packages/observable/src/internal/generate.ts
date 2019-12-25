@@ -5,26 +5,13 @@ import {
 } from "@reactive-js/scheduler";
 import { defer } from "./defer";
 
-class GenerateObservable<T> implements ObservableLike<T> {
-  private subscriber: SubscriberLike<T> | undefined;
-
-  private readonly continuation: SchedulerContinuationLike = (
-    shouldYield: () => boolean,
-  ) => {
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    try {
-      this.loop(shouldYield);
-    } catch (cause) {
-      subscriber.complete({ cause });
-    }
-
-    return subscriber.isDisposed ? undefined : this.continuationResult;
-  };
-
+class GenerateObservable<T>
+  implements ObservableLike<T>, SchedulerContinuationLike {
   private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this.continuation,
+    continuation: this,
     delay: this.delay,
   };
+  private subscriber: SubscriberLike<T> | undefined;
 
   constructor(
     private readonly generator: (acc: T) => T,
@@ -45,9 +32,20 @@ class GenerateObservable<T> implements ObservableLike<T> {
     this.acc = acc;
   }
 
+  run(shouldYield: () => boolean) {
+    const subscriber = this.subscriber as SubscriberLike<T>;
+    try {
+      this.loop(shouldYield);
+    } catch (cause) {
+      subscriber.complete({ cause });
+    }
+
+    return subscriber.isDisposed ? undefined : this.continuationResult;
+  }
+
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    subscriber.schedule(this.continuation, this.delay);
+    subscriber.schedule(this, this.delay);
   }
 }
 

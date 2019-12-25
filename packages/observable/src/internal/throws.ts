@@ -1,21 +1,26 @@
 import { ObservableLike, SubscriberLike, ErrorLike } from "@reactive-js/rx";
+import { defer } from "./defer";
 
 class ThrowsObservable<T> implements ObservableLike<T> {
+  private subscriber: SubscriberLike<T> | undefined;
+
   constructor(
     private readonly error: ErrorLike,
     private readonly delay: number,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<T>) {
-    const continuation = (_: () => boolean) => {
-      subscriber.complete(this.error);
-    };
+  run(_: () => boolean) {
+    (this.subscriber as SubscriberLike<T>).complete(this.error);
+  }
 
-    subscriber.schedule(continuation, this.delay);
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+
+    subscriber.schedule(this, this.delay);
   }
 }
 
 export const throws = <T>(cause: unknown, delay = 0): ObservableLike<T> => {
   const error = { cause };
-  return new ThrowsObservable(error, delay);
+  return defer(() => new ThrowsObservable(error, delay));
 };

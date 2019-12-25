@@ -10,9 +10,37 @@ import {
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 
-class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
+  implements SchedulerContinuationLike {
   private readonly last: T[] = [];
-  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
+
+  private readonly continuation: SchedulerContinuationResultLike = {
+    continuation: this,
+  };
+
+  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
+    super(delegate);
+  }
+
+  complete(error?: ErrorLike) {
+    if (error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      this.dispose();
+      this.delegate.schedule(this);
+    }
+  }
+
+  next(data: T) {
+    if (!this.isDisposed) {
+      this.last.push(data);
+      if (this.last.length > this.maxCount) {
+        this.last.shift();
+      }
+    }
+  }
+
+  run(shouldYield: () => boolean) {
     let error = undefined;
 
     try {
@@ -33,31 +61,6 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
 
     this.delegate.complete(error);
     return;
-  };
-  private readonly continuation: SchedulerContinuationResultLike = {
-    continuation: this.drainQueue,
-  };
-
-  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
-    super(delegate);
-  }
-
-  complete(error?: ErrorLike) {
-    if (error !== undefined) {
-      this.delegate.complete(error);
-    } else {
-      this.dispose();
-      this.delegate.schedule(this.drainQueue);
-    }
-  }
-
-  next(data: T) {
-    if (!this.isDisposed) {
-      this.last.push(data);
-      if (this.last.length > this.maxCount) {
-        this.last.shift();
-      }
-    }
   }
 }
 

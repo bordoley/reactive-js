@@ -44,7 +44,8 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
   return diff;
 };
 
-class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
+class PrioritySchedulerResourceImpl
+  implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
   private readonly disposable: SerialDisposableLike = createSerialDisposable().add(
     () => this.queue.clear(),
   );
@@ -73,56 +74,6 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     return (
       currentTaskIsDisposed || nextTaskIsHigherPriority || hostRequestedYield
     );
-  };
-  private readonly drainQueue: SchedulerContinuationLike = shouldYield => {
-    for (
-      let currentTask = this.queue.peek();
-      currentTask !== undefined;
-      currentTask = this.queue.peek()
-    ) {
-      const delay = currentTask.dueTime - this.now;
-      if (delay > 0) {
-        return { continuation: this.drainQueue, delay };
-      }
-
-      this.queue.pop();
-
-      if (!currentTask.disposable.isDisposed) {
-        this.currentTask = currentTask;
-        this.currentShouldYield = shouldYield;
-
-        const result = currentTask.continuation(this.shouldYield) || undefined;
-
-        this.currentShouldYield = undefined;
-        this.currentTask = undefined;
-
-        if (result !== undefined) {
-          const { continuation: nextContinuation, delay = 0 } = result;
-          const now = this.now;
-          const continuedTask = {
-            taskID: this.taskIDCounter++,
-            continuation: nextContinuation,
-            disposable: currentTask.disposable,
-            priority: currentTask.priority,
-            startTime: now,
-            dueTime: now + delay,
-          };
-          this.queue.push(continuedTask);
-        } else {
-          currentTask.disposable.dispose();
-        }
-      }
-
-      const nextTask = this.queue.peek();
-      if (nextTask !== undefined && shouldYield()) {
-        const now = this.now;
-        return {
-          continuation: this.drainQueue,
-          delay: Math.max(nextTask.dueTime - now, 0),
-        };
-      }
-    }
-    return;
   };
 
   constructor(private readonly hostScheduler: SchedulerLike) {}
@@ -155,6 +106,58 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     return this;
   }
 
+  run(shouldYield: () => boolean) {
+    for (
+      let currentTask = this.queue.peek();
+      currentTask !== undefined;
+      currentTask = this.queue.peek()
+    ) {
+      const delay = currentTask.dueTime - this.now;
+      if (delay > 0) {
+        return { continuation: this, delay };
+      }
+
+      this.queue.pop();
+
+      if (!currentTask.disposable.isDisposed) {
+        this.currentTask = currentTask;
+        this.currentShouldYield = shouldYield;
+
+        const result =
+          currentTask.continuation.run(this.shouldYield) || undefined;
+
+        this.currentShouldYield = undefined;
+        this.currentTask = undefined;
+
+        if (result !== undefined) {
+          const { continuation: nextContinuation, delay = 0 } = result;
+          const now = this.now;
+          const continuedTask = {
+            taskID: this.taskIDCounter++,
+            continuation: nextContinuation,
+            disposable: currentTask.disposable,
+            priority: currentTask.priority,
+            startTime: now,
+            dueTime: now + delay,
+          };
+          this.queue.push(continuedTask);
+        } else {
+          currentTask.disposable.dispose();
+        }
+      }
+
+      const nextTask = this.queue.peek();
+      if (nextTask !== undefined && shouldYield()) {
+        const now = this.now;
+        return {
+          continuation: this,
+          delay: Math.max(nextTask.dueTime - now, 0),
+        };
+      }
+    }
+    return;
+  }
+
   schedule(
     continuation: SchedulerContinuationLike,
     priority: number,
@@ -185,10 +188,7 @@ class PrioritySchedulerResourceImpl implements PrioritySchedulerResourceLike {
     if (head === task && this.disposable.disposable.isDisposed) {
       const delay = Math.max(task.dueTime - this.now, 0);
 
-      this.disposable.disposable = this.hostScheduler.schedule(
-        this.drainQueue,
-        delay,
-      );
+      this.disposable.disposable = this.hostScheduler.schedule(this, delay);
     }
   }
 }

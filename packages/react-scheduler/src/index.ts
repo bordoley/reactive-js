@@ -61,7 +61,7 @@ const createCallback = (
   const callback = () => {
     if (!disposable.isDisposed) {
       currentDisposable = disposable;
-      const result = continuation(shouldYield) || undefined;
+      const result = continuation.run(shouldYield) || undefined;
       currentDisposable = disposed;
 
       if (result !== undefined) {
