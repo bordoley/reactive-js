@@ -16,17 +16,25 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
   implements ObserverLike<T> {
   private innerSubscription = disposed;
 
+  complete(error?: ErrorLike) {
+    if (this.innerSubscription.isDisposed || error !== undefined) {
+      this.delegate.complete(error);
+    } else {
+      this.dispose();
+    }
+  }
+
   next(data: ObservableLike<T>) {
-    this.remove(this.innerSubscription);
+    this.delegate.remove(this.innerSubscription);
 
     const innerSubscription = pipe(data, observe(this), subscribe(this));
-    this.add(innerSubscription);
+    this.delegate.add(innerSubscription);
     this.innerSubscription = innerSubscription;
   }
 
   onComplete(error?: ErrorLike) {
-    if (error !== undefined) {
-      this.complete(error);
+     if (error !== undefined || this.isDisposed) {
+      this.delegate.complete(error);
     }
   }
 
