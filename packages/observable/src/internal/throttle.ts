@@ -3,6 +3,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
+  empty,
   subscribe,
   DelegatingSubscriber,
   ErrorLike,
@@ -10,7 +11,6 @@ import {
   SubscriberLike,
   ObserverLike,
 } from "@reactive-js/rx";
-import { empty } from "./fromArray";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";

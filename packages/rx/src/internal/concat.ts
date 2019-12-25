@@ -2,10 +2,8 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  DelegatingSubscriber,
-} from "@reactive-js/rx";
-import { fromArray } from "./fromArray";
-import { ObservableOperatorLike } from "./interfaces";
+} from "./interfaces";
+import { DelegatingSubscriber } from "./subscriber";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   private index = 0;
@@ -55,20 +53,4 @@ export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
   return new ConcatObservable(observables);
-}
-
-export function startWith<T>(
-  value: T,
-  ...values: T[]
-): ObservableOperatorLike<T, T>;
-export function startWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
-  return obs => concat(fromArray(values), obs);
-}
-
-export function endWith<T>(
-  value: T,
-  ...values: T[]
-): ObservableOperatorLike<T, T>;
-export function endWith<T>(...values: T[]): ObservableOperatorLike<T, T> {
-  return obs => concat(obs, fromArray(values));
 }

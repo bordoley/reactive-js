@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@reactive-js/ix": "^0.0.18",
-    "@reactive-js/observable": "^0.0.18",
+    "@reactive-js/rx": "^0.0.18",
     "@reactive-js/react": "^0.0.18",
     "@reactive-js/react-router": "^0.0.18",
     "@reactive-js/react-scheduler": "^0.0.18",

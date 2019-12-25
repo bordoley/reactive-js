@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike, ErrorLike } from "@reactive-js/rx";
+import { ObservableLike, SubscriberLike, ErrorLike } from "./interfaces";
 import { defer } from "./defer";
 
 class ThrowsObservable<T> implements ObservableLike<T> {

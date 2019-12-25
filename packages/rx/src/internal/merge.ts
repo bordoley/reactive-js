@@ -2,8 +2,9 @@ import {
   ErrorLike,
   ObservableLike,
   SubscriberLike,
-  DelegatingSubscriber,
-} from "@reactive-js/rx";
+} from "./interfaces";
+
+import { DelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   private completedCount = 0;

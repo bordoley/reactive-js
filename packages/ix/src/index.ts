@@ -1,16 +1,16 @@
 import {
-  subscribe,
   createSubject,
-  SubjectResourceLike,
-  SubscriberLike,
+  merge,
   MulticastObservableLike,
   MulticastObservableResourceLike,
+  SubjectResourceLike,
+  SubscriberLike,
+  subscribe,
 } from "@reactive-js/rx";
 
 import {
   distinctUntilChanged,
   ignoreElements,
-  merge,
   onNext,
   scan,
   share,

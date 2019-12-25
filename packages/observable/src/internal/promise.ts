@@ -2,45 +2,15 @@ import {
   ObservableLike,
   ObserverLike,
   subscribe,
-  createObservable,
   ErrorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { observe } from "./observe";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import {
-  createDisposable,
   DisposableLike,
   createSerialDisposable,
 } from "@reactive-js/disposable";
-
-export const fromPromiseFactory = <T>(
-  factory: () => Promise<T>,
-): ObservableLike<T> => {
-  const onSubscribe = (observer: ObserverLike<T>) => {
-    const disposable = createDisposable();
-
-    factory()
-      .then(
-        v => {
-          if (!disposable.isDisposed) {
-            observer.onNext(v);
-            observer.onComplete();
-          }
-        },
-        cause => {
-          if (!disposable.isDisposed) {
-            observer.onComplete({ cause });
-          }
-        },
-      )
-      .finally(() => disposable.dispose());
-
-    return disposable;
-  };
-
-  return createObservable(onSubscribe);
-};
 
 class ToPromiseObserver<T> implements ObserverLike<T> {
   private result: [T] | undefined = undefined;

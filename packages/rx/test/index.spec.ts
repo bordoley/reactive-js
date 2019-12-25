@@ -1,4 +1,20 @@
-import { subscribe, createObservable, createSubject } from "../src/index";
+import {   
+  combineLatest,
+  concat,
+  createObservable, 
+  createSubject,
+  empty,
+  fromArray,
+  fromIterable,
+  fromPromise,
+  fromScheduledValues,
+  generate,
+  merge,
+  never,
+  ofValue,
+  throws,
+  subscribe, 
+} from "../src/index";
 import { createDisposable } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";

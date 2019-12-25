@@ -10,8 +10,8 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
+      const { fromArray, } = require("@reactive-js/rx");
       const {
-        fromArray,
         keep,
         map,
         reduce,
