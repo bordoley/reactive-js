@@ -11,14 +11,17 @@ work to be performed.
 
 * **SchedulerContinuationLike**
 
-## Callable
+## Index
 
-▸ (`shouldYield`: function): *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
+### Methods
 
-A unit of work which executes on a scheduler. Implementations should
-periodically check whether they should yield, and return
-a SchedulerContinuationResult if there is additional
-work to be performed.
+* [run](schedulercontinuationlike.md#run)
+
+## Methods
+
+###  run
+
+▸ **run**(`shouldYield`: function): *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
 
 **Parameters:**
 
