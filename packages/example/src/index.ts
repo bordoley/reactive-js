@@ -1,8 +1,6 @@
-import { subscribe } from "@reactive-js/rx";
+import { fromArray, generate, subscribe } from "@reactive-js/rx";
 import {
   exhaust,
-  fromArray,
-  generate,
   map,
   onNext,
 } from "@reactive-js/observable";

@@ -6,7 +6,7 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate } from "@reactive-js/observable";
+import { generate } from "@reactive-js/rx";
 import { createLocationStoreResource, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";

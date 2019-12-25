@@ -9,12 +9,12 @@ import {
   ObservableLike,
   ObserverLike,
   ErrorLike,
+  throws,
 } from "@reactive-js/rx";
 import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
-import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
 

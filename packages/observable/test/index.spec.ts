@@ -4,7 +4,7 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { subscribe, createObservable, ObserverLike } from "@reactive-js/rx";
+import { createObservable, fromScheduledValues, ObserverLike, subscribe } from "@reactive-js/rx";
 import {
   createVirtualTimeSchedulerResource,
   AbstractScheduler,
@@ -12,22 +12,12 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   buffer,
-  combineLatest,
-  concat,
   concatAll,
   distinctUntilChanged,
-  empty,
-  fromArray,
-  fromPromiseFactory,
-  fromScheduledValues,
-  generate,
   ignoreElements,
   keep,
   map,
-  merge,
-  never,
   observe,
-  ofValue,
   onComplete,
   onError,
   onNext,
@@ -36,12 +26,10 @@ import {
   switchAll,
   takeFirst,
   takeLast,
-  throws,
   toPromise,
   withLatestFrom,
   toArray,
   toIterable,
-  fromIterable,
   repeat,
   timeout,
   throttle,

@@ -1,4 +1,5 @@
 import {
+  empty,
   SubscriberLike,
   DelegatingSubscriber,
   ObservableLike,
@@ -11,7 +12,6 @@ import { ObservableOperatorLike, SubscriberOperatorLike } from "./interfaces";
 import { createSerialDisposable } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { observe } from "./observe";
-import { empty } from "./fromArray";
 
 class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   implements ObserverLike<unknown> {

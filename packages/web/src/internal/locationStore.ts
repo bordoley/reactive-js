@@ -4,8 +4,8 @@ import {
   AsyncIteratorLike,
   StateStoreResourceLike,
 } from "@reactive-js/ix";
-import { MulticastObservableLike } from "@reactive-js/rx";
-import { concat, ofValue, share } from "@reactive-js/observable";
+import { concat, ofValue, MulticastObservableLike } from "@reactive-js/rx";
+import { share } from "@reactive-js/observable";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
 
