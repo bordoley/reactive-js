@@ -14,6 +14,7 @@ class FromArrayObservable<T>
     continuation: this,
     delay: this.delay,
   };
+  
   constructor(
     private readonly values: readonly T[],
     private readonly delay: number,
@@ -67,9 +68,6 @@ export const fromArray = <T>(
   values: readonly T[],
   delay = 0,
 ): ObservableLike<T> => defer(() => new FromArrayObservable(values, delay));
-
-export const empty = <T>(delay?: number): ObservableLike<T> =>
-  fromArray([], delay);
 
 export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
   fromArray([value], delay);

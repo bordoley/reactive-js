@@ -3,7 +3,7 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { empty } from "./fromArray";
+import { empty } from "./empty";
 import {
   ErrorLike,
   ObservableLike,

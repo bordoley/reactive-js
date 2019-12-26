@@ -13,6 +13,7 @@ class FromIteratorObservable<T>
     continuation: this,
     delay: this.delay,
   };
+  
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
