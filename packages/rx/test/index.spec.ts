@@ -1,45 +1,4 @@
 import {
-  combineLatest,
-  concat,
-  createObservable,
-  createSubject,
-  empty,
-  fromArray,
-  fromIterable,
-  fromPromise,
-  fromScheduledValues,
-  generate,
-  merge,
-  never,
-  ofValue,
-  throws,
-  subscribe,
-  buffer,
-  concatAll,
-  distinctUntilChanged,
-  ignoreElements,
-  keep,
-  map,
-  observe,
-  onComplete,
-  onError,
-  onNext,
-  scan,
-  share,
-  switchAll,
-  takeFirst,
-  takeLast,
-  toPromise,
-  withLatestFrom,
-  toArray,
-  toIterable,
-  repeat,
-  timeout,
-  throttle,
-  ThrottleMode,
-  takeWhile,
-} from "../src/index";
-import {
   createDisposable,
   disposed,
   DisposableLike,
@@ -51,176 +10,54 @@ import {
   createVirtualTimeSchedulerResource,
 } from "@reactive-js/schedulers";
 import { Subscriber } from "../src/internal/subscriber";
-import { ObserverLike } from "../dist/types";
+import {
+  buffer,
+  combineLatest,
+  concat,
+  concatAll,
+  createObservable,
+  createSubject,
+  distinctUntilChanged,
+  empty,
+  fromArray,
+  fromIterable,
+  fromPromise,
+  fromScheduledValues,
+  generate,
+  ignoreElements,
+  keep,
+  map,
+  merge,
+  never,
+  observe,
+  ObserverLike,
+  ofValue,
+  onComplete,
+  onError,
+  onNext,
+  repeat,
+  scan,
+  share,
+  subscribe,
+  switchAll,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  throttle,
+  ThrottleMode,
+  throws,
+  timeout,
+  toArray,
+  toIterable,
+  toPromise,
+  toValue,
+  withLatestFrom,
+} from "../src/index";
 
 class MockSubscriber<T> extends Subscriber<T> {
   next = jest.fn();
   complete = jest.fn();
 }
-
-describe("rx", () => {
-  describe("subscribe", () => {
-    test("auto-disposes the subscription on complete", () => {
-      const observable = createObservable(observer => observer.onComplete());
-      const scheduler = createVirtualTimeSchedulerResource();
-
-      const subscription = pipe(observable, subscribe(scheduler));
-      expect(subscription.isDisposed).toBeFalsy();
-
-      scheduler.run();
-      expect(subscription.isDisposed).toBeTruthy();
-    });
-  });
-
-  describe("createObservable", () => {
-    test("completes the subscriber if onSubscribe throws", () => {
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new MockSubscriber(scheduler);
-      const cause = new Error();
-      const observable = createObservable(_ => {
-        throw cause;
-      });
-
-      observable.subscribe(subscriber);
-      scheduler.run();
-
-      expect(subscriber.complete).toBeCalledWith({ cause });
-    });
-
-    test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
-      const scheduler = createVirtualTimeSchedulerResource();
-      const disposable = createDisposable();
-
-      const subscription = pipe(
-        (_: ObserverLike<unknown>) => disposable,
-        createObservable,
-        subscribe(scheduler),
-      );
-      scheduler.run();
-
-      expect(disposable.isDisposed).toBeFalsy();
-      subscription.dispose();
-      expect(disposable.isDisposed).toBeTruthy();
-    });
-
-    test("when subscriber throws", () => {
-      const cause = new Error();
-
-      class ThrowingSubscriber<T> extends Subscriber<T> {
-        complete = jest.fn();
-
-        next(_: T) {
-          throw cause;
-        }
-      }
-
-      const observable = createObservable(observer => {
-        observer.onNext(1);
-      });
-
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new ThrowingSubscriber(scheduler);
-      observable.subscribe(subscriber);
-      scheduler.run();
-      expect(subscriber.complete).toBeCalledWith({ cause });
-    });
-  });
-
-  describe("createSubject", () => {
-    test("when subject is completed", () => {
-      const subject = createSubject(2);
-
-      subject.onNext(1);
-      subject.onNext(2);
-      subject.onNext(3);
-      subject.onComplete();
-
-      const scheduler = createVirtualTimeSchedulerResource(1);
-      const subscriber = new MockSubscriber(scheduler);
-      subject.subscribe(subscriber);
-
-      expect(subject.subscriberCount).toEqual(0);
-      scheduler.run();
-
-      expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
-      expect(subscriber.complete).toHaveBeenCalled();
-    });
-
-    test("when subject is not completed", () => {
-      const subject = createSubject(2);
-
-      subject.onNext(1);
-      subject.onNext(2);
-      subject.onNext(3);
-
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new MockSubscriber(scheduler);
-      subject.subscribe(subscriber);
-      scheduler.schedule({
-        run: _ => {
-          subject.onNext(4);
-          subject.onComplete();
-        },
-      });
-
-      expect(subject.subscriberCount).toEqual(1);
-      scheduler.run();
-
-      expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
-      expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
-      expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
-      expect(subscriber.complete).toHaveBeenCalled();
-    });
-
-    test("subscribe and dispose the subscription remove the observer", () => {
-      const subject = createSubject(2);
-
-      subject.onNext(1);
-      subject.onNext(2);
-      subject.onNext(3);
-
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new MockSubscriber(scheduler);
-
-      subject.subscribe(subscriber);
-      expect(subject.subscriberCount).toEqual(1);
-
-      subscriber.dispose();
-      expect(subject.subscriberCount).toEqual(0);
-
-      scheduler.run();
-      expect(subscriber.isDisposed).toBeTruthy();
-      expect(subscriber.next).toHaveBeenCalledTimes(0);
-    });
-
-    test("disposed subject ignores notifications", () => {
-      const subject = createSubject(2);
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new MockSubscriber(scheduler);
-
-      subject.subscribe(subscriber);
-      expect(subject.isDisposed).toBeFalsy();
-
-      subject.dispose();
-      expect(subject.isDisposed).toBeTruthy();
-
-      subject.onNext(1);
-      subject.onComplete();
-      expect(subscriber.next).toHaveBeenCalledTimes(0);
-      expect(subscriber.complete).toHaveBeenCalledTimes(0);
-    });
-
-    test("disposes subscriber if disposed", () => {
-      const subject = createSubject(2);
-      const scheduler = createVirtualTimeSchedulerResource();
-      const subscriber = new MockSubscriber(scheduler);
-
-      subject.dispose();
-      subject.subscribe(subscriber);
-      expect(subscriber.isDisposed).toBeTruthy();
-    });
-  });
-});
 
 const callbackAndDispose = (
   callback: () => void,
@@ -252,30 +89,6 @@ const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
 const createMockObserver = <T>(): ObserverLike<T> => ({
   onNext: jest.fn(),
   onComplete: jest.fn(),
-});
-
-test("lift", () => {
-  const onNext = <T>(onNext: (data: T) => void) =>
-    observe({
-      onNext: onNext,
-      onComplete: _ => {},
-    });
-  const scheduler = createVirtualTimeSchedulerResource();
-  const result: number[] = [];
-
-  const liftedObservable = pipe(
-    createObservable(observer => observer.onNext(1)),
-    onNext(_ => result.push(1)),
-  );
-
-  pipe(
-    liftedObservable,
-    onNext(_ => result.push(3)),
-    subscribe(scheduler),
-  );
-  scheduler.run();
-
-  expect(result).toEqual([1, 3]);
 });
 
 test("buffer", () => {
@@ -401,6 +214,149 @@ describe("concatAll", () => {
     expect(cb).toHaveBeenNthCalledWith(1, 1);
     expect(cb).toHaveBeenNthCalledWith(2, 2);
     expect(cb).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("createObservable", () => {
+  test("completes the subscriber if onSubscribe throws", () => {
+    const cause = new Error();
+    const observable = createObservable(_ => {
+      throw cause;
+    });
+    expect(() => pipe(observable, toValue())).toThrow(cause);
+  });
+
+  test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
+    const scheduler = createVirtualTimeSchedulerResource();
+    const disposable = createDisposable();
+
+    const subscription = pipe(
+      (_: ObserverLike<unknown>) => disposable,
+      createObservable,
+      subscribe(scheduler),
+    );
+    scheduler.run();
+
+    expect(disposable.isDisposed).toBeFalsy();
+    subscription.dispose();
+    expect(disposable.isDisposed).toBeTruthy();
+  });
+
+  test("when subscriber throws", () => {
+    const cause = new Error();
+
+    class ThrowingSubscriber<T> extends Subscriber<T> {
+      complete = jest.fn();
+
+      next(_: T) {
+        throw cause;
+      }
+    }
+
+    const observable = createObservable(observer => {
+      observer.onNext(1);
+    });
+
+    const scheduler = createVirtualTimeSchedulerResource();
+    const subscriber = new ThrowingSubscriber(scheduler);
+    observable.subscribe(subscriber);
+    scheduler.run();
+    expect(subscriber.complete).toBeCalledWith({ cause });
+  });
+});
+
+describe("createSubject", () => {
+  test("when subject is completed", () => {
+    const subject = createSubject(2);
+
+    subject.onNext(1);
+    subject.onNext(2);
+    subject.onNext(3);
+    subject.onComplete();
+
+    const scheduler = createVirtualTimeSchedulerResource(1);
+    const subscriber = new MockSubscriber(scheduler);
+    subject.subscribe(subscriber);
+
+    expect(subject.subscriberCount).toEqual(0);
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
+    expect(subscriber.complete).toHaveBeenCalled();
+  });
+
+  test("when subject is not completed", () => {
+    const subject = createSubject(2);
+
+    subject.onNext(1);
+    subject.onNext(2);
+    subject.onNext(3);
+
+    const scheduler = createVirtualTimeSchedulerResource();
+    const subscriber = new MockSubscriber(scheduler);
+    subject.subscribe(subscriber);
+    scheduler.schedule({
+      run: _ => {
+        subject.onNext(4);
+        subject.onComplete();
+      },
+    });
+
+    expect(subject.subscriberCount).toEqual(1);
+    scheduler.run();
+
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
+    expect(subscriber.complete).toHaveBeenCalled();
+  });
+
+  test("subscribe and dispose the subscription remove the observer", () => {
+    const subject = createSubject(2);
+
+    subject.onNext(1);
+    subject.onNext(2);
+    subject.onNext(3);
+
+    const scheduler = createVirtualTimeSchedulerResource();
+    const subscriber = new MockSubscriber(scheduler);
+
+    subject.subscribe(subscriber);
+    expect(subject.subscriberCount).toEqual(1);
+
+    subscriber.dispose();
+    expect(subject.subscriberCount).toEqual(0);
+
+    scheduler.run();
+    expect(subscriber.isDisposed).toBeTruthy();
+    expect(subscriber.next).toHaveBeenCalledTimes(0);
+  });
+
+  test("disposed subject ignores notifications", () => {
+    const subject = createSubject(2);
+    const scheduler = createVirtualTimeSchedulerResource();
+    const subscriber = new MockSubscriber(scheduler);
+
+    subject.subscribe(subscriber);
+    expect(subject.isDisposed).toBeFalsy();
+
+    subject.dispose();
+    expect(subject.isDisposed).toBeTruthy();
+
+    subject.onNext(1);
+    subject.onComplete();
+    expect(subscriber.next).toHaveBeenCalledTimes(0);
+    expect(subscriber.complete).toHaveBeenCalledTimes(0);
+  });
+
+  test("disposes subscriber if disposed", () => {
+    const subject = createSubject(2);
+    const scheduler = createVirtualTimeSchedulerResource();
+    const subscriber = new MockSubscriber(scheduler);
+
+    subject.dispose();
+    subject.subscribe(subscriber);
+    expect(subscriber.isDisposed).toBeTruthy();
   });
 });
 
@@ -727,6 +683,30 @@ test("keep", () => {
   expect(observer.onComplete).toBeCalledWith({ cause });
 });
 
+test("lift", () => {
+  const onNext = <T>(onNext: (data: T) => void) =>
+    observe({
+      onNext: onNext,
+      onComplete: _ => {},
+    });
+  const scheduler = createVirtualTimeSchedulerResource();
+  const result: number[] = [];
+
+  const liftedObservable = pipe(
+    createObservable(observer => observer.onNext(1)),
+    onNext(_ => result.push(1)),
+  );
+
+  pipe(
+    liftedObservable,
+    onNext(_ => result.push(3)),
+    subscribe(scheduler),
+  );
+  scheduler.run();
+
+  expect(result).toEqual([1, 3]);
+});
+
 test("merge", () => {
   const scheduler = createVirtualTimeSchedulerResource(1);
   const observer = createMockObserver();
@@ -875,6 +855,73 @@ test("scan", () => {
   expect(observer.onNext).toHaveBeenNthCalledWith(2, 3);
   expect(observer.onNext).toHaveBeenNthCalledWith(3, 6);
   expect(observer.onComplete).toBeCalledWith({ cause });
+});
+
+test("share", () => {
+  const scheduler = createVirtualTimeSchedulerResource();
+
+  const replayed = pipe(
+    concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),
+    share(scheduler, 1),
+  );
+  const replayedSubscription = subscribe(scheduler)(replayed);
+
+  const liftedObserver = createMockObserver();
+  let liftedSubscription = disposed;
+  scheduler.schedule(
+    {
+      run: _ => {
+        liftedSubscription = pipe(
+          replayed,
+          observe(liftedObserver),
+          subscribe(scheduler),
+        );
+      },
+    },
+    1,
+  );
+
+  const anotherLiftedSubscriptionObserver = createMockObserver();
+  let anotherLiftedSubscription = disposed;
+  scheduler.schedule(
+    {
+      run: _ => {
+        replayedSubscription.dispose();
+        liftedSubscription.dispose();
+
+        anotherLiftedSubscription = pipe(
+          replayed,
+          observe(anotherLiftedSubscriptionObserver),
+          subscribe(scheduler),
+        );
+      },
+    },
+    3,
+  );
+
+  scheduler.run();
+
+  anotherLiftedSubscription.dispose();
+
+  expect(liftedObserver.onNext).toBeCalledTimes(1);
+  expect(liftedObserver.onNext).toBeCalledWith(2);
+  expect(liftedObserver.onComplete).toBeCalledTimes(1);
+
+  expect(anotherLiftedSubscriptionObserver.onNext).toBeCalledTimes(3);
+  expect(anotherLiftedSubscriptionObserver.onComplete).toBeCalledTimes(1);
+});
+
+describe("subscribe", () => {
+  test("auto-disposes the subscription on complete", () => {
+    const observable = createObservable(observer => observer.onComplete());
+    const scheduler = createVirtualTimeSchedulerResource();
+
+    const subscription = pipe(observable, subscribe(scheduler));
+    expect(subscription.isDisposed).toBeFalsy();
+
+    scheduler.run();
+    expect(subscription.isDisposed).toBeTruthy();
+  });
 });
 
 test("switchAll", () => {
@@ -1106,56 +1153,3 @@ test("withLatestFrom", () => {
   expect(cb).toHaveBeenNthCalledWith(6, [3, 3]);
 });
 
-test("share", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
-
-  const replayed = pipe(
-    concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),
-    share(scheduler, 1),
-  );
-  const replayedSubscription = subscribe(scheduler)(replayed);
-
-  const liftedObserver = createMockObserver();
-  let liftedSubscription = disposed;
-  scheduler.schedule(
-    {
-      run: _ => {
-        liftedSubscription = pipe(
-          replayed,
-          observe(liftedObserver),
-          subscribe(scheduler),
-        );
-      },
-    },
-    1,
-  );
-
-  const anotherLiftedSubscriptionObserver = createMockObserver();
-  let anotherLiftedSubscription = disposed;
-  scheduler.schedule(
-    {
-      run: _ => {
-        replayedSubscription.dispose();
-        liftedSubscription.dispose();
-
-        anotherLiftedSubscription = pipe(
-          replayed,
-          observe(anotherLiftedSubscriptionObserver),
-          subscribe(scheduler),
-        );
-      },
-    },
-    3,
-  );
-
-  scheduler.run();
-
-  anotherLiftedSubscription.dispose();
-
-  expect(liftedObserver.onNext).toBeCalledTimes(1);
-  expect(liftedObserver.onNext).toBeCalledWith(2);
-  expect(liftedObserver.onComplete).toBeCalledTimes(1);
-
-  expect(anotherLiftedSubscriptionObserver.onNext).toBeCalledTimes(3);
-  expect(anotherLiftedSubscriptionObserver.onComplete).toBeCalledTimes(1);
-});
