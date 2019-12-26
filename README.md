@@ -5,15 +5,15 @@ Fast modern reactive Javascript programming library
 ## Example Usage
 
 ```typescript
-import { subscribe } from "@reactive-js/rx";
+import { pipe } from "@reactive-js/pipe";
 import {
   exhaust,
   fromArray,
   generate,
   map,
   onNext,
-} from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+  subscribe 
+} from "@reactive-js/rx";
 import { normalPriority } from "@reactive-js/react-scheduler";
 
 // The pipe function can be used to compose operators.
@@ -43,14 +43,10 @@ const subscription = pipe(
 ### Reactive Asynchronous Programming (RX)
 
 - [@reactive-js/rx](./packages/rx)
-- [@reactive-js/observable](./packages/observable)
-- [@reactive-js/observable-resource](./packages/observable-resource)
 
 ### Interactive Asynchronous Programming (IX)
 
 - [@reactive-js/ix](./packages/ix/docs)
-- [@reactive-js/async-iterator](./packages/async-iterator/docs)
-- [@reactive-js/async-iterator-resource](./packages/async-iterator-resource/docs)
 
 ### Schedulers
 
@@ -77,5 +73,3 @@ const subscription = pipe(
 #### Web
 
 - [@reactive-js/web](./packages/web/docs)
-
-## RxJS/TC39 Comparison
