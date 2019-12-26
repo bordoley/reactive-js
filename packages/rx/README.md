@@ -2,7 +2,7 @@
 
 Reactive-Js's core reactive programming API.
 
-This library defines the core interfaces (ObservableLike, ObserverLike, and SubscriberLike) to support an event-driven, reactive, asynchronous programming model. In addition, basic utilities for safely creating and using Observable streams are provided. The [@reactive-js/observable](../observable) library provides additional utilities for creating and transforming observable sources.
+This library defines the core interfaces (ObservableLike, ObserverLike, and SubscriberLike) to support an event-driven, reactive, asynchronous programming model. In addition, basic utilities for safely creating, transforming, and using Observable streams are provided. 
 
 Unlike in RxJS, reactive-js Observable streams are always asynchronous. Calling subscribe on an Observable only sets up a subscription, but does not synchronously produce values (doing so is a programming error). Instead, reactive-js deeply integrates scheduling into the Subscriber type. During subscription setup ,Observable sources may schedule work to be done in the future, such as iterating through an iterable source.
 
