@@ -15,7 +15,6 @@ class ThrowsObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-
     subscriber.schedule(this, this.delay);
   }
 }
