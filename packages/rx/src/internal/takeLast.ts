@@ -92,7 +92,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
         result = this.loop(shouldYield);
       } else {
         result = this.loopFast();
-      } 
+      }
 
       if (result !== undefined) {
         return result;

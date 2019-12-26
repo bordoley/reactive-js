@@ -73,9 +73,7 @@ const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
 };
 
 class WebScheduler extends AbstractScheduler {
-  protected shouldCallbackYield(startTime: number): boolean {
-    return shouldCallbackYield(startTime);
-  }
+  protected shouldCallbackYield = shouldCallbackYield;
 
   scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays

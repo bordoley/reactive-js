@@ -17,16 +17,12 @@ import {
 import { createSchedulerWithPriority } from "@reactive-js/schedulers";
 import {
   createDisposable,
-  disposed,
   DisposableLike,
   SerialDisposableLike,
   createSerialDisposable,
 } from "@reactive-js/disposable";
 
-let currentDisposable: DisposableLike = disposed;
-
-const shouldYield = () =>
-  currentDisposable.isDisposed || unstable_shouldYield();
+const shouldYield = unstable_shouldYield;
 
 const scheduleCallback = (
   callback: () => void,
@@ -60,9 +56,7 @@ const createCallback = (
 ): (() => void) => {
   const callback = () => {
     if (!disposable.isDisposed) {
-      currentDisposable = disposable;
       const result = continuation.run(shouldYield) || undefined;
-      currentDisposable = disposed;
 
       if (result !== undefined) {
         const { continuation: nextContinuation, delay = 0 } = result;
