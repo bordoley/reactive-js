@@ -3,9 +3,9 @@ import {
   VirtualTimeSchedulerResourceLike,
 } from "./virtualTimeScheduler";
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
+import { SchedulerContinuationResultLike } from "@reactive-js/scheduler";
 
 // Intentionally defined as a module function for perf reasons.
-const shouldYieldFalse = () => false;
 const shouldYieldTrue = () => true;
 
 // @ts-ignore override shouldYield for perf
@@ -16,7 +16,7 @@ class SynchronousSchedulerResource extends AbstractVirtualTimeSchedulerResource
   private readonly queue: (() => void)[] = [];
 
   // @ts-ignore override shouldYield for perf
-  private shouldYield = shouldYieldFalse;
+  private shouldYield?: () => boolean;
 
   protected shouldCallbackYield(_: number): boolean {
     return false;
@@ -40,9 +40,9 @@ class SynchronousSchedulerResource extends AbstractVirtualTimeSchedulerResource
     return super.next();
   }
 
-  run() {
-    this.shouldYield = shouldYieldFalse;
-    super.run();
+  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+    this.shouldYield = undefined;
+    return super.run(shouldYield);
   }
 }
 

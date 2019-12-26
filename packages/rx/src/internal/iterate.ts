@@ -6,6 +6,7 @@ import {
 import { ObservableLike } from "./interfaces";
 import { subscribe } from "./subscribe";
 
+/** @ignore */
 export const iterate = <T>(
   schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
 ): OperatorLike<ObservableLike<T>, void> => observable => {

@@ -1152,4 +1152,3 @@ test("withLatestFrom", () => {
   expect(cb).toHaveBeenNthCalledWith(5, [2, 3]);
   expect(cb).toHaveBeenNthCalledWith(6, [3, 3]);
 });
-

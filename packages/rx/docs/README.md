@@ -530,7 +530,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`delay?`: undefined | number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **empty**<**T**>(`delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -538,9 +538,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`delay?` | undefined &#124; number |
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

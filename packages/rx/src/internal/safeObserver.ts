@@ -38,6 +38,16 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     }
   }
 
+  private loopFast(): SchedulerContinuationResultLike | void {
+    const subscriber = this.subscriber;
+    const nextQueue = this.nextQueue;
+
+    while (nextQueue.length > 0 && !subscriber.isDisposed) {
+      const next = nextQueue.shift() as T;
+      subscriber.next(next);
+    }
+  }
+
   onComplete(error?: ErrorLike) {
     if (this.isCompleted || this.subscriber.isDisposed) {
       return;
@@ -57,9 +67,15 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     this.scheduleDrainQueue();
   }
 
-  run(shouldYield: () => boolean) {
+  run(shouldYield?: () => boolean) {
     try {
-      const result = this.loop(shouldYield);
+      let result: SchedulerContinuationResultLike | void;
+      if (shouldYield !== undefined) {
+        result = this.loop(shouldYield);
+      } else {
+        result = this.loopFast();
+      } 
+
       if (result !== undefined) {
         return result;
       }

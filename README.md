@@ -12,7 +12,7 @@ import {
   generate,
   map,
   onNext,
-  subscribe 
+  subscribe
 } from "@reactive-js/rx";
 import { normalPriority } from "@reactive-js/react-scheduler";
 

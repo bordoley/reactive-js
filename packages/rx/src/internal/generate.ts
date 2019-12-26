@@ -20,7 +20,6 @@ class GenerateObservable<T>
   ) {}
 
   private loop(shouldYield: () => boolean) {
-    const delay = this.delay;
     const generator = this.generator;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
@@ -28,14 +27,40 @@ class GenerateObservable<T>
     do {
       subscriber.next(acc);
       acc = generator(acc);
-    } while (!shouldYield() && !subscriber.isDisposed && delay === 0);
+    } while (
+      !(shouldYield() || subscriber.isDisposed)
+    );
     this.acc = acc;
   }
 
-  run(shouldYield: () => boolean) {
+  private loopFast() {
+    const generator = this.generator;
+    const subscriber = this.subscriber as SubscriberLike<T>;
+
+    let acc = this.acc;
+    do {
+      subscriber.next(acc);
+      acc = generator(acc);
+    } while (!subscriber.isDisposed);
+    this.acc = acc;
+  }
+
+  private emitDelayedValue() {
+    let acc = this.acc;
+    (this.subscriber as SubscriberLike<T>).next(acc);
+    this.acc = this.generator(acc);
+  }
+
+  run(shouldYield?: () => boolean) {
     const subscriber = this.subscriber as SubscriberLike<T>;
     try {
-      this.loop(shouldYield);
+      if (this.delay > 0) {
+        this.emitDelayedValue();
+      } else if (shouldYield !== undefined) {
+        this.loop(shouldYield);
+      } else {
+        this.loopFast();
+      }
     } catch (cause) {
       subscriber.complete({ cause });
     }

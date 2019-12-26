@@ -15,12 +15,12 @@ import {
   subscribe,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { 
-  AsyncIteratorLike, 
-  AsyncIteratorResourceLike, 
+import {
+  AsyncIteratorLike,
+  AsyncIteratorResourceLike,
   EventEmitterResourceLike,
   StateStoreResourceLike,
-  StateUpdaterLike, 
+  StateUpdaterLike,
 } from "./interfaces";
 
 class AsyncIteratorResourceImpl<TReq, T>

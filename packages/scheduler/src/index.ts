@@ -7,7 +7,7 @@ import { DisposableLike } from "@reactive-js/disposable";
  * work to be performed.
  */
 export interface SchedulerContinuationLike {
-  run(shouldYield: () => boolean): SchedulerContinuationResultLike | void;
+  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void;
 }
 
 export interface SchedulerContinuationResultLike {
