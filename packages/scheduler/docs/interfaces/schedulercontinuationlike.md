@@ -21,12 +21,12 @@ work to be performed.
 
 ###  run
 
-▸ **run**(`shouldYield`: function): *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
+▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
 
 **Parameters:**
 
-▪ **shouldYield**: *function*
-
-▸ (): *boolean*
+Name | Type |
+------ | ------ |
+`shouldYield?` | undefined &#124; function |
 
 **Returns:** *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*

@@ -13,7 +13,7 @@ class FromScheduledValuesObservable<T>
   constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
   private loop(
-    shouldYield: () => boolean,
+    shouldYield?: () => boolean,
   ): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const values = this.values;
@@ -27,7 +27,7 @@ class FromScheduledValuesObservable<T>
       if (index < values.length) {
         const delay = values[index][0] || 0;
 
-        if (delay > 0 || shouldYield()) {
+        if (delay > 0 || (shouldYield !== undefined && shouldYield())) {
           this.index = index;
           return { continuation: this, delay };
         }
@@ -36,7 +36,7 @@ class FromScheduledValuesObservable<T>
     return;
   }
 
-  run(shouldYield: () => boolean) {
+  run(shouldYield?: () => boolean) {
     let error = undefined;
     try {
       const result = this.loop(shouldYield);

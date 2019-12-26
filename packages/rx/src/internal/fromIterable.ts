@@ -13,7 +13,7 @@ class FromIteratorObservable<T>
     continuation: this,
     delay: this.delay,
   };
-  
+
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
@@ -24,7 +24,6 @@ class FromIteratorObservable<T>
   ): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
-    const delay = this.delay;
 
     for (
       let next = iterator.next();
@@ -33,16 +32,53 @@ class FromIteratorObservable<T>
     ) {
       subscriber.next(next.value);
 
-      if (shouldYield() || delay !== 0) {
+      if (shouldYield()) {
         return this.continuationResult;
       }
     }
+
+    return;
   }
 
-  run(shouldYield: () => boolean) {
+  private loopFast(): SchedulerContinuationResultLike | void {
+    const iterator = this.iterator;
+    const subscriber = this.subscriber as SubscriberLike<T>;
+
+    for (
+      let next = iterator.next();
+      !next.done && !subscriber.isDisposed;
+      next = iterator.next()
+    ) {
+      subscriber.next(next.value);
+    }
+
+    return;
+  }
+
+  private emitDelayedValue() {
+    const next = this.iterator.next();
+    const subscriber = this.subscriber as SubscriberLike<T>;
+
+    if (!next.done && !subscriber.isDisposed) {
+      subscriber.next(next.value);
+      return this.continuationResult;
+    } else {
+      return;
+    }
+  }
+
+  run(shouldYield?: () => boolean) {
     let error = undefined;
     try {
-      const result = this.loop(shouldYield);
+      let result: SchedulerContinuationResultLike | void;
+      if (this.delay > 0) {
+        result = this.emitDelayedValue();
+      } else if (shouldYield !== undefined) {
+        result = this.loop(shouldYield);
+      } else {
+        result = this.loopFast();
+      }
+
       if (result !== undefined) {
         return result;
       }

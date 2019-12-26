@@ -58,6 +58,22 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     return;
   }
 
+  loopFast() {
+    const last = this.last;
+    const length = last.length;
+    const delegate = this.delegate;
+
+    let index = this.index;
+    while (index < length && !delegate.isDisposed) {
+      const next = last[index];
+      delegate.next(next);
+      index++;
+    }
+
+    last.length = 0;
+    return;
+  }
+
   next(data: T) {
     if (!this.isDisposed) {
       this.last.push(data);
@@ -67,11 +83,17 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  run(shouldYield: () => boolean) {
+  run(shouldYield?: () => boolean) {
     let error = undefined;
 
     try {
-      const result = this.loop(shouldYield);
+      let result: SchedulerContinuationResultLike | void;
+      if (shouldYield !== undefined) {
+        result = this.loop(shouldYield);
+      } else {
+        result = this.loopFast();
+      } 
+
       if (result !== undefined) {
         return result;
       }

@@ -3,16 +3,19 @@ import {
   DisposableLike,
   throwIfDisposed,
 } from "@reactive-js/disposable";
-import { SchedulerResourceLike } from "@reactive-js/scheduler";
+import {
+  SchedulerResourceLike,
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
+} from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerResource } from "./abstractScheduler";
 
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerResourceLike
   extends SchedulerResourceLike,
-    Iterator<void> {
-  run(): void;
-}
+    Iterator<void>,
+    SchedulerContinuationLike {}
 
 const iteratorYield = {
   done: false,
@@ -26,6 +29,7 @@ const iteratorDone = {
 
 /** @ignore */
 export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSchedulerResource {
+  private readonly continuationResult = { continuation: this };
   protected abstract step(): boolean;
 
   next(): IteratorResult<void> {
@@ -48,12 +52,36 @@ export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSched
     return iteratorDone;
   }
 
-  run() {
-    throwIfDisposed(this);
+  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+    while (this.step()) {
+      if (shouldYield()) {
+        return this.continuationResult;
+      }
+    }
+    return;
+  }
 
+  loopFast() {
     // eslint-disable-next-line no-empty
     while (this.step()) {}
-    this.dispose();
+  }
+
+  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+    throwIfDisposed(this);
+
+    let result;
+    if (shouldYield !== undefined) {
+      result = this.loop(shouldYield);
+    } else {
+      result = this.loopFast();
+    }
+
+    if (result !== undefined) {
+      return result;
+    } else {
+      this.dispose();
+      return;
+    }
   }
 }
 

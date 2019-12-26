@@ -106,7 +106,7 @@ class PrioritySchedulerResourceImpl
     return this;
   }
 
-  run(shouldYield: () => boolean) {
+  run(shouldYield?: () => boolean) {
     for (
       let currentTask = this.queue.peek();
       currentTask !== undefined;
@@ -147,12 +147,16 @@ class PrioritySchedulerResourceImpl
       }
 
       const nextTask = this.queue.peek();
-      if (nextTask !== undefined && shouldYield()) {
+      if (nextTask !== undefined) {
         const now = this.now;
-        return {
-          continuation: this,
-          delay: Math.max(nextTask.dueTime - now, 0),
-        };
+        const nextTaskDelay = Math.max(nextTask.dueTime - now, 0);
+
+        if (nextTaskDelay > 0 || (shouldYield !== undefined && shouldYield())) {
+          return {
+            continuation: this,
+            delay: nextTaskDelay,
+          };
+        }
       }
     }
     return;

@@ -9,7 +9,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
     private readonly delay: number,
   ) {}
 
-  run(_: () => boolean) {
+  run(_?: () => boolean) {
     (this.subscriber as SubscriberLike<T>).complete(this.error);
   }
 

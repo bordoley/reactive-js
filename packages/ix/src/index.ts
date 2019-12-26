@@ -1,12 +1,12 @@
-export { 
-  AsyncIteratorLike, 
-  AsyncIteratorOperatorLike, 
-  AsyncIteratorResourceLike, 
+export {
+  AsyncIteratorLike,
+  AsyncIteratorOperatorLike,
+  AsyncIteratorResourceLike,
   EventEmitterLike,
   EventEmitterResourceLike,
-  StateStoreLike, 
+  StateStoreLike,
   StateStoreResourceLike,
-  StateUpdaterLike, 
+  StateUpdaterLike,
 } from "./internal/interfaces";
 
 export {
@@ -16,7 +16,4 @@ export {
   createPersistentStateStore,
 } from "./internal/create";
 
-export {
-  lift,
-  liftReq,
-} from "./internal/lift";
+export { lift, liftReq } from "./internal/lift";
