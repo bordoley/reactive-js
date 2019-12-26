@@ -19,7 +19,6 @@
 
 * [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
-* [createSynchronousSchedulerResource](README.md#const-createsynchronousschedulerresource)
 * [createVirtualTimeSchedulerResource](README.md#const-createvirtualtimeschedulerresource)
 
 ## Functions
@@ -50,14 +49,6 @@ Name | Type |
 `priority` | number |
 
 **Returns:** *SchedulerLike*
-
-___
-
-### `Const` createSynchronousSchedulerResource
-
-▸ **createSynchronousSchedulerResource**(): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
-
-**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
 
 ___
 

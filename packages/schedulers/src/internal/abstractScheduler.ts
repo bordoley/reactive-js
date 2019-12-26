@@ -1,7 +1,6 @@
 import {
   createDisposable,
   createSerialDisposable,
-  disposed,
   DisposableLike,
   DisposableOrTeardown,
   SerialDisposableLike,
@@ -14,11 +13,8 @@ import {
 
 /** @noInheritDoc */
 export abstract class AbstractScheduler implements SchedulerLike {
-  private currentDisposable: DisposableLike = disposed;
   private startTime = 0;
-  private shouldYield = () =>
-    this.currentDisposable.isDisposed ||
-    this.shouldCallbackYield(this.startTime);
+  private shouldYield = () => this.shouldCallbackYield(this.startTime);
 
   protected abstract shouldCallbackYield(startTime: number): boolean;
 
@@ -36,9 +32,7 @@ export abstract class AbstractScheduler implements SchedulerLike {
     const callback = () => {
       if (!disposable.isDisposed) {
         this.startTime = this.now;
-        this.currentDisposable = disposable;
         const result = continuation.run(this.shouldYield) || undefined;
-        this.currentDisposable = disposed;
 
         if (result !== undefined) {
           const { continuation: nextContinuation, delay = 0 } = result;

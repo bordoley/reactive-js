@@ -9,8 +9,6 @@ export {
   VirtualTimeSchedulerResourceLike,
 } from "./internal/virtualTimeScheduler";
 
-export { createSynchronousSchedulerResource } from "./internal/synchronousScheduler";
-
 export { createSchedulerWithPriority } from "./internal/schedulerWithPriority";
 
 export {

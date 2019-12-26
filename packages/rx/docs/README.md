@@ -1261,7 +1261,7 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **schedulerFactory**: *function*=  createSynchronousSchedulerResource
+▪`Default value`  **schedulerFactory**: *function*=  defaultSchedulerFactory
 
 ▸ (): *VirtualTimeSchedulerResourceLike*
 

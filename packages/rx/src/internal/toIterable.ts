@@ -1,7 +1,7 @@
 import { throwIfDisposed } from "@reactive-js/disposable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import {
-  createSynchronousSchedulerResource,
+  createVirtualTimeSchedulerResource,
   VirtualTimeSchedulerResourceLike,
 } from "@reactive-js/schedulers";
 import { ObservableLike, ErrorLike, ObserverLike } from "./interfaces";
@@ -77,9 +77,9 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     return iteratorDone;
   }
 }
-
+const defaultSchedulerFactory = () => createVirtualTimeSchedulerResource(1);
 const toIterator = <T>(
-  schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
+  schedulerFactory: () => VirtualTimeSchedulerResourceLike = defaultSchedulerFactory,
 ): OperatorLike<ObservableLike<T>, Iterator<T>> => observable => {
   const scheduler = schedulerFactory();
   return new ObservableIteratorImpl(scheduler, observable);
@@ -97,6 +97,6 @@ class IterableObservable<T> implements Iterable<T> {
 }
 
 export const toIterable = <T>(
-  schedulerFactory: () => VirtualTimeSchedulerResourceLike = createSynchronousSchedulerResource,
+  schedulerFactory: () => VirtualTimeSchedulerResourceLike = defaultSchedulerFactory,
 ): OperatorLike<ObservableLike<T>, Iterable<T>> => observable =>
   new IterableObservable(observable, schedulerFactory);

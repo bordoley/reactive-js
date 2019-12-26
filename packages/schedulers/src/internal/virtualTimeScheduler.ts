@@ -8,8 +8,8 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerResource } from "./abstractScheduler";
+import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerResourceLike
@@ -27,64 +27,6 @@ const iteratorDone = {
   value: undefined,
 };
 
-/** @ignore */
-export abstract class AbstractVirtualTimeSchedulerResource extends AbstractSchedulerResource {
-  private readonly continuationResult = { continuation: this };
-  protected abstract step(): boolean;
-
-  next(): IteratorResult<void> {
-    throwIfDisposed(this);
-
-    const hasMore = this.step();
-    return hasMore ? iteratorYield : iteratorDone;
-  }
-
-  return(): IteratorResult<void> {
-    this.dispose();
-    return iteratorDone;
-  }
-
-  throw(e?: any): IteratorResult<void> {
-    this.dispose;
-    if (e !== undefined) {
-      throw e;
-    }
-    return iteratorDone;
-  }
-
-  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
-    while (this.step()) {
-      if (shouldYield()) {
-        return this.continuationResult;
-      }
-    }
-    return;
-  }
-
-  loopFast() {
-    // eslint-disable-next-line no-empty
-    while (this.step()) {}
-  }
-
-  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
-    throwIfDisposed(this);
-
-    let result;
-    if (shouldYield !== undefined) {
-      result = this.loop(shouldYield);
-    } else {
-      result = this.loopFast();
-    }
-
-    if (result !== undefined) {
-      return result;
-    } else {
-      this.dispose();
-      return;
-    }
-  }
-}
-
 interface VirtualTask {
   callback: () => void;
   disposable: DisposableLike;
@@ -99,11 +41,12 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl
-  extends AbstractVirtualTimeSchedulerResource
+class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
   implements VirtualTimeSchedulerResourceLike {
-  now = 0;
+  private readonly continuationResult = { continuation: this };
   private microTaskTicks = 0;
+  now = 0;
+  private runShouldYield?: () => boolean;
   private taskIDCount = 0;
   private readonly taskQueue: PriorityQueueLike<
     VirtualTask
@@ -113,9 +56,62 @@ class VirtualTimeSchedulerResourceImpl
     super();
   }
 
-  protected shouldCallbackYield(_: number): boolean {
-    this.microTaskTicks++;
-    return this.microTaskTicks >= this.maxMicroTaskTicks;
+  private loop(
+    shouldYield: () => boolean,
+  ): SchedulerContinuationResultLike | void {
+    this.runShouldYield = shouldYield;
+    while (this.step()) {
+      if (shouldYield()) {
+        this.runShouldYield = undefined;
+        return this.continuationResult;
+      }
+    }
+
+    this.runShouldYield = undefined;
+    return;
+  }
+
+  private loopFast() {
+    // eslint-disable-next-line no-empty
+    while (this.step()) {}
+  }
+
+  next(): IteratorResult<void> {
+    throwIfDisposed(this);
+
+    const hasMore = this.step();
+    return hasMore ? iteratorYield : iteratorDone;
+  }
+
+  return(): IteratorResult<void> {
+    this.dispose();
+    return iteratorDone;
+  }
+
+  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+    throwIfDisposed(this);
+
+    if (
+      this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
+      shouldYield === undefined
+    ) {
+      // @ts-ignore override shouldYield for perf
+      this.shouldYield = undefined;
+    }
+
+    let result: SchedulerContinuationResultLike | void;
+    if (shouldYield !== undefined) {
+      result = this.loop(shouldYield);
+    } else {
+      result = this.loopFast();
+    }
+
+    if (result !== undefined) {
+      return result;
+    } else {
+      this.dispose();
+      return;
+    }
   }
 
   protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
@@ -132,7 +128,16 @@ class VirtualTimeSchedulerResourceImpl
     return disposable;
   }
 
-  protected step(): boolean {
+  protected shouldCallbackYield(_: number): boolean {
+    const runShouldYield = this.runShouldYield;
+    this.microTaskTicks++;
+    return (
+      this.microTaskTicks >= this.maxMicroTaskTicks ||
+      (runShouldYield !== undefined && runShouldYield())
+    );
+  }
+
+  private step(): boolean {
     const task = this.taskQueue.pop();
 
     if (task !== undefined) {
@@ -148,6 +153,14 @@ class VirtualTimeSchedulerResourceImpl
     }
 
     return this.taskQueue.count > 0;
+  }
+
+  throw(e?: any): IteratorResult<void> {
+    this.dispose;
+    if (e !== undefined) {
+      throw e;
+    }
+    return iteratorDone;
   }
 }
 

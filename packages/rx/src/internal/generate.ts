@@ -27,9 +27,7 @@ class GenerateObservable<T>
     do {
       subscriber.next(acc);
       acc = generator(acc);
-    } while (
-      !(shouldYield() || subscriber.isDisposed)
-    );
+    } while (!(shouldYield() || subscriber.isDisposed));
     this.acc = acc;
   }
 
