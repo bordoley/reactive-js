@@ -1,27 +1,22 @@
+import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposable";
+import { OperatorLike, pipe } from "@reactive-js/pipe";
 import {
   createSubject,
+  distinctUntilChanged,
+  ignoreElements,
   merge,
   MulticastObservableLike,
   MulticastObservableResourceLike,
-  SubjectResourceLike,
-  SubscriberLike,
-  subscribe,
-} from "@reactive-js/rx";
-
-import {
-  distinctUntilChanged,
-  ignoreElements,
+  ObservableLike,
   onNext,
   scan,
   share,
   startWith,
-} from "@reactive-js/observable";
-
-import { pipe } from "@reactive-js/pipe";
-
+  SubjectResourceLike,
+  SubscriberLike,
+  subscribe,
+} from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-
-import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposable";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends MulticastObservableLike<T> {
@@ -177,3 +172,61 @@ export const createPersistentStateStore = <T>(
     dispatcher,
   );
 };
+
+export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
+  (iter: AsyncIteratorLike<TSrcReq, TSrc>): AsyncIteratorLike<TReq, T>;
+}
+
+class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
+  constructor(
+    readonly dispatcher: (req: TReq) => void,
+    readonly observable: MulticastObservableLike<T>,
+  ) {}
+
+  get subscriberCount(): number {
+    return this.observable.subscriberCount;
+  }
+
+  dispatch(req: TReq) {
+    this.dispatcher(req);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.observable.subscribe(subscriber);
+  }
+}
+
+const liftImpl = <TReq, T, TReqA, TA>(
+  operator?: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
+  dispatchOperator?: (dispatcher: (req: TReq) => void) => (req: TReqA) => void,
+): AsyncIteratorOperatorLike<TReq, T, TReqA, TA> => iterator => {
+  // Cheat here. AsyncIteratorResourceImpl follows the same protocol, so
+  // dynamically pull properties off of it.
+  const observable: MulticastObservableLike<T> =
+    (iterator as any).observable || iterator;
+  const dispatcher: (req: TReq) => void =
+    (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
+
+  const liftedObservable =
+    operator !== undefined ? operator(observable) : observable;
+
+  const liftedDispatcher: (req: TReqA) => void =
+    dispatchOperator !== undefined
+      ? dispatchOperator(dispatcher)
+      : (dispatcher as any);
+
+  return new LiftedIteratorImpl(
+    liftedDispatcher,
+    liftedObservable as MulticastObservableLike<TA>,
+  );
+};
+
+export const lift = <TReq, T, TA>(
+  operator: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
+): AsyncIteratorOperatorLike<TReq, T, TReq, TA> =>
+  liftImpl(operator, undefined);
+
+export const liftReq = <TReq, T, TReqA>(
+  operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
+): AsyncIteratorOperatorLike<TReq, T, TReqA, T> =>
+  liftImpl(undefined, operator);

@@ -1,8 +1,4 @@
-import {
-  ErrorLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {

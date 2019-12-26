@@ -1,13 +1,15 @@
 import { AsyncIteratorLike } from "@reactive-js/ix";
+import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
-  subscribe,
   ErrorLike,
   ObservableLike,
+  observe,
   ObserverLike,
+  subscribe,
+  subscribeOn,
+  throttle,
 } from "@reactive-js/rx";
-import { observe, throttle, subscribeOn } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
 
