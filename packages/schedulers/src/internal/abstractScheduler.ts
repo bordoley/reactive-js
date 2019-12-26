@@ -13,10 +13,7 @@ import {
 
 /** @noInheritDoc */
 export abstract class AbstractScheduler implements SchedulerLike {
-  private startTime = 0;
-  private shouldYield = () => this.shouldCallbackYield(this.startTime);
-
-  protected abstract shouldCallbackYield(startTime: number): boolean;
+  protected abstract get shouldYield(): (() => boolean) | undefined;
 
   protected abstract scheduleCallback(
     callback: () => void,
@@ -31,7 +28,6 @@ export abstract class AbstractScheduler implements SchedulerLike {
   ): () => void {
     const callback = () => {
       if (!disposable.isDisposed) {
-        this.startTime = this.now;
         const result = continuation.run(this.shouldYield) || undefined;
 
         if (result !== undefined) {
