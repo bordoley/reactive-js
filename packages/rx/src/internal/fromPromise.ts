@@ -1,9 +1,6 @@
-import {
-  ObservableLike,
-  ObserverLike,
-} from "./interfaces";
-import { createObservable } from "./createObservable";
 import { createDisposable } from "@reactive-js/disposable";
+import { createObservable } from "./createObservable";
+import { ObservableLike, ObserverLike } from "./interfaces";
 
 export const fromPromise = <T>(
   factory: () => Promise<T>,

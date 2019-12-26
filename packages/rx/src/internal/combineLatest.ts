@@ -1,10 +1,6 @@
-import {
-  ErrorLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
 import { defer } from "./defer";
+import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { DelegatingSubscriber } from "./subscriber";
 
 class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
   private hasProducedValue = false;

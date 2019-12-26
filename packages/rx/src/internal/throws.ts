@@ -1,5 +1,5 @@
-import { ObservableLike, SubscriberLike, ErrorLike } from "./interfaces";
 import { defer } from "./defer";
+import { ObservableLike, SubscriberLike, ErrorLike } from "./interfaces";
 
 class ThrowsObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;

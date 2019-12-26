@@ -1,9 +1,4 @@
-import {
-  ErrorLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
-
+import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {

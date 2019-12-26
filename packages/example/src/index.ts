@@ -1,11 +1,13 @@
-import { fromArray, generate, subscribe } from "@reactive-js/rx";
+import { createSchedulerWithPriority } from "@reactive-js/node";
+import { pipe } from "@reactive-js/pipe";
 import {
   exhaust,
+  fromArray,
+  generate,
   map,
   onNext,
-} from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
-import { createSchedulerWithPriority } from "@reactive-js/node";
+  subscribe,
+} from "@reactive-js/rx";
 
 const scheduler = createSchedulerWithPriority(500);
 

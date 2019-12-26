@@ -1,6 +1,6 @@
 import { StateStoreLike, StateUpdaterLike } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
-import { map, scan } from "@reactive-js/observable";
+import { map, scan } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo } from "react";

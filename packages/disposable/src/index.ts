@@ -66,7 +66,9 @@ class DisposableImpl implements DisposableLike {
           this.disposables.push(d);
 
           if (!(d instanceof Function)) {
-            d.add(() => { this.doRemove(d) })
+            d.add(() => {
+              this.doRemove(d);
+            });
           }
         }
       }

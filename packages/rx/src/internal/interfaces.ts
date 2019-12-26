@@ -43,10 +43,22 @@ export interface SubscriberLike<T> extends SchedulerResourceLike {
 }
 
 /**
+ * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
+ */
+export interface SubscriberOperatorLike<A, B> {
+  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
+}
+
+/**
  * The source of notifications which may be observed by a SubscriberLike instance.
  */
 export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
+}
+
+/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
+export interface ObservableOperatorLike<A, B> {
+  (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
 /** @noInheritDoc */

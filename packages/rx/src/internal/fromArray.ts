@@ -1,9 +1,9 @@
+import { defer } from "./defer";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { defer } from "./defer";
 
 class FromArrayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
