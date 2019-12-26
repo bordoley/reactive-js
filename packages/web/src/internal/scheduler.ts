@@ -20,71 +20,72 @@ const now =
 const yieldInterval = 5;
 const maxYieldInterval = 300;
 
-const shouldCallbackYield =
-  navigator !== undefined &&
-  (navigator as any).scheduling !== undefined &&
-  (navigator as any).scheduling.isInputPending !== undefined
-    ? (startTime: number) => {
-        const currentTime = now();
-        const deadline = startTime + yieldInterval;
-        const maxDeadline = startTime + maxYieldInterval;
-        const inputPending = (navigator as any).scheduling.isInputPending();
-
-        return (
-          (currentTime >= deadline && inputPending) ||
-          currentTime >= maxDeadline
-        );
-      }
-    : (startTime: number) => now() >= startTime + yieldInterval;
-
-let channel: MessageChannel | undefined = undefined;
-
-const scheduleImmediate = (callback: () => void): DisposableLike => {
-  const disposable = createDisposable();
-  channel = channel || new MessageChannel();
-
-  channel.port1.onmessage = () => {
-    if (!disposable.isDisposed) {
-      callback();
-      disposable.dispose();
-    }
-  };
-  channel.port2.postMessage(null);
-  return disposable;
-};
-
-const callCallbackAndDispose = (
-  callback: () => void,
-  disposable: DisposableLike,
-) => {
-  callback();
-  disposable.dispose();
-};
-
-const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
-  const disposable = createDisposable(() => clearTimeout(timeout));
-  const timeout = setTimeout(
-    callCallbackAndDispose,
-    delay,
-    callback,
-    disposable,
-  );
-  return disposable;
-};
-
 class WebScheduler extends AbstractScheduler {
-  protected shouldCallbackYield = shouldCallbackYield;
+  private readonly callCallbackAndDispose = (
+    callback: () => void,
+    disposable: DisposableLike,
+  ) => {
+    this.startTime = this.now;
+    callback();
+    disposable.dispose();
+  };
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
-    // setTimeout has a floor of 4ms so for lesser delays
-    // just schedule immediately.
-    return delay >= 4
-      ? scheduleDelayed(callback, delay)
-      : scheduleImmediate(callback);
-  }
+  private channel = new MessageChannel();
+
+  protected readonly shouldYield =
+    navigator !== undefined &&
+    (navigator as any).scheduling !== undefined &&
+    (navigator as any).scheduling.isInputPending !== undefined
+      ? () => {
+          const currentTime = now();
+          const deadline = this.startTime + yieldInterval;
+          const maxDeadline = this.startTime + maxYieldInterval;
+          const inputPending = (navigator as any).scheduling.isInputPending();
+
+          return (
+            (currentTime >= deadline && inputPending) ||
+            currentTime >= maxDeadline
+          );
+        }
+      : () => now() >= this.startTime + yieldInterval;
+
+  private startTime = this.now;
 
   get now(): number {
     return now();
+  }
+
+  protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+    // setTimeout has a floor of 4ms so for lesser delays
+    // just schedule immediately.
+    return delay >= 4
+      ? this.scheduleDelayed(callback, delay)
+      : this.scheduleImmediate(callback);
+  }
+
+  private scheduleImmediate(callback: () => void): DisposableLike {
+    const disposable = createDisposable();
+
+    this.channel.port1.onmessage = () => {
+      if (!disposable.isDisposed) {
+        this.startTime = this.now;
+        callback();
+        disposable.dispose();
+      }
+    };
+    this.channel.port2.postMessage(null);
+    return disposable;
+  }
+
+  private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
+    const disposable = createDisposable(() => clearTimeout(timeout));
+    const timeout = setTimeout(
+      this.callCallbackAndDispose,
+      delay,
+      callback,
+      disposable,
+    );
+    return disposable;
   }
 }
 

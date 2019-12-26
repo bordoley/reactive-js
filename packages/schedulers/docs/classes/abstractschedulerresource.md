@@ -19,10 +19,13 @@
 
 * [now](abstractschedulerresource.md#abstract-now)
 
+### Accessors
+
+* [shouldYield](abstractschedulerresource.md#protected-shouldyield)
+
 ### Methods
 
 * [scheduleCallback](abstractschedulerresource.md#protected-abstract-schedulecallback)
-* [shouldCallbackYield](abstractschedulerresource.md#protected-abstract-shouldcallbackyield)
 
 ## Properties
 
@@ -31,6 +34,16 @@
 • **now**: *number*
 
 *Inherited from [AbstractScheduler](abstractscheduler.md).[now](abstractscheduler.md#abstract-now)*
+
+## Accessors
+
+### `Protected` shouldYield
+
+• **get shouldYield**(): *function | undefined*
+
+*Inherited from [AbstractScheduler](abstractscheduler.md).[shouldYield](abstractscheduler.md#protected-shouldyield)*
+
+**Returns:** *function | undefined*
 
 ## Methods
 
@@ -49,19 +62,3 @@
 ▪`Optional`  **delay**: *undefined | number*
 
 **Returns:** *DisposableLike*
-
-___
-
-### `Protected` `Abstract` shouldCallbackYield
-
-▸ **shouldCallbackYield**(`startTime`: number): *boolean*
-
-*Inherited from [AbstractScheduler](abstractscheduler.md).[shouldCallbackYield](abstractscheduler.md#protected-abstract-shouldcallbackyield)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`startTime` | number |
-
-**Returns:** *boolean*

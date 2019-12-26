@@ -52,6 +52,15 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
     VirtualTask
   > = createPriorityQueue(comparator);
 
+  protected shouldYield: (() => boolean) | undefined = () => {
+    const runShouldYield = this.runShouldYield;
+    this.microTaskTicks++;
+    return (
+      this.microTaskTicks >= this.maxMicroTaskTicks ||
+      (runShouldYield !== undefined && runShouldYield())
+    );
+  };
+
   constructor(private readonly maxMicroTaskTicks: number) {
     super();
   }
@@ -95,7 +104,6 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
       shouldYield === undefined
     ) {
-      // @ts-ignore override shouldYield for perf
       this.shouldYield = undefined;
     }
 
@@ -126,15 +134,6 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
 
     this.add(disposable);
     return disposable;
-  }
-
-  protected shouldCallbackYield(_: number): boolean {
-    const runShouldYield = this.runShouldYield;
-    this.microTaskTicks++;
-    return (
-      this.microTaskTicks >= this.maxMicroTaskTicks ||
-      (runShouldYield !== undefined && runShouldYield())
-    );
   }
 
   private step(): boolean {

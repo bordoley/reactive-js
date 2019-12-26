@@ -12,40 +12,47 @@ export const setSchedulerTimeout = (newTimeout: number) => {
   timeout = newTimeout;
 };
 
-const callCallbackAndDispose = (
-  callback: () => void,
-  disposable: DisposableLike,
-) => {
-  callback();
-  disposable.dispose();
-};
-
-const scheduleImmediate = (callback: () => void): DisposableLike => {
-  const disposable = createDisposable(() => clearImmediate(immediate));
-  const immediate = setImmediate(callCallbackAndDispose, callback, disposable);
-  return disposable;
-};
-
-const scheduleDelayed = (callback: () => void, delay = 0): DisposableLike => {
-  const disposable = createDisposable(() => clearTimeout(timeout));
-  const timeout = setTimeout(
-    callCallbackAndDispose,
-    delay,
-    callback,
-    disposable,
-  );
-  return disposable;
-};
-
 class NodeScheduler extends AbstractScheduler {
-  protected shouldCallbackYield(startTime: number): boolean {
-    return this.now > startTime + timeout;
+  private readonly callCallbackAndDispose = (
+    callback: () => void,
+    disposable: DisposableLike,
+  ) => {
+    this.startTime = this.now;
+    callback();
+    disposable.dispose();
+  };
+
+  private startTime = this.now;
+
+  private scheduleImmediate(callback: () => void): DisposableLike {
+    const disposable = createDisposable(() => clearImmediate(immediate));
+    const immediate = setImmediate(
+      this.callCallbackAndDispose,
+      callback,
+      disposable,
+    );
+    return disposable;
   }
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
+    const disposable = createDisposable(() => clearTimeout(timeout));
+    const timeout = setTimeout(
+      this.callCallbackAndDispose,
+      delay,
+      callback,
+      disposable,
+    );
+    return disposable;
+  }
+
+  protected readonly shouldYield = () => {
+    return this.now > this.startTime + timeout;
+  };
+
+  protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     return delay > 0
-      ? scheduleDelayed(callback, delay)
-      : scheduleImmediate(callback);
+      ? this.scheduleDelayed(callback, delay)
+      : this.scheduleImmediate(callback);
   }
 
   get now(): number {
