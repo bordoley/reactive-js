@@ -17,7 +17,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createEventEmitter } from "./create";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, OperatorLike } from "@reactive-js/pipe";
 
 interface ReduceRequestLike<TReq, TAcc> {
   readonly request: TReq;
@@ -31,7 +31,10 @@ export const reduce = <TReq, TSrc, TAcc>(
   ) => ObservableLike<ReduceRequestLike<TReq, TAcc>>,
   initial: ReduceRequestLike<TReq, TAcc>,
   scheduler: SchedulerLike,
-) => (iterable: AsyncIterableLike<TReq, TSrc>): ObservableLike<TAcc> => {
+): OperatorLike<
+  AsyncIterableLike<TReq, TSrc>,
+  ObservableLike<TAcc>
+> => iterable => {
   const resourceFactory = (): [
     AsyncIteratorResourceLike<TReq, TSrc>,
     EventEmitterResourceLike<ReduceRequestLike<TReq, TAcc>>,

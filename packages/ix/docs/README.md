@@ -306,7 +306,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: ReduceRequestLike‹TReq, TAcc›, `scheduler`: SchedulerLike): *(Anonymous function)*
+▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: ReduceRequestLike‹TReq, TAcc›, `scheduler`: SchedulerLike): *OperatorLike‹[AsyncIterableLike](interfaces/asynciterablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
@@ -333,4 +333,4 @@ Name | Type |
 
 ▪ **scheduler**: *SchedulerLike*
 
-**Returns:** *(Anonymous function)*
+**Returns:** *OperatorLike‹[AsyncIterableLike](interfaces/asynciterablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
