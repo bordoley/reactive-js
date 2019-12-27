@@ -16,4 +16,7 @@ export {
   createPersistentStateStore,
 } from "./internal/create";
 
+export { fromArray } from "./internal/fromArray";
+export { generate } from "./internal/generate";
+
 export { lift, liftReq } from "./internal/lift";

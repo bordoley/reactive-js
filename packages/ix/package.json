@@ -43,12 +43,28 @@
     "@reactive-js/rx": "^0.0.19",
     "@reactive-js/scheduler": "^0.0.19"
   },
+  "devDependencies": {
+    "@reactive-js/schedulers": "^0.0.19",
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm5": "tsc -p tsconfig.esm5.json",
     "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json"
+    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "test": "jest",
+    "test-coverage": "jest --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.cjs.json"
+      }
+    }
   },
   "publishConfig": {
     "access": "public"
