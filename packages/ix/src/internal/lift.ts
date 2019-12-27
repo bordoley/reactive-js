@@ -127,3 +127,20 @@ export const lift = <TReq, TA, TB>(
 
   return new LiftedAsyncIterable(source, observableOperators, reqOperators);
 };
+
+
+export const liftReq = <TReqA, TReqB, T>(
+  operator: AsyncIteratorRequestOperatorLike<TReqA, TReqB>
+): AsyncIterableOperatorLike<TReqA, T, TReqB, T> => iterable => {
+  const source = (iterable as any).source || iterable;
+  const observableOperators =
+    iterable instanceof LiftedAsyncIterable
+      ? iterable.observableOperators
+      : [];
+  const reqOperators =
+    iterable instanceof LiftedAsyncIterable 
+      ? [...iterable.reqOperators, operator] 
+      : [operator];
+
+  return new LiftedAsyncIterable(source, observableOperators, reqOperators);
+};
