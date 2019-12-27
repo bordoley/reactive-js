@@ -51,7 +51,7 @@ ___
 
 ### `Const` createAsyncIteratorResource
 
-▸ **createAsyncIteratorResource**<**TReq**, **T**>(`f`: function, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+▸ **createAsyncIteratorResource**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
 
 **Type parameters:**
 
@@ -61,19 +61,11 @@ ___
 
 **Parameters:**
 
-▪ **f**: *function*
-
-▸ (`obs`: ObservableLike‹TReq›): *ObservableLike‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`obs` | ObservableLike‹TReq› |
-
-▪ **scheduler**: *SchedulerLike*
-
-▪`Default value`  **replayCount**: *number*= 0
+Name | Type | Default |
+------ | ------ | ------ |
+`operator` | ObservableOperatorLike‹TReq, T› | - |
+`scheduler` | SchedulerLike | - |
+`replayCount` | number | 0 |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
 
