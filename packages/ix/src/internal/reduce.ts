@@ -12,12 +12,11 @@ import {
   startWith,
   takeFirst,
   ObservableLike,
-  publish,
-  MulticastObservableResourceLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createEventEmitter } from "./create";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
+import { identity } from "./identity";
+import { lift } from "./lift";
 
 interface ReduceRequestLike<TReq, TAcc> {
   readonly request: TReq;
@@ -38,42 +37,31 @@ export const reduce = <TReq, TSrc, TAcc>(
   const resourceFactory = (): [
     AsyncIteratorResourceLike<TReq, TSrc>,
     EventEmitterResourceLike<ReduceRequestLike<TReq, TAcc>>,
-    MulticastObservableResourceLike<ReduceRequestLike<TReq, TAcc>>,
   ] => {
     const resource: AsyncIteratorResourceLike<
       TReq,
       TSrc
     > = iterable.getIXAsyncIterator(scheduler);
-    const eventEmitter: EventEmitterResourceLike<ReduceRequestLike<
-      TReq,
-      TAcc
-    >> = createEventEmitter();
-    const onResultStream: MulticastObservableResourceLike<ReduceRequestLike<
-      TReq,
-      TAcc
-    >> = pipe(
-      eventEmitter,
-      onNext(({ request }) => resource.dispatch(request)),
-      publish(scheduler, 1),
-    );
 
-    return [resource, eventEmitter, onResultStream];
+    const eventEmitter = pipe(
+      identity<ReduceRequestLike<TReq, TAcc>>(),
+      lift(onNext(({ request }) => resource.dispatch(request))),
+    ).getIXAsyncIterator(scheduler, 1);
+
+    return [resource, eventEmitter];
   };
 
-  const observableFactory = ([iterator, resultEmitter, onResultStream]: [
+  const observableFactory = ([iterator, eventEmitter]: [
     AsyncIteratorResourceLike<TReq, TSrc>,
     EventEmitterResourceLike<ReduceRequestLike<TReq, TAcc>>,
-    MulticastObservableResourceLike<ReduceRequestLike<TReq, TAcc>>,
   ]) =>
     pipe(
       iterator,
-      withLatestFrom(onResultStream, (next, { result }) =>
-        reducer(result, next),
-      ),
+      withLatestFrom(eventEmitter, (next, { result }) => reducer(result, next)),
       map(obs => pipe(obs, takeFirst())),
       switchAll(),
       startWith(initial()),
-      onNext(next => resultEmitter.dispatch(next)),
+      onNext(next => eventEmitter.dispatch(next)),
       map(({ result }) => result),
     );
 

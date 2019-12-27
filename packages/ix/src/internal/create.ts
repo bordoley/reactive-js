@@ -83,13 +83,19 @@ export const createAsyncIteratorResource = <TReq, T>(
   return new AsyncIteratorResourceImpl(dispatcher, observable);
 };
 
-export const createEventEmitter = <T>(config: {
-  scheduler: SchedulerLike,
-  replayCount: number
-} | void): EventEmitterResourceLike<T> => {
+export const createEventEmitter = <T>(
+  config: {
+    scheduler: SchedulerLike;
+    replayCount: number;
+  } | void,
+): EventEmitterResourceLike<T> => {
   config = config || undefined;
   if (config !== undefined) {
-    return createAsyncIteratorResource(x => x, config.scheduler, config.replayCount);
+    return createAsyncIteratorResource(
+      x => x,
+      config.scheduler,
+      config.replayCount,
+    );
   } else {
     const dispatcher = createSubject();
     return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
