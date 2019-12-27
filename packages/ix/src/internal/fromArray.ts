@@ -25,6 +25,7 @@ const fromArrayScanner = (
 const fromArrayAsyncIterator = <T>(
   values: readonly T[],
   scheduler: SchedulerLike,
+  replayCount?: number,
 ): AsyncIteratorResourceLike<number | void, T> => {
   const f = (obs: ObservableLike<number>) =>
     pipe(
@@ -38,14 +39,14 @@ const fromArrayAsyncIterator = <T>(
       takeFirst(values.length),
     );
 
-  return createAsyncIteratorResource(f, scheduler);
+  return createAsyncIteratorResource(f, scheduler, replayCount);
 };
 
 class FromArrayAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
   constructor(private readonly values: readonly T[]) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike) {
-    return fromArrayAsyncIterator(this.values, scheduler);
+  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
+    return fromArrayAsyncIterator(this.values, scheduler, replayCount);
   }
 }
 

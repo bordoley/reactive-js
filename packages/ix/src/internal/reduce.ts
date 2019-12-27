@@ -74,10 +74,7 @@ export const reduce = <TReq, TSrc, TAcc>(
       switchAll(),
       startWith(initial()),
       onNext(next => resultEmitter.dispatch(next)),
-      map(next => {
-        const { result } = next;
-        return result;
-      }),
+      map(({ result }) => result),
     );
 
   return using(resourceFactory, observableFactory);

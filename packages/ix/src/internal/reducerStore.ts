@@ -14,8 +14,8 @@ class ReducerStoreAsyncIterable<TAction, T>
   implements AsyncIterableLike<TAction, T> {
   constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike) {
-    return createAsyncIteratorResource(this.operator, scheduler);
+  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
+    return createAsyncIteratorResource(this.operator, scheduler, replayCount);
   }
 }
 

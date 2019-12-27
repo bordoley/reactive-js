@@ -7,9 +7,11 @@
 ### Interfaces
 
 * [AsyncIterableLike](interfaces/asynciterablelike.md)
+* [AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)
 * [AsyncIteratorLike](interfaces/asynciteratorlike.md)
 * [AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
+* [AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)
 * [EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)
 * [StateStoreResourceLike](interfaces/statestoreresourcelike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
@@ -30,8 +32,8 @@
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
+* [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
-* [liftReq](README.md#const-liftreq)
 * [reduce](README.md#const-reduce)
 
 ## Type aliases
@@ -76,11 +78,17 @@ ___
 
 ### `Const` createEventEmitter
 
-▸ **createEventEmitter**<**T**>(): *[EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)‹T›*
+▸ **createEventEmitter**<**T**>(`config`: object | void): *[EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)‹T›*
 
 **Type parameters:**
 
 ▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`config` | object &#124; void |
 
 **Returns:** *[EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)‹T›*
 
@@ -238,9 +246,21 @@ Name | Type |
 
 ___
 
+### `Const` identity
+
+▸ **identity**<**T**>(): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹T, T›*
+
+___
+
 ### `Const` lift
 
-▸ **lift**<**TReq**, **TA**, **TB**>(`operator`: ObservableOperatorLike‹TA, TB›, `scheduler`: SchedulerLike, `replay?`: undefined | number): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, TA, TReq, TB›*
+▸ **lift**<**TReq**, **TA**, **TB**>(`operator`: ObservableOperatorLike‹TA, TB›): *[AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -255,52 +275,8 @@ ___
 Name | Type |
 ------ | ------ |
 `operator` | ObservableOperatorLike‹TA, TB› |
-`scheduler` | SchedulerLike |
-`replay?` | undefined &#124; number |
 
-**Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, TA, TReq, TB›*
-
-___
-
-### `Const` liftReq
-
-▸ **liftReq**<**TReqA**, **T**, **TReqB**>(`operator`: function): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReqA, T, TReqB, T›*
-
-**Type parameters:**
-
-▪ **TReqA**
-
-▪ **T**
-
-▪ **TReqB**
-
-**Parameters:**
-
-▪ **operator**: *function*
-
-▸ (`dispatcher`: function): *function*
-
-**Parameters:**
-
-▪ **dispatcher**: *function*
-
-▸ (`req`: TReqA): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | TReqA |
-
-▸ (`ref`: TReqB): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`ref` | TReqB |
-
-**Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReqA, T, TReqB, T›*
+**Returns:** *[AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)‹TReq, TA, TReq, TB›*
 
 ___
 
