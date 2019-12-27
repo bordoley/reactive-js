@@ -25,6 +25,8 @@
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createReducerStore](README.md#const-createreducerstore)
 * [createStateStore](README.md#const-createstatestore)
+* [fromArray](README.md#const-fromarray)
+* [generate](README.md#const-generate)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
 
@@ -159,6 +161,55 @@ Name | Type |
 `equals?` | undefined &#124; function |
 
 **Returns:** *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+
+___
+
+### `Const` fromArray
+
+▸ **fromArray**<**T**>(`values`: keyof T[], `scheduler`: SchedulerLike): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`values` | keyof T[] |
+`scheduler` | SchedulerLike |
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
+
+___
+
+### `Const` generate
+
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `scheduler`: SchedulerLike): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **generator**: *function*
+
+▸ (`acc`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *T*
+
+▪ **scheduler**: *SchedulerLike*
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
 
 ___
 
