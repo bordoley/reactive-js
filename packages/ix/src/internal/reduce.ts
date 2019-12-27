@@ -29,7 +29,7 @@ export const reduce = <TReq, TSrc, TAcc>(
     acc: TAcc,
     next: TSrc,
   ) => ObservableLike<ReduceRequestLike<TReq, TAcc>>,
-  initial: ReduceRequestLike<TReq, TAcc>,
+  initial: () => ReduceRequestLike<TReq, TAcc>,
   scheduler: SchedulerLike,
 ): OperatorLike<
   AsyncIterableLike<TReq, TSrc>,
@@ -72,7 +72,7 @@ export const reduce = <TReq, TSrc, TAcc>(
       ),
       map(obs => pipe(obs, takeFirst())),
       switchAll(),
-      startWith(initial),
+      startWith(initial()),
       onNext(next => resultEmitter.dispatch(next)),
       map(next => {
         const { result } = next;
