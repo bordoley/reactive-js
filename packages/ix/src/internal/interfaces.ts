@@ -2,6 +2,7 @@ import {
   MulticastObservableLike,
   MulticastObservableResourceLike,
 } from "@reactive-js/rx";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
 export interface AsyncIteratorLike<TReq, T> extends MulticastObservableLike<T> {
@@ -16,6 +17,12 @@ export interface AsyncIteratorOperatorLike<TSrcReq, TSrc, TReq, T> {
 export interface AsyncIteratorResourceLike<TReq, T>
   extends AsyncIteratorLike<TReq, T>,
     MulticastObservableResourceLike<T> {}
+
+export interface AsyncIterableLike<TReq, T> {
+  getIXAsyncIterator(
+    scheduler: SchedulerLike,
+  ): AsyncIteratorResourceLike<TReq, T>;
+}
 
 export interface StateUpdaterLike<T> {
   (oldState: T): T;

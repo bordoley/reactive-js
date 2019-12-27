@@ -1,9 +1,10 @@
-import { OperatorLike, pipe } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import {
   MulticastObservableLike,
   ObservableLike,
   SubscriberLike,
   share,
+  ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { AsyncIteratorLike, AsyncIteratorOperatorLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -27,12 +28,12 @@ class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   }
 }
 
-export const lift = <TReq, T, TA>(
-  operator: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
+export const lift = <TReq, TA, TB>(
+  operator: ObservableOperatorLike<TA, TB>,
   scheduler: SchedulerLike,
   replay?: number,
-): AsyncIteratorOperatorLike<TReq, T, TReq, TA> => iterator => {
-  const observable: ObservableLike<T> =
+): AsyncIteratorOperatorLike<TReq, TA, TReq, TB> => iterator => {
+  const observable: ObservableLike<TA> =
     (iterator as any).observable || iterator;
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
@@ -42,20 +43,20 @@ export const lift = <TReq, T, TA>(
 
   return new LiftedIteratorImpl(
     dispatcher,
-    pipe(liftedObservable as ObservableLike<TA>, share(scheduler, replay)),
+    pipe(liftedObservable as ObservableLike<TB>, share(scheduler, replay)),
   );
 };
 
-export const liftReq = <TReq, T, TReqA>(
-  operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
-): AsyncIteratorOperatorLike<TReq, T, TReqA, T> => iterator => {
+export const liftReq = <TReqA, T, TReqB>(
+  operator: (dispatcher: (req: TReqA) => void) => (ref: TReqB) => void,
+): AsyncIteratorOperatorLike<TReqA, T, TReqB, T> => iterator => {
   const observable: MulticastObservableLike<T> =
     (iterator as any).observable || iterator;
 
-  const dispatcher: (req: TReq) => void =
+  const dispatcher: (req: TReqA) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
 
-  const liftedDispatcher: (req: TReqA) => void = operator(dispatcher);
+  const liftedDispatcher: (req: TReqB) => void = operator(dispatcher);
 
   return new LiftedIteratorImpl(liftedDispatcher, observable);
 };
