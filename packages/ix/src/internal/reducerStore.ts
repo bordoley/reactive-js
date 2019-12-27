@@ -24,15 +24,16 @@ export const createReducerStore = <TAction, T>(
   reducer: (state: T, action: TAction) => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIterableLike<TAction, T> => {
-  const initialState = initialStateFactory();
+  const operator = (src: ObservableLike<TAction>) => {
+    const initialState = initialStateFactory();
 
-  const operator = (src: ObservableLike<TAction>) =>
-    pipe(
+    return pipe(
       src,
       scan(reducer, () => initialState),
       startWith(initialState),
       distinctUntilChanged(equals),
     );
+  };
 
   return new ReducerStoreAsyncIterable(operator);
 };
