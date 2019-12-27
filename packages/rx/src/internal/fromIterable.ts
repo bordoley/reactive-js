@@ -1,13 +1,17 @@
 import { defer } from "./defer";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, MulticastObservableLike } from "./interfaces";
+import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
+  SchedulerLike,
 } from "@reactive-js/scheduler";
+import { share } from "./share";
 
 class FromIteratorObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
+  private count = 0;
 
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
@@ -17,6 +21,7 @@ class FromIteratorObservable<T>
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
+    private readonly maxCount: number,
   ) {}
 
   private loop(
@@ -24,15 +29,20 @@ class FromIteratorObservable<T>
   ): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
+    const maxCount = this.maxCount;
 
-    for (
-      let next = iterator.next();
-      !next.done && !subscriber.isDisposed;
-      next = iterator.next()
-    ) {
-      subscriber.next(next.value);
+    let count = this.count;
+    while (count < maxCount && !subscriber.isDisposed) {
+      const next = iterator.next();
+      if (!next.done) {
+        subscriber.next(next.value);
+        count++;
+      } else {
+        break;
+      }
 
       if (shouldYield()) {
+        this.count = count;
         return this.continuationResult;
       }
     }
@@ -43,28 +53,37 @@ class FromIteratorObservable<T>
   private loopFast(): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
+    const maxCount = this.maxCount;
 
-    for (
-      let next = iterator.next();
-      !next.done && !subscriber.isDisposed;
-      next = iterator.next()
-    ) {
-      subscriber.next(next.value);
+    let count = this.count;
+    while (count < maxCount && !subscriber.isDisposed) {
+      const next = iterator.next();
+      if (!next.done) {
+        subscriber.next(next.value);
+        count++;
+      } else {
+        break;
+      }
     }
 
     return;
   }
 
   private emitDelayedValue() {
-    const next = this.iterator.next();
     const subscriber = this.subscriber as SubscriberLike<T>;
 
-    if (!next.done && !subscriber.isDisposed) {
-      subscriber.next(next.value);
-      return this.continuationResult;
-    } else {
+    if (this.count >= this.maxCount || subscriber.isDisposed) {
       return;
     }
+
+    const next = this.iterator.next();
+    if(next.done) {
+      return;
+    }
+
+    subscriber.next(next.value);
+    this.count++;
+    return this.continuationResult;
   }
 
   run(shouldYield?: () => boolean) {
@@ -103,8 +122,24 @@ class FromIteratorObservable<T>
   }
 }
 
+export const fromIterator = <T>(
+  iterator: Iterator<T>,
+  scheduler: SchedulerLike,
+  config: {
+    delay?: number,
+    count?: number,
+  } = {},
+): MulticastObservableLike<T> => {
+  const delay = Math.max(config.delay ?? 0, 0);
+  const maxCount = Math.min(
+    Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0), 
+    Number.MAX_SAFE_INTEGER,
+  );
+  return pipe(new FromIteratorObservable(iterator, delay, maxCount), share(scheduler));
+}
+
 export const fromIterable = <T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> =>
-  defer(() => new FromIteratorObservable(iterable[Symbol.iterator](), delay));
+  defer(() => new FromIteratorObservable(iterable[Symbol.iterator](), delay, Number.MAX_SAFE_INTEGER));
