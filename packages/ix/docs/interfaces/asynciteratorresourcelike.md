@@ -17,5 +17,3 @@
   ↳ **AsyncIteratorResourceLike**
 
   ↳ [StateStoreResourceLike](statestoreresourcelike.md)
-
-  ↳ [EventEmitterResourceLike](eventemitterresourcelike.md)

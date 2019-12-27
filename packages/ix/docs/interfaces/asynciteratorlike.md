@@ -18,8 +18,6 @@
 
   ↳ [StateStoreResourceLike](statestoreresourcelike.md)
 
-  ↳ [EventEmitterResourceLike](eventemitterresourcelike.md)
-
 ## Index
 
 ### Methods

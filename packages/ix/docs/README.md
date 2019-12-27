@@ -12,19 +12,16 @@
 * [AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)
-* [EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)
 * [StateStoreResourceLike](interfaces/statestoreresourcelike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
 ### Type aliases
 
-* [EventEmitterLike](README.md#eventemitterlike)
 * [StateStoreLike](README.md#statestorelike)
 
 ### Functions
 
 * [createAsyncIteratorResource](README.md#const-createasynciteratorresource)
-* [createEventEmitter](README.md#const-createeventemitter)
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createReducerStore](README.md#const-createreducerstore)
 * [createStateStore](README.md#const-createstatestore)
@@ -38,14 +35,6 @@
 * [reduce](README.md#const-reduce)
 
 ## Type aliases
-
-###  EventEmitterLike
-
-Ƭ **EventEmitterLike**: *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, T›*
-
-**`noinheritdoc`** 
-
-___
 
 ###  StateStoreLike
 
@@ -74,24 +63,6 @@ Name | Type | Default |
 `replayCount` | number | 0 |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
-
-___
-
-### `Const` createEventEmitter
-
-▸ **createEventEmitter**<**T**>(`config`: object | void): *[EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`config` | object &#124; void |
-
-**Returns:** *[EventEmitterResourceLike](interfaces/eventemitterresourcelike.md)‹T›*
 
 ___
 
