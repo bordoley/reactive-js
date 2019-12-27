@@ -74,11 +74,15 @@ export const createAsyncIteratorResource = <TReq, T>(
   replayCount = 0,
 ): AsyncIteratorResourceLike<TReq, T> => {
   const dispatcher = createSubject();
-  const observable = pipe(dispatcher, operator, publish(scheduler, replayCount));
+  const observable = pipe(
+    dispatcher,
+    operator,
+    publish(scheduler, replayCount),
+  );
   dispatcher.add(observable);
 
   return new AsyncIteratorResourceImpl(dispatcher, observable);
-}
+};
 
 export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   const dispatcher = createSubject();
@@ -91,12 +95,13 @@ export const createReducerStore = <TAction, T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIteratorResourceLike<TAction, T> => {
-  const f = (src: ObservableLike<TAction>) => pipe(
-    src,
-    scan(reducer, () => initialState),
-    startWith(initialState),
-    distinctUntilChanged(equals),
-  );
+  const f = (src: ObservableLike<TAction>) =>
+    pipe(
+      src,
+      scan(reducer, () => initialState),
+      startWith(initialState),
+      distinctUntilChanged(equals),
+    );
 
   return createAsyncIteratorResource(f, scheduler);
 };
@@ -116,10 +121,7 @@ export const createPersistentStateStore = <T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): StateStoreResourceLike<T> => {
-
-  const f = (
-    obs: ObservableLike<StateUpdaterLike<T>>,
-  ): ObservableLike<T> => {
+  const f = (obs: ObservableLike<StateUpdaterLike<T>>): ObservableLike<T> => {
     const onPersistentStoreChangedStream = pipe(
       persistentStore,
       onNext(v => iter.dispatch((_: T) => v)),

@@ -17,9 +17,7 @@ class PublishObservable<T> implements MulticastObservableResourceLike<T> {
     private readonly subject: SubjectResourceLike<T>,
     scheduler: SchedulerLike,
   ) {
-    this.subject.add(
-      pipe(source, observe(subject), subscribe(scheduler))
-    );
+    this.subject.add(pipe(source, observe(subject), subscribe(scheduler)));
   }
 
   get subscriberCount() {
@@ -58,7 +56,10 @@ class PublishObservable<T> implements MulticastObservableResourceLike<T> {
 export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount: number = 0,
-): OperatorLike<ObservableLike<T>, MulticastObservableResourceLike<T>> => observable => {
+): OperatorLike<
+  ObservableLike<T>,
+  MulticastObservableResourceLike<T>
+> => observable => {
   const subject = createSubject(replayCount);
   return new PublishObservable(observable, subject, scheduler);
 };
