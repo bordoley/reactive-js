@@ -40,6 +40,7 @@ export { lift } from "./internal/lift";
 export { map } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
+export { publish } from "./internal/publish";
 export { reduce } from "./internal/reduce";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
