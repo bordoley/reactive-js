@@ -16,6 +16,7 @@ export {
   createPersistentStateStore,
 } from "./internal/create";
 
+export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
