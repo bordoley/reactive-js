@@ -1,7 +1,13 @@
 import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
-import { fromArray, fromIterable, generate } from "../src/index";
+import { fromArray, fromIterable, generate, reduce } from "../src/index";
 import { pipe } from "@reactive-js/pipe";
-import { subscribe, onNext, ErrorLike, onComplete } from "@reactive-js/rx";
+import {
+  subscribe,
+  onNext,
+  ErrorLike,
+  onComplete,
+  ofValue,
+} from "@reactive-js/rx";
 
 test("fromArray", () => {
   const scheduler = createVirtualTimeSchedulerResource();
@@ -68,4 +74,24 @@ test("generate", () => {
   scheduler.run();
 
   expect(result).toEqual([1, 2, 3]);
+});
+
+test("reduce", () => {
+  const scheduler = createVirtualTimeSchedulerResource(1);
+  const iter = fromIterable([1, 2, 3, 4, 5, 6]);
+
+  const result: number[] = [];
+  pipe(
+    iter,
+    reduce(
+      (acc, next) => ofValue({ result: acc + next, request: 1 }),
+      { request: 1, result: 0 },
+      scheduler,
+    ),
+    onNext(x => result.push(x)),
+    subscribe(scheduler),
+  );
+  scheduler.run();
+
+  expect(result).toEqual([0, 1, 3, 6, 10, 15, 21]);
 });
