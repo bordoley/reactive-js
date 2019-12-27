@@ -116,30 +116,29 @@ export const createPersistentStateStore = <T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): StateStoreResourceLike<T> => {
-  const dispatcher: SubjectResourceLike<StateUpdaterLike<T>> = createSubject();
+ 
+  const f = (
+    obs: ObservableLike<StateUpdaterLike<T>>,
+  ): ObservableLike<T> => {
+    const onPersistentStoreChangedStream = pipe(
+      persistentStore,
+      onNext(v => iter.dispatch((_: T) => v)),
+      ignoreElements(),
+    );
 
-  const onPersistentStoreChangedStream = pipe(
-    persistentStore,
-    onNext(v => dispatcher.onNext(_ => v)),
-    ignoreElements(),
-  );
+    const stateObs = pipe(
+      obs,
+      scan(
+        (acc: T, next: StateUpdaterLike<T>) => next(acc),
+        () => initialState,
+      ),
+      distinctUntilChanged(equals),
+      onNext(next => persistentStore.dispatch(next)),
+    );
 
-  const stateObs = pipe(
-    dispatcher,
-    scan(
-      (acc: T, next: StateUpdaterLike<T>) => next(acc),
-      () => initialState,
-    ),
-    distinctUntilChanged(equals),
-    onNext(next => persistentStore.dispatch(next)),
-  );
+    return merge<T>(onPersistentStoreChangedStream, stateObs);
+  };
 
-  const observable = pipe(
-    merge(onPersistentStoreChangedStream, stateObs),
-    publish(scheduler, 1),
-  );
-
-  dispatcher.add(observable);
-
-  return new AsyncIteratorResourceImpl(dispatcher, observable);
+  const iter = createAsyncIteratorResource(f, scheduler, 1);
+  return iter;
 };
