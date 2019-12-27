@@ -1,4 +1,4 @@
-import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposable";
+import { DisposableOrTeardown } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
   createSubject,
@@ -7,12 +7,12 @@ import {
   merge,
   MulticastObservableLike,
   onNext,
+  publish,
   scan,
-  share,
   startWith,
   SubjectResourceLike,
   SubscriberLike,
-  subscribe,
+  ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
@@ -26,13 +26,12 @@ import {
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   constructor(
-    readonly dispatch: (req: TReq) => void,
+    private readonly dispatcher: SubjectResourceLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
-    private readonly disposable: DisposableLike,
   ) {}
 
   get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+    return this.dispatcher.isDisposed;
   }
 
   get subscriberCount(): number {
@@ -43,19 +42,23 @@ class AsyncIteratorResourceImpl<TReq, T>
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.add(disposable, ...disposables);
+    this.dispatcher.add(disposable, ...disposables);
     return this;
   }
 
+  dispatch(req: TReq) {
+    this.dispatcher.onNext(req);
+  }
+
   dispose() {
-    this.disposable.dispose();
+    this.dispatcher.dispose();
   }
 
   remove(
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ) {
-    this.disposable.remove(disposable, ...disposables);
+    this.dispatcher.remove(disposable, ...disposables);
     return this;
   }
 
@@ -65,19 +68,21 @@ class AsyncIteratorResourceImpl<TReq, T>
 }
 
 export const createAsyncIteratorResource = <TReq, T>(
-  dispatch: (req: TReq) => void,
-  observable: MulticastObservableLike<T>,
-  disposable: DisposableLike,
-): AsyncIteratorResourceLike<TReq, T> =>
-  new AsyncIteratorResourceImpl(dispatch, observable, disposable);
+  f: (obs: ObservableLike<TReq>) => ObservableLike<T>,
+  scheduler: SchedulerLike,
+  replayCount = 0,
+): AsyncIteratorResourceLike<TReq, T> => {
+  const dispatcher = createSubject();
+  const observable = pipe(dispatcher, f, publish(scheduler, replayCount));
+  dispatcher.add(observable);
+
+  return new AsyncIteratorResourceImpl(dispatcher, observable);
+}
 
 export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   const dispatcher = createSubject();
-  return createAsyncIteratorResource(
-    dispatcher.onNext.bind(dispatcher),
-    dispatcher,
-    dispatcher,
-  );
+
+  return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
 
 export const createReducerStore = <TAction, T>(
@@ -86,21 +91,14 @@ export const createReducerStore = <TAction, T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIteratorResourceLike<TAction, T> => {
-  const dispatcher = createSubject();
-  const observable = pipe(
-    dispatcher,
+  const f = (src: ObservableLike<TAction>) => pipe(
+    src,
     scan(reducer, () => initialState),
     startWith(initialState),
     distinctUntilChanged(equals),
-    share(scheduler, 1),
-  );
-  const store = createAsyncIteratorResource(
-    dispatcher.onNext.bind(dispatcher),
-    observable,
-    dispatcher,
   );
 
-  return store.add(pipe(store, subscribe(scheduler)));
+  return createAsyncIteratorResource(f, scheduler);
 };
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
@@ -138,12 +136,10 @@ export const createPersistentStateStore = <T>(
 
   const observable = pipe(
     merge(onPersistentStoreChangedStream, stateObs),
-    share(scheduler, 1),
+    publish(scheduler, 1),
   );
 
-  return createAsyncIteratorResource(
-    dispatcher.onNext.bind(dispatcher),
-    observable,
-    dispatcher,
-  );
+  dispatcher.add(observable);
+
+  return new AsyncIteratorResourceImpl(dispatcher, observable);
 };

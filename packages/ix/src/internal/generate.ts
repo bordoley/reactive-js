@@ -1,13 +1,10 @@
 import { pipe } from "@reactive-js/pipe";
 import {
   concatAll,
-  createSubject,
   generate as generateObs,
   map,
+  ObservableLike,
   scan,
-  share,
-  SubjectResourceLike,
-  subscribe,
   takeFirst,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -24,19 +21,13 @@ export const generate = <T>(
   initialValue: () => T,
   scheduler: SchedulerLike,
 ): AsyncIteratorResourceLike<number, T> => {
-  const dispatcher: SubjectResourceLike<number> = createSubject();
-  
-  const observable = pipe(
-    dispatcher,
-    map(x => pipe(generateObs(_ => undefined, () => undefined), takeFirst(x))),
-    concatAll(),
-    scan(generateScanner(generator), initialValue),
-    share(scheduler),
-  );
+  const f = (obs: ObservableLike<number>) =>
+    pipe(
+      obs,
+      map(x => pipe(generateObs(_ => undefined, () => undefined), takeFirst(x))),
+      concatAll(),
+      scan(generateScanner(generator), initialValue),
+    );
 
-  return createAsyncIteratorResource(
-    dispatcher.onNext.bind(dispatcher),
-    observable,
-    dispatcher,
-  ).add(pipe(observable, subscribe(scheduler)));
-}
+  return createAsyncIteratorResource(f, scheduler);
+};
