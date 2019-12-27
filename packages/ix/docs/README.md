@@ -34,6 +34,7 @@
 * [generate](README.md#const-generate)
 * [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
+* [liftReq](README.md#const-liftreq)
 * [reduce](README.md#const-reduce)
 
 ## Type aliases
@@ -277,6 +278,28 @@ Name | Type |
 `operator` | ObservableOperatorLike‹TA, TB› |
 
 **Returns:** *[AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)‹TReq, TA, TReq, TB›*
+
+___
+
+### `Const` liftReq
+
+▸ **liftReq**<**TReqA**, **TReqB**, **T**>(`operator`: AsyncIteratorRequestOperatorLike‹TReqA, TReqB›): *[AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)‹TReqA, T, TReqB, T›*
+
+**Type parameters:**
+
+▪ **TReqA**
+
+▪ **TReqB**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`operator` | AsyncIteratorRequestOperatorLike‹TReqA, TReqB› |
+
+**Returns:** *[AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)‹TReqA, T, TReqB, T›*
 
 ___
 
