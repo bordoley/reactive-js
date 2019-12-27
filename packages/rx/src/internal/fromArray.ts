@@ -8,7 +8,7 @@ import {
 class FromArrayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
-  private index = 0;
+  private index = this.startIndex;
 
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
@@ -18,17 +18,19 @@ class FromArrayObservable<T>
   constructor(
     private readonly values: readonly T[],
     private readonly delay: number,
+    private readonly startIndex: number,
+    private readonly endIndex: number,
   ) {}
 
   private loop(
     shouldYield: () => boolean,
   ): SchedulerContinuationResultLike | void {
     const values = this.values;
-    const length = values.length;
+    const endIndex = this.endIndex;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
     let index = this.index;
-    while (index < length && !subscriber.isDisposed) {
+    while (index < endIndex && !subscriber.isDisposed) {
       const value = values[index];
       index++;
 
@@ -44,11 +46,11 @@ class FromArrayObservable<T>
 
   private loopFast() {
     const values = this.values;
-    const length = values.length;
+    const endIndex = this.endIndex;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
     let index = this.index;
-    while (index < length && !subscriber.isDisposed) {
+    while (index < endIndex && !subscriber.isDisposed) {
       const value = values[index];
       index++;
 
@@ -58,10 +60,11 @@ class FromArrayObservable<T>
   }
 
   private emitDelayedValue() {
+    const endIndex = this.endIndex;
     const values = this.values;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
-    if (this.index < values.length && !subscriber.isDisposed) {
+    if (this.index < endIndex && !subscriber.isDisposed) {
       const value = values[this.index];
       this.index++;
 
@@ -103,8 +106,25 @@ class FromArrayObservable<T>
 
 export const fromArray = <T>(
   values: readonly T[],
-  delay = 0,
-): ObservableLike<T> => defer(() => new FromArrayObservable(values, delay));
+  options: {
+    delay?: number,
+    startIndex?: number,
+    count?: number,
+  } = {},
+): ObservableLike<T> => {
+  const delay = Math.max(options.delay ?? 0, 0);
+  const startIndex = Math.min(options.startIndex ?? 0, values.length);
+
+  const maxCount = values.length - startIndex;
+  const count = Math.min(
+    Math.max(options.count ?? maxCount, 0), 
+    maxCount,
+  );
+  
+  const endIndex = startIndex + count;
+  
+  return defer(() => new FromArrayObservable(values, delay, startIndex, endIndex));
+}
 
 export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
-  fromArray([value], delay);
+  fromArray([value], { delay });
