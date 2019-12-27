@@ -13,6 +13,7 @@ import {
   SubjectResourceLike,
   SubscriberLike,
   ObservableLike,
+  ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
@@ -68,12 +69,12 @@ class AsyncIteratorResourceImpl<TReq, T>
 }
 
 export const createAsyncIteratorResource = <TReq, T>(
-  f: (obs: ObservableLike<TReq>) => ObservableLike<T>,
+  operator: ObservableOperatorLike<TReq, T>,
   scheduler: SchedulerLike,
   replayCount = 0,
 ): AsyncIteratorResourceLike<TReq, T> => {
   const dispatcher = createSubject();
-  const observable = pipe(dispatcher, f, publish(scheduler, replayCount));
+  const observable = pipe(dispatcher, operator, publish(scheduler, replayCount));
   dispatcher.add(observable);
 
   return new AsyncIteratorResourceImpl(dispatcher, observable);
@@ -81,7 +82,6 @@ export const createAsyncIteratorResource = <TReq, T>(
 
 export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   const dispatcher = createSubject();
-
   return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
 
@@ -116,7 +116,7 @@ export const createPersistentStateStore = <T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): StateStoreResourceLike<T> => {
- 
+
   const f = (
     obs: ObservableLike<StateUpdaterLike<T>>,
   ): ObservableLike<T> => {
