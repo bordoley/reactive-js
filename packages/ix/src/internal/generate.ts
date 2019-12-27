@@ -46,7 +46,12 @@ class GenerateAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
   ) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    return generateAsyncIterator(this.generator, this.initialValue, scheduler, replayCount);
+    return generateAsyncIterator(
+      this.generator,
+      this.initialValue,
+      scheduler,
+      replayCount,
+    );
   }
 }
 
