@@ -12,13 +12,7 @@ import { subscribe } from "./subscribe";
 import { createSubject } from "./subject";
 
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
-  constructor(
-    source: ObservableLike<T>,
-    private readonly subject: SubjectResourceLike<T>,
-    scheduler: SchedulerLike,
-  ) {
-    this.subject.add(pipe(source, observe(subject), subscribe(scheduler)));
-  }
+  constructor(private readonly subject: SubjectResourceLike<T>) {}
 
   get subscriberCount() {
     return this.subject.subscriberCount;
@@ -61,5 +55,6 @@ export const publish = <T>(
   MulticastObservableResourceLike<T>
 > => observable => {
   const subject = createSubject(replayCount);
-  return new PublishObservable(observable, subject, scheduler);
+  subject.add(pipe(observable, observe(subject), subscribe(scheduler)));
+  return new PublishObservable(subject);
 };
