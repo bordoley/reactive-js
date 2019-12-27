@@ -27,7 +27,7 @@ const fromArrayAsyncIterator = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
 ): AsyncIteratorResourceLike<number | void, T> => {
-  const f = (obs: ObservableLike<number>) =>
+  const operator = (obs: ObservableLike<number>) =>
     pipe(
       obs,
       scan(fromArrayScanner, () => ({
@@ -39,7 +39,7 @@ const fromArrayAsyncIterator = <T>(
       takeFirst(values.length),
     );
 
-  return createAsyncIteratorResource(f, scheduler, replayCount);
+  return createAsyncIteratorResource(operator, scheduler, replayCount);
 };
 
 class FromArrayAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
