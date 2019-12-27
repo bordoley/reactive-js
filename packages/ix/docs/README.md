@@ -25,6 +25,7 @@
 * [createPersistentStateStore](README.md#const-createpersistentstatestore)
 * [createReducerStore](README.md#const-createreducerstore)
 * [createStateStore](README.md#const-createstatestore)
+* [empty](README.md#const-empty)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
@@ -154,6 +155,26 @@ Name | Type |
 `equals?` | undefined &#124; function |
 
 **Returns:** *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+
+___
+
+### `Const` empty
+
+▸ **empty**<**TReq**, **T**>(`scheduler`: SchedulerLike): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
 
 ___
 
