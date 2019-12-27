@@ -17,16 +17,12 @@ import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposable";
 
 class LiftedAsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   constructor(
-    readonly dispatcher: (req: TReq) => void,
+    readonly dispatch: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
   ) {}
 
   get subscriberCount(): number {
     return this.observable.subscriberCount;
-  }
-
-  dispatch(req: TReq) {
-    this.dispatcher(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -38,11 +34,11 @@ class LiftedAsyncIteratorResourceImpl<TReq, T>
   extends LiftedAsyncIteratorImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   constructor(
-    dispatcher: (req: TReq) => void,
+    dispatch: (req: TReq) => void,
     observable: MulticastObservableLike<T>,
     readonly disposable: DisposableLike,
   ) {
-    super(dispatcher, observable);
+    super(dispatch, observable);
   }
 
   get isDisposed(): boolean {
@@ -91,11 +87,13 @@ class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
   ): AsyncIteratorResourceLike<TReq, T> {
     const iterator = this.source.getIXAsyncIterator(scheduler);
 
-    const dispatcher: (req: any) => void =
-      (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
-    const liftedDispatcher = this.reqOperators.reduce(
+    const dispatch: (req: any) => void = 
+      iterator instanceof LiftedAsyncIterable
+        ? iterator.dispatch 
+        : ((req: any) => iterator.dispatch(req));
+    const liftedDispatch = this.reqOperators.reduce(
       (acc, next) => next(acc),
-      dispatcher,
+      dispatch,
     );
 
     const observable: ObservableLike<any> =
@@ -109,7 +107,7 @@ class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
     disposable.add(liftedObservable);
 
     return new LiftedAsyncIteratorResourceImpl(
-      liftedDispatcher,
+      liftedDispatch,
       liftedObservable,
       disposable,
     );
