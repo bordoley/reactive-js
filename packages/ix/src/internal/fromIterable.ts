@@ -1,6 +1,8 @@
 import { pipe } from "@reactive-js/pipe";
 import {
+  catchError,
   concatAll,
+  empty,
   fromIterator,
   map,
   ObservableLike,
@@ -11,6 +13,8 @@ import {
 } from "./interfaces";
 import { createAsyncIteratorResource } from "./create";
 
+const doneError = Symbol("IteratorDone");
+
 export const fromIterable = <T>(
   iterable:  Iterable<T>,
   scheduler: SchedulerLike,
@@ -18,8 +22,9 @@ export const fromIterable = <T>(
   const iterator = iterable[Symbol.iterator]();
   const f = (obs: ObservableLike<number>) => pipe(
     obs,
-    map(count => fromIterator(iterator, scheduler, { count })),
+    map(count => fromIterator(iterator, scheduler, { count, doneError })),
     concatAll<T>(),
+    catchError(error => error === doneError ? empty() : undefined),
   );
 
   return createAsyncIteratorResource(f, scheduler);

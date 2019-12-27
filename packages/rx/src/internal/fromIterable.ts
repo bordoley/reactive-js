@@ -22,6 +22,7 @@ class FromIteratorObservable<T>
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
     private readonly maxCount: number,
+    private readonly doneError?: unknown,
   ) {}
 
   private loop(
@@ -30,6 +31,7 @@ class FromIteratorObservable<T>
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const maxCount = this.maxCount;
+    const doneError = this.doneError;
 
     let count = this.count;
     while (count < maxCount && !subscriber.isDisposed) {
@@ -37,7 +39,9 @@ class FromIteratorObservable<T>
       if (!next.done) {
         subscriber.next(next.value);
         count++;
-      } else {
+      } else if (doneError !== undefined) {
+        throw doneError;
+      }else {
         break;
       }
 
@@ -54,6 +58,7 @@ class FromIteratorObservable<T>
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const maxCount = this.maxCount;
+    const doneError = this.doneError;
 
     let count = this.count;
     while (count < maxCount && !subscriber.isDisposed) {
@@ -61,7 +66,9 @@ class FromIteratorObservable<T>
       if (!next.done) {
         subscriber.next(next.value);
         count++;
-      } else {
+      } else if (doneError !== undefined) {
+        throw doneError;
+      }else {
         break;
       }
     }
@@ -71,13 +78,17 @@ class FromIteratorObservable<T>
 
   private emitDelayedValue() {
     const subscriber = this.subscriber as SubscriberLike<T>;
+    const doneError = this.doneError;
 
     if (this.count >= this.maxCount || subscriber.isDisposed) {
       return;
     }
 
     const next = this.iterator.next();
-    if(next.done) {
+    const done = next.done;
+    if (done && doneError !== undefined) {
+      throw doneError;
+    } else if (done) {
       return;
     }
 
@@ -128,14 +139,15 @@ export const fromIterator = <T>(
   config: {
     delay?: number,
     count?: number,
+    doneError?: unknown,
   } = {},
 ): MulticastObservableLike<T> => {
   const delay = Math.max(config.delay ?? 0, 0);
   const maxCount = Math.min(
-    Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0), 
+    Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0),
     Number.MAX_SAFE_INTEGER,
   );
-  return pipe(new FromIteratorObservable(iterator, delay, maxCount), share(scheduler));
+  return pipe(new FromIteratorObservable(iterator, delay, maxCount, config.doneError), share(scheduler));
 }
 
 export const fromIterable = <T>(

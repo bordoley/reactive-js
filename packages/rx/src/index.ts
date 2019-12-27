@@ -32,6 +32,7 @@ export { throws } from "./internal/throws";
 export { using } from "./internal/using";
 
 export { buffer } from "./internal/buffer";
+export { catchError } from "./internal/catchError";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export { endWith } from "./internal/endWith";
 export { ignoreElements } from "./internal/ignoreElements";
