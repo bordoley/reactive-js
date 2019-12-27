@@ -85,7 +85,7 @@ test("reduce", () => {
     iter,
     reduce(
       (acc, next) => ofValue({ result: acc + next }),
-      { request: undefined, result: 0 },
+      () => ({ request: undefined, result: 0 }),
       scheduler,
     ),
     onNext(x => result.push(x)),
