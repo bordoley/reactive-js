@@ -12,7 +12,6 @@ import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
 
 class ReducerStoreAsyncIterable<TAction, T>
   implements AsyncIterableLike<TAction, T> {
-
   constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike) {

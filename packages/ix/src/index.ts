@@ -20,4 +20,5 @@ export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 export { lift, liftReq } from "./internal/lift";
+export { reduce } from "./internal/reduce";
 export { createReducerStore, createStateStore } from "./internal/reducerStore";

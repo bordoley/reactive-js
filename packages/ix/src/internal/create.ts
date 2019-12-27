@@ -94,7 +94,9 @@ export const createPersistentStateStore = <T>(
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): StateStoreResourceLike<T> => {
-  const operator = (obs: ObservableLike<StateUpdaterLike<T>>): ObservableLike<T> => {
+  const operator = (
+    obs: ObservableLike<StateUpdaterLike<T>>,
+  ): ObservableLike<T> => {
     const onPersistentStoreChangedStream = pipe(
       persistentStore,
       onNext((v: T) => iter.dispatch((_: T): T => v)),
