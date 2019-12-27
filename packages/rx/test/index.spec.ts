@@ -424,7 +424,7 @@ describe("fromArray", () => {
   });
 
   test("with delay", () => {
-    const observable = fromArray([1, 2, 3, 4, 5, 6], 3);
+    const observable = fromArray([1, 2, 3, 4, 5, 6], { delay: 3 });
     const scheduler = createVirtualTimeSchedulerResource(1);
     const observer = createMockObserver();
 
@@ -926,7 +926,7 @@ test("switchAll", () => {
   const cb = jest.fn();
   const innerObservable = fromArray([1, 2]);
   const cause = new Error();
-  const src = fromArray([innerObservable, innerObservable, throws(cause)], 1);
+  const src = fromArray([innerObservable, innerObservable, throws(cause)], { delay: 1 });
 
   expect(() => pipe(src, switchAll(), onNext(cb), toArray())).toThrow(cause);
 
@@ -947,7 +947,7 @@ describe("takeLast", () => {
   test("immediately completes with an error if completed with an error", () => {
     const observer = createMockObserver();
     const cause = new Error();
-    const src = merge(fromArray([1, 2, 3, 4], 4), throws(cause, 2));
+    const src = merge(fromArray([1, 2, 3, 4], { delay: 4 }), throws(cause, 2));
 
     expect(() =>
       pipe(
