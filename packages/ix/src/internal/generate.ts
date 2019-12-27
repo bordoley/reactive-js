@@ -8,9 +8,7 @@ import {
   takeFirst,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  AsyncIteratorResourceLike,
-} from "./interfaces";
+import { AsyncIteratorResourceLike } from "./interfaces";
 import { createAsyncIteratorResource } from "./create";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
@@ -24,7 +22,15 @@ export const generate = <T>(
   const f = (obs: ObservableLike<number>) =>
     pipe(
       obs,
-      map(x => pipe(generateObs(_ => undefined, () => undefined), takeFirst(x))),
+      map(x =>
+        pipe(
+          generateObs(
+            _ => undefined,
+            () => undefined,
+          ),
+          takeFirst(x),
+        ),
+      ),
       concatAll(),
       scan(generateScanner(generator), initialValue),
     );

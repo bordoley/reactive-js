@@ -12,7 +12,7 @@ class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   constructor(
     readonly dispatcher: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
-  ) { }
+  ) {}
 
   get subscriberCount(): number {
     return this.observable.subscriberCount;
@@ -32,7 +32,8 @@ export const lift = <TReq, T, TA>(
   scheduler: SchedulerLike,
   replay?: number,
 ): AsyncIteratorOperatorLike<TReq, T, TReq, TA> => iterator => {
-  const observable: ObservableLike<T> = (iterator as any).observable || iterator;
+  const observable: ObservableLike<T> =
+    (iterator as any).observable || iterator;
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
 
@@ -43,20 +44,18 @@ export const lift = <TReq, T, TA>(
     dispatcher,
     pipe(liftedObservable as ObservableLike<TA>, share(scheduler, replay)),
   );
-}
+};
 
 export const liftReq = <TReq, T, TReqA>(
   operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
 ): AsyncIteratorOperatorLike<TReq, T, TReqA, T> => iterator => {
-  const observable: MulticastObservableLike<T> = (iterator as any).observable || iterator;
+  const observable: MulticastObservableLike<T> =
+    (iterator as any).observable || iterator;
 
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
 
   const liftedDispatcher: (req: TReqA) => void = operator(dispatcher);
 
-  return new LiftedIteratorImpl(
-    liftedDispatcher,
-    observable,
-  );
-}
+  return new LiftedIteratorImpl(liftedDispatcher, observable);
+};

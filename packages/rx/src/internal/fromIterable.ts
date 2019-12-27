@@ -1,5 +1,9 @@
 import { defer } from "./defer";
-import { ObservableLike, SubscriberLike, MulticastObservableLike } from "./interfaces";
+import {
+  ObservableLike,
+  SubscriberLike,
+  MulticastObservableLike,
+} from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerContinuationLike,
@@ -41,7 +45,7 @@ class FromIteratorObservable<T>
         count++;
       } else if (doneError !== undefined) {
         throw doneError;
-      }else {
+      } else {
         break;
       }
 
@@ -68,7 +72,7 @@ class FromIteratorObservable<T>
         count++;
       } else if (doneError !== undefined) {
         throw doneError;
-      }else {
+      } else {
         break;
       }
     }
@@ -137,9 +141,9 @@ export const fromIterator = <T>(
   iterator: Iterator<T>,
   scheduler: SchedulerLike,
   config: {
-    delay?: number,
-    count?: number,
-    doneError?: unknown,
+    delay?: number;
+    count?: number;
+    doneError?: unknown;
   } = {},
 ): MulticastObservableLike<T> => {
   const delay = Math.max(config.delay ?? 0, 0);
@@ -147,11 +151,21 @@ export const fromIterator = <T>(
     Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0),
     Number.MAX_SAFE_INTEGER,
   );
-  return pipe(new FromIteratorObservable(iterator, delay, maxCount, config.doneError), share(scheduler));
-}
+  return pipe(
+    new FromIteratorObservable(iterator, delay, maxCount, config.doneError),
+    share(scheduler),
+  );
+};
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> =>
-  defer(() => new FromIteratorObservable(iterable[Symbol.iterator](), delay, Number.MAX_SAFE_INTEGER));
+  defer(
+    () =>
+      new FromIteratorObservable(
+        iterable[Symbol.iterator](),
+        delay,
+        Number.MAX_SAFE_INTEGER,
+      ),
+  );

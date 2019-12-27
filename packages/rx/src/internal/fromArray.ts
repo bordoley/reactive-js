@@ -107,24 +107,23 @@ class FromArrayObservable<T>
 export const fromArray = <T>(
   values: readonly T[],
   options: {
-    delay?: number,
-    startIndex?: number,
-    count?: number,
+    delay?: number;
+    startIndex?: number;
+    count?: number;
   } = {},
 ): ObservableLike<T> => {
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
   const maxCount = values.length - startIndex;
-  const count = Math.min(
-    Math.max(options.count ?? maxCount, 0), 
-    maxCount,
-  );
-  
+  const count = Math.min(Math.max(options.count ?? maxCount, 0), maxCount);
+
   const endIndex = startIndex + count;
-  
-  return defer(() => new FromArrayObservable(values, delay, startIndex, endIndex));
-}
+
+  return defer(
+    () => new FromArrayObservable(values, delay, startIndex, endIndex),
+  );
+};
 
 export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
   fromArray([value], { delay });

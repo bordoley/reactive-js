@@ -926,7 +926,9 @@ test("switchAll", () => {
   const cb = jest.fn();
   const innerObservable = fromArray([1, 2]);
   const cause = new Error();
-  const src = fromArray([innerObservable, innerObservable, throws(cause)], { delay: 1 });
+  const src = fromArray([innerObservable, innerObservable, throws(cause)], {
+    delay: 1,
+  });
 
   expect(() => pipe(src, switchAll(), onNext(cb), toArray())).toThrow(cause);
 
