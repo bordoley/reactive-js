@@ -69,9 +69,7 @@ const callbackAndDispose = (
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
 class PromiseTestScheduler extends AbstractScheduler {
-  protected shouldCallbackYield(_: number): boolean {
-    return false;
-  }
+  protected shouldYield = (): boolean => false;
 
   scheduleCallback(callback: () => void, _ = 0): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
