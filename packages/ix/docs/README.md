@@ -108,7 +108,7 @@ ___
 
 ### `Const` createReducerStore
 
-▸ **createReducerStore**<**TAction**, **T**>(`initialState`: T, `reducer`: function, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TAction, T›*
+▸ **createReducerStore**<**TAction**, **T**>(`initialStateFactory`: function, `reducer`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
 
 **Type parameters:**
 
@@ -118,7 +118,9 @@ ___
 
 **Parameters:**
 
-▪ **initialState**: *T*
+▪ **initialStateFactory**: *function*
+
+▸ (): *T*
 
 ▪ **reducer**: *function*
 
@@ -131,17 +133,15 @@ Name | Type |
 `state` | T |
 `action` | TAction |
 
-▪ **scheduler**: *SchedulerLike*
-
 ▪`Optional`  **equals**: *undefined | function*
 
-**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TAction, T›*
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
 
 ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -149,13 +149,13 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`initialState` | T |
-`scheduler` | SchedulerLike |
-`equals?` | undefined &#124; function |
+▪ **initialState**: *function*
 
-**Returns:** *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
+▸ (): *T*
+
+▪`Optional`  **equals**: *undefined | function*
+
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
 ___
 

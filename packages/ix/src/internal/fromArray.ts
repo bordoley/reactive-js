@@ -41,7 +41,7 @@ const fromArrayAsyncIterator = <T>(
   return createAsyncIteratorResource(f, scheduler);
 };
 
-class FromArrayAsyncIterator<T> implements AsyncIterableLike<number, T> {
+class FromArrayAsyncIterable<T> implements AsyncIterableLike<number, T> {
   constructor(private readonly values: readonly T[]) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike) {
@@ -49,5 +49,6 @@ class FromArrayAsyncIterator<T> implements AsyncIterableLike<number, T> {
   }
 }
 
-export const fromArray = <T>(values: readonly T[]): AsyncIterableLike<number, T> =>
-  new FromArrayAsyncIterator(values);
+export const fromArray = <T>(
+  values: readonly T[],
+): AsyncIterableLike<number, T> => new FromArrayAsyncIterable(values);
