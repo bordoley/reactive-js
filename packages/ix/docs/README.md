@@ -26,6 +26,7 @@
 * [createReducerStore](README.md#const-createreducerstore)
 * [createStateStore](README.md#const-createstatestore)
 * [fromArray](README.md#const-fromarray)
+* [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
@@ -177,6 +178,25 @@ ___
 Name | Type |
 ------ | ------ |
 `values` | keyof T[] |
+`scheduler` | SchedulerLike |
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
+
+___
+
+### `Const` fromIterable
+
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `scheduler`: SchedulerLike): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`iterable` | Iterable‹T› |
 `scheduler` | SchedulerLike |
 
 **Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹number, T›*
