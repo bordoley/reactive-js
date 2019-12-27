@@ -259,7 +259,7 @@ ___
 
 ### `Const` liftReq
 
-▸ **liftReq**<**TReq**, **T**, **TReqA**>(`operator`: function, `scheduler`: SchedulerLike, `replay?`: undefined | number): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
+▸ **liftReq**<**TReq**, **T**, **TReqA**>(`operator`: function): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
 
 **Type parameters:**
 
@@ -294,9 +294,5 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `ref` | TReqA |
-
-▪ **scheduler**: *SchedulerLike*
-
-▪`Optional`  **replay**: *undefined | number*
 
 **Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
