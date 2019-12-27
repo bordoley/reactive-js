@@ -8,13 +8,13 @@ import {
   takeFirst,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncIteratorResourceLike } from "./interfaces";
+import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
 import { createAsyncIteratorResource } from "./create";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);
 
-export const generate = <T>(
+const generateAsyncIterator = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
   scheduler: SchedulerLike,
@@ -37,3 +37,18 @@ export const generate = <T>(
 
   return createAsyncIteratorResource(f, scheduler);
 };
+
+
+class GenerateAsyncIterable<T> implements AsyncIterableLike<number, T> {
+  constructor(
+    private readonly generator: (acc: T) => T,
+    private readonly initialValue: () => T,
+  ) {}
+
+  getIXAsyncIterator(scheduler: SchedulerLike) {
+    return generateAsyncIterator(this.generator, this.initialValue, scheduler);
+  }
+}
+
+export const generate = <T>(generator: (acc: T) => T, initialValue: () => T): AsyncIterableLike<number, T> =>
+  new GenerateAsyncIterable(generator, initialValue);

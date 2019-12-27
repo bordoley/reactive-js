@@ -8,7 +8,7 @@ import {
   ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncIteratorResourceLike } from "./interfaces";
+import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
 import { createAsyncIteratorResource } from "./create";
 
 const fromArrayScanner = (
@@ -22,7 +22,7 @@ const fromArrayScanner = (
   count,
 });
 
-export const fromArray = <T>(
+const fromArrayAsyncIterator = <T>(
   values: readonly T[],
   scheduler: SchedulerLike,
 ): AsyncIteratorResourceLike<number, T> => {
@@ -40,3 +40,14 @@ export const fromArray = <T>(
 
   return createAsyncIteratorResource(f, scheduler);
 };
+
+class FromArrayAsyncIterator<T> implements AsyncIterableLike<number, T> {
+  constructor(private readonly values: readonly T[]) {}
+
+  getIXAsyncIterator(scheduler: SchedulerLike) {
+    return fromArrayAsyncIterator(this.values, scheduler);
+  }
+}
+
+export const fromArray = <T>(values: readonly T[]): AsyncIterableLike<number, T> =>
+  new FromArrayAsyncIterator(values);
