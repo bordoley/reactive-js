@@ -13,6 +13,8 @@ const emptyAsyncIterator = <TReq, T>(
 ): AsyncIteratorResourceLike<TReq, T> =>
   createAsyncIteratorResource(operator, scheduler, replayCount);
 
-export const empty = <TReq, T>(): AsyncIterableLike<TReq, T> => ({
+const instance = {
   getIXAsyncIterator: emptyAsyncIterator,
-});
+};
+
+export const empty = <TReq, T>(): AsyncIterableLike<TReq, T> => instance;

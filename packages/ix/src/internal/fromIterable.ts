@@ -19,7 +19,7 @@ const fromIterableAsyncIterator = <T>(
   replayCount?: number,
 ): AsyncIteratorResourceLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
-  const f = (obs: ObservableLike<number | void>) =>
+  const operator = (obs: ObservableLike<number | void>) =>
     pipe(
       obs,
       map(count =>
@@ -29,7 +29,7 @@ const fromIterableAsyncIterator = <T>(
       catchError(error => (error === doneError ? empty() : undefined)),
     );
 
-  return createAsyncIteratorResource(f, scheduler, replayCount);
+  return createAsyncIteratorResource(operator, scheduler, replayCount);
 };
 
 class FromIterableAsyncIterable<T>
