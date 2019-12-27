@@ -18,7 +18,6 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   AsyncIteratorLike,
   AsyncIteratorResourceLike,
-  EventEmitterResourceLike,
   StateStoreResourceLike,
   StateUpdaterLike,
 } from "./interfaces";
@@ -83,12 +82,13 @@ export const createAsyncIteratorResource = <TReq, T>(
   return new AsyncIteratorResourceImpl(dispatcher, observable);
 };
 
+/** @ignore */
 export const createEventEmitter = <T>(
   config: {
     scheduler: SchedulerLike;
     replayCount: number;
   } | void,
-): EventEmitterResourceLike<T> => {
+): AsyncIteratorResourceLike<T, T> => {
   config = config || undefined;
   if (config !== undefined) {
     return createAsyncIteratorResource(

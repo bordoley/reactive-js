@@ -1,7 +1,6 @@
 import {
   AsyncIterableLike,
   AsyncIteratorResourceLike,
-  EventEmitterResourceLike,
 } from "./interfaces";
 import {
   using,
@@ -36,7 +35,7 @@ export const reduce = <TReq, TSrc, TAcc>(
 > => iterable => {
   const resourceFactory = (): [
     AsyncIteratorResourceLike<TReq, TSrc>,
-    EventEmitterResourceLike<ReduceRequestLike<TReq, TAcc>>,
+    AsyncIteratorResourceLike<ReduceRequestLike<TReq, TAcc>, ReduceRequestLike<TReq, TAcc>>,
   ] => {
     const resource: AsyncIteratorResourceLike<
       TReq,
@@ -53,7 +52,7 @@ export const reduce = <TReq, TSrc, TAcc>(
 
   const observableFactory = ([iterator, eventEmitter]: [
     AsyncIteratorResourceLike<TReq, TSrc>,
-    EventEmitterResourceLike<ReduceRequestLike<TReq, TAcc>>,
+    AsyncIteratorResourceLike<ReduceRequestLike<TReq, TAcc>, ReduceRequestLike<TReq, TAcc>>,
   ]) =>
     pipe(
       iterator,

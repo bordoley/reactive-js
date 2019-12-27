@@ -3,8 +3,6 @@ export {
   AsyncIteratorOperatorLike,
   AsyncIteratorResourceLike,
   AsyncIteratorResourceOperatorLike,
-  EventEmitterLike,
-  EventEmitterResourceLike,
   StateStoreLike,
   StateStoreResourceLike,
   StateUpdaterLike,
@@ -12,7 +10,6 @@ export {
 
 export {
   createAsyncIteratorResource,
-  createEventEmitter,
   createPersistentStateStore,
 } from "./internal/create";
 
