@@ -32,6 +32,7 @@
 * [generate](README.md#const-generate)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
+* [reduce](README.md#const-reduce)
 
 ## Type aliases
 
@@ -175,7 +176,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[]): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+▸ **fromArray**<**T**>(`values`: keyof T[]): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 **Type parameters:**
 
@@ -187,13 +188,13 @@ Name | Type |
 ------ | ------ |
 `values` | keyof T[] |
 
-**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 **Type parameters:**
 
@@ -205,13 +206,13 @@ Name | Type |
 ------ | ------ |
 `iterable` | Iterable‹T› |
 
-**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 **Type parameters:**
 
@@ -233,7 +234,7 @@ Name | Type |
 
 ▸ (): *T*
 
-**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number, T›*
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹number | void, T›*
 
 ___
 
@@ -300,3 +301,36 @@ Name | Type |
 `ref` | TReqB |
 
 **Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReqA, T, TReqB, T›*
+
+___
+
+### `Const` reduce
+
+▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: ReduceRequestLike‹TReq, TAcc›, `scheduler`: SchedulerLike): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TSrc**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **reducer**: *function*
+
+▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹ReduceRequestLike‹TReq, TAcc››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | TSrc |
+
+▪ **initial**: *ReduceRequestLike‹TReq, TAcc›*
+
+▪ **scheduler**: *SchedulerLike*
+
+**Returns:** *(Anonymous function)*

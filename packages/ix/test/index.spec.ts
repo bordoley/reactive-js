@@ -20,7 +20,7 @@ test("fromArray", () => {
     subscribe(scheduler),
   );
 
-  iter.dispatch(1);
+  iter.dispatch();
   iter.dispatch(2);
 
   scheduler.run();
@@ -43,7 +43,7 @@ test("fromIterable", () => {
     subscribe(scheduler),
   );
 
-  iter.dispatch(1);
+  iter.dispatch();
   iter.dispatch(2);
   iter.dispatch(3);
   iter.dispatch(5);
@@ -68,7 +68,7 @@ test("generate", () => {
     subscribe(scheduler),
   );
 
-  iter.dispatch(1);
+  iter.dispatch();
   iter.dispatch(2);
 
   scheduler.run();
@@ -84,8 +84,8 @@ test("reduce", () => {
   pipe(
     iter,
     reduce(
-      (acc, next) => ofValue({ result: acc + next, request: 1 }),
-      { request: 1, result: 0 },
+      (acc, next) => ofValue({ result: acc + next }),
+      { request: undefined, result: 0 },
       scheduler,
     ),
     onNext(x => result.push(x)),
