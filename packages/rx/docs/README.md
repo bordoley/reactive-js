@@ -29,6 +29,7 @@
 ### Functions
 
 * [buffer](README.md#const-buffer)
+* [catchError](README.md#const-catcherror)
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
@@ -41,6 +42,7 @@
 * [exhaust](README.md#const-exhaust)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
+* [fromIterator](README.md#const-fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#const-generate)
@@ -56,6 +58,7 @@
 * [onComplete](README.md#const-oncomplete)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
+* [publish](README.md#const-publish)
 * [reduce](README.md#const-reduce)
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
@@ -96,6 +99,30 @@ Name | Type | Default |
 `maxBufferSize` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
+
+___
+
+### `Const` catchError
+
+▸ **catchError**<**T**>(`onError`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onError**: *function*
+
+▸ (`error`: unknown): *[ObservableLike](interfaces/observablelike.md)‹T› | void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`error` | unknown |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 ___
 
@@ -615,6 +642,26 @@ Name | Type | Default |
 
 ___
 
+### `Const` fromIterator
+
+▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `scheduler`: SchedulerLike, `config`: object): *[MulticastObservableLike](interfaces/multicastobservablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`iterator` | Iterator‹T› | - |
+`scheduler` | SchedulerLike | - |
+`config` | object |  {} |
+
+**Returns:** *[MulticastObservableLike](interfaces/multicastobservablelike.md)‹T›*
+
+___
+
 ### `Const` fromPromise
 
 ▸ **fromPromise**<**T**>(`factory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
@@ -926,6 +973,25 @@ Name | Type |
 `next` | T |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` publish
+
+▸ **publish**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`scheduler` | SchedulerLike | - |
+`replayCount` | number | 0 |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)‹T››*
 
 ___
 
