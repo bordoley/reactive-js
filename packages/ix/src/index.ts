@@ -17,6 +17,7 @@ export {
 } from "./internal/create";
 
 export { fromArray } from "./internal/fromArray";
+export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 
 export { lift, liftReq } from "./internal/lift";

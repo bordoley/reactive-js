@@ -22,7 +22,7 @@ export { defer } from "./internal/defer";
 export { empty } from "./internal/empty";
 export { fromArray, ofValue } from "./internal/fromArray";
 export { fromScheduledValues } from "./internal/fromScheduledValues";
-export { fromIterable } from "./internal/fromIterable";
+export { fromIterable, fromIterator } from "./internal/fromIterable";
 export { fromPromise } from "./internal/fromPromise";
 export { generate } from "./internal/generate";
 export { merge } from "./internal/merge";
