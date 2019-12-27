@@ -1,10 +1,12 @@
-import { OperatorLike } from "@reactive-js/pipe";
+import { OperatorLike, pipe } from "@reactive-js/pipe";
 import {
   MulticastObservableLike,
   ObservableLike,
   SubscriberLike,
+  share,
 } from "@reactive-js/rx";
 import { AsyncIteratorLike, AsyncIteratorOperatorLike } from "./interfaces";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   constructor(
@@ -26,10 +28,12 @@ class LiftedIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
 }
 
 const liftImpl = <TReq, T, TReqA, TA>(
-  operator?: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
+  scheduler: SchedulerLike,
+  operator?: OperatorLike<ObservableLike<T>, ObservableLike<TA>>,
   dispatchOperator?: (dispatcher: (req: TReq) => void) => (req: TReqA) => void,
+  replay?: number,
 ): AsyncIteratorOperatorLike<TReq, T, TReqA, TA> => iterator => {
-  const observable: MulticastObservableLike<T> =
+  const observable: ObservableLike<T> =
     (iterator as any).observable || iterator;
   const dispatcher: (req: TReq) => void =
     (iterator as any).dispatcher || ((req: any) => iterator.dispatch(req));
@@ -44,16 +48,20 @@ const liftImpl = <TReq, T, TReqA, TA>(
 
   return new LiftedIteratorImpl(
     liftedDispatcher,
-    liftedObservable as MulticastObservableLike<TA>,
+    pipe(liftedObservable as ObservableLike<TA>, share(scheduler, replay)),
   );
 };
 
 export const lift = <TReq, T, TA>(
   operator: OperatorLike<ObservableLike<T>, MulticastObservableLike<TA>>,
+  scheduler: SchedulerLike,
+  replay?: number,
 ): AsyncIteratorOperatorLike<TReq, T, TReq, TA> =>
-  liftImpl(operator, undefined);
+  liftImpl(scheduler, operator, undefined, replay);
 
 export const liftReq = <TReq, T, TReqA>(
   operator: (dispatcher: (req: TReq) => void) => (ref: TReqA) => void,
+  scheduler: SchedulerLike,
+  replay?: number,
 ): AsyncIteratorOperatorLike<TReq, T, TReqA, T> =>
-  liftImpl(undefined, operator);
+  liftImpl(scheduler, undefined, operator, replay);
