@@ -16,6 +16,7 @@ const doneError = Symbol("IteratorDone");
 const fromIterableAsyncIterator = <T>(
   iterable: Iterable<T>,
   scheduler: SchedulerLike,
+  replayCount?: number,
 ): AsyncIteratorResourceLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
   const f = (obs: ObservableLike<number | void>) =>
@@ -28,15 +29,15 @@ const fromIterableAsyncIterator = <T>(
       catchError(error => (error === doneError ? empty() : undefined)),
     );
 
-  return createAsyncIteratorResource(f, scheduler);
+  return createAsyncIteratorResource(f, scheduler, replayCount);
 };
 
 class FromIterableAsyncIterable<T>
   implements AsyncIterableLike<number | void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike) {
-    return fromIterableAsyncIterator(this.iterable, scheduler);
+  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
+    return fromIterableAsyncIterator(this.iterable, scheduler, replayCount);
   }
 }
 

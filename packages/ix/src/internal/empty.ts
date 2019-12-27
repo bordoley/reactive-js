@@ -9,8 +9,9 @@ const operator = <TReq, T>(obs: ObservableLike<TReq>): ObservableLike<T> =>
 
 const emptyAsyncIterator = <TReq, T>(
   scheduler: SchedulerLike,
+  replayCount?: number,
 ): AsyncIteratorResourceLike<TReq, T> =>
-  createAsyncIteratorResource(operator, scheduler);
+  createAsyncIteratorResource(operator, scheduler, replayCount);
 
 export const empty = <TReq, T>(): AsyncIterableLike<TReq, T> => ({
   getIXAsyncIterator: emptyAsyncIterator,

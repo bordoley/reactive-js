@@ -22,12 +22,13 @@
 
 ###  getIXAsyncIterator
 
-▸ **getIXAsyncIterator**(`scheduler`: SchedulerLike): *[AsyncIteratorResourceLike](asynciteratorresourcelike.md)‹TReq, T›*
+▸ **getIXAsyncIterator**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncIteratorResourceLike](asynciteratorresourcelike.md)‹TReq, T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
 
 **Returns:** *[AsyncIteratorResourceLike](asynciteratorresourcelike.md)‹TReq, T›*

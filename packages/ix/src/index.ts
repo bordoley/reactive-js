@@ -2,6 +2,7 @@ export {
   AsyncIteratorLike,
   AsyncIteratorOperatorLike,
   AsyncIteratorResourceLike,
+  AsyncIteratorResourceOperatorLike,
   EventEmitterLike,
   EventEmitterResourceLike,
   StateStoreLike,
@@ -19,6 +20,7 @@ export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
-export { lift, liftReq } from "./internal/lift";
+export { identity } from "./internal/identity";
+export { lift } from "./internal/lift";
 export { reduce } from "./internal/reduce";
 export { createReducerStore, createStateStore } from "./internal/reducerStore";
