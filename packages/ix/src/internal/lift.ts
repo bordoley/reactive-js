@@ -87,10 +87,10 @@ class LiftedAsyncIterable<TReq, T> implements AsyncIterableLike<TReq, T> {
   ): AsyncIteratorResourceLike<TReq, T> {
     const iterator = this.source.getIXAsyncIterator(scheduler);
 
-    const dispatch: (req: any) => void = 
+    const dispatch: (req: any) => void =
       iterator instanceof LiftedAsyncIterable
-        ? iterator.dispatch 
-        : ((req: any) => iterator.dispatch(req));
+        ? iterator.dispatch
+        : (req: any) => iterator.dispatch(req);
     const liftedDispatch = this.reqOperators.reduce(
       (acc, next) => next(acc),
       dispatch,
@@ -128,18 +128,15 @@ export const lift = <TReq, TA, TB>(
   return new LiftedAsyncIterable(source, observableOperators, reqOperators);
 };
 
-
 export const liftReq = <TReqA, TReqB, T>(
-  operator: AsyncIteratorRequestOperatorLike<TReqA, TReqB>
+  operator: AsyncIteratorRequestOperatorLike<TReqA, TReqB>,
 ): AsyncIterableOperatorLike<TReqA, T, TReqB, T> => iterable => {
   const source = (iterable as any).source || iterable;
   const observableOperators =
-    iterable instanceof LiftedAsyncIterable
-      ? iterable.observableOperators
-      : [];
+    iterable instanceof LiftedAsyncIterable ? iterable.observableOperators : [];
   const reqOperators =
-    iterable instanceof LiftedAsyncIterable 
-      ? [...iterable.reqOperators, operator] 
+    iterable instanceof LiftedAsyncIterable
+      ? [...iterable.reqOperators, operator]
       : [operator];
 
   return new LiftedAsyncIterable(source, observableOperators, reqOperators);
