@@ -579,7 +579,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -590,7 +590,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `values` | keyof T[] | - |
-`delay` | number | 0 |
+`options` | object |  {} |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
