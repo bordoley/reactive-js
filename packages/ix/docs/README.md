@@ -235,7 +235,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TReq**, **T**, **TA**>(`operator`: OperatorLike‹ObservableLike‹T›, MulticastObservableLike‹TA››): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReq, TA›*
+▸ **lift**<**TReq**, **T**, **TA**>(`operator`: OperatorLike‹ObservableLike‹T›, MulticastObservableLike‹TA››, `scheduler`: SchedulerLike, `replay?`: undefined | number): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReq, TA›*
 
 **Type parameters:**
 
@@ -250,6 +250,8 @@ ___
 Name | Type |
 ------ | ------ |
 `operator` | OperatorLike‹ObservableLike‹T›, MulticastObservableLike‹TA›› |
+`scheduler` | SchedulerLike |
+`replay?` | undefined &#124; number |
 
 **Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReq, TA›*
 
@@ -257,7 +259,7 @@ ___
 
 ### `Const` liftReq
 
-▸ **liftReq**<**TReq**, **T**, **TReqA**>(`operator`: function): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
+▸ **liftReq**<**TReq**, **T**, **TReqA**>(`operator`: function, `scheduler`: SchedulerLike, `replay?`: undefined | number): *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
 
 **Type parameters:**
 
@@ -292,5 +294,9 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `ref` | TReqA |
+
+▪ **scheduler**: *SchedulerLike*
+
+▪`Optional`  **replay**: *undefined | number*
 
 **Returns:** *[AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)‹TReq, T, TReqA, T›*
