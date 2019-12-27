@@ -9,7 +9,6 @@ import {
   onNext,
   publish,
   scan,
-  startWith,
   SubjectResourceLike,
   SubscriberLike,
   ObservableLike,
@@ -89,42 +88,16 @@ export const createEventEmitter = <T>(): EventEmitterResourceLike<T> => {
   return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
 
-export const createReducerStore = <TAction, T>(
-  initialState: T,
-  reducer: (state: T, action: TAction) => T,
-  scheduler: SchedulerLike,
-  equals?: (a: T, b: T) => boolean,
-): AsyncIteratorResourceLike<TAction, T> => {
-  const f = (src: ObservableLike<TAction>) =>
-    pipe(
-      src,
-      scan(reducer, () => initialState),
-      startWith(initialState),
-      distinctUntilChanged(equals),
-    );
-
-  return createAsyncIteratorResource(f, scheduler);
-};
-
-const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
-  action(state);
-export const createStateStore = <T>(
-  initialState: T,
-  scheduler: SchedulerLike,
-  equals?: (a: T, b: T) => boolean,
-): StateStoreResourceLike<T> =>
-  createReducerStore(initialState, stateStoreReducer, scheduler, equals);
-
 export const createPersistentStateStore = <T>(
   persistentStore: AsyncIteratorLike<T, T>,
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
 ): StateStoreResourceLike<T> => {
-  const f = (obs: ObservableLike<StateUpdaterLike<T>>): ObservableLike<T> => {
+  const operator = (obs: ObservableLike<StateUpdaterLike<T>>): ObservableLike<T> => {
     const onPersistentStoreChangedStream = pipe(
       persistentStore,
-      onNext(v => iter.dispatch((_: T) => v)),
+      onNext((v: T) => iter.dispatch((_: T): T => v)),
       ignoreElements(),
     );
 
@@ -135,12 +108,12 @@ export const createPersistentStateStore = <T>(
         () => initialState,
       ),
       distinctUntilChanged(equals),
-      onNext(next => persistentStore.dispatch(next)),
+      onNext((next: T) => persistentStore.dispatch(next)),
     );
 
     return merge<T>(onPersistentStoreChangedStream, stateObs);
   };
 
-  const iter = createAsyncIteratorResource(f, scheduler, 1);
+  const iter = createAsyncIteratorResource(operator, scheduler, 1);
   return iter;
 };

@@ -52,7 +52,8 @@ test("generate", () => {
   const scheduler = createVirtualTimeSchedulerResource();
   const iter = generate(
     x => x + 1,
-    () => 0).getIXAsyncIterator(scheduler)
+    () => 0,
+  ).getIXAsyncIterator(scheduler);
 
   const result: number[] = [];
   pipe(

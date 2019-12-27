@@ -29,13 +29,14 @@ const fromIterableAsyncIterator = <T>(
   return createAsyncIteratorResource(f, scheduler);
 };
 
-class FromIterableAsyncIterator<T> implements AsyncIterableLike<number, T> {
-  constructor(private readonly iterable: Iterable<T>,) {}
+class FromIterableAsyncIterable<T> implements AsyncIterableLike<number, T> {
+  constructor(private readonly iterable: Iterable<T>) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike) {
     return fromIterableAsyncIterator(this.iterable, scheduler);
   }
 }
 
-export const fromIterable = <T>(iterable: Iterable<T>): AsyncIterableLike<number, T> =>
-  new FromIterableAsyncIterator(iterable);
+export const fromIterable = <T>(
+  iterable: Iterable<T>,
+): AsyncIterableLike<number, T> => new FromIterableAsyncIterable(iterable);

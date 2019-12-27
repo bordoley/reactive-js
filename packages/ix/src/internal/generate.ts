@@ -19,7 +19,7 @@ const generateAsyncIterator = <T>(
   initialValue: () => T,
   scheduler: SchedulerLike,
 ): AsyncIteratorResourceLike<number, T> => {
-  const f = (obs: ObservableLike<number>) =>
+  const operator = (obs: ObservableLike<number>) =>
     pipe(
       obs,
       map(x =>
@@ -35,9 +35,8 @@ const generateAsyncIterator = <T>(
       scan(generateScanner(generator), initialValue),
     );
 
-  return createAsyncIteratorResource(f, scheduler);
+  return createAsyncIteratorResource(operator, scheduler);
 };
-
 
 class GenerateAsyncIterable<T> implements AsyncIterableLike<number, T> {
   constructor(
@@ -50,5 +49,8 @@ class GenerateAsyncIterable<T> implements AsyncIterableLike<number, T> {
   }
 }
 
-export const generate = <T>(generator: (acc: T) => T, initialValue: () => T): AsyncIterableLike<number, T> =>
+export const generate = <T>(
+  generator: (acc: T) => T,
+  initialValue: () => T,
+): AsyncIterableLike<number, T> =>
   new GenerateAsyncIterable(generator, initialValue);
