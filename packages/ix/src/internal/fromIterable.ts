@@ -21,7 +21,9 @@ const fromIterableAsyncIterator = <T>(
   const f = (obs: ObservableLike<number | void>) =>
     pipe(
       obs,
-      map(count => fromIterator(iterator, scheduler, { count: count || 1, doneError })),
+      map(count =>
+        fromIterator(iterator, scheduler, { count: count || 1, doneError }),
+      ),
       concatAll<T>(),
       catchError(error => (error === doneError ? empty() : undefined)),
     );
@@ -29,7 +31,8 @@ const fromIterableAsyncIterator = <T>(
   return createAsyncIteratorResource(f, scheduler);
 };
 
-class FromIterableAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
+class FromIterableAsyncIterable<T>
+  implements AsyncIterableLike<number | void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike) {
@@ -39,4 +42,5 @@ class FromIterableAsyncIterable<T> implements AsyncIterableLike<number | void, T
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-): AsyncIterableLike<number | void, T> => new FromIterableAsyncIterable(iterable);
+): AsyncIterableLike<number | void, T> =>
+  new FromIterableAsyncIterable(iterable);
