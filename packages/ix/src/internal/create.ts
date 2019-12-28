@@ -84,22 +84,10 @@ export const createAsyncIteratorResource = <TReq, T>(
 
 /** @ignore */
 export const createEventEmitter = <T>(
-  config: {
-    scheduler: SchedulerLike;
-    replayCount: number;
-  } | void,
+  replayCount?: number,
 ): AsyncIteratorResourceLike<T, T> => {
-  config = config || undefined;
-  if (config !== undefined) {
-    return createAsyncIteratorResource(
-      x => x,
-      config.scheduler,
-      config.replayCount,
-    );
-  } else {
-    const dispatcher = createSubject();
-    return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
-  }
+  const dispatcher = createSubject(replayCount);
+  return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
 
 export const createPersistentStateStore = <T>(
