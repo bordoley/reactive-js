@@ -5,9 +5,11 @@ import {
   withLatestFrom,
   map,
   switchAll,
-  startWith,
   takeFirst,
   ObservableLike,
+  merge,
+  ofValue,
+  takeLast,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
@@ -45,10 +47,15 @@ export const reduce = <TReq, TSrc, TAcc>(
     const eventEmitter = pipe(
       identity<ReduceRequestLike<TReq, TAcc>>(),
       lift(onNext(({ request }) => resource.dispatch(request))),
-    ).getIXAsyncIterator(scheduler, 1);
+    ).getIXAsyncIterator(scheduler);
 
     return [resource, eventEmitter];
   };
+
+  const withLatestSelector = (
+    next: TSrc,
+    { result }: ReduceRequestLike<TReq, TAcc>,
+  ) => pipe(reducer(result, next), takeFirst());
 
   const observableFactory = ([iterator, eventEmitter]: [
     AsyncIteratorResourceLike<TReq, TSrc>,
@@ -58,13 +65,17 @@ export const reduce = <TReq, TSrc, TAcc>(
     >,
   ]) =>
     pipe(
-      iterator,
-      withLatestFrom(eventEmitter, (next, { result }) => reducer(result, next)),
-      map(obs => pipe(obs, takeFirst())),
-      switchAll(),
-      startWith(initial()),
+      merge(
+        pipe(
+          iterator,
+          withLatestFrom(eventEmitter, withLatestSelector),
+          switchAll(),
+        ),
+        ofValue(initial()),
+      ),
       onNext(next => eventEmitter.dispatch(next)),
       map(({ result }) => result),
+      takeLast(),
     );
 
   return using(resourceFactory, observableFactory);

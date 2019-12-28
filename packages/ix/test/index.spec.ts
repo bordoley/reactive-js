@@ -80,7 +80,7 @@ test("reduce", () => {
   const scheduler = createVirtualTimeSchedulerResource(1);
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
-  const result: number[] = [];
+  let result: number = 0;
   pipe(
     iter,
     reduce(
@@ -88,10 +88,10 @@ test("reduce", () => {
       () => ({ request: undefined, result: 0 }),
       scheduler,
     ),
-    onNext(x => result.push(x)),
+    onNext(x => { result = x }),
     subscribe(scheduler),
   );
   scheduler.run();
 
-  expect(result).toEqual([0, 1, 3, 6, 10, 15, 21]);
+  expect(result).toEqual(21);
 });
