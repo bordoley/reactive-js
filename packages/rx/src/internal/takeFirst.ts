@@ -1,3 +1,5 @@
+import { pipe } from "@reactive-js/pipe";
+import { empty } from "./empty";
 import {
   ObservableOperatorLike,
   SubscriberLike,
@@ -6,8 +8,8 @@ import {
 import { lift } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
-class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private count = -1;
+class TakeFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
+  private count = 0;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
@@ -16,9 +18,8 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
   next(data: T) {
     if (!this.isDisposed) {
       this.count++;
-      if (this.count < this.maxCount) {
-        this.delegate.next(data);
-      } else {
+      this.delegate.next(data);
+      if (this.count >= this.maxCount) {
         this.complete();
       }
     }
@@ -28,7 +29,7 @@ class TakeSubscriber<T> extends DelegatingSubscriber<T, T> {
 const operator = <T>(
   count: number,
 ): SubscriberOperatorLike<T, T> => subscriber =>
-  new TakeSubscriber(subscriber, count);
+  new TakeFirstSubscriber(subscriber, count);
 
-export const takeFirst = <T>(count = 1): ObservableOperatorLike<T, T> =>
-  lift(operator(count));
+export const takeFirst = <T>(count = 1): ObservableOperatorLike<T, T> => observable =>
+  count > 0 ? pipe(observable, lift(operator(count))) : empty();
