@@ -55,7 +55,8 @@
     "build-types": "tsc -p tsconfig.types.json",
     "docs": "typedoc --tsconfig tsconfig.doc.json",
     "test": "jest",
-    "test-coverage": "jest --coverage"
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
   "jest": {
     "preset": "ts-jest",
