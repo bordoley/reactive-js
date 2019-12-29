@@ -6,7 +6,7 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  createObservableEnumerator,
+  AbstractEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { runMixin } from "./producer";
@@ -93,11 +93,31 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
   run = runMixin;
 }
 
+class GenerateEnumerator<T> extends AbstractEnumerator<T> {
+  hasCurrent = false;
+
+  constructor(private readonly generator: (acc: T) => T, public current: T) {
+    super();
+  }
+
+  moveNext(): boolean {
+    if (this.hasCurrent) {
+      this.current = this.generator(this.current);
+    } else {
+      this.hasCurrent = true;
+    }
+    return true;
+  }
+}
+
 class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
-  constructor(private readonly generator: (acc: T) => T, private acc: T) {}
+  constructor(
+    private readonly generator: (acc: T) => T,
+    private readonly acc: T,
+  ) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    return createObservableEnumerator(this);
+    return new GenerateEnumerator(this.generator, this.acc);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
