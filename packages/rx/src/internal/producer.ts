@@ -8,6 +8,7 @@ interface ProducerLike<T> {
   loopFast(): void;
 }
 
+/** @ignore */
 export function runMixin<T>(
   this: ProducerLike<T>,
   shouldYield?: () => boolean,
