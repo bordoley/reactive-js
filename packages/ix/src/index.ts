@@ -19,5 +19,5 @@ export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
-export { reduce } from "./internal/reduce";
+export { reduceAsync } from "./internal/reduceAsync";
 export { createReducerStore, createStateStore } from "./internal/reducerStore";
