@@ -6,6 +6,7 @@ import {
   fromIterator,
   map,
   ObservableLike,
+  using,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
@@ -13,18 +14,23 @@ import { createAsyncIteratorResource } from "./create";
 
 const doneError = Symbol("IteratorDone");
 
+const identity = <T>(x: T) => x;
+
 const fromIterableAsyncIterator = <T>(
   iterable: Iterable<T>,
   scheduler: SchedulerLike,
   replayCount?: number,
 ): AsyncIteratorResourceLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
+  const makeIteratorObservable = (count: number) =>
+    using(
+      () => fromIterator(iterator, scheduler, { count: count || 1, doneError }),
+      identity,
+    );
   const operator = (obs: ObservableLike<number | void>) =>
     pipe(
       obs,
-      map(count =>
-        fromIterator(iterator, scheduler, { count: count || 1, doneError }),
-      ),
+      map(makeIteratorObservable),
       concatAll<T>(),
       catchError(error => (error === doneError ? empty() : undefined)),
     );

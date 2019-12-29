@@ -52,6 +52,7 @@ import {
   toPromise,
   toValue,
   withLatestFrom,
+  zip,
 } from "../src/index";
 
 class MockSubscriber<T> extends Subscriber<T> {
@@ -102,7 +103,7 @@ test("buffer", () => {
       [1, 4],
     ),
     buffer(4, 3),
-    toArray(createVirtualTimeSchedulerResource),
+    toArray(),
   );
 
   expect(result).toEqual([
@@ -951,14 +952,9 @@ describe("takeLast", () => {
     const cause = new Error();
     const src = merge(fromArray([1, 2, 3, 4], { delay: 4 }), throws(cause, 2));
 
-    expect(() =>
-      pipe(
-        src,
-        takeLast(3),
-        observe(observer),
-        toArray(() => createVirtualTimeSchedulerResource()),
-      ),
-    ).toThrow(cause);
+    expect(() => pipe(src, takeLast(3), observe(observer), toArray())).toThrow(
+      cause,
+    );
     expect(observer.onNext).toHaveBeenCalledTimes(0);
   });
 });
@@ -988,7 +984,7 @@ describe("throttle", () => {
       toArray(() => createVirtualTimeSchedulerResource(1)),
     );
 
-    expect(result).toEqual([0, 49, 99]);
+    expect(result).toEqual([0, 49]);
   });
 
   test("last", () => {
@@ -1141,7 +1137,7 @@ test("withLatestFrom", () => {
       observable,
       withLatestFrom(otherObservable, (a, b) => [a, b]),
       onNext(cb),
-      toArray(createVirtualTimeSchedulerResource),
+      toArray(),
     ),
   ).toThrow(cause);
 
@@ -1151,4 +1147,47 @@ test("withLatestFrom", () => {
   expect(cb).toHaveBeenNthCalledWith(4, [1, 3]);
   expect(cb).toHaveBeenNthCalledWith(5, [2, 3]);
   expect(cb).toHaveBeenNthCalledWith(6, [3, 3]);
+});
+
+describe("zip", () => {
+  test("zip non-delayed sources", () => {
+    const result = pipe(
+      zip(
+        [
+          fromArray([1, 2]),
+          fromIterable([2, 3]),
+          generate(
+            x => x + 1,
+            () => 3,
+          ),
+        ],
+        (x, y, z) => [x, y, z],
+      ),
+      toArray(),
+    );
+
+    expect(result).toEqual([
+      [1, 2, 3],
+      [2, 3, 4],
+    ]);
+  });
+
+  test("zip with-delayed sources", () => {
+    const result = pipe(
+      zip(
+        [
+          fromArray([1, 2], { delay: 1 }),
+          fromIterable([2, 3]),
+          fromArray([3, 4, 5], { delay: 1 }),
+        ],
+        (x, y, z) => [x, y, z],
+      ),
+      toArray(),
+    );
+
+    expect(result).toEqual([
+      [1, 2, 3],
+      [2, 3, 4],
+    ]);
+  });
 });
