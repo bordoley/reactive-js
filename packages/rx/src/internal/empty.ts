@@ -6,11 +6,11 @@ import {
 import { defer } from "./defer";
 
 class EmptyObservable<T>
-  implements ObservableLike<T>,  SchedulerContinuationLike {
+  implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
 
   constructor(private readonly delay: number) {}
-  
+
   run(_?: () => boolean): SchedulerContinuationResultLike | void {
     (this.subscriber as SubscriberLike<T>).complete();
   }
@@ -24,6 +24,4 @@ class EmptyObservable<T>
 const defaultEmpty = defer(() => new EmptyObservable(0));
 
 export const empty = <T>(delay = 0): ObservableLike<T> =>
-  delay > 0
-    ? defer(() => new EmptyObservable(delay))
-    : defaultEmpty;
+  delay > 0 ? defer(() => new EmptyObservable(delay)) : defaultEmpty;
