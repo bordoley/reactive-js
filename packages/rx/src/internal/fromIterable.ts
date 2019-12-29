@@ -22,7 +22,7 @@ import {
   DisposableOrTeardown,
   DisposableLike,
 } from "@reactive-js/disposable";
-import { runMixin } from "./producer";
+import { producerMixin } from "./producer";
 
 class FromIteratorWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -99,56 +99,49 @@ class FromIteratorObservable<T>
     private readonly doneError?: unknown,
   ) {}
 
-  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const maxCount = this.maxCount;
     const doneError = this.doneError;
 
     let count = this.count;
-    while (count < maxCount && !subscriber.isDisposed) {
-      const next = iterator.next();
-      if (!next.done) {
-        subscriber.next(next.value);
-        count++;
-      } else if (doneError !== undefined) {
-        throw doneError;
-      } else {
-        break;
+
+    if (shouldYield !== undefined) {
+      while (count < maxCount && !subscriber.isDisposed) {
+        const next = iterator.next();
+        if (!next.done) {
+          subscriber.next(next.value);
+          count++;
+        } else if (doneError !== undefined) {
+          throw doneError;
+        } else {
+          break;
+        }
+
+        if (shouldYield()) {
+          this.count = count;
+          return this.continuationResult;
+        }
       }
-
-      if (shouldYield()) {
-        this.count = count;
-        return this.continuationResult;
-      }
-    }
-
-    return;
-  }
-
-  loopFast(): SchedulerContinuationResultLike | void {
-    const iterator = this.iterator;
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const maxCount = this.maxCount;
-    const doneError = this.doneError;
-
-    let count = this.count;
-    while (count < maxCount && !subscriber.isDisposed) {
-      const next = iterator.next();
-      if (!next.done) {
-        subscriber.next(next.value);
-        count++;
-      } else if (doneError !== undefined) {
-        throw doneError;
-      } else {
-        break;
+    } else {
+      while (count < maxCount && !subscriber.isDisposed) {
+        const next = iterator.next();
+        if (!next.done) {
+          subscriber.next(next.value);
+          count++;
+        } else if (doneError !== undefined) {
+          throw doneError;
+        } else {
+          break;
+        }
       }
     }
 
     return;
   }
 
-  run = runMixin;
+  run = producerMixin.run;
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

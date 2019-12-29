@@ -9,7 +9,7 @@ import {
   AbstractEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { runMixin } from "./producer";
+import { producerMixin } from "./producer";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -59,38 +59,31 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     private acc: T,
   ) {}
 
-  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const generator = this.generator;
     const subscriber = this.subscriber;
 
     let acc = this.acc;
-    while (!subscriber.isDisposed) {
-      subscriber.next(acc);
-      acc = generator(acc);
+    if (shouldYield !== undefined) { 
+      while (!subscriber.isDisposed) {
+        subscriber.next(acc);
+        acc = generator(acc);
 
-      if (shouldYield()) {
-        this.acc = acc;
-        return this.continuationResult;
+        if (shouldYield()) {
+          this.acc = acc;
+          return this.continuationResult;
+        }
       }
+    } else {
+      while (!subscriber.isDisposed) {
+        subscriber.next(acc);
+        acc = generator(acc);
+      };
     }
     return;
   }
 
-  loopFast(): SchedulerContinuationResultLike | void {
-    const generator = this.generator;
-    const subscriber = this.subscriber;
-
-    let acc = this.acc;
-    do {
-      subscriber.next(acc);
-      acc = generator(acc);
-    } while (!subscriber.isDisposed);
-    this.acc = acc;
-
-    return;
-  }
-
-  run = runMixin;
+  run = producerMixin.run;
 }
 
 class GenerateEnumerator<T> extends AbstractEnumerator<T> {

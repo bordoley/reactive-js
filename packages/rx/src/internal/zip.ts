@@ -6,7 +6,7 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { runMixin } from "./producer";
+import { producerMixin } from "./producer";
 
 const shouldEmit = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
   for (const buffer of buffers) {
@@ -122,45 +122,39 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     readonly selector: (...values: unknown[]) => T,
   ) {}
 
-  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const buffers = this.buffers;
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
-    while (shouldEmit(buffers) && !subscriber.isDisposed) {
-      const next = selector(...buffers.map(getCurrent));
-      subscriber.next(next);
+    if (shouldYield !== undefined){
+      while (shouldEmit(buffers) && !subscriber.isDisposed) {
+        const next = selector(...buffers.map(getCurrent));
+        subscriber.next(next);
 
-      // FIXME: In theory this loop should be capable of yielding
-      for (const buffer of buffers) {
-        buffer.moveNext();
+        for (const buffer of buffers) {
+          buffer.moveNext();
+        }
+
+        if (shouldYield()) {
+          return this.continuationResult;
+        }
       }
-
-      if (shouldYield()) {
-        return this.continuationResult;
+    } else {
+      while (shouldEmit(buffers) && !subscriber.isDisposed) {
+        const next = selector(...buffers.map(getCurrent));
+  
+        for (const buffer of buffers) {
+          buffer.moveNext();
+        }
+  
+        subscriber.next(next);
       }
     }
     return;
   }
 
-  loopFast() {
-    const buffers = this.buffers;
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const selector = this.selector;
-
-    while (shouldEmit(buffers) && !subscriber.isDisposed) {
-      const next = selector(...buffers.map(getCurrent));
-
-      for (const buffer of buffers) {
-        buffer.moveNext();
-      }
-
-      subscriber.next(next);
-    }
-    return;
-  }
-
-  run = runMixin;
+  run = producerMixin.run;
 
   subscribe(subscriber: SubscriberLike<T>) {
     const observables = this.observables;

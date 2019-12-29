@@ -9,7 +9,7 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { runMixin } from "./producer";
+import { producerMixin } from "./producer";
 
 class FromArrayWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -67,42 +67,36 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
     private readonly startIndex: number,
   ) {}
 
-  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const values = this.values;
     const length = values.length;
     const subscriber = this.subscriber;
 
     let index = this.index;
-    while (index < length && !subscriber.isDisposed) {
-      const value = values[index];
-      index++;
+    if (shouldYield !== undefined) {
+      while (index < length && !subscriber.isDisposed) {
+        const value = values[index];
+        index++;
 
-      subscriber.next(value);
+        subscriber.next(value);
 
-      if (shouldYield()) {
-        this.index = index;
-        return this.continuationResult;
+        if (shouldYield()) {
+          this.index = index;
+          return this.continuationResult;
+        }
+      }
+    } else {
+      while (index < length && !subscriber.isDisposed) {
+        const value = values[index];
+        index++;
+  
+        subscriber.next(value);
       }
     }
     return;
   }
 
-  loopFast() {
-    const values = this.values;
-    const length = values.length;
-    const subscriber = this.subscriber;
-
-    let index = this.index;
-    while (index < length && !subscriber.isDisposed) {
-      const value = values[index];
-      index++;
-
-      subscriber.next(value);
-    }
-    return;
-  }
-
-  run = runMixin;
+  run = producerMixin.run;
 }
 
 class FromArrayEnumerator<T> extends AbstractEnumerator<T> {

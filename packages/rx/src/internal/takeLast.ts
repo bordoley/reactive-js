@@ -10,7 +10,7 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
-import { runMixin } from "./producer";
+import { producerMixin } from "./producer";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
   implements SchedulerContinuationLike {
@@ -37,37 +37,29 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  loop(shouldYield: () => boolean) {
+  loop(shouldYield?: () => boolean) {
     const last = this.last;
     const length = last.length;
     const delegate = this.delegate;
 
     let index = this.index;
-    while (index < length && !delegate.isDisposed) {
-      const next = last[index];
-      delegate.next(next);
-      index++;
+    if (shouldYield !== undefined) {
+      while (index < length && !delegate.isDisposed) {
+        const next = last[index];
+        delegate.next(next);
+        index++;
 
-      if (shouldYield() && index < length) {
-        this.index = index;
-        return this.continuation;
+        if (shouldYield() && index < length) {
+          this.index = index;
+          return this.continuation;
+        }
       }
-    }
-
-    last.length = 0;
-    return;
-  }
-
-  loopFast() {
-    const last = this.last;
-    const length = last.length;
-    const delegate = this.delegate;
-
-    let index = this.index;
-    while (index < length && !delegate.isDisposed) {
-      const next = last[index];
-      delegate.next(next);
-      index++;
+    } else {
+      while (index < length && !delegate.isDisposed) {
+        const next = last[index];
+        delegate.next(next);
+        index++;
+      }
     }
 
     last.length = 0;
@@ -83,7 +75,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  run = runMixin;
+  run = producerMixin.run;
 }
 
 const operator = <T>(
