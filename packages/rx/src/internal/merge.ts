@@ -2,19 +2,19 @@ import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private completedCount = 0;
-
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly totalCount: number,
+    private readonly ctx: MergeObservable<T>
   ) {
     super(delegate);
   }
 
   complete(error?: ErrorLike) {
-    this.completedCount++;
+    this.dispose();
+    const ctx = this.ctx;
+    ctx.completedCount++;
 
-    if (error !== undefined || this.completedCount >= this.totalCount) {
+    if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
       this.delegate.complete(error);
     }
   }
@@ -25,16 +25,19 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 class MergeObservable<T> implements ObservableLike<T> {
-  constructor(private readonly observables: readonly ObservableLike<T>[]) {}
+  completedCount = 0;
+
+  constructor(readonly observables: readonly ObservableLike<T>[]) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const mergeSubscriber = new MergeSubscriber(
-      subscriber,
-      this.observables.length,
-    );
     const observables = this.observables;
 
     for (const observable of observables) {
+      const mergeSubscriber = new MergeSubscriber(
+        subscriber,
+        this,
+      );
+
       observable.subscribe(mergeSubscriber);
     }
   }
