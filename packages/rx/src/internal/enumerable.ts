@@ -57,7 +57,8 @@ export interface EnumerableLike<T> {
   getEnumerator(): EnumeratorLike<T>;
 }
 
-class ObservableEnumerator<T> extends AbstractEnumerator<T> implements ObserverLike<T> {
+class ObservableEnumerator<T> extends AbstractEnumerator<T>
+  implements ObserverLike<T> {
   private _current: T | undefined;
   hasCurrent = false;
   private error?: ErrorLike = undefined;
@@ -76,7 +77,7 @@ class ObservableEnumerator<T> extends AbstractEnumerator<T> implements ObserverL
     return this._current as T;
   }
 
-  moveNext() { 
+  moveNext() {
     this.hasCurrent = false;
     this.scheduler.next();
     const error = this.error;
@@ -101,4 +102,3 @@ class ObservableEnumerator<T> extends AbstractEnumerator<T> implements ObserverL
 export const createObservableEnumerator = <T>(
   observable: ObservableLike<T>,
 ): EnumeratorLike<T> => new ObservableEnumerator(observable);
-  

@@ -79,10 +79,10 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     if (shouldEmit(buffers)) {
       const next = ctx.selector(...buffers.map(getCurrent));
 
-      for(const buffer of buffers){
+      for (const buffer of buffers) {
         buffer.moveNext();
       }
-      
+
       this.delegate.next(next);
     }
   }
@@ -106,14 +106,14 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
   ): SchedulerContinuationResultLike | void {
     const buffers = this.buffers;
     const selector = this.selector;
-    const subscriber = (this.subscriber as SubscriberLike<T>);
+    const subscriber = this.subscriber as SubscriberLike<T>;
 
     while (shouldEmit(buffers) && !subscriber.isDisposed) {
       const next = selector(...buffers.map(getCurrent));
       subscriber.next(next);
 
       // FIXME: In theory this loop should be capable of yielding
-      for(const buffer of buffers){
+      for (const buffer of buffers) {
         buffer.moveNext();
       }
 
@@ -126,13 +126,13 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
 
   private loopFast() {
     const buffers = this.buffers;
-    const subscriber = (this.subscriber as SubscriberLike<T>);
+    const subscriber = this.subscriber as SubscriberLike<T>;
     const selector = this.selector;
 
     while (shouldEmit(buffers) && !subscriber.isDisposed) {
       const next = selector(...buffers.map(getCurrent));
 
-      for(const buffer of buffers){
+      for (const buffer of buffers) {
         buffer.moveNext();
       }
 
@@ -173,7 +173,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
       if ((observable as any).getEnumerator !== undefined) {
         const enumerable = (observable as unknown) as EnumerableLike<T>;
         const enumerator = enumerable.getEnumerator();
-        
+
         enumerator.moveNext();
         buffers.push(enumerator);
         this.completedCount++;
