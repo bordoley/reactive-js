@@ -2,7 +2,7 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  AbstractEnumerator,
+  createObservableEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -50,50 +50,6 @@ class FromArrayWithDelayObservable<T>
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
     subscriber.schedule(this, this.delay);
-  }
-}
-
-class ArrayEnumerator<T> extends AbstractEnumerator<T> {
-  private isStarted = false;
-  private index = this.startIndex;
-
-  constructor(
-    private readonly values: readonly T[],
-    private readonly startIndex: number,
-  ) {
-    super();
-  }
-
-  get current(): T {
-    if (!this.isStarted) {
-      throw new Error("no current value");
-    }
-
-    return this.values[this.index];
-  }
-
-  get hasNext(): boolean {
-    return !this.isStarted
-      ? this.index < this.values.length
-      : this.index < this.values.length - 1;
-  }
-
-  get isCompleted(): boolean {
-    return this.index >= this.values.length;
-  }
-
-  moveNext(): boolean {
-    const index = this.index;
-
-    if (!this.isStarted) {
-      this.isStarted = true;
-      return index < this.values.length;
-    } else if (index < this.values.length) {
-      this.index++;
-      return this.index < this.values.length;
-    } else {
-      return false;
-    }
   }
 }
 
@@ -176,7 +132,7 @@ class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
   ) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    return new ArrayEnumerator(this.values, this.startIndex);
+    return createObservableEnumerator(this);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

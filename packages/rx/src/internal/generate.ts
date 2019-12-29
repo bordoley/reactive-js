@@ -6,7 +6,7 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  AbstractEnumerator,
+  createObservableEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 
@@ -44,32 +44,6 @@ class GenerateWithDelayObservable<T>
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
     subscriber.schedule(this, this.delay);
-  }
-}
-
-class GeneratorEnumerator<T> extends AbstractEnumerator<T> {
-  private isStarted = false;
-  isCompleted = false;
-  hasNext = true;
-
-  constructor(private readonly generator: (acc: T) => T, private acc: T) {
-    super();
-  }
-
-  get current(): T {
-    if (!this.isStarted) {
-      throw new Error("no current value");
-    }
-    return this.acc;
-  }
-
-  moveNext(): boolean {
-    if (this.isStarted) {
-      this.acc = this.generator(this.acc);
-    } else {
-      this.isStarted = true;
-    }
-    return true;
   }
 }
 
@@ -139,7 +113,7 @@ class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
   constructor(private readonly generator: (acc: T) => T, private acc: T) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    return new GeneratorEnumerator(this.generator, this.acc);
+    return createObservableEnumerator(this);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
