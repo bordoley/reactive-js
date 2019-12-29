@@ -17,7 +17,7 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   ) {}
 
   subscribe(subscriber: SubscriberLike<TAcc>) {
-    const accFeedbackSubject = createSubject(1);
+    const accFeedbackSubject = createSubject();
     subscriber.add(accFeedbackSubject);
 
     pipe(
@@ -35,3 +35,5 @@ export const scanAsync = <T, TAcc>(
   initialValue: () => TAcc,
 ): ObservableOperatorLike<T, TAcc> => observable =>
   new ScanAsyncObservable(observable, scanner, initialValue);
+
+
