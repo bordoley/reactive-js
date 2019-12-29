@@ -88,7 +88,9 @@ test("reduce", () => {
       () => ({ request: undefined, result: 0 }),
       scheduler,
     ),
-    onNext(x => { result = x }),
+    onNext(x => {
+      result = x;
+    }),
     subscribe(scheduler),
   );
   scheduler.run();
