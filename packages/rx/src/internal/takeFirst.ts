@@ -31,5 +31,7 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, T> => subscriber =>
   new TakeFirstSubscriber(subscriber, count);
 
-export const takeFirst = <T>(count = 1): ObservableOperatorLike<T, T> => observable =>
+export const takeFirst = <T>(
+  count = 1,
+): ObservableOperatorLike<T, T> => observable =>
   count > 0 ? pipe(observable, lift(operator(count))) : empty();
