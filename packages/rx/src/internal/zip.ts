@@ -6,6 +6,7 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
+import { runMixin } from "./producer";
 
 const shouldEmit = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
   for (const buffer of buffers) {
@@ -101,9 +102,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     readonly selector: (...values: unknown[]) => T,
   ) {}
 
-  private loop(
-    shouldYield: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
     const buffers = this.buffers;
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
@@ -124,7 +123,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     return;
   }
 
-  private loopFast() {
+  loopFast() {
     const buffers = this.buffers;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const selector = this.selector;
@@ -141,26 +140,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     return;
   }
 
-  run(shouldYield?: () => boolean) {
-    let error = undefined;
-    try {
-      let result: SchedulerContinuationResultLike | void;
-      if (shouldYield !== undefined) {
-        result = this.loop(shouldYield);
-      } else {
-        result = this.loopFast();
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  }
+  run = runMixin;
 
   subscribe(subscriber: SubscriberLike<T>) {
     const observables = this.observables;
