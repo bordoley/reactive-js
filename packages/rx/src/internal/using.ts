@@ -20,7 +20,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     } else {
       subscriber.add(resources as DisposableLike);
       this.observableFactory(resources as TResource).subscribe(subscriber);
-    } 
+    }
   }
 }
 
@@ -46,7 +46,9 @@ export function using<
 >(
   resourceFactory: () => [TResource1, TResource2, TResource3],
   observableFactory: (
-    r1: TResource1, r2: TResource2, r3: TResource3,
+    r1: TResource1,
+    r2: TResource2,
+    r3: TResource3,
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
 
@@ -59,7 +61,10 @@ export function using<
 >(
   resourceFactory: () => [TResource1, TResource2, TResource3, TResource4],
   observableFactory: (
-    r1: TResource1, r2: TResource2, r3: TResource3, r4: TResource4,
+    r1: TResource1,
+    r2: TResource2,
+    r3: TResource3,
+    r4: TResource4,
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
 
@@ -79,7 +84,10 @@ export function using<
     TResource5,
   ],
   observableFactory: (
-    r1: TResource1, r2: TResource2, r3: TResource3, r4: TResource5,
+    r1: TResource1,
+    r2: TResource2,
+    r3: TResource3,
+    r4: TResource5,
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(

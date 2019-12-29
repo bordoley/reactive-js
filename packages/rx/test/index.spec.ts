@@ -37,6 +37,7 @@ import {
   onNext,
   repeat,
   scan,
+  scanAsync,
   share,
   subscribe,
   switchAll,
@@ -854,6 +855,47 @@ test("scan", () => {
   expect(observer.onNext).toHaveBeenNthCalledWith(2, 3);
   expect(observer.onNext).toHaveBeenNthCalledWith(3, 6);
   expect(observer.onComplete).toBeCalledWith({ cause });
+});
+
+describe("scanAsync", () => {
+  test("with sync source and sync scan result", () => {
+    const result = pipe(
+      fromArray([1, 2, 3]),
+      scanAsync(
+        (acc, x) => ofValue(acc + x),
+        () => 0,
+      ),
+      toArray(),
+    );
+
+    expect(result).toEqual([1, 3, 6]);
+  });
+
+  test("with async source and async scan result", () => {
+    const result = pipe(
+      fromArray([1, 2, 3], { delay: 1 }),
+      scanAsync(
+        (acc, x) => ofValue(acc + x, 2),
+        () => 0,
+      ),
+      toArray(),
+    );
+
+    expect(result).toEqual([1, 3, 6]);
+  });
+
+  test("with async source and sync scan result", () => {
+    const result = pipe(
+      fromArray([1, 2, 3], { delay: 1 }),
+      scanAsync(
+        (acc, x) => ofValue(acc + x),
+        () => 0,
+      ),
+      toArray(),
+    );
+
+    expect(result).toEqual([1, 3, 6]);
+  });
 });
 
 test("share", () => {

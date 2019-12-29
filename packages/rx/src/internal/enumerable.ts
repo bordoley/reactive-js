@@ -80,12 +80,18 @@ class ObservableEnumerator<T> extends AbstractEnumerator<T>
   moveNext() {
     this.hasCurrent = false;
     this.scheduler.next();
+
     const error = this.error;
     if (error !== undefined) {
       const { cause } = error;
       throw cause;
     }
-    return this.hasCurrent;
+
+    const hasCurrent = this.hasCurrent;
+    if (!hasCurrent) {
+      this.dispose();
+    }
+    return hasCurrent;
   }
 
   onComplete(error?: ErrorLike) {
