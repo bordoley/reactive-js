@@ -48,7 +48,7 @@
 * [generate](README.md#const-generate)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
-* [lift](README.md#const-lift)
+* [lift](README.md#lift)
 * [map](README.md#const-map)
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
@@ -769,9 +769,9 @@ Name | Type |
 
 ___
 
-### `Const` lift
+###  lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
 Converts a SubscriberOperatorLike to an ObservableOperatorLike.
 
@@ -783,11 +783,207 @@ Converts a SubscriberOperatorLike to an ObservableOperatorLike.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`operator` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |   |
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+▸ **lift**<**TA**, **TB**, **TC**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TC›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TC›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TD›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TD›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**, **TE**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›, `op4`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TE›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+`op4` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TE›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›, `op4`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE›, `op5`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TF›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+`op4` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE› |
+`op5` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TF›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›, `op4`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE›, `op5`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF›, `op6`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TG›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+`op4` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE› |
+`op5` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF› |
+`op6` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TG›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›, `op4`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE›, `op5`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF›, `op6`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG›, `op7`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TG, TH›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TH›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+`op4` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE› |
+`op5` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF› |
+`op6` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG› |
+`op7` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TG, TH› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TH›*
+
+▸ **lift**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`op1`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `op2`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC›, `op3`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD›, `op4`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE›, `op5`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF›, `op6`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG›, `op7`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TG, TH›, `op8`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TH, TI›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TI›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+▪ **TI**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op1` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› |
+`op2` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TB, TC› |
+`op3` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TC, TD› |
+`op4` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TD, TE› |
+`op5` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TE, TF› |
+`op6` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TF, TG› |
+`op7` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TG, TH› |
+`op8` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TH, TI› |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TI›*
 
 ___
 
