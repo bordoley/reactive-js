@@ -35,5 +35,3 @@ export const scanAsync = <T, TAcc>(
   initialValue: () => TAcc,
 ): ObservableOperatorLike<T, TAcc> => observable =>
   new ScanAsyncObservable(observable, scanner, initialValue);
-
-

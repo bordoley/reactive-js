@@ -13,7 +13,7 @@ import {
 import {
   EnumerableLike,
   EnumeratorLike,
-  createObservableEnumerator,
+  AbstractEnumerator,
 } from "./enumerable";
 import { publish } from "./publish";
 import { using } from "./using";
@@ -186,12 +186,35 @@ export const fromIterator = <T>(
   );
 };
 
+class FromIterableEnumerator<T> extends AbstractEnumerator<T> {
+  hasCurrent = false;
+  current: any;
+
+  constructor(private readonly iterator: Iterator<T>) {
+    super();
+  }
+
+  moveNext(): boolean {
+    const next = this.iterator.next();
+    if (next.done) {
+      this.hasCurrent = false;
+      this.current = undefined;
+      this.dispose();
+      return false;
+    } else {
+      this.current = next.value;
+      this.hasCurrent = true;
+      return true;
+    }
+  }
+}
+
 class FromIterableObservable<T>
   implements ObservableLike<T>, EnumerableLike<T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    return createObservableEnumerator(this);
+    return new FromIterableEnumerator(this.iterable[Symbol.iterator]());
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

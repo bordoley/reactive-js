@@ -63,6 +63,7 @@
 * [repeat](README.md#const-repeat)
 * [retry](README.md#const-retry)
 * [scan](README.md#const-scan)
+* [scanAsync](README.md#const-scanasync)
 * [share](README.md#const-share)
 * [startWith](README.md#startwith)
 * [subscribe](README.md#const-subscribe)
@@ -1078,6 +1079,37 @@ ___
 ▪ **scanner**: *function*
 
 ▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
+
+___
+
+### `Const` scanAsync
+
+▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **scanner**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *[ObservableLike](interfaces/observablelike.md)‹TAcc›*
 
 **Parameters:**
 

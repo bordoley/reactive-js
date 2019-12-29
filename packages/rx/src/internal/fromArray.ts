@@ -2,7 +2,7 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  createObservableEnumerator,
+  AbstractEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -105,6 +105,36 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
   run = runMixin;
 }
 
+class FromArrayEnumerator<T> extends AbstractEnumerator<T> {
+  hasCurrent = false;
+  current: any;
+
+  constructor(private readonly values: readonly T[], private index: number) {
+    super();
+  }
+
+  moveNext(): boolean {
+    if (this.hasCurrent) {
+      this.index++;
+    } else {
+      this.hasCurrent = true;
+    }
+
+    const values = this.values;
+    const index = this.index;
+
+    if (index < values.length) {
+      this.current = values[index];
+      return true;
+    } else {
+      this.current = undefined;
+      this.hasCurrent = false;
+      this.dispose();
+      return false;
+    }
+  }
+}
+
 class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
   constructor(
     private readonly values: readonly T[],
@@ -112,7 +142,7 @@ class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
   ) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    return createObservableEnumerator(this);
+    return new FromArrayEnumerator(this.values, this.startIndex);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
