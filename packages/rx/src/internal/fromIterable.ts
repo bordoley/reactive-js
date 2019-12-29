@@ -13,7 +13,7 @@ import {
 import {
   EnumerableLike,
   EnumeratorLike,
-  AbstractEnumerator,
+  createObservableEnumerator,
 } from "./enumerable";
 import { publish } from "./publish";
 import { using } from "./using";
@@ -206,62 +206,12 @@ export const fromIterator = <T>(
   );
 };
 
-class IteratorEnumerator<T> extends AbstractEnumerator<T> {
-  private isStarted = false;
-  private isDone = false;
-  private _current: T;
-
-  constructor(private readonly iterator: Iterator<T>) {
-    super();
-    this.add(() => {
-      const iterator = this.iterator;
-      if (iterator.return !== undefined) {
-        iterator.return();
-      }
-    });
-
-    const next = iterator.next();
-    this.isDone = next.done || false;
-    this._current = next.value;
-  }
-
-  get current(): T {
-    if (!this.isStarted || this.isDone) {
-      throw new Error("no current value");
-    }
-    return this._current;
-  }
-
-  get hasNext(): boolean {
-    return !this.isDone;
-  }
-
-  get isCompleted(): boolean {
-    return this.isDone;
-  }
-
-  moveNext(): boolean {
-    if (this.isDone) {
-      return false;
-    } else if (!this.isStarted) {
-      this.isStarted = true;
-      return true;
-    } else {
-      const next = this.iterator.next();
-      this.isDone = next.done || false;
-      this._current = next.value;
-      return this.isDone;
-    }
-  }
-}
-
 class FromIterableObservable<T>
   implements ObservableLike<T>, EnumerableLike<T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
   getEnumerator(): EnumeratorLike<T> {
-    const iterator = this.iterable[Symbol.iterator]();
-    return new IteratorEnumerator(iterator);
+    return createObservableEnumerator(this);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

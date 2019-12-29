@@ -9,22 +9,22 @@ import {
 
 const shouldEmit = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
   for (const buffer of buffers) {
-    if (!buffer.hasNext) {
+    if (!buffer.hasCurrent) {
       return false;
     }
   }
   return true;
 };
 
-const shift = (buffer: EnumeratorLike<unknown>): unknown => {
-  buffer.moveNext();
+const getCurrent = (buffer: EnumeratorLike<unknown>): unknown => {
   return buffer.current;
 };
 
 class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
   private readonly buffer: Array<unknown> = [];
-  private _current: [unknown] | undefined;
+  hasCurrent = false;
+  private _current: unknown;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -34,33 +34,22 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   }
 
   get current(): unknown {
-    const current = this._current;
-    if (current === undefined) {
+    if (!this.hasCurrent) {
       throw new Error("no current value");
     }
-    return current[0];
-  }
-
-  get hasNext(): boolean {
-    return this.buffer.length > 0;
-  }
-
-  get isCompleted(): boolean {
-    return this.isDisposed;
+    return this._current;
   }
 
   moveNext(): boolean {
     const buffer = this.buffer;
     if (buffer.length > 0) {
       const next = buffer.shift() as unknown;
-      const current = this._current;
-      if (current !== undefined) {
-        current[0] = next;
-      } else {
-        this._current = [next];
-      }
+      this.hasCurrent = true;
+      this._current = next;
       return true;
     } else {
+      this.hasCurrent = false;
+      this._current = undefined;
       return false;
     }
   }
@@ -80,10 +69,20 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     const ctx = this.ctx;
     const buffers = ctx.buffers;
 
-    this.buffer.push(data);
+    if (this.hasCurrent) {
+      this.buffer.push(data);
+    } else {
+      this.hasCurrent = true;
+      this._current = data;
+    }
 
     if (shouldEmit(buffers)) {
-      const next = ctx.selector(...buffers.map(shift));
+      const next = ctx.selector(...buffers.map(getCurrent));
+
+      for(const buffer of buffers){
+        buffer.moveNext();
+      }
+      
       this.delegate.next(next);
     }
   }
@@ -108,8 +107,13 @@ class ZipProducer<T> implements SchedulerContinuationLike {
     const selector = this.selector;
 
     while (shouldEmit(buffers) && !subscriber.isDisposed) {
-      const next = selector(...buffers.map(shift));
+      const next = selector(...buffers.map(getCurrent));
       subscriber.next(next);
+
+      // FIXME: In theory this loop should be capable of yielding
+      for(const buffer of buffers){
+        buffer.moveNext();
+      }
 
       if (shouldYield()) {
         return this.continuationResult;
@@ -124,7 +128,12 @@ class ZipProducer<T> implements SchedulerContinuationLike {
     const selector = this.selector;
 
     while (shouldEmit(buffers) && !subscriber.isDisposed) {
-      const next = selector(...buffers.map(shift));
+      const next = selector(...buffers.map(getCurrent));
+
+      for(const buffer of buffers){
+        buffer.moveNext();
+      }
+
       subscriber.next(next);
     }
     return;
@@ -172,6 +181,8 @@ class ZipObservable<T> implements ObservableLike<T> {
       if ((observable as any).getEnumerator !== undefined) {
         const enumerable = (observable as unknown) as EnumerableLike<T>;
         const enumerator = enumerable.getEnumerator();
+        enumerator.moveNext();
+
         buffers.push(enumerator);
         this.completedCount++;
       } else {
