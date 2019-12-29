@@ -1418,13 +1418,14 @@ Name | Type |
 
 ▪ **observableFactory**: *function*
 
-▸ (`resource`: [TResource1, TResource2]): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ (`r1`: TResource1, `r2`: TResource2): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`resource` | [TResource1, TResource2] |
+`r1` | TResource1 |
+`r2` | TResource2 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1448,13 +1449,15 @@ Name | Type |
 
 ▪ **observableFactory**: *function*
 
-▸ (`resource`: [TResource1, TResource2, TResource3]): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`resource` | [TResource1, TResource2, TResource3] |
+`r1` | TResource1 |
+`r2` | TResource2 |
+`r3` | TResource3 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1480,13 +1483,16 @@ Name | Type |
 
 ▪ **observableFactory**: *function*
 
-▸ (`resource`: [TResource1, TResource2, TResource3, TResource4]): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3, `r4`: TResource4): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`resource` | [TResource1, TResource2, TResource3, TResource4] |
+`r1` | TResource1 |
+`r2` | TResource2 |
+`r3` | TResource3 |
+`r4` | TResource4 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1514,13 +1520,16 @@ Name | Type |
 
 ▪ **observableFactory**: *function*
 
-▸ (`resource`: [TResource1, TResource2, TResource3, TResource4, TResource5]): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3, `r4`: TResource5): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`resource` | [TResource1, TResource2, TResource3, TResource4, TResource5] |
+`r1` | TResource1 |
+`r2` | TResource2 |
+`r3` | TResource3 |
+`r4` | TResource5 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

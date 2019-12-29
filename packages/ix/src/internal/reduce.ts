@@ -57,13 +57,13 @@ export const reduce = <TReq, TSrc, TAcc>(
     { result }: ReduceRequestLike<TReq, TAcc>,
   ) => pipe(reducer(result, next), takeFirst());
 
-  const observableFactory = ([iterator, eventEmitter]: [
-    AsyncIteratorResourceLike<TReq, TSrc>,
-    AsyncIteratorResourceLike<
+  const observableFactory = (
+    iterator: AsyncIteratorResourceLike<TReq, TSrc>,
+    eventEmitter: AsyncIteratorResourceLike<
       ReduceRequestLike<TReq, TAcc>,
       ReduceRequestLike<TReq, TAcc>
     >,
-  ]) =>
+  ) =>
     pipe(
       merge(
         pipe(
