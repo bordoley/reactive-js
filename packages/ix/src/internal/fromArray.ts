@@ -34,7 +34,9 @@ const fromArrayAsyncIterator = <T>(
         startIndex: 0,
         count: 0,
       })),
-      map(options => fromArrayObs<T>(values, options)),
+      map(options =>
+        pipe(fromArrayObs<T>(values, options), takeFirst(options.count)),
+      ),
       concatAll<T>(),
       takeFirst(values.length),
     );

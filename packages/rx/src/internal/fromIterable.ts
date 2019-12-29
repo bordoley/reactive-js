@@ -1,8 +1,8 @@
-import { defer } from "./defer";
+import { empty } from "./empty";
 import {
   ObservableLike,
   SubscriberLike,
-  MulticastObservableLike,
+  MulticastObservableResourceLike,
 } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
 import {
@@ -10,9 +10,20 @@ import {
   SchedulerContinuationResultLike,
   SchedulerLike,
 } from "@reactive-js/scheduler";
-import { share } from "./share";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  AbstractEnumerator,
+} from "./enumerable";
+import { publish } from "./publish";
+import { using } from "./using";
+import {
+  createDisposable,
+  DisposableOrTeardown,
+  DisposableLike,
+} from "@reactive-js/disposable";
 
-class FromIteratorObservable<T>
+class FromIteratorWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
   private count = 0;
@@ -25,6 +36,64 @@ class FromIteratorObservable<T>
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
+    private readonly maxCount: number,
+    private readonly doneError?: unknown,
+  ) {}
+
+  private emitDelayedValue() {
+    const subscriber = this.subscriber as SubscriberLike<T>;
+    const doneError = this.doneError;
+
+    if (this.count >= this.maxCount || subscriber.isDisposed) {
+      return;
+    }
+
+    const next = this.iterator.next();
+    const done = next.done;
+    if (done && doneError !== undefined) {
+      throw doneError;
+    } else if (done) {
+      return;
+    }
+
+    subscriber.next(next.value);
+    this.count++;
+    return this.continuationResult;
+  }
+
+  run(_?: () => boolean) {
+    let error = undefined;
+    try {
+      const result = this.emitDelayedValue();
+
+      if (result !== undefined) {
+        return result;
+      }
+    } catch (cause) {
+      error = { cause };
+    }
+
+    (this.subscriber as SubscriberLike<T>).complete(error);
+    return;
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.subscriber = subscriber;
+    subscriber.schedule(this, this.delay);
+  }
+}
+
+class FromIteratorObservable<T>
+  implements ObservableLike<T>, SchedulerContinuationLike {
+  private subscriber: SubscriberLike<T> | undefined;
+  private count = 0;
+
+  private readonly continuationResult: SchedulerContinuationResultLike = {
+    continuation: this,
+  };
+
+  constructor(
+    private readonly iterator: Iterator<T>,
     private readonly maxCount: number,
     private readonly doneError?: unknown,
   ) {}
@@ -80,34 +149,11 @@ class FromIteratorObservable<T>
     return;
   }
 
-  private emitDelayedValue() {
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const doneError = this.doneError;
-
-    if (this.count >= this.maxCount || subscriber.isDisposed) {
-      return;
-    }
-
-    const next = this.iterator.next();
-    const done = next.done;
-    if (done && doneError !== undefined) {
-      throw doneError;
-    } else if (done) {
-      return;
-    }
-
-    subscriber.next(next.value);
-    this.count++;
-    return this.continuationResult;
-  }
-
-  run(shouldYield?: () => boolean) {
+  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     let error = undefined;
     try {
       let result: SchedulerContinuationResultLike | void;
-      if (this.delay > 0) {
-        result = this.emitDelayedValue();
-      } else if (shouldYield !== undefined) {
+      if (shouldYield !== undefined) {
         result = this.loop(shouldYield);
       } else {
         result = this.loopFast();
@@ -126,14 +172,7 @@ class FromIteratorObservable<T>
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    subscriber.add(() => {
-      const iterator = this.iterator;
-      if (iterator.return !== undefined) {
-        iterator.return();
-      }
-    });
-
-    subscriber.schedule(this, this.delay);
+    subscriber.schedule(this);
   }
 }
 
@@ -145,27 +184,152 @@ export const fromIterator = <T>(
     count?: number;
     doneError?: unknown;
   } = {},
-): MulticastObservableLike<T> => {
+): MulticastObservableResourceLike<T> => {
   const delay = Math.max(config.delay ?? 0, 0);
   const maxCount = Math.min(
     Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0),
     Number.MAX_SAFE_INTEGER,
   );
+
   return pipe(
-    new FromIteratorObservable(iterator, delay, maxCount, config.doneError),
-    share(scheduler),
+    maxCount === 0
+      ? empty()
+      : delay > 0
+      ? new FromIteratorWithDelayObservable(
+          iterator,
+          delay,
+          maxCount,
+          config.doneError,
+        )
+      : new FromIteratorObservable(iterator, maxCount, config.doneError),
+    publish(scheduler),
   );
 };
+
+class IteratorEnumerator<T> extends AbstractEnumerator<T> {
+  private isStarted = false;
+  private isDone = false;
+  private _current: T;
+
+  constructor(private readonly iterator: Iterator<T>) {
+    super();
+    this.add(() => {
+      const iterator = this.iterator;
+      if (iterator.return !== undefined) {
+        iterator.return();
+      }
+    });
+
+    const next = iterator.next();
+    this.isDone = next.done || false;
+    this._current = next.value;
+  }
+
+  get current(): T {
+    if (!this.isStarted || this.isDone) {
+      throw new Error("no current value");
+    }
+    return this._current;
+  }
+
+  get hasNext(): boolean {
+    return !this.isDone;
+  }
+
+  get isCompleted(): boolean {
+    return this.isDone;
+  }
+
+  moveNext(): boolean {
+    if (this.isDone) {
+      return false;
+    } else if (!this.isStarted) {
+      this.isStarted = true;
+      return true;
+    } else {
+      const next = this.iterator.next();
+      this.isDone = next.done || false;
+      this._current = next.value;
+      return this.isDone;
+    }
+  }
+}
+
+class FromIterableObservable<T>
+  implements ObservableLike<T>, EnumerableLike<T> {
+  constructor(private readonly iterable: Iterable<T>) {}
+
+  getEnumerator(): EnumeratorLike<T> {
+    const iterator = this.iterable[Symbol.iterator]();
+    return new IteratorEnumerator(iterator);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const iterator = this.iterable[Symbol.iterator]();
+    subscriber.add(() => {
+      if (iterator.return !== undefined) {
+        iterator.return();
+      }
+    });
+
+    const observable = new FromIteratorObservable(
+      iterator,
+      Number.MAX_SAFE_INTEGER,
+    );
+    observable.subscribe(subscriber);
+  }
+}
+
+/** @ignore */
+export class IteratorDisposable<T> implements DisposableLike {
+  private readonly disposable = createDisposable();
+
+  constructor(readonly iterator: Iterator<T>) {
+    this.add(() => {
+      const iterator = this.iterator;
+      if (iterator.return !== undefined) {
+        iterator.return();
+      }
+    });
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
+
+  add(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.add(disposable, ...disposables);
+    return this;
+  }
+
+  dispose() {
+    this.disposable.dispose();
+  }
+
+  remove(
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ) {
+    this.disposable.remove(disposable, ...disposables);
+    return this;
+  }
+}
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> =>
-  defer(
-    () =>
-      new FromIteratorObservable(
-        iterable[Symbol.iterator](),
-        delay,
-        Number.MAX_SAFE_INTEGER,
-      ),
-  );
+  delay > 0
+    ? using(
+        () => new IteratorDisposable(iterable[Symbol.iterator]()),
+        enumerator =>
+          new FromIteratorWithDelayObservable(
+            enumerator.iterator,
+            delay,
+            Number.MAX_SAFE_INTEGER,
+          ),
+      )
+    : new FromIterableObservable(iterable);

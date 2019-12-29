@@ -55,6 +55,7 @@ export { takeWhile } from "./internal/takeWhile";
 export { ThrottleMode, throttle } from "./internal/throttle";
 export { timeout } from "./internal/timeout";
 export { withLatestFrom } from "./internal/withLatestFrom";
+export { zip } from "./internal/zip";
 
 export { toArray } from "./internal/toArray";
 export { toIterable } from "./internal/toIterable";
