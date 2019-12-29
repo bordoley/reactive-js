@@ -80,6 +80,7 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   }
 
   complete(error?: ErrorLike) {
+    this.dispose();
     this.delegate.complete(error);
   }
 }
