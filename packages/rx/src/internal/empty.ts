@@ -3,30 +3,27 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { EnumerableLike, EnumeratorLike, createObservableEnumerator } from "./enumerable";
-
-class EmptyProducer<T> implements SchedulerContinuationLike {
-  constructor(private readonly subscriber: SubscriberLike<T>) {}
-
-  run(_?: () => boolean): SchedulerContinuationResultLike | void {
-    this.subscriber.complete();
-  }
-}
+import { defer } from "./defer";
 
 class EmptyObservable<T>
-  implements ObservableLike<T>, EnumerableLike<T> {
+  implements ObservableLike<T>,  SchedulerContinuationLike {
+  private subscriber: SubscriberLike<T> | undefined;
 
   constructor(private readonly delay: number) {}
-
-  getEnumerator(): EnumeratorLike<T> {
-    return createObservableEnumerator(this);
+  
+  run(_?: () => boolean): SchedulerContinuationResultLike | void {
+    (this.subscriber as SubscriberLike<T>).complete();
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new EmptyProducer(subscriber);
-    subscriber.schedule(producer, this.delay);
+    this.subscriber = subscriber;
+    subscriber.schedule(this, this.delay);
   }
 }
 
+const defaultEmpty = defer(() => new EmptyObservable(0));
+
 export const empty = <T>(delay = 0): ObservableLike<T> =>
-  new EmptyObservable(delay);
+  delay > 0
+    ? defer(() => new EmptyObservable(delay))
+    : defaultEmpty;
