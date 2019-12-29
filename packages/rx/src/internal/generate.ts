@@ -9,6 +9,7 @@ import {
   createObservableEnumerator,
 } from "./enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { runMixin } from "./producer";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -58,9 +59,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     private acc: T,
   ) {}
 
-  private loop(
-    shouldYield: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
     const generator = this.generator;
     const subscriber = this.subscriber;
 
@@ -77,7 +76,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     return;
   }
 
-  private loopFast(): SchedulerContinuationResultLike | void {
+  loopFast(): SchedulerContinuationResultLike | void {
     const generator = this.generator;
     const subscriber = this.subscriber;
 
@@ -91,22 +90,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     return;
   }
 
-  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
-    let error = undefined;
-    try {
-      const result =
-        shouldYield !== undefined ? this.loop(shouldYield) : this.loopFast();
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    this.subscriber.complete(error);
-    return;
-  }
+  run = runMixin;
 }
 
 class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {

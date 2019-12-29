@@ -22,6 +22,7 @@ import {
   DisposableOrTeardown,
   DisposableLike,
 } from "@reactive-js/disposable";
+import { runMixin } from "./producer";
 
 class FromIteratorWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -98,9 +99,7 @@ class FromIteratorObservable<T>
     private readonly doneError?: unknown,
   ) {}
 
-  private loop(
-    shouldYield: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  loop(shouldYield: () => boolean): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const maxCount = this.maxCount;
@@ -127,7 +126,7 @@ class FromIteratorObservable<T>
     return;
   }
 
-  private loopFast(): SchedulerContinuationResultLike | void {
+  loopFast(): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber as SubscriberLike<T>;
     const maxCount = this.maxCount;
@@ -149,26 +148,7 @@ class FromIteratorObservable<T>
     return;
   }
 
-  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
-    let error = undefined;
-    try {
-      let result: SchedulerContinuationResultLike | void;
-      if (shouldYield !== undefined) {
-        result = this.loop(shouldYield);
-      } else {
-        result = this.loopFast();
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
-  }
+  run = runMixin;
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

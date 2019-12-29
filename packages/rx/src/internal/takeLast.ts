@@ -10,16 +10,16 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
+import { runMixin } from "./producer";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
   implements SchedulerContinuationLike {
   private readonly continuation: SchedulerContinuationResultLike = {
     continuation: this,
   };
-
   private index = 0;
-
   private readonly last: T[] = [];
+  subscriber = this.delegate;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
@@ -83,27 +83,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  run(shouldYield?: () => boolean) {
-    let error = undefined;
-
-    try {
-      let result: SchedulerContinuationResultLike | void;
-      if (shouldYield !== undefined) {
-        result = this.loop(shouldYield);
-      } else {
-        result = this.loopFast();
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    this.delegate.complete(error);
-    return;
-  }
+  run = runMixin;
 }
 
 const operator = <T>(
