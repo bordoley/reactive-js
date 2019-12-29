@@ -45,6 +45,7 @@ export { publish } from "./internal/publish";
 export { reduce } from "./internal/reduce";
 export { repeat, retry } from "./internal/repeat";
 export { scan } from "./internal/scan";
+export { scanAsync } from "./internal/scanAsync";
 export { share } from "./internal/share";
 export { startWith } from "./internal/startWith";
 export { subscribeOn } from "./internal/subscribeOn";

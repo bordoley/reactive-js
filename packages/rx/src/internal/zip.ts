@@ -17,6 +17,16 @@ const shouldEmit = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
   return true;
 };
 
+const shouldComplete = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
+  for (const buffer of buffers) {
+    buffer.moveNext();
+    if (buffer.isDisposed && !buffer.hasCurrent) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const getCurrent = (buffer: EnumeratorLike<unknown>): unknown => {
   return buffer.current;
 };
@@ -32,6 +42,11 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     private readonly ctx: ZipObservable<T>,
   ) {
     super(delegate);
+    this.delegate.add(() => {
+      this.hasCurrent = false;
+      this._current = undefined;
+      this.buffer.length = 0;
+    });
   }
 
   get current(): unknown {
@@ -58,11 +73,10 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   complete(error?: ErrorLike) {
     this.dispose();
 
-    const ctx = this.ctx;
-    ctx.completedCount++;
-
-    if (error !== undefined || ctx.completedCount === ctx.buffers.length) {
+    if (error !== undefined) {
       this.delegate.complete(error);
+    } else if (this.buffer.length === 0 && !this.hasCurrent) {
+      this.delegate.complete();
     }
   }
 
@@ -70,28 +84,34 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     const ctx = this.ctx;
     const buffers = ctx.buffers;
 
-    if (this.hasCurrent) {
-      this.buffer.push(data);
-    } else {
-      this.hasCurrent = true;
-      this._current = data;
-    }
-
-    if (shouldEmit(buffers)) {
-      const next = ctx.selector(...buffers.map(getCurrent));
-
-      for (const buffer of buffers) {
-        buffer.moveNext();
+    if (!this.isDisposed) {
+      if (this.hasCurrent) {
+        this.buffer.push(data);
+      } else {
+        this.hasCurrent = true;
+        this._current = data;
       }
 
-      this.delegate.next(next);
+      if (shouldEmit(buffers)) {
+        const next = ctx.selector(...buffers.map(getCurrent));
+        const shouldCompleteResult = shouldComplete(buffers);
+
+        this.delegate.next(next);
+
+        if (shouldCompleteResult) {
+          this.hasCurrent = false;
+          this._current = undefined;
+          this.buffer.length = 0;
+          this.complete();
+        }
+      }
     }
   }
 }
 
 class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
   readonly buffers: EnumeratorLike<unknown>[] = [];
-  completedCount = 0;
+
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
   };
@@ -147,6 +167,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     const count = observables.length;
     const buffers = this.buffers;
 
+    let enumerableCount = 0;
     for (let index = 0; index < count; index++) {
       const observable = observables[index];
 
@@ -156,7 +177,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
 
         enumerator.moveNext();
         buffers.push(enumerator);
-        this.completedCount++;
+        enumerableCount++;
       } else {
         const innerSubscriber = new ZipSubscriber(subscriber, this);
 
@@ -165,7 +186,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
       }
     }
 
-    if (this.completedCount === count) {
+    if (enumerableCount === count) {
       this.subscriber = subscriber;
       subscriber.schedule(this);
     }
