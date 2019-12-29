@@ -4,7 +4,7 @@ import { DelegatingSubscriber } from "./subscriber";
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly ctx: MergeObservable<T>
+    private readonly ctx: MergeObservable<T>,
   ) {
     super(delegate);
   }
@@ -33,10 +33,7 @@ class MergeObservable<T> implements ObservableLike<T> {
     const observables = this.observables;
 
     for (const observable of observables) {
-      const mergeSubscriber = new MergeSubscriber(
-        subscriber,
-        this,
-      );
+      const mergeSubscriber = new MergeSubscriber(subscriber, this);
 
       observable.subscribe(mergeSubscriber);
     }
