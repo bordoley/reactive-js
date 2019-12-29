@@ -21,7 +21,7 @@ interface ReduceRequestLike<TReq, TAcc> {
   readonly result: TAcc;
 }
 
-export const reduce = <TReq, TSrc, TAcc>(
+export const reduceAsync = <TReq, TSrc, TAcc>(
   reducer: (
     acc: TAcc,
     next: TSrc,

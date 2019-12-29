@@ -32,7 +32,7 @@
 * [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
-* [reduce](README.md#const-reduce)
+* [reduceAsync](README.md#const-reduceasync)
 
 ## Type aliases
 
@@ -274,9 +274,9 @@ Name | Type |
 
 ___
 
-### `Const` reduce
+### `Const` reduceAsync
 
-▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function, `scheduler`: SchedulerLike): *OperatorLike‹[AsyncIterableLike](interfaces/asynciterablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+▸ **reduceAsync**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function, `scheduler`: SchedulerLike): *OperatorLike‹[AsyncIterableLike](interfaces/asynciterablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
