@@ -11,7 +11,8 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncIteratorResourceLike } from "./interfaces";
 
-class AsyncIteratorResourceImpl<TReq, T>
+/** @ignore */
+export class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   add = disposableMixin.add;
   dispose = disposableMixin.dispose;
@@ -52,12 +53,4 @@ export const createAsyncIteratorResource = <TReq, T>(
   dispatcher.add(observable);
 
   return new AsyncIteratorResourceImpl(dispatcher, observable);
-};
-
-/** @ignore */
-export const createEventEmitter = <T>(
-  replayCount?: number,
-): AsyncIteratorResourceLike<T, T> => {
-  const dispatcher = createSubject(replayCount);
-  return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
