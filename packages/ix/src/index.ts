@@ -1,4 +1,5 @@
 export {
+  AsyncIterableLike,
   AsyncIteratorLike,
   AsyncIteratorResourceLike,
   StateUpdaterLike,
