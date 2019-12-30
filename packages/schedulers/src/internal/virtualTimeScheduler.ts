@@ -2,13 +2,14 @@ import {
   createDisposable,
   DisposableLike,
   throwIfDisposed,
+  disposableMixin,
 } from "@reactive-js/disposable";
 import {
   SchedulerResourceLike,
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { AbstractSchedulerResource } from "./abstractScheduler";
+import { schedulerMixin } from "./schedulerMixin";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** @noInheritDoc */
@@ -41,9 +42,9 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
-  implements VirtualTimeSchedulerResourceLike {
+class VirtualTimeSchedulerResourceImpl implements VirtualTimeSchedulerResourceLike {
   private readonly continuationResult = { continuation: this };
+  readonly disposable: DisposableLike = createDisposable();
   private microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
@@ -62,8 +63,15 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
   };
 
   constructor(private readonly maxMicroTaskTicks: number) {
-    super();
   }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  add = disposableMixin.add;
+
+  dispose = disposableMixin.dispose;
 
   private loop(
     shouldYield: () => boolean,
@@ -91,6 +99,8 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
     const hasMore = this.step();
     return hasMore ? iteratorYield : iteratorDone;
   }
+
+  remove = disposableMixin.remove;
 
   return(): IteratorResult<void> {
     this.dispose();
@@ -122,7 +132,7 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
     }
   }
 
-  protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {
       id: this.taskIDCount++,
@@ -153,6 +163,8 @@ class VirtualTimeSchedulerResourceImpl extends AbstractSchedulerResource
 
     return this.taskQueue.count > 0;
   }
+
+  schedule = schedulerMixin.schedule;
 
   throw(e?: any): IteratorResult<void> {
     this.dispose;
