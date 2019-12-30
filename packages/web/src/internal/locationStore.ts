@@ -1,18 +1,15 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   createPersistentStateAsyncIterable,
-  AsyncIteratorResourceLike,
+  createAsyncIteratorResource,
 } from "@reactive-js/ix";
 import {
-  concat,
-  ofValue,
-  MulticastObservableResourceLike,
-  publish,
-  SubscriberLike,
+  merge,
+  ObservableLike,
+  onNext,
 } from "@reactive-js/rx";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
-import { disposableMixin } from "@reactive-js/disposable";
 
 export interface LocationLike {
   readonly fragment: string;
@@ -40,49 +37,27 @@ const getCurrentLocation = (_?: unknown): LocationLike => {
   return { path, query, fragment };
 };
 
-class HistoryIteratorResourceImpl
-  implements AsyncIteratorResourceLike<LocationLike, LocationLike> {
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
-  constructor(
-    private readonly disposable: MulticastObservableResourceLike<LocationLike>,
-  ) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+const pushHistoryState = (newLocation: LocationLike) => {
+  const currentLocation = getCurrentLocation();
+  if (!locationEquals(currentLocation, newLocation)) {
+    const { path, query, fragment } = newLocation;
+    let uriString = path;
+    uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
+    uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
+    window.history.pushState(undefined, "", uriString);
   }
+};
 
-  get subscriberCount(): number {
-    return this.disposable.subscriberCount;
-  }
-
-  dispatch(newLocation: LocationLike) {
-    const currentLocation = getCurrentLocation();
-    if (!locationEquals(currentLocation, newLocation)) {
-      const { path, query, fragment } = newLocation;
-      let uriString = path;
-      uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
-      uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
-      window.history.pushState(undefined, "", uriString);
-    }
-  }
-
-  subscribe(subscriber: SubscriberLike<LocationLike>) {
-    this.disposable.subscribe(subscriber);
-  }
-}
-
+const historyOperator = (obs: ObservableLike<LocationLike>) => merge(
+  pipe(obs, onNext(pushHistoryState)),
+  fromEvent(window, "popstate", getCurrentLocation),
+);
+  
 const historyIterable = {
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    const observable: MulticastObservableResourceLike<LocationLike> = pipe(
-      concat(
-        ofValue(getCurrentLocation()),
-        fromEvent(window, "popstate", getCurrentLocation),
-      ),
-      publish(scheduler, replayCount),
-    );
-    return new HistoryIteratorResourceImpl(observable);
+    const iter = createAsyncIteratorResource(historyOperator, scheduler, replayCount);
+    iter.dispatch(getCurrentLocation());
+    return iter;
   },
 };
 
