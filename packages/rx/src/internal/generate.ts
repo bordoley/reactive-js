@@ -18,6 +18,7 @@ class GenerateWithDelayObservable<T>
     continuation: this,
     delay: this.delay,
   };
+  run = producerMixin.run;
   private subscriber: SubscriberLike<T> | undefined;
 
   constructor(
@@ -26,21 +27,16 @@ class GenerateWithDelayObservable<T>
     private readonly delay = 0,
   ) {}
 
-  run(_?: () => boolean) {
+  loop() {
     const subscriber = this.subscriber as SubscriberLike<T>;
-    if (!subscriber.isDisposed) {
-      try {
-        const acc = this.acc;
-        subscriber.next(acc);
-        this.acc = this.generator(acc);
-      } catch (cause) {
-        subscriber.complete({ cause });
-      }
-
+    const acc = this.acc;
+    if(!subscriber.isDisposed) {
+      subscriber.next(acc);
+      this.acc = this.generator(acc);
       return this.continuationResult;
+    } else {
+      return;
     }
-
-    return;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
