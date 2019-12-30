@@ -1,5 +1,5 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createAsyncIteratorResource } from "@reactive-js/ix";
+import { AsyncIterableLike, createAsyncIteratorResource } from "@reactive-js/ix";
 import { merge, ObservableLike, onNext, ofValue } from "@reactive-js/rx";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
@@ -42,7 +42,7 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-export const historyIterable = {
+export const historyIterable: AsyncIterableLike<LocationLike, LocationLike> = {
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
     return createAsyncIteratorResource(
       historyOperator,
