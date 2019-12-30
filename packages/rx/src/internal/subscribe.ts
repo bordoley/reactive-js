@@ -16,5 +16,5 @@ export const subscribe = <T>(
 ): DisposableLike => {
   const subscriber = new Subscriber(scheduler);
   observable.subscribe(subscriber);
-  return subscriber;
+  return subscriber.disposable;
 };
