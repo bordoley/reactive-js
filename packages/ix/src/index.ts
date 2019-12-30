@@ -13,7 +13,7 @@ export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
-export { reduceAsync } from "./internal/reduceAsync";
+export { scanAsync } from "./internal/scanAsync";
 export {
   createActionReducerAsyncIterable,
   createStateAsyncIterable,
