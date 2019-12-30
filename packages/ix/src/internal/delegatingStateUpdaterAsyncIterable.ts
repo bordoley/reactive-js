@@ -8,28 +8,26 @@ import {
   ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
+import { StateUpdaterLike, AsyncIterableLike, AsyncIterableOperatorLike } from "./interfaces";
 import { createAsyncIteratorResource } from "./createAsyncIterator";
 
-class PersistentStateAsyncIterable<T>
+class DelegatingStateUpdaterAsyncIterable<T>
   implements AsyncIterableLike<StateUpdaterLike<T>, T> {
   constructor(
-    private readonly persistentStoreIterable: AsyncIterableLike<T, T>,
+    private readonly iterable: AsyncIterableLike<T, T>,
     private readonly initialState: () => T,
     private readonly equals?: (a: T, b: T) => boolean,
   ) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    const persistentStore = this.persistentStoreIterable.getIXAsyncIterator(
-      scheduler,
-    );
+    const iterator = this.iterable.getIXAsyncIterator(scheduler);
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,
     ): ObservableLike<T> => {
-      const onPersistentStoreChangedStream = pipe(
-        persistentStore,
-        onNext((v: T) => iter.dispatch((_: T): T => v)),
+      const onIteratorNextChangedObs = pipe(
+        iterator,
+        onNext((v: T) => retval.dispatch((_: T): T => v)),
         ignoreElements(),
       );
 
@@ -40,25 +38,23 @@ class PersistentStateAsyncIterable<T>
           this.initialState,
         ),
         distinctUntilChanged(this.equals),
-        onNext((next: T) => persistentStore.dispatch(next)),
+        onNext((next: T) => iterator.dispatch(next)),
       );
 
-      return merge<T>(onPersistentStoreChangedStream, stateObs);
+      return merge<T>(onIteratorNextChangedObs, stateObs);
     };
 
-    const iter = createAsyncIteratorResource(operator, scheduler, replayCount);
-    iter.add(persistentStore);
-    return iter;
+    const retval = createAsyncIteratorResource(operator, scheduler, replayCount).add(iterator);
+    return retval;
   }
 }
 
-export const createPersistentStateAsyncIterable = <T>(
-  persistentStoreIterable: AsyncIterableLike<T, T>,
+export const toStateUpdaterAsyncIterable = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIterableLike<StateUpdaterLike<T>, T> =>
-  new PersistentStateAsyncIterable(
-    persistentStoreIterable,
+): AsyncIterableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>
+  new DelegatingStateUpdaterAsyncIterable(
+    iterable,
     initialState,
     equals,
   );

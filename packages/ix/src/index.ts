@@ -16,6 +16,6 @@ export { lift, liftReq } from "./internal/lift";
 export { scanAsync } from "./internal/scanAsync";
 export {
   createActionReducerAsyncIterable,
-  createStateAsyncIterable,
+  createStateUpdaterAsyncIterable,
 } from "./internal/reducerAsyncIterable";
-export { createPersistentStateAsyncIterable } from "./internal/persistentStateAsyncIterable";
+export { toStateUpdaterAsyncIterable } from "./internal/delegatingStateUpdaterAsyncIterable";
