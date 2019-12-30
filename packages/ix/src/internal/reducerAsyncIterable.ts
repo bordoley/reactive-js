@@ -20,8 +20,8 @@ class ReducerStoreAsyncIterable<TAction, T>
 }
 
 export const createActionReducerAsyncIterable = <TAction, T>(
-  initialStateFactory: () => T,
   reducer: (state: T, action: TAction) => T,
+  initialStateFactory: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIterableLike<TAction, T> => {
   const operator = (src: ObservableLike<TAction>) => {
@@ -44,4 +44,4 @@ export const createStateAsyncIterable = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIterableLike<StateUpdaterLike<T>, T> =>
-  createActionReducerAsyncIterable(initialState, stateStoreReducer, equals);
+  createActionReducerAsyncIterable(stateStoreReducer, initialState, equals);

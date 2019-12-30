@@ -31,7 +31,7 @@
 
 ### `Const` createActionReducerAsyncIterable
 
-▸ **createActionReducerAsyncIterable**<**TAction**, **T**>(`initialStateFactory`: function, `reducer`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
+▸ **createActionReducerAsyncIterable**<**TAction**, **T**>(`reducer`: function, `initialStateFactory`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
 
 **Type parameters:**
 
@@ -40,10 +40,6 @@
 ▪ **T**
 
 **Parameters:**
-
-▪ **initialStateFactory**: *function*
-
-▸ (): *T*
 
 ▪ **reducer**: *function*
 
@@ -55,6 +51,10 @@ Name | Type |
 ------ | ------ |
 `state` | T |
 `action` | TAction |
+
+▪ **initialStateFactory**: *function*
+
+▸ (): *T*
 
 ▪`Optional`  **equals**: *undefined | function*
 
