@@ -6,7 +6,6 @@ export {
 
 export {
   createAsyncIteratorResource,
-  createPersistentStateAsyncIterable,
 } from "./internal/create";
 
 export { empty } from "./internal/empty";
@@ -16,4 +15,5 @@ export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
 export { reduceAsync } from "./internal/reduceAsync";
-export { createActionReducerAsyncIterable, createStateAsyncIterable } from "./internal/reducerIterable";
+export { createActionReducerAsyncIterable, createStateAsyncIterable } from "./internal/reducerAsyncIterable";
+export { createPersistentStateAsyncIterable } from "./internal/persistentStateAsyncIterable";

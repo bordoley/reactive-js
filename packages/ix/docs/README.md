@@ -12,10 +12,6 @@
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
-### Type aliases
-
-* [StateStoreLike](README.md#statestorelike)
-
 ### Functions
 
 * [createActionReducerAsyncIterable](README.md#const-createactionreducerasynciterable)
@@ -30,14 +26,6 @@
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
 * [reduceAsync](README.md#const-reduceasync)
-
-## Type aliases
-
-###  StateStoreLike
-
-Ƭ **StateStoreLike**: *[AsyncIteratorLike](interfaces/asynciteratorlike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
-
-**`noinheritdoc`** 
 
 ## Functions
 
