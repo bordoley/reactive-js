@@ -19,7 +19,7 @@
 
 ###  locationStore
 
-• **locationStore**: *StateStoreLike‹[RelativeURILike](relativeurilike.md)›*
+• **locationStore**: *AsyncIteratorResourceLike‹StateUpdaterLike‹[RelativeURILike](relativeurilike.md)›, [RelativeURILike](relativeurilike.md)›*
 
 ___
 

@@ -1,6 +1,6 @@
 export { fromEvent } from "./internal/event";
 export {
-  createLocationStoreResource,
+  locationAsyncIterable,
   LocationLike,
 } from "./internal/locationStore";
 export { createSchedulerWithPriority } from "./internal/scheduler";

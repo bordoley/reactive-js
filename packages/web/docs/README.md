@@ -8,27 +8,26 @@
 
 * [LocationLike](interfaces/locationlike.md)
 
+### Variables
+
+* [locationAsyncIterable](README.md#const-locationasynciterable)
+
 ### Functions
 
-* [createLocationStoreResource](README.md#const-createlocationstoreresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [fromEvent](README.md#const-fromevent)
 
+## Variables
+
+### `Const` locationAsyncIterable
+
+• **locationAsyncIterable**: *AsyncIterableLike‹StateUpdaterLike‹object›, object›* =  createPersistentStateAsyncIterable(
+  historyIterable,
+  () => emptyLocation,
+  locationEquals,
+)
+
 ## Functions
-
-### `Const` createLocationStoreResource
-
-▸ **createLocationStoreResource**(`scheduler`: SchedulerLike): *StateStoreResourceLike‹[LocationLike](interfaces/locationlike.md)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | SchedulerLike |
-
-**Returns:** *StateStoreResourceLike‹[LocationLike](interfaces/locationlike.md)›*
-
-___
 
 ### `Const` createSchedulerWithPriority
 

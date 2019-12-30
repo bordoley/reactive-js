@@ -19,6 +19,7 @@ import {
   AsyncIteratorLike,
   AsyncIteratorResourceLike,
   StateUpdaterLike,
+  AsyncIterableLike,
 } from "./interfaces";
 
 class AsyncIteratorResourceImpl<TReq, T>
@@ -78,34 +79,50 @@ export const createEventEmitter = <T>(
 /** @noInheritDoc */
 export type StateStoreLike<T> = AsyncIteratorLike<StateUpdaterLike<T>, T>;
 
-export const createPersistentStateIteratorResource = <T>(
-  persistentStore: AsyncIteratorLike<T, T>,
-  initialState: T,
-  scheduler: SchedulerLike,
+
+class PersistentStateAsyncIterable<T>
+  implements AsyncIterableLike<StateUpdaterLike<T>, T> {
+    
+  constructor(
+    private readonly persistentStoreIterable: AsyncIterableLike<T, T>,
+    private readonly initialState: () => T,
+    private readonly equals?: (a: T, b: T) => boolean,
+  ) {}
+
+  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
+    const persistentStore = this.persistentStoreIterable.getIXAsyncIterator(scheduler);
+
+    const operator = (
+      obs: ObservableLike<StateUpdaterLike<T>>,
+    ): ObservableLike<T> => {
+      const onPersistentStoreChangedStream = pipe(
+        persistentStore,
+        onNext((v: T) => iter.dispatch((_: T): T => v)),
+        ignoreElements(),
+      );
+  
+      const stateObs = pipe(
+        obs,
+        scan(
+          (acc: T, next: StateUpdaterLike<T>) => next(acc),
+          this.initialState,
+        ),
+        distinctUntilChanged(this.equals),
+        onNext((next: T) => persistentStore.dispatch(next)),
+      );
+  
+      return merge<T>(onPersistentStoreChangedStream, stateObs);
+    };
+  
+    const iter = createAsyncIteratorResource(operator, scheduler, replayCount);
+    iter.add(persistentStore);
+    return iter;
+  }
+}
+
+export const createPersistentStateAsyncIterable = <T>(
+  persistentStoreIterable: AsyncIterableLike<T, T>,
+  initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIteratorResourceLike<StateUpdaterLike<T>, T> => {
-  const operator = (
-    obs: ObservableLike<StateUpdaterLike<T>>,
-  ): ObservableLike<T> => {
-    const onPersistentStoreChangedStream = pipe(
-      persistentStore,
-      onNext((v: T) => iter.dispatch((_: T): T => v)),
-      ignoreElements(),
-    );
-
-    const stateObs = pipe(
-      obs,
-      scan(
-        (acc: T, next: StateUpdaterLike<T>) => next(acc),
-        () => initialState,
-      ),
-      distinctUntilChanged(equals),
-      onNext((next: T) => persistentStore.dispatch(next)),
-    );
-
-    return merge<T>(onPersistentStoreChangedStream, stateObs);
-  };
-
-  const iter = createAsyncIteratorResource(operator, scheduler, 1);
-  return iter;
-};
+): AsyncIterableLike<StateUpdaterLike<T>, T> => 
+  new PersistentStateAsyncIterable(persistentStoreIterable, initialState, equals);

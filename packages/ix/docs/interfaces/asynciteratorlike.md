@@ -16,8 +16,6 @@
 
   ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
 
-  ↳ [StateStoreResourceLike](statestoreresourcelike.md)
-
 ## Index
 
 ### Methods

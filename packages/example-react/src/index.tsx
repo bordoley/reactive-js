@@ -6,10 +6,11 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate } from "@reactive-js/rx";
-import { createLocationStoreResource, LocationLike } from "@reactive-js/web";
+import { generate, onNext } from "@reactive-js/rx";
+import { locationAsyncIterable, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
+import { pipe } from '@reactive-js/pipe';
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdaterLike<LocationLike>) => void,
@@ -86,7 +87,8 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route3", StatefulComponent],
 ];
 
-const locationStore = createLocationStoreResource(normalPriority);
+const locationStore = locationAsyncIterable.getIXAsyncIterator(normalPriority, 1);
+pipe(locationStore, onNext(console.log));
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
