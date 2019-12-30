@@ -13,7 +13,6 @@ interface ProducerLike<T> {
 /** @ignore */
 export const producerMixin: SchedulerContinuationLike = {
   run: function run<T>(this: ProducerLike<T>, shouldYield?: () => boolean) {
-    let error = undefined;
     try {
       const result = this.loop(shouldYield);
 
@@ -21,10 +20,9 @@ export const producerMixin: SchedulerContinuationLike = {
         return result;
       }
     } catch (cause) {
-      error = { cause };
+      const error = { cause };
+      (this.subscriber as SubscriberLike<T>).complete(error);
     }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
     return;
   },
 };

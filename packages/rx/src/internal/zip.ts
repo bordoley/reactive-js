@@ -157,6 +157,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
         subscriber.next(next);
       }
     }
+    subscriber.complete();
     return;
   }
 
