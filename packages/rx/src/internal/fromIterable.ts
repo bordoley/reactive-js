@@ -19,7 +19,7 @@ import { publish } from "./publish";
 import { using } from "./using";
 import {
   createDisposable,
-  DisposableOrTeardown,
+  disposableMixin,
   DisposableLike,
 } from "@reactive-js/disposable";
 import { producerMixin } from "./producer";
@@ -228,7 +228,7 @@ class FromIterableObservable<T>
 
 /** @ignore */
 export class IteratorDisposable<T> implements DisposableLike {
-  private readonly disposable = createDisposable();
+  readonly disposable = createDisposable();
 
   constructor(readonly iterator: Iterator<T>) {
     this.add(() => {
@@ -243,25 +243,9 @@ export class IteratorDisposable<T> implements DisposableLike {
     return this.disposable.isDisposed;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
-
-  dispose() {
-    this.disposable.dispose();
-  }
-
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
 }
 
 export const fromIterable = <T>(

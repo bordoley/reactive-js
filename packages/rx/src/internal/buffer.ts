@@ -32,7 +32,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   }
 
   private notifyNext() {
-    this.durationSubscription.disposable.dispose();
+    this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
 
@@ -58,8 +58,8 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
 
     if (buffer.length === this.maxBufferSize) {
       this.notifyNext();
-    } else if (durationSubscription.disposable.isDisposed) {
-      durationSubscription.disposable = pipe(
+    } else if (durationSubscription.inner.isDisposed) {
+      durationSubscription.inner = pipe(
         this.durationSelector(data),
         observe(this),
         subscribe(this),

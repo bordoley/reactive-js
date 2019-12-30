@@ -1,4 +1,4 @@
-import { DisposableOrTeardown } from "@reactive-js/disposable";
+import { disposableMixin } from "@reactive-js/disposable";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
@@ -12,38 +12,24 @@ import { subscribe } from "./subscribe";
 import { createSubject } from "./subject";
 
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
-  constructor(private readonly subject: SubjectResourceLike<T>) {}
+  constructor(readonly disposable: SubjectResourceLike<T>) {}
 
   get subscriberCount() {
-    return this.subject.subscriberCount;
+    return this.disposable.subscriberCount;
   }
 
   get isDisposed() {
-    return this.subject.isDisposed;
+    return this.disposable.isDisposed;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.subject.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
-  dispose() {
-    this.subject.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.subject.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 
   subscribe(subscriber: SubscriberLike<T>): void {
-    this.subject.subscribe(subscriber);
+    this.disposable.subscribe(subscriber);
   }
 }
 

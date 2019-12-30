@@ -78,12 +78,12 @@ describe("SerialDisposable", () => {
     const serialDisposable = createSerialDisposable();
     const disposable = createDisposable();
 
-    serialDisposable.disposable = disposable;
-    expect(serialDisposable.disposable).toEqual(disposable);
+    serialDisposable.inner = disposable;
+    expect(serialDisposable.inner).toEqual(disposable);
 
     const anotherDisposable = createDisposable();
-    serialDisposable.disposable = anotherDisposable;
-    expect(serialDisposable.disposable).toEqual(anotherDisposable);
+    serialDisposable.inner = anotherDisposable;
+    expect(serialDisposable.inner).toEqual(anotherDisposable);
     expect(disposable.isDisposed).toBeTruthy();
 
     expect(anotherDisposable.isDisposed).toBeFalsy();
@@ -91,7 +91,7 @@ describe("SerialDisposable", () => {
     expect(anotherDisposable.isDisposed).toBeTruthy();
 
     const yetAnotherDisposable = createDisposable();
-    serialDisposable.disposable = yetAnotherDisposable;
+    serialDisposable.inner = yetAnotherDisposable;
     expect(yetAnotherDisposable.isDisposed).toBeTruthy();
   });
 });

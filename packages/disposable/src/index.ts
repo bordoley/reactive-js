@@ -153,6 +153,35 @@ export const throwIfDisposed = (disposable: DisposableLike) => {
   }
 };
 
+export interface DelegatingDisposableLike {
+  readonly disposable: DisposableLike;
+}
+
+export const disposableMixin = {
+  get isDisposed(this: DelegatingDisposableLike): boolean {
+    return this.disposable.isDisposed;
+  },
+  add(
+    this: DelegatingDisposableLike,
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ): any {
+    this.disposable.add(disposable, ...disposables);
+    return this;
+  },
+  dispose(this: DelegatingDisposableLike) {
+    this.disposable.dispose();
+  },
+  remove(
+    this: DelegatingDisposableLike,
+    disposable: DisposableOrTeardown,
+    ...disposables: DisposableOrTeardown[]
+  ): any {
+    this.disposable.remove(disposable, ...disposables);
+    return this;
+  },
+};
+
 /**
  * A Disposable container that allows replacing a contained Disposable with another,
  * disposing the previously contained disposable in the process. Disposing the
@@ -162,29 +191,37 @@ export const throwIfDisposed = (disposable: DisposableLike) => {
  */
 export interface SerialDisposableLike extends DisposableLike {
   /** The inner disposable that may be get or set. */
-  disposable: DisposableLike;
+  inner: DisposableLike;
 }
 
-class SerialDisposableImpl extends DisposableImpl
-  implements SerialDisposableLike {
-  private _disposable: DisposableLike = disposed;
+class SerialDisposableImpl implements SerialDisposableLike {
+  _inner: DisposableLike = disposed;
+  readonly disposable = createDisposable();
 
-  get disposable(): DisposableLike {
-    return this._disposable;
+  get inner() {
+    return this._inner
   }
 
-  set disposable(newDisposable: DisposableLike) {
+  set inner(newInner: DisposableLike) {
     if (this.isDisposed) {
-      newDisposable.dispose();
+      newInner.dispose();
     } else {
-      const oldDisposable = this.disposable;
-      this._disposable = newDisposable;
+      const oldInner = this._inner;
+      this._inner = newInner;
 
-      if (oldDisposable !== newDisposable) {
-        this.add(newDisposable).remove(oldDisposable);
+      if (oldInner !== newInner) {
+        this.add(newInner).remove(oldInner);
       }
     }
   }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  add = disposableMixin.add;
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
 }
 
 /**

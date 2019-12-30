@@ -56,7 +56,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   private setupDurationSubscription(next: T) {
-    this.durationSubscription.disposable = pipe(
+    this.durationSubscription.inner = pipe(
       this.durationSelector(next),
       observe(this),
       subscribe(this),
@@ -85,7 +85,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
       }
 
       const durationSubscriptionDisposableIsDisposed = this.durationSubscription
-        .disposable.isDisposed;
+        .inner.isDisposed;
 
       if (
         durationSubscriptionDisposableIsDisposed &&

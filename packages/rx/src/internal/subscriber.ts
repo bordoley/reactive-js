@@ -1,7 +1,7 @@
 import {
   DisposableLike,
-  DisposableOrTeardown,
   createDisposable,
+  disposableMixin,
   disposed,
 } from "@reactive-js/disposable";
 import {
@@ -12,7 +12,7 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
-  private readonly disposable: DisposableLike = createDisposable();
+  readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
   constructor(private readonly scheduler: SchedulerLike) {}
@@ -21,13 +21,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
   complete(_?: ErrorLike) {
     this.dispose();
@@ -42,13 +36,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
 
   next(_: T): void {}
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 
   schedule(
     continuation: SchedulerContinuationLike,

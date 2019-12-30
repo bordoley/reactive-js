@@ -2,7 +2,7 @@ import {
   createDisposable,
   createSerialDisposable,
   DisposableLike,
-  DisposableOrTeardown,
+  disposableMixin,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
@@ -37,7 +37,7 @@ export abstract class AbstractScheduler implements SchedulerLike {
               ? callback
               : this.createCallback(nextContinuation, disposable);
 
-          disposable.disposable = this.scheduleCallback(nextCallback, delay);
+          disposable.inner = this.scheduleCallback(nextCallback, delay);
         } else {
           disposable.dispose();
         }
@@ -50,14 +50,14 @@ export abstract class AbstractScheduler implements SchedulerLike {
   schedule(continuation: SchedulerContinuationLike, delay = 0): DisposableLike {
     const disposable = createSerialDisposable();
     const callback = this.createCallback(continuation, disposable);
-    disposable.disposable = this.scheduleCallback(callback, delay);
+    disposable.inner = this.scheduleCallback(callback, delay);
     return disposable;
   }
 }
 
 export abstract class AbstractSchedulerResource extends AbstractScheduler
   implements SchedulerResourceLike {
-  private readonly disposable = createDisposable();
+  readonly disposable = createDisposable();
 
   /** @ignore */
   get isDisposed() {
@@ -65,25 +65,11 @@ export abstract class AbstractSchedulerResource extends AbstractScheduler
   }
 
   /** @ignore */
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
   /** @ignore */
-  dispose() {
-    this.disposable.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
   /** @ignore */
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 }

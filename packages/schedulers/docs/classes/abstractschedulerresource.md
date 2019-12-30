@@ -17,6 +17,7 @@
 
 ### Properties
 
+* [disposable](abstractschedulerresource.md#disposable)
 * [now](abstractschedulerresource.md#abstract-now)
 
 ### Accessors
@@ -28,6 +29,12 @@
 * [scheduleCallback](abstractschedulerresource.md#protected-abstract-schedulecallback)
 
 ## Properties
+
+###  disposable
+
+• **disposable**: *DisposableLike‹›* =  createDisposable()
+
+___
 
 ### `Abstract` now
 

@@ -56,7 +56,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
       this.delegate.complete(error);
     } else {
       this.count++;
-      this.innerSubscription.disposable = pipe(
+      this.innerSubscription.inner = pipe(
         this.observable,
         observe(this),
         subscribe(this.delegate),
