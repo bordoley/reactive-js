@@ -283,7 +283,8 @@ describe("createSubject", () => {
     expect(subject.subscriberCount).toEqual(0);
     scheduler.run();
 
-    expect(subscriber.next).toHaveBeenNthCalledWith(1, 3);
+    expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
     expect(subscriber.complete).toHaveBeenCalled();
   });
 

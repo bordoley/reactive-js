@@ -9,7 +9,8 @@ import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 
 class ToPromiseObserver<T> implements ObserverLike<T> {
-  private result: [T] | undefined = undefined;
+  private hasResult = false;
+  private result: T | undefined = undefined;
 
   constructor(
     private readonly subscription: DisposableLike,
@@ -17,29 +18,21 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     private readonly reject: (reason?: any) => void,
   ) {}
 
-  onNext(x: T) {
-    const result = this.result;
-
-    if (result === undefined) {
-      this.result = [x];
-    } else {
-      result[0] = x;
-    }
+  onNext(next: T) {
+    this.result = next;
+    this.hasResult = true;
   }
 
   onComplete(err?: ErrorLike) {
-    const result = this.result;
-
     this.subscription.dispose();
 
     if (err !== undefined) {
       const { cause } = err;
       this.reject(cause);
-    } else if (result === undefined) {
+    } else if (!this.hasResult) {
       this.reject(new Error("Observable completed without producing a value"));
     } else {
-      const value = result[0];
-      this.resolve(value);
+      this.resolve(this.result);
     }
   }
 }

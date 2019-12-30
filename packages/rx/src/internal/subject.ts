@@ -7,34 +7,12 @@ import {
 } from "./interfaces";
 import { createSafeObserver } from "./safeObserver";
 
-const enum NotificationKind {
-  Next = 1,
-  Complete = 2,
-}
-
-type Notification<T> =
-  | [NotificationKind.Next, T]
-  | [NotificationKind.Complete, ErrorLike | undefined];
-
-const notify = <T>(
-  observer: ObserverLike<T>,
-  notification: Notification<T>,
-) => {
-  switch (notification[0]) {
-    case NotificationKind.Next:
-      observer.onNext(notification[1]);
-      break;
-    case NotificationKind.Complete:
-      observer.onComplete(notification[1]);
-      break;
-  }
-};
-
 class SubjectImpl<T> implements SubjectResourceLike<T> {
   readonly disposable = createDisposable();
   private isCompleted = false;
+  private error?: ErrorLike;
   private readonly observers: Array<ObserverLike<T>> = [];
-  private readonly replayed: Notification<T>[] = [];
+  private readonly replayed: T[] = [];
 
   constructor(private readonly replayCount: number) {
     this.add(() => {
@@ -60,11 +38,8 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       return;
     }
 
-    if (this.replayCount > 0) {
-      this.pushNotification(NotificationKind.Complete, error);
-    }
-
     this.isCompleted = true;
+    this.error = error;
 
     const observers = this.observers.slice();
     this.observers.length = 0;
@@ -79,7 +54,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     }
 
     if (this.replayCount > 0) {
-      this.pushNotification(NotificationKind.Next, data);
+      this.replayed.push(data);
+      if (this.replayed.length > this.replayCount) {
+        this.replayed.shift();
+      }
     }
 
     const observers = this.observers.slice();
@@ -100,8 +78,8 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       // The observer is a safe observer, queues all notifications
       // until a drain is scheduled. Hence there is no need to
       // copy the replayed notifications before publishing via notify.
-      for (const notif of this.replayed) {
-        notify(observer, notif);
+      for (const next of this.replayed) {
+        observer.onNext(next);;
       }
 
       if (!this.isCompleted) {
@@ -113,23 +91,13 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
             this.observers.splice(index, 1);
           }
         });
+      } else {
+        observer.onComplete(this.error);
       }
 
       this.add(subscriber);
     } else {
       subscriber.dispose();
-    }
-  }
-
-  private pushNotification(
-    notif: NotificationKind.Complete,
-    error?: ErrorLike,
-  ): void;
-  private pushNotification(notif: NotificationKind.Next, value: T): void;
-  private pushNotification(notif: NotificationKind, value: any) {
-    this.replayed.push([notif, value] as Notification<T>);
-    if (this.replayed.length > this.replayCount) {
-      this.replayed.shift();
     }
   }
 }

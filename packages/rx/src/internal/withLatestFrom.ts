@@ -14,7 +14,8 @@ import { DelegatingSubscriber } from "./subscriber";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
-  private otherLatest: [TB] | undefined;
+  private otherLatest: TB | undefined;
+  private hasLatest = false;
 
   constructor(
     delegate: SubscriberLike<TC>,
@@ -28,11 +29,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   }
 
   next(data: TA) {
-    const otherLatest = this.otherLatest;
-
-    if (!this.isDisposed && otherLatest !== undefined) {
-      const [other] = otherLatest;
-      const result = this.selector(data, other);
+    if (!this.isDisposed && this.hasLatest) {
+      const result = this.selector(data, this.otherLatest as TB);
       this.delegate.next(result);
     }
   }
@@ -44,13 +42,8 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
   }
 
   onNext(data: TB) {
-    const otherLatest = this.otherLatest;
-
-    if (otherLatest === undefined) {
-      this.otherLatest = [data];
-    } else {
-      otherLatest[0] = data;
-    }
+    this.hasLatest = true;
+    this.otherLatest = data;
   }
 }
 

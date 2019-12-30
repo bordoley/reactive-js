@@ -7,7 +7,8 @@ import { lift } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private prev: [T] | undefined;
+  private prev: T | undefined;
+  private hasValue = false;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -17,16 +18,13 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   next(data: T) {
-    const prev = this.prev;
     const shouldEmit =
-      !this.isDisposed && (prev === undefined || !this.equals(prev[0], data));
+      !this.isDisposed && 
+      (!this.hasValue || !this.equals(this.prev as T, data))
 
     if (shouldEmit) {
-      if (prev === undefined) {
-        this.prev = [data];
-      } else {
-        prev[0] = data;
-      }
+      this.prev = data;
+      this.hasValue = true;
       this.delegate.next(data);
     }
   }
