@@ -1100,6 +1100,21 @@ Name | Type |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`value` | T | - |
+`delay` | number | 0 |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
 ___
 
 ### `Const` onComplete
