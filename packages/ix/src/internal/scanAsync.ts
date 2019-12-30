@@ -9,7 +9,6 @@ import {
   ObservableLike,
   merge,
   ofValue,
-  takeLast,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
@@ -21,7 +20,7 @@ interface ReduceRequestLike<TReq, TAcc> {
   readonly result: TAcc;
 }
 
-export const reduceAsync = <TReq, TSrc, TAcc>(
+export const scanAsync = <TReq, TSrc, TAcc>(
   reducer: (
     acc: TAcc,
     next: TSrc,
@@ -75,7 +74,6 @@ export const reduceAsync = <TReq, TSrc, TAcc>(
       ),
       onNext(next => eventEmitter.dispatch(next)),
       map(({ result }) => result),
-      takeLast(),
     );
 
   return using(resourceFactory, observableFactory);
