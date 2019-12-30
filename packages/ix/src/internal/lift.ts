@@ -7,7 +7,6 @@ import {
   publish,
 } from "@reactive-js/rx";
 import {
-  AsyncIteratorLike,
   AsyncIteratorResourceLike,
   AsyncIterableLike,
   AsyncIterableOperatorLike,
@@ -15,34 +14,21 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
-class LiftedAsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
+class LiftedAsyncIteratorResourceImpl<TReq, T>
+  implements AsyncIteratorResourceLike<TReq, T> {
+
   constructor(
     readonly dispatch: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
-  ) {}
-
-  get subscriberCount(): number {
-    return this.observable.subscriberCount;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.observable.subscribe(subscriber);
-  }
-}
-
-class LiftedAsyncIteratorResourceImpl<TReq, T>
-  extends LiftedAsyncIteratorImpl<TReq, T>
-  implements AsyncIteratorResourceLike<TReq, T> {
-  constructor(
-    dispatch: (req: TReq) => void,
-    observable: MulticastObservableLike<T>,
     readonly disposable: DisposableLike,
-  ) {
-    super(dispatch, observable);
-  }
+  ) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
+  }
+
+  get subscriberCount(): number {
+    return this.observable.subscriberCount;
   }
 
   add = disposableMixin.add;
@@ -50,6 +36,10 @@ class LiftedAsyncIteratorResourceImpl<TReq, T>
   dispose = disposableMixin.dispose;
 
   remove = disposableMixin.remove;
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    this.observable.subscribe(subscriber);
+  }
 }
 
 interface AsyncIteratorRequestOperatorLike<TReqA, TReqB> {
