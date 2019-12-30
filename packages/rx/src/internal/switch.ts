@@ -17,10 +17,10 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
   private innerSubscription = disposed;
 
   complete(error?: ErrorLike) {
-    if (this.innerSubscription.isDisposed || error !== undefined) {
-      this.delegate.complete(error);
-    } else {
-      this.dispose();
+    if (this.dispose()) {
+      if (this.innerSubscription.isDisposed || error !== undefined) {
+        this.delegate.complete(error);
+      }
     }
   }
 

@@ -64,14 +64,12 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   complete(error?: ErrorLike) {
-    if (
-      !this.isDisposed &&
-      error === undefined &&
-      this.mode !== ThrottleMode.First
-    ) {
-      this.notifyNext();
-    }
-    this.delegate.complete(error);
+    if(this.dispose()) {
+      if (error === undefined && this.mode !== ThrottleMode.First) {
+        this.notifyNext();
+      }
+      this.delegate.complete(error);
+    } 
   }
 
   next(data: T) {

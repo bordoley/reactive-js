@@ -2,28 +2,30 @@ import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
-  private index = 0;
-
   constructor(
     delegate: SubscriberLike<T>,
     private readonly observables: readonly ObservableLike<T>[],
+    private readonly index: number,
   ) {
     super(delegate);
   }
 
   complete(error?: ErrorLike) {
-    if (error !== undefined) {
-      this.delegate.complete(error);
-    } else {
-      const head = this.observables[this.index];
-
-      if (head !== undefined) {
-        this.index++;
-        head.subscribe(this);
+    if (this.dispose()) {
+      if (error !== undefined) {
+        this.delegate.complete(error);
       } else {
-        this.delegate.complete();
+        const nextIndex = this.index + 1;
+        const head = this.observables[nextIndex];
+
+        if (head !== undefined) {
+          const concatSubscriber = new ConcatSubscriber(this.delegate, this.observables, nextIndex);
+          head.subscribe(concatSubscriber);
+        } else {
+          this.delegate.complete();
+        }
       }
-    }
+    };
   }
 
   next(data: T) {
@@ -35,8 +37,8 @@ class ConcatObservable<T> implements ObservableLike<T> {
   constructor(private readonly observables: readonly ObservableLike<T>[]) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const concatSubscriber = new ConcatSubscriber(subscriber, this.observables);
-    concatSubscriber.complete();
+    const concatSubscriber = new ConcatSubscriber(subscriber, this.observables, 0);
+    this.observables[0].subscribe(concatSubscriber);
   }
 }
 

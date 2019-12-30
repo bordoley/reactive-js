@@ -23,7 +23,7 @@ export interface DisposableLike {
   /**
    * Dispose the resource, the operation should be idempotent.
    */
-  dispose(): void;
+  dispose(): boolean;
 
   /**
    * Removes and disposes the given disposables if they are part of this container.
@@ -77,8 +77,9 @@ class DisposableImpl implements DisposableLike {
     return this;
   }
 
-  dispose() {
-    if (!this.isDisposed) {
+  dispose(): boolean {
+    const isDisposed = this.isDisposed;
+    if (!isDisposed) {
       this.isDisposed = true;
 
       let disposable = this.disposables.shift();
@@ -87,6 +88,7 @@ class DisposableImpl implements DisposableLike {
         disposable = this.disposables.shift();
       }
     }
+    return !isDisposed;
   }
 
   remove(...disposables: DisposableOrTeardown[]) {
@@ -131,7 +133,7 @@ const _disposed: DisposableLike = {
     return _disposed;
   },
   isDisposed: true,
-  dispose() {},
+  dispose() { return false; },
   remove(..._: DisposableOrTeardown[]) {
     return _disposed;
   },
@@ -166,8 +168,8 @@ export const disposableMixin = {
     this.disposable.add(disposable, ...disposables);
     return this;
   },
-  dispose(this: DelegatingDisposableLike) {
-    this.disposable.dispose();
+  dispose(this: DelegatingDisposableLike): boolean {
+    return this.disposable.dispose();
   },
   remove(
     this: DelegatingDisposableLike,

@@ -17,7 +17,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   complete(error?: ErrorLike) {
-    if (!this.isDisposed) {
+    if (this.dispose()) {
       try {
         this.observer.onComplete(error);
       } catch (cause) {

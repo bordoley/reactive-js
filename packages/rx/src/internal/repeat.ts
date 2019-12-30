@@ -31,8 +31,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   complete(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.dispose();
+    if (this.dispose()) {
       this.onComplete(error);
     }
   }
