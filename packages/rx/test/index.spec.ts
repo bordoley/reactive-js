@@ -6,7 +6,7 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
-  AbstractScheduler,
+  schedulerMixin,
   createVirtualTimeSchedulerResource,
 } from "@reactive-js/schedulers";
 import { Subscriber } from "../src/internal/subscriber";
@@ -70,8 +70,12 @@ const callbackAndDispose = (
 };
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
-class PromiseTestScheduler extends AbstractScheduler {
-  protected shouldYield = (): boolean => false;
+class PromiseTestScheduler implements SchedulerLike {
+  get now(): number {
+    return Date.now();
+  }
+
+  schedule = schedulerMixin.schedule;
 
   scheduleCallback(callback: () => void, _ = 0): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
@@ -79,9 +83,7 @@ class PromiseTestScheduler extends AbstractScheduler {
     return disposable;
   }
 
-  get now(): number {
-    return Date.now();
-  }
+  shouldYield = (): boolean => false;
 }
 
 const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
