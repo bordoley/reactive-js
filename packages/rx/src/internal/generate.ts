@@ -6,10 +6,11 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  AbstractEnumerator,
-} from "./enumerable";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+  ObservableLike,
+  SubscriberLike,
+} from "./interfaces";
 import { producerMixin } from "./producer";
+import { createDisposable, disposableMixin } from "@reactive-js/disposable";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -64,7 +65,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     const subscriber = this.subscriber;
 
     let acc = this.acc;
-    if (shouldYield !== undefined) { 
+    if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         subscriber.next(acc);
         acc = generator(acc);
@@ -78,7 +79,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
       while (!subscriber.isDisposed) {
         subscriber.next(acc);
         acc = generator(acc);
-      };
+      }
     }
     return;
   }
@@ -86,12 +87,19 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
   run = producerMixin.run;
 }
 
-class GenerateEnumerator<T> extends AbstractEnumerator<T> {
+class GenerateEnumerator<T> implements EnumeratorLike<T> {
+  readonly disposable = createDisposable();
   hasCurrent = false;
 
-  constructor(private readonly generator: (acc: T) => T, public current: T) {
-    super();
+  constructor(private readonly generator: (acc: T) => T, public current: T) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
+
+  add = disposableMixin.add;
+
+  dispose = disposableMixin.dispose;
 
   moveNext(): boolean {
     if (this.hasCurrent) {
@@ -101,6 +109,8 @@ class GenerateEnumerator<T> extends AbstractEnumerator<T> {
     }
     return true;
   }
+
+  remove = disposableMixin.remove;
 }
 
 class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {

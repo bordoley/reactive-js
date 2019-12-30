@@ -16,7 +16,6 @@ import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
 class LiftedAsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-
   constructor(
     readonly dispatch: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
@@ -191,7 +190,17 @@ export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, TReqG, T>(
   op5: AsyncIteratorRequestOperatorLike<TReqE, TReqF>,
   op6: AsyncIteratorRequestOperatorLike<TReqF, TReqG>,
 ): AsyncIterableOperatorLike<TReqA, T, TReqG, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, TReqG, TReqH, T>(
+export function liftReq<
+  TReqA,
+  TReqB,
+  TReqC,
+  TReqD,
+  TReqE,
+  TReqF,
+  TReqG,
+  TReqH,
+  T
+>(
   op1: AsyncIteratorRequestOperatorLike<TReqA, TReqB>,
   op2: AsyncIteratorRequestOperatorLike<TReqB, TReqC>,
   op3: AsyncIteratorRequestOperatorLike<TReqC, TReqD>,
@@ -200,7 +209,18 @@ export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, TReqG, TReqH, 
   op6: AsyncIteratorRequestOperatorLike<TReqF, TReqG>,
   op7: AsyncIteratorRequestOperatorLike<TReqG, TReqH>,
 ): AsyncIterableOperatorLike<TReqA, T, TReqH, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, TReqG, TReqH, TReqI, T>(
+export function liftReq<
+  TReqA,
+  TReqB,
+  TReqC,
+  TReqD,
+  TReqE,
+  TReqF,
+  TReqG,
+  TReqH,
+  TReqI,
+  T
+>(
   op1: AsyncIteratorRequestOperatorLike<TReqA, TReqB>,
   op2: AsyncIteratorRequestOperatorLike<TReqB, TReqC>,
   op3: AsyncIteratorRequestOperatorLike<TReqC, TReqD>,
@@ -216,7 +236,9 @@ export function liftReq<T>(
   return iterable => {
     const source = (iterable as any).source || iterable;
     const observableOperators =
-      iterable instanceof LiftedAsyncIterable ? iterable.observableOperators : [];
+      iterable instanceof LiftedAsyncIterable
+        ? iterable.observableOperators
+        : [];
     const reqOperators =
       iterable instanceof LiftedAsyncIterable
         ? [...iterable.reqOperators, ...operators]

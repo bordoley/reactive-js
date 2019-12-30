@@ -1,5 +1,7 @@
 import { empty } from "./empty";
 import {
+  EnumerableLike,
+  EnumeratorLike,
   ObservableLike,
   SubscriberLike,
   MulticastObservableResourceLike,
@@ -10,11 +12,6 @@ import {
   SchedulerContinuationResultLike,
   SchedulerLike,
 } from "@reactive-js/scheduler";
-import {
-  EnumerableLike,
-  EnumeratorLike,
-  AbstractEnumerator,
-} from "./enumerable";
 import { publish } from "./publish";
 import { using } from "./using";
 import {
@@ -179,13 +176,20 @@ export const fromIterator = <T>(
   );
 };
 
-class FromIterableEnumerator<T> extends AbstractEnumerator<T> {
-  hasCurrent = false;
+class FromIterableEnumerator<T> implements EnumeratorLike<T> {
   current: any;
+  readonly disposable = createDisposable();
+  hasCurrent = false;
 
-  constructor(private readonly iterator: Iterator<T>) {
-    super();
+  constructor(private readonly iterator: Iterator<T>) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
+
+  add = disposableMixin.add;
+
+  dispose = disposableMixin.dispose;
 
   moveNext(): boolean {
     const next = this.iterator.next();
@@ -200,6 +204,8 @@ class FromIterableEnumerator<T> extends AbstractEnumerator<T> {
       return true;
     }
   }
+
+  remove = disposableMixin.remove;
 }
 
 class FromIterableObservable<T>

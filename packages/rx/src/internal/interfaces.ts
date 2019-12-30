@@ -85,3 +85,16 @@ export interface SubjectLike<T>
 export interface SubjectResourceLike<T>
   extends SubjectLike<T>,
     MulticastObservableResourceLike<T> {}
+
+/** @ignore */
+export interface EnumeratorLike<T> extends DisposableLike {
+  readonly current: T;
+  readonly hasCurrent: boolean;
+
+  moveNext(): boolean;
+}
+
+/** @ignore */
+export interface EnumerableLike<T> {
+  getEnumerator(): EnumeratorLike<T>;
+}

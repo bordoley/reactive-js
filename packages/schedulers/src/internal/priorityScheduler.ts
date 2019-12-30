@@ -46,8 +46,8 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
 
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
-  readonly disposable: SerialDisposableLike = createSerialDisposable().add(
-    () => this.queue.clear(),
+  readonly disposable: SerialDisposableLike = createSerialDisposable().add(() =>
+    this.queue.clear(),
   );
   private readonly queue: PriorityQueueLike<
     ScheduledTaskLike

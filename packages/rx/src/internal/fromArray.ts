@@ -2,14 +2,15 @@ import { defer } from "./defer";
 import {
   EnumerableLike,
   EnumeratorLike,
-  AbstractEnumerator,
-} from "./enumerable";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+  ObservableLike,
+  SubscriberLike,
+} from "./interfaces";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
+import { disposableMixin, createDisposable } from "@reactive-js/disposable";
 
 class FromArrayWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -89,7 +90,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
       while (index < length && !subscriber.isDisposed) {
         const value = values[index];
         index++;
-  
+
         subscriber.next(value);
       }
     }
@@ -99,13 +100,20 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
   run = producerMixin.run;
 }
 
-class FromArrayEnumerator<T> extends AbstractEnumerator<T> {
-  hasCurrent = false;
+class FromArrayEnumerator<T> implements EnumeratorLike<T> {
   current: any;
+  readonly disposable = createDisposable();
+  hasCurrent = false;
 
-  constructor(private readonly values: readonly T[], private index: number) {
-    super();
+  constructor(private readonly values: readonly T[], private index: number) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
+
+  add = disposableMixin.add;
+
+  dispose = disposableMixin.dispose;
 
   moveNext(): boolean {
     if (this.hasCurrent) {
@@ -127,6 +135,8 @@ class FromArrayEnumerator<T> extends AbstractEnumerator<T> {
       return false;
     }
   }
+
+  remove = disposableMixin.remove;
 }
 
 class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
