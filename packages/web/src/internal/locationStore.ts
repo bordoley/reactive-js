@@ -1,8 +1,9 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
-  createPersistentStateStore,
+  createPersistentStateIteratorResource,
   AsyncIteratorLike,
-  StateStoreResourceLike,
+  AsyncIteratorResourceLike,
+  StateUpdaterLike,
 } from "@reactive-js/ix";
 import {
   concat,
@@ -52,7 +53,7 @@ const dispatch = (newLocation: LocationLike) => {
 
 export const createLocationStoreResource = (
   scheduler: SchedulerLike,
-): StateStoreResourceLike<LocationLike> => {
+): AsyncIteratorResourceLike<StateUpdaterLike<LocationLike>, LocationLike> => {
   const observable: MulticastObservableLike<LocationLike> = pipe(
     concat(
       ofValue(getCurrentLocation()),
@@ -69,7 +70,7 @@ export const createLocationStoreResource = (
     subscribe: subscriber => observable.subscribe(subscriber),
   };
 
-  return createPersistentStateStore(
+  return createPersistentStateIteratorResource(
     historyIterator,
     emptyLocation,
     scheduler,
