@@ -31,6 +31,8 @@ class FromIteratorWithDelayObservable<T>
     delay: this.delay,
   };
 
+  run = producerMixin.run;
+
   constructor(
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
@@ -38,11 +40,12 @@ class FromIteratorWithDelayObservable<T>
     private readonly doneError?: unknown,
   ) {}
 
-  private emitDelayedValue() {
+  loop() {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const doneError = this.doneError;
 
     if (this.count >= this.maxCount || subscriber.isDisposed) {
+      subscriber.complete()
       return;
     }
 
@@ -51,28 +54,13 @@ class FromIteratorWithDelayObservable<T>
     if (done && doneError !== undefined) {
       throw doneError;
     } else if (done) {
+      subscriber.complete()
       return;
     }
 
     subscriber.next(next.value);
     this.count++;
     return this.continuationResult;
-  }
-
-  run(_?: () => boolean) {
-    let error = undefined;
-    try {
-      const result = this.emitDelayedValue();
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      error = { cause };
-    }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

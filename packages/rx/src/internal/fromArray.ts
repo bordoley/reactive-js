@@ -17,6 +17,8 @@ class FromArrayWithDelayObservable<T>
   private subscriber: SubscriberLike<T> | undefined;
   private index = this.startIndex;
 
+  run = producerMixin.run;
+
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,
@@ -28,25 +30,20 @@ class FromArrayWithDelayObservable<T>
     private readonly startIndex: number,
   ) {}
 
-  run(_?: () => boolean) {
-    let error = undefined;
-    try {
-      const values = this.values;
-      const subscriber = this.subscriber as SubscriberLike<T>;
+  loop(_?: () => boolean) {
+    const values = this.values;
+    const subscriber = this.subscriber as SubscriberLike<T>;
 
-      if (this.index < values.length && !subscriber.isDisposed) {
-        const value = values[this.index];
-        this.index++;
+    if (this.index < values.length && !subscriber.isDisposed) {
+      const value = values[this.index];
+      this.index++;
 
-        subscriber.next(value);
-        return this.continuationResult;
-      }
-    } catch (cause) {
-      error = { cause };
+      subscriber.next(value);
+      return this.continuationResult;
+    } else {
+      subscriber.complete();
+      return;
     }
-
-    (this.subscriber as SubscriberLike<T>).complete(error);
-    return;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
