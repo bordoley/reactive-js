@@ -15,15 +15,18 @@ export class Subscriber<T> implements SubscriberLike<T> {
   readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
-  constructor(private readonly scheduler: SchedulerLike) {}
+  add = disposableMixin.add;
+remove = disposableMixin.remove;
+constructor(private readonly scheduler: SchedulerLike) {}
 
   get now() {
     return this.scheduler.now;
   }
 
-  add = disposableMixin.add;
+  
 
-  complete(_?: ErrorLike) {
+  
+complete(_?: ErrorLike) {
     this.dispose();
   }
 
@@ -36,7 +39,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
 
   next(_: T): void {}
 
-  remove = disposableMixin.remove;
+  
 
   schedule(
     continuation: SchedulerContinuationLike,

@@ -7,7 +7,7 @@ import {
   ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createAsyncIteratorResource } from "./create";
+import { createAsyncIteratorResource } from "./createAsyncIterator";
 import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
 
 class ReducerStoreAsyncIterable<TAction, T>

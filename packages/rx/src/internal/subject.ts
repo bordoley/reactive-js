@@ -14,7 +14,10 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly replayed: T[] = [];
 
-  constructor(private readonly replayCount: number) {
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(private readonly replayCount: number) {
     this.add(() => {
       this.observers.length = 0;
       this.replayed.length = 0;
@@ -29,11 +32,12 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispose = disposableMixin.dispose;
+  
 
-  onComplete(error?: ErrorLike) {
+  
+onComplete(error?: ErrorLike) {
     if (this.isCompleted || this.isDisposed) {
       return;
     }
@@ -66,7 +70,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     }
   }
 
-  remove = disposableMixin.remove;
+  
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {

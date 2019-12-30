@@ -76,7 +76,13 @@ class PrioritySchedulerResourceImpl
     );
   };
 
-  constructor(private readonly hostScheduler: SchedulerLike) {}
+  /** @ignore */
+add = disposableMixin.add;
+/** @ignore */
+dispose = disposableMixin.dispose;
+/** @ignore */
+remove = disposableMixin.remove;
+constructor(private readonly hostScheduler: SchedulerLike) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
@@ -86,14 +92,14 @@ class PrioritySchedulerResourceImpl
     return this.hostScheduler.now;
   }
 
-  /** @ignore */
-  add = disposableMixin.add;
+  
+  
 
-  /** @ignore */
-  dispose = disposableMixin.dispose;
+  
+  
 
-  /** @ignore */
-  remove = disposableMixin.remove;
+  
+  
 
   run(shouldYield?: () => boolean) {
     for (
