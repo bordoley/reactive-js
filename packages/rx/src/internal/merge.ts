@@ -10,12 +10,13 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   complete(error?: ErrorLike) {
-    this.dispose();
-    const ctx = this.ctx;
-    ctx.completedCount++;
+    if(this.dispose()) {
+      const ctx = this.ctx;
+      ctx.completedCount++;
 
-    if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
-      this.delegate.complete(error);
+      if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
+        this.delegate.complete(error);
+      }
     }
   }
 

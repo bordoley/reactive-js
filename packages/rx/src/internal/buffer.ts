@@ -19,6 +19,8 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
 
+  isDisposed = false;
+
   constructor(
     delegate: SubscriberLike<readonly T[]>,
     private readonly durationSelector: (next: T) => ObservableLike<unknown>,
@@ -27,6 +29,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     super(delegate);
 
     this.add(this.durationSubscription).add(() => {
+      this.isDisposed = true;
       this.buffer.length = 0;
     });
   }
@@ -44,10 +47,16 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   }
 
   complete(error?: ErrorLike) {
-    if (!this.isDisposed && error === undefined) {
-      this.notifyNext();
+    if (!this.isDisposed) {
+      this.isDisposed = true;
+      
+      if (error === undefined) {
+        this.notifyNext();
+      }
+
+      this.dispose();
+      this.delegate.complete(error);
     }
-    this.delegate.complete(error);
   }
 
   next(data: T) {

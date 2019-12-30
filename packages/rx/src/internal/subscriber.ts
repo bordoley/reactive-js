@@ -28,10 +28,12 @@ export class Subscriber<T> implements SubscriberLike<T> {
   }
 
   dispose() {
-    if (!this.isDisposed) {
+    const isDisposed = this.isDisposed;
+    if (!isDisposed) {
       this.isDisposed = true;
       this.disposable.dispose();
     }
+    return !isDisposed;
   }
 
   next(_: T): void {}
@@ -66,7 +68,9 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   }
 
   complete(error?: ErrorLike) {
-    this.dispose();
-    this.delegate.complete(error);
+    if(!this.isDisposed) {
+      this.dispose()
+      this.delegate.complete(error);
+    }
   }
 }

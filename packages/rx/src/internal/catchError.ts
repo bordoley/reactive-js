@@ -17,21 +17,22 @@ class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   complete(error?: ErrorLike) {
-    if (!this.isDisposed && error !== undefined) {
-      try {
-        const { cause } = error;
-        const result = this.onError(cause) || undefined;
-        if (result !== undefined) {
-          this.dispose();
-          result.subscribe(this.delegate);
-        } else {
-          this.delegate.complete(error);
+    if (this.dispose()) {
+      if (error !== undefined) {
+        try {
+          const { cause } = error;
+          const result = this.onError(cause) || undefined;
+          if (result !== undefined) {
+            result.subscribe(this.delegate);
+          } else {
+            this.delegate.complete(error);
+          }
+        } catch (cause) {
+          this.delegate.complete({ cause, parent: error } as ErrorLike);
         }
-      } catch (cause) {
-        this.delegate.complete({ cause, parent: error } as ErrorLike);
+      } else {
+        this.delegate.complete();
       }
-    } else {
-      this.delegate.complete();
     }
   }
 
