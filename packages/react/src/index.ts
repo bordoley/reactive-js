@@ -1,4 +1,4 @@
-import { AsyncIteratorLike } from "@reactive-js/ix";
+import { AsyncIteratorLike, AsyncIterableLike, disposedAsyncIteratorResource, AsyncIteratorResourceLike } from "@reactive-js/ix";
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
@@ -12,6 +12,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
+import { DisposableLike } from "@reactive-js/disposable";
 
 class UseObservableObserver<T> implements ObserverLike<T> {
   constructor(
@@ -81,3 +82,42 @@ export const useAsyncIterator = <TReq, T>(
   const value = useObservable(iterator, scheduler);
   return [value, dispatch];
 };
+
+const useResource = <T extends DisposableLike>(
+  factory: () => T,
+  defaultResource: T,
+): T => {
+  const [resource, updateResource] = useState(defaultResource);
+
+  useEffect(() => {
+    const resource = factory();
+    updateResource(_ => resource);
+
+    return () => {
+      resource.dispose();
+    }
+  }, [factory, updateResource]);
+
+  return resource;
+}
+
+export const useAsyncIterable = <TReq, T>(
+  iterable: AsyncIterableLike<TReq, T>,
+  config: {
+    scheduler?: SchedulerLike,
+    replay?: number,
+  } = {},
+): AsyncIteratorResourceLike<TReq, T> => {
+  const scheduler = config.scheduler || normalPriority;
+  const replay = config.replay || 0;
+
+  const factory = useCallback(
+    () => iterable.getIXAsyncIterator(scheduler, replay),
+    [iterable, scheduler, replay],
+  );
+
+  return useResource<AsyncIteratorResourceLike<TReq, T>>(
+    factory,
+    disposedAsyncIteratorResource,
+  );
+}

@@ -12,6 +12,10 @@
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
+### Variables
+
+* [disposedAsyncIteratorResource](README.md#const-disposedasynciteratorresource)
+
 ### Functions
 
 * [createActionReducerAsyncIterable](README.md#const-createactionreducerasynciterable)
@@ -26,6 +30,12 @@
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
 * [reduceAsync](README.md#const-reduceasync)
+
+## Variables
+
+### `Const` disposedAsyncIteratorResource
+
+• **disposedAsyncIteratorResource**: *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹unknown, any›* =  _disposed
 
 ## Functions
 

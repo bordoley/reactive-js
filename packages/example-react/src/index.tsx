@@ -1,12 +1,12 @@
-import { createPersistentStateAsyncIterable, StateUpdaterLike } from "@reactive-js/ix";
+import { createPersistentStateAsyncIterable, StateUpdaterLike, lift } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
 } from "@reactive-js/react-router";
-import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate, onNext, subscribe } from "@reactive-js/rx";
+import { idlePriority } from "@reactive-js/react-scheduler";
+import { generate, onNext } from "@reactive-js/rx";
 import { historyIterable, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
@@ -93,22 +93,19 @@ const emptyLocation = {
   query: "",
 };
 
-const locationAsyncIterable = createPersistentStateAsyncIterable(
-  historyIterable,
-  () => emptyLocation,
+const locationIterable = pipe(
+  createPersistentStateAsyncIterable(
+    historyIterable,
+    () => emptyLocation,
+  ),
+  lift(onNext<LocationLike>(console.log))
 );
-
-const locationStore = locationAsyncIterable.getIXAsyncIterator(
-  normalPriority,
-  1,
-);
-pipe(locationStore, onNext(console.log), subscribe(normalPriority));
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
   .render(
     <Router
-      locationStore={locationStore}
+      locationIterable={locationIterable}
       notFound={NotFound}
       routes={routes}
     />,

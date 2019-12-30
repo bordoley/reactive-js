@@ -6,7 +6,7 @@ export {
 } from "./internal/interfaces";
 
 export { createAsyncIteratorResource } from "./internal/createAsyncIterator";
-
+export { disposedAsyncIteratorResource } from "./internal/disposedIterator";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";

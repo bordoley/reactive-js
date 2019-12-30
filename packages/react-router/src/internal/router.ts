@@ -1,9 +1,9 @@
-import { StateUpdaterLike, AsyncIteratorLike } from "@reactive-js/ix";
-import { useObservable } from "@reactive-js/react";
-import { map, scan } from "@reactive-js/rx";
+import { StateUpdaterLike, AsyncIterableLike } from "@reactive-js/ix";
+import { useObservable, useAsyncIterable } from "@reactive-js/react";
+import { map, scan, never } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createElement, useMemo } from "react";
+import { createElement, useMemo, ReactElement } from "react";
 
 export interface RelativeURILike {
   readonly fragment: string;
@@ -28,7 +28,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStore: AsyncIteratorLike<
+  readonly locationIterable: AsyncIterableLike<
     StateUpdaterLike<RelativeURILike>,
     RelativeURILike
   >;
@@ -40,39 +40,48 @@ export interface RouterProps {
   readonly scheduler?: SchedulerLike;
 }
 
-export const Router = function Router(props: RouterProps) {
-  const { locationStore, notFound, routes, scheduler } = props;
+export const Router = function Router(props: RouterProps): ReactElement | null {
+  const { locationIterable, notFound, routes, scheduler } = props;
+
+  const locationStore = useAsyncIterable(
+    locationIterable,
+    { replay: 1},
+  );
 
   const observable = useMemo(() => {
-    const routeMap: RouteMap = {};
-    for (const [path, component] of routes) {
-      routeMap[path] = component;
+    if (locationStore.isDisposed) {
+      return never<ReactElement>();
+    } else {
+      const routeMap: RouteMap = {};
+      for (const [path, component] of routes) {
+        routeMap[path] = component;
+      }
+
+      const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
+        locationStore.dispatch(updater);
+      };
+
+      const pairify = (
+        [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
+        next: RelativeURILike,
+      ): [RelativeURILike | undefined, RelativeURILike] =>
+        oldState === empty ? [undefined, next] : [oldState, next];
+
+      return pipe(
+        locationStore,
+        scan(pairify, (): [RelativeURILike | undefined, RelativeURILike] => [
+          undefined,
+          empty,
+        ]),
+        map(([referer, uri]) =>
+          createElement(routeMap[uri.path] || notFound, {
+            referer,
+            uri,
+            uriUpdater,
+          }),
+        ),
+      );
     }
-
-    const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
-      locationStore.dispatch(updater);
-    };
-
-    const pairify = (
-      [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
-      next: RelativeURILike,
-    ): [RelativeURILike | undefined, RelativeURILike] =>
-      oldState === empty ? [undefined, next] : [oldState, next];
-
-    return pipe(
-      locationStore,
-      scan(pairify, (): [RelativeURILike | undefined, RelativeURILike] => [
-        undefined,
-        empty,
-      ]),
-      map(([referer, uri]) =>
-        createElement(routeMap[uri.path] || notFound, {
-          referer,
-          uri,
-          uriUpdater,
-        }),
-      ),
-    );
   }, [locationStore, notFound, routes]);
 
   const element = useObservable(observable, scheduler);
