@@ -29,18 +29,22 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
   ) {
     super(delegate);
     this.add(this.durationSubscription);
+
+    this.durationSubscription.inner = pipe(
+      this.duration,
+      observe(this),
+      subscribe(this),
+    );
   }
 
   next(data: T) {
-    if (!this.isDisposed) {
-      this.durationSubscription.inner = pipe(
-        this.duration,
-        observe(this),
-        subscribe(this),
-      );
+    this.durationSubscription.inner = pipe(
+      this.duration,
+      observe(this),
+      subscribe(this),
+    );
 
-      this.delegate.next(data);
-    }
+    this.delegate.next(data);
   }
 
   onComplete(error?: ErrorLike) {
