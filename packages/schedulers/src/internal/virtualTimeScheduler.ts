@@ -63,17 +63,23 @@ class VirtualTimeSchedulerResourceImpl
     );
   };
 
-  constructor(private readonly maxMicroTaskTicks: number) {}
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+schedule = schedulerMixin.schedule;
+constructor(private readonly maxMicroTaskTicks: number) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispose = disposableMixin.dispose;
+  
 
-  private loop(
+  
+
+private loop(
     shouldYield: () => boolean,
   ): SchedulerContinuationResultLike | void {
     this.runShouldYield = shouldYield;
@@ -100,9 +106,10 @@ class VirtualTimeSchedulerResourceImpl
     return hasMore ? iteratorYield : iteratorDone;
   }
 
-  remove = disposableMixin.remove;
+  
 
-  return(): IteratorResult<void> {
+  
+return(): IteratorResult<void> {
     this.dispose();
     return iteratorDone;
   }
@@ -164,7 +171,7 @@ class VirtualTimeSchedulerResourceImpl
     return this.taskQueue.count > 0;
   }
 
-  schedule = schedulerMixin.schedule;
+  
 
   throw(e?: any): IteratorResult<void> {
     this.dispose;

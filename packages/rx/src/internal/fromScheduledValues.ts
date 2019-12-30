@@ -11,7 +11,8 @@ class FromScheduledValuesObservable<T>
   private subscriber: SubscriberLike<T> | undefined;
   private index = 0;
 
-  constructor(private readonly values: ReadonlyArray<[number, T]>) {}
+  run = producerMixin.run;
+constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber as SubscriberLike<T>;
@@ -35,7 +36,7 @@ class FromScheduledValuesObservable<T>
     return;
   }
 
-  run = producerMixin.run;
+  
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;

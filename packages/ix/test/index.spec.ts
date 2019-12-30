@@ -80,7 +80,7 @@ test("reduceAsync", () => {
   const scheduler = createVirtualTimeSchedulerResource(1);
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
-  let result: number = 0;
+  let result = 0;
   pipe(
     iter,
     reduceAsync(

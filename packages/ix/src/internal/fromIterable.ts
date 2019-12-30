@@ -10,7 +10,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./create";
+import { createAsyncIteratorResource } from "./createAsyncIterator";
 
 const doneError = Symbol("IteratorDone");
 

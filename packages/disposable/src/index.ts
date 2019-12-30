@@ -195,7 +195,10 @@ class SerialDisposableImpl implements SerialDisposableLike {
   _inner: DisposableLike = disposed;
   readonly disposable = createDisposable();
 
-  get inner() {
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+get inner() {
     return this._inner;
   }
 
@@ -216,9 +219,9 @@ class SerialDisposableImpl implements SerialDisposableLike {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
+  
+  
+  
 }
 
 /**

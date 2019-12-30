@@ -12,7 +12,10 @@ import { subscribe } from "./subscribe";
 import { createSubject } from "./subject";
 
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
-  constructor(readonly disposable: SubjectResourceLike<T>) {}
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(readonly disposable: SubjectResourceLike<T>) {}
 
   get subscriberCount() {
     return this.disposable.subscriberCount;
@@ -22,11 +25,11 @@ class PublishObservable<T> implements MulticastObservableResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispose = disposableMixin.dispose;
+  
 
-  remove = disposableMixin.remove;
+  
 
   subscribe(subscriber: SubscriberLike<T>): void {
     this.disposable.subscribe(subscriber);
@@ -35,7 +38,7 @@ class PublishObservable<T> implements MulticastObservableResourceLike<T> {
 
 export const publish = <T>(
   scheduler: SchedulerLike,
-  replayCount: number = 0,
+  replayCount = 0,
 ): OperatorLike<
   ObservableLike<T>,
   MulticastObservableResourceLike<T>

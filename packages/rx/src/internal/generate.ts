@@ -30,7 +30,7 @@ class GenerateWithDelayObservable<T>
     const subscriber = this.subscriber as SubscriberLike<T>;
     if (!subscriber.isDisposed) {
       try {
-        let acc = this.acc;
+        const acc = this.acc;
         subscriber.next(acc);
         this.acc = this.generator(acc);
       } catch (cause) {
@@ -54,7 +54,8 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     continuation: this,
   };
 
-  constructor(
+  run = producerMixin.run;
+constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
@@ -84,24 +85,28 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     return;
   }
 
-  run = producerMixin.run;
+  
 }
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
   readonly disposable = createDisposable();
   hasCurrent = false;
 
-  constructor(private readonly generator: (acc: T) => T, public current: T) {}
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(private readonly generator: (acc: T) => T, public current: T) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispose = disposableMixin.dispose;
+  
 
-  moveNext(): boolean {
+  
+moveNext(): boolean {
     if (this.hasCurrent) {
       this.current = this.generator(this.current);
     } else {
@@ -110,7 +115,7 @@ class GenerateEnumerator<T> implements EnumeratorLike<T> {
     return true;
   }
 
-  remove = disposableMixin.remove;
+  
 }
 
 class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {

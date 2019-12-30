@@ -90,7 +90,8 @@ class FromIteratorObservable<T>
     continuation: this,
   };
 
-  constructor(
+  run = producerMixin.run;
+constructor(
     private readonly iterator: Iterator<T>,
     private readonly maxCount: number,
     private readonly doneError?: unknown,
@@ -138,7 +139,7 @@ class FromIteratorObservable<T>
     return;
   }
 
-  run = producerMixin.run;
+  
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
@@ -181,17 +182,21 @@ class FromIterableEnumerator<T> implements EnumeratorLike<T> {
   readonly disposable = createDisposable();
   hasCurrent = false;
 
-  constructor(private readonly iterator: Iterator<T>) {}
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(private readonly iterator: Iterator<T>) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispose = disposableMixin.dispose;
+  
 
-  moveNext(): boolean {
+  
+moveNext(): boolean {
     const next = this.iterator.next();
     if (next.done) {
       this.hasCurrent = false;
@@ -205,7 +210,7 @@ class FromIterableEnumerator<T> implements EnumeratorLike<T> {
     }
   }
 
-  remove = disposableMixin.remove;
+  
 }
 
 class FromIterableObservable<T>
@@ -236,7 +241,10 @@ class FromIterableObservable<T>
 export class IteratorDisposable<T> implements DisposableLike {
   readonly disposable = createDisposable();
 
-  constructor(readonly iterator: Iterator<T>) {
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(readonly iterator: Iterator<T>) {
     this.add(() => {
       const iterator = this.iterator;
       if (iterator.return !== undefined) {
@@ -249,9 +257,9 @@ export class IteratorDisposable<T> implements DisposableLike {
     return this.disposable.isDisposed;
   }
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
+  
+  
+  
 }
 
 export const fromIterable = <T>(

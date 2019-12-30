@@ -9,7 +9,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./create";
+import { createAsyncIteratorResource } from "./createAsyncIterator";
 
 class PersistentStateAsyncIterable<T>
   implements AsyncIterableLike<StateUpdaterLike<T>, T> {

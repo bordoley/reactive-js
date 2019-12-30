@@ -9,7 +9,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./create";
+import { createAsyncIteratorResource } from "./createAsyncIterator";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);

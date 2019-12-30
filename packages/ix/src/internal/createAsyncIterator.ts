@@ -13,7 +13,10 @@ import { AsyncIteratorResourceLike } from "./interfaces";
 
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-  constructor(
+  add = disposableMixin.add;
+dispose = disposableMixin.dispose;
+remove = disposableMixin.remove;
+constructor(
     readonly disposable: SubjectResourceLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
   ) {}
@@ -26,15 +29,17 @@ class AsyncIteratorResourceImpl<TReq, T>
     return this.observable.subscriberCount;
   }
 
-  add = disposableMixin.add;
+  
 
-  dispatch(req: TReq) {
+  
+
+dispatch(req: TReq) {
     this.disposable.onNext(req);
   }
 
-  dispose = disposableMixin.dispose;
+  
 
-  remove = disposableMixin.remove;
+  
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.observable.subscribe(subscriber);

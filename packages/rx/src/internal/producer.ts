@@ -15,7 +15,7 @@ export const producerMixin: SchedulerContinuationLike = {
   run: function run<T>(this: ProducerLike<T>, shouldYield?: () => boolean) {
     let error = undefined;
     try {
-      let result = this.loop(shouldYield);
+      const result = this.loop(shouldYield);
 
       if (result !== undefined) {
         return result;

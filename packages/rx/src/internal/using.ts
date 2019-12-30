@@ -19,7 +19,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
       this.observableFactory(...resources).subscribe(subscriber);
     } else {
       subscriber.add(resources as DisposableLike);
-      this.observableFactory(resources as TResource).subscribe(subscriber);
+      this.observableFactory(resources).subscribe(subscriber);
     }
   }
 }
