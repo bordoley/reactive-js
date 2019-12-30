@@ -1,7 +1,12 @@
 import { defer } from "./defer";
-import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
+import {
+  EnumeratorLike,
+  EnumerableLike,
+  ErrorLike,
+  ObservableLike,
+  SubscriberLike,
+} from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
-import { EnumeratorLike, EnumerableLike } from "./enumerable";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
@@ -127,7 +132,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
-    if (shouldYield !== undefined){
+    if (shouldYield !== undefined) {
       while (shouldEmit(buffers) && !subscriber.isDisposed) {
         const next = selector(...buffers.map(getCurrent));
         subscriber.next(next);
@@ -143,11 +148,11 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     } else {
       while (shouldEmit(buffers) && !subscriber.isDisposed) {
         const next = selector(...buffers.map(getCurrent));
-  
+
         for (const buffer of buffers) {
           buffer.moveNext();
         }
-  
+
         subscriber.next(next);
       }
     }

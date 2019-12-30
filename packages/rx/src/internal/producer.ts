@@ -1,4 +1,7 @@
-import { SchedulerContinuationResultLike, SchedulerContinuationLike } from "@reactive-js/scheduler";
+import {
+  SchedulerContinuationResultLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
 interface ProducerLike<T> {
@@ -9,22 +12,19 @@ interface ProducerLike<T> {
 
 /** @ignore */
 export const producerMixin: SchedulerContinuationLike = {
-  run: function run<T>(
-    this: ProducerLike<T>,
-    shouldYield?: () => boolean,
-  ) {
+  run: function run<T>(this: ProducerLike<T>, shouldYield?: () => boolean) {
     let error = undefined;
     try {
       let result = this.loop(shouldYield);
-  
+
       if (result !== undefined) {
         return result;
       }
     } catch (cause) {
       error = { cause };
     }
-  
+
     (this.subscriber as SubscriberLike<T>).complete(error);
     return;
-  }
-}
+  },
+};

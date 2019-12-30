@@ -1,7 +1,4 @@
-import {
-  createDisposable,
-  disposableMixin,
-} from "@reactive-js/disposable";
+import { createDisposable, disposableMixin } from "@reactive-js/disposable";
 import {
   ErrorLike,
   ObserverLike,

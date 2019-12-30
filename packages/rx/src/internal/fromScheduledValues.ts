@@ -13,9 +13,7 @@ class FromScheduledValuesObservable<T>
 
   constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
-  loop(
-    shouldYield?: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const values = this.values;
 

@@ -199,7 +199,7 @@ class SerialDisposableImpl implements SerialDisposableLike {
   readonly disposable = createDisposable();
 
   get inner() {
-    return this._inner
+    return this._inner;
   }
 
   set inner(newInner: DisposableLike) {
