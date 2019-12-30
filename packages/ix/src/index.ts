@@ -6,7 +6,7 @@ export {
 
 export {
   createAsyncIteratorResource,
-} from "./internal/create";
+} from "./internal/createAsyncIterator";
 
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";

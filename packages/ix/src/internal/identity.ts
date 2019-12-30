@@ -1,6 +1,6 @@
 import { AsyncIterableLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createEventEmitter } from "./create";
+import { createEventEmitter } from "./createAsyncIterator";
 
 const instance = {
   getIXAsyncIterator: (_: SchedulerLike, replayCount = 0) =>
