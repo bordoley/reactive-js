@@ -91,7 +91,7 @@ class FromIteratorObservable<T>
   };
 
   run = producerMixin.run;
-constructor(
+  constructor(
     private readonly iterator: Iterator<T>,
     private readonly maxCount: number,
     private readonly doneError?: unknown,
@@ -139,8 +139,6 @@ constructor(
     return;
   }
 
-  
-
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
     subscriber.schedule(this);
@@ -183,20 +181,15 @@ class FromIterableEnumerator<T> implements EnumeratorLike<T> {
   hasCurrent = false;
 
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(private readonly iterator: Iterator<T>) {}
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(private readonly iterator: Iterator<T>) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
-  
-
-  
-
-  
-moveNext(): boolean {
+  moveNext(): boolean {
     const next = this.iterator.next();
     if (next.done) {
       this.hasCurrent = false;
@@ -209,8 +202,6 @@ moveNext(): boolean {
       return true;
     }
   }
-
-  
 }
 
 class FromIterableObservable<T>
@@ -242,9 +233,9 @@ export class IteratorDisposable<T> implements DisposableLike {
   readonly disposable = createDisposable();
 
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(readonly iterator: Iterator<T>) {
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(readonly iterator: Iterator<T>) {
     this.add(() => {
       const iterator = this.iterator;
       if (iterator.return !== undefined) {
@@ -256,10 +247,6 @@ constructor(readonly iterator: Iterator<T>) {
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
-
-  
-  
-  
 }
 
 export const fromIterable = <T>(

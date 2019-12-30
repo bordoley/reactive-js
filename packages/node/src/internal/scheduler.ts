@@ -27,8 +27,8 @@ class NodeScheduler implements SchedulerLike {
   protected readonly shouldYield = () => {
     return this.now > this.startTime + timeout;
   };
-schedule = schedulerMixin.schedule;
-private scheduleImmediate(callback: () => void): DisposableLike {
+  schedule = schedulerMixin.schedule;
+  private scheduleImmediate(callback: () => void): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(
       this.callCallbackAndDispose,
@@ -49,16 +49,11 @@ private scheduleImmediate(callback: () => void): DisposableLike {
     return disposable;
   }
 
-  
-
-  
-scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     return delay > 0
       ? this.scheduleDelayed(callback, delay)
       : this.scheduleImmediate(callback);
   }
-
-  
 
   get now(): number {
     const hr = process.hrtime();

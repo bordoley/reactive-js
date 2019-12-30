@@ -43,9 +43,9 @@ const getCurrentLocation = (_?: unknown): LocationLike => {
 class HistoryIteratorResourceImpl
   implements AsyncIteratorResourceLike<LocationLike, LocationLike> {
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(
     private readonly disposable: MulticastObservableResourceLike<LocationLike>,
   ) {}
 
@@ -57,11 +57,7 @@ constructor(
     return this.disposable.subscriberCount;
   }
 
-  
-
-  
-
-dispatch(newLocation: LocationLike) {
+  dispatch(newLocation: LocationLike) {
     const currentLocation = getCurrentLocation();
     if (!locationEquals(currentLocation, newLocation)) {
       const { path, query, fragment } = newLocation;
@@ -71,10 +67,6 @@ dispatch(newLocation: LocationLike) {
       window.history.pushState(undefined, "", uriString);
     }
   }
-
-  
-
-  
 
   subscribe(subscriber: SubscriberLike<LocationLike>) {
     this.disposable.subscribe(subscriber);

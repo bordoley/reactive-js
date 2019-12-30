@@ -55,7 +55,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
   };
 
   run = producerMixin.run;
-constructor(
+  constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
@@ -84,8 +84,6 @@ constructor(
     }
     return;
   }
-
-  
 }
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
@@ -93,20 +91,15 @@ class GenerateEnumerator<T> implements EnumeratorLike<T> {
   hasCurrent = false;
 
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(private readonly generator: (acc: T) => T, public current: T) {}
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(private readonly generator: (acc: T) => T, public current: T) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
-  
-
-  
-
-  
-moveNext(): boolean {
+  moveNext(): boolean {
     if (this.hasCurrent) {
       this.current = this.generator(this.current);
     } else {
@@ -114,8 +107,6 @@ moveNext(): boolean {
     }
     return true;
   }
-
-  
 }
 
 class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {

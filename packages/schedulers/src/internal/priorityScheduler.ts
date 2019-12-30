@@ -77,12 +77,12 @@ class PrioritySchedulerResourceImpl
   };
 
   /** @ignore */
-add = disposableMixin.add;
-/** @ignore */
-dispose = disposableMixin.dispose;
-/** @ignore */
-remove = disposableMixin.remove;
-constructor(private readonly hostScheduler: SchedulerLike) {}
+  add = disposableMixin.add;
+  /** @ignore */
+  dispose = disposableMixin.dispose;
+  /** @ignore */
+  remove = disposableMixin.remove;
+  constructor(private readonly hostScheduler: SchedulerLike) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
@@ -91,15 +91,6 @@ constructor(private readonly hostScheduler: SchedulerLike) {}
   get now(): number {
     return this.hostScheduler.now;
   }
-
-  
-  
-
-  
-  
-
-  
-  
 
   run(shouldYield?: () => boolean) {
     for (

@@ -39,9 +39,8 @@ const getCurrent = (buffer: EnumeratorLike<unknown>): unknown => {
 class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
   private _current: unknown;
-private readonly buffer: Array<unknown> = [];
+  private readonly buffer: Array<unknown> = [];
   hasCurrent = false;
-  
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -124,7 +123,7 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
   private subscriber: SubscriberLike<T> | undefined;
 
   run = producerMixin.run;
-constructor(
+  constructor(
     private readonly observables: readonly ObservableLike<any>[],
     readonly selector: (...values: unknown[]) => T,
   ) {}
@@ -160,8 +159,6 @@ constructor(
     }
     return;
   }
-
-  
 
   subscribe(subscriber: SubscriberLike<T>) {
     const observables = this.observables;

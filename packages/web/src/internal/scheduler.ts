@@ -52,7 +52,7 @@ class WebScheduler implements SchedulerLike {
   private startTime = this.now;
 
   schedule = schedulerMixin.schedule;
-get now(): number {
+  get now(): number {
     return now();
   }
 
@@ -88,8 +88,6 @@ get now(): number {
     );
     return disposable;
   }
-
-  
 }
 
 let schedulerHost: SchedulerLike | undefined = undefined;
