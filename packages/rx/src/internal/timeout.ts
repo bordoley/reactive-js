@@ -29,7 +29,10 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
   ) {
     super(delegate);
     this.add(this.durationSubscription);
+    this.setupDurationSubscription();
+  }
 
+  private setupDurationSubscription() {
     this.durationSubscription.inner = pipe(
       this.duration,
       observe(this),
@@ -38,12 +41,7 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   next(data: T) {
-    this.durationSubscription.inner = pipe(
-      this.duration,
-      observe(this),
-      subscribe(this),
-    );
-
+    this.setupDurationSubscription();
     this.delegate.next(data);
   }
 
