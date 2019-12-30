@@ -5,6 +5,7 @@
 
 ### Interfaces
 
+* [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)
 * [DisposableLike](interfaces/disposablelike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
@@ -21,6 +22,10 @@
 * [createDisposable](README.md#const-createdisposable)
 * [createSerialDisposable](README.md#const-createserialdisposable)
 * [throwIfDisposed](README.md#const-throwifdisposed)
+
+### Object literals
+
+* [disposableMixin](README.md#const-disposablemixin)
 
 ## Type aliases
 
@@ -77,3 +82,53 @@ Name | Type | Description |
 `disposable` | [DisposableLike](interfaces/disposablelike.md) |   |
 
 **Returns:** *void*
+
+## Object literals
+
+### `Const` disposableMixin
+
+### ▪ **disposableMixin**: *object*
+
+###  add
+
+▸ **add**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *any*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+`disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
+`...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
+
+**Returns:** *any*
+
+###  dispose
+
+▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+
+**Returns:** *void*
+
+###  remove
+
+▸ **remove**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *any*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+`disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
+`...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
+
+**Returns:** *any*
+
+###  isDisposed
+
+• **isDisposed**:

@@ -51,7 +51,7 @@ export const toPromise = <T>(
     const subscription = createSerialDisposable();
     const observer = new ToPromiseObserver(subscription, resolve, reject);
 
-    subscription.disposable = pipe(
+    subscription.inner = pipe(
       observable,
       observe(observer),
       subscribe(scheduler),

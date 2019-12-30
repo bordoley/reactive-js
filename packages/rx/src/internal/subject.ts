@@ -1,6 +1,6 @@
 import {
   createDisposable,
-  DisposableOrTeardown,
+  disposableMixin,
 } from "@reactive-js/disposable";
 import {
   ErrorLike,
@@ -34,7 +34,7 @@ const notify = <T>(
 };
 
 class SubjectImpl<T> implements SubjectResourceLike<T> {
-  private readonly disposable = createDisposable();
+  readonly disposable = createDisposable();
   private isCompleted = false;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly replayed: Notification<T>[] = [];
@@ -54,17 +54,9 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
-  dispose() {
-    this.disposable.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
   onComplete(error?: ErrorLike) {
     if (this.isCompleted || this.isDisposed) {
@@ -99,13 +91,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     }
   }
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 
   subscribe(subscriber: SubscriberLike<T>) {
     if (!this.isDisposed) {

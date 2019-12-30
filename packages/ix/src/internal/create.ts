@@ -1,4 +1,4 @@
-import { DisposableOrTeardown } from "@reactive-js/disposable";
+import { disposableMixin } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
   createSubject,
@@ -25,41 +25,27 @@ import {
 class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
   constructor(
-    private readonly dispatcher: SubjectResourceLike<TReq>,
+    readonly disposable: SubjectResourceLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
   ) {}
 
   get isDisposed(): boolean {
-    return this.dispatcher.isDisposed;
+    return this.disposable.isDisposed;
   }
 
   get subscriberCount(): number {
     return this.observable.subscriberCount;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.dispatcher.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
   dispatch(req: TReq) {
-    this.dispatcher.onNext(req);
+    this.disposable.onNext(req);
   }
 
-  dispose() {
-    this.dispatcher.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.dispatcher.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.observable.subscribe(subscriber);

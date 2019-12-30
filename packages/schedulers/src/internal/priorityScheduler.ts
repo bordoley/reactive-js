@@ -2,7 +2,7 @@ import {
   createDisposable,
   createSerialDisposable,
   DisposableLike,
-  DisposableOrTeardown,
+  disposableMixin,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
@@ -46,7 +46,7 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
 
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
-  private readonly disposable: SerialDisposableLike = createSerialDisposable().add(
+  readonly disposable: SerialDisposableLike = createSerialDisposable().add(
     () => this.queue.clear(),
   );
   private readonly queue: PriorityQueueLike<
@@ -86,25 +86,14 @@ class PrioritySchedulerResourceImpl
     return this.hostScheduler.now;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  /** @ignore */
+  add = disposableMixin.add;
 
-  dispose() {
-    this.disposable.dispose();
-  }
+  /** @ignore */
+  dispose = disposableMixin.dispose;
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  /** @ignore */
+  remove = disposableMixin.remove;
 
   run(shouldYield?: () => boolean) {
     for (
@@ -188,10 +177,10 @@ class PrioritySchedulerResourceImpl
 
   private scheduleDrainQueue(task: ScheduledTaskLike) {
     const head = this.queue.peek();
-    if (head === task && this.disposable.disposable.isDisposed) {
+    if (head === task && this.disposable.inner.isDisposed) {
       const delay = Math.max(task.dueTime - this.now, 0);
 
-      this.disposable.disposable = this.hostScheduler.schedule(this, delay);
+      this.disposable.inner = this.hostScheduler.schedule(this, delay);
     }
   }
 }

@@ -33,7 +33,7 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
 
   next(data: T) {
     if (!this.isDisposed) {
-      this.durationSubscription.disposable = pipe(
+      this.durationSubscription.inner = pipe(
         this.duration,
         observe(this),
         subscribe(this),

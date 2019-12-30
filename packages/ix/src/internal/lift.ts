@@ -13,7 +13,7 @@ import {
   AsyncIterableOperatorLike,
 } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { DisposableOrTeardown, DisposableLike } from "@reactive-js/disposable";
+import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
 class LiftedAsyncIteratorImpl<TReq, T> implements AsyncIteratorLike<TReq, T> {
   constructor(
@@ -45,25 +45,11 @@ class LiftedAsyncIteratorResourceImpl<TReq, T>
     return this.disposable.isDisposed;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
-  dispose() {
-    this.disposable.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 }
 
 interface AsyncIteratorRequestOperatorLike<TReqA, TReqB> {

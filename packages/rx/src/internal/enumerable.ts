@@ -1,6 +1,6 @@
 import {
   createDisposable,
-  DisposableOrTeardown,
+  disposableMixin,
   DisposableLike,
 } from "@reactive-js/disposable";
 import { ObservableLike, ObserverLike, ErrorLike } from "./interfaces";
@@ -19,7 +19,7 @@ export interface EnumeratorLike<T> extends DisposableLike {
 
 /** @ignore */
 export abstract class AbstractEnumerator<T> implements EnumeratorLike<T> {
-  private readonly disposable = createDisposable();
+  readonly disposable = createDisposable();
 
   abstract get current(): T;
 
@@ -29,27 +29,13 @@ export abstract class AbstractEnumerator<T> implements EnumeratorLike<T> {
     return this.disposable.isDisposed;
   }
 
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.add(disposable, ...disposables);
-    return this;
-  }
+  add = disposableMixin.add;
 
-  dispose() {
-    this.disposable.dispose();
-  }
+  dispose = disposableMixin.dispose;
 
   abstract moveNext(): boolean;
 
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ) {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
-  }
+  remove = disposableMixin.remove;
 }
 
 /** @ignore */

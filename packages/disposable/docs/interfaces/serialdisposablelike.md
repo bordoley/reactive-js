@@ -15,12 +15,12 @@ container also disposes the contained disposable.
 
 ### Properties
 
-* [disposable](serialdisposablelike.md#disposable)
+* [inner](serialdisposablelike.md#inner)
 
 ## Properties
 
-###  disposable
+###  inner
 
-• **disposable**: *[DisposableLike](disposablelike.md)*
+• **inner**: *[DisposableLike](disposablelike.md)*
 
 The inner disposable that may be get or set.
