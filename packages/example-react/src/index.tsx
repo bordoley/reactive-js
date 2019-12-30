@@ -10,7 +10,7 @@ import { generate, onNext } from "@reactive-js/rx";
 import { locationAsyncIterable, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
-import { pipe } from '@reactive-js/pipe';
+import { pipe } from "@reactive-js/pipe";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdaterLike<LocationLike>) => void,
@@ -87,7 +87,10 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route3", StatefulComponent],
 ];
 
-const locationStore = locationAsyncIterable.getIXAsyncIterator(normalPriority, 1);
+const locationStore = locationAsyncIterable.getIXAsyncIterator(
+  normalPriority,
+  1,
+);
 pipe(locationStore, onNext(console.log));
 
 (ReactDOM as any)

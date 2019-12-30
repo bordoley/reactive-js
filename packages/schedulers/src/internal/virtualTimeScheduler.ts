@@ -42,7 +42,8 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerResourceImpl implements VirtualTimeSchedulerResourceLike {
+class VirtualTimeSchedulerResourceImpl
+  implements VirtualTimeSchedulerResourceLike {
   private readonly continuationResult = { continuation: this };
   readonly disposable: DisposableLike = createDisposable();
   private microTaskTicks = 0;
@@ -62,8 +63,7 @@ class VirtualTimeSchedulerResourceImpl implements VirtualTimeSchedulerResourceLi
     );
   };
 
-  constructor(private readonly maxMicroTaskTicks: number) {
-  }
+  constructor(private readonly maxMicroTaskTicks: number) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
