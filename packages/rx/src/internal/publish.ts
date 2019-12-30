@@ -13,9 +13,9 @@ import { createSubject } from "./subject";
 
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(readonly disposable: SubjectResourceLike<T>) {}
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(readonly disposable: SubjectResourceLike<T>) {}
 
   get subscriberCount() {
     return this.disposable.subscriberCount;
@@ -24,12 +24,6 @@ constructor(readonly disposable: SubjectResourceLike<T>) {}
   get isDisposed() {
     return this.disposable.isDisposed;
   }
-
-  
-
-  
-
-  
 
   subscribe(subscriber: SubscriberLike<T>): void {
     this.disposable.subscribe(subscriber);

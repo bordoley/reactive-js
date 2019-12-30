@@ -22,7 +22,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
   subscriber = this.delegate;
 
   run = producerMixin.run;
-constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
+  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
     this.delegate.add(() => {
       this.last.length = 0;
@@ -75,8 +75,6 @@ constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
       }
     }
   }
-
-  
 }
 
 const operator = <T>(

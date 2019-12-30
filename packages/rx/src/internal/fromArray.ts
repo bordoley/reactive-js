@@ -63,7 +63,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
   };
 
   run = producerMixin.run;
-constructor(
+  constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
@@ -97,8 +97,6 @@ constructor(
     }
     return;
   }
-
-  
 }
 
 class FromArrayEnumerator<T> implements EnumeratorLike<T> {
@@ -107,20 +105,15 @@ class FromArrayEnumerator<T> implements EnumeratorLike<T> {
   hasCurrent = false;
 
   add = disposableMixin.add;
-dispose = disposableMixin.dispose;
-remove = disposableMixin.remove;
-constructor(private readonly values: readonly T[], private index: number) {}
+  dispose = disposableMixin.dispose;
+  remove = disposableMixin.remove;
+  constructor(private readonly values: readonly T[], private index: number) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
   }
 
-  
-
-  
-
-  
-moveNext(): boolean {
+  moveNext(): boolean {
     if (this.hasCurrent) {
       this.index++;
     } else {
@@ -140,8 +133,6 @@ moveNext(): boolean {
       return false;
     }
   }
-
-  
 }
 
 class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
