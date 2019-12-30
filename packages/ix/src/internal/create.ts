@@ -18,7 +18,6 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   AsyncIteratorLike,
   AsyncIteratorResourceLike,
-  StateStoreResourceLike,
   StateUpdaterLike,
 } from "./interfaces";
 
@@ -76,12 +75,15 @@ export const createEventEmitter = <T>(
   return new AsyncIteratorResourceImpl(dispatcher, dispatcher);
 };
 
-export const createPersistentStateStore = <T>(
+/** @noInheritDoc */
+export type StateStoreLike<T> = AsyncIteratorLike<StateUpdaterLike<T>, T>;
+
+export const createPersistentStateIteratorResource = <T>(
   persistentStore: AsyncIteratorLike<T, T>,
   initialState: T,
   scheduler: SchedulerLike,
   equals?: (a: T, b: T) => boolean,
-): StateStoreResourceLike<T> => {
+): AsyncIteratorResourceLike<StateUpdaterLike<T>, T> => {
   const operator = (
     obs: ObservableLike<StateUpdaterLike<T>>,
   ): ObservableLike<T> => {

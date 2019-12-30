@@ -1,4 +1,4 @@
-import { StateStoreLike, StateUpdaterLike } from "@reactive-js/ix";
+import { StateUpdaterLike, AsyncIteratorResourceLike } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import { map, scan } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
@@ -28,7 +28,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStore: StateStoreLike<RelativeURILike>;
+  readonly locationStore: AsyncIteratorResourceLike<StateUpdaterLike<RelativeURILike>, RelativeURILike>
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,
