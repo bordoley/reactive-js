@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/example-react",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "private": true,
   "keywords": [
     "asynchronous",
@@ -36,12 +36,12 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/ix": "^0.0.20",
-    "@reactive-js/react": "^0.0.20",
-    "@reactive-js/react-router": "^0.0.20",
-    "@reactive-js/react-scheduler": "^0.0.20",
-    "@reactive-js/rx": "^0.0.20",
-    "@reactive-js/web": "^0.0.20",
+    "@reactive-js/ix": "^0.0.21",
+    "@reactive-js/react": "^0.0.21",
+    "@reactive-js/react-router": "^0.0.21",
+    "@reactive-js/react-scheduler": "^0.0.21",
+    "@reactive-js/rx": "^0.0.21",
+    "@reactive-js/web": "^0.0.21",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   },
