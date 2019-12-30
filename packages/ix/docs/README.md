@@ -9,10 +9,7 @@
 * [AsyncIterableLike](interfaces/asynciterablelike.md)
 * [AsyncIterableOperatorLike](interfaces/asynciterableoperatorlike.md)
 * [AsyncIteratorLike](interfaces/asynciteratorlike.md)
-* [AsyncIteratorOperatorLike](interfaces/asynciteratoroperatorlike.md)
 * [AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)
-* [AsyncIteratorResourceOperatorLike](interfaces/asynciteratorresourceoperatorlike.md)
-* [StateStoreResourceLike](interfaces/statestoreresourcelike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
 ### Type aliases
@@ -21,10 +18,10 @@
 
 ### Functions
 
+* [createActionReducerAsyncIterable](README.md#const-createactionreducerasynciterable)
 * [createAsyncIteratorResource](README.md#const-createasynciteratorresource)
-* [createPersistentStateStore](README.md#const-createpersistentstatestore)
-* [createReducerStore](README.md#const-createreducerstore)
-* [createStateStore](README.md#const-createstatestore)
+* [createPersistentStateAsyncIterable](README.md#const-createpersistentstateasynciterable)
+* [createStateAsyncIterable](README.md#const-createstateasynciterable)
 * [empty](README.md#const-empty)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
@@ -44,52 +41,9 @@
 
 ## Functions
 
-### `Const` createAsyncIteratorResource
+### `Const` createActionReducerAsyncIterable
 
-▸ **createAsyncIteratorResource**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`operator` | ObservableOperatorLike‹TReq, T› | - |
-`scheduler` | SchedulerLike | - |
-`replayCount` | number | 0 |
-
-**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
-
-___
-
-### `Const` createPersistentStateStore
-
-▸ **createPersistentStateStore**<**T**>(`persistentStore`: [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, T›, `initialState`: T, `scheduler`: SchedulerLike, `equals?`: undefined | function): *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`persistentStore` | [AsyncIteratorLike](interfaces/asynciteratorlike.md)‹T, T› |
-`initialState` | T |
-`scheduler` | SchedulerLike |
-`equals?` | undefined &#124; function |
-
-**Returns:** *[StateStoreResourceLike](interfaces/statestoreresourcelike.md)‹T›*
-
-___
-
-### `Const` createReducerStore
-
-▸ **createReducerStore**<**TAction**, **T**>(`initialStateFactory`: function, `reducer`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
+▸ **createActionReducerAsyncIterable**<**TAction**, **T**>(`initialStateFactory`: function, `reducer`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹TAction, T›*
 
 **Type parameters:**
 
@@ -120,9 +74,53 @@ Name | Type |
 
 ___
 
-### `Const` createStateStore
+### `Const` createAsyncIteratorResource
 
-▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+▸ **createAsyncIteratorResource**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`operator` | ObservableOperatorLike‹TReq, T› | - |
+`scheduler` | SchedulerLike | - |
+`replayCount` | number | 0 |
+
+**Returns:** *[AsyncIteratorResourceLike](interfaces/asynciteratorresourcelike.md)‹TReq, T›*
+
+___
+
+### `Const` createPersistentStateAsyncIterable
+
+▸ **createPersistentStateAsyncIterable**<**T**>(`persistentStoreIterable`: [AsyncIterableLike](interfaces/asynciterablelike.md)‹T, T›, `initialState`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **persistentStoreIterable**: *[AsyncIterableLike](interfaces/asynciterablelike.md)‹T, T›*
+
+▪ **initialState**: *function*
+
+▸ (): *T*
+
+▪`Optional`  **equals**: *undefined | function*
+
+**Returns:** *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+
+___
+
+### `Const` createStateAsyncIterable
+
+▸ **createStateAsyncIterable**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncIterableLike](interfaces/asynciterablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
 **Type parameters:**
 

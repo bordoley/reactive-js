@@ -128,7 +128,3 @@ Name | Type |
 `...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
 
 **Returns:** *any*
-
-###  isDisposed
-
-• **isDisposed**:

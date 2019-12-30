@@ -15,5 +15,3 @@
 * MulticastObservableResourceLike‹T›
 
   ↳ **AsyncIteratorResourceLike**
-
-  ↳ [StateStoreResourceLike](statestoreresourcelike.md)
