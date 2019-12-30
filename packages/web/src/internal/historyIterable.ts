@@ -42,7 +42,7 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-export const historyIterable: AsyncIterableLike<LocationLike, LocationLike> = {
+const _historyIterable: AsyncIterableLike<LocationLike, LocationLike> = {
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
     return createAsyncIteratorResource(
       historyOperator,
@@ -51,3 +51,5 @@ export const historyIterable: AsyncIterableLike<LocationLike, LocationLike> = {
     );
   },
 };
+
+export const historyIterable: AsyncIterableLike<LocationLike, LocationLike> = _historyIterable;
