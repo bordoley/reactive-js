@@ -8,15 +8,11 @@ import {
   ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  StateUpdaterLike,
-  AsyncIterableLike,
-} from "./interfaces";
+import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
 import { createAsyncIteratorResource } from "./create";
 
 class PersistentStateAsyncIterable<T>
   implements AsyncIterableLike<StateUpdaterLike<T>, T> {
-    
   constructor(
     private readonly persistentStoreIterable: AsyncIterableLike<T, T>,
     private readonly initialState: () => T,
@@ -24,7 +20,9 @@ class PersistentStateAsyncIterable<T>
   ) {}
 
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    const persistentStore = this.persistentStoreIterable.getIXAsyncIterator(scheduler);
+    const persistentStore = this.persistentStoreIterable.getIXAsyncIterator(
+      scheduler,
+    );
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,
@@ -34,7 +32,7 @@ class PersistentStateAsyncIterable<T>
         onNext((v: T) => iter.dispatch((_: T): T => v)),
         ignoreElements(),
       );
-  
+
       const stateObs = pipe(
         obs,
         scan(
@@ -44,10 +42,10 @@ class PersistentStateAsyncIterable<T>
         distinctUntilChanged(this.equals),
         onNext((next: T) => persistentStore.dispatch(next)),
       );
-  
+
       return merge<T>(onPersistentStoreChangedStream, stateObs);
     };
-  
+
     const iter = createAsyncIteratorResource(operator, scheduler, replayCount);
     iter.add(persistentStore);
     return iter;
@@ -58,5 +56,9 @@ export const createPersistentStateAsyncIterable = <T>(
   persistentStoreIterable: AsyncIterableLike<T, T>,
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIterableLike<StateUpdaterLike<T>, T> => 
-  new PersistentStateAsyncIterable(persistentStoreIterable, initialState, equals);
+): AsyncIterableLike<StateUpdaterLike<T>, T> =>
+  new PersistentStateAsyncIterable(
+    persistentStoreIterable,
+    initialState,
+    equals,
+  );

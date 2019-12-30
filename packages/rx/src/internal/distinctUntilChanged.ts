@@ -19,8 +19,8 @@ class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
 
   next(data: T) {
     const shouldEmit =
-      !this.isDisposed && 
-      (!this.hasValue || !this.equals(this.prev as T, data))
+      !this.isDisposed &&
+      (!this.hasValue || !this.equals(this.prev as T, data));
 
     if (shouldEmit) {
       this.prev = data;

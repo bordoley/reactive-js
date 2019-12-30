@@ -42,7 +42,6 @@ const getCurrentLocation = (_?: unknown): LocationLike => {
 
 class HistoryIteratorResourceImpl
   implements AsyncIteratorResourceLike<LocationLike, LocationLike> {
-
   constructor(
     private readonly disposable: MulticastObservableResourceLike<LocationLike>,
   ) {}
@@ -88,7 +87,7 @@ const historyIterable = {
     );
     return new HistoryIteratorResourceImpl(observable);
   },
-}
+};
 
 export const locationAsyncIterable = createPersistentStateAsyncIterable(
   historyIterable,

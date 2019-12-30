@@ -79,7 +79,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
       // until a drain is scheduled. Hence there is no need to
       // copy the replayed notifications before publishing via notify.
       for (const next of this.replayed) {
-        observer.onNext(next);;
+        observer.onNext(next);
       }
 
       if (!this.isCompleted) {

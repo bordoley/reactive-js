@@ -28,7 +28,10 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStore: AsyncIteratorResourceLike<StateUpdaterLike<RelativeURILike>, RelativeURILike>
+  readonly locationStore: AsyncIteratorResourceLike<
+    StateUpdaterLike<RelativeURILike>,
+    RelativeURILike
+  >;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,

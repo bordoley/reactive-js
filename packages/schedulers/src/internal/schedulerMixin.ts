@@ -9,10 +9,7 @@ export interface SchedulerHost {
   readonly now: number;
   readonly shouldYield: (() => boolean) | undefined;
 
-  scheduleCallback(
-    callback: () => void,
-    delay?: number,
-  ): DisposableLike;
+  scheduleCallback(callback: () => void, delay?: number): DisposableLike;
 }
 
 function createCallback(
@@ -41,10 +38,14 @@ function createCallback(
 }
 
 export const schedulerMixin = {
-  schedule(this: SchedulerHost, continuation: SchedulerContinuationLike, delay = 0): DisposableLike {
+  schedule(
+    this: SchedulerHost,
+    continuation: SchedulerContinuationLike,
+    delay = 0,
+  ): DisposableLike {
     const disposable = createSerialDisposable();
     const callback = createCallback.call(this, continuation, disposable);
     disposable.inner = this.scheduleCallback(callback, delay);
     return disposable;
-  }
-}
+  },
+};
