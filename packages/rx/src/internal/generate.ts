@@ -82,6 +82,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
         acc = generator(acc);
       }
     }
+    subscriber.complete();
     return;
   }
 }

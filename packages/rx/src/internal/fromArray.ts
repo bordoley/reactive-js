@@ -95,6 +95,8 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
         subscriber.next(value);
       }
     }
+
+    subscriber.complete();
     return;
   }
 }

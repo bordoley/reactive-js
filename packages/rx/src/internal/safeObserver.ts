@@ -3,12 +3,14 @@ import {
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
+import { producerMixin } from "./producer";
 
 class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
   private readonly continuation = { continuation: this };
   private error: ErrorLike | undefined;
   private isCompleted = false;
   private readonly nextQueue: Array<T> = [];
+  run = producerMixin.run;
 
   constructor(private readonly subscriber: SubscriberLike<T>) {
     this.subscriber.add(() => {
@@ -22,29 +24,30 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     return this.nextQueue.length + (this.isCompleted ? 1 : 0);
   }
 
-  private loop(
-    shouldYield: () => boolean,
+  loop(
+    shouldYield?: () => boolean,
   ): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber;
     const nextQueue = this.nextQueue;
 
-    while (nextQueue.length > 0 && !subscriber.isDisposed) {
-      const next = nextQueue.shift() as T;
-      subscriber.next(next);
+    if (shouldYield !== undefined) {
+      while (nextQueue.length > 0 && !subscriber.isDisposed) {
+        const next = nextQueue.shift() as T;
+        subscriber.next(next);
 
-      if (shouldYield() && this.remainingEvents > 0) {
-        return this.continuation;
+        if (shouldYield() && this.remainingEvents > 0) {
+          return this.continuation;
+        }
+      }
+    } else {
+      while (nextQueue.length > 0 && !subscriber.isDisposed) {
+        const next = nextQueue.shift() as T;
+        subscriber.next(next);
       }
     }
-  }
 
-  private loopFast(): SchedulerContinuationResultLike | void {
-    const subscriber = this.subscriber;
-    const nextQueue = this.nextQueue;
-
-    while (nextQueue.length > 0 && !subscriber.isDisposed) {
-      const next = nextQueue.shift() as T;
-      subscriber.next(next);
+    if (this.isCompleted) {
+      this.subscriber.complete(this.error);
     }
   }
 
@@ -65,29 +68,6 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
 
     this.nextQueue.push(data);
     this.scheduleDrainQueue();
-  }
-
-  run(shouldYield?: () => boolean) {
-    try {
-      let result: SchedulerContinuationResultLike | void;
-      if (shouldYield !== undefined) {
-        result = this.loop(shouldYield);
-      } else {
-        result = this.loopFast();
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-    } catch (cause) {
-      this.isCompleted = true;
-      this.error = { cause };
-    }
-
-    if (this.isCompleted) {
-      this.subscriber.complete(this.error);
-    }
-    return;
   }
 
   private scheduleDrainQueue() {

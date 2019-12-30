@@ -136,6 +136,7 @@ class FromIteratorObservable<T>
       }
     }
 
+    subscriber.complete();
     return;
   }
 

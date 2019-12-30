@@ -64,6 +64,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
     }
 
     last.length = 0;
+    delegate.complete();
     return;
   }
 
