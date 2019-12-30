@@ -133,7 +133,9 @@ const _disposed: DisposableLike = {
     return _disposed;
   },
   isDisposed: true,
-  dispose() { return false; },
+  dispose() {
+    return false;
+  },
   remove(..._: DisposableOrTeardown[]) {
     return _disposed;
   },

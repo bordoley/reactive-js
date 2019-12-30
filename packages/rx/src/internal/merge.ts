@@ -10,7 +10,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   }
 
   complete(error?: ErrorLike) {
-    if(this.dispose()) {
+    if (this.dispose()) {
       const ctx = this.ctx;
       ctx.completedCount++;
 

@@ -24,9 +24,7 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     return this.nextQueue.length + (this.isCompleted ? 1 : 0);
   }
 
-  loop(
-    shouldYield?: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const subscriber = this.subscriber;
     const nextQueue = this.nextQueue;
 

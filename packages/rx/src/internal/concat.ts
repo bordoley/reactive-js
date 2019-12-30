@@ -19,13 +19,17 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
         const head = this.observables[nextIndex];
 
         if (head !== undefined) {
-          const concatSubscriber = new ConcatSubscriber(this.delegate, this.observables, nextIndex);
+          const concatSubscriber = new ConcatSubscriber(
+            this.delegate,
+            this.observables,
+            nextIndex,
+          );
           head.subscribe(concatSubscriber);
         } else {
           this.delegate.complete();
         }
       }
-    };
+    }
   }
 
   next(data: T) {
@@ -37,7 +41,11 @@ class ConcatObservable<T> implements ObservableLike<T> {
   constructor(private readonly observables: readonly ObservableLike<T>[]) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const concatSubscriber = new ConcatSubscriber(subscriber, this.observables, 0);
+    const concatSubscriber = new ConcatSubscriber(
+      subscriber,
+      this.observables,
+      0,
+    );
     this.observables[0].subscribe(concatSubscriber);
   }
 }

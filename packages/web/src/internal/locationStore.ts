@@ -3,11 +3,7 @@ import {
   createPersistentStateAsyncIterable,
   createAsyncIteratorResource,
 } from "@reactive-js/ix";
-import {
-  merge,
-  ObservableLike,
-  onNext,
-} from "@reactive-js/rx";
+import { merge, ObservableLike, onNext } from "@reactive-js/rx";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
 
@@ -48,14 +44,19 @@ const pushHistoryState = (newLocation: LocationLike) => {
   }
 };
 
-const historyOperator = (obs: ObservableLike<LocationLike>) => merge(
-  pipe(obs, onNext(pushHistoryState)),
-  fromEvent(window, "popstate", getCurrentLocation),
-);
-  
+const historyOperator = (obs: ObservableLike<LocationLike>) =>
+  merge(
+    pipe(obs, onNext(pushHistoryState)),
+    fromEvent(window, "popstate", getCurrentLocation),
+  );
+
 const historyIterable = {
   getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    const iter = createAsyncIteratorResource(historyOperator, scheduler, replayCount);
+    const iter = createAsyncIteratorResource(
+      historyOperator,
+      scheduler,
+      replayCount,
+    );
     iter.dispatch(getCurrentLocation());
     return iter;
   },

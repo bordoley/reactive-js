@@ -30,7 +30,7 @@ class GenerateWithDelayObservable<T>
   loop() {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const acc = this.acc;
-    if(!subscriber.isDisposed) {
+    if (!subscriber.isDisposed) {
       subscriber.next(acc);
       this.acc = this.generator(acc);
       return this.continuationResult;
