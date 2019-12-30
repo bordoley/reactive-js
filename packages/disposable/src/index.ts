@@ -158,9 +158,6 @@ export interface DelegatingDisposableLike {
 }
 
 export const disposableMixin = {
-  get isDisposed(this: DelegatingDisposableLike): boolean {
-    return this.disposable.isDisposed;
-  },
   add(
     this: DelegatingDisposableLike,
     disposable: DisposableOrTeardown,

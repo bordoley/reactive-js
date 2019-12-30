@@ -4,7 +4,7 @@ import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
   PrioritySchedulerResourceLike,
-  AbstractScheduler,
+  schedulerMixin,
 } from "@reactive-js/schedulers";
 
 let timeout = 500;
@@ -12,7 +12,7 @@ export const setSchedulerTimeout = (newTimeout: number) => {
   timeout = newTimeout;
 };
 
-class NodeScheduler extends AbstractScheduler {
+class NodeScheduler implements SchedulerLike {
   private readonly callCallbackAndDispose = (
     callback: () => void,
     disposable: DisposableLike,
@@ -49,11 +49,13 @@ class NodeScheduler extends AbstractScheduler {
     return this.now > this.startTime + timeout;
   };
 
-  protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     return delay > 0
       ? this.scheduleDelayed(callback, delay)
       : this.scheduleImmediate(callback);
   }
+
+  schedule = schedulerMixin.schedule;
 
   get now(): number {
     const hr = process.hrtime();

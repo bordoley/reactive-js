@@ -11,7 +11,4 @@ export {
 
 export { createSchedulerWithPriority } from "./internal/schedulerWithPriority";
 
-export {
-  AbstractScheduler,
-  AbstractSchedulerResource,
-} from "./internal/abstractScheduler";
+export { SchedulerHost, schedulerMixin } from "./internal/schedulerMixin";

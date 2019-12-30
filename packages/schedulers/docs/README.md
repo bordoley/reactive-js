@@ -4,15 +4,11 @@
 
 ## Index
 
-### Classes
-
-* [AbstractScheduler](classes/abstractscheduler.md)
-* [AbstractSchedulerResource](classes/abstractschedulerresource.md)
-
 ### Interfaces
 
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
+* [SchedulerHost](interfaces/schedulerhost.md)
 * [VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)
 
 ### Functions
@@ -20,6 +16,10 @@
 * [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [createVirtualTimeSchedulerResource](README.md#const-createvirtualtimeschedulerresource)
+
+### Object literals
+
+* [schedulerMixin](README.md#const-schedulermixin)
 
 ## Functions
 
@@ -63,3 +63,23 @@ Name | Type | Default |
 `maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER |
 
 **Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+
+## Object literals
+
+### `Const` schedulerMixin
+
+### ▪ **schedulerMixin**: *object*
+
+###  schedule
+
+▸ **schedule**(`this`: [SchedulerHost](interfaces/schedulerhost.md), `continuation`: SchedulerContinuationLike, `delay`: number): *DisposableLike*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`this` | [SchedulerHost](interfaces/schedulerhost.md) | - |
+`continuation` | SchedulerContinuationLike | - |
+`delay` | number | 0 |
+
+**Returns:** *DisposableLike*

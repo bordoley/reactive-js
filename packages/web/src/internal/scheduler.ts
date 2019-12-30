@@ -4,7 +4,7 @@ import {
   createPrioritySchedulerResource,
   createSchedulerWithPriority as createSchedulerWithPriorityImpl,
   PrioritySchedulerResourceLike,
-  AbstractScheduler,
+  schedulerMixin,
 } from "@reactive-js/schedulers";
 
 const performance = window.performance;
@@ -20,7 +20,7 @@ const now =
 const yieldInterval = 5;
 const maxYieldInterval = 300;
 
-class WebScheduler extends AbstractScheduler {
+class WebScheduler implements SchedulerLike {
   private readonly callCallbackAndDispose = (
     callback: () => void,
     disposable: DisposableLike,
@@ -55,7 +55,7 @@ class WebScheduler extends AbstractScheduler {
     return now();
   }
 
-  protected scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4
@@ -87,6 +87,8 @@ class WebScheduler extends AbstractScheduler {
     );
     return disposable;
   }
+
+  schedule = schedulerMixin.schedule;
 }
 
 let schedulerHost: SchedulerLike | undefined = undefined;
