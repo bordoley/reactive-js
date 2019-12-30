@@ -1,4 +1,4 @@
-import { createPersistentStateAsyncIterable, StateUpdaterLike, lift } from "@reactive-js/ix";
+import { toStateUpdaterAsyncIterable, StateUpdaterLike, lift } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -94,10 +94,8 @@ const emptyLocation = {
 };
 
 const locationIterable = pipe(
-  createPersistentStateAsyncIterable(
-    historyIterable,
-    () => emptyLocation,
-  ),
+  historyIterable,
+  toStateUpdaterAsyncIterable(() => emptyLocation),
   lift(onNext<LocationLike>(console.log))
 );
 

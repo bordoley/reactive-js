@@ -40,7 +40,7 @@ export const createActionReducerAsyncIterable = <TAction, T>(
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
   action(state);
-export const createStateAsyncIterable = <T>(
+export const createStateUpdaterAsyncIterable = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncIterableLike<StateUpdaterLike<T>, T> =>
