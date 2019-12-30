@@ -45,7 +45,7 @@ class FromIteratorWithDelayObservable<T>
     const doneError = this.doneError;
 
     if (this.count >= this.maxCount || subscriber.isDisposed) {
-      subscriber.complete()
+      subscriber.complete();
       return;
     }
 
@@ -54,7 +54,7 @@ class FromIteratorWithDelayObservable<T>
     if (done && doneError !== undefined) {
       throw doneError;
     } else if (done) {
-      subscriber.complete()
+      subscriber.complete();
       return;
     }
 
