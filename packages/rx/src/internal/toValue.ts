@@ -5,21 +5,17 @@ import { iterate } from "./iterate";
 import { observe } from "./observe";
 
 class ToValueObserver<T> implements ObserverLike<T> {
-  private _result: [T] | undefined = undefined;
+  private _result: T | undefined = undefined;
+  private hasResult = false;
   private error: ErrorLike | undefined = undefined;
 
-  onNext(x: T) {
-    const result = this._result;
-
-    if (result === undefined) {
-      this._result = [x];
-    } else {
-      result[0] = x;
-    }
+  onNext(next: T) {
+    this._result = next;
+    this.hasResult = true;
   }
 
-  onComplete(x?: ErrorLike) {
-    this.error = x;
+  onComplete(error?: ErrorLike) {
+    this.error = error;
   }
 
   get result(): T {
@@ -28,12 +24,10 @@ class ToValueObserver<T> implements ObserverLike<T> {
       throw cause;
     }
 
-    const result = this._result;
-
-    if (result === undefined) {
+    if (!this.hasResult) {
       throw new Error("Observable did not produce any values");
     }
-    return result[0];
+    return this._result as T;
   }
 }
 

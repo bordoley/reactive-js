@@ -14,7 +14,8 @@ const iteratorDone: IteratorReturnResult<any> = {
 };
 
 class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
-  private value: [T] | undefined = undefined;
+  private hasValue = false;
+  private value: T | undefined = undefined;
   private error: ErrorLike | undefined = undefined;
 
   constructor(
@@ -25,14 +26,9 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     scheduler.add(subscription);
   }
 
-  onNext(data: T) {
-    const value = this.value;
-
-    if (value === undefined) {
-      this.value = [data];
-    } else {
-      value[0] = data;
-    }
+  onNext(next: T) {
+    this.value = next;
+    this.hasValue = true;
   }
 
   onComplete(error?: ErrorLike) {
@@ -45,7 +41,7 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
     let done = false;
 
     do {
-      this.value = undefined;
+      this.value = undefined as T | undefined;
       done = this.scheduler.next().done || false;
 
       const error = this.error;
@@ -53,14 +49,13 @@ class ObservableIteratorImpl<T> implements Iterator<T>, ObserverLike<T> {
         const { cause } = error;
         throw cause;
       }
-    } while (this.value === undefined && !done);
+    } while (!this.hasValue && !done);
 
     if (done) {
       this.scheduler.dispose();
       return iteratorDone;
     } else {
-      const [value] = this.value || [];
-      return { done: false, value };
+      return { done: false, value: this.value as T };
     }
   }
 

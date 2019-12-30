@@ -26,7 +26,8 @@ export const enum ThrottleMode {
 class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-  private value: [T] | undefined = undefined;
+  private value: T | undefined = undefined;
+  private hasValue = false;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -39,16 +40,15 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   private notifyNext() {
-    const value = this.value;
-
-    if (value !== undefined) {
+    if (this.hasValue) {
+      const value = this.value as T;
       this.value = undefined;
-      const [next] = value;
+      this.hasValue = false;
 
-      this.setupDurationSubscription(next);
+      this.setupDurationSubscription(value);
 
       try {
-        this.delegate.next(next);
+        this.delegate.next(value);
       } catch (cause) {
         this.delegate.complete({ cause });
       }
@@ -76,13 +76,8 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
 
   next(data: T) {
     if (!this.isDisposed) {
-      const value = this.value;
-
-      if (value !== undefined) {
-        value[0] = data;
-      } else {
-        this.value = [data];
-      }
+      this.value = data;
+      this.hasValue = true;
 
       const durationSubscriptionDisposableIsDisposed = this.durationSubscription
         .inner.isDisposed;
