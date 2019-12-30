@@ -1,4 +1,4 @@
-import { StateUpdaterLike } from "@reactive-js/ix";
+import { createPersistentStateAsyncIterable, StateUpdaterLike } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -6,8 +6,8 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate, onNext } from "@reactive-js/rx";
-import { locationAsyncIterable, LocationLike } from "@reactive-js/web";
+import { generate, onNext, subscribe } from "@reactive-js/rx";
+import { historyIterable, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe } from "@reactive-js/pipe";
@@ -87,11 +87,22 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route3", StatefulComponent],
 ];
 
+const emptyLocation = {
+  fragment: "",
+  path: "",
+  query: "",
+};
+
+const locationAsyncIterable = createPersistentStateAsyncIterable(
+  historyIterable,
+  () => emptyLocation,
+);
+
 const locationStore = locationAsyncIterable.getIXAsyncIterator(
   normalPriority,
   1,
 );
-pipe(locationStore, onNext(console.log));
+pipe(locationStore, onNext(console.log), subscribe(normalPriority));
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
