@@ -1,5 +1,5 @@
 import { StateUpdaterLike } from "@reactive-js/ix";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { RelativeURILike, RoutableComponentProps } from "./router";
 
 const createURIStateUpdater = <TState>(
@@ -46,8 +46,8 @@ export const useRoutableState = <TState>(
     return parse(serialized);
   }, [query, fragment]);
 
-  const dispatch = useMemo(
-    () => (stateUpdater: StateUpdaterLike<TState>) => {
+  const dispatch = useCallback(
+    (stateUpdater: StateUpdaterLike<TState>) => {
       uriUpdater(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );

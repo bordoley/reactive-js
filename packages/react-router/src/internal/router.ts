@@ -1,4 +1,4 @@
-import { StateUpdaterLike, AsyncIteratorResourceLike } from "@reactive-js/ix";
+import { StateUpdaterLike, AsyncIteratorLike } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import { map, scan } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
@@ -28,7 +28,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationStore: AsyncIteratorResourceLike<
+  readonly locationStore: AsyncIteratorLike<
     StateUpdaterLike<RelativeURILike>,
     RelativeURILike
   >;
