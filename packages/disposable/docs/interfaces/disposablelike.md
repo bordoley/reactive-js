@@ -50,11 +50,11 @@ ___
 
 ###  dispose
 
-▸ **dispose**(): *void*
+▸ **dispose**(): *boolean*
 
 Dispose the resource, the operation should be idempotent.
 
-**Returns:** *void*
+**Returns:** *boolean*
 
 ___
 

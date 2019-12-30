@@ -8,24 +8,14 @@
 
 * [LocationLike](interfaces/locationlike.md)
 
-### Variables
-
-* [locationAsyncIterable](README.md#const-locationasynciterable)
-
 ### Functions
 
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [fromEvent](README.md#const-fromevent)
 
-## Variables
+### Object literals
 
-### `Const` locationAsyncIterable
-
-• **locationAsyncIterable**: *AsyncIterableLike‹StateUpdaterLike‹object›, object›* =  createPersistentStateAsyncIterable(
-  historyIterable,
-  () => emptyLocation,
-  locationEquals,
-)
+* [historyIterable](README.md#const-historyiterable)
 
 ## Functions
 
@@ -68,3 +58,22 @@ Name | Type |
 `ev` | Event |
 
 **Returns:** *ObservableLike‹T›*
+
+## Object literals
+
+### `Const` historyIterable
+
+### ▪ **historyIterable**: *object*
+
+###  getIXAsyncIterator
+
+▸ **getIXAsyncIterator**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncIteratorResourceLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
+
+**Returns:** *AsyncIteratorResourceLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›*

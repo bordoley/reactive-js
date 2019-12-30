@@ -105,7 +105,7 @@ Name | Type |
 
 ###  dispose
 
-▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)): *void*
+▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)): *boolean*
 
 **Parameters:**
 
@@ -113,7 +113,7 @@ Name | Type |
 ------ | ------ |
 `this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
 
-**Returns:** *void*
+**Returns:** *boolean*
 
 ###  remove
 
