@@ -71,8 +71,9 @@ const callbackAndDispose = (
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
 class PromiseTestScheduler implements SchedulerLike {
-  schedule = schedulerMixin.schedule;
-  shouldYield = (): boolean => false;
+  readonly schedule = schedulerMixin.schedule;
+  readonly shouldYield = (): boolean => false;
+
   get now(): number {
     return Date.now();
   }

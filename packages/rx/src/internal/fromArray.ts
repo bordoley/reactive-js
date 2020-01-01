@@ -14,15 +14,14 @@ import { disposableMixin, createDisposable } from "@reactive-js/disposable";
 
 class FromArrayWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
-  private subscriber: SubscriberLike<T> | undefined;
-  private index = this.startIndex;
-
-  run = producerMixin.run;
-
+  
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,
   };
+  private index = this.startIndex;
+  readonly run = producerMixin.run;
+  private subscriber: SubscriberLike<T> | undefined;
 
   constructor(
     private readonly values: readonly T[],
@@ -106,6 +105,7 @@ class FromArrayEnumerator<T> implements EnumeratorLike<T> {
   add = disposableMixin.add;
   dispose = disposableMixin.dispose;
   remove = disposableMixin.remove;
+
   constructor(private readonly values: readonly T[], private index: number) {}
 
   get isDisposed(): boolean {
@@ -140,7 +140,7 @@ class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
     private readonly startIndex: number,
   ) {}
 
-  getEnumerator(): EnumeratorLike<T> {
+  enumerate(): EnumeratorLike<T> {
     return new FromArrayEnumerator(this.values, this.startIndex);
   }
 

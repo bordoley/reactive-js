@@ -14,9 +14,11 @@ import { AsyncIteratorResourceLike } from "./interfaces";
 /** @ignore */
 export class AsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
+
+  readonly add = disposableMixin.add;
+  readonly dispose = disposableMixin.dispose;
+  readonly remove = disposableMixin.remove;
+
   constructor(
     readonly disposable: SubjectResourceLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,

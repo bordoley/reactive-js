@@ -19,9 +19,9 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
   };
   private index = 0;
   private readonly last: T[] = [];
+  readonly run = producerMixin.run;
   subscriber = this.delegate;
 
-  run = producerMixin.run;
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
     this.delegate.add(() => {

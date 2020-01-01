@@ -197,11 +197,11 @@ export interface SerialDisposableLike extends DisposableLike {
 
 class SerialDisposableImpl implements SerialDisposableLike {
   _inner: DisposableLike = disposed;
+  readonly add = disposableMixin.add;
   readonly disposable = createDisposable();
-
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
+  readonly dispose = disposableMixin.dispose;
+  readonly remove = disposableMixin.remove;
+  
   get inner() {
     return this._inner;
   }

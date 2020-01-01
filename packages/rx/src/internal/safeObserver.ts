@@ -10,7 +10,7 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
   private error: ErrorLike | undefined;
   private isCompleted = false;
   private readonly nextQueue: Array<T> = [];
-  run = producerMixin.run;
+  readonly run = producerMixin.run;
 
   constructor(private readonly subscriber: SubscriberLike<T>) {
     this.subscriber.add(() => {

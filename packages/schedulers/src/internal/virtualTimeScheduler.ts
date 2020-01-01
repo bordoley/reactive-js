@@ -44,17 +44,17 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 class VirtualTimeSchedulerResourceImpl
   implements VirtualTimeSchedulerResourceLike {
+
+  readonly add = disposableMixin.add;
   private readonly continuationResult = { continuation: this };
   readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   private microTaskTicks = 0;
   now = 0;
+  readonly remove = disposableMixin.remove;
   private runShouldYield?: () => boolean;
-  private taskIDCount = 0;
-  private readonly taskQueue: PriorityQueueLike<
-    VirtualTask
-  > = createPriorityQueue(comparator);
-
-  protected shouldYield: (() => boolean) | undefined = () => {
+  readonly schedule = schedulerMixin.schedule;
+  shouldYield: (() => boolean) | undefined = () => {
     const runShouldYield = this.runShouldYield;
     this.microTaskTicks++;
     return (
@@ -62,11 +62,12 @@ class VirtualTimeSchedulerResourceImpl
       (runShouldYield !== undefined && runShouldYield())
     );
   };
+  private taskIDCount = 0;
+  private readonly taskQueue: PriorityQueueLike<
+    VirtualTask
+  > = createPriorityQueue(comparator);
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
-  schedule = schedulerMixin.schedule;
+
   constructor(private readonly maxMicroTaskTicks: number) {}
 
   get isDisposed() {

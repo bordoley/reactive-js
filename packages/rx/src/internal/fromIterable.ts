@@ -165,13 +165,13 @@ export const fromIterator = <T>(
 };
 
 class FromIterableEnumerator<T> implements EnumeratorLike<T> {
+  readonly add = disposableMixin.add;
   current: any;
   readonly disposable = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   hasCurrent = false;
+  readonly remove = disposableMixin.remove;
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
   constructor(private readonly iterator: Iterator<T>) {}
 
   get isDisposed(): boolean {
@@ -197,7 +197,7 @@ class FromIterableObservable<T>
   implements ObservableLike<T>, EnumerableLike<T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
-  getEnumerator(): EnumeratorLike<T> {
+  enumerate(): EnumeratorLike<T> {
     return new FromIterableEnumerator(this.iterable[Symbol.iterator]());
   }
 
