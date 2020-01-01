@@ -52,9 +52,12 @@ class PrioritySchedulerResourceImpl
   private readonly queue: PriorityQueueLike<
     ScheduledTaskLike
   > = createPriorityQueue(comparator);
-  private taskIDCounter = 0;
+
+  readonly add = disposableMixin.add;
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
+  readonly dispose = disposableMixin.dispose;
+  readonly remove = disposableMixin.remove;
   private shouldYield = () => {
     const currentTaskIsDisposed =
       this.currentTask !== undefined && this.currentTask.disposable.isDisposed;
@@ -75,13 +78,8 @@ class PrioritySchedulerResourceImpl
       currentTaskIsDisposed || nextTaskIsHigherPriority || hostRequestedYield
     );
   };
+  private taskIDCounter = 0;
 
-  /** @ignore */
-  add = disposableMixin.add;
-  /** @ignore */
-  dispose = disposableMixin.dispose;
-  /** @ignore */
-  remove = disposableMixin.remove;
   constructor(private readonly hostScheduler: SchedulerLike) {}
 
   get isDisposed(): boolean {

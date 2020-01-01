@@ -13,10 +13,11 @@ import { ErrorLike, SubscriberLike } from "./interfaces";
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
   readonly disposable: DisposableLike = createDisposable();
+  
+  readonly add = disposableMixin.add;
   isDisposed = false;
+  readonly remove = disposableMixin.remove;
 
-  add = disposableMixin.add;
-  remove = disposableMixin.remove;
   constructor(private readonly scheduler: SchedulerLike) {}
 
   get now() {

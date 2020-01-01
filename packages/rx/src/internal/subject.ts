@@ -8,15 +8,15 @@ import {
 import { createSafeObserver } from "./safeObserver";
 
 class SubjectImpl<T> implements SubjectResourceLike<T> {
+  readonly add = disposableMixin.add;
   readonly disposable = createDisposable();
   private isCompleted = false;
+  readonly dispose = disposableMixin.dispose;
   private error?: ErrorLike;
   private readonly observers: Array<ObserverLike<T>> = [];
+  readonly remove = disposableMixin.remove;
   private readonly replayed: T[] = [];
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
   constructor(private readonly replayCount: number) {
     this.add(() => {
       this.observers.length = 0;

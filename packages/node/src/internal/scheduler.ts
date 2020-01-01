@@ -22,20 +22,23 @@ class NodeScheduler implements SchedulerLike {
     disposable.dispose();
   };
 
-  private startTime = this.now;
+  readonly schedule = schedulerMixin.schedule;
 
   protected readonly shouldYield = () => {
     return this.now > this.startTime + timeout;
   };
-  schedule = schedulerMixin.schedule;
-  private scheduleImmediate(callback: () => void): DisposableLike {
-    const disposable = createDisposable(() => clearImmediate(immediate));
-    const immediate = setImmediate(
-      this.callCallbackAndDispose,
-      callback,
-      disposable,
-    );
-    return disposable;
+
+  private startTime = this.now;
+
+  get now(): number {
+    const hr = process.hrtime();
+    return hr[0] * 1000 + hr[1] / 1e6;
+  }
+
+  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+    return delay > 0
+      ? this.scheduleDelayed(callback, delay)
+      : this.scheduleImmediate(callback);
   }
 
   private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
@@ -49,15 +52,14 @@ class NodeScheduler implements SchedulerLike {
     return disposable;
   }
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
-    return delay > 0
-      ? this.scheduleDelayed(callback, delay)
-      : this.scheduleImmediate(callback);
-  }
-
-  get now(): number {
-    const hr = process.hrtime();
-    return hr[0] * 1000 + hr[1] / 1e6;
+  private scheduleImmediate(callback: () => void): DisposableLike {
+    const disposable = createDisposable(() => clearImmediate(immediate));
+    const immediate = setImmediate(
+      this.callCallbackAndDispose,
+      callback,
+      disposable,
+    );
+    return disposable;
   }
 }
 

@@ -32,6 +32,8 @@ class WebScheduler implements SchedulerLike {
 
   private channel = new MessageChannel();
 
+  readonly schedule = schedulerMixin.schedule;
+
   protected readonly shouldYield =
     navigator !== undefined &&
     (navigator as any).scheduling !== undefined &&
@@ -51,7 +53,6 @@ class WebScheduler implements SchedulerLike {
 
   private startTime = this.now;
 
-  schedule = schedulerMixin.schedule;
   get now(): number {
     return now();
   }

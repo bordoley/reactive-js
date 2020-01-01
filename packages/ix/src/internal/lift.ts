@@ -16,9 +16,11 @@ import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
 class LiftedAsyncIteratorResourceImpl<TReq, T>
   implements AsyncIteratorResourceLike<TReq, T> {
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
+  
+  readonly add = disposableMixin.add;
+  readonly dispose = disposableMixin.dispose;
+  readonly remove = disposableMixin.remove;
+
   constructor(
     readonly dispatch: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,

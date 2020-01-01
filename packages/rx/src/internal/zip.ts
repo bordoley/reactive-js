@@ -116,13 +116,12 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
 
 class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
   readonly buffers: EnumeratorLike<unknown>[] = [];
-
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
   };
+  readonly run = producerMixin.run;
   private subscriber: SubscriberLike<T> | undefined;
 
-  run = producerMixin.run;
   constructor(
     private readonly observables: readonly ObservableLike<any>[],
     readonly selector: (...values: unknown[]) => T,
@@ -170,9 +169,9 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     for (let index = 0; index < count; index++) {
       const observable = observables[index];
 
-      if ((observable as any).getEnumerator !== undefined) {
+      if ((observable as any).enumerate !== undefined) {
         const enumerable = (observable as unknown) as EnumerableLike<T>;
-        const enumerator = enumerable.getEnumerator();
+        const enumerator = enumerable.enumerate();
 
         enumerator.moveNext();
         buffers.push(enumerator);

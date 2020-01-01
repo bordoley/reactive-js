@@ -96,5 +96,8 @@ export interface EnumeratorLike<T> extends DisposableLike {
 
 /** @ignore */
 export interface EnumerableLike<T> {
-  getEnumerator(): EnumeratorLike<T>;
+  enumerate(): EnumeratorLike<T>;
 }
+
+/** @ignore */
+export interface EnumerableObservableLike<T> extends EnumerableLike<T>, ObservableLike<T> {}

@@ -14,11 +14,12 @@ import { createDisposable, disposableMixin } from "@reactive-js/disposable";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
+
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,
   };
-  run = producerMixin.run;
+  readonly run = producerMixin.run;
   private subscriber: SubscriberLike<T> | undefined;
 
   constructor(
@@ -50,7 +51,8 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     continuation: this,
   };
 
-  run = producerMixin.run;
+  readonly run = producerMixin.run;
+
   constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
@@ -84,12 +86,12 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
 }
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
+  readonly add = disposableMixin.add;
   readonly disposable = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   hasCurrent = false;
+  readonly remove = disposableMixin.remove;
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
   constructor(private readonly generator: (acc: T) => T, public current: T) {}
 
   get isDisposed(): boolean {
@@ -112,7 +114,7 @@ class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
     private readonly acc: T,
   ) {}
 
-  getEnumerator(): EnumeratorLike<T> {
+  enumerate(): EnumeratorLike<T> {
     return new GenerateEnumerator(this.generator, this.acc);
   }
 
