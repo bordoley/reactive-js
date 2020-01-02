@@ -1,5 +1,5 @@
-import { StateUpdaterLike, AsyncIterableLike } from "@reactive-js/ix";
-import { useObservable, useAsyncIterable } from "@reactive-js/react";
+import { StateUpdaterLike, AsyncEnumerableLike } from "@reactive-js/ix";
+import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
 import { map, scan, never } from "@reactive-js/rx";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -28,7 +28,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationIterable: AsyncIterableLike<
+  readonly locationIterable: AsyncEnumerableLike<
     StateUpdaterLike<RelativeURILike>,
     RelativeURILike
   >;
@@ -43,7 +43,7 @@ export interface RouterProps {
 export const Router = function Router(props: RouterProps): ReactElement | null {
   const { locationIterable, notFound, routes, scheduler } = props;
 
-  const locationStore = useAsyncIterable(
+  const locationStore = useAsyncEnumerable(
     locationIterable,
     { replay: 1},
   );

@@ -9,11 +9,11 @@ import {
   ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncIteratorResourceLike } from "./interfaces";
+import { AsyncEnumeratorResourceLike } from "./interfaces";
 
 /** @ignore */
-export class AsyncIteratorResourceImpl<TReq, T>
-  implements AsyncIteratorResourceLike<TReq, T> {
+export class AsyncEnumeratorResourceImpl<TReq, T>
+  implements AsyncEnumeratorResourceLike<TReq, T> {
 
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
@@ -41,11 +41,11 @@ export class AsyncIteratorResourceImpl<TReq, T>
   }
 }
 
-export const createAsyncIteratorResource = <TReq, T>(
+export const createAsyncEnumeratorResource = <TReq, T>(
   operator: ObservableOperatorLike<TReq, T>,
   scheduler: SchedulerLike,
   replayCount = 0,
-): AsyncIteratorResourceLike<TReq, T> => {
+): AsyncEnumeratorResourceLike<TReq, T> => {
   const dispatcher = createSubject();
   const observable = pipe(
     dispatcher,
@@ -54,5 +54,5 @@ export const createAsyncIteratorResource = <TReq, T>(
   );
   dispatcher.add(observable);
 
-  return new AsyncIteratorResourceImpl(dispatcher, observable);
+  return new AsyncEnumeratorResourceImpl(dispatcher, observable);
 };

@@ -9,18 +9,18 @@ import {
   using,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./createAsyncIterator";
+import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
 
 const doneError = Symbol("IteratorDone");
 
 const identity = <T>(x: T) => x;
 
-const fromIterableAsyncIterator = <T>(
+const fromIterableAsyncEnumerator = <T>(
   iterable: Iterable<T>,
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncIteratorResourceLike<number | void, T> => {
+): AsyncEnumeratorResourceLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
   const makeIteratorObservable = (count: number) =>
     using(
@@ -35,19 +35,19 @@ const fromIterableAsyncIterator = <T>(
       catchError(error => (error === doneError ? empty() : undefined)),
     );
 
-  return createAsyncIteratorResource(operator, scheduler, replayCount);
+  return createAsyncEnumeratorResource(operator, scheduler, replayCount);
 };
 
-class FromIterableAsyncIterable<T>
-  implements AsyncIterableLike<number | void, T> {
+class FromIterableAsyncEnumerable<T>
+  implements AsyncEnumerableLike<number | void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    return fromIterableAsyncIterator(this.iterable, scheduler, replayCount);
+  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+    return fromIterableAsyncEnumerator(this.iterable, scheduler, replayCount);
   }
 }
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-): AsyncIterableLike<number | void, T> =>
-  new FromIterableAsyncIterable(iterable);
+): AsyncEnumerableLike<number | void, T> =>
+  new FromIterableAsyncEnumerable(iterable);
