@@ -91,7 +91,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class FromArrayObservable<T> implements EnumerableLike<T> {
+class FromArrayEnumerable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -110,17 +110,30 @@ class FromArrayObservable<T> implements EnumerableLike<T> {
   }
 }
 
-export const fromArray = <T>(
+export function fromArray <T>(
+  values: readonly T[],
+  options?: {
+    startIndex: number;
+  },
+): ObservableLike<T>;
+export function fromArray <T>(
+  values: readonly T[],
+  options: {
+    delay: number;
+    startIndex?: number;
+  },
+): EnumerableLike<T>;
+export function fromArray <T>(
   values: readonly T[],
   options: {
     delay?: number;
     startIndex?: number;
   } = {},
-): ObservableLike<T> => {
+): ObservableLike<T> {
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
   return delay > 0
     ? defer(() => new FromArrayWithDelayObservable(values, delay, startIndex))
-    : new FromArrayObservable(values, startIndex);
+    : new FromArrayEnumerable(values, startIndex);
 };
