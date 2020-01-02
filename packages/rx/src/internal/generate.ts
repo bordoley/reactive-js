@@ -94,13 +94,23 @@ class GenerateObservable<T> implements EnumerableLike<T> {
   }
 }
 
-export const generate = <T>(
+export function generate<T>(
+  generator: (acc: T) => T,
+  initialValue: () => T,
+): EnumerableLike<T>;
+export function generate<T>(
+  generator: (acc: T) => T,
+  initialValue: () => T,
+  delay: number,
+): ObservableLike<T>;
+export function generate<T>(
   generator: (acc: T) => T,
   initialValue: () => T,
   delay = 0,
-): ObservableLike<T> =>
-  delay > 0
+): ObservableLike<T> {
+  return delay > 0
     ? defer(
         () => new GenerateWithDelayObservable(generator, initialValue(), delay),
       )
     : new GenerateObservable(generator, initialValue());
+}
