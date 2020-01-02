@@ -1,30 +1,45 @@
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { defer } from "./defer";
+import { enumerableMixin } from "./enumerable";
 
-class OfValueObservable<T>
-  implements ObservableLike<T>, SchedulerContinuationLike {
-  private subscriber: SubscriberLike<T> | undefined;
+class OfValueProducer<T> implements SchedulerContinuationLike {
+  constructor(
+    private readonly value: T,
+    private readonly subscriber: SubscriberLike<T>,
+  ) {}
+
+  run(_?: () => boolean): SchedulerContinuationResultLike | void {
+    this.subscriber.next(this.value);
+    this.subscriber.complete();
+  }
+}
+
+class OfValueEnumerable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
 
   constructor(
     private readonly value: T,
-    private readonly delay: number,
-) {}
-
-  run(_?: () => boolean): SchedulerContinuationResultLike | void {
-    const subscriber = (this.subscriber as SubscriberLike<T>);
-    subscriber.next(this.value);
-    subscriber.complete();
+  ) {}
+  
+  subscribe(subscriber: SubscriberLike<T>) {
+    subscriber.schedule(new OfValueProducer(this.value, subscriber));
   }
+}
+
+class OfValueObservable<T> implements ObservableLike<T> {
+  constructor(
+    private readonly value: T,
+    private readonly delay: number,
+  ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this, this.delay);
+    subscriber.schedule(new OfValueProducer(this.value, subscriber), this.delay);
   }
 }
 
 export const ofValue = <T>(value: T, delay = 0): ObservableLike<T> =>
-   defer(() => new OfValueObservable(value, delay));
+  delay > 0 ? new OfValueObservable(value, delay) : new OfValueEnumerable(value);
