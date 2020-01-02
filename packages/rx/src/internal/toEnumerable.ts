@@ -4,11 +4,18 @@ import {
   createVirtualTimeSchedulerResource,
   VirtualTimeSchedulerResourceLike,
 } from "@reactive-js/schedulers";
-import { ObservableLike, ErrorLike, EnumerableLike, EnumeratorLike, SubscriberLike } from "./interfaces";
+import {
+  ObservableLike,
+  ErrorLike,
+  EnumerableLike,
+  EnumeratorLike,
+  SubscriberLike,
+} from "./interfaces";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
-class VirtualTimeObservableEnumerator<T> implements EnumeratorLike<T>, SubscriberLike<T> {
+class VirtualTimeObservableEnumerator<T>
+  implements EnumeratorLike<T>, SubscriberLike<T> {
   add = disposableMixin.add;
   current: any = undefined;
   readonly disposable: VirtualTimeSchedulerResourceLike;
@@ -44,13 +51,13 @@ class VirtualTimeObservableEnumerator<T> implements EnumeratorLike<T>, Subscribe
     this.current = undefined;
 
     let done = false;
-    while(!this.hasCurrent) {
+    while (!this.hasCurrent) {
       if (this.isDisposed) {
         return false;
       }
 
       done = this.disposable.next().done || false;
-      
+
       const error = this.error;
       if (error !== undefined) {
         const { cause } = error;
@@ -70,10 +77,7 @@ class VirtualTimeObservableEnumerator<T> implements EnumeratorLike<T>, Subscribe
     continuation: SchedulerContinuationLike,
     delay?: number,
   ): DisposableLike {
-    const schedulerSubscription = this.disposable.schedule(
-      continuation,
-      delay,
-    );
+    const schedulerSubscription = this.disposable.schedule(continuation, delay);
     this.add(schedulerSubscription);
     return schedulerSubscription;
   }
@@ -82,9 +86,7 @@ class VirtualTimeObservableEnumerator<T> implements EnumeratorLike<T>, Subscribe
 class EnumerableObservable<T> implements EnumerableLike<T> {
   [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
-  constructor(
-    private readonly observable: ObservableLike<T>,
-  ) {}
+  constructor(private readonly observable: ObservableLike<T>) {}
 
   enumerate() {
     const subscriber = new VirtualTimeObservableEnumerator<T>();
@@ -92,12 +94,15 @@ class EnumerableObservable<T> implements EnumerableLike<T> {
     return subscriber;
   }
 
-  subscribe(subscriber: SubscriberLike<T>){
+  subscribe(subscriber: SubscriberLike<T>) {
     this.observable.subscribe(subscriber);
   }
 }
 
-export const toEnumerable = <T>(): OperatorLike<ObservableLike<T>, EnumerableLike<T>> => observable =>
+export const toEnumerable = <T>(): OperatorLike<
+  ObservableLike<T>,
+  EnumerableLike<T>
+> => observable =>
   isEnumerable(observable)
-    ? observable as EnumerableLike<T>
+    ? (observable as EnumerableLike<T>)
     : new EnumerableObservable(observable);

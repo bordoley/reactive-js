@@ -47,7 +47,7 @@ const operator = <T>(
  */
 export function observe<T>(
   observer: ObserverLike<T>,
-): ObservableOperatorLike<T, T> { 
+): ObservableOperatorLike<T, T> {
   return liftEnumerable(operator(observer));
 }
 

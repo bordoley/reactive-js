@@ -43,10 +43,7 @@ export interface RouterProps {
 export const Router = function Router(props: RouterProps): ReactElement | null {
   const { locationIterable, notFound, routes, scheduler } = props;
 
-  const locationStore = useAsyncEnumerable(
-    locationIterable,
-    { replay: 1},
-  );
+  const locationStore = useAsyncEnumerable(locationIterable, { replay: 1 });
 
   const observable = useMemo(() => {
     if (locationStore.isDisposed) {

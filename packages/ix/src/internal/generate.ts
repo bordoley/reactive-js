@@ -39,7 +39,8 @@ const generateAsyncEnumerator = <T>(
   return createAsyncEnumeratorResource(operator, scheduler, replayCount);
 };
 
-class GenerateAsyncEnumerable<T> implements AsyncEnumerableLike<number | void, T> {
+class GenerateAsyncEnumerable<T>
+  implements AsyncEnumerableLike<number | void, T> {
   constructor(
     private readonly generator: (acc: T) => T,
     private readonly initialValue: () => T,

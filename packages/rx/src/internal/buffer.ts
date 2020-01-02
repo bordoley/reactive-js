@@ -88,19 +88,21 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, readonly T[]> => subscriber =>
   new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
 
-export function buffer<T>(options: {
-  duration?: ((next: T) => ObservableLike<unknown>) | number,
-  maxBufferSize?: number,
-} = {}): ObservableOperatorLike<T, readonly T[]> {
+export function buffer<T>(
+  options: {
+    duration?: ((next: T) => ObservableLike<unknown>) | number;
+    maxBufferSize?: number;
+  } = {},
+): ObservableOperatorLike<T, readonly T[]> {
   const duration = options.duration || Number.MAX_SAFE_INTEGER;
   const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
 
   return duration === Number.MAX_SAFE_INTEGER
     ? liftEnumerable(operator(never, maxBufferSize))
     : liftObservable(
-      operator(
-        typeof duration === "number" ? (_: T) => empty(duration) : duration,
-        maxBufferSize,
-      ),
-    );
+        operator(
+          typeof duration === "number" ? (_: T) => empty(duration) : duration,
+          maxBufferSize,
+        ),
+      );
 }

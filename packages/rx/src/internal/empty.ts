@@ -17,7 +17,7 @@ class EmptyProducer<T> implements SchedulerContinuationLike {
 class EmptyEnumerable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
-  
+
   subscribe(subscriber: SubscriberLike<T>) {
     subscriber.schedule(new EmptyProducer(subscriber));
   }
@@ -29,7 +29,7 @@ class EmptyObservable<T> implements ObservableLike<T> {
   constructor(private readonly delay: number) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    subscriber.schedule(new EmptyProducer(subscriber),  this.delay);
+    subscriber.schedule(new EmptyProducer(subscriber), this.delay);
   }
 }
 

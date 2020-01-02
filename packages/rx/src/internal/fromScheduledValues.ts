@@ -8,11 +8,10 @@ import { producerMixin } from "./producer";
 
 class FromScheduledValuesObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
-  
   private index = 0;
   readonly run = producerMixin.run;
   private subscriber: SubscriberLike<T> | undefined;
- 
+
   constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {

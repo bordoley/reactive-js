@@ -5,7 +5,8 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
-export interface AsyncEnumeratorLike<TReq, T> extends MulticastObservableLike<T> {
+export interface AsyncEnumeratorLike<TReq, T>
+  extends MulticastObservableLike<T> {
   dispatch(request: TReq): void;
 }
 

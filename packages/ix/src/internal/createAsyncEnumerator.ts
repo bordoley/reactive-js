@@ -14,7 +14,6 @@ import { AsyncEnumeratorResourceLike } from "./interfaces";
 /** @ignore */
 export class AsyncEnumeratorResourceImpl<TReq, T>
   implements AsyncEnumeratorResourceLike<TReq, T> {
-
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
   readonly remove = disposableMixin.remove;

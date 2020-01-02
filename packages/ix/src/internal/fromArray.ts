@@ -44,7 +44,8 @@ const fromArrayAsyncEnumerator = <T>(
   return createAsyncEnumeratorResource(operator, scheduler, replayCount);
 };
 
-class FromArrayAsyncEnumerable<T> implements AsyncEnumerableLike<number | void, T> {
+class FromArrayAsyncEnumerable<T>
+  implements AsyncEnumerableLike<number | void, T> {
   constructor(private readonly values: readonly T[]) {}
 
   getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
@@ -54,4 +55,5 @@ class FromArrayAsyncEnumerable<T> implements AsyncEnumerableLike<number | void, 
 
 export const fromArray = <T>(
   values: readonly T[],
-): AsyncEnumerableLike<number | void, T> => new FromArrayAsyncEnumerable(values);
+): AsyncEnumerableLike<number | void, T> =>
+  new FromArrayAsyncEnumerable(values);

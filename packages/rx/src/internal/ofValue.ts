@@ -21,25 +21,25 @@ class OfValueEnumerable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(
-    private readonly value: T,
-  ) {}
-  
+  constructor(private readonly value: T) {}
+
   subscribe(subscriber: SubscriberLike<T>) {
     subscriber.schedule(new OfValueProducer(this.value, subscriber));
   }
 }
 
 class OfValueObservable<T> implements ObservableLike<T> {
-  constructor(
-    private readonly value: T,
-    private readonly delay: number,
-  ) {}
+  constructor(private readonly value: T, private readonly delay: number) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    subscriber.schedule(new OfValueProducer(this.value, subscriber), this.delay);
+    subscriber.schedule(
+      new OfValueProducer(this.value, subscriber),
+      this.delay,
+    );
   }
 }
 
 export const ofValue = <T>(value: T, delay = 0): ObservableLike<T> =>
-  delay > 0 ? new OfValueObservable(value, delay) : new OfValueEnumerable(value);
+  delay > 0
+    ? new OfValueObservable(value, delay)
+    : new OfValueEnumerable(value);
