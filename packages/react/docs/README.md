@@ -6,15 +6,15 @@
 
 ### Functions
 
-* [useAsyncIterable](README.md#const-useasynciterable)
-* [useAsyncIterator](README.md#const-useasynciterator)
+* [useAsyncEnumerable](README.md#const-useasyncenumerable)
+* [useAsyncEnumerator](README.md#const-useasyncenumerator)
 * [useObservable](README.md#const-useobservable)
 
 ## Functions
 
-### `Const` useAsyncIterable
+### `Const` useAsyncEnumerable
 
-▸ **useAsyncIterable**<**TReq**, **T**>(`iterable`: AsyncIterableLike‹TReq, T›, `config`: object): *AsyncIteratorResourceLike‹TReq, T›*
+▸ **useAsyncEnumerable**<**TReq**, **T**>(`iterable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *AsyncEnumeratorResourceLike‹TReq, T›*
 
 **Type parameters:**
 
@@ -26,16 +26,16 @@
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`iterable` | AsyncIterableLike‹TReq, T› | - |
+`iterable` | AsyncEnumerableLike‹TReq, T› | - |
 `config` | object |  {} |
 
-**Returns:** *AsyncIteratorResourceLike‹TReq, T›*
+**Returns:** *AsyncEnumeratorResourceLike‹TReq, T›*
 
 ___
 
-### `Const` useAsyncIterator
+### `Const` useAsyncEnumerator
 
-▸ **useAsyncIterator**<**TReq**, **T**>(`iterator`: AsyncIteratorLike‹TReq, T›, `scheduler?`: SchedulerLike): *[T | undefined, function]*
+▸ **useAsyncEnumerator**<**TReq**, **T**>(`iterator`: AsyncEnumeratorLike‹TReq, T›, `scheduler?`: SchedulerLike): *[T | undefined, function]*
 
 **Type parameters:**
 
@@ -47,7 +47,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`iterator` | AsyncIteratorLike‹TReq, T› |
+`iterator` | AsyncEnumeratorLike‹TReq, T› |
 `scheduler?` | SchedulerLike |
 
 **Returns:** *[T | undefined, function]*
