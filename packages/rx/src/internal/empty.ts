@@ -1,27 +1,37 @@
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { defer } from "./defer";
+import { enumerableMixin } from "./enumerable";
 
-class EmptyObservable<T>
-  implements ObservableLike<T>, SchedulerContinuationLike {
-  private subscriber: SubscriberLike<T> | undefined;
-
-  constructor(private readonly delay: number) {}
+class EmptyProducer<T> implements SchedulerContinuationLike {
+  constructor(private readonly subscriber: SubscriberLike<T>) {}
 
   run(_?: () => boolean): SchedulerContinuationResultLike | void {
-    (this.subscriber as SubscriberLike<T>).complete();
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this, this.delay);
+    this.subscriber.complete();
   }
 }
 
-const defaultEmpty = defer(() => new EmptyObservable(0));
+class EmptyEnumerable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+  
+  subscribe(subscriber: SubscriberLike<T>) {
+    subscriber.schedule(new EmptyProducer(subscriber));
+  }
+}
+
+const defaultEmpty = new EmptyEnumerable();
+
+class EmptyObservable<T> implements ObservableLike<T> {
+  constructor(private readonly delay: number) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    subscriber.schedule(new EmptyProducer(subscriber),  this.delay);
+  }
+}
 
 export const empty = <T>(delay = 0): ObservableLike<T> =>
   delay > 0 ? defer(() => new EmptyObservable(delay)) : defaultEmpty;
