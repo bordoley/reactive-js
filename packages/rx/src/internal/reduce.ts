@@ -43,4 +43,5 @@ const operator = <T, TAcc>(
 export const reduce = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => liftEnumerable(operator(reducer, initialValue));
+): ObservableOperatorLike<T, TAcc> =>
+  liftEnumerable(operator(reducer, initialValue));

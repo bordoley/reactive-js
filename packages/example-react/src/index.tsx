@@ -1,4 +1,8 @@
-import { toStateUpdaterAsyncEnumerable, StateUpdaterLike, lift } from "@reactive-js/ix";
+import {
+  toStateUpdaterAsyncEnumerable,
+  StateUpdaterLike,
+  lift,
+} from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -96,7 +100,7 @@ const emptyLocation = {
 const locationIterable = pipe(
   historyAsyncEnumerable,
   toStateUpdaterAsyncEnumerable(() => emptyLocation),
-  lift(onNext<LocationLike>(console.log))
+  lift(onNext<LocationLike>(console.log)),
 );
 
 (ReactDOM as any)

@@ -1,5 +1,8 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumerableLike, createAsyncEnumeratorResource } from "@reactive-js/ix";
+import {
+  AsyncEnumerableLike,
+  createAsyncEnumeratorResource,
+} from "@reactive-js/ix";
 import { merge, ObservableLike, onNext, ofValue } from "@reactive-js/rx";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
@@ -52,4 +55,7 @@ const _historyIterable: AsyncEnumerableLike<LocationLike, LocationLike> = {
   },
 };
 
-export const historyAsyncEnumerable: AsyncEnumerableLike<LocationLike, LocationLike> = _historyIterable;
+export const historyAsyncEnumerable: AsyncEnumerableLike<
+  LocationLike,
+  LocationLike
+> = _historyIterable;

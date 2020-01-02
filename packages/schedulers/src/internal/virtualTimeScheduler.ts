@@ -44,7 +44,6 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 class VirtualTimeSchedulerResourceImpl
   implements VirtualTimeSchedulerResourceLike {
-
   readonly add = disposableMixin.add;
   private readonly continuationResult = { continuation: this };
   readonly disposable: DisposableLike = createDisposable();
@@ -66,7 +65,6 @@ class VirtualTimeSchedulerResourceImpl
   private readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
-
 
   constructor(private readonly maxMicroTaskTicks: number) {}
 

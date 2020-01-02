@@ -1,4 +1,9 @@
-import { AsyncEnumeratorLike, AsyncEnumerableLike, disposedAsyncEnumeratorResource, AsyncEnumeratorResourceLike } from "@reactive-js/ix";
+import {
+  AsyncEnumeratorLike,
+  AsyncEnumerableLike,
+  disposedAsyncEnumeratorResource,
+  AsyncEnumeratorResourceLike,
+} from "@reactive-js/ix";
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
@@ -95,17 +100,17 @@ const useResource = <T extends DisposableLike>(
 
     return () => {
       resource.dispose();
-    }
+    };
   }, [factory, updateResource]);
 
   return resource;
-}
+};
 
 export const useAsyncEnumerable = <TReq, T>(
   iterable: AsyncEnumerableLike<TReq, T>,
   config: {
-    scheduler?: SchedulerLike,
-    replay?: number,
+    scheduler?: SchedulerLike;
+    replay?: number;
   } = {},
 ): AsyncEnumeratorResourceLike<TReq, T> => {
   const scheduler = config.scheduler || normalPriority;
@@ -120,4 +125,4 @@ export const useAsyncEnumerable = <TReq, T>(
     factory,
     disposedAsyncEnumeratorResource,
   );
-}
+};

@@ -32,4 +32,5 @@ const operator = <T, TAcc>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => liftEnumerable(operator(scanner, initialValue));
+): ObservableOperatorLike<T, TAcc> =>
+  liftEnumerable(operator(scanner, initialValue));

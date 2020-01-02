@@ -21,7 +21,7 @@ class PublishObservable<T> implements MulticastObservableResourceLike<T> {
   get isDisposed() {
     return this.disposable.isDisposed;
   }
-  
+
   get subscriberCount() {
     return this.disposable.subscriberCount;
   }

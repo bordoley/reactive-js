@@ -98,7 +98,8 @@ const operator = <T>(
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): ObservableOperatorLike<ObservableLike<T>, T> => liftObservable(operator(options));
+}): ObservableOperatorLike<ObservableLike<T>, T> =>
+  liftObservable(operator(options));
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,

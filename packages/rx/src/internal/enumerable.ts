@@ -6,23 +6,27 @@ import {
   ObservableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
-import { DisposableLike, createDisposable, disposableMixin } from "@reactive-js/disposable";
+import {
+  DisposableLike,
+  createDisposable,
+  disposableMixin,
+} from "@reactive-js/disposable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };
 
 class EnumeratorIterator<T> implements Iterator<T> {
   constructor(private readonly enumerator: EnumeratorLike<T>) {}
- 
+
   next<T>(): IteratorResult<T> {
-    return this.enumerator.moveNext() 
+    return this.enumerator.moveNext()
       ? { done: false, value: this.enumerator.current }
       : done;
-  };
+  }
 
   return<T>(value?: any): IteratorResult<T> {
     this.enumerator.dispose();
     return value !== undefined ? { done: true, value } : done;
-  };
+  }
 
   throw<T>(error?: unknown): IteratorResult<T> {
     this.enumerator.dispose();
@@ -65,12 +69,14 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
     this.current = undefined;
     this.error = undefined;
 
-    while(!this.hasCurrent) {
+    while (!this.hasCurrent) {
       if (this.isDisposed || this.continuation === undefined) {
         return false;
       }
 
-      this.continuation = (this.continuation.run(alwaysTrue) || {}).continuation;
+      this.continuation = (
+        this.continuation.run(alwaysTrue) || {}
+      ).continuation;
 
       const error = this.error;
       if (error !== undefined) {
@@ -93,7 +99,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   ): DisposableLike {
     if (!this.isDisposed) {
       this.continuation = continuation;
-    } 
+    }
     return this;
   }
 }
@@ -109,8 +115,8 @@ export const enumerableMixin = {
     this.subscribe(subscriber);
     return subscriber;
   },
-}
+};
 
 /** @ignore */
-export const isEnumerable = <T>(obs: ObservableLike<T>) => 
+export const isEnumerable = <T>(obs: ObservableLike<T>) =>
   (obs as any).enumerate !== undefined;

@@ -1,9 +1,5 @@
 import { defer } from "./defer";
-import {
-  EnumerableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
+import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
@@ -13,7 +9,6 @@ import { enumerableMixin } from "./enumerable";
 
 class FromArrayWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
-  
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,
@@ -99,7 +94,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
 class FromArrayObservable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
-  
+
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,

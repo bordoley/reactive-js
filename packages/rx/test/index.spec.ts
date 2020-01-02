@@ -104,7 +104,7 @@ test("buffer", () => {
       [1, 3],
       [1, 4],
     ),
-    buffer({duration: 4, maxBufferSize: 3}),
+    buffer({ duration: 4, maxBufferSize: 3 }),
     toArray(),
   );
 
@@ -1199,7 +1199,10 @@ describe("zip", () => {
       zip(
         [
           fromArray([1, 2]),
-          pipe(fromArray([1, 2]), map(x => x + 1)),
+          pipe(
+            fromArray([1, 2]),
+            map(x => x + 1),
+          ),
           generate(
             x => x + 1,
             () => 3,

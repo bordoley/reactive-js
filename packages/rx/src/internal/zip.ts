@@ -128,7 +128,11 @@ class ZipObservable<T> implements ObservableLike<T> {
         enumerator.moveNext();
         enumerators.push(enumerator);
       } else {
-        const innerSubscriber = new ZipSubscriber(subscriber, enumerators, this.selector);
+        const innerSubscriber = new ZipSubscriber(
+          subscriber,
+          enumerators,
+          this.selector,
+        );
 
         observable.subscribe(innerSubscriber);
         enumerators.push(innerSubscriber);
@@ -188,7 +192,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
 class ZipEnumerable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
-  
+
   constructor(
     private readonly enumerables: readonly EnumerableLike<any>[],
     readonly selector: (...values: unknown[]) => T,
@@ -197,14 +201,16 @@ class ZipEnumerable<T> implements EnumerableLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     const enumerables = this.enumerables;
     const enumerators = [];
-  
-      for (const enumerable of enumerables) {
-        const enumerator = enumerable.enumerate();
-        enumerator.moveNext();
-        enumerators.push(enumerator);
-      }
 
-    subscriber.schedule(new ZipProducer(subscriber, enumerators, this.selector));
+    for (const enumerable of enumerables) {
+      const enumerator = enumerable.enumerate();
+      enumerator.moveNext();
+      enumerators.push(enumerator);
+    }
+
+    subscriber.schedule(
+      new ZipProducer(subscriber, enumerators, this.selector),
+    );
   }
 }
 

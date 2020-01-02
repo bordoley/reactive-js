@@ -3,17 +3,12 @@ import {
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { defer } from "./defer";
-import {
-  EnumerableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
+import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
-
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,

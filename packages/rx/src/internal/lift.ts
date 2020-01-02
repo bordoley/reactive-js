@@ -95,7 +95,8 @@ export function liftObservable(
   };
 }
 
-class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut> implements EnumerableLike<TOut> {
+class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
+  implements EnumerableLike<TOut> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 }
@@ -155,7 +156,7 @@ export function liftEnumerable<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
 export function liftEnumerable(
   ...operators: SubscriberOperatorLike<unknown, unknown>[]
 ): ObservableOperatorLike<unknown, unknown> {
-  return source => {    
+  return source => {
     const sourceSource =
       source instanceof LiftedObservable ? source.source : source;
 
@@ -163,9 +164,9 @@ export function liftEnumerable(
       source instanceof LiftedObservable
         ? [...source.operators, ...operators]
         : operators;
-        
+
     return isEnumerable(source)
       ? new LiftedEnumerable(sourceSource, allOperators)
       : new LiftedObservable(sourceSource, allOperators);
   };
-};
+}

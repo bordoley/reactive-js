@@ -1,5 +1,5 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
-import { liftEnumerable} from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>
