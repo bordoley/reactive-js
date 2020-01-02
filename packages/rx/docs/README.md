@@ -14,6 +14,8 @@
 
 ### Interfaces
 
+* [EnumerableLike](interfaces/enumerablelike.md)
+* [EnumeratorLike](interfaces/enumeratorlike.md)
 * [ErrorLike](interfaces/errorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)
@@ -435,7 +437,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: EnumerableLike‹T›, `snd`: EnumerableLike‹T›, ...`tail`: Array‹EnumerableLike‹T››): *EnumerableLike‹T›*
+▸ **concat**<**T**>(`fst`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, `snd`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, ...`tail`: Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T››): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -445,11 +447,11 @@ ___
 
 Name | Type |
 ------ | ------ |
-`fst` | EnumerableLike‹T› |
-`snd` | EnumerableLike‹T› |
-`...tail` | Array‹EnumerableLike‹T›› |
+`fst` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
+`snd` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
+`...tail` | Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T›› |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -576,13 +578,13 @@ ___
 
 ###  empty
 
-▸ **empty**<**T**>(): *EnumerableLike‹T›*
+▸ **empty**<**T**>(): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **empty**<**T**>(`delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -633,19 +635,19 @@ ___
 
 ### `Const` flatten
 
-▸ **flatten**<**T**>(): *OperatorLike‹EnumerableLike‹EnumerableLike‹T››, EnumerableLike‹T››*
+▸ **flatten**<**T**>(): *OperatorLike‹[EnumerableLike](interfaces/enumerablelike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T››, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹EnumerableLike‹EnumerableLike‹T››, EnumerableLike‹T››*
+**Returns:** *OperatorLike‹[EnumerableLike](interfaces/enumerablelike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T››, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
 
 ___
 
 ###  fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *EnumerableLike‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -658,7 +660,7 @@ Name | Type |
 `values` | keyof T[] |
 `options?` | undefined &#124; object |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -679,7 +681,7 @@ ___
 
 ###  fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *EnumerableLike‹T›*
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -691,7 +693,7 @@ Name | Type |
 ------ | ------ |
 `iterable` | Iterable‹T› |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -769,7 +771,7 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *EnumerableLike‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -791,7 +793,7 @@ Name | Type |
 
 ▸ (): *T*
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1359,13 +1361,13 @@ ___
 
 ### `Const` never
 
-▸ **never**<**T**>(): *EnumerableLike‹T›*
+▸ **never**<**T**>(): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ___
 
@@ -1391,7 +1393,7 @@ ___
 
 ###  ofValue
 
-▸ **ofValue**<**T**>(`value`: T): *EnumerableLike‹T›*
+▸ **ofValue**<**T**>(`value`: T): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -1403,7 +1405,7 @@ Name | Type |
 ------ | ------ |
 `value` | T |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1868,13 +1870,13 @@ ___
 
 ### `Const` toEnumerable
 
-▸ **toEnumerable**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, EnumerableLike‹T››*
+▸ **toEnumerable**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, EnumerableLike‹T››*
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
 
 ___
 
@@ -2410,7 +2412,7 @@ Name | Type |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2422,7 +2424,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›]*
 
 ▪ **selector**: *function*
 
@@ -2435,9 +2437,9 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2451,7 +2453,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›]*
 
 ▪ **selector**: *function*
 
@@ -2465,9 +2467,9 @@ Name | Type |
 `b` | TB |
 `c` | TC |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2483,7 +2485,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›]*
 
 ▪ **selector**: *function*
 
@@ -2498,9 +2500,9 @@ Name | Type |
 `c` | TC |
 `d` | TD |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2518,7 +2520,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›]*
 
 ▪ **selector**: *function*
 
@@ -2534,9 +2536,9 @@ Name | Type |
 `d` | TD |
 `e` | TE |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2556,7 +2558,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›]*
 
 ▪ **selector**: *function*
 
@@ -2573,9 +2575,9 @@ Name | Type |
 `e` | TE |
 `f` | TF |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2597,7 +2599,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›]*
 
 ▪ **selector**: *function*
 
@@ -2615,9 +2617,9 @@ Name | Type |
 `f` | TF |
 `g` | TG |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2641,7 +2643,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›]*
 
 ▪ **selector**: *function*
 
@@ -2660,9 +2662,9 @@ Name | Type |
 `g` | TG |
 `h` | TH |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›, EnumerableLike‹TI›], `selector`: function): *EnumerableLike‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›, [EnumerableLike](interfaces/enumerablelike.md)‹TI›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -2688,7 +2690,7 @@ Name | Type |
 
 **Parameters:**
 
-▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›, EnumerableLike‹TI›]*
+▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›, [EnumerableLike](interfaces/enumerablelike.md)‹TI›]*
 
 ▪ **selector**: *function*
 
@@ -2708,4 +2710,4 @@ Name | Type |
 `h` | TH |
 `i` | TI |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
