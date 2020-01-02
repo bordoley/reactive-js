@@ -1,4 +1,4 @@
-import { AsyncIterableLike, AsyncIteratorResourceLike } from "./interfaces";
+import { AsyncEnumerableLike, AsyncEnumeratorResourceLike } from "./interfaces";
 import {
   using,
   onNext,
@@ -28,25 +28,25 @@ export const scanAsync = <TReq, TSrc, TAcc>(
   initial: () => ReduceRequestLike<TReq, TAcc>,
   scheduler: SchedulerLike,
 ): OperatorLike<
-  AsyncIterableLike<TReq, TSrc>,
+  AsyncEnumerableLike<TReq, TSrc>,
   ObservableLike<TAcc>
 > => iterable => {
   const resourceFactory = (): [
-    AsyncIteratorResourceLike<TReq, TSrc>,
-    AsyncIteratorResourceLike<
+    AsyncEnumeratorResourceLike<TReq, TSrc>,
+    AsyncEnumeratorResourceLike<
       ReduceRequestLike<TReq, TAcc>,
       ReduceRequestLike<TReq, TAcc>
     >,
   ] => {
-    const resource: AsyncIteratorResourceLike<
+    const resource: AsyncEnumeratorResourceLike<
       TReq,
       TSrc
-    > = iterable.getIXAsyncIterator(scheduler);
+    > = iterable.getIXAsyncEnumerator(scheduler);
 
     const eventEmitter = pipe(
       identity<ReduceRequestLike<TReq, TAcc>>(),
       lift(onNext(({ request }) => resource.dispatch(request))),
-    ).getIXAsyncIterator(scheduler);
+    ).getIXAsyncEnumerator(scheduler);
 
     return [resource, eventEmitter];
   };
@@ -57,8 +57,8 @@ export const scanAsync = <TReq, TSrc, TAcc>(
   ) => pipe(reducer(result, next), takeFirst());
 
   const observableFactory = (
-    iterator: AsyncIteratorResourceLike<TReq, TSrc>,
-    eventEmitter: AsyncIteratorResourceLike<
+    iterator: AsyncEnumeratorResourceLike<TReq, TSrc>,
+    eventEmitter: AsyncEnumeratorResourceLike<
       ReduceRequestLike<TReq, TAcc>,
       ReduceRequestLike<TReq, TAcc>
     >,

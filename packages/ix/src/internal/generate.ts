@@ -8,18 +8,18 @@ import {
   takeFirst,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncIteratorResourceLike, AsyncIterableLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./createAsyncIterator";
+import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);
 
-const generateAsyncIterator = <T>(
+const generateAsyncEnumerator = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncIteratorResourceLike<number, T> => {
+): AsyncEnumeratorResourceLike<number, T> => {
   const operator = (obs: ObservableLike<number | void>) =>
     pipe(
       obs,
@@ -36,17 +36,17 @@ const generateAsyncIterator = <T>(
       scan(generateScanner(generator), initialValue),
     );
 
-  return createAsyncIteratorResource(operator, scheduler, replayCount);
+  return createAsyncEnumeratorResource(operator, scheduler, replayCount);
 };
 
-class GenerateAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
+class GenerateAsyncEnumerable<T> implements AsyncEnumerableLike<number | void, T> {
   constructor(
     private readonly generator: (acc: T) => T,
     private readonly initialValue: () => T,
   ) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    return generateAsyncIterator(
+  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+    return generateAsyncEnumerator(
       this.generator,
       this.initialValue,
       scheduler,
@@ -58,5 +58,5 @@ class GenerateAsyncIterable<T> implements AsyncIterableLike<number | void, T> {
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-): AsyncIterableLike<number | void, T> =>
-  new GenerateAsyncIterable(generator, initialValue);
+): AsyncEnumerableLike<number | void, T> =>
+  new GenerateAsyncEnumerable(generator, initialValue);

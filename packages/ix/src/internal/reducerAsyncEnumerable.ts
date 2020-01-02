@@ -7,23 +7,23 @@ import {
   ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createAsyncIteratorResource } from "./createAsyncIterator";
-import { StateUpdaterLike, AsyncIterableLike } from "./interfaces";
+import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { StateUpdaterLike, AsyncEnumerableLike } from "./interfaces";
 
-class ReducerStoreAsyncIterable<TAction, T>
-  implements AsyncIterableLike<TAction, T> {
+class ReducerStoreAsyncEnumerable<TAction, T>
+  implements AsyncEnumerableLike<TAction, T> {
   constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    return createAsyncIteratorResource(this.operator, scheduler, replayCount);
+  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+    return createAsyncEnumeratorResource(this.operator, scheduler, replayCount);
   }
 }
 
-export const createActionReducerAsyncIterable = <TAction, T>(
+export const createActionReducerAsyncEnumerable = <TAction, T>(
   reducer: (state: T, action: TAction) => T,
   initialStateFactory: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIterableLike<TAction, T> => {
+): AsyncEnumerableLike<TAction, T> => {
   const operator = (src: ObservableLike<TAction>) => {
     const initialState = initialStateFactory();
 
@@ -35,13 +35,13 @@ export const createActionReducerAsyncIterable = <TAction, T>(
     );
   };
 
-  return new ReducerStoreAsyncIterable(operator);
+  return new ReducerStoreAsyncEnumerable(operator);
 };
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
   action(state);
-export const createStateUpdaterAsyncIterable = <T>(
+export const createStateUpdaterAsyncEnumerable = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIterableLike<StateUpdaterLike<T>, T> =>
-  createActionReducerAsyncIterable(stateStoreReducer, initialState, equals);
+): AsyncEnumerableLike<StateUpdaterLike<T>, T> =>
+  createActionReducerAsyncEnumerable(stateStoreReducer, initialState, equals);

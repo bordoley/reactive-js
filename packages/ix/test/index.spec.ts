@@ -12,7 +12,7 @@ import {
 
 test("fromArray", () => {
   const scheduler = createVirtualTimeSchedulerResource();
-  const iter = fromArray([1, 2, 3, 4, 5, 6]).getIXAsyncIterator(scheduler);
+  const iter = fromArray([1, 2, 3, 4, 5, 6]).getIXAsyncEnumerator(scheduler);
 
   const result: number[] = [];
   pipe(
@@ -31,7 +31,7 @@ test("fromArray", () => {
 
 test("fromIterable", () => {
   const scheduler = createVirtualTimeSchedulerResource();
-  const iter = fromIterable([1, 2, 3, 4, 5, 6]).getIXAsyncIterator(scheduler);
+  const iter = fromIterable([1, 2, 3, 4, 5, 6]).getIXAsyncEnumerator(scheduler);
 
   const result: number[] = [];
   let error: ErrorLike | undefined = undefined;
@@ -60,7 +60,7 @@ test("generate", () => {
   const iter = generate(
     x => x + 1,
     () => 0,
-  ).getIXAsyncIterator(scheduler);
+  ).getIXAsyncEnumerator(scheduler);
 
   const result: number[] = [];
   pipe(

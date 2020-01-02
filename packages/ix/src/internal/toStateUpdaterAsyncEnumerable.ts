@@ -8,19 +8,19 @@ import {
   ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { StateUpdaterLike, AsyncIterableLike, AsyncIterableOperatorLike } from "./interfaces";
-import { createAsyncIteratorResource } from "./createAsyncIterator";
+import { StateUpdaterLike, AsyncEnumerableLike, AsyncEnumerableOperatorLike } from "./interfaces";
+import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
 
-class DelegatingStateUpdaterAsyncIterable<T>
-  implements AsyncIterableLike<StateUpdaterLike<T>, T> {
+class DelegatingStateUpdaterAsyncEnumerable<T>
+  implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
   constructor(
-    private readonly iterable: AsyncIterableLike<T, T>,
+    private readonly iterable: AsyncEnumerableLike<T, T>,
     private readonly initialState: () => T,
     private readonly equals?: (a: T, b: T) => boolean,
   ) {}
 
-  getIXAsyncIterator(scheduler: SchedulerLike, replayCount?: number) {
-    const iterator = this.iterable.getIXAsyncIterator(scheduler);
+  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+    const iterator = this.iterable.getIXAsyncEnumerator(scheduler);
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,
@@ -44,16 +44,16 @@ class DelegatingStateUpdaterAsyncIterable<T>
       return merge<T>(onIteratorNextChangedObs, stateObs);
     };
 
-    const retval = createAsyncIteratorResource(operator, scheduler, replayCount).add(iterator);
+    const retval = createAsyncEnumeratorResource(operator, scheduler, replayCount).add(iterator);
     return retval;
   }
 }
 
-export const toStateUpdaterAsyncIterable = <T>(
+export const toStateUpdaterAsyncEnumerable = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncIterableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>
-  new DelegatingStateUpdaterAsyncIterable(
+): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>
+  new DelegatingStateUpdaterAsyncEnumerable(
     iterable,
     initialState,
     equals,
