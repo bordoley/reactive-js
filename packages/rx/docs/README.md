@@ -1285,13 +1285,13 @@ ___
 
 ### `Const` never
 
-▸ **never**<**T**>(): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **never**<**T**>(): *EnumerableLike‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *EnumerableLike‹T›*
 
 ___
 
