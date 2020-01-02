@@ -3,6 +3,7 @@ import {
   EnumeratorLike,
   SubscriberLike,
   ErrorLike,
+  ObservableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { DisposableLike, createDisposable, disposableMixin } from "@reactive-js/disposable";
@@ -97,6 +98,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   }
 }
 
+/** @ignore */
 export const enumerableMixin = {
   [Symbol.iterator]: function<T>(this: EnumerableLike<T>) {
     const enumerator = this.enumerate();
@@ -108,3 +110,7 @@ export const enumerableMixin = {
     return subscriber;
   },
 }
+
+/** @ignore */
+export const isEnumerable = <T>(obs: ObservableLike<T>) => 
+  (obs as any).enumerate !== undefined;

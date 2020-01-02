@@ -5,7 +5,7 @@ import {
   VirtualTimeSchedulerResourceLike,
 } from "@reactive-js/schedulers";
 import { ObservableLike, ErrorLike, EnumerableLike, EnumeratorLike, SubscriberLike } from "./interfaces";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin, isEnumerable } from "./enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
 class VirtualTimeObservableEnumerator<T> implements EnumeratorLike<T>, SubscriberLike<T> {
@@ -98,6 +98,6 @@ class EnumerableObservable<T> implements EnumerableLike<T> {
 }
 
 export const toEnumerable = <T>(): OperatorLike<ObservableLike<T>, EnumerableLike<T>> => observable =>
-  (observable as any).enumerate !== undefined
+  isEnumerable(observable)
     ? observable as EnumerableLike<T>
     : new EnumerableObservable(observable);

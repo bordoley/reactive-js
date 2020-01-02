@@ -1,4 +1,3 @@
-import { defer } from "./defer";
 import {
   EnumeratorLike,
   EnumerableLike,
@@ -12,53 +11,48 @@ import {
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
+import { enumerableMixin, isEnumerable } from "./enumerable";
 
-const shouldEmit = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
-  for (const buffer of buffers) {
-    if (!buffer.hasCurrent) {
+const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
+  for (const enumerator of enumerators) {
+    if (!enumerator.hasCurrent) {
       return false;
     }
   }
   return true;
 };
 
-const shouldComplete = (buffers: ReadonlyArray<EnumeratorLike<unknown>>) => {
-  for (const buffer of buffers) {
-    buffer.moveNext();
-    if (buffer.isDisposed && !buffer.hasCurrent) {
+const shouldComplete = (enumerators: readonly EnumeratorLike<unknown>[]) => {
+  for (const enumerator of enumerators) {
+    enumerator.moveNext();
+    if (enumerator.isDisposed && !enumerator.hasCurrent) {
       return true;
     }
   }
   return false;
 };
 
-const getCurrent = (buffer: EnumeratorLike<unknown>): unknown => {
-  return buffer.current;
+const getCurrent = <T>(enumerator: EnumeratorLike<T>): T => {
+  return enumerator.current;
 };
 
 class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
-  private _current: unknown;
+  current: unknown;
   private readonly buffer: Array<unknown> = [];
   hasCurrent = false;
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly ctx: ZipObservable<T>,
+    private readonly enumerators: readonly EnumeratorLike<any>[],
+    private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
     this.delegate.add(() => {
       this.hasCurrent = false;
-      this._current = undefined;
+      this.current = undefined;
       this.buffer.length = 0;
     });
-  }
-
-  get current(): unknown {
-    if (!this.hasCurrent) {
-      throw new Error("no current value");
-    }
-    return this._current;
   }
 
   moveNext(): boolean {
@@ -66,11 +60,11 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     if (buffer.length > 0) {
       const next = buffer.shift();
       this.hasCurrent = true;
-      this._current = next;
+      this.current = next;
       return true;
     } else {
       this.hasCurrent = false;
-      this._current = undefined;
+      this.current = undefined;
       return false;
     }
   }
@@ -86,26 +80,25 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   }
 
   next(data: unknown) {
-    const ctx = this.ctx;
-    const buffers = ctx.buffers;
+    const enumerators = this.enumerators;
 
     if (!this.isDisposed) {
       if (this.hasCurrent) {
         this.buffer.push(data);
       } else {
         this.hasCurrent = true;
-        this._current = data;
+        this.current = data;
       }
 
-      if (shouldEmit(buffers)) {
-        const next = ctx.selector(...buffers.map(getCurrent));
-        const shouldCompleteResult = shouldComplete(buffers);
+      if (shouldEmit(enumerators)) {
+        const next = this.selector(...enumerators.map(getCurrent));
+        const shouldCompleteResult = shouldComplete(enumerators);
 
         this.delegate.next(next);
 
         if (shouldCompleteResult) {
           this.hasCurrent = false;
-          this._current = undefined;
+          this.current = undefined;
           this.buffer.length = 0;
           this.complete();
         }
@@ -114,30 +107,61 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   }
 }
 
-class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
-  readonly buffers: EnumeratorLike<unknown>[] = [];
+class ZipObservable<T> implements ObservableLike<T> {
+  constructor(
+    private readonly observables: readonly ObservableLike<any>[],
+    private readonly selector: (...values: unknown[]) => T,
+  ) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const observables = this.observables;
+    const count = observables.length;
+    const enumerators: EnumeratorLike<unknown>[] = [];
+
+    for (let index = 0; index < count; index++) {
+      const observable = observables[index];
+
+      if (isEnumerable(observable)) {
+        const enumerable = (observable as unknown) as EnumerableLike<T>;
+        const enumerator = enumerable.enumerate();
+
+        enumerator.moveNext();
+        enumerators.push(enumerator);
+      } else {
+        const innerSubscriber = new ZipSubscriber(subscriber, enumerators, this.selector);
+
+        observable.subscribe(innerSubscriber);
+        enumerators.push(innerSubscriber);
+      }
+    }
+  }
+}
+
+class ZipProducer<T> implements SchedulerContinuationLike {
+  current: any;
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
   };
+  hasCurrent = false;
   readonly run = producerMixin.run;
-  private subscriber: SubscriberLike<T> | undefined;
 
   constructor(
-    private readonly observables: readonly ObservableLike<any>[],
-    readonly selector: (...values: unknown[]) => T,
+    private readonly subscriber: SubscriberLike<T>,
+    private readonly enumerators: readonly EnumeratorLike<any>[],
+    private readonly selector: (...values: unknown[]) => T,
   ) {}
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
-    const buffers = this.buffers;
+    const enumerators = this.enumerators;
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
 
     if (shouldYield !== undefined) {
-      while (shouldEmit(buffers) && !subscriber.isDisposed) {
-        const next = selector(...buffers.map(getCurrent));
+      while (shouldEmit(enumerators) && !subscriber.isDisposed) {
+        const next = selector(...enumerators.map(getCurrent));
         subscriber.next(next);
 
-        for (const buffer of buffers) {
+        for (const buffer of enumerators) {
           buffer.moveNext();
         }
 
@@ -146,11 +170,11 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
         }
       }
     } else {
-      while (shouldEmit(buffers) && !subscriber.isDisposed) {
-        const next = selector(...buffers.map(getCurrent));
+      while (shouldEmit(enumerators) && !subscriber.isDisposed) {
+        const next = selector(...enumerators.map(getCurrent));
 
-        for (const buffer of buffers) {
-          buffer.moveNext();
+        for (const enumerator of enumerators) {
+          enumerator.moveNext();
         }
 
         subscriber.next(next);
@@ -159,35 +183,28 @@ class ZipObservable<T> implements ObservableLike<T>, SchedulerContinuationLike {
     subscriber.complete();
     return;
   }
+}
+
+class ZipEnumerable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+  
+  constructor(
+    private readonly enumerables: readonly EnumerableLike<any>[],
+    readonly selector: (...values: unknown[]) => T,
+  ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const observables = this.observables;
-    const count = observables.length;
-    const buffers = this.buffers;
-
-    let enumerableCount = 0;
-    for (let index = 0; index < count; index++) {
-      const observable = observables[index];
-
-      if ((observable as any).enumerate !== undefined) {
-        const enumerable = (observable as unknown) as EnumerableLike<T>;
+    const enumerables = this.enumerables;
+    const enumerators = [];
+  
+      for (const enumerable of enumerables) {
         const enumerator = enumerable.enumerate();
-
         enumerator.moveNext();
-        buffers.push(enumerator);
-        enumerableCount++;
-      } else {
-        const innerSubscriber = new ZipSubscriber(subscriber, this);
-
-        observable.subscribe(innerSubscriber);
-        buffers.push(innerSubscriber);
+        enumerators.push(enumerator);
       }
-    }
 
-    if (enumerableCount === count) {
-      this.subscriber = subscriber;
-      subscriber.schedule(this);
-    }
+    subscriber.schedule(new ZipProducer(subscriber, enumerators, this.selector));
   }
 }
 
@@ -282,5 +299,7 @@ export function zip<T>(
   observables: ObservableLike<unknown>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  return defer(() => new ZipObservable(observables, selector));
+  return observables.every(isEnumerable)
+    ? new ZipEnumerable(observables as EnumerableLike<T>[], selector)
+    : new ZipObservable(observables, selector);
 }
