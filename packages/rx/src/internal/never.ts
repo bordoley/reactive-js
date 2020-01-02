@@ -1,8 +1,11 @@
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { EnumerableLike, SubscriberLike } from "./interfaces";
+import { enumerableMixin } from "./enumerable";
 
-class NeverObservable<T> implements ObservableLike<T> {
+class NeverObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
   subscribe(_: SubscriberLike<T>) {}
 }
 
-const neverInstance: ObservableLike<any> = new NeverObservable();
-export const never = <T>() => neverInstance as ObservableLike<T>;
+const neverInstance: EnumerableLike<any> = new NeverObservable();
+export const never = <T>() => neverInstance as EnumerableLike<T>;
