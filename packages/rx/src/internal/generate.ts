@@ -5,12 +5,11 @@ import {
 import { defer } from "./defer";
 import {
   EnumerableLike,
-  EnumeratorLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
 import { producerMixin } from "./producer";
-import { createDisposable, disposableMixin } from "@reactive-js/disposable";
+import { enumerableMixin } from "./enumerable";
 
 class GenerateWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -85,38 +84,14 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class GenerateEnumerator<T> implements EnumeratorLike<T> {
-  readonly add = disposableMixin.add;
-  readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
-  hasCurrent = false;
-  readonly remove = disposableMixin.remove;
+class GenerateObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(private readonly generator: (acc: T) => T, public current: T) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  moveNext(): boolean {
-    if (this.hasCurrent) {
-      this.current = this.generator(this.current);
-    } else {
-      this.hasCurrent = true;
-    }
-    return true;
-  }
-}
-
-class GenerateObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
   constructor(
     private readonly generator: (acc: T) => T,
     private readonly acc: T,
   ) {}
-
-  enumerate(): EnumeratorLike<T> {
-    return new GenerateEnumerator(this.generator, this.acc);
-  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new GenerateProducer(subscriber, this.generator, this.acc);

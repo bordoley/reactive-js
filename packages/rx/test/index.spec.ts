@@ -49,7 +49,7 @@ import {
   throws,
   timeout,
   toArray,
-  toIterable,
+  toEnumerable,
   toPromise,
   toValue,
   withLatestFrom,
@@ -104,7 +104,7 @@ test("buffer", () => {
       [1, 3],
       [1, 4],
     ),
-    buffer(4, 3),
+    buffer({duration: 4, maxBufferSize: 3}),
     toArray(),
   );
 
@@ -1097,12 +1097,12 @@ describe("timeout", () => {
   });
 });
 
-describe("toIterable", () => {
+describe("toEnumerable", () => {
   test("iterate using a for of loop", () => {
     const iterable = pipe(
       fromArray([1, 2, 3, 4]),
       map(x => x + 1),
-      toIterable(),
+      toEnumerable(),
     );
     const acc = [];
     for (const v of iterable) {
@@ -1113,7 +1113,7 @@ describe("toIterable", () => {
 
   test("rethrows an error when the source throws", () => {
     const error = new Error();
-    const iterable = pipe(throws(error), toIterable());
+    const iterable = pipe(throws(error), toEnumerable());
 
     expect(() => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
@@ -1124,7 +1124,7 @@ describe("toIterable", () => {
 
   test("calling throw, throws the error", () => {
     const error = new Error();
-    const iterator = pipe(fromArray([1, 2, 3, 4]), toIterable())[
+    const iterator = pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
       Symbol.iterator
     ]();
 
@@ -1132,7 +1132,7 @@ describe("toIterable", () => {
   });
 
   test("calling throw without an error returns done.", () => {
-    const result = (pipe(fromArray([1, 2, 3, 4]), toIterable())[
+    const result = (pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
       Symbol.iterator
     ]() as any).throw();
 
@@ -1140,7 +1140,7 @@ describe("toIterable", () => {
   });
 
   test("calling return, returns done", () => {
-    const result = (pipe(fromArray([1, 2, 3, 4]), toIterable())[
+    const result = (pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
       Symbol.iterator
     ]() as any).return();
 
@@ -1199,7 +1199,7 @@ describe("zip", () => {
       zip(
         [
           fromArray([1, 2]),
-          fromIterable([2, 3]),
+          pipe(fromArray([1, 2]), map(x => x + 1)),
           generate(
             x => x + 1,
             () => 3,

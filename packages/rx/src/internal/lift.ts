@@ -3,15 +3,17 @@ import {
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
+  EnumerableLike,
 } from "./interfaces";
+import { enumerableMixin } from "./enumerable";
 
-class LiftedObservable<TSrc, T> implements ObservableLike<T> {
+class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
-    readonly source: ObservableLike<TSrc>,
+    readonly source: ObservableLike<TIn>,
     readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  subscribe(subscriber: SubscriberLike<TOut>) {
     const liftedSubscrber: SubscriberLike<any> = this.operators.reduceRight(
       (acc, next) => next(acc),
       subscriber,
@@ -25,32 +27,32 @@ class LiftedObservable<TSrc, T> implements ObservableLike<T> {
  * Converts a SubscriberOperatorLike to an ObservableOperatorLike.
  * @param operator
  */
-export function lift<TA, TB>(
+export function liftObservable<TA, TB>(
   op1: SubscriberOperatorLike<TA, TB>,
 ): ObservableOperatorLike<TA, TB>;
-export function lift<TA, TB, TC>(
+export function liftObservable<TA, TB, TC>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
 ): ObservableOperatorLike<TA, TC>;
-export function lift<TA, TB, TC, TD>(
+export function liftObservable<TA, TB, TC, TD>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
 ): ObservableOperatorLike<TA, TD>;
-export function lift<TA, TB, TC, TD, TE>(
+export function liftObservable<TA, TB, TC, TD, TE>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
   op4: SubscriberOperatorLike<TD, TE>,
 ): ObservableOperatorLike<TA, TE>;
-export function lift<TA, TB, TC, TD, TE, TF>(
+export function liftObservable<TA, TB, TC, TD, TE, TF>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
   op4: SubscriberOperatorLike<TD, TE>,
   op5: SubscriberOperatorLike<TE, TF>,
 ): ObservableOperatorLike<TA, TF>;
-export function lift<TA, TB, TC, TD, TE, TF, TG>(
+export function liftObservable<TA, TB, TC, TD, TE, TF, TG>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
@@ -58,7 +60,7 @@ export function lift<TA, TB, TC, TD, TE, TF, TG>(
   op5: SubscriberOperatorLike<TE, TF>,
   op6: SubscriberOperatorLike<TF, TG>,
 ): ObservableOperatorLike<TA, TG>;
-export function lift<TA, TB, TC, TD, TE, TF, TG, TH>(
+export function liftObservable<TA, TB, TC, TD, TE, TF, TG, TH>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
@@ -67,7 +69,7 @@ export function lift<TA, TB, TC, TD, TE, TF, TG, TH>(
   op6: SubscriberOperatorLike<TF, TG>,
   op7: SubscriberOperatorLike<TG, TH>,
 ): ObservableOperatorLike<TA, TH>;
-export function lift<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+export function liftObservable<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   op1: SubscriberOperatorLike<TA, TB>,
   op2: SubscriberOperatorLike<TB, TC>,
   op3: SubscriberOperatorLike<TC, TD>,
@@ -77,7 +79,7 @@ export function lift<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   op7: SubscriberOperatorLike<TG, TH>,
   op8: SubscriberOperatorLike<TH, TI>,
 ): ObservableOperatorLike<TA, TI>;
-export function lift(
+export function liftObservable(
   ...operators: SubscriberOperatorLike<unknown, unknown>[]
 ): ObservableOperatorLike<unknown, unknown> {
   return source => {
@@ -92,3 +94,78 @@ export function lift(
     return new LiftedObservable(sourceSource, allOperators);
   };
 }
+
+class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut> implements EnumerableLike<TOut> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+}
+
+export function liftEnumerable<TA, TB>(
+  op1: SubscriberOperatorLike<TA, TB>,
+): ObservableOperatorLike<TA, TB>;
+export function liftEnumerable<TA, TB, TC>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+): ObservableOperatorLike<TA, TC>;
+export function liftEnumerable<TA, TB, TC, TD>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+): ObservableOperatorLike<TA, TD>;
+export function liftEnumerable<TA, TB, TC, TD, TE>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+  op4: SubscriberOperatorLike<TD, TE>,
+): ObservableOperatorLike<TA, TE>;
+export function liftEnumerable<TA, TB, TC, TD, TE, TF>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+  op4: SubscriberOperatorLike<TD, TE>,
+  op5: SubscriberOperatorLike<TE, TF>,
+): ObservableOperatorLike<TA, TF>;
+export function liftEnumerable<TA, TB, TC, TD, TE, TF, TG>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+  op4: SubscriberOperatorLike<TD, TE>,
+  op5: SubscriberOperatorLike<TE, TF>,
+  op6: SubscriberOperatorLike<TF, TG>,
+): ObservableOperatorLike<TA, TG>;
+export function liftEnumerable<TA, TB, TC, TD, TE, TF, TG, TH>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+  op4: SubscriberOperatorLike<TD, TE>,
+  op5: SubscriberOperatorLike<TE, TF>,
+  op6: SubscriberOperatorLike<TF, TG>,
+  op7: SubscriberOperatorLike<TG, TH>,
+): ObservableOperatorLike<TA, TH>;
+export function liftEnumerable<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  op1: SubscriberOperatorLike<TA, TB>,
+  op2: SubscriberOperatorLike<TB, TC>,
+  op3: SubscriberOperatorLike<TC, TD>,
+  op4: SubscriberOperatorLike<TD, TE>,
+  op5: SubscriberOperatorLike<TE, TF>,
+  op6: SubscriberOperatorLike<TF, TG>,
+  op7: SubscriberOperatorLike<TG, TH>,
+  op8: SubscriberOperatorLike<TH, TI>,
+): ObservableOperatorLike<TA, TI>;
+export function liftEnumerable(
+  ...operators: SubscriberOperatorLike<unknown, unknown>[]
+): ObservableOperatorLike<unknown, unknown> {
+  return source => {    
+    const sourceSource =
+      source instanceof LiftedObservable ? source.source : source;
+
+    const allOperators =
+      source instanceof LiftedObservable
+        ? [...source.operators, ...operators]
+        : operators;
+        
+    return (source as any).enumerate !== undefined
+      ? new LiftedEnumerable(sourceSource, allOperators)
+      : new LiftedObservable(sourceSource, allOperators);
+  };
+};

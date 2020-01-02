@@ -6,7 +6,7 @@ import {
   ErrorLike,
 } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 
 class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
@@ -48,4 +48,4 @@ const operator = <T>(
 
 export const catchError = <T>(
   onError: (error: unknown) => ObservableLike<T> | void,
-): ObservableOperatorLike<T, T> => lift(operator(onError));
+): ObservableOperatorLike<T, T> => liftObservable(operator(onError));

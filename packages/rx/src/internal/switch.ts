@@ -7,7 +7,7 @@ import {
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
@@ -47,4 +47,4 @@ const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
 
 export const switchAll = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
-  lift(operator);
+  liftObservable(operator);

@@ -8,7 +8,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
@@ -89,7 +89,7 @@ export const repeat = <T>(
       : (count: number, error?: ErrorLike) =>
           error === undefined && predicate(count);
 
-  return obs => lift(repeatOperator(obs, repeatPredicate))(obs);
+  return obs => liftObservable(repeatOperator(obs, repeatPredicate))(obs);
 };
 
 const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
@@ -104,5 +104,5 @@ export const retry = <T>(
       : (count: number, error?: ErrorLike) =>
           error !== undefined && predicate(count, error.cause);
 
-  return obs => lift(repeatOperator(obs, retryPredicate))(obs);
+  return obs => liftObservable(repeatOperator(obs, retryPredicate))(obs);
 };

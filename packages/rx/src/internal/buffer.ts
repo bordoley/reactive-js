@@ -1,7 +1,8 @@
 import { createSerialDisposable } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { empty } from "./empty";
-import { lift } from "./lift";
+import { liftEnumerable, liftObservable } from "./lift";
+import { never } from "./never";
 import {
   ErrorLike,
   ObservableLike,
@@ -32,18 +33,6 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     });
   }
 
-  private notifyNext() {
-    this.durationSubscription.inner.dispose();
-    const buffer = this.buffer;
-    this.buffer = [];
-
-    try {
-      this.delegate.next(buffer);
-    } catch (cause) {
-      this.delegate.complete({ cause });
-    }
-  }
-
   complete(error?: ErrorLike) {
     if (this.dispose()) {
       if (error === undefined) {
@@ -70,6 +59,18 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     }
   }
 
+  private notifyNext() {
+    this.durationSubscription.inner.dispose();
+    const buffer = this.buffer;
+    this.buffer = [];
+
+    try {
+      this.delegate.next(buffer);
+    } catch (cause) {
+      this.delegate.complete({ cause });
+    }
+  }
+
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
       this.complete(error);
@@ -87,13 +88,19 @@ const operator = <T>(
 ): SubscriberOperatorLike<T, readonly T[]> => subscriber =>
   new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
 
-export const buffer = <T>(
-  duration: ((next: T) => ObservableLike<unknown>) | number,
-  maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableOperatorLike<T, readonly T[]> =>
-  lift(
-    operator(
-      typeof duration === "number" ? _ => empty(duration) : duration,
-      maxBufferSize,
-    ),
-  );
+export function buffer<T>(options: {
+  duration?: ((next: T) => ObservableLike<unknown>) | number,
+  maxBufferSize?: number,
+} = {}): ObservableOperatorLike<T, readonly T[]> {
+  const duration = options.duration || Number.MAX_SAFE_INTEGER;
+  const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
+
+  return duration === Number.MAX_SAFE_INTEGER
+    ? liftEnumerable(operator(never, maxBufferSize))
+    : liftObservable(
+      operator(
+        typeof duration === "number" ? (_: T) => empty(duration) : duration,
+        maxBufferSize,
+      ),
+    );
+}

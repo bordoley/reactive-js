@@ -3,7 +3,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
@@ -32,4 +32,4 @@ const operator = <T, TAcc>(
 export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => lift(operator(scanner, initialValue));
+): ObservableOperatorLike<T, TAcc> => liftEnumerable(operator(scanner, initialValue));

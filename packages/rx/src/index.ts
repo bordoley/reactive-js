@@ -1,4 +1,6 @@
 export {
+  EnumeratorLike,
+  EnumerableLike,
   ErrorLike,
   MulticastObservableLike,
   MulticastObservableResourceLike,
@@ -38,7 +40,7 @@ export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export { endWith } from "./internal/endWith";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
-export { lift } from "./internal/lift";
+export { liftEnumerable, liftObservable } from "./internal/lift";
 export { map } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { observe, onComplete, onError, onNext } from "./internal/observe";
@@ -60,6 +62,6 @@ export { withLatestFrom } from "./internal/withLatestFrom";
 export { zip } from "./internal/zip";
 
 export { toArray } from "./internal/toArray";
-export { toIterable } from "./internal/toIterable";
+export { toEnumerable } from "./internal/toEnumerable";
 export { toValue } from "./internal/toValue";
 export { toPromise } from "./internal/toPromise";

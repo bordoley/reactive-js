@@ -5,7 +5,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class TakeFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -34,4 +34,4 @@ const operator = <T>(
 export const takeFirst = <T>(
   count = 1,
 ): ObservableOperatorLike<T, T> => observable =>
-  count > 0 ? pipe(observable, lift(operator(count))) : empty();
+  count > 0 ? pipe(observable, liftEnumerable(operator(count))) : empty();

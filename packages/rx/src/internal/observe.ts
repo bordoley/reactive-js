@@ -1,11 +1,11 @@
 import {
-  ErrorLike,
   ObservableOperatorLike,
+  ErrorLike,
   ObserverLike,
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -45,9 +45,11 @@ const operator = <T>(
  *
  * @param observer
  */
-export const observe = <T>(
+export function observe<T>(
   observer: ObserverLike<T>,
-): ObservableOperatorLike<T, T> => lift(operator(observer));
+): ObservableOperatorLike<T, T> { 
+  return liftEnumerable(operator(observer));
+}
 
 const ignore = <T>(_: T) => {};
 

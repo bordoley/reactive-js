@@ -3,7 +3,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -29,4 +29,4 @@ const operator = <T>(
 
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): ObservableOperatorLike<T, T> => lift(operator(predicate));
+): ObservableOperatorLike<T, T> => liftEnumerable(operator(predicate));

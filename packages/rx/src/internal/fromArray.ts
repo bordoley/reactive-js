@@ -1,7 +1,6 @@
 import { defer } from "./defer";
 import {
   EnumerableLike,
-  EnumeratorLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
@@ -10,7 +9,7 @@ import {
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
-import { disposableMixin, createDisposable } from "@reactive-js/disposable";
+import { enumerableMixin } from "./enumerable";
 
 class FromArrayWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -97,52 +96,14 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class FromArrayEnumerator<T> implements EnumeratorLike<T> {
-  current: any;
-  readonly disposable = createDisposable();
-  hasCurrent = false;
-
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
-
-  constructor(private readonly values: readonly T[], private index: number) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  moveNext(): boolean {
-    if (this.hasCurrent) {
-      this.index++;
-    } else {
-      this.hasCurrent = true;
-    }
-
-    const values = this.values;
-    const index = this.index;
-
-    if (index < values.length) {
-      this.current = values[index];
-      return true;
-    } else {
-      this.current = undefined;
-      this.hasCurrent = false;
-      this.dispose();
-      return false;
-    }
-  }
-}
-
-class FromArrayObservable<T> implements ObservableLike<T>, EnumerableLike<T> {
+class FromArrayObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+  
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,
   ) {}
-
-  enumerate(): EnumeratorLike<T> {
-    return new FromArrayEnumerator(this.values, this.startIndex);
-  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new FromArrayProducer(
@@ -168,6 +129,3 @@ export const fromArray = <T>(
     ? defer(() => new FromArrayWithDelayObservable(values, delay, startIndex))
     : new FromArrayObservable(values, startIndex);
 };
-
-export const ofValue = <T>(value: T, delay?: number): ObservableLike<T> =>
-  fromArray([value], { delay });
