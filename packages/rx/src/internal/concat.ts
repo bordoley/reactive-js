@@ -1,12 +1,14 @@
-import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
+import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike, EnumeratorLike } from "./interfaces";
+import { OperatorLike } from "@reactive-js/pipe";
 import { DelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
+import { fromArray } from "./fromArray";
+import { empty } from "./empty";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly observables: readonly ObservableLike<T>[],
-    private readonly index: number,
+    private readonly enumerator: EnumeratorLike<ObservableLike<T>>,
   ) {
     super(delegate);
   }
@@ -16,16 +18,13 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
       if (error !== undefined) {
         this.delegate.complete(error);
       } else {
-        const nextIndex = this.index + 1;
-        const head = this.observables[nextIndex];
-
-        if (head !== undefined) {
+        const enumerator = this.enumerator;
+        if (enumerator.moveNext()) {
           const concatSubscriber = new ConcatSubscriber(
             this.delegate,
-            this.observables,
-            nextIndex,
+            enumerator
           );
-          head.subscribe(concatSubscriber);
+          enumerator.current.subscribe(concatSubscriber);
         } else {
           this.delegate.complete();
         }
@@ -39,15 +38,20 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
 }
 
 class ConcatObservable<T> implements ObservableLike<T> {
-  constructor(private readonly observables: readonly ObservableLike<T>[]) {}
+  constructor(private readonly observables: EnumerableLike<ObservableLike<T>>) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
+    const enumerator = this.observables.enumerate();
     const concatSubscriber = new ConcatSubscriber(
       subscriber,
-      this.observables,
-      0,
+      enumerator,
     );
-    this.observables[0].subscribe(concatSubscriber);
+    
+    if(enumerator.moveNext()) {
+      enumerator.current.subscribe(concatSubscriber);
+    } else {
+      empty().subscribe(subscriber);
+    }
   }
 }
 
@@ -70,6 +74,10 @@ export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
   return observables.every(isEnumerable) 
-    ? new ConcatEnumerable(observables as EnumerableLike<T>[]) 
-    : new ConcatObservable(observables);
+    ? new ConcatEnumerable(fromArray(observables)) 
+    : new ConcatObservable(fromArray(observables));
 }
+
+export const flatten = <T>(): OperatorLike<EnumerableLike<EnumerableLike<T>>, EnumerableLike<T>> =>
+  enumerable => new ConcatEnumerable(enumerable);
+ 

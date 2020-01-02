@@ -19,7 +19,7 @@ export { DelegatingSubscriber } from "./internal/subscriber";
 export { combineLatest } from "./internal/combineLatest";
 export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
-export { concat } from "./internal/concat";
+export { concat, flatten } from "./internal/concat";
 export { defer } from "./internal/defer";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";

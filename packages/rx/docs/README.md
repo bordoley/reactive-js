@@ -40,7 +40,8 @@
 * [empty](README.md#const-empty)
 * [endWith](README.md#endwith)
 * [exhaust](README.md#const-exhaust)
-* [fromArray](README.md#const-fromarray)
+* [flatten](README.md#const-flatten)
+* [fromArray](README.md#fromarray)
 * [fromIterable](README.md#const-fromiterable)
 * [fromIterator](README.md#const-fromiterator)
 * [fromPromise](README.md#const-frompromise)
@@ -622,9 +623,21 @@ ___
 
 ___
 
-### `Const` fromArray
+### `Const` flatten
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **flatten**<**T**>(): *OperatorLike‹EnumerableLike‹EnumerableLike‹T››, EnumerableLike‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *OperatorLike‹EnumerableLike‹EnumerableLike‹T››, EnumerableLike‹T››*
+
+___
+
+###  fromArray
+
+▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -632,12 +645,27 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`values` | keyof T[] | - |
-`options` | object |  {} |
+Name | Type |
+------ | ------ |
+`values` | keyof T[] |
+`options?` | undefined &#124; object |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`values` | keyof T[] |
+`options` | object |
+
+**Returns:** *EnumerableLike‹T›*
 
 ___
 
