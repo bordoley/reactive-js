@@ -84,10 +84,6 @@
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
 
-### Object literals
-
-* [enumerableMixin](README.md#const-enumerablemixin)
-
 ## Functions
 
 ###  buffer
@@ -437,6 +433,22 @@ Name | Type |
 ___
 
 ###  concat
+
+▸ **concat**<**T**>(`fst`: EnumerableLike‹T›, `snd`: EnumerableLike‹T›, ...`tail`: Array‹EnumerableLike‹T››): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`fst` | EnumerableLike‹T› |
+`snd` | EnumerableLike‹T› |
+`...tail` | Array‹EnumerableLike‹T›› |
+
+**Returns:** *EnumerableLike‹T›*
 
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -2309,41 +2321,3 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-## Object literals
-
-### `Const` enumerableMixin
-
-### ▪ **enumerableMixin**: *object*
-
-###  __@iterator
-
-▸ **__@iterator**<**T**>(`this`: EnumerableLike‹T›): *Iterator‹T, any, undefined›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | EnumerableLike‹T› |
-
-**Returns:** *Iterator‹T, any, undefined›*
-
-###  enumerate
-
-▸ **enumerate**<**T**>(`this`: EnumerableLike‹T›): *EnumeratorLike‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | EnumerableLike‹T› |
-
-**Returns:** *EnumeratorLike‹T›*

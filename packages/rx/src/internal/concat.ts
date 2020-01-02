@@ -1,5 +1,6 @@
-import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
+import { enumerableMixin, isEnumerable } from "./enumerable";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
@@ -50,6 +51,16 @@ class ConcatObservable<T> implements ObservableLike<T> {
   }
 }
 
+class ConcatEnumerable<T> extends ConcatObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+}
+
+export function concat<T>(
+  fst: EnumerableLike<T>,
+  snd: EnumerableLike<T>,
+  ...tail: Array<EnumerableLike<T>>
+): EnumerableLike<T>;
 export function concat<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
@@ -58,5 +69,7 @@ export function concat<T>(
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  return new ConcatObservable(observables);
+  return observables.every(isEnumerable) 
+    ? new ConcatEnumerable(observables as EnumerableLike<T>[]) 
+    : new ConcatObservable(observables);
 }
