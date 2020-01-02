@@ -207,11 +207,18 @@ export class IteratorDisposable<T> implements DisposableLike {
   }
 }
 
-export const fromIterable = <T>(
+export function fromIterable<T>(
+  iterable: Iterable<T>,
+): EnumerableLike<T>;
+export function fromIterable<T>(
+  iterable: Iterable<T>,
+  delay: number,
+): ObservableLike<T>;
+export function fromIterable<T>(
   iterable: Iterable<T>,
   delay = 0,
-): ObservableLike<T> =>
-  delay > 0
+): ObservableLike<T> {
+  return delay > 0
     ? using(
         () => new IteratorDisposable(iterable[Symbol.iterator]()),
         enumerator =>
@@ -222,3 +229,4 @@ export const fromIterable = <T>(
           ),
       )
     : new FromIterableObservable(iterable);
+}

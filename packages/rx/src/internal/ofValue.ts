@@ -39,7 +39,10 @@ class OfValueObservable<T> implements ObservableLike<T> {
   }
 }
 
-export const ofValue = <T>(value: T, delay = 0): ObservableLike<T> =>
-  delay > 0
+export function ofValue<T>(value: T): EnumerableLike<T>
+export function ofValue<T>(value: T, delay: number): ObservableLike<T>
+export function ofValue<T>(value: T, delay = 0): ObservableLike<T> {
+  return delay > 0
     ? new OfValueObservable(value, delay)
     : new OfValueEnumerable(value);
+}

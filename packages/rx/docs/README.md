@@ -37,16 +37,16 @@
 * [createSubject](README.md#const-createsubject)
 * [defer](README.md#const-defer)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
-* [empty](README.md#const-empty)
+* [empty](README.md#empty)
 * [endWith](README.md#endwith)
 * [exhaust](README.md#const-exhaust)
 * [flatten](README.md#const-flatten)
 * [fromArray](README.md#fromarray)
-* [fromIterable](README.md#const-fromiterable)
+* [fromIterable](README.md#fromiterable)
 * [fromIterator](README.md#const-fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
-* [generate](README.md#const-generate)
+* [generate](README.md#generate)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
 * [liftEnumerable](README.md#liftenumerable)
@@ -56,7 +56,7 @@
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
 * [observe](README.md#observe)
-* [ofValue](README.md#const-ofvalue)
+* [ofValue](README.md#ofvalue)
 * [onComplete](README.md#const-oncomplete)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
@@ -574,7 +574,15 @@ Name | Type |
 
 ___
 
-### `Const` empty
+###  empty
+
+▸ **empty**<**T**>(): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *EnumerableLike‹T›*
 
 ▸ **empty**<**T**>(`delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -584,9 +592,9 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -637,7 +645,7 @@ ___
 
 ###  fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *EnumerableLike‹T›*
 
 **Type parameters:**
 
@@ -650,9 +658,9 @@ Name | Type |
 `values` | keyof T[] |
 `options?` | undefined &#124; object |
 
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+**Returns:** *EnumerableLike‹T›*
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *EnumerableLike‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -665,11 +673,25 @@ Name | Type |
 `values` | keyof T[] |
 `options` | object |
 
-**Returns:** *EnumerableLike‹T›*
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ___
 
-### `Const` fromIterable
+###  fromIterable
+
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`iterable` | Iterable‹T› |
+
+**Returns:** *EnumerableLike‹T›*
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -679,10 +701,10 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`iterable` | Iterable‹T› | - |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`iterable` | Iterable‹T› |
+`delay` | number |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -745,7 +767,31 @@ Name | Type |
 
 ___
 
-### `Const` generate
+###  generate
+
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **generator**: *function*
+
+▸ (`acc`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *T*
+
+**Returns:** *EnumerableLike‹T›*
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -769,7 +815,7 @@ Name | Type |
 
 ▸ (): *T*
 
-▪`Default value`  **delay**: *number*= 0
+▪ **delay**: *number*
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1343,7 +1389,21 @@ Name | Type | Description |
 
 ___
 
-### `Const` ofValue
+###  ofValue
+
+▸ **ofValue**<**T**>(`value`: T): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | T |
+
+**Returns:** *EnumerableLike‹T›*
 
 ▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1353,10 +1413,10 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`value` | T | - |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`value` | T |
+`delay` | number |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

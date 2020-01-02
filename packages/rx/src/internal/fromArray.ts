@@ -115,14 +115,14 @@ export function fromArray <T>(
   options?: {
     startIndex: number;
   },
-): ObservableLike<T>;
+): EnumerableLike<T>;
 export function fromArray <T>(
   values: readonly T[],
   options: {
     delay: number;
     startIndex?: number;
   },
-): EnumerableLike<T>;
+): ObservableLike<T>;
 export function fromArray <T>(
   values: readonly T[],
   options: {

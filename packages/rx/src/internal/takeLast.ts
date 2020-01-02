@@ -8,7 +8,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 import { producerMixin } from "./producer";
 
@@ -85,4 +85,4 @@ const operator = <T>(
   new TakeLastSubscriber(subscriber, count);
 
 export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> =>
-  liftObservable(operator(count));
+  liftEnumerable(operator(count));

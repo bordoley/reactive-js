@@ -74,9 +74,10 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
         return false;
       }
 
-      this.continuation = (
-        this.continuation.run(alwaysTrue) || {}
-      ).continuation;
+      const result = this.continuation.run(alwaysTrue) || undefined;
+      if (result !== undefined) {
+        this.continuation = result.continuation;
+      }
 
       const error = this.error;
       if (error !== undefined) {

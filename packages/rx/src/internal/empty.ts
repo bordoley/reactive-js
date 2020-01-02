@@ -33,5 +33,8 @@ class EmptyObservable<T> implements ObservableLike<T> {
   }
 }
 
-export const empty = <T>(delay = 0): ObservableLike<T> =>
-  delay > 0 ? defer(() => new EmptyObservable(delay)) : defaultEmpty;
+export function empty<T>(): EnumerableLike<T> 
+export function empty<T>(delay: number): ObservableLike<T> 
+export function empty<T>(delay = 0): ObservableLike<T> {
+  return delay > 0 ? defer(() => new EmptyObservable(delay)) : defaultEmpty;
+}
