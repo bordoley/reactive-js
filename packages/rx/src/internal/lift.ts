@@ -5,7 +5,7 @@ import {
   SubscriberOperatorLike,
   EnumerableLike,
 } from "./interfaces";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin, isEnumerable } from "./enumerable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
@@ -164,7 +164,7 @@ export function liftEnumerable(
         ? [...source.operators, ...operators]
         : operators;
         
-    return (source as any).enumerate !== undefined
+    return isEnumerable(source)
       ? new LiftedEnumerable(sourceSource, allOperators)
       : new LiftedObservable(sourceSource, allOperators);
   };
