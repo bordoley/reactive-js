@@ -2321,3 +2321,303 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+▸ **zip**<**TA**, **TB**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
+
+**Returns:** *EnumerableLike‹T›*
+
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›, EnumerableLike‹TI›], `selector`: function): *EnumerableLike‹T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+▪ **TI**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **observables**: *[EnumerableLike‹TA›, EnumerableLike‹TB›, EnumerableLike‹TC›, EnumerableLike‹TD›, EnumerableLike‹TE›, EnumerableLike‹TF›, EnumerableLike‹TG›, EnumerableLike‹TH›, EnumerableLike‹TI›]*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
+`i` | TI |
+
+**Returns:** *EnumerableLike‹T›*
