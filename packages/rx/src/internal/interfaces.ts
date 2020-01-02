@@ -81,7 +81,7 @@ export interface SubjectResourceLike<T>
   extends SubjectLike<T>,
     MulticastObservableResourceLike<T> {}
 
-/** @ignore */
+/** @noInheritDoc */    
 export interface EnumeratorLike<T> extends DisposableLike {
   readonly current: T;
   readonly hasCurrent: boolean;
@@ -89,7 +89,7 @@ export interface EnumeratorLike<T> extends DisposableLike {
   moveNext(): boolean;
 }
 
-/** @ignore */
+/** @noInheritDoc */
 export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
   enumerate(): EnumeratorLike<T>;
 }

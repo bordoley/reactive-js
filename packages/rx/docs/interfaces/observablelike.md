@@ -16,6 +16,8 @@ The source of notifications which may be observed by a SubscriberLike instance.
 
   ↳ [MulticastObservableLike](multicastobservablelike.md)
 
+  ↳ [EnumerableLike](enumerablelike.md)
+
 ## Index
 
 ### Methods
