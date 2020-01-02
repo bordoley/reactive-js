@@ -94,8 +94,8 @@ const emptyLocation = {
 };
 
 const locationIterable = pipe(
-  historyIterable,
-  toStateUpdaterAsyncIterable(() => emptyLocation),
+  historyAsyncEnumerable,
+  toStateUpdaterAsyncEnumerable(() => emptyLocation),
   lift(onNext<LocationLike>(console.log))
 );
 
