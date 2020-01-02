@@ -1,6 +1,6 @@
-[@reactive-js/ix](../README.md) › [AsyncIteratorLike](asynciteratorlike.md)
+[@reactive-js/ix](../README.md) › [AsyncEnumeratorLike](asyncenumeratorlike.md)
 
-# Interface: AsyncIteratorLike <**TReq, T**>
+# Interface: AsyncEnumeratorLike <**TReq, T**>
 
 ## Type parameters
 
@@ -12,15 +12,15 @@
 
 * MulticastObservableLike‹T›
 
-  ↳ **AsyncIteratorLike**
+  ↳ **AsyncEnumeratorLike**
 
-  ↳ [AsyncIteratorResourceLike](asynciteratorresourcelike.md)
+  ↳ [AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)
 
 ## Index
 
 ### Methods
 
-* [dispatch](asynciteratorlike.md#dispatch)
+* [dispatch](asyncenumeratorlike.md#dispatch)
 
 ## Methods
 

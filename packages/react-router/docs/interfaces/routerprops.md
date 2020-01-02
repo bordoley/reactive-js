@@ -19,7 +19,7 @@
 
 ###  locationIterable
 
-• **locationIterable**: *AsyncIterableLike‹StateUpdaterLike‹[RelativeURILike](relativeurilike.md)›, [RelativeURILike](relativeurilike.md)›*
+• **locationIterable**: *AsyncEnumerableLike‹StateUpdaterLike‹[RelativeURILike](relativeurilike.md)›, [RelativeURILike](relativeurilike.md)›*
 
 ___
 
