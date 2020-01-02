@@ -6,7 +6,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
@@ -56,4 +56,4 @@ const operator = <TA, TB, TC>(
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperatorLike<TA, TC> => lift(operator(other, selector));
+): ObservableOperatorLike<TA, TC> => liftObservable(operator(other, selector));

@@ -1,7 +1,6 @@
 import { empty } from "./empty";
 import {
   EnumerableLike,
-  EnumeratorLike,
   ObservableLike,
   SubscriberLike,
   MulticastObservableResourceLike,
@@ -20,6 +19,7 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { producerMixin } from "./producer";
+import { enumerableMixin } from "./enumerable";
 
 class FromIteratorWithDelayObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
@@ -164,42 +164,11 @@ export const fromIterator = <T>(
   );
 };
 
-class FromIterableEnumerator<T> implements EnumeratorLike<T> {
-  readonly add = disposableMixin.add;
-  current: any;
-  readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
-  hasCurrent = false;
-  readonly remove = disposableMixin.remove;
+class FromIterableObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(private readonly iterator: Iterator<T>) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  moveNext(): boolean {
-    const next = this.iterator.next();
-    if (next.done) {
-      this.hasCurrent = false;
-      this.current = undefined;
-      this.dispose();
-      return false;
-    } else {
-      this.current = next.value;
-      this.hasCurrent = true;
-      return true;
-    }
-  }
-}
-
-class FromIterableObservable<T>
-  implements ObservableLike<T>, EnumerableLike<T> {
   constructor(private readonly iterable: Iterable<T>) {}
-
-  enumerate(): EnumeratorLike<T> {
-    return new FromIterableEnumerator(this.iterable[Symbol.iterator]());
-  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const iterator = this.iterable[Symbol.iterator]();

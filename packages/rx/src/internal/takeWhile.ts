@@ -3,7 +3,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -32,4 +32,4 @@ const operator = <T>(
 
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-): ObservableOperatorLike<T, T> => lift(operator(predicate));
+): ObservableOperatorLike<T, T> => liftEnumerable(operator(predicate));

@@ -6,7 +6,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
@@ -98,7 +98,7 @@ const operator = <T>(
 export const mergeAll = <T>(options?: {
   maxBufferSize?: number;
   maxConcurrency?: number;
-}): ObservableOperatorLike<ObservableLike<T>, T> => lift(operator(options));
+}): ObservableOperatorLike<ObservableLike<T>, T> => liftObservable(operator(options));
 
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,

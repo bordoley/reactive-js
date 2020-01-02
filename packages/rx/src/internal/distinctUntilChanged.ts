@@ -1,9 +1,9 @@
 import {
-  ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
+  ObservableOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class DistinctUntilChangedSubscriber<T> extends DelegatingSubscriber<T, T> {
@@ -39,4 +39,5 @@ const operator = <T>(
 
 export const distinctUntilChanged = <T>(
   equals?: (a: T, b: T) => boolean,
-): ObservableOperatorLike<T, T> => lift(operator(equals));
+): ObservableOperatorLike<T, T> => liftEnumerable(operator(equals));
+

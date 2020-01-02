@@ -10,7 +10,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
@@ -60,7 +60,7 @@ const operator = <T>(
 export const timeout = <T>(
   duration: number | ObservableLike<unknown>,
 ): ObservableOperatorLike<T, T> =>
-  lift(
+  liftObservable(
     operator(
       typeof duration === "number" ? throws(timeoutError, duration) : duration,
     ),

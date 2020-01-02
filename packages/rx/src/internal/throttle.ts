@@ -12,7 +12,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
@@ -112,7 +112,7 @@ export const throttle = <T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableOperatorLike<T, T> =>
-  lift(
+  liftObservable(
     throttleOperator(
       typeof duration === "number" ? _ => empty(duration) : duration,
       mode,

@@ -56,11 +56,6 @@ export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
-/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
-export interface ObservableOperatorLike<A, B> {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-}
-
 /** @noInheritDoc */
 export interface ObservableResourceLike<T>
   extends ObservableLike<T>,
@@ -95,9 +90,11 @@ export interface EnumeratorLike<T> extends DisposableLike {
 }
 
 /** @ignore */
-export interface EnumerableLike<T> {
+export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
   enumerate(): EnumeratorLike<T>;
 }
 
-/** @ignore */
-export interface EnumerableObservableLike<T> extends EnumerableLike<T>, ObservableLike<T> {}
+/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
+export interface ObservableOperatorLike<A, B> {
+  (observable: ObservableLike<A>): ObservableLike<B>;
+}

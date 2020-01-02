@@ -3,7 +3,7 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
@@ -27,4 +27,4 @@ const operator = <TA, TB>(
 
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): ObservableOperatorLike<TA, TB> => lift(operator(mapper));
+): ObservableOperatorLike<TA, TB> => liftEnumerable(operator(mapper));

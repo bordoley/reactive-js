@@ -1,10 +1,10 @@
 import {
-  ErrorLike,
   ObservableOperatorLike,
+  ErrorLike,
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { lift } from "./lift";
+import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 
 class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
@@ -43,4 +43,4 @@ const operator = <T, TAcc>(
 export const reduce = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => lift(operator(reducer, initialValue));
+): ObservableOperatorLike<T, TAcc> => liftEnumerable(operator(reducer, initialValue));
