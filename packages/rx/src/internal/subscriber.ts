@@ -68,6 +68,7 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
     this.delegate.add(this);
   }
 
+  /** @ignore */
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
       this.dispose();

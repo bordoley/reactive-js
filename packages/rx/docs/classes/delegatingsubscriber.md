@@ -30,10 +30,6 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 * [delegate](delegatingsubscriber.md#delegate)
 
-### Methods
-
-* [complete](delegatingsubscriber.md#complete)
-
 ## Constructors
 
 ###  constructor
@@ -55,21 +51,3 @@ Name | Type |
 ###  delegate
 
 • **delegate**: *[SubscriberLike](../interfaces/subscriberlike.md)‹TB›*
-
-## Methods
-
-###  complete
-
-▸ **complete**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
-
-*Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
-
-*Overrides void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error?` | [ErrorLike](../interfaces/errorlike.md) |
-
-**Returns:** *void*
