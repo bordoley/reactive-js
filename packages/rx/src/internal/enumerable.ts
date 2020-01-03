@@ -71,7 +71,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
 
     while (!this.hasCurrent) {
       if (this.isDisposed || this.continuation === undefined) {
-        return false;
+        break;
       }
 
       const result = this.continuation.run(alwaysTrue) || undefined;
@@ -86,7 +86,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
       }
     }
 
-    return true;
+    return this.hasCurrent;
   }
 
   next(next: T): void {
