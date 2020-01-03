@@ -1,5 +1,4 @@
-import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike, EnumeratorLike } from "./interfaces";
-import { OperatorLike } from "@reactive-js/pipe";
+import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike, EnumeratorLike, EnumerableOperatorLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { fromArray } from "./fromArray";
@@ -78,6 +77,6 @@ export function concat<T>(
     : new ConcatObservable(fromArray(observables));
 }
 
-export const flatten = <T>(): OperatorLike<EnumerableLike<EnumerableLike<T>>, EnumerableLike<T>> =>
+export const flatten = <T>(): EnumerableOperatorLike<EnumerableLike<T>, T> =>
   enumerable => new ConcatEnumerable(enumerable);
  
