@@ -15,7 +15,7 @@ import {
 } from "./interfaces";
 import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
-class DelegatingStateUpdaterAsyncEnumerable<T>
+class DelegatingStateStoreAsyncEnumerable<T>
   implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
   constructor(
     private readonly iterable: AsyncEnumerableLike<T, T>,
@@ -61,4 +61,4 @@ export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>
-  new DelegatingStateUpdaterAsyncEnumerable(iterable, initialState, equals);
+  new DelegatingStateStoreAsyncEnumerable(iterable, initialState, equals);
