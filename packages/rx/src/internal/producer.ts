@@ -5,7 +5,7 @@ import {
 import { SubscriberLike } from "./interfaces";
 
 interface ProducerLike<T> {
-  readonly subscriber: SubscriberLike<T> | undefined;
+  readonly subscriber: SubscriberLike<T>;
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void;
 }
@@ -21,7 +21,7 @@ export const producerMixin: SchedulerContinuationLike = {
       }
     } catch (cause) {
       const error = { cause };
-      (this.subscriber as SubscriberLike<T>).complete(error);
+      this.subscriber.complete(error);
     }
     return;
   },

@@ -2,47 +2,14 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { defer } from "./defer";
 import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
-class GenerateWithDelayObservable<T>
-  implements ObservableLike<T>, SchedulerContinuationLike {
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-    delay: this.delay,
-  };
-  readonly run = producerMixin.run;
-  private subscriber: SubscriberLike<T> | undefined;
-
-  constructor(
-    private readonly generator: (acc: T) => T,
-    private acc: T,
-    private readonly delay = 0,
-  ) {}
-
-  loop() {
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const acc = this.acc;
-    if (!subscriber.isDisposed) {
-      subscriber.next(acc);
-      this.acc = this.generator(acc);
-      return this.continuationResult;
-    } else {
-      return;
-    }
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this, this.delay);
-  }
-}
-
 class GenerateProducer<T> implements SchedulerContinuationLike {
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
+    delay: this.delay,
   };
 
   readonly run = producerMixin.run;
@@ -51,6 +18,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
+    private readonly delay: number,
   ) {}
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
@@ -58,14 +26,20 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     const subscriber = this.subscriber;
 
     let acc = this.acc;
-    if (shouldYield !== undefined) {
+    let result = undefined;
+    if (this.delay > 0 && !subscriber.isDisposed) {
+      subscriber.next(acc);
+      this.acc = this.generator(acc);
+      result = this.continuationResult;
+    } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         subscriber.next(acc);
         acc = generator(acc);
 
         if (shouldYield()) {
           this.acc = acc;
-          return this.continuationResult;
+          result = this.continuationResult;
+          break;
         }
       }
     } else {
@@ -74,23 +48,37 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
         acc = generator(acc);
       }
     }
-    subscriber.complete();
-    return;
+    return result;
   }
 }
 
-class GenerateObservable<T> implements EnumerableLike<T> {
+class GenerateObservable<T> implements ObservableLike<T> {
+  constructor(
+    private readonly generator: (acc: T) => T,
+    private readonly acc: T,
+    private readonly delay: number,
+  ) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const producer = new GenerateProducer(
+      subscriber, 
+      this.generator, 
+      this.acc, 
+      this.delay,
+    );
+    subscriber.schedule(producer, this.delay);
+  }
+}
+
+class GenerateEnumerable<T> extends GenerateObservable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
   constructor(
-    private readonly generator: (acc: T) => T,
-    private readonly acc: T,
-  ) {}
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new GenerateProducer(subscriber, this.generator, this.acc);
-    subscriber.schedule(producer);
+    generator: (acc: T) => T,
+    acc: T,
+  ) {
+    super(generator, acc, 0);
   }
 }
 
@@ -109,8 +97,6 @@ export function generate<T>(
   delay = 0,
 ): ObservableLike<T> {
   return delay > 0
-    ? defer(
-        () => new GenerateWithDelayObservable(generator, initialValue(), delay),
-      )
-    : new GenerateObservable(generator, initialValue());
+    ? new GenerateObservable(generator, initialValue(), delay)
+    : new GenerateEnumerable(generator, initialValue());
 }
