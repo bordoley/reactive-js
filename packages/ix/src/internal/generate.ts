@@ -46,7 +46,7 @@ class GenerateAsyncEnumerable<T>
     private readonly initialValue: () => T,
   ) {}
 
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
     return generateAsyncEnumerator(
       this.generator,
       this.initialValue,

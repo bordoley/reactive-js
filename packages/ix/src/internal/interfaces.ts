@@ -16,7 +16,7 @@ export interface AsyncEnumeratorResourceLike<TReq, T>
     MulticastObservableResourceLike<T> {}
 
 export interface AsyncEnumerableLike<TReq, T> {
-  getIXAsyncEnumerator(
+  enumerateAsync(
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorResourceLike<TReq, T>;

@@ -16,13 +16,13 @@
 
 ### Methods
 
-* [getIXAsyncEnumerator](asyncenumerablelike.md#getixasyncenumerator)
+* [enumerateAsync](asyncenumerablelike.md#enumerateasync)
 
 ## Methods
 
-###  getIXAsyncEnumerator
+###  enumerateAsync
 
-▸ **getIXAsyncEnumerator**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)‹TReq, T›*
+▸ **enumerateAsync**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)‹TReq, T›*
 
 **Parameters:**
 

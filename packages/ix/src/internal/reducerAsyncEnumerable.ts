@@ -14,7 +14,7 @@ class ReducerStoreAsyncEnumerable<TAction, T>
   implements AsyncEnumerableLike<TAction, T> {
   constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
 
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
     return createAsyncEnumeratorResource(this.operator, scheduler, replayCount);
   }
 }

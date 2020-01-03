@@ -14,7 +14,7 @@ const emptyAsyncEnumerator = <TReq, T>(
   createAsyncEnumeratorResource(operator, scheduler, replayCount);
 
 const instance = {
-  getIXAsyncEnumerator: emptyAsyncEnumerator,
+  enumerateAsync: emptyAsyncEnumerator,
 };
 
 export const empty = <TReq, T>(): AsyncEnumerableLike<TReq, T> => instance;
