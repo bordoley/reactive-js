@@ -41,12 +41,12 @@ export const scanAsync = <TReq, TSrc, TAcc>(
     const resource: AsyncEnumeratorResourceLike<
       TReq,
       TSrc
-    > = iterable.getIXAsyncEnumerator(scheduler);
+    > = iterable.enumerateAsync(scheduler);
 
     const eventEmitter = pipe(
       identity<ReduceRequestLike<TReq, TAcc>>(),
       lift(onNext(({ request }) => resource.dispatch(request))),
-    ).getIXAsyncEnumerator(scheduler);
+    ).enumerateAsync(scheduler);
 
     return [resource, eventEmitter];
   };

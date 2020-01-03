@@ -23,8 +23,8 @@ class DelegatingStateUpdaterAsyncEnumerable<T>
     private readonly equals?: (a: T, b: T) => boolean,
   ) {}
 
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
-    const iterator = this.iterable.getIXAsyncEnumerator(scheduler);
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
+    const iterator = this.iterable.enumerateAsync(scheduler);
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,

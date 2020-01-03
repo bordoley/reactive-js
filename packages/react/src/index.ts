@@ -117,7 +117,7 @@ export const useAsyncEnumerable = <TReq, T>(
   const replay = config.replay || 0;
 
   const factory = useCallback(
-    () => iterable.getIXAsyncEnumerator(scheduler, replay),
+    () => iterable.enumerateAsync(scheduler, replay),
     [iterable, scheduler, replay],
   );
 

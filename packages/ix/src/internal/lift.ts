@@ -54,11 +54,11 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     >,
   ) {}
 
-  getIXAsyncEnumerator(
+  enumerateAsync(
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorResourceLike<TReq, T> {
-    const iterator = this.source.getIXAsyncEnumerator(scheduler);
+    const iterator = this.source.enumerateAsync(scheduler);
 
     const dispatch: (req: any) => void =
       iterator instanceof LiftedAsyncEnumerable

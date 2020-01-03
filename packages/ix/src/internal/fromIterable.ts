@@ -52,7 +52,7 @@ class FromIterableAsyncEnumerable<T>
   implements AsyncEnumerableLike<number | void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
     return fromIterableAsyncEnumerator(this.iterable, scheduler, replayCount);
   }
 }

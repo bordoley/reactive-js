@@ -46,7 +46,7 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
   );
 
 const _historyIterable: AsyncEnumerableLike<LocationLike, LocationLike> = {
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
     return createAsyncEnumeratorResource(
       historyOperator,
       scheduler,

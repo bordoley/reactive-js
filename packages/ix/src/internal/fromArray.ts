@@ -48,7 +48,7 @@ class FromArrayAsyncEnumerable<T>
   implements AsyncEnumerableLike<number | void, T> {
   constructor(private readonly values: readonly T[]) {}
 
-  getIXAsyncEnumerator(scheduler: SchedulerLike, replayCount?: number) {
+  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
     return fromArrayAsyncEnumerator(this.values, scheduler, replayCount);
   }
 }
