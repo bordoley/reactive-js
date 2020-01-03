@@ -10,7 +10,7 @@
 
 ### Variables
 
-* [historyAsyncEnumerable](README.md#const-historyasyncenumerable)
+* [history](README.md#const-history)
 
 ### Functions
 
@@ -19,9 +19,9 @@
 
 ## Variables
 
-### `Const` historyAsyncEnumerable
+### `Const` history
 
-• **historyAsyncEnumerable**: *AsyncEnumerableLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›* =  _historyIterable
+• **history**: *AsyncEnumerableLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›* =  _history
 
 ## Functions
 

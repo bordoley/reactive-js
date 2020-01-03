@@ -7,7 +7,7 @@ import {
   ObservableOperatorLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
 import { StateUpdaterLike, AsyncEnumerableLike } from "./interfaces";
 
 class ReducerStoreAsyncEnumerable<TAction, T>
@@ -15,11 +15,11 @@ class ReducerStoreAsyncEnumerable<TAction, T>
   constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    return createAsyncEnumeratorResource(this.operator, scheduler, replayCount);
+    return createAsyncEnumerator(this.operator, scheduler, replayCount);
   }
 }
 
-export const createActionReducerAsyncEnumerable = <TAction, T>(
+export const createActionReducer = <TAction, T>(
   reducer: (state: T, action: TAction) => T,
   initialStateFactory: () => T,
   equals?: (a: T, b: T) => boolean,
@@ -40,8 +40,8 @@ export const createActionReducerAsyncEnumerable = <TAction, T>(
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
   action(state);
-export const createStateUpdaterAsyncEnumerable = <T>(
+export const createStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncEnumerableLike<StateUpdaterLike<T>, T> =>
-  createActionReducerAsyncEnumerable(stateStoreReducer, initialState, equals);
+  createActionReducer(stateStoreReducer, initialState, equals);

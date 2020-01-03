@@ -13,7 +13,7 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "./interfaces";
-import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 class DelegatingStateUpdaterAsyncEnumerable<T>
   implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
@@ -48,7 +48,7 @@ class DelegatingStateUpdaterAsyncEnumerable<T>
       return merge<T>(onIteratorNextChangedObs, stateObs);
     };
 
-    const retval = createAsyncEnumeratorResource(
+    const retval = createAsyncEnumerator(
       operator,
       scheduler,
       replayCount,
@@ -57,7 +57,7 @@ class DelegatingStateUpdaterAsyncEnumerable<T>
   }
 }
 
-export const toStateUpdaterAsyncEnumerable = <T>(
+export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
 ): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>

@@ -1,6 +1,6 @@
 export { fromEvent } from "./internal/event";
 export {
-  historyAsyncEnumerable,
+  history,
   LocationLike,
-} from "./internal/historyAsyncEnumerable";
+} from "./internal/history";
 export { createSchedulerWithPriority } from "./internal/scheduler";

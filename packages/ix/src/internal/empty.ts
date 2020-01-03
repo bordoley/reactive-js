@@ -1,17 +1,16 @@
-import { pipe } from "@reactive-js/pipe";
-import { ignoreElements, takeFirst, ObservableLike } from "@reactive-js/rx";
+import { empty as emptyObs, ObservableLike } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
-import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
-const operator = <TReq, T>(obs: ObservableLike<TReq>): ObservableLike<T> =>
-  pipe(obs, takeFirst(0), ignoreElements());
+const operator = <TReq, T>(_: ObservableLike<TReq>): ObservableLike<T> =>
+ emptyObs();
 
 const emptyAsyncEnumerator = <TReq, T>(
   scheduler: SchedulerLike,
   replayCount?: number,
 ): AsyncEnumeratorResourceLike<TReq, T> =>
-  createAsyncEnumeratorResource(operator, scheduler, replayCount);
+  createAsyncEnumerator(operator, scheduler, replayCount);
 
 const instance = {
   enumerateAsync: emptyAsyncEnumerator,

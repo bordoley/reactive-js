@@ -14,7 +14,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
-import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const doneError = Symbol("IteratorDone");
 
@@ -45,7 +45,7 @@ const fromIterableAsyncEnumerator = <T>(
       catchError(error => error === doneError ? empty() : undefined),
     );
 
-  return createAsyncEnumeratorResource(operator, scheduler, replayCount);
+  return createAsyncEnumerator(operator, scheduler, replayCount);
 };
 
 class FromIterableAsyncEnumerable<T>

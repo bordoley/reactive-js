@@ -9,7 +9,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
-import { createAsyncEnumeratorResource } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);
@@ -36,7 +36,7 @@ const generateAsyncEnumerator = <T>(
       scan(generateScanner(generator), initialValue),
     );
 
-  return createAsyncEnumeratorResource(operator, scheduler, replayCount);
+  return createAsyncEnumerator(operator, scheduler, replayCount);
 };
 
 class GenerateAsyncEnumerable<T>
