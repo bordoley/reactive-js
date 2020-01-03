@@ -14,13 +14,13 @@
 
 ### Variables
 
-* [disposedAsyncEnumeratorResource](README.md#const-disposedasyncenumeratorresource)
+* [disposedAsyncEnumerator](README.md#const-disposedasyncenumerator)
 
 ### Functions
 
-* [createActionReducerAsyncEnumerable](README.md#const-createactionreducerasyncenumerable)
-* [createAsyncEnumeratorResource](README.md#const-createasyncenumeratorresource)
-* [createStateUpdaterAsyncEnumerable](README.md#const-createstateupdaterasyncenumerable)
+* [createActionReducer](README.md#const-createactionreducer)
+* [createAsyncEnumerator](README.md#const-createasyncenumerator)
+* [createStateStore](README.md#const-createstatestore)
 * [empty](README.md#const-empty)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
@@ -29,19 +29,19 @@
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
 * [scanAsync](README.md#const-scanasync)
-* [toStateUpdaterAsyncEnumerable](README.md#const-tostateupdaterasyncenumerable)
+* [toStateStore](README.md#const-tostatestore)
 
 ## Variables
 
-### `Const` disposedAsyncEnumeratorResource
+### `Const` disposedAsyncEnumerator
 
-• **disposedAsyncEnumeratorResource**: *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹unknown, any›* =  _disposed
+• **disposedAsyncEnumerator**: *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹unknown, any›* =  _disposed
 
 ## Functions
 
-### `Const` createActionReducerAsyncEnumerable
+### `Const` createActionReducer
 
-▸ **createActionReducerAsyncEnumerable**<**TAction**, **T**>(`reducer`: function, `initialStateFactory`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TAction, T›*
+▸ **createActionReducer**<**TAction**, **T**>(`reducer`: function, `initialStateFactory`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TAction, T›*
 
 **Type parameters:**
 
@@ -72,9 +72,9 @@ Name | Type |
 
 ___
 
-### `Const` createAsyncEnumeratorResource
+### `Const` createAsyncEnumerator
 
-▸ **createAsyncEnumeratorResource**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹TReq, T›*
+▸ **createAsyncEnumerator**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹TReq, T›*
 
 **Type parameters:**
 
@@ -94,9 +94,9 @@ Name | Type | Default |
 
 ___
 
-### `Const` createStateUpdaterAsyncEnumerable
+### `Const` createStateStore
 
-▸ **createStateUpdaterAsyncEnumerable**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -703,9 +703,9 @@ Name | Type |
 
 ___
 
-### `Const` toStateUpdaterAsyncEnumerable
+### `Const` toStateStore
 
-▸ **toStateUpdaterAsyncEnumerable**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+▸ **toStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
 **Type parameters:**
 

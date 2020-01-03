@@ -1,5 +1,5 @@
 import {
-  toStateUpdaterAsyncEnumerable,
+  toStateStore,
   StateUpdaterLike,
   lift,
 } from "@reactive-js/ix";
@@ -11,7 +11,7 @@ import {
 } from "@reactive-js/react-router";
 import { idlePriority } from "@reactive-js/react-scheduler";
 import { generate, onNext } from "@reactive-js/rx";
-import { historyAsyncEnumerable, LocationLike } from "@reactive-js/web";
+import { history, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe } from "@reactive-js/pipe";
@@ -98,8 +98,8 @@ const emptyLocation = {
 };
 
 const locationIterable = pipe(
-  historyAsyncEnumerable,
-  toStateUpdaterAsyncEnumerable(() => emptyLocation),
+  history,
+  toStateStore(() => emptyLocation),
   lift(onNext<LocationLike>(console.log)),
 );
 

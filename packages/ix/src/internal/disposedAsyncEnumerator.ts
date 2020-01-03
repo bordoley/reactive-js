@@ -8,4 +8,4 @@ const _disposed: AsyncEnumeratorResourceLike<unknown, any> = {
   subscribe: subscriber => subscriber.dispose(),
 };
 
-export const disposedAsyncEnumeratorResource = _disposed;
+export const disposedAsyncEnumerator = _disposed;

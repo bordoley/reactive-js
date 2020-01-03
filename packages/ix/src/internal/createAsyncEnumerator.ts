@@ -40,7 +40,7 @@ export class AsyncEnumeratorResourceImpl<TReq, T>
   }
 }
 
-export const createAsyncEnumeratorResource = <TReq, T>(
+export const createAsyncEnumerator = <TReq, T>(
   operator: ObservableOperatorLike<TReq, T>,
   scheduler: SchedulerLike,
   replayCount = 0,

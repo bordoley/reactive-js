@@ -1,7 +1,7 @@
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
-  disposedAsyncEnumeratorResource,
+  disposedAsyncEnumerator,
   AsyncEnumeratorResourceLike,
 } from "@reactive-js/ix";
 import { pipe } from "@reactive-js/pipe";
@@ -123,6 +123,6 @@ export const useAsyncEnumerable = <TReq, T>(
 
   return useResource<AsyncEnumeratorResourceLike<TReq, T>>(
     factory,
-    disposedAsyncEnumeratorResource,
+    disposedAsyncEnumerator,
   );
 };
