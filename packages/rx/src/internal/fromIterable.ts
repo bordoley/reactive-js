@@ -1,174 +1,142 @@
-import { empty } from "./empty";
 import {
   EnumerableLike,
   ObservableLike,
   SubscriberLike,
-  MulticastObservableResourceLike,
+  EnumeratorLike,
 } from "./interfaces";
-import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
-  SchedulerLike,
 } from "@reactive-js/scheduler";
-import { publish } from "./publish";
-import { using } from "./using";
-import {
-  createDisposable,
-  disposableMixin,
-  DisposableLike,
-} from "@reactive-js/disposable";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
+import { DisposableLike, disposableMixin, createDisposable } from "@reactive-js/disposable";
 
-class FromIteratorWithDelayObservable<T>
-  implements ObservableLike<T>, SchedulerContinuationLike {
-  private subscriber: SubscriberLike<T> | undefined;
-  private count = 0;
-
+class FromIteratorProducer<T> implements SchedulerContinuationLike {
   private readonly continuationResult: SchedulerContinuationResultLike = {
     continuation: this,
     delay: this.delay,
   };
-
   run = producerMixin.run;
 
   constructor(
+    private readonly subscriber: SubscriberLike<T>,
     private readonly iterator: Iterator<T>,
     private readonly delay: number,
-    private readonly maxCount: number,
-    private readonly doneError?: unknown,
-  ) {}
-
-  loop() {
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const doneError = this.doneError;
-
-    if (this.count >= this.maxCount || subscriber.isDisposed) {
-      subscriber.complete();
-      return;
-    }
-
-    const next = this.iterator.next();
-    const done = next.done;
-    if (done && doneError !== undefined) {
-      throw doneError;
-    } else if (done) {
-      subscriber.complete();
-      return;
-    }
-
-    subscriber.next(next.value);
-    this.count++;
-    return this.continuationResult;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this, this.delay);
-  }
-}
-
-class FromIteratorObservable<T>
-  implements ObservableLike<T>, SchedulerContinuationLike {
-  private subscriber: SubscriberLike<T> | undefined;
-  private count = 0;
-
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-  };
-
-  run = producerMixin.run;
-  constructor(
-    private readonly iterator: Iterator<T>,
-    private readonly maxCount: number,
-    private readonly doneError?: unknown,
   ) {}
 
   loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
-    const subscriber = this.subscriber as SubscriberLike<T>;
-    const maxCount = this.maxCount;
-    const doneError = this.doneError;
+    const subscriber = this.subscriber;
 
-    let count = this.count;
-
-    if (shouldYield !== undefined) {
-      while (count < maxCount && !subscriber.isDisposed) {
+    if (this.delay > 0 && !subscriber.isDisposed) {
+      const next = iterator.next();
+      if (!next.done) { 
+        subscriber.next(next.value);
+        return this.continuationResult;
+      }
+    } else if (shouldYield !== undefined) {
+      while (!subscriber.isDisposed) {
         const next = iterator.next();
-        if (!next.done) {
-          subscriber.next(next.value);
-          count++;
-        } else if (doneError !== undefined) {
-          throw doneError;
-        } else {
-          break;
-        }
-
+        if (next.done) { break; }
+        subscriber.next(next.value);
+        
         if (shouldYield()) {
-          this.count = count;
           return this.continuationResult;
         }
       }
     } else {
-      while (count < maxCount && !subscriber.isDisposed) {
+      while (!subscriber.isDisposed) {
         const next = iterator.next();
-        if (!next.done) {
-          subscriber.next(next.value);
-          count++;
-        } else if (doneError !== undefined) {
-          throw doneError;
-        } else {
-          break;
-        }
+        if (next.done) { break; }
+        subscriber.next(next.value);
       }
     }
 
     subscriber.complete();
     return;
   }
+}
+
+class FromIteratorObservable<T> implements ObservableLike<T> {
+  constructor(
+    protected readonly iterator: Iterator<T>,
+    private readonly delay: number,
+  ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this);
+    const producer = new FromIteratorProducer(
+      subscriber, 
+      this.iterator, 
+      this.delay,
+    );
+    subscriber.schedule(producer, this.delay);
   }
 }
 
-export const fromIterator = <T>(
-  iterator: Iterator<T>,
-  scheduler: SchedulerLike,
-  config: {
-    delay?: number;
-    count?: number;
-    doneError?: unknown;
-  } = {},
-): MulticastObservableResourceLike<T> => {
-  const delay = Math.max(config.delay ?? 0, 0);
-  const maxCount = Math.min(
-    Math.max(config.count ?? Number.MAX_SAFE_INTEGER, 0),
-    Number.MAX_SAFE_INTEGER,
-  );
+class IteratorEnumerator<T> implements EnumeratorLike<T> {
+  readonly add = disposableMixin.add;
+  current: any;
+  readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
+  hasCurrent = false;
+  readonly remove = disposableMixin.remove;
 
-  return pipe(
-    maxCount === 0
-      ? empty()
-      : delay > 0
-      ? new FromIteratorWithDelayObservable(
-          iterator,
-          delay,
-          maxCount,
-          config.doneError,
-        )
-      : new FromIteratorObservable(iterator, maxCount, config.doneError),
-    publish(scheduler),
-  );
-};
+  constructor(private readonly iterator: Iterator<T>) {}
 
-class FromIterableObservable<T> implements EnumerableLike<T> {
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+
+  moveNext(): boolean {
+    this.current = undefined;
+    this.hasCurrent = false;
+
+    const next = this.iterator.next();
+    if (!next.done) { 
+      this.hasCurrent = true;
+      this.current = next.value;
+    } else {
+      this.dispose();
+    }
+
+    return this.hasCurrent;
+  }
+}
+
+class FromIteratorEnumerable<T> extends FromIteratorObservable<T> implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(private readonly iterable: Iterable<T>) {}
+  constructor(iterator: Iterator<T>) {
+    super(iterator, 0);
+  }
+
+  enumerate() {
+    return new IteratorEnumerator(this.iterator);
+  }
+}
+
+export function fromIterator<T>(
+  iterator: Iterator<T>,
+): EnumerableLike<T>;
+export function fromIterator<T>(
+  iterator: Iterator<T>,
+  delay: number,
+): ObservableLike<T>;
+export function fromIterator<T>(
+  iterator: Iterator<T>,
+  delay: number = 0,
+): ObservableLike<T> {
+  return delay > 0 
+    ? new FromIteratorObservable(iterator, delay)
+    : new FromIteratorEnumerable(iterator);
+}
+
+class FromIterableObservable<T> implements ObservableLike<T> {
+  constructor(
+    protected readonly iterable: Iterable<T>, 
+    private readonly delay: number,
+  ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     const iterator = this.iterable[Symbol.iterator]();
@@ -178,32 +146,20 @@ class FromIterableObservable<T> implements EnumerableLike<T> {
       }
     });
 
-    const observable = new FromIteratorObservable(
-      iterator,
-      Number.MAX_SAFE_INTEGER,
-    );
+    const observable = fromIterator(iterator, this.delay);
     observable.subscribe(subscriber);
   }
 }
 
-/** @ignore */
-export class IteratorDisposable<T> implements DisposableLike {
-  readonly disposable = createDisposable();
+class FromIterableEnumerable<T> extends FromIterableObservable<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-  remove = disposableMixin.remove;
-  constructor(readonly iterator: Iterator<T>) {
-    this.add(() => {
-      const iterator = this.iterator;
-      if (iterator.return !== undefined) {
-        iterator.return();
-      }
-    });
+  constructor(iterable: Iterable<T>) {
+    super(iterable, 0);
   }
 
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+  enumerate() {
+    return new IteratorEnumerator(this.iterable[Symbol.iterator]());
   }
 }
 
@@ -218,15 +174,7 @@ export function fromIterable<T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0
-    ? using(
-        () => new IteratorDisposable(iterable[Symbol.iterator]()),
-        enumerator =>
-          new FromIteratorWithDelayObservable(
-            enumerator.iterator,
-            delay,
-            Number.MAX_SAFE_INTEGER,
-          ),
-      )
-    : new FromIterableObservable(iterable);
+  return delay > 0 
+    ? new FromIterableObservable(iterable, delay)
+    : new FromIterableEnumerable(iterable);
 }

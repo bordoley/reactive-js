@@ -44,8 +44,9 @@
 * [exhaust](README.md#const-exhaust)
 * [flatten](README.md#const-flatten)
 * [fromArray](README.md#fromarray)
+* [fromEnumerator](README.md#fromenumerator)
 * [fromIterable](README.md#fromiterable)
-* [fromIterator](README.md#const-fromiterator)
+* [fromIterator](README.md#fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
@@ -679,6 +680,39 @@ Name | Type |
 
 ___
 
+###  fromEnumerator
+
+▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› |
+
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+
+▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› |
+`delay` | number |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
 ###  fromIterable
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
@@ -712,9 +746,9 @@ Name | Type |
 
 ___
 
-### `Const` fromIterator
+###  fromIterator
 
-▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `scheduler`: SchedulerLike, `config`: object): *[MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)‹T›*
+▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -722,13 +756,26 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`iterator` | Iterator‹T› | - |
-`scheduler` | SchedulerLike | - |
-`config` | object |  {} |
+Name | Type |
+------ | ------ |
+`iterator` | Iterator‹T› |
 
-**Returns:** *[MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)‹T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+
+▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`iterator` | Iterator‹T› |
+`delay` | number |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ___
 
