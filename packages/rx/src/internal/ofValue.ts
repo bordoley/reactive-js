@@ -17,17 +17,6 @@ class OfValueProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class OfValueEnumerable<T> implements EnumerableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
-
-  constructor(private readonly value: T) {}
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    subscriber.schedule(new OfValueProducer(this.value, subscriber));
-  }
-}
-
 class OfValueObservable<T> implements ObservableLike<T> {
   constructor(private readonly value: T, private readonly delay: number) {}
 
@@ -36,6 +25,15 @@ class OfValueObservable<T> implements ObservableLike<T> {
       new OfValueProducer(this.value, subscriber),
       this.delay,
     );
+  }
+}
+
+class OfValueEnumerable<T> extends OfValueObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+
+  constructor(value: T) {
+    super(value, 0);
   }
 }
 

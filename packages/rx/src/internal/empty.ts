@@ -3,7 +3,6 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { defer } from "./defer";
 import { enumerableMixin } from "./enumerable";
 
 class EmptyProducer<T> implements SchedulerContinuationLike {
@@ -14,17 +13,6 @@ class EmptyProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class EmptyEnumerable<T> implements EnumerableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    subscriber.schedule(new EmptyProducer(subscriber));
-  }
-}
-
-const defaultEmpty = new EmptyEnumerable();
-
 class EmptyObservable<T> implements ObservableLike<T> {
   constructor(private readonly delay: number) {}
 
@@ -33,8 +21,20 @@ class EmptyObservable<T> implements ObservableLike<T> {
   }
 }
 
+class EmptyEnumerable<T> extends EmptyObservable<T> implements EnumerableLike<T> {
+  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
+  readonly enumerate = enumerableMixin.enumerate;
+
+  constructor() {
+    super(0);
+  }
+}
+
+const defaultEmpty = new EmptyEnumerable();
+
+
 export function empty<T>(): EnumerableLike<T> 
 export function empty<T>(delay: number): ObservableLike<T> 
 export function empty<T>(delay = 0): ObservableLike<T> {
-  return delay > 0 ? defer(() => new EmptyObservable(delay)) : defaultEmpty;
+  return delay > 0 ? new EmptyObservable(delay) : defaultEmpty;
 }
