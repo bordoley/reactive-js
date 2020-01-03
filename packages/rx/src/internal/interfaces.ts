@@ -98,3 +98,8 @@ export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
 export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
 }
+
+/** A function which converts an EnumerableLike<A> to an EnumerableLike<B> */
+export interface EnumerableOperatorLike<A, B> {
+  (enumerable: EnumerableLike<A>): EnumerableLike<B>;
+}

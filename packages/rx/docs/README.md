@@ -15,6 +15,7 @@
 ### Interfaces
 
 * [EnumerableLike](interfaces/enumerablelike.md)
+* [EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)
 * [EnumeratorLike](interfaces/enumeratorlike.md)
 * [ErrorLike](interfaces/errorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
@@ -636,13 +637,13 @@ ___
 
 ### `Const` flatten
 
-▸ **flatten**<**T**>(): *OperatorLike‹[EnumerableLike](interfaces/enumerablelike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T››, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
+▸ **flatten**<**T**>(): *[EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[EnumerableLike](interfaces/enumerablelike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T››, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
+**Returns:** *[EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, T›*
 
 ___
 
