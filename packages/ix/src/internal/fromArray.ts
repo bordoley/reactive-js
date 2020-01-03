@@ -8,7 +8,7 @@ import {
   ObservableLike,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const fromArrayScanner = (
@@ -22,34 +22,27 @@ const fromArrayScanner = (
   count: count || 1,
 });
 
-const fromArrayAsyncEnumerator = <T>(
-  values: readonly T[],
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncEnumeratorResourceLike<number | void, T> => {
-  const operator = (obs: ObservableLike<number>) =>
-    pipe(
-      obs,
-      scan(fromArrayScanner, () => ({
-        startIndex: 0,
-        count: 0,
-      })),
-      map(options =>
-        pipe(fromArrayObs<T>(values, options), takeFirst(options.count)),
-      ),
-      concatAll<T>(),
-      takeFirst(values.length),
-    );
-
-  return createAsyncEnumerator(operator, scheduler, replayCount);
-};
-
 class FromArrayAsyncEnumerable<T>
   implements AsyncEnumerableLike<number | void, T> {
   constructor(private readonly values: readonly T[]) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    return fromArrayAsyncEnumerator(this.values, scheduler, replayCount);
+    const values = this.values;
+    const operator = (obs: ObservableLike<number>) =>
+      pipe(
+        obs,
+        scan(fromArrayScanner, () => ({
+          startIndex: 0,
+          count: 0,
+        })),
+        map(options =>
+          pipe(fromArrayObs<T>(values, options), takeFirst(options.count)),
+        ),
+        concatAll<T>(),
+        takeFirst(values.length),
+      );
+
+    return createAsyncEnumerator(operator, scheduler, replayCount);
   }
 }
 

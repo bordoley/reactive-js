@@ -8,36 +8,11 @@ import {
   takeFirst,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);
-
-const generateAsyncEnumerator = <T>(
-  generator: (acc: T) => T,
-  initialValue: () => T,
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncEnumeratorResourceLike<number, T> => {
-  const operator = (obs: ObservableLike<number | void>) =>
-    pipe(
-      obs,
-      map(x =>
-        pipe(
-          generateObs(
-            _ => undefined,
-            () => undefined,
-          ),
-          takeFirst(x || 1),
-        ),
-      ),
-      concatAll(),
-      scan(generateScanner(generator), initialValue),
-    );
-
-  return createAsyncEnumerator(operator, scheduler, replayCount);
-};
 
 class GenerateAsyncEnumerable<T>
   implements AsyncEnumerableLike<number | void, T> {
@@ -47,12 +22,23 @@ class GenerateAsyncEnumerable<T>
   ) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    return generateAsyncEnumerator(
-      this.generator,
-      this.initialValue,
-      scheduler,
-      replayCount,
-    );
+    const operator = (obs: ObservableLike<number | void>) =>
+      pipe(
+        obs,
+        map(x =>
+          pipe(
+            generateObs(
+              _ => undefined,
+              () => undefined,
+            ),
+            takeFirst(x || 1),
+          ),
+        ),
+        concatAll(),
+        scan(generateScanner(this.generator), this.initialValue),
+      );
+
+  return createAsyncEnumerator(operator, scheduler, replayCount);
   }
 }
 
