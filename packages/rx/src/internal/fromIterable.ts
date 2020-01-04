@@ -10,7 +10,11 @@ import {
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
-import { DisposableLike, disposableMixin, createDisposable } from "@reactive-js/disposable";
+import {
+  DisposableLike,
+  disposableMixin,
+  createDisposable,
+} from "@reactive-js/disposable";
 
 class FromIteratorProducer<T> implements SchedulerContinuationLike {
   private readonly continuationResult: SchedulerContinuationResultLike = {
@@ -31,16 +35,18 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
 
     if (this.delay > 0 && !subscriber.isDisposed) {
       const next = iterator.next();
-      if (!next.done) { 
+      if (!next.done) {
         subscriber.notifyNext(next.value);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         const next = iterator.next();
-        if (next.done) { break; }
+        if (next.done) {
+          break;
+        }
         subscriber.notifyNext(next.value);
-        
+
         if (shouldYield()) {
           return this.continuationResult;
         }
@@ -48,7 +54,9 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
     } else {
       while (!subscriber.isDisposed) {
         const next = iterator.next();
-        if (next.done) { break; }
+        if (next.done) {
+          break;
+        }
         subscriber.notifyNext(next.value);
       }
     }
@@ -66,8 +74,8 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new FromIteratorProducer(
-      subscriber, 
-      this.iterator, 
+      subscriber,
+      this.iterator,
       this.delay,
     );
     subscriber.schedule(producer, this.delay);
@@ -92,7 +100,7 @@ class IteratorEnumerator<T> implements EnumeratorLike<T> {
     this.hasCurrent = false;
 
     const next = this.iterator.next();
-    if (!next.done) { 
+    if (!next.done) {
       this.hasCurrent = true;
       this.current = next.value;
     } else {
@@ -103,7 +111,8 @@ class IteratorEnumerator<T> implements EnumeratorLike<T> {
   }
 }
 
-class FromIteratorEnumerable<T> extends FromIteratorObservable<T> implements EnumerableLike<T> {
+class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(iterator: Iterator<T>) {
@@ -115,9 +124,7 @@ class FromIteratorEnumerable<T> extends FromIteratorObservable<T> implements Enu
   }
 }
 
-export function fromIterator<T>(
-  iterator: Iterator<T>,
-): EnumerableLike<T>;
+export function fromIterator<T>(iterator: Iterator<T>): EnumerableLike<T>;
 export function fromIterator<T>(
   iterator: Iterator<T>,
   delay: number,
@@ -126,14 +133,14 @@ export function fromIterator<T>(
   iterator: Iterator<T>,
   delay: number = 0,
 ): ObservableLike<T> {
-  return delay > 0 
+  return delay > 0
     ? new FromIteratorObservable(iterator, delay)
     : new FromIteratorEnumerable(iterator);
 }
 
 class FromIterableObservable<T> implements ObservableLike<T> {
   constructor(
-    protected readonly iterable: Iterable<T>, 
+    protected readonly iterable: Iterable<T>,
     private readonly delay: number,
   ) {}
 
@@ -162,9 +169,7 @@ class FromIterableEnumerable<T> extends FromIterableObservable<T> {
   }
 }
 
-export function fromIterable<T>(
-  iterable: Iterable<T>,
-): EnumerableLike<T>;
+export function fromIterable<T>(iterable: Iterable<T>): EnumerableLike<T>;
 export function fromIterable<T>(
   iterable: Iterable<T>,
   delay: number,
@@ -173,7 +178,7 @@ export function fromIterable<T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0 
+  return delay > 0
     ? new FromIterableObservable(iterable, delay)
     : new FromIterableEnumerable(iterable);
 }

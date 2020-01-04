@@ -6,7 +6,10 @@ import {
 import { liftEnumerable } from "./lift";
 import { AutoDisposingDelegatingSubscriber } from "./subscriber";
 
-class ScanSubscriber<T, TAcc> extends AutoDisposingDelegatingSubscriber<T, TAcc> {
+class ScanSubscriber<T, TAcc> extends AutoDisposingDelegatingSubscriber<
+  T,
+  TAcc
+> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly scanner: (acc: TAcc, next: T) => TAcc,

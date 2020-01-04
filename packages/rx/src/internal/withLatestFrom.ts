@@ -12,7 +12,8 @@ import { subscribe } from "./subscribe";
 import { AutoDisposingDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
-class WithLatestFromSubscriber<TA, TB, TC> extends AutoDisposingDelegatingSubscriber<TA, TC>
+class WithLatestFromSubscriber<TA, TB, TC>
+  extends AutoDisposingDelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
   private otherLatest: TB | undefined;
   private hasLatest = false;

@@ -4,7 +4,7 @@ import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const operator = <TReq, T>(_: ObservableLike<TReq>): ObservableLike<T> =>
- emptyObs();
+  emptyObs();
 
 const enumerateAsync = <TReq, T>(
   scheduler: SchedulerLike,

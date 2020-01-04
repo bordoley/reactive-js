@@ -28,14 +28,13 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
     const subscriber = this.subscriber;
 
     let index = this.index;
-    if (this.delay > 0 && index < length && !subscriber.isDisposed) {      
+    if (this.delay > 0 && index < length && !subscriber.isDisposed) {
       const value = values[index];
       this.index++;
 
       subscriber.notifyNext(value);
       return this.continuationResult;
-    }
-    else if (shouldYield !== undefined) {
+    } else if (shouldYield !== undefined) {
       while (index < length && !subscriber.isDisposed) {
         const value = values[index];
         index++;
@@ -79,32 +78,30 @@ class FromArrayObservable<T> implements ObservableLike<T> {
   }
 }
 
-class FromArrayEnumerable<T> extends FromArrayObservable<T> implements EnumerableLike<T> {
+class FromArrayEnumerable<T> extends FromArrayObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(
-    values: readonly T[],
-    startIndex: number,
-  ) {
+  constructor(values: readonly T[], startIndex: number) {
     super(values, startIndex, 0);
   }
 }
 
-export function fromArray <T>(
+export function fromArray<T>(
   values: readonly T[],
   options?: {
     startIndex: number;
   },
 ): EnumerableLike<T>;
-export function fromArray <T>(
+export function fromArray<T>(
   values: readonly T[],
   options: {
     delay: number;
     startIndex?: number;
   },
 ): ObservableLike<T>;
-export function fromArray <T>(
+export function fromArray<T>(
   values: readonly T[],
   options: {
     delay?: number;
@@ -117,4 +114,4 @@ export function fromArray <T>(
   return delay > 0
     ? new FromArrayObservable(values, startIndex, delay)
     : new FromArrayEnumerable(values, startIndex);
-};
+}

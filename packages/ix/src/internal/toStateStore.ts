@@ -48,11 +48,9 @@ class DelegatingStateStoreAsyncEnumerable<T>
       return merge<T>(onIteratorNextChangedObs, stateObs);
     };
 
-    const retval = createAsyncEnumerator(
-      operator,
-      scheduler,
-      replayCount,
-    ).add(iterator);
+    const retval = createAsyncEnumerator(operator, scheduler, replayCount).add(
+      iterator,
+    );
     return retval;
   }
 }

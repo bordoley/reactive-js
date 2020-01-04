@@ -53,7 +53,9 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   readonly now = 0;
 
   constructor() {
-    this.add(error => { this.error = error})
+    this.add(error => {
+      this.error = error;
+    });
   }
 
   get isDisposed() {

@@ -21,7 +21,8 @@ class EmptyObservable<T> implements ObservableLike<T> {
   }
 }
 
-class EmptyEnumerable<T> extends EmptyObservable<T> implements EnumerableLike<T> {
+class EmptyEnumerable<T> extends EmptyObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -32,8 +33,8 @@ class EmptyEnumerable<T> extends EmptyObservable<T> implements EnumerableLike<T>
 
 const defaultEmpty = new EmptyEnumerable();
 
-export function empty<T>(): EnumerableLike<T> 
-export function empty<T>(delay: number): ObservableLike<T> 
+export function empty<T>(): EnumerableLike<T>;
+export function empty<T>(delay: number): ObservableLike<T>;
 export function empty<T>(delay = 0): ObservableLike<T> {
   return delay > 0 ? new EmptyObservable(delay) : defaultEmpty;
 }

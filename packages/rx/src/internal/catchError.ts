@@ -14,26 +14,24 @@ class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly onError: (error: unknown) => ObservableLike<T> | void,
   ) {
     super(delegate);
-    
-    this.add(
-      (error?: ErrorLike) => {
-        if (error !== undefined) {
-          try {
-            const { cause } = error;
-            const result = this.onError(cause) || undefined;
-            if (result !== undefined) {
-              result.subscribe(this.delegate);
-            } else {
-              this.delegate.dispose(error);
-            }
-          } catch (cause) {
-            this.delegate.dispose({ cause, parent: error } as ErrorLike);
+
+    this.add((error?: ErrorLike) => {
+      if (error !== undefined) {
+        try {
+          const { cause } = error;
+          const result = this.onError(cause) || undefined;
+          if (result !== undefined) {
+            result.subscribe(this.delegate);
+          } else {
+            this.delegate.dispose(error);
           }
-        } else {
-          this.delegate.dispose();
+        } catch (cause) {
+          this.delegate.dispose({ cause, parent: error } as ErrorLike);
         }
+      } else {
+        this.delegate.dispose();
       }
-    )
+    });
   }
 
   notifyNext(data: T) {

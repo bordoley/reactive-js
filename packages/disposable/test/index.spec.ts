@@ -48,7 +48,7 @@ describe("Disposable", () => {
 
   test("disposed", () => {
     expect(disposed.isDisposed).toBeTruthy();
-    
+
     const child = createDisposable();
     disposed.add(child);
 
@@ -68,7 +68,9 @@ describe("Disposable", () => {
     const childTeardown = jest.fn();
     const child = createDisposable().add(e => childTeardown(e));
     const teardown = jest.fn();
-    const disposable = createDisposable().add(child).add(e => teardown(e));
+    const disposable = createDisposable()
+      .add(child)
+      .add(e => teardown(e));
     disposable.dispose(error);
 
     const teardown2 = jest.fn();
@@ -82,7 +84,7 @@ describe("Disposable", () => {
     expect(teardown).toBeCalledWith(error);
     expect(childTeardown2).toBeCalledWith(error);
     expect(teardown2).toBeCalledWith(error);
-  })
+  });
 });
 
 describe("SerialDisposable", () => {

@@ -1,8 +1,4 @@
-import {
-  toStateStore,
-  StateUpdaterLike,
-  lift,
-} from "@reactive-js/ix";
+import { toStateStore, StateUpdaterLike, lift } from "@reactive-js/ix";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,

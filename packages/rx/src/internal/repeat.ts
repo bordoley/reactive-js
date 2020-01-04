@@ -29,7 +29,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
     this.delegate.add(this.innerSubscription);
     this.add(error => {
       this.onComplete(error);
-    })
+    });
   }
 
   notifyNext(data: T) {

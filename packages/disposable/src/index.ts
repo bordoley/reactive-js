@@ -6,7 +6,9 @@ export interface ErrorLike {
   readonly cause: unknown;
 }
 
-export type DisposableOrTeardown = DisposableLike | ((error?: ErrorLike) => void);
+export type DisposableOrTeardown =
+  | DisposableLike
+  | ((error?: ErrorLike) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -103,7 +105,9 @@ class DisposableImpl implements DisposableLike {
 /**
  * Creates an empty DisposableLike instance.
  */
-export const createDisposable = (onDispose?: (error?: ErrorLike) => void): DisposableLike => {
+export const createDisposable = (
+  onDispose?: (error?: ErrorLike) => void,
+): DisposableLike => {
   const disposable = new DisposableImpl();
   if (onDispose !== undefined) {
     disposable.add(onDispose);

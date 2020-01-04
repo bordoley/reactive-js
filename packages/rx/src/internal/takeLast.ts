@@ -22,7 +22,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
       } else {
         fromArray(this.last).subscribe(this.delegate);
       }
-    })
+    });
   }
 
   notifyNext(data: T) {

@@ -6,7 +6,9 @@ import {
 import { liftEnumerable } from "./lift";
 import { AutoDisposingDelegatingSubscriber } from "./subscriber";
 
-class DistinctUntilChangedSubscriber<T> extends AutoDisposingDelegatingSubscriber<T, T> {
+class DistinctUntilChangedSubscriber<
+  T
+> extends AutoDisposingDelegatingSubscriber<T, T> {
   private prev: T | undefined;
   private hasValue = false;
 

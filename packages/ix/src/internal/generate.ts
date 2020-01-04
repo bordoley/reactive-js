@@ -38,7 +38,7 @@ class GenerateAsyncEnumerable<T>
         scan(generateScanner(this.generator), this.initialValue),
       );
 
-  return createAsyncEnumerator(operator, scheduler, replayCount);
+    return createAsyncEnumerator(operator, scheduler, replayCount);
   }
 }
 
