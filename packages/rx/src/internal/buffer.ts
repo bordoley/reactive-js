@@ -26,7 +26,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription).add((error: ErrorLike) => {
+    this.add(this.durationSubscription).add(error => {
       const buffer = this.buffer;
       this.buffer = [];
       if (error === undefined && buffer.length > 0) {

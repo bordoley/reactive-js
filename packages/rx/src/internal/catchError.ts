@@ -15,7 +15,7 @@ class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
   ) {
     super(delegate);
 
-    this.add((error?: ErrorLike) => {
+    this.add(error => {
       if (error !== undefined) {
         try {
           const { cause } = error;

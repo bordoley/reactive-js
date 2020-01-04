@@ -9,7 +9,6 @@ import { DelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { fromArray } from "./fromArray";
 import { empty } from "./empty";
-import { ErrorLike } from "@reactive-js/disposable";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
@@ -17,7 +16,7 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly enumerator: EnumeratorLike<ObservableLike<T>>,
   ) {
     super(delegate);
-    this.add((error?: ErrorLike) => {
+    this.add(error => {
       if (error !== undefined) {
         this.delegate.dispose(error);
       } else {
@@ -47,6 +46,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     const enumerator = this.observables.enumerate();
+    subscriber.add(enumerator);
     const concatSubscriber = new ConcatSubscriber(subscriber, enumerator);
 
     if (enumerator.moveNext()) {

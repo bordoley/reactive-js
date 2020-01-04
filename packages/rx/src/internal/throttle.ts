@@ -36,9 +36,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   ) {
     super(delegate);
 
-    this.add(error => {
-      this.durationSubscription.dispose();
-
+    this.add(this.durationSubscription).add(error => {
       if (
         error === undefined &&
         this.mode !== ThrottleMode.First &&

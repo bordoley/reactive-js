@@ -1,7 +1,6 @@
 import { defer } from "./defer";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
-import { ErrorLike } from "@reactive-js/disposable";
 
 class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
   private hasProducedValue = false;
@@ -12,7 +11,7 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
     private readonly index: number,
   ) {
     super(delegate);
-    this.add((error?: ErrorLike) => {
+    this.add(error => {
       const ctx = this.ctx;
       ctx.completedCount++;
 

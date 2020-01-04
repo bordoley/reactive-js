@@ -146,8 +146,11 @@ class FromIterableObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     const iterator = this.iterable[Symbol.iterator]();
-    subscriber.add(() => {
-      if (iterator.return !== undefined) {
+    subscriber.add(error => {
+      if (error !== undefined && iterator.throw !== undefined) {
+        const { cause } = error;
+        iterator.throw(cause);
+      } else if (iterator.return !== undefined) {
         iterator.return();
       }
     });

@@ -1,6 +1,5 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
-import { ErrorLike } from "@reactive-js/disposable";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(
@@ -8,7 +7,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly ctx: MergeObservable<T>,
   ) {
     super(delegate);
-    this.add((error?: ErrorLike) => {
+    this.add(error => {
       const ctx = this.ctx;
       ctx.completedCount++;
 

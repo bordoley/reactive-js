@@ -20,8 +20,7 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
       } catch (cause) {
         error = { cause, parent: error } as ErrorLike;
       }
-      this.delegate.dispose(error);
-    });
+    }).add(this.delegate);
   }
 
   notifyNext(data: T) {
