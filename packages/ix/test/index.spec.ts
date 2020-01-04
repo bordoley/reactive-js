@@ -3,12 +3,12 @@ import { fromArray, fromIterable, generate, scanAsync } from "../src/index";
 import { pipe } from "@reactive-js/pipe";
 import {
   subscribe,
-  onNext,
-  ErrorLike,
+  onNext, 
   onDispose,
   ofValue,
   takeLast,
 } from "@reactive-js/rx";
+import { ErrorLike } from "@reactive-js/disposable";
 
 test("fromArray", () => {
   const scheduler = createVirtualTimeSchedulerResource();
