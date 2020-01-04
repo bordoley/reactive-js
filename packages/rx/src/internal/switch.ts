@@ -23,7 +23,7 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
 
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose();
+      this.dispose(error);
       if (this.innerSubscription.inner.isDisposed || error !== undefined) {
         this.delegate.complete(error);
       }

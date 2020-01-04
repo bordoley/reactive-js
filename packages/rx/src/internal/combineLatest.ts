@@ -15,7 +15,7 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
 
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose();
+      this.dispose(error);
       const ctx = this.ctx;
       ctx.completedCount++;
 
