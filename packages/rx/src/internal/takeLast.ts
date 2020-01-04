@@ -31,7 +31,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
 
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose();
+      this.dispose(error);
       if (error !== undefined) {
         this.delegate.complete(error);
       } else {

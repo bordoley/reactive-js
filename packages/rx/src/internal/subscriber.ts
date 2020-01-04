@@ -22,15 +22,15 @@ export class Subscriber<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  complete(_?: ErrorLike) {
-    this.dispose();
+  complete(error?: ErrorLike) {
+    this.dispose(error);
   }
 
-  dispose() {
+  dispose(error?: ErrorLike) {
     const isDisposed = this.isDisposed;
     if (!isDisposed) {
       this.isDisposed = true;
-      this.disposable.dispose();
+      this.disposable.dispose(error);
     }
   }
 
@@ -68,7 +68,7 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   /** @ignore */
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose();
+      this.dispose(error);
       this.delegate.complete(error);
     }
   }
