@@ -57,7 +57,6 @@ class PrioritySchedulerResourceImpl
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
   readonly dispose = disposableMixin.dispose;
-  readonly remove = disposableMixin.remove;
   private shouldYield = () => {
     const currentTaskIsDisposed =
       this.currentTask !== undefined && this.currentTask.disposable.isDisposed;

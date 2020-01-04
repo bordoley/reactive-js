@@ -80,7 +80,6 @@ class IteratorEnumerator<T> implements EnumeratorLike<T> {
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = disposableMixin.dispose;
   hasCurrent = false;
-  readonly remove = disposableMixin.remove;
 
   constructor(private readonly iterator: Iterator<T>) {}
 

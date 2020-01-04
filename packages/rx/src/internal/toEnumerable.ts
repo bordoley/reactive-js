@@ -22,7 +22,6 @@ class VirtualTimeObservableEnumerator<T>
   dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
-  remove = disposableMixin.remove;
 
   constructor() {
     this.disposable = createVirtualTimeSchedulerResource(1);

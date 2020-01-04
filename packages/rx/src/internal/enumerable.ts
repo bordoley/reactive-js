@@ -51,7 +51,6 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
-  readonly remove = disposableMixin.remove;
 
   constructor() {}
 
