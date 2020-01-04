@@ -1,6 +1,6 @@
 import { createSerialDisposable } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { empty } from "./empty";
+import { ofValue } from "./ofValue";
 import { liftEnumerable, liftObservable } from "./lift";
 import { never } from "./never";
 import {
@@ -14,10 +14,9 @@ import {
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
 class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
-  implements ObserverLike<unknown>, SchedulerContinuationLike {
+  implements ObserverLike<unknown> {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
 
@@ -37,8 +36,12 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
       this.dispose(error);
-      if (error === undefined) {
-        this.delegate.schedule(this);
+      const buffer = this.buffer;
+     
+      if (error === undefined && buffer.length > 0) {
+        const buffer = this.buffer;
+        this.buffer = [];
+        ofValue(buffer).subscribe(this.delegate);
       } else {
         this.delegate.complete(error);
       }      
@@ -52,7 +55,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     buffer.push(data);
 
     if (buffer.length === this.maxBufferSize) {
-      this.run();
+      this.notifyNext();
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
         this.durationSelector(data),
@@ -62,7 +65,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  run(_?: unknown) {
+  notifyNext() {
     this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
@@ -81,12 +84,12 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
       this.complete(error);
-    } else {
-      this.delegate.schedule(this);
     }
   }
 
-  onNext(_: unknown) {}
+  onNext(_: unknown) {
+    this.notifyNext();
+  }
 }
 
 const operator = <T>(
@@ -108,7 +111,7 @@ export function buffer<T>(
     ? liftEnumerable(operator(never, maxBufferSize))
     : liftObservable(
         operator(
-          typeof duration === "number" ? (_: T) => empty(duration) : duration,
+          typeof duration === "number" ? (_: T) => ofValue(undefined, duration) : duration,
           maxBufferSize,
         ),
       );
