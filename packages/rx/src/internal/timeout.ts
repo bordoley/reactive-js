@@ -14,12 +14,12 @@ import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
-import { AutoDisposingDelegatingSubscriber } from "./subscriber";
+import { DelegatingSubscriber } from "./subscriber";
 import { throws } from "./throws";
 
 const timeoutError = Symbol("TimeoutError");
 
-class TimeoutSubscriber<T> extends AutoDisposingDelegatingSubscriber<T, T>
+class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
@@ -28,7 +28,7 @@ class TimeoutSubscriber<T> extends AutoDisposingDelegatingSubscriber<T, T>
     private readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
-    this.add(this.durationSubscription);
+    this.add(this.durationSubscription).add(delegate);
     this.setupDurationSubscription();
   }
 

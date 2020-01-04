@@ -9,11 +9,11 @@ import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
-import { AutoDisposingDelegatingSubscriber } from "./subscriber";
+import { DelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
 class WithLatestFromSubscriber<TA, TB, TC>
-  extends AutoDisposingDelegatingSubscriber<TA, TC>
+  extends DelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
   private otherLatest: TB | undefined;
   private hasLatest = false;
@@ -26,7 +26,7 @@ class WithLatestFromSubscriber<TA, TB, TC>
     super(delegate);
     this.selector = selector;
 
-    this.add(pipe(other, observe(this), subscribe(this)));
+    this.add(pipe(other, observe(this), subscribe(this))).add(delegate);
   }
 
   notifyNext(data: TA) {

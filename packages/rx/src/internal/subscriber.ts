@@ -10,26 +10,10 @@ import {
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
-/** @ignore */
-export class Subscriber<T> implements SubscriberLike<T> {
-  readonly add = disposableMixin.add;
-  readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
-  isDisposed = false;
-
-  constructor(private readonly scheduler: SchedulerLike) {
-    this.add(() => {
-      this.isDisposed = true;
-    });
-  }
-
-  get now() {
-    return this.scheduler.now;
-  }
-
-  notifyNext(_: T): void {}
-
-  schedule(
+export const subscriberMixin = {
+  ...disposableMixin,
+  schedule<T>(
+    this: SubscriberLike<T> & { scheduler: SchedulerLike },
     continuation: SchedulerContinuationLike,
     delay?: number,
   ): DisposableLike {
@@ -46,25 +30,52 @@ export class Subscriber<T> implements SubscriberLike<T> {
   }
 }
 
+/** @ignore */
+export class Subscriber<T> implements SubscriberLike<T> {
+  readonly add = disposableMixin.add;
+  readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
+  isDisposed = false;
+  readonly schedule = subscriberMixin.schedule;
+
+  constructor(private readonly scheduler: SchedulerLike) {
+    this.add(() => {
+      this.isDisposed = true;
+    });
+  }
+
+  get now() {
+    return this.scheduler.now;
+  }
+
+  notifyNext(_: T): void {}
+}
+
 /**
  * Abstract base class for implementing SubscriberOperatorLikes.
  *
  * @noInheritDoc
  */
-export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
-  constructor(readonly delegate: SubscriberLike<TB>) {
-    super((delegate as any).scheduler || delegate);
+export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA> {
+  readonly add = disposableMixin.add;
+  readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
+  isDisposed = false;
+  readonly schedule = subscriberMixin.schedule;
+  readonly scheduler: SchedulerLike;
 
+  constructor(readonly delegate: SubscriberLike<TB>) {
+    this.scheduler = (delegate as any).scheduler || delegate;
+
+    this.add(() => {
+      this.isDisposed = true;
+    });
     this.delegate.add(this);
   }
-}
 
-export class AutoDisposingDelegatingSubscriber<
-  TA,
-  TB
-> extends DelegatingSubscriber<TA, TB> {
-  constructor(readonly delegate: SubscriberLike<TB>) {
-    super(delegate);
-    this.add(delegate);
+  get now() {
+    return this.scheduler.now;
   }
+
+  abstract notifyNext(_: TA): void;
 }
