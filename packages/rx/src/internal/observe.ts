@@ -1,12 +1,12 @@
 import {
   ObservableOperatorLike,
-  ErrorLike,
   ObserverLike,
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(

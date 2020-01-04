@@ -1,5 +1,4 @@
 import {
-  ErrorLike,
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
@@ -7,6 +6,7 @@ import {
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 import { fromArray } from "./fromArray";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly last: T[] = [];

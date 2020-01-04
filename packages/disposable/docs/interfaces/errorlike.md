@@ -1,4 +1,3 @@
-[@reactive-js/rx](../README.md) › [ErrorLike](errorlike.md)
 
 # Interface: ErrorLike
 

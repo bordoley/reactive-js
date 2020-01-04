@@ -1,7 +1,6 @@
 import {
   EnumeratorLike,
   EnumerableLike,
-  ErrorLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
@@ -12,6 +11,7 @@ import {
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin, isEnumerable } from "./enumerable";
+import { ErrorLike } from "@reactive-js/disposable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {

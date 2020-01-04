@@ -1,6 +1,7 @@
 import { defer } from "./defer";
-import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
   private hasProducedValue = false;

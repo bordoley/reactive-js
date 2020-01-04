@@ -1,9 +1,9 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
+  ErrorLike,
 } from "@reactive-js/disposable";
 import {
-  ErrorLike,
   ObservableLike,
   ObservableOperatorLike,
   ObserverLike,

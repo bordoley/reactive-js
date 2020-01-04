@@ -26,24 +26,9 @@ executing on the subscriber's scheduler.
 
 ### Methods
 
-* [complete](subscriberlike.md#complete)
 * [next](subscriberlike.md#next)
 
 ## Methods
-
-###  complete
-
-▸ **complete**(`error?`: [ErrorLike](errorlike.md)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error?` | [ErrorLike](errorlike.md) |
-
-**Returns:** *void*
-
-___
 
 ###  next
 

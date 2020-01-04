@@ -7,6 +7,7 @@
 
 * [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)
 * [DisposableLike](interfaces/disposablelike.md)
+* [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
 ### Type aliases
@@ -105,26 +106,13 @@ Name | Type |
 
 ###  dispose
 
-▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)): *boolean*
+▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `error?`: [ErrorLike](interfaces/errorlike.md)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+`error?` | [ErrorLike](interfaces/errorlike.md) |
 
-**Returns:** *boolean*
-
-###  remove
-
-▸ **remove**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *any*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
-`disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
-`...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
-
-**Returns:** *any*
+**Returns:** *void*

@@ -1,7 +1,6 @@
-import { createSerialDisposable } from "@reactive-js/disposable";
+import { createSerialDisposable, ErrorLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
-  ErrorLike,
   ObservableLike,
   ObservableOperatorLike,
   ObserverLike,
