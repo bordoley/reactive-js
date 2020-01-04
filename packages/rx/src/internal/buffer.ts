@@ -14,9 +14,10 @@ import {
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 
 class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
-  implements ObserverLike<unknown> {
+  implements ObserverLike<unknown>, SchedulerContinuationLike {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
 
@@ -37,9 +38,10 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     if (!this.isDisposed) {
       this.dispose(error);
       if (error === undefined) {
-        this.notifyNext();
-      }
-      this.delegate.complete(error);
+        this.delegate.schedule(this);
+      } else {
+        this.delegate.complete(error);
+      }      
     }
   }
 
@@ -50,7 +52,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     buffer.push(data);
 
     if (buffer.length === this.maxBufferSize) {
-      this.notifyNext();
+      this.run();
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
         this.durationSelector(data),
@@ -60,7 +62,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  private notifyNext() {
+  run(_?: unknown) {
     this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
@@ -70,13 +72,17 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     } catch (cause) {
       this.delegate.complete({ cause });
     }
+
+    if(this.isDisposed) {
+      this.delegate.complete();
+    }
   }
 
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
       this.complete(error);
     } else {
-      this.notifyNext();
+      this.delegate.schedule(this);
     }
   }
 

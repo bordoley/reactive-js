@@ -6,6 +6,7 @@ import {
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
+import { ofValue } from "./ofValue";
 
 class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   constructor(
@@ -19,14 +20,12 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
       this.dispose(error);
+      
       if (error === undefined) {
-        try {
-          this.delegate.next(this.acc);
-        } catch (cause) {
-          error = { cause };
-        }
+        ofValue(this.acc).subscribe(this.delegate);
+      } else {
+        this.delegate.complete(error);
       }
-      this.delegate.complete(error);
     }
   }
 

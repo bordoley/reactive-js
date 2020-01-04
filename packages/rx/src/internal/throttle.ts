@@ -3,7 +3,6 @@ import {
   SerialDisposableLike,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { empty } from "./empty";
 import {
   ErrorLike,
   ObservableLike,
@@ -16,6 +15,7 @@ import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
+import { ofValue } from "./ofValue";
 
 export const enum ThrottleMode {
   First = 1,
@@ -38,7 +38,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
 
     this.add(this.durationSubscription);
   }
-
+  
   private notifyNext() {
     if (this.hasValue) {
       const value = this.value as T;
@@ -66,10 +66,11 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
       this.dispose(error);
-      if (error === undefined && this.mode !== ThrottleMode.First) {
-        this.notifyNext();
+      if (error === undefined && this.mode !== ThrottleMode.First && this.hasValue) {
+        ofValue(this.value).subscribe(this.delegate)
+      } else {
+        this.delegate.complete(error);
       }
-      this.delegate.complete(error);
     }
   }
 
@@ -95,12 +96,12 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
       this.complete(error);
-    } else {
-      this.notifyNext();
     }
   }
 
-  onNext(_: unknown) {}
+  onNext(_: unknown) {
+    this.notifyNext();
+  }
 }
 
 const throttleOperator = <T>(
@@ -115,7 +116,7 @@ export const throttle = <T>(
 ): ObservableOperatorLike<T, T> =>
   liftObservable(
     throttleOperator(
-      typeof duration === "number" ? _ => empty(duration) : duration,
+      typeof duration === "number" ? _ => ofValue(undefined, duration) : duration,
       mode,
     ),
   );
