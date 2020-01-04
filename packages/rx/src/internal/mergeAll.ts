@@ -28,7 +28,8 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 
   complete(error?: ErrorLike) {
-    if (this.dispose()) {
+    if (!this.isDisposed) {
+      this.dispose();
       if (error !== undefined || this.queue.length + this.activeCount === 0) {
         this.delegate.complete(error);
       }
