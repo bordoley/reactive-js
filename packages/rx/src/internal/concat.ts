@@ -5,12 +5,12 @@ import {
   EnumeratorLike,
   EnumerableOperatorLike,
 } from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { fromArray } from "./fromArray";
 import { empty } from "./empty";
 
-class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
+class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly enumerator: EnumeratorLike<ObservableLike<T>>,

@@ -14,7 +14,7 @@ import {
 import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
 
 export const enum ThrottleMode {
@@ -23,7 +23,7 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
-class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
+class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
   private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: T | undefined = undefined;

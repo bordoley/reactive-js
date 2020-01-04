@@ -4,11 +4,11 @@ import {
   ObservableOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class DistinctUntilChangedSubscriber<
   T
-> extends DelegatingSubscriber<T, T> {
+> extends AbstractDelegatingSubscriber<T, T> {
   private prev: T | undefined;
   private hasValue = false;
 

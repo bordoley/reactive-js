@@ -4,10 +4,10 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { fromArray } from "./fromArray";
 
-class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
   subscriber = this.delegate;
 

@@ -10,7 +10,7 @@ import {
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
-export const subscriberMixin = {
+const subscriberMixin = {
   ...disposableMixin,
   schedule<T>(
     this: SubscriberLike<T> & { scheduler: SchedulerLike },
@@ -32,9 +32,9 @@ export const subscriberMixin = {
 
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
-  readonly add = disposableMixin.add;
+  readonly add = subscriberMixin.add;
   readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = subscriberMixin.dispose;
   isDisposed = false;
   readonly schedule = subscriberMixin.schedule;
 
@@ -56,12 +56,18 @@ export class Subscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA> {
-  readonly add = disposableMixin.add;
+export abstract class AbstractDelegatingSubscriber<TA, TB> implements SubscriberLike<TA> {
+  /** @ignore */
+  readonly add = subscriberMixin.add;
+  /** @ignore */
   readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  /** @ignore */
+  readonly dispose = subscriberMixin.dispose;
+  /** @ignore */
   isDisposed = false;
+  /** @ignore */
   readonly schedule = subscriberMixin.schedule;
+  /** @ignore */
   readonly scheduler: SchedulerLike;
 
   constructor(readonly delegate: SubscriberLike<TB>) {
@@ -73,6 +79,7 @@ export abstract class DelegatingSubscriber<TA, TB> implements SubscriberLike<TA>
     this.delegate.add(this);
   }
 
+  /** @ignore */
   get now() {
     return this.scheduler.now;
   }

@@ -4,7 +4,7 @@ import {
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
@@ -35,7 +35,7 @@ const getCurrent = <T>(enumerator: EnumeratorLike<T>): T => {
   return enumerator.current;
 };
 
-class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
+class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
   current: unknown;
   private readonly buffer: Array<unknown> = [];

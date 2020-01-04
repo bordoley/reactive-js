@@ -1,8 +1,8 @@
 import { defer } from "./defer";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
+class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T> {
   private hasProducedValue = false;
 
   constructor(
