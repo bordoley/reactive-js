@@ -1,8 +1,4 @@
 import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
-import {
   ErrorLike,
   ObservableOperatorLike,
   SubscriberLike,
@@ -10,16 +6,10 @@ import {
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
-import { producerMixin } from "./producer";
+import { fromArray } from "./fromArray";
 
-class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
-  implements SchedulerContinuationLike {
-  private readonly continuation: SchedulerContinuationResultLike = {
-    continuation: this,
-  };
-  private index = 0;
+class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
-  readonly run = producerMixin.run;
   subscriber = this.delegate;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
@@ -35,39 +25,9 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T>
       if (error !== undefined) {
         this.delegate.complete(error);
       } else {
-        this.delegate.schedule(this);
+        fromArray(this.last).subscribe(this.delegate);
       }
     }
-  }
-
-  loop(shouldYield?: () => boolean) {
-    const last = this.last;
-    const length = last.length;
-    const delegate = this.delegate;
-
-    let index = this.index;
-    if (shouldYield !== undefined) {
-      while (index < length && !delegate.isDisposed) {
-        const next = last[index];
-        delegate.next(next);
-        index++;
-
-        if (shouldYield() && index < length) {
-          this.index = index;
-          return this.continuation;
-        }
-      }
-    } else {
-      while (index < length && !delegate.isDisposed) {
-        const next = last[index];
-        delegate.next(next);
-        index++;
-      }
-    }
-
-    last.length = 0;
-    delegate.complete();
-    return;
   }
 
   next(data: T) {

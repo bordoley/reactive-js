@@ -72,10 +72,8 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
   complete(error?: ErrorLike) {
     if (!this.isDisposed) {
       this.dispose(error);
-      if (error !== undefined) {
+      if (error !== undefined || (this.buffer.length === 0 && !this.hasCurrent)) {
         this.delegate.complete(error);
-      } else if (this.buffer.length === 0 && !this.hasCurrent) {
-        this.delegate.complete();
       }
     }
   }
