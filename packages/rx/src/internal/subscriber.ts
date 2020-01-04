@@ -32,7 +32,6 @@ export class Subscriber<T> implements SubscriberLike<T> {
       this.isDisposed = true;
       this.disposable.dispose();
     }
-    return !isDisposed;
   }
 
   next(_: T): void {}

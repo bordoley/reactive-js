@@ -34,7 +34,8 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   }
 
   complete(error?: ErrorLike) {
-    if (this.dispose()) {
+    if (!this.isDisposed) {
+      this.dispose();
       if (error === undefined) {
         this.notifyNext();
       }
