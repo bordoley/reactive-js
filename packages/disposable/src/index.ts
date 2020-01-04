@@ -147,11 +147,11 @@ export interface DelegatingDisposableLike {
 }
 
 export const disposableMixin = {
-  add(
-    this: DelegatingDisposableLike,
+  add<This extends DisposableLike>(
+    this: DelegatingDisposableLike & This,
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
-  ): any {
+  ): This {
     this.disposable.add(disposable, ...disposables);
     return this;
   },
