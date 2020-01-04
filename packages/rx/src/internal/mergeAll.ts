@@ -48,7 +48,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>,
     this.delegate.notifyNext(data);
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     this.activeCount--;
 
     if (error !== undefined) {

@@ -28,7 +28,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     super(delegate);
     this.delegate.add(this.innerSubscription);
     this.add(error => {
-      this.onComplete(error);
+      this.onDispose(error);
     });
   }
 
@@ -38,7 +38,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     let shouldComplete = false;
     try {
       shouldComplete = !this.shouldRepeat(this.count, error);

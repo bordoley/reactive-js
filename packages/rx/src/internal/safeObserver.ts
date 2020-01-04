@@ -50,7 +50,7 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     }
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     if (this.isCompleted || this.subscriber.isDisposed) {
       return;
     }

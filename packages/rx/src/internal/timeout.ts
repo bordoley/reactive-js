@@ -45,7 +45,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     this.delegate.notifyNext(data);
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     this.dispose(error);
   }
 

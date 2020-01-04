@@ -249,14 +249,14 @@ export function bindNodeCallback(
     return createObservable(observer => {
       const handler = (cause: unknown, ...innerArgs: unknown[]) => {
         if (cause) {
-          observer.onComplete({ cause });
+          observer.onDispose({ cause });
         } else {
           if (innerArgs.length > 1) {
             observer.onNext(innerArgs);
           } else if (innerArgs.length === 1) {
             observer.onNext(innerArgs[0]);
           }
-          observer.onComplete();
+          observer.onDispose();
         }
       };
 

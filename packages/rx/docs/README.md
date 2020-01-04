@@ -60,7 +60,7 @@
 * [never](README.md#const-never)
 * [observe](README.md#observe)
 * [ofValue](README.md#ofvalue)
-* [onComplete](README.md#const-oncomplete)
+* [onDispose](README.md#const-ondispose)
 * [onError](README.md#const-onerror)
 * [onNext](README.md#const-onnext)
 * [publish](README.md#const-publish)
@@ -1471,9 +1471,9 @@ Name | Type |
 
 ___
 
-### `Const` onComplete
+### `Const` onDispose
 
-▸ **onComplete**<**T**>(`onComplete`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **onDispose**<**T**>(`onDispose`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1481,7 +1481,7 @@ ___
 
 **Parameters:**
 
-▪ **onComplete**: *function*
+▪ **onDispose**: *function*
 
 ▸ (`err?`: ErrorLike): *void*
 

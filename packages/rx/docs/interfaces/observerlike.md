@@ -18,14 +18,14 @@ An observer of push-based notifications.
 
 ### Methods
 
-* [onComplete](observerlike.md#oncomplete)
+* [onDispose](observerlike.md#ondispose)
 * [onNext](observerlike.md#onnext)
 
 ## Methods
 
-###  onComplete
+###  onDispose
 
-▸ **onComplete**(`error?`: ErrorLike): *void*
+▸ **onDispose**(`error?`: ErrorLike): *void*
 
 Called by a provider to indicate that it is done sending push-based notifications.
 

@@ -5,7 +5,7 @@ import {
   subscribe,
   onNext,
   ErrorLike,
-  onComplete,
+  onDispose,
   ofValue,
   takeLast,
 } from "@reactive-js/rx";
@@ -38,7 +38,7 @@ test("fromIterable", () => {
   pipe(
     iter,
     onNext(x => result.push(x)),
-    onComplete(e => {
+    onDispose(e => {
       error = e;
     }),
     subscribe(scheduler),

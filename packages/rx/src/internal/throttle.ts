@@ -92,7 +92,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     if (error !== undefined) {
       this.dispose(error);
     }

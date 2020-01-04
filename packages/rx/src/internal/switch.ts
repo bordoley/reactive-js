@@ -33,7 +33,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>
     this.innerSubscription.inner = innerSubscription;
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     if (error !== undefined || this.isDisposed) {
       this.delegate.dispose(error);
     }

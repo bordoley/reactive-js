@@ -15,7 +15,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
     this.hasResult = true;
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     this.error = error;
   }
 

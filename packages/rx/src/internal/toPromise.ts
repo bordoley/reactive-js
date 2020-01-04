@@ -24,7 +24,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     this.hasResult = true;
   }
 
-  onComplete(err?: ErrorLike) {
+  onDispose(err?: ErrorLike) {
     this.subscription.dispose();
 
     if (err !== undefined) {

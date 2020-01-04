@@ -28,7 +28,7 @@ class UseObservableObserver<T> implements ObserverLike<T> {
     >,
   ) {}
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     this.updateError(_ => error);
   }
 
