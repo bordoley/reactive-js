@@ -26,13 +26,13 @@ executing on the subscriber's scheduler.
 
 ### Methods
 
-* [next](subscriberlike.md#next)
+* [notifyNext](subscriberlike.md#notifynext)
 
 ## Methods
 
-###  next
+###  notifyNext
 
-▸ **next**(`data`: T): *void*
+▸ **notifyNext**(`data`: T): *void*
 
 **Parameters:**
 
