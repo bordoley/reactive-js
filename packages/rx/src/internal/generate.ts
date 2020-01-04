@@ -21,7 +21,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     private readonly delay: number,
   ) {}
 
-  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const generator = this.generator;
     const subscriber = this.subscriber;
 

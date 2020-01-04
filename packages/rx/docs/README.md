@@ -10,6 +10,7 @@
 
 ### Classes
 
+* [AutoDisposingDelegatingSubscriber](classes/autodisposingdelegatingsubscriber.md)
 * [DelegatingSubscriber](classes/delegatingsubscriber.md)
 
 ### Interfaces

@@ -4,7 +4,9 @@
 
 ## Hierarchy
 
-* **SchedulerHost**
+* SchedulerLike
+
+  ↳ **SchedulerHost**
 
 ## Index
 
@@ -15,6 +17,7 @@
 
 ### Methods
 
+* [schedule](schedulerhost.md#schedule)
 * [scheduleCallback](schedulerhost.md#schedulecallback)
 
 ## Properties
@@ -23,6 +26,8 @@
 
 • **now**: *number*
 
+*Inherited from void*
+
 ___
 
 ###  shouldYield
@@ -30,6 +35,23 @@ ___
 • **shouldYield**: *function | undefined*
 
 ## Methods
+
+###  schedule
+
+▸ **schedule**(`continuation`: SchedulerContinuationLike, `delay?`: undefined | number): *DisposableLike*
+
+*Inherited from void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`continuation` | SchedulerContinuationLike |
+`delay?` | undefined &#124; number |
+
+**Returns:** *DisposableLike*
+
+___
 
 ###  scheduleCallback
 

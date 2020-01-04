@@ -29,7 +29,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
     private readonly delay: number,
   ) {}
 
-  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const iterator = this.iterator;
     const subscriber = this.subscriber;
 

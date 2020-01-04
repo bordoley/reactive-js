@@ -24,7 +24,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
     private readonly delay: number,
   ) {}
 
-  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const enumerator = this.enumerator;
     const subscriber = this.subscriber;
 
