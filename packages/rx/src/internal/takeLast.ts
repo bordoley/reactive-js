@@ -30,7 +30,7 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
       this.last.push(data);
       if (this.last.length > this.maxCount) {

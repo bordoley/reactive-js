@@ -14,10 +14,10 @@ class KeepSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     const shouldKeep = !this.isDisposed && this.predicate(data);
     if (shouldKeep) {
-      this.delegate.next(data);
+      this.delegate.notifyNext(data);
     }
   }
 }

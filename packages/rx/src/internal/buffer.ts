@@ -47,14 +47,14 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     const buffer = this.buffer;
     const durationSubscription = this.durationSubscription;
 
     buffer.push(data);
 
     if (buffer.length === this.maxBufferSize) {
-      this.notifyNext();
+      this.doNotifyNext();
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
         this.durationSelector(data),
@@ -64,13 +64,13 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  notifyNext() {
+  doNotifyNext() {
     this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
 
     try {
-      this.delegate.next(buffer);
+      this.delegate.notifyNext(buffer);
     } catch (cause) {
       this.delegate.dispose({ cause });
     }
@@ -87,7 +87,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   }
 
   onNext(_: unknown) {
-    this.notifyNext();
+    this.doNotifyNext();
   }
 }
 

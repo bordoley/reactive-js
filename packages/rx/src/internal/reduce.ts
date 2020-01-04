@@ -29,7 +29,7 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     }
   }
 
-  next(next: T) {
+  notifyNext(next: T) {
     this.acc = this.reducer(this.acc, next);
   }
 }

@@ -33,7 +33,7 @@ class VirtualTimeObservableEnumerator<T>
     return this.disposable.now;
   }
 
-  next(next: T) {
+  notifyNext(next: T) {
     this.current = next;
     this.hasCurrent = true;
   }

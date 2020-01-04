@@ -23,14 +23,14 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
     if (this.delay > 0 && !subscriber.isDisposed) {
       const hasCurrent = enumerator.moveNext();
       if (!hasCurrent) { 
-        subscriber.next(enumerator.current);
+        subscriber.notifyNext(enumerator.current);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         const hasCurrent = enumerator.moveNext();
         if (!hasCurrent) { break; }
-        subscriber.next(enumerator.current);
+        subscriber.notifyNext(enumerator.current);
         
         if (shouldYield()) {
           return this.continuationResult;
@@ -40,7 +40,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
       while (!subscriber.isDisposed) {
         const hasCurrent = enumerator.moveNext();
         if (!hasCurrent) { break; }
-        subscriber.next(enumerator.current);
+        subscriber.notifyNext(enumerator.current);
       }
     }
 

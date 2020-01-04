@@ -15,10 +15,10 @@ class TakeFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
       this.count++;
-      this.delegate.next(data);
+      this.delegate.notifyNext(data);
       if (this.count >= this.maxCount) {
         this.dispose();
       }

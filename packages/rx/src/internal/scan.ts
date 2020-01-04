@@ -15,11 +15,11 @@ class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     super(delegate);
   }
 
-  next(next: T) {
+  notifyNext(next: T) {
     const nextAcc = this.scanner(this.acc, next);
     this.acc = nextAcc;
 
-    this.delegate.next(nextAcc);
+    this.delegate.notifyNext(nextAcc);
   }
 }
 

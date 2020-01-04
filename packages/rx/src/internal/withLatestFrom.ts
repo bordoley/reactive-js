@@ -28,10 +28,10 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
     this.add(pipe(other, observe(this), subscribe(this)));
   }
 
-  next(data: TA) {
+  notifyNext(data: TA) {
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(data, this.otherLatest as TB);
-      this.delegate.next(result);
+      this.delegate.notifyNext(result);
     }
   }
 

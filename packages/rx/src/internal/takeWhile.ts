@@ -14,10 +14,10 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
       if (this.predicate(data)) {
-        this.delegate.next(data);
+        this.delegate.notifyNext(data);
       } else {
         this.dispose();
       }
