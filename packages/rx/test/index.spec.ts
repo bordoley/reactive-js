@@ -276,7 +276,8 @@ describe("createSubject", () => {
 
     const scheduler = createVirtualTimeSchedulerResource(1);
     const subscriber = new MockSubscriber(scheduler);
-    subscriber.dispose = jest.fn();
+    const onDispose = jest.fn();
+    subscriber.add(e => onDispose(e));
 
     subject.subscribe(subscriber);
 
@@ -285,7 +286,7 @@ describe("createSubject", () => {
 
     expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
     expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
-    expect(subscriber.dispose).toHaveBeenCalled();
+    expect(onDispose).toHaveBeenCalled();
   });
 
   test("when subject is not completed", () => {
@@ -297,7 +298,8 @@ describe("createSubject", () => {
 
     const scheduler = createVirtualTimeSchedulerResource();
     const subscriber = new MockSubscriber(scheduler);
-    subscriber.dispose = jest.fn();
+    const onDispose = jest.fn();
+    subscriber.add(e => onDispose(e));
 
     subject.subscribe(subscriber);
     scheduler.schedule({
@@ -313,7 +315,7 @@ describe("createSubject", () => {
     expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
     expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
     expect(subscriber.notifyNext).toHaveBeenNthCalledWith(3, 4);
-    expect(subscriber.dispose).toHaveBeenCalled();
+    expect(onDispose).toHaveBeenCalled();
   });
 
   test("subscribe and dispose the subscription remove the observer", () => {
@@ -341,7 +343,8 @@ describe("createSubject", () => {
     const subject = createSubject(2);
     const scheduler = createVirtualTimeSchedulerResource();
     const subscriber = new MockSubscriber(scheduler);
-    subscriber.dispose = jest.fn();
+    const onDispose = jest.fn();
+    subscriber.add(e => onDispose(e));
 
     subject.subscribe(subscriber);
     expect(subject.isDisposed).toBeFalsy();
@@ -352,7 +355,7 @@ describe("createSubject", () => {
     subject.onNext(1);
     subject.onDispose();
     expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
-    expect(subscriber.dispose).toHaveBeenCalledTimes(1);
+    expect(onDispose).toHaveBeenCalledTimes(1);
   });
 
   test("disposes subscriber if disposed", () => {
