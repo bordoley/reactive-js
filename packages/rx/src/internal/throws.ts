@@ -10,7 +10,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
   ) {}
 
   run(_?: () => boolean) {
-    (this.subscriber as SubscriberLike<T>).complete(this.error);
+    (this.subscriber as SubscriberLike<T>).dispose(this.error);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

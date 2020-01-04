@@ -20,7 +20,7 @@ class TakeFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
       this.count++;
       this.delegate.next(data);
       if (this.count >= this.maxCount) {
-        this.complete();
+        this.dispose();
       }
     }
   }

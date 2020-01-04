@@ -16,15 +16,15 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       try {
         this.observer.onComplete(error);
       } catch (cause) {
         error = { cause, parent: error } as ErrorLike;
       }
-      this.delegate.complete(error);
+      this.delegate.dispose(error);
     }
   }
 

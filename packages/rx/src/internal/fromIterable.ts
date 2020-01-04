@@ -53,7 +53,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
       }
     }
 
-    subscriber.complete();
+    subscriber.dispose();
     return;
   }
 }

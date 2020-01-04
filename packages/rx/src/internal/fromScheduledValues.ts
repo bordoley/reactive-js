@@ -33,7 +33,7 @@ class FromScheduledValuesObservable<T>
         }
       }
     }
-    subscriber.complete();
+    subscriber.dispose();
     return;
   }
 

@@ -12,11 +12,11 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error !== undefined) {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       } else {
         const enumerator = this.enumerator;
         if (enumerator.moveNext()) {
@@ -26,7 +26,7 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
           );
           enumerator.current.subscribe(concatSubscriber);
         } else {
-          this.delegate.complete();
+          this.delegate.dispose();
         }
       }
     }

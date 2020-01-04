@@ -19,11 +19,11 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     });
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error !== undefined) {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       } else {
         fromArray(this.last).subscribe(this.delegate);
       }

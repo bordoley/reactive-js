@@ -33,17 +33,17 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     });
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
+
       const buffer = this.buffer;
-     
       if (error === undefined && buffer.length > 0) {
         const buffer = this.buffer;
         this.buffer = [];
         ofValue(buffer).subscribe(this.delegate);
       } else {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }      
     }
   }
@@ -73,17 +73,17 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
     try {
       this.delegate.next(buffer);
     } catch (cause) {
-      this.delegate.complete({ cause });
+      this.delegate.dispose({ cause });
     }
 
     if(this.isDisposed) {
-      this.delegate.complete();
+      this.delegate.dispose();
     }
   }
 
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
-      this.complete(error);
+      this.dispose(error);
     }
   }
 
