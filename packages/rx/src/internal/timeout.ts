@@ -40,9 +40,9 @@ class TimeoutSubscriber<T> extends DelegatingSubscriber<T, T>
     );
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     this.setupDurationSubscription();
-    this.delegate.next(data);
+    this.delegate.notifyNext(data);
   }
 
   onComplete(error?: ErrorLike) {

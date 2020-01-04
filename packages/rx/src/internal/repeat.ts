@@ -36,9 +36,9 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
-      this.delegate.next(data);
+      this.delegate.notifyNext(data);
     }
   }
 
@@ -64,7 +64,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   onNext(data: T) {
-    this.delegate.next(data);
+    this.delegate.notifyNext(data);
   }
 }
 

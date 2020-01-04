@@ -28,10 +28,10 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
       this.observer.onNext(data);
-      this.delegate.next(data);
+      this.delegate.notifyNext(data);
     }
   }
 }

@@ -26,7 +26,7 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
     }
   }
 
-  next(data: unknown) {
+  notifyNext(data: unknown) {
     const ctx = this.ctx;
     const latest = ctx.latest;
     latest[this.index] = data;
@@ -38,7 +38,7 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
 
     if (ctx.producedCount === ctx.totalCount) {
       const result = ctx.selector(...latest);
-      this.delegate.next(result);
+      this.delegate.notifyNext(result);
     }
   }
 }

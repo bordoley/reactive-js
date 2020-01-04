@@ -33,7 +33,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
     }
   }
 
-  next(_: T): void {}
+  notifyNext(_: T): void {}
 
   schedule(
     continuation: SchedulerContinuationLike,

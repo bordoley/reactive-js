@@ -28,12 +28,12 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     let acc = this.acc;
     let result = undefined;
     if (this.delay > 0 && !subscriber.isDisposed) {
-      subscriber.next(acc);
+      subscriber.notifyNext(acc);
       this.acc = this.generator(acc);
       result = this.continuationResult;
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
-        subscriber.next(acc);
+        subscriber.notifyNext(acc);
         acc = generator(acc);
 
         if (shouldYield()) {
@@ -44,7 +44,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
       }
     } else {
       while (!subscriber.isDisposed) {
-        subscriber.next(acc);
+        subscriber.notifyNext(acc);
         acc = generator(acc);
       }
     }

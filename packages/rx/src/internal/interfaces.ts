@@ -30,7 +30,7 @@ export interface ObserverLike<T> {
  * @noInheritDoc
  */
 export interface SubscriberLike<T> extends SchedulerResourceLike {
-  next(data: T): void;
+  notifyNext(data: T): void;
 }
 
 /**

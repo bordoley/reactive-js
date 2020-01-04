@@ -7,7 +7,6 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
-  ErrorLike,
   ObservableLike,
   observe,
   ObserverLike,
@@ -17,7 +16,7 @@ import {
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
-import { DisposableLike } from "@reactive-js/disposable";
+import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
 
 class UseObservableObserver<T> implements ObserverLike<T> {
   constructor(

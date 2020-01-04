@@ -87,7 +87,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
     return this.hasCurrent;
   }
 
-  next(next: T): void {
+  notifyNext(next: T): void {
     this.current = next;
     this.hasCurrent = true;
   }

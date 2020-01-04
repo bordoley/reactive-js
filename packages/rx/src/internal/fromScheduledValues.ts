@@ -22,7 +22,7 @@ class FromScheduledValuesObservable<T>
     while (index < values.length && !subscriber.isDisposed) {
       const [, value] = values[index];
       index++;
-      subscriber.next(value);
+      subscriber.notifyNext(value);
 
       if (index < values.length) {
         const delay = values[index][0] || 0;

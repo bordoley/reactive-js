@@ -14,9 +14,9 @@ class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
     super(delegate);
   }
 
-  next(data: TA) {
+  notifyNext(data: TA) {
     const mappedData = this.mapper(data);
-    this.delegate.next(mappedData);
+    this.delegate.notifyNext(mappedData);
   }
 }
 

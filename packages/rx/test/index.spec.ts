@@ -57,7 +57,7 @@ import {
 } from "../src/index";
 
 class MockSubscriber<T> extends Subscriber<T> {
-  next = jest.fn();
+  notifyNext = jest.fn();
 }
 
 const callbackAndDispose = (
@@ -248,7 +248,7 @@ describe("createObservable", () => {
     class ThrowingSubscriber<T> extends Subscriber<T> {
       dispose = jest.fn();
 
-      next(_: T) {
+      notifyNext(_: T) {
         throw cause;
       }
     }
@@ -283,8 +283,8 @@ describe("createSubject", () => {
     expect(subject.subscriberCount).toEqual(0);
     scheduler.run();
 
-    expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
-    expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
     expect(subscriber.dispose).toHaveBeenCalled();
   });
 
@@ -310,9 +310,9 @@ describe("createSubject", () => {
     expect(subject.subscriberCount).toEqual(1);
     scheduler.run();
 
-    expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
-    expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
-    expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
+    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(3, 4);
     expect(subscriber.dispose).toHaveBeenCalled();
   });
 
@@ -334,7 +334,7 @@ describe("createSubject", () => {
 
     scheduler.run();
     expect(subscriber.isDisposed).toBeTruthy();
-    expect(subscriber.next).toHaveBeenCalledTimes(0);
+    expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
   });
 
   test("disposed subject ignores notifications", () => {
@@ -351,7 +351,7 @@ describe("createSubject", () => {
 
     subject.onNext(1);
     subject.onComplete();
-    expect(subscriber.next).toHaveBeenCalledTimes(0);
+    expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
     expect(subscriber.dispose).toHaveBeenCalledTimes(1);
   });
 

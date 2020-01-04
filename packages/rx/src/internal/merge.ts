@@ -22,8 +22,8 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
     }
   }
 
-  next(data: T) {
-    this.delegate.next(data);
+  notifyNext(data: T) {
+    this.delegate.notifyNext(data);
   }
 }
 

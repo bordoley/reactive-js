@@ -36,7 +36,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     }
   }
 
-  next(next: ObservableLike<T>) {
+  notifyNext(next: ObservableLike<T>) {
     const queue = this.queue;
     if (
       !this.isDisposed &&
@@ -48,7 +48,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   }
 
   onNext(data: T) {
-    this.delegate.next(data);
+    this.delegate.notifyNext(data);
   }
 
   onComplete(error?: ErrorLike) {

@@ -32,14 +32,14 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
     if (this.delay > 0 && !subscriber.isDisposed) {
       const next = iterator.next();
       if (!next.done) { 
-        subscriber.next(next.value);
+        subscriber.notifyNext(next.value);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         const next = iterator.next();
         if (next.done) { break; }
-        subscriber.next(next.value);
+        subscriber.notifyNext(next.value);
         
         if (shouldYield()) {
           return this.continuationResult;
@@ -49,7 +49,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
       while (!subscriber.isDisposed) {
         const next = iterator.next();
         if (next.done) { break; }
-        subscriber.next(next.value);
+        subscriber.notifyNext(next.value);
       }
     }
 

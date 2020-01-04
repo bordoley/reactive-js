@@ -39,7 +39,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
     this.add(this.durationSubscription);
   }
   
-  private notifyNext() {
+  private doNotifyNext() {
     if (this.hasValue) {
       const value = this.value as T;
       this.value = undefined;
@@ -48,7 +48,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
       this.setupDurationSubscription(value);
 
       try {
-        this.delegate.next(value);
+        this.delegate.notifyNext(value);
       } catch (cause) {
         this.delegate.dispose({ cause });
       }
@@ -74,7 +74,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
     }
   }
 
-  next(data: T) {
+  notifyNext(data: T) {
     if (!this.isDisposed) {
       this.value = data;
       this.hasValue = true;
@@ -86,7 +86,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
         durationSubscriptionDisposableIsDisposed &&
         this.mode !== ThrottleMode.Last
       ) {
-        this.notifyNext();
+        this.doNotifyNext();
       } else if (durationSubscriptionDisposableIsDisposed) {
         this.setupDurationSubscription(data);
       }
@@ -100,7 +100,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   }
 
   onNext(_: unknown) {
-    this.notifyNext();
+    this.doNotifyNext();
   }
 }
 
