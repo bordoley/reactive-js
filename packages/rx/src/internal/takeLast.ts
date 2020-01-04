@@ -6,7 +6,6 @@ import {
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 import { fromArray } from "./fromArray";
-import { ErrorLike } from "@reactive-js/disposable";
 
 class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
@@ -17,17 +16,13 @@ class TakeLastSubscriber<T> extends DelegatingSubscriber<T, T> {
     this.delegate.add(() => {
       this.last.length = 0;
     });
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add(error => {
       if (error !== undefined) {
         this.delegate.dispose(error);
       } else {
         fromArray(this.last).subscribe(this.delegate);
       }
-    }
+    })
   }
 
   notifyNext(data: T) {

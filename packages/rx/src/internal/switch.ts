@@ -18,17 +18,13 @@ class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
     this.delegate.add(this.innerSubscription);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add(error => {
       if (this.innerSubscription.inner.isDisposed || error !== undefined) {
         this.delegate.dispose(error);
       }
-    }
+    })
   }
-
+  
   notifyNext(data: ObservableLike<T>) {
     this.innerSubscription.inner.dispose();
 

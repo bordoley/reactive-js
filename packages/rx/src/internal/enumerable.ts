@@ -47,19 +47,17 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   private continuation?: SchedulerContinuationLike;
   current: any;
   readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
 
-  constructor() {}
+  constructor() {
+    this.add(error => { this.error = error})
+  }
 
   get isDisposed() {
     return this.disposable.isDisposed;
-  }
-
-  dispose(error?: ErrorLike) {
-    this.disposable.dispose(error);
-    this.error = error;
   }
 
   moveNext(): boolean {

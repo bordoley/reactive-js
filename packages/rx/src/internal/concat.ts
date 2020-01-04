@@ -11,26 +11,22 @@ class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly enumerator: EnumeratorLike<ObservableLike<T>>,
   ) {
     super(delegate);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-      if (error !== undefined) {
-        this.delegate.dispose(error);
-      } else {
-        const enumerator = this.enumerator;
-        if (enumerator.moveNext()) {
-          const concatSubscriber = new ConcatSubscriber(
-            this.delegate,
-            enumerator
-          );
-          enumerator.current.subscribe(concatSubscriber);
+    this.add((error?: ErrorLike) => {
+        if (error !== undefined) {
+          this.delegate.dispose(error);
         } else {
-          this.delegate.dispose();
+          const enumerator = this.enumerator;
+          if (enumerator.moveNext()) {
+            const concatSubscriber = new ConcatSubscriber(
+              this.delegate,
+              enumerator
+            );
+            enumerator.current.subscribe(concatSubscriber);
+          } else {
+            this.delegate.dispose();
+          }
         }
-      }
-    }
+    });
   }
 
   notifyNext(data: T) {
