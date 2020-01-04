@@ -92,17 +92,21 @@ Name | Type | Description |
 
 ###  add
 
-▸ **add**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *any*
+▸ **add**<**This**>(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *This*
+
+**Type parameters:**
+
+▪ **This**: *[DisposableLike](interfaces/disposablelike.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) & This |
 `disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
 `...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
 
-**Returns:** *any*
+**Returns:** *This*
 
 ###  dispose
 

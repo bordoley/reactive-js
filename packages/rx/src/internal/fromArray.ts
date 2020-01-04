@@ -22,7 +22,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
     private readonly delay: number,
   ) {}
 
-  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const values = this.values;
     const length = values.length;
     const subscriber = this.subscriber;

@@ -142,7 +142,7 @@ export const throwIfDisposed = (disposable: DisposableLike) => {
   }
 };
 
-export interface DelegatingDisposableLike {
+export interface DelegatingDisposableLike extends DisposableLike {
   readonly disposable: DisposableLike;
 }
 

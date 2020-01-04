@@ -16,6 +16,8 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
   ↳ **DelegatingSubscriber**
 
+  ↳ [AutoDisposingDelegatingSubscriber](autodisposingdelegatingsubscriber.md)
+
 ## Implements
 
 * [SubscriberLike](../interfaces/subscriberlike.md)‹TA›

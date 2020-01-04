@@ -3,10 +3,9 @@ import {
   DisposableLike,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { SchedulerContinuationLike, SchedulerLike } from "@reactive-js/scheduler";
 
-export interface SchedulerHost {
-  readonly now: number;
+export interface SchedulerHost extends SchedulerLike {
   readonly shouldYield: (() => boolean) | undefined;
 
   scheduleCallback(callback: () => void, delay?: number): DisposableLike;

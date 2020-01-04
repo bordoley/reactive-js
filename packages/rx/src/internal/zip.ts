@@ -152,7 +152,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
     private readonly selector: (...values: unknown[]) => T,
   ) {}
 
-  loop(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
     const enumerators = this.enumerators;
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
