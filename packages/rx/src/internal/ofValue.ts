@@ -28,7 +28,8 @@ class OfValueObservable<T> implements ObservableLike<T> {
   }
 }
 
-class OfValueEnumerable<T> extends OfValueObservable<T> implements EnumerableLike<T> {
+class OfValueEnumerable<T> extends OfValueObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -37,8 +38,8 @@ class OfValueEnumerable<T> extends OfValueObservable<T> implements EnumerableLik
   }
 }
 
-export function ofValue<T>(value: T): EnumerableLike<T>
-export function ofValue<T>(value: T, delay: number): ObservableLike<T>
+export function ofValue<T>(value: T): EnumerableLike<T>;
+export function ofValue<T>(value: T, delay: number): ObservableLike<T>;
 export function ofValue<T>(value: T, delay = 0): ObservableLike<T> {
   return delay > 0
     ? new OfValueObservable(value, delay)

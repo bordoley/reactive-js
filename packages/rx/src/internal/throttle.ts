@@ -38,15 +38,19 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
 
     this.add(error => {
       this.durationSubscription.dispose();
-      
-      if (error === undefined && this.mode !== ThrottleMode.First && this.hasValue) {
-        ofValue(this.value).subscribe(this.delegate)
+
+      if (
+        error === undefined &&
+        this.mode !== ThrottleMode.First &&
+        this.hasValue
+      ) {
+        ofValue(this.value).subscribe(this.delegate);
       } else {
         this.delegate.dispose(error);
       }
     });
   }
-  
+
   private doNotifyNext() {
     if (this.hasValue) {
       const value = this.value as T;
@@ -113,7 +117,9 @@ export const throttle = <T>(
 ): ObservableOperatorLike<T, T> =>
   liftObservable(
     throttleOperator(
-      typeof duration === "number" ? _ => ofValue(undefined, duration) : duration,
+      typeof duration === "number"
+        ? _ => ofValue(undefined, duration)
+        : duration,
       mode,
     ),
   );

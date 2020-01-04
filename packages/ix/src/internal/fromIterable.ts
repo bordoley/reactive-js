@@ -25,24 +25,19 @@ const fromIterableAsyncEnumerator = <T>(
 ): AsyncEnumeratorResourceLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
   const enumerator = fromIterator(iterator).enumerate();
-  
-  const takeCountFromEnumerator = (count: number) => concat(
-    pipe(
-      fromEnumerator(enumerator),
-      takeFirst(count || 1),
-    ), 
-    defer(() => enumerator.isDisposed 
-      ? throws(doneError)
-      : empty()
-    )
-  );
+
+  const takeCountFromEnumerator = (count: number) =>
+    concat(
+      pipe(fromEnumerator(enumerator), takeFirst(count || 1)),
+      defer(() => (enumerator.isDisposed ? throws(doneError) : empty())),
+    );
 
   const operator = (obs: ObservableLike<number | void>) =>
     pipe(
       obs,
       map(takeCountFromEnumerator),
       concatAll<T>(),
-      catchError(error => error === doneError ? empty() : undefined),
+      catchError(error => (error === doneError ? empty() : undefined)),
     );
 
   return createAsyncEnumerator(operator, scheduler, replayCount);

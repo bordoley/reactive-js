@@ -53,10 +53,13 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
       this.buffer.length = 0;
     });
     this.add(error => {
-      if (error !== undefined || (this.buffer.length === 0 && !this.hasCurrent)) {
+      if (
+        error !== undefined ||
+        (this.buffer.length === 0 && !this.hasCurrent)
+      ) {
         this.delegate.dispose(error);
       }
-    })
+    });
   }
 
   moveNext(): boolean {

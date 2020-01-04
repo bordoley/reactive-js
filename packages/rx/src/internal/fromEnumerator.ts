@@ -1,5 +1,13 @@
-import { EnumeratorLike, EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
-import { SchedulerContinuationLike, SchedulerContinuationResultLike } from "@reactive-js/scheduler";
+import {
+  EnumeratorLike,
+  EnumerableLike,
+  ObservableLike,
+  SubscriberLike,
+} from "./interfaces";
+import {
+  SchedulerContinuationLike,
+  SchedulerContinuationResultLike,
+} from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
@@ -22,16 +30,18 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
 
     if (this.delay > 0 && !subscriber.isDisposed) {
       const hasCurrent = enumerator.moveNext();
-      if (!hasCurrent) { 
+      if (!hasCurrent) {
         subscriber.notifyNext(enumerator.current);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         const hasCurrent = enumerator.moveNext();
-        if (!hasCurrent) { break; }
+        if (!hasCurrent) {
+          break;
+        }
         subscriber.notifyNext(enumerator.current);
-        
+
         if (shouldYield()) {
           return this.continuationResult;
         }
@@ -39,7 +49,9 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
     } else {
       while (!subscriber.isDisposed) {
         const hasCurrent = enumerator.moveNext();
-        if (!hasCurrent) { break; }
+        if (!hasCurrent) {
+          break;
+        }
         subscriber.notifyNext(enumerator.current);
       }
     }
@@ -65,7 +77,8 @@ class FromEnumeratorObservable<T> implements ObservableLike<T> {
   }
 }
 
-class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T> implements EnumerableLike<T> {
+class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(enumerator: EnumeratorLike<T>) {
@@ -88,7 +101,7 @@ export function fromEnumerator<T>(
   enumerator: EnumeratorLike<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0 
+  return delay > 0
     ? new FromEnumeratorObservable(enumerator, delay)
     : new FromEnumeratorEnumerable(enumerator);
 }

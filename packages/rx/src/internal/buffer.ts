@@ -26,17 +26,15 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription).add(
-      (error: ErrorLike) => {
-        const buffer = this.buffer;
-        this.buffer = [];
-        if (error === undefined && buffer.length > 0) {
-          ofValue(buffer).subscribe(this.delegate);
-        } else {
-          this.delegate.dispose(error);
-        }  
+    this.add(this.durationSubscription).add((error: ErrorLike) => {
+      const buffer = this.buffer;
+      this.buffer = [];
+      if (error === undefined && buffer.length > 0) {
+        ofValue(buffer).subscribe(this.delegate);
+      } else {
+        this.delegate.dispose(error);
       }
-    )
+    });
   }
 
   notifyNext(data: T) {
@@ -67,7 +65,7 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
       this.delegate.dispose({ cause });
     }
 
-    if(this.isDisposed) {
+    if (this.isDisposed) {
       this.delegate.dispose();
     }
   }
@@ -102,7 +100,9 @@ export function buffer<T>(
     ? liftEnumerable(operator(never, maxBufferSize))
     : liftObservable(
         operator(
-          typeof duration === "number" ? (_: T) => ofValue(undefined, duration) : duration,
+          typeof duration === "number"
+            ? (_: T) => ofValue(undefined, duration)
+            : duration,
           maxBufferSize,
         ),
       );

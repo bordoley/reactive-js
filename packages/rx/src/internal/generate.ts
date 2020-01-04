@@ -61,23 +61,21 @@ class GenerateObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new GenerateProducer(
-      subscriber, 
-      this.generator, 
-      this.acc, 
+      subscriber,
+      this.generator,
+      this.acc,
       this.delay,
     );
     subscriber.schedule(producer, this.delay);
   }
 }
 
-class GenerateEnumerable<T> extends GenerateObservable<T> implements EnumerableLike<T> {
+class GenerateEnumerable<T> extends GenerateObservable<T>
+  implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
-  constructor(
-    generator: (acc: T) => T,
-    acc: T,
-  ) {
+  constructor(generator: (acc: T) => T, acc: T) {
     super(generator, acc, 0);
   }
 }

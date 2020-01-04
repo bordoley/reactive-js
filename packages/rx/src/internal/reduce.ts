@@ -20,7 +20,7 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
       } else {
         this.delegate.dispose(error);
       }
-    })
+    });
   }
 
   notifyNext(next: T) {

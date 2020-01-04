@@ -8,7 +8,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "@reactive-js/scheduler";
-import {  SubscriberLike } from "./interfaces";
+import { SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
@@ -18,9 +18,9 @@ export class Subscriber<T> implements SubscriberLike<T> {
   isDisposed = false;
 
   constructor(private readonly scheduler: SchedulerLike) {
-    this.add(() => { 
+    this.add(() => {
       this.isDisposed = true;
-    })
+    });
   }
 
   get now() {
@@ -59,7 +59,10 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   }
 }
 
-export class AutoDisposingDelegatingSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
+export class AutoDisposingDelegatingSubscriber<
+  TA,
+  TB
+> extends DelegatingSubscriber<TA, TB> {
   constructor(readonly delegate: SubscriberLike<TB>) {
     super(delegate);
     this.add(delegate);

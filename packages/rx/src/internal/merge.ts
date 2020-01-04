@@ -15,7 +15,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
       if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
         this.delegate.dispose(error);
       }
-    })
+    });
   }
 
   notifyNext(data: T) {

@@ -1,4 +1,8 @@
-import { createDisposable, disposableMixin, ErrorLike } from "@reactive-js/disposable";
+import {
+  createDisposable,
+  disposableMixin,
+  ErrorLike,
+} from "@reactive-js/disposable";
 import {
   ObserverLike,
   SubjectResourceLike,
