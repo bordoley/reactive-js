@@ -14,7 +14,6 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
   readonly dispose = disposableMixin.dispose;
   private error?: ErrorLike;
   private readonly observers: Array<ObserverLike<T>> = [];
-  readonly remove = disposableMixin.remove;
   private readonly replayed: T[] = [];
 
   constructor(private readonly replayCount: number) {

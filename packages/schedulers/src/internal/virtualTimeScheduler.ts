@@ -50,7 +50,6 @@ class VirtualTimeSchedulerResourceImpl
   readonly dispose = disposableMixin.dispose;
   private microTaskTicks = 0;
   now = 0;
-  readonly remove = disposableMixin.remove;
   private runShouldYield?: () => boolean;
   readonly schedule = schedulerMixin.schedule;
   shouldYield: (() => boolean) | undefined = () => {

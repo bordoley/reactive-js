@@ -18,7 +18,6 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
   implements AsyncEnumeratorResourceLike<TReq, T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
-  readonly remove = disposableMixin.remove;
 
   constructor(
     readonly dispatch: (req: TReq) => void,

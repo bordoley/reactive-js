@@ -14,7 +14,6 @@ import { createSubject } from "./subject";
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
-  readonly remove = disposableMixin.remove;
 
   constructor(readonly disposable: SubjectResourceLike<T>) {}
 
