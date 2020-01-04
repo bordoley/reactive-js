@@ -4,11 +4,11 @@ import {
   ObservableOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { AutoDisposingDelegatingSubscriber } from "./subscriber";
+import { DelegatingSubscriber } from "./subscriber";
 
 class DistinctUntilChangedSubscriber<
   T
-> extends AutoDisposingDelegatingSubscriber<T, T> {
+> extends DelegatingSubscriber<T, T> {
   private prev: T | undefined;
   private hasValue = false;
 
@@ -17,6 +17,7 @@ class DistinctUntilChangedSubscriber<
     private readonly equals: (a: T, b: T) => boolean,
   ) {
     super(delegate);
+    this.add(delegate);
   }
 
   notifyNext(data: T) {

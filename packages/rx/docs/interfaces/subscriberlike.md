@@ -20,7 +20,6 @@ executing on the subscriber's scheduler.
 
 ## Implemented by
 
-* [AutoDisposingDelegatingSubscriber](../classes/autodisposingdelegatingsubscriber.md)
 * [DelegatingSubscriber](../classes/delegatingsubscriber.md)
 
 ## Index

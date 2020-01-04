@@ -4,14 +4,15 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { AutoDisposingDelegatingSubscriber } from "./subscriber";
+import { DelegatingSubscriber } from "./subscriber";
 
-class MapSubscriber<TA, TB> extends AutoDisposingDelegatingSubscriber<TA, TB> {
+class MapSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
   constructor(
     delegate: SubscriberLike<TB>,
     private readonly mapper: (data: TA) => TB,
   ) {
     super(delegate);
+    this.add(delegate);
   }
 
   notifyNext(data: TA) {

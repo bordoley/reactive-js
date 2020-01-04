@@ -4,9 +4,9 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { AutoDisposingDelegatingSubscriber } from "./subscriber";
+import { DelegatingSubscriber } from "./subscriber";
 
-class ScanSubscriber<T, TAcc> extends AutoDisposingDelegatingSubscriber<
+class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<
   T,
   TAcc
 > {
@@ -16,6 +16,7 @@ class ScanSubscriber<T, TAcc> extends AutoDisposingDelegatingSubscriber<
     private acc: TAcc,
   ) {
     super(delegate);
+    this.add(delegate);
   }
 
   notifyNext(next: T) {
