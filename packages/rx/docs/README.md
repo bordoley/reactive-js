@@ -10,7 +10,7 @@
 
 ### Classes
 
-* [DelegatingSubscriber](classes/delegatingsubscriber.md)
+* [AbstractDelegatingSubscriber](classes/abstractdelegatingsubscriber.md)
 
 ### Interfaces
 
@@ -87,10 +87,6 @@
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
-
-### Object literals
-
-* [subscriberMixin](README.md#const-subscribermixin)
 
 ## Functions
 
@@ -2762,27 +2758,3 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
-
-## Object literals
-
-### `Const` subscriberMixin
-
-### ▪ **subscriberMixin**: *object*
-
-###  schedule
-
-▸ **schedule**<**T**>(`this`: [SubscriberLike](interfaces/subscriberlike.md)‹T› & object, `continuation`: SchedulerContinuationLike, `delay?`: undefined | number): *DisposableLike*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | [SubscriberLike](interfaces/subscriberlike.md)‹T› & object |
-`continuation` | SchedulerContinuationLike |
-`delay?` | undefined &#124; number |
-
-**Returns:** *DisposableLike*

@@ -4,9 +4,9 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<
+class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<
   T,
   TAcc
 > {

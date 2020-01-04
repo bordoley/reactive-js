@@ -10,9 +10,9 @@ import {
 import { liftEnumerable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
+class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<T> {
   private readonly innerSubscription = createSerialDisposable();
   private count = 1;

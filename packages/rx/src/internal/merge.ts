@@ -1,7 +1,7 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
+class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly ctx: MergeObservable<T>,

@@ -4,11 +4,11 @@ import {
   SubscriberOperatorLike,
   ObservableOperatorLike,
 } from "./interfaces";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { liftObservable } from "./lift";
 import { ErrorLike } from "@reactive-js/disposable";
 
-class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
+class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly onError: (error: unknown) => ObservableLike<T> | void,

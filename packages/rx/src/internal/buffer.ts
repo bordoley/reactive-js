@@ -12,9 +12,9 @@ import {
 } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
+class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   implements ObserverLike<unknown> {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];

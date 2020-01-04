@@ -9,9 +9,9 @@ import {
 import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class SwitchSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T>
+class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>, T>
   implements ObserverLike<T> {
   private innerSubscription = createSerialDisposable();
 

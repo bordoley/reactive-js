@@ -6,9 +6,9 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class TakeFirstSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {

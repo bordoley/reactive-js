@@ -4,10 +4,10 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
 
-class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
+class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly reducer: (acc: TAcc, next: T) => TAcc,

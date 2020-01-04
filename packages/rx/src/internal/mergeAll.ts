@@ -8,10 +8,10 @@ import {
 import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { DelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
-class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
+class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount = 0;
   private readonly queue: Array<ObservableLike<T>> = [];
 

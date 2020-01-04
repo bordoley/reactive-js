@@ -20,7 +20,7 @@ executing on the subscriber's scheduler.
 
 ## Implemented by
 
-* [DelegatingSubscriber](../classes/delegatingsubscriber.md)
+* [AbstractDelegatingSubscriber](../classes/abstractdelegatingsubscriber.md)
 
 ## Index
 

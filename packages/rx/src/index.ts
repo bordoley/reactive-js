@@ -14,7 +14,7 @@ export {
   SubjectResourceLike,
 } from "./internal/interfaces";
 
-export { DelegatingSubscriber } from "./internal/subscriber";
+export { AbstractDelegatingSubscriber } from "./internal/subscriber";
 
 export { combineLatest } from "./internal/combineLatest";
 export { createObservable } from "./internal/createObservable";
