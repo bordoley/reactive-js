@@ -10,7 +10,7 @@ export interface ObserverLike<T> {
    *
    * @param error If present, indicates that the provider experienced an error condition.
    */
-  onComplete(error?: ErrorLike): void;
+  onDispose(error?: ErrorLike): void;
 
   /**
    * Provides the next item to observe.

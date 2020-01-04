@@ -34,7 +34,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     return this.disposable.isDisposed;
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     if (this.isCompleted || this.isDisposed) {
       return;
     }
@@ -45,7 +45,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
     const observers = this.observers.slice();
     this.observers.length = 0;
     for (const observer of observers) {
-      observer.onComplete(error);
+      observer.onDispose(error);
     }
   }
 
@@ -91,7 +91,7 @@ class SubjectImpl<T> implements SubjectResourceLike<T> {
           }
         });
       } else {
-        observer.onComplete(this.error);
+        observer.onDispose(this.error);
       }
 
       this.add(subscriber);

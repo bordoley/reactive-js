@@ -13,12 +13,12 @@ export const fromPromise = <T>(
         v => {
           if (!disposable.isDisposed) {
             observer.onNext(v);
-            observer.onComplete();
+            observer.onDispose();
           }
         },
         cause => {
           if (!disposable.isDisposed) {
-            observer.onComplete({ cause });
+            observer.onDispose({ cause });
           }
         },
       )

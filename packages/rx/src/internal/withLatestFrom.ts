@@ -36,7 +36,7 @@ class WithLatestFromSubscriber<TA, TB, TC>
     }
   }
 
-  onComplete(error?: ErrorLike) {
+  onDispose(error?: ErrorLike) {
     if (error !== undefined) {
       this.dispose(error);
     }

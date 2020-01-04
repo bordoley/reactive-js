@@ -21,7 +21,7 @@ class CreateObservable<T> implements ObservableLike<T> {
         subscriber.add(onSubscribeSubscription);
       }
     } catch (cause) {
-      observer.onComplete({ cause });
+      observer.onDispose({ cause });
     }
   }
 }
