@@ -37,7 +37,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends DelegatingSubscriber<TA, TC>
 
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
-      this.complete(error);
+      this.dispose(error);
     }
   }
 

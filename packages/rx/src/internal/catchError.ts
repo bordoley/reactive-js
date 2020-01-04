@@ -16,9 +16,9 @@ class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
     super(delegate);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error !== undefined) {
         try {
           const { cause } = error;
@@ -26,13 +26,13 @@ class CatchErrorSubscriber<T> extends DelegatingSubscriber<T, T> {
           if (result !== undefined) {
             result.subscribe(this.delegate);
           } else {
-            this.delegate.complete(error);
+            this.delegate.dispose(error);
           }
         } catch (cause) {
-          this.delegate.complete({ cause, parent: error } as ErrorLike);
+          this.delegate.dispose({ cause, parent: error } as ErrorLike);
         }
       } else {
-        this.delegate.complete();
+        this.delegate.dispose();
       }
     }
   }

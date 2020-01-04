@@ -9,7 +9,7 @@ class EmptyProducer<T> implements SchedulerContinuationLike {
   constructor(private readonly subscriber: SubscriberLike<T>) {}
 
   run(_?: () => boolean): SchedulerContinuationResultLike | void {
-    this.subscriber.complete();
+    this.subscriber.dispose();
   }
 }
 
@@ -31,7 +31,6 @@ class EmptyEnumerable<T> extends EmptyObservable<T> implements EnumerableLike<T>
 }
 
 const defaultEmpty = new EmptyEnumerable();
-
 
 export function empty<T>(): EnumerableLike<T> 
 export function empty<T>(delay: number): ObservableLike<T> 

@@ -47,7 +47,6 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   private continuation?: SchedulerContinuationLike;
   current: any;
   readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
@@ -58,8 +57,8 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
     return this.disposable.isDisposed;
   }
 
-  complete(error?: ErrorLike) {
-    this.dispose();
+  dispose(error?: ErrorLike) {
+    this.disposable.dispose(error);
     this.error = error;
   }
 

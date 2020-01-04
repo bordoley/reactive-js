@@ -19,7 +19,6 @@ class VirtualTimeObservableEnumerator<T>
   add = disposableMixin.add;
   current: any = undefined;
   readonly disposable: VirtualTimeSchedulerResourceLike;
-  dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
 
@@ -40,8 +39,8 @@ class VirtualTimeObservableEnumerator<T>
     this.hasCurrent = true;
   }
 
-  complete(error?: ErrorLike) {
-    this.dispose();
+  dispose(error?: ErrorLike) {
+    this.disposable.dispose();
     this.error = error;
   }
 

@@ -50,7 +50,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
       try {
         this.delegate.next(value);
       } catch (cause) {
-        this.delegate.complete({ cause });
+        this.delegate.dispose({ cause });
       }
     }
   }
@@ -63,13 +63,13 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
     );
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error === undefined && this.mode !== ThrottleMode.First && this.hasValue) {
         ofValue(this.value).subscribe(this.delegate)
       } else {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }
     }
   }
@@ -95,7 +95,7 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
 
   onComplete(error?: ErrorLike) {
     if (error !== undefined) {
-      this.complete(error);
+      this.dispose(error);
     }
   }
 

@@ -13,7 +13,7 @@ class OfValueProducer<T> implements SchedulerContinuationLike {
 
   run(_?: () => boolean): SchedulerContinuationResultLike | void {
     this.subscriber.next(this.value);
-    this.subscriber.complete();
+    this.subscriber.dispose();
   }
 }
 

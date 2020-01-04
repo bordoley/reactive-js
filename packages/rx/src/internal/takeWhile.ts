@@ -19,7 +19,7 @@ class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
       if (this.predicate(data)) {
         this.delegate.next(data);
       } else {
-        this.complete();
+        this.dispose();
       }
     }
   }

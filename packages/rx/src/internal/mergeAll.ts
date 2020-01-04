@@ -27,11 +27,11 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     });
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error !== undefined || this.queue.length + this.activeCount === 0) {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }
     }
   }
@@ -55,7 +55,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
     this.activeCount--;
 
     if (error !== undefined) {
-      this.delegate.complete(error);
+      this.delegate.dispose(error);
     } else {
       this.subscribeNext();
     }
@@ -76,7 +76,7 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
 
         this.delegate.add(nextObsSubscription);
       } else if (this.isDisposed) {
-        this.delegate.complete();
+        this.delegate.dispose();
       }
     }
   }

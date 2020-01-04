@@ -16,20 +16,18 @@ export class Subscriber<T> implements SubscriberLike<T> {
   readonly disposable: DisposableLike = createDisposable();
   isDisposed = false;
 
-  constructor(private readonly scheduler: SchedulerLike) {}
+  constructor(private readonly scheduler: SchedulerLike) {
+    this.add(() => { 
+      this.isDisposed = true;
+    })
+  }
 
   get now() {
     return this.scheduler.now;
   }
 
-  complete(error?: ErrorLike) {
-    this.dispose(error);
-  }
-
   dispose(error?: ErrorLike) {
-    const isDisposed = this.isDisposed;
-    if (!isDisposed) {
-      this.isDisposed = true;
+    if (!this.isDisposed) {
       this.disposable.dispose(error);
     }
   }
@@ -66,10 +64,10 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
   }
 
   /** @ignore */
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
-      this.delegate.complete(error);
+      this.disposable.dispose(error);
+      this.delegate.dispose(error);
     }
   }
 }

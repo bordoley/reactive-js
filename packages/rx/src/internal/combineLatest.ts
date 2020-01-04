@@ -13,14 +13,14 @@ class CombineLatestSubscriber<T> extends DelegatingSubscriber<unknown, T> {
     super(delegate);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       const ctx = this.ctx;
       ctx.completedCount++;
 
       if (error !== undefined || ctx.completedCount === ctx.totalCount) {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }
     }
   }

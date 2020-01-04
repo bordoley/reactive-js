@@ -17,14 +17,14 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     super(delegate);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       
       if (error === undefined) {
         ofValue(this.acc).subscribe(this.delegate);
       } else {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }
     }
   }

@@ -21,7 +21,7 @@ export const producerMixin: SchedulerContinuationLike = {
       }
     } catch (cause) {
       const error = { cause };
-      this.subscriber.complete(error);
+      this.subscriber.dispose(error);
     }
     return;
   },

@@ -69,11 +69,11 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
     }
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       if (error !== undefined || (this.buffer.length === 0 && !this.hasCurrent)) {
-        this.delegate.complete(error);
+        this.delegate.dispose(error);
       }
     }
   }
@@ -99,7 +99,7 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
           this.hasCurrent = false;
           this.current = undefined;
           this.buffer.length = 0;
-          this.complete();
+          this.dispose();
         }
       }
     }
@@ -183,7 +183,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
         subscriber.next(next);
       }
     }
-    subscriber.complete();
+    subscriber.dispose();
     return;
   }
 }

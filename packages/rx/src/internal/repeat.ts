@@ -30,9 +30,9 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
     this.delegate.add(this.innerSubscription);
   }
 
-  complete(error?: ErrorLike) {
+  dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.dispose(error);
+      this.disposable.dispose(error);
       this.onComplete(error);
     }
   }
@@ -53,7 +53,7 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
     }
 
     if (shouldComplete) {
-      this.delegate.complete(error);
+      this.delegate.dispose(error);
     } else {
       this.count++;
       this.innerSubscription.inner = pipe(

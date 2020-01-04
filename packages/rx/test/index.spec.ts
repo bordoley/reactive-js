@@ -58,7 +58,6 @@ import {
 
 class MockSubscriber<T> extends Subscriber<T> {
   next = jest.fn();
-  complete = jest.fn();
 }
 
 const callbackAndDispose = (
@@ -247,7 +246,7 @@ describe("createObservable", () => {
     const cause = new Error();
 
     class ThrowingSubscriber<T> extends Subscriber<T> {
-      complete = jest.fn();
+      dispose = jest.fn();
 
       next(_: T) {
         throw cause;
@@ -262,7 +261,7 @@ describe("createObservable", () => {
     const subscriber = new ThrowingSubscriber(scheduler);
     observable.subscribe(subscriber);
     scheduler.run();
-    expect(subscriber.complete).toBeCalledWith({ cause });
+    expect(subscriber.dispose).toBeCalledWith({ cause });
   });
 });
 
@@ -277,6 +276,8 @@ describe("createSubject", () => {
 
     const scheduler = createVirtualTimeSchedulerResource(1);
     const subscriber = new MockSubscriber(scheduler);
+    subscriber.dispose = jest.fn();
+
     subject.subscribe(subscriber);
 
     expect(subject.subscriberCount).toEqual(0);
@@ -284,7 +285,7 @@ describe("createSubject", () => {
 
     expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
     expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
-    expect(subscriber.complete).toHaveBeenCalled();
+    expect(subscriber.dispose).toHaveBeenCalled();
   });
 
   test("when subject is not completed", () => {
@@ -296,6 +297,8 @@ describe("createSubject", () => {
 
     const scheduler = createVirtualTimeSchedulerResource();
     const subscriber = new MockSubscriber(scheduler);
+    subscriber.dispose = jest.fn();
+
     subject.subscribe(subscriber);
     scheduler.schedule({
       run: _ => {
@@ -310,7 +313,7 @@ describe("createSubject", () => {
     expect(subscriber.next).toHaveBeenNthCalledWith(1, 2);
     expect(subscriber.next).toHaveBeenNthCalledWith(2, 3);
     expect(subscriber.next).toHaveBeenNthCalledWith(3, 4);
-    expect(subscriber.complete).toHaveBeenCalled();
+    expect(subscriber.dispose).toHaveBeenCalled();
   });
 
   test("subscribe and dispose the subscription remove the observer", () => {
@@ -338,6 +341,7 @@ describe("createSubject", () => {
     const subject = createSubject(2);
     const scheduler = createVirtualTimeSchedulerResource();
     const subscriber = new MockSubscriber(scheduler);
+    subscriber.dispose = jest.fn();
 
     subject.subscribe(subscriber);
     expect(subject.isDisposed).toBeFalsy();
@@ -348,7 +352,7 @@ describe("createSubject", () => {
     subject.onNext(1);
     subject.onComplete();
     expect(subscriber.next).toHaveBeenCalledTimes(0);
-    expect(subscriber.complete).toHaveBeenCalledTimes(0);
+    expect(subscriber.dispose).toHaveBeenCalledTimes(1);
   });
 
   test("disposes subscriber if disposed", () => {
@@ -748,13 +752,12 @@ test("merge", () => {
 });
 
 describe("never", () => {
-  test("produces no values and doesn't complete", () => {
+  test("produces no values", () => {
     const observer = createMockObserver();
 
     expect(() => pipe(never(), observe(observer), toArray())).toThrow();
 
     expect(observer.onNext).toHaveBeenCalledTimes(0);
-    expect(observer.onComplete).toHaveBeenCalledTimes(0);
   });
 });
 
