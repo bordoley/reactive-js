@@ -3,12 +3,13 @@ import {
   createDisposable,
   disposableMixin,
   disposed,
+  ErrorLike,
 } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "@reactive-js/scheduler";
-import { ErrorLike, SubscriberLike } from "./interfaces";
+import {  SubscriberLike } from "./interfaces";
 
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {

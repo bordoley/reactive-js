@@ -1,5 +1,6 @@
 import { defer } from "./defer";
-import { ObservableLike, SubscriberLike, ErrorLike } from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class ThrowsObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;

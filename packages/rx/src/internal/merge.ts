@@ -1,5 +1,6 @@
-import { ErrorLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(

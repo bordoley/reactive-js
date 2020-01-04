@@ -25,7 +25,7 @@ An observer of push-based notifications.
 
 ###  onComplete
 
-▸ **onComplete**(`error?`: [ErrorLike](errorlike.md)): *void*
+▸ **onComplete**(`error?`: ErrorLike): *void*
 
 Called by a provider to indicate that it is done sending push-based notifications.
 
@@ -33,7 +33,7 @@ Called by a provider to indicate that it is done sending push-based notification
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | [ErrorLike](errorlike.md) | If present, indicates that the provider experienced an error condition.  |
+`error?` | ErrorLike | If present, indicates that the provider experienced an error condition.  |
 
 **Returns:** *void*
 

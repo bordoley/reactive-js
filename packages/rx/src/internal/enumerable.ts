@@ -2,7 +2,6 @@ import {
   EnumerableLike,
   EnumeratorLike,
   SubscriberLike,
-  ErrorLike,
   ObservableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
@@ -10,6 +9,7 @@ import {
   DisposableLike,
   createDisposable,
   disposableMixin,
+  ErrorLike,
 } from "@reactive-js/disposable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };

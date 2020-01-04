@@ -1,10 +1,11 @@
 import {
   DisposableLike,
   createSerialDisposable,
+  ErrorLike,
 } from "@reactive-js/disposable";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { ErrorLike, ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 

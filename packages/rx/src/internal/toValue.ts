@@ -1,8 +1,9 @@
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { VirtualTimeSchedulerResourceLike } from "@reactive-js/schedulers";
-import { ObservableLike, ErrorLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import { iterate } from "./iterate";
 import { observe } from "./observe";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class ToValueObserver<T> implements ObserverLike<T> {
   private _result: T | undefined = undefined;

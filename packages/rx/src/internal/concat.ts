@@ -1,8 +1,9 @@
-import { ErrorLike, ObservableLike, SubscriberLike, EnumerableLike, EnumeratorLike, EnumerableOperatorLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, EnumerableLike, EnumeratorLike, EnumerableOperatorLike } from "./interfaces";
 import { DelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { fromArray } from "./fromArray";
 import { empty } from "./empty";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class ConcatSubscriber<T> extends DelegatingSubscriber<T, T> {
   constructor(

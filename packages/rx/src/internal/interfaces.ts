@@ -1,13 +1,5 @@
-import { DisposableLike } from "@reactive-js/disposable";
+import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
 import { SchedulerResourceLike } from "@reactive-js/scheduler";
-
-/**
- * A wrapper around a caught error to handle wierd corner cases like
- * a function which throws undefined or a string.
- */
-export interface ErrorLike {
-  readonly cause: unknown;
-}
 
 /**
  * An observer of push-based notifications.

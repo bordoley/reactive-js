@@ -2,8 +2,9 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
-import { ErrorLike, ObserverLike, SubscriberLike } from "./interfaces";
+import { ObserverLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
   private readonly continuation = { continuation: this };

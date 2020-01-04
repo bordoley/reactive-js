@@ -17,7 +17,6 @@
 * [EnumerableLike](interfaces/enumerablelike.md)
 * [EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)
 * [EnumeratorLike](interfaces/enumeratorlike.md)
-* [ErrorLike](interfaces/errorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [MulticastObservableResourceLike](interfaces/multicastobservableresourcelike.md)
 * [ObservableLike](interfaces/observablelike.md)
@@ -1484,13 +1483,13 @@ ___
 
 ▪ **onComplete**: *function*
 
-▸ (`err?`: [ErrorLike](interfaces/errorlike.md)): *void*
+▸ (`err?`: ErrorLike): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err?` | [ErrorLike](interfaces/errorlike.md) |
+`err?` | ErrorLike |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 

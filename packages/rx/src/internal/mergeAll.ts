@@ -1,6 +1,5 @@
 import { pipe } from "@reactive-js/pipe";
 import {
-  ErrorLike,
   ObservableLike,
   ObservableOperatorLike,
   SubscriberLike,
@@ -10,6 +9,7 @@ import { liftObservable } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { DelegatingSubscriber } from "./subscriber";
+import { ErrorLike } from "@reactive-js/disposable";
 
 class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   private activeCount = 0;

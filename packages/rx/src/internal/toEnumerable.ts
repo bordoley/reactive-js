@@ -1,4 +1,4 @@
-import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
+import { disposableMixin, DisposableLike, ErrorLike } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   createVirtualTimeSchedulerResource,
@@ -6,7 +6,6 @@ import {
 } from "@reactive-js/schedulers";
 import {
   ObservableLike,
-  ErrorLike,
   EnumerableLike,
   EnumeratorLike,
   SubscriberLike,

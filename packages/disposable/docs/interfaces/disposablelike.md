@@ -19,7 +19,6 @@ Represents an unmanaged resource that can be disposed.
 
 * [add](disposablelike.md#add)
 * [dispose](disposablelike.md#dispose)
-* [remove](disposablelike.md#remove)
 
 ## Properties
 
@@ -50,25 +49,14 @@ ___
 
 ###  dispose
 
-▸ **dispose**(): *boolean*
+▸ **dispose**(`error?`: [ErrorLike](errorlike.md)): *void*
 
 Dispose the resource, the operation should be idempotent.
 
-**Returns:** *boolean*
-
-___
-
-###  remove
-
-▸ **remove**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *this*
-
-Removes and disposes the given disposables if they are part of this container.
-
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
-`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
+Name | Type |
+------ | ------ |
+`error?` | [ErrorLike](errorlike.md) |
 
-**Returns:** *this*
+**Returns:** *void*
