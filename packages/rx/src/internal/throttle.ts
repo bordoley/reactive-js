@@ -36,7 +36,15 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription);
+    this.add(error => {
+      this.durationSubscription.dispose();
+      
+      if (error === undefined && this.mode !== ThrottleMode.First && this.hasValue) {
+        ofValue(this.value).subscribe(this.delegate)
+      } else {
+        this.delegate.dispose(error);
+      }
+    });
   }
   
   private doNotifyNext() {
@@ -61,17 +69,6 @@ class ThrottleSubscriber<T> extends DelegatingSubscriber<T, T>
       observe(this),
       subscribe(this),
     );
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-      if (error === undefined && this.mode !== ThrottleMode.First && this.hasValue) {
-        ofValue(this.value).subscribe(this.delegate)
-      } else {
-        this.delegate.dispose(error);
-      }
-    }
   }
 
   notifyNext(data: T) {

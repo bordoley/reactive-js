@@ -3,7 +3,6 @@ import {
   createDisposable,
   disposableMixin,
   disposed,
-  ErrorLike,
 } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
@@ -15,6 +14,7 @@ import {  SubscriberLike } from "./interfaces";
 export class Subscriber<T> implements SubscriberLike<T> {
   readonly add = disposableMixin.add;
   readonly disposable: DisposableLike = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   isDisposed = false;
 
   constructor(private readonly scheduler: SchedulerLike) {
@@ -25,12 +25,6 @@ export class Subscriber<T> implements SubscriberLike<T> {
 
   get now() {
     return this.scheduler.now;
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-    }
   }
 
   notifyNext(_: T): void {}
@@ -63,12 +57,11 @@ export class DelegatingSubscriber<TA, TB> extends Subscriber<TA> {
 
     this.delegate.add(this);
   }
+}
 
-  /** @ignore */
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-      this.delegate.dispose(error);
-    }
+export class AutoDisposingDelegatingSubscriber<TA, TB> extends DelegatingSubscriber<TA, TB> {
+  constructor(readonly delegate: SubscriberLike<TB>) {
+    super(delegate);
+    this.add(delegate);
   }
 }

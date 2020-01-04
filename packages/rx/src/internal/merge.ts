@@ -8,18 +8,14 @@ class MergeSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly ctx: MergeObservable<T>,
   ) {
     super(delegate);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add((error?: ErrorLike) => {
       const ctx = this.ctx;
       ctx.completedCount++;
 
       if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
         this.delegate.dispose(error);
       }
-    }
+    })
   }
 
   notifyNext(data: T) {

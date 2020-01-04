@@ -22,18 +22,15 @@ class MergeSubscriber<T> extends DelegatingSubscriber<ObservableLike<T>, T> {
   ) {
     super(delegate);
 
-    this.delegate.add(() => {
-      this.queue.length = 0;
-    });
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add(error => {
       if (error !== undefined || this.queue.length + this.activeCount === 0) {
         this.delegate.dispose(error);
       }
-    }
+    })
+
+    this.delegate.add(() => {
+      this.queue.length = 0;
+    });
   }
 
   notifyNext(next: ObservableLike<T>) {

@@ -6,7 +6,6 @@ import {
 import { liftEnumerable } from "./lift";
 import { DelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
-import { ErrorLike } from "@reactive-js/disposable";
 
 class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
   constructor(
@@ -15,18 +14,13 @@ class ReduceSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
     private acc: TAcc,
   ) {
     super(delegate);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-      
+    this.add(error => {
       if (error === undefined) {
         ofValue(this.acc).subscribe(this.delegate);
       } else {
         this.delegate.dispose(error);
       }
-    }
+    })
   }
 
   notifyNext(next: T) {

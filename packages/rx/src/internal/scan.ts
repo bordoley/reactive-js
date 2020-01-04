@@ -4,9 +4,9 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AutoDisposingDelegatingSubscriber } from "./subscriber";
 
-class ScanSubscriber<T, TAcc> extends DelegatingSubscriber<T, TAcc> {
+class ScanSubscriber<T, TAcc> extends AutoDisposingDelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly scanner: (acc: TAcc, next: T) => TAcc,

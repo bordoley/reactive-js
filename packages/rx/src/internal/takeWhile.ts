@@ -4,9 +4,9 @@ import {
   SubscriberOperatorLike,
 } from "./interfaces";
 import { liftEnumerable } from "./lift";
-import { DelegatingSubscriber } from "./subscriber";
+import { AutoDisposingDelegatingSubscriber } from "./subscriber";
 
-class TakeWhileSubscriber<T> extends DelegatingSubscriber<T, T> {
+class TakeWhileSubscriber<T> extends AutoDisposingDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly predicate: (next: T) => boolean,

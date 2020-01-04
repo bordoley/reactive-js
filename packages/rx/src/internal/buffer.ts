@@ -26,25 +26,17 @@ class BufferSubscriber<T> extends DelegatingSubscriber<T, readonly T[]>
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription);
-    this.delegate.add(() => {
-      this.buffer.length = 0;
-    });
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-
-      const buffer = this.buffer;
-      if (error === undefined && buffer.length > 0) {
+    this.add(this.durationSubscription).add(
+      (error: ErrorLike) => {
         const buffer = this.buffer;
         this.buffer = [];
-        ofValue(buffer).subscribe(this.delegate);
-      } else {
-        this.delegate.dispose(error);
-      }      
-    }
+        if (error === undefined && buffer.length > 0) {
+          ofValue(buffer).subscribe(this.delegate);
+        } else {
+          this.delegate.dispose(error);
+        }  
+      }
+    )
   }
 
   notifyNext(data: T) {

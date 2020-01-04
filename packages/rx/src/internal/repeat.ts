@@ -27,13 +27,9 @@ class RepeatSubscriber<T> extends DelegatingSubscriber<T, T>
   ) {
     super(delegate);
     this.delegate.add(this.innerSubscription);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add(error => {
       this.onComplete(error);
-    }
+    })
   }
 
   notifyNext(data: T) {

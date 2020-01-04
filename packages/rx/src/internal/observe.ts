@@ -14,18 +14,14 @@ class ObserveSubscriber<T> extends DelegatingSubscriber<T, T> {
     private readonly observer: ObserverLike<T>,
   ) {
     super(delegate);
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
+    this.add(error => {
       try {
         this.observer.onComplete(error);
       } catch (cause) {
         error = { cause, parent: error } as ErrorLike;
       }
       this.delegate.dispose(error);
-    }
+    })
   }
 
   notifyNext(data: T) {

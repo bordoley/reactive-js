@@ -11,7 +11,6 @@ import {
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin, isEnumerable } from "./enumerable";
-import { ErrorLike } from "@reactive-js/disposable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -53,6 +52,11 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
       this.current = undefined;
       this.buffer.length = 0;
     });
+    this.add(error => {
+      if (error !== undefined || (this.buffer.length === 0 && !this.hasCurrent)) {
+        this.delegate.dispose(error);
+      }
+    })
   }
 
   moveNext(): boolean {
@@ -66,15 +70,6 @@ class ZipSubscriber<T> extends DelegatingSubscriber<unknown, T>
       this.hasCurrent = false;
       this.current = undefined;
       return false;
-    }
-  }
-
-  dispose(error?: ErrorLike) {
-    if (!this.isDisposed) {
-      this.disposable.dispose(error);
-      if (error !== undefined || (this.buffer.length === 0 && !this.hasCurrent)) {
-        this.delegate.dispose(error);
-      }
     }
   }
 
