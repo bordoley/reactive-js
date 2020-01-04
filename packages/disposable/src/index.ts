@@ -1,4 +1,12 @@
-export type DisposableOrTeardown = DisposableLike | (() => void);
+/**
+ * A wrapper around a caught error to handle wierd corner cases like
+ * a function which throws undefined or a string.
+ */
+export interface ErrorLike {
+  readonly cause: unknown;
+}
+
+export type DisposableOrTeardown = DisposableLike | ((error?: ErrorLike) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -23,42 +31,32 @@ export interface DisposableLike {
   /**
    * Dispose the resource, the operation should be idempotent.
    */
-  dispose(): boolean;
-
-  /**
-   * Removes and disposes the given disposables if they are part of this container.
-   *
-   * @param disposable
-   * @param disposables
-   */
-  remove(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): this;
+  dispose(error?: ErrorLike): void;
 }
 
-const doDispose = (disposable: DisposableOrTeardown) => {
+const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
   if (disposable instanceof Function) {
     try {
-      disposable();
+      disposable(error);
     } catch (_) {
       /* Proactively catch exceptions thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected exceptions.
        */
     }
   } else {
-    disposable.dispose();
+    disposable.dispose(error);
   }
 };
 
 class DisposableImpl implements DisposableLike {
   isDisposed = false;
   private readonly disposables: Array<DisposableOrTeardown> = [];
+  private error?: ErrorLike = undefined;
 
   add(...disposables: DisposableOrTeardown[]) {
     if (this.isDisposed) {
       for (const d of disposables) {
-        doDispose(d);
+        doDispose(d, this.error);
       }
     } else {
       for (const d of disposables) {
@@ -77,29 +75,17 @@ class DisposableImpl implements DisposableLike {
     return this;
   }
 
-  dispose(): boolean {
-    const isDisposed = this.isDisposed;
-    if (!isDisposed) {
+  dispose(error?: ErrorLike) {
+    if (!this.isDisposed) {
       this.isDisposed = true;
+      this.error = error;
 
       let disposable = this.disposables.shift();
       while (disposable !== undefined) {
-        doDispose(disposable);
+        doDispose(disposable, error);
         disposable = this.disposables.shift();
       }
     }
-    return !isDisposed;
-  }
-
-  remove(...disposables: DisposableOrTeardown[]) {
-    if (!this.isDisposed) {
-      for (const d of disposables) {
-        if (this.doRemove(d)) {
-          doDispose(d);
-        }
-      }
-    }
-    return this;
   }
 
   private doRemove(d: DisposableOrTeardown): boolean {
@@ -117,7 +103,7 @@ class DisposableImpl implements DisposableLike {
 /**
  * Creates an empty DisposableLike instance.
  */
-export const createDisposable = (onDispose?: () => void): DisposableLike => {
+export const createDisposable = (onDispose?: (error?: ErrorLike) => void): DisposableLike => {
   const disposable = new DisposableImpl();
   if (onDispose !== undefined) {
     disposable.add(onDispose);
@@ -133,12 +119,7 @@ const _disposed: DisposableLike = {
     return _disposed;
   },
   isDisposed: true,
-  dispose() {
-    return false;
-  },
-  remove(..._: DisposableOrTeardown[]) {
-    return _disposed;
-  },
+  dispose(_?: ErrorLike) {},
 };
 
 /**
@@ -170,16 +151,8 @@ export const disposableMixin = {
     this.disposable.add(disposable, ...disposables);
     return this;
   },
-  dispose(this: DelegatingDisposableLike): boolean {
-    return this.disposable.dispose();
-  },
-  remove(
-    this: DelegatingDisposableLike,
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): any {
-    this.disposable.remove(disposable, ...disposables);
-    return this;
+  dispose(this: DelegatingDisposableLike, error?: ErrorLike) {
+    this.disposable.dispose(error);
   },
 };
 
@@ -200,7 +173,6 @@ class SerialDisposableImpl implements SerialDisposableLike {
   readonly add = disposableMixin.add;
   readonly disposable = createDisposable();
   readonly dispose = disposableMixin.dispose;
-  readonly remove = disposableMixin.remove;
 
   get inner() {
     return this._inner;
@@ -214,7 +186,8 @@ class SerialDisposableImpl implements SerialDisposableLike {
       this._inner = newInner;
 
       if (oldInner !== newInner) {
-        this.add(newInner).remove(oldInner);
+        this.add(newInner);
+        oldInner.dispose();
       }
     }
   }
