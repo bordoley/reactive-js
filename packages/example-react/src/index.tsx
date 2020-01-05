@@ -93,7 +93,7 @@ const emptyLocation = {
   query: "",
 };
 
-const locationIterable = pipe(
+const location = pipe(
   history,
   toStateStore(() => emptyLocation),
   lift(onNotify<LocationLike>(console.log)),
@@ -103,7 +103,7 @@ const locationIterable = pipe(
   .createRoot(document.getElementById("root"))
   .render(
     <Router
-      locationIterable={locationIterable}
+      location={location}
       notFound={NotFound}
       routes={routes}
     />,
