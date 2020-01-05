@@ -4,7 +4,6 @@ import {
   SubscriberLike,
   EnumeratorLike,
 } from "./interfaces";
-import { enumerableMixin } from "./enumerable";
 import {
   DisposableLike,
   disposableMixin,
@@ -55,10 +54,13 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
 
 class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
   implements EnumerableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(iterator: Iterator<T>) {
     super(iterator, 0);
+  }
+
+  [Symbol.iterator]() {
+    return this.iterator;
   }
 
   enumerate() {
@@ -103,10 +105,12 @@ class FromIterableObservable<T> implements ObservableLike<T> {
 }
 
 class FromIterableEnumerable<T> extends FromIterableObservable<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-
   constructor(iterable: Iterable<T>) {
     super(iterable, 0);
+  }
+
+  [Symbol.iterator]() {
+    return this.iterable[Symbol.iterator]();
   }
 
   enumerate() {
