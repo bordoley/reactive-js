@@ -82,7 +82,6 @@
 * [toArray](README.md#const-toarray)
 * [toEnumerable](README.md#const-toenumerable)
 * [toPromise](README.md#const-topromise)
-* [toSafeSubscriber](README.md#const-tosafesubscriber)
 * [toValue](README.md#const-tovalue)
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -1949,24 +1948,6 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, Promise‹T››*
-
-___
-
-### `Const` toSafeSubscriber
-
-▸ **toSafeSubscriber**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *[SubscriberLike](interfaces/subscriberlike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
-
-**Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹T›*
 
 ___
 
