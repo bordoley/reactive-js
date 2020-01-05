@@ -231,8 +231,7 @@ describe("createObservable", () => {
     const disposable = createDisposable();
 
     const subscription = pipe(
-      (_: ObserverLike<unknown>) => disposable,
-      createObservable,
+      createObservable(_ => disposable),
       subscribe(scheduler),
     );
     scheduler.run();
@@ -246,22 +245,24 @@ describe("createObservable", () => {
     const cause = new Error();
 
     class ThrowingSubscriber<T> extends Subscriber<T> {
-      dispose = jest.fn();
-
       notify(_: T) {
         throw cause;
       }
     }
 
-    const observable = createObservable(observer => {
-      observer.onNext(1);
+    const observable = createObservable(notify => {
+      notify(1);
+      return disposed;
     });
 
     const scheduler = createVirtualTimeSchedulerResource();
     const subscriber = new ThrowingSubscriber(scheduler);
+    const onDispose = jest.fn();
+    subscriber.add(error => onDispose(error));
+
     observable.subscribe(subscriber);
     scheduler.run();
-    expect(subscriber.dispose).toBeCalledWith({ cause });
+    expect(onDispose).toBeCalledWith({ cause });
   });
 });
 
@@ -706,7 +707,10 @@ test("lift", () => {
   const result: number[] = [];
 
   const liftedObservable = pipe(
-    createObservable(observer => observer.onNext(1)),
+    createObservable(notify => {
+      notify(1)
+      return disposed;
+    }),
     onNext(_ => result.push(1)),
   );
 
@@ -966,7 +970,7 @@ test("share", () => {
 
 describe("subscribe", () => {
   test("auto-disposes the subscription on complete", () => {
-    const observable = createObservable(observer => observer.onDispose());
+    const observable = createObservable(_ => disposed);
     const scheduler = createVirtualTimeSchedulerResource();
 
     const subscription = pipe(observable, subscribe(scheduler));

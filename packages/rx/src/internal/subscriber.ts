@@ -87,3 +87,4 @@ export abstract class AbstractDelegatingSubscriber<TA, TB> implements Subscriber
 
   abstract notify(_: TA): void;
 }
+

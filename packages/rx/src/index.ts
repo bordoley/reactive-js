@@ -65,3 +65,4 @@ export { toArray } from "./internal/toArray";
 export { toEnumerable } from "./internal/toEnumerable";
 export { toValue } from "./internal/toValue";
 export { toPromise } from "./internal/toPromise";
+export { toSafeSubscriber } from "./internal/toSafeSubscriber";

@@ -1,27 +1,28 @@
-import { DisposableOrTeardown } from "@reactive-js/disposable";
-import { ObservableLike, ObserverLike, SubscriberLike } from "./interfaces";
-import { createSafeObserver } from "./safeObserver";
+import { DisposableLike } from "@reactive-js/disposable";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
   constructor(
     private readonly onSubscribe: (
-      observer: ObserverLike<T>,
-    ) => DisposableOrTeardown | void,
+      notify: (next: T) => void
+    ) => DisposableLike,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const observer = createSafeObserver(subscriber);
+
+    const safeSubscriber = toSafeSubscriber(subscriber);
+    const notify = (next: T) => safeSubscriber.notify(next);
 
     try {
-      const onSubscribeSubscription = this.onSubscribe(observer) || undefined;
-      if (onSubscribeSubscription !== undefined) {
-        subscriber.add(onSubscribeSubscription);
-      }
+      const onSubscribeSubscription = this.onSubscribe(notify);
+      safeSubscriber.add(onSubscribeSubscription);
+      onSubscribeSubscription.add(safeSubscriber);
     } catch (cause) {
-      observer.onDispose({ cause });
+      safeSubscriber.dispose({ cause });
     }
   }
 }
@@ -39,5 +40,5 @@ class CreateObservable<T> implements ObservableLike<T> {
  * @param onSubscribe
  */
 export const createObservable = <T>(
-  onSubscribe: (observer: ObserverLike<T>) => DisposableOrTeardown | void,
+  onSubscribe:  (notify: (next: T) => void) => DisposableLike,
 ): ObservableLike<T> => new CreateObservable(onSubscribe);

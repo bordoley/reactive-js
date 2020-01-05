@@ -3,14 +3,13 @@ import {
   ErrorLike,
 } from "@reactive-js/disposable";
 import {
-  ObserverLike,
   SubjectLike,
   SubscriberLike,
 } from "./interfaces";
 import {
   subscriberMixin
 } from "./subscriber"
-import { createSafeObserver } from "./safeObserver";
+import { toSafeSubscriber } from "./toSafeSubscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class SubjectImpl<T> implements SubjectLike<T> {
@@ -18,7 +17,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
   readonly disposable = createDisposable();
   readonly dispose = subscriberMixin.dispose;
   private error?: ErrorLike;
-  private readonly observers: Array<ObserverLike<T>> = [];
+  private readonly subscribers: Array<SubscriberLike<T>> = [];
   private readonly replayed: T[] = [];
   readonly schedule = subscriberMixin.schedule;
 
@@ -29,10 +28,10 @@ class SubjectImpl<T> implements SubjectLike<T> {
     this.add(error => {
       this.error = error;
 
-      const observers = this.observers.slice();
-      this.observers.length = 0;
-      for (const observer of observers) {
-        observer.onDispose(error);
+      const subscribers = this.subscribers.slice();
+      this.subscribers.length = 0;
+      for (const subscriber of subscribers) {
+        subscriber.dispose(error);
       }
     });
   }
@@ -46,7 +45,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
   }
 
   get subscriberCount() {
-    return this.observers.length;
+    return this.subscribers.length;
   }
 
   notify(next: T): void {
@@ -58,9 +57,9 @@ class SubjectImpl<T> implements SubjectLike<T> {
         }
       }
   
-      const observers = this.observers.slice();
+      const observers = this.subscribers.slice();
       for (const observer of observers) {
-        observer.onNext(next);
+        observer.notify(next);
       }
     }
   }
@@ -69,26 +68,23 @@ class SubjectImpl<T> implements SubjectLike<T> {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const observer = createSafeObserver(subscriber);
+    const safeSubscriber = toSafeSubscriber(subscriber);
 
-    // The observer is a safe observer, queues all notifications
-    // until a drain is scheduled. Hence there is no need to
-    // copy the replayed notifications before publishing via notify.
     for (const next of this.replayed) {
-      observer.onNext(next);
+      safeSubscriber.notify(next);
     }
 
     if (!this.isDisposed) {
-      this.observers.push(observer);
+      this.subscribers.push(safeSubscriber);
 
       subscriber.add(() => {
-        const index = this.observers.indexOf(observer);
+        const index = this.subscribers.indexOf(safeSubscriber);
         if (index !== -1) {
-          this.observers.splice(index, 1);
+          this.subscribers.splice(index, 1);
         }
       });
     } else {
-      observer.onDispose(this.error);
+      safeSubscriber.dispose(this.error);
     }
   }
 }

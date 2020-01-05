@@ -1,4 +1,5 @@
 import { createObservable, ObservableLike } from "@reactive-js/rx";
+import { createDisposable } from "@reactive-js/disposable";
 
 export function bindNodeCallback<R1, R2, R3, R4>(
   callbackFunc: (
@@ -246,21 +247,24 @@ export function bindNodeCallback(
   callback: Function,
 ): (...args: unknown[]) => ObservableLike<unknown> {
   return function(this: unknown, ...args: unknown[]) {
-    return createObservable(observer => {
+    return createObservable(notify => {
+      const disposable = createDisposable();
+
       const handler = (cause: unknown, ...innerArgs: unknown[]) => {
         if (cause) {
-          observer.onDispose({ cause });
+          disposable.dispose({ cause });
         } else {
           if (innerArgs.length > 1) {
-            observer.onNext(innerArgs);
+            notify(innerArgs);
           } else if (innerArgs.length === 1) {
-            observer.onNext(innerArgs[0]);
+            notify(innerArgs[0]);
           }
-          observer.onDispose();
+          disposable.dispose();
         }
       };
 
       callback.apply(this, [...args, handler]);
+      return disposable;
     });
   };
 }
