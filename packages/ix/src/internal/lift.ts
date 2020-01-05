@@ -72,25 +72,25 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorResourceLike<TReq, T> {
-    const iterator = this.source.enumerateAsync(scheduler);
+    const enumerator = this.source.enumerateAsync(scheduler);
 
     const notify: (req: any) => void =
-      iterator instanceof LiftedAsyncEnumerable
-        ? iterator.notify
-        : (req: any) => iterator.notify(req);
+      enumerator instanceof LiftedAsyncEnumeratorResourceImpl
+        ? enumerator.notify
+        : (req: any) => enumerator.notify(req);
     const liftednotify = this.reqOperators.reduce(
       (acc, next) => next(acc),
       notify,
     );
 
     const observable: ObservableLike<any> =
-      (iterator as any).observable || iterator;
+      (enumerator as any).observable || enumerator;
     const liftedObservable = pipe(
       this.observableOperators.reduce((acc, next) => next(acc), observable),
       publish(scheduler, replayCount),
     );
 
-    const disposable = (iterator as any).disposable || iterator;
+    const disposable = (enumerator as any).disposable || enumerator;
     disposable.add(liftedObservable);
 
     return new LiftedAsyncEnumeratorResourceImpl(

@@ -24,13 +24,13 @@ class DelegatingStateStoreAsyncEnumerable<T>
   ) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    const iterator = this.iterable.enumerateAsync(scheduler);
+    const enumerator = this.iterable.enumerateAsync(scheduler);
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,
     ): ObservableLike<T> => {
       const onIteratorNextChangedObs = pipe(
-        iterator,
+        enumerator,
         onNotify((v: T) => retval.notify((_: T): T => v)),
         ignoreElements(),
       );
@@ -42,14 +42,14 @@ class DelegatingStateStoreAsyncEnumerable<T>
           this.initialState,
         ),
         distinctUntilChanged(this.equals),
-        onNotify((next: T) => iterator.notify(next)),
+        onNotify((next: T) => enumerator.notify(next)),
       );
 
       return merge<T>(onIteratorNextChangedObs, stateObs);
     };
 
     const retval = createAsyncEnumerator(operator, scheduler, replayCount).add(
-      iterator,
+      enumerator,
     );
     return retval;
   }
