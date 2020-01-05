@@ -12,8 +12,6 @@ An observer of push-based notifications.
 
 * **ObserverLike**
 
-  ↳ [SubjectLike](subjectlike.md)
-
 ## Index
 
 ### Methods

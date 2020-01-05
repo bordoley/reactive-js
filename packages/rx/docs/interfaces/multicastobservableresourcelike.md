@@ -14,4 +14,4 @@
 
   ↳ **MulticastObservableResourceLike**
 
-  ↳ [SubjectResourceLike](subjectresourcelike.md)
+  ↳ [SubjectLike](subjectlike.md)

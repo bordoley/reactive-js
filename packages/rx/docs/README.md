@@ -24,7 +24,6 @@
 * [ObservableResourceLike](interfaces/observableresourcelike.md)
 * [ObserverLike](interfaces/observerlike.md)
 * [SubjectLike](interfaces/subjectlike.md)
-* [SubjectResourceLike](interfaces/subjectresourcelike.md)
 * [SubscriberLike](interfaces/subscriberlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
 
@@ -525,7 +524,7 @@ ___
 
 ### `Const` createSubject
 
-▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+▸ **createSubject**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *[SubjectLike](interfaces/subjectlike.md)‹T›*
 
 **Type parameters:**
 
@@ -535,9 +534,10 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
+`scheduler` | SchedulerLike | - |
 `replayCount` | number | 0 |
 
-**Returns:** *[SubjectResourceLike](interfaces/subjectresourcelike.md)‹T›*
+**Returns:** *[SubjectLike](interfaces/subjectlike.md)‹T›*
 
 ___
 

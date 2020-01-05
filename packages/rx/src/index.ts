@@ -11,7 +11,6 @@ export {
   SubscriberLike,
   SubscriberOperatorLike,
   SubjectLike,
-  SubjectResourceLike,
 } from "./internal/interfaces";
 
 export { AbstractDelegatingSubscriber } from "./internal/subscriber";

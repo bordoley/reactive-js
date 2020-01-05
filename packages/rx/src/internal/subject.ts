@@ -1,105 +1,100 @@
 import {
   createDisposable,
-  disposableMixin,
   ErrorLike,
 } from "@reactive-js/disposable";
 import {
   ObserverLike,
-  SubjectResourceLike,
+  SubjectLike,
   SubscriberLike,
 } from "./interfaces";
+import {
+  subscriberMixin
+} from "./subscriber"
 import { createSafeObserver } from "./safeObserver";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
-class SubjectImpl<T> implements SubjectResourceLike<T> {
-  readonly add = disposableMixin.add;
+class SubjectImpl<T> implements SubjectLike<T> {
+  readonly add = subscriberMixin.add;
   readonly disposable = createDisposable();
-  private isCompleted = false;
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = subscriberMixin.dispose;
   private error?: ErrorLike;
   private readonly observers: Array<ObserverLike<T>> = [];
   private readonly replayed: T[] = [];
+  readonly schedule = subscriberMixin.schedule;
 
-  constructor(private readonly replayCount: number) {
-    this.add(() => {
+  constructor(
+    private readonly scheduler: SchedulerLike,
+    private readonly replayCount: number,
+  ) {
+    this.add(error => {
+      this.error = error;
+
+      const observers = this.observers.slice();
       this.observers.length = 0;
-      this.replayed.length = 0;
+      for (const observer of observers) {
+        observer.onDispose(error);
+      }
     });
-  }
-
-  get subscriberCount() {
-    return this.observers.length;
   }
 
   get isDisposed() {
     return this.disposable.isDisposed;
   }
 
-  onDispose(error?: ErrorLike) {
-    if (this.isCompleted || this.isDisposed) {
-      return;
-    }
-
-    this.isCompleted = true;
-    this.error = error;
-
-    const observers = this.observers.slice();
-    this.observers.length = 0;
-    for (const observer of observers) {
-      observer.onDispose(error);
-    }
+  get now() {
+    return this.scheduler.now;
   }
 
-  onNext(data: T) {
-    if (this.isCompleted || this.isDisposed) {
-      return;
-    }
+  get subscriberCount() {
+    return this.observers.length;
+  }
 
-    if (this.replayCount > 0) {
-      this.replayed.push(data);
-      if (this.replayed.length > this.replayCount) {
-        this.replayed.shift();
+  notifyNext(next: T): void {
+    if (!this.isDisposed) {
+      if (this.replayCount > 0) {
+        this.replayed.push(next);
+        if (this.replayed.length > this.replayCount) {
+          this.replayed.shift();
+        }
       }
-    }
-
-    const observers = this.observers.slice();
-    for (const observer of observers) {
-      observer.onNext(data);
+  
+      const observers = this.observers.slice();
+      for (const observer of observers) {
+        observer.onNext(next);
+      }
     }
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
+    // The idea here is that an onSubscribe function may
+    // call next from unscheduled sources such as event handlers.
+    // So we marshall those events back to the scheduler.
+    const observer = createSafeObserver(subscriber);
+
+    // The observer is a safe observer, queues all notifications
+    // until a drain is scheduled. Hence there is no need to
+    // copy the replayed notifications before publishing via notify.
+    for (const next of this.replayed) {
+      observer.onNext(next);
+    }
+
     if (!this.isDisposed) {
-      // The idea here is that an onSubscribe function may
-      // call next from unscheduled sources such as event handlers.
-      // So we marshall those events back to the scheduler.
-      const observer = createSafeObserver(subscriber);
+      this.observers.push(observer);
 
-      // The observer is a safe observer, queues all notifications
-      // until a drain is scheduled. Hence there is no need to
-      // copy the replayed notifications before publishing via notify.
-      for (const next of this.replayed) {
-        observer.onNext(next);
-      }
-
-      if (!this.isCompleted) {
-        this.observers.push(observer);
-
-        subscriber.add(() => {
-          const index = this.observers.indexOf(observer);
-          if (index !== -1) {
-            this.observers.splice(index, 1);
-          }
-        });
-      } else {
-        observer.onDispose(this.error);
-      }
-
-      this.add(subscriber);
+      subscriber.add(() => {
+        const index = this.observers.indexOf(observer);
+        if (index !== -1) {
+          this.observers.splice(index, 1);
+        }
+      });
     } else {
-      subscriber.dispose();
+      observer.onDispose(this.error);
     }
   }
 }
 
-export const createSubject = <T>(replayCount = 0): SubjectResourceLike<T> =>
-  new SubjectImpl(replayCount);
+export const createSubject = <T>(
+  scheduler: SchedulerLike,
+  replayCount = 0,
+): SubjectLike<T> =>
+  new SubjectImpl(scheduler, replayCount);

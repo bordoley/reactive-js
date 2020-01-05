@@ -8,6 +8,7 @@ import { zip } from "./zip";
 import { createSubject } from "./subject";
 import { observe } from "./observe";
 import { concatAll } from "./mergeAll";
+import { createSafeObserver } from "./safeObserver";
 
 class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   constructor(
@@ -17,16 +18,18 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   ) {}
 
   subscribe(subscriber: SubscriberLike<TAcc>) {
-    const accFeedbackSubject = createSubject();
+    const accFeedbackSubject = createSubject(subscriber);
+    const feedbackObserver = createSafeObserver(accFeedbackSubject);
+
     subscriber.add(accFeedbackSubject);
 
     pipe(
       zip([accFeedbackSubject, this.source], this.scanner as any),
       concatAll(),
-      observe(accFeedbackSubject),
+      observe(feedbackObserver),
     ).subscribe(subscriber);
 
-    accFeedbackSubject.onNext(this.initialValue());
+    feedbackObserver.onNext(this.initialValue());
   }
 }
 

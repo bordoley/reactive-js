@@ -1,21 +1,19 @@
 import { disposableMixin } from "@reactive-js/disposable";
-import { pipe, OperatorLike } from "@reactive-js/pipe";
+import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   MulticastObservableResourceLike,
   ObservableLike,
-  SubjectResourceLike,
   SubscriberLike,
+  SubjectLike,
 } from "./interfaces";
-import { observe } from "./observe";
-import { subscribe } from "./subscribe";
 import { createSubject } from "./subject";
 
 class PublishObservable<T> implements MulticastObservableResourceLike<T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
 
-  constructor(readonly disposable: SubjectResourceLike<T>) {}
+  constructor(readonly disposable: SubjectLike<T>) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
@@ -37,7 +35,7 @@ export const publish = <T>(
   ObservableLike<T>,
   MulticastObservableResourceLike<T>
 > => observable => {
-  const subject = createSubject(replayCount);
-  subject.add(pipe(observable, observe(subject), subscribe(scheduler)));
+  const subject = createSubject(scheduler, replayCount);
+  observable.subscribe(subject);
   return new PublishObservable(subject);
 };
