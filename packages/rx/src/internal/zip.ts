@@ -76,22 +76,22 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     }
   }
 
-  notifyNext(data: unknown) {
+  notify(next: unknown) {
     const enumerators = this.enumerators;
 
     if (!this.isDisposed) {
       if (this.hasCurrent) {
-        this.buffer.push(data);
+        this.buffer.push(next);
       } else {
         this.hasCurrent = true;
-        this.current = data;
+        this.current = next;
       }
 
       if (shouldEmit(enumerators)) {
         const next = this.selector(...enumerators.map(getCurrent));
         const shouldCompleteResult = shouldComplete(enumerators);
 
-        this.delegate.notifyNext(next);
+        this.delegate.notify(next);
 
         if (shouldCompleteResult) {
           this.hasCurrent = false;
@@ -160,7 +160,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
     if (shouldYield !== undefined) {
       while (shouldEmit(enumerators) && !subscriber.isDisposed) {
         const next = selector(...enumerators.map(getCurrent));
-        subscriber.notifyNext(next);
+        subscriber.notify(next);
 
         for (const buffer of enumerators) {
           buffer.moveNext();
@@ -178,7 +178,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
           enumerator.moveNext();
         }
 
-        subscriber.notifyNext(next);
+        subscriber.notify(next);
       }
     }
     subscriber.dispose();

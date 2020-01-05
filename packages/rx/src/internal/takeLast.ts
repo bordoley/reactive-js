@@ -25,9 +25,9 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     });
   }
 
-  notifyNext(data: T) {
+  notify(next: T) {
     if (!this.isDisposed) {
-      this.last.push(data);
+      this.last.push(next);
       if (this.last.length > this.maxCount) {
         this.last.shift();
       }

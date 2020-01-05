@@ -21,7 +21,7 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
   readonly dispose = disposableMixin.dispose;
 
   constructor(
-    readonly notifyNext: (req: TReq) => void,
+    readonly notify: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
     readonly disposable: DisposableLike,
     readonly scheduler: SchedulerLike,
@@ -49,7 +49,7 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
 }
 
 interface AsyncEnumeratorRequestOperatorLike<TReqA, TReqB> {
-  (notifyNext: (req: TReqA) => void): (ref: TReqB) => void;
+  (notify: (req: TReqA) => void): (ref: TReqB) => void;
 }
 
 class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
@@ -69,13 +69,13 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
   ): AsyncEnumeratorResourceLike<TReq, T> {
     const iterator = this.source.enumerateAsync(scheduler);
 
-    const notifyNext: (req: any) => void =
+    const notify: (req: any) => void =
       iterator instanceof LiftedAsyncEnumerable
-        ? iterator.notifyNext
-        : (req: any) => iterator.notifyNext(req);
-    const liftedNotifyNext = this.reqOperators.reduce(
+        ? iterator.notify
+        : (req: any) => iterator.notify(req);
+    const liftednotify = this.reqOperators.reduce(
       (acc, next) => next(acc),
-      notifyNext,
+      notify,
     );
 
     const observable: ObservableLike<any> =
@@ -89,7 +89,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     disposable.add(liftedObservable);
 
     return new LiftedAsyncEnumeratorResourceImpl(
-      liftedNotifyNext,
+      liftednotify,
       liftedObservable,
       disposable,
       scheduler,

@@ -31,7 +31,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
     if (this.delay > 0 && !subscriber.isDisposed) {
       const hasCurrent = enumerator.moveNext();
       if (!hasCurrent) {
-        subscriber.notifyNext(enumerator.current);
+        subscriber.notify(enumerator.current);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
@@ -40,7 +40,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
         if (!hasCurrent) {
           break;
         }
-        subscriber.notifyNext(enumerator.current);
+        subscriber.notify(enumerator.current);
 
         if (shouldYield()) {
           return this.continuationResult;
@@ -52,7 +52,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
         if (!hasCurrent) {
           break;
         }
-        subscriber.notifyNext(enumerator.current);
+        subscriber.notify(enumerator.current);
       }
     }
 

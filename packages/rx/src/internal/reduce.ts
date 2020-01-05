@@ -23,7 +23,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     });
   }
 
-  notifyNext(next: T) {
+  notify(next: T) {
     this.acc = this.reducer(this.acc, next);
   }
 }

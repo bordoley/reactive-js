@@ -37,30 +37,30 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     });
   }
 
-  notifyNext(data: T) {
+  notify(next: T) {
     const buffer = this.buffer;
     const durationSubscription = this.durationSubscription;
 
-    buffer.push(data);
+    buffer.push(next);
 
     if (buffer.length === this.maxBufferSize) {
-      this.doNotifyNext();
+      this.donotify();
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
-        this.durationSelector(data),
+        this.durationSelector(next),
         observe(this),
         subscribe(this),
       );
     }
   }
 
-  doNotifyNext() {
+  donotify() {
     this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
 
     try {
-      this.delegate.notifyNext(buffer);
+      this.delegate.notify(buffer);
     } catch (cause) {
       this.delegate.dispose({ cause });
     }
@@ -77,7 +77,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   }
 
   onNext(_: unknown) {
-    this.doNotifyNext();
+    this.donotify();
   }
 }
 

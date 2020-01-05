@@ -33,9 +33,9 @@ class AsyncEnumeratorResourceImpl<TReq, T>
     return this.observable.subscriberCount;
   }
 
-  notifyNext(req: TReq) {
+  notify(req: TReq) {
     // FIXME: need to use an observer not a subscriber.
-    this.disposable.notifyNext(req);
+    this.disposable.notify(req);
   }
 
   schedule(continuation: SchedulerContinuationLike, delay?: number) {
@@ -52,13 +52,13 @@ export const createAsyncEnumerator = <TReq, T>(
   scheduler: SchedulerLike,
   replayCount = 0,
 ): AsyncEnumeratorResourceLike<TReq, T> => {
-  const notifyNext = createSubject(scheduler);
+  const notify = createSubject(scheduler);
   const observable = pipe(
-    notifyNext,
+    notify,
     operator,
     publish(scheduler, replayCount),
   );
-  notifyNext.add(observable);
+  notify.add(observable);
 
-  return new AsyncEnumeratorResourceImpl(notifyNext, observable);
+  return new AsyncEnumeratorResourceImpl(notify, observable);
 };

@@ -30,7 +30,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ### Methods
 
-* [notifyNext](abstractdelegatingsubscriber.md#abstract-notifynext)
+* [notify](abstractdelegatingsubscriber.md#abstract-notify)
 
 ## Constructors
 
@@ -54,9 +54,9 @@ Name | Type |
 
 ## Methods
 
-### `Abstract` notifyNext
+### `Abstract` notify
 
-▸ **notifyNext**(`_`: TA): *void*
+▸ **notify**(`_`: TA): *void*
 
 *Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
 

@@ -19,11 +19,11 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<
     this.add(delegate);
   }
 
-  notifyNext(next: T) {
+  notify(next: T) {
     const nextAcc = this.scanner(this.acc, next);
     this.acc = nextAcc;
 
-    this.delegate.notifyNext(nextAcc);
+    this.delegate.notify(nextAcc);
   }
 }
 

@@ -4,7 +4,7 @@ import { disposed as disposedDisposable } from "@reactive-js/disposable";
 const _disposed: AsyncEnumeratorResourceLike<unknown, any> = {
   ...(disposedDisposable as any),
   subscriberCount: 0,
-  notifyNext: _ => {},
+  notify: _ => {},
   subscribe: subscriber => subscriber.dispose(),
 };
 

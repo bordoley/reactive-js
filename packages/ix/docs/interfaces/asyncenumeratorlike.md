@@ -20,18 +20,18 @@
 
 ### Methods
 
-* [notifyNext](asyncenumeratorlike.md#notifynext)
+* [notify](asyncenumeratorlike.md#notify)
 
 ## Methods
 
-###  notifyNext
+###  notify
 
-▸ **notifyNext**(`request`: TReq): *void*
+▸ **notify**(`req`: TReq): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | TReq |
+`req` | TReq |
 
 **Returns:** *void*

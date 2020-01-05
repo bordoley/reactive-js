@@ -21,10 +21,10 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T
     });
   }
 
-  notifyNext(data: unknown) {
+  notify(next: unknown) {
     const ctx = this.ctx;
     const latest = ctx.latest;
-    latest[this.index] = data;
+    latest[this.index] = next;
 
     if (!this.hasProducedValue) {
       ctx.producedCount++;
@@ -33,7 +33,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T
 
     if (ctx.producedCount === ctx.totalCount) {
       const result = ctx.selector(...latest);
-      this.delegate.notifyNext(result);
+      this.delegate.notify(result);
     }
   }
 }

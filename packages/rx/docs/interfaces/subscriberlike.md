@@ -28,18 +28,18 @@ executing on the subscriber's scheduler.
 
 ### Methods
 
-* [notifyNext](subscriberlike.md#notifynext)
+* [notify](subscriberlike.md#notify)
 
 ## Methods
 
-###  notifyNext
+###  notify
 
-▸ **notifyNext**(`data`: T): *void*
+▸ **notify**(`next`: T): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`data` | T |
+`next` | T |
 
 **Returns:** *void*

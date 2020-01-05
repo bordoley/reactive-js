@@ -31,7 +31,7 @@ class DelegatingStateStoreAsyncEnumerable<T>
     ): ObservableLike<T> => {
       const onIteratorNextChangedObs = pipe(
         iterator,
-        onNext((v: T) => retval.notifyNext((_: T): T => v)),
+        onNext((v: T) => retval.notify((_: T): T => v)),
         ignoreElements(),
       );
 
@@ -42,7 +42,7 @@ class DelegatingStateStoreAsyncEnumerable<T>
           this.initialState,
         ),
         distinctUntilChanged(this.equals),
-        onNext((next: T) => iterator.notifyNext(next)),
+        onNext((next: T) => iterator.notify(next)),
       );
 
       return merge<T>(onIteratorNextChangedObs, stateObs);
