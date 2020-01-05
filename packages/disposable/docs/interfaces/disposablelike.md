@@ -7,8 +7,6 @@ Represents an unmanaged resource that can be disposed.
 
 * **DisposableLike**
 
-  ↳ [DelegatingDisposableLike](delegatingdisposablelike.md)
-
   ↳ [SerialDisposableLike](serialdisposablelike.md)
 
 ## Index
