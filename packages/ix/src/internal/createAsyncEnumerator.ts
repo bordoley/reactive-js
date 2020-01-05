@@ -8,7 +8,10 @@ import {
   SubscriberLike,
   ObservableOperatorLike,
 } from "@reactive-js/rx";
-import { SchedulerLike, SchedulerContinuationLike } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike } from "./interfaces";
 
 class AsyncEnumeratorResourceImpl<TReq, T>
@@ -53,11 +56,7 @@ export const createAsyncEnumerator = <TReq, T>(
   replayCount = 0,
 ): AsyncEnumeratorResourceLike<TReq, T> => {
   const notify = createSubject(scheduler);
-  const observable = pipe(
-    notify,
-    operator,
-    publish(scheduler, replayCount),
-  );
+  const observable = pipe(notify, operator, publish(scheduler, replayCount));
   notify.add(observable);
 
   return new AsyncEnumeratorResourceImpl(notify, observable);

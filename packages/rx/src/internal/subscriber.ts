@@ -28,8 +28,8 @@ export const subscriberMixin = {
     } else {
       return disposed;
     }
-  }
-}
+  },
+};
 
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
@@ -57,7 +57,8 @@ export class Subscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export abstract class AbstractDelegatingSubscriber<TA, TB> implements SubscriberLike<TA> {
+export abstract class AbstractDelegatingSubscriber<TA, TB>
+  implements SubscriberLike<TA> {
   /** @ignore */
   readonly add = subscriberMixin.add;
   /** @ignore */
@@ -87,4 +88,3 @@ export abstract class AbstractDelegatingSubscriber<TA, TB> implements Subscriber
 
   abstract notify(_: TA): void;
 }
-

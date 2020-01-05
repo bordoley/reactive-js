@@ -13,7 +13,8 @@ export interface AsyncEnumeratorLike<TReq, T>
 
 /** @noInheritDoc */
 export interface AsyncEnumeratorResourceLike<TReq, T>
-  extends AsyncEnumeratorLike<TReq, T>, SubscriberLike<TReq>,
+  extends AsyncEnumeratorLike<TReq, T>,
+    SubscriberLike<TReq>,
     MulticastObservableResourceLike<T> {}
 
 export interface AsyncEnumerableLike<TReq, T> {

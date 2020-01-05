@@ -8,7 +8,7 @@ export const fromEvent = <T>(
 ): ObservableLike<T> =>
   createObservable(notify => {
     const disposable = createDisposable();
-    
+
     const listener = (event: Event) => {
       try {
         const result = selector(event);
@@ -19,11 +19,9 @@ export const fromEvent = <T>(
     };
 
     target.addEventListener(eventName, listener, { passive: true });
-    disposable.add(
-      () => {
-        target.removeEventListener(eventName, listener);
-      }
-    );
+    disposable.add(() => {
+      target.removeEventListener(eventName, listener);
+    });
 
     return disposable;
   });

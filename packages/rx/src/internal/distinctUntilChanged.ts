@@ -6,9 +6,10 @@ import {
 import { liftEnumerable } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class DistinctUntilChangedSubscriber<
+class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
+  T,
   T
-> extends AbstractDelegatingSubscriber<T, T> {
+> {
   private prev: T | undefined;
   private hasValue = false;
 

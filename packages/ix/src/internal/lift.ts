@@ -11,12 +11,14 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "./interfaces";
-import { SchedulerLike, SchedulerContinuationLike } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
 class LiftedAsyncEnumeratorResourceImpl<TReq, T>
   implements AsyncEnumeratorResourceLike<TReq, T> {
-
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
 
@@ -39,7 +41,10 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
     return this.observable.subscriberCount;
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay?: number): DisposableLike {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    delay?: number,
+  ): DisposableLike {
     return this.scheduler.schedule(continuation, delay);
   }
 
