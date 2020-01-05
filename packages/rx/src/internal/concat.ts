@@ -8,7 +8,6 @@ import {
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 import { fromArray } from "./fromArray";
-import { empty } from "./empty";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -52,7 +51,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
     if (enumerator.moveNext()) {
       enumerator.current.subscribe(concatSubscriber);
     } else {
-      empty().subscribe(subscriber);
+      subscriber.dispose();
     }
   }
 }

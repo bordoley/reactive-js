@@ -101,7 +101,7 @@ test("buffer", () => {
       [1, 1],
       [1, 2],
       [1, 3],
-      [1, 4],
+      [8, 4],
     ),
     buffer({ duration: 4, maxBufferSize: 3 }),
     toArray(),
@@ -110,7 +110,8 @@ test("buffer", () => {
   expect(result).toEqual([
     [1, 2, 3],
     [4, 1, 2],
-    [3, 4],
+    [3],
+    [4],
   ]);
 });
 
