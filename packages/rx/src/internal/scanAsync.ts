@@ -6,9 +6,7 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { zip } from "./zip";
 import { createSubject } from "./subject";
-import { observe } from "./observe";
 import { concatAll } from "./mergeAll";
-import { createSafeObserver } from "./safeObserver";
 
 class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   constructor(
@@ -19,17 +17,16 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
 
   subscribe(subscriber: SubscriberLike<TAcc>) {
     const accFeedbackSubject = createSubject(subscriber);
-    const feedbackObserver = createSafeObserver(accFeedbackSubject);
-
     subscriber.add(accFeedbackSubject);
 
     pipe(
       zip([accFeedbackSubject, this.source], this.scanner as any),
       concatAll(),
-      observe(feedbackObserver),
-    ).subscribe(subscriber);
+    ).subscribe(accFeedbackSubject);
 
-    feedbackObserver.onNext(this.initialValue());
+    accFeedbackSubject.notify(this.initialValue());
+
+    accFeedbackSubject.subscribe(subscriber);
   }
 }
 
