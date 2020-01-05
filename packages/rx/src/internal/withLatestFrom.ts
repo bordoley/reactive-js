@@ -29,10 +29,10 @@ class WithLatestFromSubscriber<TA, TB, TC>
     this.add(pipe(other, observe(this), subscribe(this))).add(delegate);
   }
 
-  notifyNext(data: TA) {
+  notify(next: TA) {
     if (!this.isDisposed && this.hasLatest) {
-      const result = this.selector(data, this.otherLatest as TB);
-      this.delegate.notifyNext(result);
+      const result = this.selector(next, this.otherLatest as TB);
+      this.delegate.notify(result);
     }
   }
 

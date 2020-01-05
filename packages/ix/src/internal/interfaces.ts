@@ -8,7 +8,7 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 /** @noInheritDoc */
 export interface AsyncEnumeratorLike<TReq, T>
   extends MulticastObservableLike<T> {
-  notifyNext(request: TReq): void;
+  notify(req: TReq): void;
 }
 
 /** @noInheritDoc */

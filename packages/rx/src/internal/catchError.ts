@@ -34,8 +34,8 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     });
   }
 
-  notifyNext(data: T) {
-    this.delegate.notifyNext(data);
+  notify(next: T) {
+    this.delegate.notify(next);
   }
 }
 

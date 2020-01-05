@@ -49,7 +49,7 @@ export class Subscriber<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  notifyNext(_: T): void {}
+  notify(_: T): void {}
 }
 
 /**
@@ -85,5 +85,5 @@ export abstract class AbstractDelegatingSubscriber<TA, TB> implements Subscriber
     return this.scheduler.now;
   }
 
-  abstract notifyNext(_: TA): void;
+  abstract notify(_: TA): void;
 }

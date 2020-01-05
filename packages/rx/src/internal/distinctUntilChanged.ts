@@ -20,15 +20,15 @@ class DistinctUntilChangedSubscriber<
     this.add(delegate);
   }
 
-  notifyNext(data: T) {
+  notify(next: T) {
     const shouldEmit =
       !this.isDisposed &&
-      (!this.hasValue || !this.equals(this.prev as T, data));
+      (!this.hasValue || !this.equals(this.prev as T, next));
 
     if (shouldEmit) {
-      this.prev = data;
+      this.prev = next;
       this.hasValue = true;
-      this.delegate.notifyNext(data);
+      this.delegate.notify(next);
     }
   }
 }

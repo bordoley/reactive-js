@@ -49,7 +49,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
     return this.observers.length;
   }
 
-  notifyNext(next: T): void {
+  notify(next: T): void {
     if (!this.isDisposed) {
       if (this.replayCount > 0) {
         this.replayed.push(next);

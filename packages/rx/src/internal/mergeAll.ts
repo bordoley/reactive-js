@@ -33,7 +33,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>,
     });
   }
 
-  notifyNext(next: ObservableLike<T>) {
+  notify(next: ObservableLike<T>) {
     const queue = this.queue;
     if (
       !this.isDisposed &&
@@ -45,7 +45,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>,
   }
 
   onNext(data: T) {
-    this.delegate.notifyNext(data);
+    this.delegate.notify(data);
   }
 
   onDispose(error?: ErrorLike) {

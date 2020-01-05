@@ -32,14 +32,14 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
       const value = values[index];
       this.index++;
 
-      subscriber.notifyNext(value);
+      subscriber.notify(value);
       return this.continuationResult;
     } else if (shouldYield !== undefined) {
       while (index < length && !subscriber.isDisposed) {
         const value = values[index];
         index++;
 
-        subscriber.notifyNext(value);
+        subscriber.notify(value);
 
         if (shouldYield()) {
           this.index = index;
@@ -51,7 +51,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
         const value = values[index];
         index++;
 
-        subscriber.notifyNext(value);
+        subscriber.notify(value);
       }
     }
 

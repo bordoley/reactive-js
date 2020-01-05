@@ -16,10 +16,10 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     this.add(delegate);
   }
 
-  notifyNext(data: T) {
+  notify(next: T) {
     if (!this.isDisposed) {
       this.count++;
-      this.delegate.notifyNext(data);
+      this.delegate.notify(next);
       if (this.count >= this.maxCount) {
         this.dispose();
       }

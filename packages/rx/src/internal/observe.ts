@@ -24,10 +24,10 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     });
   }
 
-  notifyNext(data: T) {
+  notify(next: T) {
     if (!this.isDisposed) {
-      this.observer.onNext(data);
-      this.delegate.notifyNext(data);
+      this.observer.onNext(next);
+      this.delegate.notify(next);
     }
   }
 }

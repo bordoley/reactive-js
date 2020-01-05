@@ -36,7 +36,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
     if (this.delay > 0 && !subscriber.isDisposed) {
       const next = iterator.next();
       if (!next.done) {
-        subscriber.notifyNext(next.value);
+        subscriber.notify(next.value);
         return this.continuationResult;
       }
     } else if (shouldYield !== undefined) {
@@ -45,7 +45,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
         if (next.done) {
           break;
         }
-        subscriber.notifyNext(next.value);
+        subscriber.notify(next.value);
 
         if (shouldYield()) {
           return this.continuationResult;
@@ -57,7 +57,7 @@ class FromIteratorProducer<T> implements SchedulerContinuationLike {
         if (next.done) {
           break;
         }
-        subscriber.notifyNext(next.value);
+        subscriber.notify(next.value);
       }
     }
 

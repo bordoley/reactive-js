@@ -25,10 +25,10 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>
     });
   }
 
-  notifyNext(data: ObservableLike<T>) {
+  notify(next: ObservableLike<T>) {
     this.innerSubscription.inner.dispose();
 
-    const innerSubscription = pipe(data, observe(this), subscribe(this));
+    const innerSubscription = pipe(next, observe(this), subscribe(this));
     this.delegate.add(innerSubscription);
     this.innerSubscription.inner = innerSubscription;
   }
@@ -39,8 +39,8 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>
     }
   }
 
-  onNext(data: T) {
-    this.delegate.notifyNext(data);
+  onNext(next: T) {
+    this.delegate.notify(next);
   }
 }
 

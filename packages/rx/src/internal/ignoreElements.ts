@@ -8,7 +8,7 @@ class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
     this.add(delegate);
   }
 
-  notifyNext(_: TA) {}
+  notify(_: TA) {}
 }
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>

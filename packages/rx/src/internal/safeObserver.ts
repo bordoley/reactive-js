@@ -32,7 +32,7 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     if (shouldYield !== undefined) {
       while (nextQueue.length > 0 && !subscriber.isDisposed) {
         const next = nextQueue.shift() as T;
-        subscriber.notifyNext(next);
+        subscriber.notify(next);
 
         if (shouldYield() && this.remainingEvents > 0) {
           return this.continuation;
@@ -41,7 +41,7 @@ class SafeObserver<T> implements ObserverLike<T>, SchedulerContinuationLike {
     } else {
       while (nextQueue.length > 0 && !subscriber.isDisposed) {
         const next = nextQueue.shift() as T;
-        subscriber.notifyNext(next);
+        subscriber.notify(next);
       }
     }
 

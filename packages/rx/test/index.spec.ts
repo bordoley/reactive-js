@@ -57,7 +57,7 @@ import {
 } from "../src/index";
 
 class MockSubscriber<T> extends Subscriber<T> {
-  notifyNext = jest.fn();
+  notify = jest.fn();
 }
 
 const callbackAndDispose = (
@@ -248,7 +248,7 @@ describe("createObservable", () => {
     class ThrowingSubscriber<T> extends Subscriber<T> {
       dispose = jest.fn();
 
-      notifyNext(_: T) {
+      notify(_: T) {
         throw cause;
       }
     }
@@ -270,9 +270,9 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeSchedulerResource(1);
     const subject = createSubject(scheduler, 2);
 
-    subject.notifyNext(1);
-    subject.notifyNext(2);
-    subject.notifyNext(3);
+    subject.notify(1);
+    subject.notify(2);
+    subject.notify(3);
     subject.dispose();
 
     const subscriber = new MockSubscriber(scheduler);
@@ -285,8 +285,8 @@ describe("createSubject", () => {
     expect(subject.subscriberCount).toEqual(0);
     scheduler.run();
 
-    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
-    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
     expect(onDispose).toHaveBeenCalled();
   });
 
@@ -294,9 +294,9 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeSchedulerResource();
     const subject = createSubject(scheduler, 2);
 
-    subject.notifyNext(1);
-    subject.notifyNext(2);
-    subject.notifyNext(3);
+    subject.notify(1);
+    subject.notify(2);
+    subject.notify(3);
 
     const subscriber = new MockSubscriber(scheduler);
     const onDispose = jest.fn();
@@ -305,7 +305,7 @@ describe("createSubject", () => {
     subject.subscribe(subscriber);
     scheduler.schedule({
       run: _ => {
-        subject.notifyNext(4);
+        subject.notify(4);
         subject.dispose();
       },
     });
@@ -313,9 +313,9 @@ describe("createSubject", () => {
     expect(subject.subscriberCount).toEqual(1);
     scheduler.run();
 
-    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(1, 2);
-    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(2, 3);
-    expect(subscriber.notifyNext).toHaveBeenNthCalledWith(3, 4);
+    expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
+    expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
+    expect(subscriber.notify).toHaveBeenNthCalledWith(3, 4);
     expect(onDispose).toHaveBeenCalled();
   });
 
@@ -323,9 +323,9 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeSchedulerResource();
     const subject = createSubject(scheduler, 2);
 
-    subject.notifyNext(1);
-    subject.notifyNext(2);
-    subject.notifyNext(3);
+    subject.notify(1);
+    subject.notify(2);
+    subject.notify(3);
     
     const subscriber = new MockSubscriber(scheduler);
 
@@ -337,7 +337,7 @@ describe("createSubject", () => {
 
     scheduler.run();
     expect(subscriber.isDisposed).toBeTruthy();
-    expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
+    expect(subscriber.notify).toHaveBeenCalledTimes(0);
   });
 
   test("disposed subject ignores notifications", () => {
@@ -352,11 +352,11 @@ describe("createSubject", () => {
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
 
-    subject.notifyNext(1);
+    subject.notify(1);
     subject.dispose();
     scheduler.run();
 
-    expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
+    expect(subscriber.notify).toHaveBeenCalledTimes(0);
     expect(onDispose).toHaveBeenCalledTimes(1);
   });
 
