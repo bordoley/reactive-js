@@ -39,7 +39,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>
     }
   }
 
-  onNext(next: T) {
+  onNotify(next: T) {
     this.delegate.notify(next);
   }
 }

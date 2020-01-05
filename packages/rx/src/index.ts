@@ -43,7 +43,7 @@ export { keep } from "./internal/keep";
 export { liftEnumerable, liftObservable } from "./internal/lift";
 export { map } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
-export { observe, onDispose, onError, onNext } from "./internal/observe";
+export { observe, onDispose, onError, onNotify } from "./internal/observe";
 export { publish } from "./internal/publish";
 export { reduce } from "./internal/reduce";
 export { repeat, retry } from "./internal/repeat";

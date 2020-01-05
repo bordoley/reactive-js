@@ -6,7 +6,7 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority } from "@reactive-js/react-scheduler";
-import { generate, onNext } from "@reactive-js/rx";
+import { generate, onNotify } from "@reactive-js/rx";
 import { history, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
@@ -96,7 +96,7 @@ const emptyLocation = {
 const locationIterable = pipe(
   history,
   toStateStore(() => emptyLocation),
-  lift(onNext<LocationLike>(console.log)),
+  lift(onNotify<LocationLike>(console.log)),
 );
 
 (ReactDOM as any)

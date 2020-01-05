@@ -3,7 +3,7 @@ import {
   distinctUntilChanged,
   ignoreElements,
   merge,
-  onNext,
+  onNotify,
   scan,
   ObservableLike,
 } from "@reactive-js/rx";
@@ -31,7 +31,7 @@ class DelegatingStateStoreAsyncEnumerable<T>
     ): ObservableLike<T> => {
       const onIteratorNextChangedObs = pipe(
         iterator,
-        onNext((v: T) => retval.notify((_: T): T => v)),
+        onNotify((v: T) => retval.notify((_: T): T => v)),
         ignoreElements(),
       );
 
@@ -42,7 +42,7 @@ class DelegatingStateStoreAsyncEnumerable<T>
           this.initialState,
         ),
         distinctUntilChanged(this.equals),
-        onNext((next: T) => iterator.notify(next)),
+        onNotify((next: T) => iterator.notify(next)),
       );
 
       return merge<T>(onIteratorNextChangedObs, stateObs);

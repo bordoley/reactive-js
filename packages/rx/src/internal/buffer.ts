@@ -44,7 +44,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     buffer.push(next);
 
     if (buffer.length === this.maxBufferSize) {
-      this.donotify();
+      this.doNotify();
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
         this.durationSelector(next),
@@ -54,7 +54,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  donotify() {
+  doNotify() {
     this.durationSubscription.inner.dispose();
     const buffer = this.buffer;
     this.buffer = [];
@@ -76,8 +76,8 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  onNext(_: unknown) {
-    this.donotify();
+  onNotify(_: unknown) {
+    this.doNotify();
   }
 }
 

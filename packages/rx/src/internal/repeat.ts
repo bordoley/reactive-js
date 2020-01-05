@@ -59,8 +59,8 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onNext(data: T) {
-    this.delegate.notify(data);
+  onNotify(next: T) {
+    this.delegate.notify(next);
   }
 }
 

@@ -17,7 +17,7 @@ export interface ObserverLike<T> {
    *
    * @param data
    */
-  onNext(data: T): void;
+  onNotify(next: T): void;
 }
 
 /**

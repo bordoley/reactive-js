@@ -1,7 +1,7 @@
 import { AsyncEnumerableLike, AsyncEnumeratorResourceLike } from "./interfaces";
 import {
   using,
-  onNext,
+  onNotify,
   withLatestFrom,
   map,
   switchAll,
@@ -45,7 +45,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
 
     const eventEmitter = pipe(
       identity<ReduceRequestLike<TReq, TAcc>>(),
-      lift(onNext(({ request }) => resource.notify(request))),
+      lift(onNotify(({ request }) => resource.notify(request))),
     ).enumerateAsync(scheduler);
 
     return [resource, eventEmitter];
@@ -72,7 +72,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
         ),
         ofValue(initial()),
       ),
-      onNext(next => eventEmitter.notify(next)),
+      onNotify(next => eventEmitter.notify(next)),
       map(({ result }) => result),
     );
 
