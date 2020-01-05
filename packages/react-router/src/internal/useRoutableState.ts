@@ -46,7 +46,7 @@ export const useRoutableState = <TState>(
     return parse(serialized);
   }, [query, fragment]);
 
-  const dispatch = useCallback(
+  const notifyNext = useCallback(
     (stateUpdater: StateUpdaterLike<TState>) => {
       uriUpdater(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
@@ -55,5 +55,5 @@ export const useRoutableState = <TState>(
     [uriUpdater],
   );
 
-  return [state, dispatch];
+  return [state, notifyNext];
 };

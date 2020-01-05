@@ -82,9 +82,9 @@ export const useAsyncEnumerator = <TReq, T>(
   iterator: AsyncEnumeratorLike<TReq, T>,
   scheduler?: SchedulerLike,
 ): [T | undefined, (req: TReq) => void] => {
-  const dispatch = useCallback(req => iterator.dispatch(req), [iterator]);
+  const notifyNext = useCallback(req => iterator.notifyNext(req), [iterator]);
   const value = useObservable(iterator, scheduler);
-  return [value, dispatch];
+  return [value, notifyNext];
 };
 
 const useResource = <T extends DisposableLike>(
