@@ -5,7 +5,6 @@
 
 ### Interfaces
 
-* [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md)
 * [DisposableLike](interfaces/disposablelike.md)
 * [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
@@ -92,7 +91,7 @@ Name | Type | Description |
 
 ###  add
 
-▸ **add**<**This**>(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *This*
+▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *This*
 
 **Type parameters:**
 
@@ -102,7 +101,7 @@ Name | Type | Description |
 
 Name | Type |
 ------ | ------ |
-`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) & This |
+`this` | object & This |
 `disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
 `...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
 
@@ -110,13 +109,13 @@ Name | Type |
 
 ###  dispose
 
-▸ **dispose**(`this`: [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md), `error?`: [ErrorLike](interfaces/errorlike.md)): *void*
+▸ **dispose**(`this`: object, `error?`: [ErrorLike](interfaces/errorlike.md)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`this` | [DelegatingDisposableLike](interfaces/delegatingdisposablelike.md) |
+`this` | object |
 `error?` | [ErrorLike](interfaces/errorlike.md) |
 
 **Returns:** *void*

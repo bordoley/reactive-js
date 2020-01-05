@@ -142,20 +142,16 @@ export const throwIfDisposed = (disposable: DisposableLike) => {
   }
 };
 
-export interface DelegatingDisposableLike extends DisposableLike {
-  readonly disposable: DisposableLike;
-}
-
 export const disposableMixin = {
   add<This extends DisposableLike>(
-    this: DelegatingDisposableLike & This,
+    this: { disposable: DisposableLike } & This,
     disposable: DisposableOrTeardown,
     ...disposables: DisposableOrTeardown[]
   ): This {
     this.disposable.add(disposable, ...disposables);
     return this;
   },
-  dispose(this: DelegatingDisposableLike, error?: ErrorLike) {
+  dispose(this: { disposable: DisposableLike }, error?: ErrorLike) {
     this.disposable.dispose(error);
   },
 };

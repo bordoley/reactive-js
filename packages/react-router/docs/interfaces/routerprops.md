@@ -10,16 +10,16 @@
 
 ### Properties
 
-* [locationIterable](routerprops.md#locationiterable)
+* [location](routerprops.md#location)
 * [notFound](routerprops.md#notfound)
 * [routes](routerprops.md#routes)
 * [scheduler](routerprops.md#optional-scheduler)
 
 ## Properties
 
-###  locationIterable
+###  location
 
-• **locationIterable**: *AsyncEnumerableLike‹StateUpdaterLike‹[RelativeURILike](relativeurilike.md)›, [RelativeURILike](relativeurilike.md)›*
+• **location**: *AsyncEnumerableLike‹StateUpdaterLike‹[RelativeURILike](relativeurilike.md)›, [RelativeURILike](relativeurilike.md)›*
 
 ___
 
