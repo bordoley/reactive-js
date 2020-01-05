@@ -1,6 +1,6 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumerableLike, createAsyncEnumerator } from "@reactive-js/ix";
-import { merge, ObservableLike, onNext, ofValue } from "@reactive-js/rx";
+import { merge, ObservableLike, onNotify, ofValue } from "@reactive-js/rx";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
 
@@ -38,7 +38,7 @@ const pushHistoryState = (newLocation: LocationLike) => {
 const historyOperator = (obs: ObservableLike<LocationLike>) =>
   merge(
     ofValue(getCurrentLocation()),
-    pipe(obs, onNext(pushHistoryState)),
+    pipe(obs, onNotify(pushHistoryState)),
     fromEvent(window, "popstate", getCurrentLocation),
   );
 

@@ -3,7 +3,7 @@ import { fromArray, fromIterable, generate, scanAsync } from "../src/index";
 import { pipe } from "@reactive-js/pipe";
 import {
   subscribe,
-  onNext, 
+  onNotify, 
   onDispose,
   ofValue,
   takeLast,
@@ -17,7 +17,7 @@ test("fromArray", () => {
   const result: number[] = [];
   pipe(
     iter,
-    onNext(x => result.push(x)),
+    onNotify(x => result.push(x)),
     subscribe(scheduler),
   );
 
@@ -37,7 +37,7 @@ test("fromIterable", () => {
   let error: ErrorLike | undefined = undefined;
   pipe(
     iter,
-    onNext(x => result.push(x)),
+    onNotify(x => result.push(x)),
     onDispose(e => {
       error = e;
     }),
@@ -65,7 +65,7 @@ test("generate", () => {
   const result: number[] = [];
   pipe(
     iter,
-    onNext(x => result.push(x)),
+    onNotify(x => result.push(x)),
     subscribe(scheduler),
   );
 
@@ -90,7 +90,7 @@ test("scanAsync", () => {
       scheduler,
     ),
     takeLast(),
-    onNext(x => {
+    onNotify(x => {
       result = x;
     }),
     subscribe(scheduler),

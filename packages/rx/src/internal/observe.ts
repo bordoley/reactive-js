@@ -26,7 +26,7 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   notify(next: T) {
     if (!this.isDisposed) {
-      this.observer.onNext(next);
+      this.observer.onNotify(next);
       this.delegate.notify(next);
     }
   }
@@ -54,7 +54,7 @@ export const onDispose = <T>(
   onDispose: (err?: ErrorLike) => void,
 ): ObservableOperatorLike<T, T> =>
   observe({
-    onNext: ignore,
+    onNotify: ignore,
     onDispose,
   });
 
@@ -68,17 +68,17 @@ class OnErrorObserver<T> implements ObserverLike<T> {
     }
   }
 
-  onNext(_: T) {}
+  onNotify(_: T) {}
 }
 
 export const onError = <T>(
   onError: (err: unknown) => void,
 ): ObservableOperatorLike<T, T> => observe(new OnErrorObserver(onError));
 
-export const onNext = <T>(
-  onNext: (next: T) => void,
+export const onNotify = <T>(
+  onNotify: (next: T) => void,
 ): ObservableOperatorLike<T, T> =>
   observe({
-    onNext,
+    onNotify,
     onDispose: ignore,
   });

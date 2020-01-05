@@ -32,8 +32,8 @@ class UseObservableObserver<T> implements ObserverLike<T> {
     this.updateError(_ => error);
   }
 
-  onNext(data: T) {
-    this.updateState(_ => data);
+  onNotify(next: T) {
+    this.updateState(_ => next);
   }
 }
 

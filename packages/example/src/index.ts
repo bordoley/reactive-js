@@ -5,7 +5,7 @@ import {
   fromArray,
   generate,
   map,
-  onNext,
+  onNotify,
   subscribe,
 } from "@reactive-js/rx";
 
@@ -18,6 +18,6 @@ pipe(
   ),
   map(x => fromArray([x, x, x, x])),
   exhaust(),
-  onNext(console.log),
+  onNotify(console.log),
   subscribe(scheduler),
 );

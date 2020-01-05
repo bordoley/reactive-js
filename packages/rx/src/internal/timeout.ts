@@ -49,7 +49,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     this.dispose(error);
   }
 
-  onNext(_: unknown) {}
+  onNotify(_: unknown) {}
 }
 
 const operator = <T>(

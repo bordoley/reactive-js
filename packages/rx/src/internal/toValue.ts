@@ -10,7 +10,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
   private hasResult = false;
   private error: ErrorLike | undefined = undefined;
 
-  onNext(next: T) {
+  onNotify(next: T) {
     this._result = next;
     this.hasResult = true;
   }

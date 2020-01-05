@@ -42,9 +42,9 @@ class WithLatestFromSubscriber<TA, TB, TC>
     }
   }
 
-  onNext(data: TB) {
+  onNotify(next: TB) {
     this.hasLatest = true;
-    this.otherLatest = data;
+    this.otherLatest = next;
   }
 }
 

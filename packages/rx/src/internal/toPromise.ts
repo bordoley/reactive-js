@@ -19,7 +19,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     private readonly reject: (reason?: any) => void,
   ) {}
 
-  onNext(next: T) {
+  onNotify(next: T) {
     this.result = next;
     this.hasResult = true;
   }
