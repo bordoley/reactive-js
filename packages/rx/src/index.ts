@@ -38,6 +38,7 @@ export { buffer } from "./internal/buffer";
 export { catchError } from "./internal/catchError";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export { endWith } from "./internal/endWith";
+export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
 export { liftEnumerable, liftObservable } from "./internal/lift";

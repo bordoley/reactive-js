@@ -42,6 +42,7 @@
 * [endWith](README.md#endwith)
 * [exhaust](README.md#const-exhaust)
 * [flatten](README.md#const-flatten)
+* [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
 * [fromEnumerator](README.md#fromenumerator)
 * [fromIterable](README.md#fromiterable)
@@ -649,6 +650,34 @@ ___
 ▪ **T**
 
 **Returns:** *[EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, T›*
+
+___
+
+### `Const` forEach
+
+▸ **forEach**<**T**>(`onNotify`: function, `schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onNotify**: *function*
+
+▸ (`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeSchedulerResource
+
+▸ (): *VirtualTimeSchedulerResourceLike*
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
 ___
 
@@ -1953,7 +1982,7 @@ ___
 
 ### `Const` toValue
 
-▸ **toValue**<**T**>(`schedulerFactory?`: undefined | function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **toValue**<**T**>(`schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
 **Type parameters:**
 
@@ -1961,9 +1990,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`schedulerFactory?` | undefined &#124; function |
+▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeSchedulerResource
+
+▸ (): *VirtualTimeSchedulerResourceLike*
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 

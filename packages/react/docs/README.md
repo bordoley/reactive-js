@@ -35,7 +35,7 @@ ___
 
 ### `Const` useAsyncEnumerator
 
-▸ **useAsyncEnumerator**<**TReq**, **T**>(`iterator`: AsyncEnumeratorLike‹TReq, T›, `scheduler?`: SchedulerLike): *[T | undefined, function]*
+▸ **useAsyncEnumerator**<**TReq**, **T**>(`enumerator`: AsyncEnumeratorLike‹TReq, T›, `scheduler?`: SchedulerLike): *[T | undefined, function]*
 
 **Type parameters:**
 
@@ -47,7 +47,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`iterator` | AsyncEnumeratorLike‹TReq, T› |
+`enumerator` | AsyncEnumeratorLike‹TReq, T› |
 `scheduler?` | SchedulerLike |
 
 **Returns:** *[T | undefined, function]*
