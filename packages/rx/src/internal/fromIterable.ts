@@ -4,83 +4,13 @@ import {
   SubscriberLike,
   EnumeratorLike,
 } from "./interfaces";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
-import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 import {
   DisposableLike,
   disposableMixin,
   createDisposable,
 } from "@reactive-js/disposable";
-
-class FromIteratorProducer<T> implements SchedulerContinuationLike {
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-    delay: this.delay,
-  };
-  run = producerMixin.run;
-
-  constructor(
-    private readonly subscriber: SubscriberLike<T>,
-    private readonly iterator: Iterator<T>,
-    private readonly delay: number,
-  ) {}
-
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
-    const iterator = this.iterator;
-    const subscriber = this.subscriber;
-
-    if (this.delay > 0 && !subscriber.isDisposed) {
-      const next = iterator.next();
-      if (!next.done) {
-        subscriber.notify(next.value);
-        return this.continuationResult;
-      }
-    } else if (shouldYield !== undefined) {
-      while (!subscriber.isDisposed) {
-        const next = iterator.next();
-        if (next.done) {
-          break;
-        }
-        subscriber.notify(next.value);
-
-        if (shouldYield()) {
-          return this.continuationResult;
-        }
-      }
-    } else {
-      while (!subscriber.isDisposed) {
-        const next = iterator.next();
-        if (next.done) {
-          break;
-        }
-        subscriber.notify(next.value);
-      }
-    }
-
-    subscriber.dispose();
-    return;
-  }
-}
-
-class FromIteratorObservable<T> implements ObservableLike<T> {
-  constructor(
-    protected readonly iterator: Iterator<T>,
-    private readonly delay: number,
-  ) {}
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new FromIteratorProducer(
-      subscriber,
-      this.iterator,
-      this.delay,
-    );
-    subscriber.schedule(producer, this.delay);
-  }
-}
+import { fromEnumerator } from "./fromEnumerator";
 
 class IteratorEnumerator<T> implements EnumeratorLike<T> {
   readonly add = disposableMixin.add;
@@ -108,6 +38,18 @@ class IteratorEnumerator<T> implements EnumeratorLike<T> {
     }
 
     return this.hasCurrent;
+  }
+}
+
+class FromIteratorObservable<T> implements ObservableLike<T> {
+  constructor(
+    protected readonly iterator: Iterator<T>,
+    private readonly delay: number,
+  ) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const enumerator = new IteratorEnumerator(this.iterator);
+    fromEnumerator(enumerator, this.delay).subscribe(subscriber);
   }
 }
 

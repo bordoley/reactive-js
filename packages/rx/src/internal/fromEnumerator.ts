@@ -30,7 +30,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
 
     if (this.delay > 0 && !subscriber.isDisposed) {
       const hasCurrent = enumerator.moveNext();
-      if (!hasCurrent) {
+      if (hasCurrent) {
         subscriber.notify(enumerator.current);
         return this.continuationResult;
       }
