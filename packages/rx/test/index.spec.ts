@@ -327,7 +327,7 @@ describe("createSubject", () => {
     subject.notify(1);
     subject.notify(2);
     subject.notify(3);
-    
+
     const subscriber = new MockSubscriber(scheduler);
 
     subject.subscribe(subscriber);
@@ -344,11 +344,11 @@ describe("createSubject", () => {
   test("disposed subject ignores notifications", () => {
     const scheduler = createVirtualTimeSchedulerResource();
     const subject = createSubject(scheduler, 2);
-    
+
     const onDispose = jest.fn();
     const subscriber = new MockSubscriber(scheduler).add(e => onDispose(e));
     subject.subscribe(subscriber);
-    
+
     expect(subject.isDisposed).toBeFalsy();
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
@@ -369,7 +369,7 @@ describe("createSubject", () => {
     subject.dispose();
     subject.subscribe(subscriber);
     scheduler.run();
-    
+
     expect(subscriber.isDisposed).toBeTruthy();
   });
 });
@@ -708,7 +708,7 @@ test("lift", () => {
 
   const liftedObservable = pipe(
     createObservable(notify => {
-      notify(1)
+      notify(1);
       return disposed;
     }),
     onNotify(_ => result.push(1)),

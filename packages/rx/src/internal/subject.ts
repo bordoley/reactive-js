@@ -1,14 +1,6 @@
-import {
-  createDisposable,
-  ErrorLike,
-} from "@reactive-js/disposable";
-import {
-  SubjectLike,
-  SubscriberLike,
-} from "./interfaces";
-import {
-  subscriberMixin
-} from "./subscriber"
+import { createDisposable, ErrorLike } from "@reactive-js/disposable";
+import { SubjectLike, SubscriberLike } from "./interfaces";
+import { subscriberMixin } from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -56,7 +48,7 @@ class SubjectImpl<T> implements SubjectLike<T> {
           this.replayed.shift();
         }
       }
-  
+
       const observers = this.subscribers.slice();
       for (const observer of observers) {
         observer.notify(next);
@@ -92,5 +84,4 @@ class SubjectImpl<T> implements SubjectLike<T> {
 export const createSubject = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): SubjectLike<T> =>
-  new SubjectImpl(scheduler, replayCount);
+): SubjectLike<T> => new SubjectImpl(scheduler, replayCount);

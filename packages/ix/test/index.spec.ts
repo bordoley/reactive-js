@@ -3,7 +3,7 @@ import { fromArray, fromIterable, generate, scanAsync } from "../src/index";
 import { pipe } from "@reactive-js/pipe";
 import {
   subscribe,
-  onNotify, 
+  onNotify,
   onDispose,
   ofValue,
   takeLast,

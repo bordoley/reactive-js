@@ -8,20 +8,19 @@ export const fromPromise = <T>(
   const onSubscribe = (notify: (next: T) => void) => {
     const disposable = createDisposable();
 
-    factory()
-      .then(
-        next => {
-          if (!disposable.isDisposed) {
-            notify(next);
-            disposable.dispose();
-          }
-        },
-        cause => {
-          if (!disposable.isDisposed) {
-            disposable.dispose({ cause });
-          }
-        },
-      );
+    factory().then(
+      next => {
+        if (!disposable.isDisposed) {
+          notify(next);
+          disposable.dispose();
+        }
+      },
+      cause => {
+        if (!disposable.isDisposed) {
+          disposable.dispose({ cause });
+        }
+      },
+    );
 
     return disposable;
   };

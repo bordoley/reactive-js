@@ -6,10 +6,7 @@ import {
 import { liftEnumerable } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<
-  T,
-  TAcc
-> {
+class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
     private readonly scanner: (acc: TAcc, next: T) => TAcc,

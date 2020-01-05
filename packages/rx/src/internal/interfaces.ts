@@ -64,7 +64,8 @@ export interface MulticastObservableResourceLike<T>
 
 /** @noInheritDoc */
 export interface SubjectLike<T>
-  extends SubscriberLike<T>, MulticastObservableResourceLike<T> {}
+  extends SubscriberLike<T>,
+    MulticastObservableResourceLike<T> {}
 
 /** @noInheritDoc */
 export interface EnumeratorLike<T> extends DisposableLike {

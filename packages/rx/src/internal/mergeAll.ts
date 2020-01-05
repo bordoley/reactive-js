@@ -11,7 +11,10 @@ import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
-class MergeSubscriber<T> extends AbstractDelegatingSubscriber<ObservableLike<T>, T> {
+class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
+  ObservableLike<T>,
+  T
+> {
   private activeCount = 0;
   private readonly queue: Array<ObservableLike<T>> = [];
 

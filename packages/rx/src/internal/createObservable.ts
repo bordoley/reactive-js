@@ -4,9 +4,7 @@ import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly onSubscribe: (
-      notify: (next: T) => void
-    ) => DisposableLike,
+    private readonly onSubscribe: (notify: (next: T) => void) => DisposableLike,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -40,5 +38,5 @@ class CreateObservable<T> implements ObservableLike<T> {
  * @param onSubscribe
  */
 export const createObservable = <T>(
-  onSubscribe:  (notify: (next: T) => void) => DisposableLike,
+  onSubscribe: (notify: (next: T) => void) => DisposableLike,
 ): ObservableLike<T> => new CreateObservable(onSubscribe);
