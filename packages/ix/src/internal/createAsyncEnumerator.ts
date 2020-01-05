@@ -11,8 +11,7 @@ import {
 import { SchedulerLike, SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike } from "./interfaces";
 
-/** @ignore */
-export class AsyncEnumeratorResourceImpl<TReq, T>
+class AsyncEnumeratorResourceImpl<TReq, T>
   implements AsyncEnumeratorResourceLike<TReq, T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
