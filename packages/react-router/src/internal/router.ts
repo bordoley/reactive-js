@@ -28,7 +28,7 @@ interface RouteMap {
 }
 
 export interface RouterProps {
-  readonly locationIterable: AsyncEnumerableLike<
+  readonly location: AsyncEnumerableLike<
     StateUpdaterLike<RelativeURILike>,
     RelativeURILike
   >;
@@ -41,9 +41,9 @@ export interface RouterProps {
 }
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
-  const { locationIterable, notFound, routes, scheduler } = props;
+  const { location, notFound, routes, scheduler } = props;
 
-  const locationStore = useAsyncEnumerable(locationIterable, { replay: 1 });
+  const locationStore = useAsyncEnumerable(location, { replay: 1 });
 
   const observable = useMemo(() => {
     if (locationStore.isDisposed) {
