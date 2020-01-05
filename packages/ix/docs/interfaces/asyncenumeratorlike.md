@@ -20,13 +20,13 @@
 
 ### Methods
 
-* [dispatch](asyncenumeratorlike.md#dispatch)
+* [notifyNext](asyncenumeratorlike.md#notifynext)
 
 ## Methods
 
-###  dispatch
+###  notifyNext
 
-▸ **dispatch**(`request`: TReq): *void*
+▸ **notifyNext**(`request`: TReq): *void*
 
 **Parameters:**
 

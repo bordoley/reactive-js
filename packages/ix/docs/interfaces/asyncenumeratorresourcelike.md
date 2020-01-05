@@ -12,6 +12,8 @@
 
   ↳ [AsyncEnumeratorLike](asyncenumeratorlike.md)‹TReq, T›
 
+* SubscriberLike‹TReq›
+
 * MulticastObservableResourceLike‹T›
 
   ↳ **AsyncEnumeratorResourceLike**
