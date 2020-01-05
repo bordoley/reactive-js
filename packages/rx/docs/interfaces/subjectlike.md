@@ -8,10 +8,8 @@
 
 ## Hierarchy
 
-* [ObserverLike](observerlike.md)‹T›
+  ↳ [SubscriberLike](subscriberlike.md)‹T›
 
-  ↳ [MulticastObservableLike](multicastobservablelike.md)‹T›
+  ↳ [MulticastObservableResourceLike](multicastobservableresourcelike.md)‹T›
 
   ↳ **SubjectLike**
-
-  ↳ [SubjectResourceLike](subjectresourcelike.md)

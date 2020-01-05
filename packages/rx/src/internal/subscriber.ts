@@ -10,7 +10,8 @@ import {
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
-const subscriberMixin = {
+/** @ignore */
+export const subscriberMixin = {
   ...disposableMixin,
   schedule<T>(
     this: SubscriberLike<T> & { scheduler: SchedulerLike },
@@ -33,7 +34,7 @@ const subscriberMixin = {
 /** @ignore */
 export class Subscriber<T> implements SubscriberLike<T> {
   readonly add = subscriberMixin.add;
-  readonly disposable: DisposableLike = createDisposable();
+  readonly disposable = createDisposable();
   readonly dispose = subscriberMixin.dispose;
   isDisposed = false;
   readonly schedule = subscriberMixin.schedule;
@@ -60,7 +61,7 @@ export abstract class AbstractDelegatingSubscriber<TA, TB> implements Subscriber
   /** @ignore */
   readonly add = subscriberMixin.add;
   /** @ignore */
-  readonly disposable: DisposableLike = createDisposable();
+  readonly disposable = createDisposable();
   /** @ignore */
   readonly dispose = subscriberMixin.dispose;
   /** @ignore */

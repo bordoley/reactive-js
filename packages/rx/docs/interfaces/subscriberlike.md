@@ -18,6 +18,8 @@ executing on the subscriber's scheduler.
 
   ↳ **SubscriberLike**
 
+  ↳ [SubjectLike](subjectlike.md)
+
 ## Implemented by
 
 * [AbstractDelegatingSubscriber](../classes/abstractdelegatingsubscriber.md)

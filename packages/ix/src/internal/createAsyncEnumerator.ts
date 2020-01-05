@@ -4,7 +4,7 @@ import {
   createSubject,
   MulticastObservableLike,
   publish,
-  SubjectResourceLike,
+  SubjectLike,
   SubscriberLike,
   ObservableOperatorLike,
 } from "@reactive-js/rx";
@@ -18,7 +18,8 @@ export class AsyncEnumeratorResourceImpl<TReq, T>
   readonly dispose = disposableMixin.dispose;
 
   constructor(
-    readonly disposable: SubjectResourceLike<TReq>,
+    // FIXME: Totally not safe. Subject is a subscriber. We should wrap it in a safeObserver.
+    readonly disposable: SubjectLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
   ) {}
 
@@ -31,7 +32,8 @@ export class AsyncEnumeratorResourceImpl<TReq, T>
   }
 
   dispatch(req: TReq) {
-    this.disposable.onNext(req);
+    // FIXME: need to use an observer not a subscriber.
+    this.disposable.notifyNext(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -44,7 +46,7 @@ export const createAsyncEnumerator = <TReq, T>(
   scheduler: SchedulerLike,
   replayCount = 0,
 ): AsyncEnumeratorResourceLike<TReq, T> => {
-  const dispatcher = createSubject();
+  const dispatcher = createSubject(scheduler);
   const observable = pipe(
     dispatcher,
     operator,

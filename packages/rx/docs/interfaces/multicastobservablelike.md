@@ -14,8 +14,6 @@
 
   ↳ [MulticastObservableResourceLike](multicastobservableresourcelike.md)
 
-  ↳ [SubjectLike](subjectlike.md)
-
 ## Index
 
 ### Properties

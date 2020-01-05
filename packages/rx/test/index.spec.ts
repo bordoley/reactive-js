@@ -267,18 +267,19 @@ describe("createObservable", () => {
 
 describe("createSubject", () => {
   test("when subject is completed", () => {
-    const subject = createSubject(2);
-
-    subject.onNext(1);
-    subject.onNext(2);
-    subject.onNext(3);
-    subject.onDispose();
-
     const scheduler = createVirtualTimeSchedulerResource(1);
+    const subject = createSubject(scheduler, 2);
+
+    subject.notifyNext(1);
+    subject.notifyNext(2);
+    subject.notifyNext(3);
+    subject.dispose();
+
     const subscriber = new MockSubscriber(scheduler);
     const onDispose = jest.fn();
     subscriber.add(e => onDispose(e));
 
+    debugger;
     subject.subscribe(subscriber);
 
     expect(subject.subscriberCount).toEqual(0);
@@ -290,13 +291,13 @@ describe("createSubject", () => {
   });
 
   test("when subject is not completed", () => {
-    const subject = createSubject(2);
-
-    subject.onNext(1);
-    subject.onNext(2);
-    subject.onNext(3);
-
     const scheduler = createVirtualTimeSchedulerResource();
+    const subject = createSubject(scheduler, 2);
+
+    subject.notifyNext(1);
+    subject.notifyNext(2);
+    subject.notifyNext(3);
+
     const subscriber = new MockSubscriber(scheduler);
     const onDispose = jest.fn();
     subscriber.add(e => onDispose(e));
@@ -304,8 +305,8 @@ describe("createSubject", () => {
     subject.subscribe(subscriber);
     scheduler.schedule({
       run: _ => {
-        subject.onNext(4);
-        subject.onDispose();
+        subject.notifyNext(4);
+        subject.dispose();
       },
     });
 
@@ -319,13 +320,13 @@ describe("createSubject", () => {
   });
 
   test("subscribe and dispose the subscription remove the observer", () => {
-    const subject = createSubject(2);
-
-    subject.onNext(1);
-    subject.onNext(2);
-    subject.onNext(3);
-
     const scheduler = createVirtualTimeSchedulerResource();
+    const subject = createSubject(scheduler, 2);
+
+    subject.notifyNext(1);
+    subject.notifyNext(2);
+    subject.notifyNext(3);
+    
     const subscriber = new MockSubscriber(scheduler);
 
     subject.subscribe(subscriber);
@@ -340,31 +341,34 @@ describe("createSubject", () => {
   });
 
   test("disposed subject ignores notifications", () => {
-    const subject = createSubject(2);
     const scheduler = createVirtualTimeSchedulerResource();
-    const subscriber = new MockSubscriber(scheduler);
+    const subject = createSubject(scheduler, 2);
+    
     const onDispose = jest.fn();
-    subscriber.add(e => onDispose(e));
-
+    const subscriber = new MockSubscriber(scheduler).add(e => onDispose(e));
     subject.subscribe(subscriber);
+    
     expect(subject.isDisposed).toBeFalsy();
-
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
 
-    subject.onNext(1);
-    subject.onDispose();
+    subject.notifyNext(1);
+    subject.dispose();
+    scheduler.run();
+
     expect(subscriber.notifyNext).toHaveBeenCalledTimes(0);
     expect(onDispose).toHaveBeenCalledTimes(1);
   });
 
   test("disposes subscriber if disposed", () => {
-    const subject = createSubject(2);
     const scheduler = createVirtualTimeSchedulerResource();
+    const subject = createSubject(scheduler, 2);
     const subscriber = new MockSubscriber(scheduler);
 
     subject.dispose();
     subject.subscribe(subscriber);
+    scheduler.run();
+    
     expect(subscriber.isDisposed).toBeTruthy();
   });
 });

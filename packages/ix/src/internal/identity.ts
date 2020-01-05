@@ -4,8 +4,9 @@ import { AsyncEnumeratorResourceImpl } from "./createAsyncEnumerator";
 import { createSubject } from "@reactive-js/rx";
 
 const instance = {
-  enumerateAsync: (_: SchedulerLike, replayCount = 0) => {
-    const dispatcher = createSubject(replayCount);
+  enumerateAsync: (scheduler: SchedulerLike, replayCount = 0) => {
+    // FIXME: subject is a subscriber not an observer, going to be problematic.
+    const dispatcher = createSubject(scheduler, replayCount);
     return new AsyncEnumeratorResourceImpl(dispatcher, dispatcher);
   },
 };
