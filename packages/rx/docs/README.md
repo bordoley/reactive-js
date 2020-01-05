@@ -61,7 +61,7 @@
 * [ofValue](README.md#ofvalue)
 * [onDispose](README.md#const-ondispose)
 * [onError](README.md#const-onerror)
-* [onNext](README.md#const-onnext)
+* [onNotify](README.md#const-onnotify)
 * [publish](README.md#const-publish)
 * [reduce](README.md#const-reduce)
 * [repeat](README.md#const-repeat)
@@ -82,6 +82,7 @@
 * [toArray](README.md#const-toarray)
 * [toEnumerable](README.md#const-toenumerable)
 * [toPromise](README.md#const-topromise)
+* [toSafeSubscriber](README.md#const-tosafesubscriber)
 * [toValue](README.md#const-tovalue)
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
@@ -510,13 +511,19 @@ the onSubscribe function.
 
 ▪ **onSubscribe**: *function*
 
-▸ (`observer`: [ObserverLike](interfaces/observerlike.md)‹T›): *DisposableOrTeardown | void*
+▸ (`notify`: function): *DisposableLike*
+
+**Parameters:**
+
+▪ **notify**: *function*
+
+▸ (`next`: T): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`observer` | [ObserverLike](interfaces/observerlike.md)‹T› |
+`next` | T |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1519,9 +1526,9 @@ Name | Type |
 
 ___
 
-### `Const` onNext
+### `Const` onNotify
 
-▸ **onNext**<**T**>(`onNext`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+▸ **onNotify**<**T**>(`onNotify`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 **Type parameters:**
 
@@ -1529,7 +1536,7 @@ ___
 
 **Parameters:**
 
-▪ **onNext**: *function*
+▪ **onNotify**: *function*
 
 ▸ (`next`: T): *void*
 
@@ -1942,6 +1949,24 @@ Name | Type |
 `scheduler` | SchedulerLike |
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, Promise‹T››*
+
+___
+
+### `Const` toSafeSubscriber
+
+▸ **toSafeSubscriber**<**T**>(`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *[SubscriberLike](interfaces/subscriberlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
+
+**Returns:** *[SubscriberLike](interfaces/subscriberlike.md)‹T›*
 
 ___
 

@@ -17,7 +17,7 @@ An observer of push-based notifications.
 ### Methods
 
 * [onDispose](observerlike.md#ondispose)
-* [onNext](observerlike.md#onnext)
+* [onNotify](observerlike.md#onnotify)
 
 ## Methods
 
@@ -37,16 +37,16 @@ Name | Type | Description |
 
 ___
 
-###  onNext
+###  onNotify
 
-▸ **onNext**(`data`: T): *void*
+▸ **onNotify**(`next`: T): *void*
 
 Provides the next item to observe.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`data` | T |   |
+Name | Type |
+------ | ------ |
+`next` | T |
 
 **Returns:** *void*
