@@ -25,10 +25,7 @@ export interface DisposableLike {
    * @param disposable
    * @param disposables
    */
-  add(
-    disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
-  ): this;
+  add(disposable: DisposableOrTeardown): this;
 
   /**
    * Dispose the resource, the operation should be idempotent.
@@ -55,21 +52,17 @@ class DisposableImpl implements DisposableLike {
   private readonly disposables: Array<DisposableOrTeardown> = [];
   private error?: ErrorLike = undefined;
 
-  add(...disposables: DisposableOrTeardown[]) {
+  add(disposable: DisposableOrTeardown) {
     if (this.isDisposed) {
-      for (const d of disposables) {
-        doDispose(d, this.error);
-      }
+      doDispose(disposable, this.error);
     } else {
-      for (const d of disposables) {
-        if (!this.disposables.includes(d)) {
-          this.disposables.push(d);
+      if (!this.disposables.includes(disposable)) {
+        this.disposables.push(disposable);
 
-          if (!(d instanceof Function)) {
-            d.add(() => {
-              this.doRemove(d);
-            });
-          }
+        if (!(disposable instanceof Function)) {
+          disposable.add(() => {
+            this.doRemove(disposable);
+          });
         }
       }
     }
@@ -90,15 +83,12 @@ class DisposableImpl implements DisposableLike {
     }
   }
 
-  private doRemove(d: DisposableOrTeardown): boolean {
+  private doRemove(d: DisposableOrTeardown) {
     const index = this.disposables.indexOf(d);
 
     if (index > -1) {
       this.disposables.splice(index, 1);
-      return true;
-    } else {
-      return false;
-    }
+    } 
   }
 }
 
@@ -146,9 +136,8 @@ export const disposableMixin = {
   add<This extends DisposableLike>(
     this: { disposable: DisposableLike } & This,
     disposable: DisposableOrTeardown,
-    ...disposables: DisposableOrTeardown[]
   ): This {
-    this.disposable.add(disposable, ...disposables);
+    this.disposable.add(disposable,)
     return this;
   },
   dispose(this: { disposable: DisposableLike }, error?: ErrorLike) {
