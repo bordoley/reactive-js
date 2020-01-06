@@ -32,16 +32,15 @@ Returns true if this resource has been disposed.
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](../README.md#disposableorteardown)[]): *this*
+▸ **add**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown)): *this*
 
 Adds the given disposables to this container or disposes them if the container has been disposed.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) | - |
-`...disposables` | [DisposableOrTeardown](../README.md#disposableorteardown)[] |   |
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) |
 
 **Returns:** *this*
 

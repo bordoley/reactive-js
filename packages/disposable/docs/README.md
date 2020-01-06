@@ -91,7 +91,7 @@ Name | Type | Description |
 
 ###  add
 
-▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown), ...`disposables`: [DisposableOrTeardown](README.md#disposableorteardown)[]): *This*
+▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown)): *This*
 
 **Type parameters:**
 
@@ -103,7 +103,6 @@ Name | Type |
 ------ | ------ |
 `this` | object & This |
 `disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
-`...disposables` | [DisposableOrTeardown](README.md#disposableorteardown)[] |
 
 **Returns:** *This*
 
