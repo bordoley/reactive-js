@@ -34,12 +34,14 @@
 * [combineLatest](README.md#combinelatest)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
+* [contains](README.md#const-contains)
 * [createObservable](README.md#const-createobservable)
 * [createSubject](README.md#const-createsubject)
 * [defer](README.md#const-defer)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
+* [every](README.md#const-every)
 * [exhaust](README.md#const-exhaust)
 * [flatten](README.md#const-flatten)
 * [forEach](README.md#const-foreach)
@@ -58,6 +60,7 @@
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
+* [none](README.md#const-none)
 * [observe](README.md#observe)
 * [ofValue](README.md#ofvalue)
 * [onDispose](README.md#const-ondispose)
@@ -70,6 +73,7 @@
 * [scan](README.md#const-scan)
 * [scanAsync](README.md#const-scanasync)
 * [share](README.md#const-share)
+* [some](README.md#const-some)
 * [startWith](README.md#startwith)
 * [subscribe](README.md#const-subscribe)
 * [subscribeOn](README.md#const-subscribeon)
@@ -490,6 +494,33 @@ Name | Type | Default |
 
 ___
 
+### `Const` contains
+
+▸ **contains**<**T**>(`value`: T, `equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **value**: *T*
+
+▪`Default value`  **equals**: *function*=  referenceEquals
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+___
+
 ### `Const` createObservable
 
 ▸ **createObservable**<**T**>(`onSubscribe`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
@@ -626,6 +657,30 @@ Name | Type |
 `...values` | T[] |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` every
+
+▸ **every**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`next`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
 ___
 
@@ -1453,6 +1508,30 @@ ___
 
 ___
 
+### `Const` none
+
+▸ **none**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`next`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+___
+
 ###  observe
 
 ▸ **observe**<**T**>(`observer`: [ObserverLike](interfaces/observerlike.md)‹T›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
@@ -1742,6 +1821,30 @@ Name | Type |
 `replayCount?` | undefined &#124; number |
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [MulticastObservableLike](interfaces/multicastobservablelike.md)‹T››*
+
+___
+
+### `Const` some
+
+▸ **some**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+▸ (`next`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
 ___
 
