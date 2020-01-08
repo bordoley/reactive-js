@@ -2,11 +2,11 @@ import {
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -32,11 +32,6 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(
-  observer: ObserverLike<T>,
-): SubscriberOperatorLike<T, T> => (subscriber: SubscriberLike<T>) =>
-  new ObserveSubscriber(subscriber, observer);
-
 /**
  * Returns a ObservableOperatorLike which forwards notifications to the provided observer.
  *
@@ -45,7 +40,9 @@ const operator = <T>(
 export function observe<T>(
   observer: ObserverLike<T>,
 ): ObservableOperatorLike<T, T> {
-  return liftEnumerable(operator(observer));
+  const call = (subscriber: SubscriberLike<T>) =>
+    new ObserveSubscriber(subscriber, observer);
+  return lift(new SubscriberOperator(true, call));
 }
 
 const ignore = <T>(_: T) => {};

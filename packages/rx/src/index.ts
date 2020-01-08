@@ -42,7 +42,7 @@ export { every, none } from "./internal/every";
 export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
-export { liftEnumerable, liftObservable } from "./internal/lift";
+export { lift } from "./internal/lift";
 export { map } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { observe, onDispose, onError, onNotify } from "./internal/observe";

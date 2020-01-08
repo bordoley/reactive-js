@@ -6,10 +6,11 @@ import {
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class SwitchSubscriber<T>
   extends AbstractDelegatingSubscriber<ObservableLike<T>, T>
@@ -45,8 +46,8 @@ class SwitchSubscriber<T>
   }
 }
 
-const operator = <T>(subscriber: SubscriberLike<T>) =>
-  new SwitchSubscriber(subscriber);
-
-export const switchAll = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
-  liftObservable(operator);
+export const switchAll = <T>(): ObservableOperatorLike<ObservableLike<T>, T> => {
+  const call = (subscriber: SubscriberLike<T>) =>
+    new SwitchSubscriber(subscriber);
+  return lift(new SubscriberOperator(false, call));
+}

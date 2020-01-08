@@ -3,14 +3,14 @@ import {
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class WithLatestFromSubscriber<TA, TB, TC>
   extends AbstractDelegatingSubscriber<TA, TC>
@@ -48,13 +48,11 @@ class WithLatestFromSubscriber<TA, TB, TC>
   }
 }
 
-const operator = <TA, TB, TC>(
-  other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC,
-): SubscriberOperatorLike<TA, TC> => subscriber =>
-  new WithLatestFromSubscriber(subscriber, other, selector);
-
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperatorLike<TA, TC> => liftObservable(operator(other, selector));
+): ObservableOperatorLike<TA, TC> => {
+  const call = (subscriber: SubscriberLike<TC>) =>
+    new WithLatestFromSubscriber(subscriber, other, selector);
+  return lift(new SubscriberOperator(false, call));  
+}

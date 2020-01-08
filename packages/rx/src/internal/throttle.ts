@@ -9,13 +9,13 @@ import {
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
+import { SubscriberOperator } from "./subscriberOperator";
 
 export const enum ThrottleMode {
   First = 1,
@@ -99,21 +99,14 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 }
 
-const throttleOperator = <T>(
-  durationSelector: (next: T) => ObservableLike<unknown>,
-  mode: ThrottleMode,
-): SubscriberOperatorLike<T, T> => subscriber =>
-  new ThrottleSubscriber(subscriber, durationSelector, mode);
-
 export const throttle = <T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableOperatorLike<T, T> =>
-  liftObservable(
-    throttleOperator(
-      typeof duration === "number"
-        ? _ => ofValue(undefined, duration)
-        : duration,
-      mode,
-    ),
-  );
+): ObservableOperatorLike<T, T> => {
+  const durationSelector = typeof duration === "number"
+    ? (_: T) => ofValue(undefined, duration)
+    : duration;
+  const call = (subscriber: SubscriberLike<T>) =>
+    new ThrottleSubscriber(subscriber, durationSelector, mode);
+  return lift(new SubscriberOperator(false, call));
+};

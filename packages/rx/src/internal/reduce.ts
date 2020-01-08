@@ -1,11 +1,11 @@
 import {
   ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
@@ -28,14 +28,11 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   }
 }
 
-const operator = <T, TAcc>(
-  reducer: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
-): SubscriberOperatorLike<T, TAcc> => subscriber =>
-  new ReduceSubscriber(subscriber, reducer, initialValue());
-
 export const reduce = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> =>
-  liftEnumerable(operator(reducer, initialValue));
+): ObservableOperatorLike<T, TAcc> => {
+  const call = (subscriber: SubscriberLike<TAcc>) =>
+    new ReduceSubscriber(subscriber, reducer, initialValue());
+  return lift(new SubscriberOperator(true, call));
+}
