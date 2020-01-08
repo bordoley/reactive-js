@@ -12,7 +12,9 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Hierarchy
 
-* **AbstractDelegatingSubscriber**
+* AbstractSubscriber‹TA›
+
+  ↳ **AbstractDelegatingSubscriber**
 
 ## Implements
 
@@ -38,6 +40,8 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 \+ **new AbstractDelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)*
 
+*Overrides void*
+
 **Parameters:**
 
 Name | Type |
@@ -59,6 +63,8 @@ Name | Type |
 ▸ **notify**(`_`: TA): *void*
 
 *Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
+
+*Overrides void*
 
 **Parameters:**
 
