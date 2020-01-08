@@ -78,7 +78,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
       enumerator instanceof LiftedAsyncEnumeratorResourceImpl
         ? enumerator.notify
         : (req: any) => enumerator.notify(req);
-    const liftednotify = this.reqOperators.reduce(
+    const liftedNotify = this.reqOperators.reduce(
       (acc, next) => next(acc),
       notify,
     );
@@ -94,7 +94,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     disposable.add(liftedObservable);
 
     return new LiftedAsyncEnumeratorResourceImpl(
-      liftednotify,
+      liftedNotify,
       liftedObservable,
       disposable,
       scheduler,
@@ -103,66 +103,14 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
 }
 
 export function lift<TReq, TA, TB>(
-  op1: ObservableOperatorLike<TA, TB>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB>;
-export function lift<TReq, TA, TB, TC>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TC>;
-export function lift<TReq, TA, TB, TC, TD>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TD>;
-export function lift<TReq, TA, TB, TC, TD, TE>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-  op4: ObservableOperatorLike<TD, TE>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TE>;
-export function lift<TReq, TA, TB, TC, TD, TE, TF>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-  op4: ObservableOperatorLike<TD, TE>,
-  op5: ObservableOperatorLike<TE, TF>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TF>;
-export function lift<TReq, TA, TB, TC, TD, TE, TF, TG>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-  op4: ObservableOperatorLike<TD, TE>,
-  op5: ObservableOperatorLike<TE, TF>,
-  op6: ObservableOperatorLike<TF, TG>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TG>;
-export function lift<TReq, TA, TB, TC, TD, TE, TF, TG, TH>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-  op4: ObservableOperatorLike<TD, TE>,
-  op5: ObservableOperatorLike<TE, TF>,
-  op6: ObservableOperatorLike<TF, TG>,
-  op7: ObservableOperatorLike<TG, TH>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TH>;
-export function lift<TReq, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
-  op1: ObservableOperatorLike<TA, TB>,
-  op2: ObservableOperatorLike<TB, TC>,
-  op3: ObservableOperatorLike<TC, TD>,
-  op4: ObservableOperatorLike<TD, TE>,
-  op5: ObservableOperatorLike<TE, TF>,
-  op6: ObservableOperatorLike<TF, TG>,
-  op7: ObservableOperatorLike<TG, TH>,
-  op8: ObservableOperatorLike<TH, TI>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TI>;
-export function lift<TReq>(
-  ...operators: ObservableOperatorLike<unknown, unknown>[]
-): AsyncEnumerableOperatorLike<TReq, unknown, TReq, unknown> {
+  op: ObservableOperatorLike<TA, TB>,
+): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB> {
   return iterable => {
     const source = (iterable as any).source || iterable;
     const observableOperators =
       iterable instanceof LiftedAsyncEnumerable
-        ? [...iterable.observableOperators, ...operators]
-        : operators;
+        ? [...iterable.observableOperators, op]
+        : [op];
     const reqOperators =
       iterable instanceof LiftedAsyncEnumerable ? iterable.reqOperators : [];
 
@@ -171,81 +119,8 @@ export function lift<TReq>(
 }
 
 export function liftReq<TReqA, TReqB, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T>;
-export function liftReq<TReqA, TReqB, TReqC, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqC, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqD, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-  op4: AsyncEnumeratorRequestOperatorLike<TReqD, TReqE>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqE, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-  op4: AsyncEnumeratorRequestOperatorLike<TReqD, TReqE>,
-  op5: AsyncEnumeratorRequestOperatorLike<TReqE, TReqF>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqF, T>;
-export function liftReq<TReqA, TReqB, TReqC, TReqD, TReqE, TReqF, TReqG, T>(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-  op4: AsyncEnumeratorRequestOperatorLike<TReqD, TReqE>,
-  op5: AsyncEnumeratorRequestOperatorLike<TReqE, TReqF>,
-  op6: AsyncEnumeratorRequestOperatorLike<TReqF, TReqG>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqG, T>;
-export function liftReq<
-  TReqA,
-  TReqB,
-  TReqC,
-  TReqD,
-  TReqE,
-  TReqF,
-  TReqG,
-  TReqH,
-  T
->(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-  op4: AsyncEnumeratorRequestOperatorLike<TReqD, TReqE>,
-  op5: AsyncEnumeratorRequestOperatorLike<TReqE, TReqF>,
-  op6: AsyncEnumeratorRequestOperatorLike<TReqF, TReqG>,
-  op7: AsyncEnumeratorRequestOperatorLike<TReqG, TReqH>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqH, T>;
-export function liftReq<
-  TReqA,
-  TReqB,
-  TReqC,
-  TReqD,
-  TReqE,
-  TReqF,
-  TReqG,
-  TReqH,
-  TReqI,
-  T
->(
-  op1: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-  op2: AsyncEnumeratorRequestOperatorLike<TReqB, TReqC>,
-  op3: AsyncEnumeratorRequestOperatorLike<TReqC, TReqD>,
-  op4: AsyncEnumeratorRequestOperatorLike<TReqD, TReqE>,
-  op5: AsyncEnumeratorRequestOperatorLike<TReqE, TReqF>,
-  op6: AsyncEnumeratorRequestOperatorLike<TReqF, TReqG>,
-  op7: AsyncEnumeratorRequestOperatorLike<TReqG, TReqH>,
-  op8: AsyncEnumeratorRequestOperatorLike<TReqH, TReqI>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqI, T>;
-export function liftReq<T>(
-  ...operators: AsyncEnumeratorRequestOperatorLike<unknown, unknown>[]
-): AsyncEnumerableOperatorLike<unknown, T, unknown, T> {
+  op: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
+): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T> {
   return iterable => {
     const source = (iterable as any).source || iterable;
     const observableOperators =
@@ -254,8 +129,8 @@ export function liftReq<T>(
         : [];
     const reqOperators =
       iterable instanceof LiftedAsyncEnumerable
-        ? [...iterable.reqOperators, ...operators]
-        : operators;
+        ? [...iterable.reqOperators, op]
+        : [op];
 
     return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);
   };
