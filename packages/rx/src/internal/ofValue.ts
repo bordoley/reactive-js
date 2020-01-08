@@ -1,17 +1,15 @@
 import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { enumerableMixin } from "./enumerable";
 
 class OfValueProducer<T> implements SchedulerContinuationLike {
   constructor(
-    private readonly value: T,
     private readonly subscriber: SubscriberLike<T>,
+    private readonly value: T,
+    readonly delay: number,
   ) {}
 
-  run(_?: () => boolean): SchedulerContinuationResultLike | void {
+  run(_?: () => boolean){
     this.subscriber.notify(this.value);
     this.subscriber.dispose();
   }
@@ -22,8 +20,7 @@ class OfValueObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     subscriber.schedule(
-      new OfValueProducer(this.value, subscriber),
-      this.delay,
+      new OfValueProducer(subscriber, this.value, this.delay),
     );
   }
 }

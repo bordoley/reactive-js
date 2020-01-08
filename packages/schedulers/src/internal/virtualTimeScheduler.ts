@@ -7,7 +7,6 @@ import {
 import {
   SchedulerResourceLike,
   SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { schedulerMixin } from "./schedulerMixin";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
@@ -45,7 +44,6 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 class VirtualTimeSchedulerResourceImpl
   implements VirtualTimeSchedulerResourceLike {
   readonly add = disposableMixin.add;
-  private readonly continuationResult = { continuation: this };
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = disposableMixin.dispose;
   private microTaskTicks = 0;
@@ -73,12 +71,12 @@ class VirtualTimeSchedulerResourceImpl
 
   private loop(
     shouldYield: () => boolean,
-  ): SchedulerContinuationResultLike | void {
+  ): SchedulerContinuationLike | void {
     this.runShouldYield = shouldYield;
     while (this.step()) {
       if (shouldYield()) {
         this.runShouldYield = undefined;
-        return this.continuationResult;
+        return this;
       }
     }
 
@@ -103,7 +101,7 @@ class VirtualTimeSchedulerResourceImpl
     return iteratorDone;
   }
 
-  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  run(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     throwIfDisposed(this);
 
     if (
@@ -113,7 +111,7 @@ class VirtualTimeSchedulerResourceImpl
       this.shouldYield = undefined;
     }
 
-    let result: SchedulerContinuationResultLike | void;
+    let result: SchedulerContinuationLike | void;
     if (shouldYield !== undefined) {
       result = this.loop(shouldYield);
     } else {

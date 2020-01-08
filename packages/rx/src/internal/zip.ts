@@ -5,10 +5,7 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 
@@ -140,9 +137,6 @@ class ZipObservable<T> implements ObservableLike<T> {
 
 class ZipProducer<T> implements SchedulerContinuationLike {
   current: any;
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-  };
   hasCurrent = false;
   readonly run = producerMixin.run;
 
@@ -152,7 +146,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
     private readonly selector: (...values: unknown[]) => T,
   ) {}
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const enumerators = this.enumerators;
     const selector = this.selector;
     const subscriber = this.subscriber as SubscriberLike<T>;
@@ -167,7 +161,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
         }
 
         if (shouldYield()) {
-          return this.continuationResult;
+          return this;
         }
       }
     } else {

@@ -59,11 +59,11 @@ const createCallback = (
       const result = continuation.run(shouldYield) || undefined;
 
       if (result !== undefined) {
-        const { continuation: nextContinuation, delay = 0 } = result;
+        const { delay = 0 } = result;
         const nextCallback =
-          nextContinuation === continuation
+          result === continuation
             ? callback
-            : createCallback(nextContinuation, disposable, priority);
+            : createCallback(result, disposable, priority);
 
         disposable.inner = scheduleCallback(nextCallback, priority, delay);
       } else {
@@ -83,12 +83,11 @@ const priorityScheduler = {
   schedule(
     continuation: SchedulerContinuationLike,
     priority: number,
-    delay = 0,
   ): DisposableLike {
     const disposable = createSerialDisposable();
     const callback = createCallback(continuation, disposable, priority);
 
-    disposable.inner = scheduleCallback(callback, priority, delay);
+    disposable.inner = scheduleCallback(callback, priority, continuation.delay ?? 0);
     return disposable;
   },
 };

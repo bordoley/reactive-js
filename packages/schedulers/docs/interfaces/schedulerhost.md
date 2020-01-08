@@ -38,7 +38,7 @@ ___
 
 ###  schedule
 
-▸ **schedule**(`continuation`: SchedulerContinuationLike, `delay?`: undefined | number): *DisposableLike*
+▸ **schedule**(`continuation`: SchedulerContinuationLike): *DisposableLike*
 
 *Inherited from void*
 
@@ -47,7 +47,6 @@ ___
 Name | Type |
 ------ | ------ |
 `continuation` | SchedulerContinuationLike |
-`delay?` | undefined &#124; number |
 
 **Returns:** *DisposableLike*
 

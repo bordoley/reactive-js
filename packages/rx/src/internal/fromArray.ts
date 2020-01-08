@@ -1,7 +1,6 @@
 import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import {
   SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
 } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
@@ -9,20 +8,15 @@ import { enumerableMixin } from "./enumerable";
 class FromArrayProducer<T> implements SchedulerContinuationLike {
   private index = this.startIndex;
 
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-    delay: this.delay,
-  };
-
   run = producerMixin.run;
   constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
-    private readonly delay: number,
+    readonly delay: number,
   ) {}
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const values = this.values;
     const length = values.length;
     const subscriber = this.subscriber;
@@ -33,7 +27,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
       this.index++;
 
       subscriber.notify(value);
-      return this.continuationResult;
+      return this;
     } else if (shouldYield !== undefined) {
       while (index < length && !subscriber.isDisposed) {
         const value = values[index];
@@ -43,7 +37,7 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
 
         if (shouldYield()) {
           this.index = index;
-          return this.continuationResult;
+          return this;
         }
       }
     } else {
@@ -74,7 +68,7 @@ class FromArrayObservable<T> implements ObservableLike<T> {
       this.startIndex,
       this.delay,
     );
-    subscriber.schedule(producer, this.delay);
+    subscriber.schedule(producer);
   }
 }
 

@@ -72,14 +72,13 @@ Name | Type | Default |
 
 ###  schedule
 
-▸ **schedule**(`this`: [SchedulerHost](interfaces/schedulerhost.md), `continuation`: SchedulerContinuationLike, `delay`: number): *DisposableLike*
+▸ **schedule**(`this`: [SchedulerHost](interfaces/schedulerhost.md), `continuation`: SchedulerContinuationLike): *DisposableLike*
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`this` | [SchedulerHost](interfaces/schedulerhost.md) | - |
-`continuation` | SchedulerContinuationLike | - |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`this` | [SchedulerHost](interfaces/schedulerhost.md) |
+`continuation` | SchedulerContinuationLike |
 
 **Returns:** *DisposableLike*

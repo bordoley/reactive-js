@@ -7,7 +7,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
 
   constructor(
     private readonly error: ErrorLike,
-    private readonly delay: number,
+    readonly delay: number,
   ) {}
 
   run(_?: () => boolean) {
@@ -16,7 +16,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     this.subscriber = subscriber;
-    subscriber.schedule(this, this.delay);
+    subscriber.schedule(this);
   }
 }
 

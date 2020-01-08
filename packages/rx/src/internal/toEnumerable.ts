@@ -74,11 +74,8 @@ class VirtualTimeObservableEnumerator<T>
     return true;
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    delay?: number,
-  ): DisposableLike {
-    const schedulerSubscription = this.disposable.schedule(continuation, delay);
+  schedule(continuation: SchedulerContinuationLike): DisposableLike {
+    const schedulerSubscription = this.disposable.schedule(continuation);
     this.add(schedulerSubscription);
     return schedulerSubscription;
   }

@@ -7,12 +7,8 @@ import { DisposableLike } from "@reactive-js/disposable";
  * work to be performed.
  */
 export interface SchedulerContinuationLike {
-  run(shouldYield?: () => boolean): SchedulerContinuationResultLike | void;
-}
-
-export interface SchedulerContinuationResultLike {
-  readonly continuation: SchedulerContinuationLike;
   readonly delay?: number;
+  run(shouldYield?: () => boolean): SchedulerContinuationLike | void;
 }
 
 /**
@@ -30,7 +26,6 @@ export interface SchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuationLike,
-    delay?: number,
   ): DisposableLike;
 }
 
