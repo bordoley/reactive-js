@@ -1,22 +1,19 @@
-import { createDisposable, ErrorLike } from "@reactive-js/disposable";
+import { ErrorLike } from "@reactive-js/disposable";
 import { SubjectLike, SubscriberLike } from "./interfaces";
-import { subscriberMixin } from "./subscriber";
+import { AbstractSubscriber } from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-class SubjectImpl<T> implements SubjectLike<T> {
-  readonly add = subscriberMixin.add;
-  readonly disposable = createDisposable();
-  readonly dispose = subscriberMixin.dispose;
+class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   private error?: ErrorLike;
   private readonly subscribers: Array<SubscriberLike<T>> = [];
   private readonly replayed: T[] = [];
-  readonly schedule = subscriberMixin.schedule;
 
   constructor(
-    private readonly scheduler: SchedulerLike,
+    scheduler: SchedulerLike,
     private readonly replayCount: number,
   ) {
+    super(scheduler);
     this.add(error => {
       this.error = error;
 
@@ -26,14 +23,6 @@ class SubjectImpl<T> implements SubjectLike<T> {
         subscriber.dispose(error);
       }
     });
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  get now() {
-    return this.scheduler.now;
   }
 
   get subscriberCount() {

@@ -9,7 +9,7 @@ import {
   schedulerMixin,
   createVirtualTimeSchedulerResource,
 } from "@reactive-js/schedulers";
-import { Subscriber } from "../src/internal/subscriber";
+import { AbstractSubscriber } from "../src/internal/subscriber";
 import {
   buffer,
   combineLatest,
@@ -60,7 +60,7 @@ import {
   zip,
 } from "../src/index";
 
-class MockSubscriber<T> extends Subscriber<T> {
+class MockSubscriber<T> extends AbstractSubscriber<T> {
   notify = jest.fn();
 }
 
@@ -270,7 +270,7 @@ describe("createObservable", () => {
   test("when subscriber throws", () => {
     const cause = new Error();
 
-    class ThrowingSubscriber<T> extends Subscriber<T> {
+    class ThrowingSubscriber<T> extends AbstractSubscriber<T> {
       notify(_: T) {
         throw cause;
       }

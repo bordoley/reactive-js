@@ -2,7 +2,6 @@ import {
   DisposableLike,
   createDisposable,
   disposableMixin,
-  disposed,
 } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
@@ -11,36 +10,16 @@ import {
 import { SubscriberLike } from "./interfaces";
 
 /** @ignore */
-export const subscriberMixin = {
-  ...disposableMixin,
-  schedule<T>(
-    this: SubscriberLike<T> & { scheduler: SchedulerLike },
-    continuation: SchedulerContinuationLike,
-    delay?: number,
-  ): DisposableLike {
-    if (!this.isDisposed) {
-      const schedulerSubscription = this.scheduler.schedule(
-        continuation,
-        delay,
-      );
-      this.add(schedulerSubscription);
-      return schedulerSubscription;
-    } else {
-      return disposed;
-    }
-  },
-};
-
-/** @ignore */
-export class Subscriber<T> implements SubscriberLike<T> {
-  readonly add = subscriberMixin.add;
+export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
+  readonly add = disposableMixin.add;
   readonly disposable = createDisposable();
-  readonly dispose = subscriberMixin.dispose;
+  readonly dispose = disposableMixin.dispose;
   isDisposed = false;
-  readonly schedule = subscriberMixin.schedule;
+  readonly scheduler: SchedulerLike;
 
-  constructor(private readonly scheduler: SchedulerLike) {
-    this.add(() => {
+  constructor(scheduler: SchedulerLike) {
+    this.scheduler = (scheduler as any).scheduler || scheduler;
+    this.add(_ => {
       this.isDisposed = true;
     });
   }
@@ -49,7 +28,20 @@ export class Subscriber<T> implements SubscriberLike<T> {
     return this.scheduler.now;
   }
 
-  notify(_: T): void {}
+  abstract notify(_: T): void;
+
+  schedule<T>(
+    this: SubscriberLike<T> & { scheduler: SchedulerLike },
+    continuation: SchedulerContinuationLike,
+    delay?: number,
+  ): DisposableLike {
+    const schedulerSubscription = this.scheduler.schedule(
+      continuation,
+      delay,
+    );
+    this.add(schedulerSubscription);
+    return schedulerSubscription;
+  }
 }
 
 /**
@@ -57,33 +49,12 @@ export class Subscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export abstract class AbstractDelegatingSubscriber<TA, TB>
-  implements SubscriberLike<TA> {
-  /** @ignore */
-  readonly add = subscriberMixin.add;
-  /** @ignore */
-  readonly disposable = createDisposable();
-  /** @ignore */
-  readonly dispose = subscriberMixin.dispose;
-  /** @ignore */
-  isDisposed = false;
-  /** @ignore */
-  readonly schedule = subscriberMixin.schedule;
-  /** @ignore */
-  readonly scheduler: SchedulerLike;
+export abstract class AbstractDelegatingSubscriber<TA, TB> 
+  extends AbstractSubscriber<TA>{
 
   constructor(readonly delegate: SubscriberLike<TB>) {
-    this.scheduler = (delegate as any).scheduler || delegate;
-
-    this.add(() => {
-      this.isDisposed = true;
-    });
+    super(delegate);
     this.delegate.add(this);
-  }
-
-  /** @ignore */
-  get now() {
-    return this.scheduler.now;
   }
 
   abstract notify(_: TA): void;

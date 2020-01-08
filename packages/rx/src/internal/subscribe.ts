@@ -2,7 +2,11 @@ import { DisposableLike } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike } from "./interfaces";
-import { Subscriber } from "./subscriber";
+import { AbstractSubscriber } from "./subscriber";
+
+class DefaultSubscriber<T> extends AbstractSubscriber<T> {
+  notify(_: T) {};
+}
 
 /**
  * Safely subscribes an ObservableLike to a SubscriberLike,
@@ -14,7 +18,7 @@ export const subscribe = <T>(
 ): OperatorLike<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
 ): DisposableLike => {
-  const subscriber = new Subscriber(scheduler);
+  const subscriber = new DefaultSubscriber(scheduler);
   observable.subscribe(subscriber);
   return subscriber.disposable;
 };
