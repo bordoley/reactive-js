@@ -541,19 +541,13 @@ the onSubscribe function.
 
 ▪ **onSubscribe**: *function*
 
-▸ (`notify`: function): *DisposableLike*
-
-**Parameters:**
-
-▪ **notify**: *function*
-
-▸ (`next`: T): *void*
+▸ (`subscriber`: [SubscriberLike](interfaces/subscriberlike.md)‹T›): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`next` | T |
+`subscriber` | [SubscriberLike](interfaces/subscriberlike.md)‹T› |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

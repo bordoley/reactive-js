@@ -8,6 +8,8 @@ import { subscribe } from "./subscribe";
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,
 ): ObservableOperatorLike<T, T> => observable =>
-  createObservable(notify =>
-    pipe(observable, onNotify(notify), subscribe(scheduler)),
-  );
+  createObservable(subscriber => {
+    subscriber.add(
+      pipe(observable, onNotify(next => subscriber.notify(next)), subscribe(scheduler))
+    );
+  });
