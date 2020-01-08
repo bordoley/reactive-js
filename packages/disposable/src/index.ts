@@ -3,6 +3,7 @@
  * a function which throws undefined or a string.
  */
 export interface ErrorLike {
+  /** The underlying cause of the error. */
   readonly cause: unknown;
 }
 
@@ -20,7 +21,7 @@ export interface DisposableLike {
   readonly isDisposed: boolean;
 
   /**
-   * Adds the given disposables to this container or disposes them if the container has been disposed.
+   * Adds the given disposable to this container or disposes it if the container has been disposed.
    *
    * @param disposable
    * @param disposables
@@ -121,17 +122,6 @@ const _disposed: DisposableLike = {
  */
 export const disposed: DisposableLike = _disposed;
 
-/**
- * Throws an exception if the given disposable is disposed.
- *
- * @param disposable
- */
-export const throwIfDisposed = (disposable: DisposableLike) => {
-  if (disposable.isDisposed) {
-    throw new Error("Disposed");
-  }
-};
-
 export const disposableMixin = {
   add<This extends DisposableLike>(
     this: { disposable: DisposableLike } & This,
@@ -146,14 +136,18 @@ export const disposableMixin = {
 };
 
 /**
- * A Disposable container that allows replacing a contained Disposable with another,
- * disposing the previously contained disposable in the process. Disposing the
- * container also disposes the contained disposable.
+ * A Disposable container that allows replacing an inner Disposable with another,
+ * disposing the previous inner disposable in the process. Disposing the
+ * container also disposes the inner disposable.
  *
  * @noInheritDoc
  */
 export interface SerialDisposableLike extends DisposableLike {
-  /** The inner disposable that may be get or set. */
+  /**
+   *  The inner disposable that may be get or set. Setting the inner
+   *  disposable disposes the old disposable unless it is reference equal
+   *  to the new one.
+   */
   inner: DisposableLike;
 }
 

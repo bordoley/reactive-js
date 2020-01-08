@@ -1,7 +1,6 @@
 import {
   createDisposable,
   DisposableLike,
-  throwIfDisposed,
   disposableMixin,
 } from "@reactive-js/disposable";
 import {
@@ -69,28 +68,8 @@ class VirtualTimeSchedulerResourceImpl
     return this.disposable.isDisposed;
   }
 
-  private loop(shouldYield: () => boolean): SchedulerContinuationLike | void {
-    this.runShouldYield = shouldYield;
-    while (this.step()) {
-      if (shouldYield()) {
-        this.runShouldYield = undefined;
-        return this;
-      }
-    }
-
-    this.runShouldYield = undefined;
-    return;
-  }
-
-  private loopFast() {
-    // eslint-disable-next-line no-empty
-    while (this.step()) {}
-  }
-
   next(): IteratorResult<void> {
-    throwIfDisposed(this);
-
-    const hasMore = this.step();
+    const hasMore = !this.isDisposed && this.step();
     return hasMore ? iteratorYield : iteratorDone;
   }
 
@@ -100,7 +79,9 @@ class VirtualTimeSchedulerResourceImpl
   }
 
   run(shouldYield?: () => boolean): SchedulerContinuationLike | void {
-    throwIfDisposed(this);
+    if(this.isDisposed) {
+      return;
+    }
 
     if (
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
@@ -109,19 +90,23 @@ class VirtualTimeSchedulerResourceImpl
       this.shouldYield = undefined;
     }
 
-    let result: SchedulerContinuationLike | void;
     if (shouldYield !== undefined) {
-      result = this.loop(shouldYield);
+      this.runShouldYield = shouldYield;
+      while (this.step()) {
+        if (shouldYield()) {
+          this.runShouldYield = undefined;
+          return this;
+        }
+      }
+
+      this.runShouldYield = undefined;
     } else {
-      result = this.loopFast();
+      // eslint-disable-next-line no-empty
+      while (this.step()) {}
     }
 
-    if (result !== undefined) {
-      return result;
-    } else {
-      this.dispose();
-      return;
-    }
+    this.dispose();
+    return;
   }
 
   scheduleCallback(callback: () => void, delay = 0): DisposableLike {
@@ -156,10 +141,10 @@ class VirtualTimeSchedulerResourceImpl
     return this.taskQueue.count > 0;
   }
 
-  throw(e?: any): IteratorResult<void> {
-    this.dispose;
-    if (e !== undefined) {
-      throw e;
+  throw(cause?: unknown): IteratorResult<void> {
+    this.dispose({cause});
+    if (cause !== undefined) {
+      throw cause;
     }
     return iteratorDone;
   }
