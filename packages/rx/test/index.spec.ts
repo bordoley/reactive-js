@@ -458,7 +458,7 @@ describe("empty", () => {
 
 test("every", () => {
   pipe(empty(), every(_ => false), toValue(), expect).toBeTruthy();
-  
+
   pipe(fromArray([1,2,3]), every(_ => true), toValue(), expect).toBeTruthy();
   pipe(fromArray([1,2,3]), every(_ => false), toValue(), expect).toBeFalsy();
 });
@@ -972,6 +972,7 @@ test("share", () => {
   let liftedSubscription = disposed;
   scheduler.schedule(
     {
+      delay: 1,
       run: _ => {
         liftedSubscription = pipe(
           replayed,
@@ -980,13 +981,13 @@ test("share", () => {
         );
       },
     },
-    1,
   );
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
   scheduler.schedule(
     {
+      delay: 3,
       run: _ => {
         replayedSubscription.dispose();
         liftedSubscription.dispose();
@@ -998,7 +999,6 @@ test("share", () => {
         );
       },
     },
-    3,
   );
 
   scheduler.run();

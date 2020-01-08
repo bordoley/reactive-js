@@ -17,7 +17,6 @@ export interface PrioritySchedulerLike {
   schedule(
     continuation: SchedulerContinuationLike,
     priority: number,
-    delay?: number,
   ): DisposableLike;
 }
 
@@ -56,6 +55,7 @@ class PrioritySchedulerResourceImpl
   readonly add = disposableMixin.add;
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
+  delay = 0;
   readonly dispose = disposableMixin.dispose;
   private shouldYield = () => {
     const currentTaskIsDisposed =
@@ -97,7 +97,8 @@ class PrioritySchedulerResourceImpl
     ) {
       const delay = currentTask.dueTime - this.now;
       if (delay > 0) {
-        return { continuation: this, delay };
+        this.delay = delay;
+        return this;
       }
 
       this.queue.pop();
@@ -113,11 +114,11 @@ class PrioritySchedulerResourceImpl
         this.currentTask = undefined;
 
         if (result !== undefined) {
-          const { continuation: nextContinuation, delay = 0 } = result;
+          const { delay = 0 } = result;
           const now = this.now;
           const continuedTask = {
             taskID: this.taskIDCounter++,
-            continuation: nextContinuation,
+            continuation: result,
             disposable: currentTask.disposable,
             priority: currentTask.priority,
             startTime: now,
@@ -135,10 +136,8 @@ class PrioritySchedulerResourceImpl
         const nextTaskDelay = Math.max(nextTask.dueTime - now, 0);
 
         if (nextTaskDelay > 0 || (shouldYield !== undefined && shouldYield())) {
-          return {
-            continuation: this,
-            delay: nextTaskDelay,
-          };
+          this.delay = nextTaskDelay;
+          return this;
         }
       }
     }
@@ -148,10 +147,9 @@ class PrioritySchedulerResourceImpl
   schedule(
     continuation: SchedulerContinuationLike,
     priority: number,
-    delay = 0,
   ): DisposableLike {
     const startTime = this.now;
-    const dueTime = startTime + delay;
+    const dueTime = startTime + (continuation.delay ?? 0);
 
     const task = {
       taskID: this.taskIDCounter++,
@@ -172,9 +170,9 @@ class PrioritySchedulerResourceImpl
   private scheduleDrainQueue(task: ScheduledTaskLike) {
     const head = this.queue.peek();
     if (head === task && this.disposable.inner.isDisposed) {
-      const delay = Math.max(task.dueTime - this.now, 0);
+      this.delay = Math.max(task.dueTime - this.now, 0);
 
-      this.disposable.inner = this.hostScheduler.schedule(this, delay);
+      this.disposable.inner = this.hostScheduler.schedule(this);
     }
   }
 }

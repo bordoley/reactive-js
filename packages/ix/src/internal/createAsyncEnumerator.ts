@@ -41,8 +41,8 @@ class AsyncEnumeratorResourceImpl<TReq, T>
     this.disposable.notify(req);
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay?: number) {
-    return this.disposable.schedule(continuation, delay);
+  schedule(continuation: SchedulerContinuationLike) {
+    return this.disposable.schedule(continuation);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

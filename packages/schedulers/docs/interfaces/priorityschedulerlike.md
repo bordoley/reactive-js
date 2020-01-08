@@ -28,7 +28,7 @@
 
 ###  schedule
 
-▸ **schedule**(`continuation`: SchedulerContinuationLike, `priority`: number, `delay?`: undefined | number): *DisposableLike*
+▸ **schedule**(`continuation`: SchedulerContinuationLike, `priority`: number): *DisposableLike*
 
 **Parameters:**
 
@@ -36,6 +36,5 @@ Name | Type |
 ------ | ------ |
 `continuation` | SchedulerContinuationLike |
 `priority` | number |
-`delay?` | undefined &#124; number |
 
 **Returns:** *DisposableLike*

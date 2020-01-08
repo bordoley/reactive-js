@@ -1,27 +1,19 @@
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
 class GenerateProducer<T> implements SchedulerContinuationLike {
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-    delay: this.delay,
-  };
-
   readonly run = producerMixin.run;
 
   constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
-    private readonly delay: number,
+   readonly delay: number,
   ) {}
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const generator = this.generator;
     const subscriber = this.subscriber;
 
@@ -30,7 +22,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     if (this.delay > 0 && !subscriber.isDisposed) {
       subscriber.notify(acc);
       this.acc = this.generator(acc);
-      result = this.continuationResult;
+      result = this;
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
         subscriber.notify(acc);
@@ -38,7 +30,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
 
         if (shouldYield()) {
           this.acc = acc;
-          result = this.continuationResult;
+          result = this;
           break;
         }
       }
@@ -66,7 +58,7 @@ class GenerateObservable<T> implements ObservableLike<T> {
       this.acc,
       this.delay,
     );
-    subscriber.schedule(producer, this.delay);
+    subscriber.schedule(producer);
   }
 }
 

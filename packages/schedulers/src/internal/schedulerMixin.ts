@@ -24,11 +24,11 @@ function createCallback(
       const result = continuation.run(this.shouldYield) || undefined;
 
       if (result !== undefined) {
-        const { continuation: nextContinuation, delay = 0 } = result;
+        const { delay = 0 } = result;
         const nextCallback =
-          nextContinuation === continuation
+          result === continuation
             ? callback
-            : createCallback.call(this, nextContinuation, disposable);
+            : createCallback.call(this, result, disposable);
 
         disposable.inner = this.scheduleCallback(nextCallback, delay);
       } else {
@@ -43,11 +43,10 @@ export const schedulerMixin = {
   schedule(
     this: SchedulerHost,
     continuation: SchedulerContinuationLike,
-    delay = 0,
   ): DisposableLike {
     const disposable = createSerialDisposable();
     const callback = createCallback.call(this, continuation, disposable);
-    disposable.inner = this.scheduleCallback(callback, delay);
+    disposable.inner = this.scheduleCallback(callback, continuation.delay);
     return disposable;
   },
 };

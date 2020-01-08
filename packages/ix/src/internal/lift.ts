@@ -41,11 +41,8 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
     return this.observable.subscriberCount;
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    delay?: number,
-  ): DisposableLike {
-    return this.scheduler.schedule(continuation, delay);
+  schedule(continuation: SchedulerContinuationLike): DisposableLike {
+    return this.scheduler.schedule(continuation);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

@@ -1,14 +1,14 @@
 import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { enumerableMixin } from "./enumerable";
 
 class EmptyProducer<T> implements SchedulerContinuationLike {
-  constructor(private readonly subscriber: SubscriberLike<T>) {}
+  constructor(
+    private readonly subscriber: SubscriberLike<T>,
+    readonly delay: number,
+  ) {}
 
-  run(_?: () => boolean): SchedulerContinuationResultLike | void {
+  run(_?: () => boolean) {
     this.subscriber.dispose();
   }
 }
@@ -17,7 +17,7 @@ class EmptyObservable<T> implements ObservableLike<T> {
   constructor(private readonly delay: number) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    subscriber.schedule(new EmptyProducer(subscriber), this.delay);
+    subscriber.schedule(new EmptyProducer(subscriber, this.delay));
   }
 }
 

@@ -1,13 +1,10 @@
-import {
-  SchedulerContinuationResultLike,
-  SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
 interface ProducerLike<T> extends SchedulerContinuationLike {
   readonly subscriber: SubscriberLike<T>;
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void;
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void;
 }
 
 /** @ignore */

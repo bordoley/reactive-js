@@ -4,27 +4,20 @@ import {
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
 class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
-  private readonly continuationResult: SchedulerContinuationResultLike = {
-    continuation: this,
-    delay: this.delay,
-  };
   run = producerMixin.run;
 
   constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly enumerator: EnumeratorLike<T>,
-    private readonly delay: number,
+    readonly delay: number,
   ) {}
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const enumerator = this.enumerator;
     const subscriber = this.subscriber;
 
@@ -32,7 +25,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
       const hasCurrent = enumerator.moveNext();
       if (hasCurrent) {
         subscriber.notify(enumerator.current);
-        return this.continuationResult;
+        return this;
       }
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {
@@ -43,7 +36,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
         subscriber.notify(enumerator.current);
 
         if (shouldYield()) {
-          return this.continuationResult;
+          return this;
         }
       }
     } else {
@@ -73,7 +66,7 @@ class FromEnumeratorObservable<T> implements ObservableLike<T> {
       this.enumerator,
       this.delay,
     );
-    subscriber.schedule(producer, this.delay);
+    subscriber.schedule(producer);
   }
 }
 

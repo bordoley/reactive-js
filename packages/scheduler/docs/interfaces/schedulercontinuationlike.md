@@ -13,15 +13,25 @@ work to be performed.
 
 ## Index
 
+### Properties
+
+* [delay](schedulercontinuationlike.md#optional-delay)
+
 ### Methods
 
 * [run](schedulercontinuationlike.md#run)
+
+## Properties
+
+### `Optional` delay
+
+• **delay**? : *undefined | number*
 
 ## Methods
 
 ###  run
 
-▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
+▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
 
 **Parameters:**
 
@@ -29,4 +39,4 @@ Name | Type |
 ------ | ------ |
 `shouldYield?` | undefined &#124; function |
 
-**Returns:** *[SchedulerContinuationResultLike](schedulercontinuationresultlike.md) | void*
+**Returns:** *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*

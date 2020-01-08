@@ -15,11 +15,8 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     return this.priorityScheduler.now;
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    delay?: number | undefined,
-  ): DisposableLike {
-    return this.priorityScheduler.schedule(continuation, this.priority, delay);
+  schedule(continuation: SchedulerContinuationLike): DisposableLike {
+    return this.priorityScheduler.schedule(continuation, this.priority);
   }
 }
 

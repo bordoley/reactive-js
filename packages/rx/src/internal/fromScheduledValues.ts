@@ -1,20 +1,18 @@
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationResultLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { defer } from "./defer";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 
 class FromScheduledValuesObservable<T>
   implements ObservableLike<T>, SchedulerContinuationLike {
+  delay = 0;
   private index = 0;
   readonly run = producerMixin.run;
   private subscriber: SubscriberLike<T> | undefined;
 
   constructor(private readonly values: ReadonlyArray<[number, T]>) {}
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const subscriber = this.subscriber as SubscriberLike<T>;
     const values = this.values;
 
@@ -29,7 +27,8 @@ class FromScheduledValuesObservable<T>
 
         if (delay > 0 || (shouldYield !== undefined && shouldYield())) {
           this.index = index;
-          return { continuation: this, delay };
+          this.delay = delay;
+          return this;
         }
       }
     }
@@ -41,7 +40,8 @@ class FromScheduledValuesObservable<T>
     this.subscriber = subscriber;
 
     const [delay] = this.values[0];
-    subscriber.schedule(this, delay);
+    this.delay = delay;
+    subscriber.schedule(this);
   }
 }
 

@@ -1,11 +1,10 @@
-import { SchedulerContinuationResultLike } from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { ErrorLike } from "@reactive-js/disposable";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
-  private readonly continuation = { continuation: this };
   private error: ErrorLike | undefined;
   private readonly nextQueue: Array<T> = [];
   readonly run = producerMixin.run;
@@ -29,7 +28,7 @@ class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     }
   }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationResultLike | void {
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const subscriber = this.delegate;
     const nextQueue = this.nextQueue;
 
@@ -39,7 +38,7 @@ class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
         subscriber.notify(next);
 
         if (shouldYield() && this.remainingEvents > 0) {
-          return this.continuation;
+          return this;
         }
       }
     } else {
