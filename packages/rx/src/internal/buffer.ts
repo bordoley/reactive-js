@@ -84,18 +84,18 @@ export function buffer<T>(
   } = {},
 ): ObservableOperatorLike<T, readonly T[]> {
   const duration = options.duration || Number.MAX_SAFE_INTEGER;
-  const durationSelector = duration === Number.MAX_SAFE_INTEGER
-    ? never
-    : typeof duration === "number"
-    ? (_: T) => ofValue(undefined, duration)
-    : duration;
+  const durationSelector =
+    duration === Number.MAX_SAFE_INTEGER
+      ? never
+      : typeof duration === "number"
+      ? (_: T) => ofValue(undefined, duration)
+      : duration;
 
   const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
-  const call = (subscriber: SubscriberLike<readonly T[]>) => 
+  const call = (subscriber: SubscriberLike<readonly T[]>) =>
     new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
 
-  return lift(new SubscriberOperator(
-    duration === Number.MAX_SAFE_INTEGER,
-    call,
-  ));
+  return lift(
+    new SubscriberOperator(duration === Number.MAX_SAFE_INTEGER, call),
+  );
 }

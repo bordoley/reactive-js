@@ -7,10 +7,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   private readonly subscribers: Array<SubscriberLike<T>> = [];
   private readonly replayed: T[] = [];
 
-  constructor(
-    scheduler: SchedulerLike,
-    private readonly replayCount: number,
-  ) {
+  constructor(scheduler: SchedulerLike, private readonly replayCount: number) {
     super(scheduler);
   }
 

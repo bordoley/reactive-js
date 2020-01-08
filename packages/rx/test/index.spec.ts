@@ -110,12 +110,7 @@ test("buffer", () => {
     buffer({ duration: 4, maxBufferSize: 3 }),
     toArray(),
     expect,
-  ).toEqual([
-    [1, 2, 3],
-    [4, 1, 2],
-    [3],
-    [4],
-  ]);
+  ).toEqual([[1, 2, 3], [4, 1, 2], [3], [4]]);
 });
 
 test("combineLatest", () => {
@@ -221,26 +216,19 @@ describe("concatAll", () => {
 });
 
 test("contains", () => {
-  pipe(
-    empty(),
-    contains(1),
-    toValue(),
-    expect,
-  ).toBeFalsy();
+  pipe(empty(), contains(1), toValue(), expect).toBeFalsy();
 
   pipe(
-    generate(x => x + 1, () => 0),
+    generate(
+      x => x + 1,
+      () => 0,
+    ),
     contains(1),
     toValue(),
     expect,
   ).toBeTruthy();
 
-  pipe(
-    ofValue(0),
-    contains(1),
-    toValue(),
-    expect,
-  ).toBeFalsy();
+  pipe(ofValue(0), contains(1), toValue(), expect).toBeFalsy();
 });
 
 describe("createObservable", () => {
@@ -457,16 +445,31 @@ describe("empty", () => {
 });
 
 test("every", () => {
-  pipe(empty(), every(_ => false), toValue(), expect).toBeTruthy();
+  pipe(
+    empty(),
+    every(_ => false),
+    toValue(),
+    expect,
+  ).toBeTruthy();
 
-  pipe(fromArray([1,2,3]), every(_ => true), toValue(), expect).toBeTruthy();
-  pipe(fromArray([1,2,3]), every(_ => false), toValue(), expect).toBeFalsy();
+  pipe(
+    fromArray([1, 2, 3]),
+    every(_ => true),
+    toValue(),
+    expect,
+  ).toBeTruthy();
+  pipe(
+    fromArray([1, 2, 3]),
+    every(_ => false),
+    toValue(),
+    expect,
+  ).toBeFalsy();
 });
 
 test("forEach", () => {
   const result: number[] = [];
   pipe(
-    fromArray([1,2,3]),
+    fromArray([1, 2, 3]),
     forEach(x => result.push(x)),
   );
   expect(result).toEqual([1, 2, 3]);
@@ -812,13 +815,25 @@ describe("never", () => {
 
 test("none", () => {
   expect(
-    pipe(empty(), none(_ => false), toValue())
+    pipe(
+      empty(),
+      none(_ => false),
+      toValue(),
+    ),
   ).toBeTruthy();
   expect(
-    pipe(fromArray([1,2,3]), none(_ => true), toValue())
-  ).toBeFalsy()
+    pipe(
+      fromArray([1, 2, 3]),
+      none(_ => true),
+      toValue(),
+    ),
+  ).toBeFalsy();
   expect(
-    pipe(fromArray([1,2,3]), none(_ => false), toValue())
+    pipe(
+      fromArray([1, 2, 3]),
+      none(_ => false),
+      toValue(),
+    ),
   ).toBeTruthy();
 });
 
@@ -970,36 +985,32 @@ test("share", () => {
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
-  scheduler.schedule(
-    {
-      delay: 1,
-      run: _ => {
-        liftedSubscription = pipe(
-          replayed,
-          observe(liftedObserver),
-          subscribe(scheduler),
-        );
-      },
+  scheduler.schedule({
+    delay: 1,
+    run: _ => {
+      liftedSubscription = pipe(
+        replayed,
+        observe(liftedObserver),
+        subscribe(scheduler),
+      );
     },
-  );
+  });
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
-  scheduler.schedule(
-    {
-      delay: 3,
-      run: _ => {
-        replayedSubscription.dispose();
-        liftedSubscription.dispose();
+  scheduler.schedule({
+    delay: 3,
+    run: _ => {
+      replayedSubscription.dispose();
+      liftedSubscription.dispose();
 
-        anotherLiftedSubscription = pipe(
-          replayed,
-          observe(anotherLiftedSubscriptionObserver),
-          subscribe(scheduler),
-        );
-      },
+      anotherLiftedSubscription = pipe(
+        replayed,
+        observe(anotherLiftedSubscriptionObserver),
+        subscribe(scheduler),
+      );
     },
-  );
+  });
 
   scheduler.run();
 

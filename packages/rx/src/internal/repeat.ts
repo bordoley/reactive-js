@@ -72,7 +72,7 @@ const repeatObs = <T>(
   const operator = lift(new SubscriberOperator(true, call));
 
   return operator(observable);
-}
+};
 
 const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
   error === undefined;
@@ -104,5 +104,5 @@ export const retry = <T>(
       : (count: number, error?: ErrorLike) =>
           error !== undefined && predicate(count, error.cause);
 
-  return repeatObs(retryPredicate);;
+  return repeatObs(retryPredicate);
 };

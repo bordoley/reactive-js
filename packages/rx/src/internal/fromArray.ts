@@ -1,7 +1,5 @@
 import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
-import {
-  SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 

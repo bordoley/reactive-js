@@ -87,7 +87,11 @@ const priorityScheduler = {
     const disposable = createSerialDisposable();
     const callback = createCallback(continuation, disposable, priority);
 
-    disposable.inner = scheduleCallback(callback, priority, continuation.delay ?? 0);
+    disposable.inner = scheduleCallback(
+      callback,
+      priority,
+      continuation.delay ?? 0,
+    );
     return disposable;
   },
 };

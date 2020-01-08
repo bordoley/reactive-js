@@ -54,5 +54,5 @@ export const withLatestFrom = <TA, TB, TC>(
 ): ObservableOperatorLike<TA, TC> => {
   const call = (subscriber: SubscriberLike<TC>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);
-  return lift(new SubscriberOperator(false, call));  
-}
+  return lift(new SubscriberOperator(false, call));
+};

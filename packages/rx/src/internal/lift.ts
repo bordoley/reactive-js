@@ -30,7 +30,7 @@ class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
 }
 
 export function lift<TA, TB>(
-  operator: SubscriberOperatorLike<TA, TB>
+  operator: SubscriberOperatorLike<TA, TB>,
 ): ObservableOperatorLike<TA, TB> {
   return source => {
     const sourceSource =

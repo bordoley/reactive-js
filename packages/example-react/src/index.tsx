@@ -101,10 +101,4 @@ const location = pipe(
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
-  .render(
-    <Router
-      location={location}
-      notFound={NotFound}
-      routes={routes}
-    />,
-  );
+  .render(<Router location={location} notFound={NotFound} routes={routes} />);

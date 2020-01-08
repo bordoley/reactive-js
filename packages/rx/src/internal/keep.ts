@@ -1,7 +1,4 @@
-import {
-  ObservableOperatorLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { SubscriberOperator } from "./subscriberOperator";
@@ -26,7 +23,7 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const keep = <T>(
   predicate: (data: T) => boolean,
 ): ObservableOperatorLike<T, T> => {
-  const call = (subscriber: SubscriberLike<T>) => 
+  const call = (subscriber: SubscriberLike<T>) =>
     new KeepSubscriber(subscriber, predicate);
   return lift(new SubscriberOperator(true, call));
-}
+};

@@ -103,9 +103,10 @@ export const throttle = <T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableOperatorLike<T, T> => {
-  const durationSelector = typeof duration === "number"
-    ? (_: T) => ofValue(undefined, duration)
-    : duration;
+  const durationSelector =
+    typeof duration === "number"
+      ? (_: T) => ofValue(undefined, duration)
+      : duration;
   const call = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
   return lift(new SubscriberOperator(false, call));

@@ -82,10 +82,12 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
-export const mergeAll = <T>(options: {
-  maxBufferSize?: number;
-  maxConcurrency?: number;
-} = {}): ObservableOperatorLike<ObservableLike<T>, T> => {
+export const mergeAll = <T>(
+  options: {
+    maxBufferSize?: number;
+    maxConcurrency?: number;
+  } = {},
+): ObservableOperatorLike<ObservableLike<T>, T> => {
   const {
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
@@ -94,7 +96,7 @@ export const mergeAll = <T>(options: {
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 
   return lift(new SubscriberOperator(false, call));
-}
+};
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
 ): ObservableOperatorLike<ObservableLike<T>, T> =>

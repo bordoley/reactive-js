@@ -42,6 +42,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const catchError = <T>(
   onError: (error: unknown) => ObservableLike<T> | void,
 ): ObservableOperatorLike<T, T> => {
-  const call = (subscriber: SubscriberLike<T>) => new CatchErrorSubscriber(subscriber, onError);
+  const call = (subscriber: SubscriberLike<T>) =>
+    new CatchErrorSubscriber(subscriber, onError);
   return lift(new SubscriberOperator(false, call));
-}
+};

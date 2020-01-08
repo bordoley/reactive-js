@@ -24,9 +24,7 @@ export interface SchedulerLike {
    * @param continuation
    * @param delay The delay in ms after which to execute the continuation.
    */
-  schedule(
-    continuation: SchedulerContinuationLike,
-  ): DisposableLike;
+  schedule(continuation: SchedulerContinuationLike): DisposableLike;
 }
 
 /**

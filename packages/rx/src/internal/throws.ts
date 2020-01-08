@@ -5,10 +5,7 @@ import { ErrorLike } from "@reactive-js/disposable";
 class ThrowsObservable<T> implements ObservableLike<T> {
   private subscriber: SubscriberLike<T> | undefined;
 
-  constructor(
-    private readonly error: ErrorLike,
-    readonly delay: number,
-  ) {}
+  constructor(private readonly error: ErrorLike, readonly delay: number) {}
 
   run(_?: () => boolean) {
     (this.subscriber as SubscriberLike<T>).dispose(this.error);

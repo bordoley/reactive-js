@@ -28,13 +28,11 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(
-  count: number,
-): SubscriberOperatorLike<T, T> => {
+const operator = <T>(count: number): SubscriberOperatorLike<T, T> => {
   const call = (subscriber: SubscriberLike<T>) =>
     new TakeFirstSubscriber(subscriber, count);
   return new SubscriberOperator(true, call);
-}
+};
 
 export const takeFirst = <T>(
   count = 1,

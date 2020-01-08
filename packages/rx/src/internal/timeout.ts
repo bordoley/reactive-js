@@ -55,9 +55,8 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
 export const timeout = <T>(
   duration: number | ObservableLike<unknown>,
 ): ObservableOperatorLike<T, T> => {
-  const durationObs = typeof duration === "number" 
-    ? throws(timeoutError, duration) 
-    : duration;
+  const durationObs =
+    typeof duration === "number" ? throws(timeoutError, duration) : duration;
   const call = (subscriber: SubscriberLike<T>) =>
     new TimeoutSubscriber(subscriber, durationObs);
   return lift(new SubscriberOperator(false, call));

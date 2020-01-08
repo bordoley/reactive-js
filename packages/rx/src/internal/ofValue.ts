@@ -9,7 +9,7 @@ class OfValueProducer<T> implements SchedulerContinuationLike {
     readonly delay: number,
   ) {}
 
-  run(_?: () => boolean){
+  run(_?: () => boolean) {
     this.subscriber.notify(this.value);
     this.subscriber.dispose();
   }
