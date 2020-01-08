@@ -1,11 +1,9 @@
-import { ErrorLike } from "@reactive-js/disposable";
 import { SubjectLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriber } from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
-  private error?: ErrorLike;
   private readonly subscribers: Array<SubscriberLike<T>> = [];
   private readonly replayed: T[] = [];
 
@@ -14,15 +12,6 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     private readonly replayCount: number,
   ) {
     super(scheduler);
-    this.add(error => {
-      this.error = error;
-
-      const subscribers = this.subscribers.slice();
-      this.subscribers.length = 0;
-      for (const subscriber of subscribers) {
-        subscriber.dispose(error);
-      }
-    });
   }
 
   get subscriberCount() {
@@ -51,22 +40,22 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     // So we marshall those events back to the scheduler.
     const safeSubscriber = toSafeSubscriber(subscriber);
 
-    for (const next of this.replayed) {
-      safeSubscriber.notify(next);
-    }
-
     if (!this.isDisposed) {
       this.subscribers.push(safeSubscriber);
 
-      subscriber.add(() => {
+      safeSubscriber.add(() => {
         const index = this.subscribers.indexOf(safeSubscriber);
         if (index !== -1) {
           this.subscribers.splice(index, 1);
         }
       });
-    } else {
-      safeSubscriber.dispose(this.error);
     }
+
+    for (const next of this.replayed) {
+      safeSubscriber.notify(next);
+    }
+
+    this.add(safeSubscriber);
   }
 }
 
