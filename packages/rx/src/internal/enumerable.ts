@@ -46,17 +46,13 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
   readonly add = disposableMixin.add;
   private continuation?: SchedulerContinuationLike;
   current: any;
-  readonly disposable: DisposableLike = createDisposable();
+  readonly disposable: DisposableLike = createDisposable(error => {
+    this.error = error;
+  });
   readonly dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
-
-  constructor() {
-    this.add(error => {
-      this.error = error;
-    });
-  }
 
   get isDisposed() {
     return this.disposable.isDisposed;
