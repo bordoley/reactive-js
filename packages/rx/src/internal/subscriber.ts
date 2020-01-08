@@ -34,9 +34,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
     this: SubscriberLike<T> & { scheduler: SchedulerLike },
     continuation: SchedulerContinuationLike,
   ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(
-      continuation,
-    );
+    const schedulerSubscription = this.scheduler.schedule(continuation);
     this.add(schedulerSubscription);
     return schedulerSubscription;
   }
@@ -47,9 +45,10 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export abstract class AbstractDelegatingSubscriber<TA, TB>
-  extends AbstractSubscriber<TA>{
-
+export abstract class AbstractDelegatingSubscriber<
+  TA,
+  TB
+> extends AbstractSubscriber<TA> {
   constructor(readonly delegate: SubscriberLike<TB>) {
     super(delegate);
     this.delegate.add(this);

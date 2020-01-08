@@ -88,7 +88,7 @@ class DisposableImpl implements DisposableLike {
 
     if (index > -1) {
       this.disposables.splice(index, 1);
-    } 
+    }
   }
 }
 
@@ -137,7 +137,7 @@ export const disposableMixin = {
     this: { disposable: DisposableLike } & This,
     disposable: DisposableOrTeardown,
   ): This {
-    this.disposable.add(disposable,)
+    this.disposable.add(disposable);
     return this;
   },
   dispose(this: { disposable: DisposableLike }, error?: ErrorLike) {

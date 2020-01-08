@@ -69,9 +69,7 @@ class VirtualTimeSchedulerResourceImpl
     return this.disposable.isDisposed;
   }
 
-  private loop(
-    shouldYield: () => boolean,
-  ): SchedulerContinuationLike | void {
+  private loop(shouldYield: () => boolean): SchedulerContinuationLike | void {
     this.runShouldYield = shouldYield;
     while (this.step()) {
       if (shouldYield()) {

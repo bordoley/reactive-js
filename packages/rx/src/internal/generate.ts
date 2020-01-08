@@ -10,7 +10,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     private readonly subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
-   readonly delay: number,
+    readonly delay: number,
   ) {}
 
   produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {

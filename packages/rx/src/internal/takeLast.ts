@@ -1,7 +1,4 @@
-import {
-  ObservableOperatorLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { fromArray } from "./fromArray";
@@ -39,4 +36,4 @@ export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> => {
   const call = (subscriber: SubscriberLike<T>) =>
     new TakeLastSubscriber(subscriber, count);
   return lift(new SubscriberOperator(true, call));
-}
+};

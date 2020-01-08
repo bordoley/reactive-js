@@ -1,13 +1,10 @@
-import {
-  ObservableOperatorLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
 import { SubscriberOperator } from "./subscriberOperator";
 
-class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean>  {
+class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(
     delegate: SubscriberLike<boolean>,
     private readonly predicate: (next: T) => boolean,
@@ -32,12 +29,12 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean>  {
 }
 
 export const some = <T>(
-  predicate: (next: T) => boolean
+  predicate: (next: T) => boolean,
 ): ObservableOperatorLike<T, boolean> => {
   const call = (subscriber: SubscriberLike<boolean>) =>
     new SomeSubscriber(subscriber, predicate);
   return lift(new SubscriberOperator(true, call));
-}
+};
 
 const referenceEquals = <T>(a: T, b: T) => a === b;
 

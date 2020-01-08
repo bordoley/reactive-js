@@ -54,7 +54,6 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
 
 class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
   implements EnumerableLike<T> {
-
   constructor(iterator: Iterator<T>) {
     super(iterator, 0);
   }

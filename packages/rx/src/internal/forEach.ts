@@ -1,5 +1,8 @@
 import { OperatorLike, pipe } from "@reactive-js/pipe";
-import { VirtualTimeSchedulerResourceLike, createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
+import {
+  VirtualTimeSchedulerResourceLike,
+  createVirtualTimeSchedulerResource,
+} from "@reactive-js/schedulers";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
 import { ErrorLike } from "@reactive-js/disposable";
@@ -21,10 +24,14 @@ export const forEach = <T>(
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
   const observer = new ForEachObserver<T>(onNotify);
-  const subscription = pipe(observable, observe(observer), subscribe(scheduler));
+  const subscription = pipe(
+    observable,
+    observe(observer),
+    subscribe(scheduler),
+  );
 
   scheduler.run();
-  
+
   subscription.dispose();
   scheduler.dispose();
 

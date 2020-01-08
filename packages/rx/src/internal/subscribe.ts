@@ -5,7 +5,7 @@ import { ObservableLike } from "./interfaces";
 import { AbstractSubscriber } from "./subscriber";
 
 class DefaultSubscriber<T> extends AbstractSubscriber<T> {
-  notify(_: T) {};
+  notify(_: T) {}
 }
 
 /**

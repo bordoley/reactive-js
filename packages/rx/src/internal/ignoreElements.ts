@@ -13,7 +13,7 @@ class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 }
 
 export const ignoreElements = <TA, TB>(): ObservableOperatorLike<TA, TB> => {
-  const call = (subscriber: SubscriberLike<TB>) => 
+  const call = (subscriber: SubscriberLike<TB>) =>
     new IgnoreSubscriber(subscriber);
   return lift(new SubscriberOperator(true, call));
-}
+};

@@ -46,8 +46,11 @@ class SwitchSubscriber<T>
   }
 }
 
-export const switchAll = <T>(): ObservableOperatorLike<ObservableLike<T>, T> => {
+export const switchAll = <T>(): ObservableOperatorLike<
+  ObservableLike<T>,
+  T
+> => {
   const call = (subscriber: SubscriberLike<T>) =>
     new SwitchSubscriber(subscriber);
   return lift(new SubscriberOperator(false, call));
-}
+};
