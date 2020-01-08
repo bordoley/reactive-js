@@ -11,17 +11,37 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 import { SubscriberOperator } from "./subscriberOperator";
 
+const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
+  if (subscriber.activeCount < subscriber.maxConcurrency) {
+    const nextObs = subscriber.queue.shift();
+
+    if (nextObs !== undefined) {
+      subscriber.activeCount++;
+
+      const nextObsSubscription = pipe(
+        nextObs,
+        observe(subscriber),
+        subscribe(subscriber.delegate),
+      );
+
+      subscriber.delegate.add(nextObsSubscription);
+    } else if (subscriber.isDisposed) {
+      subscriber.delegate.dispose();
+    }
+  }
+}
+
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ObservableLike<T>,
   T
 > {
-  private activeCount = 0;
-  private readonly queue: Array<ObservableLike<T>> = [];
+  activeCount = 0;
+  readonly queue: Array<ObservableLike<T>> = [];
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly maxBufferSize: number,
-    private readonly maxConcurrency: number,
+    readonly maxBufferSize: number,
+    readonly maxConcurrency: number,
   ) {
     super(delegate);
 
@@ -43,7 +63,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
       queue.length + this.activeCount < this.maxBufferSize
     ) {
       queue.push(next);
-      this.subscribeNext();
+      subscribeNext(this);
     }
   }
 
@@ -57,27 +77,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     if (error !== undefined) {
       this.delegate.dispose(error);
     } else {
-      this.subscribeNext();
-    }
-  }
-
-  private subscribeNext() {
-    if (this.activeCount < this.maxConcurrency) {
-      const nextObs = this.queue.shift();
-
-      if (nextObs !== undefined) {
-        this.activeCount++;
-
-        const nextObsSubscription = pipe(
-          nextObs,
-          observe(this),
-          subscribe(this.delegate),
-        );
-
-        this.delegate.add(nextObsSubscription);
-      } else if (this.isDisposed) {
-        this.delegate.dispose();
-      }
+      subscribeNext(this);
     }
   }
 }

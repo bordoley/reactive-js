@@ -62,7 +62,11 @@ class DisposableImpl implements DisposableLike {
 
         if (!(disposable instanceof Function)) {
           disposable.add(() => {
-            this.doRemove(disposable);
+            const disposables = this.disposables;
+            const index = disposables.indexOf(disposable);
+            if (index > -1) {
+              disposables.splice(index, 1);
+            }
           });
         }
       }
@@ -81,14 +85,6 @@ class DisposableImpl implements DisposableLike {
         doDispose(disposable, error);
         disposable = this.disposables.shift();
       }
-    }
-  }
-
-  private doRemove(d: DisposableOrTeardown) {
-    const index = this.disposables.indexOf(d);
-
-    if (index > -1) {
-      this.disposables.splice(index, 1);
     }
   }
 }
