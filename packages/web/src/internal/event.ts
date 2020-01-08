@@ -1,27 +1,22 @@
 import { createObservable, ObservableLike } from "@reactive-js/rx";
-import { createDisposable } from "@reactive-js/disposable";
 
 export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
   selector: (ev: Event) => T,
 ): ObservableLike<T> =>
-  createObservable(notify => {
-    const disposable = createDisposable();
-
+  createObservable(subscriber => {
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        notify(result);
+        subscriber.notify(result);
       } catch (cause) {
-        disposable.dispose({ cause });
+        subscriber.dispose({ cause });
       }
     };
 
     target.addEventListener(eventName, listener, { passive: true });
-    disposable.add(() => {
+    subscriber.add(() => {
       target.removeEventListener(eventName, listener);
     });
-
-    return disposable;
   });

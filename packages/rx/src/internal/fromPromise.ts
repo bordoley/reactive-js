@@ -1,28 +1,23 @@
-import { createDisposable } from "@reactive-js/disposable";
 import { createObservable } from "./createObservable";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
 
 export const fromPromise = <T>(
   factory: () => Promise<T>,
 ): ObservableLike<T> => {
-  const onSubscribe = (notify: (next: T) => void) => {
-    const disposable = createDisposable();
-
+  const onSubscribe = (subscriber: SubscriberLike<T>) => {
     factory().then(
       next => {
-        if (!disposable.isDisposed) {
-          notify(next);
-          disposable.dispose();
+        if (!subscriber.isDisposed) {
+          subscriber.notify(next);
+          subscriber.dispose();
         }
       },
       cause => {
-        if (!disposable.isDisposed) {
-          disposable.dispose({ cause });
+        if (!subscriber.isDisposed) {
+          subscriber.dispose({ cause });
         }
       },
     );
-
-    return disposable;
   };
 
   return createObservable(onSubscribe);

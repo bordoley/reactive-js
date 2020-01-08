@@ -240,21 +240,6 @@ describe("createObservable", () => {
     expect(() => pipe(observable, toValue())).toThrow(cause);
   });
 
-  test("disposes the returned onSubscribe dispsoable when the returned subscription is disposed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
-    const disposable = createDisposable();
-
-    const subscription = pipe(
-      createObservable(_ => disposable),
-      subscribe(scheduler),
-    );
-    scheduler.run();
-
-    expect(disposable.isDisposed).toBeFalsy();
-    subscription.dispose();
-    expect(disposable.isDisposed).toBeTruthy();
-  });
-
   test("when subscriber throws", () => {
     const cause = new Error();
 
@@ -264,9 +249,8 @@ describe("createObservable", () => {
       }
     }
 
-    const observable = createObservable(notify => {
-      notify(1);
-      return disposed;
+    const observable = createObservable(subscriber => {
+      subscriber.notify(1);
     });
 
     const scheduler = createVirtualTimeSchedulerResource();
@@ -748,8 +732,8 @@ test("liftObserable", () => {
   const result: number[] = [];
 
   const liftedObservable = pipe(
-    createObservable(notify => {
-      notify(1);
+    createObservable(subscriber => {
+      subscriber.notify(1);
       return disposed;
     }),
     onNotify(_ => result.push(1)),
@@ -1022,19 +1006,6 @@ test("share", () => {
 
   expect(anotherLiftedSubscriptionObserver.onNotify).toBeCalledTimes(3);
   expect(anotherLiftedSubscriptionObserver.onDispose).toBeCalledTimes(1);
-});
-
-describe("subscribe", () => {
-  test("auto-disposes the subscription on complete", () => {
-    const observable = createObservable(_ => disposed);
-    const scheduler = createVirtualTimeSchedulerResource();
-
-    const subscription = pipe(observable, subscribe(scheduler));
-    expect(subscription.isDisposed).toBeFalsy();
-
-    scheduler.run();
-    expect(subscription.isDisposed).toBeTruthy();
-  });
 });
 
 test("switchAll", () => {
