@@ -1,10 +1,10 @@
 import {
   ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -26,11 +26,10 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(
-  predicate: (next: T) => boolean,
-): SubscriberOperatorLike<T, T> => subscriber =>
-  new TakeWhileSubscriber(subscriber, predicate);
-
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-): ObservableOperatorLike<T, T> => liftEnumerable(operator(predicate));
+): ObservableOperatorLike<T, T> => {
+  const call = (subscriber: SubscriberLike<T>) =>
+    new TakeWhileSubscriber(subscriber, predicate);
+  return lift(new SubscriberOperator(true, call));
+}

@@ -1,10 +1,10 @@
 import {
   ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
@@ -21,11 +21,10 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   }
 }
 
-const operator = <TA, TB>(
-  mapper: (data: TA) => TB,
-): SubscriberOperatorLike<TA, TB> => subscriber =>
-  new MapSubscriber(subscriber, mapper);
-
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): ObservableOperatorLike<TA, TB> => liftEnumerable(operator(mapper));
+): ObservableOperatorLike<TA, TB> => {
+  const call = (subscriber: SubscriberLike<TB>) => 
+    new MapSubscriber(subscriber, mapper);
+  return lift(new SubscriberOperator(true, call));
+}

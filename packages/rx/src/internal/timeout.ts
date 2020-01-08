@@ -8,14 +8,14 @@ import {
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { throws } from "./throws";
+import { SubscriberOperator } from "./subscriberOperator";
 
 const timeoutError = Symbol("TimeoutError");
 
@@ -52,16 +52,13 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   onNotify(_: unknown) {}
 }
 
-const operator = <T>(
-  duration: ObservableLike<unknown>,
-): SubscriberOperatorLike<T, T> => subscriber =>
-  new TimeoutSubscriber(subscriber, duration);
-
 export const timeout = <T>(
   duration: number | ObservableLike<unknown>,
-): ObservableOperatorLike<T, T> =>
-  liftObservable(
-    operator(
-      typeof duration === "number" ? throws(timeoutError, duration) : duration,
-    ),
-  );
+): ObservableOperatorLike<T, T> => {
+  const durationObs = typeof duration === "number" 
+    ? throws(timeoutError, duration) 
+    : duration;
+  const call = (subscriber: SubscriberLike<T>) =>
+    new TimeoutSubscriber(subscriber, durationObs);
+  return lift(new SubscriberOperator(false, call));
+};

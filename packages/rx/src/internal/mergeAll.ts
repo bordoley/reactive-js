@@ -3,13 +3,13 @@ import {
   ObservableLike,
   ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftObservable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ObservableLike<T>,
@@ -82,26 +82,19 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
-const operator = <T>(
-  options: {
-    maxBufferSize?: number;
-    maxConcurrency?: number;
-  } = {},
-): SubscriberOperatorLike<ObservableLike<T>, T> => {
+export const mergeAll = <T>(options: {
+  maxBufferSize?: number;
+  maxConcurrency?: number;
+} = {}): ObservableOperatorLike<ObservableLike<T>, T> => {
   const {
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
-  return subscriber =>
+  const call = (subscriber: SubscriberLike<T>) =>
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
-};
 
-export const mergeAll = <T>(options?: {
-  maxBufferSize?: number;
-  maxConcurrency?: number;
-}): ObservableOperatorLike<ObservableLike<T>, T> =>
-  liftObservable(operator(options));
-
+  return lift(new SubscriberOperator(false, call));
+}
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
 ): ObservableOperatorLike<ObservableLike<T>, T> =>

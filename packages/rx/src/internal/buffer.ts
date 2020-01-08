@@ -1,18 +1,18 @@
 import { createSerialDisposable, ErrorLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { ofValue } from "./ofValue";
-import { liftEnumerable, liftObservable } from "./lift";
+import { lift } from "./lift";
 import { never } from "./never";
 import {
   ObservableLike,
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   implements ObserverLike<unknown> {
@@ -77,12 +77,6 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   }
 }
 
-const operator = <T>(
-  durationSelector: (next: T) => ObservableLike<unknown>,
-  maxBufferSize: number,
-): SubscriberOperatorLike<T, readonly T[]> => subscriber =>
-  new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
-
 export function buffer<T>(
   options: {
     duration?: ((next: T) => ObservableLike<unknown>) | number;
@@ -90,16 +84,18 @@ export function buffer<T>(
   } = {},
 ): ObservableOperatorLike<T, readonly T[]> {
   const duration = options.duration || Number.MAX_SAFE_INTEGER;
-  const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
+  const durationSelector = duration === Number.MAX_SAFE_INTEGER
+    ? never
+    : typeof duration === "number"
+    ? (_: T) => ofValue(undefined, duration)
+    : duration;
 
-  return duration === Number.MAX_SAFE_INTEGER
-    ? liftEnumerable(operator(never, maxBufferSize))
-    : liftObservable(
-        operator(
-          typeof duration === "number"
-            ? (_: T) => ofValue(undefined, duration)
-            : duration,
-          maxBufferSize,
-        ),
-      );
+  const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
+  const call = (subscriber: SubscriberLike<readonly T[]>) => 
+    new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
+
+  return lift(new SubscriberOperator(
+    duration === Number.MAX_SAFE_INTEGER,
+    call,
+  ));
 }

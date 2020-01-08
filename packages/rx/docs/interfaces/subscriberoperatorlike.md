@@ -14,11 +14,27 @@ A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 * **SubscriberOperatorLike**
 
-## Callable
+## Index
 
-▸ (`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
+### Properties
 
-A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
+* [isSynchronous](subscriberoperatorlike.md#issynchronous)
+
+### Methods
+
+* [call](subscriberoperatorlike.md#call)
+
+## Properties
+
+###  isSynchronous
+
+• **isSynchronous**: *boolean*
+
+## Methods
+
+###  call
+
+▸ **call**(`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
 
 **Parameters:**
 

@@ -1,11 +1,11 @@
 import {
   ObservableOperatorLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { fromArray } from "./fromArray";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
@@ -35,10 +35,8 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(
-  count: number,
-): SubscriberOperatorLike<T, T> => subscriber =>
-  new TakeLastSubscriber(subscriber, count);
-
-export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> =>
-  liftEnumerable(operator(count));
+export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> => {
+  const call = (subscriber: SubscriberLike<T>) =>
+    new TakeLastSubscriber(subscriber, count);
+  return lift(new SubscriberOperator(true, call));
+}

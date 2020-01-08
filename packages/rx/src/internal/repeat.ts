@@ -5,12 +5,12 @@ import {
   ObservableOperatorLike,
   ObserverLike,
   SubscriberLike,
-  SubscriberOperatorLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<T> {
@@ -64,11 +64,15 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 }
 
-const repeatOperator = <T>(
-  observable: ObservableLike<T>,
+const repeatObs = <T>(
   shouldRepeat: (count: number, error?: ErrorLike) => boolean,
-): SubscriberOperatorLike<T, T> => (subscriber: SubscriberLike<T>) =>
-  new RepeatSubscriber(subscriber, observable, shouldRepeat);
+): ObservableOperatorLike<T, T> => observable => {
+  const call = (subscriber: SubscriberLike<T>) =>
+    new RepeatSubscriber(subscriber, observable, shouldRepeat);
+  const operator = lift(new SubscriberOperator(true, call));
+
+  return operator(observable);
+}
 
 const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
   error === undefined;
@@ -85,7 +89,7 @@ export const repeat = <T>(
       : (count: number, error?: ErrorLike) =>
           error === undefined && predicate(count);
 
-  return obs => liftEnumerable(repeatOperator(obs, repeatPredicate))(obs);
+  return repeatObs(repeatPredicate);
 };
 
 const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
@@ -100,5 +104,5 @@ export const retry = <T>(
       : (count: number, error?: ErrorLike) =>
           error !== undefined && predicate(count, error.cause);
 
-  return obs => liftEnumerable(repeatOperator(obs, retryPredicate))(obs);
+  return repeatObs(retryPredicate);;
 };

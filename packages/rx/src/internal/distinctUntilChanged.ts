@@ -1,10 +1,10 @@
 import {
-  SubscriberLike,
-  SubscriberOperatorLike,
   ObservableOperatorLike,
+  SubscriberLike,
 } from "./interfaces";
-import { liftEnumerable } from "./lift";
+import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { SubscriberOperator } from "./subscriberOperator";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -36,11 +36,10 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
-const operator = <T>(
-  equals: (a: T, b: T) => boolean = referenceEquality,
-): SubscriberOperatorLike<T, T> => subscriber =>
-  new DistinctUntilChangedSubscriber(subscriber, equals);
-
 export const distinctUntilChanged = <T>(
-  equals?: (a: T, b: T) => boolean,
-): ObservableOperatorLike<T, T> => liftEnumerable(operator(equals));
+  equals: (a: T, b: T) => boolean = referenceEquality,
+): ObservableOperatorLike<T, T> => {
+  const call = (subscriber: SubscriberLike<T>) => 
+    new DistinctUntilChangedSubscriber(subscriber, equals);
+  return lift(new SubscriberOperator(true, call));
+}

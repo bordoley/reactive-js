@@ -37,7 +37,8 @@ export interface SubscriberLike<T> extends SchedulerResourceLike {
  * A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
  */
 export interface SubscriberOperatorLike<A, B> {
-  (subscriber: SubscriberLike<B>): SubscriberLike<A>;
+  readonly isSynchronous: boolean;
+  call(subscriber: SubscriberLike<B>): SubscriberLike<A>;
 }
 
 /**
