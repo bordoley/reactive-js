@@ -14,7 +14,7 @@ class CreateObservable<T> implements ObservableLike<T> {
     try {
       this.onSubscribe(safeSubscriber);
     } catch (cause) {
-      safeSubscriber.dispose({ cause });
+      subscriber.dispose({ cause });
     }
   }
 }
