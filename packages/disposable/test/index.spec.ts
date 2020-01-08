@@ -2,12 +2,7 @@ import {
   createDisposable,
   createSerialDisposable,
   disposed,
-  throwIfDisposed,
 } from "../src/index";
-
-test("throwIfDisposed", () => {
-  expect(() => throwIfDisposed(disposed)).toThrow();
-});
 
 describe("Disposable", () => {
   test("create", () => {
