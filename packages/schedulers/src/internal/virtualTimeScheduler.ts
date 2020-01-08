@@ -40,12 +40,30 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
+const step = (scheduler: VirtualTimeSchedulerResourceImpl): boolean => {
+  const task = scheduler.taskQueue.pop();
+
+  if (task !== undefined) {
+    const { dueTime, callback, disposable } = task;
+
+    scheduler.now = dueTime;
+    scheduler.microTaskTicks = 0;
+
+    if (!disposable.isDisposed) {
+      callback();
+      disposable.dispose();
+    }
+  }
+
+  return scheduler.taskQueue.count > 0;
+}
+
 class VirtualTimeSchedulerResourceImpl
   implements VirtualTimeSchedulerResourceLike {
   readonly add = disposableMixin.add;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = disposableMixin.dispose;
-  private microTaskTicks = 0;
+  microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
   readonly schedule = schedulerMixin.schedule;
@@ -58,7 +76,7 @@ class VirtualTimeSchedulerResourceImpl
     );
   };
   private taskIDCount = 0;
-  private readonly taskQueue: PriorityQueueLike<
+  readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
 
@@ -69,7 +87,7 @@ class VirtualTimeSchedulerResourceImpl
   }
 
   next(): IteratorResult<void> {
-    const hasMore = !this.isDisposed && this.step();
+    const hasMore = !this.isDisposed && step(this);
     return hasMore ? iteratorYield : iteratorDone;
   }
 
@@ -92,7 +110,7 @@ class VirtualTimeSchedulerResourceImpl
 
     if (shouldYield !== undefined) {
       this.runShouldYield = shouldYield;
-      while (this.step()) {
+      while (step(this)) {
         if (shouldYield()) {
           this.runShouldYield = undefined;
           return this;
@@ -102,7 +120,7 @@ class VirtualTimeSchedulerResourceImpl
       this.runShouldYield = undefined;
     } else {
       // eslint-disable-next-line no-empty
-      while (this.step()) {}
+      while (step(this)) {}
     }
 
     this.dispose();
@@ -121,24 +139,6 @@ class VirtualTimeSchedulerResourceImpl
 
     this.add(disposable);
     return disposable;
-  }
-
-  private step(): boolean {
-    const task = this.taskQueue.pop();
-
-    if (task !== undefined) {
-      const { dueTime, callback, disposable } = task;
-
-      this.now = dueTime;
-      this.microTaskTicks = 0;
-
-      if (!disposable.isDisposed) {
-        callback();
-        disposable.dispose();
-      }
-    }
-
-    return this.taskQueue.count > 0;
   }
 
   throw(cause?: unknown): IteratorResult<void> {

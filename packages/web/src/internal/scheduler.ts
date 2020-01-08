@@ -20,16 +20,17 @@ const now =
 const yieldInterval = 5;
 const maxYieldInterval = 300;
 
-class WebScheduler implements SchedulerLike {
-  private readonly callCallbackAndDispose = (
-    callback: () => void,
-    disposable: DisposableLike,
-  ) => {
-    this.startTime = this.now;
-    callback();
-    disposable.dispose();
-  };
+const callCallbackAndDispose = (
+  scheduler: WebScheduler,
+  callback: () => void,
+  disposable: DisposableLike,
+) => {
+  scheduler.startTime = scheduler.now;
+  callback();
+  disposable.dispose();
+};
 
+class WebScheduler implements SchedulerLike {
   private channel = new MessageChannel();
 
   readonly schedule = schedulerMixin.schedule;
@@ -51,7 +52,7 @@ class WebScheduler implements SchedulerLike {
         }
       : () => now() >= this.startTime + yieldInterval;
 
-  private startTime = this.now;
+  startTime = this.now;
 
   get now(): number {
     return now();
@@ -82,8 +83,9 @@ class WebScheduler implements SchedulerLike {
   private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
     const disposable = createDisposable(() => clearTimeout(timeout));
     const timeout = setTimeout(
-      this.callCallbackAndDispose,
+      callCallbackAndDispose,
       delay,
+      this,
       callback,
       disposable,
     );

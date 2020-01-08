@@ -19,29 +19,29 @@ import { SubscriberOperator } from "./subscriberOperator";
 
 const timeoutError = Symbol("TimeoutError");
 
+const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
+  subscriber.durationSubscription.inner = pipe(
+    subscriber.duration,
+    observe(subscriber),
+    subscribe(subscriber),
+  );
+}
+
 class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
-  private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+  readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly duration: ObservableLike<unknown>,
+    readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
     this.add(this.durationSubscription).add(delegate);
-    this.setupDurationSubscription();
-  }
-
-  private setupDurationSubscription() {
-    this.durationSubscription.inner = pipe(
-      this.duration,
-      observe(this),
-      subscribe(this),
-    );
+    setupDurationSubscription(this);
   }
 
   notify(next: T) {
-    this.setupDurationSubscription();
+    setupDurationSubscription(this);
     this.delegate.notify(next);
   }
 
