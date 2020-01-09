@@ -1,12 +1,12 @@
 export {
-  createPrioritySchedulerResource,
+  createPriorityScheduler,
   PrioritySchedulerLike,
   PrioritySchedulerResourceLike,
 } from "./internal/priorityScheduler";
 
 export {
-  createVirtualTimeSchedulerResource,
-  VirtualTimeSchedulerResourceLike,
+  createVirtualTimeScheduler,
+  VirtualTimeSchedulerLike,
 } from "./internal/virtualTimeScheduler";
 
 export { createSchedulerWithPriority } from "./internal/schedulerWithPriority";

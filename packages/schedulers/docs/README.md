@@ -9,13 +9,13 @@
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [SchedulerHost](interfaces/schedulerhost.md)
-* [VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)
+* [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
 
 ### Functions
 
 * [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
-* [createVirtualTimeSchedulerResource](README.md#const-createvirtualtimeschedulerresource)
+* [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
 
 ### Object literals
 
@@ -52,9 +52,9 @@ Name | Type |
 
 ___
 
-### `Const` createVirtualTimeSchedulerResource
+### `Const` createVirtualTimeScheduler
 
-▸ **createVirtualTimeSchedulerResource**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
 
 **Parameters:**
 
@@ -62,7 +62,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *[VirtualTimeSchedulerResourceLike](interfaces/virtualtimeschedulerresourcelike.md)*
+**Returns:** *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
 
 ## Object literals
 

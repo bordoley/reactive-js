@@ -727,9 +727,9 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeSchedulerResource
+▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeScheduler
 
-▸ (): *VirtualTimeSchedulerResourceLike*
+▸ (): *VirtualTimeSchedulerLike*
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
@@ -1678,9 +1678,9 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeSchedulerResource
+▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeScheduler
 
-▸ (): *VirtualTimeSchedulerResourceLike*
+▸ (): *VirtualTimeSchedulerLike*
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 

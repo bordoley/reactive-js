@@ -10,8 +10,11 @@ import {
 import { schedulerMixin } from "./schedulerMixin";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
-/** @noInheritDoc */
-export interface VirtualTimeSchedulerResourceLike
+/** 
+ * A scheduler that uses virtual clock to simulate time. Useful for testing.
+ * @noInheritDoc 
+ */
+export interface VirtualTimeSchedulerLike
   extends DisposableLike, 
     SchedulerLike,
     Iterator<void>,
@@ -41,7 +44,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-const step = (scheduler: VirtualTimeSchedulerResourceImpl): boolean => {
+const step = (scheduler: VirtualTimeSchedulerImpl): boolean => {
   const task = scheduler.taskQueue.pop();
 
   if (task !== undefined) {
@@ -59,8 +62,8 @@ const step = (scheduler: VirtualTimeSchedulerResourceImpl): boolean => {
   return scheduler.taskQueue.count > 0;
 };
 
-class VirtualTimeSchedulerResourceImpl
-  implements VirtualTimeSchedulerResourceLike {
+class VirtualTimeSchedulerImpl
+  implements VirtualTimeSchedulerLike {
   readonly add = disposableMixin.add;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = disposableMixin.dispose;
@@ -151,7 +154,7 @@ class VirtualTimeSchedulerResourceImpl
   }
 }
 
-export const createVirtualTimeSchedulerResource = (
+export const createVirtualTimeScheduler = (
   maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
-): VirtualTimeSchedulerResourceLike =>
-  new VirtualTimeSchedulerResourceImpl(maxMicroTaskTicks);
+): VirtualTimeSchedulerLike =>
+  new VirtualTimeSchedulerImpl(maxMicroTaskTicks);

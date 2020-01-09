@@ -14,7 +14,7 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
-import { createSchedulerWithPriority } from "@reactive-js/schedulers";
+import { createSchedulerWithPriority, PrioritySchedulerLike } from "@reactive-js/schedulers";
 import {
   createDisposable,
   DisposableLike,
@@ -75,14 +75,14 @@ const createCallback = (
   return callback;
 };
 
-const priorityScheduler = {
+const priorityScheduler: PrioritySchedulerLike = {
   get now(): number {
     return unstable_now();
   },
 
   schedule(
     continuation: SchedulerContinuationLike,
-    priority: number,
+    priority = unstable_NormalPriority,
   ): DisposableLike {
     const disposable = createSerialDisposable();
     const callback = createCallback(continuation, disposable, priority);
@@ -106,10 +106,7 @@ export const immediatePriority: SchedulerLike = createSchedulerWithPriority(
   unstable_ImmediatePriority,
 );
 
-export const normalPriority: SchedulerLike = createSchedulerWithPriority(
-  priorityScheduler,
-  unstable_NormalPriority,
-);
+export const normalPriority: SchedulerLike = priorityScheduler;
 
 export const lowPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
