@@ -14,21 +14,9 @@ A scheduler which schedules work according to it's priority.
 
 ## Index
 
-### Properties
-
-* [now](priorityschedulerlike.md#now)
-
 ### Methods
 
 * [schedule](priorityschedulerlike.md#schedule)
-
-## Properties
-
-###  now
-
-• **now**: *number*
-
-*Inherited from void*
 
 ## Methods
 
