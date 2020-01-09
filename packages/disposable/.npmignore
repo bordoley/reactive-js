@@ -1,0 +1,6 @@
+*.tsbuildinfo
+docs
+src
+test
+tsconfig.*
+typedoc.json
