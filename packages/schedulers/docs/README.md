@@ -68,7 +68,7 @@ Creates a new virtual time scheduler instance.
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER | The max number of times shouldYield should return true before returning false. Useful for testing cooperative multitasking.  |
+`maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER | The max number of times shouldYield should return false before returning true. Useful for testing cooperative multitasking.  |
 
 **Returns:** *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
 
