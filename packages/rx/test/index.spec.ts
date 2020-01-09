@@ -7,7 +7,7 @@ import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   schedulerMixin,
-  createVirtualTimeSchedulerResource,
+  createVirtualTimeScheduler,
 } from "@reactive-js/schedulers";
 import { AbstractSubscriber } from "../src/internal/subscriber";
 import {
@@ -136,7 +136,7 @@ test("combineLatest", () => {
       ],
       (a, b) => [a, b],
     ),
-    toArray(() => createVirtualTimeSchedulerResource(1)),
+    toArray(() => createVirtualTimeScheduler(1)),
     expect,
   ).toEqual([
     [3, 2],
@@ -253,7 +253,7 @@ describe("createObservable", () => {
       subscriber.notify(1);
     });
 
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const subscriber = new ThrowingSubscriber(scheduler);
     const onDispose = jest.fn();
     subscriber.add(error => onDispose(error));
@@ -266,7 +266,7 @@ describe("createObservable", () => {
 
 describe("createSubject", () => {
   test("when subject is completed", () => {
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const subject = createSubject(scheduler, 2);
 
     subject.notify(1);
@@ -289,7 +289,7 @@ describe("createSubject", () => {
   });
 
   test("when subject is not completed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
     subject.notify(1);
@@ -318,7 +318,7 @@ describe("createSubject", () => {
   });
 
   test("subscribe and dispose the subscription remove the observer", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
     subject.notify(1);
@@ -339,7 +339,7 @@ describe("createSubject", () => {
   });
 
   test("disposed subject ignores notifications", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
     const onDispose = jest.fn();
@@ -359,7 +359,7 @@ describe("createSubject", () => {
   });
 
   test("disposes subscriber if disposed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
     const subscriber = new MockSubscriber(scheduler);
 
@@ -467,7 +467,7 @@ describe("fromArray", () => {
 
   test("with delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6], { delay: 3 });
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const observer = createMockObserver();
 
     pipe(
@@ -499,14 +499,14 @@ describe("fromIterable", () => {
     const observable = fromIterable(src);
     pipe(
       observable,
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(() => createVirtualTimeScheduler(1)),
       expect,
     ).toEqual(src);
   });
 
   test("with delay", () => {
     const observable = fromIterable([1, 2, 3, 4, 5, 6], 3);
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const observer = createMockObserver();
 
     pipe(
@@ -537,7 +537,7 @@ describe("fromIterable", () => {
       },
     };
 
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const subscription = subscribe(scheduler)(fromIterable(mockIterable));
     subscription.dispose();
 
@@ -567,7 +567,7 @@ describe("fromPromise", () => {
 });
 
 test("fromScheduledValues", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
+  const scheduler = createVirtualTimeScheduler(1);
   const observer = createMockObserver();
   const observable = fromScheduledValues(
     [0, 1],
@@ -635,7 +635,7 @@ describe("generate", () => {
   });
 
   test("with delay", () => {
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const observer = createMockObserver();
 
     pipe(
@@ -660,7 +660,7 @@ describe("generate", () => {
   });
 
   test("with delay, generate throws", () => {
-    const scheduler = createVirtualTimeSchedulerResource(1);
+    const scheduler = createVirtualTimeScheduler(1);
     const observer = createMockObserver();
     const cause = new Error();
 
@@ -690,7 +690,7 @@ describe("generate", () => {
 });
 
 test("ignoreElements", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
+  const scheduler = createVirtualTimeScheduler(1);
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
@@ -703,7 +703,7 @@ test("ignoreElements", () => {
 });
 
 test("keep", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
+  const scheduler = createVirtualTimeScheduler(1);
   const observer = createMockObserver();
   const cause = new Error();
   const src = concat(fromArray([1, 2, 3]), throws(cause));
@@ -727,7 +727,7 @@ test("liftObserable", () => {
       onNotify: onNotify,
       onDispose: _ => {},
     });
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const result: number[] = [];
 
   const liftedObservable = pipe(
@@ -749,7 +749,7 @@ test("liftObserable", () => {
 });
 
 test("merge", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
+  const scheduler = createVirtualTimeScheduler(1);
   const observer = createMockObserver();
   const cause = new Error();
 
@@ -827,7 +827,7 @@ describe("ofValue", () => {
 });
 
 test("onDispose", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const observer = createMockObserver();
   const cb = jest.fn();
 
@@ -840,7 +840,7 @@ test("onDispose", () => {
 
 describe("onError", () => {
   test("when completed with error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const observer = createMockObserver();
     const cause = new Error();
     const cb = jest.fn();
@@ -853,7 +853,7 @@ describe("onError", () => {
   });
 
   test("when completed without error", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const observer = createMockObserver();
     const cb = jest.fn();
 
@@ -866,7 +866,7 @@ describe("onError", () => {
 });
 
 test("onNotify", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const observer = createMockObserver();
   const cb = jest.fn();
 
@@ -958,7 +958,7 @@ describe("scanAsync", () => {
 });
 
 test("share", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
 
   const replayed = pipe(
     concat(fromScheduledValues([0, 0], [0, 1], [0, 2]), empty(2)),
@@ -1064,7 +1064,7 @@ describe("throttle", () => {
       ),
       takeFirst(100),
       throttle(50, ThrottleMode.First),
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(() => createVirtualTimeScheduler(1)),
     );
 
     expect(result).toEqual([0, 49]);
@@ -1079,7 +1079,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(50, ThrottleMode.Last),
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(() => createVirtualTimeScheduler(1)),
     );
 
     expect(result).toEqual([49, 99, 149, 199]);
@@ -1094,7 +1094,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(75, ThrottleMode.Interval),
-      toArray(() => createVirtualTimeSchedulerResource(1)),
+      toArray(() => createVirtualTimeScheduler(1)),
     );
 
     expect(result).toEqual([0, 74, 149, 199]);
@@ -1103,7 +1103,7 @@ describe("throttle", () => {
 
 describe("throws", () => {
   test("completes with an exception when subscribed", () => {
-    const scheduler = createVirtualTimeSchedulerResource();
+    const scheduler = createVirtualTimeScheduler();
     const observer = createMockObserver();
     const cause = new Error();
 
@@ -1121,7 +1121,7 @@ describe("timeout", () => {
       pipe(
         ofValue(1, 2),
         timeout(1),
-        toArray(() => createVirtualTimeSchedulerResource(2)),
+        toArray(() => createVirtualTimeScheduler(2)),
       ),
     ).toThrow();
   });
@@ -1130,7 +1130,7 @@ describe("timeout", () => {
     const result = pipe(
       ofValue(1, 2),
       timeout(3),
-      toArray(() => createVirtualTimeSchedulerResource(2)),
+      toArray(() => createVirtualTimeScheduler(2)),
     );
     expect(result).toEqual([1]);
   });

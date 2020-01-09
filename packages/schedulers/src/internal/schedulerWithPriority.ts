@@ -20,6 +20,13 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
   }
 }
 
+/**
+ * Creates a scheduler instance that schedules work on the provided priority
+ * scheduler with the given priority.
+ * 
+ * @param priorityScheduler The underlying scheduler upon which to scheduler work.
+ * @param priority The priority to schedule work at.
+ */
 export const createSchedulerWithPriority = (
   priorityScheduler: PrioritySchedulerLike,
   priority: number,

@@ -5,8 +5,8 @@ import {
 } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
-  createVirtualTimeSchedulerResource,
-  VirtualTimeSchedulerResourceLike,
+  createVirtualTimeScheduler,
+  VirtualTimeSchedulerLike,
 } from "@reactive-js/schedulers";
 import {
   ObservableLike,
@@ -21,12 +21,12 @@ class VirtualTimeObservableEnumerator<T>
   implements EnumeratorLike<T>, SubscriberLike<T> {
   add = disposableMixin.add;
   current: any = undefined;
-  readonly disposable: VirtualTimeSchedulerResourceLike;
+  readonly disposable: VirtualTimeSchedulerLike;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
 
   constructor() {
-    this.disposable = createVirtualTimeSchedulerResource(1);
+    this.disposable = createVirtualTimeScheduler(1);
   }
 
   get isDisposed(): boolean {

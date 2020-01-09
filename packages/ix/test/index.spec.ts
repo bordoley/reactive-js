@@ -1,4 +1,4 @@
-import { createVirtualTimeSchedulerResource } from "@reactive-js/schedulers";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import { fromArray, fromIterable, generate, scanAsync } from "../src/index";
 import { pipe } from "@reactive-js/pipe";
 import {
@@ -11,7 +11,7 @@ import {
 import { ErrorLike } from "@reactive-js/disposable";
 
 test("fromArray", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const iter = fromArray([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
 
   const result: number[] = [];
@@ -30,7 +30,7 @@ test("fromArray", () => {
 });
 
 test("fromIterable", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const iter = fromIterable([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
 
   const result: number[] = [];
@@ -56,7 +56,7 @@ test("fromIterable", () => {
 });
 
 test("generate", () => {
-  const scheduler = createVirtualTimeSchedulerResource();
+  const scheduler = createVirtualTimeScheduler();
   const iter = generate(
     x => x + 1,
     () => 0,
@@ -78,7 +78,7 @@ test("generate", () => {
 });
 
 test("scanAsync", () => {
-  const scheduler = createVirtualTimeSchedulerResource(1);
+  const scheduler = createVirtualTimeScheduler(1);
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
   let result = 0;
