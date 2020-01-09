@@ -157,7 +157,7 @@ class VirtualTimeSchedulerImpl
 /**
  * Creates a new virtual time scheduler instance.
  * @param maxMicroTaskTicks The max number of times 
- * shouldYield should return true before returning false. Useful
+ * shouldYield should return false before returning true. Useful
  * for testing cooperative multitasking. 
  */
 export const createVirtualTimeScheduler = (
