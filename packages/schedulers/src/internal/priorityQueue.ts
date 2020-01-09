@@ -38,7 +38,7 @@ const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
       break;
     }
   }
-}
+};
 
 const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   const { values, compare } = queue;
@@ -55,7 +55,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
     values[parentIndex] = item;
     values[index] = parent;
   }
-}
+};
 
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   readonly values: Array<T> = [];

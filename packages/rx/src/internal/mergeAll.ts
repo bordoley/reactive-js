@@ -29,7 +29,7 @@ const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
       subscriber.delegate.dispose();
     }
   }
-}
+};
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ObservableLike<T>,

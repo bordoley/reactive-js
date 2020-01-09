@@ -56,7 +56,7 @@ const step = (scheduler: VirtualTimeSchedulerResourceImpl): boolean => {
   }
 
   return scheduler.taskQueue.count > 0;
-}
+};
 
 class VirtualTimeSchedulerResourceImpl
   implements VirtualTimeSchedulerResourceLike {
@@ -76,9 +76,9 @@ class VirtualTimeSchedulerResourceImpl
     );
   };
   private taskIDCount = 0;
-  readonly taskQueue: PriorityQueueLike<
-    VirtualTask
-  > = createPriorityQueue(comparator);
+  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
+    comparator,
+  );
 
   constructor(private readonly maxMicroTaskTicks: number) {}
 
@@ -97,7 +97,7 @@ class VirtualTimeSchedulerResourceImpl
   }
 
   run(shouldYield?: () => boolean): SchedulerContinuationLike | void {
-    if(this.isDisposed) {
+    if (this.isDisposed) {
       return;
     }
 
@@ -142,7 +142,7 @@ class VirtualTimeSchedulerResourceImpl
   }
 
   throw(cause?: unknown): IteratorResult<void> {
-    this.dispose({cause});
+    this.dispose({ cause });
     if (cause !== undefined) {
       throw cause;
     }

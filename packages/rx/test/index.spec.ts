@@ -278,7 +278,6 @@ describe("createSubject", () => {
     const onDispose = jest.fn();
     subscriber.add(e => onDispose(e));
 
-    debugger;
     subject.subscribe(subscriber);
 
     expect(subject.subscriberCount).toEqual(0);

@@ -9,10 +9,6 @@
 * [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
-### Type aliases
-
-* [DisposableOrTeardown](README.md#disposableorteardown)
-
 ### Variables
 
 * [disposed](README.md#const-disposed)
@@ -21,17 +17,10 @@
 
 * [createDisposable](README.md#const-createdisposable)
 * [createSerialDisposable](README.md#const-createserialdisposable)
-* [throwIfDisposed](README.md#const-throwifdisposed)
 
 ### Object literals
 
 * [disposableMixin](README.md#const-disposablemixin)
-
-## Type aliases
-
-###  DisposableOrTeardown
-
-Ƭ **DisposableOrTeardown**: *[DisposableLike](interfaces/disposablelike.md) | function*
 
 ## Variables
 
@@ -51,9 +40,9 @@ Creates an empty DisposableLike instance.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`onDispose?` | undefined &#124; function |
+Name | Type | Description |
+------ | ------ | ------ |
+`onDispose?` | undefined &#124; function | Optional teardown logic to attach to the newly created disposable.  |
 
 **Returns:** *[DisposableLike](interfaces/disposablelike.md)*
 
@@ -67,31 +56,17 @@ Creates a new SerialDisposableLike instance containing a disposed instance.
 
 **Returns:** *[SerialDisposableLike](interfaces/serialdisposablelike.md)*
 
-___
-
-### `Const` throwIfDisposed
-
-▸ **throwIfDisposed**(`disposable`: [DisposableLike](interfaces/disposablelike.md)): *void*
-
-Throws an exception if the given disposable is disposed.
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`disposable` | [DisposableLike](interfaces/disposablelike.md) |   |
-
-**Returns:** *void*
-
 ## Object literals
 
 ### `Const` disposableMixin
 
 ### ▪ **disposableMixin**: *object*
 
+Mixin functions that can be used to implement the DisposableLike interface
+
 ###  add
 
-▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableOrTeardown](README.md#disposableorteardown)): *This*
+▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableLike](interfaces/disposablelike.md) | function): *This*
 
 **Type parameters:**
 
@@ -102,7 +77,7 @@ Name | Type | Description |
 Name | Type |
 ------ | ------ |
 `this` | object & This |
-`disposable` | [DisposableOrTeardown](README.md#disposableorteardown) |
+`disposable` | [DisposableLike](interfaces/disposablelike.md) &#124; function |
 
 **Returns:** *This*
 

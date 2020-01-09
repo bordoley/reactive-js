@@ -23,8 +23,7 @@ class CreateObservable<T> implements ObservableLike<T> {
  * Factory for safely creating new ObservableLikes. The onSubscribe function
  * is called with an observer which may be notified from any context,
  * queueing notifications for notification on the underlying SubscriberLike's
- * scheduler. The onSubscribe function may return a DisposableOrTeardown instance
- * which will be disposed when the underlying subscription is disposed.
+ * scheduler.
  *
  * Note, implementations should not do significant blocking work in
  * the onSubscribe function.

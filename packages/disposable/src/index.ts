@@ -1,13 +1,13 @@
 /**
- * A wrapper around a caught error to handle wierd corner cases like
- * a function which throws undefined or a string.
+ * A wrapper around a caught exception to handle corner cases such 
+ * as a function which throws undefined or string.
  */
 export interface ErrorLike {
   /** The underlying cause of the error. */
   readonly cause: unknown;
 }
 
-export type DisposableOrTeardown =
+type DisposableOrTeardown =
   | DisposableLike
   | ((error?: ErrorLike) => void);
 
@@ -24,12 +24,13 @@ export interface DisposableLike {
    * Adds the given disposable to this container or disposes it if the container has been disposed.
    *
    * @param disposable
-   * @param disposables
    */
-  add(disposable: DisposableOrTeardown): this;
+  add(disposable: DisposableLike | ((error?: ErrorLike) => void)): this;
 
   /**
-   * Dispose the resource, the operation should be idempotent.
+   * Dispose the resource. The operation is idempotent.
+   * 
+   * @param error An optional error that to signal that the resource is being disposed due to an error.
    */
   dispose(error?: ErrorLike): void;
 }
@@ -54,21 +55,20 @@ class DisposableImpl implements DisposableLike {
   private error?: ErrorLike = undefined;
 
   add(disposable: DisposableOrTeardown) {
+    const disposables = this.disposables;
+
     if (this.isDisposed) {
       doDispose(disposable, this.error);
-    } else {
-      if (!this.disposables.includes(disposable)) {
-        this.disposables.push(disposable);
+    } else if (!disposables.includes(disposable)) {
+      disposables.push(disposable);
 
-        if (!(disposable instanceof Function)) {
-          disposable.add(() => {
-            const disposables = this.disposables;
-            const index = disposables.indexOf(disposable);
-            if (index > -1) {
-              disposables.splice(index, 1);
-            }
-          });
-        }
+      if (!(disposable instanceof Function)) {
+        disposable.add(() => {
+          const index = disposables.indexOf(disposable);
+          if (index > -1) {
+            disposables.splice(index, 1);
+          }
+        });
       }
     }
 
@@ -80,10 +80,11 @@ class DisposableImpl implements DisposableLike {
       this.isDisposed = true;
       this.error = error;
 
-      let disposable = this.disposables.shift();
+      const disposables = this.disposables;
+      let disposable = disposables.shift();
       while (disposable !== undefined) {
         doDispose(disposable, error);
-        disposable = this.disposables.shift();
+        disposable = disposables.shift();
       }
     }
   }
@@ -91,6 +92,8 @@ class DisposableImpl implements DisposableLike {
 
 /**
  * Creates an empty DisposableLike instance.
+ * 
+ * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
 export const createDisposable = (
   onDispose?: (error?: ErrorLike) => void,
@@ -103,10 +106,8 @@ export const createDisposable = (
 };
 
 const _disposed: DisposableLike = {
-  add(...disposables: DisposableOrTeardown[]) {
-    for (const d of disposables) {
-      doDispose(d);
-    }
+  add(disposable: DisposableOrTeardown) {
+    doDispose(disposable);
     return _disposed;
   },
   isDisposed: true,
@@ -118,10 +119,11 @@ const _disposed: DisposableLike = {
  */
 export const disposed: DisposableLike = _disposed;
 
+/** Mixin functions that can be used to implement the DisposableLike interface */
 export const disposableMixin = {
   add<This extends DisposableLike>(
     this: { disposable: DisposableLike } & This,
-    disposable: DisposableOrTeardown,
+    disposable: DisposableLike | ((error?: ErrorLike) => void),
   ): This {
     this.disposable.add(disposable);
     return this;

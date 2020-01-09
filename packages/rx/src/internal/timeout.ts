@@ -25,7 +25,7 @@ const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
     observe(subscriber),
     subscribe(subscriber),
   );
-}
+};
 
 class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {

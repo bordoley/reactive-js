@@ -149,7 +149,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
   produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
     const enumerators = this.enumerators;
     const selector = this.selector;
-    const subscriber = this.subscriber as SubscriberLike<T>;
+    const subscriber = this.subscriber;
 
     if (shouldYield !== undefined) {
       while (shouldEmit(enumerators) && !subscriber.isDisposed) {
