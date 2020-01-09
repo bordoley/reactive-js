@@ -14,7 +14,10 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
-import { createSchedulerWithPriority, PrioritySchedulerLike } from "@reactive-js/schedulers";
+import {
+  createSchedulerWithPriority,
+  PrioritySchedulerLike,
+} from "@reactive-js/schedulers";
 import {
   createDisposable,
   DisposableLike,

@@ -1,3 +1,4 @@
+/** A Unary function that transforms a value of type A into a value of type B */
 export interface OperatorLike<A, B> {
   (src: A): B;
 }
@@ -71,6 +72,10 @@ export function pipe<T, A, B, C, D, E, F, G, H, I>(
   op8: OperatorLike<G, H>,
   op9: OperatorLike<H, I>,
 ): I;
+
+/**
+ * Pipes the source value through a series of unary functions.
+ */
 export function pipe(
   source: unknown,
   ...operators: Array<OperatorLike<unknown, unknown>>

@@ -9,15 +9,15 @@ import {
 } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
-/** 
+/**
  * A scheduler that uses a virtual clock to simulate time. Useful for testing.
- * 
+ *
  * Note: VirtualTimeSchedulerLike implements the same EnumeratorLike protocol
  * defined in the @reactive-js/rx package.
- * @noInheritDoc 
+ * @noInheritDoc
  */
 export interface VirtualTimeSchedulerLike
-  extends DisposableLike, 
+  extends DisposableLike,
     SchedulerLike,
     SchedulerContinuationLike {
   /** The current value of the enumerator. Always undefined. */
@@ -31,7 +31,7 @@ export interface VirtualTimeSchedulerLike
 }
 
 interface VirtualTask {
-  continuation: SchedulerContinuationLike,
+  continuation: SchedulerContinuationLike;
   readonly disposable: DisposableLike;
   dueTime: number;
   id: number;
@@ -44,8 +44,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl
-  implements VirtualTimeSchedulerLike {
+class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   readonly add = disposableMixin.add;
   readonly current = undefined;
   readonly disposable: DisposableLike = createDisposable();
@@ -63,16 +62,16 @@ class VirtualTimeSchedulerImpl
     );
   };
   private taskIDCount = 0;
-  private readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
-    comparator,
-  );
+  private readonly taskQueue: PriorityQueueLike<
+    VirtualTask
+  > = createPriorityQueue(comparator);
 
   constructor(private readonly maxMicroTaskTicks: number) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
   }
-  
+
   moveNext() {
     this.hasCurrent = false;
     const task = this.taskQueue.pop();
@@ -80,28 +79,26 @@ class VirtualTimeSchedulerImpl
     if (task !== undefined) {
       this.hasCurrent = true;
       const { dueTime, continuation, disposable } = task;
-  
+
       this.now = dueTime;
       this.microTaskTicks = 0;
-  
+
       if (!disposable.isDisposed) {
         const result = continuation.run(this.shouldYield) || undefined;
         if (result !== undefined) {
           const { delay = 0 } = result;
-  
+
           // This is to maintain consistency with the other
           // scheduler implementation which always explicitly reschedule
           // using the schedule function.
-          task.id = this.taskIDCount++,
-          task.continuation = result;
-          task.dueTime = dueTime + delay,
-          this.taskQueue.push(task);
+          (task.id = this.taskIDCount++), (task.continuation = result);
+          (task.dueTime = dueTime + delay), this.taskQueue.push(task);
         } else {
           disposable.dispose();
         }
       }
     }
-  
+
     return this.hasCurrent;
   }
 
@@ -148,16 +145,15 @@ class VirtualTimeSchedulerImpl
 
     this.add(disposable);
     return disposable;
-  };
+  }
 }
 
 /**
  * Creates a new virtual time scheduler instance.
- * @param maxMicroTaskTicks The max number of times 
+ * @param maxMicroTaskTicks The max number of times
  * shouldYield should return false before returning true. Useful
- * for testing cooperative multitasking. 
+ * for testing cooperative multitasking.
  */
 export const createVirtualTimeScheduler = (
   maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
-): VirtualTimeSchedulerLike =>
-  new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
