@@ -4,7 +4,7 @@ import {
   disposableMixin,
 } from "@reactive-js/disposable";
 import {
-  SchedulerResourceLike,
+  SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
 import { schedulerMixin } from "./schedulerMixin";
@@ -12,7 +12,8 @@ import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** @noInheritDoc */
 export interface VirtualTimeSchedulerResourceLike
-  extends SchedulerResourceLike,
+  extends DisposableLike, 
+    SchedulerLike,
     Iterator<void>,
     SchedulerContinuationLike {}
 

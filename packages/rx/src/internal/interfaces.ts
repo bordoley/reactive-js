@@ -1,5 +1,5 @@
 import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
-import { SchedulerResourceLike } from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
  * An observer of push-based notifications.
@@ -29,7 +29,7 @@ export interface ObserverLike<T> {
  *
  * @noInheritDoc
  */
-export interface SubscriberLike<T> extends SchedulerResourceLike {
+export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
   notify(next: T): void;
 }
 

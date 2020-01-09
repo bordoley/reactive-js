@@ -8,8 +8,6 @@ An object that schedules units of work on a runloop.
 
 * **SchedulerLike**
 
-  ↳ [SchedulerResourceLike](schedulerresourcelike.md)
-
 ## Index
 
 ### Properties
@@ -34,12 +32,12 @@ The scheduler's current time in ms.
 
 ▸ **schedule**(`continuation`: [SchedulerContinuationLike](schedulercontinuationlike.md)): *DisposableLike*
 
-Schedules a continuation to be execute on the scheduler.
+Schedules a continuation to be executed on the scheduler.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`continuation` | [SchedulerContinuationLike](schedulercontinuationlike.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`continuation` | [SchedulerContinuationLike](schedulercontinuationlike.md) | The SchedulerContinuation to be executed.  |
 
 **Returns:** *DisposableLike*

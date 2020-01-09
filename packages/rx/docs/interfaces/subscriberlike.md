@@ -14,7 +14,9 @@ executing on the subscriber's scheduler.
 
 ## Hierarchy
 
-* SchedulerResourceLike
+* DisposableLike
+
+* SchedulerLike
 
   ↳ **SubscriberLike**
 

@@ -10,7 +10,9 @@
 
 ## Hierarchy
 
-* SchedulerResourceLike
+* DisposableLike
+
+* SchedulerLike
 
 * Iterator‹void›
 
