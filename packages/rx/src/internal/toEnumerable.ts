@@ -51,13 +51,12 @@ class VirtualTimeObservableEnumerator<T>
     this.hasCurrent = false;
     this.current = undefined;
 
-    let done = false;
     while (!this.hasCurrent) {
       if (this.isDisposed) {
         return false;
       }
 
-      done = this.disposable.next().done || false;
+      const done = !this.disposable.moveNext();
 
       const error = this.error;
       if (error !== undefined) {

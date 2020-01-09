@@ -7,32 +7,32 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
-import { schedulerMixin } from "./schedulerMixin";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** 
- * A scheduler that uses virtual clock to simulate time. Useful for testing.
+ * A scheduler that uses a virtual clock to simulate time. Useful for testing.
+ * 
+ * Note: VirtualTimeSchedulerLike implements the same EnumeratorLike protocol
+ * defined in the @reactive-js/rx package.
  * @noInheritDoc 
  */
 export interface VirtualTimeSchedulerLike
   extends DisposableLike, 
     SchedulerLike,
-    Iterator<void>,
-    SchedulerContinuationLike {}
+    SchedulerContinuationLike {
+  /** The current value of the enumerator. Always undefined. */
+  readonly current: undefined;
 
-const iteratorYield = {
-  done: false,
-  value: undefined,
-};
+  /** Whether the enumerator has a current value. */
+  readonly hasCurrent: boolean;
 
-const iteratorDone = {
-  done: true,
-  value: undefined,
-};
+  /** Advances the enumerator to the next element. */
+  moveNext(): boolean;
+}
 
 interface VirtualTask {
-  callback: () => void;
-  disposable: DisposableLike;
+  continuation: SchedulerContinuationLike,
+  readonly disposable: DisposableLike;
   dueTime: number;
   id: number;
 }
@@ -44,34 +44,17 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-const step = (scheduler: VirtualTimeSchedulerImpl): boolean => {
-  const task = scheduler.taskQueue.pop();
-
-  if (task !== undefined) {
-    const { dueTime, callback, disposable } = task;
-
-    scheduler.now = dueTime;
-    scheduler.microTaskTicks = 0;
-
-    if (!disposable.isDisposed) {
-      callback();
-      disposable.dispose();
-    }
-  }
-
-  return scheduler.taskQueue.count > 0;
-};
-
 class VirtualTimeSchedulerImpl
   implements VirtualTimeSchedulerLike {
   readonly add = disposableMixin.add;
+  readonly current = undefined;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = disposableMixin.dispose;
-  microTaskTicks = 0;
+  hasCurrent = false;
+  private microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
-  readonly schedule = schedulerMixin.schedule;
-  shouldYield: (() => boolean) | undefined = () => {
+  private shouldYield: (() => boolean) | undefined = () => {
     const runShouldYield = this.runShouldYield;
     this.microTaskTicks++;
     return (
@@ -80,7 +63,7 @@ class VirtualTimeSchedulerImpl
     );
   };
   private taskIDCount = 0;
-  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
+  private readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
     comparator,
   );
 
@@ -89,15 +72,37 @@ class VirtualTimeSchedulerImpl
   get isDisposed() {
     return this.disposable.isDisposed;
   }
+  
+  moveNext() {
+    this.hasCurrent = false;
+    const task = this.taskQueue.pop();
 
-  next(): IteratorResult<void> {
-    const hasMore = !this.isDisposed && step(this);
-    return hasMore ? iteratorYield : iteratorDone;
-  }
-
-  return(): IteratorResult<void> {
-    this.dispose();
-    return iteratorDone;
+    if (task !== undefined) {
+      this.hasCurrent = true;
+      const { dueTime, continuation, disposable } = task;
+  
+      this.now = dueTime;
+      this.microTaskTicks = 0;
+  
+      if (!disposable.isDisposed) {
+        const result = continuation.run(this.shouldYield) || undefined;
+        if (result !== undefined) {
+          const { delay = 0 } = result;
+  
+          // This is to maintain consistency with the other
+          // scheduler implementation which always explicitly reschedule
+          // using the schedule function.
+          task.id = this.taskIDCount++,
+          task.continuation = result;
+          task.dueTime = dueTime + delay,
+          this.taskQueue.push(task);
+        } else {
+          disposable.dispose();
+        }
+      }
+    }
+  
+    return this.hasCurrent;
   }
 
   run(shouldYield?: () => boolean): SchedulerContinuationLike | void {
@@ -114,7 +119,7 @@ class VirtualTimeSchedulerImpl
 
     if (shouldYield !== undefined) {
       this.runShouldYield = shouldYield;
-      while (step(this)) {
+      while (this.moveNext()) {
         if (shouldYield()) {
           this.runShouldYield = undefined;
           return this;
@@ -124,34 +129,26 @@ class VirtualTimeSchedulerImpl
       this.runShouldYield = undefined;
     } else {
       // eslint-disable-next-line no-empty
-      while (step(this)) {}
+      while (this.moveNext()) {}
     }
 
     this.dispose();
     return;
   }
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  schedule(continuation: SchedulerContinuationLike): DisposableLike {
     const disposable = createDisposable();
     const work: VirtualTask = {
       id: this.taskIDCount++,
-      dueTime: this.now + delay,
-      callback,
+      dueTime: this.now + (continuation.delay ?? 0),
+      continuation,
       disposable,
     };
     this.taskQueue.push(work);
 
     this.add(disposable);
     return disposable;
-  }
-
-  throw(cause?: unknown): IteratorResult<void> {
-    this.dispose({ cause });
-    if (cause !== undefined) {
-      throw cause;
-    }
-    return iteratorDone;
-  }
+  };
 }
 
 /**
