@@ -14,23 +14,13 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 
 ### Properties
 
-* [now](schedulerhost.md#now)
 * [shouldYield](schedulerhost.md#shouldyield)
 
 ### Methods
 
-* [schedule](schedulerhost.md#schedule)
 * [scheduleCallback](schedulerhost.md#schedulecallback)
 
 ## Properties
-
-###  now
-
-• **now**: *number*
-
-*Inherited from void*
-
-___
 
 ###  shouldYield
 
@@ -39,22 +29,6 @@ ___
 Platform specific shouldYield function passed to continuations when they are run.
 
 ## Methods
-
-###  schedule
-
-▸ **schedule**(`continuation`: SchedulerContinuationLike): *DisposableLike*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`continuation` | SchedulerContinuationLike |
-
-**Returns:** *DisposableLike*
-
-___
 
 ###  scheduleCallback
 
