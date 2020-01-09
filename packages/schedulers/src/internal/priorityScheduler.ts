@@ -11,10 +11,10 @@ import {
 } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
-/** 
+/**
  * A scheduler which schedules work according to it's priority.
- * 
- * @noInheritDoc 
+ *
+ * @noInheritDoc
  */
 export interface PrioritySchedulerLike extends SchedulerLike {
   /**
@@ -23,7 +23,7 @@ export interface PrioritySchedulerLike extends SchedulerLike {
    * @param continuation The SchedulerContinuation to be executed.
    * @param priority An optional priority that is used when prioritizing which work
    * to execute next. The definition of the priority value along with it's default
-   * value is implementation specific. 
+   * value is implementation specific.
    */
   schedule(
     continuation: SchedulerContinuationLike,
@@ -31,10 +31,10 @@ export interface PrioritySchedulerLike extends SchedulerLike {
   ): DisposableLike;
 }
 
-/** 
+/**
  * A priority scheduler which is also an unmanaged resource.
- * 
- * @noInheritDoc 
+ *
+ * @noInheritDoc
  * */
 export interface PrioritySchedulerResourceLike
   extends PrioritySchedulerLike,
@@ -192,11 +192,10 @@ class PrioritySchedulerResourceImpl
   }
 }
 
-
-/** 
+/**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
- * 
+ *
  * @param hostScheduler The underlying platform scheduler used by the priority
  * scheduler to schedule work.
  */

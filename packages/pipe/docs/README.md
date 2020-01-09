@@ -18,6 +18,8 @@
 
 ▸ **pipe**<**T**, **A**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›): *A*
 
+Pipes the source value through a series of unary functions.
+
 **Type parameters:**
 
 ▪ **T**
@@ -34,6 +36,8 @@ Name | Type |
 **Returns:** *A*
 
 ▸ **pipe**<**T**, **A**, **B**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›): *B*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -54,6 +58,8 @@ Name | Type |
 **Returns:** *B*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›): *C*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -77,6 +83,8 @@ Name | Type |
 **Returns:** *C*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›): *D*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -103,6 +111,8 @@ Name | Type |
 **Returns:** *D*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›): *E*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -132,6 +142,8 @@ Name | Type |
 **Returns:** *E*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›): *F*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -164,6 +176,8 @@ Name | Type |
 **Returns:** *F*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›): *G*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -199,6 +213,8 @@ Name | Type |
 **Returns:** *G*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›): *H*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 
@@ -237,6 +253,8 @@ Name | Type |
 **Returns:** *H*
 
 ▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›): *I*
+
+Pipes the source value through a series of unary functions.
 
 **Type parameters:**
 

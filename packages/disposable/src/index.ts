@@ -1,5 +1,5 @@
 /**
- * A wrapper around a caught exception to handle corner cases such 
+ * A wrapper around a caught exception to handle corner cases such
  * as a function which throws undefined or string.
  */
 export interface ErrorLike {
@@ -7,9 +7,7 @@ export interface ErrorLike {
   readonly cause: unknown;
 }
 
-type DisposableOrTeardown =
-  | DisposableLike
-  | ((error?: ErrorLike) => void);
+type DisposableOrTeardown = DisposableLike | ((error?: ErrorLike) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -29,7 +27,7 @@ export interface DisposableLike {
 
   /**
    * Dispose the resource. The operation is idempotent.
-   * 
+   *
    * @param error An optional error that to signal that the resource is being disposed due to an error.
    */
   dispose(error?: ErrorLike): void;
@@ -92,7 +90,7 @@ class DisposableImpl implements DisposableLike {
 
 /**
  * Creates an empty DisposableLike instance.
- * 
+ *
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
 export const createDisposable = (
