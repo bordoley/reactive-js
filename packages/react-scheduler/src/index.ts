@@ -99,23 +99,28 @@ const priorityScheduler: PrioritySchedulerLike = {
   },
 };
 
+/** Scheduler that schedules work on React's internal priority scheduler with idle priority. */
 export const idlePriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_IdlePriority,
 );
 
+/** Scheduler that schedules work on React's internal priority scheduler with immediate priority. */
 export const immediatePriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_ImmediatePriority,
 );
 
+/** Scheduler that schedules work on React's internal priority scheduler with normal priority. */
 export const normalPriority: SchedulerLike = priorityScheduler;
 
+/** Scheduler that schedules work on React's internal priority scheduler with low priority. */
 export const lowPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_LowPriority,
 );
 
+/** Scheduler that schedules work on React's internal priority scheduler with user blocking priority. */
 export const userBlockingPriority: SchedulerLike = createSchedulerWithPriority(
   priorityScheduler,
   unstable_UserBlockingPriority,
