@@ -8,7 +8,11 @@ import {
   SchedulerLike,
 } from "@reactive-js/scheduler";
 
-/** Interface used by Scheduler implementations using the 'schedulerMixin' functions */
+/** 
+ * Interface used by Scheduler implementations using the 'schedulerMixin' functions 
+ * 
+ * @noInheritDoc 
+ */
 export interface SchedulerHost extends SchedulerLike {
   /** Platform specific shouldYield function passed to continuations when they are run.*/
   readonly shouldYield: (() => boolean) | undefined;
