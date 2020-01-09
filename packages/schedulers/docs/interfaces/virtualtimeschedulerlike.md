@@ -2,6 +2,8 @@
 
 # Interface: VirtualTimeSchedulerLike <**TReturn, TNext**>
 
+A scheduler that uses virtual clock to simulate time. Useful for testing.
+
 ## Type parameters
 
 ▪ **TReturn**

@@ -13,7 +13,7 @@
 
 ### Functions
 
-* [createPrioritySchedulerResource](README.md#const-createpriorityschedulerresource)
+* [createPriorityScheduler](README.md#const-createpriorityscheduler)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
 
@@ -23,15 +23,18 @@
 
 ## Functions
 
-### `Const` createPrioritySchedulerResource
+### `Const` createPriorityScheduler
 
-▸ **createPrioritySchedulerResource**(`hostScheduler`: SchedulerLike): *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
+▸ **createPriorityScheduler**(`hostScheduler`: SchedulerLike): *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
+
+Creates a new priority scheduler which schedules work using the provided
+host scheduler.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`hostScheduler` | SchedulerLike |
+Name | Type | Description |
+------ | ------ | ------ |
+`hostScheduler` | SchedulerLike | The underlying platform scheduler used by the priority scheduler to schedule work.  |
 
 **Returns:** *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
 
@@ -41,12 +44,15 @@ ___
 
 ▸ **createSchedulerWithPriority**(`priorityScheduler`: [PrioritySchedulerLike](interfaces/priorityschedulerlike.md), `priority`: number): *SchedulerLike*
 
+Creates a scheduler instance that schedules work on the provided priority
+scheduler with the given priority.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`priorityScheduler` | [PrioritySchedulerLike](interfaces/priorityschedulerlike.md) |
-`priority` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`priorityScheduler` | [PrioritySchedulerLike](interfaces/priorityschedulerlike.md) | The underlying scheduler upon which to scheduler work. |
+`priority` | number | The priority to schedule work at.  |
 
 **Returns:** *SchedulerLike*
 
@@ -69,6 +75,8 @@ Name | Type | Default |
 ### `Const` schedulerMixin
 
 ### ▪ **schedulerMixin**: *object*
+
+Mixin functions that can be used to implement the SchedulerLike interface
 
 ###  schedule
 

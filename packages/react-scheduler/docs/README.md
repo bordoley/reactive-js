@@ -43,10 +43,7 @@ ___
 
 ### `Const` normalPriority
 
-• **normalPriority**: *SchedulerLike* =  createSchedulerWithPriority(
-  priorityScheduler,
-  unstable_NormalPriority,
-)
+• **normalPriority**: *SchedulerLike* =  priorityScheduler
 
 ___
 
