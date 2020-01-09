@@ -13,6 +13,8 @@ import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 /** 
  * A scheduler which schedules work according to it's priority.
+ * 
+ * @noInheritDoc 
  */
 export interface PrioritySchedulerLike extends SchedulerLike {
   /**
