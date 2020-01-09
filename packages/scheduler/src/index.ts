@@ -1,13 +1,24 @@
 import { DisposableLike } from "@reactive-js/disposable";
 
 /**
- * A unit of work which executes on a scheduler. Implementations should
- * periodically check whether they should yield, and return
- * a SchedulerContinuationResult if there is additional
- * work to be performed.
+ * A unit of work to be executed by a scheduler.
  */
 export interface SchedulerContinuationLike {
+  /** 
+   * An optional delay in ms that the scheduler should wait
+   * before invoking the continuation's `run` function.
+   */
   readonly delay?: number;
+
+  /**
+   * Work function to be invoked by the scheduler after the specified delay.
+   * May return either a continuation to be scheduled in the future 
+   * or void if the work is done.
+   * 
+   * @param shouldYield An optional function that should be periodically checked 
+   * when defined. If `shouldYield` returns true the continuation should return, 
+   * yielding control back to the scheduler.
+   */
   run(shouldYield?: () => boolean): SchedulerContinuationLike | void;
 }
 
@@ -19,16 +30,9 @@ export interface SchedulerLike {
   readonly now: number;
 
   /**
-   * Schedules a continuation to be execute on the scheduler.
+   * Schedules a continuation to be executed on the scheduler.
    *
-   * @param continuation
-   * @param delay The delay in ms after which to execute the continuation.
+   * @param continuation The SchedulerContinuation to be executed.
    */
   schedule(continuation: SchedulerContinuationLike): DisposableLike;
 }
-
-/**
- * A SchedulerLike instance that is also a DisposableLike resource.
- * @noInheritDoc
- */
-export interface SchedulerResourceLike extends SchedulerLike, DisposableLike {}

@@ -2,10 +2,7 @@
 
 # Interface: SchedulerContinuationLike
 
-A unit of work which executes on a scheduler. Implementations should
-periodically check whether they should yield, and return
-a SchedulerContinuationResult if there is additional
-work to be performed.
+A unit of work to be executed by a scheduler.
 
 ## Hierarchy
 
@@ -27,16 +24,23 @@ work to be performed.
 
 • **delay**? : *undefined | number*
 
+An optional delay in ms that the scheduler should wait
+before invoking the continuation's `run` function.
+
 ## Methods
 
 ###  run
 
 ▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
 
+Work function to be invoked by the scheduler after the specified delay.
+May return either a continuation to be scheduled in the future
+or void if the work is done.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`shouldYield?` | undefined &#124; function |
+Name | Type | Description |
+------ | ------ | ------ |
+`shouldYield?` | undefined &#124; function | An optional function that should be periodically checked when defined. If `shouldYield` returns true the continuation should return, yielding control back to the scheduler.  |
 
 **Returns:** *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
