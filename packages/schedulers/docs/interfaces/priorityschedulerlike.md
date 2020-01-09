@@ -2,9 +2,13 @@
 
 # Interface: PrioritySchedulerLike
 
+A scheduler which schedules work according to it's priority.
+
 ## Hierarchy
 
-* **PrioritySchedulerLike**
+* SchedulerLike
+
+  ↳ **PrioritySchedulerLike**
 
   ↳ [PrioritySchedulerResourceLike](priorityschedulerresourcelike.md)
 
@@ -24,17 +28,23 @@
 
 • **now**: *number*
 
+*Inherited from void*
+
 ## Methods
 
 ###  schedule
 
-▸ **schedule**(`continuation`: SchedulerContinuationLike, `priority`: number): *DisposableLike*
+▸ **schedule**(`continuation`: SchedulerContinuationLike, `priority?`: undefined | number): *DisposableLike*
+
+*Overrides void*
+
+Schedules a continuation to be executed on the scheduler.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`continuation` | SchedulerContinuationLike |
-`priority` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`continuation` | SchedulerContinuationLike | The SchedulerContinuation to be executed. |
+`priority?` | undefined &#124; number | An optional priority that is used when prioritizing which work to execute next. The definition of the priority value along with it's default value is implementation specific.  |
 
 **Returns:** *DisposableLike*
