@@ -74,7 +74,7 @@ export function fromIterator<T>(
 ): ObservableLike<T>;
 export function fromIterator<T>(
   iterator: Iterator<T>,
-  delay: number = 0,
+  delay = 0,
 ): ObservableLike<T> {
   return delay > 0
     ? new FromIteratorObservable(iterator, delay)

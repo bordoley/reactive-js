@@ -1,8 +1,8 @@
 
 # Interface: ErrorLike
 
-A wrapper around a caught error to handle wierd corner cases like
-a function which throws undefined or a string.
+A wrapper around a caught exception to handle corner cases such
+as a function which throws undefined or string.
 
 ## Hierarchy
 
@@ -19,3 +19,5 @@ a function which throws undefined or a string.
 ###  cause
 
 • **cause**: *unknown*
+
+The underlying cause of the error.

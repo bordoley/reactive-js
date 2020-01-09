@@ -8,7 +8,7 @@ const scheduleDrainQueue = <T>(subscriber: SafeSubscriber<T>) => {
   if (subscriber.remainingEvents === 1) {
     subscriber.delegate.schedule(subscriber);
   }
-}
+};
 
 class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private error: ErrorLike | undefined;

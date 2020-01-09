@@ -10,6 +10,10 @@ export const subscribeOn = <T>(
 ): ObservableOperatorLike<T, T> => observable =>
   createObservable(subscriber => {
     subscriber.add(
-      pipe(observable, onNotify(next => subscriber.notify(next)), subscribe(scheduler))
+      pipe(
+        observable,
+        onNotify(next => subscriber.notify(next)),
+        subscribe(scheduler),
+      ),
     );
   });

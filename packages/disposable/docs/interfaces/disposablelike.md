@@ -32,15 +32,15 @@ Returns true if this resource has been disposed.
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableOrTeardown](../README.md#disposableorteardown)): *this*
+▸ **add**(`disposable`: [DisposableLike](disposablelike.md) | function): *this*
 
-Adds the given disposables to this container or disposes them if the container has been disposed.
+Adds the given disposable to this container or disposes it if the container has been disposed.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`disposable` | [DisposableOrTeardown](../README.md#disposableorteardown) |
+Name | Type | Description |
+------ | ------ | ------ |
+`disposable` | [DisposableLike](disposablelike.md) &#124; function |   |
 
 **Returns:** *this*
 
@@ -50,12 +50,12 @@ ___
 
 ▸ **dispose**(`error?`: [ErrorLike](errorlike.md)): *void*
 
-Dispose the resource, the operation should be idempotent.
+Dispose the resource. The operation is idempotent.
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`error?` | [ErrorLike](errorlike.md) |
+Name | Type | Description |
+------ | ------ | ------ |
+`error?` | [ErrorLike](errorlike.md) | An optional error that to signal that the resource is being disposed due to an error.  |
 
 **Returns:** *void*
