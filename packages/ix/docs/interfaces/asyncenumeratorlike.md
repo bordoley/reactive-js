@@ -20,13 +20,13 @@
 
 ### Methods
 
-* [notify](asyncenumeratorlike.md#notify)
+* [notifySafe](asyncenumeratorlike.md#notifysafe)
 
 ## Methods
 
-###  notify
+###  notifySafe
 
-▸ **notify**(`req`: TReq): *void*
+▸ **notifySafe**(`req`: TReq): *void*
 
 **Parameters:**
 

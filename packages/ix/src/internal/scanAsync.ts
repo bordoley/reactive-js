@@ -45,7 +45,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
 
     const eventEmitter = pipe(
       identity<ReduceRequestLike<TReq, TAcc>>(),
-      lift(onNotify(({ request }) => resource.notify(request))),
+      lift(onNotify(({ request }) => resource.notifySafe(request))),
     ).enumerateAsync(scheduler);
 
     return [resource, eventEmitter];
@@ -72,7 +72,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
         ),
         ofValue(initial()),
       ),
-      onNotify(next => eventEmitter.notify(next)),
+      onNotify(next => eventEmitter.notifySafe(next)),
       map(({ result }) => result),
     );
 

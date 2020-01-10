@@ -6,6 +6,7 @@ export {
   ObserverLike,
   ObservableLike,
   ObservableOperatorLike,
+  SafeSubscriberLike,
   SubjectLike,
   SubscriberLike,
   SubscriberOperatorLike,
@@ -68,3 +69,4 @@ export { toArray } from "./internal/toArray";
 export { toEnumerable } from "./internal/toEnumerable";
 export { toValue } from "./internal/toValue";
 export { toPromise } from "./internal/toPromise";
+export { toSafeSubscriber } from "./internal/toSafeSubscriber";

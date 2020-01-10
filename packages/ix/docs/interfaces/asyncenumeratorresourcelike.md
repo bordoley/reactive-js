@@ -12,7 +12,7 @@
 
   ↳ [AsyncEnumeratorLike](asyncenumeratorlike.md)‹TReq, T›
 
-* SubscriberLike‹TReq›
+* SafeSubscriberLike‹TReq›
 
 * MulticastObservableLike‹T›
 

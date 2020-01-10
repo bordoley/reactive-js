@@ -23,7 +23,7 @@ class LiftedAsyncEnumeratorResourceImpl<TReq, T>
   readonly dispose = disposableMixin.dispose;
 
   constructor(
-    readonly notify: (req: TReq) => void,
+    readonly notifySafe: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
     readonly disposable: DisposableLike,
     readonly scheduler: SchedulerLike,
@@ -73,8 +73,8 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
 
     const notify: (req: any) => void =
       enumerator instanceof LiftedAsyncEnumeratorResourceImpl
-        ? enumerator.notify
-        : (req: any) => enumerator.notify(req);
+        ? enumerator.notifySafe
+        : (req: any) => enumerator.notifySafe(req);
     const liftedNotify = this.reqOperators.reduce(
       (acc, next) => next(acc),
       notify,

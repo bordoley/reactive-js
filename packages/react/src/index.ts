@@ -82,7 +82,7 @@ export const useAsyncEnumerator = <TReq, T>(
   enumerator: AsyncEnumeratorLike<TReq, T>,
   scheduler?: SchedulerLike,
 ): [T | undefined, (req: TReq) => void] => {
-  const notify = useCallback(req => enumerator.notify(req), [enumerator]);
+  const notify = useCallback(req => enumerator.notifySafe(req), [enumerator]);
   const value = useObservable(enumerator, scheduler);
   return [value, notify];
 };

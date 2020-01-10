@@ -65,7 +65,6 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
   }
 }
 
-/** @ignore */
 export const toSafeSubscriber = <T>(
   subscriber: SubscriberLike<T>,
 ): SafeSubscriberLike<T> => new SafeSubscriberImpl(subscriber);
