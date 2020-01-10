@@ -28,6 +28,12 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   }
 }
 
+/**
+ * Returns an observable that emits a single true value if the predicate is satisfied for
+ * every value produced, or if the observable is empty, otherwise false.
+ *
+ * @param predicate The predicate function.
+ */
 export const every = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperatorLike<T, boolean> => {
@@ -36,6 +42,12 @@ export const every = <T>(
   return lift(new SubscriberOperator(true, call));
 };
 
+/**
+ * Returns an observable that emits a single true value if the predicate does not satisfy
+ * every value produced, or if the observable is empty, otherwise false.
+ *
+ * @param predicate The predicate function.
+ */
 export const none = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperatorLike<T, boolean> => every(next => !predicate(next));

@@ -251,7 +251,7 @@ describe("createObservable", () => {
     }
 
     const observable = createObservable(subscriber => {
-      subscriber.notify(1);
+      subscriber.notifySafe(1);
     });
 
     const scheduler = createVirtualTimeScheduler();
@@ -733,7 +733,7 @@ test("liftObserable", () => {
 
   const liftedObservable = pipe(
     createObservable(subscriber => {
-      subscriber.notify(1);
+      subscriber.notifySafe(1);
       return disposed;
     }),
     onNotify(_ => result.push(1)),

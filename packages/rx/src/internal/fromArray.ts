@@ -80,12 +80,27 @@ class FromArrayEnumerable<T> extends FromArrayObservable<T>
   }
 }
 
+/**
+ * Creates an `EnumerableLike` from the given array, starting at the `startIndex` if specified.
+ *
+ * @param values The array.
+ * @param options Optional config object that specifies the `startIndex` into the array.
+ */
 export function fromArray<T>(
   values: readonly T[],
   options?: {
     startIndex: number;
   },
 ): EnumerableLike<T>;
+
+/**
+ * Creates an `ObservableLIke` from the given array with a specified `delay` between emitted items.
+ * An optional `startIndex` in the array maybe specified,
+ *
+ * @param values The array.
+ * @param options Config object that includes a the specified `delay` between emitted items and
+ * an optional `startIndex` into the array.
+ */
 export function fromArray<T>(
   values: readonly T[],
   options: {
