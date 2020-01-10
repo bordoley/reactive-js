@@ -86,13 +86,13 @@ test("scanAsync", () => {
   pipe(
     iter,
     scanAsync(
-      (acc, next) => ofValue({ result: acc + next }),
-      () => ({ request: undefined, result: 0 }),
+      (acc, next) => ofValue({ acc: acc + next }),
+      () => ({ request: undefined, acc: 0 }),
       scheduler,
     ),
     takeLast(),
-    onNotify(x => {
-      result1 = x;
+    onNotify(acc => {
+      result1 = acc;
     }),
     subscribe(scheduler),
   );
@@ -101,13 +101,13 @@ test("scanAsync", () => {
   pipe(
     iter,
     scanAsync(
-      (acc, next) => acc > 0 ? empty() : ofValue({ result: acc + next }),
-      () => ({ request: undefined, result: 0 }),
+      (acc, next) => acc > 0 ? empty() : ofValue({ acc: acc + next }),
+      () => ({ request: undefined, acc: 0 }),
       scheduler,
     ),
     takeLast(),
-    onNotify(x => {
-      result2 = x;
+    onNotify(acc => {
+      result2 = acc;
     }),
     subscribe(scheduler),
   );

@@ -20,7 +20,7 @@ import { lift } from "./lift";
 
 interface ReduceRequestLike<TReq, TAcc> {
   readonly request: TReq;
-  readonly result: TAcc;
+  readonly acc: TAcc;
 }
 
 export const scanAsync = <TReq, TSrc, TAcc>(
@@ -58,8 +58,8 @@ export const scanAsync = <TReq, TSrc, TAcc>(
 
   const withLatestSelector = (
     next: TSrc,
-    { result }: ReduceRequestLike<TReq, TAcc>,
-  ) => pipe(reducer(result, next), takeFirst(), throwIfEmpty(() => emptyError));
+    { acc }: ReduceRequestLike<TReq, TAcc>,
+  ) => pipe(reducer(acc, next), takeFirst(), throwIfEmpty(() => emptyError));
 
   const observableFactory = (
     iterator: AsyncEnumeratorResourceLike<TReq, TSrc>,
@@ -78,7 +78,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
         ofValue(initial()),
       ),
       onNotify(next => eventEmitter.notifySafe(next)),
-      map(({ result }) => result),
+      map(({ acc }) => acc),
       catchError(e => e === emptyError ? empty() : undefined),
     );
 
