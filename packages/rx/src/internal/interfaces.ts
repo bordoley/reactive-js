@@ -46,7 +46,7 @@ export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface SafeSubscriberLike<T> extends DisposableLike, SchedulerLike {
+export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
   /**
    * Notifies the the subscriber of the next notification produced by the observable source.
    *

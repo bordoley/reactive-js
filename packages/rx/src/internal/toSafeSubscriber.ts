@@ -40,27 +40,27 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
-    const subscriber = this.delegate;
+    const delegate = this.delegate;
     const nextQueue = this.nextQueue;
 
     if (shouldYield !== undefined) {
-      while (nextQueue.length > 0 && !subscriber.isDisposed) {
+      while (nextQueue.length > 0 && !delegate.isDisposed) {
         const next = nextQueue.shift() as T;
-        subscriber.notify(next);
+        delegate.notify(next);
 
         if (shouldYield() && this.remainingEvents > 0) {
           return this;
         }
       }
     } else {
-      while (nextQueue.length > 0 && !subscriber.isDisposed) {
+      while (nextQueue.length > 0 && !delegate.isDisposed) {
         const next = nextQueue.shift() as T;
-        subscriber.notify(next);
+        delegate.notify(next);
       }
     }
 
     if (this.isDisposed) {
-      this.delegate.dispose(this.error);
+      delegate.dispose(this.error);
     }
   }
 }

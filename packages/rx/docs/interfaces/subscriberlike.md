@@ -19,6 +19,8 @@ to receive notifications.
 
   ↳ **SubscriberLike**
 
+  ↳ [SafeSubscriberLike](safesubscriberlike.md)
+
   ↳ [SubjectLike](subjectlike.md)
 
 ## Implemented by

@@ -21,8 +21,8 @@ test("fromArray", () => {
     subscribe(scheduler),
   );
 
-  iter.notify();
-  iter.notify(2);
+  iter.notifySafe();
+  iter.notifySafe(2);
 
   scheduler.run();
 
@@ -44,10 +44,10 @@ test("fromIterable", () => {
     subscribe(scheduler),
   );
 
-  iter.notify();
-  iter.notify(2);
-  iter.notify(3);
-  iter.notify(5);
+  iter.notifySafe();
+  iter.notifySafe(2);
+  iter.notifySafe(3);
+  iter.notifySafe(5);
 
   scheduler.run();
 
@@ -69,8 +69,8 @@ test("generate", () => {
     subscribe(scheduler),
   );
 
-  iter.notify();
-  iter.notify(2);
+  iter.notifySafe();
+  iter.notifySafe(2);
 
   scheduler.run();
 
