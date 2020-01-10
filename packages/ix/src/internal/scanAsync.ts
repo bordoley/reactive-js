@@ -9,6 +9,9 @@ import {
   ObservableLike,
   merge,
   ofValue,
+  throwIfEmpty,
+  catchError,
+  empty,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
@@ -51,10 +54,12 @@ export const scanAsync = <TReq, TSrc, TAcc>(
     return [resource, eventEmitter];
   };
 
+  const emptyError = Symbol("empty");
+
   const withLatestSelector = (
     next: TSrc,
     { result }: ReduceRequestLike<TReq, TAcc>,
-  ) => pipe(reducer(result, next), takeFirst());
+  ) => pipe(reducer(result, next), takeFirst(), throwIfEmpty(() => emptyError));
 
   const observableFactory = (
     iterator: AsyncEnumeratorResourceLike<TReq, TSrc>,
@@ -74,6 +79,7 @@ export const scanAsync = <TReq, TSrc, TAcc>(
       ),
       onNotify(next => eventEmitter.notifySafe(next)),
       map(({ result }) => result),
+      catchError(e => e === emptyError ? empty() : undefined),
     );
 
   return using(resourceFactory, observableFactory);
