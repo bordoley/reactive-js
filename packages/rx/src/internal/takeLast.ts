@@ -6,7 +6,6 @@ import { SubscriberOperator } from "./subscriberOperator";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
-  subscriber = this.delegate;
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);

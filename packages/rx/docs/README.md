@@ -81,6 +81,7 @@
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
 * [throttle](README.md#const-throttle)
+* [throwIfEmpty](README.md#const-throwifempty)
 * [throws](README.md#const-throws)
 * [timeout](README.md#const-timeout)
 * [toArray](README.md#const-toarray)
@@ -1578,6 +1579,24 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `duration` | function &#124; number | - |
 `mode` | [ThrottleMode](enums/throttlemode.md) |  ThrottleMode.Interval |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` throwIfEmpty
+
+▸ **throwIfEmpty**<**T**>(`factory`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *unknown*
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
