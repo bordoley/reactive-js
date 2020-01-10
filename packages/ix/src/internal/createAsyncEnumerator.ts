@@ -37,6 +37,10 @@ class AsyncEnumeratorResourceImpl<TReq, T>
     return this.observable.subscriberCount;
   }
 
+  notify(req: TReq) {
+    this.disposable.notify(req);
+  }
+
   notifySafe(req: TReq) {
     this.disposable.notifySafe(req);
   }

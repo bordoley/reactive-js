@@ -11,9 +11,7 @@ a backing subscriber from any context.
 
 ## Hierarchy
 
-* DisposableLike
-
-* SchedulerLike
+  ↳ [SubscriberLike](subscriberlike.md)‹T›
 
   ↳ **SafeSubscriberLike**
 
