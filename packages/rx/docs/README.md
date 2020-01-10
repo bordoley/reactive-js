@@ -150,7 +150,7 @@ ___
 
 ▸ **combineLatest**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -179,7 +179,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -211,7 +211,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -246,7 +246,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -284,7 +284,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -325,7 +325,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -369,7 +369,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›, [ObservableLike](interfaces/observablelike.md)‹TH›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -416,7 +416,7 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›, [ObservableLike](interfaces/observablelike.md)‹TH›, [ObservableLike](interfaces/observablelike.md)‹TI›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines latest values from multiple observables using the specified `selector` function.
+Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
 
 **Type parameters:**
 
@@ -470,7 +470,7 @@ ___
 
 ▸ **concat**<**T**>(`fst`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, `snd`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, ...`tail`: Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T››): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-Creates an observable which smits all values from each given observable sequentially.
+Creates an observable which emits all values from each given observable sequentially.
 
 **Type parameters:**
 
@@ -488,7 +488,7 @@ Name | Type |
 
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an observable which smits all values from each given observable sequentially.
+Creates an observable which emits all values from each given observable sequentially.
 
 **Type parameters:**
 
@@ -688,6 +688,9 @@ ___
 
 ▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
+Returns an observable that emits the items from the source observable,
+concatenated with the values specified as arguments.
+
 **Type parameters:**
 
 ▪ **T**
@@ -707,6 +710,9 @@ ___
 
 ▸ **every**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
+Returns an observable that emits a single true value if the predicate is satisfied for
+every value produced, or if the observable is empty, otherwise false.
+
 **Type parameters:**
 
 ▪ **T**
@@ -714,6 +720,8 @@ ___
 **Parameters:**
 
 ▪ **predicate**: *function*
+
+The predicate function.
 
 ▸ (`next`: T): *boolean*
 
@@ -758,6 +766,10 @@ ___
 
 ▸ **forEach**<**T**>(`onNotify`: function, `schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
+Synchronously subscribes to the observable using a `VirtualTimeSchedulerLike` scheduler,
+invoking the onNotify callback for each emitted item from the source. Throws an error
+if the source is disposed with an error.
+
 **Type parameters:**
 
 ▪ **T**
@@ -765,6 +777,8 @@ ___
 **Parameters:**
 
 ▪ **onNotify**: *function*
+
+callback to invoke for each emitted item from the source.
 
 ▸ (`next`: T): *void*
 
@@ -776,6 +790,8 @@ Name | Type |
 
 ▪`Default value`  **schedulerFactory**: *function*=  createVirtualTimeScheduler
 
+optional factory function to create a virtual time scheduler.
+
 ▸ (): *VirtualTimeSchedulerLike*
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
@@ -786,31 +802,36 @@ ___
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
+Creates an `EnumerableLike` from the given array, starting at the `startIndex` if specified.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`values` | keyof T[] |
-`options?` | undefined &#124; object |
+Name | Type | Description |
+------ | ------ | ------ |
+`values` | keyof T[] | The array. |
+`options?` | undefined &#124; object | Optional config object that specifies the `startIndex` into the array.  |
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Creates an `ObservableLIke` from the given array with a specified `delay` between emitted items.
+An optional `startIndex` in the array maybe specified,
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`values` | keyof T[] |
-`options` | object |
+Name | Type | Description |
+------ | ------ | ------ |
+`values` | keyof T[] | The array. |
+`options` | object | Config object that includes a the specified `delay` between emitted items and an optional `startIndex` into the array.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1144,6 +1165,9 @@ ___
 
 ▸ **none**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
+Returns an observable that emits a single true value if the predicate does not satisfy
+every value produced, or if the observable is empty, otherwise false.
+
 **Type parameters:**
 
 ▪ **T**
@@ -1151,6 +1175,8 @@ ___
 **Parameters:**
 
 ▪ **predicate**: *function*
+
+The predicate function.
 
 ▸ (`next`: T): *boolean*
 

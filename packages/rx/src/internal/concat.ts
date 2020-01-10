@@ -74,7 +74,7 @@ export function concat<T>(
 ): ObservableLike<T>;
 
 /**
- * Creates an observable which smits all values from each given observable sequentially.
+ * Creates an observable which emits all values from each given observable sequentially.
  */
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>

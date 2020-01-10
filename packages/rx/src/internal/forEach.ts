@@ -18,6 +18,14 @@ class ForEachObserver<T> implements ObserverLike<T> {
   }
 }
 
+/**
+ * Synchronously subscribes to the observable using a `VirtualTimeSchedulerLike` scheduler,
+ * invoking the onNotify callback for each emitted item from the source. Throws an error
+ * if the source is disposed with an error.
+ *
+ * @param onNotify callback to invoke for each emitted item from the source.
+ * @param schedulerFactory optional factory function to create a virtual time scheduler.
+ */
 export const forEach = <T>(
   onNotify: (next: T) => void,
   schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
