@@ -8,9 +8,9 @@ export {
   ObservableLike,
   ObservableOperatorLike,
   ObservableResourceLike,
+  SubjectLike,
   SubscriberLike,
   SubscriberOperatorLike,
-  SubjectLike,
 } from "./internal/interfaces";
 
 export { AbstractDelegatingSubscriber } from "./internal/subscriber";

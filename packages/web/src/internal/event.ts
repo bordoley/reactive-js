@@ -9,7 +9,7 @@ export const fromEvent = <T>(
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        subscriber.notify(result);
+        subscriber.notifySafe(result);
       } catch (cause) {
         subscriber.dispose({ cause });
       }

@@ -1,10 +1,10 @@
-import { SubjectLike, SubscriberLike } from "./interfaces";
+import { SafeSubscriberLike, SubjectLike, SubscriberLike } from "./interfaces";
 import { AbstractSubscriber } from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
-  private readonly subscribers: Array<SubscriberLike<T>> = [];
+  private readonly subscribers: Array<SafeSubscriberLike<T>> = [];
   private readonly replayed: T[] = [];
 
   constructor(scheduler: SchedulerLike, private readonly replayCount: number) {
@@ -26,7 +26,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
 
       const observers = this.subscribers.slice();
       for (const observer of observers) {
-        observer.notify(next);
+        observer.notifySafe(next);
       }
     }
   }
@@ -49,7 +49,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     }
 
     for (const next of this.replayed) {
-      safeSubscriber.notify(next);
+      safeSubscriber.notifySafe(next);
     }
 
     this.add(safeSubscriber);

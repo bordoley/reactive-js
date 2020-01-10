@@ -2,18 +2,18 @@ import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
- * An observer of push-based notifications.
+ * An observer of push-based notifications within an observable source.
  */
 export interface ObserverLike<T> {
   /**
-   * Called by a provider to indicate that it is done sending push-based notifications.
+   * Notifies the observer that the provider has finished sending push-based notifications.
    *
    * @param error If present, indicates that the provider experienced an error condition.
    */
   onDispose(error?: ErrorLike): void;
 
   /**
-   * Provides the next item to observe.
+   * Provides the observer with the next item to observe.
    *
    * @param data
    */
@@ -21,16 +21,17 @@ export interface ObserverLike<T> {
 }
 
 /**
- * A SubscriberLike represents the underlying mechanism for receiving notifications from
- * an ObservableLike. A SubscriberLike composes an observer with a
- * scheduler and disposable subscription. Subscribers may only be notified
- * after they have been subscribeed and must be notified from a SchedulerContinuation
- * executing on the subscriber's scheduler.
+ * The underlying mechanism for receiving and transforming notifications from an Observable source.
+ * The SubscriberLike interface composes Scheduler and isposable subscription. In general,
  *
  * @noInheritDoc
  */
 export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
   notify(next: T): void;
+}
+
+export interface SafeSubscriberLike<T> extends DisposableLike, SchedulerLike {
+  notifySafe(next: T): void;
 }
 
 /**
