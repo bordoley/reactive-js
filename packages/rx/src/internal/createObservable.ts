@@ -1,9 +1,9 @@
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly onSubscribe: (subscriber: SubscriberLike<T>) => void,
+    private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -31,5 +31,5 @@ class CreateObservable<T> implements ObservableLike<T> {
  * @param onSubscribe
  */
 export const createObservable = <T>(
-  onSubscribe: (subscriber: SubscriberLike<T>) => void,
+  onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
 ): ObservableLike<T> => new CreateObservable(onSubscribe);

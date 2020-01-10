@@ -1,16 +1,16 @@
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
-import { SubscriberLike } from "./interfaces";
+import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { ErrorLike } from "@reactive-js/disposable";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-const scheduleDrainQueue = <T>(subscriber: SafeSubscriber<T>) => {
+const scheduleDrainQueue = <T>(subscriber: SafeSubscriberImpl<T>) => {
   if (subscriber.remainingEvents === 1) {
     subscriber.delegate.schedule(subscriber);
   }
 };
 
-class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T> implements SafeSubscriberLike<T> {
   private error: ErrorLike | undefined;
   private readonly nextQueue: Array<T> = [];
   readonly run = producerMixin.run;
@@ -28,6 +28,10 @@ class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T): void {
+    this.delegate.notify(next);
+  }
+
+  notifySafe(next: T): void {
     if (!this.isDisposed) {
       this.nextQueue.push(next);
       scheduleDrainQueue(this);
@@ -63,4 +67,4 @@ class SafeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 /** @ignore */
 export const toSafeSubscriber = <T>(
   subscriber: SubscriberLike<T>,
-): SubscriberLike<T> => new SafeSubscriber(subscriber);
+): SafeSubscriberLike<T> => new SafeSubscriberImpl(subscriber);

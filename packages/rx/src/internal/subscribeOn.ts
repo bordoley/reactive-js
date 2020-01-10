@@ -12,7 +12,7 @@ export const subscribeOn = <T>(
     subscriber.add(
       pipe(
         observable,
-        onNotify(next => subscriber.notify(next)),
+        onNotify(next => subscriber.notifySafe(next)),
         subscribe(scheduler),
       ),
     );

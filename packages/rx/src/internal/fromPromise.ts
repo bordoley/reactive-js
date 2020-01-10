@@ -1,14 +1,14 @@
 import { createObservable } from "./createObservable";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, SafeSubscriberLike } from "./interfaces";
 
 export const fromPromise = <T>(
   factory: () => Promise<T>,
 ): ObservableLike<T> => {
-  const onSubscribe = (subscriber: SubscriberLike<T>) => {
+  const onSubscribe = (subscriber: SafeSubscriberLike<T>) => {
     factory().then(
       next => {
         if (!subscriber.isDisposed) {
-          subscriber.notify(next);
+          subscriber.notifySafe(next);
           subscriber.dispose();
         }
       },
