@@ -7,6 +7,7 @@ import {
   onDispose,
   ofValue,
   takeLast,
+  empty,
 } from "@reactive-js/rx";
 import { ErrorLike } from "@reactive-js/disposable";
 
@@ -81,7 +82,7 @@ test("scanAsync", () => {
   const scheduler = createVirtualTimeScheduler(1);
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
-  let result = 0;
+  let result1 = 0;
   pipe(
     iter,
     scanAsync(
@@ -91,11 +92,28 @@ test("scanAsync", () => {
     ),
     takeLast(),
     onNotify(x => {
-      result = x;
+      result1 = x;
     }),
     subscribe(scheduler),
   );
+
+  let result2 = 0;
+  pipe(
+    iter,
+    scanAsync(
+      (acc, next) => acc > 0 ? empty() : ofValue({ result: acc + next }),
+      () => ({ request: undefined, result: 0 }),
+      scheduler,
+    ),
+    takeLast(),
+    onNotify(x => {
+      result2 = x;
+    }),
+    subscribe(scheduler),
+  );
+
   scheduler.run();
 
-  expect(result).toEqual(21);
+  expect(result1).toEqual(21);
+  expect(result2).toEqual(1);
 });
