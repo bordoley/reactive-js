@@ -1,10 +1,12 @@
 import { AsyncEnumerableLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createSubject } from "@reactive-js/rx";
+import { createAsyncEnumerator } from "./createAsyncEnumerator";
+
+const f = <T>(x: T): T => x;
 
 const instance = {
   enumerateAsync: (scheduler: SchedulerLike, replayCount = 0) => {
-    return createSubject(scheduler, replayCount);
+    return createAsyncEnumerator(f, scheduler, replayCount);
   },
 };
 

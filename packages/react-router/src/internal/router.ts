@@ -55,7 +55,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
       }
 
       const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
-        locationStore.notify(updater);
+        locationStore.notifySafe(updater);
       };
 
       const pairify = (
