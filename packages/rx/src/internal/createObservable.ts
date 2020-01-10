@@ -1,4 +1,8 @@
-import { ObservableLike, SafeSubscriberLike, SubscriberLike } from "./interfaces";
+import {
+  ObservableLike,
+  SafeSubscriberLike,
+  SubscriberLike,
+} from "./interfaces";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
@@ -20,10 +24,8 @@ class CreateObservable<T> implements ObservableLike<T> {
 }
 
 /**
- * Factory for safely creating new ObservableLikes. The onSubscribe function
- * is called with an observer which may be notified from any context,
- * queueing notifications for notification on the underlying SubscriberLike's
- * scheduler.
+ * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
+ * is called with a `SafeSubscriberLike` that may be notified from any context.
  *
  * Note, implementations should not do significant blocking work in
  * the onSubscribe function.

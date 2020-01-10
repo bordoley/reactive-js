@@ -34,8 +34,6 @@ before invoking the continuation's `run` function.
 ▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
 
 Work function to be invoked by the scheduler after the specified delay.
-May return either a continuation to be scheduled in the future
-or void if the work is done.
 
 **Parameters:**
 
@@ -44,3 +42,6 @@ Name | Type | Description |
 `shouldYield?` | undefined &#124; function | An optional function that should be periodically checked when defined. If `shouldYield` returns true the continuation should return, yielding control back to the scheduler.  |
 
 **Returns:** *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
+
+either a continuation to be scheduled in the future
+or void if the work is done.

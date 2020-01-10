@@ -2,6 +2,8 @@
 
 # Interface: MulticastObservableLike <**T**>
 
+An `ObservableLike` that shares a common subscription to an underlying observable source.
+
 ## Type parameters
 
 ▪ **T**
@@ -10,9 +12,11 @@
 
 * [ObservableLike](observablelike.md)‹T›
 
+* DisposableLike
+
   ↳ **MulticastObservableLike**
 
-  ↳ [MulticastObservableResourceLike](multicastobservableresourcelike.md)
+  ↳ [SubjectLike](subjectlike.md)
 
 ## Index
 
@@ -25,3 +29,5 @@
 ###  subscriberCount
 
 • **subscriberCount**: *number*
+
+The number of subscribers currently subscribed.

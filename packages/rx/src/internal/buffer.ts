@@ -74,9 +74,18 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     if (error !== undefined) {
       this.dispose(error);
     }
+
+    // FIXME: should schedule onNotify if the duration subscription has been disposed as well.
   }
 }
 
+/**
+ * Buffer items produced by the source observable until either the number of item reaches the
+ * specified maximum buffer size or the duration time expires.
+ *
+ * @param options a configuration object that specifies an optional `duration` function or time in ms,
+ * and an optional `maxBufferSize`.
+ */
 export function buffer<T>(
   options: {
     duration?: ((next: T) => ObservableLike<unknown>) | number;

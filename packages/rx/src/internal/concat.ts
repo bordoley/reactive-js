@@ -72,6 +72,10 @@ export function concat<T>(
   snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T>;
+
+/**
+ * Creates an observable which smits all values from each given observable sequentially.
+ */
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
@@ -80,6 +84,10 @@ export function concat<T>(
     : new ConcatObservable(fromArray(observables));
 }
 
+/**
+ * Converts a higher-order EnumerableLike into a first-order EnumerableLike
+ * by concatenating the inner Enumerables in order.
+ */
 export const flatten = <T>(): EnumerableOperatorLike<
   EnumerableLike<T>,
   T

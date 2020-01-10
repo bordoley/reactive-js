@@ -20,13 +20,21 @@ export interface VirtualTimeSchedulerLike
   extends DisposableLike,
     SchedulerLike,
     SchedulerContinuationLike {
-  /** The current value of the enumerator. Always undefined. */
+  /**
+   * The current item. Always undefined.
+   */
   readonly current: undefined;
 
-  /** Whether the enumerator has a current value. */
+  /**
+   * `true` if the current the enumerator has a current value, otherwise `false`.
+   */
   readonly hasCurrent: boolean;
 
-  /** Advances the enumerator to the next element. */
+  /**
+   * Advances the enumerator to the next item.
+   *
+   * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
+   */
   moveNext(): boolean;
 }
 

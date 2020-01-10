@@ -34,7 +34,7 @@ defined in the @reactive-js/rx package.
 
 • **current**: *undefined*
 
-The current value of the enumerator. Always undefined.
+The current item. Always undefined.
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **hasCurrent**: *boolean*
 
-Whether the enumerator has a current value.
+`true` if the current the enumerator has a current value, otherwise `false`.
 
 ## Methods
 
@@ -50,6 +50,8 @@ Whether the enumerator has a current value.
 
 ▸ **moveNext**(): *boolean*
 
-Advances the enumerator to the next element.
+Advances the enumerator to the next item.
 
 **Returns:** *boolean*
+
+`true` if the enumerator was successfully advanced to the next item, otherwise `false`.

@@ -2,7 +2,7 @@
 
 # Interface: ObserverLike <**T**>
 
-An observer of push-based notifications.
+An observer of push-based notifications within an observable source.
 
 ## Type parameters
 
@@ -25,7 +25,7 @@ An observer of push-based notifications.
 
 ▸ **onDispose**(`error?`: ErrorLike): *void*
 
-Called by a provider to indicate that it is done sending push-based notifications.
+Notifies the observer that the provider has finished sending push-based notifications.
 
 **Parameters:**
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **onNotify**(`next`: T): *void*
 
-Provides the next item to observe.
+Provides the observer with the next item to observe.
 
 **Parameters:**
 

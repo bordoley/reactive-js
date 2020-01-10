@@ -1103,11 +1103,20 @@ describe("throttle", () => {
 });
 
 test("throwIfEmpty", () => {
-  expect(
-    () => pipe(empty(), throwIfEmpty(() => new Error()), toValue())
+  expect(() =>
+    pipe(
+      empty(),
+      throwIfEmpty(() => new Error()),
+      toValue(),
+    ),
   ).toThrow();
 
-  pipe(ofValue(1), throwIfEmpty(() => new Error()), toValue(), expect).toEqual(1);
+  pipe(
+    ofValue(1),
+    throwIfEmpty(() => new Error()),
+    toValue(),
+    expect,
+  ).toEqual(1);
 });
 
 describe("throws", () => {

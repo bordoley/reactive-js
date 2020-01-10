@@ -1,8 +1,4 @@
-import {
-  MulticastObservableLike,
-  MulticastObservableResourceLike,
-  SubscriberLike,
-} from "@reactive-js/rx";
+import { MulticastObservableLike, SubscriberLike } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
@@ -15,7 +11,7 @@ export interface AsyncEnumeratorLike<TReq, T>
 export interface AsyncEnumeratorResourceLike<TReq, T>
   extends AsyncEnumeratorLike<TReq, T>,
     SubscriberLike<TReq>,
-    MulticastObservableResourceLike<T> {}
+    MulticastObservableLike<T> {}
 
 export interface AsyncEnumerableLike<TReq, T> {
   enumerateAsync(

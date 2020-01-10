@@ -14,7 +14,7 @@ type DisposableOrTeardown = DisposableLike | ((error?: ErrorLike) => void);
  */
 export interface DisposableLike {
   /**
-   * Returns true if this resource has been disposed.
+   * `true` if this resource has been disposed, otherwise false
    */
   readonly isDisposed: boolean;
 
@@ -22,6 +22,7 @@ export interface DisposableLike {
    * Adds the given disposable to this container or disposes it if the container has been disposed.
    *
    * @param disposable
+   * @returns `this`
    */
   add(disposable: DisposableLike | ((error?: ErrorLike) => void)): this;
 

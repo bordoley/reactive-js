@@ -2,7 +2,7 @@
 
 # Interface: SubscriberOperatorLike <**A, B**>
 
-A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
+A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
 
 ## Type parameters
 
@@ -30,16 +30,21 @@ A function with transforms a SubscriberLike<B> to a SubscriberLike<A>.
 
 • **isSynchronous**: *boolean*
 
+Flag that indicates that the transformed `SubscriberLike` synchronously
+transforms notifications, without introducing delays.
+
 ## Methods
 
 ###  call
 
 ▸ **call**(`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
 
+Transforms the `SubscriberLike<B>` to a `SubscriberLike<A>`.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`subscriber` | [SubscriberLike](subscriberlike.md)‹B› |
+Name | Type | Description |
+------ | ------ | ------ |
+`subscriber` | [SubscriberLike](subscriberlike.md)‹B› | The subscriber to transform.  |
 
 **Returns:** *[SubscriberLike](subscriberlike.md)‹A›*

@@ -33,6 +33,13 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
 
 const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 
+/**
+ * Returns an observable that emits all items emitted by the source that
+ * are distinct by comparison from the previous item.
+ *
+ * @param equals Optional equality function that is used to compare
+ * if an item is distinct from the previous item.
+ */
 export const distinctUntilChanged = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableOperatorLike<T, T> => {

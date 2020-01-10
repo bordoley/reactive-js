@@ -10,7 +10,8 @@ const scheduleDrainQueue = <T>(subscriber: SafeSubscriberImpl<T>) => {
   }
 };
 
-class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T> implements SafeSubscriberLike<T> {
+class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
+  implements SafeSubscriberLike<T> {
   private error: ErrorLike | undefined;
   private readonly nextQueue: Array<T> = [];
   readonly run = producerMixin.run;

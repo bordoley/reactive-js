@@ -2,14 +2,14 @@ import { disposableMixin } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
-  MulticastObservableResourceLike,
+  MulticastObservableLike,
   ObservableLike,
   SubscriberLike,
   SubjectLike,
 } from "./interfaces";
 import { createSubject } from "./subject";
 
-class PublishObservable<T> implements MulticastObservableResourceLike<T> {
+class PublishObservable<T> implements MulticastObservableLike<T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
 
@@ -33,7 +33,7 @@ export const publish = <T>(
   replayCount = 0,
 ): OperatorLike<
   ObservableLike<T>,
-  MulticastObservableResourceLike<T>
+  MulticastObservableLike<T>
 > => observable => {
   const subject = createSubject(scheduler, replayCount);
   observable.subscribe(subject);

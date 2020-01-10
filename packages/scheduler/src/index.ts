@@ -12,12 +12,13 @@ export interface SchedulerContinuationLike {
 
   /**
    * Work function to be invoked by the scheduler after the specified delay.
-   * May return either a continuation to be scheduled in the future
-   * or void if the work is done.
    *
    * @param shouldYield An optional function that should be periodically checked
    * when defined. If `shouldYield` returns true the continuation should return,
    * yielding control back to the scheduler.
+   *
+   * @returns either a continuation to be scheduled in the future
+   * or void if the work is done.
    */
   run(shouldYield?: () => boolean): SchedulerContinuationLike | void;
 }
@@ -33,6 +34,8 @@ export interface SchedulerLike {
    * Schedules a continuation to be executed on the scheduler.
    *
    * @param continuation The SchedulerContinuation to be executed.
+   *
+   * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
    */
   schedule(continuation: SchedulerContinuationLike): DisposableLike;
 }
