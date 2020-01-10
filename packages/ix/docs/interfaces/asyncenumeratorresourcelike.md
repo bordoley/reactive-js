@@ -14,6 +14,6 @@
 
 * SubscriberLike‹TReq›
 
-* MulticastObservableResourceLike‹T›
+* MulticastObservableLike‹T›
 
   ↳ **AsyncEnumeratorResourceLike**

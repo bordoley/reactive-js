@@ -1,16 +1,15 @@
 import { disposed } from "@reactive-js/disposable";
-import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
-  MulticastObservableLike,
   ObservableLike,
+  ObservableOperatorLike,
   SubjectLike,
   SubscriberLike,
 } from "./interfaces";
 import { createSubject } from "./subject";
 
-class SharedObservable<T> implements MulticastObservableLike<T> {
-  subscriberCount = 0;
+class SharedObservable<T> implements ObservableLike<T> {
+  private subscriberCount = 0;
   private sourceSubscription = disposed;
   private subject?: SubjectLike<T>;
   private readonly teardown = () => {
@@ -46,7 +45,7 @@ class SharedObservable<T> implements MulticastObservableLike<T> {
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): OperatorLike<ObservableLike<T>, MulticastObservableLike<T>> => {
+): ObservableOperatorLike<T, T> => {
   const factory = () => createSubject(scheduler, replayCount);
   return observable => new SharedObservable(factory, observable);
 };

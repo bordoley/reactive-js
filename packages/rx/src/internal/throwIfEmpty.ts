@@ -7,14 +7,14 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private isEmpty = true;
 
   constructor(
-    delegate: SubscriberLike<T>, 
+    delegate: SubscriberLike<T>,
     private readonly factory: () => unknown,
   ) {
     super(delegate);
     this.add(error => {
-      if (error === undefined && this.isEmpty){
-         const cause = this.factory();
-         error = { cause };
+      if (error === undefined && this.isEmpty) {
+        const cause = this.factory();
+        error = { cause };
       }
       this.delegate.dispose(error);
     });

@@ -3,11 +3,9 @@ export {
   EnumerableLike,
   EnumerableOperatorLike,
   MulticastObservableLike,
-  MulticastObservableResourceLike,
   ObserverLike,
   ObservableLike,
   ObservableOperatorLike,
-  ObservableResourceLike,
   SubjectLike,
   SubscriberLike,
   SubscriberOperatorLike,
@@ -53,6 +51,7 @@ export { scan } from "./internal/scan";
 export { scanAsync } from "./internal/scanAsync";
 export { share } from "./internal/share";
 export { contains, some } from "./internal/some";
+export { skipFirst } from "./internal/skipFirst";
 export { startWith } from "./internal/startWith";
 export { subscribeOn } from "./internal/subscribeOn";
 export { switchAll } from "./internal/switch";

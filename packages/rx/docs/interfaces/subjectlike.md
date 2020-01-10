@@ -2,6 +2,8 @@
 
 # Interface: SubjectLike <**T**>
 
+A `MulticastObservableLike` that is also `SubscriberLike`.
+
 ## Type parameters
 
 ▪ **T**
@@ -10,6 +12,6 @@
 
   ↳ [SubscriberLike](subscriberlike.md)‹T›
 
-  ↳ [MulticastObservableResourceLike](multicastobservableresourcelike.md)‹T›
+  ↳ [MulticastObservableLike](multicastobservablelike.md)‹T›
 
   ↳ **SubjectLike**

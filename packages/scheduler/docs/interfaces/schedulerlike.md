@@ -41,3 +41,5 @@ Name | Type | Description |
 `continuation` | [SchedulerContinuationLike](schedulercontinuationlike.md) | The SchedulerContinuation to be executed.  |
 
 **Returns:** *DisposableLike*
+
+A `DisposableLike` that can be disposed to cancel the scheduled work.

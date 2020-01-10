@@ -24,6 +24,8 @@ export interface PrioritySchedulerLike extends SchedulerLike {
    * @param priority An optional priority that is used when prioritizing which work
    * to execute next. The definition of the priority value along with it's default
    * value is implementation specific.
+   *
+   * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
    */
   schedule(
     continuation: SchedulerContinuationLike,

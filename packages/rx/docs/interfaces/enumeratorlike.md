@@ -29,11 +29,15 @@
 
 • **current**: *T*
 
+The current item, if present, at the current position of the enumerator.
+
 ___
 
 ###  hasCurrent
 
 • **hasCurrent**: *boolean*
+
+`true` if the current the enumerator has a current value, otherwise `false`.
 
 ## Methods
 
@@ -41,4 +45,8 @@ ___
 
 ▸ **moveNext**(): *boolean*
 
+Advances the enumerator to the next item.
+
 **Returns:** *boolean*
+
+`true` if the enumerator was successfully advanced to the next item, otherwise `false`.

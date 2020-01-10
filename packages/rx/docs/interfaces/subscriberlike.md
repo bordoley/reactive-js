@@ -2,11 +2,10 @@
 
 # Interface: SubscriberLike <**T**>
 
-A SubscriberLike represents the underlying mechanism for receiving notifications from
-an ObservableLike. A SubscriberLike composes an observer with a
-scheduler and disposable subscription. Subscribers may only be notified
-after they have been subscribeed and must be notified from a SchedulerContinuation
-executing on the subscriber's scheduler.
+The underlying mechanism for receiving and transforming notifications from an
+observable source. The `SubscriberLike` interface composes the `SchedulerLike` and
+`DisposableLike` interfaces into a single unified type, while adding the capability
+to receive notifications.
 
 ## Type parameters
 
@@ -38,10 +37,15 @@ executing on the subscriber's scheduler.
 
 ▸ **notify**(`next`: T): *void*
 
+Notifies the the subscriber of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the subscriber's `schedule` method.
+
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`next` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`next` | T | The next notification value.  |
 
 **Returns:** *void*

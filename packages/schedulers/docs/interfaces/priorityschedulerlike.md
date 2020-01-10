@@ -36,3 +36,5 @@ Name | Type | Description |
 `priority?` | undefined &#124; number | An optional priority that is used when prioritizing which work to execute next. The definition of the priority value along with it's default value is implementation specific.  |
 
 **Returns:** *DisposableLike*
+
+A `DisposableLike` that can be disposed to cancel the scheduled work.

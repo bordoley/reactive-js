@@ -2,6 +2,8 @@
 
 # Interface: EnumerableLike <**T**>
 
+An `ObservableLike` that also support synchronous enumeration and iteration.
+
 ## Type parameters
 
 ▪ **T**
@@ -25,5 +27,7 @@
 ###  enumerate
 
 ▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹T›*
+
+Returns an `EnumeratorLike` to iterate through the observable source.
 
 **Returns:** *[EnumeratorLike](enumeratorlike.md)‹T›*

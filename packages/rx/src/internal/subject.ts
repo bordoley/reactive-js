@@ -24,9 +24,9 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
         }
       }
 
-      const observers = this.subscribers.slice();
-      for (const observer of observers) {
-        observer.notifySafe(next);
+      const subscribers = this.subscribers.slice();
+      for (const subscriber of subscribers) {
+        subscriber.notifySafe(next);
       }
     }
   }

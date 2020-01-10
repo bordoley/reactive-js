@@ -26,7 +26,7 @@ Represents an unmanaged resource that can be disposed.
 
 • **isDisposed**: *boolean*
 
-Returns true if this resource has been disposed.
+`true` if this resource has been disposed, otherwise false
 
 ## Methods
 
@@ -38,11 +38,13 @@ Adds the given disposable to this container or disposes it if the container has 
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`disposable` | [DisposableLike](disposablelike.md) &#124; function |   |
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableLike](disposablelike.md) &#124; function |
 
 **Returns:** *this*
+
+`this`
 
 ___
 
