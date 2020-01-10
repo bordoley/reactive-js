@@ -60,6 +60,7 @@ export { takeFirst } from "./internal/takeFirst";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
 export { ThrottleMode, throttle } from "./internal/throttle";
+export { throwIfEmpty } from "./internal/throwIfEmpty";
 export { timeout } from "./internal/timeout";
 export { withLatestFrom } from "./internal/withLatestFrom";
 export { zip } from "./internal/zip";

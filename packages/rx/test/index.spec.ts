@@ -50,6 +50,7 @@ import {
   takeWhile,
   throttle,
   ThrottleMode,
+  throwIfEmpty,
   throws,
   timeout,
   toArray,
@@ -1099,6 +1100,14 @@ describe("throttle", () => {
 
     expect(result).toEqual([0, 74, 149, 199]);
   });
+});
+
+test("throwIfEmpty", () => {
+  expect(
+    () => pipe(empty(), throwIfEmpty(() => new Error()), toValue())
+  ).toThrow();
+
+  pipe(ofValue(1), throwIfEmpty(() => new Error()), toValue(), expect).toEqual(1);
 });
 
 describe("throws", () => {
