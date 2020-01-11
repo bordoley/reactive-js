@@ -29,6 +29,7 @@
 ### Functions
 
 * [consume](README.md#const-consume)
+* [consumeAsync](README.md#const-consumeasync)
 * [createActionReducer](README.md#const-createactionreducer)
 * [createAsyncEnumerator](README.md#const-createasyncenumerator)
 * [createStateStore](README.md#const-createstatestore)
@@ -58,6 +59,39 @@
 ### `Const` consume
 
 ▸ **consume**<**TReq**, **TSrc**, **TAcc**>(`consumer`: function, `initial`: function): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TSrc**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **consumer**: *function*
+
+▸ (`acc`: TAcc, `next`: TSrc): *[ConsumeRequest](README.md#consumerequest)‹TReq, TAcc›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | TSrc |
+
+▪ **initial**: *function*
+
+▸ (): *[ConsumeRequest](README.md#consumerequest)‹TReq, TAcc›*
+
+**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+
+___
+
+### `Const` consumeAsync
+
+▸ **consumeAsync**<**TReq**, **TSrc**, **TAcc**>(`consumer`: function, `initial`: function): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
