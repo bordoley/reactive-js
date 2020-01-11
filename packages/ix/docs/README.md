@@ -4,12 +4,18 @@
 
 ## Index
 
+### Enumerations
+
+* [ConsumeRequestType](enums/consumerequesttype.md)
+
 ### Interfaces
 
 * [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)
 * [AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)
 * [AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)
 * [AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)
+* [ContinueRequestLike](interfaces/continuerequestlike.md)
+* [DoneRequestLike](interfaces/donerequestlike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
 ### Variables
@@ -18,6 +24,7 @@
 
 ### Functions
 
+* [consume](README.md#const-consume)
 * [createActionReducer](README.md#const-createactionreducer)
 * [createAsyncEnumerator](README.md#const-createasyncenumerator)
 * [createStateStore](README.md#const-createstatestore)
@@ -28,7 +35,6 @@
 * [identity](README.md#const-identity)
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
-* [scanAsync](README.md#const-scanasync)
 * [toStateStore](README.md#const-tostatestore)
 
 ## Variables
@@ -38,6 +44,39 @@
 • **disposedAsyncEnumerator**: *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹unknown, any›* =  _disposed
 
 ## Functions
+
+### `Const` consume
+
+▸ **consume**<**TReq**, **TSrc**, **TAcc**>(`consumer`: function, `initial`: function): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TSrc**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **consumer**: *function*
+
+▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹ConsumeRequest‹TReq, TAcc››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | TSrc |
+
+▪ **initial**: *function*
+
+▸ (): *ConsumeRequest‹TReq, TAcc›*
+
+**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+
+___
 
 ### `Const` createActionReducer
 
@@ -245,41 +284,6 @@ Name | Type |
 `op` | AsyncEnumeratorRequestOperatorLike‹TReqA, TReqB› |
 
 **Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
-
-___
-
-### `Const` scanAsync
-
-▸ **scanAsync**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function, `scheduler`: SchedulerLike): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **TSrc**
-
-▪ **TAcc**
-
-**Parameters:**
-
-▪ **reducer**: *function*
-
-▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹ReduceRequestLike‹TReq, TAcc››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | TSrc |
-
-▪ **initial**: *function*
-
-▸ (): *ReduceRequestLike‹TReq, TAcc›*
-
-▪ **scheduler**: *SchedulerLike*
-
-**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 ___
 

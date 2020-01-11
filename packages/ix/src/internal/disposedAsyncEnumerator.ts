@@ -6,7 +6,7 @@ const _disposed: AsyncEnumeratorResourceLike<unknown, any> = {
   now: 0,
   subscriberCount: 0,
   notify(_) {},
-  notifySafe(_){},
+  notifySafe(_) {},
   schedule: _ => disposedDisposable,
   subscribe: subscriber => subscriber.dispose(),
 };
