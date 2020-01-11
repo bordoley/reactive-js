@@ -32,7 +32,7 @@ export interface DoneRequestLike<TAcc> {
   readonly acc: TAcc;
 }
 
-type ConsumeRequest<TReq, TAcc> =
+export type ConsumeRequest<TReq, TAcc> =
   | ContinueRequestLike<TReq, TAcc>
   | DoneRequestLike<TAcc>;
 

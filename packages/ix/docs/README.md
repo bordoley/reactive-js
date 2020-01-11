@@ -18,6 +18,10 @@
 * [DoneRequestLike](interfaces/donerequestlike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
+### Type aliases
+
+* [ConsumeRequest](README.md#consumerequest)
+
 ### Variables
 
 * [disposedAsyncEnumerator](README.md#const-disposedasyncenumerator)
@@ -36,6 +40,12 @@
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
 * [toStateStore](README.md#const-tostatestore)
+
+## Type aliases
+
+###  ConsumeRequest
+
+Ƭ **ConsumeRequest**: *[ContinueRequestLike](interfaces/continuerequestlike.md)‹TReq, TAcc› | [DoneRequestLike](interfaces/donerequestlike.md)‹TAcc›*
 
 ## Variables
 
@@ -61,7 +71,7 @@
 
 ▪ **consumer**: *function*
 
-▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹ConsumeRequest‹TReq, TAcc››*
+▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹[ConsumeRequest](README.md#consumerequest)‹TReq, TAcc››*
 
 **Parameters:**
 
@@ -72,7 +82,7 @@ Name | Type |
 
 ▪ **initial**: *function*
 
-▸ (): *ConsumeRequest‹TReq, TAcc›*
+▸ (): *[ConsumeRequest](README.md#consumerequest)‹TReq, TAcc›*
 
 **Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 

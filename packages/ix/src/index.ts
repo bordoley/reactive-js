@@ -9,6 +9,7 @@ export {
   consume,
   ConsumeRequestType,
   ContinueRequestLike,
+  ConsumeRequest,
   DoneRequestLike,
 } from "./internal/consume";
 export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
