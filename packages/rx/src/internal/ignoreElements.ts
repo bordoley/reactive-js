@@ -12,6 +12,9 @@ class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   notify(_: TA) {}
 }
 
+/**
+ * Returns an observable that ignores all items emitted by the source.
+ */
 export const ignoreElements = <TA, TB>(): ObservableOperatorLike<TA, TB> => {
   const call = (subscriber: SubscriberLike<TB>) =>
     new IgnoreSubscriber(subscriber);

@@ -768,8 +768,7 @@ ___
 ▸ **forEach**<**T**>(`onNotify`: function, `schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the observable using a `VirtualTimeSchedulerLike` scheduler,
-invoking the onNotify callback for each emitted item from the source. Throws an error
-if the source is disposed with an error.
+invoking the onNotify callback for each emitted item from the source.
 
 **Type parameters:**
 
@@ -820,7 +819,7 @@ Name | Type | Description |
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an `ObservableLIke` from the given array with a specified `delay` between emitted items.
+Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
 An optional `startIndex` in the array maybe specified,
 
 **Type parameters:**
@@ -842,30 +841,35 @@ ___
 
 ▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
+Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› | The `EnumeratorLike`.  |
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Creates an `ObservableLike` backed by the provided `EnumeratorLike`
+with a specified `delay` between emitted items.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› |
-`delay` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› | The `EnumeratorLike`. |
+`delay` | number | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -874,6 +878,9 @@ ___
 ###  fromIterable
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+
+Creates an `EnumerableLike` which iterates through the values
+produced by the provided `Iterable`.
 
 **Type parameters:**
 
@@ -889,16 +896,19 @@ Name | Type |
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Creates an `ObservableLike` which iterates through the values
+produced by the provided `Iterable` with a specified `delay` between emitted items.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`iterable` | Iterable‹T› |
-`delay` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`iterable` | Iterable‹T› | - |
+`delay` | number | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -908,30 +918,35 @@ ___
 
 ▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
+Creates an `EnumerableLike` backed by the provided `Iterator`.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`iterator` | Iterator‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`iterator` | Iterator‹T› | The `Iterator`.  |
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Creates an `ObservableLike` backed by the provided `Iterator`
+with a specified `delay` between emitted items.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`iterator` | Iterator‹T› |
-`delay` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`iterator` | Iterator‹T› | - |
+`delay` | number | The requested delay between emitted items byt the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -941,6 +956,9 @@ ___
 
 ▸ **fromPromise**<**T**>(`factory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Converts a `Promise` to an `ObservableLike`. The provided promise factory
+is invoked for each subscriber to the observable.
+
 **Type parameters:**
 
 ▪ **T**
@@ -948,6 +966,8 @@ ___
 **Parameters:**
 
 ▪ **factory**: *function*
+
+Factory function to create a new `Promise` instance.
 
 ▸ (): *Promise‹T›*
 
@@ -958,6 +978,9 @@ ___
 ###  fromScheduledValues
 
 ▸ **fromScheduledValues**<**T**>(`value`: [number, T], ...`values`: Array‹[number, T]›): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an observable from a series of [delay, value] tuples.
+The delay is relative to the current time.
 
 **Type parameters:**
 
@@ -978,6 +1001,9 @@ ___
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
+Generates an `EnumerableLike` sequence from a generator function
+that is applied to an accumulator value.
+
 **Type parameters:**
 
 ▪ **T**
@@ -985,6 +1011,8 @@ ___
 **Parameters:**
 
 ▪ **generator**: *function*
+
+the generator function.
 
 ▸ (`acc`: T): *T*
 
@@ -995,6 +1023,8 @@ Name | Type |
 `acc` | T |
 
 ▪ **initialValue**: *function*
+
+factory function to generate the initial accumulator.
 
 ▸ (): *T*
 
@@ -1002,6 +1032,10 @@ Name | Type |
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
+Generates an `ObservableLike` sequence from a generator function
+that is applied to an accumulator value with a specified `delay`
+between emitted items.
+
 **Type parameters:**
 
 ▪ **T**
@@ -1009,6 +1043,8 @@ Name | Type |
 **Parameters:**
 
 ▪ **generator**: *function*
+
+the generator function.
 
 ▸ (`acc`: T): *T*
 
@@ -1019,6 +1055,8 @@ Name | Type |
 `acc` | T |
 
 ▪ **initialValue**: *function*
+
+factory function to generate the initial accumulator.
 
 ▸ (): *T*
 
@@ -1031,6 +1069,8 @@ ___
 ### `Const` ignoreElements
 
 ▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+Returns an observable that ignores all items emitted by the source.
 
 **Type parameters:**
 
@@ -1046,6 +1086,9 @@ ___
 
 ▸ **keep**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
+Returns an observable that only emits items produced by the
+source that satisfy the specified predicate.
+
 **Type parameters:**
 
 ▪ **T**
@@ -1053,6 +1096,8 @@ ___
 **Parameters:**
 
 ▪ **predicate**: *function*
+
+The predicate function.
 
 ▸ (`data`: T): *boolean*
 

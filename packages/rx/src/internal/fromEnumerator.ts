@@ -83,13 +83,27 @@ class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
   }
 }
 
+/**
+ * Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
+ *
+ * @param enumerator The `EnumeratorLike`.
+ */
 export function fromEnumerator<T>(
   enumerator: EnumeratorLike<T>,
 ): EnumerableLike<T>;
+
+/**
+ * Creates an `ObservableLike` backed by the provided `EnumeratorLike`
+ * with a specified `delay` between emitted items.
+ *
+ * @param enumerator The `EnumeratorLike`.
+ * @param delay The requested delay between emitted items by the observable.
+ */
 export function fromEnumerator<T>(
   enumerator: EnumeratorLike<T>,
   delay: number,
 ): ObservableLike<T>;
+
 export function fromEnumerator<T>(
   enumerator: EnumeratorLike<T>,
   delay = 0,

@@ -94,7 +94,7 @@ export function fromArray<T>(
 ): EnumerableLike<T>;
 
 /**
- * Creates an `ObservableLIke` from the given array with a specified `delay` between emitted items.
+ * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
  *
  * @param values The array.
@@ -108,6 +108,7 @@ export function fromArray<T>(
     startIndex?: number;
   },
 ): ObservableLike<T>;
+
 export function fromArray<T>(
   values: readonly T[],
   options: {

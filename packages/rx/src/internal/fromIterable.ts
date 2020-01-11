@@ -67,7 +67,20 @@ class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
   }
 }
 
+/**
+ * Creates an `EnumerableLike` backed by the provided `Iterator`.
+ *
+ * @param iterator The `Iterator`.
+ */
 export function fromIterator<T>(iterator: Iterator<T>): EnumerableLike<T>;
+
+/**
+ * Creates an `ObservableLike` backed by the provided `Iterator`
+ * with a specified `delay` between emitted items.
+ *
+ * @param enumerator The `Iterator`.
+ * @param delay The requested delay between emitted items byt the observable.
+ */
 export function fromIterator<T>(
   iterator: Iterator<T>,
   delay: number,
@@ -117,11 +130,26 @@ class FromIterableEnumerable<T> extends FromIterableObservable<T> {
   }
 }
 
+/**
+ * Creates an `EnumerableLike` which iterates through the values
+ * produced by the provided `Iterable`.
+ *
+ * @param values The `Iterable`.
+ */
 export function fromIterable<T>(iterable: Iterable<T>): EnumerableLike<T>;
+
+/**
+ * Creates an `ObservableLike` which iterates through the values
+ * produced by the provided `Iterable` with a specified `delay` between emitted items.
+ *
+ * @param values The `Iterable`.
+ * @param delay The requested delay between emitted items by the observable.
+ */
 export function fromIterable<T>(
   iterable: Iterable<T>,
   delay: number,
 ): ObservableLike<T>;
+
 export function fromIterable<T>(
   iterable: Iterable<T>,
   delay = 0,
