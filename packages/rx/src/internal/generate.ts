@@ -90,8 +90,8 @@ export function generate<T>(
  * between emitted items.
  * 
  * @param generator the generator function.
- * @param initialValue factory function to generate the initial accumulator.
- * @param delay 
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
  */
 export function generate<T>(
   generator: (acc: T) => T,
