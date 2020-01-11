@@ -1056,11 +1056,13 @@ Name | Type |
 
 ▪ **initialValue**: *function*
 
-factory function to generate the initial accumulator.
+Factory function used to generate the initial accumulator.
 
 ▸ (): *T*
 
 ▪ **delay**: *number*
+
+The requested delay between emitted items by the observable.
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
