@@ -6,40 +6,30 @@ import {
   ofValue,
   onNotify,
   SubscriberLike,
+  switchAll,
+  takeFirst,
   takeLast,
+  throwIfEmpty,
   withLatestFrom,
 } from "@reactive-js/rx";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { identity } from "./identity";
 import { lift } from "./lift";
+import {
+  ConsumeRequestType,
+  ContinueRequestLike,
+  ConsumeRequest,
+} from "./consume";
 
-export const enum ConsumeRequestType {
-  Continue = 1,
-  Done = 2,
-}
+const emptyError = Symbol("empty");
 
-export interface ContinueRequestLike<TReq, TAcc> {
-  readonly type: ConsumeRequestType.Continue;
-  readonly req: TReq;
-  readonly acc: TAcc;
-}
-
-export interface DoneRequestLike<TAcc> {
-  readonly type: ConsumeRequestType.Done;
-  readonly acc: TAcc;
-}
-
-export type ConsumeRequest<TReq, TAcc> =
-  | ContinueRequestLike<TReq, TAcc>
-  | DoneRequestLike<TAcc>;
-
-class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
+class ConsumeAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   constructor(
     private readonly enumerable: AsyncEnumerableLike<TReq, TSrc>,
     private readonly withLatestSelector: (
       next: TSrc,
       acc: TAcc,
-    ) => ConsumeRequest<TReq, TAcc>,
+    ) => ObservableLike<ConsumeRequest<TReq, TAcc>>,
     private readonly initial: () => ConsumeRequest<TReq, TAcc>,
   ) {}
 
@@ -63,6 +53,7 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
         pipe(
           enumerator,
           withLatestFrom(eventEmitter, this.withLatestSelector),
+          switchAll(),
         ),
         ofValue(this.initial()),
       ),
@@ -79,16 +70,21 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
-export const consume = <TReq, TSrc, TAcc>(
+export const consumeAsync = <TReq, TSrc, TAcc>(
   consumer: (
     acc: TAcc,
     next: TSrc,
-  ) => ConsumeRequest<TReq, TAcc>,
+  ) => ObservableLike<ConsumeRequest<TReq, TAcc>>,
   initial: () => ConsumeRequest<TReq, TAcc>,
 ): OperatorLike<
   AsyncEnumerableLike<TReq, TSrc>,
   ObservableLike<TAcc>
 > => enumerable => {
-  const withLatestSelector = (next: TSrc, acc: TAcc) => consumer(acc, next);
-  return new ConsumeObservable(enumerable, withLatestSelector, initial);
+  const withLatestSelector = (next: TSrc, acc: TAcc) =>
+    pipe(
+      consumer(acc, next),
+      takeFirst(),
+      throwIfEmpty(() => emptyError),
+    );
+  return new ConsumeAsyncObservable(enumerable, withLatestSelector, initial);
 };

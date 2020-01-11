@@ -12,6 +12,7 @@ export {
   ConsumeRequest,
   DoneRequestLike,
 } from "./internal/consume";
+export { consumeAsync } from "./internal/consumeAsync";
 export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
 export { disposedAsyncEnumerator } from "./internal/disposedAsyncEnumerator";
 export { empty } from "./internal/empty";
