@@ -5,6 +5,12 @@ export {
   StateUpdaterLike,
 } from "./internal/interfaces";
 
+export {
+  consume,
+  ConsumeRequestType,
+  ContinueRequestLike,
+  DoneRequestLike,
+} from "./internal/consume";
 export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
 export { disposedAsyncEnumerator } from "./internal/disposedAsyncEnumerator";
 export { empty } from "./internal/empty";
@@ -13,7 +19,7 @@ export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
-export { scanAsync } from "./internal/scanAsync";
+
 export {
   createActionReducer,
   createStateStore,

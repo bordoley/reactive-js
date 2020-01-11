@@ -1,15 +1,61 @@
 import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
-import { fromArray, fromIterable, generate, scanAsync } from "../src/index";
+import {
+  consume,
+  ConsumeRequestType,
+  fromArray,
+  fromIterable,
+  generate,
+} from "../src/index";
 import { pipe } from "@reactive-js/pipe";
 import {
   subscribe,
   onNotify,
   onDispose,
   ofValue,
-  takeLast,
-  empty,
+  toValue,
 } from "@reactive-js/rx";
 import { ErrorLike } from "@reactive-js/disposable";
+
+test("consume", () => {
+  const iter = fromIterable([1, 2, 3, 4, 5, 6]);
+
+  pipe(
+    iter,
+    consume(
+      (acc, next) =>
+        ofValue({
+          type: ConsumeRequestType.Continue,
+          req: 1,
+          acc: acc + next,
+        }),
+      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+    ),
+    toValue(),
+    expect,
+  ).toEqual(21);
+
+  pipe(
+    iter,
+    consume(
+      (acc, next) =>
+        ofValue(
+          acc > 0
+            ? {
+                type: ConsumeRequestType.Done,
+                acc: acc + next,
+              }
+            : {
+                type: ConsumeRequestType.Continue,
+                req: 1,
+                acc: acc + next,
+              },
+        ),
+      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+    ),
+    toValue(),
+    expect,
+  ).toEqual(3);
+});
 
 test("fromArray", () => {
   const scheduler = createVirtualTimeScheduler();
@@ -76,44 +122,4 @@ test("generate", () => {
   scheduler.run();
 
   expect(result).toEqual([1, 2, 3]);
-});
-
-test("scanAsync", () => {
-  const scheduler = createVirtualTimeScheduler(1);
-  const iter = fromIterable([1, 2, 3, 4, 5, 6]);
-
-  let result1 = 0;
-  pipe(
-    iter,
-    scanAsync(
-      (acc, next) => ofValue({ acc: acc + next }),
-      () => ({ request: undefined, acc: 0 }),
-      scheduler,
-    ),
-    takeLast(),
-    onNotify(acc => {
-      result1 = acc;
-    }),
-    subscribe(scheduler),
-  );
-
-  let result2 = 0;
-  pipe(
-    iter,
-    scanAsync(
-      (acc, next) => acc > 0 ? empty() : ofValue({ acc: acc + next }),
-      () => ({ request: undefined, acc: 0 }),
-      scheduler,
-    ),
-    takeLast(),
-    onNotify(acc => {
-      result2 = acc;
-    }),
-    subscribe(scheduler),
-  );
-
-  scheduler.run();
-
-  expect(result1).toEqual(21);
-  expect(result2).toEqual(1);
 });

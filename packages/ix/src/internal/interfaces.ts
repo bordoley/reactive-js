@@ -10,7 +10,7 @@ export interface AsyncEnumeratorLike<TReq, T>
 /** @noInheritDoc */
 export interface AsyncEnumeratorResourceLike<TReq, T>
   extends AsyncEnumeratorLike<TReq, T>,
-  SafeSubscriberLike<TReq>,
+    SafeSubscriberLike<TReq>,
     MulticastObservableLike<T> {}
 
 export interface AsyncEnumerableLike<TReq, T> {
