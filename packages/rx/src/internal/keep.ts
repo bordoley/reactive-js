@@ -20,6 +20,12 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
+/**
+ * Returns an observable that only emits items produced by the 
+ * source that satisfy the specified predicate.
+ * 
+ * @param predicate The predicate function.
+ */
 export const keep = <T>(
   predicate: (data: T) => boolean,
 ): ObservableOperatorLike<T, T> => {
