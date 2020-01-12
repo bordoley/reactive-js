@@ -1,8 +1,5 @@
 import { OperatorLike, pipe } from "@reactive-js/pipe";
-import {
-  VirtualTimeSchedulerLike,
-  createVirtualTimeScheduler,
-} from "@reactive-js/schedulers";
+import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
 import { ErrorLike } from "@reactive-js/disposable";
@@ -19,19 +16,17 @@ class ForEachObserver<T> implements ObserverLike<T> {
 }
 
 /**
- * Synchronously subscribes to the observable using a `VirtualTimeSchedulerLike` scheduler,
- * invoking the onNotify callback for each emitted item from the source.
+ * Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
+ * invoking the onNotify callback for each item emitted by the source.
  *
- * @param onNotify callback to invoke for each emitted item from the source.
- * @param schedulerFactory optional factory function to create a virtual time scheduler.
+ * @param onNotify callback to invoke for each item emitted by the source.
  *
  * @throws an error if the source is disposed with an error.
  */
 export const forEach = <T>(
   onNotify: (next: T) => void,
-  schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
 ): OperatorLike<ObservableLike<T>, void> => observable => {
-  const scheduler = schedulerFactory();
+  const scheduler = createVirtualTimeScheduler();
   const observer = new ForEachObserver<T>(onNotify);
   const subscription = pipe(
     observable,

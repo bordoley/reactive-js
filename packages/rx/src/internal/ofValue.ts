@@ -35,8 +35,21 @@ class OfValueEnumerable<T> extends OfValueObservable<T>
   }
 }
 
+/**
+ * Creates an `EnumerableLike` that emits `value` then disposes the subscriber.
+ *
+ * @param value The value to emit.
+ */
 export function ofValue<T>(value: T): EnumerableLike<T>;
+
+/**
+ *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+ *
+ * @param value The value to emit.
+ * @param delay The delay before emitting the value.
+ */
 export function ofValue<T>(value: T, delay: number): ObservableLike<T>;
+
 export function ofValue<T>(value: T, delay = 0): ObservableLike<T> {
   return delay > 0
     ? new OfValueObservable(value, delay)

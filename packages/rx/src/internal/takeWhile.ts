@@ -23,6 +23,12 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
+/**
+ * Emits values emitted by the source as long as each value satisfies the given predicate,
+ * and then completes as soon as this predicate is not satisfied.
+ *
+ * @param predicate The predicate function.
+ */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperatorLike<T, T> => {

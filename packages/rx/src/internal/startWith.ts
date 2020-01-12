@@ -2,6 +2,10 @@ import { concat } from "./concat";
 import { fromArray } from "./fromArray";
 import { ObservableOperatorLike } from "./interfaces";
 
+/**
+ * Returns an observable that emits the values specified as arguments,
+ * concatenated with items from the source.
+ */
 export function startWith<T>(
   value: T,
   ...values: T[]

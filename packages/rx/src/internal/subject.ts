@@ -17,15 +17,16 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
 
   notify(next: T): void {
     if (!this.isDisposed) {
-      if (this.replayCount > 0) {
-        this.replayed.push(next);
-        if (this.replayed.length > this.replayCount) {
-          this.replayed.shift();
+      const replayed = this.replayed;
+      const replayCount = this.replayCount;
+      if (replayCount > 0) {
+        replayed.push(next);
+        if (replayed.length > replayCount) {
+          replayed.shift();
         }
       }
 
-      const subscribers = this.subscribers.slice();
-      for (const subscriber of subscribers) {
+      for (const subscriber of this.subscribers) {
         subscriber.notifySafe(next);
       }
     }
@@ -38,12 +39,13 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     const safeSubscriber = toSafeSubscriber(subscriber);
 
     if (!this.isDisposed) {
-      this.subscribers.push(safeSubscriber);
+      const subscribers = this.subscribers;
+      subscribers.push(safeSubscriber);
 
       safeSubscriber.add(() => {
-        const index = this.subscribers.indexOf(safeSubscriber);
+        const index = subscribers.indexOf(safeSubscriber);
         if (index !== -1) {
-          this.subscribers.splice(index, 1);
+          subscribers.splice(index, 1);
         }
       });
     }
@@ -56,6 +58,13 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   }
 }
 
+/**
+ * Returns a new `SubjectLike` instance.
+ *
+ * @param scheduler The scheduler that should be used by sources to notify the `SubjectLike` instance.
+ * @param replayCount The number of events that should be replayed when the `SubjectLike`
+ * is subscribed to.
+ */
 export const createSubject = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,

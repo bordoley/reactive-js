@@ -34,6 +34,11 @@ const operator = <T>(count: number): SubscriberOperatorLike<T, T> => {
   return new SubscriberOperator(true, call);
 };
 
+/**
+ * Returns an observable that only emits the first `count` values emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
 export const takeFirst = <T>(
   count = 1,
 ): ObservableOperatorLike<T, T> => observable =>

@@ -38,6 +38,12 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
   }
 }
 
+/**
+ * Returns an observable that completes with the last value produced by
+ * the source.
+ * 
+ * @param scheduler The scheduler upon which to subscribe to the source observable.
+ */
 export const toPromise = <T>(
   scheduler: SchedulerLike,
 ): OperatorLike<ObservableLike<T>, Promise<T>> => observable =>

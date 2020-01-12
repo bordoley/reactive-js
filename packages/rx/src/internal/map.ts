@@ -18,6 +18,11 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   }
 }
 
+/**
+ * Applies the `mapper` function to each value emitted by the source observable.
+ *
+ * @param mapper The pure function to apply each value.
+ */
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
 ): ObservableOperatorLike<TA, TB> => {

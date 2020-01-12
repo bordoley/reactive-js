@@ -33,9 +33,9 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 /**
- * Returns a ObservableOperatorLike which forwards notifications to the provided observer.
+ * Returns an observable that forwards notifications to the provided observer.
  *
- * @param observer
+ * @param observer The observer that observes notifications.
  */
 export function observe<T>(
   observer: ObserverLike<T>,
@@ -47,6 +47,11 @@ export function observe<T>(
 
 const ignore = <T>(_: T) => {};
 
+/**
+ * Returns an observable that forwards dispose notifications to the provided `onDispose` function.
+ *
+ * @param onDispose The function that is invoked when the observable subscription is disposed.
+ */
 export const onDispose = <T>(
   onDispose: (err?: ErrorLike) => void,
 ): ObservableOperatorLike<T, T> =>
@@ -68,10 +73,20 @@ class OnErrorObserver<T> implements ObserverLike<T> {
   onNotify(_: T) {}
 }
 
+/**
+ * Returns an observable that forwards error notifications to the provided `onError` function.
+ *
+ * @param onError The function that is invoked when the observable subscription is disposed with an error.
+ */
 export const onError = <T>(
   onError: (err: unknown) => void,
 ): ObservableOperatorLike<T, T> => observe(new OnErrorObserver(onError));
 
+/**
+ * Returns an observable that forwards notifications to the provided `onNotify` function.
+ *
+ * @param onNotify The function that is invoked when the observable source produces values.
+ */
 export const onNotify = <T>(
   onNotify: (next: T) => void,
 ): ObservableOperatorLike<T, T> =>

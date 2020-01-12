@@ -34,6 +34,12 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
+/**
+ * Applies an asynchronous accumulator function over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
 export const scanAsync = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
   initialValue: () => TAcc,

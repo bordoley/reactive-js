@@ -17,7 +17,14 @@ class ThrowsObservable<T> implements ObservableLike<T> {
   }
 }
 
-export const throws = <T>(cause: unknown, delay = 0): ObservableLike<T> => {
-  const error = { cause };
-  return defer(() => new ThrowsObservable(error, delay));
-};
+/**
+ * Creates an observable that emits no items and immediately disposes its subscription with an error.
+ *
+ * @param factory Factory function to generate the error to emit.
+ * @param delay The delay before disposing the subscription.
+ */
+export const throws = <T>(
+  factory: () => unknown,
+  delay = 0,
+): ObservableLike<T> =>
+  defer(() => new ThrowsObservable({ cause: factory() }, delay));

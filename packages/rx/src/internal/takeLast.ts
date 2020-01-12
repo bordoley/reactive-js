@@ -31,6 +31,11 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
+/**
+ * Returns an observable that only emits the last `count` values emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
 export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> => {
   const call = (subscriber: SubscriberLike<T>) =>
     new TakeLastSubscriber(subscriber, count);

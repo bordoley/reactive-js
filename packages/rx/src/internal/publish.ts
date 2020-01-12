@@ -28,6 +28,14 @@ class PublishObservable<T> implements MulticastObservableLike<T> {
   }
 }
 
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to
+ * source observable.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replayCount The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
 export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,

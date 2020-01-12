@@ -42,6 +42,15 @@ class SharedObservable<T> implements ObservableLike<T> {
   }
 }
 
+/**
+ * Returns an observable backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replayCount The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,

@@ -1,8 +1,4 @@
-import {
-  disposableMixin,
-  DisposableLike,
-  ErrorLike,
-} from "@reactive-js/disposable";
+import { ErrorLike } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   createVirtualTimeScheduler,
@@ -15,26 +11,21 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { enumerableMixin, isEnumerable } from "./enumerable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { AbstractSubscriber } from "./subscriber";
 
-class VirtualTimeObservableEnumerator<T>
+class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
   implements EnumeratorLike<T>, SubscriberLike<T> {
-  add = disposableMixin.add;
   current: any = undefined;
-  readonly disposable: VirtualTimeSchedulerLike;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
 
-  constructor() {
-    this.disposable = createVirtualTimeScheduler(1);
-  }
+  constructor(private readonly vts: VirtualTimeSchedulerLike) {
+    super(vts);
 
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  get now(): number {
-    return this.disposable.now;
+    this.add(vts).add(error => {
+      this.error = error;
+    });
+    vts.add(this);
   }
 
   notify(next: T) {
@@ -42,51 +33,32 @@ class VirtualTimeObservableEnumerator<T>
     this.hasCurrent = true;
   }
 
-  dispose(error?: ErrorLike) {
-    this.disposable.dispose();
-    this.error = error;
-  }
-
   moveNext(): boolean {
     this.hasCurrent = false;
     this.current = undefined;
 
-    while (!this.hasCurrent) {
-      if (this.isDisposed) {
-        return false;
-      }
-
-      const done = !this.disposable.moveNext();
+    while (!this.hasCurrent && !this.isDisposed) {
+      this.vts.moveNext();
 
       const error = this.error;
       if (error !== undefined) {
         const { cause } = error;
         throw cause;
       }
-
-      if (done) {
-        this.dispose();
-        return false;
-      }
     }
 
-    return true;
-  }
-
-  schedule(continuation: SchedulerContinuationLike): DisposableLike {
-    const schedulerSubscription = this.disposable.schedule(continuation);
-    this.add(schedulerSubscription);
-    return schedulerSubscription;
+    return this.hasCurrent;
   }
 }
 
-class EnumerableObservable<T> implements EnumerableLike<T> {
+class VirtualTimeEnumerableObservable<T> implements EnumerableLike<T> {
   [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(private readonly observable: ObservableLike<T>) {}
 
   enumerate() {
-    const subscriber = new VirtualTimeObservableEnumerator<T>();
+    const scheduler = createVirtualTimeScheduler(1);
+    const subscriber = new VirtualTimeEnumeratorSubscriber<T>(scheduler);
     this.subscribe(subscriber);
     return subscriber;
   }
@@ -96,10 +68,17 @@ class EnumerableObservable<T> implements EnumerableLike<T> {
   }
 }
 
+/**
+ * Converts an `ObservableLike` source into an `EnumerableLike` source. If the 
+ * source itself is `EnumerableLike`, then this function returns the source. Otherwise,
+ * a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
+ * should not be used with sources that perform I/O such as ones that wrap Promises
+ * or DOM events.
+ */
 export const toEnumerable = <T>(): OperatorLike<
   ObservableLike<T>,
   EnumerableLike<T>
 > => observable =>
   isEnumerable(observable)
     ? (observable as EnumerableLike<T>)
-    : new EnumerableObservable(observable);
+    : new VirtualTimeEnumerableObservable(observable);

@@ -58,11 +58,13 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
 
   notify(next: ObservableLike<T>) {
     const queue = this.queue;
-    if (
-      !this.isDisposed &&
-      queue.length + this.activeCount < this.maxBufferSize
-    ) {
+    if (!this.isDisposed) {
       queue.push(next);
+
+      // Drop old events if the maxBufferSize has been exceeded
+      if (queue.length + this.activeCount === this.maxBufferSize) {
+        queue.shift();
+      }
       subscribeNext(this);
     }
   }
@@ -82,6 +84,14 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
+/**
+ * Converts a higher-order observable into a first-order observable
+ * which concurrently delivers values emitted by the inner observables.
+ *
+ * @param options Optional configuration object. The `maxBufferSize` property specifies
+ * how many source observables may be queued before dropping previous observables. The `maxConcurrency`
+ * property specifies the maximum number of inner observables that may be subscribed to concurrently.
+ */
 export const mergeAll = <T>(
   options: {
     maxBufferSize?: number;
@@ -97,10 +107,22 @@ export const mergeAll = <T>(
 
   return lift(new SubscriberOperator(false, call));
 };
+
+/**
+ * Converts a higher-order observable into a first-order
+ * observable by concatenating the inner observables in order.
+ *
+ * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
+ */
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
 ): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
+/**
+ * Converts a higher-order observable into a first-order observable
+ * by dropping inner observables while the previous inner observable
+ * has not yet been disposed.
+ */
 export const exhaust = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });

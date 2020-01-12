@@ -9,7 +9,9 @@ import {
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
-/** @ignore */
+/**
+ * Abstract based class for implementing the `SubscriberLike` interface.
+ */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = disposableMixin.add;
   readonly disposable = createDisposable(_ => {
@@ -17,7 +19,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   });
   readonly dispose = disposableMixin.dispose;
   isDisposed = false;
-  readonly scheduler: SchedulerLike;
+  private readonly scheduler: SchedulerLike;
 
   constructor(scheduler: SchedulerLike) {
     this.scheduler = (scheduler as any).scheduler || scheduler;
@@ -40,7 +42,8 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
 }
 
 /**
- * Abstract base class for implementing SubscriberOperatorLikes.
+ * Abstract based class for implementing instances of the `SubscriberLike` interface
+ * which delegate notifications to a parent `SubscriberLike` instance
  *
  * @noInheritDoc
  */

@@ -29,7 +29,7 @@ const fromIterableAsyncEnumerator = <T>(
   const takeCountFromEnumerator = (count: number) =>
     concat(
       pipe(fromEnumerator(enumerator), takeFirst(count || 1)),
-      defer(() => (enumerator.isDisposed ? throws(doneError) : empty())),
+      defer(() => (enumerator.isDisposed ? throws(() => doneError) : empty())),
     );
 
   const operator = (obs: ObservableLike<number | void>) =>
