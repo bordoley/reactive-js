@@ -24,7 +24,7 @@ class ForEachObserver<T> implements ObserverLike<T> {
  *
  * @param onNotify callback to invoke for each emitted item from the source.
  * @param schedulerFactory optional factory function to create a virtual time scheduler.
- * 
+ *
  * @throws an error if the source is disposed with an error.
  */
 export const forEach = <T>(

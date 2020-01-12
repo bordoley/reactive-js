@@ -1,6 +1,6 @@
-import { disposableMixin } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
+  AbstractDelegatingSubscriber,
   createSubject,
   MulticastObservableLike,
   publish,
@@ -9,28 +9,18 @@ import {
   SafeSubscriberLike,
   toSafeSubscriber,
 } from "@reactive-js/rx";
-import {
-  SchedulerLike,
-  SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike } from "./interfaces";
 
 class AsyncEnumeratorResourceImpl<TReq, T>
+  extends AbstractDelegatingSubscriber<TReq, TReq>
   implements AsyncEnumeratorResourceLike<TReq, T> {
-  readonly add = disposableMixin.add;
-  readonly dispose = disposableMixin.dispose;
-
   constructor(
-    readonly disposable: SafeSubscriberLike<TReq>,
+    delegate: SafeSubscriberLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
-  ) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  get now(): number {
-    return this.disposable.now;
+  ) {
+    super(delegate);
+    this.add(observable);
   }
 
   get subscriberCount(): number {
@@ -38,15 +28,11 @@ class AsyncEnumeratorResourceImpl<TReq, T>
   }
 
   notify(req: TReq) {
-    this.disposable.notify(req);
+    this.delegate.notify(req);
   }
 
   notifySafe(req: TReq) {
-    this.disposable.notifySafe(req);
-  }
-
-  schedule(continuation: SchedulerContinuationLike) {
-    return this.disposable.schedule(continuation);
+    (this.delegate as SafeSubscriberLike<TReq>).notifySafe(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -60,9 +46,9 @@ export const createAsyncEnumerator = <TReq, T>(
   replayCount = 0,
 ): AsyncEnumeratorResourceLike<TReq, T> => {
   const subject = createSubject(scheduler);
-  const observable = pipe(subject, operator, publish(scheduler, replayCount));
+
   const safeSubscriber = toSafeSubscriber(subject);
-  safeSubscriber.add(observable);
+  const observable = pipe(subject, operator, publish(scheduler, replayCount));
 
   return new AsyncEnumeratorResourceImpl(safeSubscriber, observable);
 };

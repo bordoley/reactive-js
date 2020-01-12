@@ -75,7 +75,7 @@ class GenerateEnumerable<T> extends GenerateObservable<T>
 /**
  * Generates an `EnumerableLike` sequence from a generator function
  * that is applied to an accumulator value.
- * 
+ *
  * @param generator the generator function.
  * @param initialValue factory function to generate the initial accumulator.
  */
@@ -86,9 +86,9 @@ export function generate<T>(
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay` 
+ * that is applied to an accumulator value with a specified `delay`
  * between emitted items.
- * 
+ *
  * @param generator the generator function.
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.

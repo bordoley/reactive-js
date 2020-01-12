@@ -43,23 +43,23 @@ class ConsumeAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
           enumerator.notifySafe(continueRequest.req);
         }),
       ),
-      lift(map(({acc}) => acc))
+      lift(map(({ acc }) => acc)),
     ).enumerateAsync(subscriber);
 
     subscriber.add(enumerator).add(eventEmitter);
 
     pipe(
       merge(
+        ofValue(this.initial()),
         pipe(
           enumerator,
           withLatestFrom(eventEmitter, this.withLatestSelector),
           switchAll(),
         ),
-        ofValue(this.initial()),
       ),
-      onNotify(request => {
-        if (request.type === ConsumeRequestType.Continue) {
-          eventEmitter.notifySafe(request);
+      onNotify(next => {
+        if (next.type === ConsumeRequestType.Continue) {
+          eventEmitter.notifySafe(next);
         } else {
           enumerator.dispose();
         }
