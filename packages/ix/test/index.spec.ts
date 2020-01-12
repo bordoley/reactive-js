@@ -1,6 +1,6 @@
 import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import {
-  consume,
+  consumeAsync,
   ConsumeRequestType,
   fromArray,
   fromIterable,
@@ -16,12 +16,12 @@ import {
 } from "@reactive-js/rx";
 import { ErrorLike } from "@reactive-js/disposable";
 
-test("consume", () => {
+test("consumeAsync", () => {
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
   pipe(
     iter,
-    consume(
+    consumeAsync(
       (acc, next) =>
         ofValue({
           type: ConsumeRequestType.Continue,
@@ -36,7 +36,7 @@ test("consume", () => {
 
   pipe(
     iter,
-    consume(
+    consumeAsync(
       (acc, next) =>
         ofValue(
           acc > 0
