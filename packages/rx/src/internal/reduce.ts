@@ -26,8 +26,8 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 }
 
 /**
- * Applies an accumulator function over the source observable,
- * returning the accumulated result when the subscription is disposed.
+ * Returns an `ObservableLike` that applies an accumulator function 
+ * over the source, returning the accumulated result when the subscription is disposed.
  *
  * @param reducer The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.

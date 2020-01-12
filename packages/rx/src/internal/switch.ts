@@ -47,8 +47,8 @@ class SwitchSubscriber<T>
 }
 
 /**
- * Converts a higher-order observable into a first-order observable producing
- * values only from the most recent observable.
+ * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
+ * values only from the most recent source.
  */
 export const switchAll = <T>(): ObservableOperatorLike<
   ObservableLike<T>,

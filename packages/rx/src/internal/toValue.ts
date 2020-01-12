@@ -34,7 +34,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
 
 /**
  * Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, returning
- * the last values produced by the source.
+ * the last value produced by the source.
  */
 export const toValue = <T>(): OperatorLike<
   ObservableLike<T>,

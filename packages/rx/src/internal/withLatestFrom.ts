@@ -49,8 +49,8 @@ class WithLatestFromSubscriber<TA, TB, TC>
 }
 
 /**
- * Combines the source with other to create an `ObservableLike` whose values are 
- * calculated from the latest values of each, only when the source emits.
+ * Returns an `ObservableLike` which combines the source with 
+ * the latest value from another `ObservableLike`.
  * 
  * @param other 
  * @param selector 

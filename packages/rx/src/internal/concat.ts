@@ -62,20 +62,25 @@ class ConcatEnumerable<T> extends ConcatObservable<T>
   readonly enumerate = enumerableMixin.enumerate;
 }
 
+/**
+ * Creates an `EnumerableLike` which emits all values from each source sequentially.
+ */
 export function concat<T>(
   fst: EnumerableLike<T>,
   snd: EnumerableLike<T>,
   ...tail: Array<EnumerableLike<T>>
 ): EnumerableLike<T>;
+
+/**
+ * Creates an `ObservableLike` which emits all values from each source sequentially.
+ */
 export function concat<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T>;
 
-/**
- * Creates an observable which emits all values from each given sources sequentially.
- */
+
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {

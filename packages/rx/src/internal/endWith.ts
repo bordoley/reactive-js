@@ -3,7 +3,7 @@ import { fromArray } from "./fromArray";
 import { ObservableOperatorLike } from "./interfaces";
 
 /**
- * Returns an observable that emits the items from the source,
+ * Returns an `ObservableLike` that emits items from the source,
  * concatenated with the values specified as arguments.
  */
 export function endWith<T>(

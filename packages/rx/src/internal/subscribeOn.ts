@@ -23,7 +23,7 @@ class SubscribeOnObserver<T> implements ObserverLike<T> {
 }
 
 /**
- * Returns an observable that subscribes to the source on the specified `SchedulerLike`.
+ * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */

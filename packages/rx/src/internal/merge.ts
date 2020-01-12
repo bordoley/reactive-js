@@ -39,7 +39,7 @@ class MergeObservable<T> implements ObservableLike<T> {
 }
 
 /**
- *  Creates an observable which concurrently emits values from the sources.
+ *  Creates an `ObservableLike` which concurrently emits values from the sources.
  */
 export function merge<T>(
   fst: ObservableLike<T>,

@@ -90,6 +90,11 @@ export function using<
     r4: TResource5,
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
+
+/**
+ * Creates an `ObservableLike` that uses one or more resources which 
+ * will be disposed when the ObservableLike disposes it's only subscription.
+ */
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(
   resourceFactory: () => TResource | TResource[],
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,

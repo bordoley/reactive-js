@@ -34,7 +34,7 @@ const operator = <T>(count: number): SubscriberOperatorLike<T, T> => {
 };
 
 /**
- * Returns an observable that skips the first count items emitted by the source.
+ * Returns an `ObservableLike` that skips the first count items emitted by the source.
  *
  * @param count The number of items emitted by source that should be skipped.
  */

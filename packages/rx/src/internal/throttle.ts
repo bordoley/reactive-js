@@ -126,9 +126,11 @@ export function throttle<T>(
 ): ObservableOperatorLike<T, T>;
 
 /**
- * Emits a value from the source Observable, then ignores subsequent source values for `duration` milliseconds.
+ * Returns an `ObservableLike` which emits a value from the source, 
+ * then ignores subsequent source values for `duration` milliseconds.
  *
- * @param duration Time to wait before emitting another value after emitting the last value, measured in milliseconds.
+ * @param duration Time to wait before emitting another value after 
+ * emitting the last value, measured in milliseconds.
  * @param mode The throttle mode.
  */
 export function throttle<T>(

@@ -100,8 +100,8 @@
 
 ▸ **buffer**<**T**>(`options`: object): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
 
-Buffer items produced by the source until either the number of item reaches the
-specified maximum buffer size or the duration time expires.
+Returns an `ObservableLike` which buffer items produced by the source until either the
+number of items reaches the specified maximum buffer size or the duration time expires.
 
 **Type parameters:**
 
@@ -111,7 +111,7 @@ specified maximum buffer size or the duration time expires.
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`options` | object |  {} | a configuration object that specifies an optional `duration` function or time in ms, and an optional `maxBufferSize`.  |
+`options` | object |  {} | A configuration object that specifies an optional `duration` function or time in ms, and an optional `maxBufferSize`.  |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
 
@@ -121,8 +121,8 @@ ___
 
 ▸ **catchError**<**T**>(`onError`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Catches errors produced by source and either continues with
-the observable returned from the `onError` callback or propagates the error if
+Returns an `ObservableLike` which catches errors produced by source and either continues with
+the `ObservableLike` returned from the `onError` callback or propagates the error if
 void is returned.
 
 **Type parameters:**
@@ -152,7 +152,8 @@ ___
 
 ▸ **combineLatest**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -181,7 +182,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -213,7 +215,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -248,7 +251,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -286,7 +290,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -327,7 +332,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -371,7 +377,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›, [ObservableLike](interfaces/observablelike.md)‹TH›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -418,7 +425,8 @@ Name | Type |
 
 ▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB›, [ObservableLike](interfaces/observablelike.md)‹TC›, [ObservableLike](interfaces/observablelike.md)‹TD›, [ObservableLike](interfaces/observablelike.md)‹TE›, [ObservableLike](interfaces/observablelike.md)‹TF›, [ObservableLike](interfaces/observablelike.md)‹TG›, [ObservableLike](interfaces/observablelike.md)‹TH›, [ObservableLike](interfaces/observablelike.md)‹TI›], `selector`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
+Returns an `ObservableLike` that combines the latest values from
+multiple sources using the specified `selector` function.
 
 **Type parameters:**
 
@@ -472,7 +480,7 @@ ___
 
 ▸ **concat**<**T**>(`fst`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, `snd`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, ...`tail`: Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T››): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-Creates an observable which emits all values from each given sources sequentially.
+Creates an `EnumerableLike` which emits all values from each source sequentially.
 
 **Type parameters:**
 
@@ -490,7 +498,7 @@ Name | Type |
 
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an observable which emits all values from each given sources sequentially.
+Creates an `ObservableLike` which emits all values from each source sequentially.
 
 **Type parameters:**
 
@@ -512,8 +520,8 @@ ___
 
 ▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
-Converts a higher-order observable into a first-order
-observable by concatenating the inner observables in order.
+Converts a higher-order `ObservableLike` into a first-order
+`ObservableLike` by concatenating the inner sources in order.
 
 **Type parameters:**
 
@@ -533,7 +541,7 @@ ___
 
 ▸ **contains**<**T**>(`value`: T, `equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an observable that emits a single `true` value if the source
+Returns an `ObservableLike` that emits a single `true` value if the source
 emits any item equal to `value`, otherwise false.
 
 **Type parameters:**
@@ -604,7 +612,7 @@ Returns a new `SubjectLike` instance.
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `scheduler` | SchedulerLike | - | The scheduler that should be used by sources to notify the `SubjectLike` instance. |
-`replayCount` | number | 0 | The number of events that should be replayed when the `SubjectLike` is subscribed to.  |
+`replayCount` | number | 0 | The number of events that should be replayed when the `SubjectLike` instance is subscribed to.  |
 
 **Returns:** *[SubjectLike](interfaces/subjectlike.md)‹T›*
 
@@ -614,8 +622,8 @@ ___
 
 ▸ **defer**<**T**>(`factory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an observable that when subscribed to calls the `factory` function
-to make a new observable for each new `SubscriberLike`.
+Creates an `ObservableLike` that when subscribed to calls the `factory` function
+to create a new source instance for each subscriber.
 
 **Type parameters:**
 
@@ -637,7 +645,7 @@ ___
 
 ▸ **distinctUntilChanged**<**T**>(`equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that emits all items emitted by the source that
+Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
 
 **Type parameters:**
@@ -698,7 +706,7 @@ ___
 
 ▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that emits the items from the source,
+Returns an `ObservableLike` that emits items from the source,
 concatenated with the values specified as arguments.
 
 **Type parameters:**
@@ -720,7 +728,7 @@ ___
 
 ▸ **every**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an observable that emits a single true value if the predicate is satisfied for
+Returns an `ObservableLike` that emits a single true value if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise false.
 
 **Type parameters:**
@@ -749,8 +757,8 @@ ___
 
 ▸ **exhaust**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
-Converts a higher-order observable into a first-order observable
-by dropping inner observables while the previous inner observable
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+by dropping inner sources while the previous inner source
 has not yet been disposed.
 
 **Type parameters:**
@@ -986,7 +994,7 @@ ___
 
 ▸ **fromScheduledValues**<**T**>(`value`: [number, T], ...`values`: Array‹[number, T]›): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an observable from a series of [delay, value] tuples.
+Creates an `ObservableLike` from a series of [delay, value] tuples.
 The delay is relative to the current time.
 
 **Type parameters:**
@@ -1079,7 +1087,7 @@ ___
 
 ▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
-Returns an observable that ignores all items emitted by the source.
+Returns an `ObservableLike` that ignores all items emitted by the source.
 
 **Type parameters:**
 
@@ -1095,7 +1103,7 @@ ___
 
 ▸ **keep**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that only emits items produced by the
+Returns an `ObservableLike` that only emits items produced by the
 source that satisfy the specified predicate.
 
 **Type parameters:**
@@ -1124,7 +1132,7 @@ ___
 
 ▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
-Creates a new observable which applies the provided the operator function to
+Creates a new `ObservableLike` which applies the provided the operator function to
 subscriber when the source is subscribed to.
 
 **Type parameters:**
@@ -1147,7 +1155,8 @@ ___
 
 ▸ **map**<**TA**, **TB**>(`mapper`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
-Applies the `mapper` function to each value emitted by the source observable.
+Returns an `ObservableLike` that applies the `mapper` function to each
+value emitted by the source.
 
 **Type parameters:**
 
@@ -1159,7 +1168,7 @@ Applies the `mapper` function to each value emitted by the source observable.
 
 ▪ **mapper**: *function*
 
-The pure function to apply each value.
+The map function to apply each value. Must be a pure function.
 
 ▸ (`data`: TA): *TB*
 
@@ -1177,7 +1186,7 @@ ___
 
 ▸ **merge**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
- Creates an observable which concurrently emits values from the sources.
+ Creates an `ObservableLike` which concurrently emits values from the sources.
 
 **Type parameters:**
 
@@ -1199,8 +1208,8 @@ ___
 
 ▸ **mergeAll**<**T**>(`options`: object): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
-Converts a higher-order observable into a first-order observable
-which concurrently delivers values emitted by the inner observables.
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+which concurrently delivers values emitted by the inner sources.
 
 **Type parameters:**
 
@@ -1220,7 +1229,7 @@ ___
 
 ▸ **never**<**T**>(): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-An observable that emits no items and never disposes its subscriber.
+Returna an `ObservableLike` instance that emits no items and never disposes its subscriber.
 
 **Type parameters:**
 
@@ -1234,7 +1243,7 @@ ___
 
 ▸ **none**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an observable that emits a single true value if the predicate does not satisfy
+Returns an `ObservableLike` that emits a single true value if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise false.
 
 **Type parameters:**
@@ -1348,7 +1357,7 @@ ___
 
 ▸ **onError**<**T**>(`onError`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that forwards error notifications to the provided `onError` function.
+Returns an `ObservableLike` that forwards error notifications to the provided `onError` function.
 
 The function that is invoked when the observable subscription is disposed with an error.
 
@@ -1376,7 +1385,7 @@ ___
 
 ▸ **onNotify**<**T**>(`onNotify`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that forwards notifications to the provided `onNotify` function.
+Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
 
 The function that is invoked when the observable source produces values.
 
@@ -1425,8 +1434,8 @@ ___
 
 ▸ **reduce**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
 
-Applies an accumulator function over the source observable,
-returning the accumulated result when the subscription is disposed.
+Returns an `ObservableLike` that applies an accumulator function
+over the source, returning the accumulated result when the subscription is disposed.
 
 **Type parameters:**
 
@@ -1463,7 +1472,7 @@ ___
 
 ▸ **repeat**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that applies the predicate function each time the source
+Returns an `ObservableLike` that applies the predicate function each time the source
 completes to determine if the subscription should be renewed.
 
 **Type parameters:**
@@ -1488,7 +1497,7 @@ Name | Type |
 
 ▸ **repeat**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that repeats the source count times.
+Returns an `ObservableLike` that repeats the source count times.
 
 **Type parameters:**
 
@@ -1504,7 +1513,7 @@ Name | Type | Description |
 
 ▸ **repeat**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that repeats the source.
+Returns an `ObservableLike` that continually repeats the source.
 
 **Type parameters:**
 
@@ -1518,7 +1527,7 @@ ___
 
 ▸ **retry**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that mirrors the source, resubscrbing
+Returns an `ObservableLike` that mirrors the source, re-subscribing
 if the source completes with an error.
 
 **Type parameters:**
@@ -1529,9 +1538,8 @@ if the source completes with an error.
 
 ▸ **retry**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that mirrors the source, resubscrbing
-if the source completes with an error if the predicate function
-returns true.
+Returns an `ObservableLike` that mirrors the source, resubscrbing
+if the source completes with an error which satisfies the predicate function.
 
 **Type parameters:**
 
@@ -1558,7 +1566,8 @@ ___
 
 ▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
 
-Applies an accumulator function over the source observable, and emits each intermediate result.
+Returns an `ObservableLike` that applies an accumulator function over the source,
+and emits each intermediate result.
 
 **Type parameters:**
 
@@ -1595,7 +1604,8 @@ ___
 
 ▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, TAcc›*
 
-Applies an asynchronous accumulator function over the source, and emits each intermediate result.
+Returns the `ObservableLike` that applies an asynchronous accumulator function
+over the source, and emits each intermediate result.
 
 **Type parameters:**
 
@@ -1632,7 +1642,7 @@ ___
 
 ▸ **share**<**T**>(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable backed by a shared refcounted subscription to the
+Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
 to the source is disposed.
 
@@ -1655,7 +1665,7 @@ ___
 
 ▸ **skipFirst**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that skips the first count items emitted by the source.
+Returns an `ObservableLike` that skips the first count items emitted by the source.
 
 **Type parameters:**
 
@@ -1675,8 +1685,8 @@ ___
 
 ▸ **some**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an observable that emits a single `true` value if the source
-emits any items satisfy the predicate, otherwise false.
+Returns an `ObservableLike` that emits a single `true` value if the source
+emits any items which satisfy the predicate, otherwise false.
 
 **Type parameters:**
 
@@ -1704,7 +1714,7 @@ ___
 
 ▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that emits the values specified as arguments,
+Returns an `ObservableLike` that emits the values specified as arguments,
 concatenated with items from the source.
 
 **Type parameters:**
@@ -1738,7 +1748,7 @@ may used to cancel the subscription.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`scheduler` | SchedulerLike | The scheduler that should be used by the source to notify it's subscriber.  |
+`scheduler` | SchedulerLike | The SchedulerLike instance that should be used by the source to notify it's subscriber.  |
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, DisposableLike›*
 
@@ -1748,7 +1758,7 @@ ___
 
 ▸ **subscribeOn**<**T**>(`scheduler`: SchedulerLike): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that subscribes to the source on the specified `SchedulerLike`.
+Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
 
 **Type parameters:**
 
@@ -1768,8 +1778,8 @@ ___
 
 ▸ **switchAll**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
-Converts a higher-order observable into a first-order observable producing
-values only from the most recent observable.
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
+values only from the most recent source.
 
 **Type parameters:**
 
@@ -1783,7 +1793,7 @@ ___
 
 ▸ **takeFirst**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that only emits the first `count` values emitted by the source.
+Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
 
 **Type parameters:**
 
@@ -1803,7 +1813,7 @@ ___
 
 ▸ **takeLast**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that only emits the last `count` values emitted by the source.
+Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
 
 **Type parameters:**
 
@@ -1823,8 +1833,9 @@ ___
 
 ▸ **takeWhile**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Emits values emitted by the source as long as each value satisfies the given predicate,
-and then completes as soon as this predicate is not satisfied.
+Returns an `ObservableLike` which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
 
 **Type parameters:**
 
@@ -1880,7 +1891,8 @@ The throttle mode.
 
 ▸ **throttle**<**T**>(`duration`: number, `mode?`: [ThrottleMode](enums/throttlemode.md)): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Emits a value from the source Observable, then ignores subsequent source values for `duration` milliseconds.
+Returns an `ObservableLike` which emits a value from the source,
+then ignores subsequent source values for `duration` milliseconds.
 
 **Type parameters:**
 
@@ -1901,7 +1913,7 @@ ___
 
 ▸ **throwIfEmpty**<**T**>(`factory`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an observable that emits an error if the source completes without emitting a value.
+Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
 
 **Type parameters:**
 
@@ -1923,7 +1935,7 @@ ___
 
 ▸ **throws**<**T**>(`factory`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an observable that emits no items and immediately disposes its subscription with an error.
+Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
 **Type parameters:**
 
@@ -1949,7 +1961,8 @@ ___
 
 ▸ **timeout**<**T**>(`duration`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Errors if the source does not emit a value in given time span.
+Returns an `ObservableLike` that completes with an error if the source
+does not emit a value in given time span.
 
 **Type parameters:**
 
@@ -2016,7 +2029,7 @@ ___
 
 ▸ **toPromise**<**T**>(`scheduler`: SchedulerLike): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, Promise‹T››*
 
-Returns an observable that completes with the last value produced by
+Returns a Promise that completes with the last value produced by
 the source.
 
 **Type parameters:**
@@ -2027,7 +2040,7 @@ the source.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`scheduler` | SchedulerLike | The scheduler upon which to subscribe to the source observable.  |
+`scheduler` | SchedulerLike | The scheduler upon which to subscribe to the source.  |
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, Promise‹T››*
 
@@ -2058,7 +2071,7 @@ ___
 ▸ **toValue**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, returning
-the last values produced by the source.
+the last value produced by the source.
 
 **Type parameters:**
 
@@ -2071,6 +2084,9 @@ ___
 ###  using
 
 ▸ **using**<**TResource**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
@@ -2097,6 +2113,9 @@ Name | Type |
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
@@ -2126,6 +2145,9 @@ Name | Type |
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
@@ -2158,6 +2180,9 @@ Name | Type |
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
@@ -2193,6 +2218,9 @@ Name | Type |
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
@@ -2235,8 +2263,8 @@ ___
 
 ▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: [ObservableLike](interfaces/observablelike.md)‹TB›, `selector`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TC›*
 
-Combines the source with other to create an `ObservableLike` whose values are
-calculated from the latest values of each, only when the source emits.
+Returns an `ObservableLike` which combines the source with
+the latest value from another `ObservableLike`.
 
 **Type parameters:**
 

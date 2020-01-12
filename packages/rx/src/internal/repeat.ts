@@ -78,7 +78,7 @@ const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
   error === undefined;
 
 /**
- * Returns an observable that applies the predicate function each time the source
+ * Returns an `ObservableLike` that applies the predicate function each time the source
  * completes to determine if the subscription should be renewed.
  *
  * @param predicate The predicate function to apply.
@@ -88,13 +88,13 @@ export function repeat<T>(
 ): ObservableOperatorLike<T, T>;
 
 /**
- * Returns an observable that repeats the source count times.
+ * Returns an `ObservableLike` that repeats the source count times.
  * @param count
  */
 export function repeat<T>(count: number): ObservableOperatorLike<T, T>;
 
 /**
- * Returns an observable that repeats the source.
+ * Returns an `ObservableLike` that continually repeats the source.
  */
 export function repeat<T>(): ObservableOperatorLike<T, T>;
 
@@ -117,15 +117,14 @@ const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
   error !== undefined;
 
 /**
- * Returns an observable that mirrors the source, resubscrbing
+ * Returns an `ObservableLike` that mirrors the source, re-subscribing
  * if the source completes with an error.
  */
 export function retry<T>(): ObservableOperatorLike<T, T>;
 
 /**
- * Returns an observable that mirrors the source, resubscrbing
- * if the source completes with an error if the predicate function
- * returns true.
+ * Returns an `ObservableLike` that mirrors the source, resubscrbing
+ * if the source completes with an error which satisfies the predicate function.
  *
  * @param predicate
  */

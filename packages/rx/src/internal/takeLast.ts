@@ -32,7 +32,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 /**
- * Returns an observable that only emits the last `count` values emitted by the source.
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
  * @param count The maximum number of values to emit.
  */

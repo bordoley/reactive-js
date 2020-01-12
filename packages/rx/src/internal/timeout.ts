@@ -56,7 +56,8 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
 }
 
 /**
- * Errors if the source does not emit a value in given time span.
+ * Returns an `ObservableLike` that completes with an error if the source 
+ * does not emit a value in given time span.
  *
  * @param duration Time in ms within which the source must emit values.
  */
