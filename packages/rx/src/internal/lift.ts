@@ -29,6 +29,12 @@ class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
   readonly enumerate = enumerableMixin.enumerate;
 }
 
+/**
+ * Creates a new observable which applies the provided the operator function to
+ * subscriber when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
 export function lift<TA, TB>(
   operator: SubscriberOperatorLike<TA, TB>,
 ): ObservableOperatorLike<TA, TB> {

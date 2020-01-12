@@ -17,9 +17,23 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
 import { SubscriberOperator } from "./subscriberOperator";
 
+/**
+ * The throttle most used by the `throttle` operator.
+ */
 export const enum ThrottleMode {
+  /**
+   * Takes a leading value.
+   */
   First = 1,
+
+  /**
+   * Takes the trailing value
+   */
   Last = 2,
+
+  /**
+   * Takes both the leading and trailing values.
+   */
   Interval = 3,
 }
 
@@ -80,6 +94,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     if (error !== undefined) {
       this.dispose(error);
     }
+    // FIXME: Should really schedule a call to onNotify here.
   }
 
   onNotify(_?: unknown) {
@@ -99,10 +114,32 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 }
 
-export const throttle = <T>(
+/**
+ * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
+ *
+ * @param duration Selector function that is used to determine the silence duration in between emitted values.
+ * @param mode The throttle mode.
+ */
+export function throttle<T>(
+  duration: (next: T) => ObservableLike<unknown>,
+  mode?: ThrottleMode,
+): ObservableOperatorLike<T, T>;
+
+/**
+ * Emits a value from the source Observable, then ignores subsequent source values for `duration` milliseconds.
+ *
+ * @param duration Time to wait before emitting another value after emitting the last value, measured in milliseconds.
+ * @param mode The throttle mode.
+ */
+export function throttle<T>(
+  duration: number,
+  mode?: ThrottleMode,
+): ObservableOperatorLike<T, T>;
+
+export function throttle<T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperatorLike<T, T> {
   const durationSelector =
     typeof duration === "number"
       ? (_: T) => ofValue(undefined, duration)
@@ -110,4 +147,4 @@ export const throttle = <T>(
   const call = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
   return lift(new SubscriberOperator(false, call));
-};
+}

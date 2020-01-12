@@ -77,9 +77,30 @@ const repeatObs = <T>(
 const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
   error === undefined;
 
-export const repeat = <T>(
+/**
+ * Returns an observable that applies the predicate function each time the source
+ * completes to determine if the subscription should be renewed.
+ *
+ * @param predicate The predicate function to apply.
+ */
+export function repeat<T>(
+  predicate: (count: number) => boolean,
+): ObservableOperatorLike<T, T>;
+
+/**
+ * Returns an observable that repeats the source count times.
+ * @param count
+ */
+export function repeat<T>(count: number): ObservableOperatorLike<T, T>;
+
+/**
+ * Returns an observable that repeats the source.
+ */
+export function repeat<T>(): ObservableOperatorLike<T, T>;
+
+export function repeat<T>(
   predicate?: ((count: number) => boolean) | number,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperatorLike<T, T> {
   const repeatPredicate =
     predicate === undefined
       ? defaultRepeatPredicate
@@ -90,14 +111,31 @@ export const repeat = <T>(
           error === undefined && predicate(count);
 
   return repeatObs(repeatPredicate);
-};
+}
 
 const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
   error !== undefined;
 
-export const retry = <T>(
+/**
+ * Returns an observable that mirrors the source, resubscrbing
+ * if the source completes with an error.
+ */
+export function retry<T>(): ObservableOperatorLike<T, T>;
+
+/**
+ * Returns an observable that mirrors the source, resubscrbing
+ * if the source completes with an error if the predicate function
+ * returns true.
+ *
+ * @param predicate
+ */
+export function retry<T>(
+  predicate: (count: number, error: unknown) => boolean,
+): ObservableOperatorLike<T, T>;
+
+export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperatorLike<T, T> {
   const retryPredicate =
     predicate === undefined
       ? defaultRetryPredicate
@@ -105,4 +143,4 @@ export const retry = <T>(
           error !== undefined && predicate(count, error.cause);
 
   return repeatObs(retryPredicate);
-};
+}

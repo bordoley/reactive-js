@@ -28,6 +28,12 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   }
 }
 
+/**
+ * Returns an observable that emits a single `true` value if the source
+ * emits any items satisfy the predicate, otherwise false.
+ *
+ * @param predicate The predicate function.
+ */
 export const some = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperatorLike<T, boolean> => {
@@ -38,6 +44,13 @@ export const some = <T>(
 
 const referenceEquals = <T>(a: T, b: T) => a === b;
 
+/**
+ * Returns an observable that emits a single `true` value if the source
+ * emits any item equal to `value`, otherwise false.
+ *
+ * @param value
+ * @param equals
+ */
 export const contains = <T>(
   value: T,
   equals: (a: T, b: T) => boolean = referenceEquals,

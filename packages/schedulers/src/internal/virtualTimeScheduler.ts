@@ -82,28 +82,36 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
   moveNext() {
     this.hasCurrent = false;
-    const task = this.taskQueue.pop();
 
-    if (task !== undefined) {
-      this.hasCurrent = true;
-      const { dueTime, continuation, disposable } = task;
+    if (!this.isDisposed) {
+      const task = this.taskQueue.pop();
 
-      this.now = dueTime;
-      this.microTaskTicks = 0;
+      if (task !== undefined) {
+        this.hasCurrent = true;
+        const { dueTime, continuation, disposable } = task;
 
-      if (!disposable.isDisposed) {
-        const result = continuation.run(this.shouldYield) || undefined;
-        if (result !== undefined) {
-          const { delay = 0 } = result;
+        this.now = dueTime;
+        this.microTaskTicks = 0;
 
-          // This is to maintain consistency with the other
-          // scheduler implementation which always explicitly reschedule
-          // using the schedule function.
-          (task.id = this.taskIDCount++), (task.continuation = result);
-          (task.dueTime = dueTime + delay), this.taskQueue.push(task);
-        } else {
-          disposable.dispose();
+        if (!disposable.isDisposed) {
+          const result = continuation.run(this.shouldYield) || undefined;
+          if (result !== undefined) {
+            const { delay = 0 } = result;
+
+            // This is to maintain consistency with the other
+            // scheduler implementation which always explicitly reschedule
+            // using the schedule function.
+            task.id = this.taskIDCount++;
+            task.continuation = result;
+            task.dueTime = dueTime + delay;
+
+            this.taskQueue.push(task);
+          } else {
+            disposable.dispose();
+          }
         }
+      } else {
+        this.dispose();
       }
     }
 

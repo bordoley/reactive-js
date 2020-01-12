@@ -9,9 +9,11 @@ class DefaultSubscriber<T> extends AbstractSubscriber<T> {
 }
 
 /**
- * Safely subscribes an ObservableLike to a SubscriberLike,
- * using the provided scheduler. The returned DisposableLike
+ * Safely subscribes to an `ObservableLike` with a `SubscriberLike` instance
+ * using the provided scheduler. The returned `DisposableLike`
  * may used to cancel the subscription.
+ *
+ * @param scheduler The scheduler that should be used by the source to notify it's subscriber.
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,

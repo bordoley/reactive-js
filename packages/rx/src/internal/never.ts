@@ -8,4 +8,8 @@ class NeverEnumerable<T> implements EnumerableLike<T> {
 }
 
 const neverInstance: EnumerableLike<any> = new NeverEnumerable();
+
+/**
+ * An observable that emits no items and never disposes its subscriber.
+ */
 export const never = <T>() => neverInstance as EnumerableLike<T>;

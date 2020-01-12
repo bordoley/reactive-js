@@ -160,7 +160,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
 ): ObservableLike<T>;
 
 /**
- * Returns an observable that combines the latest values from multiple observables using the specified `selector` function.
+ * Returns an observable that combines the latest values from multiple sources using the specified `selector` function.
  */
 export function combineLatest<T>(
   observables: ObservableLike<any>[],

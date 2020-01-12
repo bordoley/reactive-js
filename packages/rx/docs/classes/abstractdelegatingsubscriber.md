@@ -2,7 +2,8 @@
 
 # Class: AbstractDelegatingSubscriber <**TA, TB**>
 
-Abstract base class for implementing SubscriberOperatorLikes.
+Abstract based class for implementing instances of the `SubscriberLike` interface
+which delegate notifications to a parent `SubscriberLike` instance
 
 ## Type parameters
 
@@ -12,7 +13,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 ## Hierarchy
 
-* AbstractSubscriber‹TA›
+* [AbstractSubscriber](abstractsubscriber.md)‹TA›
 
   ↳ **AbstractDelegatingSubscriber**
 
@@ -40,7 +41,7 @@ Abstract base class for implementing SubscriberOperatorLikes.
 
 \+ **new AbstractDelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)*
 
-*Overrides void*
+*Overrides [AbstractSubscriber](abstractsubscriber.md).[constructor](abstractsubscriber.md#constructor)*
 
 **Parameters:**
 
@@ -64,7 +65,7 @@ Name | Type |
 
 *Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
 
-*Overrides void*
+*Overrides [AbstractSubscriber](abstractsubscriber.md).[notify](abstractsubscriber.md#abstract-notify)*
 
 **Parameters:**
 

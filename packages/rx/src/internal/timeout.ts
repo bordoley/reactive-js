@@ -16,6 +16,7 @@ import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { throws } from "./throws";
 import { SubscriberOperator } from "./subscriberOperator";
+import { concat } from "./concat";
 
 const timeoutError = Symbol("TimeoutError");
 
@@ -41,23 +42,45 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   notify(next: T) {
-    setupDurationSubscription(this);
+    this.durationSubscription.dispose();
     this.delegate.notify(next);
   }
 
   onDispose(error?: ErrorLike) {
-    this.dispose(error);
+    if (error !== undefined) {
+      this.dispose(error);
+    }
   }
 
   onNotify(_: unknown) {}
 }
 
-export const timeout = <T>(
+/**
+ * Errors if the source does not emit a value in given time span.
+ *
+ * @param duration Time in ms within which the source must emit values.
+ */
+export function timeout<T>(duration: number): ObservableOperatorLike<T, T>;
+
+/**
+ *
+ * @param duration
+ */
+export function timeout<T>(
+  duration: ObservableLike<unknown>,
+): ObservableOperatorLike<T, T>;
+
+export function timeout<T>(
   duration: number | ObservableLike<unknown>,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperatorLike<T, T> {
   const durationObs =
-    typeof duration === "number" ? throws(timeoutError, duration) : duration;
+    typeof duration === "number"
+      ? throws(() => timeoutError, duration)
+      : concat(
+          duration,
+          throws(() => timeoutError),
+        );
   const call = (subscriber: SubscriberLike<T>) =>
     new TimeoutSubscriber(subscriber, durationObs);
   return lift(new SubscriberOperator(false, call));
-};
+}

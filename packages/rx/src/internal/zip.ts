@@ -379,6 +379,11 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     i: TI,
   ) => T,
 ): EnumerableLike<T>;
+
+/**
+ * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values, 
+ * in order, of each of its input sources.
+ */
 export function zip<T>(
   observables: ObservableLike<unknown>[],
   selector: (...values: unknown[]) => T,

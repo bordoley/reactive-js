@@ -40,7 +40,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 /**
- * Catches errors produced by source the observable and either continues with
+ * Catches errors produced by source and either continues with
  * the observable returned from the `onError` callback or propagates the error if
  * void is returned.
  *

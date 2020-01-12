@@ -26,6 +26,7 @@ to receive notifications.
 ## Implemented by
 
 * [AbstractDelegatingSubscriber](../classes/abstractdelegatingsubscriber.md)
+* [AbstractSubscriber](../classes/abstractsubscriber.md)
 
 ## Index
 
