@@ -4,7 +4,7 @@ import { ObservableLike, SafeSubscriberLike } from "./interfaces";
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
  * is invoked for each subscriber to the observable.
- * 
+ *
  * @param factory Factory function to create a new `Promise` instance.
  */
 export const fromPromise = <T>(

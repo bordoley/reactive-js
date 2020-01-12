@@ -46,7 +46,7 @@ class FromScheduledValuesObservable<T>
 }
 
 /**
- * Creates an observable from a series of [delay, value] tuples. 
+ * Creates an observable from a series of [delay, value] tuples.
  * The delay is relative to the current time.
  */
 export function fromScheduledValues<T>(
