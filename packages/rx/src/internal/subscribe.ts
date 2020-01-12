@@ -13,7 +13,7 @@ class DefaultSubscriber<T> extends AbstractSubscriber<T> {
  * using the provided scheduler. The returned `DisposableLike`
  * may used to cancel the subscription.
  *
- * @param scheduler The scheduler that should be used by the source to notify it's subscriber.
+ * @param scheduler The SchedulerLike instance that should be used by the source to notify it's subscriber.
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,

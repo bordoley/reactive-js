@@ -30,7 +30,7 @@ class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
 }
 
 /**
- * Creates a new observable which applies the provided the operator function to
+ * Creates a new `ObservableLike` which applies the provided the operator function to
  * subscriber when the source is subscribed to.
  *
  * @param operator The operator function to apply.

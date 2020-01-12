@@ -62,7 +62,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
  * Returns a new `SubjectLike` instance.
  *
  * @param scheduler The scheduler that should be used by sources to notify the `SubjectLike` instance.
- * @param replayCount The number of events that should be replayed when the `SubjectLike`
+ * @param replayCount The number of events that should be replayed when the `SubjectLike` instance
  * is subscribed to.
  */
 export const createSubject = <T>(

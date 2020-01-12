@@ -27,7 +27,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 /**
- * Returns an observable that emits an error if the source completes without emitting a value.
+ * Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
  *
  * @param factory A factory function invoked to produce the error to be thrown.
  */

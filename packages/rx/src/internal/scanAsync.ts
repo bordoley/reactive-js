@@ -35,7 +35,8 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
 }
 
 /**
- * Applies an asynchronous accumulator function over the source, and emits each intermediate result.
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function 
+ * over the source, and emits each intermediate result.
  *
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.

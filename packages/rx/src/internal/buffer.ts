@@ -80,10 +80,10 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
 }
 
 /**
- * Buffer items produced by the source until either the number of item reaches the
- * specified maximum buffer size or the duration time expires.
+ * Returns an `ObservableLike` which buffer items produced by the source until either the
+ * number of items reaches the specified maximum buffer size or the duration time expires.
  *
- * @param options a configuration object that specifies an optional `duration` function or time in ms,
+ * @param options A configuration object that specifies an optional `duration` function or time in ms,
  * and an optional `maxBufferSize`.
  */
 export function buffer<T>(

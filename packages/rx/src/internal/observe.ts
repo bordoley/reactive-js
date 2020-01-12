@@ -74,7 +74,7 @@ class OnErrorObserver<T> implements ObserverLike<T> {
 }
 
 /**
- * Returns an observable that forwards error notifications to the provided `onError` function.
+ * Returns an `ObservableLike` that forwards error notifications to the provided `onError` function.
  *
  * @param onError The function that is invoked when the observable subscription is disposed with an error.
  */
@@ -83,7 +83,7 @@ export const onError = <T>(
 ): ObservableOperatorLike<T, T> => observe(new OnErrorObserver(onError));
 
 /**
- * Returns an observable that forwards notifications to the provided `onNotify` function.
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */

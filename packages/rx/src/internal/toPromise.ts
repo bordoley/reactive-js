@@ -39,10 +39,10 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
 }
 
 /**
- * Returns an observable that completes with the last value produced by
+ * Returns a Promise that completes with the last value produced by
  * the source.
  * 
- * @param scheduler The scheduler upon which to subscribe to the source observable.
+ * @param scheduler The scheduler upon which to subscribe to the source.
  */
 export const toPromise = <T>(
   scheduler: SchedulerLike,

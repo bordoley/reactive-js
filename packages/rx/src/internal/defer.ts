@@ -9,8 +9,8 @@ class DeferObservable<T> implements ObservableLike<T> {
 }
 
 /**
- * Creates an observable that when subscribed to calls the `factory` function
- * to make a new observable for each new `SubscriberLike`.
+ * Creates an `ObservableLike` that when subscribed to calls the `factory` function
+ * to create a new source instance for each subscriber.
  *
  * @param factory Factory function to invoke for each `SubscriberLike` that subscribes to the observable.
  */

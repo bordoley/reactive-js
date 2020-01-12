@@ -18,7 +18,7 @@ class ThrowsObservable<T> implements ObservableLike<T> {
 }
 
 /**
- * Creates an observable that emits no items and immediately disposes its subscription with an error.
+ * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
  *
  * @param factory Factory function to generate the error to emit.
  * @param delay The delay before disposing the subscription.

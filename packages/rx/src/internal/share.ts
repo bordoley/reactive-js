@@ -39,7 +39,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 }
 
 /**
- * Returns an observable backed by a shared refcounted subscription to the
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
  * to the source is disposed.
  *
