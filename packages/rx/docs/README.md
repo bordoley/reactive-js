@@ -1404,8 +1404,7 @@ ___
 
 ▸ **publish**<**T**>(`scheduler`: SchedulerLike, `replayCount`: number): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [MulticastObservableLike](interfaces/multicastobservablelike.md)‹T››*
 
-Returns a `MulticastObservableLike` backed by a single subscription to
-source observable.
+Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
 **Type parameters:**
 

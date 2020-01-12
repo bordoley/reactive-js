@@ -1,4 +1,3 @@
-import { disposed } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   ObservableLike,
@@ -10,14 +9,11 @@ import { createSubject } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private subscriberCount = 0;
-  private sourceSubscription = disposed;
   private subject?: SubjectLike<T>;
   private readonly teardown = () => {
     this.subscriberCount--;
 
     if (this.subscriberCount === 0) {
-      this.sourceSubscription.dispose();
-      this.sourceSubscription = disposed;
       (this.subject as SubjectLike<T>).dispose();
       this.subject = undefined;
     }
