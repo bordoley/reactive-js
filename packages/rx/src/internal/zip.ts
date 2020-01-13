@@ -1,6 +1,6 @@
 import {
   EnumeratorLike,
-  EnumerableLike,
+  EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
@@ -116,7 +116,7 @@ class ZipObservable<T> implements ObservableLike<T> {
       const observable = observables[index];
 
       if (isEnumerable(observable)) {
-        const enumerable = (observable as unknown) as EnumerableLike<T>;
+        const enumerable = (observable as unknown) as EnumerableObservableLike<T>;
         const enumerator = enumerable.enumerate();
 
         enumerator.move();
@@ -180,12 +180,12 @@ class ZipProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class ZipEnumerable<T> implements EnumerableLike<T> {
+class ZipEnumerable<T> implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
   constructor(
-    private readonly enumerables: readonly EnumerableLike<any>[],
+    private readonly enumerables: readonly EnumerableObservableLike<any>[],
     readonly selector: (...values: unknown[]) => T,
   ) {}
 
@@ -293,79 +293,79 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   ) => T,
 ): ObservableLike<T>;
 export function zip<TA, TB, T>(
-  observables: [EnumerableLike<TA>, EnumerableLike<TB>],
+  observables: [EnumerableObservableLike<TA>, EnumerableObservableLike<TB>],
   selector: (a: TA, b: TB) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, T>(
-  observables: [EnumerableLike<TA>, EnumerableLike<TB>, EnumerableLike<TC>],
+  observables: [EnumerableObservableLike<TA>, EnumerableObservableLike<TB>, EnumerableObservableLike<TC>],
   selector: (a: TA, b: TB, c: TC) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
   ],
   selector: (a: TA, b: TB, c: TC, d: TD) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, TE, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
+    EnumerableObservableLike<TE>,
   ],
   selector: (a: TA, b: TB, c: TC, d: TD, e: TE) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
+    EnumerableObservableLike<TE>,
+    EnumerableObservableLike<TF>,
   ],
   selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
+    EnumerableObservableLike<TE>,
+    EnumerableObservableLike<TF>,
+    EnumerableObservableLike<TG>,
   ],
   selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
-    EnumerableLike<TH>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
+    EnumerableObservableLike<TE>,
+    EnumerableObservableLike<TF>,
+    EnumerableObservableLike<TG>,
+    EnumerableObservableLike<TH>,
   ],
   selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
-    EnumerableLike<TH>,
-    EnumerableLike<TI>,
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+    EnumerableObservableLike<TD>,
+    EnumerableObservableLike<TE>,
+    EnumerableObservableLike<TF>,
+    EnumerableObservableLike<TG>,
+    EnumerableObservableLike<TH>,
+    EnumerableObservableLike<TI>,
   ],
   selector: (
     a: TA,
@@ -378,7 +378,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     h: TH,
     i: TI,
   ) => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
@@ -389,6 +389,6 @@ export function zip<T>(
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
   return observables.every(isEnumerable)
-    ? new ZipEnumerable(observables as EnumerableLike<T>[], selector)
+    ? new ZipEnumerable(observables as EnumerableObservableLike<T>[], selector)
     : new ZipObservable(observables, selector);
 }

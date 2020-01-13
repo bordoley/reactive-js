@@ -1,6 +1,6 @@
 import {
   EnumeratorLike,
-  EnumerableLike,
+  EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
@@ -71,7 +71,7 @@ class FromEnumeratorObservable<T> implements ObservableLike<T> {
 }
 
 class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(enumerator: EnumeratorLike<void, T>) {
@@ -84,13 +84,13 @@ class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
 }
 
 /**
- * Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
+ * Creates an `EnumerableObservableLike` backed by the provided `EnumeratorLike`.
  *
  * @param enumerator The `EnumeratorLike`.
  */
 export function fromEnumerator<T>(
   enumerator: EnumeratorLike<void, T>,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` backed by the provided `EnumeratorLike`

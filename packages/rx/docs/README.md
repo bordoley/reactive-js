@@ -16,7 +16,8 @@
 ### Interfaces
 
 * [EnumerableLike](interfaces/enumerablelike.md)
-* [EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)
+* [EnumerableObservableLike](interfaces/enumerableobservablelike.md)
+* [EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)
 * [EnumeratorLike](interfaces/enumeratorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [ObservableLike](interfaces/observablelike.md)
@@ -478,9 +479,9 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, `snd`: [EnumerableLike](interfaces/enumerablelike.md)‹T›, ...`tail`: Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T››): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **concat**<**T**>(`fst`: [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, `snd`: [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, ...`tail`: Array‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` which emits all values from each source sequentially.
+Creates an `EnumerableObservableLike` which emits all values from each source sequentially.
 
 **Type parameters:**
 
@@ -490,11 +491,11 @@ Creates an `EnumerableLike` which emits all values from each source sequentially
 
 Name | Type |
 ------ | ------ |
-`fst` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
-`snd` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
-`...tail` | Array‹[EnumerableLike](interfaces/enumerablelike.md)‹T›› |
+`fst` | [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T› |
+`snd` | [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T› |
+`...tail` | Array‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›› |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -674,15 +675,15 @@ ___
 
 ###  empty
 
-▸ **empty**<**T**>(): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **empty**<**T**>(): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Return an `EnumerableLike` that emits no items and immediately disposes the subscription.
+Return an `EnumerableObservableLike` that emits no items and immediately disposes the subscription.
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **empty**<**T**>(`delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -771,16 +772,16 @@ ___
 
 ### `Const` flatten
 
-▸ **flatten**<**T**>(): *[EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, T›*
+▸ **flatten**<**T**>(): *[EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, T›*
 
-Converts a higher-order EnumerableLike into a first-order EnumerableLike
+Converts a higher-order EnumerableObservableLike into a first-order EnumerableObservableLike
 by concatenating the inner Enumerables in order.
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[EnumerableOperatorLike](interfaces/enumerableoperatorlike.md)‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, T›*
+**Returns:** *[EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, T›*
 
 ___
 
@@ -815,9 +816,9 @@ ___
 
 ###  fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` from the given array, starting at the `startIndex` if specified.
+Creates an `EnumerableObservableLike` from the given array, starting at the `startIndex` if specified.
 
 **Type parameters:**
 
@@ -830,7 +831,7 @@ Name | Type | Description |
 `values` | keyof T[] | The array. |
 `options?` | undefined &#124; object | Optional config object that specifies the `startIndex` into the array.  |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -854,9 +855,9 @@ ___
 
 ###  fromEnumerator
 
-▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
+Creates an `EnumerableObservableLike` backed by the provided `EnumeratorLike`.
 
 **Type parameters:**
 
@@ -868,7 +869,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T› | The `EnumeratorLike`.  |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -892,9 +893,9 @@ ___
 
 ###  fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` which iterates through the values
+Creates an `EnumerableObservableLike` which iterates through the values
 produced by the provided `Iterable`.
 
 **Type parameters:**
@@ -907,7 +908,7 @@ Name | Type |
 ------ | ------ |
 `iterable` | Iterable‹T› |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -931,9 +932,9 @@ ___
 
 ###  fromIterator
 
-▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` backed by the provided `Iterator`.
+Creates an `EnumerableObservableLike` backed by the provided `Iterator`.
 
 **Type parameters:**
 
@@ -945,7 +946,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `iterator` | Iterator‹T› | The `Iterator`.  |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1014,9 +1015,9 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Generates an `EnumerableLike` sequence from a generator function
+Generates an `EnumerableObservableLike` sequence from a generator function
 that is applied to an accumulator value.
 
 **Type parameters:**
@@ -1043,7 +1044,7 @@ Factory function to generate the initial accumulator.
 
 ▸ (): *T*
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1227,7 +1228,7 @@ ___
 
 ### `Const` never
 
-▸ **never**<**T**>(): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **never**<**T**>(): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Returna an `ObservableLike` instance that emits no items and never disposes its subscriber.
 
@@ -1235,7 +1236,7 @@ Returna an `ObservableLike` instance that emits no items and never disposes its 
 
 ▪ **T**
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ___
 
@@ -1290,9 +1291,9 @@ ___
 
 ###  ofValue
 
-▸ **ofValue**<**T**>(`value`: T): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **ofValue**<**T**>(`value`: T): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Creates an `EnumerableLike` that emits `value` then disposes the subscriber.
+Creates an `EnumerableObservableLike` that emits `value` then disposes the subscriber.
 
 **Type parameters:**
 
@@ -1304,7 +1305,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `value` | T | The value to emit.  |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -2009,10 +2010,10 @@ ___
 
 ### `Const` toEnumerable
 
-▸ **toEnumerable**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
+▸ **toEnumerable**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››*
 
-Converts an `ObservableLike` source into an `EnumerableLike` source. If the
-source itself is `EnumerableLike`, then this function returns the source. Otherwise,
+Converts an `ObservableLike` source into an `EnumerableObservableLike` source. If the
+source itself is `EnumerableObservableLike`, then this function returns the source. Otherwise,
 a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
 should not be used with sources that perform I/O such as ones that wrap Promises
 or DOM events.
@@ -2021,7 +2022,7 @@ or DOM events.
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableLike](interfaces/enumerablelike.md)‹T››*
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››*
 
 ___
 
@@ -2619,7 +2620,7 @@ Name | Type |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2634,7 +2635,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›]*
 
 ▪ **selector**: *function*
 
@@ -2647,9 +2648,9 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2666,7 +2667,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›]*
 
 ▪ **selector**: *function*
 
@@ -2680,9 +2681,9 @@ Name | Type |
 `b` | TB |
 `c` | TC |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2701,7 +2702,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›]*
 
 ▪ **selector**: *function*
 
@@ -2716,9 +2717,9 @@ Name | Type |
 `c` | TC |
 `d` | TD |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2739,7 +2740,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›]*
 
 ▪ **selector**: *function*
 
@@ -2755,9 +2756,9 @@ Name | Type |
 `d` | TD |
 `e` | TE |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2780,7 +2781,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›]*
 
 ▪ **selector**: *function*
 
@@ -2797,9 +2798,9 @@ Name | Type |
 `e` | TE |
 `f` | TF |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2824,7 +2825,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›]*
 
 ▪ **selector**: *function*
 
@@ -2842,9 +2843,9 @@ Name | Type |
 `f` | TF |
 `g` | TG |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2871,7 +2872,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›]*
 
 ▪ **selector**: *function*
 
@@ -2890,9 +2891,9 @@ Name | Type |
 `g` | TG |
 `h` | TH |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›, [EnumerableLike](interfaces/enumerablelike.md)‹TI›], `selector`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TI›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2921,7 +2922,7 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableLike](interfaces/enumerablelike.md)‹TA›, [EnumerableLike](interfaces/enumerablelike.md)‹TB›, [EnumerableLike](interfaces/enumerablelike.md)‹TC›, [EnumerableLike](interfaces/enumerablelike.md)‹TD›, [EnumerableLike](interfaces/enumerablelike.md)‹TE›, [EnumerableLike](interfaces/enumerablelike.md)‹TF›, [EnumerableLike](interfaces/enumerablelike.md)‹TG›, [EnumerableLike](interfaces/enumerablelike.md)‹TH›, [EnumerableLike](interfaces/enumerablelike.md)‹TI›]*
+▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TI›]*
 
 ▪ **selector**: *function*
 
@@ -2941,4 +2942,4 @@ Name | Type |
 `h` | TH |
 `i` | TI |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*

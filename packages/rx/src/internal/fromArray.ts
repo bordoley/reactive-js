@@ -1,4 +1,4 @@
-import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { EnumerableObservableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
@@ -71,7 +71,7 @@ class FromArrayObservable<T> implements ObservableLike<T> {
 }
 
 class FromArrayEnumerable<T> extends FromArrayObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -81,7 +81,7 @@ class FromArrayEnumerable<T> extends FromArrayObservable<T>
 }
 
 /**
- * Creates an `EnumerableLike` from the given array, starting at the `startIndex` if specified.
+ * Creates an `EnumerableObservableLike` from the given array, starting at the `startIndex` if specified.
  *
  * @param values The array.
  * @param options Optional config object that specifies the `startIndex` into the array.
@@ -91,7 +91,7 @@ export function fromArray<T>(
   options?: {
     startIndex: number;
   },
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.

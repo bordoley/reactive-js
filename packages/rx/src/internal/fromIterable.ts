@@ -1,5 +1,5 @@
 import {
-  EnumerableLike,
+  EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
   EnumeratorLike,
@@ -53,7 +53,7 @@ class FromIteratorObservable<T> implements ObservableLike<T> {
 }
 
 class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   constructor(iterator: Iterator<T>) {
     super(iterator, 0);
   }
@@ -68,11 +68,11 @@ class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
 }
 
 /**
- * Creates an `EnumerableLike` backed by the provided `Iterator`.
+ * Creates an `EnumerableObservableLike` backed by the provided `Iterator`.
  *
  * @param iterator The `Iterator`.
  */
-export function fromIterator<T>(iterator: Iterator<T>): EnumerableLike<T>;
+export function fromIterator<T>(iterator: Iterator<T>): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` backed by the provided `Iterator`
@@ -131,12 +131,12 @@ class FromIterableEnumerable<T> extends FromIterableObservable<T> {
 }
 
 /**
- * Creates an `EnumerableLike` which iterates through the values
+ * Creates an `EnumerableObservableLike` which iterates through the values
  * produced by the provided `Iterable`.
  *
  * @param values The `Iterable`.
  */
-export function fromIterable<T>(iterable: Iterable<T>): EnumerableLike<T>;
+export function fromIterable<T>(iterable: Iterable<T>): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` which iterates through the values

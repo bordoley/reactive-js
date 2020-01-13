@@ -6,7 +6,7 @@ import {
 } from "@reactive-js/schedulers";
 import {
   ObservableLike,
-  EnumerableLike,
+  EnumerableObservableLike,
   EnumeratorLike,
   SubscriberLike,
 } from "./interfaces";
@@ -51,7 +51,7 @@ class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
   }
 }
 
-class VirtualTimeEnumerableObservable<T> implements EnumerableLike<T> {
+class VirtualTimeEnumerableObservable<T> implements EnumerableObservableLike<T> {
   [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(private readonly observable: ObservableLike<T>) {}
@@ -69,16 +69,16 @@ class VirtualTimeEnumerableObservable<T> implements EnumerableLike<T> {
 }
 
 /**
- * Converts an `ObservableLike` source into an `EnumerableLike` source. If the
- * source itself is `EnumerableLike`, then this function returns the source. Otherwise,
+ * Converts an `ObservableLike` source into an `EnumerableObservableLike` source. If the
+ * source itself is `EnumerableObservableLike`, then this function returns the source. Otherwise,
  * a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
  * should not be used with sources that perform I/O such as ones that wrap Promises
  * or DOM events.
  */
 export const toEnumerable = <T>(): OperatorLike<
   ObservableLike<T>,
-  EnumerableLike<T>
+  EnumerableObservableLike<T>
 > => observable =>
   isEnumerable(observable)
-    ? (observable as EnumerableLike<T>)
+    ? (observable as EnumerableObservableLike<T>)
     : new VirtualTimeEnumerableObservable(observable);

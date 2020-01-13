@@ -1,9 +1,9 @@
 import {
   ObservableLike,
   SubscriberLike,
-  EnumerableLike,
+  EnumerableObservableLike,
   EnumeratorLike,
-  EnumerableOperatorLike,
+  EnumerableObservableOperatorLike,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
@@ -37,7 +37,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
 class ConcatObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly observables: EnumerableLike<ObservableLike<T>>,
+    private readonly observables: EnumerableObservableLike<ObservableLike<T>>,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -54,19 +54,19 @@ class ConcatObservable<T> implements ObservableLike<T> {
 }
 
 class ConcatEnumerable<T> extends ConcatObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 }
 
 /**
- * Creates an `EnumerableLike` which emits all values from each source sequentially.
+ * Creates an `EnumerableObservableLike` which emits all values from each source sequentially.
  */
 export function concat<T>(
-  fst: EnumerableLike<T>,
-  snd: EnumerableLike<T>,
-  ...tail: Array<EnumerableLike<T>>
-): EnumerableLike<T>;
+  fst: EnumerableObservableLike<T>,
+  snd: EnumerableObservableLike<T>,
+  ...tail: Array<EnumerableObservableLike<T>>
+): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
@@ -86,10 +86,10 @@ export function concat<T>(
 }
 
 /**
- * Converts a higher-order EnumerableLike into a first-order EnumerableLike
+ * Converts a higher-order EnumerableObservableLike into a first-order EnumerableObservableLike
  * by concatenating the inner Enumerables in order.
  */
-export const flatten = <T>(): EnumerableOperatorLike<
-  EnumerableLike<T>,
+export const flatten = <T>(): EnumerableObservableOperatorLike<
+  EnumerableObservableLike<T>,
   T
 > => enumerable => new ConcatEnumerable(enumerable);
