@@ -14,7 +14,7 @@ import { enumerableMixin, isEnumerable } from "./enumerable";
 import { AbstractSubscriber } from "./subscriber";
 
 class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
-  implements EnumeratorLike<T>, SubscriberLike<T> {
+  implements EnumeratorLike<void, T>, SubscriberLike<T> {
   current: any = undefined;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;

@@ -9,7 +9,7 @@ import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 
-const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
+const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
     if (!enumerator.hasCurrent) {
       return false;
@@ -18,7 +18,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   return true;
 };
 
-const shouldComplete = (enumerators: readonly EnumeratorLike<unknown>[]) => {
+const shouldComplete = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
     enumerator.moveNext();
     if (enumerator.isDisposed && !enumerator.hasCurrent) {
@@ -28,19 +28,19 @@ const shouldComplete = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   return false;
 };
 
-const getCurrent = <T>(enumerator: EnumeratorLike<T>): T => {
+const getCurrent = <T>(enumerator: EnumeratorLike<void, T>): T => {
   return enumerator.current;
 };
 
 class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
-  implements EnumeratorLike<unknown> {
+  implements EnumeratorLike<void, unknown> {
   current: unknown;
   private readonly buffer: Array<unknown> = [];
   hasCurrent = false;
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly enumerators: readonly EnumeratorLike<any>[],
+    private readonly enumerators: readonly EnumeratorLike<void, any>[],
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
@@ -110,7 +110,7 @@ class ZipObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     const observables = this.observables;
     const count = observables.length;
-    const enumerators: EnumeratorLike<unknown>[] = [];
+    const enumerators: EnumeratorLike<void, unknown>[] = [];
 
     for (let index = 0; index < count; index++) {
       const observable = observables[index];
@@ -142,7 +142,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
 
   constructor(
     private readonly subscriber: SubscriberLike<T>,
-    private readonly enumerators: readonly EnumeratorLike<any>[],
+    private readonly enumerators: readonly EnumeratorLike<void, any>[],
     private readonly selector: (...values: unknown[]) => T,
   ) {}
 

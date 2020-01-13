@@ -1,8 +1,10 @@
 [@reactive-js/rx](../README.md) › [EnumeratorLike](enumeratorlike.md)
 
-# Interface: EnumeratorLike <**T**>
+# Interface: EnumeratorLike <**TReq, T**>
 
 ## Type parameters
+
+▪ **TReq**
 
 ▪ **T**
 
@@ -43,9 +45,15 @@ ___
 
 ###  moveNext
 
-▸ **moveNext**(): *boolean*
+▸ **moveNext**(`req`: TReq): *boolean*
 
 Advances the enumerator to the next item.
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | TReq |
 
 **Returns:** *boolean*
 

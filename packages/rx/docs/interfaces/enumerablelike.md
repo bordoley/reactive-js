@@ -26,8 +26,8 @@ An `ObservableLike` that also support synchronous enumeration and iteration.
 
 ###  enumerate
 
-▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹T›*
+▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹void, T›*
 
 Returns an `EnumeratorLike` to iterate through the observable source.
 
-**Returns:** *[EnumeratorLike](enumeratorlike.md)‹T›*
+**Returns:** *[EnumeratorLike](enumeratorlike.md)‹void, T›*
