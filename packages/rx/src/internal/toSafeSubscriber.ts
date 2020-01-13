@@ -67,7 +67,7 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
 
 /**
  * Returns a `SafeSubscriberLike` that delegates to the provided subscriber.
- * 
+ *
  * @param subscriber The `SubscriberLike` instance to wrap in a `SafeSubscriberLike`.
  */
 export const toSafeSubscriber = <T>(

@@ -60,14 +60,27 @@ const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
   return diff;
 };
 
+const scheduleDrainQueue = (
+  scheduler: PrioritySchedulerResourceImpl,
+  task: ScheduledTaskLike,
+) => {
+  const head = scheduler.queue.peek();
+  const disposable = scheduler.disposable;
+
+  if (head === task && disposable.inner.isDisposed) {
+    scheduler.delay = Math.max(task.dueTime - scheduler.now, 0);
+    disposable.inner = scheduler.hostScheduler.schedule(scheduler);
+  }
+};
+
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
   readonly disposable: SerialDisposableLike = createSerialDisposable().add(() =>
     this.queue.clear(),
   );
-  private readonly queue: PriorityQueueLike<
-    ScheduledTaskLike
-  > = createPriorityQueue(comparator);
+  readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
+    comparator,
+  );
 
   readonly add = disposableMixin.add;
   private currentTask: ScheduledTaskLike | undefined = undefined;
@@ -75,20 +88,23 @@ class PrioritySchedulerResourceImpl
   delay = 0;
   readonly dispose = disposableMixin.dispose;
   private shouldYield = () => {
+    const currentTask = this.currentTask;
     const currentTaskIsDisposed =
-      this.currentTask !== undefined && this.currentTask.disposable.isDisposed;
+      currentTask !== undefined && currentTask.disposable.isDisposed;
 
     const nextTask = this.queue.peek();
     const now = this.now;
-    const nextTaskIsHigherPriority =
-      this.currentTask !== undefined &&
-      nextTask !== undefined &&
-      this.currentTask !== nextTask &&
-      nextTask.dueTime <= now &&
-      nextTask.priority < this.currentTask.priority;
 
+    const nextTaskIsHigherPriority =
+      currentTask !== undefined &&
+      nextTask !== undefined &&
+      currentTask !== nextTask &&
+      nextTask.dueTime <= now &&
+      nextTask.priority < currentTask.priority;
+
+    const currentShouldYield = this.currentShouldYield;
     const hostRequestedYield =
-      this.currentShouldYield !== undefined && this.currentShouldYield();
+      currentShouldYield !== undefined && currentShouldYield();
 
     return (
       currentTaskIsDisposed || nextTaskIsHigherPriority || hostRequestedYield
@@ -96,7 +112,7 @@ class PrioritySchedulerResourceImpl
   };
   private taskIDCounter = 0;
 
-  constructor(private readonly hostScheduler: SchedulerLike) {}
+  constructor(readonly hostScheduler: SchedulerLike) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
@@ -107,10 +123,11 @@ class PrioritySchedulerResourceImpl
   }
 
   run(shouldYield?: () => boolean) {
+    const queue = this.queue;
     for (
-      let currentTask = this.queue.peek();
+      let currentTask = queue.peek();
       currentTask !== undefined;
-      currentTask = this.queue.peek()
+      currentTask = queue.peek()
     ) {
       const delay = currentTask.dueTime - this.now;
       if (delay > 0) {
@@ -118,7 +135,7 @@ class PrioritySchedulerResourceImpl
         return this;
       }
 
-      this.queue.pop();
+      queue.pop();
 
       if (!currentTask.disposable.isDisposed) {
         this.currentTask = currentTask;
@@ -141,13 +158,13 @@ class PrioritySchedulerResourceImpl
             startTime: now,
             dueTime: now + delay,
           };
-          this.queue.push(continuedTask);
+          queue.push(continuedTask);
         } else {
           currentTask.disposable.dispose();
         }
       }
 
-      const nextTask = this.queue.peek();
+      const nextTask = queue.peek();
       if (nextTask !== undefined) {
         const now = this.now;
         const nextTaskDelay = Math.max(nextTask.dueTime - now, 0);
@@ -178,19 +195,10 @@ class PrioritySchedulerResourceImpl
     };
 
     this.queue.push(task);
-    this.scheduleDrainQueue(task);
+    scheduleDrainQueue(this, task);
 
     this.add(task.disposable);
     return task.disposable;
-  }
-
-  private scheduleDrainQueue(task: ScheduledTaskLike) {
-    const head = this.queue.peek();
-    if (head === task && this.disposable.inner.isDisposed) {
-      this.delay = Math.max(task.dueTime - this.now, 0);
-
-      this.disposable.inner = this.hostScheduler.schedule(this);
-    }
   }
 }
 

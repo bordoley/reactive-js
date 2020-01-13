@@ -69,7 +69,7 @@ class VirtualTimeEnumerableObservable<T> implements EnumerableLike<T> {
 }
 
 /**
- * Converts an `ObservableLike` source into an `EnumerableLike` source. If the 
+ * Converts an `ObservableLike` source into an `EnumerableLike` source. If the
  * source itself is `EnumerableLike`, then this function returns the source. Otherwise,
  * a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
  * should not be used with sources that perform I/O such as ones that wrap Promises

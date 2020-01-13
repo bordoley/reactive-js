@@ -22,7 +22,7 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 }
 
 /**
- * Returns an `ObservableLike` that applies an accumulator function over the source, 
+ * Returns an `ObservableLike` that applies an accumulator function over the source,
  * and emits each intermediate result.
  *
  * @param scanner The accumulator function called on each source value.

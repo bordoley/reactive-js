@@ -44,7 +44,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
-    this.delegate.add(() => {
+    delegate.add(() => {
       this.hasCurrent = false;
       this.current = undefined;
       this.buffer.length = 0;
@@ -54,7 +54,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
         error !== undefined ||
         (this.buffer.length === 0 && !this.hasCurrent)
       ) {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
@@ -381,7 +381,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
 ): EnumerableLike<T>;
 
 /**
- * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values, 
+ * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
  * in order, of each of its input sources.
  */
 export function zip<T>(

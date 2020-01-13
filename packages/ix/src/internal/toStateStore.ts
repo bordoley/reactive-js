@@ -18,13 +18,13 @@ import { createAsyncEnumerator } from "./createAsyncEnumerator";
 class DelegatingStateStoreAsyncEnumerable<T>
   implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
   constructor(
-    private readonly iterable: AsyncEnumerableLike<T, T>,
+    private readonly enumerable: AsyncEnumerableLike<T, T>,
     private readonly initialState: () => T,
     private readonly equals?: (a: T, b: T) => boolean,
   ) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    const enumerator = this.iterable.enumerateAsync(scheduler);
+    const enumerator = this.enumerable.enumerateAsync(scheduler);
 
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,

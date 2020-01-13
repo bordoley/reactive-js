@@ -13,9 +13,9 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     super(delegate);
     this.add(error => {
       if (error === undefined) {
-        ofValue(this.acc).subscribe(this.delegate);
+        ofValue(this.acc).subscribe(delegate);
       } else {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
@@ -26,7 +26,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 }
 
 /**
- * Returns an `ObservableLike` that applies an accumulator function 
+ * Returns an `ObservableLike` that applies an accumulator function
  * over the source, returning the accumulated result when the subscription is disposed.
  *
  * @param reducer The accumulator function called on each source value.

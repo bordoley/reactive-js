@@ -11,7 +11,7 @@ import { SubscriberOperator } from "./subscriberOperator";
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly onError: (error: unknown) => ObservableLike<T> | void,
+    onError: (error: unknown) => ObservableLike<T> | void,
   ) {
     super(delegate);
 
@@ -19,17 +19,17 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (error !== undefined) {
         try {
           const { cause } = error;
-          const result = this.onError(cause) || undefined;
+          const result = onError(cause) || undefined;
           if (result !== undefined) {
-            result.subscribe(this.delegate);
+            result.subscribe(delegate);
           } else {
-            this.delegate.dispose(error);
+            delegate.dispose(error);
           }
         } catch (cause) {
-          this.delegate.dispose({ cause, parent: error } as ErrorLike);
+          delegate.dispose({ cause, parent: error } as ErrorLike);
         }
       } else {
-        this.delegate.dispose();
+        delegate.dispose();
       }
     });
   }

@@ -41,8 +41,9 @@ class WebScheduler implements SchedulerLike {
     (navigator as any).scheduling.isInputPending !== undefined
       ? () => {
           const currentTime = now();
-          const deadline = this.startTime + yieldInterval;
-          const maxDeadline = this.startTime + maxYieldInterval;
+          const startTime = this.startTime;
+          const deadline = startTime + yieldInterval;
+          const maxDeadline = startTime + maxYieldInterval;
           const inputPending = (navigator as any).scheduling.isInputPending();
 
           return (
@@ -68,15 +69,16 @@ class WebScheduler implements SchedulerLike {
 
   private scheduleImmediate(callback: () => void): DisposableLike {
     const disposable = createDisposable();
+    const channel = this.channel;
 
-    this.channel.port1.onmessage = () => {
+    channel.port1.onmessage = () => {
       if (!disposable.isDisposed) {
         this.startTime = this.now;
         callback();
         disposable.dispose();
       }
     };
-    this.channel.port2.postMessage(null);
+    channel.port2.postMessage(null);
     return disposable;
   }
 

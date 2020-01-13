@@ -12,9 +12,9 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
     super(delegate);
     this.add(error => {
       if (error === undefined) {
-        ofValue(true).subscribe(this.delegate);
+        ofValue(true).subscribe(delegate);
       } else {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
@@ -22,8 +22,10 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   notify(next: T) {
     const failedPredicate = !this.predicate(next);
     if (failedPredicate) {
-      this.delegate.notify(false);
-      this.delegate.dispose();
+      const delegate = this.delegate;
+
+      delegate.notify(false);
+      delegate.dispose();
     }
   }
 }

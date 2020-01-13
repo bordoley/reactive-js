@@ -18,8 +18,9 @@ class EnumeratorIterator<T> implements Iterator<T> {
   constructor(private readonly enumerator: EnumeratorLike<T>) {}
 
   next<T>(): IteratorResult<T> {
-    return this.enumerator.moveNext()
-      ? { done: false, value: this.enumerator.current }
+    const enumerator = this.enumerator;
+    return enumerator.moveNext()
+      ? { done: false, value: enumerator.current }
       : done;
   }
 

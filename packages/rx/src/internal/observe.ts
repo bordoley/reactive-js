@@ -16,11 +16,11 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
     this.add(error => {
       try {
-        this.observer.onDispose(error);
+        observer.onDispose(error);
       } catch (cause) {
         error = { cause, parent: error } as ErrorLike;
       }
-      this.delegate.dispose(error);
+      delegate.dispose(error);
     });
   }
 

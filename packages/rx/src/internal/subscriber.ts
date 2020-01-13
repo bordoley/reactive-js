@@ -11,7 +11,7 @@ import { SubscriberLike } from "./interfaces";
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.
- * 
+ *
  * @noInheritDoc
  */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
@@ -55,7 +55,7 @@ export abstract class AbstractDelegatingSubscriber<
 > extends AbstractSubscriber<TA> {
   constructor(readonly delegate: SubscriberLike<TB>) {
     super(delegate);
-    this.delegate.add(this);
+    delegate.add(this);
   }
 
   abstract notify(_: TA): void;

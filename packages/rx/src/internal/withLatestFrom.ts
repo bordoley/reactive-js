@@ -49,11 +49,11 @@ class WithLatestFromSubscriber<TA, TB, TC>
 }
 
 /**
- * Returns an `ObservableLike` which combines the source with 
+ * Returns an `ObservableLike` which combines the source with
  * the latest value from another `ObservableLike`.
- * 
- * @param other 
- * @param selector 
+ *
+ * @param other
+ * @param selector
  */
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,

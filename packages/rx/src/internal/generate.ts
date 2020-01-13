@@ -21,7 +21,7 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
     let result = undefined;
     if (this.delay > 0 && !subscriber.isDisposed) {
       subscriber.notify(acc);
-      this.acc = this.generator(acc);
+      this.acc = generator(acc);
       result = this;
     } else if (shouldYield !== undefined) {
       while (!subscriber.isDisposed) {

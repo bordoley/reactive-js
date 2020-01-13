@@ -20,8 +20,9 @@ class ToValueObserver<T> implements ObserverLike<T> {
   }
 
   get result(): T {
-    if (this.error !== undefined) {
-      const { cause } = this.error;
+    const error = this.error;
+    if (error !== undefined) {
+      const { cause } = error;
       throw cause;
     }
 

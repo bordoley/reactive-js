@@ -12,7 +12,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       ctx.completedCount++;
 
       if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
