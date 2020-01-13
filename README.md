@@ -46,30 +46,30 @@ const subscription = pipe(
 
 ### Interactive Asynchronous Programming (IX)
 
-- [@reactive-js/ix](./packages/ix/docs)
+- [@reactive-js/ix](./packages/ix)
 
 ### Schedulers
 
 - [@reactive-js/scheduler](./packages/scheduler)
-- [@reactive-js/schedulers](./packages/schedulers/docs)
+- [@reactive-js/schedulers](./packages/schedulers)
 
 ### Utilities
 
 - [@reactive-js/disposable](./packages/disposable)
-- [@reactive-js/pipe](./packages/pipe/docs)
+- [@reactive-js/pipe](./packages/pipe)
 
 ### Platform Integrations
 
 #### Node.js
 
-- [@reactive-js/node](./packages/node/docs)
+- [@reactive-js/node](./packages/node)
 
 #### React
 
-- [@reactive-js/react](./packages/react/docs)
-- [@reactive-js/react-router](./packages/react-router/docs)
-- [@reactive-js/react-scheduler](./packages/react-scheduler/docs)
+- [@reactive-js/react](./packages/react)
+- [@reactive-js/react-router](./packages/react-router)
+- [@reactive-js/react-scheduler](./packages/react-scheduler)
 
 #### Web
 
-- [@reactive-js/web](./packages/web/docs)
+- [@reactive-js/web](./packages/web)
