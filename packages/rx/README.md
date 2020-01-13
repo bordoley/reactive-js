@@ -1,20 +1,18 @@
 # @reactive-js/rx
 
-Reactive-Js's core reactive programming API.
+Reactive-Js's core reactive and interactive programming API. 
 
-This library defines the core interfaces (ObservableLike, ObserverLike, and SubscriberLike) to support an event-driven, reactive, asynchronous programming model. In addition, basic utilities for safely creating, transforming, and using Observable streams are provided.
+Reactive-Js unifies reactive and interactive programming into a single API, defined by two core interfaces: [ObservableLike](./docs/interfaces/observablelike.md) and [EnumerableLike](./docs/interfaces/enumerablelike.md). In addition, basic utilities for safely creating, transforming, and using `ObservableLike` and `EnumerableLike` streams is provided.
 
-Unlike in RxJS, reactive-js Observable streams are always asynchronous. Calling subscribe on an Observable only sets up a subscription, but does not synchronously produce values (doing so is a programming error). Instead, reactive-js deeply integrates scheduling into the Subscriber type. During subscription setup ,Observable sources may schedule work to be done in the future, such as iterating through an iterable source.
-
-Another significant departure from RxJS is the API for subscribing to an Observable. Unlike in RxJS where user code typically directly calls an Observable's subscribe function, in reactive-js user code should use the `subscribe` function to setup a subscription. The `subscribe` function requires the user to provide a scheduler. This scheduler is used by the Observable source to schedule both immediate and delayed work, and enables deep integration with platform specific scheduling such as React's internal scheduler.
+`ObservableLike` streams are always asynchronous. Subscribing only sets up subscription, but does not synchronously produce values (doing so is a programming error). Instead scheduling is deeply integrated into the `SubscriberLike` type. During subscription setup, `ObservableLike` sources schedule work to be done in the future, such as iterating through an iterable source. This enables tight integrationg with platform specific scheduling implementations such as React's internal scheduler.
 
 ### A note on backpressure
 
-While reactive-js does not provide an API to directly apply backpressure to an Observable source, the library does provided several primitives that can be used to achieve the effect.
+While reactive-js does not provide an API to directly apply backpressure to an `ObservableLike` source, the library does provided several primitives that can be used to achieve the effect. 
 
-First and foremost, Observable sources are required to schedule the production of values on a Subscriber's Scheduler. Scheduling in reactive-js is designed around cooperative multi-tasking, and Observable sources must honor a Scheduler's `shouldYield` requests, ceasing to produce values, and returning a continuation callback if additional work is to be completed. This is effectively a form of backpressure that can be used to implement timeslicing and improve user experience.
+CPU bound backpressure can be achieved via the [@reactive-js/scheduler](../scheduler) [`SchedulerLike`](../scheduler/docs/interfaces/schedulerlike.md) interface's support for cooperative multi-tasking. Specifically, `ObservableLike` sources must honor a `SchedulerLike`'s `shouldYield` requests, yielding control back to the scheduler, and returning a `SchedulerContinuationLike` if additional work is to be completed. 
 
-A second approach is provided by the [@reactive-js/ix](../ix) package, which defines interfaces for iterating through asynchronous producers.
+A second approach is provided by the [@reactive-js/ix](../ix) package, which defines a push/pull interface for iterating through asynchronous producers.
 
 ## Installation
 

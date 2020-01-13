@@ -29,8 +29,8 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
 }
 
 /**
- * Returns an `ObservableLike` that emits a single true value if the predicate is satisfied for
- * every value produced by the source, or if the source is empty, otherwise false.
+ * Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
+ * every value produced by the source, or if the source is empty, otherwise `false`.
  *
  * @param predicate The predicate function.
  */
@@ -43,8 +43,8 @@ export const every = <T>(
 };
 
 /**
- * Returns an `ObservableLike` that emits a single true value if the predicate does not satisfy
- * every value produced by the source, or if the source is empty, otherwise false.
+ * Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
+ * every value produced by the source, or if the source is empty, otherwise `false`.
  *
  * @param predicate The predicate function.
  */

@@ -30,7 +30,7 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
 
 /**
  * Returns an `ObservableLike` that emits a single `true` value if the source
- * emits any items which satisfy the predicate, otherwise false.
+ * emits any items which satisfy the predicate, otherwise `false`.
  *
  * @param predicate The predicate function.
  */
@@ -46,7 +46,7 @@ const referenceEquals = <T>(a: T, b: T) => a === b;
 
 /**
  * Returns an `ObservableLike` that emits a single `true` value if the source
- * emits any item equal to `value`, otherwise false.
+ * emits any item equal to `value`, otherwise `false`.
  *
  * @param value
  * @param equals
