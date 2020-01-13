@@ -2,7 +2,7 @@
 
 # Class: AbstractDelegatingSubscriber <**TA, TB**>
 
-Abstract based class for implementing instances of the `SubscriberLike` interface
+Abstract base class for implementing instances of the `SubscriberLike` interface
 which delegate notifications to a parent `SubscriberLike` instance
 
 ## Type parameters

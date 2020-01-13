@@ -18,7 +18,7 @@ import { ofValue } from "./ofValue";
 import { SubscriberOperator } from "./subscriberOperator";
 
 /**
- * The throttle most used by the `throttle` operator.
+ * The throttle mode used by the `throttle` operator.
  */
 export const enum ThrottleMode {
   /**
@@ -27,7 +27,7 @@ export const enum ThrottleMode {
   First = 1,
 
   /**
-   * Takes the trailing value
+   * Takes the trailing value.
    */
   Last = 2,
 

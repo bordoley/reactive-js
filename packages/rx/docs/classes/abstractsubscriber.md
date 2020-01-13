@@ -2,7 +2,7 @@
 
 # Class: AbstractSubscriber <**T**>
 
-Abstract based class for implementing the `SubscriberLike` interface.
+Abstract base class for implementing the `SubscriberLike` interface.
 
 ## Type parameters
 
