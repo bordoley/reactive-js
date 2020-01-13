@@ -1,5 +1,6 @@
 export {
   EnumeratorLike,
+  EnumerableLike,
   EnumerableObservableLike,
   EnumerableObservableOperatorLike,
   MulticastObservableLike,
