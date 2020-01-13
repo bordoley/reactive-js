@@ -1,8 +1,8 @@
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
-  disposedAsyncEnumerator,
   AsyncEnumeratorResourceLike,
+  empty,
 } from "@reactive-js/ix";
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
@@ -113,6 +113,7 @@ export const useAsyncEnumerable = <TReq, T>(
   } = {},
 ): AsyncEnumeratorResourceLike<TReq, T> => {
   const scheduler = config.scheduler || normalPriority;
+  const emptyEnumerator = empty().enumerateAsync(scheduler);
   const replay = config.replay || 0;
 
   const factory = useCallback(
@@ -122,6 +123,6 @@ export const useAsyncEnumerable = <TReq, T>(
 
   return useResource<AsyncEnumeratorResourceLike<TReq, T>>(
     factory,
-    disposedAsyncEnumerator,
+    emptyEnumerator,
   );
 };

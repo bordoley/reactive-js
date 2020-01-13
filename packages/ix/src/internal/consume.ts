@@ -13,22 +13,59 @@ import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { identity } from "./identity";
 import { lift } from "./lift";
 
+/**
+ * 
+ */
 export const enum ConsumeRequestType {
+  /**
+   * 
+   */
   Continue = 1,
+
+  /**
+   * 
+   */
   Done = 2,
 }
 
+/**
+ * 
+ */
 export interface ContinueRequestLike<TReq, TAcc> {
+  /**
+   * 
+   */
   readonly type: ConsumeRequestType.Continue;
+  
+  /**
+   * 
+   */
   readonly req: TReq;
+
+  /**
+   * 
+   */
   readonly acc: TAcc;
 }
 
+/**
+ * 
+ */
 export interface DoneRequestLike<TAcc> {
+  /**
+   * 
+   */
   readonly type: ConsumeRequestType.Done;
+
+  /**
+   * 
+   */
   readonly acc: TAcc;
 }
 
+/**
+ * 
+ */
 export type ConsumeRequest<TReq, TAcc> =
   | ContinueRequestLike<TReq, TAcc>
   | DoneRequestLike<TAcc>;
@@ -76,6 +113,12 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
+/**
+ * 
+ * 
+ * @param consumer 
+ * @param initial 
+ */
 export const consume = <TReq, TSrc, TAcc>(
   consumer: (acc: TAcc, next: TSrc) => ConsumeRequest<TReq, TAcc>,
   initial: () => ConsumeRequest<TReq, TAcc>,

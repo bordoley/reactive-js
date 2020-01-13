@@ -70,6 +70,12 @@ class ConsumeAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
+/**
+ * 
+ * 
+ * @param consumer 
+ * @param initial 
+ */
 export const consumeAsync = <TReq, TSrc, TAcc>(
   consumer: (
     acc: TAcc,
