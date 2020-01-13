@@ -26,7 +26,7 @@ defined in the @reactive-js/rx package.
 
 ### Methods
 
-* [moveNext](virtualtimeschedulerlike.md#movenext)
+* [move](virtualtimeschedulerlike.md#move)
 
 ## Properties
 
@@ -46,9 +46,9 @@ ___
 
 ## Methods
 
-###  moveNext
+###  move
 
-▸ **moveNext**(): *boolean*
+▸ **move**(): *boolean*
 
 Advances the enumerator to the next item.
 

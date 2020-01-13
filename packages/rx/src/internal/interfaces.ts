@@ -130,7 +130,7 @@ export interface EnumeratorLike<TReq, T> extends DisposableLike {
    *
    * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
    */
-  moveNext(req: TReq): boolean;
+  move(req: TReq): boolean;
 }
 
 /**
