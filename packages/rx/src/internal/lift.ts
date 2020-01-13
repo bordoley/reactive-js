@@ -3,7 +3,7 @@ import {
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
-  EnumerableLike,
+  EnumerableObservableLike,
 } from "./interfaces";
 import { enumerableMixin, isEnumerable } from "./enumerable";
 
@@ -24,7 +24,7 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
 }
 
 class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
-  implements EnumerableLike<TOut> {
+  implements EnumerableObservableLike<TOut> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 }

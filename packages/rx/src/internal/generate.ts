@@ -1,5 +1,5 @@
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
-import { EnumerableLike, ObservableLike, SubscriberLike } from "./interfaces";
+import { EnumerableObservableLike, ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
 
@@ -63,7 +63,7 @@ class GenerateObservable<T> implements ObservableLike<T> {
 }
 
 class GenerateEnumerable<T> extends GenerateObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -73,7 +73,7 @@ class GenerateEnumerable<T> extends GenerateObservable<T>
 }
 
 /**
- * Generates an `EnumerableLike` sequence from a generator function
+ * Generates an `EnumerableObservableLike` sequence from a generator function
  * that is applied to an accumulator value.
  *
  * @param generator The generator function.
@@ -82,7 +82,7 @@ class GenerateEnumerable<T> extends GenerateObservable<T>
 export function generate<T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-): EnumerableLike<T>;
+): EnumerableObservableLike<T>;
 
 /**
  * Generates an `ObservableLike` sequence from a generator function

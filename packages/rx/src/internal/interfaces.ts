@@ -133,16 +133,20 @@ export interface EnumeratorLike<TReq, T> extends DisposableLike {
   move(req: TReq): boolean;
 }
 
+export interface EnumerableLike<TReq, T> {
+  /**
+   * Returns an `EnumeratorLike` to iterate through the source.
+   */
+  enumerate(): EnumeratorLike<TReq, T>;
+}
+
+
 /**
  * An `ObservableLike` that also support synchronous enumeration and iteration.
  *
  * @noInheritDoc
  */
-export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
-  /**
-   * Returns an `EnumeratorLike` to iterate through the source.
-   */
-  enumerate(): EnumeratorLike<void, T>;
+export interface EnumerableObservableLike<T> extends ObservableLike<T>, EnumerableLike<void, T>, Iterable<T> {
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
@@ -150,7 +154,7 @@ export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
-/** A function which converts an EnumerableLike<A> to an EnumerableLike<B>. */
-export interface EnumerableOperatorLike<A, B> {
-  (enumerable: EnumerableLike<A>): EnumerableLike<B>;
+/** A function which converts an EnumerableObservableLike<A> to an EnumerableObservableLike<B>. */
+export interface EnumerableObservableOperatorLike<A, B> {
+  (enumerable: EnumerableObservableLike<A>): EnumerableObservableLike<B>;
 }

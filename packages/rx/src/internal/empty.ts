@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, EnumerableObservableLike } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { enumerableMixin } from "./enumerable";
 
@@ -22,7 +22,7 @@ class EmptyObservable<T> implements ObservableLike<T> {
 }
 
 class EmptyEnumerable<T> extends EmptyObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -34,9 +34,9 @@ class EmptyEnumerable<T> extends EmptyObservable<T>
 const defaultEmpty = new EmptyEnumerable();
 
 /**
- * Return an `EnumerableLike` that emits no items and immediately disposes the subscription.
+ * Return an `EnumerableObservableLike` that emits no items and immediately disposes the subscription.
  */
-export function empty<T>(): EnumerableLike<T>;
+export function empty<T>(): EnumerableObservableLike<T>;
 
 /**
  * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.

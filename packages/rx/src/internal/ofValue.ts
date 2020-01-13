@@ -1,4 +1,4 @@
-import { ObservableLike, SubscriberLike, EnumerableLike } from "./interfaces";
+import { ObservableLike, SubscriberLike, EnumerableObservableLike } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { enumerableMixin } from "./enumerable";
 
@@ -28,7 +28,7 @@ class OfValueObservable<T> implements ObservableLike<T> {
 }
 
 class OfValueEnumerable<T> extends OfValueObservable<T>
-  implements EnumerableLike<T> {
+  implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
   readonly enumerate = enumerableMixin.enumerate;
 
@@ -38,11 +38,11 @@ class OfValueEnumerable<T> extends OfValueObservable<T>
 }
 
 /**
- * Creates an `EnumerableLike` that emits `value` then disposes the subscriber.
+ * Creates an `EnumerableObservableLike` that emits `value` then disposes the subscriber.
  *
  * @param value The value to emit.
  */
-export function ofValue<T>(value: T): EnumerableLike<T>;
+export function ofValue<T>(value: T): EnumerableObservableLike<T>;
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.

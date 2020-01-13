@@ -1,20 +1,18 @@
 [@reactive-js/rx](../README.md) › [EnumerableLike](enumerablelike.md)
 
-# Interface: EnumerableLike <**T**>
-
-An `ObservableLike` that also support synchronous enumeration and iteration.
+# Interface: EnumerableLike <**TReq, T**>
 
 ## Type parameters
+
+▪ **TReq**
 
 ▪ **T**
 
 ## Hierarchy
 
-* [ObservableLike](observablelike.md)‹T›
+* **EnumerableLike**
 
-* Iterable‹T›
-
-  ↳ **EnumerableLike**
+  ↳ [EnumerableObservableLike](enumerableobservablelike.md)
 
 ## Index
 
@@ -26,8 +24,8 @@ An `ObservableLike` that also support synchronous enumeration and iteration.
 
 ###  enumerate
 
-▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹void, T›*
+▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹TReq, T›*
 
 Returns an `EnumeratorLike` to iterate through the source.
 
-**Returns:** *[EnumeratorLike](enumeratorlike.md)‹void, T›*
+**Returns:** *[EnumeratorLike](enumeratorlike.md)‹TReq, T›*

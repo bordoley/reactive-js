@@ -1,5 +1,5 @@
 import {
-  EnumerableLike,
+  EnumerableObservableLike,
   EnumeratorLike,
   SubscriberLike,
   ObservableLike,
@@ -102,11 +102,11 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike
 
 /** @ignore */
 export const enumerableMixin = {
-  [Symbol.iterator]: function<T>(this: EnumerableLike<T>) {
+  [Symbol.iterator]: function<T>(this: EnumerableObservableLike<T>) {
     const enumerator = this.enumerate();
     return toIterator(enumerator);
   },
-  enumerate<T>(this: EnumerableLike<T>): EnumeratorLike<void, T> {
+  enumerate<T>(this: EnumerableObservableLike<T>): EnumeratorLike<void, T> {
     const subscriber = new EnumeratorSubscriber<T>();
     this.subscribe(subscriber);
     return subscriber;
