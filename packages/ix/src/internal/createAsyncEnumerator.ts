@@ -12,7 +12,8 @@ import {
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorLike } from "./interfaces";
 
-class AsyncEnumeratorImpl<TReq, T>
+/** @ignore */
+export class AsyncEnumeratorImpl<TReq, T>
   extends AbstractDelegatingSubscriber<TReq, TReq>
   implements AsyncEnumeratorLike<TReq, T> {
   constructor(
