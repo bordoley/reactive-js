@@ -18,12 +18,12 @@
 
 ## Callable
 
-▸ (`iter`: [AsyncEnumerableLike](asyncenumerablelike.md)‹TSrcReq, TSrc›): *[AsyncEnumerableLike](asyncenumerablelike.md)‹TReq, T›*
+▸ (`enumerable`: [AsyncEnumerableLike](asyncenumerablelike.md)‹TSrcReq, TSrc›): *[AsyncEnumerableLike](asyncenumerablelike.md)‹TReq, T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`iter` | [AsyncEnumerableLike](asyncenumerablelike.md)‹TSrcReq, TSrc› |
+`enumerable` | [AsyncEnumerableLike](asyncenumerablelike.md)‹TSrcReq, TSrc› |
 
 **Returns:** *[AsyncEnumerableLike](asyncenumerablelike.md)‹TReq, T›*
