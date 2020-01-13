@@ -23,7 +23,7 @@
 
 ### Methods
 
-* [moveNext](enumeratorlike.md#movenext)
+* [move](enumeratorlike.md#move)
 
 ## Properties
 
@@ -43,9 +43,9 @@ ___
 
 ## Methods
 
-###  moveNext
+###  move
 
-▸ **moveNext**(`req`: TReq): *boolean*
+▸ **move**(`req`: TReq): *boolean*
 
 Advances the enumerator to the next item.
 

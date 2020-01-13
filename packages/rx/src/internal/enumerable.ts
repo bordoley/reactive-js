@@ -19,7 +19,7 @@ class EnumeratorIterator<T> implements Iterator<T> {
 
   next<T>(): IteratorResult<T> {
     const enumerator = this.enumerator;
-    return enumerator.moveNext()
+    return enumerator.move()
       ? { done: false, value: enumerator.current }
       : done;
   }
@@ -59,7 +59,7 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike
     return this.disposable.isDisposed;
   }
 
-  moveNext(): boolean {
+  move(): boolean {
     this.hasCurrent = false;
     this.current = undefined;
     this.error = undefined;

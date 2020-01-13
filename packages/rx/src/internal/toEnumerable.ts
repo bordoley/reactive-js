@@ -33,12 +33,12 @@ class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
     this.hasCurrent = true;
   }
 
-  moveNext(): boolean {
+  move(): boolean {
     this.hasCurrent = false;
     this.current = undefined;
 
     while (!this.hasCurrent && !this.isDisposed) {
-      this.vts.moveNext();
+      this.vts.move();
 
       const error = this.error;
       if (error !== undefined) {

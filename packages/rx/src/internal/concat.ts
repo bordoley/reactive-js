@@ -20,7 +20,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
         delegate.dispose(error);
       } else {
         const enumerator = this.enumerator;
-        if (enumerator.moveNext()) {
+        if (enumerator.move()) {
           const concatSubscriber = new ConcatSubscriber(delegate, enumerator);
           enumerator.current.subscribe(concatSubscriber);
         } else {
@@ -45,7 +45,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
     subscriber.add(enumerator);
     const concatSubscriber = new ConcatSubscriber(subscriber, enumerator);
 
-    if (enumerator.moveNext()) {
+    if (enumerator.move()) {
       enumerator.current.subscribe(concatSubscriber);
     } else {
       subscriber.dispose();

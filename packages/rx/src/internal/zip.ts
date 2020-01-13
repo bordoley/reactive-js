@@ -20,7 +20,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
 
 const shouldComplete = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
-    enumerator.moveNext();
+    enumerator.move();
     if (enumerator.isDisposed && !enumerator.hasCurrent) {
       return true;
     }
@@ -59,7 +59,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     });
   }
 
-  moveNext(): boolean {
+  move(): boolean {
     const buffer = this.buffer;
     if (buffer.length > 0) {
       const next = buffer.shift();
@@ -119,7 +119,7 @@ class ZipObservable<T> implements ObservableLike<T> {
         const enumerable = (observable as unknown) as EnumerableLike<T>;
         const enumerator = enumerable.enumerate();
 
-        enumerator.moveNext();
+        enumerator.move();
         enumerators.push(enumerator);
       } else {
         const innerSubscriber = new ZipSubscriber(
@@ -157,7 +157,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
         subscriber.notify(next);
 
         for (const buffer of enumerators) {
-          buffer.moveNext();
+          buffer.move();
         }
 
         if (shouldYield()) {
@@ -169,7 +169,7 @@ class ZipProducer<T> implements SchedulerContinuationLike {
         const next = selector(...enumerators.map(getCurrent));
 
         for (const enumerator of enumerators) {
-          enumerator.moveNext();
+          enumerator.move();
         }
 
         subscriber.notify(next);
@@ -195,7 +195,7 @@ class ZipEnumerable<T> implements EnumerableLike<T> {
 
     for (const enumerable of enumerables) {
       const enumerator = enumerable.enumerate();
-      enumerator.moveNext();
+      enumerator.move();
       enumerators.push(enumerator);
     }
 

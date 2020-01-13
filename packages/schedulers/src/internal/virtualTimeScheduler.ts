@@ -35,7 +35,7 @@ export interface VirtualTimeSchedulerLike
    *
    * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
    */
-  moveNext(): boolean;
+  move(): boolean;
 }
 
 interface VirtualTask {
@@ -80,7 +80,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return this.disposable.isDisposed;
   }
 
-  moveNext() {
+  move() {
     this.hasCurrent = false;
 
     if (!this.isDisposed) {
@@ -133,7 +133,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
 
     if (shouldYield !== undefined) {
       this.runShouldYield = shouldYield;
-      while (this.moveNext()) {
+      while (this.move()) {
         if (shouldYield()) {
           this.runShouldYield = undefined;
           return this;
@@ -143,7 +143,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
       this.runShouldYield = undefined;
     } else {
       // eslint-disable-next-line no-empty
-      while (this.moveNext()) {}
+      while (this.move()) {}
     }
 
     this.dispose();

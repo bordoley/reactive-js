@@ -24,7 +24,7 @@ class IteratorEnumerator<T> implements EnumeratorLike<void, T> {
     return this.disposable.isDisposed;
   }
 
-  moveNext(): boolean {
+  move(): boolean {
     this.current = undefined;
     this.hasCurrent = false;
 
