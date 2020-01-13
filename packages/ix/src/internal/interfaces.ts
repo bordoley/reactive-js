@@ -14,7 +14,7 @@ export interface AsyncEnumerableLike<TReq, T> {
 }
 
 export interface AsyncEnumerableOperatorLike<TSrcReq, TSrc, TReq, T> {
-  (iter: AsyncEnumerableLike<TSrcReq, TSrc>): AsyncEnumerableLike<TReq, T>;
+  (enumerable: AsyncEnumerableLike<TSrcReq, TSrc>): AsyncEnumerableLike<TReq, T>;
 }
 
 export interface StateUpdaterLike<T> {

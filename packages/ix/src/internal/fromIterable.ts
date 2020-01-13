@@ -1,16 +1,10 @@
 import { pipe } from "@reactive-js/pipe";
 import {
   catchError,
-  concatAll,
   empty,
   fromIterator,
   map,
   ObservableLike,
-  takeFirst,
-  throws,
-  fromEnumerator,
-  defer,
-  concat,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorLike, AsyncEnumerableLike } from "./interfaces";
@@ -26,25 +20,24 @@ const fromIterableAsyncEnumerator = <T>(
   const iterator = iterable[Symbol.iterator]();
   const enumerator = fromIterator(iterator).enumerate();
 
-  const takeCountFromEnumerator = () =>
-    concat(
-      pipe(fromEnumerator(enumerator), takeFirst()),
-      defer(() => (enumerator.isDisposed ? throws(() => doneError) : empty())),
-    );
-
   const operator = (obs: ObservableLike<void>) =>
     pipe(
       obs,
-      map(takeCountFromEnumerator),
-      concatAll<T>(),
-      catchError(error => (error === doneError ? empty() : undefined)),
+      map(_ => {
+        if (enumerator.move()) {
+          return enumerator.current;
+        } else {
+          throw doneError;
+        }
+      }),
+      catchError(error => error === doneError ? empty() : undefined),
     );
 
   return createAsyncEnumerator(operator, scheduler, replayCount);
 };
 
 class FromIterableAsyncEnumerable<T>
-  implements AsyncEnumerableLike<number | void, T> {
+  implements AsyncEnumerableLike<void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
