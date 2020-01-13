@@ -1,4 +1,4 @@
-import { OperatorLike, pipe } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { ObservableLike } from "./interfaces";
 import { reduce } from "./reduce";
 import { toValue } from "./toValue";
@@ -9,15 +9,12 @@ const toArrayReducer = <T>(acc: T[], next: T): T[] => {
 };
 
 /**
- * Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, accumulating all
- * values emitted by the source into an array.
+ * Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
+ * values emitted by `source` into an array.
  */
-export const toArray = <T>(): OperatorLike<
-  ObservableLike<T>,
-  readonly T[]
-> => observable =>
+export const toArray = <T>(source: ObservableLike<T>): readonly T[] =>
   pipe(
-    observable,
+    source,
     reduce(toArrayReducer, (): T[] => []),
-    toValue(),
+    toValue,
   );

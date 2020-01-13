@@ -17,7 +17,6 @@
 
 * [EnumerableLike](interfaces/enumerablelike.md)
 * [EnumerableObservableLike](interfaces/enumerableobservablelike.md)
-* [EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)
 * [EnumeratorLike](interfaces/enumeratorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [ObservableLike](interfaces/observablelike.md)
@@ -27,6 +26,12 @@
 * [SubjectLike](interfaces/subjectlike.md)
 * [SubscriberLike](interfaces/subscriberlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
+
+### Variables
+
+* [exhaust](README.md#const-exhaust)
+* [ignoreElements](README.md#const-ignoreelements)
+* [switchAll](README.md#const-switchall)
 
 ### Functions
 
@@ -43,7 +48,6 @@
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
 * [every](README.md#const-every)
-* [exhaust](README.md#const-exhaust)
 * [flatten](README.md#const-flatten)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
@@ -53,7 +57,6 @@
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
-* [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
 * [lift](README.md#lift)
 * [map](README.md#const-map)
@@ -78,7 +81,6 @@
 * [startWith](README.md#startwith)
 * [subscribe](README.md#const-subscribe)
 * [subscribeOn](README.md#const-subscribeon)
-* [switchAll](README.md#const-switchall)
 * [takeFirst](README.md#const-takefirst)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
@@ -94,6 +96,77 @@
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
+
+## Variables
+
+### `Const` exhaust
+
+• **exhaust**: *function* =  mergeAll({ maxBufferSize: 1, maxConcurrency: 1 })
+
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+by dropping inner sources while the previous inner source
+has not yet been disposed.
+
+#### Type declaration:
+
+▸ <**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›› |
+
+___
+
+### `Const` ignoreElements
+
+• **ignoreElements**: *function* =  lift(new SubscriberOperator(true, call))
+
+Returns an `ObservableLike` that ignores all items emitted by the source.
+
+#### Type declaration:
+
+▸ <**TA**, **TB**>(`source`: [ObservableLike](interfaces/observablelike.md)‹TA›): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹TA› |
+
+___
+
+### `Const` switchAll
+
+• **switchAll**: *function* =  lift(new SubscriberOperator(false, call))
+
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
+values only from the most recent source.
+
+#### Type declaration:
+
+▸ <**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›› |
 
 ## Functions
 
@@ -754,34 +827,20 @@ Name | Type |
 
 ___
 
-### `Const` exhaust
-
-▸ **exhaust**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
-
-Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
-by dropping inner sources while the previous inner source
-has not yet been disposed.
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
-
-___
-
 ### `Const` flatten
 
-▸ **flatten**<**T**>(): *[EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, T›*
+▸ **flatten**(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››): *ConcatEnumerable‹T›*
 
-Converts a higher-order EnumerableObservableLike into a first-order EnumerableObservableLike
+Converts a higher-order EnumerableLike into a first-order EnumerableLike
 by concatenating the inner Enumerables in order.
 
-**Type parameters:**
+**Parameters:**
 
-▪ **T**
+Name | Type |
+------ | ------ |
+`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›› |
 
-**Returns:** *[EnumerableObservableOperatorLike](interfaces/enumerableobservableoperatorlike.md)‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, T›*
+**Returns:** *ConcatEnumerable‹T›*
 
 ___
 
@@ -1081,22 +1140,6 @@ Factory function used to generate the initial accumulator.
 The requested delay between emitted items by the observable.
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-___
-
-### `Const` ignoreElements
-
-▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
-
-Returns an `ObservableLike` that ignores all items emitted by the source.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
 ___
 
@@ -1775,21 +1818,6 @@ Name | Type | Description |
 
 ___
 
-### `Const` switchAll
-
-▸ **switchAll**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
-
-Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
-values only from the most recent source.
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
-
-___
-
 ### `Const` takeFirst
 
 ▸ **takeFirst**<**T**>(`count`: number): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
@@ -1995,26 +2023,32 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, keyof T[]›*
+▸ **toArray**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *keyof T[]*
 
-Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, accumulating all
-values emitted by the source into an array.
+Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
+values emitted by `source` into an array.
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, keyof T[]›*
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
+
+**Returns:** *keyof T[]*
 
 ___
 
 ### `Const` toEnumerable
 
-▸ **toEnumerable**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››*
+▸ **toEnumerable**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-Converts an `ObservableLike` source into an `EnumerableObservableLike` source. If the
-source itself is `EnumerableObservableLike`, then this function returns the source. Otherwise,
-a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
+Converts the `ObservableLike` `source` into an `EnumerableObservableLike`. If
+`source` is `EnumerableObservableLike`, then this function returns `source`. Otherwise,
+a `VirtualTimeSchedulerLike` is used to enumerate `source`. Hence, this function
 should not be used with sources that perform I/O such as ones that wrap Promises
 or DOM events.
 
@@ -2022,7 +2056,13 @@ or DOM events.
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››*
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
+
+**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ___
 
@@ -2069,16 +2109,22 @@ ___
 
 ### `Const` toValue
 
-▸ **toValue**<**T**>(): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+▸ **toValue**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *T*
 
-Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, returning
-the last value produced by the source.
+Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
+the last value produced.
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
+
+**Returns:** *T*
 
 ___
 

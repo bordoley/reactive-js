@@ -17,7 +17,7 @@ pipe(
     () => 0,
   ),
   map(x => fromArray([x, x, x, x])),
-  exhaust(),
+  exhaust,
   onNotify(console.log),
   subscribe(scheduler),
 );

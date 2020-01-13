@@ -126,5 +126,6 @@ export const concatAll = <T>(
  * by dropping inner sources while the previous inner source
  * has not yet been disposed.
  */
-export const exhaust = <T>(): ObservableOperatorLike<ObservableLike<T>, T> =>
-  mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+export const exhaust: <T>(
+  source: ObservableLike<ObservableLike<T>>,
+) => ObservableLike<T> = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });

@@ -110,7 +110,7 @@ test("buffer", () => {
       [8, 4],
     ),
     buffer({ duration: 4, maxBufferSize: 3 }),
-    toArray(),
+    toArray,
     expect,
   ).toEqual([[1, 2, 3], [4, 1, 2], [3], [4]]);
 });
@@ -138,7 +138,7 @@ test("combineLatest", () => {
       ],
       (a, b) => [a, b],
     ),
-    toArray(),
+    toArray,
     expect,
   ).toEqual([
     [3, 2],
@@ -150,7 +150,7 @@ test("combineLatest", () => {
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
-    const result = pipe(concat(ofValue(1), ofValue(2), ofValue(3)), toArray());
+    const result = pipe(concat(ofValue(1), ofValue(2), ofValue(3)), toArray);
     expect(result).toEqual([1, 2, 3]);
   });
 
@@ -167,8 +167,8 @@ describe("concat", () => {
           ofValue(3),
         ),
         onNotify(cb),
-        ignoreElements(),
-        toArray(),
+        ignoreElements,
+        toArray,
       ),
     ).toThrow(cause);
 
@@ -183,7 +183,7 @@ describe("concatAll", () => {
     const observableA = fromArray([1, 2]);
     const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB, observableB, observableA]);
-    const result = pipe(src, concatAll(), toArray());
+    const result = pipe(src, concatAll(), toArray);
     expect(result).toEqual([1, 2, 3, 4, 3, 4, 1, 2]);
   });
 
@@ -199,7 +199,7 @@ describe("concatAll", () => {
     );
 
     expect(() =>
-      pipe(src, concatAll(), onNotify(cb), ignoreElements(), toArray()),
+      pipe(src, concatAll(), onNotify(cb), ignoreElements, toArray),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
     expect(cb).toHaveBeenNthCalledWith(2, 2);
@@ -217,7 +217,7 @@ describe("concatAll", () => {
     const src = fromArray([observableA, observableB]);
 
     expect(() =>
-      pipe(src, concatAll(), onNotify(cb), ignoreElements(), toArray()),
+      pipe(src, concatAll(), onNotify(cb), ignoreElements, toArray),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
     expect(cb).toHaveBeenNthCalledWith(2, 2);
@@ -226,7 +226,7 @@ describe("concatAll", () => {
 });
 
 test("contains", () => {
-  pipe(empty(), contains(1), toValue(), expect).toBeFalsy();
+  pipe(empty(), contains(1), toValue, expect).toBeFalsy();
 
   pipe(
     generate(
@@ -234,11 +234,11 @@ test("contains", () => {
       () => 0,
     ),
     contains(1),
-    toValue(),
+    toValue,
     expect,
   ).toBeTruthy();
 
-  pipe(ofValue(0), contains(1), toValue(), expect).toBeFalsy();
+  pipe(ofValue(0), contains(1), toValue, expect).toBeFalsy();
 });
 
 describe("createObservable", () => {
@@ -247,7 +247,7 @@ describe("createObservable", () => {
     const observable = createObservable(_ => {
       throw cause;
     });
-    expect(() => pipe(observable, toValue())).toThrow(cause);
+    expect(() => pipe(observable, toValue)).toThrow(cause);
   });
 
   test("when subscriber throws", () => {
@@ -421,8 +421,8 @@ test("distinctUntilChanged", () => {
       ),
       distinctUntilChanged(),
       onNotify(cb),
-      ignoreElements(),
-      toArray(),
+      ignoreElements,
+      toArray,
     ),
   ).toThrow(cause);
   expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -433,7 +433,7 @@ test("distinctUntilChanged", () => {
 
 describe("empty", () => {
   test("produces no values and completes", () => {
-    pipe(empty(), toArray(), expect).toEqual([]);
+    pipe(empty(), toArray, expect).toEqual([]);
   });
 });
 
@@ -441,20 +441,20 @@ test("every", () => {
   pipe(
     empty(),
     every(_ => false),
-    toValue(),
+    toValue,
     expect,
   ).toBeTruthy();
 
   pipe(
     fromArray([1, 2, 3]),
     every(_ => true),
-    toValue(),
+    toValue,
     expect,
   ).toBeTruthy();
   pipe(
     fromArray([1, 2, 3]),
     every(_ => false),
-    toValue(),
+    toValue,
     expect,
   ).toBeFalsy();
 });
@@ -472,7 +472,7 @@ describe("fromArray", () => {
   test("with no delay", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromArray(src);
-    pipe(observable, toArray(), expect).toEqual(src);
+    pipe(observable, toArray, expect).toEqual(src);
   });
 
   test("with delay", () => {
@@ -501,13 +501,13 @@ describe("fromIterable", () => {
   test("with no delay when scheduler does not request yields", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromIterable(src);
-    pipe(observable, toArray(), expect).toEqual(src);
+    pipe(observable, toArray, expect).toEqual(src);
   });
 
   test("with no delay when scheduler requests yields", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromIterable(src);
-    pipe(observable, toArray(), expect).toEqual(src);
+    pipe(observable, toArray, expect).toEqual(src);
   });
 
   test("with delay", () => {
@@ -608,7 +608,7 @@ describe("generate", () => {
         () => 1,
       ),
       takeFirst(5),
-      toArray(),
+      toArray,
       expect,
     ).toEqual([1, 2, 3, 4, 5]);
   });
@@ -630,8 +630,8 @@ describe("generate", () => {
         generate(generator, () => 1),
         takeFirst(5),
         onNotify(cb),
-        ignoreElements(),
-        toArray(),
+        ignoreElements,
+        toArray,
       ),
     ).toThrow(cause);
     expect(cb).toHaveBeenCalledTimes(3);
@@ -704,7 +704,7 @@ test("ignoreElements", () => {
     throws(() => cause),
   );
 
-  pipe(src, ignoreElements(), observe(observer), subscribe(scheduler));
+  pipe(src, ignoreElements, observe(observer), subscribe(scheduler));
   scheduler.run();
 
   expect(observer.onNotify).toBeCalledTimes(0);
@@ -802,7 +802,7 @@ describe("never", () => {
   test("produces no values", () => {
     const observer = createMockObserver();
 
-    expect(() => pipe(never(), observe(observer), toArray())).toThrow();
+    expect(() => pipe(never(), observe(observer), toArray)).toThrow();
 
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
   });
@@ -813,28 +813,28 @@ test("none", () => {
     pipe(
       empty(),
       none(_ => false),
-      toValue(),
+      toValue,
     ),
   ).toBeTruthy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
       none(_ => true),
-      toValue(),
+      toValue,
     ),
   ).toBeFalsy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
       none(_ => false),
-      toValue(),
+      toValue,
     ),
   ).toBeTruthy();
 });
 
 describe("ofValue", () => {
   test("completes with the value when subscribed", () => {
-    pipe(ofValue(1), toArray(), expect).toEqual([1]);
+    pipe(ofValue(1), toArray, expect).toEqual([1]);
   });
 });
 
@@ -896,7 +896,7 @@ test("onNotify", () => {
 
 describe("repeat", () => {
   test("repeats the observable n times", () => {
-    pipe(ofValue(1), repeat(3), toArray(), expect).toEqual([1, 1, 1]);
+    pipe(ofValue(1), repeat(3), toArray, expect).toEqual([1, 1, 1]);
   });
 
   test("when the repeat functions throws throws", () => {
@@ -907,7 +907,7 @@ describe("repeat", () => {
         repeat(_ => {
           throw error;
         }),
-        toArray(),
+        toArray,
       ),
     ).toThrow(error);
   });
@@ -929,7 +929,7 @@ test("scan", () => {
         () => 0,
       ),
       observe(observer),
-      toArray(),
+      toArray,
     ),
   ).toThrow(cause);
 
@@ -947,7 +947,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x),
         () => 0,
       ),
-      toArray(),
+      toArray,
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -959,7 +959,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x, 2),
         () => 0,
       ),
-      toArray(),
+      toArray,
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -971,7 +971,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x),
         () => 0,
       ),
-      toArray(),
+      toArray,
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -1038,7 +1038,7 @@ test("switchAll", () => {
     },
   );
 
-  expect(() => pipe(src, switchAll(), onNotify(cb), toArray())).toThrow(cause);
+  expect(() => pipe(src, switchAll, onNotify(cb), toArray)).toThrow(cause);
 
   expect(cb).toBeCalledTimes(4);
   expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -1050,7 +1050,7 @@ test("switchAll", () => {
 describe("takeLast", () => {
   test("publishes the last n values when completed", () => {
     const src = fromArray([1, 2, 3, 4]);
-    pipe(src, takeLast(3), toArray(), expect).toEqual([2, 3, 4]);
+    pipe(src, takeLast(3), toArray, expect).toEqual([2, 3, 4]);
   });
 
   test("immediately completes with an error if completed with an error", () => {
@@ -1061,7 +1061,7 @@ describe("takeLast", () => {
       throws(() => cause, 2),
     );
 
-    expect(() => pipe(src, takeLast(3), observe(observer), toArray())).toThrow(
+    expect(() => pipe(src, takeLast(3), observe(observer), toArray)).toThrow(
       cause,
     );
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
@@ -1075,7 +1075,7 @@ test("takeWhile", () => {
       () => 0,
     ),
     takeWhile(x => x < 3),
-    toArray(),
+    toArray,
     expect,
   ).toEqual([0, 1, 2]);
 });
@@ -1090,7 +1090,7 @@ describe("throttle", () => {
       ),
       takeFirst(100),
       throttle(50, ThrottleMode.First),
-      toArray(),
+      toArray,
     );
 
     expect(result).toEqual([0, 49]);
@@ -1105,7 +1105,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(50, ThrottleMode.Last),
-      toArray(),
+      toArray,
     );
 
     expect(result).toEqual([49, 99, 149, 199]);
@@ -1120,7 +1120,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(75, ThrottleMode.Interval),
-      toArray(),
+      toArray,
     );
 
     expect(result).toEqual([0, 74, 149, 199]);
@@ -1132,14 +1132,14 @@ test("throwIfEmpty", () => {
     pipe(
       empty(),
       throwIfEmpty(() => new Error()),
-      toValue(),
+      toValue,
     ),
   ).toThrow();
 
   pipe(
     ofValue(1),
     throwIfEmpty(() => new Error()),
-    toValue(),
+    toValue,
     expect,
   ).toEqual(1);
 });
@@ -1164,11 +1164,11 @@ describe("throws", () => {
 
 describe("timeout", () => {
   test("throws when a timeout occurs", () => {
-    expect(() => pipe(ofValue(1, 2), timeout(1), toArray())).toThrow();
+    expect(() => pipe(ofValue(1, 2), timeout(1), toArray)).toThrow();
   });
 
   test("when timeout is greater than observed time", () => {
-    const result = pipe(ofValue(1, 2), timeout(3), toArray());
+    const result = pipe(ofValue(1, 2), timeout(3), toArray);
     expect(result).toEqual([1]);
   });
 });
@@ -1178,7 +1178,7 @@ describe("toEnumerable", () => {
     const iterable = pipe(
       fromArray([1, 2, 3, 4]),
       map(x => x + 1),
-      toEnumerable(),
+      toEnumerable,
     );
     const acc = [];
     for (const v of iterable) {
@@ -1191,7 +1191,7 @@ describe("toEnumerable", () => {
     const error = new Error();
     const iterable = pipe(
       throws(() => error),
-      toEnumerable(),
+      toEnumerable,
     );
 
     expect(() => {
@@ -1203,25 +1203,22 @@ describe("toEnumerable", () => {
 
   test("calling throw, throws the error", () => {
     const error = new Error();
-    const iterator = pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
-      Symbol.iterator
-    ]();
+    const enumerable = pipe(fromArray([1, 2, 3, 4]), toEnumerable);
+    const iterator = enumerable[Symbol.iterator]();
 
     expect(() => (iterator as any).throw(error)).toThrowError(error);
   });
 
   test("calling throw without an error returns done.", () => {
-    const result = (pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
-      Symbol.iterator
-    ]() as any).throw();
+    const enumerable = pipe(fromArray([1, 2, 3, 4]), toEnumerable);
+    const result = (enumerable[Symbol.iterator]() as any).throw();
 
     expect(result.done).toBeTruthy();
   });
 
   test("calling return, returns done", () => {
-    const result = (pipe(fromArray([1, 2, 3, 4]), toEnumerable())[
-      Symbol.iterator
-    ]() as any).return();
+    const enumerable = pipe(fromArray([1, 2, 3, 4]), toEnumerable);
+    const result = (enumerable[Symbol.iterator]() as any).return();
 
     expect(result.done).toBeTruthy();
   });
@@ -1235,7 +1232,7 @@ describe("toEnumerable", () => {
     });
 
     const result: number[] = [];
-    const enumerable = pipe(obs, toEnumerable());
+    const enumerable = pipe(obs, toEnumerable);
     for (const v of enumerable) {
       result.push(v);
     }
@@ -1277,7 +1274,7 @@ test("withLatestFrom", () => {
       observable,
       withLatestFrom(otherObservable, (a, b) => [a, b]),
       onNotify(cb),
-      toArray(),
+      toArray,
     ),
   ).toThrow(cause);
 
@@ -1306,7 +1303,7 @@ describe("zip", () => {
         ],
         (x, y, z) => [x, y, z],
       ),
-      toArray(),
+      toArray,
     );
 
     expect(result).toEqual([
@@ -1325,7 +1322,7 @@ describe("zip", () => {
         ],
         (x, y, z) => [x, y, z],
       ),
-      toArray(),
+      toArray,
     );
 
     expect(result).toEqual([

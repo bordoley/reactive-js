@@ -140,21 +140,17 @@ export interface EnumerableLike<TReq, T> {
   enumerate(): EnumeratorLike<TReq, T>;
 }
 
-
 /**
  * An `ObservableLike` that also support synchronous enumeration and iteration.
  *
  * @noInheritDoc
  */
-export interface EnumerableObservableLike<T> extends ObservableLike<T>, EnumerableLike<void, T>, Iterable<T> {
-}
+export interface EnumerableObservableLike<T>
+  extends ObservableLike<T>,
+    EnumerableLike<void, T>,
+    Iterable<T> {}
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
-}
-
-/** A function which converts an EnumerableObservableLike<A> to an EnumerableObservableLike<B>. */
-export interface EnumerableObservableOperatorLike<A, B> {
-  (enumerable: EnumerableObservableLike<A>): EnumerableObservableLike<B>;
 }

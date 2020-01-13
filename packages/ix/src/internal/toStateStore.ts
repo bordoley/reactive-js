@@ -32,7 +32,7 @@ class DelegatingStateStoreAsyncEnumerable<T>
       const onIteratorNextChangedObs = pipe(
         enumerator,
         onNotify((v: T) => retval.dispatch((_: T): T => v)),
-        ignoreElements(),
+        ignoreElements,
       );
 
       const stateObs = pipe(

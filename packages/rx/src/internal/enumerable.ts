@@ -43,7 +43,8 @@ const toIterator = <T>(enumerator: EnumeratorLike<void, T>): Iterator<T> =>
 
 const alwaysTrue = () => true;
 
-class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike<T> {
+class EnumeratorSubscriber<T>
+  implements EnumeratorLike<void, T>, SubscriberLike<T> {
   readonly add = disposableMixin.add;
   private continuation?: SchedulerContinuationLike;
   current: any;

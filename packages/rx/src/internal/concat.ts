@@ -1,9 +1,9 @@
 import {
   ObservableLike,
   SubscriberLike,
-  EnumerableObservableLike,
+  EnumerableLike,
   EnumeratorLike,
-  EnumerableObservableOperatorLike,
+  EnumerableObservableLike,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { enumerableMixin, isEnumerable } from "./enumerable";
@@ -37,7 +37,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
 class ConcatObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly observables: EnumerableObservableLike<ObservableLike<T>>,
+    private readonly observables: EnumerableLike<void, ObservableLike<T>>,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -86,10 +86,10 @@ export function concat<T>(
 }
 
 /**
- * Converts a higher-order EnumerableObservableLike into a first-order EnumerableObservableLike
+ * Converts a higher-order EnumerableLike into a first-order EnumerableLike
  * by concatenating the inner Enumerables in order.
  */
-export const flatten = <T>(): EnumerableObservableOperatorLike<
-  EnumerableObservableLike<T>,
-  T
-> => enumerable => new ConcatEnumerable(enumerable);
+export const flatten: <T>(
+  enumerable: EnumerableLike<void, EnumerableObservableLike<T>>,
+) => EnumerableObservableLike<T> = enumerable =>
+  new ConcatEnumerable(enumerable);
