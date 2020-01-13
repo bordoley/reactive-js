@@ -224,7 +224,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[]): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+▸ **fromArray**<**T**>(`values`: keyof T[]): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -238,13 +238,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `values` | keyof T[] | The array.  |
 
-**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -258,13 +258,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `iterable` | Iterable‹T› |   |
 
-**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -293,7 +293,7 @@ Factory function to generate the initial accumulator.
 
 ▸ (): *T*
 
-**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
+**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
 
 ___
 
