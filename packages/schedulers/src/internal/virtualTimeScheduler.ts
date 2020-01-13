@@ -84,7 +84,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     this.hasCurrent = false;
 
     if (!this.isDisposed) {
-      const task = this.taskQueue.pop();
+      const taskQueue = this.taskQueue;
+      const task = taskQueue.pop();
 
       if (task !== undefined) {
         this.hasCurrent = true;
@@ -105,7 +106,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
             task.continuation = result;
             task.dueTime = dueTime + delay;
 
-            this.taskQueue.push(task);
+            taskQueue.push(task);
           } else {
             disposable.dispose();
           }

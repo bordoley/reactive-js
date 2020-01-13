@@ -12,14 +12,15 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
 
   subscribe(subscriber: SubscriberLike<T>) {
     const resources = this.resourceFactory();
+    const observableFactory = this.observableFactory;
 
     if (Array.isArray(resources)) {
       // eslint-disable-next-line prefer-spread
       subscriber.add.apply(subscriber, resources as any);
-      this.observableFactory(...resources).subscribe(subscriber);
+      observableFactory(...resources).subscribe(subscriber);
     } else {
       subscriber.add(resources as DisposableLike);
-      this.observableFactory(resources).subscribe(subscriber);
+      observableFactory(resources).subscribe(subscriber);
     }
   }
 }
@@ -92,7 +93,7 @@ export function using<
 ): ObservableLike<T>;
 
 /**
- * Creates an `ObservableLike` that uses one or more resources which 
+ * Creates an `ObservableLike` that uses one or more resources which
  * will be disposed when the ObservableLike disposes it's only subscription.
  */
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(

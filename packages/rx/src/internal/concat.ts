@@ -17,17 +17,17 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
     this.add(error => {
       if (error !== undefined) {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       } else {
         const enumerator = this.enumerator;
         if (enumerator.moveNext()) {
           const concatSubscriber = new ConcatSubscriber(
-            this.delegate,
+            delegate,
             enumerator,
           );
           enumerator.current.subscribe(concatSubscriber);
         } else {
-          this.delegate.dispose();
+          delegate.dispose();
         }
       }
     });
@@ -79,7 +79,6 @@ export function concat<T>(
   snd: ObservableLike<T>,
   ...tail: Array<ObservableLike<T>>
 ): ObservableLike<T>;
-
 
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>

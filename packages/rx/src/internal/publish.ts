@@ -1,9 +1,6 @@
 import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  MulticastObservableLike,
-  ObservableLike,
-} from "./interfaces";
+import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { createSubject } from "./subject";
 
 /**

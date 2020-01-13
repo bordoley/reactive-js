@@ -45,14 +45,16 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   ) {
     super(delegate);
 
+    const queue = this.queue;
+
     this.add(error => {
-      if (error !== undefined || this.queue.length + this.activeCount === 0) {
-        this.delegate.dispose(error);
+      if (error !== undefined || queue.length + this.activeCount === 0) {
+        delegate.dispose(error);
       }
     });
 
-    this.delegate.add(() => {
-      this.queue.length = 0;
+    delegate.add(() => {
+      queue.length = 0;
     });
   }
 
@@ -62,7 +64,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
       queue.push(next);
 
       // Drop old events if the maxBufferSize has been exceeded
-      if (queue.length + this.activeCount === this.maxBufferSize) {
+      if (queue.length + this.activeCount > this.maxBufferSize) {
         queue.shift();
       }
       subscribeNext(this);

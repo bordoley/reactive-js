@@ -19,7 +19,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
       ctx.completedCount++;
 
       if (error !== undefined || ctx.completedCount === ctx.totalCount) {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
@@ -160,7 +160,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
 ): ObservableLike<T>;
 
 /**
- * Returns an `ObservableLike` that combines the latest values from 
+ * Returns an `ObservableLike` that combines the latest values from
  * multiple sources using the specified `selector` function.
  */
 export function combineLatest<T>(

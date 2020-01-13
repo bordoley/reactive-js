@@ -19,7 +19,7 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 }
 
 /**
- * Returns an `ObservableLike` that applies the `mapper` function to each 
+ * Returns an `ObservableLike` that applies the `mapper` function to each
  * value emitted by the source.
  *
  * @param mapper The map function to apply each value. Must be a pure function.

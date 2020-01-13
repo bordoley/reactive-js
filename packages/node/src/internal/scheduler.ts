@@ -12,23 +12,24 @@ export const setSchedulerTimeout = (newTimeout: number) => {
   timeout = newTimeout;
 };
 
-class NodeScheduler implements SchedulerLike {
-  private readonly callCallbackAndDispose = (
-    callback: () => void,
-    disposable: DisposableLike,
-  ) => {
-    this.startTime = this.now;
-    callback();
-    disposable.dispose();
-  };
+const callCallbackAndDispose = (
+  scheduler: NodeScheduler,
+  callback: () => void,
+  disposable: DisposableLike,
+) => {
+  scheduler.startTime = scheduler.now;
+  callback();
+  disposable.dispose();
+};
 
+class NodeScheduler implements SchedulerLike {
   readonly schedule = schedulerMixin.schedule;
 
   protected readonly shouldYield = () => {
     return this.now > this.startTime + timeout;
   };
 
-  private startTime = this.now;
+  startTime = this.now;
 
   get now(): number {
     const hr = process.hrtime();
@@ -44,8 +45,9 @@ class NodeScheduler implements SchedulerLike {
   private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
     const disposable = createDisposable(() => clearTimeout(timeout));
     const timeout = setTimeout(
-      this.callCallbackAndDispose,
+      callCallbackAndDispose,
       delay,
+      this,
       callback,
       disposable,
     );
@@ -55,8 +57,9 @@ class NodeScheduler implements SchedulerLike {
   private scheduleImmediate(callback: () => void): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(
-      this.callCallbackAndDispose,
+      callCallbackAndDispose,
       callback,
+      this,
       disposable,
     );
     return disposable;

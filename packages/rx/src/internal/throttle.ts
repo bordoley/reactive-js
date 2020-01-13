@@ -37,15 +37,23 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
+const setupDurationSubscription = <T>(subscriber: ThrottleSubscriber<T>, next: T) => {
+  subscriber.durationSubscription.inner = pipe(
+    subscriber.durationSelector(next),
+    observe(subscriber),
+    subscribe(subscriber),
+  );
+}
+
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
-  private readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+  readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: T | undefined = undefined;
   private hasValue = false;
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly durationSelector: (next: T) => ObservableLike<unknown>,
+    readonly durationSelector: (next: T) => ObservableLike<unknown>,
     private readonly mode: ThrottleMode,
   ) {
     super(delegate);
@@ -53,22 +61,14 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     this.add(this.durationSubscription).add(error => {
       if (
         error === undefined &&
-        this.mode !== ThrottleMode.First &&
+        mode !== ThrottleMode.First &&
         this.hasValue
       ) {
-        ofValue(this.value).subscribe(this.delegate);
+        ofValue(this.value).subscribe(delegate);
       } else {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
-  }
-
-  private setupDurationSubscription(next: T) {
-    this.durationSubscription.inner = pipe(
-      this.durationSelector(next),
-      observe(this),
-      subscribe(this),
-    );
   }
 
   notify(next: T) {
@@ -85,7 +85,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
       ) {
         this.onNotify();
       } else if (durationSubscriptionDisposableIsDisposed) {
-        this.setupDurationSubscription(next);
+        setupDurationSubscription(this, next);
       }
     }
   }
@@ -103,7 +103,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
       this.value = undefined;
       this.hasValue = false;
 
-      this.setupDurationSubscription(value);
+      setupDurationSubscription(this, value);
 
       try {
         this.delegate.notify(value);
@@ -126,10 +126,10 @@ export function throttle<T>(
 ): ObservableOperatorLike<T, T>;
 
 /**
- * Returns an `ObservableLike` which emits a value from the source, 
+ * Returns an `ObservableLike` which emits a value from the source,
  * then ignores subsequent source values for `duration` milliseconds.
  *
- * @param duration Time to wait before emitting another value after 
+ * @param duration Time to wait before emitting another value after
  * emitting the last value, measured in milliseconds.
  * @param mode The throttle mode.
  */

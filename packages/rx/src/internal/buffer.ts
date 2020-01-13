@@ -30,9 +30,9 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
       const buffer = this.buffer;
       this.buffer = [];
       if (error === undefined && buffer.length > 0) {
-        ofValue(buffer).subscribe(this.delegate);
+        ofValue(buffer).subscribe(delegate);
       } else {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       }
     });
   }
@@ -59,14 +59,16 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     const buffer = this.buffer;
     this.buffer = [];
 
+    const delegate = this.delegate;
+
     try {
-      this.delegate.notify(buffer);
+      delegate.notify(buffer);
     } catch (cause) {
-      this.delegate.dispose({ cause });
+      delegate.dispose({ cause });
     }
 
     if (this.isDisposed) {
-      this.delegate.dispose();
+      delegate.dispose();
     }
   }
 

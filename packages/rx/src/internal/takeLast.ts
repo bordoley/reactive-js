@@ -9,23 +9,29 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
-    this.delegate.add(() => {
-      this.last.length = 0;
+    const last = this.last;
+
+    delegate.add(() => {
+      last.length = 0;
     });
+
     this.add(error => {
       if (error !== undefined) {
-        this.delegate.dispose(error);
+        delegate.dispose(error);
       } else {
-        fromArray(this.last).subscribe(this.delegate);
+        fromArray(last).subscribe(delegate);
       }
     });
   }
 
   notify(next: T) {
     if (!this.isDisposed) {
-      this.last.push(next);
-      if (this.last.length > this.maxCount) {
-        this.last.shift();
+      const last = this.last;
+
+      last.push(next);
+
+      if (last.length > this.maxCount) {
+        last.shift();
       }
     }
   }

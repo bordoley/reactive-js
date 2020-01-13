@@ -26,7 +26,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     ) => boolean,
   ) {
     super(delegate);
-    this.delegate.add(this.innerSubscription);
+    delegate.add(this.innerSubscription);
     this.add(error => {
       this.onDispose(error);
     });
@@ -47,14 +47,15 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
       error = { cause, parent: error } as ErrorLike;
     }
 
+    const delegate = this.delegate;
     if (shouldComplete) {
-      this.delegate.dispose(error);
+      delegate.dispose(error);
     } else {
       this.count++;
       this.innerSubscription.inner = pipe(
         this.observable,
         observe(this),
-        subscribe(this.delegate),
+        subscribe(delegate),
       );
     }
   }
