@@ -19,7 +19,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     if (!this.isDisposed) {
       const replayed = this.replayed;
       const replayCount = this.replayCount;
-      
+
       if (replayCount > 0) {
         replayed.push(next);
         if (replayed.length > replayCount) {
