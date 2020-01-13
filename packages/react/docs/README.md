@@ -14,7 +14,7 @@
 
 ### `Const` useAsyncEnumerable
 
-▸ **useAsyncEnumerable**<**TReq**, **T**>(`iterable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *AsyncEnumeratorResourceLike‹TReq, T›*
+▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *AsyncEnumeratorLike‹TReq, T›*
 
 **Type parameters:**
 
@@ -24,12 +24,12 @@
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`iterable` | AsyncEnumerableLike‹TReq, T› | - |
-`config` | object |  {} |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`enumerable` | AsyncEnumerableLike‹TReq, T› | - | - |
+`config` | object |  {} |   |
 
-**Returns:** *AsyncEnumeratorResourceLike‹TReq, T›*
+**Returns:** *AsyncEnumeratorLike‹TReq, T›*
 
 ___
 
@@ -45,10 +45,10 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`enumerator` | AsyncEnumeratorLike‹TReq, T› |
-`scheduler?` | SchedulerLike |
+Name | Type | Description |
+------ | ------ | ------ |
+`enumerator` | AsyncEnumeratorLike‹TReq, T› | - |
+`scheduler?` | SchedulerLike |   |
 
 **Returns:** *[T | undefined, function]*
 
@@ -58,15 +58,17 @@ ___
 
 ▸ **useObservable**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *T | undefined*
 
+Returns the current value, if defined, of `observable`.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`observable` | ObservableLike‹T› | - |
-`scheduler` | SchedulerLike |  normalPriority |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`observable` | ObservableLike‹T› | - | The `ObservableLike` to subscribe to. |
+`scheduler` | SchedulerLike |  normalPriority | An optional scheduler used when subscribing to `observable`. The default is React's normal priority scheduler.  |
 
 **Returns:** *T | undefined*

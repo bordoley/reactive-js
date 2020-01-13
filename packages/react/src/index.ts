@@ -1,7 +1,6 @@
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
-  AsyncEnumeratorResourceLike,
   empty,
 } from "@reactive-js/ix";
 import { pipe } from "@reactive-js/pipe";
@@ -85,6 +84,11 @@ export const useObservable = <T>(
   return state;
 };
 
+/**
+ * 
+ * @param enumerator 
+ * @param scheduler 
+ */
 export const useAsyncEnumerator = <TReq, T>(
   enumerator: AsyncEnumeratorLike<TReq, T>,
   scheduler?: SchedulerLike,
@@ -123,7 +127,7 @@ export const useAsyncEnumerable = <TReq, T>(
     scheduler?: SchedulerLike;
     replay?: number;
   } = {},
-): AsyncEnumeratorResourceLike<TReq, T> => {
+): AsyncEnumeratorLike<TReq, T> => {
   const scheduler = config.scheduler || normalPriority;
   const emptyEnumerator = empty().enumerateAsync(scheduler);
   const replay = config.replay || 0;
@@ -133,7 +137,7 @@ export const useAsyncEnumerable = <TReq, T>(
     [enumerable, scheduler, replay],
   );
 
-  return useResource<AsyncEnumeratorResourceLike<TReq, T>>(
+  return useResource<AsyncEnumeratorLike<TReq, T>>(
     factory,
     emptyEnumerator,
   );

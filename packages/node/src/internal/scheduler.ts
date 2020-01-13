@@ -58,8 +58,8 @@ class NodeScheduler implements SchedulerLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(
       callCallbackAndDispose,
-      callback,
       this,
+      callback,
       disposable,
     );
     return disposable;

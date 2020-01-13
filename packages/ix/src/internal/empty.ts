@@ -1,8 +1,8 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumeratorLike, AsyncEnumerableLike } from "./interfaces";
 import { disposed as disposedDisposable } from "@reactive-js/disposable";
 
-const disposed: AsyncEnumeratorResourceLike<unknown, any> = {
+const disposed: AsyncEnumeratorLike<unknown, any> = {
   ...(disposedDisposable as any),
   now: 0,
   subscriberCount: 0,
@@ -14,7 +14,7 @@ const disposed: AsyncEnumeratorResourceLike<unknown, any> = {
 
 const enumerateAsync = <TReq, T>(
   _: SchedulerLike,
-): AsyncEnumeratorResourceLike<TReq, T> => disposed;
+): AsyncEnumeratorLike<TReq, T> => disposed;
 
 const instance = { enumerateAsync };
 

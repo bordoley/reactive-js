@@ -3,21 +3,14 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */
 export interface AsyncEnumeratorLike<TReq, T>
-  extends MulticastObservableLike<T> {
-  notifySafe(req: TReq): void;
-}
-
-/** @noInheritDoc */
-export interface AsyncEnumeratorResourceLike<TReq, T>
-  extends AsyncEnumeratorLike<TReq, T>,
-    SafeSubscriberLike<TReq>,
+  extends SafeSubscriberLike<TReq>,
     MulticastObservableLike<T> {}
 
 export interface AsyncEnumerableLike<TReq, T> {
   enumerateAsync(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorResourceLike<TReq, T>;
+  ): AsyncEnumeratorLike<TReq, T>;
 }
 
 export interface AsyncEnumerableOperatorLike<TSrcReq, TSrc, TReq, T> {

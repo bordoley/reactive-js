@@ -10,11 +10,11 @@ import {
   toSafeSubscriber,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorResourceLike } from "./interfaces";
+import { AsyncEnumeratorLike } from "./interfaces";
 
-class AsyncEnumeratorResourceImpl<TReq, T>
+class AsyncEnumeratorImpl<TReq, T>
   extends AbstractDelegatingSubscriber<TReq, TReq>
-  implements AsyncEnumeratorResourceLike<TReq, T> {
+  implements AsyncEnumeratorLike<TReq, T> {
   constructor(
     delegate: SafeSubscriberLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
@@ -51,11 +51,11 @@ export const createAsyncEnumerator = <TReq, T>(
   operator: ObservableOperatorLike<TReq, T>,
   scheduler: SchedulerLike,
   replayCount = 0,
-): AsyncEnumeratorResourceLike<TReq, T> => {
+): AsyncEnumeratorLike<TReq, T> => {
   const subject = createSubject(scheduler);
 
   const safeSubscriber = toSafeSubscriber(subject);
   const observable = pipe(subject, operator, publish(scheduler, replayCount));
 
-  return new AsyncEnumeratorResourceImpl(safeSubscriber, observable);
+  return new AsyncEnumeratorImpl(safeSubscriber, observable);
 };
