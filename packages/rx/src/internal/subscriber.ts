@@ -10,7 +10,9 @@ import {
 import { SubscriberLike } from "./interfaces";
 
 /**
- * Abstract based class for implementing the `SubscriberLike` interface.
+ * Abstract base class for implementing the `SubscriberLike` interface.
+ * 
+ * @noInheritDoc
  */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = disposableMixin.add;
@@ -42,7 +44,7 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
 }
 
 /**
- * Abstract based class for implementing instances of the `SubscriberLike` interface
+ * Abstract base class for implementing instances of the `SubscriberLike` interface
  * which delegate notifications to a parent `SubscriberLike` instance
  *
  * @noInheritDoc

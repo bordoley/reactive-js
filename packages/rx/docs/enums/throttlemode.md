@@ -2,7 +2,7 @@
 
 # Enumeration: ThrottleMode
 
-The throttle most used by the `throttle` operator.
+The throttle mode used by the `throttle` operator.
 
 ## Index
 
@@ -34,4 +34,4 @@ ___
 
 • **Last**: = 2
 
-Takes the trailing value
+Takes the trailing value.
