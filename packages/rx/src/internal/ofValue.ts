@@ -11,7 +11,7 @@ class OfValueProducer<T> implements SchedulerContinuationLike {
 
   run(_?: () => boolean) {
     const subscriber = this.subscriber;
-    
+
     subscriber.notify(this.value);
     subscriber.dispose();
   }

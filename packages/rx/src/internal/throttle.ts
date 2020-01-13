@@ -37,13 +37,16 @@ export const enum ThrottleMode {
   Interval = 3,
 }
 
-const setupDurationSubscription = <T>(subscriber: ThrottleSubscriber<T>, next: T) => {
+const setupDurationSubscription = <T>(
+  subscriber: ThrottleSubscriber<T>,
+  next: T,
+) => {
   subscriber.durationSubscription.inner = pipe(
     subscriber.durationSelector(next),
     observe(subscriber),
     subscribe(subscriber),
   );
-}
+};
 
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
@@ -59,11 +62,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     super(delegate);
 
     this.add(this.durationSubscription).add(error => {
-      if (
-        error === undefined &&
-        mode !== ThrottleMode.First &&
-        this.hasValue
-      ) {
+      if (error === undefined && mode !== ThrottleMode.First && this.hasValue) {
         ofValue(this.value).subscribe(delegate);
       } else {
         delegate.dispose(error);

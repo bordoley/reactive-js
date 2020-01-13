@@ -21,10 +21,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       } else {
         const enumerator = this.enumerator;
         if (enumerator.moveNext()) {
-          const concatSubscriber = new ConcatSubscriber(
-            delegate,
-            enumerator,
-          );
+          const concatSubscriber = new ConcatSubscriber(delegate, enumerator);
           enumerator.current.subscribe(concatSubscriber);
         } else {
           delegate.dispose();
