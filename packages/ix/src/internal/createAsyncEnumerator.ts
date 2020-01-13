@@ -32,8 +32,8 @@ export class AsyncEnumeratorImpl<TReq, T>
     this.delegate.notify(req);
   }
 
-  notifySafe(req: TReq) {
-    (this.delegate as SafeSubscriberLike<TReq>).notifySafe(req);
+  dispatch(req: TReq) {
+    (this.delegate as SafeSubscriberLike<TReq>).dispatch(req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

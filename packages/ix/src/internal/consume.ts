@@ -87,7 +87,7 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
       identity<ContinueRequestLike<TReq, TAcc>>(),
       lift(
         onNotify(continueRequest => {
-          enumerator.notifySafe(continueRequest.req);
+          enumerator.dispatch(continueRequest.req);
         }),
       ),
       lift(map(({ acc }) => acc)),
@@ -102,7 +102,7 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
       ),
       onNotify(next => {
         if (next.type === ConsumeRequestType.Continue) {
-          eventEmitter.notifySafe(next);
+          eventEmitter.dispatch(next);
         } else {
           enumerator.dispose();
         }

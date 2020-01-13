@@ -7,7 +7,7 @@ const disposed: AsyncEnumeratorLike<unknown, any> = {
   now: 0,
   subscriberCount: 0,
   notify(_) {},
-  notifySafe(_) {},
+  dispatch(_) {},
   schedule: _ => disposedDisposable,
   subscribe: subscriber => subscriber.dispose(),
 };

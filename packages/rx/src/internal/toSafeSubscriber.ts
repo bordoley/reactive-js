@@ -32,7 +32,7 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
     this.delegate.notify(next);
   }
 
-  notifySafe(next: T): void {
+  dispatch(next: T): void {
     if (!this.isDisposed) {
       this.nextQueue.push(next);
       scheduleDrainQueue(this);

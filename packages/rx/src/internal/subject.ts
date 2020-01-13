@@ -28,7 +28,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
       }
 
       for (const subscriber of this.subscribers) {
-        subscriber.notifySafe(next);
+        subscriber.dispatch(next);
       }
     }
   }
@@ -52,7 +52,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
     }
 
     for (const next of this.replayed) {
-      safeSubscriber.notifySafe(next);
+      safeSubscriber.dispatch(next);
     }
 
     this.add(safeSubscriber);

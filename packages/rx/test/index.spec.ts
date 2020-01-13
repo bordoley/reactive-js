@@ -260,7 +260,7 @@ describe("createObservable", () => {
     }
 
     const observable = createObservable(subscriber => {
-      subscriber.notifySafe(1);
+      subscriber.dispatch(1);
     });
 
     const scheduler = createVirtualTimeScheduler();
@@ -744,7 +744,7 @@ test("liftObserable", () => {
 
   const liftedObservable = pipe(
     createObservable(subscriber => {
-      subscriber.notifySafe(1);
+      subscriber.dispatch(1);
       return disposed;
     }),
     onNotify(_ => result.push(1)),
@@ -1228,9 +1228,9 @@ describe("toEnumerable", () => {
 
   test("with non-enumerable source", () => {
     const obs: ObservableLike<number> = createObservable(subscriber => {
-      subscriber.notifySafe(1);
-      subscriber.notifySafe(2);
-      subscriber.notifySafe(3);
+      subscriber.dispatch(1);
+      subscriber.dispatch(2);
+      subscriber.dispatch(3);
       subscriber.dispose();
     });
 
