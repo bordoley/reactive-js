@@ -11,7 +11,7 @@ import {
 } from "@reactive-js/disposable";
 import { fromEnumerator } from "./fromEnumerator";
 
-class IteratorEnumerator<T> implements EnumeratorLike<T> {
+class IteratorEnumerator<T> implements EnumeratorLike<void, T> {
   readonly add = disposableMixin.add;
   current: any;
   readonly disposable: DisposableLike = createDisposable();

@@ -854,7 +854,7 @@ ___
 
 ###  fromEnumerator
 
-▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
+▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
 
@@ -866,11 +866,11 @@ Creates an `EnumerableLike` backed by the provided `EnumeratorLike`.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› | The `EnumeratorLike`.  |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T› | The `EnumeratorLike`.  |
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
-▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` backed by the provided `EnumeratorLike`
 with a specified `delay` between emitted items.
@@ -883,7 +883,7 @@ with a specified `delay` between emitted items.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹T› | The `EnumeratorLike`. |
+`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T› | The `EnumeratorLike`. |
 `delay` | number | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*

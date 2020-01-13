@@ -15,7 +15,7 @@ import {
 const done: IteratorResult<any> = { done: true, value: undefined };
 
 class EnumeratorIterator<T> implements Iterator<T> {
-  constructor(private readonly enumerator: EnumeratorLike<T>) {}
+  constructor(private readonly enumerator: EnumeratorLike<void, T>) {}
 
   next<T>(): IteratorResult<T> {
     const enumerator = this.enumerator;
@@ -38,12 +38,12 @@ class EnumeratorIterator<T> implements Iterator<T> {
   }
 }
 
-const toIterator = <T>(enumerator: EnumeratorLike<T>): Iterator<T> =>
+const toIterator = <T>(enumerator: EnumeratorLike<void, T>): Iterator<T> =>
   new EnumeratorIterator(enumerator);
 
 const alwaysTrue = () => true;
 
-class EnumeratorSubscriber<T> implements EnumeratorLike<T>, SubscriberLike<T> {
+class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike<T> {
   readonly add = disposableMixin.add;
   private continuation?: SchedulerContinuationLike;
   current: any;
@@ -106,7 +106,7 @@ export const enumerableMixin = {
     const enumerator = this.enumerate();
     return toIterator(enumerator);
   },
-  enumerate<T>(this: EnumerableLike<T>): EnumeratorLike<T> {
+  enumerate<T>(this: EnumerableLike<T>): EnumeratorLike<void, T> {
     const subscriber = new EnumeratorSubscriber<T>();
     this.subscribe(subscriber);
     return subscriber;

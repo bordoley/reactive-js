@@ -114,7 +114,7 @@ export interface SubjectLike<T>
  *
  * @noInheritDoc
  */
-export interface EnumeratorLike<T> extends DisposableLike {
+export interface EnumeratorLike<TReq, T> extends DisposableLike {
   /**
    * The current item, if present, at the current position of the enumerator.
    */
@@ -130,7 +130,7 @@ export interface EnumeratorLike<T> extends DisposableLike {
    *
    * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
    */
-  moveNext(): boolean;
+  moveNext(req: TReq): boolean;
 }
 
 /**
@@ -142,7 +142,7 @@ export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
   /**
    * Returns an `EnumeratorLike` to iterate through the observable source.
    */
-  enumerate(): EnumeratorLike<T>;
+  enumerate(): EnumeratorLike<void, T>;
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B> */

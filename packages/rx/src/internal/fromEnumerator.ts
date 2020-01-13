@@ -13,7 +13,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
 
   constructor(
     private readonly subscriber: SubscriberLike<T>,
-    private readonly enumerator: EnumeratorLike<T>,
+    private readonly enumerator: EnumeratorLike<void, T>,
     readonly delay: number,
   ) {}
 
@@ -56,7 +56,7 @@ class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
 
 class FromEnumeratorObservable<T> implements ObservableLike<T> {
   constructor(
-    protected readonly enumerator: EnumeratorLike<T>,
+    protected readonly enumerator: EnumeratorLike<void, T>,
     private readonly delay: number,
   ) {}
 
@@ -74,7 +74,7 @@ class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
   implements EnumerableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
-  constructor(enumerator: EnumeratorLike<T>) {
+  constructor(enumerator: EnumeratorLike<void, T>) {
     super(enumerator, 0);
   }
 
@@ -89,7 +89,7 @@ class FromEnumeratorEnumerable<T> extends FromEnumeratorObservable<T>
  * @param enumerator The `EnumeratorLike`.
  */
 export function fromEnumerator<T>(
-  enumerator: EnumeratorLike<T>,
+  enumerator: EnumeratorLike<void, T>,
 ): EnumerableLike<T>;
 
 /**
@@ -100,12 +100,12 @@ export function fromEnumerator<T>(
  * @param delay The requested delay between emitted items by the observable.
  */
 export function fromEnumerator<T>(
-  enumerator: EnumeratorLike<T>,
+  enumerator: EnumeratorLike<void, T>,
   delay: number,
 ): ObservableLike<T>;
 
 export function fromEnumerator<T>(
-  enumerator: EnumeratorLike<T>,
+  enumerator: EnumeratorLike<void, T>,
   delay = 0,
 ): ObservableLike<T> {
   return delay > 0

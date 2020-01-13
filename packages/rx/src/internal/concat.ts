@@ -12,7 +12,7 @@ import { fromArray } from "./fromArray";
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly enumerator: EnumeratorLike<ObservableLike<T>>,
+    private readonly enumerator: EnumeratorLike<void, ObservableLike<T>>,
   ) {
     super(delegate);
     this.add(error => {
