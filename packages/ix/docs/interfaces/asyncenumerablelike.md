@@ -22,7 +22,7 @@
 
 ###  enumerateAsync
 
-▸ **enumerateAsync**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)‹TReq, T›*
+▸ **enumerateAsync**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorLike](asyncenumeratorlike.md)‹TReq, T›*
 
 **Parameters:**
 
@@ -31,4 +31,4 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *[AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)‹TReq, T›*
+**Returns:** *[AsyncEnumeratorLike](asyncenumeratorlike.md)‹TReq, T›*

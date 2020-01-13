@@ -7,7 +7,7 @@ import {
   publish,
 } from "@reactive-js/rx";
 import {
-  AsyncEnumeratorResourceLike,
+  AsyncEnumeratorLike,
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "./interfaces";
@@ -17,8 +17,8 @@ import {
 } from "@reactive-js/scheduler";
 import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
 
-class LiftedAsyncEnumeratorResourceImpl<TReq, T>
-  implements AsyncEnumeratorResourceLike<TReq, T> {
+class LiftedAsyncEnumeratorImpl<TReq, T>
+  implements AsyncEnumeratorLike<TReq, T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
 
@@ -69,11 +69,11 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
   enumerateAsync(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorResourceLike<TReq, T> {
+  ): AsyncEnumeratorLike<TReq, T> {
     const enumerator = this.source.enumerateAsync(scheduler);
 
     const notify: (req: any) => void =
-      enumerator instanceof LiftedAsyncEnumeratorResourceImpl
+      enumerator instanceof LiftedAsyncEnumeratorImpl
         ? enumerator.notify
         : (req: any) => enumerator.notify(req);
     const liftedNotify = this.reqOperators.reduce(
@@ -82,7 +82,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     );
 
     const notifySafe: (req: any) => void =
-      enumerator instanceof LiftedAsyncEnumeratorResourceImpl
+      enumerator instanceof LiftedAsyncEnumeratorImpl
         ? enumerator.notifySafe
         : (req: any) => enumerator.notifySafe(req);
     const liftedNotifySafe = this.reqOperators.reduce(
@@ -100,7 +100,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
     const disposable = (enumerator as any).disposable || enumerator;
     disposable.add(liftedObservable);
 
-    return new LiftedAsyncEnumeratorResourceImpl(
+    return new LiftedAsyncEnumeratorImpl(
       liftedNotify,
       liftedNotifySafe,
       liftedObservable,

@@ -13,7 +13,6 @@
 * [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)
 * [AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)
 * [AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)
-* [AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)
 * [ContinueRequestLike](interfaces/continuerequestlike.md)
 * [DoneRequestLike](interfaces/donerequestlike.md)
 * [StateUpdaterLike](interfaces/stateupdaterlike.md)
@@ -157,7 +156,7 @@ ___
 
 ### `Const` createAsyncEnumerator
 
-▸ **createAsyncEnumerator**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹TReq, T›*
+▸ **createAsyncEnumerator**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›*
 
 **Type parameters:**
 
@@ -173,7 +172,7 @@ Name | Type | Default | Description |
 `scheduler` | SchedulerLike | - | - |
 `replayCount` | number | 0 |   |
 
-**Returns:** *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹TReq, T›*
+**Returns:** *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›*
 
 ___
 

@@ -10,28 +10,8 @@
 
 ## Hierarchy
 
+* SafeSubscriberLike‹TReq›
+
 * MulticastObservableLike‹T›
 
   ↳ **AsyncEnumeratorLike**
-
-  ↳ [AsyncEnumeratorResourceLike](asyncenumeratorresourcelike.md)
-
-## Index
-
-### Methods
-
-* [notifySafe](asyncenumeratorlike.md#notifysafe)
-
-## Methods
-
-###  notifySafe
-
-▸ **notifySafe**(`req`: TReq): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | TReq |
-
-**Returns:** *void*

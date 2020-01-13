@@ -13,7 +13,7 @@ import {
   concat,
 } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumeratorLike, AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerator } from "./createAsyncEnumerator";
 
 const doneError = Symbol("IteratorDone");
@@ -22,7 +22,7 @@ const fromIterableAsyncEnumerator = <T>(
   iterable: Iterable<T>,
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncEnumeratorResourceLike<number | void, T> => {
+): AsyncEnumeratorLike<number | void, T> => {
   const iterator = iterable[Symbol.iterator]();
   const enumerator = fromIterator(iterator).enumerate();
 
