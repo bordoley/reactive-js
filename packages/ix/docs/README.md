@@ -22,10 +22,6 @@
 
 * [ConsumeRequest](README.md#consumerequest)
 
-### Variables
-
-* [disposedAsyncEnumerator](README.md#const-disposedasyncenumerator)
-
 ### Functions
 
 * [consume](README.md#const-consume)
@@ -47,12 +43,6 @@
 ###  ConsumeRequest
 
 Ƭ **ConsumeRequest**: *[ContinueRequestLike](interfaces/continuerequestlike.md)‹TReq, TAcc› | [DoneRequestLike](interfaces/donerequestlike.md)‹TAcc›*
-
-## Variables
-
-### `Const` disposedAsyncEnumerator
-
-• **disposedAsyncEnumerator**: *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹unknown, any›* =  _disposed
 
 ## Functions
 
@@ -124,7 +114,10 @@ ___
 
 ### `Const` createActionReducer
 
-▸ **createActionReducer**<**TAction**, **T**>(`reducer`: function, `initialStateFactory`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TAction, T›*
+▸ **createActionReducer**<**TAction**, **T**>(`reducer`: function, `initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TAction, T›*
+
+Returns a new `AsyncEnumerableLike` instance that applies an accumulator function
+over the notified actions, emitting each intermediate result.
 
 **Type parameters:**
 
@@ -136,6 +129,8 @@ ___
 
 ▪ **reducer**: *function*
 
+The accumulator function called on each notified action.
+
 ▸ (`state`: T, `action`: TAction): *T*
 
 **Parameters:**
@@ -145,11 +140,16 @@ Name | Type |
 `state` | T |
 `action` | TAction |
 
-▪ **initialStateFactory**: *function*
+▪ **initialState**: *function*
+
+The initial accumulation value.
 
 ▸ (): *T*
 
 ▪`Optional`  **equals**: *undefined | function*
+
+Optional equality function that is used to compare
+if a state value is distinct from the previous one.
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TAction, T›*
 
@@ -167,11 +167,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`operator` | ObservableOperatorLike‹TReq, T› | - |
-`scheduler` | SchedulerLike | - |
-`replayCount` | number | 0 |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`operator` | ObservableOperatorLike‹TReq, T› | - | - |
+`scheduler` | SchedulerLike | - | - |
+`replayCount` | number | 0 |   |
 
 **Returns:** *[AsyncEnumeratorResourceLike](interfaces/asyncenumeratorresourcelike.md)‹TReq, T›*
 
@@ -181,6 +181,10 @@ ___
 
 ▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
+Returns a new `AsyncEnumerableLike` instance that stores state which can
+be updated by notifying the instance with a `StateUpdaterLike` that computes a
+new state based upon the previous state.
+
 **Type parameters:**
 
 ▪ **T**
@@ -189,9 +193,14 @@ ___
 
 ▪ **initialState**: *function*
 
+The initial accumulation value.
+
 ▸ (): *T*
 
 ▪`Optional`  **equals**: *undefined | function*
+
+Optional equality function that is used to compare
+if a state value is distinct from the previous one.
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
@@ -200,6 +209,9 @@ ___
 ### `Const` empty
 
 ▸ **empty**<**TReq**, **T**>(): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›*
+
+Returns an empty `AsyncEnumerableLike` that always returns
+a disposed `AsyncEnumeratorLike` instance.
 
 **Type parameters:**
 
@@ -215,15 +227,17 @@ ___
 
 ▸ **fromArray**<**T**>(`values`: keyof T[]): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
 
+Returns an `AsyncEnumerableLike` from the provided array.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`values` | keyof T[] |
+Name | Type | Description |
+------ | ------ | ------ |
+`values` | keyof T[] | The array.  |
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
 
@@ -233,15 +247,17 @@ ___
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
 
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`iterable` | Iterable‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`iterable` | Iterable‹T› |   |
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
 
@@ -251,6 +267,9 @@ ___
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
 
+Generates an `AsyncEnumerableLike` sequence from a generator function
+that is applied to an accumulator value.
+
 **Type parameters:**
 
 ▪ **T**
@@ -258,6 +277,8 @@ ___
 **Parameters:**
 
 ▪ **generator**: *function*
+
+The generator function.
 
 ▸ (`acc`: T): *T*
 
@@ -269,6 +290,8 @@ Name | Type |
 
 ▪ **initialValue**: *function*
 
+Factory function to generate the initial accumulator.
+
 ▸ (): *T*
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹number | void, T›*
@@ -278,6 +301,8 @@ ___
 ### `Const` identity
 
 ▸ **identity**<**T**>(): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, T›*
+
+Returns an `AsyncEnumerableLike` that publishes it's notifications.
 
 **Type parameters:**
 
@@ -335,6 +360,8 @@ ___
 
 ▸ **toStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
 
+Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdaterLike<T>, T>`.
+
 **Type parameters:**
 
 ▪ **T**
@@ -343,8 +370,13 @@ ___
 
 ▪ **initialState**: *function*
 
+Factory function to generate the initial state.
+
 ▸ (): *T*
 
 ▪`Optional`  **equals**: *undefined | function*
+
+Optional equality function that is used to compare
+if a state value is distinct from the previous one.
 
 **Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*

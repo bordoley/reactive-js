@@ -1027,7 +1027,7 @@ that is applied to an accumulator value.
 
 ▪ **generator**: *function*
 
-the generator function.
+The generator function.
 
 ▸ (`acc`: T): *T*
 
@@ -1039,7 +1039,7 @@ Name | Type |
 
 ▪ **initialValue**: *function*
 
-factory function to generate the initial accumulator.
+Factory function to generate the initial accumulator.
 
 ▸ (): *T*
 

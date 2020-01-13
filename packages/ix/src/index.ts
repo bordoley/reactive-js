@@ -14,7 +14,6 @@ export {
 } from "./internal/consume";
 export { consumeAsync } from "./internal/consumeAsync";
 export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
-export { disposedAsyncEnumerator } from "./internal/disposedAsyncEnumerator";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";

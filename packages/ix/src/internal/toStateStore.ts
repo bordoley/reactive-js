@@ -55,6 +55,13 @@ class DelegatingStateStoreAsyncEnumerable<T>
   }
 }
 
+/**
+ * Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdaterLike<T>, T>`.
+ * 
+ * @param initialState Factory function to generate the initial state.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
 export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,

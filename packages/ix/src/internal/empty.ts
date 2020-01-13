@@ -1,17 +1,25 @@
-import { empty as emptyObs, ObservableLike } from "@reactive-js/rx";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorResourceLike, AsyncEnumerableLike } from "./interfaces";
-import { createAsyncEnumerator } from "./createAsyncEnumerator";
+import { disposed as disposedDisposable } from "@reactive-js/disposable";
 
-const operator = <TReq, T>(_: ObservableLike<TReq>): ObservableLike<T> =>
-  emptyObs();
+const disposed: AsyncEnumeratorResourceLike<unknown, any> = {
+  ...(disposedDisposable as any),
+  now: 0,
+  subscriberCount: 0,
+  notify(_) {},
+  notifySafe(_) {},
+  schedule: _ => disposedDisposable,
+  subscribe: subscriber => subscriber.dispose(),
+};
 
 const enumerateAsync = <TReq, T>(
-  scheduler: SchedulerLike,
-  replayCount?: number,
-): AsyncEnumeratorResourceLike<TReq, T> =>
-  createAsyncEnumerator(operator, scheduler, replayCount);
+  _: SchedulerLike,
+): AsyncEnumeratorResourceLike<TReq, T> => disposed;
 
 const instance = { enumerateAsync };
 
+/**
+ * Returns an empty `AsyncEnumerableLike` that always returns 
+ * a disposed `AsyncEnumeratorLike` instance.
+ */
 export const empty = <TReq, T>(): AsyncEnumerableLike<TReq, T> => instance;
