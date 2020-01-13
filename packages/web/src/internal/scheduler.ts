@@ -30,12 +30,37 @@ const callCallbackAndDispose = (
   disposable.dispose();
 };
 
+const scheduleImmediate = (scheduler: WebScheduler, callback: () => void): DisposableLike => {
+  const disposable = createDisposable();
+  const channel = scheduler.channel;
+
+  channel.port1.onmessage = () => {
+    if (!disposable.isDisposed) {
+      scheduler.startTime = scheduler.now;
+      callback();
+      disposable.dispose();
+    }
+  };
+  channel.port2.postMessage(null);
+  return disposable;
+}
+
+const scheduleDelayed = (scheduler: WebScheduler, callback: () => void, delay = 0): DisposableLike => {
+  const disposable = createDisposable(() => clearTimeout(timeout));
+  const timeout = setTimeout(
+    callCallbackAndDispose,
+    delay,
+    scheduler,
+    callback,
+    disposable,
+  );
+  return disposable;
+}
+
 class WebScheduler implements SchedulerLike {
-  private channel = new MessageChannel();
-
+  channel = new MessageChannel();
   readonly schedule = schedulerMixin.schedule;
-
-  protected readonly shouldYield =
+  readonly shouldYield =
     navigator !== undefined &&
     (navigator as any).scheduling !== undefined &&
     (navigator as any).scheduling.isInputPending !== undefined
@@ -63,35 +88,8 @@ class WebScheduler implements SchedulerLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4
-      ? this.scheduleDelayed(callback, delay)
-      : this.scheduleImmediate(callback);
-  }
-
-  private scheduleImmediate(callback: () => void): DisposableLike {
-    const disposable = createDisposable();
-    const channel = this.channel;
-
-    channel.port1.onmessage = () => {
-      if (!disposable.isDisposed) {
-        this.startTime = this.now;
-        callback();
-        disposable.dispose();
-      }
-    };
-    channel.port2.postMessage(null);
-    return disposable;
-  }
-
-  private scheduleDelayed(callback: () => void, delay = 0): DisposableLike {
-    const disposable = createDisposable(() => clearTimeout(timeout));
-    const timeout = setTimeout(
-      callCallbackAndDispose,
-      delay,
-      this,
-      callback,
-      disposable,
-    );
-    return disposable;
+      ? scheduleDelayed(this, callback, delay)
+      : scheduleImmediate(this, callback);
   }
 }
 
