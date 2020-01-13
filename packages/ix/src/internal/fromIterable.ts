@@ -30,14 +30,13 @@ const fromIterableAsyncEnumerator = <T>(
           throw doneError;
         }
       }),
-      catchError(error => error === doneError ? empty() : undefined),
+      catchError(error => (error === doneError ? empty() : undefined)),
     );
 
   return createAsyncEnumerator(operator, scheduler, replayCount);
 };
 
-class FromIterableAsyncEnumerable<T>
-  implements AsyncEnumerableLike<void, T> {
+class FromIterableAsyncEnumerable<T> implements AsyncEnumerableLike<void, T> {
   constructor(private readonly iterable: Iterable<T>) {}
 
   enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
@@ -52,5 +51,4 @@ class FromIterableAsyncEnumerable<T>
  */
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-): AsyncEnumerableLike<void, T> =>
-  new FromIterableAsyncEnumerable(iterable);
+): AsyncEnumerableLike<void, T> => new FromIterableAsyncEnumerable(iterable);

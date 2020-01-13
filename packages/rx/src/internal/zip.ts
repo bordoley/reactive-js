@@ -18,7 +18,9 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   return true;
 };
 
-const shouldComplete = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
+const shouldComplete = (
+  enumerators: readonly EnumeratorLike<void, unknown>[],
+) => {
   for (const enumerator of enumerators) {
     enumerator.move();
     if (enumerator.isDisposed && !enumerator.hasCurrent) {
@@ -116,7 +118,9 @@ class ZipObservable<T> implements ObservableLike<T> {
       const observable = observables[index];
 
       if (isEnumerable(observable)) {
-        const enumerable = (observable as unknown) as EnumerableObservableLike<T>;
+        const enumerable = (observable as unknown) as EnumerableObservableLike<
+          T
+        >;
         const enumerator = enumerable.enumerate();
 
         enumerator.move();
@@ -297,7 +301,11 @@ export function zip<TA, TB, T>(
   selector: (a: TA, b: TB) => T,
 ): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, T>(
-  observables: [EnumerableObservableLike<TA>, EnumerableObservableLike<TB>, EnumerableObservableLike<TC>],
+  observables: [
+    EnumerableObservableLike<TA>,
+    EnumerableObservableLike<TB>,
+    EnumerableObservableLike<TC>,
+  ],
   selector: (a: TA, b: TB, c: TC) => T,
 ): EnumerableObservableLike<T>;
 export function zip<TA, TB, TC, TD, T>(

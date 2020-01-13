@@ -1,4 +1,4 @@
-import { OperatorLike, pipe } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
@@ -34,20 +34,13 @@ class ToValueObserver<T> implements ObserverLike<T> {
 }
 
 /**
- * Synchronously subscribes to the source using a `VirtualTimeSchedulerLike`, returning
- * the last value produced by the source.
+ * Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
+ * the last value produced.
  */
-export const toValue = <T>(): OperatorLike<
-  ObservableLike<T>,
-  T
-> => observable => {
+export const toValue = <T>(source: ObservableLike<T>): T => {
   const scheduler = createVirtualTimeScheduler();
   const observer = new ToValueObserver<T>();
-  const subscription = pipe(
-    observable,
-    observe(observer),
-    subscribe(scheduler),
-  );
+  const subscription = pipe(source, observe(observer), subscribe(scheduler));
 
   scheduler.run();
 

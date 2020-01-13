@@ -1,5 +1,4 @@
 import { ErrorLike } from "@reactive-js/disposable";
-import { OperatorLike } from "@reactive-js/pipe";
 import {
   createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
@@ -51,7 +50,8 @@ class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
   }
 }
 
-class VirtualTimeEnumerableObservable<T> implements EnumerableObservableLike<T> {
+class VirtualTimeEnumerableObservable<T>
+  implements EnumerableObservableLike<T> {
   [Symbol.iterator] = enumerableMixin[Symbol.iterator];
 
   constructor(private readonly observable: ObservableLike<T>) {}
@@ -69,16 +69,15 @@ class VirtualTimeEnumerableObservable<T> implements EnumerableObservableLike<T> 
 }
 
 /**
- * Converts an `ObservableLike` source into an `EnumerableObservableLike` source. If the
- * source itself is `EnumerableObservableLike`, then this function returns the source. Otherwise,
- * a `VirtualTimeSchedulerLike` is used to enumerate the source. Hence, this function
+ * Converts the `ObservableLike` `source` into an `EnumerableObservableLike`. If
+ * `source` is `EnumerableObservableLike`, then this function returns `source`. Otherwise,
+ * a `VirtualTimeSchedulerLike` is used to enumerate `source`. Hence, this function
  * should not be used with sources that perform I/O such as ones that wrap Promises
  * or DOM events.
  */
-export const toEnumerable = <T>(): OperatorLike<
-  ObservableLike<T>,
-  EnumerableObservableLike<T>
-> => observable =>
-  isEnumerable(observable)
-    ? (observable as EnumerableObservableLike<T>)
-    : new VirtualTimeEnumerableObservable(observable);
+export const toEnumerable = <T>(
+  source: ObservableLike<T>,
+): EnumerableObservableLike<T> =>
+  isEnumerable(source)
+    ? (source as EnumerableObservableLike<T>)
+    : new VirtualTimeEnumerableObservable(source);

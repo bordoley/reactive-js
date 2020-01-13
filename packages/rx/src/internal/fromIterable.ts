@@ -72,7 +72,9 @@ class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
  *
  * @param iterator The `Iterator`.
  */
-export function fromIterator<T>(iterator: Iterator<T>): EnumerableObservableLike<T>;
+export function fromIterator<T>(
+  iterator: Iterator<T>,
+): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` backed by the provided `Iterator`
@@ -136,7 +138,9 @@ class FromIterableEnumerable<T> extends FromIterableObservable<T> {
  *
  * @param values The `Iterable`.
  */
-export function fromIterable<T>(iterable: Iterable<T>): EnumerableObservableLike<T>;
+export function fromIterable<T>(
+  iterable: Iterable<T>,
+): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` which iterates through the values
