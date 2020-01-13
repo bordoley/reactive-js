@@ -18,7 +18,7 @@ class SubscribeOnObserver<T> implements ObserverLike<T> {
   }
 
   onNotify(next: T) {
-    this.subscriber.notifySafe(next);
+    this.subscriber.dispatch(next);
   }
 }
 

@@ -19,13 +19,13 @@ a backing subscriber from any context.
 
 ### Methods
 
-* [notifySafe](safesubscriberlike.md#notifysafe)
+* [dispatch](safesubscriberlike.md#dispatch)
 
 ## Methods
 
-###  notifySafe
+###  dispatch
 
-▸ **notifySafe**(`next`: T): *void*
+▸ **dispatch**(`next`: T): *void*
 
 Notifies the the subscriber of the next notification produced by the observable source.
 

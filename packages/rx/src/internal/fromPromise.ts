@@ -14,7 +14,7 @@ export const fromPromise = <T>(
     factory().then(
       next => {
         if (!subscriber.isDisposed) {
-          subscriber.notifySafe(next);
+          subscriber.dispatch(next);
           subscriber.dispose();
         }
       },

@@ -56,7 +56,7 @@ export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
    *
    * @param next The next notification value.
    */
-  notifySafe(next: T): void;
+  dispatch(next: T): void;
 }
 
 /**
@@ -140,17 +140,17 @@ export interface EnumeratorLike<TReq, T> extends DisposableLike {
  */
 export interface EnumerableLike<T> extends ObservableLike<T>, Iterable<T> {
   /**
-   * Returns an `EnumeratorLike` to iterate through the observable source.
+   * Returns an `EnumeratorLike` to iterate through the source.
    */
   enumerate(): EnumeratorLike<void, T>;
 }
 
-/** A function which converts an ObservableLike<A> to an ObservableLike<B> */
+/** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
-/** A function which converts an EnumerableLike<A> to an EnumerableLike<B> */
+/** A function which converts an EnumerableLike<A> to an EnumerableLike<B>. */
 export interface EnumerableOperatorLike<A, B> {
   (enumerable: EnumerableLike<A>): EnumerableLike<B>;
 }

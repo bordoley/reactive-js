@@ -24,7 +24,7 @@ class LiftedAsyncEnumeratorImpl<TReq, T>
 
   constructor(
     readonly notify: (req: TReq) => void,
-    readonly notifySafe: (req: TReq) => void,
+    readonly dispatch: (req: TReq) => void,
     readonly observable: MulticastObservableLike<T>,
     readonly disposable: DisposableLike,
     readonly scheduler: SchedulerLike,
@@ -81,13 +81,13 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
       notify,
     );
 
-    const notifySafe: (req: any) => void =
+    const dispatch: (req: any) => void =
       enumerator instanceof LiftedAsyncEnumeratorImpl
-        ? enumerator.notifySafe
-        : (req: any) => enumerator.notifySafe(req);
-    const liftedNotifySafe = this.reqOperators.reduce(
+        ? enumerator.dispatch
+        : (req: any) => enumerator.dispatch(req);
+    const lifteddispatch = this.reqOperators.reduce(
       (acc, next) => next(acc),
-      notifySafe,
+      dispatch,
     );
 
     const observable: ObservableLike<any> =
@@ -102,7 +102,7 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
 
     return new LiftedAsyncEnumeratorImpl(
       liftedNotify,
-      liftedNotifySafe,
+      lifteddispatch,
       liftedObservable,
       disposable,
       scheduler,

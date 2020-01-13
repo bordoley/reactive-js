@@ -252,9 +252,9 @@ export function bindNodeCallback(
           subscriber.dispose({ cause });
         } else {
           if (innerArgs.length > 1) {
-            subscriber.notifySafe(innerArgs);
+            subscriber.dispatch(innerArgs);
           } else if (innerArgs.length === 1) {
-            subscriber.notifySafe(innerArgs[0]);
+            subscriber.dispatch(innerArgs[0]);
           }
           subscriber.dispose();
         }

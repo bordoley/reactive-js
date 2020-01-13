@@ -2,7 +2,7 @@
 
 # Interface: EnumerableOperatorLike <**A, B**>
 
-A function which converts an EnumerableLike<A> to an EnumerableLike<B>
+A function which converts an EnumerableLike<A> to an EnumerableLike<B>.
 
 ## Type parameters
 
@@ -18,7 +18,7 @@ A function which converts an EnumerableLike<A> to an EnumerableLike<B>
 
 ▸ (`enumerable`: [EnumerableLike](enumerablelike.md)‹A›): *[EnumerableLike](enumerablelike.md)‹B›*
 
-A function which converts an EnumerableLike<A> to an EnumerableLike<B>
+A function which converts an EnumerableLike<A> to an EnumerableLike<B>.
 
 **Parameters:**
 
