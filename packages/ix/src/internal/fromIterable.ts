@@ -53,9 +53,9 @@ class FromIterableAsyncEnumerable<T>
 }
 
 /**
- * Returns an `AsyncEnumerableLike` from the provided iterable. 
- *  
- * @param iterable 
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
  */
 export const fromIterable = <T>(
   iterable: Iterable<T>,

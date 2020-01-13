@@ -41,11 +41,11 @@ class AsyncEnumeratorImpl<TReq, T>
 }
 
 /**
- * 
- * 
- * @param operator 
- * @param scheduler 
- * @param replayCount 
+ *
+ *
+ * @param operator
+ * @param scheduler
+ * @param replayCount
  */
 export const createAsyncEnumerator = <TReq, T>(
   operator: ObservableOperatorLike<TReq, T>,

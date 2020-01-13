@@ -52,8 +52,8 @@ const subscribeObservable = <T>(
 
 /**
  * Returns the current value, if defined, of `observable`.
- * 
- * @param observable The `ObservableLike` to subscribe to. 
+ *
+ * @param observable The `ObservableLike` to subscribe to.
  * @param scheduler An optional scheduler used when subscribing to `observable`. The default
  * is React's normal priority scheduler.
  */
@@ -85,9 +85,9 @@ export const useObservable = <T>(
 };
 
 /**
- * 
- * @param enumerator 
- * @param scheduler 
+ *
+ * @param enumerator
+ * @param scheduler
  */
 export const useAsyncEnumerator = <TReq, T>(
   enumerator: AsyncEnumeratorLike<TReq, T>,
@@ -117,9 +117,9 @@ const useResource = <T extends DisposableLike>(
 };
 
 /**
- * 
- * @param enumerable 
- * @param config 
+ *
+ * @param enumerable
+ * @param config
  */
 export const useAsyncEnumerable = <TReq, T>(
   enumerable: AsyncEnumerableLike<TReq, T>,
@@ -137,8 +137,5 @@ export const useAsyncEnumerable = <TReq, T>(
     [enumerable, scheduler, replay],
   );
 
-  return useResource<AsyncEnumeratorLike<TReq, T>>(
-    factory,
-    emptyEnumerator,
-  );
+  return useResource<AsyncEnumeratorLike<TReq, T>>(factory, emptyEnumerator);
 };

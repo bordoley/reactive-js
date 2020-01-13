@@ -47,8 +47,8 @@ class FromArrayAsyncEnumerable<T>
 }
 
 /**
- * Returns an `AsyncEnumerableLike` from the provided array. 
- * 
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
  * @param values The array.
  */
 export const fromArray = <T>(

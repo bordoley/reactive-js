@@ -22,7 +22,11 @@ const callCallbackAndDispose = (
   disposable.dispose();
 };
 
-const scheduleDelayed = (scheduler: NodeScheduler, callback: () => void, delay = 0): DisposableLike => {
+const scheduleDelayed = (
+  scheduler: NodeScheduler,
+  callback: () => void,
+  delay = 0,
+): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
     callCallbackAndDispose,
@@ -32,9 +36,12 @@ const scheduleDelayed = (scheduler: NodeScheduler, callback: () => void, delay =
     disposable,
   );
   return disposable;
-}
+};
 
-const scheduleImmediate = (scheduler: NodeScheduler, callback: () => void): DisposableLike => {
+const scheduleImmediate = (
+  scheduler: NodeScheduler,
+  callback: () => void,
+): DisposableLike => {
   const disposable = createDisposable(() => clearImmediate(immediate));
   const immediate = setImmediate(
     callCallbackAndDispose,
@@ -43,7 +50,7 @@ const scheduleImmediate = (scheduler: NodeScheduler, callback: () => void): Disp
     disposable,
   );
   return disposable;
-}
+};
 
 class NodeScheduler implements SchedulerLike {
   readonly schedule = schedulerMixin.schedule;
