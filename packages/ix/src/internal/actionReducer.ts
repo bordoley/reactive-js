@@ -22,7 +22,7 @@ class ReducerStoreAsyncEnumerable<TAction, T>
 /**
  * Returns a new `AsyncEnumerableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
- * 
+ *
  * @param reducer The accumulator function called on each notified action.
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
@@ -52,9 +52,9 @@ const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
 
 /**
  * Returns a new `AsyncEnumerableLike` instance that stores state which can
- * be updated by notifying the instance with a `StateUpdaterLike` that computes a 
+ * be updated by notifying the instance with a `StateUpdaterLike` that computes a
  * new state based upon the previous state.
- * 
+ *
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.

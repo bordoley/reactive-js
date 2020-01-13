@@ -19,7 +19,7 @@ const enumerateAsync = <TReq, T>(
 const instance = { enumerateAsync };
 
 /**
- * Returns an empty `AsyncEnumerableLike` that always returns 
+ * Returns an empty `AsyncEnumerableLike` that always returns
  * a disposed `AsyncEnumeratorLike` instance.
  */
 export const empty = <TReq, T>(): AsyncEnumerableLike<TReq, T> => instance;

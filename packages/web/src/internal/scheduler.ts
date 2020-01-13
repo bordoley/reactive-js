@@ -30,7 +30,10 @@ const callCallbackAndDispose = (
   disposable.dispose();
 };
 
-const scheduleImmediate = (scheduler: WebScheduler, callback: () => void): DisposableLike => {
+const scheduleImmediate = (
+  scheduler: WebScheduler,
+  callback: () => void,
+): DisposableLike => {
   const disposable = createDisposable();
   const channel = scheduler.channel;
 
@@ -43,9 +46,13 @@ const scheduleImmediate = (scheduler: WebScheduler, callback: () => void): Dispo
   };
   channel.port2.postMessage(null);
   return disposable;
-}
+};
 
-const scheduleDelayed = (scheduler: WebScheduler, callback: () => void, delay = 0): DisposableLike => {
+const scheduleDelayed = (
+  scheduler: WebScheduler,
+  callback: () => void,
+  delay = 0,
+): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
     callCallbackAndDispose,
@@ -55,7 +62,7 @@ const scheduleDelayed = (scheduler: WebScheduler, callback: () => void, delay = 
     disposable,
   );
   return disposable;
-}
+};
 
 class WebScheduler implements SchedulerLike {
   channel = new MessageChannel();
