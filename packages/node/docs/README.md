@@ -14,7 +14,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -25,6 +25,8 @@
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -48,11 +50,24 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (): *ObservableLike‹T›*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -61,6 +76,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -83,17 +100,31 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (): *ObservableLike‹[R1, R2, R3]›*
+▸ (): *ObservableLike‹T›*
 
-▸ **bindNodeCallback**<**R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -115,15 +146,28 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (): *ObservableLike‹[R1, R2]›*
+▸ (): *ObservableLike‹T›*
 
-▸ **bindNodeCallback**<**R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -144,9 +188,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (): *ObservableLike‹R1›*
+▸ (): *ObservableLike‹T›*
 
 ▸ **bindNodeCallback**(`callbackFunc`: function): *function*
 
@@ -172,7 +226,7 @@ Name | Type |
 
 ▸ (): *ObservableLike‹void›*
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -185,6 +239,8 @@ Name | Type |
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -210,9 +266,22 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (`arg1`: A1): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -220,7 +289,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -231,6 +300,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -255,9 +326,21 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1): *ObservableLike‹[R1, R2, R3]›*
+▸ (`arg1`: A1): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -265,7 +348,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -274,6 +357,8 @@ Name | Type |
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -297,9 +382,20 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1): *ObservableLike‹[R1, R2]›*
+▸ (`arg1`: A1): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -307,13 +403,15 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
 ▪ **A1**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -336,9 +434,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1): *ObservableLike‹R1›*
+▸ (`arg1`: A1): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -382,7 +490,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -397,6 +505,8 @@ Name | Type |
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -424,9 +534,22 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -435,7 +558,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -448,6 +571,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -474,9 +599,21 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹[R1, R2, R3]›*
+▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -485,7 +622,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -496,6 +633,8 @@ Name | Type |
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -521,9 +660,20 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹[R1, R2]›*
+▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -532,7 +682,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -541,6 +691,8 @@ Name | Type |
 ▪ **A2**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -565,9 +717,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹R1›*
+▸ (`arg1`: A1, `arg2`: A2): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -617,7 +779,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -634,6 +796,8 @@ Name | Type |
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -663,9 +827,22 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -675,7 +852,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -690,6 +867,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -718,9 +897,21 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹[R1, R2, R3]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -730,7 +921,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -743,6 +934,8 @@ Name | Type |
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -770,9 +963,20 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹[R1, R2]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -782,7 +986,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -793,6 +997,8 @@ Name | Type |
 ▪ **A3**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -819,9 +1025,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹R1›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -877,7 +1093,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -896,6 +1112,8 @@ Name | Type |
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -927,9 +1145,22 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -940,7 +1171,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -957,6 +1188,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -987,9 +1220,21 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹[R1, R2, R3]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1000,7 +1245,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1015,6 +1260,8 @@ Name | Type |
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1044,9 +1291,20 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹[R1, R2]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1057,7 +1315,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1070,6 +1328,8 @@ Name | Type |
 ▪ **A4**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1098,9 +1358,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹R1›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1162,7 +1432,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1183,6 +1453,8 @@ Name | Type |
 ▪ **R3**
 
 ▪ **R4**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1216,9 +1488,22 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹[R1, R2, R3, R4]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1230,7 +1515,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1249,6 +1534,8 @@ Name | Type |
 ▪ **R2**
 
 ▪ **R3**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1281,9 +1568,21 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹[R1, R2, R3]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1295,7 +1594,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1312,6 +1611,8 @@ Name | Type |
 ▪ **R1**
 
 ▪ **R2**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1343,9 +1644,20 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹[R1, R2]›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹T›*
 
 **Parameters:**
 
@@ -1357,7 +1669,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
 **Type parameters:**
 
@@ -1372,6 +1684,8 @@ Name | Type |
 ▪ **A5**
 
 ▪ **R1**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1402,9 +1716,19 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
 **Returns:** *function*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹R1›*
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *ObservableLike‹T›*
 
 **Parameters:**
 
