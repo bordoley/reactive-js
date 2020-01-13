@@ -100,7 +100,7 @@
 
 ▸ **buffer**<**T**>(`options`: object): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, keyof T[]›*
 
-Returns an `ObservableLike` which buffer items produced by the source until either the
+Returns an `ObservableLike` which buffers items produced by the source until either the
 number of items reaches the specified maximum buffer size or the duration time expires.
 
 **Type parameters:**
@@ -121,7 +121,7 @@ ___
 
 ▸ **catchError**<**T**>(`onError`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
-Returns an `ObservableLike` which catches errors produced by source and either continues with
+Returns an `ObservableLike` which catches errors produced by the source and either continues with
 the `ObservableLike` returned from the `onError` callback or propagates the error if
 void is returned.
 
@@ -133,7 +133,7 @@ void is returned.
 
 ▪ **onError**: *function*
 
-a function that takes source error and either returns an observable
+a function that takes source error and either returns an `ObservableLike`
 to continue with or void if the error should be propagated.
 
 ▸ (`error`: unknown): *[ObservableLike](interfaces/observablelike.md)‹T› | void*
@@ -542,7 +542,7 @@ ___
 ▸ **contains**<**T**>(`value`: T, `equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
-emits any item equal to `value`, otherwise false.
+emits any item equal to `value`, otherwise `false`.
 
 **Type parameters:**
 
@@ -728,8 +728,8 @@ ___
 
 ▸ **every**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an `ObservableLike` that emits a single true value if the predicate is satisfied for
-every value produced by the source, or if the source is empty, otherwise false.
+Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
+every value produced by the source, or if the source is empty, otherwise `false`.
 
 **Type parameters:**
 
@@ -1243,8 +1243,8 @@ ___
 
 ▸ **none**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
-Returns an `ObservableLike` that emits a single true value if the predicate does not satisfy
-every value produced by the source, or if the source is empty, otherwise false.
+Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
+every value produced by the source, or if the source is empty, otherwise `false`.
 
 **Type parameters:**
 
@@ -1686,7 +1686,7 @@ ___
 ▸ **some**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
-emits any items which satisfy the predicate, otherwise false.
+emits any items which satisfy the predicate, otherwise `false`.
 
 **Type parameters:**
 
