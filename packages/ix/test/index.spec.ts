@@ -25,10 +25,10 @@ test("consume", () => {
     consume(
       (acc, next) => ({
         type: ConsumeRequestType.Continue,
-        req: 1,
+        req: undefined,
         acc: acc + next,
       }),
-      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -45,11 +45,11 @@ test("consume", () => {
             }
           : {
               type: ConsumeRequestType.Continue,
-              req: 1,
+              req: undefined,
               acc: acc + next,
             },
 
-      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -65,10 +65,10 @@ test("consumeAsync", () => {
       (acc, next) =>
         ofValue({
           type: ConsumeRequestType.Continue,
-          req: 1,
+          req: undefined,
           acc: acc + next,
         }),
-      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -86,11 +86,11 @@ test("consumeAsync", () => {
               }
             : {
                 type: ConsumeRequestType.Continue,
-                req: 1,
+                req: undefined,
                 acc: acc + next,
               },
         ),
-      () => ({ type: ConsumeRequestType.Continue, req: 1, acc: 0 }),
+      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -109,7 +109,8 @@ test("fromArray", () => {
   );
 
   iter.notifySafe();
-  iter.notifySafe(2);
+  iter.notifySafe();
+  iter.notifySafe();
 
   scheduler.run();
 
@@ -132,9 +133,11 @@ test("fromIterable", () => {
   );
 
   iter.notifySafe();
-  iter.notifySafe(2);
-  iter.notifySafe(3);
-  iter.notifySafe(5);
+  iter.notifySafe();
+  iter.notifySafe();
+  iter.notifySafe();
+  iter.notifySafe();
+  iter.notifySafe();
 
   scheduler.run();
 
@@ -157,7 +160,8 @@ test("generate", () => {
   );
 
   iter.notifySafe();
-  iter.notifySafe(2);
+  iter.notifySafe();
+  iter.notifySafe();
 
   scheduler.run();
 

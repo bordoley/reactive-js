@@ -22,17 +22,17 @@ const fromIterableAsyncEnumerator = <T>(
   iterable: Iterable<T>,
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncEnumeratorLike<number | void, T> => {
+): AsyncEnumeratorLike<void, T> => {
   const iterator = iterable[Symbol.iterator]();
   const enumerator = fromIterator(iterator).enumerate();
 
-  const takeCountFromEnumerator = (count: number) =>
+  const takeCountFromEnumerator = () =>
     concat(
-      pipe(fromEnumerator(enumerator), takeFirst(count || 1)),
+      pipe(fromEnumerator(enumerator), takeFirst()),
       defer(() => (enumerator.isDisposed ? throws(() => doneError) : empty())),
     );
 
-  const operator = (obs: ObservableLike<number | void>) =>
+  const operator = (obs: ObservableLike<void>) =>
     pipe(
       obs,
       map(takeCountFromEnumerator),
@@ -59,5 +59,5 @@ class FromIterableAsyncEnumerable<T>
  */
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-): AsyncEnumerableLike<number | void, T> =>
+): AsyncEnumerableLike<void, T> =>
   new FromIterableAsyncEnumerable(iterable);
