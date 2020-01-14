@@ -24,6 +24,7 @@ export { concat, flatten } from "./internal/concat";
 export { defer } from "./internal/defer";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
+export { fromEnumerable } from "./internal/fromEnumerable";
 export { fromEnumerator } from "./internal/fromEnumerator";
 export { fromIterable, fromIterator } from "./internal/fromIterable";
 export { fromPromise } from "./internal/fromPromise";

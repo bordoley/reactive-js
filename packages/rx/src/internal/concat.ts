@@ -6,8 +6,10 @@ import {
   EnumerableObservableLike,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { enumerableMixin, isEnumerable } from "./enumerable";
+import { enumerableMixin, isEnumerable, enumerableMap } from "./enumerable";
 import { fromArray } from "./fromArray";
+import { fromEnumerable } from "./fromEnumerable";
+import { pipe } from "@reactive-js/pipe";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -90,6 +92,7 @@ export function concat<T>(
  * by concatenating the inner Enumerables in order.
  */
 export const flatten: <T>(
-  enumerable: EnumerableLike<void, EnumerableObservableLike<T>>,
+  enumerable: EnumerableLike<void, EnumerableLike<void, T>>,
 ) => EnumerableObservableLike<T> = enumerable =>
-  new ConcatEnumerable(enumerable);
+  new ConcatEnumerable(
+    pipe(enumerable, enumerableMap(fromEnumerable)));
