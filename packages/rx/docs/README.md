@@ -51,6 +51,7 @@
 * [flatten](README.md#const-flatten)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
+* [fromEnumerable](README.md#const-fromenumerable)
 * [fromEnumerator](README.md#fromenumerator)
 * [fromIterable](README.md#fromiterable)
 * [fromIterator](README.md#fromiterator)
@@ -829,7 +830,7 @@ ___
 
 ### `Const` flatten
 
-▸ **flatten**(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››): *ConcatEnumerable‹T›*
+▸ **flatten**(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableLike](interfaces/enumerablelike.md)‹void, T››): *ConcatEnumerable‹T›*
 
 Converts a higher-order EnumerableLike into a first-order EnumerableLike
 by concatenating the inner Enumerables in order.
@@ -838,7 +839,7 @@ by concatenating the inner Enumerables in order.
 
 Name | Type |
 ------ | ------ |
-`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›› |
+`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableLike](interfaces/enumerablelike.md)‹void, T›› |
 
 **Returns:** *ConcatEnumerable‹T›*
 
@@ -907,6 +908,25 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `values` | keyof T[] | The array. |
 `options` | object | Config object that includes a the specified `delay` between emitted items and an optional `startIndex` into the array.  |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` fromEnumerable
+
+▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› | - |
+`delay` | number | 0 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
