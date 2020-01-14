@@ -5,13 +5,13 @@ export {
 } from "./internal/interfaces";
 
 export {
-  consume,
-  ConsumeRequestType,
+  ReducerRequestType,
   ContinueRequestLike,
-  ConsumeRequest,
+  ReducerRequest,
   DoneRequestLike,
-} from "./internal/consume";
-export { consumeAsync } from "./internal/consumeAsync";
+  reduce,
+} from "./internal/reduce";
+export { reduceAsync } from "./internal/reduceAsync";
 export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";

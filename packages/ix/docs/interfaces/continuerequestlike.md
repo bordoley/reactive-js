@@ -36,4 +36,4 @@ ___
 
 ###  type
 
-• **type**: *[Continue](../enums/consumerequesttype.md#continue)*
+• **type**: *[Continue](../enums/reducerrequesttype.md#continue)*
