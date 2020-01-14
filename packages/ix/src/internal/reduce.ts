@@ -16,7 +16,7 @@ import { lift } from "./lift";
 /**
  *
  */
-export const enum ConsumeRequestType {
+export const enum ReducerRequestType {
   /**
    *
    */
@@ -35,7 +35,7 @@ export interface ContinueRequestLike<TReq, TAcc> {
   /**
    *
    */
-  readonly type: ConsumeRequestType.Continue;
+  readonly type: ReducerRequestType.Continue;
 
   /**
    *
@@ -55,7 +55,7 @@ export interface DoneRequestLike<TAcc> {
   /**
    *
    */
-  readonly type: ConsumeRequestType.Done;
+  readonly type: ReducerRequestType.Done;
 
   /**
    *
@@ -66,18 +66,18 @@ export interface DoneRequestLike<TAcc> {
 /**
  *
  */
-export type ConsumeRequest<TReq, TAcc> =
+export type ReducerRequest<TReq, TAcc> =
   | ContinueRequestLike<TReq, TAcc>
   | DoneRequestLike<TAcc>;
 
-class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
+class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   constructor(
     private readonly enumerable: AsyncEnumerableLike<TReq, TSrc>,
     private readonly withLatestSelector: (
       next: TSrc,
       acc: TAcc,
-    ) => ConsumeRequest<TReq, TAcc>,
-    private readonly initial: () => ConsumeRequest<TReq, TAcc>,
+    ) => ReducerRequest<TReq, TAcc>,
+    private readonly initial: () => ReducerRequest<TReq, TAcc>,
   ) {}
 
   subscribe(subscriber: SubscriberLike<TAcc>) {
@@ -101,7 +101,7 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
         pipe(enumerator, withLatestFrom(eventEmitter, this.withLatestSelector)),
       ),
       onNotify(next => {
-        if (next.type === ConsumeRequestType.Continue) {
+        if (next.type === ReducerRequestType.Continue) {
           eventEmitter.dispatch(next);
         } else {
           enumerator.dispose();
@@ -113,19 +113,20 @@ class ConsumeObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
+
 /**
  *
  *
- * @param consumer
+ * @param reducer
  * @param initial
  */
-export const consume = <TReq, TSrc, TAcc>(
-  consumer: (acc: TAcc, next: TSrc) => ConsumeRequest<TReq, TAcc>,
-  initial: () => ConsumeRequest<TReq, TAcc>,
+export const reduce = <TReq, TSrc, TAcc>(
+  reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TReq, TAcc>,
+  initial: () => ReducerRequest<TReq, TAcc>,
 ): OperatorLike<
   AsyncEnumerableLike<TReq, TSrc>,
   ObservableLike<TAcc>
 > => enumerable => {
-  const withLatestSelector = (next: TSrc, acc: TAcc) => consumer(acc, next);
-  return new ConsumeObservable(enumerable, withLatestSelector, initial);
-};
+  const withLatestSelector = (next: TSrc, acc: TAcc) => reducer(acc, next);
+  return new ReduceObservable(enumerable, withLatestSelector, initial);
+}

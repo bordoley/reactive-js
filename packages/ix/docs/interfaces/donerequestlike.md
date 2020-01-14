@@ -27,4 +27,4 @@ ___
 
 ###  type
 
-• **type**: *[Done](../enums/consumerequesttype.md#done)*
+• **type**: *[Done](../enums/reducerrequesttype.md#done)*

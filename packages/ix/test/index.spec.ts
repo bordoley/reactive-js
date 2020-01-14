@@ -1,8 +1,8 @@
 import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import {
-  consume,
-  consumeAsync,
-  ConsumeRequestType,
+  reduce,
+  reduceAsync,
+  ReducerRequestType,
   fromArray,
   fromIterable,
   generate,
@@ -17,18 +17,18 @@ import {
 } from "@reactive-js/rx";
 import { ErrorLike } from "@reactive-js/disposable";
 
-test("consume", () => {
+test("reduce", () => {
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
   pipe(
     iter,
-    consume(
+    reduce(
       (acc, next) => ({
-        type: ConsumeRequestType.Continue,
+        type: ReducerRequestType.Continue,
         req: undefined,
         acc: acc + next,
       }),
-      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue,
     expect,
@@ -36,39 +36,39 @@ test("consume", () => {
 
   pipe(
     iter,
-    consume(
+    reduce(
       (acc, next) =>
         acc > 0
           ? {
-              type: ConsumeRequestType.Done,
+              type: ReducerRequestType.Done,
               acc: acc + next,
             }
           : {
-              type: ConsumeRequestType.Continue,
+              type: ReducerRequestType.Continue,
               req: undefined,
               acc: acc + next,
             },
 
-      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue,
     expect,
   ).toEqual(3);
 });
 
-test("consumeAsync", () => {
+test("reduceAsync", () => {
   const iter = fromIterable([1, 2, 3, 4, 5, 6]);
 
   pipe(
     iter,
-    consumeAsync(
+    reduceAsync(
       (acc, next) =>
         ofValue({
-          type: ConsumeRequestType.Continue,
+          type: ReducerRequestType.Continue,
           req: undefined,
           acc: acc + next,
         }),
-      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue,
     expect,
@@ -76,21 +76,21 @@ test("consumeAsync", () => {
 
   pipe(
     iter,
-    consumeAsync(
+    reduceAsync(
       (acc, next) =>
         ofValue(
           acc > 0
             ? {
-                type: ConsumeRequestType.Done,
+                type: ReducerRequestType.Done,
                 acc: acc + next,
               }
             : {
-                type: ConsumeRequestType.Continue,
+                type: ReducerRequestType.Continue,
                 req: undefined,
                 acc: acc + next,
               },
         ),
-      () => ({ type: ConsumeRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
     toValue,
     expect,
