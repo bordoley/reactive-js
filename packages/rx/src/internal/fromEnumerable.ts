@@ -22,9 +22,9 @@ class FromEnumerableEnumerableObservable<T> extends FromEnumerableObservable<T> 
 
   [Symbol.iterator]() {
     const enumerable = this.enumerable;
-    const iterate = (enumerable as any)[Symbol.iterator];
+    const iterate = ((enumerable as unknown) as Iterable<T>)[Symbol.iterator];
     return iterate !== undefined 
-      ? (enumerable as any)[Symbol.iterator]()
+      ? iterate.call(enumerable)
       : fromEnumerator(enumerable.enumerate())[Symbol.iterator]();
   }
 
