@@ -3,7 +3,6 @@ import {
   EnumeratorLike,
   SubscriberLike,
   ObservableLike,
-  EnumerableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import {
@@ -118,49 +117,3 @@ export const enumerableMixin = {
 /** @ignore */
 export const isEnumerable = <T>(obs: ObservableLike<T>) =>
   (obs as any).enumerate !== undefined;
-
-class MappedEnumerator<TReq, TA, TB> implements EnumeratorLike<TReq, TB> {
-  current: any = undefined;
-  hasCurrent = false;
-
-  add = disposableMixin.add;
-  dispose = disposableMixin.dispose;
-
-  constructor(
-    readonly disposable: EnumeratorLike<TReq, TA>,
-    readonly mapper: (a: TA) => TB
-  ) {}
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  move(req: TReq): boolean {
-    const enumerator = this.disposable;
-    const hasCurrent = enumerator.move(req);
-    this.hasCurrent = hasCurrent;
-
-    if (hasCurrent) {
-      this.current = this.mapper(enumerator.current);
-    }
-
-    return hasCurrent;
-  }
-} 
-
-class MappedEnumerable<TReq, TA, TB> implements EnumerableLike<TReq, TB> {
-  constructor(
-    readonly delegate: EnumerableLike<TReq, TA>,
-    readonly mapper: (a: TA) => TB,
-  ) {}
-
-  enumerate() {
-    return new MappedEnumerator(this.delegate.enumerate(), this.mapper);
-  }
-}
-
-/** @ignore */
-export const enumerableMap = <TReq, TA, TB>(
-  mapper: (a: TA) => TB,
-) => (enumerable: EnumerableLike<TReq, TA>): EnumerableLike<TReq, TB> => 
-  new MappedEnumerable(enumerable, mapper);

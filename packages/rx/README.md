@@ -1,6 +1,6 @@
 # @reactive-js/rx
 
-Reactive-Js's core reactive and interactive programming API.
+Reactive-Js's core reactive programming API.
 
 Reactive-Js unifies reactive and interactive programming into a single API, defined by two core interfaces: [ObservableLike](./docs/interfaces/observablelike.md) and [EnumerableLike](./docs/interfaces/enumerablelike.md). In addition, basic utilities for safely creating, transforming, and using `ObservableLike` and `EnumerableLike` streams are provided.
 
