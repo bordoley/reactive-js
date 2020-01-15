@@ -21,7 +21,11 @@ class FromEnumerableEnumerableObservable<T> extends FromEnumerableObservable<T> 
   }
 
   [Symbol.iterator]() {
-    return this.enumerable[Symbol.iterator]();
+    const enumerable = this.enumerable;
+    const iterate = (enumerable as any)[Symbol.iterator];
+    return iterate !== undefined 
+      ? (enumerable as any)[Symbol.iterator]()
+      : fromEnumerator(enumerable.enumerate())[Symbol.iterator]();
   }
 
   enumerate() {
@@ -34,7 +38,7 @@ export const fromEnumerable = <T>(
   delay = 0,
 ): ObservableLike<T> =>
   (enumerable as any).subscribe !== undefined && delay <= 0
-    ? (enumerable as EnumerableObservableLike<T>)
-    : delay > 0
-    ? new FromEnumerableObservable(enumerable, delay)
-    : new FromEnumerableEnumerableObservable(enumerable);
+    ? enumerable as EnumerableObservableLike<T>
+    : (delay <= 0) 
+    ? new FromEnumerableEnumerableObservable(enumerable)
+    : new FromEnumerableObservable(enumerable, delay);

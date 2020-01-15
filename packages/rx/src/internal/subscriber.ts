@@ -57,6 +57,4 @@ export abstract class AbstractDelegatingSubscriber<
     super(delegate);
     delegate.add(this);
   }
-
-  abstract notify(_: TA): void;
 }
