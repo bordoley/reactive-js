@@ -1,8 +1,6 @@
 import {
   EnumerableObservableLike,
-  EnumeratorLike,
   SubscriberLike,
-  ObservableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import {
@@ -11,6 +9,7 @@ import {
   disposableMixin,
   ErrorLike,
 } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };
 
@@ -113,7 +112,3 @@ export const enumerableMixin = {
     return subscriber;
   },
 };
-
-/** @ignore */
-export const isEnumerable = <T>(obs: ObservableLike<T>) =>
-  (obs as any).enumerate !== undefined;

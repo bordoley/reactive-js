@@ -12,7 +12,7 @@ An `ObservableLike` that also support synchronous enumeration and iteration.
 
 * [ObservableLike](observablelike.md)‹T›
 
-* [EnumerableLike](enumerablelike.md)‹void, T›
+* EnumerableLike‹void, T›
 
 * Iterable‹T›
 

@@ -1,5 +1,4 @@
 import {
-  EnumeratorLike,
   EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
@@ -7,7 +6,8 @@ import {
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
-import { enumerableMixin, isEnumerable } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
+import { EnumeratorLike, isEnumerable } from "@reactive-js/enumerable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {

@@ -113,7 +113,6 @@ class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   }
 }
 
-
 /**
  *
  *
@@ -129,4 +128,4 @@ export const reduce = <TReq, TSrc, TAcc>(
 > => enumerable => {
   const withLatestSelector = (next: TSrc, acc: TAcc) => reducer(acc, next);
   return new ReduceObservable(enumerable, withLatestSelector, initial);
-}
+};

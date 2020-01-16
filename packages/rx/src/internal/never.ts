@@ -1,5 +1,5 @@
 import { EnumerableObservableLike, SubscriberLike } from "./interfaces";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 
 class NeverEnumerable<T> implements EnumerableObservableLike<T> {
   readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];

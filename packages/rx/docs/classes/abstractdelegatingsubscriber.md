@@ -31,10 +31,6 @@ which delegate notifications to a parent `SubscriberLike` instance
 
 * [delegate](abstractdelegatingsubscriber.md#delegate)
 
-### Methods
-
-* [notify](abstractdelegatingsubscriber.md#abstract-notify)
-
 ## Constructors
 
 ###  constructor
@@ -56,21 +52,3 @@ Name | Type |
 ###  delegate
 
 • **delegate**: *[SubscriberLike](../interfaces/subscriberlike.md)‹TB›*
-
-## Methods
-
-### `Abstract` notify
-
-▸ **notify**(`_`: TA): *void*
-
-*Implementation of [SubscriberLike](../interfaces/subscriberlike.md)*
-
-*Overrides [AbstractSubscriber](abstractsubscriber.md).[notify](abstractsubscriber.md#abstract-notify)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`_` | TA |
-
-**Returns:** *void*

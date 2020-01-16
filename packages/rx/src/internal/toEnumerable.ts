@@ -6,11 +6,11 @@ import {
 import {
   ObservableLike,
   EnumerableObservableLike,
-  EnumeratorLike,
   SubscriberLike,
 } from "./interfaces";
-import { enumerableMixin, isEnumerable } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 import { AbstractSubscriber } from "./subscriber";
+import { EnumeratorLike, isEnumerable } from "@reactive-js/enumerable";
 
 class VirtualTimeEnumeratorSubscriber<T> extends AbstractSubscriber<T>
   implements EnumeratorLike<void, T>, SubscriberLike<T> {

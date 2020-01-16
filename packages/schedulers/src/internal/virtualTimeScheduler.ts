@@ -1,8 +1,5 @@
-import {
-  createDisposable,
-  DisposableLike,
-  disposableMixin,
-} from "@reactive-js/disposable";
+import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import { AbstractEnumerator, EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
@@ -18,25 +15,9 @@ import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
  */
 export interface VirtualTimeSchedulerLike
   extends DisposableLike,
+    EnumeratorLike<void, void>,
     SchedulerLike,
-    SchedulerContinuationLike {
-  /**
-   * The current item. Always undefined.
-   */
-  readonly current: undefined;
-
-  /**
-   * `true` if the current the enumerator has a current value, otherwise `false`.
-   */
-  readonly hasCurrent: boolean;
-
-  /**
-   * Advances the enumerator to the next item.
-   *
-   * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
-   */
-  move(): boolean;
-}
+    SchedulerContinuationLike {}
 
 interface VirtualTask {
   continuation: SchedulerContinuationLike;
@@ -52,11 +33,9 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
-  readonly add = disposableMixin.add;
+class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
+  implements VirtualTimeSchedulerLike {
   readonly current = undefined;
-  readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
   hasCurrent = false;
   private microTaskTicks = 0;
   now = 0;
@@ -74,10 +53,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     VirtualTask
   > = createPriorityQueue(comparator);
 
-  constructor(private readonly maxMicroTaskTicks: number) {}
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
+  constructor(private readonly maxMicroTaskTicks: number) {
+    super();
   }
 
   move() {
