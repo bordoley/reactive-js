@@ -1,4 +1,4 @@
-import { StateUpdaterLike } from "@reactive-js/ix";
+import { StateUpdaterLike } from "@reactive-js/async-enumerable";
 import { useCallback, useMemo } from "react";
 import { RelativeURILike, RoutableComponentProps } from "./router";
 

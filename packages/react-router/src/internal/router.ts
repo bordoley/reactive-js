@@ -1,6 +1,6 @@
-import { StateUpdaterLike, AsyncEnumerableLike } from "@reactive-js/ix";
+import { StateUpdaterLike, AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
-import { map, scan, never } from "@reactive-js/rx";
+import { map, scan, never } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo, ReactElement } from "react";

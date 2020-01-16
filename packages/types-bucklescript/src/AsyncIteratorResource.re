@@ -19,10 +19,10 @@ external asObservableResource: t('req, 'resp) => ObservableResource.t('resp) = "
 [@bs.get] external subscriberCount: t('req, 'resp) => int = "subscriberCount";
 
 
-[@bs.module "@reactive-js/ix"]
+[@bs.module "@reactive-js/async-enumerable"]
 external createEventEmitter:  unit => t('event, 'event) = "createEventEmitter";
 
-[@bs.module "@reactive-js/ix"]
+[@bs.module "@reactive-js/async-enumerable"]
 external createPersistentStateStore: (
     ~persistentStore: t('state, 'state),
     ~initialState: 'state,
@@ -31,7 +31,7 @@ external createPersistentStateStore: (
     unit,
 ) => t('state => 'state, 'state) = "createPersistentStateStore";
 
-[@bs.module "@reactive-js/ix"]
+[@bs.module "@reactive-js/async-enumerable"]
 external createReducerStore: (
   ~initialState: 'state,
   ~reducer: ('state, 'action) => 'state,
@@ -40,7 +40,7 @@ external createReducerStore: (
   unit,
 ) => t('action, 'state) = "createReducerStore";
 
-[@bs.module "@reactive-js/ix"]
+[@bs.module "@reactive-js/async-enumerable"]
 external createStateStore: (
   ~initialState: 'state,
   ~scheduler: Scheduler.t,
