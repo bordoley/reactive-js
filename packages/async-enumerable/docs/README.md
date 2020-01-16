@@ -33,6 +33,7 @@
 * [identity](README.md#const-identity)
 * [lift](README.md#lift)
 * [liftReq](README.md#liftreq)
+* [map](README.md#const-map)
 * [reduce](README.md#const-reduce)
 * [reduceAsync](README.md#const-reduceasync)
 * [toStateStore](README.md#const-tostatestore)
@@ -286,6 +287,34 @@ Name | Type |
 `op` | AsyncEnumeratorRequestOperatorLike‹TReqA, TReqB› |
 
 **Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
+
+___
+
+### `Const` map
+
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReq, TA, TReq, TB›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`next`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | TA |
+
+**Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReq, TA, TReq, TB›*
 
 ___
 
