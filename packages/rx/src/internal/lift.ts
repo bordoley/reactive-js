@@ -5,7 +5,8 @@ import {
   SubscriberOperatorLike,
   EnumerableObservableLike,
 } from "./interfaces";
-import { enumerableMixin, isEnumerable } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
+import { isEnumerable } from "@reactive-js/enumerable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(

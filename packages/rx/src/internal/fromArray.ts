@@ -5,7 +5,7 @@ import {
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 
 class FromArrayProducer<T> implements SchedulerContinuationLike {
   private index = this.startIndex;

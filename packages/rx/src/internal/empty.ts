@@ -4,7 +4,7 @@ import {
   EnumerableObservableLike,
 } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 
 class EmptyProducer<T> implements SchedulerContinuationLike {
   constructor(

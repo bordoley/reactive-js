@@ -73,7 +73,10 @@ class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
  * @param initial
  */
 export const reduceAsync = <TReq, TSrc, TAcc>(
-  reducer: (acc: TAcc, next: TSrc) => ObservableLike<ReducerRequest<TReq, TAcc>>,
+  reducer: (
+    acc: TAcc,
+    next: TSrc,
+  ) => ObservableLike<ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
 ): OperatorLike<
   AsyncEnumerableLike<TReq, TSrc>,
@@ -81,4 +84,4 @@ export const reduceAsync = <TReq, TSrc, TAcc>(
 > => enumerable => {
   const withLatestSelector = (next: TSrc, acc: TAcc) => reducer(acc, next);
   return new ReduceAsyncObservable(enumerable, withLatestSelector, initial);
-}
+};
