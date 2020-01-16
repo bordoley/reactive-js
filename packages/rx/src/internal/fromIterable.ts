@@ -2,7 +2,6 @@ import {
   EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
-  EnumeratorLike,
 } from "./interfaces";
 import {
   DisposableLike,
@@ -10,6 +9,7 @@ import {
   createDisposable,
 } from "@reactive-js/disposable";
 import { fromEnumerator } from "./fromEnumerator";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class IteratorEnumerator<T> implements EnumeratorLike<void, T> {
   readonly add = disposableMixin.add;

@@ -1,6 +1,5 @@
 import {
   EnumerableObservableLike,
-  EnumeratorLike,
   SubscriberLike,
   ObservableLike,
 } from "./interfaces";
@@ -11,6 +10,7 @@ import {
   disposableMixin,
   ErrorLike,
 } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };
 

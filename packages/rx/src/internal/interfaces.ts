@@ -1,4 +1,5 @@
 import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
+import { EnumerableLike } from "@reactive-js/enumerable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
@@ -110,35 +111,6 @@ export interface SubjectLike<T>
   extends SubscriberLike<T>,
     MulticastObservableLike<T> {}
 
-/**
- *
- * @noInheritDoc
- */
-export interface EnumeratorLike<TReq, T> extends DisposableLike {
-  /**
-   * The current item, if present, at the current position of the enumerator.
-   */
-  readonly current: T;
-
-  /**
-   * `true` if the current the enumerator has a current value, otherwise `false`.
-   */
-  readonly hasCurrent: boolean;
-
-  /**
-   * Advances the enumerator to the next item.
-   *
-   * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
-   */
-  move(req: TReq): boolean;
-}
-
-export interface EnumerableLike<TReq, T> {
-  /**
-   * Returns an `EnumeratorLike` to iterate through the source.
-   */
-  enumerate(): EnumeratorLike<TReq, T>;
-}
 
 /**
  * An `ObservableLike` that also support synchronous enumeration and iteration.

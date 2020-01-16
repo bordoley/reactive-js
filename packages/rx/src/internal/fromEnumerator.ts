@@ -1,5 +1,4 @@
 import {
-  EnumeratorLike,
   EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
@@ -7,6 +6,7 @@ import {
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { producerMixin } from "./producer";
 import { enumerableMixin } from "./enumerable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class FromEnumeratorProducer<T> implements SchedulerContinuationLike {
   run = producerMixin.run;

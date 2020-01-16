@@ -1,10 +1,10 @@
 import {
-  EnumerableLike,
   EnumerableObservableLike,
   ObservableLike,
   SubscriberLike,
 } from "./interfaces";
 import { fromEnumerator } from "./fromEnumerator";
+import { EnumerableLike } from "@reactive-js/enumerable";
 
 class FromEnumerableObservable<T> implements ObservableLike<T> {
   constructor(
