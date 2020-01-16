@@ -1,6 +1,6 @@
 type t('a);
 
-[@bs.module "@reactive-js/rx"]
+[@bs.module "@reactive-js/observable"]
 external create: (~replay: int=?, unit) => t('a) = "createSubject";
 
 external asDisposable: t('a) => Disposable.t = "%identity";

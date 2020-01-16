@@ -7,7 +7,7 @@ import {
   map,
   onNotify,
   subscribe,
-} from "@reactive-js/rx";
+} from "@reactive-js/observable";
 
 const scheduler = createSchedulerWithPriority(500);
 

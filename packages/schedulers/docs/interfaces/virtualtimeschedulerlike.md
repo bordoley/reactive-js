@@ -5,7 +5,7 @@
 A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 Note: VirtualTimeSchedulerLike implements the same EnumeratorLike protocol
-defined in the @reactive-js/rx package.
+defined in the @reactive-js/observable package.
 
 ## Hierarchy
 

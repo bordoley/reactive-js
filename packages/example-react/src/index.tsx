@@ -1,4 +1,4 @@
-import { toStateStore, StateUpdaterLike, lift } from "@reactive-js/ix";
+import { toStateStore, StateUpdaterLike, lift } from "@reactive-js/async-enumerable";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -6,7 +6,7 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority } from "@reactive-js/react-scheduler";
-import { generate, onNotify } from "@reactive-js/rx";
+import { generate, onNotify } from "@reactive-js/observable";
 import { history, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";

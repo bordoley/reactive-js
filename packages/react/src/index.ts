@@ -2,7 +2,7 @@ import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
   empty,
-} from "@reactive-js/ix";
+} from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
 import {
@@ -12,7 +12,7 @@ import {
   subscribe,
   subscribeOn,
   throttle,
-} from "@reactive-js/rx";
+} from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
 import { DisposableLike, ErrorLike } from "@reactive-js/disposable";

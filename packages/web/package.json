@@ -40,9 +40,9 @@
   },
   "dependencies": {
     "@reactive-js/disposable": "^0.0.28",
-    "@reactive-js/ix": "^0.0.28",
+    "@reactive-js/async-enumerable": "^0.0.28",
     "@reactive-js/pipe": "^0.0.28",
-    "@reactive-js/rx": "^0.0.28",
+    "@reactive-js/observable": "^0.0.28",
     "@reactive-js/scheduler": "^0.0.28",
     "@reactive-js/schedulers": "^0.0.28"
   },

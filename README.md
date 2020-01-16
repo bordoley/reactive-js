@@ -13,7 +13,7 @@ import {
   map,
   onNotify,
   subscribe
-} from "@reactive-js/rx";
+} from "@reactive-js/observable";
 import { normalPriority } from "@reactive-js/react-scheduler";
 
 // The pipe function can be used to compose operators.
@@ -42,11 +42,11 @@ const subscription = pipe(
 
 ### Reactive Asynchronous Programming (RX)
 
-- [@reactive-js/rx](./packages/rx)
+- [@reactive-js/observable](./packages/rx)
 
 ### Interactive Asynchronous Programming (IX)
 
-- [@reactive-js/ix](./packages/ix)
+- [@reactive-js/async-enumerable](./packages/ix)
 
 ### Schedulers
 

@@ -36,11 +36,11 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/ix": "^0.0.28",
+    "@reactive-js/async-enumerable": "^0.0.28",
     "@reactive-js/react": "^0.0.28",
     "@reactive-js/react-router": "^0.0.28",
     "@reactive-js/react-scheduler": "^0.0.28",
-    "@reactive-js/rx": "^0.0.28",
+    "@reactive-js/observable": "^0.0.28",
     "@reactive-js/web": "^0.0.28",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
