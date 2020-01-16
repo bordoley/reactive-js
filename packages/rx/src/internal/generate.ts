@@ -5,7 +5,7 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { producerMixin } from "./producer";
-import { enumerableMixin } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 
 class GenerateProducer<T> implements SchedulerContinuationLike {
   readonly run = producerMixin.run;

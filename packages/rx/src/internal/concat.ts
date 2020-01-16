@@ -4,13 +4,13 @@ import {
   EnumerableObservableLike,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { enumerableMixin, isEnumerable } from "./enumerable";
+import { enumerableMixin } from "./enumerableObservable";
 import { fromArray } from "./fromArray";
 import { fromEnumerable } from "./fromEnumerable";
 import { map } from "./map";
 import { pipe } from "@reactive-js/pipe";
 import { toEnumerable } from "./toEnumerable";
-import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
+import { EnumeratorLike, EnumerableLike, isEnumerable } from "@reactive-js/enumerable";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
