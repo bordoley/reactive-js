@@ -19,7 +19,6 @@ yarn add @reactive-js/enumerable
 ## Usage
 
 ```typescript
-
 ```
 
 ## Documentation

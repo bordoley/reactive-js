@@ -1,6 +1,6 @@
 import { AsyncEnumerableLike } from "./interfaces";
 import {
-  map,
+  map as mapObs,
   merge,
   ObservableLike,
   ofValue,
@@ -12,6 +12,7 @@ import {
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { identity } from "./identity";
 import { lift } from "./lift";
+import { map } from "./map";
 
 /**
  *
@@ -90,7 +91,7 @@ class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
           enumerator.dispatch(continueRequest.req);
         }),
       ),
-      lift(map(({ acc }) => acc)),
+      map(({ acc }) => acc),
     ).enumerateAsync(subscriber);
 
     subscriber.add(enumerator).add(eventEmitter);
@@ -107,7 +108,7 @@ class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
           enumerator.dispose();
         }
       }),
-      map(({ acc }) => acc),
+      mapObs(({ acc }) => acc),
       takeLast(),
     ).subscribe(subscriber);
   }
