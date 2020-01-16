@@ -42,11 +42,15 @@ const subscription = pipe(
 
 ### Reactive Asynchronous Programming (RX)
 
-- [@reactive-js/observable](./packages/rx)
+- [@reactive-js/observable](./packages/observable)
+
+### Interactive Synchronous Programming
+
+- [@reactive-js/enumerable](./packages/enumerable)
 
 ### Interactive Asynchronous Programming (IX)
 
-- [@reactive-js/async-enumerable](./packages/ix)
+- [@reactive-js/async-enumerable](./packages/async-enumerable)
 
 ### Schedulers
 
