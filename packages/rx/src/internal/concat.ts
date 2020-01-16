@@ -10,7 +10,11 @@ import { fromEnumerable } from "./fromEnumerable";
 import { map } from "./map";
 import { pipe } from "@reactive-js/pipe";
 import { toEnumerable } from "./toEnumerable";
-import { EnumeratorLike, EnumerableLike, isEnumerable } from "@reactive-js/enumerable";
+import {
+  EnumeratorLike,
+  EnumerableLike,
+  isEnumerable,
+} from "@reactive-js/enumerable";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

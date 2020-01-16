@@ -111,7 +111,6 @@ export interface SubjectLike<T>
   extends SubscriberLike<T>,
     MulticastObservableLike<T> {}
 
-
 /**
  * An `ObservableLike` that also support synchronous enumeration and iteration.
  *

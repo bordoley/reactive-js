@@ -1,7 +1,4 @@
-import {
-  EnumerableObservableLike,
-  SubscriberLike,
-} from "./interfaces";
+import { EnumerableObservableLike, SubscriberLike } from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import {
   DisposableLike,

@@ -1,6 +1,6 @@
 import { AsyncEnumerableLike } from "./interfaces";
 import {
-  map,
+  map as mapObs,
   merge,
   ObservableLike,
   ofValue,
@@ -18,6 +18,7 @@ import {
   ContinueRequestLike,
   ReducerRequest,
 } from "./reduce";
+import { map } from "./map";
 
 class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   constructor(
@@ -39,7 +40,7 @@ class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
           enumerator.dispatch(continueRequest.req);
         }),
       ),
-      lift(map(({ acc }) => acc)),
+      map(({ acc }) => acc),
     ).enumerateAsync(subscriber);
 
     subscriber.add(enumerator).add(eventEmitter);
@@ -60,7 +61,7 @@ class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
           enumerator.dispose();
         }
       }),
-      map(({ acc }) => acc),
+      mapObs(({ acc }) => acc),
       takeLast(),
     ).subscribe(subscriber);
   }
