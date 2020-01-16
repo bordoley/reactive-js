@@ -1,13 +1,17 @@
 import { AbstractDelegatingEnumerator } from "./enumerator";
 import { EnumeratorLike, EnumerableLike } from "./interfaces";
 
-class MappedEnumerator<TReq, TA, TB> extends AbstractDelegatingEnumerator<TReq, TA, TB> {
+class MappedEnumerator<TReq, TA, TB> extends AbstractDelegatingEnumerator<
+  TReq,
+  TA,
+  TB
+> {
   current: any = undefined;
   hasCurrent = false;
 
   constructor(
     delegate: EnumeratorLike<TReq, TA>,
-    readonly mapper: (a: TA) => TB
+    readonly mapper: (a: TA) => TB,
   ) {
     super(delegate);
     this.add(delegate);
@@ -24,8 +28,7 @@ class MappedEnumerator<TReq, TA, TB> extends AbstractDelegatingEnumerator<TReq, 
 
     return hasCurrent;
   }
-} 
-
+}
 
 class MappedEnumerable<TReq, TA, TB> implements EnumerableLike<TReq, TB> {
   constructor(
@@ -39,7 +42,6 @@ class MappedEnumerable<TReq, TA, TB> implements EnumerableLike<TReq, TB> {
 }
 
 /** @ignore */
-export const map = <TReq, TA, TB>(
-  mapper: (a: TA) => TB,
-) => (enumerable: EnumerableLike<TReq, TA>): EnumerableLike<TReq, TB> => 
-  new MappedEnumerable(enumerable, mapper);
+export const map = <TReq, TA, TB>(mapper: (a: TA) => TB) => (
+  enumerable: EnumerableLike<TReq, TA>,
+): EnumerableLike<TReq, TB> => new MappedEnumerable(enumerable, mapper);
