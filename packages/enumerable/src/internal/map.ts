@@ -41,7 +41,6 @@ class MappedEnumerable<TReq, TA, TB> implements EnumerableLike<TReq, TB> {
   }
 }
 
-/** @ignore */
 export const map = <TReq, TA, TB>(mapper: (a: TA) => TB) => (
   enumerable: EnumerableLike<TReq, TA>,
 ): EnumerableLike<TReq, TB> => new MappedEnumerable(enumerable, mapper);
