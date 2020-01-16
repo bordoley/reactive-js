@@ -1,4 +1,4 @@
-[@reactive-js/rx](../README.md) › [EnumeratorLike](enumeratorlike.md)
+[@reactive-js/enumerable](../README.md) › [EnumeratorLike](enumeratorlike.md)
 
 # Interface: EnumeratorLike <**TReq, T**>
 
@@ -13,6 +13,12 @@
 * DisposableLike
 
   ↳ **EnumeratorLike**
+
+## Implemented by
+
+* [AbstractDelegatingEnumerator](../classes/abstractdelegatingenumerator.md)
+* [AbstractDelegatingEnumerator](../classes/abstractdelegatingenumerator.md)
+* [AbstractEnumerator](../classes/abstractenumerator.md)
 
 ## Index
 

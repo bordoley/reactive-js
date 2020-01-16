@@ -15,9 +15,7 @@
 
 ### Interfaces
 
-* [EnumerableLike](interfaces/enumerablelike.md)
 * [EnumerableObservableLike](interfaces/enumerableobservablelike.md)
-* [EnumeratorLike](interfaces/enumeratorlike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [ObservableLike](interfaces/observablelike.md)
 * [ObservableOperatorLike](interfaces/observableoperatorlike.md)
@@ -830,7 +828,7 @@ ___
 
 ### `Const` flatten
 
-▸ **flatten**(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableLike](interfaces/enumerablelike.md)‹void, T››): *ConcatEnumerable‹T›*
+▸ **flatten**(`enumerable`: EnumerableLike‹void, EnumerableLike‹void, T››): *ConcatEnumerable‹T›*
 
 Converts a higher-order EnumerableLike into a first-order EnumerableLike
 by concatenating the inner Enumerables in order.
@@ -839,7 +837,7 @@ by concatenating the inner Enumerables in order.
 
 Name | Type |
 ------ | ------ |
-`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, [EnumerableLike](interfaces/enumerablelike.md)‹void, T›› |
+`enumerable` | EnumerableLike‹void, EnumerableLike‹void, T›› |
 
 **Returns:** *ConcatEnumerable‹T›*
 
@@ -915,7 +913,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromEnumerable**<**T**>(`enumerable`: EnumerableLike‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -925,7 +923,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› | - |
+`enumerable` | EnumerableLike‹void, T› | - |
 `delay` | number | 0 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
@@ -934,7 +932,7 @@ ___
 
 ###  fromEnumerator
 
-▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+▸ **fromEnumerator**<**T**>(`enumerator`: EnumeratorLike‹void, T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 Creates an `EnumerableObservableLike` backed by the provided `EnumeratorLike`.
 
@@ -946,11 +944,11 @@ Creates an `EnumerableObservableLike` backed by the provided `EnumeratorLike`.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T› | The `EnumeratorLike`.  |
+`enumerator` | EnumeratorLike‹void, T› | The `EnumeratorLike`.  |
 
 **Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
-▸ **fromEnumerator**<**T**>(`enumerator`: [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromEnumerator**<**T**>(`enumerator`: EnumeratorLike‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` backed by the provided `EnumeratorLike`
 with a specified `delay` between emitted items.
@@ -963,7 +961,7 @@ with a specified `delay` between emitted items.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`enumerator` | [EnumeratorLike](interfaces/enumeratorlike.md)‹void, T› | The `EnumeratorLike`. |
+`enumerator` | EnumeratorLike‹void, T› | The `EnumeratorLike`. |
 `delay` | number | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*

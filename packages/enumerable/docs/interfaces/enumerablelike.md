@@ -1,4 +1,4 @@
-[@reactive-js/rx](../README.md) › [EnumerableLike](enumerablelike.md)
+[@reactive-js/enumerable](../README.md) › [EnumerableLike](enumerablelike.md)
 
 # Interface: EnumerableLike <**TReq, T**>
 
@@ -11,8 +11,6 @@
 ## Hierarchy
 
 * **EnumerableLike**
-
-  ↳ [EnumerableObservableLike](enumerableobservablelike.md)
 
 ## Index
 
