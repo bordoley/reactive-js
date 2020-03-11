@@ -16,24 +16,9 @@
 
 ### Functions
 
-* [isEnumerable](README.md#const-isenumerable)
 * [map](README.md#const-map)
 
 ## Functions
-
-### `Const` isEnumerable
-
-▸ **isEnumerable**(`arg`: unknown): *arg is EnumerableLike<unknown, any>*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg` | unknown |
-
-**Returns:** *arg is EnumerableLike<unknown, any>*
-
-___
 
 ### `Const` map
 

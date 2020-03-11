@@ -15,7 +15,6 @@
 
 ### Interfaces
 
-* [EnumerableObservableLike](interfaces/enumerableobservablelike.md)
 * [MulticastObservableLike](interfaces/multicastobservablelike.md)
 * [ObservableLike](interfaces/observablelike.md)
 * [ObservableOperatorLike](interfaces/observableoperatorlike.md)
@@ -28,7 +27,6 @@
 ### Variables
 
 * [exhaust](README.md#const-exhaust)
-* [ignoreElements](README.md#const-ignoreelements)
 * [switchAll](README.md#const-switchall)
 
 ### Functions
@@ -41,21 +39,18 @@
 * [contains](README.md#const-contains)
 * [createObservable](README.md#const-createobservable)
 * [createSubject](README.md#const-createsubject)
-* [defer](README.md#const-defer)
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
 * [every](README.md#const-every)
-* [flatten](README.md#const-flatten)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
-* [fromEnumerable](README.md#const-fromenumerable)
-* [fromEnumerator](README.md#fromenumerator)
 * [fromIterable](README.md#fromiterable)
 * [fromIterator](README.md#fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
+* [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
 * [lift](README.md#lift)
 * [map](README.md#const-map)
@@ -88,13 +83,17 @@
 * [throws](README.md#const-throws)
 * [timeout](README.md#timeout)
 * [toArray](README.md#const-toarray)
-* [toEnumerable](README.md#const-toenumerable)
+* [toIterable](README.md#const-toiterable)
 * [toPromise](README.md#const-topromise)
 * [toSafeSubscriber](README.md#const-tosafesubscriber)
 * [toValue](README.md#const-tovalue)
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
+
+### Object literals
+
+* [observableMixin](README.md#const-observablemixin)
 
 ## Variables
 
@@ -122,33 +121,9 @@ Name | Type |
 
 ___
 
-### `Const` ignoreElements
-
-• **ignoreElements**: *function* =  lift(new SubscriberOperator(true, call))
-
-Returns an `ObservableLike` that ignores all items emitted by the source.
-
-#### Type declaration:
-
-▸ <**TA**, **TB**>(`source`: [ObservableLike](interfaces/observablelike.md)‹TA›): *[ObservableLike](interfaces/observablelike.md)‹TB›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹TA› |
-
-___
-
 ### `Const` switchAll
 
-• **switchAll**: *function* =  lift(new SubscriberOperator(false, call))
+• **switchAll**: *function* =  lift(operator, false)
 
 Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
 values only from the most recent source.
@@ -551,24 +526,6 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, `snd`: [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›, ...`tail`: Array‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T››): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` which emits all values from each source sequentially.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`fst` | [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T› |
-`snd` | [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T› |
-`...tail` | Array‹[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›› |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
 ▸ **concat**<**T**>(`fst`: [ObservableLike](interfaces/observablelike.md)‹T›, `snd`: [ObservableLike](interfaces/observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` which emits all values from each source sequentially.
@@ -691,29 +648,6 @@ Name | Type | Default | Description |
 
 ___
 
-### `Const` defer
-
-▸ **defer**<**T**>(`factory`: function): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-Creates an `ObservableLike` that when subscribed to calls the `factory` function
-to create a new source instance for each subscriber.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-Factory function to invoke for each `SubscriberLike` that subscribes to the observable.
-
-▸ (): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-___
-
 ### `Const` distinctUntilChanged
 
 ▸ **distinctUntilChanged**<**T**>(`equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
@@ -747,16 +681,6 @@ ___
 
 ###  empty
 
-▸ **empty**<**T**>(): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Return an `EnumerableObservableLike` that emits no items and immediately disposes the subscription.
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
 ▸ **empty**<**T**>(`delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
@@ -767,9 +691,9 @@ Return an `ObservableLike` that emits no items and disposes the subscription aft
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`delay` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -826,70 +750,24 @@ Name | Type |
 
 ___
 
-### `Const` flatten
-
-▸ **flatten**(`enumerable`: EnumerableLike‹void, EnumerableLike‹void, T››): *ConcatEnumerable‹T›*
-
-Converts a higher-order EnumerableLike into a first-order EnumerableLike
-by concatenating the inner Enumerables in order.
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`enumerable` | EnumerableLike‹void, EnumerableLike‹void, T›› |
-
-**Returns:** *ConcatEnumerable‹T›*
-
-___
-
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`onNotify`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
+▸ **forEach**(`schedulerFactory`: function): *(Anonymous function)*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
 
-**Type parameters:**
-
-▪ **T**
-
 **Parameters:**
 
-▪ **onNotify**: *function*
+▪ **schedulerFactory**: *function*
 
-callback to invoke for each item emitted by the source.
+▸ (): *VirtualTimeSchedulerLike*
 
-▸ (`next`: T): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
+**Returns:** *(Anonymous function)*
 
 ___
 
 ###  fromArray
-
-▸ **fromArray**<**T**>(`values`: keyof T[], `options?`: undefined | object): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` from the given array, starting at the `startIndex` if specified.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`values` | keyof T[] | The array. |
-`options?` | undefined &#124; object | Optional config object that specifies the `startIndex` into the array.  |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -902,90 +780,16 @@ An optional `startIndex` in the array maybe specified,
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`values` | keyof T[] | The array. |
-`options` | object | Config object that includes a the specified `delay` between emitted items and an optional `startIndex` into the array.  |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-___
-
-### `Const` fromEnumerable
-
-▸ **fromEnumerable**<**T**>(`enumerable`: EnumerableLike‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`enumerable` | EnumerableLike‹void, T› | - |
-`delay` | number | 0 |
-
-**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-___
-
-###  fromEnumerator
-
-▸ **fromEnumerator**<**T**>(`enumerator`: EnumeratorLike‹void, T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` backed by the provided `EnumeratorLike`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`enumerator` | EnumeratorLike‹void, T› | The `EnumeratorLike`.  |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **fromEnumerator**<**T**>(`enumerator`: EnumeratorLike‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-Creates an `ObservableLike` backed by the provided `EnumeratorLike`
-with a specified `delay` between emitted items.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`enumerator` | EnumeratorLike‹void, T› | The `EnumeratorLike`. |
-`delay` | number | The requested delay between emitted items by the observable.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`values` | keyof T[] | - | The array. |
+`options` | object |  {} | Config object that specifies an optional `delay` between emitted items and an optional `startIndex` into the array.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ___
 
 ###  fromIterable
-
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` which iterates through the values
-produced by the provided `Iterable`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`iterable` | Iterable‹T› |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -998,10 +802,10 @@ produced by the provided `Iterable` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`iterable` | Iterable‹T› | - |
-`delay` | number | The requested delay between emitted items by the observable.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`iterable` | Iterable‹T› | - | - |
+`delay` | number | 0 | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1009,26 +813,10 @@ ___
 
 ###  fromIterator
 
-▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` backed by the provided `Iterator`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`iterator` | Iterator‹T› | The `Iterator`.  |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
 ▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-Creates an `ObservableLike` backed by the provided `Iterator`
-with a specified `delay` between emitted items.
+Creates an `ObservableLike` which iterates through the values
+produced by the provided `Iterator` with a specified `delay` between emitted items.
 
 **Type parameters:**
 
@@ -1036,10 +824,10 @@ with a specified `delay` between emitted items.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`iterator` | Iterator‹T› | - |
-`delay` | number | The requested delay between emitted items byt the observable.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`iterator` | Iterator‹T› | - | - |
+`delay` | number | 0 | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1092,37 +880,6 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Generates an `EnumerableObservableLike` sequence from a generator function
-that is applied to an accumulator value.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **generator**: *function*
-
-The generator function.
-
-▸ (`acc`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | T |
-
-▪ **initialValue**: *function*
-
-Factory function to generate the initial accumulator.
-
-▸ (): *T*
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Generates an `ObservableLike` sequence from a generator function
@@ -1153,11 +910,27 @@ Factory function used to generate the initial accumulator.
 
 ▸ (): *T*
 
-▪ **delay**: *number*
+▪`Default value`  **delay**: *number*= 0
 
 The requested delay between emitted items by the observable.
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` ignoreElements
+
+▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+Returns an `ObservableLike` that ignores all items emitted by the source.
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
 ___
 
@@ -1192,7 +965,7 @@ ___
 
 ###  lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB›, `operatorIsSynchronous`: boolean): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
 Creates a new `ObservableLike` which applies the provided the operator function to
 subscriber when the source is subscribed to.
@@ -1205,9 +978,10 @@ subscriber when the source is subscribed to.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`operator` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› | The operator function to apply.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`operator` | [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)‹TA, TB› | - | The operator function to apply.  |
+`operatorIsSynchronous` | boolean | false | - |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
@@ -1289,7 +1063,7 @@ ___
 
 ### `Const` never
 
-▸ **never**<**T**>(): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+▸ **never**<**T**>(): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Returna an `ObservableLike` instance that emits no items and never disposes its subscriber.
 
@@ -1297,7 +1071,7 @@ Returna an `ObservableLike` instance that emits no items and never disposes its 
 
 ▪ **T**
 
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 ___
 
@@ -1352,22 +1126,6 @@ ___
 
 ###  ofValue
 
-▸ **ofValue**<**T**>(`value`: T): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Creates an `EnumerableObservableLike` that emits `value` then disposes the subscriber.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`value` | T | The value to emit.  |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
 ▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
@@ -1378,10 +1136,10 @@ Name | Type | Description |
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`value` | T | The value to emit. |
-`delay` | number | The delay before emitting the value.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`value` | T | - | The value to emit. |
+`delay` | number | 0 | The delay before emitting the value.  |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -2041,34 +1799,26 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *keyof T[]*
+▸ **toArray**(`schedulerFactory`: function): *(Anonymous function)*
 
 Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
 values emitted by `source` into an array.
 
-**Type parameters:**
-
-▪ **T**
-
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
+▪ **schedulerFactory**: *function*
 
-**Returns:** *keyof T[]*
+▸ (): *VirtualTimeSchedulerLike*
+
+**Returns:** *(Anonymous function)*
 
 ___
 
-### `Const` toEnumerable
+### `Const` toIterable
 
-▸ **toEnumerable**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+▸ **toIterable**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *Iterable‹T›*
 
-Converts the `ObservableLike` `source` into an `EnumerableObservableLike`. If
-`source` is `EnumerableObservableLike`, then this function returns `source`. Otherwise,
-a `VirtualTimeSchedulerLike` is used to enumerate `source`. Hence, this function
-should not be used with sources that perform I/O such as ones that wrap Promises
-or DOM events.
+Converts an `ObservableLike` into an `Iterable`.
 
 **Type parameters:**
 
@@ -2080,7 +1830,7 @@ Name | Type |
 ------ | ------ |
 `source` | [ObservableLike](interfaces/observablelike.md)‹T› |
 
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+**Returns:** *Iterable‹T›*
 
 ___
 
@@ -2127,22 +1877,18 @@ ___
 
 ### `Const` toValue
 
-▸ **toValue**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *T*
+▸ **toValue**(`schedulerFactory`: function): *(Anonymous function)*
 
 Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
 the last value produced.
 
-**Type parameters:**
-
-▪ **T**
-
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
+▪ **schedulerFactory**: *function*
 
-**Returns:** *T*
+▸ (): *VirtualTimeSchedulerLike*
+
+**Returns:** *(Anonymous function)*
 
 ___
 
@@ -2684,326 +2430,24 @@ Name | Type |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+## Object literals
 
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
+### `Const` observableMixin
+
+### ▪ **observableMixin**: *object*
+
+###  enumerate
+
+▸ **enumerate**<**T**>(`this`: [ObservableLike](interfaces/observablelike.md)‹T›): *EnumeratorLike‹void, T›*
 
 **Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
 
 ▪ **T**
 
 **Parameters:**
 
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
+`this` | [ObservableLike](interfaces/observablelike.md)‹T› |
 
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **TE**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **TE**
-
-▪ **TF**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **TE**
-
-▪ **TF**
-
-▪ **TG**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **TE**
-
-▪ **TF**
-
-▪ **TG**
-
-▪ **TH**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TI›], `selector`: function): *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
-
-Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
-in order, of each of its input sources.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **TD**
-
-▪ **TE**
-
-▪ **TF**
-
-▪ **TG**
-
-▪ **TH**
-
-▪ **TI**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **observables**: *[[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TA›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TB›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TC›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TD›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TE›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TF›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TG›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TH›, [EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹TI›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
-`i` | TI |
-
-**Returns:** *[EnumerableObservableLike](interfaces/enumerableobservablelike.md)‹T›*
+**Returns:** *EnumeratorLike‹void, T›*

@@ -10,19 +10,40 @@ The source of notifications which notifies a `SubscriberLike` instance.
 
 ## Hierarchy
 
-* **ObservableLike**
+* EnumerableLike‹void, T›
+
+  ↳ **ObservableLike**
 
   ↳ [MulticastObservableLike](multicastobservablelike.md)
 
-  ↳ [EnumerableObservableLike](enumerableobservablelike.md)
-
 ## Index
+
+### Properties
+
+* [isSynchronous](observablelike.md#issynchronous)
 
 ### Methods
 
+* [enumerate](observablelike.md#enumerate)
 * [subscribe](observablelike.md#subscribe)
 
+## Properties
+
+###  isSynchronous
+
+• **isSynchronous**: *boolean*
+
 ## Methods
+
+###  enumerate
+
+▸ **enumerate**(): *EnumeratorLike‹void, T›*
+
+*Inherited from void*
+
+**Returns:** *EnumeratorLike‹void, T›*
+
+___
 
 ###  subscribe
 
