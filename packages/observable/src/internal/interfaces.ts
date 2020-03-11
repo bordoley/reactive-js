@@ -61,26 +61,11 @@ export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
 }
 
 /**
- * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
- */
-export interface SubscriberOperatorLike<A, B> {
-  /**
-   * Flag that indicates that the transformed `SubscriberLike` synchronously
-   * transforms notifications, without introducing delays.
-   */
-  readonly isSynchronous: boolean;
-
-  /**
-   * Transforms the `SubscriberLike<B>` to a `SubscriberLike<A>`.
-   * @param subscriber The subscriber to transform.
-   */
-  call(subscriber: SubscriberLike<B>): SubscriberLike<A>;
-}
-
-/**
  * The source of notifications which notifies a `SubscriberLike` instance.
  */
-export interface ObservableLike<T> {
+export interface ObservableLike<T> extends EnumerableLike<void, T> {
+  readonly isSynchronous: boolean;
+
   /**
    * Subscribes the `SubscriberLike` instance to the observable.
    * @param subscriber The subscriber which should be notified by the observable source.
@@ -111,17 +96,14 @@ export interface SubjectLike<T>
   extends SubscriberLike<T>,
     MulticastObservableLike<T> {}
 
-/**
- * An `ObservableLike` that also support synchronous enumeration and iteration.
- *
- * @noInheritDoc
- */
-export interface EnumerableObservableLike<T>
-  extends ObservableLike<T>,
-    EnumerableLike<void, T>,
-    Iterable<T> {}
-
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export interface ObservableOperatorLike<A, B> {
   (observable: ObservableLike<A>): ObservableLike<B>;
+}
+
+/**
+ * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
+ */
+export interface SubscriberOperatorLike<A, B> {
+  (observable: SubscriberLike<B>): SubscriberLike<A>;
 }

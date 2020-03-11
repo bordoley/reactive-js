@@ -6,7 +6,6 @@ import {
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -40,9 +39,9 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export function observe<T>(
   observer: ObserverLike<T>,
 ): ObservableOperatorLike<T, T> {
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new ObserveSubscriber(subscriber, observer);
-  return lift(new SubscriberOperator(true, call));
+  return lift(operator, true);
 }
 
 const ignore = <T>(_: T) => {};

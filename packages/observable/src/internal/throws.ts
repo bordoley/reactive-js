@@ -1,19 +1,38 @@
-import { defer } from "./defer";
-import { ObservableLike, SubscriberLike } from "./interfaces";
 import { ErrorLike } from "@reactive-js/disposable";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
+import { producerMixin } from "./producer";
+
+class ThrowsProducer<T> implements SchedulerContinuationLike {
+  readonly run = producerMixin.run;
+
+  constructor(
+    private readonly subscriber: SubscriberLike<T>,
+    private readonly error: ErrorLike,
+    readonly delay: number,
+  ) {}
+
+  produce(_?: () => boolean): SchedulerContinuationLike | void {
+    this.subscriber.dispose(this.error);
+  }
+}
 
 class ThrowsObservable<T> implements ObservableLike<T> {
-  private subscriber: SubscriberLike<T> | undefined;
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
 
-  constructor(private readonly error: ErrorLike, readonly delay: number) {}
-
-  run(_?: () => boolean) {
-    (this.subscriber as SubscriberLike<T>).dispose(this.error);
+  constructor(private readonly factory: () => unknown, readonly delay: number) {
+    this.isSynchronous = delay === 0;
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    this.subscriber = subscriber;
-    subscriber.schedule(this);
+    const producer = new ThrowsProducer(
+      subscriber,
+      { cause: this.factory() },
+      this.delay,
+    );
+    subscriber.schedule(producer);
   }
 }
 
@@ -26,5 +45,4 @@ class ThrowsObservable<T> implements ObservableLike<T> {
 export const throws = <T>(
   factory: () => unknown,
   delay = 0,
-): ObservableLike<T> =>
-  defer(() => new ThrowsObservable({ cause: factory() }, delay));
+): ObservableLike<T> => new ThrowsObservable(factory, delay);

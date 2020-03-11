@@ -9,7 +9,6 @@ import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
-import { SubscriberOperator } from "./subscriberOperator";
 
 const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
   if (subscriber.activeCount < subscriber.maxConcurrency) {
@@ -104,10 +103,10 @@ export const mergeAll = <T>(
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
 
-  return lift(new SubscriberOperator(false, call));
+  return lift(operator, false);
 };
 
 /**

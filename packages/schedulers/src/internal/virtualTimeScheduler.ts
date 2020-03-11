@@ -1,23 +1,10 @@
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { AbstractEnumerator, EnumeratorLike } from "@reactive-js/enumerable";
+import { AbstractEnumerator } from "@reactive-js/enumerable";
 import {
-  SchedulerLike,
   SchedulerContinuationLike,
+  VirtualTimeSchedulerLike,
 } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-
-/**
- * A scheduler that uses a virtual clock to simulate time. Useful for testing.
- *
- * Note: VirtualTimeSchedulerLike implements the same EnumeratorLike protocol
- * defined in the @reactive-js/observable package.
- * @noInheritDoc
- */
-export interface VirtualTimeSchedulerLike
-  extends DisposableLike,
-    EnumeratorLike<void, void>,
-    SchedulerLike,
-    SchedulerContinuationLike {}
 
 interface VirtualTask {
   continuation: SchedulerContinuationLike;

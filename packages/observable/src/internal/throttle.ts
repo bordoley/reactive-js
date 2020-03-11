@@ -15,7 +15,6 @@ import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { ofValue } from "./ofValue";
-import { SubscriberOperator } from "./subscriberOperator";
 
 /**
  * The throttle mode used by the `throttle` operator.
@@ -145,7 +144,7 @@ export function throttle<T>(
     typeof duration === "number"
       ? (_: T) => ofValue(undefined, duration)
       : duration;
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
-  return lift(new SubscriberOperator(false, call));
+  return lift(operator, false);
 }

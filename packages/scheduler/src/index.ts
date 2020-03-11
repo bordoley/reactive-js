@@ -1,4 +1,5 @@
 import { DisposableLike } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 /**
  * A unit of work to be executed by a scheduler.
@@ -39,3 +40,14 @@ export interface SchedulerLike {
    */
   schedule(continuation: SchedulerContinuationLike): DisposableLike;
 }
+
+/**
+ * A scheduler that uses a virtual clock to simulate time. Useful for testing.
+ *
+ * @noInheritDoc
+ */
+export interface VirtualTimeSchedulerLike
+  extends DisposableLike,
+    EnumeratorLike<void, void>,
+    SchedulerLike,
+    SchedulerContinuationLike {}

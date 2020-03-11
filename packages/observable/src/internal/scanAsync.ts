@@ -8,10 +8,14 @@ import { zip } from "./zip";
 import { createSubject } from "./subject";
 import { concatAll } from "./mergeAll";
 import { merge } from "./merge";
+import { observableMixin } from "./observable";
 import { ofValue } from "./ofValue";
 import { skipFirst } from "./skipFirst";
 
 class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
+
   constructor(
     private readonly source: ObservableLike<T>,
     private readonly scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
@@ -19,13 +23,16 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
   ) {}
 
   subscribe(subscriber: SubscriberLike<TAcc>) {
-    const accFeedbackSubject = createSubject(subscriber);
+    const accFeedbackSubject = createSubject<TAcc>(subscriber);
     subscriber.add(accFeedbackSubject);
 
     merge(
       pipe(
-        zip([accFeedbackSubject, this.source], this.scanner as any),
-        concatAll(),
+        zip<TAcc, T, ObservableLike<TAcc>>(
+          [accFeedbackSubject, this.source],
+          this.scanner as any,
+        ),
+        concatAll<TAcc>(),
       ),
       ofValue(this.initialValue()),
     ).subscribe(accFeedbackSubject);

@@ -1,8 +1,12 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
 
 class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
   implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
+
   constructor(
     private readonly resourceFactory: () => TResource | TResource[],
     private readonly observableFactory: (

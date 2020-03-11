@@ -1,7 +1,6 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
@@ -32,7 +31,7 @@ export const scan = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
 ): ObservableOperatorLike<T, TAcc> => {
-  const call = (subscriber: SubscriberLike<TAcc>) =>
+  const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ScanSubscriber(subscriber, scanner, initialValue());
-  return lift(new SubscriberOperator(true, call));
+  return lift(operator, true);
 };

@@ -1,4 +1,7 @@
-import { MulticastObservableLike, SafeSubscriberLike } from "@reactive-js/observable";
+import {
+  MulticastObservableLike,
+  SafeSubscriberLike,
+} from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /** @noInheritDoc */

@@ -1,5 +1,4 @@
 export {
-  EnumerableObservableLike,
   MulticastObservableLike,
   ObserverLike,
   ObservableLike,
@@ -10,6 +9,7 @@ export {
   SubscriberOperatorLike,
 } from "./internal/interfaces";
 
+export { observableMixin } from "./internal/observable";
 export {
   AbstractSubscriber,
   AbstractDelegatingSubscriber,
@@ -18,12 +18,9 @@ export {
 export { combineLatest } from "./internal/combineLatest";
 export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
-export { concat, flatten } from "./internal/concat";
-export { defer } from "./internal/defer";
+export { concat } from "./internal/concat";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
-export { fromEnumerable } from "./internal/fromEnumerable";
-export { fromEnumerator } from "./internal/fromEnumerator";
 export { fromIterable, fromIterator } from "./internal/fromIterable";
 export { fromPromise } from "./internal/fromPromise";
 export { fromScheduledValues } from "./internal/fromScheduledValues";
@@ -57,7 +54,7 @@ export { contains, some } from "./internal/some";
 export { skipFirst } from "./internal/skipFirst";
 export { startWith } from "./internal/startWith";
 export { subscribeOn } from "./internal/subscribeOn";
-export { switchAll } from "./internal/switch";
+export { switchAll } from "./internal/switchAll";
 export { takeFirst } from "./internal/takeFirst";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";
@@ -68,7 +65,7 @@ export { withLatestFrom } from "./internal/withLatestFrom";
 export { zip } from "./internal/zip";
 
 export { toArray } from "./internal/toArray";
-export { toEnumerable } from "./internal/toEnumerable";
+export { toIterable } from "./internal/toIterable";
 export { toValue } from "./internal/toValue";
 export { toPromise } from "./internal/toPromise";
 export { toSafeSubscriber } from "./internal/toSafeSubscriber";

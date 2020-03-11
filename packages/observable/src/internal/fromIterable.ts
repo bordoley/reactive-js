@@ -1,106 +1,103 @@
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
-import {
-  DisposableLike,
-  disposableMixin,
-  createDisposable,
-} from "@reactive-js/disposable";
-import { fromEnumerator } from "./fromEnumerator";
-import { EnumeratorLike } from "@reactive-js/enumerable";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
+import { producerMixin } from "./producer";
 
-class IteratorEnumerator<T> implements EnumeratorLike<void, T> {
-  readonly add = disposableMixin.add;
-  current: any;
-  readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = disposableMixin.dispose;
-  hasCurrent = false;
+class FromIteratorProducer<T> implements SchedulerContinuationLike {
+  readonly run = producerMixin.run;
 
-  constructor(private readonly iterator: Iterator<T>) {}
+  constructor(
+    private readonly subscriber: SubscriberLike<T>,
+    private readonly iterator: Iterator<T>,
+    readonly delay: number,
+  ) {}
 
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
+  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+    const iterator = this.iterator;
+    const subscriber = this.subscriber;
 
-  move(): boolean {
-    this.current = undefined;
-    this.hasCurrent = false;
+    if (this.delay > 0 && !subscriber.isDisposed) {
+      const next = iterator.next();
+      if (!next.done) {
+        subscriber.notify(next.value);
+        return this;
+      }
+    } else if (shouldYield !== undefined) {
+      let done = false;
+      while (!subscriber.isDisposed && !done) {
+        const next = iterator.next();
+        done = next.done || false;
 
-    const next = this.iterator.next();
-    if (!next.done) {
-      this.hasCurrent = true;
-      this.current = next.value;
+        if (!done) {
+          subscriber.notify(next.value);
+        }
+
+        if (!done && shouldYield()) {
+          return this;
+        }
+      }
     } else {
-      this.dispose();
+      let done = false;
+      while (!subscriber.isDisposed && !done) {
+        const next = iterator.next();
+        done = next.done || false;
+
+        if (!done) {
+          subscriber.notify(next.value);
+        }
+      }
     }
 
-    return this.hasCurrent;
+    subscriber.dispose();
+    return;
   }
 }
 
 class FromIteratorObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
   constructor(
-    protected readonly iterator: Iterator<T>,
+    private readonly iterator: Iterator<T>,
     private readonly delay: number,
-  ) {}
+  ) {
+    this.isSynchronous = delay === 0;
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const enumerator = new IteratorEnumerator(this.iterator);
-    fromEnumerator(enumerator, this.delay).subscribe(subscriber);
-  }
-}
-
-class FromIteratorEnumerable<T> extends FromIteratorObservable<T>
-  implements EnumerableObservableLike<T> {
-  constructor(iterator: Iterator<T>) {
-    super(iterator, 0);
-  }
-
-  [Symbol.iterator]() {
-    return this.iterator;
-  }
-
-  enumerate() {
-    return new IteratorEnumerator(this.iterator);
+    const producer = new FromIteratorProducer(
+      subscriber,
+      this.iterator,
+      this.delay,
+    );
+    subscriber.schedule(producer);
   }
 }
 
 /**
- * Creates an `EnumerableObservableLike` backed by the provided `Iterator`.
+ * Creates an `ObservableLike` which iterates through the values
+ * produced by the provided `Iterator` with a specified `delay` between emitted items.
  *
- * @param iterator The `Iterator`.
+ * @param values The `Iterator`.
+ * @param delay The requested delay between emitted items by the observable.
  */
-export function fromIterator<T>(
-  iterator: Iterator<T>,
-): EnumerableObservableLike<T>;
-
-/**
- * Creates an `ObservableLike` backed by the provided `Iterator`
- * with a specified `delay` between emitted items.
- *
- * @param enumerator The `Iterator`.
- * @param delay The requested delay between emitted items byt the observable.
- */
-export function fromIterator<T>(
-  iterator: Iterator<T>,
-  delay: number,
-): ObservableLike<T>;
 export function fromIterator<T>(
   iterator: Iterator<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0
-    ? new FromIteratorObservable(iterator, delay)
-    : new FromIteratorEnumerable(iterator);
+  return new FromIteratorObservable(iterator, delay);
 }
 
 class FromIterableObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
   constructor(
-    protected readonly iterable: Iterable<T>,
+    private readonly iterable: Iterable<T>,
     private readonly delay: number,
-  ) {}
+  ) {
+    this.isSynchronous = delay === 0;
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const iterator = this.iterable[Symbol.iterator]();
@@ -113,34 +110,10 @@ class FromIterableObservable<T> implements ObservableLike<T> {
       }
     });
 
-    const observable = fromIterator(iterator, this.delay);
-    observable.subscribe(subscriber);
+    const producer = new FromIteratorProducer(subscriber, iterator, this.delay);
+    subscriber.schedule(producer);
   }
 }
-
-class FromIterableEnumerable<T> extends FromIterableObservable<T> {
-  constructor(iterable: Iterable<T>) {
-    super(iterable, 0);
-  }
-
-  [Symbol.iterator]() {
-    return this.iterable[Symbol.iterator]();
-  }
-
-  enumerate() {
-    return new IteratorEnumerator(this.iterable[Symbol.iterator]());
-  }
-}
-
-/**
- * Creates an `EnumerableObservableLike` which iterates through the values
- * produced by the provided `Iterable`.
- *
- * @param values The `Iterable`.
- */
-export function fromIterable<T>(
-  iterable: Iterable<T>,
-): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -151,14 +124,7 @@ export function fromIterable<T>(
  */
 export function fromIterable<T>(
   iterable: Iterable<T>,
-  delay: number,
-): ObservableLike<T>;
-
-export function fromIterable<T>(
-  iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0
-    ? new FromIterableObservable(iterable, delay)
-    : new FromIterableEnumerable(iterable);
+  return new FromIterableObservable(iterable, delay);
 }

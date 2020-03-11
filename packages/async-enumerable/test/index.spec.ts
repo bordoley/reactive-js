@@ -30,7 +30,7 @@ test("reduce", () => {
       }),
       () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
-    toValue,
+    toValue(createVirtualTimeScheduler),
     expect,
   ).toEqual(21);
 
@@ -51,7 +51,7 @@ test("reduce", () => {
 
       () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
-    toValue,
+    toValue(createVirtualTimeScheduler),
     expect,
   ).toEqual(3);
 });
@@ -70,7 +70,7 @@ test("reduceAsync", () => {
         }),
       () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
-    toValue,
+    toValue(createVirtualTimeScheduler),
     expect,
   ).toEqual(21);
 
@@ -92,7 +92,7 @@ test("reduceAsync", () => {
         ),
       () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
     ),
-    toValue,
+    toValue(createVirtualTimeScheduler),
     expect,
   ).toEqual(3);
 });

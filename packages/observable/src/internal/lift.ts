@@ -3,31 +3,26 @@ import {
   ObservableOperatorLike,
   SubscriberLike,
   SubscriberOperatorLike,
-  EnumerableObservableLike,
 } from "./interfaces";
-import { enumerableMixin } from "./enumerableObservable";
-import { isEnumerable } from "@reactive-js/enumerable";
+import { observableMixin } from "./observable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
+  readonly enumerate = observableMixin.enumerate;
+
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
+    readonly isSynchronous: boolean,
   ) {}
 
   subscribe(subscriber: SubscriberLike<TOut>) {
     const liftedSubscrber: SubscriberLike<any> = this.operators.reduceRight(
-      (acc, next) => next.call(acc),
+      (acc, next) => next(acc),
       subscriber,
     );
 
     this.source.subscribe(liftedSubscrber);
   }
-}
-
-class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
-  implements EnumerableObservableLike<TOut> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
 }
 
 /**
@@ -38,6 +33,7 @@ class LiftedEnumerable<TIn, TOut> extends LiftedObservable<TIn, TOut>
  */
 export function lift<TA, TB>(
   operator: SubscriberOperatorLike<TA, TB>,
+  operatorIsSynchronous = false,
 ): ObservableOperatorLike<TA, TB> {
   return source => {
     const sourceSource =
@@ -48,8 +44,8 @@ export function lift<TA, TB>(
         ? [...source.operators, operator]
         : [operator];
 
-    return isEnumerable(source) && operator.isSynchronous
-      ? new LiftedEnumerable(sourceSource, allOperators)
-      : new LiftedObservable(sourceSource, allOperators);
+    const isSynchronous = source.isSynchronous && operatorIsSynchronous;
+
+    return new LiftedObservable(sourceSource, allOperators, isSynchronous);
   };
 }

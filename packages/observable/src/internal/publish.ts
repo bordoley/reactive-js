@@ -17,7 +17,7 @@ export const publish = <T>(
   ObservableLike<T>,
   MulticastObservableLike<T>
 > => observable => {
-  const subject = createSubject(scheduler, replayCount);
+  const subject = createSubject<T>(scheduler, replayCount);
   observable.subscribe(subject);
   return subject;
 };

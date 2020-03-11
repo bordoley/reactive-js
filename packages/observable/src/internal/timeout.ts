@@ -15,7 +15,6 @@ import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { throws } from "./throws";
-import { SubscriberOperator } from "./subscriberOperator";
 import { concat } from "./concat";
 
 const timeoutError = Symbol("TimeoutError");
@@ -81,7 +80,7 @@ export function timeout<T>(
           duration,
           throws(() => timeoutError),
         );
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new TimeoutSubscriber(subscriber, durationObs);
-  return lift(new SubscriberOperator(false, call));
+  return lift(operator, false);
 }

@@ -1,5 +1,7 @@
-import { defer } from "./defer";
+import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
+import { producerMixin } from "./producer";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
@@ -10,7 +12,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly ctx: CombineLatestObservable<T>,
+    private readonly ctx: CombineLatestProducer<T>,
     private readonly index: number,
   ) {
     super(delegate);
@@ -41,14 +43,16 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
-class CombineLatestObservable<T> implements ObservableLike<T> {
+class CombineLatestProducer<T> implements SchedulerContinuationLike {
   completedCount = 0;
   producedCount = 0;
 
   readonly latest: Array<unknown>;
+  readonly run = producerMixin.run;
   readonly totalCount: number;
 
   constructor(
+    private readonly subscriber: SubscriberLike<T>,
     private readonly observables: readonly ObservableLike<any>[],
     readonly selector: (...values: unknown[]) => T,
   ) {
@@ -56,9 +60,10 @@ class CombineLatestObservable<T> implements ObservableLike<T> {
     this.latest = new Array(this.totalCount);
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  produce(_?: () => boolean): SchedulerContinuationLike | void {
     const observables = this.observables;
     const totalCount = this.totalCount;
+    const subscriber = this.subscriber;
 
     for (let index = 0; index < totalCount; index++) {
       const innerSubscriber = new CombineLatestSubscriber(
@@ -68,6 +73,27 @@ class CombineLatestObservable<T> implements ObservableLike<T> {
       );
       observables[index].subscribe(innerSubscriber);
     }
+  }
+}
+
+class CombineLatestObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
+  constructor(
+    private readonly observables: readonly ObservableLike<any>[],
+    private readonly selector: (...values: unknown[]) => T,
+  ) {
+    this.isSynchronous = observables.every(obs => obs.isSynchronous);
+  }
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const producer = new CombineLatestProducer(
+      subscriber,
+      this.observables,
+      this.selector,
+    );
+    subscriber.schedule(producer);
   }
 }
 
@@ -167,5 +193,5 @@ export function combineLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  return defer(() => new CombineLatestObservable(observables, selector));
+  return new CombineLatestObservable(observables, selector);
 }

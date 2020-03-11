@@ -5,6 +5,7 @@ import {
   SubjectLike,
   SubscriberLike,
 } from "./interfaces";
+import { observableMixin } from "./observable";
 import { createSubject } from "./subject";
 
 class SharedObservable<T> implements ObservableLike<T> {
@@ -18,6 +19,9 @@ class SharedObservable<T> implements ObservableLike<T> {
       this.subject = undefined;
     }
   };
+
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
 
   constructor(
     private readonly factory: () => SubjectLike<T>,

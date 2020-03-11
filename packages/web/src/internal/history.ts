@@ -1,6 +1,14 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumerableLike, createAsyncEnumerator } from "@reactive-js/async-enumerable";
-import { merge, ObservableLike, onNotify, ofValue } from "@reactive-js/observable";
+import {
+  AsyncEnumerableLike,
+  createAsyncEnumerator,
+} from "@reactive-js/async-enumerable";
+import {
+  merge,
+  ObservableLike,
+  onNotify,
+  ofValue,
+} from "@reactive-js/observable";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
 

@@ -1,4 +1,7 @@
-import { StateUpdaterLike, AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import {
+  StateUpdaterLike,
+  AsyncEnumerableLike,
+} from "@reactive-js/async-enumerable";
 import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
 import { map, scan, never } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";

@@ -15,4 +15,5 @@ const instance = {
 /**
  * Returns an `AsyncEnumerableLike` that publishes it's notifications.
  */
-export const identity = <T>(): AsyncEnumerableLike<T, T> => instance;
+export const identity = <T>(): AsyncEnumerableLike<T, T> =>
+  instance as AsyncEnumerableLike<T, T>;

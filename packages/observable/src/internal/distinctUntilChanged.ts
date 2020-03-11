@@ -1,7 +1,6 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -43,7 +42,7 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
 export const distinctUntilChanged = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
 ): ObservableOperatorLike<T, T> => {
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equals);
-  return lift(new SubscriberOperator(true, call));
+  return lift(operator, true);
 };

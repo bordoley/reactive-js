@@ -12,7 +12,6 @@ import {
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   implements ObserverLike<unknown> {
@@ -103,10 +102,8 @@ export function buffer<T>(
       : duration;
 
   const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
-  const call = (subscriber: SubscriberLike<readonly T[]>) =>
+  const operator = (subscriber: SubscriberLike<readonly T[]>) =>
     new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
 
-  return lift(
-    new SubscriberOperator(duration === Number.MAX_SAFE_INTEGER, call),
-  );
+  return lift(operator, duration === Number.MAX_SAFE_INTEGER);
 }
