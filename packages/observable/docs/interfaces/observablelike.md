@@ -24,7 +24,6 @@ The source of notifications which notifies a `SubscriberLike` instance.
 
 ### Methods
 
-* [enumerate](observablelike.md#enumerate)
 * [subscribe](observablelike.md#subscribe)
 
 ## Properties
@@ -34,16 +33,6 @@ The source of notifications which notifies a `SubscriberLike` instance.
 • **isSynchronous**: *boolean*
 
 ## Methods
-
-###  enumerate
-
-▸ **enumerate**(): *EnumeratorLike‹void, T›*
-
-*Inherited from void*
-
-**Returns:** *EnumeratorLike‹void, T›*
-
-___
 
 ###  subscribe
 

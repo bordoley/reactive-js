@@ -62,6 +62,8 @@ export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
 
 /**
  * The source of notifications which notifies a `SubscriberLike` instance.
+ * 
+ * @noInheritDoc
  */
 export interface ObservableLike<T> extends EnumerableLike<void, T> {
   readonly isSynchronous: boolean;
