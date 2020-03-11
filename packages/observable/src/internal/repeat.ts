@@ -10,7 +10,6 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<T> {
@@ -68,11 +67,10 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
 const repeatObs = <T>(
   shouldRepeat: (count: number, error?: ErrorLike) => boolean,
 ): ObservableOperatorLike<T, T> => observable => {
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new RepeatSubscriber(subscriber, observable, shouldRepeat);
-  const operator = lift(new SubscriberOperator(true, call));
 
-  return operator(observable);
+  return lift(operator, true)(observable);
 };
 
 const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>

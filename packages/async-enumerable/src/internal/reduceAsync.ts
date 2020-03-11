@@ -3,6 +3,7 @@ import {
   map as mapObs,
   merge,
   ObservableLike,
+  observableMixin,
   ofValue,
   onNotify,
   SubscriberLike,
@@ -21,6 +22,9 @@ import {
 import { map } from "./map";
 
 class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
+
   constructor(
     private readonly enumerable: AsyncEnumerableLike<TReq, TSrc>,
     private readonly withLatestSelector: (

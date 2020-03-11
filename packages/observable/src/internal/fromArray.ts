@@ -1,16 +1,13 @@
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
 import { producerMixin } from "./producer";
-import { enumerableMixin } from "./enumerableObservable";
 
 class FromArrayProducer<T> implements SchedulerContinuationLike {
   private index = this.startIndex;
 
-  run = producerMixin.run;
+  readonly run = producerMixin.run;
+
   constructor(
     private readonly subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
@@ -24,11 +21,13 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
     const subscriber = this.subscriber;
 
     let index = this.index;
-    if (this.delay > 0 && index < length && !subscriber.isDisposed) {
-      const value = values[index];
-      this.index++;
+    if (this.delay > 0 && index <= length && !subscriber.isDisposed) {
+      if (index < length) {
+        const value = values[index];
+        subscriber.notify(value);
+      }
 
-      subscriber.notify(value);
+      this.index++;
       return this;
     } else if (shouldYield !== undefined) {
       while (index < length && !subscriber.isDisposed) {
@@ -57,11 +56,16 @@ class FromArrayProducer<T> implements SchedulerContinuationLike {
 }
 
 class FromArrayObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,
     private readonly delay: number,
-  ) {}
+  ) {
+    this.isSynchronous = delay === 0;
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new FromArrayProducer(
@@ -74,45 +78,14 @@ class FromArrayObservable<T> implements ObservableLike<T> {
   }
 }
 
-class FromArrayEnumerable<T> extends FromArrayObservable<T>
-  implements EnumerableObservableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
-
-  constructor(values: readonly T[], startIndex: number) {
-    super(values, startIndex, 0);
-  }
-}
-
-/**
- * Creates an `EnumerableObservableLike` from the given array, starting at the `startIndex` if specified.
- *
- * @param values The array.
- * @param options Optional config object that specifies the `startIndex` into the array.
- */
-export function fromArray<T>(
-  values: readonly T[],
-  options?: {
-    startIndex: number;
-  },
-): EnumerableObservableLike<T>;
-
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
  *
  * @param values The array.
- * @param options Config object that includes a the specified `delay` between emitted items and
+ * @param options Config object that specifies an optional `delay` between emitted items and
  * an optional `startIndex` into the array.
  */
-export function fromArray<T>(
-  values: readonly T[],
-  options: {
-    delay: number;
-    startIndex?: number;
-  },
-): ObservableLike<T>;
-
 export function fromArray<T>(
   values: readonly T[],
   options: {
@@ -123,7 +96,5 @@ export function fromArray<T>(
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
-  return delay > 0
-    ? new FromArrayObservable(values, startIndex, delay)
-    : new FromArrayEnumerable(values, startIndex);
+  return new FromArrayObservable(values, startIndex, delay);
 }

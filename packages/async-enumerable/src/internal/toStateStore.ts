@@ -29,10 +29,10 @@ class DelegatingStateStoreAsyncEnumerable<T>
     const operator = (
       obs: ObservableLike<StateUpdaterLike<T>>,
     ): ObservableLike<T> => {
-      const onIteratorNextChangedObs = pipe(
+      const onIteratorNextChangedObs: ObservableLike<T> = pipe(
         enumerator,
-        onNotify((v: T) => retval.dispatch((_: T): T => v)),
-        ignoreElements,
+        onNotify(v => retval.dispatch(_ => v)),
+        ignoreElements(),
       );
 
       const stateObs = pipe(

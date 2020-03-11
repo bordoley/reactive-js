@@ -6,7 +6,6 @@ import {
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { lift } from "./lift";
 import { ErrorLike } from "@reactive-js/disposable";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -50,7 +49,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const catchError = <T>(
   onError: (error: unknown) => ObservableLike<T> | void,
 ): ObservableOperatorLike<T, T> => {
-  const call = (subscriber: SubscriberLike<T>) =>
+  const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);
-  return lift(new SubscriberOperator(false, call));
+  return lift(operator, false);
 };

@@ -11,11 +11,14 @@ import {
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AsyncEnumeratorLike } from "./interfaces";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 /** @ignore */
 export class AsyncEnumeratorImpl<TReq, T>
   extends AbstractDelegatingSubscriber<TReq, TReq>
   implements AsyncEnumeratorLike<TReq, T> {
+  readonly isSynchronous = false;
+
   constructor(
     delegate: SafeSubscriberLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,
@@ -36,6 +39,10 @@ export class AsyncEnumeratorImpl<TReq, T>
     (this.delegate as SafeSubscriberLike<TReq>).dispatch(req);
   }
 
+  enumerate(): EnumeratorLike<void, T> {
+    return this.observable.enumerate();
+  }
+
   subscribe(subscriber: SubscriberLike<T>) {
     this.observable.subscribe(subscriber);
   }
@@ -53,7 +60,7 @@ export const createAsyncEnumerator = <TReq, T>(
   scheduler: SchedulerLike,
   replayCount = 0,
 ): AsyncEnumeratorLike<TReq, T> => {
-  const subject = createSubject(scheduler);
+  const subject = createSubject<TReq>(scheduler);
 
   const safeSubscriber = toSafeSubscriber(subject);
   const observable = pipe(subject, operator, publish(scheduler, replayCount));

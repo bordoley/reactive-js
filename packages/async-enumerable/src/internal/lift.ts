@@ -16,11 +16,13 @@ import {
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
 import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class LiftedAsyncEnumeratorImpl<TReq, T>
   implements AsyncEnumeratorLike<TReq, T> {
   readonly add = disposableMixin.add;
   readonly dispose = disposableMixin.dispose;
+  readonly isSynchronous = false;
 
   constructor(
     readonly notify: (req: TReq) => void,
@@ -40,6 +42,10 @@ class LiftedAsyncEnumeratorImpl<TReq, T>
 
   get subscriberCount(): number {
     return this.observable.subscriberCount;
+  }
+
+  enumerate(): EnumeratorLike<void, T> {
+    return this.observable.enumerate();
   }
 
   schedule(continuation: SchedulerContinuationLike): DisposableLike {

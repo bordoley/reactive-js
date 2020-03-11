@@ -1,4 +1,8 @@
-import { toStateStore, StateUpdaterLike, lift } from "@reactive-js/async-enumerable";
+import {
+  toStateStore,
+  StateUpdaterLike,
+  lift,
+} from "@reactive-js/async-enumerable";
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,

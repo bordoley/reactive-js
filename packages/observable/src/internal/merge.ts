@@ -1,17 +1,21 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly ctx: MergeObservable<T>,
+    private readonly ctx: {
+      readonly count: number;
+      completedCount: number;
+    },
   ) {
     super(delegate);
     this.add(error => {
       const ctx = this.ctx;
       ctx.completedCount++;
 
-      if (error !== undefined || ctx.completedCount >= ctx.observables.length) {
+      if (error !== undefined || ctx.completedCount >= ctx.count) {
         delegate.dispose(error);
       }
     });
@@ -23,15 +27,18 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 class MergeObservable<T> implements ObservableLike<T> {
-  completedCount = 0;
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
 
   constructor(readonly observables: readonly ObservableLike<T>[]) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     const observables = this.observables;
 
+    const ctx = { count: observables.length, completedCount: 0 };
+
     for (const observable of observables) {
-      const mergeSubscriber = new MergeSubscriber(subscriber, this);
+      const mergeSubscriber = new MergeSubscriber(subscriber, ctx);
 
       observable.subscribe(mergeSubscriber);
     }

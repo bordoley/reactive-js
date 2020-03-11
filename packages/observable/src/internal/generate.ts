@@ -1,11 +1,7 @@
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
+import { observableMixin } from "./observable";
 import { producerMixin } from "./producer";
-import { enumerableMixin } from "./enumerableObservable";
 
 class GenerateProducer<T> implements SchedulerContinuationLike {
   readonly run = producerMixin.run;
@@ -49,11 +45,16 @@ class GenerateProducer<T> implements SchedulerContinuationLike {
 }
 
 class GenerateObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
   constructor(
     private readonly generator: (acc: T) => T,
     private readonly acc: T,
     private readonly delay: number,
-  ) {}
+  ) {
+    this.isSynchronous = delay === 0;
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
     const producer = new GenerateProducer(
@@ -65,28 +66,6 @@ class GenerateObservable<T> implements ObservableLike<T> {
     subscriber.schedule(producer);
   }
 }
-
-class GenerateEnumerable<T> extends GenerateObservable<T>
-  implements EnumerableObservableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
-
-  constructor(generator: (acc: T) => T, acc: T) {
-    super(generator, acc, 0);
-  }
-}
-
-/**
- * Generates an `EnumerableObservableLike` sequence from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator The generator function.
- * @param initialValue Factory function to generate the initial accumulator.
- */
-export function generate<T>(
-  generator: (acc: T) => T,
-  initialValue: () => T,
-): EnumerableObservableLike<T>;
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -100,15 +79,7 @@ export function generate<T>(
 export function generate<T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-  delay: number,
-): ObservableLike<T>;
-
-export function generate<T>(
-  generator: (acc: T) => T,
-  initialValue: () => T,
   delay = 0,
 ): ObservableLike<T> {
-  return delay > 0
-    ? new GenerateObservable(generator, initialValue(), delay)
-    : new GenerateEnumerable(generator, initialValue());
+  return new GenerateObservable(generator, initialValue(), delay);
 }

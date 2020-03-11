@@ -1,13 +1,8 @@
 import { pipe } from "@reactive-js/pipe";
 import { empty } from "./empty";
-import {
-  ObservableOperatorLike,
-  SubscriberLike,
-  SubscriberOperatorLike,
-} from "./interfaces";
+import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { SubscriberOperator } from "./subscriberOperator";
 
 class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;
@@ -28,18 +23,14 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
-const operator = <T>(count: number): SubscriberOperatorLike<T, T> => {
-  const call = (subscriber: SubscriberLike<T>) =>
-    new TakeFirstSubscriber(subscriber, count);
-  return new SubscriberOperator(true, call);
-};
-
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(
-  count = 1,
-): ObservableOperatorLike<T, T> => observable =>
-  count > 0 ? pipe(observable, lift(operator(count))) : empty();
+export const takeFirst = <T>(count = 1): ObservableOperatorLike<T, T> => {
+  const operator = (subscriber: SubscriberLike<T>) =>
+    new TakeFirstSubscriber(subscriber, count);
+  return observable =>
+    count > 0 ? pipe(observable, lift(operator, true)) : empty();
+};

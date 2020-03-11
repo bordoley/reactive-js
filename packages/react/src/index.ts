@@ -129,7 +129,7 @@ export const useAsyncEnumerable = <TReq, T>(
   } = {},
 ): AsyncEnumeratorLike<TReq, T> => {
   const scheduler = config.scheduler || normalPriority;
-  const emptyEnumerator = empty().enumerateAsync(scheduler);
+  const emptyEnumerator = empty<TReq, T>().enumerateAsync(scheduler);
   const replay = config.replay || 0;
 
   const factory = useCallback(

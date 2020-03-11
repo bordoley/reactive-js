@@ -3,12 +3,16 @@ import {
   SafeSubscriberLike,
   SubscriberLike,
 } from "./interfaces";
+import { observableMixin } from "./observable";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
   constructor(
     private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
   ) {}
+
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous = false;
 
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may

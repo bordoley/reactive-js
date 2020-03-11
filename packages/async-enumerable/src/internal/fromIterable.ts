@@ -1,4 +1,5 @@
 import { pipe } from "@reactive-js/pipe";
+
 import {
   catchError,
   empty,
@@ -48,7 +49,7 @@ class FromIterableAsyncEnumerable<T> implements AsyncEnumerableLike<void, T> {
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
  * @param iterable
- */
+ */ 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
 ): AsyncEnumerableLike<void, T> => new FromIterableAsyncEnumerable(iterable);

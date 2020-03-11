@@ -1,13 +1,9 @@
-import {
-  EnumerableObservableLike,
-  ObservableLike,
-  SubscriberLike,
-} from "./interfaces";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ObservableLike, SubscriberLike } from "./interfaces";
 import { producerMixin } from "./producer";
-import { enumerableMixin } from "./enumerableObservable";
-import { EnumeratorLike, isEnumerable } from "@reactive-js/enumerable";
+import { AbstractDelegatingSubscriber } from "./subscriber";
+import { observableMixin } from "./observable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -103,42 +99,6 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   }
 }
 
-class ZipObservable<T> implements ObservableLike<T> {
-  constructor(
-    private readonly observables: readonly ObservableLike<any>[],
-    private readonly selector: (...values: unknown[]) => T,
-  ) {}
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const observables = this.observables;
-    const count = observables.length;
-    const enumerators: EnumeratorLike<void, unknown>[] = [];
-
-    for (let index = 0; index < count; index++) {
-      const observable = observables[index];
-
-      if (isEnumerable(observable)) {
-        const enumerable = (observable as unknown) as EnumerableObservableLike<
-          T
-        >;
-        const enumerator = enumerable.enumerate();
-
-        enumerator.move();
-        enumerators.push(enumerator);
-      } else {
-        const innerSubscriber = new ZipSubscriber(
-          subscriber,
-          enumerators,
-          this.selector,
-        );
-
-        observable.subscribe(innerSubscriber);
-        enumerators.push(innerSubscriber);
-      }
-    }
-  }
-}
-
 class ZipProducer<T> implements SchedulerContinuationLike {
   current: any;
   hasCurrent = false;
@@ -184,28 +144,52 @@ class ZipProducer<T> implements SchedulerContinuationLike {
   }
 }
 
-class ZipEnumerable<T> implements EnumerableObservableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
+class ZipObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
 
   constructor(
-    private readonly enumerables: readonly EnumerableObservableLike<any>[],
-    readonly selector: (...values: unknown[]) => T,
-  ) {}
+    private readonly observables: readonly ObservableLike<any>[],
+    private readonly selector: (...values: unknown[]) => T,
+  ) {
+    this.isSynchronous = observables.every(obs => obs.isSynchronous);
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const enumerables = this.enumerables;
-    const enumerators = [];
+    const observables = this.observables;
+    const count = observables.length;
 
-    for (const enumerable of enumerables) {
-      const enumerator = enumerable.enumerate();
-      enumerator.move();
-      enumerators.push(enumerator);
+    if (this.isSynchronous) {
+      const enumerators = observables.map(obs => obs.enumerate());
+      for (const enumerator of enumerators) {
+        enumerator.move();
+      }
+
+      subscriber.schedule(
+        new ZipProducer(subscriber, enumerators, this.selector),
+      );
+    } else {
+      const enumerators: EnumeratorLike<void, unknown>[] = [];
+      for (let index = 0; index < count; index++) {
+        const observable = observables[index];
+
+        if (observable.isSynchronous) {
+          const enumerator = observable.enumerate();
+
+          enumerator.move();
+          enumerators.push(enumerator);
+        } else {
+          const innerSubscriber = new ZipSubscriber(
+            subscriber,
+            enumerators,
+            this.selector,
+          );
+
+          observable.subscribe(innerSubscriber);
+          enumerators.push(innerSubscriber);
+        }
+      }
     }
-
-    subscriber.schedule(
-      new ZipProducer(subscriber, enumerators, this.selector),
-    );
   }
 }
 
@@ -296,97 +280,6 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     i: TI,
   ) => T,
 ): ObservableLike<T>;
-export function zip<TA, TB, T>(
-  observables: [EnumerableObservableLike<TA>, EnumerableObservableLike<TB>],
-  selector: (a: TA, b: TB) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-  ],
-  selector: (a: TA, b: TB, c: TC) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-  ],
-  selector: (a: TA, b: TB, c: TC, d: TD) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-    EnumerableObservableLike<TE>,
-  ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-    EnumerableObservableLike<TE>,
-    EnumerableObservableLike<TF>,
-  ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-    EnumerableObservableLike<TE>,
-    EnumerableObservableLike<TF>,
-    EnumerableObservableLike<TG>,
-  ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-    EnumerableObservableLike<TE>,
-    EnumerableObservableLike<TF>,
-    EnumerableObservableLike<TG>,
-    EnumerableObservableLike<TH>,
-  ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T,
-): EnumerableObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
-  observables: [
-    EnumerableObservableLike<TA>,
-    EnumerableObservableLike<TB>,
-    EnumerableObservableLike<TC>,
-    EnumerableObservableLike<TD>,
-    EnumerableObservableLike<TE>,
-    EnumerableObservableLike<TF>,
-    EnumerableObservableLike<TG>,
-    EnumerableObservableLike<TH>,
-    EnumerableObservableLike<TI>,
-  ],
-  selector: (
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-    g: TG,
-    h: TH,
-    i: TI,
-  ) => T,
-): EnumerableObservableLike<T>;
 
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
@@ -396,7 +289,5 @@ export function zip<T>(
   observables: ObservableLike<unknown>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  return observables.every(isEnumerable)
-    ? new ZipEnumerable(observables as EnumerableObservableLike<T>[], selector)
-    : new ZipObservable(observables, selector);
+  return new ZipObservable(observables, selector);
 }

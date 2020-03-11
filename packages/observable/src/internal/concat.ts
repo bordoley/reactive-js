@@ -1,20 +1,8 @@
-import {
-  ObservableLike,
-  SubscriberLike,
-  EnumerableObservableLike,
-} from "./interfaces";
+import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { enumerableMixin } from "./enumerableObservable";
 import { fromArray } from "./fromArray";
-import { fromEnumerable } from "./fromEnumerable";
-import { map } from "./map";
-import { pipe } from "@reactive-js/pipe";
-import { toEnumerable } from "./toEnumerable";
-import {
-  EnumeratorLike,
-  EnumerableLike,
-  isEnumerable,
-} from "@reactive-js/enumerable";
+import { observableMixin } from "./observable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -43,13 +31,17 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 class ConcatObservable<T> implements ObservableLike<T> {
-  constructor(
-    private readonly observables: EnumerableLike<void, ObservableLike<T>>,
-  ) {}
+  readonly enumerate = observableMixin.enumerate;
+  readonly isSynchronous: boolean;
+
+  constructor(private readonly observables: Array<ObservableLike<T>>) {
+    this.isSynchronous = observables.every(obs => obs.isSynchronous);
+  }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const enumerator = this.observables.enumerate();
+    const enumerator = fromArray(this.observables).enumerate();
     subscriber.add(enumerator);
+
     const concatSubscriber = new ConcatSubscriber(subscriber, enumerator);
 
     if (enumerator.move()) {
@@ -59,21 +51,6 @@ class ConcatObservable<T> implements ObservableLike<T> {
     }
   }
 }
-
-class ConcatEnumerable<T> extends ConcatObservable<T>
-  implements EnumerableObservableLike<T> {
-  readonly [Symbol.iterator] = enumerableMixin[Symbol.iterator];
-  readonly enumerate = enumerableMixin.enumerate;
-}
-
-/**
- * Creates an `EnumerableObservableLike` which emits all values from each source sequentially.
- */
-export function concat<T>(
-  fst: EnumerableObservableLike<T>,
-  snd: EnumerableObservableLike<T>,
-  ...tail: Array<EnumerableObservableLike<T>>
-): EnumerableObservableLike<T>;
 
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
@@ -87,19 +64,5 @@ export function concat<T>(
 export function concat<T>(
   ...observables: Array<ObservableLike<T>>
 ): ObservableLike<T> {
-  return observables.every(isEnumerable)
-    ? new ConcatEnumerable(fromArray(observables))
-    : new ConcatObservable(fromArray(observables));
+  return new ConcatObservable(observables);
 }
-
-/**
- * Converts a higher-order EnumerableLike into a first-order EnumerableLike
- * by concatenating the inner Enumerables in order.
- */
-export const flatten: <T>(
-  enumerable: EnumerableLike<void, EnumerableLike<void, T>>,
-) => EnumerableObservableLike<T> = enumerable => {
-  return new ConcatEnumerable(
-    pipe(enumerable, fromEnumerable, map(fromEnumerable), toEnumerable),
-  );
-};
