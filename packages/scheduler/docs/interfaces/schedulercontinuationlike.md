@@ -8,6 +8,8 @@ A unit of work to be executed by a scheduler.
 
 * **SchedulerContinuationLike**
 
+  ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
+
 ## Index
 
 ### Properties

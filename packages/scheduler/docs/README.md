@@ -8,3 +8,4 @@
 
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
+* [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)

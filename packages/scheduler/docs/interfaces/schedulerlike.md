@@ -8,6 +8,8 @@ An object that schedules units of work on a runloop.
 
 * **SchedulerLike**
 
+  ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
+
 ## Index
 
 ### Properties

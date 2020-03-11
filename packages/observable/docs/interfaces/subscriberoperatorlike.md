@@ -14,37 +14,16 @@ A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
 
 * **SubscriberOperatorLike**
 
-## Index
+## Callable
 
-### Properties
+▸ (`observable`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
 
-* [isSynchronous](subscriberoperatorlike.md#issynchronous)
-
-### Methods
-
-* [call](subscriberoperatorlike.md#call)
-
-## Properties
-
-###  isSynchronous
-
-• **isSynchronous**: *boolean*
-
-Flag that indicates that the transformed `SubscriberLike` synchronously
-transforms notifications, without introducing delays.
-
-## Methods
-
-###  call
-
-▸ **call**(`subscriber`: [SubscriberLike](subscriberlike.md)‹B›): *[SubscriberLike](subscriberlike.md)‹A›*
-
-Transforms the `SubscriberLike<B>` to a `SubscriberLike<A>`.
+A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`subscriber` | [SubscriberLike](subscriberlike.md)‹B› | The subscriber to transform.  |
+Name | Type |
+------ | ------ |
+`observable` | [SubscriberLike](subscriberlike.md)‹B› |
 
 **Returns:** *[SubscriberLike](subscriberlike.md)‹A›*

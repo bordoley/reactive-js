@@ -9,7 +9,6 @@
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [SchedulerHost](interfaces/schedulerhost.md)
-* [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
 
 ### Functions
 
@@ -60,7 +59,7 @@ ___
 
 ### `Const` createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *VirtualTimeSchedulerLike*
 
 Creates a new virtual time scheduler instance.
 
@@ -70,7 +69,7 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `maxMicroTaskTicks` | number |  Number.MAX_SAFE_INTEGER | The max number of times shouldYield should return false before returning true. Useful for testing cooperative multitasking.  |
 
-**Returns:** *[VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)*
+**Returns:** *VirtualTimeSchedulerLike*
 
 ## Object literals
 
