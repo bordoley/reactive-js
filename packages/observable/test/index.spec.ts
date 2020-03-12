@@ -1072,7 +1072,7 @@ test("switchAll", () => {
   );
 
   expect(() =>
-    pipe(src, switchAll, onNotify(cb), toArray(createVirtualTimeScheduler)),
+    pipe(src, switchAll(), onNotify(cb), toArray(createVirtualTimeScheduler)),
   ).toThrow(cause);
 
   expect(cb).toBeCalledTimes(4);

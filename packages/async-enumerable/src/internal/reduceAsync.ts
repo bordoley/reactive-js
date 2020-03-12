@@ -55,7 +55,7 @@ class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
         pipe(
           enumerator,
           withLatestFrom(eventEmitter, this.withLatestSelector),
-          switchAll,
+          switchAll(),
         ),
       ),
       onNotify(next => {
