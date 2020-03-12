@@ -24,11 +24,6 @@
 * [SubscriberLike](interfaces/subscriberlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
 
-### Variables
-
-* [exhaust](README.md#const-exhaust)
-* [switchAll](README.md#const-switchall)
-
 ### Functions
 
 * [buffer](README.md#buffer)
@@ -43,6 +38,7 @@
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
 * [every](README.md#const-every)
+* [exhaust](README.md#const-exhaust)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
 * [fromIterable](README.md#fromiterable)
@@ -75,6 +71,7 @@
 * [startWith](README.md#startwith)
 * [subscribe](README.md#const-subscribe)
 * [subscribeOn](README.md#const-subscribeon)
+* [switchAll](README.md#const-switchall)
 * [takeFirst](README.md#const-takefirst)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
@@ -94,53 +91,6 @@
 ### Object literals
 
 * [observableMixin](README.md#const-observablemixin)
-
-## Variables
-
-### `Const` exhaust
-
-• **exhaust**: *function* =  mergeAll({ maxBufferSize: 1, maxConcurrency: 1 })
-
-Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
-by dropping inner sources while the previous inner source
-has not yet been disposed.
-
-#### Type declaration:
-
-▸ <**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›› |
-
-___
-
-### `Const` switchAll
-
-• **switchAll**: *function* =  lift(operator, false)
-
-Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
-values only from the most recent source.
-
-#### Type declaration:
-
-▸ <**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T››): *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›› |
 
 ## Functions
 
@@ -747,6 +697,22 @@ Name | Type |
 `next` | T |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
+
+___
+
+### `Const` exhaust
+
+▸ **exhaust**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
+by dropping inner sources while the previous inner source
+has not yet been disposed.
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
 ___
 
@@ -1591,6 +1557,21 @@ Name | Type | Description |
 `scheduler` | SchedulerLike | `SchedulerLike` instance to use when subscribing to the source.  |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` switchAll
+
+▸ **switchAll**<**T**>(): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+
+Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
+values only from the most recent source.
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
 
 ___
 

@@ -120,11 +120,11 @@ export const concatAll = <T>(
 ): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
+const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * by dropping inner sources while the previous inner source
  * has not yet been disposed.
  */
-export const exhaust: <T>(
-  source: ObservableLike<ObservableLike<T>>,
-) => ObservableLike<T> = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+export const exhaust = <T>() => exhaustInstance as ObservableOperatorLike<ObservableLike<T>, T>;

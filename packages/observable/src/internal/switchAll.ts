@@ -1,6 +1,6 @@
 import { ErrorLike, disposed } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { ObservableLike, ObserverLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, ObserverLike, SubscriberLike, ObservableOperatorLike } from "./interfaces";
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
@@ -42,10 +42,9 @@ class SwitchSubscriber<T>
 const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
 
+const switchAllInstance = lift(operator, false);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
-export const switchAll: <T>(
-  source: ObservableLike<ObservableLike<T>>,
-) => ObservableLike<T> = lift(operator, false);
+export const switchAll = <T>() => switchAllInstance as ObservableOperatorLike<ObservableLike<T>, T>;
