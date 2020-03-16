@@ -1,26 +1,25 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { fromArray } from "./fromArray";
 import { observableMixin } from "./observable";
-import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly enumerator: EnumeratorLike<void, ObservableLike<T>>,
+    private readonly observables: Array<ObservableLike<T>>,
+    private readonly next: number,
   ) {
     super(delegate);
     this.add(error => {
+      const observables = this.observables;
+      const next = this.next;
+
       if (error !== undefined) {
         delegate.dispose(error);
+      } else if (next < observables.length) {
+        const concatSubscriber = new ConcatSubscriber(delegate, observables, next + 1);
+        observables[next].subscribe(concatSubscriber);
       } else {
-        const enumerator = this.enumerator;
-        if (enumerator.move()) {
-          const concatSubscriber = new ConcatSubscriber(delegate, enumerator);
-          enumerator.current.subscribe(concatSubscriber);
-        } else {
-          delegate.dispose();
-        }
+        delegate.dispose();
       }
     });
   }
@@ -39,13 +38,11 @@ class ConcatObservable<T> implements ObservableLike<T> {
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const enumerator = fromArray(this.observables).enumerate();
-    subscriber.add(enumerator);
+    const observables = this.observables;
 
-    const concatSubscriber = new ConcatSubscriber(subscriber, enumerator);
-
-    if (enumerator.move()) {
-      enumerator.current.subscribe(concatSubscriber);
+    if (observables.length > 0) {
+     const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
+      observables[0].subscribe(concatSubscriber);
     } else {
       subscriber.dispose();
     }
