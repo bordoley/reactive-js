@@ -7,8 +7,7 @@ const alwaysTrue = () => true;
 
 class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
   implements EnumeratorLike<void, T>, SubscriberLike<T> {
-  // FIXME: Might need to use a queue to implement synchronous combineLatest
-  private continuation?: SchedulerContinuationLike;
+  private continuations: SchedulerContinuationLike[] = [];
   current: any;
 
   private error: ErrorLike | undefined = undefined;
@@ -23,16 +22,21 @@ class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
   }
 
   move(): boolean {
+    const continuations = this.continuations;
     this.hasCurrent = false;
     this.current = undefined;
     this.error = undefined;
 
     while (!this.hasCurrent) {
-      if (this.isDisposed || this.continuation === undefined) {
+      const continuation = continuations.shift();
+      if (this.isDisposed || continuation === undefined) {
         break;
       }
 
-      this.continuation = this.continuation.run(alwaysTrue) || undefined;
+      const next = continuation.run(alwaysTrue) || undefined;
+      if (next !== undefined) {
+        continuations.push(next);
+      }
 
       const error = this.error;
       if (error !== undefined) {
@@ -51,7 +55,7 @@ class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
 
   schedule(continuation: SchedulerContinuationLike, delay = 0): DisposableLike {
     if (!this.isDisposed && delay === 0) {
-      this.continuation = continuation;
+      this.continuations.push(continuation);
     }
     return this;
   }
