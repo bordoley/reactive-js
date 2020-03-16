@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "private": true,
   "keywords": [
     "asynchronous",
@@ -36,9 +36,9 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/node": "^0.0.29",
-    "@reactive-js/observable": "^0.0.29",
-    "@reactive-js/pipe": "^0.0.29"
+    "@reactive-js/node": "^0.0.30",
+    "@reactive-js/observable": "^0.0.30",
+    "@reactive-js/pipe": "^0.0.30"
   },
   "scripts": {
     "build": "tsc"
