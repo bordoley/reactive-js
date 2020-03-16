@@ -8,7 +8,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
   unknown,
   T
 > {
-  private hasProducedValue = false;
+  private ready = false;
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -31,12 +31,12 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
     const latest = ctx.latest;
     latest[this.index] = next;
 
-    if (!this.hasProducedValue) {
-      ctx.producedCount++;
-      this.hasProducedValue = true;
+    if (!this.ready) {
+      ctx.readyCount++;
+      this.ready = true;
     }
 
-    if (ctx.producedCount === ctx.totalCount) {
+    if (ctx.readyCount === ctx.totalCount) {
       const result = ctx.selector(...latest);
       this.delegate.notify(result);
     }
@@ -45,7 +45,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
 
 class CombineLatestProducer<T> implements SchedulerContinuationLike {
   completedCount = 0;
-  producedCount = 0;
+  readyCount = 0;
 
   readonly latest: Array<unknown>;
   readonly run = producerMixin.run;
