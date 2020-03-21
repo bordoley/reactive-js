@@ -34,7 +34,7 @@ class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
       }
 
       continuation.run(alwaysTrue);
-      
+
       if (!continuation.isDisposed) {
         continuations.push(continuation);
       }

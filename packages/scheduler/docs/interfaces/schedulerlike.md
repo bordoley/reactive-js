@@ -32,7 +32,7 @@ The scheduler's current time in ms.
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [SchedulerContinuationLike](schedulercontinuationlike.md)): *DisposableLike*
+▸ **schedule**(`continuation`: [SchedulerContinuationLike](schedulercontinuationlike.md)): *void*
 
 Schedules a continuation to be executed on the scheduler.
 
@@ -42,6 +42,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `continuation` | [SchedulerContinuationLike](schedulercontinuationlike.md) | The SchedulerContinuation to be executed.  |
 
-**Returns:** *DisposableLike*
-
-A `DisposableLike` that can be disposed to cancel the scheduled work.
+**Returns:** *void*

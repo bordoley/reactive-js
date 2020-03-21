@@ -81,7 +81,7 @@ Mixin functions that can be used to implement the SchedulerLike interface
 
 ###  schedule
 
-▸ **schedule**(`this`: [SchedulerHost](interfaces/schedulerhost.md), `continuation`: SchedulerContinuationLike): *DisposableLike*
+▸ **schedule**(`this`: [SchedulerHost](interfaces/schedulerhost.md), `continuation`: SchedulerContinuationLike): *void*
 
 **Parameters:**
 
@@ -90,4 +90,4 @@ Name | Type |
 `this` | [SchedulerHost](interfaces/schedulerhost.md) |
 `continuation` | SchedulerContinuationLike |
 
-**Returns:** *DisposableLike*
+**Returns:** *void*

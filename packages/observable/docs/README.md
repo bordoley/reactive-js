@@ -1719,7 +1719,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`factory`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **throws**<**T**>(`errorFactory`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
@@ -1729,9 +1729,7 @@ Creates an `ObservableLike` that emits no items and immediately disposes its sub
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-Factory function to generate the error to emit.
+▪ **errorFactory**: *function*
 
 ▸ (): *unknown*
 

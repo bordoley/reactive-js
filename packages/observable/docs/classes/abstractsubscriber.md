@@ -108,7 +108,7 @@ ___
 
 ###  schedule
 
-▸ **schedule**<**T**>(`this`: [SubscriberLike](../interfaces/subscriberlike.md)‹T› & object, `continuation`: SchedulerContinuationLike): *DisposableLike*
+▸ **schedule**<**T**>(`this`: [SubscriberLike](../interfaces/subscriberlike.md)‹T› & object, `continuation`: SchedulerContinuationLike): *void*
 
 **Type parameters:**
 
@@ -121,4 +121,4 @@ Name | Type |
 `this` | [SubscriberLike](../interfaces/subscriberlike.md)‹T› & object |
 `continuation` | SchedulerContinuationLike |
 
-**Returns:** *DisposableLike*
+**Returns:** *void*

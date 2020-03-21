@@ -12,6 +12,6 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 * [SchedulerLike](schedulerlike.md)
 
-* [SchedulerContinuationLike](schedulercontinuationlike.md)
+  ↳ [SchedulerContinuationLike](schedulercontinuationlike.md)
 
   ↳ **VirtualTimeSchedulerLike**
