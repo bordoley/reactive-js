@@ -337,12 +337,15 @@ describe("createSubject", () => {
     subscriber.add(e => onDispose(e));
 
     subject.subscribe(subscriber);
-    scheduler.schedule({
-      run: _ => {
+
+    pipe(
+      ofValue(undefined),
+      onNotify(_ => {
         subject.notify(4);
         subject.dispose();
-      },
-    });
+      }),
+      subscribe(scheduler),
+    );
 
     expect(subject.subscriberCount).toEqual(1);
     scheduler.run();
@@ -1021,22 +1024,25 @@ test("share", () => {
 
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
-  scheduler.schedule({
-    delay: 1,
-    run: _ => {
+
+  pipe(
+    ofValue(undefined, 1),
+    onNotify(_ => {
       liftedSubscription = pipe(
         replayed,
         observe(liftedObserver),
         subscribe(scheduler),
       );
-    },
-  });
+    }),
+    subscribe(scheduler),
+  );
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
-  scheduler.schedule({
-    delay: 3,
-    run: _ => {
+
+  pipe(
+    ofValue(undefined, 3),
+    onNotify(_ => {
       replayedSubscription.dispose();
       liftedSubscription.dispose();
 
@@ -1045,8 +1051,9 @@ test("share", () => {
         observe(anotherLiftedSubscriptionObserver),
         subscribe(scheduler),
       );
-    },
-  });
+    }),
+    subscribe(scheduler),
+  );
 
   scheduler.run();
 

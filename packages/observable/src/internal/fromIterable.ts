@@ -1,76 +1,52 @@
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
-import { producerMixin } from "./producer";
+import { createScheduledObservable } from "./observable";
+import { AbstractProducer } from "./producer";
 
-class FromIteratorProducer<T> implements SchedulerContinuationLike {
-  readonly run = producerMixin.run;
-
+class FromIteratorProducer<T> extends AbstractProducer<T> {
   constructor(
-    private readonly subscriber: SubscriberLike<T>,
+    subscriber: SubscriberLike<T>,
     private readonly iterator: Iterator<T>,
     readonly delay: number,
-  ) {}
+  ) {
+    super(subscriber);
+  }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+  produce(shouldYield?: () => boolean) {
     const iterator = this.iterator;
-    const subscriber = this.subscriber;
 
-    if (this.delay > 0 && !subscriber.isDisposed) {
+    if (this.delay > 0 && !this.isDisposed) {
       const next = iterator.next();
       if (!next.done) {
-        subscriber.notify(next.value);
-        return this;
+        this.notify(next.value);
+        return;
       }
     } else if (shouldYield !== undefined) {
       let done = false;
-      while (!subscriber.isDisposed && !done) {
+      while (!this.isDisposed && !done) {
         const next = iterator.next();
         done = next.done || false;
 
         if (!done) {
-          subscriber.notify(next.value);
+          this.notify(next.value);
         }
 
         if (!done && shouldYield()) {
-          return this;
+          return;
         }
       }
     } else {
       let done = false;
-      while (!subscriber.isDisposed && !done) {
+      while (!this.isDisposed && !done) {
         const next = iterator.next();
         done = next.done || false;
 
         if (!done) {
-          subscriber.notify(next.value);
+          this.notify(next.value);
         }
       }
     }
 
-    subscriber.dispose();
-    return;
-  }
-}
-
-class FromIteratorObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
-  readonly isSynchronous: boolean;
-
-  constructor(
-    private readonly iterator: Iterator<T>,
-    private readonly delay: number,
-  ) {
-    this.isSynchronous = delay === 0;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new FromIteratorProducer(
-      subscriber,
-      this.iterator,
-      this.delay,
-    );
-    subscriber.schedule(producer);
+    this.dispose();
   }
 }
 
@@ -85,34 +61,10 @@ export function fromIterator<T>(
   iterator: Iterator<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return new FromIteratorObservable(iterator, delay);
-}
+  const factory = (subscriber: SubscriberLike<T>) =>
+    new FromIteratorProducer(subscriber, iterator, delay);
 
-class FromIterableObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
-  readonly isSynchronous: boolean;
-
-  constructor(
-    private readonly iterable: Iterable<T>,
-    private readonly delay: number,
-  ) {
-    this.isSynchronous = delay === 0;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const iterator = this.iterable[Symbol.iterator]();
-    subscriber.add(error => {
-      if (error !== undefined && iterator.throw !== undefined) {
-        const { cause } = error;
-        iterator.throw(cause);
-      } else if (iterator.return !== undefined) {
-        iterator.return();
-      }
-    });
-
-    const producer = new FromIteratorProducer(subscriber, iterator, this.delay);
-    subscriber.schedule(producer);
-  }
+  return createScheduledObservable(factory, delay === 0);
 }
 
 /**
@@ -126,5 +78,18 @@ export function fromIterable<T>(
   iterable: Iterable<T>,
   delay = 0,
 ): ObservableLike<T> {
-  return new FromIterableObservable(iterable, delay);
+  const factory = (subscriber: SubscriberLike<T>) => {
+    const iterator = iterable[Symbol.iterator]();
+    subscriber.add(error => {
+      if (error !== undefined && iterator.throw !== undefined) {
+        const { cause } = error;
+        iterator.throw(cause);
+      } else if (iterator.return !== undefined) {
+        iterator.return();
+      }
+    });
+    return new FromIteratorProducer(subscriber, iterator, delay);
+  };
+
+  return createScheduledObservable(factory, delay === 0);
 }

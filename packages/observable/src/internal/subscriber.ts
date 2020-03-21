@@ -1,8 +1,4 @@
-import {
-  DisposableLike,
-  createDisposable,
-  disposableMixin,
-} from "@reactive-js/disposable";
+import { createDisposable, disposableMixin } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -36,10 +32,9 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   schedule<T>(
     this: SubscriberLike<T> & { scheduler: SchedulerLike },
     continuation: SchedulerContinuationLike,
-  ): DisposableLike {
-    const schedulerSubscription = this.scheduler.schedule(continuation);
-    this.add(schedulerSubscription);
-    return schedulerSubscription;
+  ) {
+    this.add(continuation);
+    this.scheduler.schedule(continuation);
   }
 }
 

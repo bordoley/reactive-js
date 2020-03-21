@@ -1,20 +1,81 @@
+import {
+  createDisposable,
+  disposableMixin,
+  ErrorLike,
+} from "@reactive-js/disposable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
-import { producerMixin } from "./producer";
-import { ErrorLike } from "@reactive-js/disposable";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
+class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLike {
+  readonly add = disposableMixin.add;
+
+  readonly disposable = createDisposable(_ => {
+    this.isDisposed = true;
+  });
+
+  readonly dispose = disposableMixin.dispose;
+
+  isDisposed = false;
+  
+  constructor(private readonly subscriber: SafeSubscriberImpl<T>) {}
+
+  produce(shouldYield?: () => boolean) {
+    const subscriber = this.subscriber;
+    const nextQueue = subscriber.nextQueue;
+    const delegate = subscriber.delegate;
+
+    if (shouldYield !== undefined) {
+      while (nextQueue.length > 0 && !delegate.isDisposed) {
+        const next = nextQueue.shift() as T;
+        delegate.notify(next);
+
+        const hasRemainingEvents = subscriber.nextQueue.length > 0 || subscriber.isDisposed;
+
+        if (hasRemainingEvents && shouldYield()) {
+          return;
+        }
+      }
+    } else {
+      while (nextQueue.length > 0 && !delegate.isDisposed) {
+        const next = nextQueue.shift() as T;
+        delegate.notify(next);
+      }
+    }
+
+    if (subscriber.isDisposed) {
+      delegate.dispose(subscriber.error);
+    }
+
+    this.dispose();
+  }
+
+  run(shouldYield?: () => boolean) {
+    if(!this.isDisposed) {
+      try {
+        this.produce(shouldYield);
+      } catch (cause) {
+        const error = { cause };
+        this.subscriber.dispose(error);
+        this.dispose();
+      }
+    };
+  }
+}
+
 const scheduleDrainQueue = <T>(subscriber: SafeSubscriberImpl<T>) => {
-  if (subscriber.remainingEvents === 1) {
-    subscriber.delegate.schedule(subscriber);
+  const remainingEvents =
+    subscriber.nextQueue.length + (subscriber.isDisposed ? 1 : 0);
+  if (remainingEvents === 1) {
+    const producer = new SafeSubscriberSchedulerContinuation(subscriber);
+    subscriber.delegate.schedule(producer);
   }
 };
 
 class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
   implements SafeSubscriberLike<T> {
-  private error: ErrorLike | undefined;
-  private readonly nextQueue: Array<T> = [];
-  readonly run = producerMixin.run;
+  error: ErrorLike | undefined;
+  readonly nextQueue: Array<T> = [];
 
   constructor(readonly subscriber: SubscriberLike<T>) {
     super(subscriber);
@@ -22,10 +83,6 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
       this.error = error;
       scheduleDrainQueue(this);
     });
-  }
-
-  get remainingEvents() {
-    return this.nextQueue.length + (this.isDisposed ? 1 : 0);
   }
 
   notify(next: T): void {
@@ -36,31 +93,6 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
     if (!this.isDisposed) {
       this.nextQueue.push(next);
       scheduleDrainQueue(this);
-    }
-  }
-
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
-    const delegate = this.delegate;
-    const nextQueue = this.nextQueue;
-
-    if (shouldYield !== undefined) {
-      while (nextQueue.length > 0 && !delegate.isDisposed) {
-        const next = nextQueue.shift() as T;
-        delegate.notify(next);
-
-        if (shouldYield() && this.remainingEvents > 0) {
-          return this;
-        }
-      }
-    } else {
-      while (nextQueue.length > 0 && !delegate.isDisposed) {
-        const next = nextQueue.shift() as T;
-        delegate.notify(next);
-      }
-    }
-
-    if (this.isDisposed) {
-      delegate.dispose(this.error);
     }
   }
 }

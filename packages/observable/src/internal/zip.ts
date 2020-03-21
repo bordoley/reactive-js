@@ -1,7 +1,6 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { producerMixin } from "./producer";
+import { AbstractProducer } from "./producer";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { observableMixin } from "./observable";
 
@@ -99,48 +98,47 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   }
 }
 
-class ZipProducer<T> implements SchedulerContinuationLike {
+class ZipProducer<T> extends AbstractProducer<T> {
   current: any;
   hasCurrent = false;
-  readonly run = producerMixin.run;
 
   constructor(
-    private readonly subscriber: SubscriberLike<T>,
+    subscriber: SubscriberLike<T>,
     private readonly enumerators: readonly EnumeratorLike<void, any>[],
     private readonly selector: (...values: unknown[]) => T,
-  ) {}
+  ) {
+    super(subscriber);
+  }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+  produce(shouldYield?: () => boolean) {
     const enumerators = this.enumerators;
     const selector = this.selector;
-    const subscriber = this.subscriber;
 
     if (shouldYield !== undefined) {
-      while (shouldEmit(enumerators) && !subscriber.isDisposed) {
+      while (shouldEmit(enumerators) && !this.isDisposed) {
         const next = selector(...enumerators.map(getCurrent));
-        subscriber.notify(next);
+        this.notify(next);
 
         for (const buffer of enumerators) {
           buffer.move();
         }
 
         if (shouldYield()) {
-          return this;
+          return;
         }
       }
     } else {
-      while (shouldEmit(enumerators) && !subscriber.isDisposed) {
+      while (shouldEmit(enumerators) && !this.isDisposed) {
         const next = selector(...enumerators.map(getCurrent));
 
         for (const enumerator of enumerators) {
           enumerator.move();
         }
 
-        subscriber.notify(next);
+        this.notify(next);
       }
     }
-    subscriber.dispose();
-    return;
+    this.dispose();
   }
 }
 

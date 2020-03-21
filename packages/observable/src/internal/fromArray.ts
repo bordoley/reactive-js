@@ -1,80 +1,53 @@
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
-import { producerMixin } from "./producer";
+import { createScheduledObservable } from "./observable";
+import { AbstractProducer } from "./producer";
 
-class FromArrayProducer<T> implements SchedulerContinuationLike {
+class FromArrayProducer<T> extends AbstractProducer<T> {
   private index = this.startIndex;
 
-  readonly run = producerMixin.run;
-
   constructor(
-    private readonly subscriber: SubscriberLike<T>,
+    subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
     readonly delay: number,
-  ) {}
+  ) {
+    super(subscriber);
+  }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+  produce(shouldYield?: () => boolean) {
     const values = this.values;
     const length = values.length;
-    const subscriber = this.subscriber;
 
     let index = this.index;
-    if (this.delay > 0 && index <= length && !subscriber.isDisposed) {
+    if (this.delay > 0 && index <= length && !this.isDisposed) {
       if (index < length) {
         const value = values[index];
-        subscriber.notify(value);
+        this.notify(value);
       }
 
       this.index++;
-      return this;
+      return;
     } else if (shouldYield !== undefined) {
-      while (index < length && !subscriber.isDisposed) {
+      while (index < length && !this.isDisposed) {
         const value = values[index];
         index++;
 
-        subscriber.notify(value);
+        this.notify(value);
 
         if (shouldYield()) {
           this.index = index;
-          return this;
+          return;
         }
       }
     } else {
-      while (index < length && !subscriber.isDisposed) {
+      while (index < length && !this.isDisposed) {
         const value = values[index];
         index++;
 
-        subscriber.notify(value);
+        this.notify(value);
       }
     }
-
-    subscriber.dispose();
-    return;
-  }
-}
-
-class FromArrayObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
-  readonly isSynchronous: boolean;
-
-  constructor(
-    private readonly values: readonly T[],
-    private readonly startIndex: number,
-    private readonly delay: number,
-  ) {
-    this.isSynchronous = delay === 0;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new FromArrayProducer(
-      subscriber,
-      this.values,
-      this.startIndex,
-      this.delay,
-    );
-    subscriber.schedule(producer);
+    this.dispose();
   }
 }
 
@@ -96,5 +69,8 @@ export function fromArray<T>(
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
-  return new FromArrayObservable(values, startIndex, delay);
+  const factory = (subscriber: SubscriberLike<T>) =>
+    new FromArrayProducer(subscriber, values, startIndex, delay);
+
+  return createScheduledObservable(factory, delay === 0);
 }
