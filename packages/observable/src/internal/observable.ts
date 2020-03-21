@@ -1,4 +1,4 @@
-import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
+import { ErrorLike } from "@reactive-js/disposable";
 import { EnumeratorLike, AbstractEnumerator } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
@@ -29,13 +29,14 @@ class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
 
     while (!this.hasCurrent) {
       const continuation = continuations.shift();
-      if (this.isDisposed || continuation === undefined) {
+      if (continuation === undefined || continuation.isDisposed) {
         break;
       }
 
-      const next = continuation.run(alwaysTrue) || undefined;
-      if (next !== undefined) {
-        continuations.push(next);
+      continuation.run(alwaysTrue);
+      
+      if (!continuation.isDisposed) {
+        continuations.push(continuation);
       }
 
       const error = this.error;
@@ -53,11 +54,11 @@ class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
     this.hasCurrent = true;
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay = 0): DisposableLike {
-    if (!this.isDisposed && delay === 0) {
+  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
+    this.add(continuation);
+    if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     }
-    return this;
   }
 }
 
@@ -68,3 +69,25 @@ export const observableMixin = {
     return subscriber;
   },
 };
+
+class ScheduledObservable<T> implements ObservableLike<T> {
+  readonly enumerate = observableMixin.enumerate;
+
+  constructor(
+    private readonly factory: (
+      subscriber: SubscriberLike<T>,
+    ) => SchedulerContinuationLike,
+    readonly isSynchronous: boolean,
+  ) {}
+
+  subscribe(subscriber: SubscriberLike<T>) {
+    const schedulerContinuation = this.factory(subscriber);
+    subscriber.schedule(schedulerContinuation);
+  }
+}
+
+/** @ignore */
+export const createScheduledObservable = <T>(
+  factory: (subscriber: SubscriberLike<T>) => SchedulerContinuationLike,
+  isSynchronous: boolean,
+): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous);

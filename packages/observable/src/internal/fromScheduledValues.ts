@@ -1,31 +1,29 @@
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
-import { producerMixin } from "./producer";
+import { createScheduledObservable } from "./observable";
+import { AbstractProducer } from "./producer";
 
-class FromScheduledValuesProducer<T> implements SchedulerContinuationLike {
+class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
   private index = 0;
   delay: number;
 
-  readonly run = producerMixin.run;
-
   constructor(
-    private subscriber: SubscriberLike<T>,
+    subscriber: SubscriberLike<T>,
     private readonly values: ReadonlyArray<[number, T]>,
   ) {
+    super(subscriber);
+
     const [delay] = this.values[0];
     this.delay = delay;
   }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
-    const subscriber = this.subscriber as SubscriberLike<T>;
+  produce(shouldYield?: () => boolean) {
     const values = this.values;
 
     let index = this.index;
-    while (index < values.length && !subscriber.isDisposed) {
+    while (index < values.length && !this.isDisposed) {
       const [, value] = values[index];
       index++;
-      subscriber.notify(value);
+      this.notify(value);
 
       if (index < values.length) {
         const delay = values[index][0] || 0;
@@ -33,24 +31,12 @@ class FromScheduledValuesProducer<T> implements SchedulerContinuationLike {
         if (delay > 0 || (shouldYield !== undefined && shouldYield())) {
           this.index = index;
           this.delay = delay;
-          return this;
+          return;
         }
       }
     }
-    subscriber.dispose();
-    return;
-  }
-}
 
-class FromScheduledValuesObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
-  readonly isSynchronous = false;
-
-  constructor(private readonly values: ReadonlyArray<[number, T]>) {}
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new FromScheduledValuesProducer(subscriber, this.values);
-    subscriber.schedule(producer);
+    this.dispose();
   }
 }
 
@@ -66,5 +52,8 @@ export function fromScheduledValues<T>(
 export function fromScheduledValues<T>(
   ...values: Array<[number, T]>
 ): ObservableLike<T> {
-  return new FromScheduledValuesObservable(values);
+  const factory = (subscriber: SubscriberLike<T>) =>
+    new FromScheduledValuesProducer(subscriber, values);
+
+  return createScheduledObservable(factory, false);
 }

@@ -1,69 +1,43 @@
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
-import { producerMixin } from "./producer";
+import { createScheduledObservable } from "./observable";
+import { AbstractProducer } from "./producer";
 
-class GenerateProducer<T> implements SchedulerContinuationLike {
-  readonly run = producerMixin.run;
-
+class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
-    private readonly subscriber: SubscriberLike<T>,
+    subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
     readonly delay: number,
-  ) {}
+  ) {
+    super(subscriber);
+  }
 
-  produce(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+  produce(shouldYield?: () => boolean) {
     const generator = this.generator;
-    const subscriber = this.subscriber;
 
     let acc = this.acc;
-    let result = undefined;
-    if (this.delay > 0 && !subscriber.isDisposed) {
-      subscriber.notify(acc);
+    if (this.delay > 0 && !this.isDisposed) {
+      this.notify(acc);
       this.acc = generator(acc);
-      result = this;
+      return;
     } else if (shouldYield !== undefined) {
-      while (!subscriber.isDisposed) {
-        subscriber.notify(acc);
+      while (!this.isDisposed) {
+        this.notify(acc);
         acc = generator(acc);
 
         if (shouldYield()) {
           this.acc = acc;
-          result = this;
-          break;
+          return;
         }
       }
     } else {
-      while (!subscriber.isDisposed) {
-        subscriber.notify(acc);
+      while (!this.isDisposed) {
+        this.notify(acc);
         acc = generator(acc);
       }
     }
-    return result;
-  }
-}
 
-class GenerateObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
-  readonly isSynchronous: boolean;
-
-  constructor(
-    private readonly generator: (acc: T) => T,
-    private readonly acc: T,
-    private readonly delay: number,
-  ) {
-    this.isSynchronous = delay === 0;
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    const producer = new GenerateProducer(
-      subscriber,
-      this.generator,
-      this.acc,
-      this.delay,
-    );
-    subscriber.schedule(producer);
+    this.dispose();
   }
 }
 
@@ -81,5 +55,8 @@ export function generate<T>(
   initialValue: () => T,
   delay = 0,
 ): ObservableLike<T> {
-  return new GenerateObservable(generator, initialValue(), delay);
+  const factory = (subscriber: SubscriberLike<T>) =>
+    new GenerateProducer(subscriber, generator, initialValue(), delay);
+
+  return createScheduledObservable(factory, delay === 0);
 }

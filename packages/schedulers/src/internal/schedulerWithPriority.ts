@@ -1,4 +1,3 @@
-import { DisposableLike } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -15,8 +14,8 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     return this.priorityScheduler.now;
   }
 
-  schedule(continuation: SchedulerContinuationLike): DisposableLike {
-    return this.priorityScheduler.schedule(continuation, this.priority);
+  schedule(continuation: SchedulerContinuationLike): void {
+    this.priorityScheduler.schedule(continuation, this.priority);
   }
 }
 

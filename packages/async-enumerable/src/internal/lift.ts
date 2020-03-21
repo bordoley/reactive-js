@@ -48,8 +48,8 @@ class LiftedAsyncEnumeratorImpl<TReq, T>
     return this.observable.enumerate();
   }
 
-  schedule(continuation: SchedulerContinuationLike): DisposableLike {
-    return this.scheduler.schedule(continuation);
+  schedule(continuation: SchedulerContinuationLike) {
+    this.scheduler.schedule(continuation);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

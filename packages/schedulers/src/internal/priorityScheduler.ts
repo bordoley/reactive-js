@@ -1,9 +1,7 @@
 import {
   createDisposable,
-  createSerialDisposable,
   DisposableLike,
   disposableMixin,
-  SerialDisposableLike,
 } from "@reactive-js/disposable";
 import {
   SchedulerLike,
@@ -27,10 +25,7 @@ export interface PrioritySchedulerLike extends SchedulerLike {
    *
    * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
    */
-  schedule(
-    continuation: SchedulerContinuationLike,
-    priority?: number,
-  ): DisposableLike;
+  schedule(continuation: SchedulerContinuationLike, priority?: number): void;
 }
 
 /**
@@ -44,7 +39,6 @@ export interface PrioritySchedulerResourceLike
 
 interface ScheduledTaskLike {
   readonly continuation: SchedulerContinuationLike;
-  readonly disposable: DisposableLike;
   readonly dueTime: number;
   readonly priority: number;
   readonly startTime: number;
@@ -65,17 +59,16 @@ const scheduleDrainQueue = (
   task: ScheduledTaskLike,
 ) => {
   const head = scheduler.queue.peek();
-  const disposable = scheduler.disposable;
 
-  if (head === task && disposable.inner.isDisposed) {
+  if (head === task && scheduler.isDisposed) {
     scheduler.delay = Math.max(task.dueTime - scheduler.now, 0);
-    disposable.inner = scheduler.hostScheduler.schedule(scheduler);
+    scheduler.hostScheduler.schedule(scheduler);
   }
 };
 
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
-  readonly disposable: SerialDisposableLike = createSerialDisposable().add(() =>
+  readonly disposable: DisposableLike = createDisposable().add(() =>
     this.queue.clear(),
   );
   readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
@@ -90,7 +83,7 @@ class PrioritySchedulerResourceImpl
   private shouldYield = () => {
     const currentTask = this.currentTask;
     const currentTaskIsDisposed =
-      currentTask !== undefined && currentTask.disposable.isDisposed;
+      currentTask !== undefined && currentTask.continuation.isDisposed;
 
     const nextTask = this.queue.peek();
     const now = this.now;
@@ -137,30 +130,28 @@ class PrioritySchedulerResourceImpl
 
       queue.pop();
 
-      if (!currentTask.disposable.isDisposed) {
+      const continuation = currentTask.continuation;
+
+      if (!continuation.isDisposed) {
         this.currentTask = currentTask;
         this.currentShouldYield = shouldYield;
 
-        const result =
-          currentTask.continuation.run(this.shouldYield) || undefined;
+        continuation.run(this.shouldYield);
 
         this.currentShouldYield = undefined;
         this.currentTask = undefined;
 
-        if (result !== undefined) {
-          const { delay = 0 } = result;
+        if (!continuation.isDisposed) {
+          const { delay = 0 } = continuation;
           const now = this.now;
           const continuedTask = {
             taskID: this.taskIDCounter++,
-            continuation: result,
-            disposable: currentTask.disposable,
+            continuation,
             priority: currentTask.priority,
             startTime: now,
             dueTime: now + delay,
           };
           queue.push(continuedTask);
-        } else {
-          currentTask.disposable.dispose();
         }
       }
 
@@ -178,10 +169,7 @@ class PrioritySchedulerResourceImpl
     return;
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    priority = 0,
-  ): DisposableLike {
+  schedule(continuation: SchedulerContinuationLike, priority = 0) {
     const startTime = this.now;
     const dueTime = startTime + (continuation.delay ?? 0);
 

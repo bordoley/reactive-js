@@ -1,8 +1,4 @@
-import {
-  createSerialDisposable,
-  DisposableLike,
-  SerialDisposableLike,
-} from "@reactive-js/disposable";
+import { DisposableLike } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -30,22 +26,14 @@ export interface SchedulerHost extends SchedulerLike {
 function createCallback(
   this: SchedulerHost,
   continuation: SchedulerContinuationLike,
-  disposable: SerialDisposableLike,
 ): () => void {
   const callback = () => {
-    if (!disposable.isDisposed) {
-      const result = continuation.run(this.shouldYield) || undefined;
+    if (!continuation.isDisposed) {
+      continuation.run(this.shouldYield);
 
-      if (result !== undefined) {
-        const { delay = 0 } = result;
-        const nextCallback =
-          result === continuation
-            ? callback
-            : createCallback.call(this, result, disposable);
-
-        disposable.inner = this.scheduleCallback(nextCallback, delay);
-      } else {
-        disposable.dispose();
+      if (!continuation.isDisposed) {
+        const { delay = 0 } = continuation;
+        this.scheduleCallback(callback, delay);
       }
     }
   };
@@ -54,13 +42,12 @@ function createCallback(
 
 /** Mixin functions that can be used to implement the SchedulerLike interface */
 export const schedulerMixin = {
-  schedule(
-    this: SchedulerHost,
-    continuation: SchedulerContinuationLike,
-  ): DisposableLike {
-    const disposable = createSerialDisposable();
-    const callback = createCallback.call(this, continuation, disposable);
-    disposable.inner = this.scheduleCallback(callback, continuation.delay);
-    return disposable;
+  schedule(this: SchedulerHost, continuation: SchedulerContinuationLike): void {
+    const callback = createCallback.call(this, continuation);
+    const callbackSubscription = this.scheduleCallback(
+      callback,
+      continuation.delay,
+    );
+    continuation.add(callbackSubscription);
   },
 };

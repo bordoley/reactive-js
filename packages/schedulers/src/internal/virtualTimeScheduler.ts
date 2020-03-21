@@ -1,4 +1,3 @@
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 import { AbstractEnumerator } from "@reactive-js/enumerable";
 import {
   SchedulerContinuationLike,
@@ -7,8 +6,7 @@ import {
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 
 interface VirtualTask {
-  continuation: SchedulerContinuationLike;
-  readonly disposable: DisposableLike;
+  readonly continuation: SchedulerContinuationLike;
   dueTime: number;
   id: number;
 }
@@ -53,27 +51,23 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
 
       if (task !== undefined) {
         this.hasCurrent = true;
-        const { dueTime, continuation, disposable } = task;
+        const { dueTime, continuation } = task;
 
         this.now = dueTime;
         this.microTaskTicks = 0;
 
-        if (!disposable.isDisposed) {
-          const result = continuation.run(this.shouldYield) || undefined;
-          if (result !== undefined) {
-            const { delay = 0 } = result;
+        continuation.run(this.shouldYield);
+        
+        if (!continuation.isDisposed) {
+          const { delay = 0 } = continuation;
 
-            // This is to maintain consistency with the other
-            // scheduler implementation which always explicitly reschedule
-            // using the schedule function.
-            task.id = this.taskIDCount++;
-            task.continuation = result;
-            task.dueTime = dueTime + delay;
+          // This is to maintain consistency with the other
+          // scheduler implementation which always explicitly reschedule
+          // using the schedule function.
+          task.id = this.taskIDCount++;
+          task.dueTime = dueTime + delay;
 
-            taskQueue.push(task);
-          } else {
-            disposable.dispose();
-          }
+          taskQueue.push(task);
         }
       } else {
         this.dispose();
@@ -114,18 +108,13 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
     return;
   }
 
-  schedule(continuation: SchedulerContinuationLike): DisposableLike {
-    const disposable = createDisposable();
+  schedule(continuation: SchedulerContinuationLike): void {
     const work: VirtualTask = {
       id: this.taskIDCount++,
       dueTime: this.now + (continuation.delay ?? 0),
       continuation,
-      disposable,
     };
     this.taskQueue.push(work);
-
-    this.add(disposable);
-    return disposable;
   }
 }
 

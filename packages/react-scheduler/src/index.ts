@@ -18,12 +18,7 @@ import {
   createSchedulerWithPriority,
   PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
-import {
-  createDisposable,
-  DisposableLike,
-  SerialDisposableLike,
-  createSerialDisposable,
-} from "@reactive-js/disposable";
+import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 
 const shouldYield = unstable_shouldYield;
 
@@ -54,24 +49,15 @@ const scheduleCallback = (
 
 const createCallback = (
   continuation: SchedulerContinuationLike,
-  disposable: SerialDisposableLike,
   priority: number,
 ): (() => void) => {
   const callback = () => {
-    if (!disposable.isDisposed) {
-      const result = continuation.run(shouldYield) || undefined;
+    continuation.run(shouldYield);
 
-      if (result !== undefined) {
-        const { delay = 0 } = result;
-        const nextCallback =
-          result === continuation
-            ? callback
-            : createCallback(result, disposable, priority);
-
-        disposable.inner = scheduleCallback(nextCallback, priority, delay);
-      } else {
-        disposable.dispose();
-      }
+    if (!continuation.isDisposed) {
+      const { delay = 0 } = continuation;
+      const disposable = scheduleCallback(callback, priority, delay);
+      continuation.add(disposable);
     }
   };
 
@@ -86,16 +72,14 @@ const priorityScheduler: PrioritySchedulerLike = {
   schedule(
     continuation: SchedulerContinuationLike,
     priority = unstable_NormalPriority,
-  ): DisposableLike {
-    const disposable = createSerialDisposable();
-    const callback = createCallback(continuation, disposable, priority);
-
-    disposable.inner = scheduleCallback(
+  ): void {
+    const callback = createCallback(continuation, priority);
+    const disposable = scheduleCallback(
       callback,
       priority,
       continuation.delay ?? 0,
     );
-    return disposable;
+    continuation.add(disposable);
   },
 };
 
