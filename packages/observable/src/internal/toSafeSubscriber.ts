@@ -7,7 +7,8 @@ import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLike {
+class SafeSubscriberSchedulerContinuation<T>
+  implements SchedulerContinuationLike {
   readonly add = disposableMixin.add;
 
   readonly disposable = createDisposable(_ => {
@@ -17,7 +18,7 @@ class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLik
   readonly dispose = disposableMixin.dispose;
 
   isDisposed = false;
-  
+
   constructor(private readonly subscriber: SafeSubscriberImpl<T>) {}
 
   produce(shouldYield?: () => boolean) {
@@ -30,7 +31,8 @@ class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLik
         const next = nextQueue.shift() as T;
         delegate.notify(next);
 
-        const hasRemainingEvents = subscriber.nextQueue.length > 0 || subscriber.isDisposed;
+        const hasRemainingEvents =
+          subscriber.nextQueue.length > 0 || subscriber.isDisposed;
 
         if (hasRemainingEvents && shouldYield()) {
           return;
@@ -51,7 +53,7 @@ class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLik
   }
 
   run(shouldYield?: () => boolean) {
-    if(!this.isDisposed) {
+    if (!this.isDisposed) {
       try {
         this.produce(shouldYield);
       } catch (cause) {
@@ -59,7 +61,7 @@ class SafeSubscriberSchedulerContinuation<T> implements SchedulerContinuationLik
         this.subscriber.dispose(error);
         this.dispose();
       }
-    };
+    }
   }
 }
 

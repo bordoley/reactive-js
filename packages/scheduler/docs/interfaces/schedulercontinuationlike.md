@@ -6,7 +6,9 @@ A unit of work to be executed by a scheduler.
 
 ## Hierarchy
 
-* **SchedulerContinuationLike**
+* DisposableLike
+
+  ↳ **SchedulerContinuationLike**
 
   ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
 
@@ -15,9 +17,12 @@ A unit of work to be executed by a scheduler.
 ### Properties
 
 * [delay](schedulercontinuationlike.md#optional-delay)
+* [isDisposed](schedulercontinuationlike.md#isdisposed)
 
 ### Methods
 
+* [add](schedulercontinuationlike.md#add)
+* [dispose](schedulercontinuationlike.md#dispose)
 * [run](schedulercontinuationlike.md#run)
 
 ## Properties
@@ -29,11 +34,51 @@ A unit of work to be executed by a scheduler.
 An optional delay in ms that the scheduler should wait
 before invoking the continuation's `run` function.
 
+___
+
+###  isDisposed
+
+• **isDisposed**: *boolean*
+
+*Inherited from void*
+
 ## Methods
+
+###  add
+
+▸ **add**(`disposable`: DisposableLike | function): *this*
+
+*Inherited from void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | DisposableLike &#124; function |
+
+**Returns:** *this*
+
+___
+
+###  dispose
+
+▸ **dispose**(`error?`: ErrorLike): *void*
+
+*Inherited from void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`error?` | ErrorLike |
+
+**Returns:** *void*
+
+___
 
 ###  run
 
-▸ **run**(`shouldYield?`: undefined | function): *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
+▸ **run**(`shouldYield?`: undefined | function): *void*
 
 Work function to be invoked by the scheduler after the specified delay.
 
@@ -43,7 +88,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `shouldYield?` | undefined &#124; function | An optional function that should be periodically checked when defined. If `shouldYield` returns true the continuation should return, yielding control back to the scheduler.  |
 
-**Returns:** *[SchedulerContinuationLike](schedulercontinuationlike.md) | void*
-
-either a continuation to be scheduled in the future
-or void if the work is done.
+**Returns:** *void*

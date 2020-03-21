@@ -57,7 +57,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
         this.microTaskTicks = 0;
 
         continuation.run(this.shouldYield);
-        
+
         if (!continuation.isDisposed) {
           const { delay = 0 } = continuation;
 
