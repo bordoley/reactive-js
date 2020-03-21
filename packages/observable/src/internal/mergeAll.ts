@@ -127,4 +127,5 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
  * by dropping inner sources while the previous inner source
  * has not yet been disposed.
  */
-export const exhaust = <T>() => exhaustInstance as ObservableOperatorLike<ObservableLike<T>, T>;
+export const exhaust = <T>() =>
+  exhaustInstance as ObservableOperatorLike<ObservableLike<T>, T>;
