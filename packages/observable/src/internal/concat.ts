@@ -16,7 +16,11 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (error !== undefined) {
         delegate.dispose(error);
       } else if (next < observables.length) {
-        const concatSubscriber = new ConcatSubscriber(delegate, observables, next + 1);
+        const concatSubscriber = new ConcatSubscriber(
+          delegate,
+          observables,
+          next + 1,
+        );
         observables[next].subscribe(concatSubscriber);
       } else {
         delegate.dispose();
@@ -41,7 +45,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
     const observables = this.observables;
 
     if (observables.length > 0) {
-     const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
+      const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
       observables[0].subscribe(concatSubscriber);
     } else {
       subscriber.dispose();
