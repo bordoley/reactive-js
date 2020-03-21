@@ -17,12 +17,9 @@ A unit of work to be executed by a scheduler.
 ### Properties
 
 * [delay](schedulercontinuationlike.md#optional-delay)
-* [isDisposed](schedulercontinuationlike.md#isdisposed)
 
 ### Methods
 
-* [add](schedulercontinuationlike.md#add)
-* [dispose](schedulercontinuationlike.md#dispose)
 * [run](schedulercontinuationlike.md#run)
 
 ## Properties
@@ -34,47 +31,7 @@ A unit of work to be executed by a scheduler.
 An optional delay in ms that the scheduler should wait
 before invoking the continuation's `run` function.
 
-___
-
-###  isDisposed
-
-• **isDisposed**: *boolean*
-
-*Inherited from void*
-
 ## Methods
-
-###  add
-
-▸ **add**(`disposable`: DisposableLike | function): *this*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`disposable` | DisposableLike &#124; function |
-
-**Returns:** *this*
-
-___
-
-###  dispose
-
-▸ **dispose**(`error?`: ErrorLike): *void*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error?` | ErrorLike |
-
-**Returns:** *void*
-
-___
 
 ###  run
 

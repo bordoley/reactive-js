@@ -3,6 +3,8 @@ import { EnumeratorLike } from "@reactive-js/enumerable";
 
 /**
  * A unit of work to be executed by a scheduler.
+ * 
+ * @noInheritDoc
  */
 export interface SchedulerContinuationLike extends DisposableLike {
   /**
