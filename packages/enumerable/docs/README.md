@@ -7,7 +7,6 @@
 ### Classes
 
 * [AbstractDelegatingEnumerator](classes/abstractdelegatingenumerator.md)
-* [AbstractEnumerator](classes/abstractenumerator.md)
 
 ### Interfaces
 

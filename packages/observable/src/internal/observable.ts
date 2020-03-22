@@ -1,24 +1,28 @@
-import { ErrorLike } from "@reactive-js/disposable";
-import { EnumeratorLike, AbstractEnumerator } from "@reactive-js/enumerable";
+import { ErrorLike, disposableMixin, createDisposable } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 
 const alwaysTrue = () => true;
 
-class EnumeratorSubscriber<T> extends AbstractEnumerator<void, T>
-  implements EnumeratorLike<void, T>, SubscriberLike<T> {
+class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike<T> {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
-
+  readonly add = disposableMixin.add;
+  readonly disposable = createDisposable();
+  readonly dispose = disposableMixin.dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
 
   constructor() {
-    super();
     this.add(error => {
       this.error = error;
     });
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 
   move(): boolean {

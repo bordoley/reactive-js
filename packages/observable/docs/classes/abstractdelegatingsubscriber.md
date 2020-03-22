@@ -13,7 +13,7 @@ which delegate notifications to a parent `SubscriberLike` instance
 
 ## Hierarchy
 
-* [AbstractSubscriber](abstractsubscriber.md)‹TA›
+* AbstractSubscriber‹TA›
 
   ↳ **AbstractDelegatingSubscriber**
 
@@ -37,7 +37,7 @@ which delegate notifications to a parent `SubscriberLike` instance
 
 \+ **new AbstractDelegatingSubscriber**(`delegate`: [SubscriberLike](../interfaces/subscriberlike.md)‹TB›): *[AbstractDelegatingSubscriber](abstractdelegatingsubscriber.md)*
 
-*Overrides [AbstractSubscriber](abstractsubscriber.md).[constructor](abstractsubscriber.md#constructor)*
+*Overrides void*
 
 **Parameters:**
 
