@@ -1,11 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  createPriorityScheduler,
-  createSchedulerWithPriority as createSchedulerWithPriorityImpl,
-  PrioritySchedulerResourceLike,
-  schedulerMixin,
-} from "@reactive-js/schedulers";
+import { schedulerMixin } from "@reactive-js/schedulers";
 
 const performance = window.performance;
 const Date = window.Date;
@@ -100,15 +95,9 @@ class WebScheduler implements SchedulerLike {
   }
 }
 
-let schedulerHost: SchedulerLike | undefined = undefined;
-let priorityScheduler: PrioritySchedulerResourceLike | undefined = undefined;
+let hostScheduler: SchedulerLike | undefined = undefined;
 
-export const createSchedulerWithPriority = (
-  priority: number,
-): SchedulerLike => {
-  schedulerHost = schedulerHost || new WebScheduler();
-  priorityScheduler =
-    priorityScheduler || createPriorityScheduler(schedulerHost);
-
-  return createSchedulerWithPriorityImpl(priorityScheduler, priority);
+export const getHostScheduler = (): SchedulerLike => {
+  hostScheduler = hostScheduler || new WebScheduler();
+  return hostScheduler
 };

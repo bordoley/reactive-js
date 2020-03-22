@@ -1,4 +1,6 @@
 export {
   setSchedulerTimeout,
-  createSchedulerWithPriority,
+  getHostScheduler,
 } from "./internal/scheduler";
+
+export { bindNodeCallback } from "./internal/bindNodeCallback";

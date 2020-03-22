@@ -1,4 +1,4 @@
-import { createSchedulerWithPriority } from "@reactive-js/node";
+import { getHostScheduler } from "@reactive-js/node";
 import { pipe } from "@reactive-js/pipe";
 import {
   exhaust,
@@ -9,7 +9,7 @@ import {
   subscribe,
 } from "@reactive-js/observable";
 
-const scheduler = createSchedulerWithPriority(500);
+const scheduler = getHostScheduler();
 
 pipe(
   generate(
