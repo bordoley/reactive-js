@@ -2,6 +2,8 @@ import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
+const alwaysTrue = () => true;
+
 class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
   private index = 0;
   delay: number;
@@ -18,21 +20,30 @@ class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
 
   produce(shouldYield?: () => boolean) {
     const values = this.values;
+    const length = values.length;
 
     let index = this.index;
-    while (index < values.length && !this.isDisposed) {
+    let isDisposed = this.isDisposed;
+
+    shouldYield = shouldYield || alwaysTrue;
+
+    while (index < length && !isDisposed) {
       const [, value] = values[index];
-      index++;
       this.notify(value);
 
-      if (index < values.length) {
-        const delay = values[index][0] || 0;
+      index++;
 
-        if (delay > 0 || (shouldYield !== undefined && shouldYield())) {
-          this.index = index;
-          this.delay = delay;
-          return;
-        }
+      const shouldYieldDueToDelay = index < length && values[index][0] > 0;
+
+      isDisposed = this.isDisposed;
+      if (
+        index < length &&
+        !isDisposed &&
+        (shouldYieldDueToDelay || shouldYield())
+      ) {
+        this.index = index;
+        this.delay = values[index][0];
+        return;
       }
     }
 

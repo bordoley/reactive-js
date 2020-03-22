@@ -116,15 +116,19 @@ class ZipProducer<T> extends AbstractProducer<T> {
     const selector = this.selector;
 
     if (shouldYield !== undefined) {
-      while (shouldEmit(enumerators) && !this.isDisposed) {
+      let isDisposed = this.isDisposed;
+      let shouldEmitNext = shouldEmit(enumerators);
+      while (shouldEmitNext && !isDisposed) {
         const next = selector(...enumerators.map(getCurrent));
         this.notify(next);
 
+        isDisposed = this.isDisposed;
         for (const buffer of enumerators) {
           buffer.move();
         }
+        shouldEmitNext = shouldEmit(enumerators);
 
-        if (shouldYield()) {
+        if (shouldEmitNext && !isDisposed && shouldYield()) {
           return;
         }
       }

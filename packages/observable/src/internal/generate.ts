@@ -2,6 +2,8 @@ import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
+const alwaysTrue = () => true;
+
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
@@ -14,30 +16,37 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 
   produce(shouldYield?: () => boolean) {
     const generator = this.generator;
+    const delay = this.delay;
 
     let acc = this.acc;
-    if (this.delay > 0 && !this.isDisposed) {
-      this.notify(acc);
-      this.acc = generator(acc);
-      return;
-    } else if (shouldYield !== undefined) {
-      while (!this.isDisposed) {
-        this.notify(acc);
-        acc = generator(acc);
+    let isDisposed = this.isDisposed;
 
-        if (shouldYield()) {
+    if (delay > 0 || shouldYield !== undefined) {
+      shouldYield = shouldYield || alwaysTrue;
+
+      while (!isDisposed) {
+        this.notify(acc);
+
+        isDisposed = this.isDisposed;
+        if (!isDisposed) {
+          acc = generator(acc);
+        }
+
+        if (!isDisposed && (delay > 0 || shouldYield())) {
           this.acc = acc;
           return;
         }
       }
     } else {
-      while (!this.isDisposed) {
+      while (!isDisposed) {
         this.notify(acc);
-        acc = generator(acc);
+
+        isDisposed = this.isDisposed;
+        if (!isDisposed) {
+          acc = generator(acc);
+        }
       }
     }
-
-    this.dispose();
   }
 }
 
