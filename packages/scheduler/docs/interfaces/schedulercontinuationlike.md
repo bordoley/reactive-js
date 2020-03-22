@@ -16,7 +16,7 @@ A unit of work to be executed by a scheduler.
 
 ### Properties
 
-* [delay](schedulercontinuationlike.md#optional-delay)
+* [delay](schedulercontinuationlike.md#delay)
 
 ### Methods
 
@@ -24,9 +24,9 @@ A unit of work to be executed by a scheduler.
 
 ## Properties
 
-### `Optional` delay
+###  delay
 
-• **delay**? : *undefined | number*
+• **delay**: *number*
 
 An optional delay in ms that the scheduler should wait
 before invoking the continuation's `run` function.

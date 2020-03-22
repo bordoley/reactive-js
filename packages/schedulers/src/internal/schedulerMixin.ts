@@ -9,7 +9,7 @@ import {
  *
  * @noInheritDoc
  */
-export interface SchedulerHost extends SchedulerLike {
+export interface CallbackScheduler extends SchedulerLike {
   /** Platform specific shouldYield function passed to continuations when they are run.*/
   readonly shouldYield: (() => boolean) | undefined;
 
@@ -20,20 +20,19 @@ export interface SchedulerHost extends SchedulerLike {
    * @param delay An optional delay in ms that the scheduler should wait
    * before invoking the callback function.
    */
-  scheduleCallback(callback: () => void, delay?: number): DisposableLike;
+  scheduleCallback(callback: () => void, delay: number): DisposableLike;
 }
 
 function createCallback(
-  this: SchedulerHost,
+  scheduler: CallbackScheduler,
   continuation: SchedulerContinuationLike,
 ): () => void {
   const callback = () => {
     if (!continuation.isDisposed) {
-      continuation.run(this.shouldYield);
+      continuation.run(scheduler.shouldYield);
 
       if (!continuation.isDisposed) {
-        const { delay = 0 } = continuation;
-        this.scheduleCallback(callback, delay);
+        scheduler.scheduleCallback(callback, continuation.delay);
       }
     }
   };
@@ -42,8 +41,8 @@ function createCallback(
 
 /** Mixin functions that can be used to implement the SchedulerLike interface */
 export const schedulerMixin = {
-  schedule(this: SchedulerHost, continuation: SchedulerContinuationLike): void {
-    const callback = createCallback.call(this, continuation);
+  schedule(this: CallbackScheduler, continuation: SchedulerContinuationLike): void {
+    const callback = createCallback(this, continuation);
     const callbackSubscription = this.scheduleCallback(
       callback,
       continuation.delay,

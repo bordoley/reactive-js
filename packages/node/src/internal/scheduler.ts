@@ -20,7 +20,7 @@ const callCallbackAndDispose = (
 const scheduleDelayed = (
   scheduler: NodeScheduler,
   callback: () => void,
-  delay = 0,
+  delay: number,
 ): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
@@ -61,7 +61,7 @@ class NodeScheduler implements SchedulerLike {
     return hr[0] * 1000 + hr[1] / 1e6;
   }
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay: number): DisposableLike {
     return delay > 0
       ? scheduleDelayed(this, callback, delay)
       : scheduleImmediate(this, callback);

@@ -21,6 +21,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
   implements VirtualTimeSchedulerLike {
   readonly current = undefined;
+  readonly delay = 0;
   hasCurrent = false;
   private microTaskTicks = 0;
   now = 0;
@@ -59,7 +60,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
         continuation.run(this.shouldYield);
 
         if (!continuation.isDisposed) {
-          const { delay = 0 } = continuation;
+          const { delay } = continuation;
 
           // This is to maintain consistency with the other
           // scheduler implementation which always explicitly reschedule
@@ -111,7 +112,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator<void, void>
   schedule(continuation: SchedulerContinuationLike): void {
     const work: VirtualTask = {
       id: this.taskIDCount++,
-      dueTime: this.now + (continuation.delay ?? 0),
+      dueTime: this.now + continuation.delay,
       continuation,
     };
     this.taskQueue.push(work);

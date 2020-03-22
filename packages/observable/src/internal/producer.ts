@@ -10,6 +10,8 @@ export abstract class AbstractProducer<T> implements SchedulerContinuationLike {
     this.isDisposed = true;
   });
 
+  abstract readonly delay: number;
+
   readonly dispose = disposableMixin.dispose;
 
   isDisposed = false;
