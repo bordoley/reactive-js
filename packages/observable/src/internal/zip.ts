@@ -100,6 +100,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
 
 class ZipProducer<T> extends AbstractProducer<T> {
   current: any;
+  readonly delay = 0;
   hasCurrent = false;
 
   constructor(

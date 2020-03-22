@@ -142,7 +142,7 @@ class PrioritySchedulerResourceImpl
         this.currentTask = undefined;
 
         if (!continuation.isDisposed) {
-          const { delay = 0 } = continuation;
+          const { delay } = continuation;
           const now = this.now;
           const continuedTask = {
             taskID: this.taskIDCounter++,

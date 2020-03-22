@@ -25,7 +25,7 @@ const shouldYield = unstable_shouldYield;
 const scheduleCallback = (
   callback: () => void,
   priority: number,
-  delay = 0,
+  delay: number,
 ): DisposableLike => {
   const disposable = createDisposable(() =>
     unstable_cancelCallback(callbackNode),
@@ -55,8 +55,7 @@ const createCallback = (
     continuation.run(shouldYield);
 
     if (!continuation.isDisposed) {
-      const { delay = 0 } = continuation;
-      const disposable = scheduleCallback(callback, priority, delay);
+      const disposable = scheduleCallback(callback, priority, continuation.delay);
       continuation.add(disposable);
     }
   };
@@ -77,7 +76,7 @@ const priorityScheduler: PrioritySchedulerLike = {
     const disposable = scheduleCallback(
       callback,
       priority,
-      continuation.delay ?? 0,
+      continuation.delay,
     );
     continuation.add(disposable);
   },

@@ -46,7 +46,7 @@ const scheduleImmediate = (
 const scheduleDelayed = (
   scheduler: WebScheduler,
   callback: () => void,
-  delay = 0,
+  delay: number,
 ): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(
@@ -86,7 +86,7 @@ class WebScheduler implements SchedulerLike {
     return now();
   }
 
-  scheduleCallback(callback: () => void, delay = 0): DisposableLike {
+  scheduleCallback(callback: () => void, delay: number): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4

@@ -11,7 +11,7 @@ export interface SchedulerContinuationLike extends DisposableLike {
    * An optional delay in ms that the scheduler should wait
    * before invoking the continuation's `run` function.
    */
-  readonly delay?: number;
+  readonly delay: number;
 
   /**
    * Work function to be invoked by the scheduler after the specified delay.

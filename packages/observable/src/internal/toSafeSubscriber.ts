@@ -11,6 +11,8 @@ class SafeSubscriberSchedulerContinuation<T>
   implements SchedulerContinuationLike {
   readonly add = disposableMixin.add;
 
+  readonly delay = 0;
+
   readonly disposable = createDisposable(_ => {
     this.isDisposed = true;
   });
