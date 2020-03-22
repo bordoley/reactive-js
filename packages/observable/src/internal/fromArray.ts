@@ -19,14 +19,14 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     const length = values.length;
 
     let index = this.index;
-    if (this.delay > 0 && index <= length && !this.isDisposed) {
-      if (index < length) {
-        const value = values[index];
-        this.notify(value);
-      }
+    if (this.delay > 0 && index < length && !this.isDisposed) {
+      const value = values[index];
+      this.notify(value);
 
       this.index++;
-      return;
+      if (this.index < length) {
+        return;
+      }
     } else if (shouldYield !== undefined) {
       while (index < length && !this.isDisposed) {
         const value = values[index];
