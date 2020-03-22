@@ -72,5 +72,5 @@ let hostScheduler: SchedulerLike | undefined = undefined;
 
 export const getHostScheduler = (): SchedulerLike => {
   hostScheduler = hostScheduler || new NodeScheduler();
-  return hostScheduler
+  return hostScheduler;
 };

@@ -41,7 +41,10 @@ function createCallback(
 
 /** Mixin functions that can be used to implement the SchedulerLike interface */
 export const schedulerMixin = {
-  schedule(this: CallbackScheduler, continuation: SchedulerContinuationLike): void {
+  schedule(
+    this: CallbackScheduler,
+    continuation: SchedulerContinuationLike,
+  ): void {
     const callback = createCallback(this, continuation);
     const callbackSubscription = this.scheduleCallback(
       callback,
