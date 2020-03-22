@@ -8,6 +8,7 @@ import {
   ObservableLike,
   onNotify,
   ofValue,
+  throttle,
 } from "@reactive-js/observable";
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
@@ -46,7 +47,7 @@ const pushHistoryState = (newLocation: LocationLike) => {
 const historyOperator = (obs: ObservableLike<LocationLike>) =>
   merge(
     ofValue(getCurrentLocation()),
-    pipe(obs, onNotify(pushHistoryState)),
+    pipe(obs, throttle(15), onNotify(pushHistoryState)),
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
