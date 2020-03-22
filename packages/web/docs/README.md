@@ -14,8 +14,8 @@
 
 ### Functions
 
-* [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [fromEvent](README.md#const-fromevent)
+* [getHostScheduler](README.md#const-gethostscheduler)
 
 ## Variables
 
@@ -24,20 +24,6 @@
 • **history**: *AsyncEnumerableLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›* =  _history
 
 ## Functions
-
-### `Const` createSchedulerWithPriority
-
-▸ **createSchedulerWithPriority**(`priority`: number): *SchedulerLike*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`priority` | number |
-
-**Returns:** *SchedulerLike*
-
-___
 
 ### `Const` fromEvent
 
@@ -64,3 +50,11 @@ Name | Type |
 `ev` | Event |
 
 **Returns:** *ObservableLike‹T›*
+
+___
+
+### `Const` getHostScheduler
+
+▸ **getHostScheduler**(): *SchedulerLike*
+
+**Returns:** *SchedulerLike*

@@ -7,7 +7,7 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
-* [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
+* [getHostScheduler](README.md#const-gethostscheduler)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
 
 ## Functions
@@ -1798,15 +1798,9 @@ Name | Type |
 
 ___
 
-### `Const` createSchedulerWithPriority
+### `Const` getHostScheduler
 
-▸ **createSchedulerWithPriority**(`priority`: number): *SchedulerLike*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`priority` | number |
+▸ **getHostScheduler**(): *SchedulerLike*
 
 **Returns:** *SchedulerLike*
 
