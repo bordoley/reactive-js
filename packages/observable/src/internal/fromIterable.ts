@@ -2,47 +2,48 @@ import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
+const alwaysTrue = () => true;
+
 class FromIteratorProducer<T> extends AbstractProducer<T> {
+  private next: IteratorResult<T, any>;
+
   constructor(
     subscriber: SubscriberLike<T>,
     private readonly iterator: Iterator<T>,
     readonly delay: number,
   ) {
     super(subscriber);
+    this.next = iterator.next();
   }
 
   produce(shouldYield?: () => boolean) {
+    const delay = this.delay;
     const iterator = this.iterator;
 
-    if (this.delay > 0 && !this.isDisposed) {
-      const next = iterator.next();
-      if (!next.done) {
+    let next = this.next;
+    let done = next.done;
+    if (delay > 0 || shouldYield !== undefined) {
+      let isDisposed = this.isDisposed;
+      shouldYield = shouldYield || alwaysTrue;
+
+      while (!done && !isDisposed) {
         this.notify(next.value);
-        return;
-      }
-    } else if (shouldYield !== undefined) {
-      let done = false;
-      while (!this.isDisposed && !done) {
-        const next = iterator.next();
-        done = next.done || false;
 
-        if (!done) {
-          this.notify(next.value);
-        }
+        next = iterator.next();
+        done = next.done;
 
-        if (!done && shouldYield()) {
+        isDisposed = this.isDisposed;
+        if (!done && !isDisposed && (delay > 0 || shouldYield())) {
+          this.next = next;
           return;
         }
       }
     } else {
-      let done = false;
       while (!this.isDisposed && !done) {
-        const next = iterator.next();
-        done = next.done || false;
+        this.notify(next.value);
 
-        if (!done) {
-          this.notify(next.value);
-        }
+        next = iterator.next();
+        done = next.done;
       }
     }
 

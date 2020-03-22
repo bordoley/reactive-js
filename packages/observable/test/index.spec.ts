@@ -1311,18 +1311,18 @@ test("withLatestFrom", () => {
   const cause = new Error();
 
   const otherObservable = concat(
-    fromScheduledValues([0, 1], [0, 2], [3, 3]),
-    throws(() => cause),
+    fromScheduledValues([0, 1], [1, 2], [1, 3]),
+    throws(() => cause, 1),
   );
 
   const observable = fromScheduledValues(
-    [0, 1],
-    [0, 2],
-    [0, 3],
-    [3, 1],
-    [0, 2],
-    [0, 3],
-    [2, 4],
+    [1, 1],
+    [1, 2],
+    [1, 3],
+    [1, 1],
+    [1, 2],
+    [1, 3],
+    [1, 4],
   );
 
   const cb = jest.fn();
@@ -1336,12 +1336,10 @@ test("withLatestFrom", () => {
     ),
   ).toThrow(cause);
 
-  expect(cb).toHaveBeenNthCalledWith(1, [1, 2]);
+  expect(cb).toHaveBeenCalledTimes(3);
+  expect(cb).toHaveBeenNthCalledWith(1, [1, 1]);
   expect(cb).toHaveBeenNthCalledWith(2, [2, 2]);
-  expect(cb).toHaveBeenNthCalledWith(3, [3, 2]);
-  expect(cb).toHaveBeenNthCalledWith(4, [1, 3]);
-  expect(cb).toHaveBeenNthCalledWith(5, [2, 3]);
-  expect(cb).toHaveBeenNthCalledWith(6, [3, 3]);
+  expect(cb).toHaveBeenNthCalledWith(3, [3, 3]);
 });
 
 describe("zip", () => {
