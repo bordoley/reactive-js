@@ -11,7 +11,6 @@
 ### Classes
 
 * [AbstractDelegatingSubscriber](classes/abstractdelegatingsubscriber.md)
-* [AbstractSubscriber](classes/abstractsubscriber.md)
 
 ### Interfaces
 

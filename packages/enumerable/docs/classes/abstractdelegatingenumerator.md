@@ -12,13 +12,10 @@
 
 ## Hierarchy
 
-* [AbstractEnumerator](abstractenumerator.md)‹TReq, TB›
-
-  ↳ **AbstractDelegatingEnumerator**
+* **AbstractDelegatingEnumerator**
 
 ## Implements
 
-* [EnumeratorLike](../interfaces/enumeratorlike.md)‹TReq, TB›
 * [EnumeratorLike](../interfaces/enumeratorlike.md)‹TReq, TB›
 
 ## Index
@@ -64,8 +61,6 @@ Name | Type |
 
 • **add**: *add* =  disposableMixin.add
 
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[add](abstractenumerator.md#add)*
-
 ___
 
 ###  delegate
@@ -78,23 +73,17 @@ ___
 
 • **disposable**: *DisposableLike‹›* =  createDisposable()
 
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[disposable](abstractenumerator.md#disposable)*
-
 ___
 
 ###  dispose
 
 • **dispose**: *dispose* =  disposableMixin.dispose
 
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[dispose](abstractenumerator.md#dispose)*
-
 ## Accessors
 
 ###  current
 
 • **get current**(): *TB*
-
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[current](abstractenumerator.md#current)*
 
 **Returns:** *TB*
 
@@ -104,8 +93,6 @@ ___
 
 • **get hasCurrent**(): *boolean*
 
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[hasCurrent](abstractenumerator.md#hascurrent)*
-
 **Returns:** *boolean*
 
 ___
@@ -113,8 +100,6 @@ ___
 ###  isDisposed
 
 • **get isDisposed**(): *boolean*
-
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[isDisposed](abstractenumerator.md#isdisposed)*
 
 **Returns:** *boolean*
 
@@ -125,8 +110,6 @@ ___
 ▸ **move**(`req`: TReq): *boolean*
 
 *Implementation of [EnumeratorLike](../interfaces/enumeratorlike.md)*
-
-*Inherited from [AbstractEnumerator](abstractenumerator.md).[move](abstractenumerator.md#abstract-move)*
 
 **Parameters:**
 

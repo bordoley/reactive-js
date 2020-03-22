@@ -8,7 +8,7 @@ import { SubscriberLike } from "./interfaces";
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.
  *
- * @noInheritDoc
+ * @ignore
  */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = disposableMixin.add;

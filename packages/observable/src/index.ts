@@ -10,10 +10,7 @@ export {
 } from "./internal/interfaces";
 
 export { observableMixin } from "./internal/observable";
-export {
-  AbstractSubscriber,
-  AbstractDelegatingSubscriber,
-} from "./internal/subscriber";
+export { AbstractDelegatingSubscriber } from "./internal/subscriber";
 
 export { combineLatest } from "./internal/combineLatest";
 export { createObservable } from "./internal/createObservable";

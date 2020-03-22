@@ -17,8 +17,6 @@
 ## Implemented by
 
 * [AbstractDelegatingEnumerator](../classes/abstractdelegatingenumerator.md)
-* [AbstractDelegatingEnumerator](../classes/abstractdelegatingenumerator.md)
-* [AbstractEnumerator](../classes/abstractenumerator.md)
 
 ## Index
 
