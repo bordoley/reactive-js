@@ -22,7 +22,9 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   readonly add = add;
   readonly current = undefined;
   readonly delay = 0;
-  readonly disposable = createDisposable(() => { this.isDisposed = true });
+  readonly disposable = createDisposable(() => {
+    this.isDisposed = true;
+  });
   readonly dispose = dispose;
 
   hasCurrent = false;
