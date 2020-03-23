@@ -69,18 +69,23 @@ const scheduleDrainQueue = (
 
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
-  readonly disposable: DisposableLike = createDisposable().add(() =>
-    this.queue.clear(),
-  );
+
+  readonly add = add;
+  readonly disposable: DisposableLike = createDisposable().add(() => {
+    this.isDisposed = true;
+    this.queue.clear();
+  });
+  readonly dispose = dispose;
   readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
     comparator,
   );
 
-  readonly add = add;
+  isDisposed = false;
+
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
   delay = 0;
-  readonly dispose = dispose;
+  
   private shouldYield = () => {
     const currentTask = this.currentTask;
     const currentTaskIsDisposed =
@@ -107,10 +112,6 @@ class PrioritySchedulerResourceImpl
   private taskIDCounter = 0;
 
   constructor(readonly hostScheduler: SchedulerLike) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
 
   get now(): number {
     return this.hostScheduler.now;
