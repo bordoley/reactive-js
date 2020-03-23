@@ -4,7 +4,9 @@ import { add, dispose, createDisposable } from "@reactive-js/disposable";
 export abstract class AbstractDelegatingEnumerator<TReq, TA, TB>
   implements EnumeratorLike<TReq, TB> {
   readonly add = add;
-  readonly disposable = createDisposable(() => { this.isDisposed = true; });
+  readonly disposable = createDisposable(() => {
+    this.isDisposed = true;
+  });
   readonly dispose = dispose;
 
   isDisposed = false;

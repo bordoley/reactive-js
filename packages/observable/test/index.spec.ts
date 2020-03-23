@@ -489,7 +489,7 @@ test("forEach", () => {
   const result: number[] = [];
   pipe(
     fromArray([1, 2, 3]),
-    forEach(createVirtualTimeScheduler)(x => result.push(x)),
+    forEach(createVirtualTimeScheduler, x => result.push(x)),
   );
   expect(result).toEqual([1, 2, 3]);
 });

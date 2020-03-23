@@ -69,7 +69,6 @@ const scheduleDrainQueue = (
 
 class PrioritySchedulerResourceImpl
   implements PrioritySchedulerResourceLike, SchedulerContinuationLike {
-
   readonly add = add;
   readonly disposable: DisposableLike = createDisposable().add(() => {
     this.isDisposed = true;
@@ -85,7 +84,7 @@ class PrioritySchedulerResourceImpl
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
   delay = 0;
-  
+
   private shouldYield = () => {
     const currentTask = this.currentTask;
     const currentTaskIsDisposed =

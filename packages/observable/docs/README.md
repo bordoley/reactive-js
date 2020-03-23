@@ -732,10 +732,14 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**(`schedulerFactory`: function): *(Anonymous function)*
+▸ **forEach**<**T**>(`schedulerFactory`: function, `onNotify`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
+
+**Type parameters:**
+
+▪ **T**
 
 **Parameters:**
 
@@ -743,7 +747,19 @@ invoking the onNotify callback for each item emitted by the source.
 
 ▸ (): *VirtualTimeSchedulerLike*
 
-**Returns:** *(Anonymous function)*
+▪ **onNotify**: *function*
+
+callback to invoke for each item emitted by the source.
+
+▸ (`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
 
 ___
 

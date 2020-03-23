@@ -23,9 +23,8 @@ class ForEachObserver<T> implements ObserverLike<T> {
  *
  * @throws an error if the source is disposed with an error.
  */
-export const forEach = (schedulerFactory: () => VirtualTimeSchedulerLike) => <
-  T
->(
+export const forEach = <T>(
+  schedulerFactory: () => VirtualTimeSchedulerLike,
   onNotify: (next: T) => void,
 ): OperatorLike<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
