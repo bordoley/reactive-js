@@ -2,7 +2,7 @@ import { EnumeratorLike } from "@reactive-js/enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractProducer } from "./producer";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { observableMixin } from "./observable";
+import { enumerate } from "./observable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -148,7 +148,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
 }
 
 class ZipObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
   readonly isSynchronous: boolean;
 
   constructor(

@@ -1,5 +1,5 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
+import { enumerate } from "./observable";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -27,7 +27,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 class MergeObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   constructor(readonly observables: readonly ObservableLike<T>[]) {}

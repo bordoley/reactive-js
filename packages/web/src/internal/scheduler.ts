@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { schedulerMixin } from "@reactive-js/schedulers";
+import { schedule } from "@reactive-js/schedulers";
 
 const performance = window.performance;
 const Date = window.Date;
@@ -61,7 +61,7 @@ const scheduleDelayed = (
 
 class WebScheduler implements SchedulerLike {
   channel = new MessageChannel();
-  readonly schedule = schedulerMixin.schedule;
+  readonly schedule = schedule;
   readonly shouldYield =
     navigator !== undefined &&
     (navigator as any).scheduling !== undefined &&

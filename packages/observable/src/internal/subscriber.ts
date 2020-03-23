@@ -1,4 +1,4 @@
-import { createDisposable, disposableMixin } from "@reactive-js/disposable";
+import { add, createDisposable, dispose } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -11,11 +11,11 @@ import { SubscriberLike } from "./interfaces";
  * @ignore
  */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly disposable = createDisposable(_ => {
     this.isDisposed = true;
   });
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
   isDisposed = false;
   private readonly scheduler: SchedulerLike;
 

@@ -15,13 +15,13 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
-import { disposableMixin, DisposableLike } from "@reactive-js/disposable";
+import { add, dispose, DisposableLike } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 
 class LiftedAsyncEnumeratorImpl<TReq, T>
   implements AsyncEnumeratorLike<TReq, T> {
-  readonly add = disposableMixin.add;
-  readonly dispose = disposableMixin.dispose;
+  readonly add = add;
+  readonly dispose = dispose;
   readonly isSynchronous = false;
 
   constructor(

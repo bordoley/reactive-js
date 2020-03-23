@@ -1,7 +1,8 @@
 import {
+  add,
   createDisposable,
+  dispose,
   DisposableLike,
-  disposableMixin,
 } from "@reactive-js/disposable";
 import {
   SchedulerLike,
@@ -75,11 +76,11 @@ class PrioritySchedulerResourceImpl
     comparator,
   );
 
-  readonly add = disposableMixin.add;
+  readonly add = add;
   private currentTask: ScheduledTaskLike | undefined = undefined;
   private currentShouldYield: (() => boolean) | undefined = undefined;
   delay = 0;
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
   private shouldYield = () => {
     const currentTask = this.currentTask;
     const currentTaskIsDisposed =

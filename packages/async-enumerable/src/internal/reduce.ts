@@ -1,9 +1,9 @@
 import { AsyncEnumerableLike } from "./interfaces";
 import {
+  enumerate,
   map as mapObs,
   merge,
   ObservableLike,
-  observableMixin,
   ofValue,
   onNotify,
   SubscriberLike,
@@ -73,7 +73,7 @@ export type ReducerRequest<TReq, TAcc> =
   | DoneRequestLike<TAcc>;
 
 class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   constructor(

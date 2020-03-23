@@ -15,10 +15,7 @@
 * [createPriorityScheduler](README.md#const-createpriorityscheduler)
 * [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
-
-### Object literals
-
-* [schedulerMixin](README.md#const-schedulermixin)
+* [schedule](README.md#schedule)
 
 ## Functions
 
@@ -71,17 +68,13 @@ Name | Type | Default | Description |
 
 **Returns:** *VirtualTimeSchedulerLike*
 
-## Object literals
-
-### `Const` schedulerMixin
-
-### ▪ **schedulerMixin**: *object*
-
-Mixin functions that can be used to implement the SchedulerLike interface
+___
 
 ###  schedule
 
 ▸ **schedule**(`this`: [CallbackScheduler](interfaces/callbackscheduler.md), `continuation`: SchedulerContinuationLike): *void*
+
+Mixin functions that can be used to implement the SchedulerLike interface
 
 **Parameters:**
 

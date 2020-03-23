@@ -9,7 +9,7 @@ export {
   SubscriberOperatorLike,
 } from "./internal/interfaces";
 
-export { observableMixin } from "./internal/observable";
+export { enumerate } from "./internal/observable";
 export { AbstractDelegatingSubscriber } from "./internal/subscriber";
 
 export { combineLatest } from "./internal/combineLatest";

@@ -15,12 +15,10 @@
 
 ### Functions
 
+* [add](README.md#add)
 * [createDisposable](README.md#const-createdisposable)
 * [createSerialDisposable](README.md#const-createserialdisposable)
-
-### Object literals
-
-* [disposableMixin](README.md#const-disposablemixin)
+* [dispose](README.md#dispose)
 
 ## Variables
 
@@ -31,6 +29,25 @@
 A disposed DisposableLike instance.
 
 ## Functions
+
+###  add
+
+▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableLike](interfaces/disposablelike.md) | function): *This*
+
+**Type parameters:**
+
+▪ **This**: *[DisposableLike](interfaces/disposablelike.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`this` | object & This |
+`disposable` | [DisposableLike](interfaces/disposablelike.md) &#124; function |
+
+**Returns:** *This*
+
+___
 
 ### `Const` createDisposable
 
@@ -56,30 +73,7 @@ Creates a new SerialDisposableLike instance containing a disposed instance.
 
 **Returns:** *[SerialDisposableLike](interfaces/serialdisposablelike.md)*
 
-## Object literals
-
-### `Const` disposableMixin
-
-### ▪ **disposableMixin**: *object*
-
-Mixin functions that can be used to implement the DisposableLike interface
-
-###  add
-
-▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableLike](interfaces/disposablelike.md) | function): *This*
-
-**Type parameters:**
-
-▪ **This**: *[DisposableLike](interfaces/disposablelike.md)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | object & This |
-`disposable` | [DisposableLike](interfaces/disposablelike.md) &#124; function |
-
-**Returns:** *This*
+___
 
 ###  dispose
 

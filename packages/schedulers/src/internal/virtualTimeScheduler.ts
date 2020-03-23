@@ -3,7 +3,7 @@ import {
   VirtualTimeSchedulerLike,
 } from "@reactive-js/scheduler";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-import { createDisposable, disposableMixin } from "@reactive-js/disposable";
+import { add, createDisposable, dispose } from "@reactive-js/disposable";
 
 interface VirtualTask {
   readonly continuation: SchedulerContinuationLike;
@@ -19,11 +19,11 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 };
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly current = undefined;
   readonly delay = 0;
   readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
 
   hasCurrent = false;
   private microTaskTicks = 0;
@@ -42,8 +42,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     VirtualTask
   > = createPriorityQueue(comparator);
 
-  constructor(private readonly maxMicroTaskTicks: number) {
-  }
+  constructor(private readonly maxMicroTaskTicks: number) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
