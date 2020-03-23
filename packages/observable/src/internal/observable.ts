@@ -15,20 +15,17 @@ class EnumeratorSubscriber<T>
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
   readonly add = add;
-  readonly disposable = createDisposable();
+  readonly disposable = createDisposable(() => { this.isDisposed = true });
   readonly dispose = dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
+  isDisposed  = false;
   readonly now = 0;
 
   constructor() {
     this.add(error => {
       this.error = error;
     });
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
   }
 
   move(): boolean {
