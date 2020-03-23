@@ -3,7 +3,7 @@ import {
   SafeSubscriberLike,
   SubscriberLike,
 } from "./interfaces";
-import { observableMixin } from "./observable";
+import { enumerate } from "./observable";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
@@ -11,7 +11,7 @@ class CreateObservable<T> implements ObservableLike<T> {
     private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
   ) {}
 
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   subscribe(subscriber: SubscriberLike<T>) {

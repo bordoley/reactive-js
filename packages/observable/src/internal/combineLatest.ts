@@ -1,4 +1,4 @@
-import { disposableMixin, createDisposable } from "@reactive-js/disposable";
+import { add, createDisposable, dispose } from "@reactive-js/disposable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
@@ -47,12 +47,12 @@ class CombineLatestSchedulerContinuation<T>
   completedCount = 0;
   readyCount = 0;
 
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly delay = 0;
   readonly disposable = createDisposable(_ => {
     this.isDisposed = true;
   });
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
   readonly latest: Array<unknown>;
   readonly totalCount: number;
 

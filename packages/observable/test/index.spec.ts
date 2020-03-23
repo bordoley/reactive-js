@@ -5,10 +5,7 @@ import {
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  schedulerMixin,
-  createVirtualTimeScheduler,
-} from "@reactive-js/schedulers";
+import { schedule, createVirtualTimeScheduler } from "@reactive-js/schedulers";
 import { AbstractSubscriber } from "../src/internal/subscriber";
 import {
   buffer,
@@ -75,7 +72,7 @@ const callbackAndDispose = (
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
 class PromiseTestScheduler implements SchedulerLike {
-  readonly schedule = schedulerMixin.schedule;
+  readonly schedule = schedule;
   readonly shouldYield = (): boolean => false;
 
   get now(): number {

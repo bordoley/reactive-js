@@ -1,16 +1,22 @@
-import { ErrorLike, disposableMixin, createDisposable } from "@reactive-js/disposable";
+import {
+  ErrorLike,
+  add,
+  createDisposable,
+  dispose,
+} from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 
 const alwaysTrue = () => true;
 
-class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike<T> {
+class EnumeratorSubscriber<T>
+  implements EnumeratorLike<void, T>, SubscriberLike<T> {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   readonly now = 0;
@@ -66,16 +72,14 @@ class EnumeratorSubscriber<T> implements EnumeratorLike<void, T>, SubscriberLike
   }
 }
 
-export const observableMixin = {
-  enumerate<T>(this: ObservableLike<T>): EnumeratorLike<void, T> {
-    const subscriber = new EnumeratorSubscriber<T>();
-    this.subscribe(subscriber);
-    return subscriber;
-  },
-};
+export function enumerate<T>(this: ObservableLike<T>): EnumeratorLike<void, T> {
+  const subscriber = new EnumeratorSubscriber<T>();
+  this.subscribe(subscriber);
+  return subscriber;
+}
 
 class ScheduledObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
 
   constructor(
     private readonly factory: (

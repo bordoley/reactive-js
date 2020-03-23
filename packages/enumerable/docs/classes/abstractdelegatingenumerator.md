@@ -59,7 +59,7 @@ Name | Type |
 
 ###  add
 
-• **add**: *add* =  disposableMixin.add
+• **add**: *add* =  add
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 ###  dispose
 
-• **dispose**: *dispose* =  disposableMixin.dispose
+• **dispose**: *dispose* =  dispose
 
 ## Accessors
 

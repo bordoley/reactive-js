@@ -118,19 +118,20 @@ const _disposed: DisposableLike = {
  */
 export const disposed: DisposableLike = _disposed;
 
-/** Mixin functions that can be used to implement the DisposableLike interface */
-export const disposableMixin = {
-  add<This extends DisposableLike>(
-    this: { disposable: DisposableLike } & This,
-    disposable: DisposableLike | ((error?: ErrorLike) => void),
-  ): This {
-    this.disposable.add(disposable);
-    return this;
-  },
-  dispose(this: { disposable: DisposableLike }, error?: ErrorLike) {
-    this.disposable.dispose(error);
-  },
-};
+export function add<This extends DisposableLike>(
+  this: { disposable: DisposableLike } & This,
+  disposable: DisposableLike | ((error?: ErrorLike) => void),
+): This {
+  this.disposable.add(disposable);
+  return this;
+}
+
+export function dispose(
+  this: { disposable: DisposableLike },
+  error?: ErrorLike,
+) {
+  this.disposable.dispose(error);
+}
 
 /**
  * A Disposable container that allows replacing an inner Disposable with another,
@@ -150,9 +151,9 @@ export interface SerialDisposableLike extends DisposableLike {
 
 class SerialDisposableImpl implements SerialDisposableLike {
   _inner: DisposableLike = disposed;
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
 
   get inner() {
     return this._inner;

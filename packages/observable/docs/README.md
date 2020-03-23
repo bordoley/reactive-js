@@ -36,6 +36,7 @@
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
+* [enumerate](README.md#enumerate)
 * [every](README.md#const-every)
 * [exhaust](README.md#const-exhaust)
 * [forEach](README.md#const-foreach)
@@ -86,10 +87,6 @@
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
-
-### Object literals
-
-* [observableMixin](README.md#const-observablemixin)
 
 ## Functions
 
@@ -667,6 +664,24 @@ Name | Type |
 `...values` | T[] |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+###  enumerate
+
+▸ **enumerate**<**T**>(`this`: [ObservableLike](interfaces/observablelike.md)‹T›): *EnumeratorLike‹void, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`this` | [ObservableLike](interfaces/observablelike.md)‹T› |
+
+**Returns:** *EnumeratorLike‹void, T›*
 
 ___
 
@@ -2407,25 +2422,3 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
-
-## Object literals
-
-### `Const` observableMixin
-
-### ▪ **observableMixin**: *object*
-
-###  enumerate
-
-▸ **enumerate**<**T**>(`this`: [ObservableLike](interfaces/observablelike.md)‹T›): *EnumeratorLike‹void, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | [ObservableLike](interfaces/observablelike.md)‹T› |
-
-**Returns:** *EnumeratorLike‹void, T›*

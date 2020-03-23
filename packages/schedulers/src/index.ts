@@ -8,4 +8,4 @@ export { createVirtualTimeScheduler } from "./internal/virtualTimeScheduler";
 
 export { createSchedulerWithPriority } from "./internal/schedulerWithPriority";
 
-export { CallbackScheduler, schedulerMixin } from "./internal/schedulerMixin";
+export { CallbackScheduler, schedule } from "./internal/schedulerMixin";

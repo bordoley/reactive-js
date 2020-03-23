@@ -1,6 +1,7 @@
 import {
+  add,
   createDisposable,
-  disposableMixin,
+  dispose,
   ErrorLike,
 } from "@reactive-js/disposable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
@@ -9,7 +10,7 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class SafeSubscriberSchedulerContinuation<T>
   implements SchedulerContinuationLike {
-  readonly add = disposableMixin.add;
+  readonly add = add;
 
   readonly delay = 0;
 
@@ -17,7 +18,7 @@ class SafeSubscriberSchedulerContinuation<T>
     this.isDisposed = true;
   });
 
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
 
   isDisposed = false;
 

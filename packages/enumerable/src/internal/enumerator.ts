@@ -1,12 +1,11 @@
 import { EnumeratorLike } from "./interfaces";
-import { disposableMixin, createDisposable } from "@reactive-js/disposable";
+import { add, dispose, createDisposable } from "@reactive-js/disposable";
 
 export abstract class AbstractDelegatingEnumerator<TReq, TA, TB>
   implements EnumeratorLike<TReq, TB> {
-
-  readonly add = disposableMixin.add;
+  readonly add = add;
   readonly disposable = createDisposable();
-  readonly dispose = disposableMixin.dispose;
+  readonly dispose = dispose;
 
   abstract get current(): TB;
   abstract get hasCurrent(): boolean;

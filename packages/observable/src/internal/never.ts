@@ -1,8 +1,8 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { observableMixin } from "./observable";
+import { enumerate } from "./observable";
 
 class NeverObservable<T> implements ObservableLike<T> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   subscribe(_: SubscriberLike<T>) {}

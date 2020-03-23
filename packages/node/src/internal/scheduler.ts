@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { schedulerMixin } from "@reactive-js/schedulers";
+import { schedule } from "@reactive-js/schedulers";
 
 let timeout = 500;
 export const setSchedulerTimeout = (newTimeout: number) => {
@@ -48,7 +48,7 @@ const scheduleImmediate = (
 };
 
 class NodeScheduler implements SchedulerLike {
-  readonly schedule = schedulerMixin.schedule;
+  readonly schedule = schedule;
 
   protected readonly shouldYield = () => {
     return this.now > this.startTime + timeout;

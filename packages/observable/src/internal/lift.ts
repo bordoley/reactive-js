@@ -4,10 +4,10 @@ import {
   SubscriberLike,
   SubscriberOperatorLike,
 } from "./interfaces";
-import { observableMixin } from "./observable";
+import { enumerate } from "./observable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-  readonly enumerate = observableMixin.enumerate;
+  readonly enumerate = enumerate;
 
   constructor(
     readonly source: ObservableLike<TIn>,
