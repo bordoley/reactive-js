@@ -3,11 +3,17 @@
 
 var ObservableOperator = { };
 
-var MergeAllConfig = { };
+var BufferOptions = { };
+
+var FromArrayOptions = { };
+
+var MergeAllOptions = { };
 
 export {
   ObservableOperator ,
-  MergeAllConfig ,
+  BufferOptions ,
+  FromArrayOptions ,
+  MergeAllOptions ,
   
 }
 /* No side effect */
