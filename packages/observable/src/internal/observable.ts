@@ -6,9 +6,8 @@ import {
 } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-
-const alwaysTrue = () => true;
 
 class EnumeratorSubscriber<T>
   implements EnumeratorLike<void, T>, SubscriberLike<T> {
