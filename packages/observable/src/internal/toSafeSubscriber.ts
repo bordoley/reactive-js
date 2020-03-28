@@ -38,8 +38,9 @@ class SafeSubscriberSchedulerContinuation<T>
           const next = nextQueue.shift() as T;
           delegate.notify(next);
 
-          const hasRemainingEvents = subscriber.nextQueue.length > 0 || subscriber.isDisposed;
-  
+          const hasRemainingEvents =
+            subscriber.nextQueue.length > 0 || subscriber.isDisposed;
+
           if (hasRemainingEvents && shouldYield()) {
             return;
           }

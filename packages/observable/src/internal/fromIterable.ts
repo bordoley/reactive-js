@@ -3,7 +3,6 @@ import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
-
 class FromIteratorProducer<T> extends AbstractProducer<T> {
   private next: IteratorResult<T, any>;
 
