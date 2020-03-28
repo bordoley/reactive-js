@@ -1,7 +1,6 @@
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
-  empty,
 } from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
 import { normalPriority } from "@reactive-js/react-scheduler";
@@ -100,9 +99,8 @@ export const useAsyncEnumerator = <TReq, T>(
 
 const useResource = <T extends DisposableLike>(
   factory: () => T,
-  defaultResource: T,
-): T => {
-  const [resource, updateResource] = useState(defaultResource);
+): T | undefined => {
+  const [resource, updateResource] = useState<T | undefined>(undefined);
 
   useEffect(() => {
     const resource = factory();
@@ -127,9 +125,8 @@ export const useAsyncEnumerable = <TReq, T>(
     scheduler?: SchedulerLike;
     replay?: number;
   } = {},
-): AsyncEnumeratorLike<TReq, T> => {
+): AsyncEnumeratorLike<TReq, T> | undefined => {
   const scheduler = config.scheduler || normalPriority;
-  const emptyEnumerator = empty<TReq, T>().enumerateAsync(scheduler);
   const replay = config.replay || 0;
 
   const factory = useCallback(
@@ -137,5 +134,5 @@ export const useAsyncEnumerable = <TReq, T>(
     [enumerable, scheduler, replay],
   );
 
-  return useResource<AsyncEnumeratorLike<TReq, T>>(factory, emptyEnumerator);
+  return useResource<AsyncEnumeratorLike<TReq, T>>(factory);
 };
