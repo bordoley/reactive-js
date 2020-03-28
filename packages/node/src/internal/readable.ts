@@ -1,8 +1,7 @@
 import { Readable } from "stream";
 import {
-  createAsyncEnumerator,
+  createAsyncEnumerable,
   AsyncEnumerableLike,
-  AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
 import {
   createObservable,
@@ -11,7 +10,6 @@ import {
   subscribe,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
-import { SchedulerLike } from "@reactive-js/scheduler";
 
 export const createReadableAsyncEnumerable = <TData>(
   factory: () => Readable,
@@ -60,12 +58,5 @@ export const createReadableAsyncEnumerable = <TData>(
       readable.pause();
     });
 
-  return {
-    enumerateAsync(
-      scheduler: SchedulerLike,
-      replayCount?: number,
-    ): AsyncEnumeratorLike<void, TData> {
-      return createAsyncEnumerator(operator, scheduler, replayCount);
-    },
-  };
+  return createAsyncEnumerable(operator);
 };

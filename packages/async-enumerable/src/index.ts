@@ -12,7 +12,7 @@ export {
   reduce,
 } from "./internal/reduce";
 export { reduceAsync } from "./internal/reduceAsync";
-export { createAsyncEnumerator } from "./internal/createAsyncEnumerator";
+export { createAsyncEnumerable } from "./internal/createAsyncEnumerable";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";

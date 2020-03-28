@@ -13,7 +13,7 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "./interfaces";
-import { createAsyncEnumerator } from "./createAsyncEnumerator";
+import { createAsyncEnumerator } from "./createAsyncEnumerable";
 
 class DelegatingStateStoreAsyncEnumerable<T>
   implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
