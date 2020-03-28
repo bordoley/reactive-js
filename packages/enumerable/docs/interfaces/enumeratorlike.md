@@ -14,10 +14,6 @@
 
   ↳ **EnumeratorLike**
 
-## Implemented by
-
-* [AbstractDelegatingEnumerator](../classes/abstractdelegatingenumerator.md)
-
 ## Index
 
 ### Properties
