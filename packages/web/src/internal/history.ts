@@ -1,7 +1,6 @@
-import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   AsyncEnumerableLike,
-  createAsyncEnumerator,
+  createAsyncEnumerable,
 } from "@reactive-js/async-enumerable";
 import {
   compute,
@@ -51,11 +50,7 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-const _history: AsyncEnumerableLike<LocationLike, LocationLike> = {
-  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    return createAsyncEnumerator(historyOperator, scheduler, replayCount);
-  },
-};
+const _history: AsyncEnumerableLike<LocationLike, LocationLike> = createAsyncEnumerable(historyOperator);
 
 export const history: AsyncEnumerableLike<
   LocationLike,

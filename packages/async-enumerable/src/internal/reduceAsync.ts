@@ -1,4 +1,3 @@
-import { AsyncEnumerableLike } from "./interfaces";
 import {
   enumerate,
   map as mapObs,
@@ -13,13 +12,14 @@ import {
 } from "@reactive-js/observable";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { identity } from "./identity";
+import { AsyncEnumerableLike } from "./interfaces";
 import { lift } from "./lift";
+import { map } from "./map";
 import {
   ReducerRequestType,
   ContinueRequestLike,
   ReducerRequest,
 } from "./reduce";
-import { map } from "./map";
 
 class ReduceAsyncObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
   readonly enumerate = enumerate;

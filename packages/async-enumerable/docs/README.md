@@ -24,7 +24,7 @@
 ### Functions
 
 * [createActionReducer](README.md#const-createactionreducer)
-* [createAsyncEnumerator](README.md#const-createasyncenumerator)
+* [createAsyncEnumerable](README.md#const-createasyncenumerable)
 * [createStateStore](README.md#const-createstatestore)
 * [empty](README.md#const-empty)
 * [fromArray](README.md#const-fromarray)
@@ -88,25 +88,29 @@ if a state value is distinct from the previous one.
 
 ___
 
-### `Const` createAsyncEnumerator
+### `Const` createAsyncEnumerable
 
-▸ **createAsyncEnumerator**<**TReq**, **T**>(`operator`: ObservableOperatorLike‹TReq, T›, `scheduler`: SchedulerLike, `replayCount`: number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›*
+▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: function): *AsyncEnumerableImpl‹TReq, TData›*
 
 **Type parameters:**
 
 ▪ **TReq**
 
-▪ **T**
+▪ **TData**
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`operator` | ObservableOperatorLike‹TReq, T› | - | - |
-`scheduler` | SchedulerLike | - | - |
-`replayCount` | number | 0 |   |
+▪ **op**: *function*
 
-**Returns:** *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›*
+▸ (`src`: ObservableLike‹TReq›): *ObservableLike‹TData›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | ObservableLike‹TReq› |
+
+**Returns:** *AsyncEnumerableImpl‹TReq, TData›*
 
 ___
 

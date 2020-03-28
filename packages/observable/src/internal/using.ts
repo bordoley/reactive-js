@@ -19,8 +19,9 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     const observableFactory = this.observableFactory;
 
     if (Array.isArray(resources)) {
-      // eslint-disable-next-line prefer-spread
-      subscriber.add.apply(subscriber, resources as any);
+      for(const resource of resources) {
+        subscriber.add(resource as DisposableLike);
+      }
       observableFactory(...resources).subscribe(subscriber);
     } else {
       subscriber.add(resources as DisposableLike);

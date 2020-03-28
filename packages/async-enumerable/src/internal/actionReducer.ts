@@ -4,20 +4,9 @@ import {
   scan,
   startWith,
   ObservableLike,
-  ObservableOperatorLike,
 } from "@reactive-js/observable";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { createAsyncEnumerator } from "./createAsyncEnumerator";
+import { createAsyncEnumerable } from "./createAsyncEnumerable";
 import { StateUpdaterLike, AsyncEnumerableLike } from "./interfaces";
-
-class ReducerStoreAsyncEnumerable<TAction, T>
-  implements AsyncEnumerableLike<TAction, T> {
-  constructor(private readonly operator: ObservableOperatorLike<TAction, T>) {}
-
-  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    return createAsyncEnumerator(this.operator, scheduler, replayCount);
-  }
-}
 
 /**
  * Returns a new `AsyncEnumerableLike` instance that applies an accumulator function
@@ -44,7 +33,7 @@ export const createActionReducer = <TAction, T>(
     );
   };
 
-  return new ReducerStoreAsyncEnumerable(operator);
+  return createAsyncEnumerable(operator);
 };
 
 const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>

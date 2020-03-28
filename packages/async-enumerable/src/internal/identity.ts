@@ -1,6 +1,6 @@
 import { AsyncEnumerableLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumeratorImpl } from "./createAsyncEnumerator";
+import { AsyncEnumeratorImpl } from "./createAsyncEnumerable";
 import { createSubject, toSafeSubscriber } from "@reactive-js/observable";
 
 const instance = {
