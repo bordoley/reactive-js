@@ -44,7 +44,7 @@ export const useRoutableState = <TState>(
   const state = useMemo(() => {
     const serialized = stateIsQuery ? query : fragment;
     return parse(serialized);
-  }, [query, fragment]);
+  }, [parse, query, fragment]);
 
   const notify = useCallback(
     (stateUpdater: StateUpdaterLike<TState>) => {
@@ -52,7 +52,7 @@ export const useRoutableState = <TState>(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );
     },
-    [uriUpdater],
+    [uriUpdater, parse, serialize, stateIsQuery],
   );
 
   return [state, notify];
