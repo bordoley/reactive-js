@@ -28,6 +28,7 @@
 * [buffer](README.md#buffer)
 * [catchError](README.md#const-catcherror)
 * [combineLatest](README.md#combinelatest)
+* [compute](README.md#const-compute)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
 * [contains](README.md#const-contains)
@@ -465,6 +466,30 @@ Name | Type |
 `g` | TG |
 `h` | TH |
 `i` | TI |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` compute
+
+▸ **compute**<**T**>(`valueFactory`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+ Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **valueFactory**: *function*
+
+▸ (): *T*
+
+▪`Default value`  **delay**: *number*= 0
+
+The delay before emitting the value.
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

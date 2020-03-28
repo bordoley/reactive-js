@@ -4,10 +4,10 @@ import {
   createAsyncEnumerator,
 } from "@reactive-js/async-enumerable";
 import {
+  compute,
   merge,
   ObservableLike,
   onNotify,
-  ofValue,
   throttle,
 } from "@reactive-js/observable";
 import { fromEvent } from "./event";
@@ -46,7 +46,7 @@ const pushHistoryState = (newLocation: LocationLike) => {
 
 const historyOperator = (obs: ObservableLike<LocationLike>) =>
   merge(
-    ofValue(getCurrentLocation()),
+    compute(getCurrentLocation),
     pipe(obs, throttle(15), onNotify(pushHistoryState)),
     fromEvent(window, "popstate", getCurrentLocation),
   );

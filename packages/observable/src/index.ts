@@ -13,9 +13,10 @@ export { enumerate } from "./internal/observable";
 export { AbstractDelegatingSubscriber } from "./internal/subscriber";
 
 export { combineLatest } from "./internal/combineLatest";
+export { compute } from "./internal/compute";
+export { concat } from "./internal/concat";
 export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
-export { concat } from "./internal/concat";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable, fromIterator } from "./internal/fromIterable";
