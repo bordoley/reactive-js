@@ -1,4 +1,4 @@
-import { Readable } from 'stream';
+import { Readable } from "stream";
 import { reduce, ReducerRequestType } from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
 import { toPromise } from "@reactive-js/observable";
@@ -26,10 +26,10 @@ describe("createReadableAsyncEnumerable", () => {
           return newAcc.length > 6
             ? { type: ReducerRequestType.Done, acc: newAcc }
             : {
-              type: ReducerRequestType.Continue,
-              req: undefined,
-              acc: newAcc,
-            };
+                type: ReducerRequestType.Continue,
+                req: undefined,
+                acc: newAcc,
+              };
         },
         () => ({ type: ReducerRequestType.Continue, req: undefined, acc: "" }),
       ),

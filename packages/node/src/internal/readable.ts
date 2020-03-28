@@ -1,6 +1,15 @@
 import { Readable } from "stream";
-import { createAsyncEnumerator, AsyncEnumerableLike, AsyncEnumeratorLike } from "@reactive-js/async-enumerable";
-import { createObservable, ObservableLike, onNotify, subscribe } from "@reactive-js/observable";
+import {
+  createAsyncEnumerator,
+  AsyncEnumerableLike,
+  AsyncEnumeratorLike,
+} from "@reactive-js/async-enumerable";
+import {
+  createObservable,
+  ObservableLike,
+  onNotify,
+  subscribe,
+} from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -12,23 +21,23 @@ export const createReadableAsyncEnumerable = <TData>(
     createObservable<TData>(subscriber => {
       const readable = factory();
 
-      subscriber.add(
-        () => {
+      subscriber
+        .add(() => {
           readable.pause();
           readable.removeAllListeners();
           readable.destroy();
-        }
-      ).add(
-        pipe(
-          requests,
-          onNotify(_ => {
-            if (readable.isPaused()) {
-              readable.resume();
-            }
-          }),
-          subscribe(subscriber),
-        )
-      );
+        })
+        .add(
+          pipe(
+            requests,
+            onNotify(_ => {
+              if (readable.isPaused()) {
+                readable.resume();
+              }
+            }),
+            subscribe(subscriber),
+          ),
+        );
 
       readable.on("data", chunk => {
         readable.pause();
@@ -52,8 +61,11 @@ export const createReadableAsyncEnumerable = <TData>(
     });
 
   return {
-    enumerateAsync(scheduler: SchedulerLike, replayCount?: number): AsyncEnumeratorLike<void, TData> {
-      return createAsyncEnumerator(operator, scheduler, replayCount)
-    }
-  }
-}
+    enumerateAsync(
+      scheduler: SchedulerLike,
+      replayCount?: number,
+    ): AsyncEnumeratorLike<void, TData> {
+      return createAsyncEnumerator(operator, scheduler, replayCount);
+    },
+  };
+};

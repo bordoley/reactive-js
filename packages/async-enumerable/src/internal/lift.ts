@@ -122,11 +122,13 @@ export function lift<TReq, TA, TB>(
   return enumerable => {
     const source = (enumerable as any).source || enumerable;
     const observableOperators =
-    enumerable instanceof LiftedAsyncEnumerable
+      enumerable instanceof LiftedAsyncEnumerable
         ? [...enumerable.observableOperators, op]
         : [op];
     const reqOperators =
-    enumerable instanceof LiftedAsyncEnumerable ? enumerable.reqOperators : [];
+      enumerable instanceof LiftedAsyncEnumerable
+        ? enumerable.reqOperators
+        : [];
 
     return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);
   };
