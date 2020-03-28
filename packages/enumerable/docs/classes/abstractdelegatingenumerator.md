@@ -30,12 +30,12 @@
 * [delegate](abstractdelegatingenumerator.md#delegate)
 * [disposable](abstractdelegatingenumerator.md#disposable)
 * [dispose](abstractdelegatingenumerator.md#dispose)
+* [isDisposed](abstractdelegatingenumerator.md#isdisposed)
 
 ### Accessors
 
 * [current](abstractdelegatingenumerator.md#current)
 * [hasCurrent](abstractdelegatingenumerator.md#hascurrent)
-* [isDisposed](abstractdelegatingenumerator.md#isdisposed)
 
 ### Methods
 
@@ -71,13 +71,21 @@ ___
 
 ###  disposable
 
-• **disposable**: *DisposableLike‹›* =  createDisposable()
+• **disposable**: *DisposableLike‹›* =  createDisposable(() => {
+    this.isDisposed = true;
+  })
 
 ___
 
 ###  dispose
 
 • **dispose**: *dispose* =  dispose
+
+___
+
+###  isDisposed
+
+• **isDisposed**: *boolean* = false
 
 ## Accessors
 
@@ -92,14 +100,6 @@ ___
 ###  hasCurrent
 
 • **get hasCurrent**(): *boolean*
-
-**Returns:** *boolean*
-
-___
-
-###  isDisposed
-
-• **get isDisposed**(): *boolean*
 
 **Returns:** *boolean*
 

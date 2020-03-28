@@ -1,6 +1,7 @@
 import { EnumeratorLike } from "./interfaces";
 import { add, dispose, createDisposable } from "@reactive-js/disposable";
 
+/** @noInheritDoc */
 export abstract class AbstractDelegatingEnumerator<TReq, TA, TB>
   implements EnumeratorLike<TReq, TB> {
   readonly add = add;
