@@ -7,6 +7,7 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
+* [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [getHostScheduler](README.md#const-gethostscheduler)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
 
@@ -1795,6 +1796,34 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 `arg5` | A5 |
+
+___
+
+### `Const` createReadableAsyncEnumerable
+
+▸ **createReadableAsyncEnumerable**<**TData**>(`factory`: function, `selector`: function): *AsyncEnumerableLike‹void, TData›*
+
+**Type parameters:**
+
+▪ **TData**
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *Readable*
+
+▪ **selector**: *function*
+
+▸ (`data`: unknown): *TData*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | unknown |
+
+**Returns:** *AsyncEnumerableLike‹void, TData›*
 
 ___
 
