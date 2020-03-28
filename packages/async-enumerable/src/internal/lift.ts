@@ -119,14 +119,14 @@ class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
 export function lift<TReq, TA, TB>(
   op: ObservableOperatorLike<TA, TB>,
 ): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB> {
-  return iterable => {
-    const source = (iterable as any).source || iterable;
+  return enumerable => {
+    const source = (enumerable as any).source || enumerable;
     const observableOperators =
-      iterable instanceof LiftedAsyncEnumerable
-        ? [...iterable.observableOperators, op]
+    enumerable instanceof LiftedAsyncEnumerable
+        ? [...enumerable.observableOperators, op]
         : [op];
     const reqOperators =
-      iterable instanceof LiftedAsyncEnumerable ? iterable.reqOperators : [];
+    enumerable instanceof LiftedAsyncEnumerable ? enumerable.reqOperators : [];
 
     return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);
   };
@@ -135,15 +135,15 @@ export function lift<TReq, TA, TB>(
 export function liftReq<TReqA, TReqB, T>(
   op: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
 ): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T> {
-  return iterable => {
-    const source = (iterable as any).source || iterable;
+  return enumerable => {
+    const source = (enumerable as any).source || enumerable;
     const observableOperators =
-      iterable instanceof LiftedAsyncEnumerable
-        ? iterable.observableOperators
+      enumerable instanceof LiftedAsyncEnumerable
+        ? enumerable.observableOperators
         : [];
     const reqOperators =
-      iterable instanceof LiftedAsyncEnumerable
-        ? [...iterable.reqOperators, op]
+      enumerable instanceof LiftedAsyncEnumerable
+        ? [...enumerable.reqOperators, op]
         : [op];
 
     return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);

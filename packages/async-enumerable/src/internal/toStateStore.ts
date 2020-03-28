@@ -65,5 +65,5 @@ class DelegatingStateStoreAsyncEnumerable<T>
 export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => iterable =>
-  new DelegatingStateStoreAsyncEnumerable(iterable, initialState, equals);
+): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => enumerable =>
+  new DelegatingStateStoreAsyncEnumerable(enumerable, initialState, equals);
