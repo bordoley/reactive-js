@@ -1,8 +1,8 @@
+import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
-const alwaysTrue = () => true;
 
 class FromIteratorProducer<T> extends AbstractProducer<T> {
   private next: IteratorResult<T, any>;
