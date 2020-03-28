@@ -14,7 +14,7 @@
 
 ### `Const` useAsyncEnumerable
 
-▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *AsyncEnumeratorLike‹TReq, T›*
+▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *AsyncEnumeratorLike‹TReq, T› | undefined*
 
 **Type parameters:**
 
@@ -29,7 +29,7 @@ Name | Type | Default | Description |
 `enumerable` | AsyncEnumerableLike‹TReq, T› | - | - |
 `config` | object |  {} |   |
 
-**Returns:** *AsyncEnumeratorLike‹TReq, T›*
+**Returns:** *AsyncEnumeratorLike‹TReq, T› | undefined*
 
 ___
 

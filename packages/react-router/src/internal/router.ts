@@ -43,13 +43,19 @@ export interface RouterProps {
   readonly scheduler?: SchedulerLike;
 }
 
+const pairify = (
+  [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
+  next: RelativeURILike,
+): [RelativeURILike | undefined, RelativeURILike] =>
+  oldState === empty ? [undefined, next] : [oldState, next];
+
 export const Router = function Router(props: RouterProps): ReactElement | null {
   const { location, notFound, routes, scheduler } = props;
 
   const locationStore = useAsyncEnumerable(location, { replay: 1 });
 
   const observable = useMemo(() => {
-    if (locationStore.isDisposed) {
+    if (locationStore === undefined) {
       return never<ReactElement>();
     } else {
       const routeMap: RouteMap = {};
@@ -60,12 +66,6 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
       const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
         locationStore.dispatch(updater);
       };
-
-      const pairify = (
-        [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
-        next: RelativeURILike,
-      ): [RelativeURILike | undefined, RelativeURILike] =>
-        oldState === empty ? [undefined, next] : [oldState, next];
 
       return pipe(
         locationStore,
