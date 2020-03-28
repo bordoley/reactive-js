@@ -5,6 +5,7 @@ import {
   ErrorLike,
 } from "@reactive-js/disposable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { alwaysFalse } from "./functions";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
@@ -24,46 +25,33 @@ class SafeSubscriberSchedulerContinuation<T>
 
   constructor(private readonly subscriber: SafeSubscriberImpl<T>) {}
 
-  produce(shouldYield?: () => boolean) {
+  run(shouldYield?: () => boolean) {
     const subscriber = this.subscriber;
     const nextQueue = subscriber.nextQueue;
     const delegate = subscriber.delegate;
 
-    if (shouldYield !== undefined) {
-      while (nextQueue.length > 0 && !delegate.isDisposed) {
-        const next = nextQueue.shift() as T;
-        delegate.notify(next);
+    shouldYield = shouldYield || alwaysFalse;
 
-        const hasRemainingEvents =
-          subscriber.nextQueue.length > 0 || subscriber.isDisposed;
-
-        if (hasRemainingEvents && shouldYield()) {
-          return;
-        }
-      }
-    } else {
-      while (nextQueue.length > 0 && !delegate.isDisposed) {
-        const next = nextQueue.shift() as T;
-        delegate.notify(next);
-      }
-    }
-
-    if (subscriber.isDisposed) {
-      delegate.dispose(subscriber.error);
-    }
-
-    this.dispose();
-  }
-
-  run(shouldYield?: () => boolean) {
     if (!this.isDisposed) {
       try {
-        this.produce(shouldYield);
+        while (nextQueue.length > 0 && !delegate.isDisposed) {
+          const next = nextQueue.shift() as T;
+          delegate.notify(next);
+
+          const hasRemainingEvents = subscriber.nextQueue.length > 0 || subscriber.isDisposed;
+  
+          if (hasRemainingEvents && shouldYield()) {
+            return;
+          }
+        }
+
+        if (subscriber.isDisposed) {
+          delegate.dispose(subscriber.error);
+        }
       } catch (cause) {
-        const error = { cause };
-        this.subscriber.dispose(error);
-        this.dispose();
+        delegate.dispose({ cause });
       }
+      this.dispose();
     }
   }
 }
