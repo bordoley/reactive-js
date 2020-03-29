@@ -1,4 +1,9 @@
-import { DisposableLike } from "@reactive-js/disposable";
+import {
+  DisposableLike,
+  add,
+  createDisposable,
+  dispose,
+} from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 
 /**
@@ -48,3 +53,37 @@ export interface VirtualTimeSchedulerLike
     EnumeratorLike<void, void>,
     SchedulerLike,
     SchedulerContinuationLike {}
+
+class CallbackSchedulerContinuation implements SchedulerContinuationLike {
+  readonly add = add;
+  readonly disposable = createDisposable();
+  readonly dispose = dispose;
+
+  constructor(private readonly cb: () => void, readonly delay: number) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
+
+  run(_?: () => boolean) {
+    if (!this.isDisposed) {
+      try {
+        this.cb();
+        this.dispose();
+      } catch (cause) {
+        const error = { cause };
+        this.dispose(error);
+      }
+    }
+  }
+}
+
+export const schedule = (
+  scheduler: SchedulerLike,
+  callback: () => void,
+  delay = 0,
+): DisposableLike => {
+  const continuation = new CallbackSchedulerContinuation(callback, delay);
+  scheduler.schedule(continuation);
+  return continuation;
+};
