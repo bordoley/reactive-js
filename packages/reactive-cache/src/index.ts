@@ -43,12 +43,7 @@ class ReactiveCacheSchedulerContinuation<T>
     shouldYield = shouldYield || alwaysFalse;
 
     for (const [, enumerator] of garbage) {
-      if (enumerator.subscriberCount > 0) {
-        this.dispose({ cause: new Error() });
-        break;
-      } else {
-        enumerator.dispose();
-      }
+      enumerator.dispose();
 
       // only delete as many entries as we need to.
       const hasMoreToCleanup = cache.size > maxCount;

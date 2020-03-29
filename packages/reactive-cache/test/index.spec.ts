@@ -5,6 +5,7 @@ import {
   ObservableLike,
   forEach,
   onNotify,
+  never,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
@@ -95,6 +96,41 @@ test("lifecycle integration", () => {
     ),
   );
 });
+
+test("subscribing to disposed value", () => {
+  const scheduler = createVirtualTimeScheduler();
+  const cache = createReactiveCache<string>(scheduler, scheduler, 1);
+
+  let observable = never<string>();
+  let value = "";
+
+  pipe(
+    fromArray(
+      [
+        () => {
+          observable = getOrSet(cache, "a", ofValue("a"));
+          getOrSet(cache, "b", ofValue("b"));
+        },
+        () => {
+          pipe(
+            observable,
+            onNotify(x => {
+              value = x;
+            }),
+            subscribe(scheduler),
+          );
+        },
+        () => {
+          expect(value).toEqual("");
+        },
+      ]
+    ),
+    forEach(
+      () => scheduler,
+      x => x(),
+    ),
+  );
+})
 
 test("getOrSet", () => {
   const scheduler = createVirtualTimeScheduler();
