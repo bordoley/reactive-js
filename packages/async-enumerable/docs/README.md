@@ -31,8 +31,8 @@
 * [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
 * [identity](README.md#const-identity)
-* [lift](README.md#lift)
-* [liftReq](README.md#liftreq)
+* [lift](README.md#const-lift)
+* [liftReq](README.md#const-liftreq)
 * [reduce](README.md#const-reduce)
 * [reduceAsync](README.md#const-reduceasync)
 * [toStateStore](README.md#const-tostatestore)
@@ -90,7 +90,7 @@ ___
 
 ### `Const` createAsyncEnumerable
 
-▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: function): *AsyncEnumerableImpl‹TReq, TData›*
+▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›): *AsyncEnumerableImpl‹TReq, TData›*
 
 **Type parameters:**
 
@@ -100,15 +100,9 @@ ___
 
 **Parameters:**
 
-▪ **op**: *function*
-
-▸ (`src`: ObservableLike‹TReq›): *ObservableLike‹TData›*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`src` | ObservableLike‹TReq› |
+`op` | ObservableOperatorLike‹TReq, TData› |
 
 **Returns:** *AsyncEnumerableImpl‹TReq, TData›*
 
@@ -249,7 +243,7 @@ Returns an `AsyncEnumerableLike` that publishes it's notifications.
 
 ___
 
-###  lift
+### `Const` lift
 
 ▸ **lift**<**TReq**, **TA**, **TB**>(`op`: ObservableOperatorLike‹TA, TB›): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReq, TA, TReq, TB›*
 
@@ -271,9 +265,9 @@ Name | Type |
 
 ___
 
-###  liftReq
+### `Const` liftReq
 
-▸ **liftReq**<**TReqA**, **TReqB**, **T**>(`op`: AsyncEnumeratorRequestOperatorLike‹TReqA, TReqB›): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
+▸ **liftReq**<**TReqA**, **TReqB**, **T**>(`op`: function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
 
 **Type parameters:**
 
@@ -285,9 +279,15 @@ ___
 
 **Parameters:**
 
+▪ **op**: *function*
+
+▸ (`req`: TReqB): *TReqA*
+
+**Parameters:**
+
 Name | Type |
 ------ | ------ |
-`op` | AsyncEnumeratorRequestOperatorLike‹TReqA, TReqB› |
+`req` | TReqB |
 
 **Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
 

@@ -3,11 +3,11 @@ import {
   AbstractDelegatingSubscriber,
   createSubject,
   MulticastObservableLike,
-  ObservableLike,
   publish,
   SubscriberLike,
   SafeSubscriberLike,
   toSafeSubscriber,
+  ObservableOperatorLike,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -48,10 +48,10 @@ export class AsyncEnumeratorImpl<TReq, T>
   }
 }
 
-class AsyncEnumerableImpl<TReq, TData> implements AsyncEnumerableLike<TReq, TData> {
-  constructor(
-    private readonly op: (src: ObservableLike<TReq>) => ObservableLike<TData>,
-  ) { };
+/** @ignore */
+export class AsyncEnumerableImpl<TReq, TData>
+  implements AsyncEnumerableLike<TReq, TData> {
+  constructor(private readonly op: ObservableOperatorLike<TReq, TData>) {}
 
   enumerateAsync(
     scheduler: SchedulerLike,
@@ -62,9 +62,9 @@ class AsyncEnumerableImpl<TReq, TData> implements AsyncEnumerableLike<TReq, TDat
     const observable = pipe(subject, this.op, publish(scheduler, replayCount));
 
     return new AsyncEnumeratorImpl(safeSubscriber, observable);
-  };
+  }
 }
 
 export const createAsyncEnumerable = <TReq, TData>(
-  op: (src: ObservableLike<TReq>) => ObservableLike<TData>,
+  op: ObservableOperatorLike<TReq, TData>,
 ) => new AsyncEnumerableImpl(op);
