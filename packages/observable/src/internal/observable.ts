@@ -5,7 +5,7 @@ import {
   dispose,
 } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { schedule, SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 
@@ -82,18 +82,22 @@ class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
     private readonly factory: (
       subscriber: SubscriberLike<T>,
-    ) => SchedulerContinuationLike,
+    ) => SchedulerContinuationLike | (() => void),
     readonly isSynchronous: boolean,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     const schedulerContinuation = this.factory(subscriber);
-    subscriber.schedule(schedulerContinuation);
+    if (schedulerContinuation instanceof Function) {
+      schedule(subscriber, schedulerContinuation);
+    } else {
+      subscriber.schedule(schedulerContinuation);
+    }
   }
 }
 
 /** @ignore */
 export const createScheduledObservable = <T>(
-  factory: (subscriber: SubscriberLike<T>) => SchedulerContinuationLike,
+  factory: (subscriber: SubscriberLike<T>) => SchedulerContinuationLike | (() => void),
   isSynchronous: boolean,
 ): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous);
