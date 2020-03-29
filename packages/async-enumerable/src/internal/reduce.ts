@@ -1,9 +1,9 @@
 import {
+  compute,
   enumerate,
   map as mapObs,
   merge,
   ObservableLike,
-  ofValue,
   onNotify,
   SubscriberLike,
   takeLast,
@@ -102,7 +102,7 @@ class ReduceObservable<TReq, TSrc, TAcc> implements ObservableLike<TAcc> {
 
     pipe(
       merge(
-        ofValue(this.initial()),
+        compute(this.initial),
         pipe(enumerator, withLatestFrom(eventEmitter, this.withLatestSelector)),
       ),
       onNotify(next => {

@@ -67,7 +67,7 @@ export const lift = <TReq, TA, TB>(
   const reqOps =
     enumerable instanceof LiftedAsyncEnumerable ? enumerable.reqOps : [];
 
-  return liftImpl(enumerable, obsOps, reqOps)
+  return liftImpl(enumerable, obsOps, reqOps);
 };
 
 export const liftReq = <TReqA, TReqB, T>(
@@ -80,5 +80,5 @@ export const liftReq = <TReqA, TReqB, T>(
       ? [op, ...enumerable.reqOps]
       : [op];
 
-  return liftImpl(enumerable, obsOps, reqOps)
+  return liftImpl(enumerable, obsOps, reqOps);
 };
