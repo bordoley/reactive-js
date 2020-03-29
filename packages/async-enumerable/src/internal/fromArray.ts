@@ -1,7 +1,5 @@
 import { pipe } from "@reactive-js/pipe";
 import {
-  concatAll,
-  fromArray as fromArrayObs,
   map,
   scan,
   takeFirst,
@@ -24,13 +22,7 @@ export const fromArray = <T>(
       pipe(
         obs,
         scan(fromArrayScanner, () => -1),
-        map(startIndex =>
-          pipe(
-            fromArrayObs<T>(values, { startIndex }),
-            takeFirst(),
-          ),
-        ),
-        concatAll<T>(),
+        map(i => values[i]),
         takeFirst(values.length),
       );
 

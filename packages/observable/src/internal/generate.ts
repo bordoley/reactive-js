@@ -1,8 +1,7 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
-
-const alwaysTrue = () => true;
+import { alwaysTrue } from "./functions";
 
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
