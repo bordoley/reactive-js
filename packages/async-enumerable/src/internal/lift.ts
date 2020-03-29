@@ -1,153 +1,84 @@
-import { pipe } from "@reactive-js/pipe";
 import {
-  MulticastObservableLike,
   ObservableLike,
-  SubscriberLike,
   ObservableOperatorLike,
-  publish,
+  map,
+  onNotify,
+  ignoreElements,
+  merge,
+  using,
 } from "@reactive-js/observable";
-import {
-  AsyncEnumeratorLike,
-  AsyncEnumerableLike,
-  AsyncEnumerableOperatorLike,
-} from "./interfaces";
-import {
-  SchedulerLike,
-  SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
-import { add, dispose, DisposableLike } from "@reactive-js/disposable";
-import { EnumeratorLike } from "@reactive-js/enumerable";
+import { AsyncEnumerableLike, AsyncEnumerableOperatorLike } from "./interfaces";
+import { AsyncEnumerableImpl } from "./createAsyncEnumerable";
+import { pipe } from "@reactive-js/pipe";
 
-class LiftedAsyncEnumeratorImpl<TReq, T>
-  implements AsyncEnumeratorLike<TReq, T> {
-  readonly add = add;
-  readonly dispose = dispose;
-  readonly isSynchronous = false;
-
+class LiftedAsyncEnumerable<TReqA, TReqB, TA, TB> extends AsyncEnumerableImpl<
+  TReqB,
+  TB
+> {
   constructor(
-    readonly notify: (req: TReq) => void,
-    readonly dispatch: (req: TReq) => void,
-    readonly observable: MulticastObservableLike<T>,
-    readonly disposable: DisposableLike,
-    readonly scheduler: SchedulerLike,
-  ) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
-
-  get now(): number {
-    return 0;
-  }
-
-  get subscriberCount(): number {
-    return this.observable.subscriberCount;
-  }
-
-  enumerate(): EnumeratorLike<void, T> {
-    return this.observable.enumerate();
-  }
-
-  schedule(continuation: SchedulerContinuationLike) {
-    this.scheduler.schedule(continuation);
-  }
-
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.observable.subscribe(subscriber);
+    op: ObservableOperatorLike<TReqB, TB>,
+    readonly src: AsyncEnumerableLike<TReqA, TA>,
+    readonly obsOps: ObservableOperatorLike<any, any>[],
+    readonly reqOps: ((req: any) => any)[],
+  ) {
+    super(op);
   }
 }
 
-interface AsyncEnumeratorRequestOperatorLike<TReqA, TReqB> {
-  (notify: (req: TReqA) => void): (ref: TReqB) => void;
-}
+const liftImpl = <TReqA, TReqB, TA, TB>(
+  enumerable: AsyncEnumerableLike<TReqA, TA>,
+  obsOps: ObservableOperatorLike<any, any>[],
+  reqOps: ((req: any) => any)[],
+) => {
+  const src =
+    enumerable instanceof LiftedAsyncEnumerable ? enumerable.src : enumerable;
+  const op = (requests: ObservableLike<TReqB>): ObservableLike<TB> =>
+    using(
+      scheduler => src.enumerateAsync(scheduler),
+      enumerator => {
+        const observable: ObservableLike<TB> = obsOps.reduce(
+          (acc: ObservableLike<unknown>, next) => next(acc),
+          enumerator,
+        );
 
-class LiftedAsyncEnumerable<TReq, T> implements AsyncEnumerableLike<TReq, T> {
-  constructor(
-    readonly source: AsyncEnumerableLike<TReq, T>,
-    readonly observableOperators: ReadonlyArray<
-      ObservableOperatorLike<any, any>
-    >,
-    readonly reqOperators: ReadonlyArray<
-      AsyncEnumeratorRequestOperatorLike<any, any>
-    >,
-  ) {}
+        const onRequest: ObservableLike<TB> = pipe(
+          requests,
+          map(
+            (req: TReqB): TReqA =>
+              reqOps.reduce((acc: unknown, next) => next(acc), req),
+          ),
+          onNotify((req: TReqA) => enumerator.dispatch(req)),
+          ignoreElements<unknown, TB>(),
+        );
 
-  enumerateAsync(
-    scheduler: SchedulerLike,
-    replayCount?: number,
-  ): AsyncEnumeratorLike<TReq, T> {
-    const enumerator = this.source.enumerateAsync(scheduler);
-
-    const notify: (req: any) => void =
-      enumerator instanceof LiftedAsyncEnumeratorImpl
-        ? enumerator.notify
-        : (req: any) => enumerator.notify(req);
-    const liftedNotify = this.reqOperators.reduce(
-      (acc, next) => next(acc),
-      notify,
+        return merge(observable, onRequest);
+      },
     );
+  return new LiftedAsyncEnumerable(op, src, obsOps, reqOps);
+};
 
-    const dispatch: (req: any) => void =
-      enumerator instanceof LiftedAsyncEnumeratorImpl
-        ? enumerator.dispatch
-        : (req: any) => enumerator.dispatch(req);
-    const lifteddispatch = this.reqOperators.reduce(
-      (acc, next) => next(acc),
-      dispatch,
-    );
-
-    const observable: ObservableLike<any> =
-      (enumerator as any).observable || enumerator;
-    const liftedObservable = pipe(
-      this.observableOperators.reduce((acc, next) => next(acc), observable),
-      publish(scheduler, replayCount),
-    );
-
-    const disposable = (enumerator as any).disposable || enumerator;
-    disposable.add(liftedObservable);
-
-    return new LiftedAsyncEnumeratorImpl(
-      liftedNotify,
-      lifteddispatch,
-      liftedObservable,
-      disposable,
-      scheduler,
-    );
-  }
-}
-
-export function lift<TReq, TA, TB>(
+export const lift = <TReq, TA, TB>(
   op: ObservableOperatorLike<TA, TB>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB> {
-  return enumerable => {
-    const source = (enumerable as any).source || enumerable;
-    const observableOperators =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? [...enumerable.observableOperators, op]
-        : [op];
-    const reqOperators =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? enumerable.reqOperators
-        : [];
+): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB> => enumerable => {
+  const obsOps =
+    enumerable instanceof LiftedAsyncEnumerable
+      ? [...enumerable.obsOps, op]
+      : [op];
+  const reqOps =
+    enumerable instanceof LiftedAsyncEnumerable ? enumerable.reqOps : [];
 
-    return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);
-  };
-}
+  return liftImpl(enumerable, obsOps, reqOps)
+};
 
-export function liftReq<TReqA, TReqB, T>(
-  op: AsyncEnumeratorRequestOperatorLike<TReqA, TReqB>,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T> {
-  return enumerable => {
-    const source = (enumerable as any).source || enumerable;
-    const observableOperators =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? enumerable.observableOperators
-        : [];
-    const reqOperators =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? [...enumerable.reqOperators, op]
-        : [op];
+export const liftReq = <TReqA, TReqB, T>(
+  op: (req: TReqB) => TReqA,
+): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T> => enumerable => {
+  const obsOps =
+    enumerable instanceof LiftedAsyncEnumerable ? enumerable.obsOps : [];
+  const reqOps =
+    enumerable instanceof LiftedAsyncEnumerable
+      ? [op, ...enumerable.reqOps]
+      : [op];
 
-    return new LiftedAsyncEnumerable(source, observableOperators, reqOperators);
-  };
-}
+  return liftImpl(enumerable, obsOps, reqOps)
+};
