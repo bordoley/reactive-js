@@ -1,4 +1,5 @@
 import { DisposableLike } from "@reactive-js/disposable";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { enumerate } from "./observable";
 
@@ -8,14 +9,14 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
   readonly isSynchronous = false;
 
   constructor(
-    private readonly resourceFactory: () => TResource | TResource[],
+    private readonly resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
     private readonly observableFactory: (
       ...resources: TResource[]
     ) => ObservableLike<T>,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
-    const resources = this.resourceFactory();
+    const resources = this.resourceFactory(subscriber);
     const observableFactory = this.observableFactory;
 
     if (Array.isArray(resources)) {
@@ -31,7 +32,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
 }
 
 export function using<TResource extends DisposableLike, T>(
-  resourceFactory: () => TResource,
+  resourceFactory: (scheduler: SchedulerLike) => TResource,
   observableFactory: (resource: TResource) => ObservableLike<T>,
 ): ObservableLike<T>;
 
@@ -40,7 +41,7 @@ export function using<
   TResource2 extends DisposableLike,
   T
 >(
-  resourceFactory: () => [TResource1, TResource2],
+  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2],
   observableFactory: (r1: TResource1, r2: TResource2) => ObservableLike<T>,
 ): ObservableLike<T>;
 
@@ -50,7 +51,7 @@ export function using<
   TResource3 extends DisposableLike,
   T
 >(
-  resourceFactory: () => [TResource1, TResource2, TResource3],
+  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2, TResource3],
   observableFactory: (
     r1: TResource1,
     r2: TResource2,
@@ -65,7 +66,7 @@ export function using<
   TResource4 extends DisposableLike,
   T
 >(
-  resourceFactory: () => [TResource1, TResource2, TResource3, TResource4],
+  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2, TResource3, TResource4],
   observableFactory: (
     r1: TResource1,
     r2: TResource2,
@@ -82,7 +83,7 @@ export function using<
   TResource5 extends DisposableLike,
   T
 >(
-  resourceFactory: () => [
+  resourceFactory: (scheduler: SchedulerLike) => [
     TResource1,
     TResource2,
     TResource3,
@@ -102,7 +103,7 @@ export function using<
  * will be disposed when the ObservableLike disposes it's only subscription.
  */
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(
-  resourceFactory: () => TResource | TResource[],
+  resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,
 ): ObservableLike<T> {
   return new UsingObservable(resourceFactory, observableFactory);

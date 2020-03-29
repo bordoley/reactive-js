@@ -1,59 +1,18 @@
 import { pipe } from "@reactive-js/pipe";
 import {
   distinctUntilChanged,
-  ignoreElements,
   merge,
   onNotify,
   scan,
+  using,
+  map,
   ObservableLike,
 } from "@reactive-js/observable";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   StateUpdaterLike,
-  AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "./interfaces";
-import { createAsyncEnumerator } from "./createAsyncEnumerable";
-
-class DelegatingStateStoreAsyncEnumerable<T>
-  implements AsyncEnumerableLike<StateUpdaterLike<T>, T> {
-  constructor(
-    private readonly enumerable: AsyncEnumerableLike<T, T>,
-    private readonly initialState: () => T,
-    private readonly equals?: (a: T, b: T) => boolean,
-  ) {}
-
-  enumerateAsync(scheduler: SchedulerLike, replayCount?: number) {
-    const enumerator = this.enumerable.enumerateAsync(scheduler);
-
-    const operator = (
-      obs: ObservableLike<StateUpdaterLike<T>>,
-    ): ObservableLike<T> => {
-      const onIteratorNextChangedObs: ObservableLike<T> = pipe(
-        enumerator,
-        onNotify(v => retval.dispatch(_ => v)),
-        ignoreElements(),
-      );
-
-      const stateObs = pipe(
-        obs,
-        scan(
-          (acc: T, next: StateUpdaterLike<T>) => next(acc),
-          this.initialState,
-        ),
-        distinctUntilChanged(this.equals),
-        onNotify((next: T) => enumerator.dispatch(next)),
-      );
-
-      return merge<T>(onIteratorNextChangedObs, stateObs);
-    };
-
-    const retval = createAsyncEnumerator(operator, scheduler, replayCount).add(
-      enumerator,
-    );
-    return retval;
-  }
-}
+import { createAsyncEnumerable } from "./createAsyncEnumerable";
 
 /**
  * Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdaterLike<T>, T>`.
@@ -65,5 +24,26 @@ class DelegatingStateStoreAsyncEnumerable<T>
 export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => enumerable =>
-  new DelegatingStateStoreAsyncEnumerable(enumerable, initialState, equals);
+): AsyncEnumerableOperatorLike<T, T, StateUpdaterLike<T>, T> => enumerable => {
+  const operator = (observable: ObservableLike<StateUpdaterLike<T>>) => using(
+    scheduler => enumerable.enumerateAsync(scheduler),
+    enumerator => {
+      const src = merge(
+        observable,
+        pipe(enumerator, map(v => (_ => v)))
+      );
+
+      return pipe(
+        src,
+        scan(
+          (acc: T, next: StateUpdaterLike<T>) => next(acc),
+          initialState,
+        ),
+        distinctUntilChanged(equals),
+        onNotify((next: T) => enumerator.dispatch(next)),
+      );
+    },
+  );
+
+  return createAsyncEnumerable(operator);
+};
