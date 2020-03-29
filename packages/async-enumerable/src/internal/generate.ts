@@ -20,5 +20,4 @@ export const generate = <T>(
   const operator = (obs: ObservableLike<void>) =>
     pipe(obs, scan(generateScanner(generator), initialValue));
   return createAsyncEnumerable(operator);
-}
-
+};

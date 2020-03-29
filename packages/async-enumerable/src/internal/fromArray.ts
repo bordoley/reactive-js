@@ -1,10 +1,5 @@
 import { pipe } from "@reactive-js/pipe";
-import {
-  map,
-  scan,
-  takeFirst,
-  ObservableLike,
-} from "@reactive-js/observable";
+import { map, scan, takeFirst, ObservableLike } from "@reactive-js/observable";
 import { AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
 
@@ -19,12 +14,12 @@ export const fromArray = <T>(
   values: readonly T[],
 ): AsyncEnumerableLike<void, T> => {
   const operator = (obs: ObservableLike<void>) =>
-      pipe(
-        obs,
-        scan(fromArrayScanner, () => -1),
-        map(i => values[i]),
-        takeFirst(values.length),
-      );
+    pipe(
+      obs,
+      scan(fromArrayScanner, () => -1),
+      map(i => values[i]),
+      takeFirst(values.length),
+    );
 
   return createAsyncEnumerable(operator);
 };

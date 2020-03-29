@@ -50,7 +50,10 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-const _history: AsyncEnumerableLike<LocationLike, LocationLike> = createAsyncEnumerable(historyOperator);
+const _history: AsyncEnumerableLike<
+  LocationLike,
+  LocationLike
+> = createAsyncEnumerable(historyOperator);
 
 export const history: AsyncEnumerableLike<
   LocationLike,
