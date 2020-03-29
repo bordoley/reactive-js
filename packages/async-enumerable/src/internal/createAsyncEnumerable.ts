@@ -6,7 +6,6 @@ import {
   ObservableLike,
   publish,
   SubscriberLike,
-  ObservableOperatorLike,
   SafeSubscriberLike,
   toSafeSubscriber,
 } from "@reactive-js/observable";
@@ -48,21 +47,6 @@ export class AsyncEnumeratorImpl<TReq, T>
     this.observable.subscribe(subscriber);
   }
 }
-
-/** @ignore */
-export const createAsyncEnumerator = <TReq, T>(
-  operator: ObservableOperatorLike<TReq, T>,
-  scheduler: SchedulerLike,
-  replayCount = 0,
-): AsyncEnumeratorLike<TReq, T> => {
-  const subject = createSubject<TReq>(scheduler);
-
-  const safeSubscriber = toSafeSubscriber(subject);
-  const observable = pipe(subject, operator, publish(scheduler, replayCount));
-
-  return new AsyncEnumeratorImpl(safeSubscriber, observable);
-};
-
 
 class AsyncEnumerableImpl<TReq, TData> implements AsyncEnumerableLike<TReq, TData> {
   constructor(

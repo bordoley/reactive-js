@@ -1943,7 +1943,13 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 ▪ **resourceFactory**: *function*
 
-▸ (): *TResource*
+▸ (`scheduler`: SchedulerLike): *TResource*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 ▪ **observableFactory**: *function*
 
@@ -1974,7 +1980,13 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 ▪ **resourceFactory**: *function*
 
-▸ (): *[TResource1, TResource2]*
+▸ (`scheduler`: SchedulerLike): *[TResource1, TResource2]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 ▪ **observableFactory**: *function*
 
@@ -2008,7 +2020,13 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 ▪ **resourceFactory**: *function*
 
-▸ (): *[TResource1, TResource2, TResource3]*
+▸ (`scheduler`: SchedulerLike): *[TResource1, TResource2, TResource3]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 ▪ **observableFactory**: *function*
 
@@ -2045,7 +2063,13 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 ▪ **resourceFactory**: *function*
 
-▸ (): *[TResource1, TResource2, TResource3, TResource4]*
+▸ (`scheduler`: SchedulerLike): *[TResource1, TResource2, TResource3, TResource4]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 ▪ **observableFactory**: *function*
 
@@ -2085,7 +2109,13 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 ▪ **resourceFactory**: *function*
 
-▸ (): *[TResource1, TResource2, TResource3, TResource4, TResource5]*
+▸ (`scheduler`: SchedulerLike): *[TResource1, TResource2, TResource3, TResource4, TResource5]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 ▪ **observableFactory**: *function*
 
