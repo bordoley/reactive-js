@@ -42,21 +42,13 @@ class ReactiveCacheSchedulerContinuation<T>
 
     shouldYield = shouldYield || alwaysFalse;
 
-    for (const key of garbage) {
-      const [enumerator] = cache.get(key) || [undefined, undefined];
-
-      if (enumerator === undefined) {
-        this.dispose({ cause: new Error() });
-        break;
-      } else if (enumerator.subscriberCount > 0) {
+    for (const [, enumerator] of garbage) {
+      if (enumerator.subscriberCount > 0) {
         this.dispose({ cause: new Error() });
         break;
       } else {
         enumerator.dispose();
-        cache.delete(key);
       }
-
-      garbage.delete(key);
 
       // only delete as many entries as we need to.
       const hasMoreToCleanup = cache.size > maxCount;
@@ -78,15 +70,21 @@ export interface ReactiveCacheLike<T> extends DisposableLike {
   set(key: string, value: ObservableLike<T>): ObservableLike<T>;
 }
 
-const markAsGarbage = <T>(reactiveCache: ReactiveCacheImpl<T>, key: string) => {
-  reactiveCache.garbage.add(key);
+const markAsGarbage = <T>(
+  reactiveCache: ReactiveCacheImpl<T>,
+  key: string,
+  enumerator: AsyncEnumeratorLike<ObservableLike<T>, T>,
+) => {
+  reactiveCache.garbage.set(key, enumerator);
 
   if (
     reactiveCache.cache.size > reactiveCache.maxCount &&
     !reactiveCache.cleaning
   ) {
     const continuation = new ReactiveCacheSchedulerContinuation(reactiveCache);
-    continuation.add(() => (reactiveCache.cleaning = false));
+    continuation.add(() => {
+      reactiveCache.cleaning = false;
+    });
     reactiveCache.cleaning = true;
     reactiveCache.cleanupScheduler.schedule(continuation);
   }
@@ -103,7 +101,10 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
   readonly dispose = dispose;
 
   // Set of keys that are eligible to be garbage collected
-  readonly garbage: Set<string> = new Set();
+  readonly garbage: Map<
+    string,
+    AsyncEnumeratorLike<ObservableLike<T>, T>
+  > = new Map();
 
   constructor(
     private readonly dispatchScheduler: SchedulerLike,
@@ -143,7 +144,10 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
         switchAll(),
         this.dispatchScheduler,
         1,
-      );
+      ).add(() => {
+        this.cache.delete(key);
+        this.garbage.delete(key);
+      });
 
       const onSubscribeUnmark = () => {
         this.garbage.delete(key);
@@ -153,7 +157,7 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
         this.add(
           schedule(this.cleanupScheduler, () => {
             if (enumerator.subscriberCount === 0) {
-              markAsGarbage(this, key);
+              markAsGarbage(this, key, enumerator);
             }
           }),
         );
@@ -169,7 +173,7 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
       this.cache.set(key, cachedValue);
 
       // Mark the key as garbage until it is subscribed to.
-      markAsGarbage(this, key);
+      markAsGarbage(this, key, enumerator);
     }
 
     const [enumerator, observable] = cachedValue;
