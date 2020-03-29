@@ -42,6 +42,7 @@ export { lift } from "./internal/lift";
 export { map } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { observe, onDispose, onError, onNotify } from "./internal/observe";
+export { onSubscribe } from "./internal/onSubscribe";
 export { publish } from "./internal/publish";
 export { reduce } from "./internal/reduce";
 export { repeat, retry } from "./internal/repeat";
