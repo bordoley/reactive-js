@@ -6,7 +6,7 @@ interface CombineLatestCtx<T> {
   completedCount: number;
   readonly latest: Array<unknown>;
   readyCount: number;
-  readonly selector: (...values: unknown[]) => T,
+  readonly selector: (...values: unknown[]) => T;
   readonly subscriber: SubscriberLike<T>;
   readonly totalCount: number;
 }
@@ -145,7 +145,6 @@ export function combineLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  
   const factory = (subscriber: SubscriberLike<T>) => {
     return () => {
       const totalCount = observables.length;
@@ -156,15 +155,15 @@ export function combineLatest<T>(
         selector,
         subscriber,
         totalCount,
-      }
+      };
 
       for (let index = 0; index < totalCount; index++) {
         const innerSubscriber = new CombineLatestSubscriber(ctx, index);
         observables[index].subscribe(innerSubscriber);
       }
-    }
+    };
   };
-   
+
   return createScheduledObservable(
     factory,
     observables.every(obs => obs.isSynchronous),
