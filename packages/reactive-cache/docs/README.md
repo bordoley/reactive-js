@@ -37,7 +37,7 @@ ___
 
 ### `Const` getOrSet
 
-▸ **getOrSet**<**T**>(`key`: string, `defaultValue`: ObservableLike‹T›): *OperatorLike‹[ReactiveCacheLike](interfaces/reactivecachelike.md)‹T›, ObservableLike‹T››*
+▸ **getOrSet**<**T**>(`cache`: [ReactiveCacheLike](interfaces/reactivecachelike.md)‹T›, `key`: string, `defaultValue`: ObservableLike‹T›): *ObservableLike‹T›*
 
 **Type parameters:**
 
@@ -47,7 +47,8 @@ ___
 
 Name | Type |
 ------ | ------ |
+`cache` | [ReactiveCacheLike](interfaces/reactivecachelike.md)‹T› |
 `key` | string |
 `defaultValue` | ObservableLike‹T› |
 
-**Returns:** *OperatorLike‹[ReactiveCacheLike](interfaces/reactivecachelike.md)‹T›, ObservableLike‹T››*
+**Returns:** *ObservableLike‹T›*
