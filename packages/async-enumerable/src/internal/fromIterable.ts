@@ -21,21 +21,22 @@ export const fromIterable = <T>(
   iterable: Iterable<T>,
 ): AsyncEnumerableLike<void, T> => {
   const enumerable = fromIterableObs(iterable);
-  const operator = (obs: ObservableLike<void>) => 
+  const operator = (obs: ObservableLike<void>) =>
     using(
       () => enumerable.enumerate(),
-      enumerator => pipe(
-        obs,
-        map(_ => {
-          if (enumerator.move()) {
-            return enumerator.current;
-          } else {
-            throw doneError;
-          }
-        }),
-        catchError(error => (error === doneError ? empty() : undefined)),
-      ),
+      enumerator =>
+        pipe(
+          obs,
+          map(_ => {
+            if (enumerator.move()) {
+              return enumerator.current;
+            } else {
+              throw doneError;
+            }
+          }),
+          catchError(error => (error === doneError ? empty() : undefined)),
+        ),
     );
 
   return createAsyncEnumerable(operator);
-}
+};

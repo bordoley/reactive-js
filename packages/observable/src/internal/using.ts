@@ -9,7 +9,9 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
   readonly isSynchronous = false;
 
   constructor(
-    private readonly resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
+    private readonly resourceFactory: (
+      scheduler: SchedulerLike,
+    ) => TResource | TResource[],
     private readonly observableFactory: (
       ...resources: TResource[]
     ) => ObservableLike<T>,
@@ -20,7 +22,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     const observableFactory = this.observableFactory;
 
     if (Array.isArray(resources)) {
-      for(const resource of resources) {
+      for (const resource of resources) {
         subscriber.add(resource as DisposableLike);
       }
       observableFactory(...resources).subscribe(subscriber);
@@ -51,7 +53,9 @@ export function using<
   TResource3 extends DisposableLike,
   T
 >(
-  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2, TResource3],
+  resourceFactory: (
+    scheduler: SchedulerLike,
+  ) => [TResource1, TResource2, TResource3],
   observableFactory: (
     r1: TResource1,
     r2: TResource2,
@@ -66,7 +70,9 @@ export function using<
   TResource4 extends DisposableLike,
   T
 >(
-  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2, TResource3, TResource4],
+  resourceFactory: (
+    scheduler: SchedulerLike,
+  ) => [TResource1, TResource2, TResource3, TResource4],
   observableFactory: (
     r1: TResource1,
     r2: TResource2,
@@ -83,13 +89,9 @@ export function using<
   TResource5 extends DisposableLike,
   T
 >(
-  resourceFactory: (scheduler: SchedulerLike) => [
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    TResource5,
-  ],
+  resourceFactory: (
+    scheduler: SchedulerLike,
+  ) => [TResource1, TResource2, TResource3, TResource4, TResource5],
   observableFactory: (
     r1: TResource1,
     r2: TResource2,
