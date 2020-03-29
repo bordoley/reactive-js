@@ -60,6 +60,7 @@
 * [onDispose](README.md#const-ondispose)
 * [onError](README.md#const-onerror)
 * [onNotify](README.md#const-onnotify)
+* [onSubscribe](README.md#const-onsubscribe)
 * [publish](README.md#const-publish)
 * [reduce](README.md#const-reduce)
 * [repeat](README.md#repeat)
@@ -1245,6 +1246,26 @@ The function that is invoked when the observable source produces values.
 Name | Type |
 ------ | ------ |
 `next` | T |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` onSubscribe
+
+▸ **onSubscribe**<**T**>(`f`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+Executes a side-effect when the observable is subscribed.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (): *void*
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
