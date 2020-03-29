@@ -98,6 +98,8 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 
 /** @ignore */
 export const createScheduledObservable = <T>(
-  factory: (subscriber: SubscriberLike<T>) => SchedulerContinuationLike | (() => void),
+  factory: (
+    subscriber: SubscriberLike<T>,
+  ) => SchedulerContinuationLike | (() => void),
   isSynchronous: boolean,
 ): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous);
