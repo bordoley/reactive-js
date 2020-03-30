@@ -24,6 +24,7 @@ export { fromIterable } from "./internal/fromIterable";
 export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
+export { sink } from "./internal/sink";
 
 export {
   createActionReducer,
