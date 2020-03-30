@@ -105,32 +105,30 @@ test("subscribing to disposed value", () => {
   let value = "";
 
   pipe(
-    fromArray(
-      [
-        () => {
-          observable = getOrSet(cache, "a", ofValue("a"));
-          getOrSet(cache, "b", ofValue("b"));
-        },
-        () => {
-          pipe(
-            observable,
-            onNotify(x => {
-              value = x;
-            }),
-            subscribe(scheduler),
-          );
-        },
-        () => {
-          expect(value).toEqual("");
-        },
-      ]
-    ),
+    fromArray([
+      () => {
+        observable = getOrSet(cache, "a", ofValue("a"));
+        getOrSet(cache, "b", ofValue("b"));
+      },
+      () => {
+        pipe(
+          observable,
+          onNotify(x => {
+            value = x;
+          }),
+          subscribe(scheduler),
+        );
+      },
+      () => {
+        expect(value).toEqual("");
+      },
+    ]),
     forEach(
       () => scheduler,
       x => x(),
     ),
   );
-})
+});
 
 test("getOrSet", () => {
   const scheduler = createVirtualTimeScheduler();
