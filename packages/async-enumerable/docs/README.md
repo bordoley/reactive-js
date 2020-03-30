@@ -38,6 +38,7 @@
 * [liftReq](README.md#const-liftreq)
 * [reduce](README.md#const-reduce)
 * [reduceAsync](README.md#const-reduceasync)
+* [sink](README.md#const-sink)
 * [toStateStore](README.md#const-tostatestore)
 
 ## Type aliases
@@ -447,6 +448,27 @@ Name | Type |
 ▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
 
 **Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+
+___
+
+### `Const` sink
+
+▸ **sink**<**TReq**, **T**>(`src`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, `dest`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq›): *ObservableLike‹void›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T› |
+`dest` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq› |
+
+**Returns:** *ObservableLike‹void›*
 
 ___
 
