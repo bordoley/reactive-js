@@ -11,52 +11,55 @@ import {
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 
+const operator = <TData>(
+  factory: () => Readable,
+  selector: (data: unknown) => TData,
+) => (requests: ObservableLike<void>) =>
+  createObservable<TData>(subscriber => {
+    const readable = factory();
+
+    const onData = (chunk: any) => {
+      readable.pause();
+      const data = selector(chunk);
+      subscriber.dispatch(data);
+    };
+    readable.on("data", onData);
+
+    const onEnd = () => {
+      subscriber.dispose();
+    };
+    readable.on("end", onEnd);
+
+    const onError = (cause: any) => {
+      subscriber.dispose({ cause });
+    };
+    readable.on("error", onError);
+
+    subscriber
+      .add(() => {
+        readable.pause();
+        readable.removeListener("data", onData);
+        readable.removeListener("end", onEnd);
+        readable.removeListener("error", onError);
+        readable.destroy();
+      })
+      .add(
+        pipe(
+          requests,
+          onNotify(_ => {
+            if (readable.isPaused()) {
+              readable.resume();
+            }
+          }),
+          subscribe(subscriber),
+        ),
+      );
+
+    readable.pause();
+  });
+
 export const createReadableAsyncEnumerable = <TData>(
   factory: () => Readable,
   selector: (data: unknown) => TData,
-): AsyncEnumerableLike<void, TData> => {
-  const operator = (requests: ObservableLike<void>) =>
-    createObservable<TData>(subscriber => {
-      const readable = factory();
-
-      subscriber
-        .add(() => {
-          readable.pause();
-          readable.removeAllListeners();
-          readable.destroy();
-        })
-        .add(
-          pipe(
-            requests,
-            onNotify(_ => {
-              if (readable.isPaused()) {
-                readable.resume();
-              }
-            }),
-            subscribe(subscriber),
-          ),
-        );
-
-      readable.on("data", chunk => {
-        readable.pause();
-        const data = selector(chunk);
-        subscriber.dispatch(data);
-      });
-
-      readable.on("close", () => {
-        subscriber.dispose();
-      });
-
-      readable.on("end", () => {
-        subscriber.dispose();
-      });
-
-      readable.on("error", cause => {
-        subscriber.dispose({ cause });
-      });
-
-      readable.pause();
-    });
-
-  return createAsyncEnumerable(operator);
-};
+): AsyncEnumerableLike<void, TData> =>
+  createAsyncEnumerable(operator(factory, selector));
