@@ -2,56 +2,116 @@ import { Writable } from "stream";
 import {
   createAsyncEnumerable,
   AsyncEnumerableLike,
+  AsyncEnumeratorLike,
+  createAsyncEnumerator,
 } from "@reactive-js/async-enumerable";
 import {
-  ObservableLike,
-  createObservable,
-  subscribe,
-  onNotify,
+  AbstractDelegatingSubscriber,
+  SafeSubscriberLike,
+  ObservableOperatorLike,
+  toSafeSubscriber,
+  lift,
+  SubscriberOperatorLike,
+  using,
 } from "@reactive-js/observable";
+import { ReadableEvent, ReadableEventType, ReadableMode } from "./readable";
+import {
+  createDisposable,
+  createDisposableWrapper,
+} from "@reactive-js/disposable";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
 
-// FIXME: add variant that supports corking
+class WritableSubscriber extends AbstractDelegatingSubscriber<
+  ReadableEvent,
+  ReadableMode
+> {
+  constructor(
+    delegate: SafeSubscriberLike<ReadableMode>,
+    private readonly writable: Writable,
+  ) {
+    super(delegate);
 
-const operator = <TData>(factory: () => Writable) => (
-  requests: ObservableLike<TData>,
-) =>
-  createObservable<void>(subscriber => {
-    const writable = factory();
-
-    const onDrain = () => {
-      subscriber.dispatch();
-    };
-    writable.on("drain", onDrain);
-
-    const onError = (cause: unknown) => {
-      subscriber.dispose({ cause });
-    };
-    writable.on("error", onError);
-
-    const requestSubscription = pipe(
-      requests,
-      onNotify(data => {
-        if (writable.write(data)) {
-          subscriber.dispatch();
-        }
-      }),
-      subscribe(subscriber),
-    );
-
-    subscriber.add(requestSubscription).add(() => {
-      writable.end();
-      writable.removeListener("drain", onDrain);
-      writable.removeListener("error", onError);
-      writable.destroy();
+    this.add(e => {
+      if (e !== undefined) {
+        delegate.dispose(e);
+      }
     });
+  }
 
-    // Dispatch an initial ready event to enable sinking an AsyncEnumerator source
-    subscriber.dispatch();
+  notify(data: ReadableEvent) {
+    switch (data.type) {
+      case ReadableEventType.Data: {
+        debugger;
+        if (!this.writable.write(data.chunk)) {
+          this.delegate.notify(ReadableMode.Pause);
+        }
+        break;
+      }
+      case ReadableEventType.End: {
+        this.writable.end();
+        break;
+      }
+    }
+  }
+}
+
+const subscriberOperator = (
+  writable: Writable,
+): SubscriberOperatorLike<ReadableEvent, ReadableMode> => subscriber => {
+  const writableDisposable = createDisposable(() => {
+    writable.removeListener("drain", onDrain);
+    writable.removeListener("error", onError);
+    writable.removeListener("finish", onFinish);
   });
+  const safeSubscriber = toSafeSubscriber(subscriber).add(writableDisposable);
 
-export const createWritableAsyncEnumerable = <TData>(
+  const onDrain = () => {
+    safeSubscriber.dispatch(ReadableMode.Resume);
+  };
+  writable.on("drain", onDrain);
+
+  const onError = (cause: unknown) => {
+    subscriber.dispose({ cause });
+  };
+  writable.on("error", onError);
+
+  const onFinish = () => {
+    safeSubscriber.dispose();
+  };
+  writable.on("finish", onFinish);
+
+  // Dispatch an initial ready event to enable sinking an AsyncEnumerator source
+  safeSubscriber.dispatch(ReadableMode.Resume);
+
+  return new WritableSubscriber(safeSubscriber, writable);
+};
+
+const operator = (writable: Writable) =>
+  lift(subscriberOperator(writable), false);
+
+export const createWritableAsyncEnumerator = (
+  writable: Writable,
+  scheduler: SchedulerLike,
+  replayCount?: number,
+): AsyncEnumeratorLike<ReadableEvent, ReadableMode> =>
+  createAsyncEnumerator(operator(writable), scheduler, replayCount);
+
+const disposeWritable = (writable: Writable) => {
+  writable.destroy();
+};
+
+const observableOperator = (
   factory: () => Writable,
-): AsyncEnumerableLike<TData, void> => {
-  return createAsyncEnumerable(operator(factory));
+): ObservableOperatorLike<ReadableEvent, ReadableMode> => observable =>
+  using(
+    _ => createDisposableWrapper(factory(), disposeWritable),
+    writable => pipe(observable, operator(writable.value)),
+  );
+
+// FIXME: add variant that supports corking
+export const createWritableAsyncEnumerable = (
+  factory: () => Writable,
+): AsyncEnumerableLike<ReadableEvent, ReadableMode> => {
+  return createAsyncEnumerable(observableOperator(factory));
 };

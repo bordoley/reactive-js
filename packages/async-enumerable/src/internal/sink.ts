@@ -4,12 +4,11 @@ import {
   createObservable,
   endWith,
 } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+import { OperatorLike, pipe } from "@reactive-js/pipe";
 
 export const sink = <TReq, T>(
-  src: AsyncEnumerableLike<TReq, T>,
   dest: AsyncEnumerableLike<T, TReq>,
-): ObservableLike<void> =>
+): OperatorLike<AsyncEnumerableLike<TReq, T>, ObservableLike<void>> => src =>
   pipe(
     createObservable<void>(subscriber => {
       const destEnumerator = dest.enumerateAsync(subscriber);

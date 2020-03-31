@@ -9,6 +9,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [SerialDisposableLike](serialdisposablelike.md)
 
+  ↳ [DisposableWrapperLike](disposablewrapperlike.md)
+
 ## Index
 
 ### Properties

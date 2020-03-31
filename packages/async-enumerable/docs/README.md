@@ -453,7 +453,7 @@ ___
 
 ### `Const` sink
 
-▸ **sink**<**TReq**, **T**>(`src`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, `dest`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq›): *ObservableLike‹void›*
+▸ **sink**<**TReq**, **T**>(`dest`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq›): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
 
 **Type parameters:**
 
@@ -465,10 +465,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`src` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T› |
 `dest` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq› |
 
-**Returns:** *ObservableLike‹void›*
+**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
 
 ___
 

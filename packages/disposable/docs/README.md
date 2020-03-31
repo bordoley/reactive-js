@@ -6,6 +6,7 @@
 ### Interfaces
 
 * [DisposableLike](interfaces/disposablelike.md)
+* [DisposableWrapperLike](interfaces/disposablewrapperlike.md)
 * [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
@@ -17,6 +18,7 @@
 
 * [add](README.md#add)
 * [createDisposable](README.md#const-createdisposable)
+* [createDisposableWrapper](README.md#const-createdisposablewrapper)
 * [createSerialDisposable](README.md#const-createserialdisposable)
 * [dispose](README.md#dispose)
 
@@ -62,6 +64,34 @@ Name | Type | Description |
 `onDispose?` | undefined &#124; function | Optional teardown logic to attach to the newly created disposable.  |
 
 **Returns:** *[DisposableLike](interfaces/disposablelike.md)*
+
+___
+
+### `Const` createDisposableWrapper
+
+▸ **createDisposableWrapper**<**T**>(`value`: T, `cleanup`: function): *[DisposableWrapperLike](interfaces/disposablewrapperlike.md)‹T›*
+
+Creates a new DisposableWrapperLike instance.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **value**: *T*
+
+▪ **cleanup**: *function*
+
+▸ (`v`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | T |
+
+**Returns:** *[DisposableWrapperLike](interfaces/disposablewrapperlike.md)‹T›*
 
 ___
 

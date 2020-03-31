@@ -2,64 +2,124 @@ import { Readable } from "stream";
 import {
   createAsyncEnumerable,
   AsyncEnumerableLike,
+  createAsyncEnumerator,
+  AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
 import {
-  createObservable,
-  ObservableLike,
-  onNotify,
-  subscribe,
+  AbstractDelegatingSubscriber,
+  SafeSubscriberLike,
+  toSafeSubscriber,
+  lift,
+  ObservableOperatorLike,
+  SubscriberOperatorLike,
+  using,
 } from "@reactive-js/observable";
+import {
+  createDisposable,
+  createDisposableWrapper,
+} from "@reactive-js/disposable";
+import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
 
-const operator = <TData>(
-  factory: () => Readable,
-  selector: (data: unknown) => TData,
-) => (requests: ObservableLike<void>) =>
-  createObservable<TData>(subscriber => {
-    const readable = factory();
+export const enum ReadableMode {
+  Resume = 1,
+  Pause = 2,
+}
 
-    const onData = (chunk: any) => {
-      readable.pause();
-      const data = selector(chunk);
-      subscriber.dispatch(data);
-    };
-    readable.on("data", onData);
+export const enum ReadableEventType {
+  Data = 1,
+  End = 2,
+}
 
-    const onEnd = () => {
-      subscriber.dispose();
-    };
-    readable.on("end", onEnd);
+export type ReadableEvent =
+  | { type: ReadableEventType.Data; chunk: Buffer }
+  | { type: ReadableEventType.End };
 
-    const onError = (cause: any) => {
-      subscriber.dispose({ cause });
-    };
-    readable.on("error", onError);
+class ReadableSubscriber extends AbstractDelegatingSubscriber<
+  ReadableMode,
+  ReadableEvent
+> {
+  constructor(
+    delegate: SafeSubscriberLike<ReadableEvent>,
+    private readonly readable: Readable,
+  ) {
+    super(delegate);
 
-    subscriber
-      .add(() => {
+    this.add(e => {
+      if (e !== undefined) {
+        delegate.dispose(e);
+      }
+    });
+  }
+
+  notify(data: ReadableMode) {
+    const readable = this.readable;
+    switch (data) {
+      case ReadableMode.Pause:
         readable.pause();
-        readable.removeListener("data", onData);
-        readable.removeListener("end", onEnd);
-        readable.removeListener("error", onError);
-        readable.destroy();
-      })
-      .add(
-        pipe(
-          requests,
-          onNotify(_ => {
-            if (readable.isPaused()) {
-              readable.resume();
-            }
-          }),
-          subscribe(subscriber),
-        ),
-      );
+        break;
+      case ReadableMode.Resume:
+        readable.resume();
+        break;
+    }
+  }
+}
 
+const subscriberOperator = (
+  readable: Readable,
+): SubscriberOperatorLike<ReadableMode, ReadableEvent> => subscriber => {
+  const readableDisposable = createDisposable(() => {
     readable.pause();
+    readable.removeListener("data", onData);
+    readable.removeListener("end", onEnd);
+    readable.removeListener("error", onError);
   });
+  const safeSubscriber = toSafeSubscriber(subscriber).add(readableDisposable);
 
-export const createReadableAsyncEnumerable = <TData>(
+  const onData = (chunk: Buffer) => {
+    safeSubscriber.dispatch({ type: ReadableEventType.Data, chunk });
+  };
+  readable.on("data", onData);
+
+  const onEnd = () => {
+    safeSubscriber.dispatch({ type: ReadableEventType.End });
+    readableDisposable.dispose();
+  };
+  readable.on("end", onEnd);
+
+  const onError = (cause: any) => {
+    subscriber.dispose({ cause });
+  };
+  readable.on("error", onError);
+
+  readable.pause();
+
+  return new ReadableSubscriber(safeSubscriber, readable);
+};
+
+const operator = (readable: Readable) =>
+  lift(subscriberOperator(readable), false);
+
+export const createReadableAsyncEnumerator = (
+  readable: Readable,
+  scheduler: SchedulerLike,
+  replayCount?: number,
+): AsyncEnumeratorLike<ReadableMode, ReadableEvent> =>
+  createAsyncEnumerator(operator(readable), scheduler, replayCount);
+
+const disposeReadable = (readable: Readable) => {
+  readable.destroy();
+};
+
+const observableOperator = (
   factory: () => Readable,
-  selector: (data: unknown) => TData,
-): AsyncEnumerableLike<void, TData> =>
-  createAsyncEnumerable(operator(factory, selector));
+): ObservableOperatorLike<ReadableMode, ReadableEvent> => observable =>
+  using(
+    _ => createDisposableWrapper(factory(), disposeReadable),
+    readable => pipe(observable, operator(readable.value)),
+  );
+
+export const createReadableAsyncEnumerable = (
+  factory: () => Readable,
+): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
+  createAsyncEnumerable(observableOperator(factory));
