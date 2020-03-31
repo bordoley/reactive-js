@@ -41,7 +41,7 @@ const operator = <TData>(factory: () => Writable) => (
 
     subscriber.add(requestSubscription).add(() => {
       writable.end();
-      writable.removeListener("error", onDrain);
+      writable.removeListener("drain", onDrain);
       writable.removeListener("error", onError);
       writable.destroy();
     });
