@@ -44,12 +44,7 @@ class ReadableSubscriber extends AbstractDelegatingSubscriber<
     private readonly readable: Readable,
   ) {
     super(delegate);
-
-    this.add(e => {
-      if (e !== undefined) {
-        delegate.dispose(e);
-      }
-    });
+    this.add(delegate);
   }
 
   notify(data: ReadableMode) {
@@ -88,7 +83,7 @@ const subscriberOperator = (
   readable.on("end", onEnd);
 
   const onError = (cause: any) => {
-    subscriber.dispose({ cause });
+    safeSubscriber.dispose({ cause });
   };
   readable.on("error", onError);
 
