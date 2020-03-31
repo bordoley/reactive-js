@@ -4,3 +4,4 @@ export { bindNodeCallback } from "./internal/bindNodeCallback";
 
 export { createReadableAsyncEnumerable } from "./internal/readable";
 export { createWritableAsyncEnumerable } from "./internal/writable";
+export { transform, TransformBackPressureStrategy } from "./internal/transform";

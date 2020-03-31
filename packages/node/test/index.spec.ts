@@ -12,13 +12,17 @@ import {
   map,
   scan,
   takeWhile,
+  compute,
+  repeat,
 } from "@reactive-js/observable";
 import {
   createReadableAsyncEnumerable,
   getHostScheduler,
   createWritableAsyncEnumerable,
+  transform,
 } from "../src";
 import { StringDecoder } from "string_decoder";
+import { createGzip, createGunzip } from "zlib";
 
 describe("writable", () => {
   test("sinking to the buffer", async () => {
@@ -59,10 +63,7 @@ describe("writable", () => {
       ),
     );
 
-    await pipe(
-      sink(src, dest),
-      toPromise(getHostScheduler()),
-    );
+    await pipe(sink(src, dest), toPromise(getHostScheduler()));
     expect(data).toEqual("abcdefg");
   });
   test("when the write throws an exception", async () => {
@@ -82,10 +83,7 @@ describe("writable", () => {
       ),
     );
 
-    const promise = pipe(
-      sink(src, dest),
-      toPromise(getHostScheduler()),
-    );
+    const promise = pipe(sink(src, dest), toPromise(getHostScheduler()));
     expect(promise).rejects.toThrow(cause);
   });
 });
@@ -181,4 +179,17 @@ describe("createReadableAsyncEnumerable", () => {
 
     return expect(promise).rejects.toThrow(cause);
   });
+});
+
+test("transform", async () => {
+  const result = await pipe(
+    compute(() => Buffer.alloc(10, "a")),
+    repeat(10),
+    transform(() => createGzip()),
+    transform(() => createGunzip()),
+    map(d => d.toLocaleString()),
+    toPromise(getHostScheduler()),
+  );
+
+  expect(result).toEqual(Buffer.alloc(100, "a").toLocaleString());
 });
