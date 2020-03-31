@@ -72,7 +72,7 @@ const subscriberOperator = (
   writable.on("drain", onDrain);
 
   const onError = (cause: unknown) => {
-    subscriber.dispose({ cause });
+    safeSubscriber.dispose({ cause });
   };
   writable.on("error", onError);
 
