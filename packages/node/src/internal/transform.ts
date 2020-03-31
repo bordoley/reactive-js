@@ -10,6 +10,7 @@ import {
 } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 import { ObservableLike, createObservable } from "@reactive-js/observable";
+import { createDisposable } from "@reactive-js/disposable";
 
 export const transform = (
   factory: () => Transform,
@@ -22,6 +23,7 @@ export const transform = (
   const op = (modeObs: ObservableLike<ReadableMode>) =>
     createObservable<ReadableEvent>(subscriber => {
       const transform = factory();
+
       const transformWritableEnumerator = createWritableAsyncEnumerator(
         transform,
         subscriber,
@@ -33,11 +35,22 @@ export const transform = (
 
       const srcEnumerator = src.enumerateAsync(subscriber);
 
+      // When a tranform's read interface has been fully consumed
+      // we can dispose the transform, its writableEnumerator
+      // and its upstream sources, but must not dispose the readableEnumerator.
+      const tranformDisposable = createDisposable(() => {
+        transform.removeListener("end", onEnd);
+        transform.destroy();
+      }).add(srcEnumerator).add(transformWritableEnumerator);
+
+      const onEnd = () => {
+        tranformDisposable.dispose();
+      };
+      transform.on("end", onEnd);
+
       subscriber
-        .add(() => transform.destroy())
-        .add(transformWritableEnumerator)
         .add(transformReadableEnumerator)
-        .add(srcEnumerator);
+        .add(tranformDisposable);
 
       // sink the src into the transform
       transformWritableEnumerator.subscribe(srcEnumerator);

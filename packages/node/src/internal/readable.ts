@@ -14,10 +14,7 @@ import {
   SubscriberOperatorLike,
   using,
 } from "@reactive-js/observable";
-import {
-  createDisposable,
-  createDisposableWrapper,
-} from "@reactive-js/disposable";
+import { createDisposableWrapper } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
 
@@ -63,13 +60,12 @@ class ReadableSubscriber extends AbstractDelegatingSubscriber<
 const subscriberOperator = (
   readable: Readable,
 ): SubscriberOperatorLike<ReadableMode, ReadableEvent> => subscriber => {
-  const readableDisposable = createDisposable(() => {
+  const safeSubscriber = toSafeSubscriber(subscriber).add(() => {
     readable.pause();
     readable.removeListener("data", onData);
     readable.removeListener("end", onEnd);
     readable.removeListener("error", onError);
   });
-  const safeSubscriber = toSafeSubscriber(subscriber).add(readableDisposable);
 
   const onData = (chunk: Buffer) => {
     safeSubscriber.dispatch({ type: ReadableEventType.Data, chunk });
@@ -78,7 +74,9 @@ const subscriberOperator = (
 
   const onEnd = () => {
     safeSubscriber.dispatch({ type: ReadableEventType.End });
-    readableDisposable.dispose();
+    // Intentionally don't dispose the subscriber,
+    // because it may be asynchronously consuming
+    // the data.
   };
   readable.on("end", onEnd);
 
@@ -110,7 +108,17 @@ const observableOperator = (
   factory: () => Readable,
 ): ObservableOperatorLike<ReadableMode, ReadableEvent> => observable =>
   using(
-    _ => createDisposableWrapper(factory(), disposeReadable),
+    _ => {
+      const readable = factory();
+      const disposable = createDisposableWrapper(readable, disposeReadable);
+
+      const onEnd = () => {
+        disposable.dispose();
+      }
+      readable.on("end", onEnd);
+
+      return disposable
+    },
     readable => pipe(observable, operator(readable.value)),
   );
 
