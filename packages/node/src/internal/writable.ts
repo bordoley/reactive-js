@@ -15,10 +15,7 @@ import {
   using,
 } from "@reactive-js/observable";
 import { ReadableEvent, ReadableEventType, ReadableMode } from "./readable";
-import {
-  createDisposable,
-  createDisposableWrapper,
-} from "@reactive-js/disposable";
+import { createDisposableWrapper } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
 
@@ -31,18 +28,12 @@ class WritableSubscriber extends AbstractDelegatingSubscriber<
     private readonly writable: Writable,
   ) {
     super(delegate);
-
-    this.add(e => {
-      if (e !== undefined) {
-        delegate.dispose(e);
-      }
-    });
+    this.add(delegate.dispose);
   }
 
   notify(data: ReadableEvent) {
     switch (data.type) {
       case ReadableEventType.Data: {
-        debugger;
         if (!this.writable.write(data.chunk)) {
           this.delegate.notify(ReadableMode.Pause);
         }
@@ -59,12 +50,11 @@ class WritableSubscriber extends AbstractDelegatingSubscriber<
 const subscriberOperator = (
   writable: Writable,
 ): SubscriberOperatorLike<ReadableEvent, ReadableMode> => subscriber => {
-  const writableDisposable = createDisposable(() => {
+  const safeSubscriber = toSafeSubscriber(subscriber).add(() => {
     writable.removeListener("drain", onDrain);
     writable.removeListener("error", onError);
     writable.removeListener("finish", onFinish);
   });
-  const safeSubscriber = toSafeSubscriber(subscriber).add(writableDisposable);
 
   const onDrain = () => {
     safeSubscriber.dispatch(ReadableMode.Resume);
