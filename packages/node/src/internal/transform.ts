@@ -1,99 +1,52 @@
-import { Transform, Writable } from "stream";
+import { Transform } from "stream";
 import {
-  AbstractDelegatingSubscriber,
-  SubscriberLike,
-  ObservableOperatorLike,
-  lift,
-  toSafeSubscriber,
-} from "@reactive-js/observable";
+  AsyncEnumerableOperatorLike,
+  createAsyncEnumerable,
+} from "@reactive-js/async-enumerable";
+import {
+  ReadableEvent,
+  ReadableMode,
+  createReadableAsyncEnumerator,
+} from "./readable";
+import { createWritableAsyncEnumerator } from "./writable";
+import { ObservableLike, createObservable } from "@reactive-js/observable";
 
-export const enum TransformBackPressureStrategy {
-  Queue = 1,
-  Drop = 2,
-  Throw = 3,
-}
-
-class WritableSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
-  private waitForDrain = false;
-
-  constructor(
-    delegate: SubscriberLike<TB>,
-    private readonly writable: Writable,
-    private readonly backPressureStrategy: TransformBackPressureStrategy,
-  ) {
-    super(delegate);
-
-    const onDrain = () => {
-      this.waitForDrain = false;
-    };
-    writable.on("drain", onDrain);
-
-    this.add(err => {
-      writable.removeListener("drain", onDrain);
-
-      if (err !== undefined) {
-        delegate.dispose(err);
-      } else {
-        writable.end();
-      }
-    });
-  }
-
-  notify(next: TA) {
-    const backPressureStrategy = this.backPressureStrategy;
-    const waitForDrain = this.waitForDrain;
-    if (
-      backPressureStrategy === TransformBackPressureStrategy.Throw &&
-      waitForDrain
-    ) {
-      const cause = new Error("Back pressure requested");
-      this.dispose({ cause });
-    }
-
-    if (
-      backPressureStrategy === TransformBackPressureStrategy.Queue ||
-      (backPressureStrategy === TransformBackPressureStrategy.Drop &&
-        !waitForDrain)
-    ) {
-      this.waitForDrain = !this.writable.write(next);
-    }
-  }
-}
-
-export const transform = <Buffer>(
+export const transform = (
   factory: () => Transform,
-  backPressureStrategy = TransformBackPressureStrategy.Queue,
-): ObservableOperatorLike<Buffer, Buffer> => {
-  const operator = (subscriber: SubscriberLike<Buffer>) => {
-    const duplex = factory();
-    const safeSubscriber = toSafeSubscriber(subscriber);
+): AsyncEnumerableOperatorLike<
+  ReadableMode,
+  ReadableEvent,
+  ReadableMode,
+  ReadableEvent
+> => src => {
+  const op = (modeObs: ObservableLike<ReadableMode>) =>
+    createObservable<ReadableEvent>(subscriber => {
+      const transform = factory();
+      const transformWritableEnumerator = createWritableAsyncEnumerator(
+        transform,
+        subscriber,
+      );
+      const transformReadableEnumerator = createReadableAsyncEnumerator(
+        transform,
+        subscriber,
+      );
 
-    const onData = (chunk: any) => {
-      safeSubscriber.dispatch(chunk);
-    };
-    duplex.on("data", onData);
+      const srcEnumerator = src.enumerateAsync(subscriber);
 
-    const onEnd = () => {
-      safeSubscriber.dispose();
-    };
-    duplex.on("end", onEnd);
+      subscriber
+        .add(() => transform.destroy())
+        .add(transformWritableEnumerator)
+        .add(transformReadableEnumerator)
+        .add(srcEnumerator);
 
-    const onError = (cause: any) => {
-      safeSubscriber.dispose({ cause });
-    };
-    duplex.on("error", onError);
+      // sink the src into the transform
+      transformWritableEnumerator.subscribe(srcEnumerator);
+      srcEnumerator.subscribe(transformWritableEnumerator);
 
-    safeSubscriber.add(() => {
-      duplex.pause();
-      duplex.removeListener("data", onData);
-      duplex.removeListener("end", onEnd);
-      duplex.removeListener("error", onError);
-      duplex.destroy();
+      // Since the transform into the subcriber
+      modeObs.subscribe(transformReadableEnumerator);
+      transformReadableEnumerator.subscribe(subscriber);
     });
 
-    duplex.resume();
-
-    return new WritableSubscriber(safeSubscriber, duplex, backPressureStrategy);
-  };
-  return lift(operator, true);
+  return createAsyncEnumerable(op);
 };

@@ -1,6 +1,7 @@
 export {
   AsyncEnumerableLike,
   AsyncEnumeratorLike,
+  AsyncEnumerableOperatorLike,
   StateUpdaterLike,
 } from "./internal/interfaces";
 

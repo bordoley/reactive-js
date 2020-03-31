@@ -4,12 +4,31 @@
 
 ## Index
 
+### Enumerations
+
+* [ReadableEventType](enums/readableeventtype.md)
+* [ReadableMode](enums/readablemode.md)
+
+### Type aliases
+
+* [ReadableEvent](README.md#readableevent)
+
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
+* [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
+* [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
+* [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
 * [getHostScheduler](README.md#const-gethostscheduler)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
+* [transform](README.md#const-transform)
+
+## Type aliases
+
+###  ReadableEvent
+
+Ƭ **ReadableEvent**: *object | object*
 
 ## Functions
 
@@ -1801,11 +1820,7 @@ ___
 
 ### `Const` createReadableAsyncEnumerable
 
-▸ **createReadableAsyncEnumerable**<**TData**>(`factory`: function, `selector`: function): *AsyncEnumerableLike‹void, TData›*
-
-**Type parameters:**
-
-▪ **TData**
+▸ **createReadableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 
 **Parameters:**
 
@@ -1813,17 +1828,53 @@ ___
 
 ▸ (): *Readable*
 
-▪ **selector**: *function*
+**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 
-▸ (`data`: unknown): *TData*
+___
+
+### `Const` createReadableAsyncEnumerator
+
+▸ **createReadableAsyncEnumerator**(`readable`: Readable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`data` | unknown |
+`readable` | Readable |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
 
-**Returns:** *AsyncEnumerableLike‹void, TData›*
+**Returns:** *AsyncEnumeratorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+___
+
+### `Const` createWritableAsyncEnumerable
+
+▸ **createWritableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *Writable*
+
+**Returns:** *AsyncEnumerableLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+
+___
+
+### `Const` createWritableAsyncEnumerator
+
+▸ **createWritableAsyncEnumerator**(`writable`: Writable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`writable` | Writable |
+`scheduler` | SchedulerLike |
+`replayCount?` | undefined &#124; number |
+
+**Returns:** *AsyncEnumeratorLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
 
 ___
 
@@ -1846,3 +1897,17 @@ Name | Type |
 `newTimeout` | number |
 
 **Returns:** *void*
+
+___
+
+### `Const` transform
+
+▸ **transform**(`factory`: function): *AsyncEnumerableOperatorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *Transform*
+
+**Returns:** *AsyncEnumerableOperatorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*

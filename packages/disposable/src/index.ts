@@ -183,3 +183,33 @@ class SerialDisposableImpl implements SerialDisposableLike {
  */
 export const createSerialDisposable = (): SerialDisposableLike =>
   new SerialDisposableImpl();
+
+/**
+ * A Disposable that provides disposable semantics to an underlying resource.
+ *
+ * @noInheritDoc
+ */
+export interface DisposableWrapperLike<T> extends DisposableLike {
+  value: T;
+}
+
+class DisposableWrapperImpl<T> implements DisposableWrapperLike<T> {
+  readonly add = add;
+  readonly disposable = createDisposable();
+  readonly dispose = dispose;
+
+  constructor(readonly value: T) {}
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
+  }
+}
+
+/**
+ * Creates a new DisposableWrapperLike instance.
+ */
+export const createDisposableWrapper = <T>(
+  value: T,
+  cleanup: (v: T) => void,
+): DisposableWrapperLike<T> =>
+  new DisposableWrapperImpl(value).add(() => cleanup(value));
