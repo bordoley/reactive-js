@@ -152,15 +152,15 @@ export interface SerialDisposableLike extends DisposableLike {
 class SerialDisposableImpl implements SerialDisposableLike {
   _inner: DisposableLike = disposed;
   readonly add = add;
-  readonly disposable = createDisposable(() => {
-    this.isDisposed = true;
-  });
+  readonly disposable = createDisposable();
   readonly dispose = dispose;
-
-  isDisposed = false;
 
   get inner() {
     return this._inner;
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 
   set inner(newInner: DisposableLike) {

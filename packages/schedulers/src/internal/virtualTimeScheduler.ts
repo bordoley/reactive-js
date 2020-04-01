@@ -22,13 +22,10 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   readonly add = add;
   readonly current = undefined;
   readonly delay = 0;
-  readonly disposable = createDisposable(() => {
-    this.isDisposed = true;
-  });
+  readonly disposable = createDisposable();
   readonly dispose = dispose;
 
   hasCurrent = false;
-  isDisposed = false;
   private microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
@@ -46,6 +43,10 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   > = createPriorityQueue(comparator);
 
   constructor(private readonly maxMicroTaskTicks: number) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
 
   move() {
     this.hasCurrent = false;

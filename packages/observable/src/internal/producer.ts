@@ -5,19 +5,16 @@ import { SubscriberLike } from "./interfaces";
 /** @ignore */
 export abstract class AbstractProducer<T> implements SchedulerContinuationLike {
   readonly add = add;
-
-  readonly disposable = createDisposable(_ => {
-    this.isDisposed = true;
-  });
-
   abstract readonly delay: number;
-
+  readonly disposable = createDisposable();
   readonly dispose = dispose;
-
-  isDisposed = false;
 
   constructor(private readonly subscriber: SubscriberLike<T>) {
     this.add(subscriber);
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
 
   notify(next: T) {
