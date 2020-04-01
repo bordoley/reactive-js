@@ -160,7 +160,7 @@ ___
 
 ### `Const` createAsyncEnumerable
 
-▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›): *AsyncEnumerableImpl‹TReq, TData›*
+▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
 
 **Type parameters:**
 
@@ -174,13 +174,13 @@ Name | Type |
 ------ | ------ |
 `op` | ObservableOperatorLike‹TReq, TData› |
 
-**Returns:** *AsyncEnumerableImpl‹TReq, TData›*
+**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
 
 ___
 
 ### `Const` createAsyncEnumerator
 
-▸ **createAsyncEnumerator**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorImpl‹TReq, TData›*
+▸ **createAsyncEnumerator**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
 
 **Type parameters:**
 
@@ -196,7 +196,7 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *AsyncEnumeratorImpl‹TReq, TData›*
+**Returns:** *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
 
 ___
 
