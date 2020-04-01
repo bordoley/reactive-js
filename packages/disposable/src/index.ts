@@ -50,7 +50,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
 
 class DisposableImpl implements DisposableLike {
   isDisposed = false;
-  private readonly disposables: Array<DisposableOrTeardown> = [];
+  private readonly disposables: Set<DisposableOrTeardown> = new Set();
   private error?: ErrorLike = undefined;
 
   add(disposable: DisposableOrTeardown) {
@@ -58,15 +58,12 @@ class DisposableImpl implements DisposableLike {
 
     if (this.isDisposed) {
       doDispose(disposable, this.error);
-    } else if (!disposables.includes(disposable)) {
-      disposables.push(disposable);
+    } else if (!disposables.has(disposable)) {
+      disposables.add(disposable);
 
       if (!(disposable instanceof Function)) {
         disposable.add(() => {
-          const index = disposables.indexOf(disposable);
-          if (index > -1) {
-            disposables.splice(index, 1);
-          }
+          disposables.delete(disposable);
         });
       }
     }
@@ -80,10 +77,9 @@ class DisposableImpl implements DisposableLike {
       this.error = error;
 
       const disposables = this.disposables;
-      let disposable = disposables.shift();
-      while (disposable !== undefined) {
+      for (const disposable of disposables) {
+        disposables.delete(disposable);
         doDispose(disposable, error);
-        disposable = disposables.shift();
       }
     }
   }
