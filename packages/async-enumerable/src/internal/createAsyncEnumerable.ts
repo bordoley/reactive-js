@@ -52,7 +52,7 @@ export const createAsyncEnumerator = <TReq, TData>(
   op: ObservableOperatorLike<TReq, TData>,
   scheduler: SchedulerLike,
   replayCount?: number,
-) => {
+): AsyncEnumeratorLike<TReq, TData> => {
   const subject = createSubject<TReq>(scheduler);
   const safeSubscriber = toSafeSubscriber(subject);
   const observable = pipe(subject, op, publish(scheduler, replayCount));
@@ -75,4 +75,4 @@ export class AsyncEnumerableImpl<TReq, TData>
 
 export const createAsyncEnumerable = <TReq, TData>(
   op: ObservableOperatorLike<TReq, TData>,
-) => new AsyncEnumerableImpl(op);
+): AsyncEnumerableLike<TReq, TData> => new AsyncEnumerableImpl(op);
