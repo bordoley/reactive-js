@@ -12,18 +12,15 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 class SafeSubscriberSchedulerContinuation<T>
   implements SchedulerContinuationLike {
   readonly add = add;
-
   readonly delay = 0;
-
-  readonly disposable = createDisposable(_ => {
-    this.isDisposed = true;
-  });
-
+  readonly disposable = createDisposable();
   readonly dispose = dispose;
 
-  isDisposed = false;
-
   constructor(private readonly subscriber: SafeSubscriberImpl<T>) {}
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
+  }
 
   run(shouldYield?: () => boolean) {
     const subscriber = this.subscriber;

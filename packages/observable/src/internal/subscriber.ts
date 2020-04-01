@@ -12,15 +12,16 @@ import { SubscriberLike } from "./interfaces";
  */
 export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = add;
-  readonly disposable = createDisposable(_ => {
-    this.isDisposed = true;
-  });
+  readonly disposable = createDisposable();
   readonly dispose = dispose;
-  isDisposed = false;
   private readonly scheduler: SchedulerLike;
 
   constructor(scheduler: SchedulerLike) {
     this.scheduler = (scheduler as any).scheduler || scheduler;
+  }
+
+  get isDisposed(): boolean {
+    return this.disposable.isDisposed;
   }
 
   get now() {
