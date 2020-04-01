@@ -3,14 +3,14 @@ import {
   AsyncEnumerableOperatorLike,
   createAsyncEnumerable,
 } from "@reactive-js/async-enumerable";
+import { createDisposable } from "@reactive-js/disposable";
+import { ObservableLike, createObservable } from "@reactive-js/observable";
 import {
   ReadableEvent,
   ReadableMode,
   createReadableAsyncEnumerator,
 } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
-import { ObservableLike, createObservable } from "@reactive-js/observable";
-import { createDisposable } from "@reactive-js/disposable";
 
 export const transform = (
   factory: () => Transform,
