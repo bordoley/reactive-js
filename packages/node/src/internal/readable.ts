@@ -14,6 +14,7 @@ import {
   ObservableOperatorLike,
   SubscriberOperatorLike,
   using,
+  map,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -126,3 +127,8 @@ export const createReadableAsyncEnumerable = (
   factory: () => Readable,
 ): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
   createAsyncEnumerable(observableOperator(factory));
+
+export const emptyReadableAsyncEnumerable = createAsyncEnumerable<
+  ReadableMode,
+  ReadableEvent
+>(map(_ => ({ type: ReadableEventType.End })));
