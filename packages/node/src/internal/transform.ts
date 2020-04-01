@@ -41,16 +41,16 @@ export const transform = (
       const tranformDisposable = createDisposable(() => {
         transform.removeListener("end", onEnd);
         transform.destroy();
-      }).add(srcEnumerator).add(transformWritableEnumerator);
+      })
+        .add(srcEnumerator)
+        .add(transformWritableEnumerator);
 
       const onEnd = () => {
         tranformDisposable.dispose();
       };
       transform.on("end", onEnd);
 
-      subscriber
-        .add(transformReadableEnumerator)
-        .add(tranformDisposable);
+      subscriber.add(transformReadableEnumerator).add(tranformDisposable);
 
       // sink the src into the transform
       transformWritableEnumerator.subscribe(srcEnumerator);

@@ -114,10 +114,10 @@ const observableOperator = (
 
       const onEnd = () => {
         disposable.dispose();
-      }
+      };
       readable.on("end", onEnd);
 
-      return disposable
+      return disposable;
     },
     readable => pipe(observable, operator(readable.value)),
   );
