@@ -5,6 +5,7 @@ import {
   createAsyncEnumerator,
   AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
+import { createDisposableWrapper } from "@reactive-js/disposable";
 import {
   AbstractDelegatingSubscriber,
   SafeSubscriberLike,
@@ -14,9 +15,8 @@ import {
   SubscriberOperatorLike,
   using,
 } from "@reactive-js/observable";
-import { createDisposableWrapper } from "@reactive-js/disposable";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 export const enum ReadableMode {
   Resume = 1,
