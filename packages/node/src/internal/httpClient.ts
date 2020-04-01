@@ -6,8 +6,6 @@ import {
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
-  AsyncEnumerableLike,
-  AsyncEnumeratorLike,
   createAsyncEnumerator,
 } from "@reactive-js/async-enumerable";
 import {
@@ -28,100 +26,40 @@ import {
   switchAll,
   throws,
 } from "@reactive-js/observable";
-import { SchedulerLike } from "@reactive-js/scheduler";
+import {
+  HttpIncomingMessageContentBody,
+  HttpResponseLike,
+  HttpRequestLike,
+  HttpContentBodyLike,
+  HttpMethod,
+} from "./http";
 import {
   ReadableMode,
   ReadableEvent,
-  createReadableAsyncEnumerator,
   ReadableEventType,
+  emptyReadableAsyncEnumerable,
 } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 
 /** @ignore */
-export enum HttpMethod {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+export interface HttpClientRequestLike
+  extends HttpRequestLike<HttpContentBodyLike> {}
 
 /** @ignore */
-export interface HttpContentBody
-  extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
-  readonly contentLength: number;
-  readonly contentType: string;
-}
-
-/** @ignore */
-export interface HttpRequest<T> {
-  content?: T;
-
-  // FIXME: Limit the allowed set of headers
-  headers?: OutgoingHttpHeaders;
-  method: HttpMethod;
-  url: string | URL;
-}
-
-/** @ignore */
-export interface HttpResponse<T> {
-  readonly httpVersion: string;
-  readonly location?: string;
-  readonly statusCode: number;
-  readonly statusMessage: string;
-  readonly content: T;
-}
-
-/** @ignore */
-export interface HttpClientRequest extends HttpRequest<HttpContentBody> {}
-
-/** @ignore */
-export interface HttpClientResponse
-  extends HttpResponse<HttpContentBody>,
+export interface HttpClientResponseLike
+  extends HttpResponseLike<HttpContentBodyLike>,
     DisposableLike {
-  readonly request: HttpClientRequest;
+  readonly request: HttpClientRequestLike;
 }
 
-/** @ignore */
-class HttpIncomingMessageContentBody implements HttpContentBody {
-  constructor(
-    private readonly response: DisposableLike,
-    private readonly msg: IncomingMessage,
-  ) {}
-
-  get contentLength(): number {
-    try {
-      return Number.parseInt(this.msg.headers["content-length"] || "0");
-    } catch (_) {
-      return 0;
-    }
-  }
-
-  get contentType(): string {
-    return this.msg.headers["content-type"] || "";
-  }
-
-  enumerateAsync(
-    scheduler: SchedulerLike,
-    replayCount?: number,
-  ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
-    const enumerator = createReadableAsyncEnumerator(
-      this.msg,
-      scheduler,
-      replayCount,
-    );
-    this.response.add(enumerator);
-    return enumerator;
-  }
-}
-
-class HttpClientResponseImpl implements HttpClientResponse {
+class HttpClientResponseImpl implements HttpClientResponseLike {
   readonly add = add;
-  readonly content: HttpContentBody;
+  readonly content: HttpContentBodyLike;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
 
   constructor(
-    readonly request: HttpClientRequest,
+    readonly request: HttpClientRequestLike,
     private readonly msg: IncomingMessage,
   ) {
     this.add(() => msg.destroy());
@@ -151,8 +89,8 @@ class HttpClientResponseImpl implements HttpClientResponse {
 
 /** @ignore */
 export const send = (
-  clientRequest: HttpClientRequest,
-): ObservableLike<HttpClientResponse> => {
+  clientRequest: HttpClientRequestLike,
+): ObservableLike<HttpClientResponseLike> => {
   const { content, headers, method, url } = clientRequest;
 
   const reqUrl = url instanceof URL ? url : new URL(url);
@@ -166,7 +104,7 @@ export const send = (
           throw new Error();
         })();
 
-  return createObservable<HttpClientResponse>(subscriber => {
+  return createObservable<HttpClientResponseLike>(subscriber => {
     const reqHeaders: OutgoingHttpHeaders = { ...headers };
     if (content !== undefined) {
       reqHeaders["content-length"] = content.contentLength;
@@ -190,12 +128,14 @@ export const send = (
     };
     req.on("response", onResponse);
 
-    const contentEnumerator: AsyncEnumeratorLike<ReadableMode, ReadableEvent> =
-      content?.enumerateAsync(subscriber) ||
-      createAsyncEnumerator<ReadableMode, ReadableEvent>(
-        map(_ => ({ type: ReadableEventType.End })),
-        subscriber,
-      );
+    const contentEnumerator = (
+      content || emptyReadableAsyncEnumerable
+    ).enumerateAsync(subscriber);
+
+    createAsyncEnumerator<ReadableMode, ReadableEvent>(
+      map(_ => ({ type: ReadableEventType.End })),
+      subscriber,
+    );
 
     const reqBodyEnumerator = createWritableAsyncEnumerator(req, subscriber);
 
@@ -224,7 +164,7 @@ const makeRedirectRequest = ({
   request: { content, headers, method },
   location,
   statusCode,
-}: HttpClientResponse): HttpClientRequest => {
+}: HttpClientResponseLike): HttpClientRequestLike => {
   const redirectToGet =
     statusCode === 303 ||
     ((statusCode === 301 || statusCode === 302) && method === "POST");
@@ -241,8 +181,8 @@ const makeRedirectRequest = ({
 export const handleRedirects = (
   maxAttempts = 10,
 ): ObservableOperatorLike<
-  HttpClientResponse,
-  HttpClientResponse
+  HttpClientResponseLike,
+  HttpClientResponseLike
 > => observable =>
   pipe(
     observable,
@@ -261,7 +201,7 @@ export const handleRedirects = (
       } else if (isRedirect && location !== undefined) {
         resp.dispose();
         // FIXME: would prefer to remove exceptions
-        return throws<HttpClientResponse>(
+        return throws<HttpClientResponseLike>(
           () => new Error("Too many redirects"),
         );
       } else {

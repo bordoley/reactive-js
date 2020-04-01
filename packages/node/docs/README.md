@@ -13,6 +13,10 @@
 
 * [ReadableEvent](README.md#readableevent)
 
+### Variables
+
+* [emptyReadableAsyncEnumerable](README.md#const-emptyreadableasyncenumerable)
+
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
@@ -29,6 +33,15 @@
 ###  ReadableEvent
 
 Ƭ **ReadableEvent**: *object | object*
+
+## Variables
+
+### `Const` emptyReadableAsyncEnumerable
+
+• **emptyReadableAsyncEnumerable**: *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), object | object›* =  createAsyncEnumerable<
+  ReadableMode,
+  ReadableEvent
+>(map(_ => ({ type: ReadableEventType.End })))
 
 ## Functions
 
