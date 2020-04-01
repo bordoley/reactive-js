@@ -5,7 +5,7 @@ import { AbstractSubscriber } from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
-  private readonly subscribers: Array<SafeSubscriberLike<T>> = [];
+  private readonly subscribers: Set<SafeSubscriberLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
   readonly enumerate = enumerate;
@@ -16,7 +16,7 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   }
 
   get subscriberCount() {
-    return this.subscribers.length;
+    return this.subscribers.size;
   }
 
   notify(next: T): void {
@@ -45,13 +45,10 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
 
     if (!this.isDisposed) {
       const subscribers = this.subscribers;
-      subscribers.push(safeSubscriber);
+      subscribers.add(safeSubscriber);
 
       safeSubscriber.add(() => {
-        const index = subscribers.indexOf(safeSubscriber);
-        if (index !== -1) {
-          subscribers.splice(index, 1);
-        }
+        subscribers.delete(safeSubscriber);
       });
     }
 
