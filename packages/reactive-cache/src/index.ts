@@ -19,7 +19,7 @@ import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
-  schedule,
+  scheduleCallback,
 } from "@reactive-js/scheduler";
 
 const alwaysFalse = () => false;
@@ -149,12 +149,14 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
       };
 
       const onDisposeCleanup = (_?: ErrorLike) => {
-        this.add(
-          schedule(this.cleanupScheduler, () => {
+        pipe(
+          this.cleanupScheduler,
+          scheduleCallback(() => {
             if (enumerator.subscriberCount === 0) {
               markAsGarbage(this, key, enumerator);
             }
           }),
+          add.bind(this),
         );
       };
 

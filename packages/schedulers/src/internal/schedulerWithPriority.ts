@@ -1,3 +1,4 @@
+import { OperatorLike } from "@reactive-js/pipe";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -20,13 +21,12 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
 }
 
 /**
- * Creates a scheduler instance that schedules work on the provided priority
- * scheduler with the given priority.
+ * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-export const createSchedulerWithPriority = (
-  priorityScheduler: PrioritySchedulerLike,
+export const toSchedulerWithPriority = (
   priority: number,
-): SchedulerLike => new SchedulerWithPriorityImpl(priorityScheduler, priority);
+): OperatorLike<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
+  new SchedulerWithPriorityImpl(priorityScheduler, priority);

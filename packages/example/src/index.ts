@@ -8,8 +8,16 @@ import {
   onNotify,
   subscribe,
 } from "@reactive-js/observable";
+import {
+  createPriorityScheduler,
+  toSchedulerWithPriority,
+} from "@reactive-js/schedulers";
 
-const scheduler = getHostScheduler();
+const scheduler = pipe(
+  getHostScheduler(), 
+  createPriorityScheduler,
+  toSchedulerWithPriority(1)
+);
 
 pipe(
   generate(

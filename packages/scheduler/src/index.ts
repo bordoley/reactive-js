@@ -5,6 +5,7 @@ import {
   dispose,
 } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
+import { OperatorLike } from "@reactive-js/pipe";
 
 /**
  * A unit of work to be executed by a scheduler.
@@ -78,11 +79,10 @@ class CallbackSchedulerContinuation implements SchedulerContinuationLike {
   }
 }
 
-export const schedule = (
-  scheduler: SchedulerLike,
+export const scheduleCallback = (
   callback: () => void,
   delay = 0,
-): DisposableLike => {
+): OperatorLike<SchedulerLike, DisposableLike> => scheduler => {
   const continuation = new CallbackSchedulerContinuation(callback, delay);
   scheduler.schedule(continuation);
   return continuation;

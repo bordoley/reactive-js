@@ -6,7 +6,7 @@ A priority scheduler which is also an unmanaged resource.
 
 ## Hierarchy
 
-  ↳ [PrioritySchedulerLike](priorityschedulerlike.md)
+* [PrioritySchedulerLike](priorityschedulerlike.md)
 
 * DisposableLike
 

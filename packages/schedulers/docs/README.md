@@ -13,9 +13,9 @@
 ### Functions
 
 * [createPriorityScheduler](README.md#const-createpriorityscheduler)
-* [createSchedulerWithPriority](README.md#const-createschedulerwithpriority)
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
 * [schedule](README.md#schedule)
+* [toSchedulerWithPriority](README.md#const-toschedulerwithpriority)
 
 ## Functions
 
@@ -33,24 +33,6 @@ Name | Type | Description |
 `hostScheduler` | SchedulerLike | The underlying platform scheduler used by the priority scheduler to schedule work.  |
 
 **Returns:** *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
-
-___
-
-### `Const` createSchedulerWithPriority
-
-▸ **createSchedulerWithPriority**(`priorityScheduler`: [PrioritySchedulerLike](interfaces/priorityschedulerlike.md), `priority`: number): *SchedulerLike*
-
-Creates a scheduler instance that schedules work on the provided priority
-scheduler with the given priority.
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`priorityScheduler` | [PrioritySchedulerLike](interfaces/priorityschedulerlike.md) | The underlying scheduler upon which to scheduler work. |
-`priority` | number | The priority to schedule work at.  |
-
-**Returns:** *SchedulerLike*
 
 ___
 
@@ -84,3 +66,19 @@ Name | Type |
 `continuation` | SchedulerContinuationLike |
 
 **Returns:** *void*
+
+___
+
+### `Const` toSchedulerWithPriority
+
+▸ **toSchedulerWithPriority**(`priority`: number): *OperatorLike‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), SchedulerLike›*
+
+Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`priority` | number | The priority to schedule work at.  |
+
+**Returns:** *OperatorLike‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), SchedulerLike›*
