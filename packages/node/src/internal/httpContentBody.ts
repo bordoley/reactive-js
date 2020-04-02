@@ -3,19 +3,17 @@ import { Transform } from "stream";
 import { createBrotliCompress, createDeflate, createGzip } from "zlib";
 import {
   AsyncEnumeratorLike,
-  createAsyncEnumerator,
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
 import { DisposableWrapperLike } from "@reactive-js/disposable";
-import { map, takeFirst, endWith } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { HttpContentBodyLike, HttpContentEncoding } from "./http";
 import {
   ReadableMode,
   ReadableEvent,
-  ReadableEventType,
   createReadableAsyncEnumerator,
+  createBufferReadableAsyncEnumerable,
 } from "./readable";
 import { transform } from "./transform";
 
@@ -90,14 +88,7 @@ class BufferContentBodyImpl implements HttpContentBodyLike {
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
-    return createAsyncEnumerator(
-      obs =>
-        pipe(
-          obs,
-          map(_ => ({ type: ReadableEventType.Data, chunk: this.chunk })),
-          takeFirst(),
-          endWith<ReadableEvent>({ type: ReadableEventType.End }),
-        ),
+    return createBufferReadableAsyncEnumerable(this.chunk).enumerateAsync(
       scheduler,
       replayCount,
     );
@@ -113,9 +104,7 @@ export const createBufferContentBody = (
 
 /** @ignore */
 class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
-  constructor(
-    private readonly msg: DisposableWrapperLike<IncomingMessage>,
-  ) {}
+  constructor(private readonly msg: DisposableWrapperLike<IncomingMessage>) {}
 
   get contentEncodings(): readonly HttpContentEncoding[] {
     //return this.msg.headers["content-encoding"] || "";

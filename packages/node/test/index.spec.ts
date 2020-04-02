@@ -99,8 +99,6 @@ describe("streams", () => {
         }
         data += chunk;
         callback();
-
-        debugger;
       },
     });
 
