@@ -20,6 +20,7 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
+* [createBufferReadableAsyncEnumerable](README.md#const-createbufferreadableasyncenumerable)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
 * [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
@@ -1828,6 +1829,20 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 `arg5` | A5 |
+
+___
+
+### `Const` createBufferReadableAsyncEnumerable
+
+▸ **createBufferReadableAsyncEnumerable**(`chunk`: Buffer): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`chunk` | Buffer |
+
+**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 
 ___
 

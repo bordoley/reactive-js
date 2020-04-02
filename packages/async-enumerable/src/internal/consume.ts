@@ -13,7 +13,7 @@ import {
   withLatestFrom,
   ObservableOperatorLike,
 } from "@reactive-js/observable";
-import { pipe, OperatorLike } from "@reactive-js/pipe";
+import { compose, pipe, OperatorLike } from "@reactive-js/pipe";
 import { identity } from "./identity";
 import { AsyncEnumeratorLike } from "./interfaces";
 import { lift } from "./lift";
@@ -155,8 +155,7 @@ export const consumeAsync = <TReq, T, TAcc>(
   const withLatestSelector = (next: T, acc: TAcc) => reducer(acc, next);
 
   return consumeImpl(
-    acc => obs =>
-      pipe(obs, withLatestFrom(acc, withLatestSelector), switchAll()),
+    acc => compose(withLatestFrom(acc, withLatestSelector), switchAll()),
     initial,
   );
 };

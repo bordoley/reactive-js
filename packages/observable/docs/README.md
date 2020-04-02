@@ -1854,10 +1854,14 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**(`schedulerFactory`: function): *(Anonymous function)*
+▸ **toArray**<**T**>(`schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T[]›*
 
 Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
 values emitted by `source` into an array.
+
+**Type parameters:**
+
+▪ **T**
 
 **Parameters:**
 
@@ -1865,7 +1869,7 @@ values emitted by `source` into an array.
 
 ▸ (): *VirtualTimeSchedulerLike*
 
-**Returns:** *(Anonymous function)*
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T[]›*
 
 ___
 

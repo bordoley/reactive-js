@@ -1,5 +1,4 @@
-import { pipe } from "@reactive-js/pipe";
-import { ObservableLike, scan } from "@reactive-js/observable";
+import { scan } from "@reactive-js/observable";
 import { AsyncEnumerableLike } from "./interfaces";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
 
@@ -17,7 +16,6 @@ export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
 ): AsyncEnumerableLike<void, T> => {
-  const operator = (obs: ObservableLike<void>) =>
-    pipe(obs, scan(generateScanner(generator), initialValue));
+  const operator = scan(generateScanner(generator), initialValue);
   return createAsyncEnumerable(operator);
 };
