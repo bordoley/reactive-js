@@ -6,6 +6,7 @@ export {
   ReadableEvent,
   ReadableEventType,
   ReadableMode,
+  createReadableAsyncEnumerableFromBuffer,
   createReadableAsyncEnumerable,
 } from "./internal/readable";
 export { createWritableAsyncEnumerable } from "./internal/writable";
