@@ -3,12 +3,11 @@ import {
   ServerResponse,
   IncomingMessage,
 } from "http";
-import { createDisposable, add, dispose } from "@reactive-js/disposable";
+import { createDisposable, add, dispose, createDisposableWrapper, DisposableLike } from "@reactive-js/disposable";
 import {
   HttpRequestLike,
   HttpContentBodyLike,
   HttpResponseLike,
-  HttpIncomingMessageContentBody,
   HttpMethod,
 } from "./http";
 import {
@@ -16,15 +15,14 @@ import {
   createObservable,
   subscribe,
   onNotify,
-  ofValue,
   map,
   switchAll,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { getHostScheduler } from "./scheduler";
 import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
+import { createIncomingMessageContentBody } from "./httpContentBody";
 
 /** @ignore */
 export interface HttpServerRequestLike
@@ -37,12 +35,14 @@ export interface HttpServerResponseLike
 class HttpServerRequestImpl implements HttpServerRequestLike {
   readonly add = add;
   readonly content: HttpContentBodyLike;
-  readonly disposable = createDisposable();
+  readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
   constructor(private readonly msg: IncomingMessage) {
-    this.add(() => msg.destroy());
-    this.content = new HttpIncomingMessageContentBody(this, msg);
+    const disposable = createDisposableWrapper(msg, msg => msg.destroy());
+    
+    this.disposable = disposable;
+    this.content = createIncomingMessageContentBody(disposable);
   }
 
   get headers() {
@@ -66,7 +66,7 @@ const writeResponseContentHeaders = (
   resp: ServerResponse,
   content: HttpContentBodyLike,
 ) => {
-  const { contentLength, contentType, contentEncoding } = content;
+  const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
     resp.setHeader("content-length", contentLength);
   }
@@ -75,8 +75,8 @@ const writeResponseContentHeaders = (
     resp.setHeader("content-type", contentType);
   }
 
-  if (contentEncoding.length > 0) {
-    resp.setHeader("content-encoding", contentType);
+  if (contentEncodings.length > 0) {
+    resp.setHeader("content-encoding", contentEncodings.join(", "));
   }
 };
 
@@ -162,20 +162,3 @@ export const createServer = (
     return close;
   };
 };
-
-const connect = createServer(
-  req =>
-    pipe(
-      ofValue(req),
-      onNotify(console.log),
-      map(_ => ({
-        statusCode: 202,
-      })),
-    ),
-  {
-    scheduler: getHostScheduler(),
-    port: 8080,
-  },
-);
-
-connect();

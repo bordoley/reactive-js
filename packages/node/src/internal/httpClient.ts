@@ -8,9 +8,9 @@ import { URL } from "url";
 import { createAsyncEnumerator } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
-  createDisposable,
   dispose,
   add,
+  createDisposableWrapper,
 } from "@reactive-js/disposable";
 import {
   createObservable,
@@ -25,7 +25,6 @@ import {
   throws,
 } from "@reactive-js/observable";
 import {
-  HttpIncomingMessageContentBody,
   HttpResponseLike,
   HttpRequestLike,
   HttpContentBodyLike,
@@ -53,15 +52,17 @@ export interface HttpClientResponseLike
 class HttpClientResponseImpl implements HttpClientResponseLike {
   readonly add = add;
   readonly content: HttpContentBodyLike;
-  readonly disposable = createDisposable();
+  readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
   constructor(
     readonly request: HttpClientRequestLike,
     private readonly msg: IncomingMessage,
   ) {
-    this.add(() => msg.destroy());
-    this.content = new HttpIncomingMessageContentBody(this, msg);
+    const disposable = createDisposableWrapper(msg, msg => msg.destroy());
+
+    this.disposable = disposable;
+    this.content = createIncomingMessageContentBody(disposable);
   }
 
   get isDisposed() {
@@ -203,6 +204,7 @@ export const handleRedirects = (
 
 import { pipe } from "@reactive-js/pipe";
 import { getHostScheduler } from "./scheduler";
+import { createIncomingMessageContentBody } from "./httpContentBody";
 pipe(
   {
     method: HttpMethod.GET,
