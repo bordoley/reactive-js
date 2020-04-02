@@ -21,7 +21,7 @@ import {
   switchAll,
   throws,
 } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, compose } from "@reactive-js/pipe";
 import {
   HttpResponseLike,
   HttpRequestLike,
@@ -170,12 +170,8 @@ const makeRedirectRequest = ({
 /** @ignore */
 export const handleRedirects = (
   maxAttempts = 10,
-): ObservableOperatorLike<
-  HttpClientResponseLike,
-  HttpClientResponseLike
-> => observable =>
-  pipe(
-    observable,
+): ObservableOperatorLike<HttpClientResponseLike, HttpClientResponseLike> =>
+  compose(
     map(resp => {
       const isRedirect = redirectCodes.includes(resp.statusCode);
       const location = resp.location;

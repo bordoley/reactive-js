@@ -1,5 +1,5 @@
 import { createServer } from "./httpServer";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, compose } from "@reactive-js/pipe";
 import { ofValue, onNotify, map, subscribe } from "@reactive-js/observable";
 import { getHostScheduler } from "./scheduler";
 import { createBufferContentBody, encode } from "./httpContentBody";
@@ -12,18 +12,17 @@ const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 const connect = createServer(
-  req =>
-    pipe(
-      ofValue(req),
-      onNotify(req => console.log(req.url)),
-      map(_ => ({
-        statusCode: 200,
-        content: pipe(
-          createBufferContentBody(chunk, "text/plain"),
-          encode(HttpContentEncoding.GZip),
-        ),
-      })),
-    ),
+  compose(
+    ofValue,
+    onNotify(req => console.log(req.url)),
+    map(_ => ({
+      statusCode: 200,
+      content: pipe(
+        createBufferContentBody(chunk, "text/plain"),
+        encode(HttpContentEncoding.GZip),
+      ),
+    })),
+  ),
   {
     scheduler,
     port: 8080,

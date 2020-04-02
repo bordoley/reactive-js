@@ -82,3 +82,73 @@ export function pipe(
 ): unknown {
   return operators.reduce((acc, next) => next(acc), source);
 }
+
+export function compose<T, A, B>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+): OperatorLike<T, B>;
+export function compose<T, A, B, C>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+): OperatorLike<T, C>;
+export function compose<T, A, B, C, D>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+): OperatorLike<T, D>;
+export function compose<T, A, B, C, D, E>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+): OperatorLike<T, E>;
+export function compose<T, A, B, C, D, E, F>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+): OperatorLike<T, F>;
+export function compose<T, A, B, C, D, E, F, G>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+): OperatorLike<T, G>;
+export function compose<T, A, B, C, D, E, F, G, H>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+): OperatorLike<T, H>;
+export function compose<T, A, B, C, D, E, F, G, H, I>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+): OperatorLike<T, I>;
+
+/**
+ * composes the source value through a series of unary functions.
+ */
+export function compose(
+  ...operators: Array<OperatorLike<unknown, unknown>>
+): OperatorLike<unknown, unknown> {
+  return source => operators.reduce((acc, next) => next(acc), source);
+}
