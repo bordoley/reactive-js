@@ -15,10 +15,11 @@ import {
   SchedulerContinuationLike,
 } from "@reactive-js/scheduler";
 import {
-  createSchedulerWithPriority,
+  toSchedulerWithPriority,
   PrioritySchedulerLike,
 } from "@reactive-js/schedulers";
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import { pipe } from "@reactive-js/pipe";
 
 const shouldYield = unstable_shouldYield;
 
@@ -72,10 +73,7 @@ const priorityScheduler: PrioritySchedulerLike = {
     return unstable_now();
   },
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    priority = unstable_NormalPriority,
-  ): void {
+  schedule(continuation: SchedulerContinuationLike, priority): void {
     const callback = createCallback(continuation, priority);
     const disposable = scheduleCallback(callback, priority, continuation.delay);
     continuation.add(disposable);
@@ -83,28 +81,31 @@ const priorityScheduler: PrioritySchedulerLike = {
 };
 
 /** Scheduler that schedules work on React's internal priority scheduler with idle priority. */
-export const idlePriority: SchedulerLike = createSchedulerWithPriority(
+export const idlePriority: SchedulerLike = pipe(
   priorityScheduler,
-  unstable_IdlePriority,
+  toSchedulerWithPriority(unstable_IdlePriority),
 );
 
 /** Scheduler that schedules work on React's internal priority scheduler with immediate priority. */
-export const immediatePriority: SchedulerLike = createSchedulerWithPriority(
+export const immediatePriority: SchedulerLike = pipe(
   priorityScheduler,
-  unstable_ImmediatePriority,
+  toSchedulerWithPriority(unstable_ImmediatePriority),
 );
 
 /** Scheduler that schedules work on React's internal priority scheduler with normal priority. */
-export const normalPriority: SchedulerLike = priorityScheduler;
+export const normalPriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_NormalPriority),
+);
 
 /** Scheduler that schedules work on React's internal priority scheduler with low priority. */
-export const lowPriority: SchedulerLike = createSchedulerWithPriority(
+export const lowPriority: SchedulerLike = pipe(
   priorityScheduler,
-  unstable_LowPriority,
+  toSchedulerWithPriority(unstable_LowPriority),
 );
 
 /** Scheduler that schedules work on React's internal priority scheduler with user blocking priority. */
-export const userBlockingPriority: SchedulerLike = createSchedulerWithPriority(
+export const userBlockingPriority: SchedulerLike = pipe(
   priorityScheduler,
-  unstable_UserBlockingPriority,
+  toSchedulerWithPriority(unstable_UserBlockingPriority),
 );

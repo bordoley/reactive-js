@@ -16,9 +16,9 @@
 
 ### `Const` idlePriority
 
-• **idlePriority**: *SchedulerLike* =  createSchedulerWithPriority(
+• **idlePriority**: *SchedulerLike* =  pipe(
   priorityScheduler,
-  unstable_IdlePriority,
+  toSchedulerWithPriority(unstable_IdlePriority),
 )
 
 Scheduler that schedules work on React's internal priority scheduler with idle priority.
@@ -27,9 +27,9 @@ ___
 
 ### `Const` immediatePriority
 
-• **immediatePriority**: *SchedulerLike* =  createSchedulerWithPriority(
+• **immediatePriority**: *SchedulerLike* =  pipe(
   priorityScheduler,
-  unstable_ImmediatePriority,
+  toSchedulerWithPriority(unstable_ImmediatePriority),
 )
 
 Scheduler that schedules work on React's internal priority scheduler with immediate priority.
@@ -38,9 +38,9 @@ ___
 
 ### `Const` lowPriority
 
-• **lowPriority**: *SchedulerLike* =  createSchedulerWithPriority(
+• **lowPriority**: *SchedulerLike* =  pipe(
   priorityScheduler,
-  unstable_LowPriority,
+  toSchedulerWithPriority(unstable_LowPriority),
 )
 
 Scheduler that schedules work on React's internal priority scheduler with low priority.
@@ -49,7 +49,10 @@ ___
 
 ### `Const` normalPriority
 
-• **normalPriority**: *SchedulerLike* =  priorityScheduler
+• **normalPriority**: *SchedulerLike* =  pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_NormalPriority),
+)
 
 Scheduler that schedules work on React's internal priority scheduler with normal priority.
 
@@ -57,9 +60,9 @@ ___
 
 ### `Const` userBlockingPriority
 
-• **userBlockingPriority**: *SchedulerLike* =  createSchedulerWithPriority(
+• **userBlockingPriority**: *SchedulerLike* =  pipe(
   priorityScheduler,
-  unstable_UserBlockingPriority,
+  toSchedulerWithPriority(unstable_UserBlockingPriority),
 )
 
 Scheduler that schedules work on React's internal priority scheduler with user blocking priority.

@@ -12,17 +12,15 @@
 
 ### Functions
 
-* [schedule](README.md#const-schedule)
+* [scheduleCallback](README.md#const-schedulecallback)
 
 ## Functions
 
-### `Const` schedule
+### `Const` scheduleCallback
 
-▸ **schedule**(`scheduler`: [SchedulerLike](interfaces/schedulerlike.md), `callback`: function, `delay`: number): *DisposableLike*
+▸ **scheduleCallback**(`callback`: function, `delay`: number): *OperatorLike‹[SchedulerLike](interfaces/schedulerlike.md), DisposableLike›*
 
 **Parameters:**
-
-▪ **scheduler**: *[SchedulerLike](interfaces/schedulerlike.md)*
 
 ▪ **callback**: *function*
 
@@ -30,4 +28,4 @@
 
 ▪`Default value`  **delay**: *number*= 0
 
-**Returns:** *DisposableLike*
+**Returns:** *OperatorLike‹[SchedulerLike](interfaces/schedulerlike.md), DisposableLike›*

@@ -5,9 +5,10 @@ import {
   dispose,
 } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { schedule, SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { scheduleCallback, SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { pipe } from "@reactive-js/pipe";
 
 class EnumeratorSubscriber<T>
   implements EnumeratorLike<void, T>, SubscriberLike<T> {
@@ -90,7 +91,9 @@ class ScheduledObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     const schedulerContinuation = this.factory(subscriber);
     if (schedulerContinuation instanceof Function) {
-      schedule(subscriber, schedulerContinuation);
+      // Note: no need to add the returned disposable, since
+      // subscriber already adds any callbacks scheduled on it.
+      pipe(subscriber, scheduleCallback(schedulerContinuation));
     } else {
       subscriber.schedule(schedulerContinuation);
     }

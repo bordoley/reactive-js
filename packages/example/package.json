@@ -38,7 +38,8 @@
   "dependencies": {
     "@reactive-js/node": "^0.0.31",
     "@reactive-js/observable": "^0.0.31",
-    "@reactive-js/pipe": "^0.0.31"
+    "@reactive-js/pipe": "^0.0.31",
+    "@reactive-js/schedulers": "^0.0.31"
   },
   "scripts": {
     "build": "tsc"
