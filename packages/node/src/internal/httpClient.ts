@@ -5,9 +5,7 @@ import {
 } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
-import {
-  createAsyncEnumerator,
-} from "@reactive-js/async-enumerable";
+import { createAsyncEnumerator } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
   createDisposable,
@@ -66,10 +64,6 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
     this.content = new HttpIncomingMessageContentBody(this, msg);
   }
 
-  get httpVersion() {
-    return this.msg.httpVersion;
-  }
-
   get isDisposed() {
     return this.disposable.isDisposed;
   }
@@ -80,10 +74,6 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
 
   get statusCode(): number {
     return this.msg.statusCode || -1;
-  }
-
-  get statusMessage(): string {
-    return this.msg.statusMessage || "";
   }
 }
 

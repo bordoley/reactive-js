@@ -25,6 +25,7 @@ export interface HttpContentBodyLike
   extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
   readonly contentLength: number;
   readonly contentType: string;
+  readonly contentEncoding: string;
 }
 
 /** @ignore */
@@ -39,10 +40,8 @@ export interface HttpRequestLike<T> {
 
 /** @ignore */
 export interface HttpResponseLike<T> {
-  readonly httpVersion: string;
   readonly location?: string;
   readonly statusCode: number;
-  readonly statusMessage: string;
   readonly content?: T;
 }
 
@@ -52,6 +51,10 @@ export class HttpIncomingMessageContentBody implements HttpContentBodyLike {
     private readonly response: DisposableLike,
     private readonly msg: IncomingMessage,
   ) {}
+
+  get contentEncoding(): string {
+    return this.msg.headers["content-encoding"] || "";
+  }
 
   get contentLength(): number {
     try {
