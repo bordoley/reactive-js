@@ -3,11 +3,7 @@ import {
   ServerResponse,
   IncomingMessage,
 } from "http";
-import {
-  createDisposable,
-  add,
-  dispose,
-} from "@reactive-js/disposable";
+import { createDisposable, add, dispose } from "@reactive-js/disposable";
 import {
   HttpRequestLike,
   HttpContentBodyLike,
@@ -66,32 +62,57 @@ class HttpServerRequestImpl implements HttpServerRequestLike {
   }
 }
 
-const consumeResponseContent = (dest: ServerResponse) => ({ content }: HttpServerResponseLike) => createObservable(subscriber => {
-  const contentReadableEnumerator = (
-    content || emptyReadableAsyncEnumerable
-  ).enumerateAsync(subscriber);
-  const responseWritableEnumerator = createWritableAsyncEnumerator(
-    dest,
-    subscriber,
-  );
+const writeResponseContentHeaders = (
+  resp: ServerResponse,
+  content: HttpContentBodyLike,
+) => {
+  const { contentLength, contentType, contentEncoding } = content;
+  if (contentLength > 0) {
+    resp.setHeader("content-length", contentLength);
+  }
 
-  subscriber
-    .add(contentReadableEnumerator)
-    .add(responseWritableEnumerator);
+  if (contentType.length > 0) {
+    resp.setHeader("content-type", contentType);
+  }
 
-  contentReadableEnumerator.subscribe(
-    responseWritableEnumerator,
-  );
-  responseWritableEnumerator.subscribe(
-    contentReadableEnumerator,
-  );
+  if (contentEncoding.length > 0) {
+    resp.setHeader("content-encoding", contentType);
+  }
+};
 
-  responseWritableEnumerator.add(subscriber);
-})
+const writeResponseMessage = (resp: ServerResponse) => ({
+  content,
+  statusCode,
+}: HttpServerResponseLike) => {
+  resp.statusCode = statusCode;
+
+  if (content !== undefined) {
+    writeResponseContentHeaders(resp, content);
+  }
+};
+
+const writeResponseContentBody = (resp: ServerResponse) => ({
+  content,
+}: HttpServerResponseLike) =>
+  createObservable(subscriber => {
+    const contentReadableEnumerator = (
+      content || emptyReadableAsyncEnumerable
+    ).enumerateAsync(subscriber);
+    const responseWritableEnumerator = createWritableAsyncEnumerator(
+      resp,
+      subscriber,
+    );
+
+    subscriber.add(contentReadableEnumerator).add(responseWritableEnumerator);
+    responseWritableEnumerator.add(subscriber);
+
+    contentReadableEnumerator.subscribe(responseWritableEnumerator);
+    responseWritableEnumerator.subscribe(contentReadableEnumerator);
+  });
 
 /** @ignore */
 export const createServer = (
-  handler: (
+  requestHandler: (
     req: HttpServerRequestLike,
   ) => ObservableLike<HttpServerResponseLike>,
   options: {
@@ -106,31 +127,22 @@ export const createServer = (
     if (close === undefined) {
       const disposable = createDisposable().add(() => server.close());
 
-      const server = createHttpServer(
-        options,
-        (req: IncomingMessage, resp: ServerResponse) => {
-          const serverRequest = new HttpServerRequestImpl(req);
+      const handler = (req: IncomingMessage, resp: ServerResponse) => {
+        const serverRequest = new HttpServerRequestImpl(req);
 
-          const responseSubscription = pipe(
-            serverRequest,
-            handler,
-            onNotify(({ statusCode, statusMessage }) => {
-              resp.statusCode = statusCode;
-              resp.statusMessage = statusMessage;
-            }),
-            map(consumeResponseContent(resp)),
-            switchAll(),
-            subscribe(scheduler),
-          ).add(serverRequest);
+        const responseSubscription = pipe(
+          serverRequest,
+          requestHandler,
+          onNotify(writeResponseMessage(resp)),
+          map(writeResponseContentBody(resp)),
+          switchAll(),
+          subscribe(scheduler),
+        ).add(serverRequest);
 
-          // FIXME: Might have to change the underlying data structure
-          // used by disposable for adding and removing child disposables.
-          // In a real world scenario this could lead to some real overhead
-          // due to the cost of finding a request and removing it when
-          // the responseSubscription is disposed.
-          disposable.add(responseSubscription);
-        },
-      ).listen(port);
+        disposable.add(responseSubscription);
+      };
+
+      const server = createHttpServer(options, handler).listen(port);
 
       close = createObservable(subscriber => {
         if (disposable.isDisposed) {
@@ -157,9 +169,7 @@ const connect = createServer(
       ofValue(req),
       onNotify(console.log),
       map(_ => ({
-        httpVersion: "1.1",
-        statusCode: 200,
-        statusMessage: "Works",
+        statusCode: 202,
       })),
     ),
   {
