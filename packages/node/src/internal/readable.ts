@@ -15,6 +15,12 @@ import {
   SubscriberOperatorLike,
   using,
   map,
+  keep,
+  fromArray,
+  switchAll,
+  takeFirst,
+  concat,
+  never,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -132,3 +138,29 @@ export const emptyReadableAsyncEnumerable = createAsyncEnumerable<
   ReadableMode,
   ReadableEvent
 >(map(_ => ({ type: ReadableEventType.End })));
+
+export const createBufferReadableAsyncEnumerable = (
+  chunk: Buffer,
+): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
+  createAsyncEnumerable(obs =>
+    pipe(
+      concat(
+        pipe(
+          obs,
+          keep(ev => ev === ReadableMode.Resume),
+          takeFirst(),
+        ),
+        // Intentionally don't dispose the subscriber,
+        // because it may be asynchronously consuming
+        // the data.
+        never(),
+      ),
+      map(_ =>
+        fromArray<ReadableEvent>([
+          { type: ReadableEventType.Data, chunk },
+          { type: ReadableEventType.End },
+        ]),
+      ),
+      switchAll(),
+    ),
+  );

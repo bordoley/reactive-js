@@ -1,10 +1,6 @@
 import { createServer } from "./httpServer";
 import { pipe } from "@reactive-js/pipe";
-import {
-  ofValue,
-  onNotify,
-  map,
-} from "@reactive-js/observable";
+import { ofValue, onNotify, map } from "@reactive-js/observable";
 import { getHostScheduler } from "./scheduler";
 import { createBufferContentBody, encode } from "./httpContentBody";
 import { HttpContentEncoding } from "./http";
@@ -22,9 +18,8 @@ const connect = createServer(
         content: pipe(
           createBufferContentBody(chunk, "text/plain"),
           encode(HttpContentEncoding.GZip),
-       ),
+        ),
       })),
-     
     ),
   {
     scheduler: getHostScheduler(),

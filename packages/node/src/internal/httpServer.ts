@@ -3,7 +3,13 @@ import {
   ServerResponse,
   IncomingMessage,
 } from "http";
-import { createDisposable, add, dispose, createDisposableWrapper, DisposableLike } from "@reactive-js/disposable";
+import {
+  createDisposable,
+  add,
+  dispose,
+  createDisposableWrapper,
+  DisposableLike,
+} from "@reactive-js/disposable";
 import {
   HttpRequestLike,
   HttpContentBodyLike,
@@ -40,7 +46,7 @@ class HttpServerRequestImpl implements HttpServerRequestLike {
 
   constructor(private readonly msg: IncomingMessage) {
     const disposable = createDisposableWrapper(msg, msg => msg.destroy());
-    
+
     this.disposable = disposable;
     this.content = createIncomingMessageContentBody(disposable);
   }
