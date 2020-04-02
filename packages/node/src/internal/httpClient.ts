@@ -16,20 +16,19 @@ import {
   createObservable,
   ObservableLike,
   map,
-  onNotify,
-  subscribe,
-  onDispose,
   ObservableOperatorLike,
   ofValue,
   switchAll,
   throws,
 } from "@reactive-js/observable";
+import { pipe } from "@reactive-js/pipe";
 import {
   HttpResponseLike,
   HttpRequestLike,
   HttpContentBodyLike,
   HttpMethod,
 } from "./http";
+import { createIncomingMessageContentBody } from "./httpContentBody";
 import {
   ReadableMode,
   ReadableEvent,
@@ -201,25 +200,3 @@ export const handleRedirects = (
     }),
     switchAll(),
   );
-
-import { pipe } from "@reactive-js/pipe";
-import { getHostScheduler } from "./scheduler";
-import { createIncomingMessageContentBody } from "./httpContentBody";
-pipe(
-  {
-    method: HttpMethod.GET,
-    url: "http://google.com/index.html",
-  },
-  send,
-  onNotify(console.log),
-  handleRedirects(0),
-  onNotify(console.log),
-  onNotify(resp => {
-    resp.dispose();
-  }),
-  onDispose(e => {
-    console.log("dispose: " + e);
-    console.log(e);
-  }),
-  subscribe(getHostScheduler()),
-);
