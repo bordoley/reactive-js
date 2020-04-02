@@ -20,8 +20,8 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
-* [createBufferReadableAsyncEnumerable](README.md#const-createbufferreadableasyncenumerable)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
+* [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
 * [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
 * [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
 * [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
@@ -1832,20 +1832,6 @@ Name | Type |
 
 ___
 
-### `Const` createBufferReadableAsyncEnumerable
-
-▸ **createBufferReadableAsyncEnumerable**(`chunk`: Buffer): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`chunk` | Buffer |
-
-**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
-
-___
-
 ### `Const` createReadableAsyncEnumerable
 
 ▸ **createReadableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
@@ -1855,6 +1841,20 @@ ___
 ▪ **factory**: *function*
 
 ▸ (): *Readable*
+
+**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+___
+
+### `Const` createReadableAsyncEnumerableFromBuffer
+
+▸ **createReadableAsyncEnumerableFromBuffer**(`chunk`: Buffer): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`chunk` | Buffer |
 
 **Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 

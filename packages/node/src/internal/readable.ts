@@ -139,7 +139,7 @@ export const emptyReadableAsyncEnumerable = createAsyncEnumerable<
   ReadableEvent
 >(map(_ => ({ type: ReadableEventType.End })));
 
-export const createBufferReadableAsyncEnumerable = (
+export const createReadableAsyncEnumerableFromBuffer = (
   chunk: Buffer,
 ): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
   createAsyncEnumerable(obs =>

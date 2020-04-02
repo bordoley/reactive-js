@@ -13,7 +13,7 @@ import {
   ReadableMode,
   ReadableEvent,
   createReadableAsyncEnumerator,
-  createBufferReadableAsyncEnumerable,
+  createReadableAsyncEnumerableFromBuffer,
 } from "./readable";
 import { transform } from "./transform";
 
@@ -88,7 +88,7 @@ class BufferContentBodyImpl implements HttpContentBodyLike {
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
-    return createBufferReadableAsyncEnumerable(this.chunk).enumerateAsync(
+    return createReadableAsyncEnumerableFromBuffer(this.chunk).enumerateAsync(
       scheduler,
       replayCount,
     );
