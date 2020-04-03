@@ -36,7 +36,7 @@ export interface HttpRequestLike<T> {
   content?: T;
 
   // FIXME: Limit the allowed set of headers
-  headers?: HttpHeaders;
+  headers: HttpHeaders;
   method: HttpMethod;
   url: string | URL;
 }

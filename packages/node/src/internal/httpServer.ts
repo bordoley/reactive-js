@@ -15,7 +15,7 @@ import {
   HttpContentBodyLike,
   HttpResponseLike,
   HttpMethod,
-  //HttpContentEncoding,
+  HttpContentEncoding,
 } from "./http";
 import {
   ObservableLike,
@@ -24,9 +24,6 @@ import {
   onNotify,
   map,
   switchAll,
-  //fromArray,
-  //keep,
-  //takeFirst,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -34,18 +31,12 @@ import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 import {
   createIncomingMessageContentBody,
-  decodeContentBody /*supportedEncodings*/,
+  decodeContentBody,
+  supportedEncodings,
+  encodeContentBody,
 } from "./httpContentBody";
 
-/** @ignore */
-export interface HttpServerRequestLike
-  extends HttpRequestLike<HttpContentBodyLike> {}
-
-/** @ignore */
-export interface HttpServerResponseLike
-  extends HttpResponseLike<HttpContentBodyLike> {}
-
-class HttpServerRequestImpl implements HttpServerRequestLike {
+class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
   readonly content: HttpContentBodyLike;
   readonly disposable: DisposableLike;
@@ -93,46 +84,48 @@ const writeResponseContentHeaders = (
   }
 };
 
-const decodeServerRequest = (
-  req: HttpServerRequestLike,
-): HttpServerRequestLike => {
+export const decodeServerRequest = (
+  req: HttpRequestLike<HttpContentBodyLike>,
+): HttpRequestLike<HttpContentBodyLike> => {
   const { content, headers, method, url } = req;
-  if (content !== undefined && content.contentEncodings.length > 0) {
-    return {
-      content: decodeContentBody(content),
-      headers,
-      method,
-      url,
-    };
-  } else {
-    return req;
-  }
+  return content !== undefined && content.contentEncodings.length > 0
+    ? {
+        content: decodeContentBody(content),
+        headers,
+        method,
+        url,
+      }
+    : req;
 };
-/*
-const encodeServerResponse = (req: HttpServerRequestLike) => (resp: HttpServerResponseLike): ObservableLike<HttpServerResponseLike> => {
+
+export const encodeServerResponse = (req: HttpRequestLike<HttpContentBodyLike>) => (
+  resp: HttpResponseLike<HttpContentBodyLike>,
+): HttpResponseLike<HttpContentBodyLike> => {
   // FIXME: This parsing is completely not abnf compliant
   // FIXME: Special case Identity
   // FIXME: Add support for determining if content should be encoded.
-  const rawAcceptHeader = String(req.headers["accept-encoding"]) || "";
-  const acceptedEncodings = rawAcceptHeader.split(",").map(x => x.trim()) as HttpContentEncoding[];
+  const rawAcceptHeader = String(req.headers["accept-encoding"] || "");
+  const acceptedEncodings = rawAcceptHeader
+    .split(",")
+    .map(x => x.trim()) as HttpContentEncoding[];
+  const encoding = acceptedEncodings.find(
+    encoding => supportedEncodings.indexOf(encoding) > -1,
+  ) as HttpContentEncoding | undefined;
+  const { content, location, statusCode } = resp;
 
-  if(rawAcceptHeader.length > 0) {
-    const encodings = pipe(
-      acceptedEncodings,
-      fromArray,
-      keep(x => supportedEncodings.indexOf(x) > -1),
-      takeFirst(),
-      map(x => )
-    );
-  
-
-  return resp;
-}*/
+  return encoding !== undefined && content !== undefined
+    ? {
+        content: pipe(content, encodeContentBody(encoding)),
+        location,
+        statusCode,
+      }
+    : resp;
+};
 
 const writeResponseMessage = (resp: ServerResponse) => ({
   content,
   statusCode,
-}: HttpServerResponseLike) => {
+}: HttpResponseLike<HttpContentBodyLike>) => {
   resp.statusCode = statusCode;
 
   if (content !== undefined) {
@@ -142,7 +135,7 @@ const writeResponseMessage = (resp: ServerResponse) => ({
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpServerResponseLike) =>
+}: HttpResponseLike<HttpContentBodyLike>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
       content || emptyReadableAsyncEnumerable
@@ -162,8 +155,8 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 /** @ignore */
 export const createServer = (
   requestHandler: (
-    req: HttpServerRequestLike,
-  ) => ObservableLike<HttpServerResponseLike>,
+    req: HttpRequestLike<HttpContentBodyLike>,
+  ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
   options: {
     port: number;
     scheduler: SchedulerLike;
@@ -181,9 +174,7 @@ export const createServer = (
 
         const responseSubscription = pipe(
           serverRequest,
-          decodeServerRequest,
           requestHandler,
-          //map(encodeServerResponse(serverRequest)),
           onNotify(writeResponseMessage(resp)),
           map(writeResponseContentBody(resp)),
           switchAll(),
