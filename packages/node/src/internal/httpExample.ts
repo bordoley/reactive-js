@@ -1,27 +1,32 @@
-import { createServer } from "./httpServer";
-import { pipe, compose } from "@reactive-js/pipe";
+import { createServer, decodeServerRequest, encodeServerResponse } from "./httpServer";
+import { pipe } from "@reactive-js/pipe";
 import { ofValue, onNotify, map, subscribe } from "@reactive-js/observable";
 import { getHostScheduler } from "./scheduler";
-import { createBufferContentBody, encodeContentBody } from "./httpContentBody";
-import { HttpContentEncoding, HttpMethod } from "./http";
+import { createBufferContentBody } from "./httpContentBody";
+import { HttpMethod } from "./http";
 import { handleRedirects, send } from "./httpClient";
+import { createPriorityScheduler, toSchedulerWithPriority } from "@reactive-js/scheduler";
 
-const scheduler = getHostScheduler();
+const scheduler = pipe(
+  getHostScheduler(),
+  createPriorityScheduler,
+  toSchedulerWithPriority(1),
+);
 
 const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 const connect = createServer(
-  compose(
+  req => pipe(
+    req,
+    decodeServerRequest,
     ofValue,
     onNotify(req => console.log(req.url)),
     map(_ => ({
       statusCode: 200,
-      content: pipe(
-        createBufferContentBody(chunk, "text/plain"),
-        encodeContentBody(HttpContentEncoding.GZip),
-      ),
+      content: createBufferContentBody(chunk, "text/plain"),
     })),
+    map(encodeServerResponse(req)),
   ),
   {
     scheduler,
@@ -36,6 +41,7 @@ pipe(
     method: HttpMethod.POST,
     url: "http://localhost:8080/index.html",
     content: createBufferContentBody(chunk, "text/plain"),
+    headers: {},
   },
   send,
   handleRedirects(0),

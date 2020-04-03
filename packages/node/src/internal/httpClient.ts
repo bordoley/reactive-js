@@ -38,14 +38,10 @@ import {
 import { createWritableAsyncEnumerator } from "./writable";
 
 /** @ignore */
-export interface HttpClientRequestLike
-  extends HttpRequestLike<HttpContentBodyLike> {}
-
-/** @ignore */
 export interface HttpClientResponseLike
   extends HttpResponseLike<HttpContentBodyLike>,
     DisposableLike {
-  readonly request: HttpClientRequestLike;
+  readonly request: HttpRequestLike<HttpContentBodyLike>;
 }
 
 class HttpClientResponseImpl implements HttpClientResponseLike {
@@ -55,7 +51,7 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
   readonly dispose = dispose;
 
   constructor(
-    readonly request: HttpClientRequestLike,
+    readonly request: HttpRequestLike<HttpContentBodyLike>,
     private readonly msg: IncomingMessage,
   ) {
     const disposable = createDisposableWrapper(msg, msg => msg.destroy());
@@ -79,7 +75,7 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
 
 /** @ignore */
 export const send = (
-  clientRequest: HttpClientRequestLike,
+  clientRequest: HttpRequestLike<HttpContentBodyLike>,
 ): ObservableLike<HttpClientResponseLike> => {
   const { content, headers, method, url } = clientRequest;
 
@@ -154,7 +150,7 @@ const makeRedirectRequest = ({
   request: { content, headers, method },
   location,
   statusCode,
-}: HttpClientResponseLike): HttpClientRequestLike => {
+}: HttpClientResponseLike): HttpRequestLike<HttpContentBodyLike> => {
   const redirectToGet =
     statusCode === 303 ||
     ((statusCode === 301 || statusCode === 302) && method === "POST");
