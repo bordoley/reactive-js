@@ -1,5 +1,14 @@
-import { HttpRequestLike, HttpContentBodyLike, HttpResponseLike, HttpContentEncoding } from "./http";
-import { decodeContentBody, supportedEncodings, encodeContentBody } from "./httpContentBody";
+import {
+  HttpRequestLike,
+  HttpContentBodyLike,
+  HttpResponseLike,
+  HttpContentEncoding,
+} from "./http";
+import {
+  decodeContentBody,
+  supportedEncodings,
+  encodeContentBody,
+} from "./httpContentBody";
 import { pipe } from "@reactive-js/pipe";
 
 export const decodeHttpRequest = (
@@ -14,7 +23,9 @@ export const decodeHttpRequest = (
     : request;
 };
 
-export const encodeHttpResponse = (acceptedEncodings: readonly HttpContentEncoding[]) => (
+export const encodeHttpResponse = (
+  acceptedEncodings: readonly HttpContentEncoding[],
+) => (
   response: HttpResponseLike<HttpContentBodyLike>,
 ): HttpResponseLike<HttpContentBodyLike> => {
   const encoding = acceptedEncodings.find(

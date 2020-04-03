@@ -22,19 +22,12 @@ interface ScheduledTaskLike {
   taskID: number;
 }
 
-const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
-  let diff = 0;
-  diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
-  diff = diff !== 0 ? diff : a.priority - b.priority;
-  diff = diff !== 0 ? diff : a.startTime - b.startTime;
-  diff = diff !== 0 ? diff : a.taskID - b.taskID;
-  return diff;
-};
-
 class PrioritySchedulerContinuation implements SchedulerContinuationLike {
   readonly add = add;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = dispose;
+
+  running = false;
 
   constructor(
     private readonly scheduler: PrioritySchedulerResourceImpl,
@@ -56,13 +49,15 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
         next !== undefined &&
         current !== next &&
         next.dueTime <= scheduler.now &&
-        next.priority > current.priority;
+        next.priority < current.priority;
 
       const hostRequestedYield =
         hostShouldYield !== undefined && hostShouldYield();
 
       return nextTaskIsHigherPriority || hostRequestedYield;
     };
+
+    this.running = true;
 
     for (
       let task = scheduler.peek(), isDisposed = this.isDisposed;
@@ -72,6 +67,7 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       const delay = task.dueTime - scheduler.now;
 
       if (delay > 0) {
+        this.running = false;
         this.delay = delay;
         return;
       }
@@ -97,13 +93,24 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       // Yield if were not disposed. The next iteration of the loop
       // will yield if the next task is delayed.
       if (!isDisposed && shouldYield()) {
+        this.running = false;
         return;
       }
     }
 
+    this.running = false;
     this.dispose();
   }
 }
+
+const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
+  let diff = 0;
+ 
+  diff = diff !== 0 ? diff : a.priority - b.priority;
+  //diff = diff !== 0 ? diff : a.startTime - b.startTime;
+  diff = diff !== 0 ? diff : a.taskID - b.taskID;
+  return diff;
+};
 
 class PrioritySchedulerResourceImpl
   implements
@@ -122,6 +129,8 @@ class PrioritySchedulerResourceImpl
   current: any = undefined;
   hasCurrent = false;
   taskIDCounter = 0;
+
+  private continuation: PrioritySchedulerContinuation | undefined = undefined;
 
   constructor(readonly hostScheduler: SchedulerLike) {}
 
@@ -165,7 +174,8 @@ class PrioritySchedulerResourceImpl
 
     if (!this.isDisposed) {
       const startTime = this.now;
-      const dueTime = startTime + (continuation.delay ?? 0);
+      const { delay } = continuation;
+      const dueTime = startTime + delay;
 
       const task = {
         taskID: this.taskIDCounter++,
@@ -178,10 +188,20 @@ class PrioritySchedulerResourceImpl
       this.queue.push(task);
       const head = this.peek();
 
-      if (head === task) {
-        const delay = Math.max(task.dueTime - this.now, 0);
-        const continuation = new PrioritySchedulerContinuation(this, delay);
+      const priorityContinuation = this.continuation;
+      const continuationActive =
+        priorityContinuation !== undefined &&
+        (priorityContinuation.running || priorityContinuation.delay <= delay)
+
+      if (head === task && !continuationActive) {
+        const continuation = new PrioritySchedulerContinuation(this, delay).add(
+          () => {
+            this.continuation = undefined;
+          }
+        );
         this.disposable.inner = continuation;
+        this.continuation = continuation;
+
         this.hostScheduler.schedule(continuation);
       }
     }

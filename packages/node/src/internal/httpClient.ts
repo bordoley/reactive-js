@@ -145,12 +145,10 @@ export const sendHttpRequest = (
 
 const redirectCodes = [301, 302, 303, 307, 308];
 
-const makeRedirectRequest = (response: HttpClientResponseLike): HttpRequestLike<HttpContentBodyLike> => {
-  const {
-    request,
-    location,
-    statusCode,
-  } = response;
+const makeRedirectRequest = (
+  response: HttpClientResponseLike,
+): HttpRequestLike<HttpContentBodyLike> => {
+  const { request, location, statusCode } = response;
 
   const { content, method } = request;
 
