@@ -1,4 +1,4 @@
-[@reactive-js/schedulers](../README.md) › [CallbackScheduler](callbackscheduler.md)
+[@reactive-js/scheduler](../README.md) › [CallbackScheduler](callbackscheduler.md)
 
 # Interface: CallbackScheduler
 
@@ -6,7 +6,7 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 
 ## Hierarchy
 
-* SchedulerLike
+* [SchedulerLike](schedulerlike.md)
 
   ↳ **CallbackScheduler**
 

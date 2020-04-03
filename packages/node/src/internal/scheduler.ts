@@ -1,6 +1,5 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { schedule } from "@reactive-js/schedulers";
+import { schedule, SchedulerLike } from "@reactive-js/scheduler";
 
 let timeout = 500;
 export const setSchedulerTimeout = (newTimeout: number) => {

@@ -1,5 +1,4 @@
 import { getHostScheduler } from "@reactive-js/node";
-import { pipe } from "@reactive-js/pipe";
 import {
   exhaust,
   fromArray,
@@ -8,10 +7,11 @@ import {
   onNotify,
   subscribe,
 } from "@reactive-js/observable";
+import { pipe } from "@reactive-js/pipe";
 import {
   createPriorityScheduler,
   toSchedulerWithPriority,
-} from "@reactive-js/schedulers";
+} from "@reactive-js/scheduler";
 
 const scheduler = pipe(
   getHostScheduler(),

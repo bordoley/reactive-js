@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { schedule } from "@reactive-js/schedulers";
+import { schedule } from "@reactive-js/scheduler";
 
 const performance = window.performance;
 const Date = window.Date;

@@ -4,8 +4,11 @@ import {
   DisposableLike,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
-import { SchedulerLike } from "@reactive-js/scheduler";
-import { schedule, createVirtualTimeScheduler } from "@reactive-js/schedulers";
+import {
+  SchedulerLike,
+  schedule,
+  createVirtualTimeScheduler,
+} from "@reactive-js/scheduler";
 import { AbstractSubscriber } from "../src/internal/subscriber";
 import {
   buffer,

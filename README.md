@@ -52,15 +52,11 @@ const subscription = pipe(
 
 - [@reactive-js/async-enumerable](./packages/async-enumerable)
 
-### Schedulers
-
-- [@reactive-js/scheduler](./packages/scheduler)
-- [@reactive-js/schedulers](./packages/schedulers)
-
 ### Utilities
 
 - [@reactive-js/disposable](./packages/disposable)
 - [@reactive-js/pipe](./packages/pipe)
+- [@reactive-js/scheduler](./packages/scheduler)
 
 ### Platform Integrations
 
