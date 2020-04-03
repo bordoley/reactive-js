@@ -79,3 +79,22 @@ export interface PrioritySchedulerLike {
 export interface PrioritySchedulerResourceLike
   extends PrioritySchedulerLike,
     DisposableLike {}
+
+/**
+ * Interface used by Scheduler implementations using the 'schedulerMixin' functions
+ *
+ * @noInheritDoc
+ */
+export interface HostSchedulerLike extends SchedulerLike {
+  /** Platform specific shouldYield function passed to continuations when they are run.*/
+  readonly shouldYield: (() => boolean) | undefined;
+
+  /**
+   * Schedules a callback with the specified delay to be executed in the future.
+   *
+   * @param callback The callback function to be executed.
+   * @param delay An optional delay in ms that the scheduler should wait
+   * before invoking the callback function.
+   */
+  scheduleCallback(callback: () => void, delay: number): DisposableLike;
+}
