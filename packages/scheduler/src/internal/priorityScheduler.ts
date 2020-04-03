@@ -27,7 +27,6 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
   readonly dispose = dispose;
 
   running = false;
-
   dueTime: number;
 
   constructor(
@@ -48,7 +47,7 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       const next = scheduler.peek();
 
       const nextTaskIsHigherPriority =
-        scheduler.current !== undefined &&
+        current !== undefined &&
         next !== undefined &&
         current !== next &&
         next.dueTime <= scheduler.now &&
@@ -97,6 +96,8 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       // will yield if the next task is delayed.
       if (!isDisposed && shouldYield()) {
         this.running = false;
+        this.delay = 0;
+        this.dueTime = scheduler.now;
         return;
       }
     }
