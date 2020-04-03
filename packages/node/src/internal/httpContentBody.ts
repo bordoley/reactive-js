@@ -213,5 +213,3 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
 export const createIncomingMessageContentBody = (
   msg: DisposableWrapperLike<IncomingMessage>,
 ) => decodeContentBody(new IncomingMessageContentBodyImpl(msg));
-
-
