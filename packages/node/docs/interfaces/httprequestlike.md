@@ -10,23 +10,18 @@
 
 * **HttpRequestLike**
 
+  ↳ [HttpServerRequest](httpserverrequest.md)
+
 ## Index
 
 ### Properties
 
-* [acceptedEncodings](httprequestlike.md#acceptedencodings)
 * [content](httprequestlike.md#optional-content)
 * [headers](httprequestlike.md#headers)
 * [method](httprequestlike.md#method)
 * [url](httprequestlike.md#url)
 
 ## Properties
-
-###  acceptedEncodings
-
-• **acceptedEncodings**: *keyof HttpContentEncoding[]*
-
-___
 
 ### `Optional` content
 

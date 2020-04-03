@@ -15,7 +15,6 @@ import {
 import { DisposableWrapperLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { HttpContentEncoding } from "./http";
 import {
   ReadableMode,
   ReadableEvent,
@@ -23,6 +22,14 @@ import {
   createReadableAsyncEnumerableFromBuffer,
 } from "./readable";
 import { transform } from "./transform";
+
+export const enum HttpContentEncoding {
+  Brotli = "br",
+  Compress = "compress",
+  Deflate = "deflate",
+  GZip = "gzip",
+  Identity = "identity",
+}
 
 /** @noInheritDoc */
 export interface HttpContentBodyLike
@@ -50,9 +57,9 @@ const createEncodingCompressTransform = (
 
 /** @ignore */
 export const supportedEncodings = [
-  HttpContentEncoding.Brotli,
-  HttpContentEncoding.Deflate,
   HttpContentEncoding.GZip,
+  HttpContentEncoding.Deflate,
+  HttpContentEncoding.Brotli,
 ];
 
 const createEncodingDecompressTransform = (
@@ -105,23 +112,31 @@ export const encodeContentBody = (
   ...encodings: readonly HttpContentEncoding[]
 ) => (contentBody: HttpContentBodyLike) => {
   const contentEncodings = [...contentBody.contentEncodings, ...encodings];
-  const transforms = contentEncodings.map(createEncodingCompressTransform);
-  return new TransformContentBodyImpl(
-    contentBody,
-    contentEncodings,
-    transforms,
-  );
+  if (contentEncodings.length > 0) {
+    const transforms = contentEncodings.map(createEncodingCompressTransform);
+    return new TransformContentBodyImpl(
+      contentBody,
+      contentEncodings,
+      transforms,
+    );
+  } else {
+    return contentBody;
+  }
 };
 
 /** @ignore */
 export const decodeContentBody = (contentBody: HttpContentBodyLike) => {
-  const contentEncodings: HttpContentEncoding[] = [];
-  const transforms = contentEncodings.map(createEncodingDecompressTransform);
-  return new TransformContentBodyImpl(
-    contentBody,
-    contentEncodings,
-    transforms,
-  );
+  const { contentEncodings } = contentBody;
+  if (contentEncodings.length > 0) {
+    const transforms = contentEncodings.map(createEncodingDecompressTransform);
+    return new TransformContentBodyImpl(
+      contentBody,
+      contentEncodings,
+      transforms,
+    );
+  } else {
+    return contentBody;
+  }
 };
 
 class BufferContentBodyImpl implements HttpContentBodyLike {
@@ -197,4 +212,6 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
 /** @ignore */
 export const createIncomingMessageContentBody = (
   msg: DisposableWrapperLike<IncomingMessage>,
-) => new IncomingMessageContentBodyImpl(msg);
+) => decodeContentBody(new IncomingMessageContentBodyImpl(msg));
+
+

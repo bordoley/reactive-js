@@ -14,7 +14,6 @@ export { transform } from "./internal/transform";
 
 export {
   HttpMethod,
-  HttpContentEncoding,
   HttpHeaders,
   HttpRequestLike,
   HttpResponseLike,
@@ -27,7 +26,7 @@ export {
   sendHttpRequest,
 } from "./internal/httpClient";
 
-export { createHttpServer } from "./internal/httpServer";
+export { HttpServerRequest, createHttpServer } from "./internal/httpServer";
 
 export {
   decodeHttpRequest,
@@ -35,6 +34,7 @@ export {
 } from "./internal/httpRequestResponseEncoding";
 
 export {
+  HttpContentEncoding,
   HttpContentBodyLike,
   createBufferContentBody,
   createStringContentBody,

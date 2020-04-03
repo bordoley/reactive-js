@@ -62,7 +62,7 @@ const connect = createHttpServer(
       req,
       decodeHttpRequest,
       ofValue,
-      onNotify(req => console.log(req.url.toString())),
+      onNotify(req => console.log(req.headers)),
       map(_ => ({
         statusCode: 200,
         content: createBufferContentBody(chunk, "text/plain"),
@@ -81,14 +81,12 @@ connect();
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferContentBody(chunk, "text/plain"),
-    acceptedEncodings: [],
     headers: {},
   }),
   sendHttpRequest,
   handleHttpClientReponseRedirect(0),
   onNotify(resp => {
-    console.log(resp.statusCode);
-    console.log(resp.location);
+    console.log(resp);
     resp.dispose();
   }),
   subscribe(scheduler),
