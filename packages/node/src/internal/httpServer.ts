@@ -34,12 +34,13 @@ import {
   createStringContentBody,
 } from "./httpContentBody";
 
-export interface HttpServerRequest
+/** @noInheritDoc */
+export interface HttpServerRequestLike
   extends HttpRequestLike<HttpContentBodyLike> {
   readonly acceptedEncodings: readonly HttpContentEncoding[];
 }
 
-class HttpServerRequestImpl implements HttpServerRequest {
+class HttpServerRequestImpl implements HttpServerRequestLike {
   readonly add = add;
   readonly content: HttpContentBodyLike;
   readonly disposable: DisposableLike;
@@ -135,6 +136,7 @@ const defaultOnError = (
 ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
   ofValue({
     statusCode: 500,
+    headers: {},
     content: createStringContentBody(
       e instanceof Error ? e.stack || "" : String(e),
       "text/plain",
@@ -143,7 +145,7 @@ const defaultOnError = (
 
 export const createHttpServer = (
   requestHandler: (
-    req: HttpServerRequest,
+    req: HttpServerRequestLike,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
   options: {
     domain: string;
