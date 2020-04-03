@@ -65,6 +65,7 @@ const connect = createHttpServer(
       onNotify(req => console.log(req.headers)),
       map(_ => ({
         statusCode: 200,
+        headers: {},
         content: createBufferContentBody(chunk, "text/plain"),
       })),
       map(encodeHttpResponse(req.acceptedEncodings)),
