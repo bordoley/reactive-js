@@ -31,6 +31,7 @@
 
 * [bindNodeCallback](README.md#bindnodecallback)
 * [createBufferContentBody](README.md#const-createbuffercontentbody)
+* [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpServer](README.md#const-createhttpserver)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
@@ -1861,6 +1862,26 @@ Name | Type | Default |
 `contentEncodings` | keyof HttpContentEncoding[] |  [] |
 
 **Returns:** *BufferContentBodyImpl‹›*
+
+___
+
+### `Const` createHttpRequest
+
+▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `url`: string | URL, `options`: object): *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`method` | [HttpMethod](enums/httpmethod.md) | - |
+`url` | string &#124; URL | - |
+`options` | object |  {} |
+
+**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
 
 ___
 

@@ -15,10 +15,10 @@ export { transform } from "./internal/transform";
 export {
   HttpMethod,
   HttpContentEncoding,
-  HttpContentBodyLike,
   HttpHeaders,
   HttpRequestLike,
   HttpResponseLike,
+  createHttpRequest,
 } from "./internal/http";
 
 export {
@@ -34,4 +34,7 @@ export {
   encodeHttpResponse,
 } from "./internal/httpRequestResponseEncoding";
 
-export { createBufferContentBody } from "./internal/httpContentBody";
+export {
+  HttpContentBodyLike,
+  createBufferContentBody,
+} from "./internal/httpContentBody";

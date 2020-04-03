@@ -48,4 +48,4 @@ ___
 
 ###  url
 
-• **url**: *string | URL*
+• **url**: *URL*

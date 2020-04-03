@@ -30,7 +30,7 @@ ___
 
 ### `Optional` location
 
-• **location**? : *undefined | string*
+• **location**? : *URL*
 
 ___
 

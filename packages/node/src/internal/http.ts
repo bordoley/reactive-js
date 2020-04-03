@@ -1,6 +1,4 @@
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { URL } from "url";
-import { ReadableMode, ReadableEvent } from "./readable";
 
 export const enum HttpMethod {
   GET = "GET",
@@ -17,31 +15,43 @@ export const enum HttpContentEncoding {
   Identity = "identity",
 }
 
-/** @noInheritDoc */
-export interface HttpContentBodyLike
-  extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
-  readonly contentLength: number;
-  readonly contentType: string;
-  readonly contentEncodings: readonly HttpContentEncoding[];
-}
-
+// FIXME: filter out headers for which we have strongly typed apis.
 export interface HttpHeaders {
   [header: string]: number | string | string[] | undefined;
 }
 
 export interface HttpRequestLike<T> {
-  content?: T;
+  readonly acceptedEncodings: readonly HttpContentEncoding[];
+  readonly content?: T;
 
-  // FIXME: Limit the allowed set of headers
   readonly headers: HttpHeaders;
   readonly method: HttpMethod;
-  readonly url: string | URL;
-
-  readonly acceptedEncodings: readonly HttpContentEncoding[];
+  readonly url: URL;
 }
 
+export const createHttpRequest = <T>(
+  method: HttpMethod,
+  url: string | URL,
+  options: {
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    headers?: HttpHeaders;
+    content?: T;
+  } = {},
+): HttpRequestLike<T> => {
+  const { acceptedEncodings = [], headers = {}, content } = options;
+
+  return {
+    acceptedEncodings,
+    content,
+    // FIXME: filter out headers for which we have strongly typed apis.
+    headers,
+    method,
+    url: url instanceof URL ? url : new URL(url),
+  };
+};
+
 export interface HttpResponseLike<T> {
-  readonly location?: string;
-  readonly statusCode: number;
   readonly content?: T;
+  readonly location?: URL;
+  readonly statusCode: number;
 }

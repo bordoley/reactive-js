@@ -22,13 +22,11 @@ import {
   throws,
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
+import { HttpResponseLike, HttpRequestLike, HttpMethod } from "./http";
 import {
-  HttpResponseLike,
-  HttpRequestLike,
   HttpContentBodyLike,
-  HttpMethod,
-} from "./http";
-import { createIncomingMessageContentBody } from "./httpContentBody";
+  createIncomingMessageContentBody,
+} from "./httpContentBody";
 import {
   ReadableMode,
   ReadableEvent,
@@ -65,7 +63,11 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
   }
 
   get location() {
-    return this.msg.headers.location;
+    try {
+      return new URL(this.msg.headers.location || "");
+    } catch (_) {
+      return undefined;
+    }
   }
 
   get statusCode(): number {
@@ -78,12 +80,10 @@ export const sendHttpRequest = (
 ): ObservableLike<HttpClientResponseLike> => {
   const { content, headers, method, url } = clientRequest;
 
-  const reqUrl = url instanceof URL ? url : new URL(url);
-
   const send =
-    reqUrl.protocol === "https:"
+    url.protocol === "https:"
       ? httpsRequest
-      : reqUrl.protocol === "http:"
+      : url.protocol === "http:"
       ? httpRequest
       : (() => {
           throw new Error();
@@ -95,7 +95,7 @@ export const sendHttpRequest = (
       reqHeaders["content-length"] = content.contentLength;
       reqHeaders["content-type"] = content.contentType;
     }
-    const req = send(reqUrl, {
+    const req = send(url, {
       headers: reqHeaders,
       method,
     });
@@ -145,10 +145,10 @@ export const sendHttpRequest = (
 
 const redirectCodes = [301, 302, 303, 307, 308];
 
-const makeRedirectRequest = (
+const makeRedirectRequest = (location: URL) => (
   response: HttpClientResponseLike,
 ): HttpRequestLike<HttpContentBodyLike> => {
-  const { request, location, statusCode } = response;
+  const { request, statusCode } = response;
 
   const { content, method } = request;
 
@@ -160,7 +160,7 @@ const makeRedirectRequest = (
     ...request,
     content: redirectToGet ? undefined : content,
     method: redirectToGet ? HttpMethod.GET : method,
-    url: location || "",
+    url: location,
   };
 };
 
@@ -176,7 +176,7 @@ export const handleHttpClientReponseRedirect = (
         resp.dispose();
         return pipe(
           resp,
-          makeRedirectRequest,
+          makeRedirectRequest(location),
           sendHttpRequest,
           handleHttpClientReponseRedirect(maxAttempts - 1),
         );

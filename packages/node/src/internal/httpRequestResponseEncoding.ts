@@ -1,10 +1,10 @@
 import {
   HttpRequestLike,
-  HttpContentBodyLike,
   HttpResponseLike,
   HttpContentEncoding,
 } from "./http";
 import {
+  HttpContentBodyLike,
   decodeContentBody,
   supportedEncodings,
   encodeContentBody,

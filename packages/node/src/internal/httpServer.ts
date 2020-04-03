@@ -3,6 +3,7 @@ import {
   ServerResponse,
   IncomingMessage,
 } from "http";
+import { URL } from "url";
 import {
   createDisposable,
   add,
@@ -12,7 +13,6 @@ import {
 } from "@reactive-js/disposable";
 import {
   HttpRequestLike,
-  HttpContentBodyLike,
   HttpResponseLike,
   HttpMethod,
   HttpContentEncoding,
@@ -29,7 +29,10 @@ import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
-import { createIncomingMessageContentBody } from "./httpContentBody";
+import {
+  HttpContentBodyLike,
+  createIncomingMessageContentBody,
+} from "./httpContentBody";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
@@ -67,7 +70,7 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 
   get url() {
-    return this.msg.url || "";
+    return new URL(this.msg.url || "");
   }
 }
 
