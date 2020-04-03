@@ -118,7 +118,7 @@ const delayedComparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
   diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
   diff = diff !== 0 ? diff : a.taskID - b.taskID;
   return diff;
-}
+};
 
 class PrioritySchedulerResourceImpl
   implements
@@ -218,13 +218,14 @@ class PrioritySchedulerResourceImpl
       const priorityContinuation = this.continuation;
       const continuationActive =
         priorityContinuation !== undefined &&
-        (priorityContinuation.running || priorityContinuation.dueTime <= dueTime)
+        (priorityContinuation.running ||
+          priorityContinuation.dueTime <= dueTime);
 
       if (head === task && !continuationActive) {
         const continuation = new PrioritySchedulerContinuation(this, delay).add(
           () => {
             this.continuation = undefined;
-          }
+          },
         );
         this.disposable.inner = continuation;
         this.continuation = continuation;

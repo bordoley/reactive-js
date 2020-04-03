@@ -15,7 +15,7 @@ import {
 import { DisposableWrapperLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { HttpContentBodyLike, HttpContentEncoding } from "./http";
+import { HttpContentEncoding } from "./http";
 import {
   ReadableMode,
   ReadableEvent,
@@ -23,6 +23,14 @@ import {
   createReadableAsyncEnumerableFromBuffer,
 } from "./readable";
 import { transform } from "./transform";
+
+/** @noInheritDoc */
+export interface HttpContentBodyLike
+  extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
+  readonly contentLength: number;
+  readonly contentType: string;
+  readonly contentEncodings: readonly HttpContentEncoding[];
+}
 
 const createEncodingCompressTransform = (
   encoding: HttpContentEncoding,

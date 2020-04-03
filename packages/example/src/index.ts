@@ -23,6 +23,7 @@ import {
   createPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
+import { createHttpRequest } from "@reactive-js/node/dist/types/internal/http";
 
 const backgroundScheduler = pipe(
   getHostScheduler(),
@@ -77,13 +78,11 @@ const connect = createHttpServer(
 connect();
 
 pipe(
-  {
-    method: HttpMethod.POST,
-    url: "http://localhost:8080/index.html",
+  createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferContentBody(chunk, "text/plain"),
     acceptedEncodings: [],
     headers: {},
-  },
+  }),
   sendHttpRequest,
   handleHttpClientReponseRedirect(0),
   onNotify(resp => {
