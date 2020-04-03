@@ -13,15 +13,15 @@ import {
   createDisposableWrapper,
 } from "@reactive-js/disposable";
 import {
+  await_,
   createObservable,
   ObservableLike,
   map,
   ObservableOperatorLike,
   ofValue,
-  switchAll,
   throws,
 } from "@reactive-js/observable";
-import { pipe, compose } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { HttpResponseLike, HttpRequestLike, HttpMethod } from "./http";
 import {
   HttpContentBodyLike,
@@ -175,28 +175,25 @@ const makeRedirectRequest = (location: URL) => (
 export const handleHttpClientReponseRedirect = (
   maxAttempts = 10,
 ): ObservableOperatorLike<HttpClientResponseLike, HttpClientResponseLike> =>
-  compose(
-    map(resp => {
-      const isRedirect = redirectCodes.includes(resp.statusCode);
-      const location = resp.location;
+  await_(resp => {
+    const isRedirect = redirectCodes.includes(resp.statusCode);
+    const location = resp.location;
 
-      if (isRedirect && location !== undefined && maxAttempts > 0) {
-        resp.dispose();
-        return pipe(
-          resp,
-          makeRedirectRequest(location),
-          sendHttpRequest,
-          handleHttpClientReponseRedirect(maxAttempts - 1),
-        );
-      } else if (isRedirect && location !== undefined) {
-        resp.dispose();
-        // FIXME: would prefer to remove exceptions
-        return throws<HttpClientResponseLike>(
-          () => new Error("Too many redirects"),
-        );
-      } else {
-        return ofValue(resp);
-      }
-    }),
-    switchAll(),
-  );
+    if (isRedirect && location !== undefined && maxAttempts > 0) {
+      resp.dispose();
+      return pipe(
+        resp,
+        makeRedirectRequest(location),
+        sendHttpRequest,
+        handleHttpClientReponseRedirect(maxAttempts - 1),
+      );
+    } else if (isRedirect && location !== undefined) {
+      resp.dispose();
+      // FIXME: would prefer to remove exceptions
+      return throws<HttpClientResponseLike>(
+        () => new Error("Too many redirects"),
+      );
+    } else {
+      return ofValue(resp);
+    }
+  });

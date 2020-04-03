@@ -25,6 +25,7 @@
 
 ### Functions
 
+* [await_](README.md#const-await_)
 * [buffer](README.md#buffer)
 * [catchError](README.md#const-catcherror)
 * [combineLatest](README.md#combinelatest)
@@ -48,6 +49,7 @@
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
 * [ignoreElements](README.md#const-ignoreelements)
+* [iif](README.md#const-iif)
 * [keep](README.md#const-keep)
 * [lift](README.md#lift)
 * [map](README.md#const-map)
@@ -92,6 +94,32 @@
 * [zip](README.md#zip)
 
 ## Functions
+
+### `Const` await_
+
+▸ **await_**<**TA**, **TB**>(`mapper`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`a`: TA): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+___
 
 ###  buffer
 
@@ -954,6 +982,44 @@ Returns an `ObservableLike` that ignores all items emitted by the source.
 ▪ **TB**
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+___
+
+### `Const` iif
+
+▸ **iif**<**TCtx**, **T**>(`trueCase`: function, `falseCase`: function, `ctx`: TCtx): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹boolean, T›*
+
+**Type parameters:**
+
+▪ **TCtx**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **trueCase**: *function*
+
+▸ (`ctx`: TCtx): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ctx` | TCtx |
+
+▪ **falseCase**: *function*
+
+▸ (`ctx`: TCtx): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ctx` | TCtx |
+
+▪ **ctx**: *TCtx*
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹boolean, T›*
 
 ___
 

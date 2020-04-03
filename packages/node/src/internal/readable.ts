@@ -17,10 +17,10 @@ import {
   map,
   keep,
   fromArray,
-  switchAll,
   takeFirst,
   concat,
   never,
+  await_,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -155,12 +155,11 @@ export const createReadableAsyncEnumerableFromBuffer = (
         // the data.
         never(),
       ),
-      map(_ =>
+      await_(_ =>
         fromArray<ReadableEvent>([
           { type: ReadableEventType.Data, chunk },
           { type: ReadableEventType.End },
         ]),
       ),
-      switchAll(),
     ),
   );

@@ -21,9 +21,10 @@ import {
   subscribe,
   onNotify,
   map,
-  switchAll,
   ofValue,
   catchError,
+  iif,
+  await_,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -158,7 +159,9 @@ export const createHttpServer = (
     shouldEncodeResponse?: (
       resp: HttpResponseLike<HttpContentBodyLike>,
     ) => ObservableLike<boolean>;
-  } & SecureContextOptions & TlsOptions & ServerOptions,
+  } & SecureContextOptions &
+    TlsOptions &
+    ServerOptions,
 ): OperatorLike<void, ObservableLike<void>> => {
   let close: ObservableLike<void> | undefined = undefined;
 
@@ -185,28 +188,24 @@ export const createHttpServer = (
         const serverRequest = new HttpServerRequest(req, base);
         const encodeResponse = (
           response: HttpResponseLike<HttpContentBodyLike>,
-        ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> => {
-          const onResult = (result: boolean) =>
-            result
-              ? pipe(
-                  response,
-                  encodeHttpResponse(serverRequest.acceptedEncodings),
-                )
-              : response;
-          return pipe(response, shouldEncodeResponse, map(onResult));
-        };
+        ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
+          pipe(
+            shouldEncodeResponse(response),
+            iif(
+              encodeHttpResponse(serverRequest.acceptedEncodings),
+              x => x,
+              response,
+            ),
+          );
 
         const responseSubscription = pipe(
           ofValue(serverRequest),
           map(decodeHttpRequest),
-          map(requestHandler),
-          switchAll(),
-          map(encodeResponse),
-          switchAll(),
+          await_(requestHandler),
+          await_(encodeResponse),
           catchError(onError),
           onNotify(writeResponseMessage(resp)),
-          map(writeResponseContentBody(resp)),
-          switchAll(),
+          await_(writeResponseContentBody(resp)),
           subscribe(scheduler),
         ).add(serverRequest);
 

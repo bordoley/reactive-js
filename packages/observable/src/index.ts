@@ -30,6 +30,7 @@ export { subscribe } from "./internal/subscribe";
 export { throws } from "./internal/throws";
 export { using } from "./internal/using";
 
+export { await_ } from "./internal/await";
 export { buffer } from "./internal/buffer";
 export { catchError } from "./internal/catchError";
 export { distinctUntilChanged } from "./internal/distinctUntilChanged";
@@ -37,6 +38,7 @@ export { endWith } from "./internal/endWith";
 export { every, none } from "./internal/every";
 export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
+export { iif } from "./internal/iif";
 export { keep } from "./internal/keep";
 export { lift } from "./internal/lift";
 export { map, mapTo } from "./internal/map";
