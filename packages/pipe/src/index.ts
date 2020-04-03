@@ -115,7 +115,6 @@ export function pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op12: OperatorLike<K, L>,
 ): L;
 
-
 /**
  * Pipes the source value through a series of unary functions.
  */
