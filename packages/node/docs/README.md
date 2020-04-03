@@ -1908,7 +1908,7 @@ ___
 
 ### `Const` createHttpServer
 
-▸ **createHttpServer**(`requestHandler`: function, `options`: object): *OperatorLike‹void, ObservableLike‹void››*
+▸ **createHttpServer**(`requestHandler`: function, `options`: object & SecureContextOptions & TlsOptions & ServerOptions): *OperatorLike‹void, ObservableLike‹void››*
 
 **Parameters:**
 
@@ -1922,7 +1922,7 @@ Name | Type |
 ------ | ------ |
 `req` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
 
-▪ **options**: *object*
+▪ **options**: *object & SecureContextOptions & TlsOptions & ServerOptions*
 
 **Returns:** *OperatorLike‹void, ObservableLike‹void››*
 

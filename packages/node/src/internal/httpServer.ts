@@ -2,8 +2,10 @@ import {
   createServer as createNodeHttpServer,
   ServerResponse,
   IncomingMessage,
+  ServerOptions,
 } from "http";
 import { createServer as createNodeHttpsServer } from "https";
+import { SecureContextOptions, TlsOptions } from "tls";
 import { URL } from "url";
 import {
   createDisposable,
@@ -156,7 +158,7 @@ export const createHttpServer = (
     shouldEncodeResponse?: (
       resp: HttpResponseLike<HttpContentBodyLike>,
     ) => ObservableLike<boolean>;
-  },
+  } & SecureContextOptions & TlsOptions & ServerOptions,
 ): OperatorLike<void, ObservableLike<void>> => {
   let close: ObservableLike<void> | undefined = undefined;
 
