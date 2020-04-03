@@ -1,8 +1,4 @@
-import {
-  HttpRequestLike,
-  HttpResponseLike,
-  HttpContentEncoding,
-} from "./http";
+import { HttpRequestLike, HttpResponseLike, HttpContentEncoding } from "./http";
 import {
   HttpContentBodyLike,
   decodeContentBody,

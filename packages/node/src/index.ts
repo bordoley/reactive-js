@@ -37,4 +37,5 @@ export {
 export {
   HttpContentBodyLike,
   createBufferContentBody,
+  createStringContentBody,
 } from "./internal/httpContentBody";

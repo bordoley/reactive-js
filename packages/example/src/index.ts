@@ -7,6 +7,7 @@ import {
   HttpMethod,
   sendHttpRequest,
   handleHttpClientReponseRedirect,
+  createHttpRequest,
 } from "@reactive-js/node";
 import {
   exhaust,
@@ -23,7 +24,6 @@ import {
   createPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
-import { createHttpRequest } from "@reactive-js/node/dist/types/internal/http";
 
 const backgroundScheduler = pipe(
   getHostScheduler(),
@@ -62,7 +62,7 @@ const connect = createHttpServer(
       req,
       decodeHttpRequest,
       ofValue,
-      onNotify(req => console.log(req.url)),
+      onNotify(req => console.log(req.url.toString())),
       map(_ => ({
         statusCode: 200,
         content: createBufferContentBody(chunk, "text/plain"),
@@ -70,6 +70,7 @@ const connect = createHttpServer(
       map(encodeHttpResponse(req.acceptedEncodings)),
     ),
   {
+    domain: "localhost",
     scheduler,
     port: 8080,
   },
