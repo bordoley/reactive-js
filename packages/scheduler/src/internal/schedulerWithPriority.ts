@@ -2,8 +2,8 @@ import { OperatorLike } from "@reactive-js/pipe";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
-} from "@reactive-js/scheduler";
-import { PrioritySchedulerLike } from "./priorityScheduler";
+  PrioritySchedulerLike,
+} from "./interfaces";
 
 class SchedulerWithPriorityImpl implements SchedulerLike {
   constructor(

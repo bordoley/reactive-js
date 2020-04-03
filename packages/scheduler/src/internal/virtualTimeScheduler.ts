@@ -1,9 +1,9 @@
+import { add, createDisposable, dispose } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
-} from "@reactive-js/scheduler";
+} from "./interfaces";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-import { add, createDisposable, dispose } from "@reactive-js/disposable";
 
 interface VirtualTask {
   readonly continuation: SchedulerContinuationLike;

@@ -1,4 +1,4 @@
-import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
+import { createVirtualTimeScheduler } from "@reactive-js/scheduler";
 import {
   reduce,
   reduceAsync,

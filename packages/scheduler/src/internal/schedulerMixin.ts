@@ -1,8 +1,5 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import {
-  SchedulerContinuationLike,
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike, SchedulerLike } from "./interfaces";
 
 /**
  * Interface used by Scheduler implementations using the 'schedulerMixin' functions

@@ -13,11 +13,9 @@ import {
 import {
   SchedulerLike,
   SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
-import {
   toSchedulerWithPriority,
   PrioritySchedulerLike,
-} from "@reactive-js/schedulers";
+} from "@reactive-js/scheduler";
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 

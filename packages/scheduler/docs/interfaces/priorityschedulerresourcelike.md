@@ -1,4 +1,4 @@
-[@reactive-js/schedulers](../README.md) › [PrioritySchedulerResourceLike](priorityschedulerresourcelike.md)
+[@reactive-js/scheduler](../README.md) › [PrioritySchedulerResourceLike](priorityschedulerresourcelike.md)
 
 # Interface: PrioritySchedulerResourceLike
 

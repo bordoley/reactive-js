@@ -8,7 +8,7 @@ import {
   never,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
-import { createVirtualTimeScheduler } from "@reactive-js/schedulers";
+import { createVirtualTimeScheduler } from "@reactive-js/scheduler";
 import { createReactiveCache, getOrSet } from "../src";
 import { disposed } from "@reactive-js/disposable";
 

@@ -6,43 +6,13 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
-} from "@reactive-js/scheduler";
+  PrioritySchedulerResourceLike,
+} from "./interfaces";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
-import { EnumeratorLike } from "@reactive-js/enumerable";
-
-/**
- * A scheduler which schedules work according to it's priority.
- *
- * @noInheritDoc
- */
-export interface PrioritySchedulerLike {
-  /** The scheduler's current time in ms. */
-  readonly now: number;
-
-  /**
-   * Schedules a continuation to be executed on the scheduler.
-   *
-   * @param continuation The SchedulerContinuation to be executed.
-   * @param priority An optional priority that is used when prioritizing which work
-   * to execute next. The definition of the priority value along with it's default
-   * value is implementation specific.
-   *
-   * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
-   */
-  schedule(continuation: SchedulerContinuationLike, priority: number): void;
-}
-
-/**
- * A priority scheduler which is also an unmanaged resource.
- *
- * @noInheritDoc
- * */
-export interface PrioritySchedulerResourceLike
-  extends PrioritySchedulerLike,
-    DisposableLike {}
 
 interface ScheduledTaskLike {
   readonly continuation: SchedulerContinuationLike;
