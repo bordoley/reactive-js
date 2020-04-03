@@ -26,6 +26,7 @@ import { HttpResponseLike, HttpRequestLike, HttpMethod } from "./http";
 import {
   HttpContentBodyLike,
   createIncomingMessageContentBody,
+  supportedEncodings,
 } from "./httpContentBody";
 import {
   ReadableMode,
@@ -90,7 +91,10 @@ export const sendHttpRequest = (
         })();
 
   return createObservable<HttpClientResponseLike>(subscriber => {
-    const reqHeaders: OutgoingHttpHeaders = { ...headers };
+    const reqHeaders: OutgoingHttpHeaders = {
+      ...headers,
+      "accept-encoding": supportedEncodings.join(","),
+    };
     if (content !== undefined) {
       reqHeaders["content-length"] = content.contentLength;
       reqHeaders["content-type"] = content.contentType;

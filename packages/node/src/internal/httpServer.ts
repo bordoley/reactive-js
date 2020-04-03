@@ -12,12 +12,7 @@ import {
   createDisposableWrapper,
   DisposableLike,
 } from "@reactive-js/disposable";
-import {
-  HttpRequestLike,
-  HttpResponseLike,
-  HttpMethod,
-  HttpContentEncoding,
-} from "./http";
+import { HttpRequestLike, HttpResponseLike, HttpMethod } from "./http";
 import {
   ObservableLike,
   createObservable,
@@ -33,12 +28,18 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 import {
+  HttpContentEncoding,
   HttpContentBodyLike,
   createIncomingMessageContentBody,
   createStringContentBody,
 } from "./httpContentBody";
 
-class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
+export interface HttpServerRequest
+  extends HttpRequestLike<HttpContentBodyLike> {
+  readonly acceptedEncodings: readonly HttpContentEncoding[];
+}
+
+class HttpServerRequestImpl implements HttpServerRequest {
   readonly add = add;
   readonly content: HttpContentBodyLike;
   readonly disposable: DisposableLike;
@@ -142,7 +143,7 @@ const defaultOnError = (
 
 export const createHttpServer = (
   requestHandler: (
-    req: HttpRequestLike<HttpContentBodyLike>,
+    req: HttpServerRequest,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
   options: {
     domain: string;
