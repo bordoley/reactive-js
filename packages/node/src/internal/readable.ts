@@ -14,7 +14,7 @@ import {
   ObservableOperatorLike,
   SubscriberOperatorLike,
   using,
-  map,
+  mapTo,
   keep,
   fromArray,
   takeFirst,
@@ -137,7 +137,7 @@ export const createReadableAsyncEnumerable = (
 export const emptyReadableAsyncEnumerable = createAsyncEnumerable<
   ReadableMode,
   ReadableEvent
->(map(_ => ({ type: ReadableEventType.End })));
+>(mapTo({ type: ReadableEventType.End }));
 
 export const createReadableAsyncEnumerableFromBuffer = (
   chunk: Buffer,
