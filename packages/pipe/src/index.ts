@@ -72,6 +72,49 @@ export function pipe<T, A, B, C, D, E, F, G, H, I>(
   op8: OperatorLike<G, H>,
   op9: OperatorLike<H, I>,
 ): I;
+export function pipe<T, A, B, C, D, E, F, G, H, I, J>(
+  src: T,
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+): J;
+export function pipe<T, A, B, C, D, E, F, G, H, I, J, K>(
+  src: T,
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+  op11: OperatorLike<J, K>,
+): K;
+export function pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  src: T,
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+  op11: OperatorLike<J, K>,
+  op12: OperatorLike<K, L>,
+): L;
+
 
 /**
  * Pipes the source value through a series of unary functions.
@@ -143,6 +186,45 @@ export function compose<T, A, B, C, D, E, F, G, H, I>(
   op8: OperatorLike<G, H>,
   op9: OperatorLike<H, I>,
 ): OperatorLike<T, I>;
+export function compose<T, A, B, C, D, E, F, G, H, I, J>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+): OperatorLike<T, J>;
+export function compose<T, A, B, C, D, E, F, G, H, I, J, K>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+  op11: OperatorLike<J, K>,
+): OperatorLike<T, K>;
+export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  op1: OperatorLike<T, A>,
+  op2: OperatorLike<A, B>,
+  op3: OperatorLike<B, C>,
+  op4: OperatorLike<C, D>,
+  op5: OperatorLike<D, E>,
+  op6: OperatorLike<E, F>,
+  op7: OperatorLike<F, G>,
+  op8: OperatorLike<G, H>,
+  op9: OperatorLike<H, I>,
+  op10: OperatorLike<I, J>,
+  op11: OperatorLike<J, K>,
+  op12: OperatorLike<K, L>,
+): OperatorLike<T, L>;
 
 /**
  * composes the source value through a series of unary functions.
