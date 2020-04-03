@@ -16,10 +16,10 @@ import {
   await_,
   createObservable,
   ObservableLike,
-  map,
   ObservableOperatorLike,
   ofValue,
   throws,
+  mapTo,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { HttpResponseLike, HttpRequestLike, HttpMethod } from "./http";
@@ -126,7 +126,7 @@ export const sendHttpRequest = (
     ).enumerateAsync(subscriber);
 
     createAsyncEnumerator<ReadableMode, ReadableEvent>(
-      map(_ => ({ type: ReadableEventType.End })),
+      mapTo({ type: ReadableEventType.End }),
       subscriber,
     );
 
