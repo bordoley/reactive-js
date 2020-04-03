@@ -149,10 +149,7 @@ test("combineLatest", () => {
 
 describe("concat", () => {
   test("concats the observable and completes", () => {
-    const result = pipe(
-      concat(ofValue(1), ofValue(2), ofValue(3)),
-      toArray(),
-    );
+    const result = pipe(concat(ofValue(1), ofValue(2), ofValue(3)), toArray());
     expect(result).toEqual([1, 2, 3]);
   });
 
@@ -201,13 +198,7 @@ describe("concatAll", () => {
     );
 
     expect(() =>
-      pipe(
-        src,
-        concatAll(),
-        onNotify(cb),
-        ignoreElements(),
-        toArray(),
-      ),
+      pipe(src, concatAll(), onNotify(cb), ignoreElements(), toArray()),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
     expect(cb).toHaveBeenNthCalledWith(2, 2);
@@ -225,13 +216,7 @@ describe("concatAll", () => {
     const src = fromArray([observableA, observableB]);
 
     expect(() =>
-      pipe(
-        src,
-        concatAll(),
-        onNotify(cb),
-        ignoreElements(),
-        toArray(),
-      ),
+      pipe(src, concatAll(), onNotify(cb), ignoreElements(), toArray()),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
     expect(cb).toHaveBeenNthCalledWith(2, 2);
@@ -240,12 +225,7 @@ describe("concatAll", () => {
 });
 
 test("contains", () => {
-  pipe(
-    empty<number>(),
-    contains(1),
-    toValue(),
-    expect,
-  ).toBeFalsy();
+  pipe(empty<number>(), contains(1), toValue(), expect).toBeFalsy();
 
   pipe(
     generate(
@@ -257,12 +237,7 @@ test("contains", () => {
     expect,
   ).toBeTruthy();
 
-  pipe(
-    ofValue(0),
-    contains(1),
-    toValue(),
-    expect,
-  ).toBeFalsy();
+  pipe(ofValue(0), contains(1), toValue(), expect).toBeFalsy();
 });
 
 describe("createObservable", () => {
@@ -271,9 +246,7 @@ describe("createObservable", () => {
     const observable = createObservable(_ => {
       throw cause;
     });
-    expect(() => pipe(observable, toValue())).toThrow(
-      cause,
-    );
+    expect(() => pipe(observable, toValue())).toThrow(cause);
   });
 
   test("when subscriber throws", () => {
@@ -831,9 +804,7 @@ describe("never", () => {
   test("produces no values", () => {
     const observer = createMockObserver();
 
-    expect(() =>
-      pipe(never(), observe(observer), toArray()),
-    ).toThrow();
+    expect(() => pipe(never(), observe(observer), toArray())).toThrow();
 
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
   });
@@ -927,12 +898,7 @@ test("onNotify", () => {
 
 describe("repeat", () => {
   test("repeats the observable n times", () => {
-    pipe(
-      ofValue(1),
-      repeat(3),
-      toArray(),
-      expect,
-    ).toEqual([1, 1, 1]);
+    pipe(ofValue(1), repeat(3), toArray(), expect).toEqual([1, 1, 1]);
   });
 
   test("when the repeat functions throws throws", () => {
@@ -1078,9 +1044,7 @@ test("switchAll", () => {
     },
   );
 
-  expect(() =>
-    pipe(src, switchAll(), onNotify(cb), toArray()),
-  ).toThrow(cause);
+  expect(() => pipe(src, switchAll(), onNotify(cb), toArray())).toThrow(cause);
 
   expect(cb).toBeCalledTimes(4);
   expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -1092,12 +1056,7 @@ test("switchAll", () => {
 describe("takeLast", () => {
   test("publishes the last n values when completed", () => {
     const src = fromArray([1, 2, 3, 4]);
-    pipe(
-      src,
-      takeLast(3),
-      toArray(),
-      expect,
-    ).toEqual([2, 3, 4]);
+    pipe(src, takeLast(3), toArray(), expect).toEqual([2, 3, 4]);
   });
 
   test("immediately completes with an error if completed with an error", () => {
@@ -1108,14 +1067,9 @@ describe("takeLast", () => {
       throws(() => cause, 2),
     );
 
-    expect(() =>
-      pipe(
-        src,
-        takeLast(3),
-        observe(observer),
-        toArray(),
-      ),
-    ).toThrow(cause);
+    expect(() => pipe(src, takeLast(3), observe(observer), toArray())).toThrow(
+      cause,
+    );
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
   });
 });
@@ -1216,17 +1170,11 @@ describe("throws", () => {
 
 describe("timeout", () => {
   test("throws when a timeout occurs", () => {
-    expect(() =>
-      pipe(ofValue(1, 2), timeout(1), toArray()),
-    ).toThrow();
+    expect(() => pipe(ofValue(1, 2), timeout(1), toArray())).toThrow();
   });
 
   test("when timeout is greater than observed time", () => {
-    const result = pipe(
-      ofValue(1, 2),
-      timeout(3),
-      toArray(),
-    );
+    const result = pipe(ofValue(1, 2), timeout(3), toArray());
     expect(result).toEqual([1]);
   });
 });
