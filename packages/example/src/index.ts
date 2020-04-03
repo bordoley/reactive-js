@@ -16,6 +16,7 @@ import {
   onNotify,
   subscribe,
   ofValue,
+  scan,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import {
@@ -34,9 +35,14 @@ pipe(
     x => x + 1,
     () => 0,
   ),
-  map(x => fromArray([x, x, x, x])),
+  map(x => fromArray([x, x, x, x], { delay: 1000 })),
   exhaust(),
-  onNotify(console.log),
+  map(_ => backgroundScheduler.now),
+  scan(
+    ([_, prev], next) => [prev, next],
+    () => [backgroundScheduler.now, backgroundScheduler.now],
+  ),
+  onNotify(([prev, next]) => console.log(next - prev)),
   subscribe(backgroundScheduler),
 );
 
