@@ -8,8 +8,35 @@ import {
   map,
   ObservableLike,
 } from "@reactive-js/observable";
-import { StateUpdaterLike, AsyncEnumerableOperatorLike } from "./interfaces";
+import {
+  StateUpdaterLike,
+  AsyncEnumerableOperatorLike,
+  AsyncEnumeratorLike,
+} from "./interfaces";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
+
+const reducer = <T>(acc: T, next: StateUpdaterLike<T>) => next(acc);
+
+const createFactory = <T>(
+  observable: ObservableLike<StateUpdaterLike<T>>,
+  initialState: () => T,
+  equals?: (a: T, b: T) => boolean,
+) => (enumerator: AsyncEnumeratorLike<T, T>) => {
+  const src = merge(
+    observable,
+    pipe(
+      enumerator,
+      map(v => _ => v),
+    ),
+  );
+
+  return pipe(
+    src,
+    scan(reducer, initialState),
+    distinctUntilChanged(equals),
+    onNotify((next: T) => enumerator.dispatch(next)),
+  );
+};
 
 /**
  * Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdaterLike<T>, T>`.
@@ -25,22 +52,7 @@ export const toStateStore = <T>(
   const operator = (observable: ObservableLike<StateUpdaterLike<T>>) =>
     using(
       scheduler => enumerable.enumerateAsync(scheduler),
-      enumerator => {
-        const src = merge(
-          observable,
-          pipe(
-            enumerator,
-            map(v => _ => v),
-          ),
-        );
-
-        return pipe(
-          src,
-          scan((acc: T, next: StateUpdaterLike<T>) => next(acc), initialState),
-          distinctUntilChanged(equals),
-          onNotify((next: T) => enumerator.dispatch(next)),
-        );
-      },
+      createFactory(observable, initialState, equals),
     );
 
   return createAsyncEnumerable(operator);

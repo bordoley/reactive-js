@@ -5,7 +5,10 @@ import {
   dispose,
 } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { scheduleCallback, SchedulerContinuationLike } from "@reactive-js/scheduler";
+import {
+  scheduleCallback,
+  SchedulerContinuationLike,
+} from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";

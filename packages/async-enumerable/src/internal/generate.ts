@@ -15,7 +15,5 @@ const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-): AsyncEnumerableLike<void, T> => {
-  const operator = scan(generateScanner(generator), initialValue);
-  return createAsyncEnumerable(operator);
-};
+): AsyncEnumerableLike<void, T> =>
+  createAsyncEnumerable(scan(generateScanner(generator), initialValue));

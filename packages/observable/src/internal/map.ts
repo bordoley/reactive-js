@@ -30,3 +30,6 @@ export const map = <TA, TB>(
     new MapSubscriber(subscriber, mapper);
   return lift(operator, true);
 };
+
+export const mapTo = <TA, TB>(value: TB): ObservableOperatorLike<TA, TB> =>
+  map(_ => value);

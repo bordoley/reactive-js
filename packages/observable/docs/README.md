@@ -51,6 +51,7 @@
 * [keep](README.md#const-keep)
 * [lift](README.md#lift)
 * [map](README.md#const-map)
+* [mapTo](README.md#const-mapto)
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
 * [never](README.md#const-never)
@@ -1035,6 +1036,26 @@ The map function to apply each value. Must be a pure function.
 Name | Type |
 ------ | ------ |
 `data` | TA |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+___
+
+### `Const` mapTo
+
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | TB |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 

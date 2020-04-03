@@ -14,9 +14,9 @@ import {
 } from "@reactive-js/schedulers";
 
 const scheduler = pipe(
-  getHostScheduler(), 
+  getHostScheduler(),
   createPriorityScheduler,
-  toSchedulerWithPriority(1)
+  toSchedulerWithPriority(1),
 );
 
 pipe(
