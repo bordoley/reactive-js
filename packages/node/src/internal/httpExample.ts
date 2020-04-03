@@ -2,7 +2,7 @@ import { createServer } from "./httpServer";
 import { pipe, compose } from "@reactive-js/pipe";
 import { ofValue, onNotify, map, subscribe } from "@reactive-js/observable";
 import { getHostScheduler } from "./scheduler";
-import { createBufferContentBody, encode } from "./httpContentBody";
+import { createBufferContentBody, encodeContentBody } from "./httpContentBody";
 import { HttpContentEncoding, HttpMethod } from "./http";
 import { handleRedirects, send } from "./httpClient";
 
@@ -19,7 +19,7 @@ const connect = createServer(
       statusCode: 200,
       content: pipe(
         createBufferContentBody(chunk, "text/plain"),
-        encode(HttpContentEncoding.GZip),
+        encodeContentBody(HttpContentEncoding.GZip),
       ),
     })),
   ),

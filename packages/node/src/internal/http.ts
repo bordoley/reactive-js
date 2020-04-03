@@ -1,5 +1,4 @@
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { OutgoingHttpHeaders } from "http";
 import { URL } from "url";
 import { ReadableMode, ReadableEvent } from "./readable";
 
@@ -28,12 +27,16 @@ export interface HttpContentBodyLike
   readonly contentEncodings: readonly HttpContentEncoding[];
 }
 
+interface HttpHeaders {
+  [header: string]: number | string | string[] | undefined;
+}
+
 /** @ignore */
 export interface HttpRequestLike<T> {
   content?: T;
 
   // FIXME: Limit the allowed set of headers
-  headers?: OutgoingHttpHeaders;
+  headers?: HttpHeaders;
   method: HttpMethod;
   url: string | URL;
 }

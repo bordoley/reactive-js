@@ -1,6 +1,13 @@
 import { IncomingMessage } from "http";
 import { Transform } from "stream";
-import { createBrotliCompress, createDeflate, createGzip } from "zlib";
+import {
+  createBrotliCompress,
+  createDeflate,
+  createGzip,
+  createBrotliDecompress,
+  createInflate,
+  createGunzip,
+} from "zlib";
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
@@ -17,7 +24,7 @@ import {
 } from "./readable";
 import { transform } from "./transform";
 
-const createEncodingTransform = (
+const createEncodingCompressTransform = (
   encoding: HttpContentEncoding,
 ) => (): Transform => {
   switch (encoding) {
@@ -33,15 +40,35 @@ const createEncodingTransform = (
   }
 };
 
-class EncodedContentBodyImpl implements HttpContentBodyLike {
-  readonly contentEncodings: readonly HttpContentEncoding[];
+/** @ignore */
+export const supportedEncodings = [
+  HttpContentEncoding.Brotli,
+  HttpContentEncoding.Deflate,
+  HttpContentEncoding.GZip,
+];
 
+const createEncodingDecompressTransform = (
+  encoding: HttpContentEncoding,
+) => (): Transform => {
+  switch (encoding) {
+    case HttpContentEncoding.Brotli:
+      return createBrotliDecompress();
+    case HttpContentEncoding.Deflate:
+      return createInflate();
+    case HttpContentEncoding.GZip:
+      return createGunzip();
+    case HttpContentEncoding.Compress:
+    case HttpContentEncoding.Identity:
+      throw new Error("unsupported encoding");
+  }
+};
+
+class TransformContentBodyImpl implements HttpContentBodyLike {
   constructor(
     private readonly delegate: HttpContentBodyLike,
-    private readonly encodings: readonly HttpContentEncoding[],
-  ) {
-    this.contentEncodings = [...delegate.contentEncodings, ...encodings];
-  }
+    readonly contentEncodings: readonly HttpContentEncoding[],
+    private readonly transforms: readonly (() => Transform)[],
+  ) {}
 
   get contentLength(): number {
     return -1;
@@ -55,10 +82,10 @@ class EncodedContentBodyImpl implements HttpContentBodyLike {
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
-    return this.encodings
+    return this.transforms
       .reduce(
-        (acc: AsyncEnumerableLike<ReadableMode, ReadableEvent>, encoding) =>
-          pipe(acc, transform(createEncodingTransform(encoding))),
+        (acc: AsyncEnumerableLike<ReadableMode, ReadableEvent>, next) =>
+          pipe(acc, transform(next)),
         this.delegate,
       )
       .enumerateAsync(scheduler, replayCount);
@@ -66,12 +93,28 @@ class EncodedContentBodyImpl implements HttpContentBodyLike {
 }
 
 /** @ignore */
-export const encode = (...encodings: readonly HttpContentEncoding[]) => (
-  contentBody: HttpContentBodyLike,
-) => new EncodedContentBodyImpl(contentBody, encodings);
+export const encodeContentBody = (
+  ...encodings: readonly HttpContentEncoding[]
+) => (contentBody: HttpContentBodyLike) => {
+  const contentEncodings = [...contentBody.contentEncodings, ...encodings];
+  const transforms = contentEncodings.map(createEncodingCompressTransform);
+  return new TransformContentBodyImpl(
+    contentBody,
+    contentEncodings,
+    transforms,
+  );
+};
 
 /** @ignore */
-export const decode = (_contentBody: HttpContentBodyLike) => {};
+export const decodeContentBody = (contentBody: HttpContentBodyLike) => {
+  const contentEncodings: HttpContentEncoding[] = [];
+  const transforms = contentEncodings.map(createEncodingDecompressTransform);
+  return new TransformContentBodyImpl(
+    contentBody,
+    contentEncodings,
+    transforms,
+  );
+};
 
 class BufferContentBodyImpl implements HttpContentBodyLike {
   constructor(
