@@ -1,6 +1,6 @@
-[@reactive-js/scheduler](../README.md) › [CallbackScheduler](callbackscheduler.md)
+[@reactive-js/scheduler](../README.md) › [HostSchedulerLike](hostschedulerlike.md)
 
-# Interface: CallbackScheduler
+# Interface: HostSchedulerLike
 
 Interface used by Scheduler implementations using the 'schedulerMixin' functions
 
@@ -8,17 +8,17 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 
 * [SchedulerLike](schedulerlike.md)
 
-  ↳ **CallbackScheduler**
+  ↳ **HostSchedulerLike**
 
 ## Index
 
 ### Properties
 
-* [shouldYield](callbackscheduler.md#shouldyield)
+* [shouldYield](hostschedulerlike.md#shouldyield)
 
 ### Methods
 
-* [scheduleCallback](callbackscheduler.md#schedulecallback)
+* [scheduleCallback](hostschedulerlike.md#schedulecallback)
 
 ## Properties
 

@@ -1,27 +1,7 @@
-import { DisposableLike } from "@reactive-js/disposable";
-import { SchedulerContinuationLike, SchedulerLike } from "./interfaces";
-
-/**
- * Interface used by Scheduler implementations using the 'schedulerMixin' functions
- *
- * @noInheritDoc
- */
-export interface CallbackScheduler extends SchedulerLike {
-  /** Platform specific shouldYield function passed to continuations when they are run.*/
-  readonly shouldYield: (() => boolean) | undefined;
-
-  /**
-   * Schedules a callback with the specified delay to be executed in the future.
-   *
-   * @param callback The callback function to be executed.
-   * @param delay An optional delay in ms that the scheduler should wait
-   * before invoking the callback function.
-   */
-  scheduleCallback(callback: () => void, delay: number): DisposableLike;
-}
+import { SchedulerContinuationLike, HostSchedulerLike } from "./interfaces";
 
 function createCallback(
-  scheduler: CallbackScheduler,
+  scheduler: HostSchedulerLike,
   continuation: SchedulerContinuationLike,
 ): () => void {
   const callback = () => {
@@ -38,7 +18,7 @@ function createCallback(
 
 /** Mixin functions that can be used to implement the SchedulerLike interface */
 export function schedule(
-  this: CallbackScheduler,
+  this: HostSchedulerLike,
   continuation: SchedulerContinuationLike,
 ): void {
   const callback = createCallback(this, continuation);
