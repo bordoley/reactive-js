@@ -138,14 +138,12 @@ class BufferContentBodyImpl implements HttpContentBodyLike {
   }
 }
 
-/** @ignore */
 export const createBufferContentBody = (
   chunk: Buffer,
   contentType: string,
   contentEncodings: readonly HttpContentEncoding[] = [],
 ) => new BufferContentBodyImpl(chunk, contentEncodings, contentType);
 
-/** @ignore */
 class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
   constructor(private readonly msg: DisposableWrapperLike<IncomingMessage>) {}
 

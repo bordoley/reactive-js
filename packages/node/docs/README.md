@@ -6,8 +6,18 @@
 
 ### Enumerations
 
+* [HttpContentEncoding](enums/httpcontentencoding.md)
+* [HttpMethod](enums/httpmethod.md)
 * [ReadableEventType](enums/readableeventtype.md)
 * [ReadableMode](enums/readablemode.md)
+
+### Interfaces
+
+* [HttpClientResponseLike](interfaces/httpclientresponselike.md)
+* [HttpContentBodyLike](interfaces/httpcontentbodylike.md)
+* [HttpHeaders](interfaces/httpheaders.md)
+* [HttpRequestLike](interfaces/httprequestlike.md)
+* [HttpResponseLike](interfaces/httpresponselike.md)
 
 ### Type aliases
 
@@ -20,12 +30,18 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
+* [createBufferContentBody](README.md#const-createbuffercontentbody)
+* [createHttpServer](README.md#const-createhttpserver)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
 * [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
 * [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
 * [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
+* [decodeHttpRequest](README.md#const-decodehttprequest)
+* [encodeHttpResponse](README.md#const-encodehttpresponse)
 * [getHostScheduler](README.md#const-gethostscheduler)
+* [handleHttpClientReponseRedirect](README.md#const-handlehttpclientreponseredirect)
+* [sendHttpRequest](README.md#const-sendhttprequest)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
 * [transform](README.md#const-transform)
 
@@ -1832,6 +1848,44 @@ Name | Type |
 
 ___
 
+### `Const` createBufferContentBody
+
+▸ **createBufferContentBody**(`chunk`: Buffer, `contentType`: string, `contentEncodings`: keyof HttpContentEncoding[]): *BufferContentBodyImpl‹›*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`chunk` | Buffer | - |
+`contentType` | string | - |
+`contentEncodings` | keyof HttpContentEncoding[] |  [] |
+
+**Returns:** *BufferContentBodyImpl‹›*
+
+___
+
+### `Const` createHttpServer
+
+▸ **createHttpServer**(`requestHandler`: function, `options`: object & any): *OperatorLike‹void, ObservableLike‹void››*
+
+**Parameters:**
+
+▪ **requestHandler**: *function*
+
+▸ (`req`: [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *ObservableLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+
+▪ **options**: *object & any*
+
+**Returns:** *OperatorLike‹void, ObservableLike‹void››*
+
+___
+
 ### `Const` createReadableAsyncEnumerable
 
 ▸ **createReadableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
@@ -1906,11 +1960,67 @@ Name | Type |
 
 ___
 
+### `Const` decodeHttpRequest
+
+▸ **decodeHttpRequest**(`request`: [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *[HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+
+**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
+
+___
+
+### `Const` encodeHttpResponse
+
+▸ **encodeHttpResponse**(`acceptedEncodings`: keyof HttpContentEncoding[]): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acceptedEncodings` | keyof HttpContentEncoding[] |
+
+**Returns:** *(Anonymous function)*
+
+___
+
 ### `Const` getHostScheduler
 
 ▸ **getHostScheduler**(): *SchedulerLike*
 
 **Returns:** *SchedulerLike*
+
+___
+
+### `Const` handleHttpClientReponseRedirect
+
+▸ **handleHttpClientReponseRedirect**(`maxAttempts`: number): *ObservableOperatorLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md), [HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`maxAttempts` | number | 10 |
+
+**Returns:** *ObservableOperatorLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md), [HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
+
+___
+
+### `Const` sendHttpRequest
+
+▸ **sendHttpRequest**(`clientRequest`: [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *ObservableLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`clientRequest` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+
+**Returns:** *ObservableLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
 
 ___
 
