@@ -1,13 +1,12 @@
 import {
   getHostScheduler,
   createHttpServer,
-  decodeHttpRequest,
   createBufferContentBody,
-  encodeHttpResponse,
   HttpMethod,
   sendHttpRequest,
   handleHttpClientReponseRedirect,
   createHttpRequest,
+  createHttpResponse,
 } from "@reactive-js/node";
 import {
   exhaust,
@@ -18,6 +17,7 @@ import {
   subscribe,
   ofValue,
   scan,
+  mapTo,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import {
@@ -60,15 +60,13 @@ const connect = createHttpServer(
   req =>
     pipe(
       req,
-      decodeHttpRequest,
       ofValue,
       onNotify(req => console.log(req.headers)),
-      map(_ => ({
-        statusCode: 200,
-        headers: {},
-        content: createBufferContentBody(chunk, "text/plain"),
-      })),
-      map(encodeHttpResponse(req.acceptedEncodings)),
+      mapTo(
+        createHttpResponse(200, {
+          content: createBufferContentBody(chunk, "text/plain"),
+        }),
+      ),
     ),
   {
     domain: "localhost",
@@ -82,7 +80,6 @@ connect();
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferContentBody(chunk, "text/plain"),
-    headers: {},
   }),
   sendHttpRequest,
   handleHttpClientReponseRedirect(0),

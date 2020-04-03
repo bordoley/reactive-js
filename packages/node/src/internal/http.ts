@@ -24,11 +24,11 @@ export const createHttpRequest = <T>(
   method: HttpMethod,
   url: string | URL,
   options: {
-    headers?: HttpHeadersLike;
     content?: T;
+    headers?: HttpHeadersLike;
   } = {},
 ): HttpRequestLike<T> => {
-  const { headers = {}, content } = options;
+  const { content, headers = {} } = options;
 
   return {
     content,
@@ -45,3 +45,22 @@ export interface HttpResponseLike<T> {
   readonly location?: URL;
   readonly statusCode: number;
 }
+
+export const createHttpResponse = <T>(
+  statusCode: number,
+  options: {
+    content?: T;
+    headers?: HttpHeadersLike;
+    location?: URL;
+  } = {},
+): HttpResponseLike<T> => {
+  const { content, headers = {}, location } = options;
+
+  return {
+    content,
+    // FIXME: filter out headers for which we have strongly typed apis.
+    headers,
+    location,
+    statusCode,
+  };
+};

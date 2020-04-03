@@ -18,7 +18,6 @@
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
-* [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
 
 ### Type aliases
 
@@ -33,6 +32,7 @@
 * [bindNodeCallback](README.md#bindnodecallback)
 * [createBufferContentBody](README.md#const-createbuffercontentbody)
 * [createHttpRequest](README.md#const-createhttprequest)
+* [createHttpResponse](README.md#const-createhttpresponse)
 * [createHttpServer](README.md#const-createhttpserver)
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
@@ -1887,6 +1887,25 @@ Name | Type | Default |
 
 ___
 
+### `Const` createHttpResponse
+
+▸ **createHttpResponse**<**T**>(`statusCode`: number, `options`: object): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`statusCode` | number | - |
+`options` | object |  {} |
+
+**Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+
+___
+
 ### `Const` createHttpServer
 
 ▸ **createHttpServer**(`requestHandler`: function, `options`: object): *OperatorLike‹void, ObservableLike‹void››*
@@ -1895,13 +1914,13 @@ ___
 
 ▪ **requestHandler**: *function*
 
-▸ (`req`: [HttpServerRequestLike](interfaces/httpserverrequestlike.md)): *ObservableLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
+▸ (`req`: [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *ObservableLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | [HttpServerRequestLike](interfaces/httpserverrequestlike.md) |
+`req` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
 
 ▪ **options**: *object*
 
