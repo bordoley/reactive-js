@@ -15,6 +15,7 @@ import {
   HttpContentBodyLike,
   HttpResponseLike,
   HttpMethod,
+  //HttpContentEncoding,
 } from "./http";
 import {
   ObservableLike,
@@ -23,12 +24,18 @@ import {
   onNotify,
   map,
   switchAll,
+  //fromArray,
+  //keep,
+  //takeFirst,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
-import { createIncomingMessageContentBody } from "./httpContentBody";
+import {
+  createIncomingMessageContentBody,
+  decodeContentBody /*supportedEncodings*/,
+} from "./httpContentBody";
 
 /** @ignore */
 export interface HttpServerRequestLike
@@ -86,6 +93,42 @@ const writeResponseContentHeaders = (
   }
 };
 
+const decodeServerRequest = (
+  req: HttpServerRequestLike,
+): HttpServerRequestLike => {
+  const { content, headers, method, url } = req;
+  if (content !== undefined && content.contentEncodings.length > 0) {
+    return {
+      content: decodeContentBody(content),
+      headers,
+      method,
+      url,
+    };
+  } else {
+    return req;
+  }
+};
+/*
+const encodeServerResponse = (req: HttpServerRequestLike) => (resp: HttpServerResponseLike): ObservableLike<HttpServerResponseLike> => {
+  // FIXME: This parsing is completely not abnf compliant
+  // FIXME: Special case Identity
+  // FIXME: Add support for determining if content should be encoded.
+  const rawAcceptHeader = String(req.headers["accept-encoding"]) || "";
+  const acceptedEncodings = rawAcceptHeader.split(",").map(x => x.trim()) as HttpContentEncoding[];
+
+  if(rawAcceptHeader.length > 0) {
+    const encodings = pipe(
+      acceptedEncodings,
+      fromArray,
+      keep(x => supportedEncodings.indexOf(x) > -1),
+      takeFirst(),
+      map(x => )
+    );
+  
+
+  return resp;
+}*/
+
 const writeResponseMessage = (resp: ServerResponse) => ({
   content,
   statusCode,
@@ -127,7 +170,7 @@ export const createServer = (
   } & any,
 ): OperatorLike<void, ObservableLike<void>> => {
   let close: ObservableLike<void> | undefined = undefined;
-  const { port, scheduler } = options;
+  const { port, scheduler, ...nodeOptions } = options;
 
   return () => {
     if (close === undefined) {
@@ -138,7 +181,9 @@ export const createServer = (
 
         const responseSubscription = pipe(
           serverRequest,
+          decodeServerRequest,
           requestHandler,
+          //map(encodeServerResponse(serverRequest)),
           onNotify(writeResponseMessage(resp)),
           map(writeResponseContentBody(resp)),
           switchAll(),
@@ -148,7 +193,7 @@ export const createServer = (
         disposable.add(responseSubscription);
       };
 
-      const server = createHttpServer(options, handler).listen(port);
+      const server = createHttpServer(nodeOptions, handler).listen(port);
 
       close = createObservable(subscriber => {
         if (disposable.isDisposed) {
