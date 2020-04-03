@@ -109,7 +109,7 @@ test("buffer", () => {
       [8, 4],
     ),
     buffer({ duration: 4, maxBufferSize: 3 }),
-    toArray(createVirtualTimeScheduler),
+    toArray(),
     expect,
   ).toEqual([[1, 2, 3], [4, 1, 2], [3], [4]]);
 });
@@ -137,7 +137,7 @@ test("combineLatest", () => {
       ],
       (a, b) => [a, b],
     ),
-    toArray(createVirtualTimeScheduler),
+    toArray(),
     expect,
   ).toEqual([
     [3, 2],
@@ -151,7 +151,7 @@ describe("concat", () => {
   test("concats the observable and completes", () => {
     const result = pipe(
       concat(ofValue(1), ofValue(2), ofValue(3)),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
     expect(result).toEqual([1, 2, 3]);
   });
@@ -170,7 +170,7 @@ describe("concat", () => {
         ),
         onNotify(cb),
         ignoreElements(),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(cause);
 
@@ -185,7 +185,7 @@ describe("concatAll", () => {
     const observableA = fromArray([1, 2]);
     const observableB = fromArray([3, 4]);
     const src = fromArray([observableA, observableB, observableB, observableA]);
-    const result = pipe(src, concatAll(), toArray(createVirtualTimeScheduler));
+    const result = pipe(src, concatAll(), toArray());
     expect(result).toEqual([1, 2, 3, 4, 3, 4, 1, 2]);
   });
 
@@ -206,7 +206,7 @@ describe("concatAll", () => {
         concatAll(),
         onNotify(cb),
         ignoreElements(),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -230,7 +230,7 @@ describe("concatAll", () => {
         concatAll(),
         onNotify(cb),
         ignoreElements(),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(cause);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -243,7 +243,7 @@ test("contains", () => {
   pipe(
     empty<number>(),
     contains(1),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeFalsy();
 
@@ -253,14 +253,14 @@ test("contains", () => {
       () => 0,
     ),
     contains(1),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeTruthy();
 
   pipe(
     ofValue(0),
     contains(1),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeFalsy();
 });
@@ -271,7 +271,7 @@ describe("createObservable", () => {
     const observable = createObservable(_ => {
       throw cause;
     });
-    expect(() => pipe(observable, toValue(createVirtualTimeScheduler))).toThrow(
+    expect(() => pipe(observable, toValue())).toThrow(
       cause,
     );
   });
@@ -451,7 +451,7 @@ test("distinctUntilChanged", () => {
       distinctUntilChanged(),
       onNotify(cb),
       ignoreElements(),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     ),
   ).toThrow(cause);
   expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -462,7 +462,7 @@ test("distinctUntilChanged", () => {
 
 describe("empty", () => {
   test("produces no values and completes", () => {
-    pipe(empty(), toArray(createVirtualTimeScheduler), expect).toEqual([]);
+    pipe(empty(), toArray(), expect).toEqual([]);
   });
 });
 
@@ -470,20 +470,20 @@ test("every", () => {
   pipe(
     empty(),
     every(_ => false),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeTruthy();
 
   pipe(
     fromArray([1, 2, 3]),
     every(_ => true),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeTruthy();
   pipe(
     fromArray([1, 2, 3]),
     every(_ => false),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toBeFalsy();
 });
@@ -492,7 +492,7 @@ test("forEach", () => {
   const result: number[] = [];
   pipe(
     fromArray([1, 2, 3]),
-    forEach(createVirtualTimeScheduler, x => result.push(x)),
+    forEach(x => result.push(x)),
   );
   expect(result).toEqual([1, 2, 3]);
 });
@@ -501,7 +501,7 @@ describe("fromArray", () => {
   test("with no delay", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromArray(src);
-    pipe(observable, toArray(createVirtualTimeScheduler), expect).toEqual(src);
+    pipe(observable, toArray(), expect).toEqual(src);
   });
 
   test("with delay", () => {
@@ -530,13 +530,13 @@ describe("fromIterable", () => {
   test("with no delay when scheduler does not request yields", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromIterable(src);
-    pipe(observable, toArray(createVirtualTimeScheduler), expect).toEqual(src);
+    pipe(observable, toArray(), expect).toEqual(src);
   });
 
   test("with no delay when scheduler requests yields", () => {
     const src = [1, 2, 3, 4, 5, 6];
     const observable = fromIterable(src);
-    pipe(observable, toArray(createVirtualTimeScheduler), expect).toEqual(src);
+    pipe(observable, toArray(), expect).toEqual(src);
   });
 
   test("with delay", () => {
@@ -637,7 +637,7 @@ describe("generate", () => {
         () => 1,
       ),
       takeFirst(5),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([1, 2, 3, 4, 5]);
   });
@@ -660,7 +660,7 @@ describe("generate", () => {
         takeFirst(5),
         onNotify(cb),
         ignoreElements(),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(cause);
     expect(cb).toHaveBeenCalledTimes(3);
@@ -832,7 +832,7 @@ describe("never", () => {
     const observer = createMockObserver();
 
     expect(() =>
-      pipe(never(), observe(observer), toArray(createVirtualTimeScheduler)),
+      pipe(never(), observe(observer), toArray()),
     ).toThrow();
 
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
@@ -844,28 +844,28 @@ test("none", () => {
     pipe(
       empty(),
       none(_ => false),
-      toValue(createVirtualTimeScheduler),
+      toValue(),
     ),
   ).toBeTruthy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
       none(_ => true),
-      toValue(createVirtualTimeScheduler),
+      toValue(),
     ),
   ).toBeFalsy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
       none(_ => false),
-      toValue(createVirtualTimeScheduler),
+      toValue(),
     ),
   ).toBeTruthy();
 });
 
 describe("ofValue", () => {
   test("completes with the value when subscribed", () => {
-    pipe(ofValue(1), toArray(createVirtualTimeScheduler), expect).toEqual([1]);
+    pipe(ofValue(1), toArray(), expect).toEqual([1]);
   });
 });
 
@@ -930,7 +930,7 @@ describe("repeat", () => {
     pipe(
       ofValue(1),
       repeat(3),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([1, 1, 1]);
   });
@@ -943,7 +943,7 @@ describe("repeat", () => {
         repeat(_ => {
           throw error;
         }),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(error);
   });
@@ -965,7 +965,7 @@ test("scan", () => {
         () => 0,
       ),
       observe(observer),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     ),
   ).toThrow(cause);
 
@@ -983,7 +983,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x),
         () => 0,
       ),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -995,7 +995,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x, 2),
         () => 0,
       ),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -1007,7 +1007,7 @@ describe("scanAsync", () => {
         (acc, x) => ofValue(acc + x),
         () => 0,
       ),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([1, 3, 6]);
   });
@@ -1079,7 +1079,7 @@ test("switchAll", () => {
   );
 
   expect(() =>
-    pipe(src, switchAll(), onNotify(cb), toArray(createVirtualTimeScheduler)),
+    pipe(src, switchAll(), onNotify(cb), toArray()),
   ).toThrow(cause);
 
   expect(cb).toBeCalledTimes(4);
@@ -1095,7 +1095,7 @@ describe("takeLast", () => {
     pipe(
       src,
       takeLast(3),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
       expect,
     ).toEqual([2, 3, 4]);
   });
@@ -1113,7 +1113,7 @@ describe("takeLast", () => {
         src,
         takeLast(3),
         observe(observer),
-        toArray(createVirtualTimeScheduler),
+        toArray(),
       ),
     ).toThrow(cause);
     expect(observer.onNotify).toHaveBeenCalledTimes(0);
@@ -1127,7 +1127,7 @@ test("takeWhile", () => {
       () => 0,
     ),
     takeWhile(x => x < 3),
-    toArray(createVirtualTimeScheduler),
+    toArray(),
     expect,
   ).toEqual([0, 1, 2]);
 });
@@ -1142,7 +1142,7 @@ describe("throttle", () => {
       ),
       takeFirst(100),
       throttle(50, ThrottleMode.First),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
 
     expect(result).toEqual([0, 49]);
@@ -1157,7 +1157,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(50, ThrottleMode.Last),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
 
     expect(result).toEqual([49, 99, 149, 199]);
@@ -1172,7 +1172,7 @@ describe("throttle", () => {
       ),
       takeFirst(200),
       throttle(75, ThrottleMode.Interval),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
 
     expect(result).toEqual([0, 74, 149, 199]);
@@ -1184,14 +1184,14 @@ test("throwIfEmpty", () => {
     pipe(
       empty(),
       throwIfEmpty(() => new Error()),
-      toValue(createVirtualTimeScheduler),
+      toValue(),
     ),
   ).toThrow();
 
   pipe(
     ofValue(1),
     throwIfEmpty(() => new Error()),
-    toValue(createVirtualTimeScheduler),
+    toValue(),
     expect,
   ).toEqual(1);
 });
@@ -1217,7 +1217,7 @@ describe("throws", () => {
 describe("timeout", () => {
   test("throws when a timeout occurs", () => {
     expect(() =>
-      pipe(ofValue(1, 2), timeout(1), toArray(createVirtualTimeScheduler)),
+      pipe(ofValue(1, 2), timeout(1), toArray()),
     ).toThrow();
   });
 
@@ -1225,7 +1225,7 @@ describe("timeout", () => {
     const result = pipe(
       ofValue(1, 2),
       timeout(3),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
     expect(result).toEqual([1]);
   });
@@ -1332,7 +1332,7 @@ test("withLatestFrom", () => {
       observable,
       withLatestFrom(otherObservable, (a, b) => [a, b]),
       onNotify(cb),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     ),
   ).toThrow(cause);
 
@@ -1359,7 +1359,7 @@ describe("zip", () => {
         ],
         (x, y, z) => [x, y, z],
       ),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
 
     expect(result).toEqual([
@@ -1378,7 +1378,7 @@ describe("zip", () => {
         ],
         (x, y, z) => [x, y, z],
       ),
-      toArray(createVirtualTimeScheduler),
+      toArray(),
     );
 
     expect(result).toEqual([
