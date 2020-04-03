@@ -204,6 +204,7 @@ export const createHttpServer = (
           catchError(onError),
           onNotify(writeResponseMessage(resp)),
           map(writeResponseContentBody(resp)),
+          switchAll(),
           subscribe(scheduler),
         ).add(serverRequest);
 
