@@ -19,7 +19,7 @@ import {
   scan,
   mapTo,
 } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, compose } from "@reactive-js/pipe";
 import {
   createPriorityScheduler,
   toSchedulerWithPriority,
@@ -57,17 +57,15 @@ const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 const connect = createHttpServer(
-  req =>
-    pipe(
-      req,
-      ofValue,
-      onNotify(req => console.log(req.headers)),
-      mapTo(
-        createHttpResponse(200, {
-          content: createBufferContentBody(chunk, "text/plain"),
-        }),
-      ),
+  compose(
+    ofValue,
+    onNotify(req => console.log(req.headers)),
+    mapTo(
+      createHttpResponse(200, {
+        content: createBufferContentBody(chunk, "text/plain"),
+      }),
     ),
+  ),
   {
     domain: "localhost",
     scheduler,
