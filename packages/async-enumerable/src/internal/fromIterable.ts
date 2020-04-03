@@ -1,16 +1,25 @@
 import {
-  catchError,
-  empty,
   fromIterable as fromIterableObs,
   map,
   ObservableLike,
   using,
+  onNotify,
+  takeWhile,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
 import { AsyncEnumerableLike } from "./interfaces";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 
-const doneError = Symbol("IteratorDone");
+const createFactory = <T>(obs: ObservableLike<void>) => (
+  enumerator: EnumeratorLike<void, T>,
+) =>
+  pipe(
+    obs,
+    onNotify(() => enumerator.move()),
+    takeWhile(_ => enumerator.hasCurrent),
+    map(_ => enumerator.current),
+  );
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -22,21 +31,7 @@ export const fromIterable = <T>(
 ): AsyncEnumerableLike<void, T> => {
   const enumerable = fromIterableObs(iterable);
   const operator = (obs: ObservableLike<void>) =>
-    using(
-      () => enumerable.enumerate(),
-      enumerator =>
-        pipe(
-          obs,
-          map(_ => {
-            if (enumerator.move()) {
-              return enumerator.current;
-            } else {
-              throw doneError;
-            }
-          }),
-          catchError(error => (error === doneError ? empty() : undefined)),
-        ),
-    );
+    using(() => enumerable.enumerate(), createFactory<T>(obs));
 
   return createAsyncEnumerable(operator);
 };

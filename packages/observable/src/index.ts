@@ -39,7 +39,7 @@ export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep } from "./internal/keep";
 export { lift } from "./internal/lift";
-export { map } from "./internal/map";
+export { map, mapTo } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
 export { observe, onDispose, onError, onNotify } from "./internal/observe";
 export { onSubscribe } from "./internal/onSubscribe";

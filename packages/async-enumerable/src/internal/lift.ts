@@ -7,7 +7,11 @@ import {
   merge,
   using,
 } from "@reactive-js/observable";
-import { AsyncEnumerableLike, AsyncEnumerableOperatorLike } from "./interfaces";
+import {
+  AsyncEnumerableLike,
+  AsyncEnumerableOperatorLike,
+  AsyncEnumeratorLike,
+} from "./interfaces";
 import { AsyncEnumerableImpl } from "./createAsyncEnumerable";
 import { pipe } from "@reactive-js/pipe";
 
@@ -25,6 +29,30 @@ class LiftedAsyncEnumerable<TReqA, TReqB, TA, TB> extends AsyncEnumerableImpl<
   }
 }
 
+const reducer = <T>(acc: T, next: (req: T) => T): T => next(acc);
+
+const createFactory = <TReqA, TReqB, TA, TB>(
+  obsOps: ObservableOperatorLike<any, any>[],
+  reqOps: ((req: unknown) => any)[],
+  requests: ObservableLike<TReqB>,
+) => (enumerator: AsyncEnumeratorLike<TReqA, TA>) => {
+  const observable: ObservableLike<TB> = obsOps.reduce<any>(
+    reducer,
+    enumerator,
+  );
+
+  const mapRequest = (req: TReqB): TReqA => reqOps.reduce<any>(reducer, req);
+
+  const onRequest: ObservableLike<TB> = pipe(
+    requests,
+    map(mapRequest),
+    onNotify((req: TReqA) => enumerator.dispatch(req)),
+    ignoreElements<unknown, TB>(),
+  );
+
+  return merge(observable, onRequest);
+};
+
 const liftImpl = <TReqA, TReqB, TA, TB>(
   enumerable: AsyncEnumerableLike<TReqA, TA>,
   obsOps: ObservableOperatorLike<any, any>[],
@@ -35,24 +63,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
   const op = (requests: ObservableLike<TReqB>): ObservableLike<TB> =>
     using(
       scheduler => src.enumerateAsync(scheduler),
-      enumerator => {
-        const observable: ObservableLike<TB> = obsOps.reduce(
-          (acc: ObservableLike<unknown>, next) => next(acc),
-          enumerator,
-        );
-
-        const onRequest: ObservableLike<TB> = pipe(
-          requests,
-          map(
-            (req: TReqB): TReqA =>
-              reqOps.reduce((acc: unknown, next) => next(acc), req),
-          ),
-          onNotify((req: TReqA) => enumerator.dispatch(req)),
-          ignoreElements<unknown, TB>(),
-        );
-
-        return merge(observable, onRequest);
-      },
+      createFactory(obsOps, reqOps, requests),
     );
   return new LiftedAsyncEnumerable(op, src, obsOps, reqOps);
 };
