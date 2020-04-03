@@ -17,6 +17,7 @@
 ### Properties
 
 * [content](httpresponselike.md#optional-content)
+* [headers](httpresponselike.md#headers)
 * [location](httpresponselike.md#optional-location)
 * [statusCode](httpresponselike.md#statuscode)
 
@@ -25,6 +26,12 @@
 ### `Optional` content
 
 • **content**? : *T*
+
+___
+
+###  headers
+
+• **headers**: *[HttpHeadersLike](httpheaderslike.md)*
 
 ___
 

@@ -8,14 +8,14 @@ export const enum HttpMethod {
 }
 
 // FIXME: filter out headers for which we have strongly typed apis.
-export interface HttpHeaders {
+export interface HttpHeadersLike {
   [header: string]: number | string | string[] | undefined;
 }
 
 export interface HttpRequestLike<T> {
   readonly content?: T;
 
-  readonly headers: HttpHeaders;
+  readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
   readonly url: URL;
 }
@@ -24,7 +24,7 @@ export const createHttpRequest = <T>(
   method: HttpMethod,
   url: string | URL,
   options: {
-    headers?: HttpHeaders;
+    headers?: HttpHeadersLike;
     content?: T;
   } = {},
 ): HttpRequestLike<T> => {
@@ -41,6 +41,7 @@ export const createHttpRequest = <T>(
 
 export interface HttpResponseLike<T> {
   readonly content?: T;
+  readonly headers: HttpHeadersLike;
   readonly location?: URL;
   readonly statusCode: number;
 }

@@ -15,10 +15,10 @@
 
 * [HttpClientResponseLike](interfaces/httpclientresponselike.md)
 * [HttpContentBodyLike](interfaces/httpcontentbodylike.md)
-* [HttpHeaders](interfaces/httpheaders.md)
+* [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
-* [HttpServerRequest](interfaces/httpserverrequest.md)
+* [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
 
 ### Type aliases
 
@@ -1895,13 +1895,13 @@ ___
 
 ▪ **requestHandler**: *function*
 
-▸ (`req`: [HttpServerRequest](interfaces/httpserverrequest.md)): *ObservableLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
+▸ (`req`: [HttpServerRequestLike](interfaces/httpserverrequestlike.md)): *ObservableLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | [HttpServerRequest](interfaces/httpserverrequest.md) |
+`req` | [HttpServerRequestLike](interfaces/httpserverrequestlike.md) |
 
 ▪ **options**: *object*
 

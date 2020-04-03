@@ -10,7 +10,7 @@
 
 * **HttpRequestLike**
 
-  ↳ [HttpServerRequest](httpserverrequest.md)
+  ↳ [HttpServerRequestLike](httpserverrequestlike.md)
 
 ## Index
 
@@ -31,7 +31,7 @@ ___
 
 ###  headers
 
-• **headers**: *[HttpHeaders](httpheaders.md)*
+• **headers**: *[HttpHeadersLike](httpheaderslike.md)*
 
 ___
 

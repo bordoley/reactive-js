@@ -59,6 +59,10 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
     this.content = createIncomingMessageContentBody(disposable);
   }
 
+  get headers() {
+    return this.msg.headers;
+  }
+
   get isDisposed() {
     return this.disposable.isDisposed;
   }
