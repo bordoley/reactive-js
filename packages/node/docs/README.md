@@ -36,6 +36,7 @@
 * [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
 * [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
 * [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
+* [createStringContentBody](README.md#const-createstringcontentbody)
 * [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
 * [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
@@ -1887,7 +1888,7 @@ ___
 
 ### `Const` createHttpServer
 
-▸ **createHttpServer**(`requestHandler`: function, `options`: object & any): *OperatorLike‹void, ObservableLike‹void››*
+▸ **createHttpServer**(`requestHandler`: function, `options`: object): *OperatorLike‹void, ObservableLike‹void››*
 
 **Parameters:**
 
@@ -1901,7 +1902,7 @@ Name | Type |
 ------ | ------ |
 `req` | [HttpRequestLike](interfaces/httprequestlike.md)‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
 
-▪ **options**: *object & any*
+▪ **options**: *object*
 
 **Returns:** *OperatorLike‹void, ObservableLike‹void››*
 
@@ -1948,6 +1949,22 @@ Name | Type |
 `replayCount?` | undefined &#124; number |
 
 **Returns:** *AsyncEnumeratorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+
+___
+
+### `Const` createStringContentBody
+
+▸ **createStringContentBody**(`content`: string, `contentType`: string, `contentEncodings`: keyof HttpContentEncoding[]): *BufferContentBodyImpl‹›*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`content` | string | - |
+`contentType` | string | - |
+`contentEncodings` | keyof HttpContentEncoding[] |  [] |
+
+**Returns:** *BufferContentBodyImpl‹›*
 
 ___
 

@@ -3,6 +3,7 @@ import {
   ServerResponse,
   IncomingMessage,
 } from "http";
+import { createServer as createNodeHttpsServer } from "https";
 import { URL } from "url";
 import {
   createDisposable,
@@ -24,6 +25,8 @@ import {
   onNotify,
   map,
   switchAll,
+  ofValue,
+  catchError,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -32,6 +35,7 @@ import { createWritableAsyncEnumerator } from "./writable";
 import {
   HttpContentBodyLike,
   createIncomingMessageContentBody,
+  createStringContentBody,
 } from "./httpContentBody";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
@@ -40,7 +44,10 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
-  constructor(private readonly msg: IncomingMessage) {
+  constructor(
+    private readonly msg: IncomingMessage,
+    private readonly base: string,
+  ) {
     const disposable = createDisposableWrapper(msg, msg => msg.destroy());
 
     this.disposable = disposable;
@@ -70,7 +77,7 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 
   get url() {
-    return new URL(this.msg.url || "");
+    return new URL(this.msg.url || "", this.base);
   }
 }
 
@@ -122,28 +129,58 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
     responseWritableEnumerator.subscribe(contentReadableEnumerator);
   });
 
+const defaultOnError = (
+  e: unknown,
+): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
+  ofValue({
+    statusCode: 500,
+    content: createStringContentBody(
+      e instanceof Error ? e.stack || "" : String(e),
+      "text/plain",
+    ),
+  });
+
 export const createHttpServer = (
   requestHandler: (
     req: HttpRequestLike<HttpContentBodyLike>,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
   options: {
+    domain: string;
+    onError?: (
+      e: unknown,
+    ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
     port: number;
+    protocol?: "http:" | "https:" | undefined;
     scheduler: SchedulerLike;
-  } & any,
+  },
 ): OperatorLike<void, ObservableLike<void>> => {
   let close: ObservableLike<void> | undefined = undefined;
-  const { port, scheduler, ...nodeOptions } = options;
+
+  const {
+    domain,
+    onError = defaultOnError,
+    port,
+    protocol = "http:",
+    scheduler,
+    ...nodeOptions
+  } = options;
+  const createServer =
+    protocol === "https:" ? createNodeHttpsServer : createNodeHttpServer;
+
+  const base = `${protocol}//${domain}${port !== 80 ? `:${port}` : ""}/`;
 
   return () => {
     if (close === undefined) {
       const disposable = createDisposable().add(() => server.close());
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const serverRequest = new HttpServerRequestImpl(req);
+        const serverRequest = new HttpServerRequestImpl(req, base);
 
         const responseSubscription = pipe(
-          serverRequest,
-          requestHandler,
+          ofValue(serverRequest),
+          map(requestHandler),
+          switchAll(),
+          catchError(onError),
           onNotify(writeResponseMessage(resp)),
           map(writeResponseContentBody(resp)),
           switchAll(),
@@ -153,7 +190,7 @@ export const createHttpServer = (
         disposable.add(responseSubscription);
       };
 
-      const server = createNodeHttpServer(nodeOptions, handler).listen(port);
+      const server = createServer(nodeOptions, handler).listen(port);
 
       close = createObservable(subscriber => {
         if (disposable.isDisposed) {
