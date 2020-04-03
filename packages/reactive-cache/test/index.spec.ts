@@ -91,8 +91,8 @@ test("lifecycle integration", () => {
       { delay: 1 },
     ),
     forEach(
-      () => scheduler,
       x => x(),
+      () => scheduler,
     ),
   );
 });
@@ -124,8 +124,8 @@ test("subscribing to disposed value", () => {
       },
     ]),
     forEach(
-      () => scheduler,
       x => x(),
+      () => scheduler,
     ),
   );
 });
@@ -157,8 +157,8 @@ test("getOrSet", () => {
       { delay: 1 },
     ),
     forEach(
-      () => scheduler,
       x => x(),
+      () => scheduler,
     ),
   );
 });
