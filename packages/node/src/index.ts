@@ -27,15 +27,11 @@ export {
   sendHttpRequest,
 } from "./internal/httpClient";
 
-export {
-  createHttpServer
-} from "./internal/httpServer";
+export { createHttpServer } from "./internal/httpServer";
 
 export {
   decodeHttpRequest,
-  encodeHttpResponse
+  encodeHttpResponse,
 } from "./internal/httpRequestResponseEncoding";
 
-export {
-  createBufferContentBody
-} from "./internal/httpContentBody";
+export { createBufferContentBody } from "./internal/httpContentBody";

@@ -29,9 +29,7 @@ import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
-import {
-  createIncomingMessageContentBody,
-} from "./httpContentBody";
+import { createIncomingMessageContentBody } from "./httpContentBody";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
@@ -48,12 +46,12 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
 
   get acceptedEncodings() {
     // FIXME: This parsing is completely not abnf compliant
-  // FIXME: Special case Identity
-  // FIXME: Add support for determining if content should be encoded.
-  const rawAcceptHeader = String(this.headers["accept-encoding"] || "");
- return rawAcceptHeader
-    .split(",")
-    .map(x => x.trim()) as HttpContentEncoding[];
+    // FIXME: Special case Identity
+    // FIXME: Add support for determining if content should be encoded.
+    const rawAcceptHeader = String(this.headers["accept-encoding"] || "");
+    return rawAcceptHeader
+      .split(",")
+      .map(x => x.trim()) as HttpContentEncoding[];
   }
 
   get headers() {
