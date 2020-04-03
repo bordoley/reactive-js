@@ -33,14 +33,12 @@ import {
   createIncomingMessageContentBody,
   createStringContentBody,
 } from "./httpContentBody";
+import {
+  decodeHttpRequest,
+  encodeHttpResponse,
+} from "./httpRequestResponseEncoding";
 
-/** @noInheritDoc */
-export interface HttpServerRequestLike
-  extends HttpRequestLike<HttpContentBodyLike> {
-  readonly acceptedEncodings: readonly HttpContentEncoding[];
-}
-
-class HttpServerRequestImpl implements HttpServerRequestLike {
+class HttpServerRequest implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
   readonly content: HttpContentBodyLike;
   readonly disposable: DisposableLike;
@@ -145,16 +143,19 @@ const defaultOnError = (
 
 export const createHttpServer = (
   requestHandler: (
-    req: HttpServerRequestLike,
+    req: HttpRequestLike<HttpContentBodyLike>,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
   options: {
     domain: string;
     onError?: (
       e: unknown,
     ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
-    port: number;
+    port?: number;
     protocol?: "http:" | "https:" | undefined;
     scheduler: SchedulerLike;
+    shouldEncodeResponse?: (
+      resp: HttpResponseLike<HttpContentBodyLike>,
+    ) => ObservableLike<boolean>;
   },
 ): OperatorLike<void, ObservableLike<void>> => {
   let close: ObservableLike<void> | undefined = undefined;
@@ -162,9 +163,11 @@ export const createHttpServer = (
   const {
     domain,
     onError = defaultOnError,
-    port,
+    port = options.protocol === "https:" ? 443 : 80,
     protocol = "http:",
     scheduler,
+    shouldEncodeResponse = (_: HttpResponseLike<HttpContentBodyLike>) =>
+      ofValue(true),
     ...nodeOptions
   } = options;
   const createServer =
@@ -177,16 +180,30 @@ export const createHttpServer = (
       const disposable = createDisposable().add(() => server.close());
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const serverRequest = new HttpServerRequestImpl(req, base);
+        const serverRequest = new HttpServerRequest(req, base);
+        const encodeResponse = (
+          response: HttpResponseLike<HttpContentBodyLike>,
+        ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> => {
+          const onResult = (result: boolean) =>
+            result
+              ? pipe(
+                  response,
+                  encodeHttpResponse(serverRequest.acceptedEncodings),
+                )
+              : response;
+          return pipe(response, shouldEncodeResponse, map(onResult));
+        };
 
         const responseSubscription = pipe(
           ofValue(serverRequest),
+          map(decodeHttpRequest),
           map(requestHandler),
+          switchAll(),
+          map(encodeResponse),
           switchAll(),
           catchError(onError),
           onNotify(writeResponseMessage(resp)),
           map(writeResponseContentBody(resp)),
-          switchAll(),
           subscribe(scheduler),
         ).add(serverRequest);
 

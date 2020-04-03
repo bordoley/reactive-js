@@ -18,6 +18,7 @@ export {
   HttpRequestLike,
   HttpResponseLike,
   createHttpRequest,
+  createHttpResponse,
 } from "./internal/http";
 
 export {
@@ -26,12 +27,7 @@ export {
   sendHttpRequest,
 } from "./internal/httpClient";
 
-export { HttpServerRequestLike, createHttpServer } from "./internal/httpServer";
-
-export {
-  decodeHttpRequest,
-  encodeHttpResponse,
-} from "./internal/httpRequestResponseEncoding";
+export { createHttpServer } from "./internal/httpServer";
 
 export {
   HttpContentEncoding,

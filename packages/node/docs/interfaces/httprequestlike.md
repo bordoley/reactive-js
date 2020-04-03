@@ -10,8 +10,6 @@
 
 * **HttpRequestLike**
 
-  ↳ [HttpServerRequestLike](httpserverrequestlike.md)
-
 ## Index
 
 ### Properties
