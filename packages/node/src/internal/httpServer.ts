@@ -1,5 +1,5 @@
 import {
-  createServer as createHttpServer,
+  createServer as createNodeHttpServer,
   ServerResponse,
   IncomingMessage,
 } from "http";
@@ -31,9 +31,6 @@ import { emptyReadableAsyncEnumerable } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 import {
   createIncomingMessageContentBody,
-  decodeContentBody,
-  supportedEncodings,
-  encodeContentBody,
 } from "./httpContentBody";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
@@ -47,6 +44,16 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
 
     this.disposable = disposable;
     this.content = createIncomingMessageContentBody(disposable);
+  }
+
+  get acceptedEncodings() {
+    // FIXME: This parsing is completely not abnf compliant
+  // FIXME: Special case Identity
+  // FIXME: Add support for determining if content should be encoded.
+  const rawAcceptHeader = String(this.headers["accept-encoding"] || "");
+ return rawAcceptHeader
+    .split(",")
+    .map(x => x.trim()) as HttpContentEncoding[];
   }
 
   get headers() {
@@ -84,44 +91,6 @@ const writeResponseContentHeaders = (
   }
 };
 
-export const decodeServerRequest = (
-  req: HttpRequestLike<HttpContentBodyLike>,
-): HttpRequestLike<HttpContentBodyLike> => {
-  const { content, headers, method, url } = req;
-  return content !== undefined && content.contentEncodings.length > 0
-    ? {
-        content: decodeContentBody(content),
-        headers,
-        method,
-        url,
-      }
-    : req;
-};
-
-export const encodeServerResponse = (req: HttpRequestLike<HttpContentBodyLike>) => (
-  resp: HttpResponseLike<HttpContentBodyLike>,
-): HttpResponseLike<HttpContentBodyLike> => {
-  // FIXME: This parsing is completely not abnf compliant
-  // FIXME: Special case Identity
-  // FIXME: Add support for determining if content should be encoded.
-  const rawAcceptHeader = String(req.headers["accept-encoding"] || "");
-  const acceptedEncodings = rawAcceptHeader
-    .split(",")
-    .map(x => x.trim()) as HttpContentEncoding[];
-  const encoding = acceptedEncodings.find(
-    encoding => supportedEncodings.indexOf(encoding) > -1,
-  ) as HttpContentEncoding | undefined;
-  const { content, location, statusCode } = resp;
-
-  return encoding !== undefined && content !== undefined
-    ? {
-        content: pipe(content, encodeContentBody(encoding)),
-        location,
-        statusCode,
-      }
-    : resp;
-};
-
 const writeResponseMessage = (resp: ServerResponse) => ({
   content,
   statusCode,
@@ -152,8 +121,7 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
     responseWritableEnumerator.subscribe(contentReadableEnumerator);
   });
 
-/** @ignore */
-export const createServer = (
+export const createHttpServer = (
   requestHandler: (
     req: HttpRequestLike<HttpContentBodyLike>,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
@@ -184,7 +152,7 @@ export const createServer = (
         disposable.add(responseSubscription);
       };
 
-      const server = createHttpServer(nodeOptions, handler).listen(port);
+      const server = createNodeHttpServer(nodeOptions, handler).listen(port);
 
       close = createObservable(subscriber => {
         if (disposable.isDisposed) {

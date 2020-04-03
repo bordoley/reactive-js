@@ -37,7 +37,7 @@ import {
 } from "./readable";
 import { createWritableAsyncEnumerator } from "./writable";
 
-/** @ignore */
+/** @noInheritDoc */
 export interface HttpClientResponseLike
   extends HttpResponseLike<HttpContentBodyLike>,
     DisposableLike {
@@ -73,8 +73,7 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
   }
 }
 
-/** @ignore */
-export const send = (
+export const sendHttpRequest = (
   clientRequest: HttpRequestLike<HttpContentBodyLike>,
 ): ObservableLike<HttpClientResponseLike> => {
   const { content, headers, method, url } = clientRequest;
@@ -146,25 +145,28 @@ export const send = (
 
 const redirectCodes = [301, 302, 303, 307, 308];
 
-const makeRedirectRequest = ({
-  request: { content, headers, method },
-  location,
-  statusCode,
-}: HttpClientResponseLike): HttpRequestLike<HttpContentBodyLike> => {
+const makeRedirectRequest = (response: HttpClientResponseLike): HttpRequestLike<HttpContentBodyLike> => {
+  const {
+    request,
+    location,
+    statusCode,
+  } = response;
+
+  const { content, method } = request;
+
   const redirectToGet =
     statusCode === 303 ||
     ((statusCode === 301 || statusCode === 302) && method === "POST");
 
   return {
+    ...request,
     content: redirectToGet ? undefined : content,
-    headers,
     method: redirectToGet ? HttpMethod.GET : method,
     url: location || "",
   };
 };
 
-/** @ignore */
-export const handleRedirects = (
+export const handleHttpClientReponseRedirect = (
   maxAttempts = 10,
 ): ObservableOperatorLike<HttpClientResponseLike, HttpClientResponseLike> =>
   compose(
@@ -177,8 +179,8 @@ export const handleRedirects = (
         return pipe(
           resp,
           makeRedirectRequest,
-          send,
-          handleRedirects(maxAttempts - 1),
+          sendHttpRequest,
+          handleHttpClientReponseRedirect(maxAttempts - 1),
         );
       } else if (isRedirect && location !== undefined) {
         resp.dispose();
