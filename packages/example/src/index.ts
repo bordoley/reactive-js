@@ -1,13 +1,15 @@
 import {
-  getHostScheduler,
-  createHttpServer,
-  createBufferContentBody,
   HttpMethod,
-  sendHttpRequest,
-  handleHttpClientReponseRedirect,
   createHttpRequest,
   createHttpResponse,
-} from "@reactive-js/node";
+} from "@reactive-js/http";
+import {
+  createBufferContentBody,
+  createHttpServer,
+  sendHttpRequest,
+  handleHttpClientReponseRedirect,
+} from "@reactive-js/http-node";
+import { getHostScheduler } from "@reactive-js/node";
 import {
   exhaust,
   fromArray,

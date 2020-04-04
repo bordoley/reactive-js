@@ -1,0 +1,77 @@
+{
+  "name": "@reactive-js/http-node",
+  "version": "0.0.32",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm5/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "asynchronous",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "node",
+    "nodejs",
+    "observable",
+    "observables",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "dependencies": {
+    "@reactive-js/async-enumerable": "^0.0.32",
+    "@reactive-js/disposable": "^0.0.32",
+    "@reactive-js/http": "^0.0.32",
+    "@reactive-js/node": "^0.0.32",
+    "@reactive-js/observable": "^0.0.32",
+    "@reactive-js/scheduler": "^0.0.32"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm5": "tsc -p tsconfig.esm5.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.cjs.json"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

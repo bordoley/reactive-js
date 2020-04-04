@@ -14,7 +14,15 @@ import {
   createDisposableWrapper,
   DisposableLike,
 } from "@reactive-js/disposable";
-import { HttpRequestLike, HttpResponseLike, HttpMethod } from "./http";
+import {
+  HttpRequestLike,
+  HttpResponseLike,
+  HttpMethod,
+} from "@reactive-js/http";
+import {
+  emptyReadableAsyncEnumerable,
+  createWritableAsyncEnumerator,
+} from "@reactive-js/node";
 import {
   ObservableLike,
   createObservable,
@@ -28,8 +36,7 @@ import {
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { emptyReadableAsyncEnumerable } from "./readable";
-import { createWritableAsyncEnumerator } from "./writable";
+
 import {
   HttpContentEncoding,
   HttpContentBodyLike,
@@ -79,7 +86,7 @@ class HttpServerRequest implements HttpRequestLike<HttpContentBodyLike> {
     return (this.msg.method as HttpMethod) || HttpMethod.GET;
   }
 
-  get url() {
+  get uri() {
     return new URL(this.msg.url || "", this.base);
   }
 }

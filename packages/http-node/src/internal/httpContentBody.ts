@@ -13,15 +13,15 @@ import {
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
 import { DisposableWrapperLike } from "@reactive-js/disposable";
-import { pipe } from "@reactive-js/pipe";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   ReadableMode,
   ReadableEvent,
   createReadableAsyncEnumerator,
   createReadableAsyncEnumerableFromBuffer,
-} from "./readable";
-import { transform } from "./transform";
+  transform,
+} from "@reactive-js/node";
+import { pipe } from "@reactive-js/pipe";
+import { SchedulerLike } from "@reactive-js/scheduler";
 
 export const enum HttpContentEncoding {
   Brotli = "br",
