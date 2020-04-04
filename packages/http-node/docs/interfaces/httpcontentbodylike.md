@@ -1,10 +1,10 @@
-[@reactive-js/node](../README.md) › [HttpContentBodyLike](httpcontentbodylike.md)
+[@reactive-js/http-node](../README.md) › [HttpContentBodyLike](httpcontentbodylike.md)
 
 # Interface: HttpContentBodyLike
 
 ## Hierarchy
 
-* AsyncEnumerableLike‹[ReadableMode](../enums/readablemode.md), [ReadableEvent](../README.md#readableevent)›
+* AsyncEnumerableLike‹ReadableMode, ReadableEvent›
 
   ↳ **HttpContentBodyLike**
 

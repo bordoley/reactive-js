@@ -1,4 +1,4 @@
-[@reactive-js/node](../README.md) › [HttpResponseLike](httpresponselike.md)
+[@reactive-js/http](../README.md) › [HttpResponseLike](httpresponselike.md)
 
 # Interface: HttpResponseLike <**T**>
 
@@ -9,8 +9,6 @@
 ## Hierarchy
 
 * **HttpResponseLike**
-
-  ↳ [HttpClientResponseLike](httpclientresponselike.md)
 
 ## Index
 
@@ -37,7 +35,7 @@ ___
 
 ### `Optional` location
 
-• **location**? : *URL*
+• **location**? : *[URI](uri.md)*
 
 ___
 

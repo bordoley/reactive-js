@@ -1,4 +1,4 @@
-[@reactive-js/node](../README.md) › [HttpRequestLike](httprequestlike.md)
+[@reactive-js/http](../README.md) › [HttpRequestLike](httprequestlike.md)
 
 # Interface: HttpRequestLike <**T**>
 
@@ -17,7 +17,7 @@
 * [content](httprequestlike.md#optional-content)
 * [headers](httprequestlike.md#headers)
 * [method](httprequestlike.md#method)
-* [url](httprequestlike.md#url)
+* [uri](httprequestlike.md#uri)
 
 ## Properties
 
@@ -39,6 +39,6 @@ ___
 
 ___
 
-###  url
+###  uri
 
-• **url**: *URL*
+• **uri**: *[URI](uri.md)*
