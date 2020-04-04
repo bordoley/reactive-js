@@ -1,4 +1,5 @@
-import { HttpRequestLike, HttpResponseLike } from "./http";
+import { HttpRequestLike, HttpResponseLike } from "@reactive-js/http";
+import { pipe } from "@reactive-js/pipe";
 import {
   HttpContentEncoding,
   HttpContentBodyLike,
@@ -6,7 +7,6 @@ import {
   supportedEncodings,
   encodeContentBody,
 } from "./httpContentBody";
-import { pipe } from "@reactive-js/pipe";
 
 export const decodeHttpRequest = (
   request: HttpRequestLike<HttpContentBodyLike>,

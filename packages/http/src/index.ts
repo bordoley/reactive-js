@@ -1,4 +1,33 @@
-import { URL } from "url";
+// A Proxy readonly interface for the what-wg URL api.
+export interface URI {
+  readonly hash: string;
+  readonly host: string;
+  readonly hostname: string;
+  readonly href: string;
+  readonly origin: string;
+  readonly pathname: string;
+  readonly port: string;
+  readonly protocol: string;
+  readonly search: string;
+
+  toString(): string;
+}
+
+declare class URL implements URI {
+  constructor(uri: string);
+
+  readonly hash: string;
+  readonly host: string;
+  readonly hostname: string;
+  readonly href: string;
+  readonly origin: string;
+  readonly pathname: string;
+  readonly port: string;
+  readonly protocol: string;
+  readonly search: string;
+
+  toString(): string;
+}
 
 export const enum HttpMethod {
   GET = "GET",
@@ -17,12 +46,19 @@ export interface HttpRequestLike<T> {
 
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
-  readonly url: URL;
+  readonly uri: URI;
+}
+
+export interface HttpResponseLike<T> {
+  readonly content?: T;
+  readonly headers: HttpHeadersLike;
+  readonly location?: URI;
+  readonly statusCode: number;
 }
 
 export const createHttpRequest = <T>(
   method: HttpMethod,
-  url: string | URL,
+  uri: string | URI,
   options: {
     content?: T;
     headers?: HttpHeadersLike;
@@ -35,16 +71,9 @@ export const createHttpRequest = <T>(
     // FIXME: filter out headers for which we have strongly typed apis.
     headers,
     method,
-    url: url instanceof URL ? url : new URL(url),
+    uri: typeof uri === "string" ? new URL(uri) : uri,
   };
 };
-
-export interface HttpResponseLike<T> {
-  readonly content?: T;
-  readonly headers: HttpHeadersLike;
-  readonly location?: URL;
-  readonly statusCode: number;
-}
 
 export const createHttpResponse = <T>(
   statusCode: number,

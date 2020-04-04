@@ -22,7 +22,12 @@ import {
   mapTo,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
-import { HttpResponseLike, HttpRequestLike, HttpMethod } from "./http";
+import {
+  HttpResponseLike,
+  HttpRequestLike,
+  HttpMethod,
+  URI,
+} from "@reactive-js/http";
 import {
   HttpContentBodyLike,
   createIncomingMessageContentBody,
@@ -32,9 +37,9 @@ import {
   ReadableMode,
   ReadableEvent,
   ReadableEventType,
+  createWritableAsyncEnumerator,
   emptyReadableAsyncEnumerable,
-} from "./readable";
-import { createWritableAsyncEnumerator } from "./writable";
+} from "@reactive-js/node";
 
 /** @noInheritDoc */
 export interface HttpClientResponseLike
@@ -83,12 +88,14 @@ class HttpClientResponseImpl implements HttpClientResponseLike {
 export const sendHttpRequest = (
   clientRequest: HttpRequestLike<HttpContentBodyLike>,
 ): ObservableLike<HttpClientResponseLike> => {
-  const { content, headers, method, url } = clientRequest;
+  const { content, headers, method, uri } = clientRequest;
+
+  const url = uri instanceof URL ? uri : new URL(uri.toString());
 
   const send =
-    url.protocol === "https:"
+    uri.protocol === "https:"
       ? httpsRequest
-      : url.protocol === "http:"
+      : uri.protocol === "http:"
       ? httpRequest
       : (() => {
           throw new Error();
@@ -103,6 +110,7 @@ export const sendHttpRequest = (
       reqHeaders["content-length"] = content.contentLength;
       reqHeaders["content-type"] = content.contentType;
     }
+
     const req = send(url, {
       headers: reqHeaders,
       method,
@@ -153,7 +161,7 @@ export const sendHttpRequest = (
 
 const redirectCodes = [301, 302, 303, 307, 308];
 
-const makeRedirectRequest = (location: URL) => (
+const makeRedirectRequest = (location: URI) => (
   response: HttpClientResponseLike,
 ): HttpRequestLike<HttpContentBodyLike> => {
   const { request, statusCode } = response;
@@ -168,7 +176,7 @@ const makeRedirectRequest = (location: URL) => (
     ...request,
     content: redirectToGet ? undefined : content,
     method: redirectToGet ? HttpMethod.GET : method,
-    url: location,
+    uri: location,
   };
 };
 
