@@ -1,4 +1,4 @@
-[@reactive-js/node](../README.md) › [HttpContentEncoding](httpcontentencoding.md)
+[@reactive-js/http-node](../README.md) › [HttpContentEncoding](httpcontentencoding.md)
 
 # Enumeration: HttpContentEncoding
 

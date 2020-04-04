@@ -1,4 +1,4 @@
-[@reactive-js/node](../README.md) › [HttpHeadersLike](httpheaderslike.md)
+[@reactive-js/http](../README.md) › [HttpHeadersLike](httpheaderslike.md)
 
 # Interface: HttpHeadersLike
 
