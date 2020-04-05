@@ -51,6 +51,7 @@
 * [ignoreElements](README.md#const-ignoreelements)
 * [iif](README.md#const-iif)
 * [keep](README.md#const-keep)
+* [keepType](README.md#const-keeptype)
 * [lift](README.md#lift)
 * [map](README.md#const-map)
 * [mapTo](README.md#const-mapto)
@@ -1049,6 +1050,37 @@ Name | Type |
 `data` | T |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
+
+___
+
+### `Const` keepType
+
+▸ **keepType**<**TA**, **TB**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
+
+Returns an `ObservableLike` that only emits items from the
+source that satisfy the specified type predicate.
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **predicate**: *function*
+
+The predicate function.
+
+▸ (`data`: unknown): *data is TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | unknown |
+
+**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹TA, TB›*
 
 ___
 

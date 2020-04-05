@@ -2,22 +2,35 @@ import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class KeepTypeSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
-    delegate: SubscriberLike<T>,
-    private readonly predicate: (data: T) => boolean,
+    delegate: SubscriberLike<TB>,
+    private readonly predicate: (data: unknown) => data is TB,
   ) {
     super(delegate);
     this.add(delegate);
   }
 
-  notify(next: T) {
-    const shouldKeep = !this.isDisposed && this.predicate(next);
-    if (shouldKeep) {
+  notify(next: TA) {
+    if (!this.isDisposed && this.predicate(next)) {
       this.delegate.notify(next);
     }
   }
 }
+
+/**
+ * Returns an `ObservableLike` that only emits items from the
+ * source that satisfy the specified type predicate.
+ *
+ * @param predicate The predicate function.
+ */
+export const keepType = <TA, TB>(
+  predicate: (data: unknown) => data is TB,
+): ObservableOperatorLike<TA, TB> => {
+  const operator = (subscriber: SubscriberLike<TB>) =>
+    new KeepTypeSubscriber(subscriber, predicate);
+  return lift(operator, true);
+};
 
 /**
  * Returns an `ObservableLike` that only emits items produced by the
@@ -27,8 +40,5 @@ class KeepSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export const keep = <T>(
   predicate: (data: T) => boolean,
-): ObservableOperatorLike<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new KeepSubscriber(subscriber, predicate);
-  return lift(operator, true);
-};
+): ObservableOperatorLike<T, T> =>
+  keepType(predicate as (data: unknown) => data is T);
