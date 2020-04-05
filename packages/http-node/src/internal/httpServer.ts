@@ -31,7 +31,6 @@ import {
   map,
   ofValue,
   catchError,
-  iif,
   await_,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
@@ -41,6 +40,7 @@ import {
   HttpContentBodyLike,
   createIncomingMessageContentBody,
   createStringContentBody,
+  HttpEncodingContentBodyLike,
 } from "./httpContentBody";
 import {
   decodeHttpRequest,
@@ -48,9 +48,9 @@ import {
 } from "./httpRequestResponseEncoding";
 import { HttpContentEncoding } from "./HttpContentEncoding";
 
-class HttpServerRequest implements HttpRequestLike<HttpContentBodyLike> {
+class HttpServerRequest implements HttpRequestLike<HttpEncodingContentBodyLike> {
   readonly add = add;
-  readonly content: HttpContentBodyLike;
+  readonly content: HttpEncodingContentBodyLike;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
@@ -93,7 +93,7 @@ class HttpServerRequest implements HttpRequestLike<HttpContentBodyLike> {
 
 const writeResponseContentHeaders = (
   resp: ServerResponse,
-  content: HttpContentBodyLike,
+  content: HttpEncodingContentBodyLike,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
@@ -112,7 +112,7 @@ const writeResponseContentHeaders = (
 const writeResponseMessage = (resp: ServerResponse) => ({
   content,
   statusCode,
-}: HttpResponseLike<HttpContentBodyLike>) => {
+}: HttpResponseLike<HttpEncodingContentBodyLike>) => {
   resp.statusCode = statusCode;
 
   if (content !== undefined) {
@@ -193,24 +193,13 @@ export const createHttpServer = (
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
         const serverRequest = new HttpServerRequest(req, base);
-        const encodeResponse = (
-          response: HttpResponseLike<HttpContentBodyLike>,
-        ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
-          pipe(
-            shouldEncodeResponse(response),
-            iif(
-              encodeHttpResponse(serverRequest.acceptedEncodings),
-              x => x,
-              response,
-            ),
-          );
 
         const responseSubscription = pipe(
           ofValue(serverRequest),
           map(decodeHttpRequest),
           await_(requestHandler),
-          await_(encodeResponse),
           catchError(onError),
+          map(encodeHttpResponse(serverRequest.acceptedEncodings)),
           onNotify(writeResponseMessage(resp)),
           await_(writeResponseContentBody(resp)),
           subscribe(scheduler),

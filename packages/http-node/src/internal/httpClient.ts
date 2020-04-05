@@ -180,6 +180,7 @@ const createHeaders = (
   headers: HttpHeadersLike,
   expectContinue: boolean,
   content?: HttpContentBodyLike,
+  contentEncoding?: HttpContentEncoding,
 ) => {
   const headerPairs = Object.entries(headers).filter(
     ([key]) => !bannedHeaders.includes(key),
@@ -198,15 +199,15 @@ const createHeaders = (
   }
 
   if (content !== undefined) {
-    const { contentType, contentLength, contentEncodings } = content;
+    const { contentType, contentLength } = content;
     reqHeaders["content-type"] = contentType;
 
     if (contentLength > 0) {
       reqHeaders["content-length"] = content.contentLength;
     }
 
-    if (contentEncodings.length > 0) {
-      reqHeaders["content-encoding"] = contentEncodings.join(", ");
+    if (contentEncoding !== undefined) {
+      reqHeaders["content-encoding"] = contentEncoding;
     }
   }
 
@@ -257,7 +258,7 @@ const sendHttpRequestInternal = (
   const onSubscribe = (
     subscriber: SafeSubscriberLike<HttpClientRequestStatus>,
   ) => {
-    const reqHeaders = createHeaders(headers, expectContinue, content);
+    const reqHeaders = createHeaders(headers, expectContinue, content, contentEncoding);
 
     subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
 

@@ -21,17 +21,20 @@ import {
   createEncodingDecompressTransform,
 } from "./HttpContentEncoding";
 
+// FIXME: Should probably be in the HTTP package
 /** @noInheritDoc */
 export interface HttpContentBodyLike
   extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
   readonly contentLength: number;
   readonly contentType: string;
+}
 
-  // FIXME: ContentEncoding should be internal
+/** @ignore */
+export interface HttpEncodingContentBodyLike extends HttpContentBodyLike {
   readonly contentEncodings: readonly HttpContentEncoding[];
 }
 
-class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
+class IncomingMessageContentBodyImpl implements HttpEncodingContentBodyLike {
   constructor(private readonly msg: DisposableWrapperLike<IncomingMessage>) {}
 
   get contentEncodings(): readonly HttpContentEncoding[] {
@@ -72,7 +75,7 @@ export const createIncomingMessageContentBody = (
   msg: DisposableWrapperLike<IncomingMessage>,
 ) => decodeContentBody(new IncomingMessageContentBodyImpl(msg));
 
-class ContentBodyImpl implements HttpContentBodyLike {
+class ContentBodyImpl implements HttpEncodingContentBodyLike {
   constructor(
     readonly delegate: AsyncEnumerableLike<ReadableMode, ReadableEvent>,
     readonly contentEncodings: readonly HttpContentEncoding[],
@@ -87,6 +90,15 @@ class ContentBodyImpl implements HttpContentBodyLike {
     return this.delegate.enumerateAsync(scheduler, replayCount);
   }
 }
+
+/** @ignore */
+export const toHttpEncodingContentBody = (
+  contentBody: HttpContentBodyLike,
+): HttpEncodingContentBodyLike =>
+  Array.isArray((contentBody as any).contentEncodings) 
+    ? contentBody as HttpEncodingContentBodyLike
+    : new ContentBodyImpl(contentBody, [], contentBody.contentLength, contentBody.contentType);
+   
 
 /** @ignore */
 export const lift = (
@@ -129,8 +141,9 @@ export const emptyContentBody: HttpContentBodyLike = new ContentBodyImpl(
 /** @ignore */
 export const encodeContentBody = (encoding: HttpContentEncoding) => (
   contentBody: HttpContentBodyLike,
-) => {
-  const contentEncodings = [...contentBody.contentEncodings, encoding];
+): HttpEncodingContentBodyLike => {
+  const existingEncodings: readonly HttpContentEncoding[] = (contentBody as any).contentEncodings || [];
+  const contentEncodings = [...existingEncodings, encoding];
   const { contentLength, contentType } = contentBody;
 
   return contentLength !== 0
@@ -141,11 +154,11 @@ export const encodeContentBody = (encoding: HttpContentEncoding) => (
           contentType,
         }),
       )
-    : contentBody;
+    : toHttpEncodingContentBody(contentBody);
 };
 
 /** @ignore */
-export const decodeContentBody = (contentBody: HttpContentBodyLike) => {
+export const decodeContentBody = (contentBody: HttpEncodingContentBodyLike) => {
   const { contentLength, contentEncodings } = contentBody;
   if (contentEncodings.length > 0 && contentLength !== 0) {
     const src =

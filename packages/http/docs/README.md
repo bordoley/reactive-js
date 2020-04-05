@@ -7,6 +7,7 @@
 ### Enumerations
 
 * [HttpMethod](enums/httpmethod.md)
+* [HttpStatusCode](enums/httpstatuscode.md)
 
 ### Interfaces
 
@@ -44,7 +45,7 @@ ___
 
 ### `Const` createHttpResponse
 
-▸ **createHttpResponse**<**T**>(`statusCode`: number, `options`: object): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `options`: object): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
 
 **Type parameters:**
 
@@ -54,7 +55,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`statusCode` | number | - |
+`statusCode` | [HttpStatusCode](enums/httpstatuscode.md) | - |
 `options` | object |  {} |
 
 **Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*

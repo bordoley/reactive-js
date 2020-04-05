@@ -16,7 +16,6 @@
 
 * [content](httpresponselike.md#optional-content)
 * [headers](httpresponselike.md#headers)
-* [location](httpresponselike.md#optional-location)
 * [statusCode](httpresponselike.md#statuscode)
 
 ## Properties
@@ -33,12 +32,6 @@ ___
 
 ___
 
-### `Optional` location
-
-• **location**? : *[URI](uri.md)*
-
-___
-
 ###  statusCode
 
-• **statusCode**: *number*
+• **statusCode**: *[HttpStatusCode](../enums/httpstatuscode.md)*
