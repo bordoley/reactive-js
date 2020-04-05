@@ -6,12 +6,26 @@
 
 ### Enumerations
 
+* [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
 * [HttpContentEncoding](enums/httpcontentencoding.md)
 
 ### Interfaces
 
+* [HttpClientOptions](interfaces/httpclientoptions.md)
+* [HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md)
+* [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)
+* [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md)
+* [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
 * [HttpClientResponseLike](interfaces/httpclientresponselike.md)
 * [HttpContentBodyLike](interfaces/httpcontentbodylike.md)
+
+### Type aliases
+
+* [HttpClientRequestStatus](README.md#httpclientrequeststatus)
+
+### Variables
+
+* [emptyContentBody](README.md#const-emptycontentbody)
 
 ### Functions
 
@@ -20,24 +34,39 @@
 * [createStringContentBody](README.md#const-createstringcontentbody)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
-* [handleHttpClientReponseRedirect](README.md#const-handlehttpclientreponseredirect)
 * [sendHttpRequest](README.md#const-sendhttprequest)
+
+## Type aliases
+
+###  HttpClientRequestStatus
+
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
+
+## Variables
+
+### `Const` emptyContentBody
+
+• **emptyContentBody**: *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)* =  new ContentBodyImpl(
+  emptyReadableAsyncEnumerable,
+  [],
+  0,
+  "",
+)
 
 ## Functions
 
 ### `Const` createBufferContentBody
 
-▸ **createBufferContentBody**(`chunk`: Buffer, `contentType`: string, `contentEncodings`: keyof HttpContentEncoding[]): *BufferContentBodyImpl‹›*
+▸ **createBufferContentBody**(`chunk`: Buffer, `contentType`: string): *ContentBodyImpl‹›*
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`chunk` | Buffer | - |
-`contentType` | string | - |
-`contentEncodings` | keyof HttpContentEncoding[] |  [] |
+Name | Type |
+------ | ------ |
+`chunk` | Buffer |
+`contentType` | string |
 
-**Returns:** *BufferContentBodyImpl‹›*
+**Returns:** *ContentBodyImpl‹›*
 
 ___
 
@@ -65,29 +94,28 @@ ___
 
 ### `Const` createStringContentBody
 
-▸ **createStringContentBody**(`content`: string, `contentType`: string, `contentEncodings`: keyof HttpContentEncoding[]): *BufferContentBodyImpl‹›*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`content` | string | - |
-`contentType` | string | - |
-`contentEncodings` | keyof HttpContentEncoding[] |  [] |
-
-**Returns:** *BufferContentBodyImpl‹›*
-
-___
-
-### `Const` decodeHttpRequest
-
-▸ **decodeHttpRequest**(`request`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
+▸ **createStringContentBody**(`content`: string, `contentType`: string): *ContentBodyImpl‹›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+`content` | string |
+`contentType` | string |
+
+**Returns:** *ContentBodyImpl‹›*
+
+___
+
+### `Const` decodeHttpRequest
+
+▸ **decodeHttpRequest**(`request`: HttpRequestLike‹HttpEncodingContentBodyLike›): *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | HttpRequestLike‹HttpEncodingContentBodyLike› |
 
 **Returns:** *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
 
@@ -107,28 +135,14 @@ Name | Type |
 
 ___
 
-### `Const` handleHttpClientReponseRedirect
+### `Const` sendHttpRequest
 
-▸ **handleHttpClientReponseRedirect**(`maxAttempts`: number): *ObservableOperatorLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md), [HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
+▸ **sendHttpRequest**(`options`: [HttpClientOptions](interfaces/httpclientoptions.md)): *(Anonymous function)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`maxAttempts` | number | 10 |
+`options` | [HttpClientOptions](interfaces/httpclientoptions.md) |  {} |
 
-**Returns:** *ObservableOperatorLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md), [HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
-
-___
-
-### `Const` sendHttpRequest
-
-▸ **sendHttpRequest**(`clientRequest`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *ObservableLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`clientRequest` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
-
-**Returns:** *ObservableLike‹[HttpClientResponseLike](interfaces/httpclientresponselike.md)›*
+**Returns:** *(Anonymous function)*
