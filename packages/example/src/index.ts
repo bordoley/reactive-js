@@ -4,12 +4,12 @@ import {
   createHttpResponse,
 } from "@reactive-js/http";
 import {
+  HttpClientRequestStatusType,
   createBufferContentBody,
   createHttpServer,
   sendHttpRequest,
-  handleHttpClientReponseRedirect,
 } from "@reactive-js/http-node";
-import { getHostScheduler } from "@reactive-js/node";
+import { getHostScheduler, setSchedulerTimeout } from "@reactive-js/node";
 import {
   exhaust,
   fromArray,
@@ -32,6 +32,7 @@ const backgroundScheduler = pipe(
   createPriorityScheduler,
   toSchedulerWithPriority(500),
 );
+setSchedulerTimeout(15);
 
 pipe(
   generate(
@@ -45,7 +46,7 @@ pipe(
     ([_, prev], next) => [prev, next],
     () => [backgroundScheduler.now, backgroundScheduler.now],
   ),
-  onNotify(([prev, next]) => console.log(next - prev)),
+  //onNotify(([prev, next]) => console.log(next - prev)),
   subscribe(backgroundScheduler),
 );
 
@@ -61,7 +62,7 @@ const chunk = Buffer.from(
 const connect = createHttpServer(
   compose(
     ofValue,
-    onNotify(req => console.log(req.headers)),
+    //onNotify(req => console.log(req.headers)),
     mapTo(
       createHttpResponse(200, {
         content: createBufferContentBody(chunk, "text/plain"),
@@ -81,11 +82,13 @@ pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferContentBody(chunk, "text/plain"),
   }),
-  sendHttpRequest,
-  handleHttpClientReponseRedirect(0),
-  onNotify(resp => {
-    console.log(resp);
-    resp.dispose();
+  sendHttpRequest(),
+  onNotify(status => {
+    console.log("onNotify: " + status.type);
+    if (status.type === HttpClientRequestStatusType.ResponseReady) {
+      const { response } = status;
+      response.dispose();
+    }
   }),
   subscribe(scheduler),
 );

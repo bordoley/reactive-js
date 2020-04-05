@@ -38,7 +38,6 @@ import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 import {
-  HttpContentEncoding,
   HttpContentBodyLike,
   createIncomingMessageContentBody,
   createStringContentBody,
@@ -47,6 +46,7 @@ import {
   decodeHttpRequest,
   encodeHttpResponse,
 } from "./httpRequestResponseEncoding";
+import { HttpContentEncoding } from "./HttpContentEncoding";
 
 class HttpServerRequest implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;

@@ -1,14 +1,20 @@
 export {
+  HttpClientOptions,
   HttpClientResponseLike,
-  handleHttpClientReponseRedirect,
+  HttpClientRequestStatusType,
+  HttpClientRequestStatusUploading,
+  HttpClientRequestStatusUploadComplete,
+  HttpClientRequestStatusResponseReady,
+  HttpClientRequestStatus,
   sendHttpRequest,
 } from "./internal/httpClient";
 
 export { createHttpServer } from "./internal/httpServer";
 
 export {
-  HttpContentEncoding,
   HttpContentBodyLike,
   createBufferContentBody,
   createStringContentBody,
 } from "./internal/httpContentBody";
+
+export { HttpContentEncoding } from "./internal/HttpContentEncoding";
