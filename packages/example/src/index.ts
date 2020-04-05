@@ -9,7 +9,7 @@ import {
   createHttpServer,
   sendHttpRequest,
 } from "@reactive-js/http-node";
-import { getHostScheduler, setSchedulerTimeout } from "@reactive-js/node";
+import { getHostScheduler } from "@reactive-js/node";
 import {
   exhaust,
   fromArray,
@@ -32,7 +32,6 @@ const backgroundScheduler = pipe(
   createPriorityScheduler,
   toSchedulerWithPriority(500),
 );
-setSchedulerTimeout(15);
 
 pipe(
   generate(
