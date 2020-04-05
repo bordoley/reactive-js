@@ -39,7 +39,7 @@ export { every, none } from "./internal/every";
 export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
 export { iif } from "./internal/iif";
-export { keep } from "./internal/keep";
+export { keep, keepType } from "./internal/keep";
 export { lift } from "./internal/lift";
 export { map, mapTo } from "./internal/map";
 export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
