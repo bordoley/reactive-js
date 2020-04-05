@@ -17,7 +17,8 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 import { throws } from "./throws";
 import { concat } from "./concat";
 
-const timeoutError = Symbol("TimeoutError");
+/** Symbol thrown when the timeout operator times out */
+export const timeoutError = Symbol("TimeoutError");
 
 const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
   subscriber.durationSubscription.inner = pipe(

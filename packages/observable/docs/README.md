@@ -23,6 +23,10 @@
 * [SubscriberLike](interfaces/subscriberlike.md)
 * [SubscriberOperatorLike](interfaces/subscriberoperatorlike.md)
 
+### Variables
+
+* [timeoutError](README.md#const-timeouterror)
+
 ### Functions
 
 * [await_](README.md#const-await_)
@@ -93,6 +97,14 @@
 * [using](README.md#using)
 * [withLatestFrom](README.md#const-withlatestfrom)
 * [zip](README.md#zip)
+
+## Variables
+
+### `Const` timeoutError
+
+• **timeoutError**: *unique symbol* =  Symbol("TimeoutError")
+
+Symbol thrown when the timeout operator times out
 
 ## Functions
 
