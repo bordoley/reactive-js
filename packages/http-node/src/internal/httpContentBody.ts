@@ -19,7 +19,7 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   createEncodingCompressTransform,
   createEncodingDecompressTransform,
-} from "./HttpContentEncoding";
+} from "./httpContentEncoding";
 import { BrotliOptions, ZlibOptions } from "zlib";
 
 // FIXME: Should probably be in the HTTP package
