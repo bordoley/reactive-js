@@ -9,10 +9,8 @@ import { SecureContextOptions, TlsOptions } from "tls";
 import { URL } from "url";
 import {
   createDisposable,
-  add,
-  dispose,
   createDisposableWrapper,
-  DisposableLike,
+  DisposableWrapperLike,
 } from "@reactive-js/disposable";
 import {
   HttpRequestLike,
@@ -21,6 +19,7 @@ import {
   HttpContentEncoding,
   createHttpResponse,
   HttpStatusCode,
+  URI,
 } from "@reactive-js/http";
 import {
   emptyReadableAsyncEnumerable,
@@ -34,6 +33,7 @@ import {
   ofValue,
   catchError,
   await_,
+  compute,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -45,19 +45,19 @@ import {
 import { writeResponseHeaders } from "./httpHeaders";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
-  readonly add = add;
-  readonly content: HttpContentBodyLike;
-  readonly disposable: DisposableLike;
-  readonly dispose = dispose;
+  readonly content: HttpContentBodyLike | undefined;
+  readonly uri: URI;
 
   constructor(
-    private readonly msg: IncomingMessage,
+    private readonly msg: DisposableWrapperLike<IncomingMessage>,
     private readonly protocol: "http:" | "https:",
   ) {
-    const disposable = createDisposableWrapper(msg, msg => msg.destroy());
-
-    this.disposable = disposable;
-    this.content = createIncomingMessageContentBody(disposable);
+    const content = createIncomingMessageContentBody(msg);
+    this.content = content.contentLength !== 0 ? content : undefined;
+   
+    const host = this.msg.value.headers.host || "";
+    const base = `${this.protocol}//${host}/`;
+    this.uri = new URL(this.msg.value.url || "", base);
   }
 
   get acceptedEncodings() {
@@ -76,22 +76,11 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 
   get headers() {
-    return this.msg.headers;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+    return this.msg.value.headers;
   }
 
   get method() {
-    return (this.msg.method as HttpMethod) || HttpMethod.GET;
-  }
-
-  get uri() {
-    const host = this.msg.headers.host || "";
-    const base = `${this.protocol}//${host}/`;
-
-    return new URL(this.msg.url || "", base);
+    return (this.msg.value.method as HttpMethod) || HttpMethod.GET;
   }
 }
 
@@ -125,6 +114,8 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
     responseWritableEnumerator.subscribe(contentReadableEnumerator);
   });
 
+// FIXME: Don't include content in prod mode
+// FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input 
 const defaultOnError = (
   e: unknown,
 ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
@@ -174,16 +165,15 @@ export const createHttpServer = (
       const disposable = createDisposable().add(() => server.close());
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const serverRequest = new HttpServerRequestImpl(req, protocol);
-
+        const message = createDisposableWrapper(req, req => req.destroy());
         const responseSubscription = pipe(
-          ofValue(serverRequest),
+          compute(() => new HttpServerRequestImpl(message, protocol)),
           await_(requestHandler),
           catchError(onError),
           onNotify(writeResponseMessage(resp)),
           await_(writeResponseContentBody(resp)),
           subscribe(scheduler),
-        ).add(serverRequest);
+        ).add(message);
 
         disposable.add(responseSubscription);
       };
