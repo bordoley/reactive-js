@@ -7,8 +7,14 @@ import {
 import { supportedEncodings } from "./httpContentEncoding";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { OperatorLike } from "@reactive-js/pipe";
+import compressible from "compressible";
 
-const alwaysTrue = <TA, TB>(_a: TA, _b: TB) => true;
+const responseIsCompressible = (
+  resp: HttpResponseLike<HttpContentBodyLike>,
+): boolean => {
+  const contentType = resp.content?.contentType;
+  return (contentType !== undefined && compressible(contentType)) || false;
+} 
 
 export const encodeHttpResponse = (
   request: HttpRequestLike<HttpContentBodyLike>,
@@ -16,18 +22,26 @@ export const encodeHttpResponse = (
     shouldEncode?: (
       req: HttpRequestLike<HttpContentBodyLike>,
       resp: HttpResponseLike<HttpContentBodyLike>,
-    ) => boolean ,
+    ) => boolean | undefined ,
     zlibOptions?: BrotliOptions | ZlibOptions,
   } = {},
 ): OperatorLike<HttpResponseLike<HttpContentBodyLike>, HttpResponseLike<HttpContentBodyLike>> => (
   response: HttpResponseLike<HttpContentBodyLike>,
 ) => {
-  const { shouldEncode = alwaysTrue, zlibOptions = {} } = options;
+  const { shouldEncode: shouldEncodeOption, zlibOptions = {} } = options;
   // FIXME:
   // Don't compress for Cache-Control: no-transform
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
 
-  const acceptedEncodings = shouldEncode(request, response)
+  const shouldEncodeOptionResult = shouldEncodeOption !== undefined
+    ? shouldEncodeOption(request, response)
+    : undefined;
+
+  const shouldEncode = shouldEncodeOptionResult !== undefined
+    ? shouldEncodeOptionResult
+    : responseIsCompressible(response);
+
+  const acceptedEncodings = shouldEncode
     ? request.acceptedEncodings
     : [];
 

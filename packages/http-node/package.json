@@ -45,9 +45,11 @@
     "@reactive-js/http": "^0.0.32",
     "@reactive-js/node": "^0.0.32",
     "@reactive-js/observable": "^0.0.32",
-    "@reactive-js/scheduler": "^0.0.32"
+    "@reactive-js/scheduler": "^0.0.32",
+    "compressible": "^2.0.18"
   },
   "devDependencies": {
+    "@types/compressible": "^2.0.0",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
     "jest": "^24.9.0",
