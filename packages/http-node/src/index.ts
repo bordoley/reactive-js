@@ -15,6 +15,7 @@ export { createHttpServer } from "./internal/httpServer";
 export {
   HttpContentBodyLike,
   createBufferContentBody,
+  createReadableContentBody,
   createStringContentBody,
 } from "./internal/httpContentBody";
 
