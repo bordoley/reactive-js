@@ -6,16 +6,22 @@ import {
 } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
+import { ZlibOptions, BrotliOptions } from "zlib";
 import {
   AsyncEnumerableOperatorLike,
   createAsyncEnumerable,
 } from "@reactive-js/async-enumerable";
 import {
-  DisposableLike,
-  dispose,
-  add,
-  createDisposableWrapper,
-} from "@reactive-js/disposable";
+  HttpContentEncoding,
+  HttpRequestLike,
+  HttpStatusCode,
+  makeRedirectRequest,
+} from "@reactive-js/http";
+import {
+  createWritableAsyncEnumerator,
+  ReadableEventType,
+  ReadableEvent,
+} from "@reactive-js/node";
 import {
   createObservable,
   ObservableLike,
@@ -30,117 +36,20 @@ import {
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
 import {
-  HttpContentEncoding,
-  HttpResponseLike,
-  HttpRequestLike,
-  HttpStatusCode,
-  makeRedirectRequest,
-} from "@reactive-js/http";
+  HttpClientResponseLike,
+  HttpContentDecodingClientResponse,
+  HttpClientResponseImpl,
+} from "./httpClientResponse";
 import {
   HttpContentBodyLike,
-  createIncomingMessageContentBody,
   encodeContentBody,
   emptyContentBody,
   lift as liftContentBody,
-  decodeContentBody,
 } from "./httpContentBody";
-import {
-  createWritableAsyncEnumerator,
-  ReadableEventType,
-  ReadableEvent,
-} from "@reactive-js/node";
 import {
   supportedEncodings,
   getFirstSupportedEncoding,
-} from "./HttpContentEncoding";
-import { ZlibOptions, BrotliOptions } from "zlib";
-
-export interface HttpClientResponseLike
-  extends HttpResponseLike<HttpContentBodyLike>,
-    DisposableLike {}
-
-class HttpClientResponseImpl implements HttpClientResponseLike {
-  readonly add = add;
-  readonly content: HttpContentBodyLike | undefined;
-  readonly disposable: DisposableLike;
-  readonly dispose = dispose;
-
-  constructor(private readonly msg: IncomingMessage) {
-    const disposable = createDisposableWrapper(msg, msg => msg.destroy());
-    const content = createIncomingMessageContentBody(disposable);
-
-    this.disposable = disposable;
-    this.content = content.contentLength !== 0 ? content : undefined;
-  }
-
-  get acceptedEncodings(): readonly HttpContentEncoding[] {
-    return [];
-  }
-
-  get headers() {
-    return this.msg.headers;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  get location() {
-    try {
-      return new URL(this.msg.headers.location || "");
-    } catch (_) {
-      return undefined;
-    }
-  }
-
-  get statusCode(): number {
-    return this.msg.statusCode || -1;
-  }
-
-  get vary(): readonly string[] {
-    // We're not going to use this so just return empty string.
-    return [];
-  }
-}
-
-class HttpContentDecodingClientResponse implements HttpClientResponseLike {
-  readonly add = add;
-  readonly content: HttpContentBodyLike | undefined;
-  readonly dispose = dispose;
-
-  constructor(
-    readonly disposable: HttpClientResponseLike,
-    options: BrotliOptions | ZlibOptions,
-  ) {
-    const { content } = disposable;
-    this.content =
-      content !== undefined ? decodeContentBody(content, options) : undefined;
-  }
-
-  get acceptedEncodings() {
-    return this.disposable.acceptedEncodings;
-  }
-
-  get headers() {
-    return this.disposable.headers;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  get location() {
-    return this.disposable.location;
-  }
-
-  get statusCode(): number {
-    return this.disposable.statusCode;
-  }
-
-  get vary(): readonly string[] {
-    return this.disposable.vary;
-  }
-}
+} from "./httpContentEncoding";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -204,47 +113,6 @@ const bannedHeaders = [
   "vary",
 ];
 
-const createHeaders = (
-  { content, expectContinue, headers }: HttpRequestLike<HttpContentBodyLike>,
-  contentEncoding?: HttpContentEncoding,
-) => {
-  const reqHeaders: OutgoingHttpHeaders = {
-    "accept-encoding": supportedEncodings.join(","),
-  };
-
-  if (expectContinue) {
-    reqHeaders["expect"] = "100-continue";
-  }
-
-  if (
-    content !== undefined &&
-    content.contentType !== "" &&
-    content.contentLength !== 0
-  ) {
-    const { contentLength, contentType } = content;
-
-    reqHeaders["content-type"] = contentType;
-
-    if (contentLength > 0) {
-      reqHeaders["content-length"] = contentLength;
-    }
-
-    if (contentEncoding !== undefined) {
-      reqHeaders["content-encoding"] = contentEncoding;
-    }
-  }
-
-  const headerPairs = Object.entries(headers).filter(
-    ([key]) => !bannedHeaders.includes(key),
-  );
-
-  for (const [header, value] of headerPairs) {
-    reqHeaders[header] = String(value);
-  }
-
-  return reqHeaders;
-};
-
 // FIXME: This should be an operator in the AsyncEnumerable package
 const spy = <TReq, T>(
   op: ObservableOperatorLike<T, unknown>,
@@ -273,8 +141,7 @@ const sendHttpRequestInternal = (
     ...nodeOptions
   } = options;
 
-  const { method, uri } = request;
-
+  const { content, expectContinue, headers, method, uri } = request;
   const url = uri instanceof URL ? uri : new URL(uri.toString());
 
   const send =
@@ -319,10 +186,43 @@ const sendHttpRequestInternal = (
     );
   };
 
-  const reqHeaders = createHeaders(request, contentEncoding);
+  const nodeHeaders: OutgoingHttpHeaders = {
+    "accept-encoding": supportedEncodings.join(","),
+  };
+
+  if (expectContinue) {
+    nodeHeaders["expect"] = "100-continue";
+  }
+
+  if (
+    content !== undefined &&
+    content.contentType !== "" &&
+    content.contentLength !== 0
+  ) {
+    const { contentLength, contentType } = content;
+
+    nodeHeaders["content-type"] = contentType;
+
+    if (contentLength > 0) {
+      nodeHeaders["content-length"] = contentLength;
+    }
+
+    if (contentEncoding !== undefined) {
+      nodeHeaders["content-encoding"] = contentEncoding;
+    }
+  }
+
+  const headerPairs = Object.entries(headers).filter(
+    ([key]) => !bannedHeaders.includes(key),
+  );
+
+  for (const [header, value] of headerPairs) {
+    nodeHeaders[header] = String(value);
+  }
+
   const nodeRequestOptions = {
     ...nodeOptions,
-    headers: reqHeaders,
+    headers: nodeHeaders,
     method,
   };
 
@@ -391,10 +291,8 @@ const sendHttpRequestInternal = (
     status: HttpClientRequestStatus,
   ): ObservableLike<HttpClientRequestStatus> => {
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
-      const { response } = status as {
-        type: HttpClientRequestStatusType.ResponseReady;
-        response: HttpClientResponseImpl;
-      };
+      const { response } = status;
+
       const { acceptedEncodings, content, location, statusCode } = response;
       const shouldRedirect =
         redirectCodes.includes(statusCode) &&

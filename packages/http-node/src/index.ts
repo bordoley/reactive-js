@@ -1,6 +1,5 @@
 export {
   HttpClientOptions,
-  HttpClientResponseLike,
   HttpClientRequestStatusType,
   HttpClientRequestStatusUploading,
   HttpClientRequestStatusUploadComplete,
@@ -8,6 +7,8 @@ export {
   HttpClientRequestStatus,
   sendHttpRequest,
 } from "./internal/httpClient";
+
+export { HttpClientResponseLike } from "./internal/httpClientResponse";
 
 export { createHttpServer } from "./internal/httpServer";
 
@@ -20,4 +21,4 @@ export {
 export {
   decodeHttpRequest,
   encodeHttpResponse,
-} from "./internal/HttpServerContentEncoder";
+} from "./internal/httpServerContentEncoder";

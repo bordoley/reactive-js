@@ -4,10 +4,7 @@ import {
   encodeContentBody,
   decodeContentBody,
 } from "./httpContentBody";
-import {
-  supportedEncodings,
-  getFirstSupportedEncoding,
-} from "./HttpContentEncoding";
+import { supportedEncodings } from "./httpContentEncoding";
 import { BrotliOptions, ZlibOptions } from "zlib";
 
 export const encodeHttpResponse = (
