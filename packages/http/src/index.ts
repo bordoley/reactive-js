@@ -169,7 +169,7 @@ export const createHttpResponse = <T>(
   };
 };
 
-export const makeRedirectRequest = <TReq, TResp>(
+export const createRedirectRequest = <TReq, TResp>(
   request: HttpRequestLike<TReq>,
   response: HttpResponseLike<TResp>,
 ): HttpRequestLike<TReq> => {
