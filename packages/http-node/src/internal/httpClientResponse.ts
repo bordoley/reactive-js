@@ -19,7 +19,6 @@ export interface HttpClientResponseLike
     DisposableLike {}
 
 /** @ignore */
-
 export class HttpClientResponseImpl implements HttpClientResponseLike {
   readonly add = add;
   readonly content: HttpContentBodyLike | undefined;
@@ -65,7 +64,6 @@ export class HttpClientResponseImpl implements HttpClientResponseLike {
 }
 
 /** @ignore */
-
 export class HttpContentDecodingClientResponse
   implements HttpClientResponseLike {
   readonly add = add;
