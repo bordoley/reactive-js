@@ -8,4 +8,4 @@
 
 ## Indexable
 
-* \[ **header**: *string*\]: number | string | string[] | undefined
+* \[ **header**: *string*\]: unknown

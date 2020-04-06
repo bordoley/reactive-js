@@ -17,4 +17,7 @@ export {
   createStringContentBody,
 } from "./internal/httpContentBody";
 
-export { HttpContentEncoding } from "./internal/HttpContentEncoding";
+export {
+  decodeHttpRequest,
+  encodeHttpResponse,
+} from "./internal/HttpServerContentEncoder";

@@ -12,10 +12,10 @@
 
 * [agent](httpclientoptions.md#optional-agent)
 * [contentEncoding](httpclientoptions.md#optional-contentencoding)
-* [expectContinue](httpclientoptions.md#optional-expectcontinue)
 * [insecureHTTPParser](httpclientoptions.md#optional-insecurehttpparser)
 * [maxHeaderSize](httpclientoptions.md#optional-maxheadersize)
 * [maxRedirects](httpclientoptions.md#optional-maxredirects)
+* [zlibOptions](httpclientoptions.md#optional-zliboptions)
 
 ## Properties
 
@@ -27,13 +27,7 @@ ___
 
 ### `Optional` contentEncoding
 
-• **contentEncoding**? : *[HttpContentEncoding](../enums/httpcontentencoding.md)*
-
-___
-
-### `Optional` expectContinue
-
-• **expectContinue**? : *undefined | false | true*
+• **contentEncoding**? : *HttpContentEncoding*
 
 ___
 
@@ -52,3 +46,9 @@ ___
 ### `Optional` maxRedirects
 
 • **maxRedirects**? : *undefined | number*
+
+___
+
+### `Optional` zlibOptions
+
+• **zlibOptions**? : *BrotliOptions | ZlibOptions*

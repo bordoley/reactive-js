@@ -5,6 +5,7 @@ import {
   AsyncEnumerableOperatorLike,
 } from "@reactive-js/async-enumerable";
 import { DisposableWrapperLike } from "@reactive-js/disposable";
+import { HttpContentEncoding } from "@reactive-js/http";
 import {
   ReadableMode,
   ReadableEvent,
@@ -16,25 +17,21 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
-  HttpContentEncoding,
   createEncodingCompressTransform,
   createEncodingDecompressTransform,
 } from "./HttpContentEncoding";
+import { BrotliOptions, ZlibOptions } from "zlib";
 
 // FIXME: Should probably be in the HTTP package
 /** @noInheritDoc */
 export interface HttpContentBodyLike
   extends AsyncEnumerableLike<ReadableMode, ReadableEvent> {
+  readonly contentEncodings: readonly HttpContentEncoding[];
   readonly contentLength: number;
   readonly contentType: string;
 }
 
-/** @ignore */
-export interface HttpEncodingContentBodyLike extends HttpContentBodyLike {
-  readonly contentEncodings: readonly HttpContentEncoding[];
-}
-
-class IncomingMessageContentBodyImpl implements HttpEncodingContentBodyLike {
+class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
   constructor(private readonly msg: DisposableWrapperLike<IncomingMessage>) {}
 
   get contentEncodings(): readonly HttpContentEncoding[] {
@@ -60,11 +57,12 @@ class IncomingMessageContentBodyImpl implements HttpEncodingContentBodyLike {
     scheduler: SchedulerLike,
     replayCount?: number,
   ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
+    // FIXME: throw error if enumerated more than once
     const enumerator = createReadableAsyncEnumerator(
       this.msg.value,
       scheduler,
       replayCount,
-    );
+    ).add(this.msg);
     this.msg.add(enumerator);
     return enumerator;
   }
@@ -73,9 +71,9 @@ class IncomingMessageContentBodyImpl implements HttpEncodingContentBodyLike {
 /** @ignore */
 export const createIncomingMessageContentBody = (
   msg: DisposableWrapperLike<IncomingMessage>,
-) => decodeContentBody(new IncomingMessageContentBodyImpl(msg));
+) => new IncomingMessageContentBodyImpl(msg);
 
-class ContentBodyImpl implements HttpEncodingContentBodyLike {
+class ContentBodyImpl implements HttpContentBodyLike {
   constructor(
     readonly delegate: AsyncEnumerableLike<ReadableMode, ReadableEvent>,
     readonly contentEncodings: readonly HttpContentEncoding[],
@@ -90,15 +88,6 @@ class ContentBodyImpl implements HttpEncodingContentBodyLike {
     return this.delegate.enumerateAsync(scheduler, replayCount);
   }
 }
-
-/** @ignore */
-export const toHttpEncodingContentBody = (
-  contentBody: HttpContentBodyLike,
-): HttpEncodingContentBodyLike =>
-  Array.isArray((contentBody as any).contentEncodings) 
-    ? contentBody as HttpEncodingContentBodyLike
-    : new ContentBodyImpl(contentBody, [], contentBody.contentLength, contentBody.contentType);
-   
 
 /** @ignore */
 export const lift = (
@@ -139,26 +128,32 @@ export const emptyContentBody: HttpContentBodyLike = new ContentBodyImpl(
 );
 
 /** @ignore */
-export const encodeContentBody = (encoding: HttpContentEncoding) => (
+export const encodeContentBody = (
   contentBody: HttpContentBodyLike,
-): HttpEncodingContentBodyLike => {
-  const existingEncodings: readonly HttpContentEncoding[] = (contentBody as any).contentEncodings || [];
+  encoding: HttpContentEncoding,
+  options: BrotliOptions | ZlibOptions,
+): HttpContentBodyLike => {
+  const existingEncodings: readonly HttpContentEncoding[] =
+    (contentBody as any).contentEncodings || [];
   const contentEncodings = [...existingEncodings, encoding];
   const { contentLength, contentType } = contentBody;
 
   return contentLength !== 0
     ? pipe(
         contentBody,
-        lift(transform(createEncodingCompressTransform(encoding)), {
+        lift(transform(createEncodingCompressTransform(encoding, options)), {
           contentEncodings,
           contentType,
         }),
       )
-    : toHttpEncodingContentBody(contentBody);
+    : contentBody;
 };
 
 /** @ignore */
-export const decodeContentBody = (contentBody: HttpEncodingContentBodyLike) => {
+export const decodeContentBody = (
+  contentBody: HttpContentBodyLike,
+  options: BrotliOptions | ZlibOptions,
+) => {
   const { contentLength, contentEncodings } = contentBody;
   if (contentEncodings.length > 0 && contentLength !== 0) {
     const src =
@@ -168,7 +163,7 @@ export const decodeContentBody = (contentBody: HttpEncodingContentBodyLike) => {
     const { contentType } = contentBody;
 
     const delegate = contentEncodings
-      .map(encoding => createEncodingDecompressTransform(encoding))
+      .map(encoding => createEncodingDecompressTransform(encoding, options))
       .reduceRight((acc, decoder) => pipe(acc, transform(decoder)), src);
 
     return new ContentBodyImpl(delegate, [], -1, contentType);

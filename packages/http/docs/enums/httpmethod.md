@@ -8,6 +8,7 @@
 
 * [DELETE](httpmethod.md#delete)
 * [GET](httpmethod.md#get)
+* [HEAD](httpmethod.md#head)
 * [POST](httpmethod.md#post)
 * [PUT](httpmethod.md#put)
 
@@ -22,6 +23,12 @@ ___
 ###  GET
 
 • **GET**: = "GET"
+
+___
+
+###  HEAD
+
+• **HEAD**: = "HEAD"
 
 ___
 
