@@ -23,10 +23,6 @@
 
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
 
-### Variables
-
-* [emptyContentBody](README.md#const-emptycontentbody)
-
 ### Functions
 
 * [createBufferContentBody](README.md#const-createbuffercontentbody)
@@ -35,23 +31,14 @@
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 * [sendHttpRequest](README.md#const-sendhttprequest)
+* [writeRequestHeaders](README.md#const-writerequestheaders)
+* [writeResponseHeaders](README.md#const-writeresponseheaders)
 
 ## Type aliases
 
 ###  HttpClientRequestStatus
 
 Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
-
-## Variables
-
-### `Const` emptyContentBody
-
-• **emptyContentBody**: *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)* =  new ContentBodyImpl(
-  emptyReadableAsyncEnumerable,
-  [],
-  0,
-  "",
-)
 
 ## Functions
 
@@ -124,24 +111,16 @@ ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**(`shouldEncode`: function, `options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+▸ **encodeHttpResponse**(`request`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, `options`: object): *OperatorLike‹HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
 
 **Parameters:**
 
-▪ **shouldEncode**: *function*
+Name | Type | Default |
+------ | ------ | ------ |
+`request` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› | - |
+`options` | object |  {} |
 
-▸ (`req`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, `resp`: HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
-`resp` | HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
-
-▪`Default value`  **options**: *BrotliOptions | ZlibOptions*=  {}
-
-**Returns:** *(Anonymous function)*
+**Returns:** *OperatorLike‹HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)››*
 
 ___
 
@@ -156,3 +135,49 @@ Name | Type | Default |
 `options` | [HttpClientOptions](interfaces/httpclientoptions.md) |  {} |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+### `Const` writeRequestHeaders
+
+▸ **writeRequestHeaders**(`__namedParameters`: object, `writeHeader`: function): *void*
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+▪ **writeHeader**: *function*
+
+▸ (`header`: string, `value`: string): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`header` | string |
+`value` | string |
+
+**Returns:** *void*
+
+___
+
+### `Const` writeResponseHeaders
+
+▸ **writeResponseHeaders**(`__namedParameters`: object, `writeHeader`: function): *void*
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+▪ **writeHeader**: *function*
+
+▸ (`header`: string, `value`: string): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`header` | string |
+`value` | string |
+
+**Returns:** *void*
