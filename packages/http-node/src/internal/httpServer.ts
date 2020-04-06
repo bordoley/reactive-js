@@ -42,6 +42,7 @@ import {
   createIncomingMessageContentBody,
   createStringContentBody,
 } from "./httpContentBody";
+import { writeResponseHeaders } from "./httpHeaders";
 
 class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
@@ -91,56 +92,16 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 }
 
-const writeResponseContentHeaders = (
-  resp: ServerResponse,
-  content: HttpContentBodyLike,
+const writeResponseMessage = (resp: ServerResponse) => (
+  response: HttpResponseLike<HttpContentBodyLike>,
 ) => {
-  const { contentLength, contentType, contentEncodings } = content;
-  if (contentLength > 0) {
-    resp.setHeader("content-length", contentLength);
-  }
+  resp.statusCode = response.statusCode;
 
-  if (contentType.length > 0) {
-    resp.setHeader("content-type", contentType);
-  }
-
-  if (contentEncodings.length > 0) {
-    resp.setHeader("content-encoding", contentEncodings.join(", "));
-  }
-};
-
-const bannedHeaders = [
-  "accept-encoding",
-  "content-encoding",
-  "content-length",
-  "content-type",
-  "expect",
-  "vary",
-];
-
-const writeResponseMessage = (resp: ServerResponse) => ({
-  content,
-  headers,
-  statusCode,
-  vary,
-}: HttpResponseLike<HttpContentBodyLike>) => {
-  resp.statusCode = statusCode;
-
-  if (content !== undefined) {
-    writeResponseContentHeaders(resp, content);
-  }
-  if (vary.length > 0) {
-    resp.setHeader("vary", vary as string[]);
-  }
-
-  const headerPairs = Object.entries(headers).filter(
-    ([key]) => !bannedHeaders.includes(key.toLowerCase()),
+  writeResponseHeaders(
+    response,
+    (header, value) => resp.setHeader(header, value),
   );
-
-  for (const [header, value] of headerPairs) {
-    resp.setHeader(header, String(value));
-  }
-};
+}
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,

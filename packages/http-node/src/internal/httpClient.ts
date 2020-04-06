@@ -42,6 +42,7 @@ import {
   getFirstSupportedEncoding,
   createEncodingCompressTransform,
 } from "./httpContentEncoding";
+import { writeRequestHeaders } from "./httpHeaders";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -96,15 +97,6 @@ export interface HttpClientOptions {
   readonly zlibOptions?: BrotliOptions | ZlibOptions;
 }
 
-const bannedHeaders = [
-  "accept-encoding",
-  "content-encoding",
-  "content-length",
-  "content-type",
-  "expect",
-  "vary",
-];
-
 const spyScanner = (
   [uploaded, total]: [number, number],
   ev: ReadableEvent,
@@ -125,7 +117,12 @@ const sendHttpRequestInternal = (
     ...nodeOptions
   } = options;
 
-  const { content, expectContinue, headers, method, uri } = request;
+  request = {
+    ...request,
+    acceptedEncodings: supportedEncodings,
+  };
+
+  const { method, uri } = request;
   const url = uri instanceof URL ? uri : new URL(uri.toString());
 
   const send =
@@ -137,39 +134,11 @@ const sendHttpRequestInternal = (
           throw new Error();
         })();
 
-  const nodeHeaders: OutgoingHttpHeaders = {
-    "accept-encoding": supportedEncodings.join(","),
-  };
-
-  if (expectContinue) {
-    nodeHeaders["expect"] = "100-continue";
-  }
-
-  if (
-    content !== undefined &&
-    content.contentType !== "" &&
-    content.contentLength !== 0
-  ) {
-    const { contentLength, contentType } = content;
-
-    nodeHeaders["content-type"] = contentType;
-
-    if (contentLength > 0) {
-      nodeHeaders["content-length"] = contentLength;
-    }
-
-    if (contentEncoding !== undefined) {
-      nodeHeaders["content-encoding"] = contentEncoding;
-    }
-  }
-
-  const headerPairs = Object.entries(headers).filter(
-    ([key]) => !bannedHeaders.includes(key),
+  const nodeHeaders: OutgoingHttpHeaders = {};
+  writeRequestHeaders(
+    request,
+    (header, value) => nodeHeaders[header] = value,
   );
-
-  for (const [header, value] of headerPairs) {
-    nodeHeaders[header] = String(value);
-  }
 
   const nodeRequestOptions = {
     ...nodeOptions,

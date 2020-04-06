@@ -6,16 +6,23 @@ import {
 } from "./httpContentBody";
 import { supportedEncodings } from "./httpContentEncoding";
 import { BrotliOptions, ZlibOptions } from "zlib";
+import { OperatorLike } from "@reactive-js/pipe";
+
+const alwaysTrue = <TA, TB>(_a: TA, _b: TB) => true;
 
 export const encodeHttpResponse = (
-  shouldEncode: (
-    req: HttpRequestLike<HttpContentBodyLike>,
-    resp: HttpResponseLike<HttpContentBodyLike>,
-  ) => boolean,
-  options: BrotliOptions | ZlibOptions = {},
-) => (request: HttpRequestLike<HttpContentBodyLike>) => (
+  request: HttpRequestLike<HttpContentBodyLike>,
+  options: {
+    shouldEncode?: (
+      req: HttpRequestLike<HttpContentBodyLike>,
+      resp: HttpResponseLike<HttpContentBodyLike>,
+    ) => boolean ,
+    zlibOptions?: BrotliOptions | ZlibOptions,
+  } = {},
+): OperatorLike<HttpResponseLike<HttpContentBodyLike>, HttpResponseLike<HttpContentBodyLike>> => (
   response: HttpResponseLike<HttpContentBodyLike>,
 ) => {
+  const { shouldEncode = alwaysTrue, zlibOptions = {} } = options;
   // FIXME:
   // Don't compress for Cache-Control: no-transform
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
@@ -34,7 +41,7 @@ export const encodeHttpResponse = (
     ...response,
     content:
       encoding !== undefined && content !== undefined
-        ? encodeContentBody(content, encoding, options)
+        ? encodeContentBody(content, encoding, zlibOptions)
         : content,
     vary: encodeBody ? [...vary, "Accept-Encoding"] : vary,
   };
