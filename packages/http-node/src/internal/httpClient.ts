@@ -7,10 +7,7 @@ import {
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import { ZlibOptions, BrotliOptions } from "zlib";
-import {
-  AsyncEnumerableOperatorLike,
-  createAsyncEnumerable,
-} from "@reactive-js/async-enumerable";
+import { identity, lift } from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpRequestLike,
@@ -19,8 +16,10 @@ import {
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
-  ReadableEventType,
   ReadableEvent,
+  ReadableMode,
+  transform,
+  ReadableEventType,
 } from "@reactive-js/node";
 import {
   createObservable,
@@ -29,10 +28,8 @@ import {
   SafeSubscriberLike,
   map,
   concatAll,
-  ObservableOperatorLike,
-  subscribe,
-  scan,
   onNotify,
+  scan,
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
 import {
@@ -40,15 +37,11 @@ import {
   HttpContentDecodingClientResponse,
   HttpClientResponseImpl,
 } from "./httpClientResponse";
-import {
-  HttpContentBodyLike,
-  encodeContentBody,
-  emptyContentBody,
-  lift as liftContentBody,
-} from "./httpContentBody";
+import { HttpContentBodyLike, emptyContentBody } from "./httpContentBody";
 import {
   supportedEncodings,
   getFirstSupportedEncoding,
+  createEncodingCompressTransform,
 } from "./httpContentEncoding";
 
 export const enum HttpClientRequestStatusType {
@@ -113,21 +106,13 @@ const bannedHeaders = [
   "vary",
 ];
 
-// FIXME: This should be an operator in the AsyncEnumerable package
-const spy = <TReq, T>(
-  op: ObservableOperatorLike<T, unknown>,
-): AsyncEnumerableOperatorLike<TReq, T, TReq, T> => enumerable =>
-  createAsyncEnumerable(observable =>
-    createObservable(subscriber => {
-      const enumerator = enumerable.enumerateAsync(subscriber);
-      subscriber.add(enumerator);
-
-      observable.subscribe(enumerator);
-      enumerator.subscribe(subscriber);
-
-      subscriber.add(pipe(enumerator, op, subscribe(subscriber)));
-    }),
-  );
+const spyScanner = (
+  [uploaded, total]: [number, number],
+  ev: ReadableEvent,
+): [number, number] =>
+  ev.type === ReadableEventType.Data
+    ? [ev.chunk.length, total + uploaded]
+    : [-1, total + uploaded];
 
 // FIXME: Support HTTP2 as well.
 const sendHttpRequestInternal = (
@@ -152,39 +137,6 @@ const sendHttpRequestInternal = (
       : (() => {
           throw new Error();
         })();
-
-  const spyContentBody = (
-    subscriber: SafeSubscriberLike<HttpClientRequestStatus>,
-  ) => (content: HttpContentBodyLike): HttpContentBodyLike => {
-    const scanner = (
-      [uploaded, total]: [number, number],
-      ev: ReadableEvent,
-    ): [number, number] =>
-      ev.type === ReadableEventType.Data
-        ? [ev.chunk.length, total + uploaded]
-        : [-1, total + uploaded];
-
-    const doOnNotify = ([count, total]: [number, number]) => {
-      const ev: HttpClientRequestStatus =
-        count < 0
-          ? { type: HttpClientRequestStatusType.UploadComplete }
-          : { type: HttpClientRequestStatusType.Uploaded, total };
-      subscriber.dispatch(ev);
-    };
-
-    return pipe(
-      content,
-      liftContentBody(
-        spy(
-          compose(
-            scan(scanner, (): [number, number] => [0, 0]),
-            onNotify(doOnNotify),
-          ),
-        ),
-        content,
-      ),
-    );
-  };
 
   const nodeHeaders: OutgoingHttpHeaders = {
     "accept-encoding": supportedEncodings.join(","),
@@ -249,14 +201,44 @@ const sendHttpRequestInternal = (
     req.on("response", onResponse);
 
     const reqBodyEnumerator = createWritableAsyncEnumerator(req, subscriber);
+
+    const doOnNotify = ([count, total]: [number, number]) => {
+      const ev: HttpClientRequestStatus =
+        count < 0
+          ? { type: HttpClientRequestStatusType.UploadComplete }
+          : { type: HttpClientRequestStatusType.Uploaded, total };
+      subscriber.dispatch(ev);
+    };
+
+    const spyEnumerator = pipe(
+      identity<ReadableEvent>(),
+      lift(
+        compose(
+          scan(spyScanner, (): [number, number] => [0, 0]),
+          onNotify(doOnNotify),
+        ),
+      ),
+    ).enumerateAsync(subscriber);
+
     const contentEnumerator = pipe(
       request.content || emptyContentBody,
-      spyContentBody(subscriber),
-      contentBody =>
-        contentEncoding !== undefined
-          ? encodeContentBody(contentBody, contentEncoding, zlibOptions)
-          : contentBody,
+      lift<ReadableMode, ReadableEvent, ReadableEvent>(
+        onNotify(ev => spyEnumerator.dispatch(ev)),
+      ),
+      contentEncoding !== undefined
+        ? transform(createEncodingCompressTransform(contentEncoding, zlibOptions))
+        : x => x,
     ).enumerateAsync(subscriber);
+
+    subscriber
+    .add(reqBodyEnumerator)
+    .add(spyEnumerator)
+    .add(contentEnumerator)
+    .add(_ => {
+      req.abort();
+      req.removeAllListeners();
+      req.destroy();
+    });
 
     const onContinue = () => {
       contentEnumerator.subscribe(reqBodyEnumerator);
@@ -276,15 +258,6 @@ const sendHttpRequestInternal = (
     // * socket: Nothing really to do here.
     // * timeout: reactive-js has a timeout operator. use it instead.
     // * information: Not much to do, we already support continue via the continue event, and will support upgrade.
-
-    subscriber
-      .add(contentEnumerator)
-      .add(reqBodyEnumerator)
-      .add(_ => {
-        req.abort();
-        req.removeAllListeners();
-        req.destroy();
-      });
   };
 
   const handleResponse = (
