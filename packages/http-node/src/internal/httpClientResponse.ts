@@ -5,7 +5,7 @@ import {
   DisposableLike,
   add,
   dispose,
-  createDisposableWrapper,
+  createDisposable,
 } from "@reactive-js/disposable";
 import { HttpResponseLike, HttpContentEncoding } from "@reactive-js/http";
 import {
@@ -26,8 +26,8 @@ export class HttpClientResponseImpl implements HttpClientResponseLike {
   readonly dispose = dispose;
 
   constructor(private readonly msg: IncomingMessage) {
-    const disposable = createDisposableWrapper(msg, msg => msg.destroy());
-    const content = createIncomingMessageContentBody(disposable);
+    const disposable = createDisposable(() => msg.destroy());
+    const content = createIncomingMessageContentBody(msg);
 
     this.disposable = disposable;
     this.content = content.contentLength !== 0 ? content : undefined;

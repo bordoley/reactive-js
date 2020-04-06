@@ -1,9 +1,13 @@
-import { HttpHeadersLike, HttpResponseLike, HttpRequestLike } from "@reactive-js/http";
+import {
+  HttpHeadersLike,
+  HttpResponseLike,
+  HttpRequestLike,
+} from "@reactive-js/http";
 import { HttpContentBodyLike } from "./httpContentBody";
 
 const writeContentHeaders = (
   content: HttpContentBodyLike,
-  writeHeader: (header: string, value: string) => void
+  writeHeader: (header: string, value: string) => void,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
@@ -29,8 +33,8 @@ const bannedHeaders = [
 ];
 
 const writeHeaders = (
-  headers: HttpHeadersLike, 
-  writeHeader: (header: string, value: string) => void
+  headers: HttpHeadersLike,
+  writeHeader: (header: string, value: string) => void,
 ) => {
   const headerPairs = Object.entries(headers).filter(
     ([key]) => !bannedHeaders.includes(key.toLowerCase()),
@@ -43,7 +47,12 @@ const writeHeaders = (
 
 /** @ignore */
 export const writeRequestHeaders = (
-  { acceptedEncodings, content, expectContinue, headers }: HttpRequestLike<HttpContentBodyLike>, 
+  {
+    acceptedEncodings,
+    content,
+    expectContinue,
+    headers,
+  }: HttpRequestLike<HttpContentBodyLike>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (acceptedEncodings.length > 0) {
@@ -59,12 +68,12 @@ export const writeRequestHeaders = (
   }
 
   writeHeaders(headers, writeHeader);
-}
+};
 
 /** @ignore */
 export const writeResponseHeaders = (
-  { content, headers, vary }: HttpResponseLike<HttpContentBodyLike>, 
-  writeHeader: (header: string, value: string) => void
+  { content, headers, vary }: HttpResponseLike<HttpContentBodyLike>,
+  writeHeader: (header: string, value: string) => void,
 ): void => {
   if (content !== undefined) {
     writeContentHeaders(content, writeHeader);

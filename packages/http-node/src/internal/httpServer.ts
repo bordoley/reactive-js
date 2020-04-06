@@ -1,17 +1,8 @@
 import {
-  createServer as createNodeHttpServer,
   ServerResponse,
   IncomingMessage,
-  ServerOptions,
 } from "http";
-import { createServer as createNodeHttpsServer } from "https";
-import { SecureContextOptions, TlsOptions } from "tls";
 import { URL } from "url";
-import {
-  createDisposable,
-  createDisposableWrapper,
-  DisposableWrapperLike,
-} from "@reactive-js/disposable";
 import {
   HttpRequestLike,
   HttpResponseLike,
@@ -35,7 +26,7 @@ import {
   await_,
   compute,
 } from "@reactive-js/observable";
-import { OperatorLike, pipe } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   HttpContentBodyLike,
@@ -49,15 +40,33 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly uri: URI;
 
   constructor(
-    private readonly msg: DisposableWrapperLike<IncomingMessage>,
-    private readonly protocol: "http:" | "https:",
+    private readonly msg: IncomingMessage,
   ) {
     const content = createIncomingMessageContentBody(msg);
     this.content = content.contentLength !== 0 ? content : undefined;
+    
+    const forwardedProtocol = msg.headers["x-forwarded-proto"];
+    const protocol = (msg.socket as any).encrypted || false
+      ? 'https'
+      : forwardedProtocol !== undefined && !Array.isArray(forwardedProtocol)
+      ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+      : "http";
+
+    const forwardedHost = msg.headers["x-forwarded-host"];
+    const http2Authority = msg.headers[":authority"];
+    const http1Host = msg.headers["host"];
+
+    const unfilteredHost = forwardedHost !== undefined && !Array.isArray(forwardedHost)
+      ? forwardedHost
+      : http2Authority !== undefined && msg.httpVersionMajor >= 2 && !Array.isArray(http2Authority)
+      ? http2Authority
+      : http1Host !== undefined && !Array.isArray(http1Host)
+      ? http1Host
+      : "";
    
-    const host = this.msg.value.headers.host || "";
-    const base = `${this.protocol}//${host}/`;
-    this.uri = new URL(this.msg.value.url || "", base);
+    const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+
+    this.uri = new URL(`${protocol}://${host}${msg.url || "" }`);
   }
 
   get acceptedEncodings() {
@@ -76,11 +85,11 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 
   get headers() {
-    return this.msg.value.headers;
+    return this.msg.headers;
   }
 
   get method() {
-    return (this.msg.value.method as HttpMethod) || HttpMethod.GET;
+    return (this.msg.method as HttpMethod) || HttpMethod.GET;
   }
 }
 
@@ -89,11 +98,10 @@ const writeResponseMessage = (resp: ServerResponse) => (
 ) => {
   resp.statusCode = response.statusCode;
 
-  writeResponseHeaders(
-    response,
-    (header, value) => resp.setHeader(header, value),
+  writeResponseHeaders(response, (header, value) =>
+    resp.setHeader(header, value),
   );
-}
+};
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
@@ -115,7 +123,7 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
   });
 
 // FIXME: Don't include content in prod mode
-// FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input 
+// FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input
 const defaultOnError = (
   e: unknown,
 ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
@@ -132,69 +140,35 @@ export interface HttpServerOptions {
   readonly onError?: (
     e: unknown,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
-  readonly port?: number;
   readonly protocol?: "http:" | "https:" | undefined;
-  readonly scheduler: SchedulerLike;
 }
 
 export const createHttpServer = (
   requestHandler: (
     req: HttpRequestLike<HttpContentBodyLike>,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
-  options: HttpServerOptions &
-    SecureContextOptions &
-    TlsOptions &
-    ServerOptions,
-): OperatorLike<void, ObservableLike<void>> => {
+  scheduler: SchedulerLike,
+  options: HttpServerOptions = {},
+): (req: IncomingMessage, resp: ServerResponse) => void => {
   const {
     onError = defaultOnError,
-    port = options.protocol === "https:" ? 443 : 80,
-    protocol = "http:",
-    scheduler,
-    ...nodeOptions
   } = options;
 
-  // FIXME: HTTP2?
-  const createServer =
-    protocol === "https:" ? createNodeHttpsServer : createNodeHttpServer;
+  return (req: IncomingMessage, resp: ServerResponse) => {
+    const responseSubscription = pipe(
+      compute(() => new HttpServerRequestImpl(req)),
+      await_(requestHandler),
+      catchError(onError),
+      onNotify(writeResponseMessage(resp)),
+      await_(writeResponseContentBody(resp)),
+      subscribe(scheduler),
+    );
 
-  let close: ObservableLike<void> | undefined = undefined;
-
-  return () => {
-    if (close === undefined) {
-      const disposable = createDisposable().add(() => server.close());
-
-      const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const message = createDisposableWrapper(req, req => req.destroy());
-        const responseSubscription = pipe(
-          compute(() => new HttpServerRequestImpl(message, protocol)),
-          await_(requestHandler),
-          catchError(onError),
-          onNotify(writeResponseMessage(resp)),
-          await_(writeResponseContentBody(resp)),
-          subscribe(scheduler),
-        ).add(message);
-
-        disposable.add(responseSubscription);
-      };
-
-      const server = createServer(nodeOptions, handler).listen(port);
-
-      close = createObservable(subscriber => {
-        if (disposable.isDisposed) {
-          subscriber.dispatch();
-          subscriber.dispose();
-        } else {
-          server.once("close", () => {
-            close = undefined;
-            subscriber.dispatch();
-            subscriber.dispose();
-          });
-          disposable.dispose();
-        }
-      });
-    }
-
-    return close;
+    req.on("error", cause => {
+      responseSubscription.dispose({cause});
+    })
+    resp.on("close", () => {
+      responseSubscription.dispose();
+    })
   };
 };

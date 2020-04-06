@@ -137,7 +137,7 @@ const sendHttpRequestInternal = (
   const nodeHeaders: OutgoingHttpHeaders = {};
   writeRequestHeaders(
     request,
-    (header, value) => nodeHeaders[header] = value,
+    (header, value) => (nodeHeaders[header] = value),
   );
 
   const nodeRequestOptions = {
@@ -190,23 +190,23 @@ const sendHttpRequestInternal = (
 
     const contentEnumerator = pipe(
       request.content || emptyContentBody,
-      lift(
-        onNotify(ev => spyEnumerator.dispatch(ev)),
-      ),
+      lift(onNotify(ev => spyEnumerator.dispatch(ev))),
       contentEncoding !== undefined
-        ? transform(createEncodingCompressTransform(contentEncoding, zlibOptions))
+        ? transform(
+            createEncodingCompressTransform(contentEncoding, zlibOptions),
+          )
         : x => x,
     ).enumerateAsync(subscriber);
 
     subscriber
-    .add(reqBodyEnumerator)
-    .add(spyEnumerator)
-    .add(contentEnumerator)
-    .add(_ => {
-      req.abort();
-      req.removeAllListeners();
-      req.destroy();
-    });
+      .add(reqBodyEnumerator)
+      .add(spyEnumerator)
+      .add(contentEnumerator)
+      .add(_ => {
+        req.abort();
+        req.removeAllListeners();
+        req.destroy();
+      });
 
     const onContinue = () => {
       contentEnumerator.subscribe(reqBodyEnumerator);

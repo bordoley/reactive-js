@@ -14,7 +14,7 @@ const responseIsCompressible = (
 ): boolean => {
   const contentType = resp.content?.contentType;
   return (contentType !== undefined && compressible(contentType)) || false;
-} 
+};
 
 export const encodeHttpResponse = (
   request: HttpRequestLike<HttpContentBodyLike>,
@@ -22,28 +22,29 @@ export const encodeHttpResponse = (
     shouldEncode?: (
       req: HttpRequestLike<HttpContentBodyLike>,
       resp: HttpResponseLike<HttpContentBodyLike>,
-    ) => boolean | undefined ,
-    zlibOptions?: BrotliOptions | ZlibOptions,
+    ) => boolean | undefined;
+    zlibOptions?: BrotliOptions | ZlibOptions;
   } = {},
-): OperatorLike<HttpResponseLike<HttpContentBodyLike>, HttpResponseLike<HttpContentBodyLike>> => (
-  response: HttpResponseLike<HttpContentBodyLike>,
-) => {
+): OperatorLike<
+  HttpResponseLike<HttpContentBodyLike>,
+  HttpResponseLike<HttpContentBodyLike>
+> => (response: HttpResponseLike<HttpContentBodyLike>) => {
   const { shouldEncode: shouldEncodeOption, zlibOptions = {} } = options;
   // FIXME:
   // Don't compress for Cache-Control: no-transform
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
 
-  const shouldEncodeOptionResult = shouldEncodeOption !== undefined
-    ? shouldEncodeOption(request, response)
-    : undefined;
+  const shouldEncodeOptionResult =
+    shouldEncodeOption !== undefined
+      ? shouldEncodeOption(request, response)
+      : undefined;
 
-  const shouldEncode = shouldEncodeOptionResult !== undefined
-    ? shouldEncodeOptionResult
-    : responseIsCompressible(response);
+  const shouldEncode =
+    shouldEncodeOptionResult !== undefined
+      ? shouldEncodeOptionResult
+      : responseIsCompressible(response);
 
-  const acceptedEncodings = shouldEncode
-    ? request.acceptedEncodings
-    : [];
+  const acceptedEncodings = shouldEncode ? request.acceptedEncodings : [];
 
   const { content, vary } = response;
   const encoding = acceptedEncodings.find(
