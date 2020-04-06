@@ -6,6 +6,7 @@ import {
 import {
   HttpClientRequestStatusType,
   createBufferContentBody,
+  createStringContentBody,
   createHttpServer,
   sendHttpRequest,
   decodeHttpRequest,
@@ -65,15 +66,20 @@ const connect = createHttpServer(
   req => pipe(
     ofValue(req),
     map(decodeHttpRequest),
+    onNotify(req => console.log(req.headers)),
     mapTo(
       createHttpResponse(200, {
         content: createBufferContentBody(chunk, "text/plain"),
       }),
     ),
+    mapTo(
+      createHttpResponse(200, {
+        content: createStringContentBody(req.uri.toString(), "text/plain"),
+      }),
+    ),
     map(encodeHttpResponse(req)),
   ),
   {
-    domain: "localhost",
     scheduler,
     port: 8080,
   },

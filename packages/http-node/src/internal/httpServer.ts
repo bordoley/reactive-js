@@ -52,7 +52,7 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
 
   constructor(
     private readonly msg: IncomingMessage,
-    private readonly base: string,
+    private readonly protocol: "http:" | "https:",
   ) {
     const disposable = createDisposableWrapper(msg, msg => msg.destroy());
 
@@ -88,7 +88,10 @@ class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   }
 
   get uri() {
-    return new URL(this.msg.url || "", this.base);
+    const host = this.msg.headers.host || "";
+    const base = `${this.protocol}//${host}/`;
+
+    return new URL(this.msg.url || "", base);
   }
 }
 
@@ -135,8 +138,6 @@ const defaultOnError = (
   );
 
 export interface HttpServerOptions {
-  // FIXME: Virtual domains?
-  readonly domain: string;
   readonly onError?: (
     e: unknown,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
@@ -155,7 +156,6 @@ export const createHttpServer = (
     ServerOptions,
 ): OperatorLike<void, ObservableLike<void>> => {
   const {
-    domain,
     onError = defaultOnError,
     port = options.protocol === "https:" ? 443 : 80,
     protocol = "http:",
@@ -167,8 +167,6 @@ export const createHttpServer = (
   const createServer =
     protocol === "https:" ? createNodeHttpsServer : createNodeHttpServer;
 
-  const base = `${protocol}//${domain}${port !== 80 ? `:${port}` : ""}/`;
-
   let close: ObservableLike<void> | undefined = undefined;
 
   return () => {
@@ -176,7 +174,7 @@ export const createHttpServer = (
       const disposable = createDisposable().add(() => server.close());
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const serverRequest = new HttpServerRequestImpl(req, base);
+        const serverRequest = new HttpServerRequestImpl(req, protocol);
 
         const responseSubscription = pipe(
           ofValue(serverRequest),
