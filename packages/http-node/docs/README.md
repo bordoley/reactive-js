@@ -27,6 +27,7 @@
 
 * [createBufferContentBody](README.md#const-createbuffercontentbody)
 * [createHttpServer](README.md#const-createhttpserver)
+* [createReadableContentBody](README.md#const-createreadablecontentbody)
 * [createStringContentBody](README.md#const-createstringcontentbody)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
@@ -44,7 +45,7 @@
 
 ### `Const` createBufferContentBody
 
-▸ **createBufferContentBody**(`chunk`: Buffer, `contentType`: string): *ContentBodyImpl‹›*
+▸ **createBufferContentBody**(`chunk`: Buffer, `contentType`: string): *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
 
 **Parameters:**
 
@@ -53,7 +54,7 @@ Name | Type |
 `chunk` | Buffer |
 `contentType` | string |
 
-**Returns:** *ContentBodyImpl‹›*
+**Returns:** *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
 
 ___
 
@@ -79,9 +80,27 @@ Name | Type |
 
 ___
 
+### `Const` createReadableContentBody
+
+▸ **createReadableContentBody**(`factory`: function, `contentType`: string, `contentLength`: number): *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *Readable*
+
+▪ **contentType**: *string*
+
+▪`Default value`  **contentLength**: *number*=  -1
+
+**Returns:** *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
+
+___
+
 ### `Const` createStringContentBody
 
-▸ **createStringContentBody**(`content`: string, `contentType`: string): *ContentBodyImpl‹›*
+▸ **createStringContentBody**(`content`: string, `contentType`: string): *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
 
 **Parameters:**
 
@@ -90,7 +109,7 @@ Name | Type |
 `content` | string |
 `contentType` | string |
 
-**Returns:** *ContentBodyImpl‹›*
+**Returns:** *[HttpContentBodyLike](interfaces/httpcontentbodylike.md)*
 
 ___
 

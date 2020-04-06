@@ -13,6 +13,7 @@ import {
   createReadableAsyncEnumerableFromBuffer,
   transform,
   emptyReadableAsyncEnumerable,
+  createReadableAsyncEnumerable,
 } from "@reactive-js/node";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -21,6 +22,7 @@ import {
   createEncodingDecompressTransform,
 } from "./httpContentEncoding";
 import { BrotliOptions, ZlibOptions } from "zlib";
+import { Readable } from "stream";
 
 // FIXME: Should probably be in the HTTP package
 /** @noInheritDoc */
@@ -173,7 +175,7 @@ export const decodeContentBody = (
   }
 };
 
-export const createBufferContentBody = (chunk: Buffer, contentType: string) =>
+export const createBufferContentBody = (chunk: Buffer, contentType: string): HttpContentBodyLike =>
   new ContentBodyImpl(
     createReadableAsyncEnumerableFromBuffer(chunk),
     [],
@@ -181,5 +183,13 @@ export const createBufferContentBody = (chunk: Buffer, contentType: string) =>
     contentType,
   );
 
-export const createStringContentBody = (content: string, contentType: string) =>
+export const createReadableContentBody = (factory: () => Readable, contentType: string, contentLength = -1): HttpContentBodyLike =>
+  new ContentBodyImpl(
+    createReadableAsyncEnumerable(factory),
+    [],
+    contentLength,
+    contentType,
+  );
+
+export const createStringContentBody = (content: string, contentType: string): HttpContentBodyLike =>
   createBufferContentBody(Buffer.from(content), contentType);
