@@ -21,7 +21,7 @@
 
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
-* [makeRedirectRequest](README.md#const-makeredirectrequest)
+* [createRedirectRequest](README.md#const-createredirectrequest)
 
 ## Functions
 
@@ -64,9 +64,9 @@ Name | Type | Default |
 
 ___
 
-### `Const` makeRedirectRequest
+### `Const` createRedirectRequest
 
-▸ **makeRedirectRequest**<**TReq**, **TResp**>(`request`: [HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, `response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
+▸ **createRedirectRequest**<**TReq**, **TResp**>(`request`: [HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, `response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
 
 **Type parameters:**
 

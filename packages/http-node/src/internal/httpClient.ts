@@ -12,7 +12,7 @@ import {
   HttpContentEncoding,
   HttpRequestLike,
   HttpStatusCode,
-  makeRedirectRequest,
+  createRedirectRequest,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -246,7 +246,7 @@ const sendHttpRequestInternal = (
 
       const { newRequest, newOptions } = (() => {
         if (shouldRedirect) {
-          const newRequest = makeRedirectRequest(request, response);
+          const newRequest = createRedirectRequest(request, response);
           const newOptions = {
             ...options,
             maxRedirects: maxRedirects - 1,
