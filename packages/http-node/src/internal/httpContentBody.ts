@@ -4,7 +4,6 @@ import {
   AsyncEnumeratorLike,
   AsyncEnumerableOperatorLike,
 } from "@reactive-js/async-enumerable";
-import { DisposableWrapperLike } from "@reactive-js/disposable";
 import { HttpContentEncoding } from "@reactive-js/http";
 import {
   ReadableMode,
@@ -34,7 +33,7 @@ export interface HttpContentBodyLike
 }
 
 class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
-  constructor(private readonly msg: DisposableWrapperLike<IncomingMessage>) {}
+  constructor(private readonly msg: IncomingMessage) {}
 
   get contentEncodings(): readonly HttpContentEncoding[] {
     // FIXME: use the node content encoding library here.
@@ -44,7 +43,7 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
 
   get contentLength(): number {
     try {
-      const contentLength = this.msg.value.headers["content-length"];
+      const contentLength = this.msg.headers["content-length"];
       return contentLength !== undefined ? Number.parseInt(contentLength) : -1;
     } catch (_) {
       return -1;
@@ -52,7 +51,7 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
   }
 
   get contentType(): string {
-    return this.msg.value.headers["content-type"] || "";
+    return this.msg.headers["content-type"] || "";
   }
 
   enumerateAsync(
@@ -61,18 +60,18 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
   ): AsyncEnumeratorLike<ReadableMode, ReadableEvent> {
     // FIXME: throw error if enumerated more than once
     const enumerator = createReadableAsyncEnumerator(
-      this.msg.value,
+      this.msg,
       scheduler,
       replayCount,
-    ).add(this.msg);
-    this.msg.add(enumerator);
+    );
+
     return enumerator;
   }
 }
 
 /** @ignore */
 export const createIncomingMessageContentBody = (
-  msg: DisposableWrapperLike<IncomingMessage>,
+  msg: IncomingMessage,
 ) => new IncomingMessageContentBodyImpl(msg);
 
 class ContentBodyImpl implements HttpContentBodyLike {
@@ -175,7 +174,10 @@ export const decodeContentBody = (
   }
 };
 
-export const createBufferContentBody = (chunk: Buffer, contentType: string): HttpContentBodyLike =>
+export const createBufferContentBody = (
+  chunk: Buffer,
+  contentType: string,
+): HttpContentBodyLike =>
   new ContentBodyImpl(
     createReadableAsyncEnumerableFromBuffer(chunk),
     [],
@@ -183,7 +185,11 @@ export const createBufferContentBody = (chunk: Buffer, contentType: string): Htt
     contentType,
   );
 
-export const createReadableContentBody = (factory: () => Readable, contentType: string, contentLength = -1): HttpContentBodyLike =>
+export const createReadableContentBody = (
+  factory: () => Readable,
+  contentType: string,
+  contentLength = -1,
+): HttpContentBodyLike =>
   new ContentBodyImpl(
     createReadableAsyncEnumerable(factory),
     [],
@@ -191,5 +197,8 @@ export const createReadableContentBody = (factory: () => Readable, contentType: 
     contentType,
   );
 
-export const createStringContentBody = (content: string, contentType: string): HttpContentBodyLike =>
+export const createStringContentBody = (
+  content: string,
+  contentType: string,
+): HttpContentBodyLike =>
   createBufferContentBody(Buffer.from(content), contentType);

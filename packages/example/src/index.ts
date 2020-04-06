@@ -1,4 +1,7 @@
 import {
+  createServer as createNodeHttpServer,
+} from "http";
+import {
   HttpMethod,
   createHttpRequest,
   createHttpResponse,
@@ -62,30 +65,30 @@ const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 
-const connect = createHttpServer(
-  req => pipe(
-    ofValue(req),
-    map(decodeHttpRequest),
-    onNotify(req => console.log(req.headers)),
-    mapTo(
-      createHttpResponse(200, {
-        content: createBufferContentBody(chunk, "text/plain"),
-      }),
+const handler = createHttpServer(
+  req =>
+    pipe(
+      ofValue(req),
+      onNotify(console.log),
+      map(decodeHttpRequest),
+      onNotify(req => console.log(req.headers)),
+      mapTo(
+        createHttpResponse(200, {
+          content: createBufferContentBody(chunk, "text/plain"),
+        }),
+      ),
+      mapTo(
+        createHttpResponse(200, {
+          content: createStringContentBody(req.uri.toString(), "text/plain"),
+        }),
+      ),
+      map(encodeHttpResponse(req)),
     ),
-    mapTo(
-      createHttpResponse(200, {
-        content: createStringContentBody(req.uri.toString(), "text/plain"),
-      }),
-    ),
-    map(encodeHttpResponse(req)),
-  ),
-  {
-    scheduler,
-    port: 8080,
-  },
+  scheduler,
 );
 
-connect();
+createNodeHttpServer({}, handler).listen(8080);
+
 
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
