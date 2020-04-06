@@ -41,6 +41,7 @@ const writeHeaders = (
   }
 };
 
+/** @ignore */
 export const writeRequestHeaders = (
   { acceptedEncodings, content, expectContinue, headers }: HttpRequestLike<HttpContentBodyLike>, 
   writeHeader: (header: string, value: string) => void,
@@ -60,6 +61,7 @@ export const writeRequestHeaders = (
   writeHeaders(headers, writeHeader);
 }
 
+/** @ignore */
 export const writeResponseHeaders = (
   { content, headers, vary }: HttpResponseLike<HttpContentBodyLike>, 
   writeHeader: (header: string, value: string) => void

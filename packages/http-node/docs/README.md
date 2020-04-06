@@ -32,8 +32,6 @@
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 * [sendHttpRequest](README.md#const-sendhttprequest)
-* [writeRequestHeaders](README.md#const-writerequestheaders)
-* [writeResponseHeaders](README.md#const-writeresponseheaders)
 
 ## Type aliases
 
@@ -154,49 +152,3 @@ Name | Type | Default |
 `options` | [HttpClientOptions](interfaces/httpclientoptions.md) |  {} |
 
 **Returns:** *(Anonymous function)*
-
-___
-
-### `Const` writeRequestHeaders
-
-▸ **writeRequestHeaders**(`__namedParameters`: object, `writeHeader`: function): *void*
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-▪ **writeHeader**: *function*
-
-▸ (`header`: string, `value`: string): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`header` | string |
-`value` | string |
-
-**Returns:** *void*
-
-___
-
-### `Const` writeResponseHeaders
-
-▸ **writeResponseHeaders**(`__namedParameters`: object, `writeHeader`: function): *void*
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-▪ **writeHeader**: *function*
-
-▸ (`header`: string, `value`: string): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`header` | string |
-`value` | string |
-
-**Returns:** *void*
