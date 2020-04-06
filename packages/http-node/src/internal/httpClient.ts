@@ -17,7 +17,6 @@ import {
 import {
   createWritableAsyncEnumerator,
   ReadableEvent,
-  ReadableMode,
   transform,
   ReadableEventType,
 } from "@reactive-js/node";
@@ -222,7 +221,7 @@ const sendHttpRequestInternal = (
 
     const contentEnumerator = pipe(
       request.content || emptyContentBody,
-      lift<ReadableMode, ReadableEvent, ReadableEvent>(
+      lift(
         onNotify(ev => spyEnumerator.dispatch(ev)),
       ),
       contentEncoding !== undefined

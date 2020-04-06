@@ -90,7 +90,7 @@ class ContentBodyImpl implements HttpContentBodyLike {
 }
 
 /** @ignore */
-export const lift = (
+const lift = (
   op: AsyncEnumerableOperatorLike<
     ReadableMode,
     ReadableEvent,
@@ -120,6 +120,7 @@ export const lift = (
   );
 };
 
+/** @ignore */
 export const emptyContentBody: HttpContentBodyLike = new ContentBodyImpl(
   emptyReadableAsyncEnumerable,
   [],
