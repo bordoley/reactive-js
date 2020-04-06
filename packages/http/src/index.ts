@@ -31,6 +31,7 @@ declare class URL implements URI {
 
 export const enum HttpMethod {
   GET = "GET",
+  HEAD = "HEAD",
   POST = "POST",
   PUT = "PUT",
   DELETE = "DELETE",
@@ -96,22 +97,35 @@ export const enum HttpStatusCode {
   NetworkAuthenticationRequired = 511,
 }
 
+export const enum HttpContentEncoding {
+  Brotli = "br",
+  Compress = "compress",
+  Deflate = "deflate",
+  GZip = "gzip",
+  Identity = "identity",
+}
+
 // FIXME: filter out headers for which we have strongly typed apis.
 export interface HttpHeadersLike {
-  [header: string]: number | string | string[] | undefined;
+  readonly [header: string]: unknown;
 }
 
 export interface HttpRequestLike<T> {
+  readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly content?: T;
+  readonly expectContinue: boolean;
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
   readonly uri: URI;
 }
 
 export interface HttpResponseLike<T> {
+  readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly content?: T;
   readonly headers: HttpHeadersLike;
+  readonly location?: URI;
   readonly statusCode: HttpStatusCode;
+  readonly vary: readonly string[];
 }
 
 export const createHttpRequest = <T>(
@@ -119,14 +133,16 @@ export const createHttpRequest = <T>(
   uri: string | URI,
   options: {
     content?: T;
+    expectContinue?: boolean;
     headers?: HttpHeadersLike;
   } = {},
 ): HttpRequestLike<T> => {
-  const { content, headers = {} } = options;
+  const { content, expectContinue = false, headers = {} } = options;
 
   return {
+    acceptedEncodings: [],
     content,
-    // FIXME: filter out headers for which we have strongly typed apis.
+    expectContinue,
     headers,
     method,
     uri: typeof uri === "string" ? new URL(uri) : uri,
@@ -136,16 +152,42 @@ export const createHttpRequest = <T>(
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
+    acceptedEncodings?: [];
     content?: T;
     headers?: HttpHeadersLike;
+    vary?: string[];
   } = {},
 ): HttpResponseLike<T> => {
-  const { content, headers = {} } = options;
+  const { acceptedEncodings, content, headers = {}, vary } = options;
 
   return {
+    acceptedEncodings: acceptedEncodings || [],
     content,
-    // FIXME: filter out headers for which we have strongly typed apis.
     headers,
     statusCode,
+    vary: vary || [],
+  };
+};
+
+export const makeRedirectRequest = <TReq, TResp>(
+  request: HttpRequestLike<TReq>,
+  response: HttpResponseLike<TResp>,
+): HttpRequestLike<TReq> => {
+  const { content, method } = request;
+  const { location, statusCode } = response;
+
+  const redirectToGet =
+    statusCode === HttpStatusCode.SeeOther ||
+    ((statusCode === HttpStatusCode.MovedPermanently ||
+      HttpStatusCode.Found === 302) &&
+      method === HttpMethod.POST);
+
+  return {
+    ...request,
+    content: redirectToGet ? undefined : content,
+    method: redirectToGet ? HttpMethod.GET : method,
+
+    // This function is only called if location is undefined.
+    uri: location as URI,
   };
 };

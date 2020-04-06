@@ -6,27 +6,23 @@ import {
   createBrotliDecompress,
   createInflate,
   createGunzip,
+  ZlibOptions,
+  BrotliOptions,
 } from "zlib";
-
-export const enum HttpContentEncoding {
-  Brotli = "br",
-  Compress = "compress",
-  Deflate = "deflate",
-  GZip = "gzip",
-  Identity = "identity",
-}
+import { HttpContentEncoding } from "@reactive-js/http";
 
 /** @ignore */
 export const createEncodingCompressTransform = (
   encoding: HttpContentEncoding,
+  options: BrotliOptions | ZlibOptions,
 ) => (): Transform => {
   switch (encoding) {
     case HttpContentEncoding.Brotli:
-      return createBrotliCompress();
+      return createBrotliCompress(options);
     case HttpContentEncoding.Deflate:
-      return createDeflate();
+      return createDeflate(options);
     case HttpContentEncoding.GZip:
-      return createGzip();
+      return createGzip(options);
     case HttpContentEncoding.Compress:
     case HttpContentEncoding.Identity:
       throw new Error("unsupported encoding");
@@ -36,14 +32,15 @@ export const createEncodingCompressTransform = (
 /** @ignore */
 export const createEncodingDecompressTransform = (
   encoding: HttpContentEncoding,
+  options: BrotliOptions | ZlibOptions,
 ) => (): Transform => {
   switch (encoding) {
     case HttpContentEncoding.Brotli:
-      return createBrotliDecompress();
+      return createBrotliDecompress(options);
     case HttpContentEncoding.Deflate:
-      return createInflate();
+      return createInflate(options);
     case HttpContentEncoding.GZip:
-      return createGunzip();
+      return createGunzip(options);
     case HttpContentEncoding.Compress:
     case HttpContentEncoding.Identity:
       throw new Error("unsupported encoding");

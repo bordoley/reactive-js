@@ -18,6 +18,9 @@ import {
   HttpRequestLike,
   HttpResponseLike,
   HttpMethod,
+  HttpContentEncoding,
+  createHttpResponse,
+  HttpStatusCode,
 } from "@reactive-js/http";
 import {
   emptyReadableAsyncEnumerable,
@@ -28,29 +31,21 @@ import {
   createObservable,
   subscribe,
   onNotify,
-  map,
   ofValue,
   catchError,
   await_,
 } from "@reactive-js/observable";
 import { OperatorLike, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-
 import {
   HttpContentBodyLike,
   createIncomingMessageContentBody,
   createStringContentBody,
-  HttpEncodingContentBodyLike,
 } from "./httpContentBody";
-import {
-  decodeHttpRequest,
-  encodeHttpResponse,
-} from "./httpRequestResponseEncoding";
-import { HttpContentEncoding } from "./HttpContentEncoding";
 
-class HttpServerRequest implements HttpRequestLike<HttpEncodingContentBodyLike> {
+class HttpServerRequestImpl implements HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
-  readonly content: HttpEncodingContentBodyLike;
+  readonly content: HttpContentBodyLike;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
@@ -74,6 +69,11 @@ class HttpServerRequest implements HttpRequestLike<HttpEncodingContentBodyLike> 
       .map(x => x.trim()) as HttpContentEncoding[];
   }
 
+  get expectContinue(): boolean {
+    const rawExpectHeader = String(this.headers.expect || "");
+    return rawExpectHeader === "100-continue";
+  }
+
   get headers() {
     return this.msg.headers;
   }
@@ -93,7 +93,7 @@ class HttpServerRequest implements HttpRequestLike<HttpEncodingContentBodyLike> 
 
 const writeResponseContentHeaders = (
   resp: ServerResponse,
-  content: HttpEncodingContentBodyLike,
+  content: HttpContentBodyLike,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
@@ -109,14 +109,36 @@ const writeResponseContentHeaders = (
   }
 };
 
+const bannedHeaders = [
+  "accept-encoding",
+  "content-encoding",
+  "content-length",
+  "content-type",
+  "expect",
+  "vary",
+];
+
 const writeResponseMessage = (resp: ServerResponse) => ({
   content,
+  headers,
   statusCode,
-}: HttpResponseLike<HttpEncodingContentBodyLike>) => {
+  vary,
+}: HttpResponseLike<HttpContentBodyLike>) => {
   resp.statusCode = statusCode;
 
   if (content !== undefined) {
     writeResponseContentHeaders(resp, content);
+  }
+  if (vary.length > 0) {
+    resp.setHeader("vary", vary as string[]);
+  }
+
+  const headerPairs = Object.entries(headers).filter(
+    ([key]) => !bannedHeaders.includes(key.toLowerCase()),
+  );
+
+  for (const [header, value] of headerPairs) {
+    resp.setHeader(header, String(value));
   }
 };
 
@@ -142,64 +164,63 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 const defaultOnError = (
   e: unknown,
 ): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
-  ofValue({
-    statusCode: 500,
-    headers: {},
-    content: createStringContentBody(
-      e instanceof Error ? e.stack || "" : String(e),
-      "text/plain",
-    ),
-  });
+  ofValue(
+    createHttpResponse(HttpStatusCode.InternalServerError, {
+      content: createStringContentBody(
+        e instanceof Error ? e.stack || "" : String(e),
+        "text/plain",
+      ),
+    }),
+  );
+
+export interface HttpServerOptions {
+  // FIXME: Virtual domains?
+  readonly domain: string;
+  readonly onError?: (
+    e: unknown,
+  ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
+  readonly port?: number;
+  readonly protocol?: "http:" | "https:" | undefined;
+  readonly scheduler: SchedulerLike;
+}
 
 export const createHttpServer = (
   requestHandler: (
     req: HttpRequestLike<HttpContentBodyLike>,
   ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
-  options: {
-    domain: string;
-    onError?: (
-      e: unknown,
-    ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
-    port?: number;
-    protocol?: "http:" | "https:" | undefined;
-    scheduler: SchedulerLike;
-    shouldEncodeResponse?: (
-      resp: HttpResponseLike<HttpContentBodyLike>,
-    ) => ObservableLike<boolean>;
-  } & SecureContextOptions &
+  options: HttpServerOptions &
+    SecureContextOptions &
     TlsOptions &
     ServerOptions,
 ): OperatorLike<void, ObservableLike<void>> => {
-  let close: ObservableLike<void> | undefined = undefined;
-
   const {
     domain,
     onError = defaultOnError,
     port = options.protocol === "https:" ? 443 : 80,
     protocol = "http:",
     scheduler,
-    shouldEncodeResponse = (_: HttpResponseLike<HttpContentBodyLike>) =>
-      ofValue(true),
     ...nodeOptions
   } = options;
+
+  // FIXME: HTTP2?
   const createServer =
     protocol === "https:" ? createNodeHttpsServer : createNodeHttpServer;
 
   const base = `${protocol}//${domain}${port !== 80 ? `:${port}` : ""}/`;
+
+  let close: ObservableLike<void> | undefined = undefined;
 
   return () => {
     if (close === undefined) {
       const disposable = createDisposable().add(() => server.close());
 
       const handler = (req: IncomingMessage, resp: ServerResponse) => {
-        const serverRequest = new HttpServerRequest(req, base);
+        const serverRequest = new HttpServerRequestImpl(req, base);
 
         const responseSubscription = pipe(
           ofValue(serverRequest),
-          map(decodeHttpRequest),
           await_(requestHandler),
           catchError(onError),
-          map(encodeHttpResponse(serverRequest.acceptedEncodings)),
           onNotify(writeResponseMessage(resp)),
           await_(writeResponseContentBody(resp)),
           subscribe(scheduler),

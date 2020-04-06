@@ -12,10 +12,17 @@
 
 ### Properties
 
+* [contentEncodings](httpcontentbodylike.md#contentencodings)
 * [contentLength](httpcontentbodylike.md#contentlength)
 * [contentType](httpcontentbodylike.md#contenttype)
 
 ## Properties
+
+###  contentEncodings
+
+• **contentEncodings**: *keyof HttpContentEncoding[]*
+
+___
 
 ###  contentLength
 

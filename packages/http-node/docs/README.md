@@ -7,7 +7,6 @@
 ### Enumerations
 
 * [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
-* [HttpContentEncoding](enums/httpcontentencoding.md)
 
 ### Interfaces
 
@@ -18,6 +17,7 @@
 * [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
 * [HttpClientResponseLike](interfaces/httpclientresponselike.md)
 * [HttpContentBodyLike](interfaces/httpcontentbodylike.md)
+* [HttpServerOptions](interfaces/httpserveroptions.md)
 
 ### Type aliases
 
@@ -72,7 +72,7 @@ ___
 
 ### `Const` createHttpServer
 
-▸ **createHttpServer**(`requestHandler`: function, `options`: object & SecureContextOptions & TlsOptions & ServerOptions): *OperatorLike‹void, ObservableLike‹void››*
+▸ **createHttpServer**(`requestHandler`: function, `options`: [HttpServerOptions](interfaces/httpserveroptions.md) & SecureContextOptions & TlsOptions & ServerOptions): *OperatorLike‹void, ObservableLike‹void››*
 
 **Parameters:**
 
@@ -86,7 +86,7 @@ Name | Type |
 ------ | ------ |
 `req` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
 
-▪ **options**: *object & SecureContextOptions & TlsOptions & ServerOptions*
+▪ **options**: *[HttpServerOptions](interfaces/httpserveroptions.md) & SecureContextOptions & TlsOptions & ServerOptions*
 
 **Returns:** *OperatorLike‹void, ObservableLike‹void››*
 
@@ -109,13 +109,14 @@ ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`request`: HttpRequestLike‹HttpEncodingContentBodyLike›): *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
+▸ **decodeHttpRequest**(`request`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, `options`: BrotliOptions | ZlibOptions): *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`request` | HttpRequestLike‹HttpEncodingContentBodyLike› |
+Name | Type | Default |
+------ | ------ | ------ |
+`request` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› | - |
+`options` | BrotliOptions &#124; ZlibOptions |  {} |
 
 **Returns:** *HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›*
 
@@ -123,13 +124,22 @@ ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**(`acceptedEncodings`: keyof HttpContentEncoding[]): *(Anonymous function)*
+▸ **encodeHttpResponse**(`shouldEncode`: function, `options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+
+**Parameters:**
+
+▪ **shouldEncode**: *function*
+
+▸ (`req`: HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›, `resp`: HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)›): *boolean*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`acceptedEncodings` | keyof HttpContentEncoding[] |
+`req` | HttpRequestLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+`resp` | HttpResponseLike‹[HttpContentBodyLike](interfaces/httpcontentbodylike.md)› |
+
+▪`Default value`  **options**: *BrotliOptions | ZlibOptions*=  {}
 
 **Returns:** *(Anonymous function)*
 

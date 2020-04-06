@@ -6,6 +6,7 @@
 
 ### Enumerations
 
+* [HttpContentEncoding](enums/httpcontentencoding.md)
 * [HttpMethod](enums/httpmethod.md)
 * [HttpStatusCode](enums/httpstatuscode.md)
 
@@ -20,6 +21,7 @@
 
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
+* [makeRedirectRequest](README.md#const-makeredirectrequest)
 
 ## Functions
 
@@ -59,3 +61,24 @@ Name | Type | Default |
 `options` | object |  {} |
 
 **Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+
+___
+
+### `Const` makeRedirectRequest
+
+▸ **makeRedirectRequest**<**TReq**, **TResp**>(`request`: [HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, `response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TResp**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | [HttpRequestLike](interfaces/httprequestlike.md)‹TReq› |
+`response` | [HttpResponseLike](interfaces/httpresponselike.md)‹TResp› |
+
+**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
