@@ -52,6 +52,7 @@ import {
   createIncomingMessageDisposableHttpResponse,
   decodeDisposableHttpResponse,
 } from "./httpResponse";
+import { contentIsCompressible } from "./httpContent";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -205,13 +206,23 @@ export interface HttpClientOptions extends BrotliOptions, ZlibOptions {
   readonly agent?: Agent | boolean;
   readonly insecureHTTPParser?: boolean;
   readonly maxHeaderSize?: number;
+  readonly shouldEncode?: (req: HttpRequestLike<unknown>) => boolean | undefined;
 }
 
 export interface HttpClientRequestOptions {
+  // The encodings accepted by the server
   readonly acceptedEncodings?: readonly HttpContentEncoding[];
+
 }
 
 const identity = <T>(x: T): T => x;
+
+const requestIsCompressible = (
+  request: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+): boolean => {
+  const { content } = request;
+  return content !== undefined ? contentIsCompressible(content) : false;
+};
 
 export interface HttpClient {
   (
@@ -227,6 +238,7 @@ export const creatHttpClient = (
     agent,
     insecureHTTPParser,
     maxHeaderSize,
+    shouldEncode: shouldEncodeOption,
     ...zlibOptions
   } = clientOptions;
 
@@ -275,8 +287,17 @@ export const creatHttpClient = (
           })();
     };
 
+    const shouldEncodeOptionResult =
+      shouldEncodeOption !== undefined
+        ? shouldEncodeOption(request)
+        : undefined;
+    const shouldEncode =
+      shouldEncodeOptionResult !== undefined
+        ? shouldEncodeOptionResult
+        : requestIsCompressible(request);
+
     const contentEncoder =
-      contentEncoding !== undefined
+      contentEncoding !== undefined && shouldEncode
         ? transform(
             createEncodingCompressTransform(contentEncoding, zlibOptions),
           )
