@@ -68,9 +68,7 @@ const listener = createHttpRequestListener(
   req =>
     pipe(
       ofValue(req),
-      onNotify(console.log),
       map(decodeHttpRequest()),
-      onNotify(req => console.log(req.headers)),
       mapTo(
         createHttpResponse(200, {
           content: createBufferHttpContent(chunk, "text/plain"),
@@ -97,7 +95,7 @@ pipe(
   sendHttpRequest,
   createDefaultHttpResponseHandler(sendHttpRequest, 10),
   onNotify(status => {
-    console.log("onNotify: " + status.type);
+    console.log("status: " + status.type);
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
       const { response } = status;
       response.dispose();

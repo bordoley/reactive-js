@@ -39,6 +39,9 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
+  "dependencies": {
+    "@reactive-js/pipe": "^0.0.32"
+  },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
     "build-cjs": "tsc -p tsconfig.cjs.json",
