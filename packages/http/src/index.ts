@@ -127,14 +127,6 @@ export interface HttpContentLike<T> {
   readonly contentType: string;
 }
 
-export interface HttpRequestPreconditionsLike {
-  //ifMatch: Choice<Set<EntityTag>, Any> option
-  //ifModifiedSince: DateTime option
-  //ifNoneMatch: Choice<Set<EntityTag>, Any> option
-  //ifUnmodifiedSince: DateTime option
-  //ifRange: Choice<EntityTag, DateTime> option
-}
-
 export interface HttpPreferencesLike {
   readonly acceptedCharsets: readonly string[];
   readonly acceptedEncodings: readonly HttpContentEncoding[];
@@ -153,7 +145,6 @@ export interface HttpRequestLike<T> {
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
   // readonly pragma: readonly CacheDirective[];
-  readonly preconditions?: HttpRequestPreconditionsLike;
   readonly preferences?: HttpPreferencesLike;
   // readonly proxyAuthorization?: Credentials
   // readonly referer?: URI;
@@ -168,7 +159,7 @@ export interface HttpResponseLike<T> {
   // cacheControl: Set<CacheDirective>
   // date:Option<DateTime>
   // etag:Option<EntityTag>
-  // expires:Option<DateTime>
+  readonly expires?: number;
   readonly lastModified?: number;
   // proxyAuthenticate:Set<Challenge>
   // retryAfter:Option<DateTime>
@@ -191,6 +182,7 @@ const bannedHeaders = [
   "content-length",
   "content-type",
   "expect",
+  "expires",
   "last-modified",
   "transfer-encoding",
   "vary",
@@ -205,43 +197,31 @@ export const createHttpRequest = <T>(
     headers?: HttpHeadersLike;
     preferences?: HttpPreferencesLike;
   } = {},
-): HttpRequestLike<T> => {
-  const {
-    content,
-    expectContinue = false,
-    headers = {},
-    preferences,
-  } = options;
-
-  return {
-    content,
-    expectContinue,
-    headers,
+): HttpRequestLike<T> => ({
+    ...options,
+    expectContinue: options.expectContinue || false,
+    headers: options.headers || {},
     method,
-    preferences,
     uri: typeof uri === "string" ? new URL(uri) : uri,
-  };
-};
+  });
 
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
     content?: HttpContentLike<T>;
+    expires?: number;
     headers?: HttpHeadersLike;
+    lastModified?: number;
+    location?: URI;
     preferences?: HttpPreferencesLike;
-    vary?: string[];
+    vary?: readonly string[];
   } = {},
-): HttpResponseLike<T> => {
-  const { content, headers = {}, preferences, vary } = options;
-
-  return {
-    content,
-    headers,
-    preferences,
+): HttpResponseLike<T> => ({
+    ...options,
+    headers: options.headers || {},
     statusCode,
-    vary: vary || [],
-  };
-};
+    vary: options.vary || [],
+  });
 
 export const createRedirectHttpRequest = <TReq, TResp>(
   response: HttpResponseLike<TResp>,
@@ -344,11 +324,16 @@ export const writeHttpRequestHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  { content, headers, lastModified, location, preferences, vary }: HttpResponseLike<T>,
+  { content, expires, headers, lastModified, location, preferences, vary }: HttpResponseLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (content !== undefined) {
     writeHttpContentHeaders(content, writeHeader);
+  }
+
+  if (expires !== undefined) {
+    const date = new Date(expires);
+    writeHeader("Expires", date.toUTCString());
   }
 
   if (lastModified !== undefined) {
