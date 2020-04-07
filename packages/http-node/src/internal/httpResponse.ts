@@ -103,6 +103,17 @@ class HttpIncomingMessageResponseImpl
     this.preferences = createIncomingMessageHttpPreferencesLike(msg);
   }
 
+  get expires() {
+    const dateValue = this.headers["expires"] || "";
+    const date = new Date(dateValue);
+    const time = date.getTime();
+
+    return dateValue !== undefined &&  !Number.isNaN(time)
+      ? time
+      : undefined
+  }
+
+
   get headers() {
     return this.msg.headers;
   }
@@ -112,11 +123,13 @@ class HttpIncomingMessageResponseImpl
   }
 
   get lastModified() {
-    const date = this.headers["last-modified"];
-    return date !== undefined
-      // FIXME: Maybe return UTC milliseconds?
-      ? new Date(date).getTime()
-      : undefined;
+    const dateValue = this.headers["last-modified"] || "";
+    const date = new Date(dateValue);
+    const time = date.getTime();
+
+    return dateValue !== "" && !Number.isNaN(time)
+      ? time
+      : undefined
   }
 
   get location() {
