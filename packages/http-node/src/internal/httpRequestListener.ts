@@ -87,17 +87,18 @@ export const createRequestListener = (
 ): RequestListener => {
   const { onError = defaultOnError } = options;
 
-  return (req, resp) => pipe(
-    using(
-      () => createIncomingMessageRequest(req),
-      compose(
-        ofValue,
-        await_(handler),
-        catchError(onError),
-        onNotify(writeResponseMessage(resp)),
-        await_(writeResponseContentBody(resp)),
+  return (req, resp) =>
+    pipe(
+      using(
+        () => createIncomingMessageRequest(req),
+        compose(
+          ofValue,
+          await_(handler),
+          catchError(onError),
+          onNotify(writeResponseMessage(resp)),
+          await_(writeResponseContentBody(resp)),
+        ),
       ),
-    ),
-    subscribe(scheduler),
-  );
+      subscribe(scheduler),
+    );
 };
