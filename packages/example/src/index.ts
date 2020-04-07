@@ -6,9 +6,9 @@ import {
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
-  createBufferContentBody,
-  createStringContentBody,
-  createRequestListener,
+  createBufferHttpContent,
+  createStringHttpContent,
+  createHttpRequestListener,
   sendHttpRequest,
   decodeHttpRequest,
   encodeHttpResponse,
@@ -63,7 +63,7 @@ const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 
-const listener = createRequestListener(
+const listener = createHttpRequestListener(
   req =>
     pipe(
       ofValue(req),
@@ -72,12 +72,12 @@ const listener = createRequestListener(
       onNotify(req => console.log(req.headers)),
       mapTo(
         createHttpResponse(200, {
-          content: createBufferContentBody(chunk, "text/plain"),
+          content: createBufferHttpContent(chunk, "text/plain"),
         }),
       ),
       mapTo(
         createHttpResponse(200, {
-          content: createStringContentBody(req.uri.toString(), "text/plain"),
+          content: createStringHttpContent(req.uri.toString(), "text/plain"),
         }),
       ),
       map(encodeHttpResponse(req)),
@@ -89,7 +89,7 @@ createNodeHttpServer({}, listener).listen(8080);
 
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
-    content: createBufferContentBody(chunk, "text/plain"),
+    content: createBufferHttpContent(chunk, "text/plain"),
   }),
   sendHttpRequest(),
   onNotify(status => {

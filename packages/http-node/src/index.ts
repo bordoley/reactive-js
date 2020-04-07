@@ -9,15 +9,14 @@ export {
 } from "./internal/httpClient";
 
 export {
-  HttpContentBodyLike,
-  createBufferContentBody,
-  createReadableContentBody,
-  createStringContentBody,
-} from "./internal/httpContentBody";
+  createBufferHttpContent,
+  createReadableHttpContent,
+  createStringHttpContent,
+} from "./internal/httpContent";
 
 export {
   HttpRequestListenerOptions,
-  createRequestListener,
+  createHttpRequestListener,
 } from "./internal/httpRequestListener";
 export { decodeHttpRequest } from "./internal/httpRequest";
 export {

@@ -112,9 +112,16 @@ export interface HttpHeadersLike {
   readonly [header: string]: unknown;
 }
 
+export interface HttpContentLike<T> {
+  readonly body: T;
+  readonly contentEncodings: readonly HttpContentEncoding[];
+  readonly contentLength: number;
+  readonly contentType: string;
+}
+
 export interface HttpRequestLike<T> {
   readonly acceptedEncodings: readonly HttpContentEncoding[];
-  readonly content?: T;
+  readonly content?: HttpContentLike<T>;
   readonly expectContinue: boolean;
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
@@ -123,7 +130,7 @@ export interface HttpRequestLike<T> {
 
 export interface HttpResponseLike<T> {
   readonly acceptedEncodings: readonly HttpContentEncoding[];
-  readonly content?: T;
+  readonly content?: HttpContentLike<T>;
   readonly headers: HttpHeadersLike;
   readonly location?: URI;
   readonly statusCode: HttpStatusCode;
@@ -134,7 +141,7 @@ export const createHttpRequest = <T>(
   method: HttpMethod,
   uri: string | URI,
   options: {
-    content?: T;
+    content?: HttpContentLike<T>;
     expectContinue?: boolean;
     headers?: HttpHeadersLike;
   } = {},
@@ -155,7 +162,7 @@ export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
     acceptedEncodings?: [];
-    content?: T;
+    content?: HttpContentLike<T>;
     headers?: HttpHeadersLike;
     vary?: string[];
   } = {},
@@ -171,7 +178,7 @@ export const createHttpResponse = <T>(
   };
 };
 
-export const createRedirectRequest = <TReq, TResp>(
+export const createRedirectHttpRequest = <TReq, TResp>(
   response: HttpResponseLike<TResp>,
 ): OperatorLike<HttpRequestLike<TReq>, HttpRequestLike<TReq>> => request => {
   const { content, method } = request;
@@ -191,4 +198,86 @@ export const createRedirectRequest = <TReq, TResp>(
     // This function is only called if location is undefined.
     uri: location as URI,
   };
+};
+
+const writeHttpContentHeaders = <T>(
+  content: HttpContentLike<T>,
+  writeHeader: (header: string, value: string) => void,
+) => {
+  const { contentLength, contentType, contentEncodings } = content;
+  if (contentLength > 0) {
+    writeHeader("content-length", contentLength.toString(10));
+  }
+
+  if (contentType.length > 0) {
+    writeHeader("content-type", contentType);
+  }
+
+  if (contentEncodings.length > 0) {
+    writeHeader("content-encoding", contentEncodings.join(", "));
+  }
+};
+
+const bannedHeaders = [
+  "accept-encoding",
+  "content-encoding",
+  "content-length",
+  "content-type",
+  "expect",
+  "vary",
+];
+
+const writeHttpHeaders = (
+  headers: HttpHeadersLike,
+  writeHeader: (header: string, value: string) => void,
+) => {
+  const headerPairs = Object.entries(headers).filter(
+    ([key]) => !bannedHeaders.includes(key.toLowerCase()),
+  );
+
+  for (const [header, value] of headerPairs) {
+    writeHeader(header, String(value));
+  }
+};
+
+export const writeHttpRequestHeaders = <T>(
+  { acceptedEncodings, content, expectContinue, headers }: HttpRequestLike<T>,
+  writeHeader: (header: string, value: string) => void,
+): void => {
+  if (acceptedEncodings.length > 0) {
+    writeHeader("accept-encoding", acceptedEncodings.join(","));
+  }
+
+  if (expectContinue) {
+    writeHeader("expect", "100-continue");
+  }
+
+  if (content !== undefined) {
+    writeHttpContentHeaders(content, writeHeader);
+  }
+
+  writeHttpHeaders(headers, writeHeader);
+};
+
+export const writeHttpResponseHeaders = <T>(
+  { acceptedEncodings, content, headers, location, vary }: HttpResponseLike<T>,
+  writeHeader: (header: string, value: string) => void,
+): void => {
+  if (acceptedEncodings.length > 0) {
+    writeHeader("accept-encoding", acceptedEncodings.join(","));
+  }
+
+  if (content !== undefined) {
+    writeHttpContentHeaders(content, writeHeader);
+  }
+
+  if (location !== undefined) {
+    writeHeader("location", location.toString());
+  }
+
+  if (vary.length > 0) {
+    writeHeader("vary", vary.join(","));
+  }
+
+  writeHttpHeaders(headers, writeHeader);
 };
