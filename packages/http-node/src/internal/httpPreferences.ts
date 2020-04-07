@@ -1,33 +1,30 @@
 import { HttpPreferencesLike, HttpContentEncoding } from "@reactive-js/http";
 import { IncomingMessage } from "http";
 
-
+import Negotiator from "negotiator";
 
 /** @ignore */
 export const createIncomingMessageHttpPreferencesLike = (
-  msg: IncomingMessage
+  msg: IncomingMessage,
 ): HttpPreferencesLike | undefined => {
-  const acceptedCharsets: readonly string[] = [];
+  const negotiator = new Negotiator(msg);
+  const acceptedCharsets = negotiator.charsets();
+  const acceptedEncodings = negotiator.encodings() as readonly HttpContentEncoding[];
+  const acceptedLanguages = negotiator.languages();
+  const acceptedMediaTypes = negotiator.mediaTypes();
 
-  // FIXME: This parsing is completely not abnf compliant
-  // FIXME: Special case Identity
-  const acceptedEncodings = 
-    String(msg.headers["accept-encoding"] || "")
-      .split(",")
-      .map(x => x.trim()) as HttpContentEncoding[];
-  const acceptedLanguages: readonly string[] = [];
-  const acceptedMediaRanges: readonly string[] = [];
+  const isUndefined =
+    acceptedCharsets.length === 0 &&
+    acceptedEncodings.length === 0 &&
+    acceptedLanguages.length === 0 &&
+    acceptedMediaTypes.length === 0;
 
-  const isUndefined = 
-    acceptedCharsets.length === 0 && 
-    acceptedEncodings.length === 0 && 
-    acceptedLanguages.length === 0 && 
-    acceptedMediaRanges.length === 0;
-
-  return isUndefined ? undefined : {
-    acceptedCharsets,
-    acceptedEncodings,
-    acceptedLanguages,
-    acceptedMediaRanges,
-  };
-}
+  return isUndefined
+    ? undefined
+    : {
+        acceptedCharsets,
+        acceptedEncodings,
+        acceptedLanguages,
+        acceptedMediaTypes,
+      };
+};

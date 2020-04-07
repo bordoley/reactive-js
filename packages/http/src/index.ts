@@ -107,6 +107,14 @@ export const enum HttpContentEncoding {
   Identity = "identity",
 }
 
+export const contentEncodings = [
+  HttpContentEncoding.Brotli,
+  HttpContentEncoding.Compress,
+  HttpContentEncoding.Deflate,
+  HttpContentEncoding.GZip,
+  HttpContentEncoding.Identity,
+];
+
 // FIXME: filter out headers for which we have strongly typed apis.
 export interface HttpHeadersLike {
   readonly [header: string]: unknown;
@@ -119,24 +127,54 @@ export interface HttpContentLike<T> {
   readonly contentType: string;
 }
 
+export interface HttpRequestPreconditionsLike {
+  //ifMatch: Choice<Set<EntityTag>, Any> option
+  //ifModifiedSince: DateTime option
+  //ifNoneMatch: Choice<Set<EntityTag>, Any> option
+  //ifUnmodifiedSince: DateTime option
+  //ifRange: Choice<EntityTag, DateTime> option
+}
+
 export interface HttpPreferencesLike {
-  readonly acceptedCharsets: readonly string[],
-  readonly acceptedEncodings: readonly HttpContentEncoding[],
-  readonly acceptedLanguages: readonly string[],
-  readonly acceptedMediaRanges: readonly string[],
+  readonly acceptedCharsets: readonly string[];
+  readonly acceptedEncodings: readonly HttpContentEncoding[];
+  readonly acceptedLanguages: readonly string[];
+  readonly acceptedMediaTypes: readonly string[];
   //readonly ranges: Option<Choice<ByteRangesSpecifier, OtherRangesSpecifier>>
-} 
+  //acceptedRanges:Option<Choice<Set<RangeUnit>, AcceptsNone>>
+}
 
 export interface HttpRequestLike<T> {
+  // readonly authorization?: Credentials;
+  // readonly cacheControl: readonly CacheDirective[];
+
   readonly content?: HttpContentLike<T>;
   readonly expectContinue: boolean;
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
+  // readonly pragma: readonly CacheDirective[];
+  readonly preconditions?: HttpRequestPreconditionsLike;
   readonly preferences?: HttpPreferencesLike;
+  // readonly proxyAuthorization?: Credentials
+  // readonly referer?: URI;
   readonly uri: URI;
+  // readonly userAgent?: UserAgent;
 }
 
 export interface HttpResponseLike<T> {
+  // age:Option<TimeSpan>
+  // allowed:Set<Method>
+  // authenticate:Set<Challenge>
+  // cacheControl: Set<CacheDirective>
+  // date:Option<DateTime>
+  // etag:Option<EntityTag>
+  // expires:Option<DateTime>
+  // lastModified:Option<DateTime>
+  // location:Option<Uri>
+  // proxyAuthenticate:Set<Challenge>
+  // retryAfter:Option<DateTime>
+  // server:Option<Server>
+  // warning:Warning list
   readonly content?: HttpContentLike<T>;
   readonly headers: HttpHeadersLike;
   readonly location?: URI;
@@ -146,11 +184,15 @@ export interface HttpResponseLike<T> {
 }
 
 const bannedHeaders = [
+  "accept-charset",
   "accept-encoding",
+  "accept-language",
+  "accept",
   "content-encoding",
   "content-length",
   "content-type",
   "expect",
+  "transfer-encoding",
   "vary",
 ];
 
@@ -164,7 +206,12 @@ export const createHttpRequest = <T>(
     preferences?: HttpPreferencesLike;
   } = {},
 ): HttpRequestLike<T> => {
-  const { content, expectContinue = false, headers = {}, preferences } = options;
+  const {
+    content,
+    expectContinue = false,
+    headers = {},
+    preferences,
+  } = options;
 
   return {
     content,
@@ -240,13 +287,13 @@ const writeHttpPreferenceHeaders = (
   preferences: HttpPreferencesLike,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  const { 
+  const {
     acceptedCharsets,
     acceptedEncodings,
     acceptedLanguages,
-    acceptedMediaRanges, 
+    acceptedMediaTypes,
   } = preferences;
-  
+
   if (acceptedCharsets.length > 0) {
     writeHeader("Accept-Charset", acceptedCharsets.join(", "));
   }
@@ -259,8 +306,8 @@ const writeHttpPreferenceHeaders = (
     writeHeader("Accept-Language", acceptedLanguages.join(", "));
   }
 
-  if (acceptedMediaRanges.length > 0) {
-    writeHeader("Accept", acceptedMediaRanges.join(", "));
+  if (acceptedMediaTypes.length > 0) {
+    writeHeader("Accept", acceptedMediaTypes.join(", "));
   }
 };
 

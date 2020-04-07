@@ -18,6 +18,7 @@
 * [expectContinue](httprequestlike.md#expectcontinue)
 * [headers](httprequestlike.md#headers)
 * [method](httprequestlike.md#method)
+* [preconditions](httprequestlike.md#optional-preconditions)
 * [preferences](httprequestlike.md#optional-preferences)
 * [uri](httprequestlike.md#uri)
 
@@ -44,6 +45,12 @@ ___
 ###  method
 
 • **method**: *[HttpMethod](../enums/httpmethod.md)*
+
+___
+
+### `Optional` preconditions
+
+• **preconditions**? : *[HttpRequestPreconditionsLike](httprequestpreconditionslike.md)*
 
 ___
 

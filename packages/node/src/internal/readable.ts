@@ -142,21 +142,20 @@ export const createReadableAsyncEnumerableFromBuffer = (
   chunk: Buffer,
 ): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
   createAsyncEnumerable(obs =>
-
-      concat(
-        pipe(
-          obs,
-          keep(ev => ev === ReadableMode.Resume),
-          await_(_ =>
-            fromArray<ReadableEvent>([
-              { type: ReadableEventType.Data, chunk },
-              { type: ReadableEventType.End },
-            ]),
-          ),
+    concat(
+      pipe(
+        obs,
+        keep(ev => ev === ReadableMode.Resume),
+        await_(_ =>
+          fromArray<ReadableEvent>([
+            { type: ReadableEventType.Data, chunk },
+            { type: ReadableEventType.End },
+          ]),
         ),
-        // Intentionally don't dispose the subscriber,
-        // because it may be asynchronously consuming
-        // the data.
-        never(),
       ),
+      // Intentionally don't dispose the subscriber,
+      // because it may be asynchronously consuming
+      // the data.
+      never(),
+    ),
   );

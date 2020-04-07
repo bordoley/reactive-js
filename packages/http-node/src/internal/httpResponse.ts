@@ -64,9 +64,10 @@ export const encodeHttpResponse = (
       : responseIsCompressible(response);
 
   const { preferences } = request;
-  const acceptedEncodings = preferences !== undefined && shouldEncode 
-    ? preferences.acceptedEncodings 
-    : [];
+  const acceptedEncodings =
+    preferences !== undefined && shouldEncode
+      ? preferences.acceptedEncodings
+      : [];
 
   const { content, vary } = response;
 
