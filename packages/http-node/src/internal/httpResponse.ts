@@ -111,6 +111,14 @@ class HttpIncomingMessageResponseImpl
     return this.disposable.isDisposed;
   }
 
+  get lastModified() {
+    const date = this.headers["last-modified"];
+    return date !== undefined
+      // FIXME: Maybe return UTC milliseconds?
+      ? new Date(date).getTime()
+      : undefined;
+  }
+
   get location() {
     try {
       return new URL(this.msg.headers.location || "");
