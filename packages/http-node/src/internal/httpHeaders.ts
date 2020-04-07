@@ -72,12 +72,21 @@ export const writeRequestHeaders = (
 
 /** @ignore */
 export const writeResponseHeaders = (
-  { content, headers, vary }: HttpResponseLike<HttpContentBodyLike>,
+  { acceptedEncodings, content, headers, location, vary }: HttpResponseLike<HttpContentBodyLike>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
+  if (acceptedEncodings.length > 0) {
+    writeHeader("accept-encoding", acceptedEncodings.join(","));
+  }
+
   if (content !== undefined) {
     writeContentHeaders(content, writeHeader);
   }
+
+  if (location !== undefined) {
+    writeHeader("location", location.toString());
+  }
+  
   if (vary.length > 0) {
     writeHeader("vary", vary.join(","));
   }
