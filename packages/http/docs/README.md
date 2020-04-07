@@ -16,8 +16,13 @@
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpPreferencesLike](interfaces/httppreferenceslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
+* [HttpRequestPreconditionsLike](interfaces/httprequestpreconditionslike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
 * [URI](interfaces/uri.md)
+
+### Variables
+
+* [contentEncodings](README.md#const-contentencodings)
 
 ### Functions
 
@@ -26,6 +31,18 @@
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
+
+## Variables
+
+### `Const` contentEncodings
+
+• **contentEncodings**: *[HttpContentEncoding](enums/httpcontentencoding.md)[]* =  [
+  HttpContentEncoding.Brotli,
+  HttpContentEncoding.Compress,
+  HttpContentEncoding.Deflate,
+  HttpContentEncoding.GZip,
+  HttpContentEncoding.Identity,
+]
 
 ## Functions
 

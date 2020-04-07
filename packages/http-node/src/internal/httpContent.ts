@@ -3,7 +3,11 @@ import { IncomingMessage } from "http";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { HttpContentEncoding, HttpContentLike } from "@reactive-js/http";
+import {
+  HttpContentEncoding,
+  HttpContentLike,
+  contentEncodings as allContentEncodings,
+} from "@reactive-js/http";
 import {
   ReadableMode,
   ReadableEvent,
@@ -17,35 +21,47 @@ import {
   createEncodingDecompressTransform,
 } from "./httpContentEncoding";
 
-const computeContentLength = (msg: IncomingMessage) => {
-    try {
-      const contentLength = msg.headers["content-length"];
-      return contentLength !== undefined ? Number.parseInt(contentLength) : -1;
-    } catch (_) {
-      return -1;
-    }
-}
+const parseContentEncoding = (
+  msg: IncomingMessage,
+): readonly HttpContentEncoding[] => {
+  const contentEncodingString = msg.headers["content-encoding"] || "";
+  return contentEncodingString
+    .split(",")
+    .map(x => x.trim())
+    .filter(x =>
+      allContentEncodings.includes(x as HttpContentEncoding),
+    ) as readonly HttpContentEncoding[];
+};
+
+const parseContentLength = (msg: IncomingMessage) => {
+  const contentLength = msg.headers["content-length"] || "0";
+  return ~~contentLength;
+};
 
 /** @ignore */
 export const createIncomingMessageHttpContent = (
-  msg: IncomingMessage
-): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> | undefined => {
+  msg: IncomingMessage,
+):
+  | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  | undefined => {
   const body = createReadableAsyncEnumerable(() => msg);
-  // FIXME: use the node content encoding library here.
-  //return msg.headers["content-encoding"] || "";
-  const contentEncodings: readonly HttpContentEncoding[] = []
-  const contentLength = computeContentLength(msg);
+  const contentEncodings: readonly HttpContentEncoding[] = parseContentEncoding(
+    msg,
+  );
+  const contentLength = parseContentLength(msg);
   const contentType = msg.headers["content-type"] || "";
 
   const isUndefined = contentType === "" || contentLength === 0;
 
-  return isUndefined ? undefined : {
-    body,
-    contentEncodings,
-    contentLength,
-    contentType,
-  };
-}
+  return isUndefined
+    ? undefined
+    : {
+        body,
+        contentEncodings,
+        contentLength,
+        contentType,
+      };
+};
 
 /** @ignore */
 export const encodeHttpContent = (
