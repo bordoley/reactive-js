@@ -119,23 +119,40 @@ export interface HttpContentLike<T> {
   readonly contentType: string;
 }
 
+export interface HttpPreferencesLike {
+  readonly acceptedCharsets: readonly string[],
+  readonly acceptedEncodings: readonly HttpContentEncoding[],
+  readonly acceptedLanguages: readonly string[],
+  readonly acceptedMediaRanges: readonly string[],
+  //readonly ranges: Option<Choice<ByteRangesSpecifier, OtherRangesSpecifier>>
+} 
+
 export interface HttpRequestLike<T> {
-  readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly content?: HttpContentLike<T>;
   readonly expectContinue: boolean;
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
+  readonly preferences?: HttpPreferencesLike;
   readonly uri: URI;
 }
 
 export interface HttpResponseLike<T> {
-  readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly content?: HttpContentLike<T>;
   readonly headers: HttpHeadersLike;
   readonly location?: URI;
+  readonly preferences?: HttpPreferencesLike;
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 }
+
+const bannedHeaders = [
+  "accept-encoding",
+  "content-encoding",
+  "content-length",
+  "content-type",
+  "expect",
+  "vary",
+];
 
 export const createHttpRequest = <T>(
   method: HttpMethod,
@@ -144,16 +161,17 @@ export const createHttpRequest = <T>(
     content?: HttpContentLike<T>;
     expectContinue?: boolean;
     headers?: HttpHeadersLike;
+    preferences?: HttpPreferencesLike;
   } = {},
 ): HttpRequestLike<T> => {
-  const { content, expectContinue = false, headers = {} } = options;
+  const { content, expectContinue = false, headers = {}, preferences } = options;
 
   return {
-    acceptedEncodings: [],
     content,
     expectContinue,
     headers,
     method,
+    preferences,
     uri: typeof uri === "string" ? new URL(uri) : uri,
   };
 };
@@ -161,18 +179,18 @@ export const createHttpRequest = <T>(
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
-    acceptedEncodings?: [];
     content?: HttpContentLike<T>;
     headers?: HttpHeadersLike;
+    preferences?: HttpPreferencesLike;
     vary?: string[];
   } = {},
 ): HttpResponseLike<T> => {
-  const { acceptedEncodings, content, headers = {}, vary } = options;
+  const { content, headers = {}, preferences, vary } = options;
 
   return {
-    acceptedEncodings: acceptedEncodings || [],
     content,
     headers,
+    preferences,
     statusCode,
     vary: vary || [],
   };
@@ -206,26 +224,45 @@ const writeHttpContentHeaders = <T>(
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
-    writeHeader("content-length", contentLength.toString(10));
+    writeHeader("Content-Length", contentLength.toString(10));
   }
 
   if (contentType.length > 0) {
-    writeHeader("content-type", contentType);
+    writeHeader("Content-Type", contentType);
   }
 
   if (contentEncodings.length > 0) {
-    writeHeader("content-encoding", contentEncodings.join(", "));
+    writeHeader("Content-Encoding", contentEncodings.join(", "));
   }
 };
 
-const bannedHeaders = [
-  "accept-encoding",
-  "content-encoding",
-  "content-length",
-  "content-type",
-  "expect",
-  "vary",
-];
+const writeHttpPreferenceHeaders = (
+  preferences: HttpPreferencesLike,
+  writeHeader: (header: string, value: string) => void,
+) => {
+  const { 
+    acceptedCharsets,
+    acceptedEncodings,
+    acceptedLanguages,
+    acceptedMediaRanges, 
+  } = preferences;
+  
+  if (acceptedCharsets.length > 0) {
+    writeHeader("Accept-Charset", acceptedCharsets.join(", "));
+  }
+
+  if (acceptedEncodings.length > 0) {
+    writeHeader("Accept-Encoding", acceptedEncodings.join(","));
+  }
+
+  if (acceptedLanguages.length > 0) {
+    writeHeader("Accept-Language", acceptedLanguages.join(", "));
+  }
+
+  if (acceptedMediaRanges.length > 0) {
+    writeHeader("Accept", acceptedMediaRanges.join(", "));
+  }
+};
 
 const writeHttpHeaders = (
   headers: HttpHeadersLike,
@@ -241,42 +278,42 @@ const writeHttpHeaders = (
 };
 
 export const writeHttpRequestHeaders = <T>(
-  { acceptedEncodings, content, expectContinue, headers }: HttpRequestLike<T>,
+  { content, expectContinue, headers, preferences }: HttpRequestLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
-  if (acceptedEncodings.length > 0) {
-    writeHeader("accept-encoding", acceptedEncodings.join(","));
-  }
-
   if (expectContinue) {
-    writeHeader("expect", "100-continue");
+    writeHeader("Expect", "100-continue");
   }
 
   if (content !== undefined) {
     writeHttpContentHeaders(content, writeHeader);
+  }
+
+  if (preferences !== undefined) {
+    writeHttpPreferenceHeaders(preferences, writeHeader);
   }
 
   writeHttpHeaders(headers, writeHeader);
 };
 
 export const writeHttpResponseHeaders = <T>(
-  { acceptedEncodings, content, headers, location, vary }: HttpResponseLike<T>,
+  { content, headers, location, preferences, vary }: HttpResponseLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
-  if (acceptedEncodings.length > 0) {
-    writeHeader("accept-encoding", acceptedEncodings.join(","));
-  }
-
   if (content !== undefined) {
     writeHttpContentHeaders(content, writeHeader);
   }
 
   if (location !== undefined) {
-    writeHeader("location", location.toString());
+    writeHeader("Location", location.toString());
+  }
+
+  if (preferences !== undefined) {
+    writeHttpPreferenceHeaders(preferences, writeHeader);
   }
 
   if (vary.length > 0) {
-    writeHeader("vary", vary.join(","));
+    writeHeader("Vary", vary.join(","));
   }
 
   writeHttpHeaders(headers, writeHeader);

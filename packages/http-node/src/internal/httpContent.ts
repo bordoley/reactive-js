@@ -17,37 +17,35 @@ import {
   createEncodingDecompressTransform,
 } from "./httpContentEncoding";
 
-class IncomingMessageHttpContentImpl
-  implements HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> {
-  readonly body: AsyncEnumerableLike<ReadableMode, ReadableEvent>;
-
-  constructor(private readonly msg: IncomingMessage) {
-    this.body = createReadableAsyncEnumerable(() => this.msg);
-  }
-
-  get contentEncodings(): readonly HttpContentEncoding[] {
-    // FIXME: use the node content encoding library here.
-    //return this.msg.headers["content-encoding"] || "";
-    return [];
-  }
-
-  get contentLength(): number {
+const computeContentLength = (msg: IncomingMessage) => {
     try {
-      const contentLength = this.msg.headers["content-length"];
+      const contentLength = msg.headers["content-length"];
       return contentLength !== undefined ? Number.parseInt(contentLength) : -1;
     } catch (_) {
       return -1;
     }
-  }
-
-  get contentType(): string {
-    return this.msg.headers["content-type"] || "";
-  }
 }
 
 /** @ignore */
-export const createIncomingMessageHttpContent = (msg: IncomingMessage) =>
-  new IncomingMessageHttpContentImpl(msg);
+export const createIncomingMessageHttpContent = (
+  msg: IncomingMessage
+): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> | undefined => {
+  const body = createReadableAsyncEnumerable(() => msg);
+  // FIXME: use the node content encoding library here.
+  //return msg.headers["content-encoding"] || "";
+  const contentEncodings: readonly HttpContentEncoding[] = []
+  const contentLength = computeContentLength(msg);
+  const contentType = msg.headers["content-type"] || "";
+
+  const isUndefined = contentType === "" || contentLength === 0;
+
+  return isUndefined ? undefined : {
+    body,
+    contentEncodings,
+    contentLength,
+    contentType,
+  };
+}
 
 /** @ignore */
 export const encodeHttpContent = (

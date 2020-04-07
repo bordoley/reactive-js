@@ -336,7 +336,8 @@ export const createDefaultHttpResponseHandler = (
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
       const { request, response } = status;
 
-      const { acceptedEncodings, location, statusCode } = response;
+      const { location, preferences, statusCode } = response;
+      const acceptedEncodings = preferences?.acceptedEncodings || [];
       const shouldRedirect =
         redirectCodes.includes(statusCode) &&
         location !== undefined &&

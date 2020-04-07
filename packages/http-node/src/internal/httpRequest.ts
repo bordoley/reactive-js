@@ -9,9 +9,9 @@ import {
 } from "@reactive-js/disposable";
 import {
   HttpRequestLike,
-  HttpContentEncoding,
   HttpMethod,
   HttpContentLike,
+  HttpPreferencesLike,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
@@ -20,6 +20,7 @@ import {
 } from "./httpContent";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import { createIncomingMessageHttpPreferencesLike } from "./httpPreferences";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
@@ -46,24 +47,15 @@ class HttpIncomingMessageRequestImpl
     | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
+  readonly preferences: HttpPreferencesLike | undefined;
 
   constructor(private readonly msg: IncomingMessage) {
     this.disposable = createDisposable(() => {
       msg.destroy();
     });
 
-    const content = createIncomingMessageHttpContent(msg);
-    this.content = content.contentLength !== 0 ? content : undefined;
-  }
-
-  get acceptedEncodings() {
-    // FIXME: This parsing is completely not abnf compliant
-    // FIXME: Special case Identity
-    // FIXME: Add support for determining if content should be encoded.
-    const rawAcceptHeader = String(this.headers["accept-encoding"] || "");
-    return rawAcceptHeader
-      .split(",")
-      .map(x => x.trim()) as HttpContentEncoding[];
+    this.content = createIncomingMessageHttpContent(msg);
+    this.preferences = createIncomingMessageHttpPreferencesLike(msg);
   }
 
   get expectContinue(): boolean {

@@ -14,20 +14,14 @@
 
 ### Properties
 
-* [acceptedEncodings](httpresponselike.md#acceptedencodings)
 * [content](httpresponselike.md#optional-content)
 * [headers](httpresponselike.md#headers)
 * [location](httpresponselike.md#optional-location)
+* [preferences](httpresponselike.md#optional-preferences)
 * [statusCode](httpresponselike.md#statuscode)
 * [vary](httpresponselike.md#vary)
 
 ## Properties
-
-###  acceptedEncodings
-
-• **acceptedEncodings**: *keyof HttpContentEncoding[]*
-
-___
 
 ### `Optional` content
 
@@ -44,6 +38,12 @@ ___
 ### `Optional` location
 
 • **location**? : *[URI](uri.md)*
+
+___
+
+### `Optional` preferences
+
+• **preferences**? : *[HttpPreferencesLike](httppreferenceslike.md)*
 
 ___
 

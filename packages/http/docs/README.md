@@ -14,6 +14,7 @@
 
 * [HttpContentLike](interfaces/httpcontentlike.md)
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
+* [HttpPreferencesLike](interfaces/httppreferenceslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
 * [URI](interfaces/uri.md)

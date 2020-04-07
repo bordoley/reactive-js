@@ -14,20 +14,14 @@
 
 ### Properties
 
-* [acceptedEncodings](httprequestlike.md#acceptedencodings)
 * [content](httprequestlike.md#optional-content)
 * [expectContinue](httprequestlike.md#expectcontinue)
 * [headers](httprequestlike.md#headers)
 * [method](httprequestlike.md#method)
+* [preferences](httprequestlike.md#optional-preferences)
 * [uri](httprequestlike.md#uri)
 
 ## Properties
-
-###  acceptedEncodings
-
-• **acceptedEncodings**: *keyof HttpContentEncoding[]*
-
-___
 
 ### `Optional` content
 
@@ -50,6 +44,12 @@ ___
 ###  method
 
 • **method**: *[HttpMethod](../enums/httpmethod.md)*
+
+___
+
+### `Optional` preferences
+
+• **preferences**? : *[HttpPreferencesLike](httppreferenceslike.md)*
 
 ___
 
