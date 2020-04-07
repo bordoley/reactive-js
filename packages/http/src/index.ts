@@ -169,8 +169,7 @@ export interface HttpResponseLike<T> {
   // date:Option<DateTime>
   // etag:Option<EntityTag>
   // expires:Option<DateTime>
-  // lastModified:Option<DateTime>
-  // location:Option<Uri>
+  readonly lastModified?: number;
   // proxyAuthenticate:Set<Challenge>
   // retryAfter:Option<DateTime>
   // server:Option<Server>
@@ -192,6 +191,7 @@ const bannedHeaders = [
   "content-length",
   "content-type",
   "expect",
+  "last-modified",
   "transfer-encoding",
   "vary",
 ];
@@ -344,11 +344,16 @@ export const writeHttpRequestHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  { content, headers, location, preferences, vary }: HttpResponseLike<T>,
+  { content, headers, lastModified, location, preferences, vary }: HttpResponseLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (content !== undefined) {
     writeHttpContentHeaders(content, writeHeader);
+  }
+
+  if (lastModified !== undefined) {
+    const date = new Date(lastModified);
+    writeHeader("Last-Modified", date.toUTCString());
   }
 
   if (location !== undefined) {
