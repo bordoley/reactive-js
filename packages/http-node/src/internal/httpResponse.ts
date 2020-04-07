@@ -2,10 +2,24 @@ import compressible from "compressible";
 import { IncomingMessage } from "http";
 import { URL } from "url";
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { DisposableLike, add, createDisposable, dispose } from "@reactive-js/disposable";
-import { HttpRequestLike, HttpResponseLike, HttpContentEncoding } from "@reactive-js/http";
+import {
+  DisposableLike,
+  add,
+  createDisposable,
+  dispose,
+} from "@reactive-js/disposable";
+import {
+  HttpRequestLike,
+  HttpResponseLike,
+  HttpContentEncoding,
+} from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
-import { HttpContentBodyLike, createIncomingMessageContentBody, decodeContentBody, encodeContentBody } from "./httpContentBody";
+import {
+  HttpContentBodyLike,
+  createIncomingMessageContentBody,
+  decodeContentBody,
+  encodeContentBody,
+} from "./httpContentBody";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
 
 const responseIsCompressible = (
@@ -47,11 +61,9 @@ export const encodeHttpResponse = (
   const acceptedEncodings = shouldEncode ? request.acceptedEncodings : [];
 
   const { content, vary } = response;
-  
-  const encoding = getFirstSupportedEncoding(
-    acceptedEncodings || [],
-  );
-  
+
+  const encoding = getFirstSupportedEncoding(acceptedEncodings || []);
+
   const encodeBody = encoding !== undefined && content !== undefined;
 
   return {
@@ -64,7 +76,8 @@ export const encodeHttpResponse = (
   };
 };
 
-class HttpIncomingMessageResponseImpl implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
+class HttpIncomingMessageResponseImpl
+  implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
   readonly add = add;
   readonly content: HttpContentBodyLike | undefined;
   readonly disposable: DisposableLike;
@@ -112,10 +125,11 @@ class HttpIncomingMessageResponseImpl implements DisposableLike, HttpResponseLik
 export const createIncomingMessageResponse = (
   msg: IncomingMessage,
 ): DisposableLike & HttpResponseLike<HttpContentBodyLike> => {
- return new HttpIncomingMessageResponseImpl(msg);
+  return new HttpIncomingMessageResponseImpl(msg);
 };
 
-class HttpContentBodyDecodingResponseImpl implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
+class HttpContentBodyDecodingResponseImpl
+  implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
   readonly add = add;
   readonly content: HttpContentBodyLike | undefined;
   readonly dispose = dispose;
@@ -159,5 +173,5 @@ export const createHttpContentBodyDecodingResponse = (
   response: DisposableLike & HttpResponseLike<HttpContentBodyLike>,
   options: BrotliOptions | ZlibOptions,
 ): DisposableLike & HttpResponseLike<HttpContentBodyLike> => {
- return new HttpContentBodyDecodingResponseImpl(response, options);
+  return new HttpContentBodyDecodingResponseImpl(response, options);
 };

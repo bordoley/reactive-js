@@ -1,10 +1,23 @@
 import { IncomingMessage } from "http";
 import { URL } from "url";
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { DisposableLike, add, dispose, createDisposable } from "@reactive-js/disposable";
-import { HttpRequestLike, HttpContentEncoding, HttpMethod } from "@reactive-js/http";
+import {
+  DisposableLike,
+  add,
+  dispose,
+  createDisposable,
+} from "@reactive-js/disposable";
+import {
+  HttpRequestLike,
+  HttpContentEncoding,
+  HttpMethod,
+} from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
-import { HttpContentBodyLike, decodeContentBody, createIncomingMessageContentBody } from "./httpContentBody";
+import {
+  HttpContentBodyLike,
+  decodeContentBody,
+  createIncomingMessageContentBody,
+} from "./httpContentBody";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
@@ -21,15 +34,18 @@ export const decodeHttpRequest = (
     : request;
 };
 
-class HttpIncomingMessageRequestImpl implements DisposableLike, HttpRequestLike<HttpContentBodyLike> {
+class HttpIncomingMessageRequestImpl
+  implements DisposableLike, HttpRequestLike<HttpContentBodyLike> {
   readonly add = add;
   readonly content: HttpContentBodyLike | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
   constructor(private readonly msg: IncomingMessage) {
-    this.disposable = createDisposable(() => { msg.destroy() });
-    
+    this.disposable = createDisposable(() => {
+      msg.destroy();
+    });
+
     const content = createIncomingMessageContentBody(msg);
     this.content = content.contentLength !== 0 ? content : undefined;
   }
@@ -97,5 +113,5 @@ class HttpIncomingMessageRequestImpl implements DisposableLike, HttpRequestLike<
 export const createIncomingMessageRequest = (
   msg: IncomingMessage,
 ): DisposableLike & HttpRequestLike<HttpContentBodyLike> => {
- return new HttpIncomingMessageRequestImpl(msg);
+  return new HttpIncomingMessageRequestImpl(msg);
 };

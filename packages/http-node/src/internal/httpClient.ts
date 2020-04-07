@@ -40,7 +40,10 @@ import {
 } from "./httpContentEncoding";
 import { writeRequestHeaders } from "./httpHeaders";
 import { DisposableLike } from "@reactive-js/disposable";
-import { createIncomingMessageResponse, createHttpContentBodyDecodingResponse } from "./httpResponse";
+import {
+  createIncomingMessageResponse,
+  createHttpContentBodyDecodingResponse,
+} from "./httpResponse";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -244,7 +247,10 @@ const sendHttpRequestInternal = (
 
       const { newRequest, newOptions } = (() => {
         if (shouldRedirect) {
-          const newRequest = createRedirectRequest<HttpContentBodyLike,unknown>(response)(request);
+          const newRequest = createRedirectRequest<
+            HttpContentBodyLike,
+            unknown
+          >(response)(request);
           const newOptions = {
             ...options,
             maxRedirects: maxRedirects - 1,
