@@ -24,6 +24,7 @@
 * [maxHeaderSize](httpclientoptions.md#optional-maxheadersize)
 * [memLevel](httpclientoptions.md#optional-memlevel)
 * [params](httpclientoptions.md#optional-params)
+* [shouldEncode](httpclientoptions.md#optional-shouldencode)
 * [strategy](httpclientoptions.md#optional-strategy)
 * [windowBits](httpclientoptions.md#optional-windowbits)
 
@@ -112,6 +113,12 @@ ___
 • **params**? : *undefined | object*
 
 *Inherited from void*
+
+___
+
+### `Optional` shouldEncode
+
+• **shouldEncode**? : *undefined | function*
 
 ___
 
