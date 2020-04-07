@@ -1,4 +1,3 @@
-import compressible from "compressible";
 import { IncomingMessage } from "http";
 import { URL } from "url";
 import { BrotliOptions, ZlibOptions } from "zlib";
@@ -16,6 +15,7 @@ import {
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
+  contentIsCompressible,
   createIncomingMessageHttpContent,
   decodeHttpContent,
   encodeHttpContent,
@@ -24,9 +24,11 @@ import { getFirstSupportedEncoding } from "./httpContentEncoding";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 
-const responseIsCompressible = (resp: HttpResponseLike<unknown>): boolean => {
-  const contentType = resp.content?.contentType;
-  return (contentType !== undefined && compressible(contentType)) || false;
+const responseIsCompressible = (
+  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+): boolean => {
+  const { content } = response;
+  return content !== undefined ? contentIsCompressible(content) : false;
 };
 
 export interface EncodeHttpResponseOptions {
@@ -128,7 +130,7 @@ class HttpIncomingMessageResponseImpl
 }
 
 /** @ignore */
-export const createIncomingMessageResponse = (
+export const createIncomingMessageDisposableHttpResponse = (
   msg: IncomingMessage,
 ): DisposableLike &
   HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
@@ -181,10 +183,11 @@ class HttpContentBodyDecodingResponseImpl
 }
 
 /** @ignore */
-export const createHttpContentDecodingResponse = (
+export const decodeDisposableHttpResponse = (
+  options: BrotliOptions | ZlibOptions,
+) => (
   response: DisposableLike &
     HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  options: BrotliOptions | ZlibOptions,
 ): DisposableLike &
   HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
   return new HttpContentBodyDecodingResponseImpl(response, options);

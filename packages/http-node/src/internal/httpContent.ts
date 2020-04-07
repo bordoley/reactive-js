@@ -1,3 +1,4 @@
+import compressible from "compressible";
 import { IncomingMessage } from "http";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
@@ -117,3 +118,11 @@ export const createStringHttpContent = (
   contentType: string,
 ): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> =>
   createBufferHttpContent(Buffer.from(content), contentType);
+
+/** @ignore */
+export const contentIsCompressible = (
+  content: HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+): boolean => {
+  const contentType = content?.contentType;
+  return (contentType !== undefined && compressible(contentType)) || false;
+};

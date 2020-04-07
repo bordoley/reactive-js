@@ -5,7 +5,8 @@ export {
   HttpClientRequestStatusUploadComplete,
   HttpClientRequestStatusResponseReady,
   HttpClientRequestStatus,
-  sendHttpRequest,
+  creatHttpClient,
+  createDefaultHttpResponseHandler,
 } from "./internal/httpClient";
 
 export {

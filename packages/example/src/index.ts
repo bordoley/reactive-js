@@ -9,9 +9,10 @@ import {
   createBufferHttpContent,
   createStringHttpContent,
   createHttpRequestListener,
-  sendHttpRequest,
+  creatHttpClient,
   decodeHttpRequest,
   encodeHttpResponse,
+  createDefaultHttpResponseHandler,
 } from "@reactive-js/http-node";
 import { getHostScheduler } from "@reactive-js/node";
 import {
@@ -87,11 +88,14 @@ const listener = createHttpRequestListener(
 
 createNodeHttpServer({}, listener).listen(8080);
 
+const sendHttpRequest = creatHttpClient();
+
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferHttpContent(chunk, "text/plain"),
   }),
-  sendHttpRequest(),
+  sendHttpRequest,
+  createDefaultHttpResponseHandler(sendHttpRequest, 10),
   onNotify(status => {
     console.log("onNotify: " + status.type);
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
@@ -99,5 +103,6 @@ pipe(
       response.dispose();
     }
   }),
+
   subscribe(scheduler),
 );
