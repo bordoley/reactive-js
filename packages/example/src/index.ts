@@ -1,6 +1,4 @@
-import {
-  createServer as createNodeHttpServer,
-} from "http";
+import { createServer as createNodeHttpServer } from "http";
 import {
   HttpMethod,
   createHttpRequest,
@@ -10,7 +8,7 @@ import {
   HttpClientRequestStatusType,
   createBufferContentBody,
   createStringContentBody,
-  createHttpServer,
+  createRequestListener,
   sendHttpRequest,
   decodeHttpRequest,
   encodeHttpResponse,
@@ -65,12 +63,12 @@ const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
 );
 
-const handler = createHttpServer(
+const listener = createRequestListener(
   req =>
     pipe(
       ofValue(req),
       onNotify(console.log),
-      map(decodeHttpRequest),
+      map(decodeHttpRequest()),
       onNotify(req => console.log(req.headers)),
       mapTo(
         createHttpResponse(200, {
@@ -87,8 +85,7 @@ const handler = createHttpServer(
   scheduler,
 );
 
-createNodeHttpServer({}, handler).listen(8080);
-
+createNodeHttpServer({}, listener).listen(8080);
 
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {

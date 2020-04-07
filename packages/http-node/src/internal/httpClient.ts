@@ -13,6 +13,7 @@ import {
   HttpRequestLike,
   HttpStatusCode,
   createRedirectRequest,
+  HttpResponseLike,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -31,18 +32,15 @@ import {
   scan,
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
-import {
-  HttpClientResponseLike,
-  HttpContentDecodingClientResponse,
-  HttpClientResponseImpl,
-} from "./httpClientResponse";
 import { HttpContentBodyLike, emptyContentBody } from "./httpContentBody";
 import {
   supportedEncodings,
-  getFirstSupportedEncoding,
   createEncodingCompressTransform,
+  getFirstSupportedEncoding,
 } from "./httpContentEncoding";
 import { writeRequestHeaders } from "./httpHeaders";
+import { DisposableLike } from "@reactive-js/disposable";
+import { createIncomingMessageResponse, createHttpContentBodyDecodingResponse } from "./httpResponse";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -67,7 +65,7 @@ export interface HttpClientRequestStatusUploadComplete {
 
 export interface HttpClientRequestStatusResponseReady {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly response: HttpClientResponseLike;
+  readonly response: DisposableLike & HttpResponseLike<HttpContentBodyLike>;
 }
 
 export type HttpClientRequestStatus =
@@ -92,9 +90,6 @@ export interface HttpClientOptions {
   readonly agent?: Agent | boolean;
   readonly insecureHTTPParser?: boolean;
   readonly maxHeaderSize?: number;
-
-  // zlib options
-  readonly zlibOptions?: BrotliOptions | ZlibOptions;
 }
 
 const spyScanner = (
@@ -105,16 +100,17 @@ const spyScanner = (
     ? [ev.chunk.length, total + uploaded]
     : [-1, total + uploaded];
 
-// FIXME: Support HTTP2 as well.
 const sendHttpRequestInternal = (
   request: HttpRequestLike<HttpContentBodyLike>,
-  options: HttpClientOptions = {},
+  options: HttpClientOptions & (BrotliOptions | ZlibOptions) = {},
 ): ObservableLike<HttpClientRequestStatus> => {
   const {
+    agent,
     contentEncoding,
+    insecureHTTPParser,
+    maxHeaderSize,
     maxRedirects = 0,
-    zlibOptions = {},
-    ...nodeOptions
+    ...zlibOptions
   } = options;
 
   request = {
@@ -141,8 +137,10 @@ const sendHttpRequestInternal = (
   );
 
   const nodeRequestOptions = {
-    ...nodeOptions,
+    agent,
     headers: nodeHeaders,
+    insecureHTTPParser,
+    maxHeaderSize,
     method,
   };
 
@@ -159,8 +157,8 @@ const sendHttpRequestInternal = (
     };
     req.on("error", onError);
 
-    const onResponse = (resp: IncomingMessage) => {
-      const response = new HttpClientResponseImpl(resp).add(subscriber);
+    const onResponse = (msg: IncomingMessage) => {
+      const response = createIncomingMessageResponse(msg).add(subscriber);
       subscriber.dispatch({
         type: HttpClientRequestStatusType.ResponseReady,
         response,
@@ -246,7 +244,7 @@ const sendHttpRequestInternal = (
 
       const { newRequest, newOptions } = (() => {
         if (shouldRedirect) {
-          const newRequest = createRedirectRequest(request, response);
+          const newRequest = createRedirectRequest<HttpContentBodyLike,unknown>(response)(request);
           const newOptions = {
             ...options,
             maxRedirects: maxRedirects - 1,
@@ -278,7 +276,7 @@ const sendHttpRequestInternal = (
       } else if (content !== undefined && content.contentEncodings.length > 0) {
         return ofValue({
           type: HttpClientRequestStatusType.ResponseReady,
-          response: new HttpContentDecodingClientResponse(
+          response: createHttpContentBodyDecodingResponse(
             response,
             zlibOptions,
           ),

@@ -17,7 +17,7 @@
 
 ###  response
 
-• **response**: *[HttpClientResponseLike](httpclientresponselike.md)*
+• **response**: *DisposableLike & HttpResponseLike‹[HttpContentBodyLike](httpcontentbodylike.md)›*
 
 ___
 
