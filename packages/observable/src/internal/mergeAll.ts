@@ -1,10 +1,11 @@
-import { pipe } from "@reactive-js/pipe";
+import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
   ObservableOperatorLike,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
+import { map } from "./map";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
@@ -109,6 +110,14 @@ export const mergeAll = <T>(
   return lift(operator, false);
 };
 
+export const mergeMap = <TA, TB>(
+  mapper: (a: TA) => ObservableLike<TB>,
+  options: {
+    maxBufferSize?: number;
+    maxConcurrency?: number;
+  } = {},
+) => compose(map(mapper), mergeAll(options));
+
 /**
  * Converts a higher-order `ObservableLike` into a first-order
  * `ObservableLike` by concatenating the inner sources in order.
@@ -120,6 +129,11 @@ export const concatAll = <T>(
 ): ObservableOperatorLike<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
+export const concatMap = <TA, TB>(
+  mapper: (a: TA) => ObservableLike<TB>,
+  maxBufferSize?: number,
+) => compose(map(mapper), concatAll(maxBufferSize));
+
 const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 
 /**
@@ -129,3 +143,6 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
  */
 export const exhaust = <T>() =>
   exhaustInstance as ObservableOperatorLike<ObservableLike<T>, T>;
+
+export const exhaustMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
+  compose(map(mapper), exhaust());

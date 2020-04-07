@@ -8,6 +8,7 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
+import { takeFirst } from "./takeFirst";
 
 class ToPromiseObserver<T> implements ObserverLike<T> {
   private hasResult = false;
@@ -53,6 +54,7 @@ export const toPromise = <T>(
 
     subscription.inner = pipe(
       observable,
+      takeFirst(),
       observe(observer),
       subscribe(scheduler),
     );
