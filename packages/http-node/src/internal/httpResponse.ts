@@ -10,8 +10,8 @@ import {
 import {
   HttpRequestLike,
   HttpResponseLike,
-  HttpContentEncoding,
   HttpContentLike,
+  HttpPreferencesLike,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
@@ -23,6 +23,7 @@ import {
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
+import { createIncomingMessageHttpPreferencesLike } from "./httpPreferences";
 
 const responseIsCompressible = (
   response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
@@ -62,7 +63,10 @@ export const encodeHttpResponse = (
       ? shouldEncodeOptionResult
       : responseIsCompressible(response);
 
-  const acceptedEncodings = shouldEncode ? request.acceptedEncodings : [];
+  const { preferences } = request;
+  const acceptedEncodings = preferences !== undefined && shouldEncode 
+    ? preferences.acceptedEncodings 
+    : [];
 
   const { content, vary } = response;
 
@@ -90,17 +94,12 @@ class HttpIncomingMessageResponseImpl
     | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
+  readonly preferences: HttpPreferencesLike | undefined;
 
   constructor(private readonly msg: IncomingMessage) {
-    const disposable = createDisposable(() => msg.destroy());
-    const content = createIncomingMessageHttpContent(msg);
-
-    this.disposable = disposable;
-    this.content = content.contentLength !== 0 ? content : undefined;
-  }
-
-  get acceptedEncodings(): readonly HttpContentEncoding[] {
-    return [];
+    this.disposable = createDisposable(() => msg.destroy());
+    this.content = createIncomingMessageHttpContent(msg);
+    this.preferences = createIncomingMessageHttpPreferencesLike(msg);
   }
 
   get headers() {
@@ -157,10 +156,6 @@ class HttpContentBodyDecodingResponseImpl
       content !== undefined ? decodeHttpContent(content, options) : undefined;
   }
 
-  get acceptedEncodings() {
-    return this.disposable.acceptedEncodings;
-  }
-
   get headers() {
     return this.disposable.headers;
   }
@@ -171,6 +166,10 @@ class HttpContentBodyDecodingResponseImpl
 
   get location() {
     return this.disposable.location;
+  }
+
+  get preferences() {
+    return this.disposable.preferences;
   }
 
   get statusCode(): number {

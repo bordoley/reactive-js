@@ -60,20 +60,11 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
-const chunk = Buffer.from(
-  "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
-);
-
 const listener = createHttpRequestListener(
   req =>
     pipe(
       ofValue(req),
       map(decodeHttpRequest()),
-      mapTo(
-        createHttpResponse(200, {
-          content: createBufferHttpContent(chunk, "text/plain"),
-        }),
-      ),
       mapTo(
         createHttpResponse(200, {
           content: createStringHttpContent(req.uri.toString(), "text/plain"),
@@ -88,6 +79,10 @@ createNodeHttpServer({}, listener).listen(8080);
 
 const sendHttpRequest = creatHttpClient();
 
+const chunk = Buffer.from(
+  "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
+);
+
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferHttpContent(chunk, "text/plain"),
@@ -101,6 +96,5 @@ pipe(
       response.dispose();
     }
   }),
-
   subscribe(scheduler),
 );
