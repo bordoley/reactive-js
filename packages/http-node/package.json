@@ -47,13 +47,15 @@
     "@reactive-js/observable": "^0.0.32",
     "@reactive-js/pipe": "^0.0.32",
     "@reactive-js/scheduler": "^0.0.32",
+    "@types/fresh": "^0.5.0",
     "compressible": "^2.0.18",
+    "fresh": "^0.5.2",
     "negotiator": "^0.6.2"
   },
   "devDependencies": {
     "@types/compressible": "^2.0.0",
-    "@types/negotiator": "^2.0.0",
     "@types/jest": "^24.0.23",
+    "@types/negotiator": "^2.0.0",
     "@types/node": "^12.12.14",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0"

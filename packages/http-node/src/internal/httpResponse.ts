@@ -1,6 +1,8 @@
 import { IncomingMessage } from "http";
+import fresh from "fresh";
 import { URL } from "url";
 import { BrotliOptions, ZlibOptions } from "zlib";
+import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
   add,
@@ -12,7 +14,11 @@ import {
   HttpResponseLike,
   HttpContentLike,
   HttpPreferencesLike,
+  HttpMethod,
+  HttpStatusCode,
+  createHttpResponse,
 } from "@reactive-js/http";
+import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   contentIsCompressible,
@@ -21,8 +27,6 @@ import {
   encodeHttpContent,
 } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { createIncomingMessageHttpPreferencesLike } from "./httpPreferences";
 
 const responseIsCompressible = (
@@ -83,6 +87,25 @@ export const encodeHttpResponse = (
         : content,
     vary: encodeBody ? [...vary, "Accept-Encoding"] : vary,
   };
+};
+
+export const checkIfNotModified = <T>(
+  { headers: reqHeaders, method }: HttpRequestLike<unknown>,
+): OperatorLike<HttpResponseLike<T>, HttpResponseLike<T>> => response => {
+  const { expires, headers, lastModified, location, preferences, statusCode, vary } = response;
+  const methodSupportsFresh = method === HttpMethod.GET || method === HttpMethod.HEAD;
+  const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
+
+  return methodSupportsFresh && statusCodeSupportsFresh && fresh(reqHeaders as any, headers as any)
+    ? createHttpResponse(HttpStatusCode.NotModified, {
+      expires,
+      headers,
+      lastModified,
+      location,
+      preferences,
+      vary,
+    })
+    : response;
 };
 
 class HttpIncomingMessageResponseImpl
