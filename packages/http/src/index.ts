@@ -1,3 +1,5 @@
+import { OperatorLike } from "@reactive-js/pipe";
+
 // A Proxy readonly interface for the what-wg URL api.
 export interface URI {
   readonly hash: string;
@@ -170,9 +172,8 @@ export const createHttpResponse = <T>(
 };
 
 export const createRedirectRequest = <TReq, TResp>(
-  request: HttpRequestLike<TReq>,
   response: HttpResponseLike<TResp>,
-): HttpRequestLike<TReq> => {
+): OperatorLike<HttpRequestLike<TReq>, HttpRequestLike<TReq>> => request => {
   const { content, method } = request;
   const { location, statusCode } = response;
 

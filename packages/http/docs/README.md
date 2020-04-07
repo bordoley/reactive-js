@@ -66,7 +66,7 @@ ___
 
 ### `Const` createRedirectRequest
 
-▸ **createRedirectRequest**<**TReq**, **TResp**>(`request`: [HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, `response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
+▸ **createRedirectRequest**<**TReq**, **TResp**>(`response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
 
 **Type parameters:**
 
@@ -78,7 +78,6 @@ ___
 
 Name | Type |
 ------ | ------ |
-`request` | [HttpRequestLike](interfaces/httprequestlike.md)‹TReq› |
 `response` | [HttpResponseLike](interfaces/httpresponselike.md)‹TResp› |
 
-**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›*
+**Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*

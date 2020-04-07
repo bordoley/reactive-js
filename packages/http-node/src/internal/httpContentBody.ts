@@ -70,9 +70,8 @@ class IncomingMessageContentBodyImpl implements HttpContentBodyLike {
 }
 
 /** @ignore */
-export const createIncomingMessageContentBody = (
-  msg: IncomingMessage,
-) => new IncomingMessageContentBodyImpl(msg);
+export const createIncomingMessageContentBody = (msg: IncomingMessage) =>
+  new IncomingMessageContentBodyImpl(msg);
 
 class ContentBodyImpl implements HttpContentBodyLike {
   constructor(

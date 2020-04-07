@@ -15,7 +15,6 @@
 * [insecureHTTPParser](httpclientoptions.md#optional-insecurehttpparser)
 * [maxHeaderSize](httpclientoptions.md#optional-maxheadersize)
 * [maxRedirects](httpclientoptions.md#optional-maxredirects)
-* [zlibOptions](httpclientoptions.md#optional-zliboptions)
 
 ## Properties
 
@@ -46,9 +45,3 @@ ___
 ### `Optional` maxRedirects
 
 • **maxRedirects**? : *undefined | number*
-
-___
-
-### `Optional` zlibOptions
-
-• **zlibOptions**? : *BrotliOptions | ZlibOptions*

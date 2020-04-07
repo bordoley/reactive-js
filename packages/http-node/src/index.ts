@@ -8,10 +8,6 @@ export {
   sendHttpRequest,
 } from "./internal/httpClient";
 
-export { HttpClientResponseLike } from "./internal/httpClientResponse";
-
-export { createHttpServer } from "./internal/httpServer";
-
 export {
   HttpContentBodyLike,
   createBufferContentBody,
@@ -19,7 +15,6 @@ export {
   createStringContentBody,
 } from "./internal/httpContentBody";
 
-export {
-  decodeHttpRequest,
-  encodeHttpResponse,
-} from "./internal/httpServerContentEncoder";
+export { HttpRequestListenerOptions, createRequestListener } from "./internal/httpRequestListener";
+export { decodeHttpRequest } from "./internal/httpRequest";
+export { EncodeHttpResponseOptions, encodeHttpResponse } from "./internal/httpResponse";
