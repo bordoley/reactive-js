@@ -12,37 +12,39 @@ import {
   HttpRequestLike,
   HttpResponseLike,
   HttpContentEncoding,
+  HttpContentLike,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
-  HttpContentBodyLike,
-  createIncomingMessageContentBody,
-  decodeContentBody,
-  encodeContentBody,
-} from "./httpContentBody";
+  createIncomingMessageHttpContent,
+  decodeHttpContent,
+  encodeHttpContent,
+} from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
+import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 
-const responseIsCompressible = (
-  resp: HttpResponseLike<HttpContentBodyLike>,
-): boolean => {
+const responseIsCompressible = (resp: HttpResponseLike<unknown>): boolean => {
   const contentType = resp.content?.contentType;
   return (contentType !== undefined && compressible(contentType)) || false;
 };
 
 export interface EncodeHttpResponseOptions {
   readonly shouldEncode?: (
-    req: HttpRequestLike<HttpContentBodyLike>,
-    resp: HttpResponseLike<HttpContentBodyLike>,
+    req: HttpRequestLike<unknown>,
+    resp: HttpResponseLike<unknown>,
   ) => boolean | undefined;
 }
 
 export const encodeHttpResponse = (
-  request: HttpRequestLike<HttpContentBodyLike>,
+  request: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   options: EncodeHttpResponseOptions & (BrotliOptions | ZlibOptions) = {},
 ): OperatorLike<
-  HttpResponseLike<HttpContentBodyLike>,
-  HttpResponseLike<HttpContentBodyLike>
-> => (response: HttpResponseLike<HttpContentBodyLike>) => {
+  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+> => (
+  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+) => {
   const { shouldEncode: shouldEncodeOption, ...zlibOptions } = options;
   // FIXME:
   // Don't compress for Cache-Control: no-transform
@@ -70,22 +72,26 @@ export const encodeHttpResponse = (
     ...response,
     content:
       encoding !== undefined && content !== undefined
-        ? encodeContentBody(content, encoding, zlibOptions)
+        ? encodeHttpContent(content, encoding, zlibOptions)
         : content,
     vary: encodeBody ? [...vary, "Accept-Encoding"] : vary,
   };
 };
 
 class HttpIncomingMessageResponseImpl
-  implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
+  implements
+    DisposableLike,
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> {
   readonly add = add;
-  readonly content: HttpContentBodyLike | undefined;
+  readonly content:
+    | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
   constructor(private readonly msg: IncomingMessage) {
     const disposable = createDisposable(() => msg.destroy());
-    const content = createIncomingMessageContentBody(msg);
+    const content = createIncomingMessageHttpContent(msg);
 
     this.disposable = disposable;
     this.content = content.contentLength !== 0 ? content : undefined;
@@ -124,23 +130,29 @@ class HttpIncomingMessageResponseImpl
 /** @ignore */
 export const createIncomingMessageResponse = (
   msg: IncomingMessage,
-): DisposableLike & HttpResponseLike<HttpContentBodyLike> => {
+): DisposableLike &
+  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
   return new HttpIncomingMessageResponseImpl(msg);
 };
 
 class HttpContentBodyDecodingResponseImpl
-  implements DisposableLike, HttpResponseLike<HttpContentBodyLike> {
+  implements
+    DisposableLike,
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> {
   readonly add = add;
-  readonly content: HttpContentBodyLike | undefined;
+  readonly content:
+    | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    | undefined;
   readonly dispose = dispose;
 
   constructor(
-    readonly disposable: DisposableLike & HttpResponseLike<HttpContentBodyLike>,
+    readonly disposable: DisposableLike &
+      HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
     options: BrotliOptions | ZlibOptions,
   ) {
     const { content } = disposable;
     this.content =
-      content !== undefined ? decodeContentBody(content, options) : undefined;
+      content !== undefined ? decodeHttpContent(content, options) : undefined;
   }
 
   get acceptedEncodings() {
@@ -169,9 +181,11 @@ class HttpContentBodyDecodingResponseImpl
 }
 
 /** @ignore */
-export const createHttpContentBodyDecodingResponse = (
-  response: DisposableLike & HttpResponseLike<HttpContentBodyLike>,
+export const createHttpContentDecodingResponse = (
+  response: DisposableLike &
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   options: BrotliOptions | ZlibOptions,
-): DisposableLike & HttpResponseLike<HttpContentBodyLike> => {
+): DisposableLike &
+  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
   return new HttpContentBodyDecodingResponseImpl(response, options);
 };

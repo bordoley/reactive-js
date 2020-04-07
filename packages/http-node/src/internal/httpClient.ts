@@ -7,19 +7,26 @@ import {
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import { ZlibOptions, BrotliOptions } from "zlib";
-import { identity, lift } from "@reactive-js/async-enumerable";
+import {
+  identity,
+  lift,
+  AsyncEnumerableLike,
+} from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpRequestLike,
   HttpStatusCode,
-  createRedirectRequest,
+  createRedirectHttpRequest,
   HttpResponseLike,
+  writeHttpRequestHeaders,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
   ReadableEvent,
   transform,
   ReadableEventType,
+  ReadableMode,
+  emptyReadableAsyncEnumerable,
 } from "@reactive-js/node";
 import {
   createObservable,
@@ -32,17 +39,15 @@ import {
   scan,
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
-import { HttpContentBodyLike, emptyContentBody } from "./httpContentBody";
 import {
   supportedEncodings,
   createEncodingCompressTransform,
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
-import { writeRequestHeaders } from "./httpHeaders";
 import { DisposableLike } from "@reactive-js/disposable";
 import {
   createIncomingMessageResponse,
-  createHttpContentBodyDecodingResponse,
+  createHttpContentDecodingResponse,
 } from "./httpResponse";
 
 export const enum HttpClientRequestStatusType {
@@ -54,7 +59,9 @@ export const enum HttpClientRequestStatusType {
 
 export interface HttpClientRequestStatusBegin {
   readonly type: HttpClientRequestStatusType.Begin;
-  readonly request: HttpRequestLike<HttpContentBodyLike>;
+  readonly request: HttpRequestLike<
+    AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  >;
 }
 
 export interface HttpClientRequestStatusUploading {
@@ -68,7 +75,8 @@ export interface HttpClientRequestStatusUploadComplete {
 
 export interface HttpClientRequestStatusResponseReady {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly response: DisposableLike & HttpResponseLike<HttpContentBodyLike>;
+  readonly response: DisposableLike &
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>;
 }
 
 export type HttpClientRequestStatus =
@@ -104,7 +112,7 @@ const spyScanner = (
     : [-1, total + uploaded];
 
 const sendHttpRequestInternal = (
-  request: HttpRequestLike<HttpContentBodyLike>,
+  request: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   options: HttpClientOptions & (BrotliOptions | ZlibOptions) = {},
 ): ObservableLike<HttpClientRequestStatus> => {
   const {
@@ -134,7 +142,7 @@ const sendHttpRequestInternal = (
         })();
 
   const nodeHeaders: OutgoingHttpHeaders = {};
-  writeRequestHeaders(
+  writeHttpRequestHeaders(
     request,
     (header, value) => (nodeHeaders[header] = value),
   );
@@ -190,7 +198,7 @@ const sendHttpRequestInternal = (
     ).enumerateAsync(subscriber);
 
     const contentEnumerator = pipe(
-      request.content || emptyContentBody,
+      request.content?.body || emptyReadableAsyncEnumerable,
       lift(onNotify(ev => spyEnumerator.dispatch(ev))),
       contentEncoding !== undefined
         ? transform(
@@ -247,8 +255,8 @@ const sendHttpRequestInternal = (
 
       const { newRequest, newOptions } = (() => {
         if (shouldRedirect) {
-          const newRequest = createRedirectRequest<
-            HttpContentBodyLike,
+          const newRequest = createRedirectHttpRequest<
+            AsyncEnumerableLike<ReadableMode, ReadableEvent>,
             unknown
           >(response)(request);
           const newOptions = {
@@ -282,10 +290,7 @@ const sendHttpRequestInternal = (
       } else if (content !== undefined && content.contentEncodings.length > 0) {
         return ofValue({
           type: HttpClientRequestStatusType.ResponseReady,
-          response: createHttpContentBodyDecodingResponse(
-            response,
-            zlibOptions,
-          ),
+          response: createHttpContentDecodingResponse(response, zlibOptions),
         });
       } else {
         // fallthrough
@@ -302,5 +307,5 @@ const sendHttpRequestInternal = (
 };
 
 export const sendHttpRequest = (options: HttpClientOptions = {}) => (
-  request: HttpRequestLike<HttpContentBodyLike>,
+  request: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ) => sendHttpRequestInternal(request, options);

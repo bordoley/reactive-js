@@ -4,10 +4,13 @@ import {
   HttpResponseLike,
   HttpStatusCode,
   createHttpResponse,
+  writeHttpResponseHeaders,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
   emptyReadableAsyncEnumerable,
+  ReadableMode,
+  ReadableEvent,
 } from "@reactive-js/node";
 import {
   ObservableLike,
@@ -21,29 +24,26 @@ import {
 } from "@reactive-js/observable";
 import { compose, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import {
-  HttpContentBodyLike,
-  createStringContentBody,
-} from "./httpContentBody";
-import { writeResponseHeaders } from "./httpHeaders";
+import { createStringHttpContent } from "./httpContent";
 import { createIncomingMessageRequest } from "./httpRequest";
+import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
-  response: HttpResponseLike<HttpContentBodyLike>,
+  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ) => {
   resp.statusCode = response.statusCode;
 
-  writeResponseHeaders(response, (header, value) =>
+  writeHttpResponseHeaders(response, (header, value) =>
     resp.setHeader(header, value),
   );
 };
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpResponseLike<HttpContentBodyLike>) =>
+}: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
-      content || emptyReadableAsyncEnumerable
+      content?.body || emptyReadableAsyncEnumerable
     ).enumerateAsync(subscriber);
     const responseWritableEnumerator = createWritableAsyncEnumerator(
       resp,
@@ -61,10 +61,12 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 // FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input
 const defaultOnError = (
   e: unknown,
-): ObservableLike<HttpResponseLike<HttpContentBodyLike>> =>
+): ObservableLike<HttpResponseLike<
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+>> =>
   ofValue(
     createHttpResponse(HttpStatusCode.InternalServerError, {
-      content: createStringContentBody(
+      content: createStringHttpContent(
         e instanceof Error ? e.stack || "" : String(e),
         "text/plain",
       ),
@@ -74,14 +76,18 @@ const defaultOnError = (
 export interface HttpRequestListenerOptions {
   readonly onError?: (
     e: unknown,
-  ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>;
+  ) => ObservableLike<
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  >;
   readonly protocol?: "http:" | "https:" | undefined;
 }
 
-export const createRequestListener = (
+export const createHttpRequestListener = (
   handler: (
-    req: HttpRequestLike<HttpContentBodyLike>,
-  ) => ObservableLike<HttpResponseLike<HttpContentBodyLike>>,
+    req: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  ) => ObservableLike<
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
 ): RequestListener => {

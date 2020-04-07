@@ -11,33 +11,39 @@ import {
   HttpRequestLike,
   HttpContentEncoding,
   HttpMethod,
+  HttpContentLike,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
-  HttpContentBodyLike,
-  decodeContentBody,
-  createIncomingMessageContentBody,
-} from "./httpContentBody";
+  decodeHttpContent,
+  createIncomingMessageHttpContent,
+} from "./httpContent";
+import { ReadableMode, ReadableEvent } from "@reactive-js/node";
+import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
 ): OperatorLike<
-  HttpRequestLike<HttpContentBodyLike>,
-  HttpRequestLike<HttpContentBodyLike>
+  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > => request => {
   const { content } = request;
   return content !== undefined && content.contentEncodings.length > 0
     ? {
         ...request,
-        content: decodeContentBody(content, options),
+        content: decodeHttpContent(content, options),
       }
     : request;
 };
 
 class HttpIncomingMessageRequestImpl
-  implements DisposableLike, HttpRequestLike<HttpContentBodyLike> {
+  implements
+    DisposableLike,
+    HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> {
   readonly add = add;
-  readonly content: HttpContentBodyLike | undefined;
+  readonly content:
+    | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
 
@@ -46,7 +52,7 @@ class HttpIncomingMessageRequestImpl
       msg.destroy();
     });
 
-    const content = createIncomingMessageContentBody(msg);
+    const content = createIncomingMessageHttpContent(msg);
     this.content = content.contentLength !== 0 ? content : undefined;
   }
 
@@ -112,6 +118,7 @@ class HttpIncomingMessageRequestImpl
 /** @ignore */
 export const createIncomingMessageRequest = (
   msg: IncomingMessage,
-): DisposableLike & HttpRequestLike<HttpContentBodyLike> => {
+): DisposableLike &
+  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
   return new HttpIncomingMessageRequestImpl(msg);
 };
