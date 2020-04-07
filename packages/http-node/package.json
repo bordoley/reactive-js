@@ -45,6 +45,7 @@
     "@reactive-js/http": "^0.0.32",
     "@reactive-js/node": "^0.0.32",
     "@reactive-js/observable": "^0.0.32",
+    "@reactive-js/pipe": "^0.0.32",
     "@reactive-js/scheduler": "^0.0.32",
     "compressible": "^2.0.18"
   },
@@ -60,10 +61,7 @@
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm5": "tsc -p tsconfig.esm5.json",
     "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json",
-    "test": "jest",
-    "test-coverage": "jest --coverage",
-    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
+    "docs": "typedoc --tsconfig tsconfig.doc.json"
   },
   "jest": {
     "preset": "ts-jest",

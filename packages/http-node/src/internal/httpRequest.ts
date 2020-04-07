@@ -116,7 +116,7 @@ class HttpIncomingMessageRequestImpl
 }
 
 /** @ignore */
-export const createIncomingMessageRequest = (
+export const createIncomingMessageHttpRequest = (
   msg: IncomingMessage,
 ): DisposableLike &
   HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {

@@ -35,8 +35,7 @@ import {
   ObservableLike,
   ofValue,
   SafeSubscriberLike,
-  map,
-  concatAll,
+  concatMap,
   onNotify,
   scan,
   ObservableOperatorLike,
@@ -206,13 +205,14 @@ export interface HttpClientOptions extends BrotliOptions, ZlibOptions {
   readonly agent?: Agent | boolean;
   readonly insecureHTTPParser?: boolean;
   readonly maxHeaderSize?: number;
-  readonly shouldEncode?: (req: HttpRequestLike<unknown>) => boolean | undefined;
+  readonly shouldEncode?: (
+    req: HttpRequestLike<unknown>,
+  ) => boolean | undefined;
 }
 
 export interface HttpClientRequestOptions {
   // The encodings accepted by the server
   readonly acceptedEncodings?: readonly HttpContentEncoding[];
-
 }
 
 const identity = <T>(x: T): T => x;
@@ -371,5 +371,5 @@ export const createDefaultHttpResponseHandler = (
     return ofValue(status);
   };
 
-  return compose(map(handleResponse), concatAll());
+  return concatMap(handleResponse);
 };

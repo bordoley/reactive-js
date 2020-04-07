@@ -25,7 +25,7 @@ import {
 import { compose, pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createStringHttpContent } from "./httpContent";
-import { createIncomingMessageRequest } from "./httpRequest";
+import { createIncomingMessageHttpRequest } from "./httpRequest";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
@@ -96,10 +96,9 @@ export const createHttpRequestListener = (
   return (req, resp) =>
     pipe(
       using(
-        () => createIncomingMessageRequest(req),
+        () => createIncomingMessageHttpRequest(req),
         compose(
-          ofValue,
-          await_(handler),
+          handler,
           catchError(onError),
           onNotify(writeResponseMessage(resp)),
           await_(writeResponseContentBody(resp)),
