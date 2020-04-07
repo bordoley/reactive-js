@@ -17,7 +17,7 @@
 
 ###  request
 
-• **request**: *HttpRequestLike‹[HttpContentBodyLike](httpcontentbodylike.md)›*
+• **request**: *HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 

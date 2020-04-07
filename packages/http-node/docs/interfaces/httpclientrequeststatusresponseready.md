@@ -10,14 +10,21 @@
 
 ### Properties
 
+* [request](httpclientrequeststatusresponseready.md#request)
 * [response](httpclientrequeststatusresponseready.md#response)
 * [type](httpclientrequeststatusresponseready.md#type)
 
 ## Properties
 
+###  request
+
+• **request**: *HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+
+___
+
 ###  response
 
-• **response**: *DisposableLike & HttpResponseLike‹[HttpContentBodyLike](httpcontentbodylike.md)›*
+• **response**: *DisposableLike & HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 

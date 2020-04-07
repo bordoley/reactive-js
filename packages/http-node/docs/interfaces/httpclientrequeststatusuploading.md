@@ -10,10 +10,17 @@
 
 ### Properties
 
+* [request](httpclientrequeststatusuploading.md#request)
 * [total](httpclientrequeststatusuploading.md#total)
 * [type](httpclientrequeststatusuploading.md#type)
 
 ## Properties
+
+###  request
+
+• **request**: *HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+
+___
 
 ###  total
 

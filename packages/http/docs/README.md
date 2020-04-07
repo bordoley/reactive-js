@@ -12,6 +12,7 @@
 
 ### Interfaces
 
+* [HttpContentLike](interfaces/httpcontentlike.md)
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
@@ -21,7 +22,9 @@
 
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
-* [createRedirectRequest](README.md#const-createredirectrequest)
+* [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
+* [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
+* [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
 ## Functions
 
@@ -64,9 +67,9 @@ Name | Type | Default |
 
 ___
 
-### `Const` createRedirectRequest
+### `Const` createRedirectHttpRequest
 
-▸ **createRedirectRequest**<**TReq**, **TResp**>(`response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
+▸ **createRedirectHttpRequest**<**TReq**, **TResp**>(`response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
 
 **Type parameters:**
 
@@ -81,3 +84,57 @@ Name | Type |
 `response` | [HttpResponseLike](interfaces/httpresponselike.md)‹TResp› |
 
 **Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
+
+___
+
+### `Const` writeHttpRequestHeaders
+
+▸ **writeHttpRequestHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+▪ **writeHeader**: *function*
+
+▸ (`header`: string, `value`: string): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`header` | string |
+`value` | string |
+
+**Returns:** *void*
+
+___
+
+### `Const` writeHttpResponseHeaders
+
+▸ **writeHttpResponseHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+▪ **writeHeader**: *function*
+
+▸ (`header`: string, `value`: string): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`header` | string |
+`value` | string |
+
+**Returns:** *void*

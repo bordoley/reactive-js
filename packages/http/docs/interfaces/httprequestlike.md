@@ -31,7 +31,7 @@ ___
 
 ### `Optional` content
 
-• **content**? : *T*
+• **content**? : *[HttpContentLike](httpcontentlike.md)‹T›*
 
 ___
 
