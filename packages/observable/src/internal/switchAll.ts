@@ -1,5 +1,5 @@
 import { ErrorLike, disposed } from "@reactive-js/disposable";
-import { pipe } from "@reactive-js/pipe";
+import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
   ObserverLike,
@@ -7,6 +7,7 @@ import {
   ObservableOperatorLike,
 } from "./interfaces";
 import { lift } from "./lift";
+import { map } from "./map";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
 import { AbstractDelegatingSubscriber } from "./subscriber";
@@ -54,3 +55,6 @@ const switchAllInstance = lift(operator, false);
  */
 export const switchAll = <T>() =>
   switchAllInstance as ObservableOperatorLike<ObservableLike<T>, T>;
+
+export const switchMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
+  compose(map(mapper), switchAll());

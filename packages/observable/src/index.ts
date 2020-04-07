@@ -38,11 +38,17 @@ export { endWith } from "./internal/endWith";
 export { every, none } from "./internal/every";
 export { forEach } from "./internal/forEach";
 export { ignoreElements } from "./internal/ignoreElements";
-export { iif } from "./internal/iif";
 export { keep, keepType } from "./internal/keep";
 export { lift } from "./internal/lift";
 export { map, mapTo } from "./internal/map";
-export { concatAll, exhaust, mergeAll } from "./internal/mergeAll";
+export {
+  concatAll,
+  concatMap,
+  exhaust,
+  exhaustMap,
+  mergeAll,
+  mergeMap,
+} from "./internal/mergeAll";
 export { observe, onDispose, onError, onNotify } from "./internal/observe";
 export { onSubscribe } from "./internal/onSubscribe";
 export { publish } from "./internal/publish";
@@ -55,7 +61,7 @@ export { contains, some } from "./internal/some";
 export { skipFirst } from "./internal/skipFirst";
 export { startWith } from "./internal/startWith";
 export { subscribeOn } from "./internal/subscribeOn";
-export { switchAll } from "./internal/switchAll";
+export { switchAll, switchMap } from "./internal/switchAll";
 export { takeFirst } from "./internal/takeFirst";
 export { takeLast } from "./internal/takeLast";
 export { takeWhile } from "./internal/takeWhile";

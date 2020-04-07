@@ -36,6 +36,7 @@
 * [compute](README.md#const-compute)
 * [concat](README.md#concat)
 * [concatAll](README.md#const-concatall)
+* [concatMap](README.md#const-concatmap)
 * [contains](README.md#const-contains)
 * [createObservable](README.md#const-createobservable)
 * [createSubject](README.md#const-createsubject)
@@ -45,6 +46,7 @@
 * [enumerate](README.md#enumerate)
 * [every](README.md#const-every)
 * [exhaust](README.md#const-exhaust)
+* [exhaustMap](README.md#const-exhaustmap)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
 * [fromIterable](README.md#fromiterable)
@@ -53,7 +55,6 @@
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
 * [ignoreElements](README.md#const-ignoreelements)
-* [iif](README.md#const-iif)
 * [keep](README.md#const-keep)
 * [keepType](README.md#const-keeptype)
 * [lift](README.md#lift)
@@ -61,6 +62,7 @@
 * [mapTo](README.md#const-mapto)
 * [merge](README.md#merge)
 * [mergeAll](README.md#const-mergeall)
+* [mergeMap](README.md#const-mergemap)
 * [never](README.md#const-never)
 * [none](README.md#const-none)
 * [observe](README.md#observe)
@@ -82,6 +84,7 @@
 * [subscribe](README.md#const-subscribe)
 * [subscribeOn](README.md#const-subscribeon)
 * [switchAll](README.md#const-switchall)
+* [switchMap](README.md#const-switchmap)
 * [takeFirst](README.md#const-takefirst)
 * [takeLast](README.md#const-takelast)
 * [takeWhile](README.md#const-takewhile)
@@ -581,6 +584,34 @@ Name | Type | Default | Description |
 
 ___
 
+### `Const` concatMap
+
+▸ **concatMap**<**TA**, **TB**>(`mapper`: function, `maxBufferSize?`: undefined | number): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`a`: TA): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+▪`Optional`  **maxBufferSize**: *undefined | number*
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+___
+
 ### `Const` contains
 
 ▸ **contains**<**T**>(`value`: T, `equals`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, boolean›*
@@ -798,6 +829,32 @@ has not yet been disposed.
 
 ___
 
+### `Const` exhaustMap
+
+▸ **exhaustMap**<**TA**, **TB**>(`mapper`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`a`: TA): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+___
+
 ### `Const` forEach
 
 ▸ **forEach**<**T**>(`onNotify`: function, `schedulerFactory`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, void›*
@@ -998,44 +1055,6 @@ Returns an `ObservableLike` that ignores all items emitted by the source.
 
 ___
 
-### `Const` iif
-
-▸ **iif**<**TCtx**, **T**>(`trueCase`: function, `falseCase`: function, `ctx`: TCtx): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹boolean, T›*
-
-**Type parameters:**
-
-▪ **TCtx**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **trueCase**: *function*
-
-▸ (`ctx`: TCtx): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`ctx` | TCtx |
-
-▪ **falseCase**: *function*
-
-▸ (`ctx`: TCtx): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`ctx` | TCtx |
-
-▪ **ctx**: *TCtx*
-
-**Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹boolean, T›*
-
-___
-
 ### `Const` keep
 
 ▸ **keep**<**T**>(`predicate`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
@@ -1211,6 +1230,34 @@ Name | Type | Default | Description |
 `options` | object |  {} | Optional configuration object. The `maxBufferSize` property specifies how many source observables may be queued before dropping previous observables. The `maxConcurrency` property specifies the maximum number of inner observables that may be subscribed to concurrently.  |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+
+___
+
+### `Const` mergeMap
+
+▸ **mergeMap**<**TA**, **TB**>(`mapper`: function, `options`: object): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`a`: TA): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+▪`Default value`  **options**: *object*=  {}
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
 
 ___
 
@@ -1779,6 +1826,32 @@ values only from the most recent source.
 ▪ **T**
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹[ObservableLike](interfaces/observablelike.md)‹T›, T›*
+
+___
+
+### `Const` switchMap
+
+▸ **switchMap**<**TA**, **TB**>(`mapper`: function): *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`a`: TA): *[ObservableLike](interfaces/observablelike.md)‹TB›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+**Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹TA›, [ObservableLike](interfaces/observablelike.md)‹TB››*
 
 ___
 
