@@ -20,7 +20,10 @@ export {
   HttpRequestListenerOptions,
   createHttpRequestListener,
 } from "./internal/httpRequestListener";
-export { decodeHttpRequest } from "./internal/httpRequest";
+export {
+  decodeHttpRequest,
+  disallowProtocolAndHostForwarding,
+} from "./internal/httpRequest";
 export {
   checkIfNotModified,
   EncodeHttpResponseOptions,

@@ -30,7 +30,10 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { createStringHttpContent } from "./httpContent";
 import { createHttpRequestFromHeaders } from "./httpRequest";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { createDisposableWrapper } from "@reactive-js/disposable";
+import {
+  createDisposableWrapper,
+  DisposableWrapperLike,
+} from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
   response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
@@ -83,7 +86,6 @@ export interface HttpRequestListenerOptions {
   ) => ObservableLike<
     HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
-  readonly protocol?: "http:" | "https:" | undefined;
 }
 
 export interface HttpRequestListenerHandler {
@@ -94,7 +96,11 @@ export interface HttpRequestListenerHandler {
   >;
 }
 
-const destroyRequest = (msg: IncomingMessage) => {
+const destroyIncomingMessge = (msg: IncomingMessage) => {
+  msg.destroy();
+};
+
+const destroyServerResponse = (msg: ServerResponse) => {
   msg.destroy();
 };
 
@@ -105,28 +111,51 @@ export const createHttpRequestListener = (
 ): RequestListener => {
   const { onError = defaultOnError } = options;
 
+  const handleRequest = (
+    disposableRequest: DisposableWrapperLike<IncomingMessage>,
+    disposableResponse: DisposableWrapperLike<ServerResponse>,
+  ) => {
+    const req = disposableRequest.value;
+    const resp = disposableResponse.value;
+
+    const {
+      method,
+      url: path = "/",
+      headers,
+      httpVersionMajor,
+      httpVersionMinor,
+    } = req;
+    const body = createReadableAsyncEnumerable(() => req);
+    const protocol = (req.socket as any).encrypted || false ? "https" : "http";
+
+    return pipe(
+      createHttpRequestFromHeaders({
+        method: method as HttpMethod,
+        path,
+        headers: headers as HttpHeadersLike,
+        httpVersionMajor,
+        httpVersionMinor,
+        protocol,
+        body,
+      }),
+      handler,
+      catchError(onError),
+      onNotify(writeResponseMessage(resp)),
+      await_(writeResponseContentBody(resp)),
+    );
+  };
+
   return (req, resp) =>
     pipe(
       using(
-        () => createDisposableWrapper(req, destroyRequest),
-        req => {
-          const value = req.value;
-          return pipe(
-            createHttpRequestFromHeaders(
-              value.method as HttpMethod,
-              value.url || "",
-              value.headers as HttpHeadersLike,
-              createReadableAsyncEnumerable(() => value),
-              (value.socket as any).encrypted || false,
-              value.httpVersionMajor,
-            ),
-
-            handler,
-            catchError(onError),
-            onNotify(writeResponseMessage(resp)),
-            await_(writeResponseContentBody(resp)),
-          );
-        },
+        (): [
+          DisposableWrapperLike<IncomingMessage>,
+          DisposableWrapperLike<ServerResponse>,
+        ] => [
+          createDisposableWrapper(req, destroyIncomingMessge),
+          createDisposableWrapper(resp, destroyServerResponse),
+        ],
+        handleRequest,
       ),
       subscribe(scheduler),
     );
