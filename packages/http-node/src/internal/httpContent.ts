@@ -1,4 +1,6 @@
 import compressible from "compressible";
+import contentTypeParser from "content-type";
+import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
@@ -114,16 +116,23 @@ export const createReadableHttpContent = (
   contentType,
 });
 
-// FIXME: This isn't quite right.
-// It should take an optional charset and default to UTF-8
-// It should update the content-type based upon the charset
-// It should use iconv to convert the string to a buffer.
 export const createStringHttpContent = (
   content: string,
   contentType: string,
-): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> =>
-  createBufferHttpContent(Buffer.from(content), contentType);
-
+  charset = "utf-8",
+): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
+  const buffer = iconv.encode(content, charset);
+  const contentTypeParsed = contentTypeParser.parse(contentType);
+  const { type, parameters = {} } = contentTypeParsed;
+  const newParameters = { ...parameters, charset };
+  const newContentTypeParsed = {
+    type,
+    parameters: newParameters,
+  }
+  const newContentType = contentTypeParser.format(newContentTypeParsed);
+  return createBufferHttpContent(buffer, newContentType);
+}
+  
 /** @ignore */
 export const contentIsCompressible = (
   content: HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
