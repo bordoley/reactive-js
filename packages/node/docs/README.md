@@ -16,6 +16,8 @@
 ### Variables
 
 * [emptyReadableAsyncEnumerable](README.md#const-emptyreadableasyncenumerable)
+* [entityTooLarge](README.md#const-entitytoolarge)
+* [unsupportedEncoding](README.md#const-unsupportedencoding)
 
 ### Functions
 
@@ -26,7 +28,9 @@
 * [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
 * [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
 * [getHostScheduler](README.md#const-gethostscheduler)
+* [readableAsyncEnumerableToString](README.md#const-readableasyncenumerabletostring)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
+* [stringToReadableAsyncEnumerable](README.md#const-stringtoreadableasyncenumerable)
 * [transform](README.md#const-transform)
 
 ## Type aliases
@@ -43,6 +47,18 @@
   ReadableMode,
   ReadableEvent
 >(mapTo({ type: ReadableEventType.End }))
+
+___
+
+### `Const` entityTooLarge
+
+• **entityTooLarge**: *unique symbol* =  Symbol("EntityTooLarge")
+
+___
+
+### `Const` unsupportedEncoding
+
+• **unsupportedEncoding**: *unique symbol* =  Symbol("unsupportedEncoding")
 
 ## Functions
 
@@ -1914,6 +1930,21 @@ ___
 
 ___
 
+### `Const` readableAsyncEnumerableToString
+
+▸ **readableAsyncEnumerableToString**(`charset`: string, `limit`: number): *OperatorLike‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`charset` | string | - |
+`limit` | number |  Number.MAX_SAFE_INTEGER |
+
+**Returns:** *OperatorLike‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
+
+___
+
 ### `Const` setSchedulerTimeout
 
 ▸ **setSchedulerTimeout**(`newTimeout`: number): *void*
@@ -1925,6 +1956,20 @@ Name | Type |
 `newTimeout` | number |
 
 **Returns:** *void*
+
+___
+
+### `Const` stringToReadableAsyncEnumerable
+
+▸ **stringToReadableAsyncEnumerable**(`charset`: string): *OperatorLike‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charset` | string |
+
+**Returns:** *OperatorLike‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
 
 ___
 

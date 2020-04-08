@@ -1,12 +1,14 @@
 import { Readable, Writable } from "stream";
 import { sink } from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
-import { toPromise } from "@reactive-js/observable";
+import { toPromise, toValue } from "@reactive-js/observable";
 import {
   createReadableAsyncEnumerable,
   getHostScheduler,
   createWritableAsyncEnumerable,
   transform,
+  stringToReadableAsyncEnumerable,
+  readableAsyncEnumerableToString,
 } from "../src";
 import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
@@ -117,5 +119,16 @@ describe("streams", () => {
       toPromise(getHostScheduler()),
     );
     expect(data).toEqual("abcdefg");
+  });
+
+  test("readableToString", () => {
+    const str = "abcdefghijklmnsopqrstuvwxyz";
+    const result = pipe(
+      str,
+      stringToReadableAsyncEnumerable("utf-8"),
+      readableAsyncEnumerableToString("utf-8"),
+      toValue(),
+    );
+    expect(result).toEqual(str);
   });
 });
