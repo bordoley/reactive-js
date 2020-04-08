@@ -17,6 +17,8 @@ import {
   HttpMethod,
   HttpStatusCode,
   createHttpResponse,
+  HttpHeadersLike,
+  URI,
 } from "@reactive-js/http";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
@@ -89,22 +91,37 @@ export const encodeHttpResponse = (
   };
 };
 
-export const checkIfNotModified = <T>(
-  { headers: reqHeaders, method }: HttpRequestLike<unknown>,
-): OperatorLike<HttpResponseLike<T>, HttpResponseLike<T>> => response => {
-  const { expires, headers, lastModified, location, preferences, statusCode, vary } = response;
-  const methodSupportsFresh = method === HttpMethod.GET || method === HttpMethod.HEAD;
+export const checkIfNotModified = <T>({
+  headers: reqHeaders,
+  method,
+}: HttpRequestLike<unknown>): OperatorLike<
+  HttpResponseLike<T>,
+  HttpResponseLike<T>
+> => response => {
+  const {
+    expires,
+    headers,
+    lastModified,
+    location,
+    preferences,
+    statusCode,
+    vary,
+  } = response;
+  const methodSupportsFresh =
+    method === HttpMethod.GET || method === HttpMethod.HEAD;
   const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
 
-  return methodSupportsFresh && statusCodeSupportsFresh && fresh(reqHeaders as any, headers as any)
+  return methodSupportsFresh &&
+    statusCodeSupportsFresh &&
+    fresh(reqHeaders as any, headers as any)
     ? createHttpResponse(HttpStatusCode.NotModified, {
-      expires,
-      headers,
-      lastModified,
-      location,
-      preferences,
-      vary,
-    })
+        expires,
+        headers,
+        lastModified,
+        location,
+        preferences,
+        vary,
+      })
     : response;
 };
 
@@ -118,58 +135,45 @@ class HttpIncomingMessageResponseImpl
     | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
+  readonly expires: number | undefined;
+  readonly headers: HttpHeadersLike;
+  readonly lastModified: number | undefined;
+  readonly location: URI | undefined;
   readonly preferences: HttpPreferencesLike | undefined;
+  readonly statusCode: HttpStatusCode;
+  readonly vary: readonly string[];
 
   constructor(private readonly msg: IncomingMessage) {
     this.disposable = createDisposable(() => msg.destroy());
     this.content = createIncomingMessageHttpContent(msg);
     this.preferences = createIncomingMessageHttpPreferencesLike(msg);
-  }
 
-  get expires() {
-    const dateValue = this.headers["expires"] || "";
-    const date = new Date(dateValue);
-    const time = date.getTime();
+    const expiresDateValue = msg.headers["expires"] || "";
+    const expiresDate = new Date(expiresDateValue);
+    const expiresTims = expiresDate.getTime();
+    this.expires = expiresDateValue !== "" && !Number.isNaN(expiresTims) ? expiresTims : undefined;
+    
+    this.headers = msg.headers;
 
-    return dateValue !== undefined &&  !Number.isNaN(time)
-      ? time
-      : undefined
-  }
+    const lastModifiedValue = msg.headers["last-modified"] || "";
+    const lastModifiedDate = new Date(lastModifiedValue);
+    const lastModifiedTime = lastModifiedDate.getTime();
+    this.lastModified = lastModifiedValue !== "" && !Number.isNaN(lastModifiedTime) ? lastModifiedTime : undefined;
 
+    try {
+      this.location = new URL(this.msg.headers.location || "");
+    } catch (_) {
+      this.location = undefined;
+    }
 
-  get headers() {
-    return this.msg.headers;
+    this.statusCode = msg.statusCode || -1;
+
+    // We're not going to use this so just return empty string.
+    this.vary = [];
   }
 
   get isDisposed() {
     return this.disposable.isDisposed;
-  }
-
-  get lastModified() {
-    const dateValue = this.headers["last-modified"] || "";
-    const date = new Date(dateValue);
-    const time = date.getTime();
-
-    return dateValue !== "" && !Number.isNaN(time)
-      ? time
-      : undefined
-  }
-
-  get location() {
-    try {
-      return new URL(this.msg.headers.location || "");
-    } catch (_) {
-      return undefined;
-    }
-  }
-
-  get statusCode(): number {
-    return this.msg.statusCode || -1;
-  }
-
-  get vary(): readonly string[] {
-    // We're not going to use this so just return empty string.
-    return [];
   }
 }
 
@@ -190,6 +194,13 @@ class HttpContentBodyDecodingResponseImpl
     | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
     | undefined;
   readonly dispose = dispose;
+  readonly expires: number | undefined;
+  readonly headers: HttpHeadersLike;
+  readonly lastModified: number | undefined;
+  readonly location: URI | undefined;
+  readonly preferences: HttpPreferencesLike | undefined;
+  readonly statusCode: HttpStatusCode;
+  readonly vary: readonly string[];
 
   constructor(
     readonly disposable: DisposableLike &
@@ -199,30 +210,18 @@ class HttpContentBodyDecodingResponseImpl
     const { content } = disposable;
     this.content =
       content !== undefined ? decodeHttpContent(content, options) : undefined;
-  }
 
-  get headers() {
-    return this.disposable.headers;
+    this.expires = disposable.expires;
+    this.headers = disposable.headers;
+    this.lastModified = disposable.lastModified;
+    this.location = disposable.location;
+    this.preferences = disposable.preferences;
+    this.statusCode = disposable.statusCode;
+    this.vary = disposable.vary;
   }
 
   get isDisposed() {
     return this.disposable.isDisposed;
-  }
-
-  get location() {
-    return this.disposable.location;
-  }
-
-  get preferences() {
-    return this.disposable.preferences;
-  }
-
-  get statusCode(): number {
-    return this.disposable.statusCode;
-  }
-
-  get vary(): readonly string[] {
-    return this.disposable.vary;
   }
 }
 

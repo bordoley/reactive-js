@@ -150,6 +150,7 @@ export interface HttpRequestLike<T> {
   // readonly referer?: URI;
   readonly uri: URI;
   // readonly userAgent?: UserAgent;
+  // referer
 }
 
 export interface HttpResponseLike<T> {
@@ -198,12 +199,12 @@ export const createHttpRequest = <T>(
     preferences?: HttpPreferencesLike;
   } = {},
 ): HttpRequestLike<T> => ({
-    ...options,
-    expectContinue: options.expectContinue || false,
-    headers: options.headers || {},
-    method,
-    uri: typeof uri === "string" ? new URL(uri) : uri,
-  });
+  ...options,
+  expectContinue: options.expectContinue || false,
+  headers: options.headers || {},
+  method,
+  uri: typeof uri === "string" ? new URL(uri) : uri,
+});
 
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
@@ -217,11 +218,11 @@ export const createHttpResponse = <T>(
     vary?: readonly string[];
   } = {},
 ): HttpResponseLike<T> => ({
-    ...options,
-    headers: options.headers || {},
-    statusCode,
-    vary: options.vary || [],
-  });
+  ...options,
+  headers: options.headers || {},
+  statusCode,
+  vary: options.vary || [],
+});
 
 export const createRedirectHttpRequest = <TReq, TResp>(
   response: HttpResponseLike<TResp>,
@@ -324,7 +325,15 @@ export const writeHttpRequestHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  { content, expires, headers, lastModified, location, preferences, vary }: HttpResponseLike<T>,
+  {
+    content,
+    expires,
+    headers,
+    lastModified,
+    location,
+    preferences,
+    vary,
+  }: HttpResponseLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (content !== undefined) {

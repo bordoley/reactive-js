@@ -15,7 +15,9 @@
 ### Properties
 
 * [content](httpresponselike.md#optional-content)
+* [expires](httpresponselike.md#optional-expires)
 * [headers](httpresponselike.md#headers)
+* [lastModified](httpresponselike.md#optional-lastmodified)
 * [location](httpresponselike.md#optional-location)
 * [preferences](httpresponselike.md#optional-preferences)
 * [statusCode](httpresponselike.md#statuscode)
@@ -29,9 +31,21 @@
 
 ___
 
+### `Optional` expires
+
+• **expires**? : *undefined | number*
+
+___
+
 ###  headers
 
 • **headers**: *[HttpHeadersLike](httpheaderslike.md)*
+
+___
+
+### `Optional` lastModified
+
+• **lastModified**? : *undefined | number*
 
 ___
 

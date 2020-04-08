@@ -16,6 +16,7 @@ export {
 } from "./internal/httpContent";
 
 export {
+  HttpRequestListenerHandler,
   HttpRequestListenerOptions,
   createHttpRequestListener,
 } from "./internal/httpRequestListener";
@@ -25,3 +26,9 @@ export {
   EncodeHttpResponseOptions,
   encodeHttpResponse,
 } from "./internal/httpResponse";
+
+export {
+  HttpRoutedRequestLike,
+  HttpRequestRouterHandler,
+  createRouter,
+} from "./internal/httpRequestRouter";

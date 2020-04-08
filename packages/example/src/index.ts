@@ -3,9 +3,12 @@ import {
   HttpMethod,
   createHttpRequest,
   createHttpResponse,
+  HttpRequestLike,
+  HttpResponseLike,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
+  HttpRequestRouterHandler,
   createBufferHttpContent,
   createStringHttpContent,
   createHttpRequestListener,
@@ -13,8 +16,13 @@ import {
   decodeHttpRequest,
   encodeHttpResponse,
   createDefaultHttpResponseHandler,
+  createRouter,
 } from "@reactive-js/http-node";
-import { getHostScheduler } from "@reactive-js/node";
+import {
+  getHostScheduler,
+  ReadableEvent,
+  ReadableMode,
+} from "@reactive-js/node";
 import {
   exhaust,
   fromArray,
@@ -25,12 +33,14 @@ import {
   ofValue,
   scan,
   mapTo,
+  ObservableLike,
 } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, compose, OperatorLike } from "@reactive-js/pipe";
 import {
   createPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
+import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 
 const backgroundScheduler = pipe(
   getHostScheduler(),
@@ -43,14 +53,14 @@ pipe(
     x => x + 1,
     () => 0,
   ),
-  map(x => fromArray([x, x, x, x], { delay: 1000 })),
+  map(x => fromArray([x, x, x, x])),
   exhaust(),
   map(_ => backgroundScheduler.now),
   scan(
     ([_, prev], next) => [prev, next],
     () => [backgroundScheduler.now, backgroundScheduler.now],
   ),
-  //onNotify(([prev, next]) => console.log(next - prev)),
+  onNotify(([prev, next]) => console.log(next - prev)),
   subscribe(backgroundScheduler),
 );
 
@@ -60,16 +70,83 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
+const routerHandlerA: OperatorLike<
+  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  ObservableLike<
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  >
+> = compose(
+  ofValue,
+  mapTo(
+    createHttpResponse(200, {
+      content: createStringHttpContent("a", "text/plain"),
+    }),
+  ),
+);
+
+const routerHandlerB: HttpRequestRouterHandler<
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+> = req =>
+  pipe(
+    ofValue(req),
+    mapTo(
+      createHttpResponse(200, {
+        content: createStringHttpContent(
+          JSON.stringify(req.params),
+          "text/plain",
+        ),
+      }),
+    ),
+  );
+
+const routerHandlerGlob: HttpRequestRouterHandler<
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+> = req =>
+  pipe(
+    ofValue(req),
+    mapTo(
+      createHttpResponse(200, {
+        content: createStringHttpContent(
+          JSON.stringify(req.params),
+          "text/plain",
+        ),
+      }),
+    ),
+  );
+
+const notFound: OperatorLike<
+  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  ObservableLike<
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  >
+> = req =>
+  pipe(
+    ofValue(req),
+    mapTo(
+      createHttpResponse(404, {
+        content: createStringHttpContent(req.uri.toString(), "text/plain"),
+      }),
+    ),
+  );
+
+const router = createRouter(
+  {
+    "/a": routerHandlerA,
+    "/path/glob/b": routerHandlerB,
+    "/path/glob/*": routerHandlerGlob,
+    "/path/:paramA/a/:paramB": routerHandlerB,
+  },
+  notFound,
+);
+
 const listener = createHttpRequestListener(
   req =>
     pipe(
-      ofValue(req),
-      map(decodeHttpRequest()),
-      mapTo(
-        createHttpResponse(200, {
-          content: createStringHttpContent(req.uri.toString(), "text/plain"),
-        }),
-      ),
+      req,
+      decodeHttpRequest(),
+      router,
       map(encodeHttpResponse(req)),
     ),
   scheduler,
