@@ -117,7 +117,7 @@ export const contentEncodings = [
 
 // FIXME: filter out headers for which we have strongly typed apis.
 export interface HttpHeadersLike {
-  readonly [header: string]: unknown;
+  readonly [header: string]: string;
 }
 
 export interface HttpContentLike<T> {

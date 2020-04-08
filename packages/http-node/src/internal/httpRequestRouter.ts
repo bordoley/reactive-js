@@ -95,22 +95,24 @@ const findHandler = <TReq, TResp>(
   }
 
   const nameRouter = router.children[child.name];
-  const nameRouterResult = nameRouter !== undefined
-    ? findHandler(nameRouter, child, params)
-    : undefined;
+  const nameRouterResult =
+    nameRouter !== undefined
+      ? findHandler(nameRouter, child, params)
+      : undefined;
   if (nameRouterResult !== undefined) {
     return nameRouterResult;
   }
 
   const paramRouter = router.children[":"];
-  const paramRouterResult = paramRouter !== undefined
-    ? findHandler(paramRouter, child, {
-      ...params,
-      [paramRouter.name]: child.name,
-    })
-    : undefined;
+  const paramRouterResult =
+    paramRouter !== undefined
+      ? findHandler(paramRouter, child, {
+          ...params,
+          [paramRouter.name]: child.name,
+        })
+      : undefined;
   if (paramRouterResult !== undefined) {
-    return paramRouterResult
+    return paramRouterResult;
   }
 
   const globRouter = router.children["*"];

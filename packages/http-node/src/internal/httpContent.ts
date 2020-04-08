@@ -1,5 +1,4 @@
 import compressible from "compressible";
-import { IncomingMessage } from "http";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
@@ -7,6 +6,7 @@ import {
   HttpContentEncoding,
   HttpContentLike,
   contentEncodings as allContentEncodings,
+  HttpHeadersLike,
 } from "@reactive-js/http";
 import {
   ReadableMode,
@@ -21,36 +21,23 @@ import {
   createEncodingDecompressTransform,
 } from "./httpContentEncoding";
 
-const parseContentEncoding = (
-  msg: IncomingMessage,
-): readonly HttpContentEncoding[] => {
-  const contentEncodingString = msg.headers["content-encoding"] || "";
-  return contentEncodingString
+/** @ignore */
+export const createHttpContentFromHeaders = <T>(
+  headers: HttpHeadersLike,
+  body: T,
+): HttpContentLike<T> | undefined => {
+  const contentEncodingString = headers["content-encoding"] || "";
+  const contentEncodings = contentEncodingString
     .split(",")
     .map(x => x.trim())
     .filter(x =>
       allContentEncodings.includes(x as HttpContentEncoding),
     ) as readonly HttpContentEncoding[];
-};
 
-const parseContentLength = (msg: IncomingMessage) => {
-  const contentLength = msg.headers["content-length"] || "0";
-  return ~~contentLength;
-};
+  const contentLengthHeader = headers["content-length"] || "0";
+  const contentLength = ~~contentLengthHeader;
 
-/** @ignore */
-export const createIncomingMessageHttpContent = (
-  msg: IncomingMessage,
-):
-  | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-  | undefined => {
-  const body = createReadableAsyncEnumerable(() => msg);
-  const contentEncodings: readonly HttpContentEncoding[] = parseContentEncoding(
-    msg,
-  );
-  const contentLength = parseContentLength(msg);
-  const contentType = msg.headers["content-type"] || "";
-
+  const contentType = headers["content-type"] || "";
   const isUndefined = contentType === "" || contentLength === 0;
 
   return isUndefined
