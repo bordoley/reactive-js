@@ -12,6 +12,8 @@ import {
   HttpMethod,
   HttpContentLike,
   HttpPreferencesLike,
+  HttpHeadersLike,
+  URI,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
@@ -47,36 +49,25 @@ class HttpIncomingMessageRequestImpl
     | undefined;
   readonly disposable: DisposableLike;
   readonly dispose = dispose;
+  readonly expectContinue: boolean;
+  readonly headers: HttpHeadersLike;
+  readonly method: HttpMethod;
   readonly preferences: HttpPreferencesLike | undefined;
+  readonly uri: URI;
 
-  constructor(private readonly msg: IncomingMessage) {
+  constructor(msg: IncomingMessage) {
     this.disposable = createDisposable(() => {
       msg.destroy();
     });
 
     this.content = createIncomingMessageHttpContent(msg);
+    const rawExpectHeader = msg.headers.expect;
+
+    this.expectContinue = rawExpectHeader === "100-continue";
+    this.headers = msg.headers;
+    
+    this.method = (msg.method as HttpMethod) || HttpMethod.GET;
     this.preferences = createIncomingMessageHttpPreferencesLike(msg);
-  }
-
-  get expectContinue(): boolean {
-    const rawExpectHeader = String(this.headers.expect || "");
-    return rawExpectHeader === "100-continue";
-  }
-
-  get headers() {
-    return this.msg.headers;
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
-  get method() {
-    return (this.msg.method as HttpMethod) || HttpMethod.GET;
-  }
-
-  get uri() {
-    const msg = this.msg;
 
     const forwardedProtocol = msg.headers["x-forwarded-proto"];
     const protocol =
@@ -89,7 +80,6 @@ class HttpIncomingMessageRequestImpl
     const forwardedHost = msg.headers["x-forwarded-host"];
     const http2Authority = msg.headers[":authority"];
     const http1Host = msg.headers["host"];
-
     const unfilteredHost =
       forwardedHost !== undefined && !Array.isArray(forwardedHost)
         ? forwardedHost
@@ -100,10 +90,12 @@ class HttpIncomingMessageRequestImpl
         : http1Host !== undefined && !Array.isArray(http1Host)
         ? http1Host
         : "";
-
     const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+    this.uri = new URL(`${protocol}://${host}${msg.url || ""}`);
+  }
 
-    return new URL(`${protocol}://${host}${msg.url || ""}`);
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 }
 

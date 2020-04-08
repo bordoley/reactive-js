@@ -82,12 +82,16 @@ export interface HttpRequestListenerOptions {
   readonly protocol?: "http:" | "https:" | undefined;
 }
 
-export const createHttpRequestListener = (
-  handler: (
+export interface HttpRequestListenerHandler {
+  (
     req: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  ) => ObservableLike<
+  ): ObservableLike<
     HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-  >,
+  >;
+}
+
+export const createHttpRequestListener = (
+  handler: HttpRequestListenerHandler,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
 ): RequestListener => {
