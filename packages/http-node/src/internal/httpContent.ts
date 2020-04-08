@@ -128,11 +128,11 @@ export const createStringHttpContent = (
   const newContentTypeParsed = {
     type,
     parameters: newParameters,
-  }
+  };
   const newContentType = contentTypeParser.format(newContentTypeParsed);
   return createBufferHttpContent(buffer, newContentType);
-}
-  
+};
+
 /** @ignore */
 export const contentIsCompressible = (
   content: HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,

@@ -17,6 +17,7 @@ import {
   encodeHttpResponse,
   createDefaultHttpResponseHandler,
   createRouter,
+  disallowProtocolAndHostForwarding,
 } from "@reactive-js/http-node";
 import {
   getHostScheduler,
@@ -60,7 +61,7 @@ pipe(
     ([_, prev], next) => [prev, next],
     () => [backgroundScheduler.now, backgroundScheduler.now],
   ),
-  onNotify(([prev, next]) => console.log(next - prev)),
+  //onNotify(([prev, next]) => console.log(next - prev)),
   subscribe(backgroundScheduler),
 );
 
@@ -142,7 +143,26 @@ const router = createRouter(
 );
 
 const listener = createHttpRequestListener(
-  req => pipe(req, decodeHttpRequest(), router, map(encodeHttpResponse(req))),
+  req =>
+    pipe(
+      req,
+      req => (
+        console.log(req.uri.toString()),
+        console.log(req.headers),
+        console.log(),
+        req
+      ),
+      disallowProtocolAndHostForwarding(),
+      req => (
+        console.log(req.uri.toString()),
+        console.log(req.headers),
+        console.log(),
+        req
+      ),
+      decodeHttpRequest(),
+      router,
+      map(encodeHttpResponse(req)),
+    ),
   scheduler,
 );
 
@@ -157,6 +177,10 @@ const chunk = Buffer.from(
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createBufferHttpContent(chunk, "text/plain"),
+    headers: {
+      "x-forwarded-host": "www.google.com",
+      "x-forwarded-proto": "https",
+    }
   }),
   sendHttpRequest,
   createDefaultHttpResponseHandler(sendHttpRequest, 10),

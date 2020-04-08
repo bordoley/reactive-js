@@ -151,6 +151,8 @@ export interface HttpRequestLike<T> {
   readonly uri: URI;
   // readonly userAgent?: UserAgent;
   // referer
+  readonly httpVersionMajor: number;
+  readonly httpVersionMinor: number;
 }
 
 export interface HttpResponseLike<T> {
@@ -197,11 +199,15 @@ export const createHttpRequest = <T>(
     expectContinue?: boolean;
     headers?: HttpHeadersLike;
     preferences?: HttpPreferencesLike;
+    httpVersionMajor?: number;
+    httpVersionMinor?: number;
   } = {},
 ): HttpRequestLike<T> => ({
   ...options,
   expectContinue: options.expectContinue || false,
   headers: options.headers || {},
+  httpVersionMajor: options.httpVersionMajor || 1,
+  httpVersionMinor: options.httpVersionMinor || 1,
   method,
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
