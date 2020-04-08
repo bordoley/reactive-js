@@ -20,16 +20,20 @@ import {
   HttpHeadersLike,
   URI,
 } from "@reactive-js/http";
-import { ReadableMode, ReadableEvent } from "@reactive-js/node";
+import {
+  ReadableMode,
+  ReadableEvent,
+  createReadableAsyncEnumerable,
+} from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   contentIsCompressible,
-  createIncomingMessageHttpContent,
+  createHttpContentFromHeaders,
   decodeHttpContent,
   encodeHttpContent,
 } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
-import { createIncomingMessageHttpPreferencesLike } from "./httpPreferences";
+import { createHttpPreferencesFromHeaders } from "./httpPreferences";
 
 const responseIsCompressible = (
   response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
@@ -145,20 +149,31 @@ class HttpIncomingMessageResponseImpl
 
   constructor(private readonly msg: IncomingMessage) {
     this.disposable = createDisposable(() => msg.destroy());
-    this.content = createIncomingMessageHttpContent(msg);
-    this.preferences = createIncomingMessageHttpPreferencesLike(msg);
+    this.content = createHttpContentFromHeaders(
+      msg.headers as HttpHeadersLike,
+      createReadableAsyncEnumerable(() => msg),
+    );
+    this.preferences = createHttpPreferencesFromHeaders(
+      msg.headers as HttpHeadersLike,
+    );
 
     const expiresDateValue = msg.headers["expires"] || "";
     const expiresDate = new Date(expiresDateValue);
     const expiresTims = expiresDate.getTime();
-    this.expires = expiresDateValue !== "" && !Number.isNaN(expiresTims) ? expiresTims : undefined;
-    
-    this.headers = msg.headers;
+    this.expires =
+      expiresDateValue !== "" && !Number.isNaN(expiresTims)
+        ? expiresTims
+        : undefined;
+
+    this.headers = msg.headers as HttpHeadersLike;
 
     const lastModifiedValue = msg.headers["last-modified"] || "";
     const lastModifiedDate = new Date(lastModifiedValue);
     const lastModifiedTime = lastModifiedDate.getTime();
-    this.lastModified = lastModifiedValue !== "" && !Number.isNaN(lastModifiedTime) ? lastModifiedTime : undefined;
+    this.lastModified =
+      lastModifiedValue !== "" && !Number.isNaN(lastModifiedTime)
+        ? lastModifiedTime
+        : undefined;
 
     try {
       this.location = new URL(this.msg.headers.location || "");

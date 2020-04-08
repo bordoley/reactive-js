@@ -142,13 +142,7 @@ const router = createRouter(
 );
 
 const listener = createHttpRequestListener(
-  req =>
-    pipe(
-      req,
-      decodeHttpRequest(),
-      router,
-      map(encodeHttpResponse(req)),
-    ),
+  req => pipe(req, decodeHttpRequest(), router, map(encodeHttpResponse(req))),
   scheduler,
 );
 

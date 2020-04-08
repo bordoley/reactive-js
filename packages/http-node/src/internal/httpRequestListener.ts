@@ -1,16 +1,19 @@
-import { RequestListener, ServerResponse } from "http";
+import { RequestListener, ServerResponse, IncomingMessage } from "http";
 import {
   HttpRequestLike,
   HttpResponseLike,
   HttpStatusCode,
   createHttpResponse,
   writeHttpResponseHeaders,
+  HttpMethod,
+  HttpHeadersLike,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
   emptyReadableAsyncEnumerable,
   ReadableMode,
   ReadableEvent,
+  createReadableAsyncEnumerable,
 } from "@reactive-js/node";
 import {
   ObservableLike,
@@ -22,11 +25,12 @@ import {
   subscribe,
   using,
 } from "@reactive-js/observable";
-import { compose, pipe } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createStringHttpContent } from "./httpContent";
-import { createIncomingMessageHttpRequest } from "./httpRequest";
+import { createHttpRequestFromHeaders } from "./httpRequest";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import { createDisposableWrapper } from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
   response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
@@ -90,6 +94,10 @@ export interface HttpRequestListenerHandler {
   >;
 }
 
+const destroyRequest = (msg: IncomingMessage) => {
+  msg.destroy();
+};
+
 export const createHttpRequestListener = (
   handler: HttpRequestListenerHandler,
   scheduler: SchedulerLike,
@@ -100,13 +108,25 @@ export const createHttpRequestListener = (
   return (req, resp) =>
     pipe(
       using(
-        () => createIncomingMessageHttpRequest(req),
-        compose(
-          handler,
-          catchError(onError),
-          onNotify(writeResponseMessage(resp)),
-          await_(writeResponseContentBody(resp)),
-        ),
+        () => createDisposableWrapper(req, destroyRequest),
+        req => {
+          const value = req.value;
+          return pipe(
+            createHttpRequestFromHeaders(
+              value.method as HttpMethod,
+              value.url || "",
+              value.headers as HttpHeadersLike,
+              createReadableAsyncEnumerable(() => value),
+              (value.socket as any).encrypted || false,
+              value.httpVersionMajor,
+            ),
+
+            handler,
+            catchError(onError),
+            onNotify(writeResponseMessage(resp)),
+            await_(writeResponseContentBody(resp)),
+          );
+        },
       ),
       subscribe(scheduler),
     );

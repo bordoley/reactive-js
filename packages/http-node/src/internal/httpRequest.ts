@@ -1,28 +1,15 @@
-import { IncomingMessage } from "http";
 import { URL } from "url";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import {
-  DisposableLike,
-  add,
-  dispose,
-  createDisposable,
-} from "@reactive-js/disposable";
-import {
   HttpRequestLike,
   HttpMethod,
-  HttpContentLike,
-  HttpPreferencesLike,
   HttpHeadersLike,
-  URI,
 } from "@reactive-js/http";
 import { OperatorLike } from "@reactive-js/pipe";
-import {
-  decodeHttpContent,
-  createIncomingMessageHttpContent,
-} from "./httpContent";
+import { decodeHttpContent, createHttpContentFromHeaders } from "./httpContent";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { createIncomingMessageHttpPreferencesLike } from "./httpPreferences";
+import { createHttpPreferencesFromHeaders } from "./httpPreferences";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
@@ -39,70 +26,51 @@ export const decodeHttpRequest = (
     : request;
 };
 
-class HttpIncomingMessageRequestImpl
-  implements
-    DisposableLike,
-    HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> {
-  readonly add = add;
-  readonly content:
-    | HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-    | undefined;
-  readonly disposable: DisposableLike;
-  readonly dispose = dispose;
-  readonly expectContinue: boolean;
-  readonly headers: HttpHeadersLike;
-  readonly method: HttpMethod;
-  readonly preferences: HttpPreferencesLike | undefined;
-  readonly uri: URI;
-
-  constructor(msg: IncomingMessage) {
-    this.disposable = createDisposable(() => {
-      msg.destroy();
-    });
-
-    this.content = createIncomingMessageHttpContent(msg);
-    const rawExpectHeader = msg.headers.expect;
-
-    this.expectContinue = rawExpectHeader === "100-continue";
-    this.headers = msg.headers;
-    
-    this.method = (msg.method as HttpMethod) || HttpMethod.GET;
-    this.preferences = createIncomingMessageHttpPreferencesLike(msg);
-
-    const forwardedProtocol = msg.headers["x-forwarded-proto"];
-    const protocol =
-      (msg.socket as any).encrypted || false
-        ? "https"
-        : forwardedProtocol !== undefined && !Array.isArray(forwardedProtocol)
-        ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
-        : "http";
-
-    const forwardedHost = msg.headers["x-forwarded-host"];
-    const http2Authority = msg.headers[":authority"];
-    const http1Host = msg.headers["host"];
-    const unfilteredHost =
-      forwardedHost !== undefined && !Array.isArray(forwardedHost)
-        ? forwardedHost
-        : http2Authority !== undefined &&
-          msg.httpVersionMajor >= 2 &&
-          !Array.isArray(http2Authority)
-        ? http2Authority
-        : http1Host !== undefined && !Array.isArray(http1Host)
-        ? http1Host
-        : "";
-    const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
-    this.uri = new URL(`${protocol}://${host}${msg.url || ""}`);
-  }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-}
-
 /** @ignore */
-export const createIncomingMessageHttpRequest = (
-  msg: IncomingMessage,
-): DisposableLike &
-  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
-  return new HttpIncomingMessageRequestImpl(msg);
+export const createHttpRequestFromHeaders = <T>(
+  method: HttpMethod,
+  path: string,
+  headers: HttpHeadersLike,
+  body: T,
+  isEncrypted: boolean,
+  httpVersionMajor: number,
+): HttpRequestLike<T> => {
+  const content = createHttpContentFromHeaders(headers, body);
+
+  const rawExpectHeader = headers.expect;
+  const expectContinue = rawExpectHeader === "100-continue";
+
+  const preferences = createHttpPreferencesFromHeaders(headers);
+
+  const forwardedProtocol = headers["x-forwarded-proto"];
+  const protocol = isEncrypted
+    ? "https"
+    : forwardedProtocol !== undefined
+    ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+    : "http";
+
+  const forwardedHost = headers["x-forwarded-host"];
+  const http2Authority = headers[":authority"];
+  const http1Host = headers["host"];
+  const unfilteredHost =
+    forwardedHost !== undefined && !Array.isArray(forwardedHost)
+      ? forwardedHost
+      : http2Authority !== undefined &&
+        httpVersionMajor >= 2 &&
+        !Array.isArray(http2Authority)
+      ? http2Authority
+      : http1Host !== undefined && !Array.isArray(http1Host)
+      ? http1Host
+      : "";
+  const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+  const uri = new URL(`${protocol}://${host}${path || ""}`);
+
+  return {
+    content,
+    expectContinue,
+    headers,
+    method,
+    preferences,
+    uri,
+  };
 };
