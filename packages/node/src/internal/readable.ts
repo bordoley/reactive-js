@@ -1,3 +1,4 @@
+import iconv from "iconv-lite";
 import { Readable } from "stream";
 import {
   createAsyncEnumerable,
@@ -20,8 +21,13 @@ import {
   concat,
   never,
   await_,
+  ObservableLike,
+  createObservable,
+  reduce,
+  map,
+  onNotify,
 } from "@reactive-js/observable";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 export const enum ReadableMode {
@@ -159,3 +165,73 @@ export const createReadableAsyncEnumerableFromBuffer = (
       never(),
     ),
   );
+
+export const stringToReadableAsyncEnumerable = (
+  charset: string,
+): OperatorLike<
+  string,
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+> => str => {
+  const buffer = iconv.encode(str, charset);
+  return createReadableAsyncEnumerableFromBuffer(buffer);
+};
+
+export const entityTooLarge = Symbol("EntityTooLarge");
+export const unsupportedEncoding = Symbol("unsupportedEncoding");
+export const readableAsyncEnumerableToString = (
+  charset: string,
+  limit = Number.MAX_SAFE_INTEGER,
+): OperatorLike<
+  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
+  ObservableLike<string>
+> => readable =>
+  createObservable(subscriber => {
+    let decoder: any;
+    try {
+      decoder = (iconv as any).getDecoder(charset);
+    } catch (err) {
+      if (!/^Encoding not recognized: /.test(err.message)) throw err;
+      throw unsupportedEncoding;
+    }
+
+    const enumerator = readable.enumerateAsync(subscriber);
+    subscriber.add(enumerator);
+
+    const reducer = (
+      {
+        count,
+        buffer,
+      }: {
+        count: number;
+        buffer: string;
+      },
+      next: ReadableEvent,
+    ) => {
+      const chunkSize =
+        next.type === ReadableEventType.Data ? next.chunk.length : 0;
+
+      const newCount = count + chunkSize;
+      if (newCount > limit) {
+        throw entityTooLarge;
+      }
+
+      buffer +=
+        next.type === ReadableEventType.Data
+          ? decoder.write(next.chunk)
+          : (
+            enumerator.dispose(),
+            decoder.end() || ""
+          );
+
+      return { count: newCount, buffer };
+    };
+
+    pipe(
+      enumerator,
+      reduce(reducer, () => ({ count: 0, buffer: "" })),
+      map(({ buffer }) => buffer),
+      onNotify(buffer => subscriber.dispatch(buffer)),
+    ).subscribe(subscriber);
+
+    enumerator.dispatch(ReadableMode.Resume);
+  });

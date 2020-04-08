@@ -10,6 +10,10 @@ export {
   createReadableAsyncEnumerator,
   createReadableAsyncEnumerable,
   emptyReadableAsyncEnumerable,
+  entityTooLarge,
+  readableAsyncEnumerableToString,
+  stringToReadableAsyncEnumerable,
+  unsupportedEncoding,
 } from "./internal/readable";
 export {
   createWritableAsyncEnumerator,

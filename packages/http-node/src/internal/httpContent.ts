@@ -114,6 +114,10 @@ export const createReadableHttpContent = (
   contentType,
 });
 
+// FIXME: This isn't quite right.
+// It should take an optional charset and default to UTF-8
+// It should update the content-type based upon the charset
+// It should use iconv to convert the string to a buffer.
 export const createStringHttpContent = (
   content: string,
   contentType: string,
