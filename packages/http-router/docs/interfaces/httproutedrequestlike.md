@@ -1,4 +1,4 @@
-[@reactive-js/http-node](../README.md) › [HttpRoutedRequestLike](httproutedrequestlike.md)
+[@reactive-js/http-router](../README.md) › [HttpRoutedRequestLike](httproutedrequestlike.md)
 
 # Interface: HttpRoutedRequestLike <**T**>
 

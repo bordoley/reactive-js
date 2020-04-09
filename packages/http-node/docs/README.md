@@ -20,12 +20,10 @@
 * [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
 * [HttpRequestListenerHandler](interfaces/httprequestlistenerhandler.md)
 * [HttpRequestListenerOptions](interfaces/httprequestlisteneroptions.md)
-* [HttpRoutedRequestLike](interfaces/httproutedrequestlike.md)
 
 ### Type aliases
 
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
-* [HttpRequestRouterHandler](README.md#httprequestrouterhandler)
 
 ### Functions
 
@@ -35,7 +33,6 @@
 * [createDefaultHttpResponseHandler](README.md#const-createdefaulthttpresponsehandler)
 * [createHttpRequestListener](README.md#const-createhttprequestlistener)
 * [createReadableHttpContent](README.md#const-createreadablehttpcontent)
-* [createRouter](README.md#const-createrouter)
 * [createStringHttpContent](README.md#const-createstringhttpcontent)
 * [decodeDisposableHttpResponse](README.md#const-decodedisposablehttpresponse)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
@@ -46,12 +43,6 @@
 ###  HttpClientRequestStatus
 
 Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
-
-___
-
-###  HttpRequestRouterHandler
-
-Ƭ **HttpRequestRouterHandler**: *OperatorLike‹[HttpRoutedRequestLike](interfaces/httproutedrequestlike.md)‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
 
 ## Functions
 
@@ -148,27 +139,6 @@ ___
 ▪`Default value`  **contentLength**: *number*=  -1
 
 **Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
-
-___
-
-### `Const` createRouter
-
-▸ **createRouter**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››): *OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **TResp**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`routes` | object |
-`notFoundHandler` | OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp››› |
-
-**Returns:** *OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
 
 ___
 

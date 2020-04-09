@@ -9,7 +9,6 @@ import {
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
-  HttpRequestRouterHandler,
   createBufferHttpContent,
   createStringHttpContent,
   createHttpRequestListener,
@@ -17,8 +16,11 @@ import {
   decodeHttpRequest,
   encodeHttpResponse,
   createDefaultHttpResponseHandler,
-  createRouter,
 } from "@reactive-js/http-node";
+import {
+  HttpRequestRouterHandler,
+  createRouter,
+} from "@reactive-js/http-router";
 import {
   getHostScheduler,
   ReadableEvent,
@@ -138,6 +140,7 @@ const router = createRouter(
     "/path/glob/b": routerHandlerB,
     "/path/glob/*": routerHandlerGlob,
     "/path/:paramA/a/:paramB": routerHandlerB,
+    "/path/:paramA/a/:paramB/*": routerHandlerB,
   },
   notFound,
 );

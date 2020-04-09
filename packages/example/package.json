@@ -38,6 +38,7 @@
   "dependencies": {
     "@reactive-js/http": "^0.0.32",
     "@reactive-js/http-node": "^0.0.32",
+    "@reactive-js/http-router": "^0.0.32",
     "@reactive-js/node": "^0.0.32",
     "@reactive-js/observable": "^0.0.32",
     "@reactive-js/pipe": "^0.0.32",
