@@ -10,9 +10,15 @@ import {
   HttpRequestLike,
   HttpMethod,
 } from "./interfaces";
-import { writeHttpContentHeaders, parseHttpContentFromHeaders } from "./httpContent";
+import {
+  writeHttpContentHeaders,
+  parseHttpContentFromHeaders,
+} from "./httpContent";
 import { writeHttpHeaders } from "./httpHeaders";
-import { writeHttpPreferenceHeaders, parseHttpPreferencesFromHeaders } from "./httpPreferences";
+import {
+  writeHttpPreferenceHeaders,
+  parseHttpPreferencesFromHeaders,
+} from "./httpPreferences";
 
 declare class URL implements URI {
   constructor(uri: string);
@@ -53,14 +59,9 @@ export const parseHttpResponseFromHeaders = <T>(
   headers: HttpHeadersLike,
   body: T,
 ): HttpResponseLike<T> => {
-  const content = parseHttpContentFromHeaders(
-    headers,
-    body,
-  );
+  const content = parseHttpContentFromHeaders(headers, body);
 
-  const preferences = parseHttpPreferencesFromHeaders(
-    headers,
-  );
+  const preferences = parseHttpPreferencesFromHeaders(headers);
 
   const expiresDateValue = headers["expires"] || "";
   const expiresDate = new Date(expiresDateValue);
@@ -79,9 +80,8 @@ export const parseHttpResponseFromHeaders = <T>(
       : undefined;
 
   const locationHeader = headers.location;
-  const location = locationHeader !== undefined
-    ? new URL(locationHeader)
-    : undefined;
+  const location =
+    locationHeader !== undefined ? new URL(locationHeader) : undefined;
 
   // We're not going to use this so just return empty string.
   const vary: readonly string[] = [];
@@ -95,7 +95,7 @@ export const parseHttpResponseFromHeaders = <T>(
     preferences,
     statusCode,
     vary,
-  }
+  };
 };
 
 export const writeHttpResponseHeaders = <T>(

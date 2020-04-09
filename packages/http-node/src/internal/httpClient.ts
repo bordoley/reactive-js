@@ -14,7 +14,10 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "@reactive-js/async-enumerable";
-import { DisposableValueLike, createDisposableValue } from "@reactive-js/disposable";
+import {
+  DisposableValueLike,
+  createDisposableValue,
+} from "@reactive-js/disposable";
 import {
   HttpContentEncoding,
   HttpHeadersLike,
@@ -84,15 +87,12 @@ export interface HttpClientRequestStatusUploadComplete {
 
 export interface HttpClientRequestStatusResponseReady {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: 
-    HttpRequestLike<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >;
+  readonly request: HttpRequestLike<
+    AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  >;
   readonly response: DisposableValueLike<
-    HttpResponseLike<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >
-    >;
+    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  >;
 }
 
 export type HttpClientRequestStatus =
@@ -137,19 +137,16 @@ const createOnSubscribe = (
 
     const response = pipe(
       parseHttpResponseFromHeaders(
-        msg.statusCode || -1, 
+        msg.statusCode || -1,
         msg.headers as HttpHeadersLike,
-        createReadableAsyncEnumerable(() => msg)
+        createReadableAsyncEnumerable(() => msg),
       ),
       decodeHttpContentResponse,
     );
 
-    const disposableResponse = createDisposableValue(
-      response,
-      _ => {
-        msg.destroy();
-      }
-    );
+    const disposableResponse = createDisposableValue(response, _ => {
+      msg.destroy();
+    });
 
     subscriber.dispatch({
       type: HttpClientRequestStatusType.ResponseReady,
@@ -373,7 +370,7 @@ export const createDefaultHttpResponseHandler = (
         : [request];
 
       if (request !== newRequest || newAcceptedEncodings !== undefined) {
-        response.dispose()
+        response.dispose();
 
         return pipe(
           sendHttpRequest(newRequest, {

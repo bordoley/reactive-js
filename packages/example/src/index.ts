@@ -192,7 +192,7 @@ pipe(
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
       const { response } = status;
       response.dispose();
-    } 
+    }
   }),
   subscribe(scheduler),
 );

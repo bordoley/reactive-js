@@ -9,8 +9,14 @@ import {
   HttpStatusCode,
 } from "./interfaces";
 import { OperatorLike } from "@reactive-js/pipe";
-import { writeHttpContentHeaders, parseHttpContentFromHeaders } from "./httpContent";
-import { writeHttpPreferenceHeaders, parseHttpPreferencesFromHeaders } from "./httpPreferences";
+import {
+  writeHttpContentHeaders,
+  parseHttpContentFromHeaders,
+} from "./httpContent";
+import {
+  writeHttpPreferenceHeaders,
+  parseHttpPreferencesFromHeaders,
+} from "./httpPreferences";
 import { writeHttpHeaders } from "./httpHeaders";
 
 declare class URL implements URI {

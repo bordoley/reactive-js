@@ -1,5 +1,9 @@
 import { httpContentEncodings } from "./httpContentEncodings";
-import { HttpContentLike, HttpHeadersLike, HttpContentEncoding } from "./interfaces";
+import {
+  HttpContentLike,
+  HttpHeadersLike,
+  HttpContentEncoding,
+} from "./interfaces";
 
 /** @ignore */
 export const parseHttpContentFromHeaders = <T>(
