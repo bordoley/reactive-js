@@ -41,9 +41,11 @@
   },
   "dependencies": {
     "@reactive-js/pipe": "^0.0.32",
+    "fresh": "^0.5.2",
     "negotiator": "^0.6.2"
   },
   "devDependencies": {
+    "@types/fresh": "^0.5.0",
     "@types/negotiator": "^0.6.1"
   },
   "scripts": {

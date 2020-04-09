@@ -24,7 +24,6 @@ export {
 export { decodeHttpRequest } from "./internal/httpRequest";
 
 export {
-  checkIfNotModified,
   EncodeHttpResponseOptions,
   encodeHttpResponse,
 } from "./internal/httpResponse";

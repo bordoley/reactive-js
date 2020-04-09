@@ -27,7 +27,6 @@
 
 ### Functions
 
-* [checkIfNotModified](README.md#const-checkifnotmodified)
 * [creatHttpClient](README.md#const-creathttpclient)
 * [createBufferHttpContent](README.md#const-createbufferhttpcontent)
 * [createDefaultHttpResponseHandler](README.md#const-createdefaulthttpresponsehandler)
@@ -45,24 +44,6 @@
 Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
 
 ## Functions
-
-### `Const` checkIfNotModified
-
-▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *OperatorLike‹HttpResponseLike‹T›, HttpResponseLike‹T››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`__namedParameters` | object |
-
-**Returns:** *OperatorLike‹HttpResponseLike‹T›, HttpResponseLike‹T››*
-
-___
 
 ### `Const` creatHttpClient
 
