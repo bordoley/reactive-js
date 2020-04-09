@@ -24,7 +24,7 @@ ___
 
 ###  response
 
-• **response**: *DisposableLike & HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+• **response**: *DisposableValueLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 

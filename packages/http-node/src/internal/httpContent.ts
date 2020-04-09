@@ -7,8 +7,6 @@ import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpContentLike,
-  httpContentEncodings,
-  HttpHeadersLike,
 } from "@reactive-js/http";
 import {
   ReadableMode,
@@ -22,35 +20,6 @@ import {
   createEncodingCompressTransform,
   createEncodingDecompressTransform,
 } from "./httpContentEncoding";
-
-/** @ignore */
-export const createHttpContentFromHeaders = <T>(
-  headers: HttpHeadersLike,
-  body: T,
-): HttpContentLike<T> | undefined => {
-  const contentEncodingString = headers["content-encoding"] || "";
-  const contentEncodings = contentEncodingString
-    .split(",")
-    .map(x => x.trim())
-    .filter(x =>
-      httpContentEncodings.includes(x as HttpContentEncoding),
-    ) as readonly HttpContentEncoding[];
-
-  const contentLengthHeader = headers["content-length"] || "0";
-  const contentLength = ~~contentLengthHeader;
-
-  const contentType = headers["content-type"] || "";
-  const isUndefined = contentType === "" || contentLength === 0;
-
-  return isUndefined
-    ? undefined
-    : {
-        body,
-        contentEncodings,
-        contentLength,
-        contentType,
-      };
-};
 
 /** @ignore */
 export const encodeHttpContent = (

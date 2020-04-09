@@ -185,11 +185,11 @@ export const createSerialDisposable = (): SerialDisposableLike =>
  *
  * @noInheritDoc
  */
-export interface DisposableWrapperLike<T> extends DisposableLike {
+export interface DisposableValueLike<T> extends DisposableLike {
   value: T;
 }
 
-class DisposableWrapperImpl<T> implements DisposableWrapperLike<T> {
+class DisposableValueImpl<T> implements DisposableValueLike<T> {
   readonly add = add;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
@@ -202,10 +202,10 @@ class DisposableWrapperImpl<T> implements DisposableWrapperLike<T> {
 }
 
 /**
- * Creates a new DisposableWrapperLike instance.
+ * Creates a new DisposableValueLike instance.
  */
-export const createDisposableWrapper = <T>(
+export const createDisposableValue = <T>(
   value: T,
   cleanup: (v: T) => void,
-): DisposableWrapperLike<T> =>
-  new DisposableWrapperImpl(value).add(() => cleanup(value));
+): DisposableValueLike<T> =>
+  new DisposableValueImpl(value).add(() => cleanup(value));

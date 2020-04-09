@@ -6,9 +6,25 @@ import {
   HttpPreferencesLike,
   HttpResponseLike,
 } from "./interfaces";
-import { writeHttpContentHeaders } from "./httpContent";
-import { writeHttpPreferenceHeaders } from "./httpPreferences";
+import { writeHttpContentHeaders, parseHttpContentFromHeaders } from "./httpContent";
+import { writeHttpPreferenceHeaders, parseHttpPreferencesFromHeaders } from "./httpPreferences";
 import { writeHttpHeaders } from "./httpHeaders";
+
+declare class URL implements URI {
+  constructor(uri: string);
+
+  readonly hash: string;
+  readonly host: string;
+  readonly hostname: string;
+  readonly href: string;
+  readonly origin: string;
+  readonly pathname: string;
+  readonly port: string;
+  readonly protocol: string;
+  readonly search: string;
+
+  toString(): string;
+}
 
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
@@ -27,6 +43,56 @@ export const createHttpResponse = <T>(
   statusCode,
   vary: options.vary || [],
 });
+
+export const parseHttpResponseFromHeaders = <T>(
+  statusCode: number,
+  headers: HttpHeadersLike,
+  body: T,
+): HttpResponseLike<T> => {
+  const content = parseHttpContentFromHeaders(
+    headers,
+    body,
+  );
+
+  const preferences = parseHttpPreferencesFromHeaders(
+    headers,
+  );
+
+  const expiresDateValue = headers["expires"] || "";
+  const expiresDate = new Date(expiresDateValue);
+  const expiresTims = expiresDate.getTime();
+  const expires =
+    expiresDateValue !== "" && !Number.isNaN(expiresTims)
+      ? expiresTims
+      : undefined;
+
+  const lastModifiedValue = headers["last-modified"] || "";
+  const lastModifiedDate = new Date(lastModifiedValue);
+  const lastModifiedTime = lastModifiedDate.getTime();
+  const lastModified =
+    lastModifiedValue !== "" && !Number.isNaN(lastModifiedTime)
+      ? lastModifiedTime
+      : undefined;
+
+  const locationHeader = headers.location;
+  const location = locationHeader !== undefined
+    ? new URL(locationHeader)
+    : undefined;
+
+  // We're not going to use this so just return empty string.
+  const vary: readonly string[] = [];
+
+  return {
+    expires,
+    lastModified,
+    content,
+    headers,
+    location,
+    preferences,
+    statusCode,
+    vary,
+  }
+};
 
 export const writeHttpResponseHeaders = <T>(
   {

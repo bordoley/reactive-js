@@ -6,7 +6,7 @@
 ### Interfaces
 
 * [DisposableLike](interfaces/disposablelike.md)
-* [DisposableWrapperLike](interfaces/disposablewrapperlike.md)
+* [DisposableValueLike](interfaces/disposablevaluelike.md)
 * [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
 
@@ -18,7 +18,7 @@
 
 * [add](README.md#add)
 * [createDisposable](README.md#const-createdisposable)
-* [createDisposableWrapper](README.md#const-createdisposablewrapper)
+* [createDisposableValue](README.md#const-createdisposablevalue)
 * [createSerialDisposable](README.md#const-createserialdisposable)
 * [dispose](README.md#dispose)
 
@@ -67,11 +67,11 @@ Name | Type | Description |
 
 ___
 
-### `Const` createDisposableWrapper
+### `Const` createDisposableValue
 
-▸ **createDisposableWrapper**<**T**>(`value`: T, `cleanup`: function): *[DisposableWrapperLike](interfaces/disposablewrapperlike.md)‹T›*
+▸ **createDisposableValue**<**T**>(`value`: T, `cleanup`: function): *[DisposableValueLike](interfaces/disposablevaluelike.md)‹T›*
 
-Creates a new DisposableWrapperLike instance.
+Creates a new DisposableValueLike instance.
 
 **Type parameters:**
 
@@ -91,7 +91,7 @@ Name | Type |
 ------ | ------ |
 `v` | T |
 
-**Returns:** *[DisposableWrapperLike](interfaces/disposablewrapperlike.md)‹T›*
+**Returns:** *[DisposableValueLike](interfaces/disposablevaluelike.md)‹T›*
 
 ___
 

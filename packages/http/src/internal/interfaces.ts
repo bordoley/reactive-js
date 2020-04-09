@@ -149,20 +149,3 @@ export interface HttpResponseLike<T> {
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 }
-
-/** @ignore */
-export declare class URL implements URI {
-  constructor(uri: string);
-
-  readonly hash: string;
-  readonly host: string;
-  readonly hostname: string;
-  readonly href: string;
-  readonly origin: string;
-  readonly pathname: string;
-  readonly port: string;
-  readonly protocol: string;
-  readonly search: string;
-
-  toString(): string;
-}

@@ -1,5 +1,5 @@
 
-# Interface: DisposableWrapperLike <**T**>
+# Interface: DisposableValueLike <**T**>
 
 A Disposable that provides disposable semantics to an underlying resource.
 
@@ -11,13 +11,13 @@ A Disposable that provides disposable semantics to an underlying resource.
 
 * [DisposableLike](disposablelike.md)
 
-  ↳ **DisposableWrapperLike**
+  ↳ **DisposableValueLike**
 
 ## Index
 
 ### Properties
 
-* [value](disposablewrapperlike.md#value)
+* [value](disposablevaluelike.md#value)
 
 ## Properties
 

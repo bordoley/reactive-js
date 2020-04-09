@@ -7,12 +7,27 @@ import {
   HttpRequestLike,
   HttpResponseLike,
   HttpStatusCode,
-  URL,
 } from "./interfaces";
 import { OperatorLike } from "@reactive-js/pipe";
-import { writeHttpContentHeaders } from "./httpContent";
-import { writeHttpPreferenceHeaders } from "./httpPreferences";
+import { writeHttpContentHeaders, parseHttpContentFromHeaders } from "./httpContent";
+import { writeHttpPreferenceHeaders, parseHttpPreferencesFromHeaders } from "./httpPreferences";
 import { writeHttpHeaders } from "./httpHeaders";
+
+declare class URL implements URI {
+  constructor(uri: string);
+
+  readonly hash: string;
+  readonly host: string;
+  readonly hostname: string;
+  readonly href: string;
+  readonly origin: string;
+  readonly pathname: string;
+  readonly port: string;
+  readonly protocol: string;
+  readonly search: string;
+
+  toString(): string;
+}
 
 export const createHttpRequest = <T>(
   method: HttpMethod,
@@ -57,6 +72,67 @@ export const createRedirectHttpRequest = <TReq, TResp>(
   };
 };
 
+const parseURIFromHeaders = (
+  protocol: "http" | "https",
+  path: string,
+  httpVersionMajor: number,
+  headers: HttpHeadersLike,
+): URI => {
+  const forwardedProtocol = headers["x-forwarded-proto"];
+  const uriProtocol =
+    forwardedProtocol !== undefined
+      ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+      : protocol;
+  const forwardedHost = headers["x-forwarded-host"];
+  const http2Authority = headers[":authority"];
+  const http1Host = headers["host"];
+  const unfilteredHost =
+    forwardedHost !== undefined
+      ? forwardedHost
+      : http2Authority !== undefined && httpVersionMajor >= 2
+      ? http2Authority
+      : http1Host !== undefined
+      ? http1Host
+      : "";
+  const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+  return new URL(`${uriProtocol}://${host}${path || ""}`);
+};
+
+export const parseHttpRequestFromHeaders = <T>({
+  method,
+  path,
+  headers,
+  httpVersionMajor,
+  httpVersionMinor,
+  protocol,
+  body,
+}: {
+  method: HttpMethod;
+  path: string;
+  headers: HttpHeadersLike;
+  body: T;
+  httpVersionMajor: number;
+  httpVersionMinor: number;
+  protocol: "http" | "https";
+}): HttpRequestLike<T> => {
+  const content = parseHttpContentFromHeaders(headers, body);
+  const rawExpectHeader = headers.expect;
+  const expectContinue = rawExpectHeader === "100-continue";
+  const preferences = parseHttpPreferencesFromHeaders(headers);
+  const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
+
+  return {
+    content,
+    expectContinue,
+    headers,
+    httpVersionMajor,
+    httpVersionMinor,
+    method,
+    preferences,
+    uri,
+  };
+};
+
 export const writeHttpRequestHeaders = <T>(
   { content, expectContinue, headers, preferences }: HttpRequestLike<T>,
   writeHeader: (header: string, value: string) => void,
@@ -74,4 +150,28 @@ export const writeHttpRequestHeaders = <T>(
   }
 
   writeHttpHeaders(headers, writeHeader);
+};
+
+export const disallowProtocolAndHostForwarding = <T>(
+  protocol: "http" | "https" = "http",
+): OperatorLike<HttpRequestLike<T>, HttpRequestLike<T>> => request => {
+  const { httpVersionMajor, headers: oldHeaders, uri: oldUri } = request;
+  const {
+    "x-forwarded-proto": xForwardedProto,
+    "x-forwarded-host": xForwardedHost,
+    ...headers
+  } = oldHeaders;
+
+  if (xForwardedProto === undefined && xForwardedHost === undefined) {
+    return request;
+  } else {
+    const path = oldUri.pathname;
+    const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
+
+    return {
+      ...request,
+      uri,
+      headers,
+    };
+  }
 };

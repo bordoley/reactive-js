@@ -28,6 +28,9 @@
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
+* [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
+* [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
+* [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
@@ -101,6 +104,62 @@ Name | Type |
 `response` | [HttpResponseLike](interfaces/httpresponselike.md)‹TResp› |
 
 **Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
+
+___
+
+### `Const` disallowProtocolAndHostForwarding
+
+▸ **disallowProtocolAndHostForwarding**<**T**>(`protocol`: "http" | "https"): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`protocol` | "http" &#124; "https" | "http" |
+
+**Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+
+___
+
+### `Const` parseHttpRequestFromHeaders
+
+▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+
+**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+
+___
+
+### `Const` parseHttpResponseFromHeaders
+
+▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `body`: T): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`statusCode` | number |
+`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`body` | T |
+
+**Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
 
 ___
 

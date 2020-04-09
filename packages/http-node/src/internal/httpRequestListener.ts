@@ -7,6 +7,7 @@ import {
   writeHttpResponseHeaders,
   HttpMethod,
   HttpHeadersLike,
+  parseHttpRequestFromHeaders,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -28,11 +29,10 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createStringHttpContent } from "./httpContent";
-import { createHttpRequestFromHeaders } from "./httpRequest";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
-  createDisposableWrapper,
-  DisposableWrapperLike,
+  createDisposableValue,
+  DisposableValueLike,
 } from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
@@ -96,12 +96,8 @@ export interface HttpRequestListenerHandler {
   >;
 }
 
-const destroyIncomingMessge = (msg: IncomingMessage) => {
-  msg.destroy();
-};
-
-const destroyServerResponse = (msg: ServerResponse) => {
-  msg.destroy();
+const destroy = <T extends { destroy: () => void}>(val: T ) => {
+  val.destroy();
 };
 
 export const createHttpRequestListener = (
@@ -112,8 +108,8 @@ export const createHttpRequestListener = (
   const { onError = defaultOnError } = options;
 
   const handleRequest = (
-    disposableRequest: DisposableWrapperLike<IncomingMessage>,
-    disposableResponse: DisposableWrapperLike<ServerResponse>,
+    disposableRequest: DisposableValueLike<IncomingMessage>,
+    disposableResponse: DisposableValueLike<ServerResponse>,
   ) => {
     const req = disposableRequest.value;
     const resp = disposableResponse.value;
@@ -129,7 +125,7 @@ export const createHttpRequestListener = (
     const protocol = (req.socket as any).encrypted || false ? "https" : "http";
 
     return pipe(
-      createHttpRequestFromHeaders({
+      parseHttpRequestFromHeaders({
         method: method as HttpMethod,
         path,
         headers: headers as HttpHeadersLike,
@@ -149,11 +145,11 @@ export const createHttpRequestListener = (
     pipe(
       using(
         (): [
-          DisposableWrapperLike<IncomingMessage>,
-          DisposableWrapperLike<ServerResponse>,
+          DisposableValueLike<IncomingMessage>,
+          DisposableValueLike<ServerResponse>,
         ] => [
-          createDisposableWrapper(req, destroyIncomingMessge),
-          createDisposableWrapper(resp, destroyServerResponse),
+          createDisposableValue(req, destroy),
+          createDisposableValue(resp, destroy),
         ],
         handleRequest,
       ),

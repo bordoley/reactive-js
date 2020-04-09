@@ -1,10 +1,11 @@
 import { createServer as createNodeHttpServer } from "http";
 import {
   HttpMethod,
-  createHttpRequest,
-  createHttpResponse,
   HttpRequestLike,
   HttpResponseLike,
+  createHttpRequest,
+  createHttpResponse,
+  disallowProtocolAndHostForwarding,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -17,7 +18,6 @@ import {
   encodeHttpResponse,
   createDefaultHttpResponseHandler,
   createRouter,
-  disallowProtocolAndHostForwarding,
 } from "@reactive-js/http-node";
 import {
   getHostScheduler,
@@ -29,12 +29,12 @@ import {
   fromArray,
   generate,
   map,
-  onNotify,
   subscribe,
   ofValue,
   scan,
   mapTo,
   ObservableLike,
+  onNotify,
 } from "@reactive-js/observable";
 import { pipe, compose, OperatorLike } from "@reactive-js/pipe";
 import {
@@ -189,7 +189,7 @@ pipe(
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
       const { response } = status;
       response.dispose();
-    }
+    } 
   }),
   subscribe(scheduler),
 );
