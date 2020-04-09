@@ -28,9 +28,3 @@ export {
   EncodeHttpResponseOptions,
   encodeHttpResponse,
 } from "./internal/httpResponse";
-
-export {
-  HttpRoutedRequestLike,
-  HttpRequestRouterHandler,
-  createRouter,
-} from "./internal/httpRequestRouter";
