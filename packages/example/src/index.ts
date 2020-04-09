@@ -1,11 +1,12 @@
 import { createServer as createNodeHttpServer } from "http";
 import {
   HttpMethod,
-  HttpRequestLike,
-  HttpResponseLike,
   createHttpRequest,
   createHttpResponse,
   disallowProtocolAndHostForwarding,
+  HttpContentLike,
+  HttpContentRequestLike,
+  HttpContentResponseLike,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -74,9 +75,9 @@ const scheduler = pipe(
 );
 
 const routerHandlerA: OperatorLike<
-  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >
 > = compose(
   ofValue,
@@ -88,8 +89,8 @@ const routerHandlerA: OperatorLike<
 );
 
 const routerHandlerB: HttpRequestRouterHandler<
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > = req =>
   pipe(
     ofValue(req),
@@ -104,8 +105,8 @@ const routerHandlerB: HttpRequestRouterHandler<
   );
 
 const routerHandlerGlob: HttpRequestRouterHandler<
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > = req =>
   pipe(
     ofValue(req),
@@ -120,9 +121,9 @@ const routerHandlerGlob: HttpRequestRouterHandler<
   );
 
 const notFound: OperatorLike<
-  HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >
 > = req =>
   pipe(

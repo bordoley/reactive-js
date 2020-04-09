@@ -1,6 +1,9 @@
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { HttpRequestLike, HttpResponseLike } from "@reactive-js/http";
+import {
+  HttpContentResponseLike,
+  HttpContentRequestLike,
+} from "@reactive-js/http";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
@@ -11,28 +14,28 @@ import {
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
 
 const responseIsCompressible = (
-  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  response: HttpContentResponseLike<
+    AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  >,
 ): boolean => {
   const { content } = response;
   return content !== undefined ? contentIsCompressible(content) : false;
 };
 
 export interface EncodeHttpResponseOptions {
-  readonly shouldEncode?: (
-    req: HttpRequestLike<unknown>,
-    resp: HttpResponseLike<unknown>,
+  readonly shouldEncode?: <T, TResp>(
+    req: HttpContentRequestLike<T>,
+    resp: HttpContentResponseLike<TResp>,
   ) => boolean | undefined;
 }
 
-export const encodeHttpResponse = (
-  request: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+export const encodeHttpResponse = <TReq>(
+  request: HttpContentRequestLike<TReq>,
   options: EncodeHttpResponseOptions & (BrotliOptions | ZlibOptions) = {},
 ): OperatorLike<
-  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-> => (
-  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-) => {
+  HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+> => response => {
   const { shouldEncode: shouldEncodeOption, ...zlibOptions } = options;
   // FIXME:
   // Don't compress for Cache-Control: no-transform
@@ -70,11 +73,11 @@ export const encodeHttpResponse = (
   };
 };
 
-export const decodeDisposableHttpResponse = (
+export const decodeHttpContentResponse = (
   options: BrotliOptions | ZlibOptions,
 ): OperatorLike<
-  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > => response => {
   const { content } = response;
 
