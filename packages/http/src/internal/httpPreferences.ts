@@ -1,5 +1,9 @@
 import Negotiator from "negotiator";
-import { HttpPreferencesLike, HttpHeadersLike, HttpContentEncoding } from "./interfaces";
+import {
+  HttpPreferencesLike,
+  HttpHeadersLike,
+  HttpContentEncoding,
+} from "./interfaces";
 
 /** @ignore */
 export const writeHttpPreferenceHeaders = (

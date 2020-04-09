@@ -70,15 +70,20 @@ const defaultOnError = (
   e: unknown,
 ): ObservableLike<HttpResponseLike<
   AsyncEnumerableLike<ReadableMode, ReadableEvent>
->> =>
-  ofValue(
+>> => {
+  const content =
+    process.env.NODE_ENV === "production"
+      ? undefined
+      : e instanceof Error && e.stack !== undefined
+      ? createStringHttpContent(e.stack || "", "text/plain")
+      : createStringHttpContent(String(e), "text/plain");
+
+  return ofValue(
     createHttpResponse(HttpStatusCode.InternalServerError, {
-      content: createStringHttpContent(
-        e instanceof Error ? e.stack || "" : String(e),
-        "text/plain",
-      ),
+      content,
     }),
   );
+};
 
 export interface HttpRequestListenerOptions {
   readonly onError?: (
@@ -96,7 +101,7 @@ export interface HttpRequestListenerHandler {
   >;
 }
 
-const destroy = <T extends { destroy: () => void}>(val: T ) => {
+const destroy = <T extends { destroy: () => void }>(val: T) => {
   val.destroy();
 };
 

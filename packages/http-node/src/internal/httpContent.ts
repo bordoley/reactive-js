@@ -4,10 +4,7 @@ import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import {
-  HttpContentEncoding,
-  HttpContentLike,
-} from "@reactive-js/http";
+import { HttpContentEncoding, HttpContentLike } from "@reactive-js/http";
 import {
   ReadableMode,
   ReadableEvent,

@@ -1,13 +1,7 @@
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import {
-  HttpRequestLike,
-  HttpResponseLike,
-} from "@reactive-js/http";
-import {
-  ReadableMode,
-  ReadableEvent,
-} from "@reactive-js/node";
+import { HttpRequestLike, HttpResponseLike } from "@reactive-js/http";
+import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   contentIsCompressible,
@@ -86,6 +80,7 @@ export const decodeDisposableHttpResponse = (
 
   return {
     ...response,
-    content: content !== undefined ? decodeHttpContent(content, options) : undefined,
-  }
+    content:
+      content !== undefined ? decodeHttpContent(content, options) : undefined,
+  };
 };
