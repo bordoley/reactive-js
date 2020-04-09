@@ -1,13 +1,13 @@
 import { RequestListener, ServerResponse, IncomingMessage } from "http";
 import {
   HttpServerRequestLike,
-  HttpResponseLike,
   HttpStatusCode,
   createHttpResponse,
   writeHttpResponseHeaders,
   HttpMethod,
   HttpHeadersLike,
   parseHttpRequestFromHeaders,
+  HttpContentResponseLike,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -36,7 +36,9 @@ import {
 } from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
-  response: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  response: HttpContentResponseLike<
+    AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  >,
 ) => {
   resp.statusCode = response.statusCode;
 
@@ -47,7 +49,7 @@ const writeResponseMessage = (resp: ServerResponse) => (
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
+}: HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
       content?.body || emptyReadableAsyncEnumerable
@@ -68,7 +70,7 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 // FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input
 const defaultOnError = (
   e: unknown,
-): ObservableLike<HttpResponseLike<
+): ObservableLike<HttpContentResponseLike<
   AsyncEnumerableLike<ReadableMode, ReadableEvent>
 >> => {
   const content =
@@ -89,15 +91,17 @@ export interface HttpRequestListenerOptions {
   readonly onError?: (
     e: unknown,
   ) => ObservableLike<
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
 }
 
 export interface HttpRequestListenerHandler {
   (
-    req: HttpServerRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    req: HttpServerRequestLike<
+      AsyncEnumerableLike<ReadableMode, ReadableEvent>
+    >,
   ): ObservableLike<
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
 }
 

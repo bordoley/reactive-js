@@ -1,13 +1,13 @@
 import {
   HttpMethod,
   URI,
-  HttpContentLike,
   HttpHeadersLike,
   HttpPreferencesLike,
   HttpRequestLike,
   HttpResponseLike,
   HttpServerRequestLike,
   HttpStatusCode,
+  HttpContentRequestLike,
 } from "./interfaces";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
@@ -41,7 +41,7 @@ export const createHttpRequest = <T>(
   method: HttpMethod,
   uri: string | URI,
   options: {
-    content?: HttpContentLike<T>;
+    content?: T;
     expectContinue?: boolean;
     headers?: HttpHeadersLike;
     preferences?: HttpPreferencesLike;
@@ -121,7 +121,7 @@ export const parseHttpRequestFromHeaders = <T>({
   body: T;
   httpVersionMajor: number;
   httpVersionMinor: number;
-  isTransportSecure: boolean
+  isTransportSecure: boolean;
 }): HttpServerRequestLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
   const rawExpectHeader = headers.expect;
@@ -153,7 +153,7 @@ export const writeHttpRequestHeaders = <T>(
     headers,
     preconditions,
     preferences,
-  }: HttpRequestLike<T>,
+  }: HttpContentRequestLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (expectContinue) {
@@ -176,9 +176,16 @@ export const writeHttpRequestHeaders = <T>(
 };
 
 // FIXME: Define HttpServerRequestLike and append isTransportSecureFlag to avoid the protocol
-export const disallowProtocolAndHostForwarding = <T>(
-): OperatorLike<HttpServerRequestLike<T>, HttpRequestLike<T>> => request => {
-  const { httpVersionMajor, headers: oldHeaders, isTransportSecure, uri: oldUri } = request;
+export const disallowProtocolAndHostForwarding = <T>(): OperatorLike<
+  HttpServerRequestLike<T>,
+  HttpServerRequestLike<T>
+> => request => {
+  const {
+    httpVersionMajor,
+    headers: oldHeaders,
+    isTransportSecure,
+    uri: oldUri,
+  } = request;
   const {
     "x-forwarded-proto": xForwardedProto,
     "x-forwarded-host": xForwardedHost,

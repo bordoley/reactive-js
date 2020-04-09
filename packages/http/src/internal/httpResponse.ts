@@ -2,13 +2,13 @@ import fresh from "fresh";
 import { OperatorLike } from "@reactive-js/pipe";
 import {
   HttpStatusCode,
-  HttpContentLike,
   HttpHeadersLike,
   URI,
   HttpPreferencesLike,
   HttpResponseLike,
   HttpRequestLike,
   HttpMethod,
+  HttpContentResponseLike,
 } from "./interfaces";
 import {
   writeHttpContentHeaders,
@@ -41,7 +41,7 @@ declare class URL implements URI {
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
-    content?: HttpContentLike<T>;
+    content?: T;
     expires?: number;
     headers?: HttpHeadersLike;
     lastModified?: number;
@@ -60,7 +60,7 @@ export const parseHttpResponseFromHeaders = <T>(
   statusCode: number,
   headers: HttpHeadersLike,
   body: T,
-): HttpResponseLike<T> => {
+): HttpContentResponseLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
   const preferences = parseHttpPreferencesFromHeaders(headers);
 
@@ -88,9 +88,8 @@ export const parseHttpResponseFromHeaders = <T>(
   };
 };
 
-export const writeHttpResponseHeaders = <T>(
+const writeCoreHttpResponseHeaders = <T>(
   {
-    content,
     etag,
     expires,
     headers,
@@ -100,11 +99,7 @@ export const writeHttpResponseHeaders = <T>(
     vary,
   }: HttpResponseLike<T>,
   writeHeader: (header: string, value: string) => void,
-): void => {
-  if (content !== undefined) {
-    writeHttpContentHeaders(content, writeHeader);
-  }
-
+) => {
   if (etag !== undefined) {
     writeHeader("ETag", serializeHttpEntityTag(etag));
   }
@@ -132,6 +127,19 @@ export const writeHttpResponseHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
+export const writeHttpResponseHeaders = <T>(
+  response: HttpContentResponseLike<T>,
+  writeHeader: (header: string, value: string) => void,
+): void => {
+  const { content } = response;
+
+  writeCoreHttpResponseHeaders(response, writeHeader);
+
+  if (content !== undefined) {
+    writeHttpContentHeaders(content, writeHeader);
+  }
+};
+
 export const checkIfNotModified = <T>({
   headers: reqHeaders,
   method,
@@ -145,7 +153,7 @@ export const checkIfNotModified = <T>({
   const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
 
   const headers: { [k: string]: string } = {};
-  writeHttpResponseHeaders(response, (k, v) => {
+  writeCoreHttpResponseHeaders(response, (k, v) => {
     headers[k.toLowerCase()] = v;
   });
 

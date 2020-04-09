@@ -1,6 +1,8 @@
 export {
   HttpContentEncoding,
   HttpContentLike,
+  HttpContentRequestLike,
+  HttpContentResponseLike,
   HttpDateTime,
   HttpEntityTagLike,
   HttpHeadersLike,

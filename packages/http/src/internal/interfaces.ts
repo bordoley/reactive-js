@@ -129,7 +129,7 @@ export interface HttpRequestLike<T> {
   // readonly authorization?: Credentials;
   // readonly cacheControl: readonly CacheDirective[];
 
-  readonly content?: HttpContentLike<T>;
+  readonly content?: T;
   readonly expectContinue: boolean;
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
@@ -145,8 +145,11 @@ export interface HttpRequestLike<T> {
   readonly httpVersionMinor: number;
 }
 
-export interface HttpServerRequestLike<T> extends HttpRequestLike<T> {
-  readonly isTransportSecure: boolean
+export interface HttpContentRequestLike<T>
+  extends HttpRequestLike<HttpContentLike<T>> {}
+
+export interface HttpServerRequestLike<T> extends HttpContentRequestLike<T> {
+  readonly isTransportSecure: boolean;
 }
 
 export interface HttpResponseLike<T> {
@@ -162,10 +165,13 @@ export interface HttpResponseLike<T> {
   // retryAfter:Option<DateTime>
   // server:Option<Server>
   // warning:Warning list
-  readonly content?: HttpContentLike<T>;
+  readonly content?: T;
   readonly headers: HttpHeadersLike;
   readonly location?: URI;
   readonly preferences?: HttpPreferencesLike;
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 }
+
+export interface HttpContentResponseLike<T>
+  extends HttpResponseLike<HttpContentLike<T>> {}
