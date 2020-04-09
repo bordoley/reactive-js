@@ -6,7 +6,7 @@ import {
   createAsyncEnumerator,
   AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
-import { createDisposableWrapper } from "@reactive-js/disposable";
+import { createDisposableValue } from "@reactive-js/disposable";
 import {
   AbstractDelegatingSubscriber,
   SafeSubscriberLike,
@@ -125,7 +125,7 @@ const observableOperator = (
   using(
     _ => {
       const readable = factory();
-      const disposable = createDisposableWrapper(readable, disposeReadable);
+      const disposable = createDisposableValue(readable, disposeReadable);
 
       const onEnd = () => {
         disposable.dispose();

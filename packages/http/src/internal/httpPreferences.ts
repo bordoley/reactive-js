@@ -1,4 +1,5 @@
-import { HttpPreferencesLike } from "./interfaces";
+import Negotiator from "negotiator";
+import { HttpPreferencesLike, HttpHeadersLike, HttpContentEncoding } from "./interfaces";
 
 /** @ignore */
 export const writeHttpPreferenceHeaders = (
@@ -27,4 +28,30 @@ export const writeHttpPreferenceHeaders = (
   if (acceptedMediaTypes.length > 0) {
     writeHeader("Accept", acceptedMediaTypes.join(", "));
   }
+};
+
+/** @ignore */
+export const parseHttpPreferencesFromHeaders = (
+  headers: HttpHeadersLike,
+): HttpPreferencesLike | undefined => {
+  const negotiator = new Negotiator({ headers });
+  const acceptedCharsets = negotiator.charsets();
+  const acceptedEncodings = negotiator.encodings() as readonly HttpContentEncoding[];
+  const acceptedLanguages = negotiator.languages();
+  const acceptedMediaTypes = negotiator.mediaTypes();
+
+  const isUndefined =
+    acceptedCharsets.length === 0 &&
+    acceptedEncodings.length === 0 &&
+    acceptedLanguages.length === 0 &&
+    acceptedMediaTypes.length === 0;
+
+  return isUndefined
+    ? undefined
+    : {
+        acceptedCharsets,
+        acceptedEncodings,
+        acceptedLanguages,
+        acceptedMediaTypes,
+      };
 };

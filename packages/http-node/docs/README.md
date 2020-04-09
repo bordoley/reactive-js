@@ -37,8 +37,8 @@
 * [createReadableHttpContent](README.md#const-createreadablehttpcontent)
 * [createRouter](README.md#const-createrouter)
 * [createStringHttpContent](README.md#const-createstringhttpcontent)
+* [decodeDisposableHttpResponse](README.md#const-decodedisposablehttpresponse)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
-* [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 
 ## Type aliases
@@ -188,6 +188,20 @@ Name | Type | Default |
 
 ___
 
+### `Const` decodeDisposableHttpResponse
+
+▸ **decodeDisposableHttpResponse**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions |
+
+**Returns:** *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+
+___
+
 ### `Const` decodeHttpRequest
 
 ▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
@@ -199,24 +213,6 @@ Name | Type | Default |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
 **Returns:** *OperatorLike‹HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
-
-___
-
-### `Const` disallowProtocolAndHostForwarding
-
-▸ **disallowProtocolAndHostForwarding**<**T**>(`protocol`: "http" | "https"): *OperatorLike‹HttpRequestLike‹T›, HttpRequestLike‹T››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`protocol` | "http" &#124; "https" | "http" |
-
-**Returns:** *OperatorLike‹HttpRequestLike‹T›, HttpRequestLike‹T››*
 
 ___
 

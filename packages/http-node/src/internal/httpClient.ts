@@ -14,11 +14,14 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperatorLike,
 } from "@reactive-js/async-enumerable";
+import { DisposableValueLike, createDisposableValue } from "@reactive-js/disposable";
 import {
   HttpContentEncoding,
+  HttpHeadersLike,
   HttpRequestLike,
   HttpStatusCode,
   createRedirectHttpRequest,
+  parseHttpResponseFromHeaders,
   HttpResponseLike,
   writeHttpRequestHeaders,
 } from "@reactive-js/http";
@@ -29,6 +32,7 @@ import {
   ReadableEventType,
   ReadableMode,
   emptyReadableAsyncEnumerable,
+  createReadableAsyncEnumerable,
 } from "@reactive-js/node";
 import {
   createObservable,
@@ -46,12 +50,8 @@ import {
   createEncodingCompressTransform,
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
-import { DisposableLike } from "@reactive-js/disposable";
-import {
-  createIncomingMessageDisposableHttpResponse,
-  decodeDisposableHttpResponse,
-} from "./httpResponse";
 import { contentIsCompressible } from "./httpContent";
+import { decodeDisposableHttpResponse } from "./httpResponse";
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -84,11 +84,15 @@ export interface HttpClientRequestStatusUploadComplete {
 
 export interface HttpClientRequestStatusResponseReady {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: HttpRequestLike<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >;
-  readonly response: DisposableLike &
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>;
+  readonly request: 
+    HttpRequestLike<
+      AsyncEnumerableLike<ReadableMode, ReadableEvent>
+    >;
+  readonly response: DisposableValueLike<
+    HttpResponseLike<
+      AsyncEnumerableLike<ReadableMode, ReadableEvent>
+    >
+    >;
 }
 
 export type HttpClientRequestStatus =
@@ -115,10 +119,8 @@ const createOnSubscribe = (
     ReadableEvent
   >,
   decodeHttpContentResponse: (
-    resp: DisposableLike &
-      HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  ) => DisposableLike &
-    HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    resp: HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  ) => HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {
   subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
 
@@ -131,15 +133,28 @@ const createOnSubscribe = (
   req.on("error", onError);
 
   const onResponse = (msg: IncomingMessage) => {
+    subscriber.add(() => msg.destroy());
+
     const response = pipe(
-      msg,
-      createIncomingMessageDisposableHttpResponse,
+      parseHttpResponseFromHeaders(
+        msg.statusCode || -1, 
+        msg.headers as HttpHeadersLike,
+        createReadableAsyncEnumerable(() => msg)
+      ),
       decodeHttpContentResponse,
-    ).add(subscriber);
+    );
+
+    const disposableResponse = createDisposableValue(
+      response,
+      _ => {
+        msg.destroy();
+      }
+    );
+
     subscriber.dispatch({
       type: HttpClientRequestStatusType.ResponseReady,
       request,
-      response,
+      response: disposableResponse,
     });
   };
   req.on("response", onResponse);
@@ -336,7 +351,7 @@ export const createDefaultHttpResponseHandler = (
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
       const { request, response } = status;
 
-      const { location, preferences, statusCode } = response;
+      const { location, preferences, statusCode } = response.value;
       const acceptedEncodings = preferences?.acceptedEncodings || [];
       const shouldRedirect =
         redirectCodes.includes(statusCode) &&
@@ -348,7 +363,7 @@ export const createDefaultHttpResponseHandler = (
             createRedirectHttpRequest<
               AsyncEnumerableLike<ReadableMode, ReadableEvent>,
               AsyncEnumerableLike<ReadableMode, ReadableEvent>
-            >(response)(request),
+            >(response.value)(request),
           ]
         : statusCode === HttpStatusCode.ExpectationFailed
         ? [{ ...request, expectContinue: false }]
@@ -358,7 +373,7 @@ export const createDefaultHttpResponseHandler = (
         : [request];
 
       if (request !== newRequest || newAcceptedEncodings !== undefined) {
-        response.dispose();
+        response.dispose()
 
         return pipe(
           sendHttpRequest(newRequest, {

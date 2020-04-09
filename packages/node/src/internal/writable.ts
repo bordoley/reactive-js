@@ -5,7 +5,7 @@ import {
   AsyncEnumeratorLike,
   createAsyncEnumerator,
 } from "@reactive-js/async-enumerable";
-import { createDisposableWrapper } from "@reactive-js/disposable";
+import { createDisposableValue } from "@reactive-js/disposable";
 import {
   AbstractDelegatingSubscriber,
   SafeSubscriberLike,
@@ -98,7 +98,7 @@ const observableOperator = (
   factory: () => Writable,
 ): ObservableOperatorLike<ReadableEvent, ReadableMode> => observable =>
   using(
-    _ => createDisposableWrapper(factory(), disposeWritable),
+    _ => createDisposableValue(factory(), disposeWritable),
     writable => pipe(observable, operator(writable.value)),
   );
 

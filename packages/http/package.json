@@ -40,7 +40,8 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/pipe": "^0.0.32"
+    "@reactive-js/pipe": "^0.0.32",
+    "negotiator": "^0.6.2"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
