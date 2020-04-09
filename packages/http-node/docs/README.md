@@ -38,6 +38,7 @@
 * [createRouter](README.md#const-createrouter)
 * [createStringHttpContent](README.md#const-createstringhttpcontent)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
+* [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 
 ## Type aliases
@@ -173,14 +174,15 @@ ___
 
 ### `Const` createStringHttpContent
 
-▸ **createStringHttpContent**(`content`: string, `contentType`: string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createStringHttpContent**(`content`: string, `contentType`: string, `charset`: string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`content` | string |
-`contentType` | string |
+Name | Type | Default |
+------ | ------ | ------ |
+`content` | string | - |
+`contentType` | string | - |
+`charset` | string | "utf-8" |
 
 **Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
@@ -197,6 +199,24 @@ Name | Type | Default |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
 **Returns:** *OperatorLike‹HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+
+___
+
+### `Const` disallowProtocolAndHostForwarding
+
+▸ **disallowProtocolAndHostForwarding**<**T**>(`protocol`: "http" | "https"): *OperatorLike‹HttpRequestLike‹T›, HttpRequestLike‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`protocol` | "http" &#124; "https" | "http" |
+
+**Returns:** *OperatorLike‹HttpRequestLike‹T›, HttpRequestLike‹T››*
 
 ___
 
