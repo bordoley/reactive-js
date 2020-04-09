@@ -17,7 +17,7 @@
 
 ###  request
 
-• **request**: *HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+• **request**: *HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 

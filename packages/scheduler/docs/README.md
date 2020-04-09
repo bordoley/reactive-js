@@ -58,16 +58,17 @@ ___
 
 ###  schedule
 
-▸ **schedule**(`this`: [HostSchedulerLike](interfaces/hostschedulerlike.md), `continuation`: [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)): *void*
+▸ **schedule**(`this`: [HostSchedulerLike](interfaces/hostschedulerlike.md), `continuation`: [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md), `delay`: number): *void*
 
 Mixin functions that can be used to implement the SchedulerLike interface
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`this` | [HostSchedulerLike](interfaces/hostschedulerlike.md) |
-`continuation` | [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md) |
+Name | Type | Default |
+------ | ------ | ------ |
+`this` | [HostSchedulerLike](interfaces/hostschedulerlike.md) | - |
+`continuation` | [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md) | - |
+`delay` | number | 0 |
 
 **Returns:** *void*
 

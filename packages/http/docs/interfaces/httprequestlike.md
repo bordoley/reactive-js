@@ -10,7 +10,7 @@
 
 * **HttpRequestLike**
 
-  ↳ [HttpServerRequestLike](httpserverrequestlike.md)
+  ↳ [HttpContentRequestLike](httpcontentrequestlike.md)
 
 ## Index
 
@@ -30,7 +30,7 @@
 
 ### `Optional` content
 
-• **content**? : *[HttpContentLike](httpcontentlike.md)‹T›*
+• **content**? : *T*
 
 ___
 

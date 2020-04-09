@@ -7,11 +7,11 @@ function createCallback(
   const callback = () => {
     if (!continuation.isDisposed) {
       scheduler.inContinuation = true;
-      continuation.run(scheduler.shouldYield);
+      const delay = continuation.run(scheduler.shouldYield);
       scheduler.inContinuation = false;
 
       if (!continuation.isDisposed) {
-        scheduler.scheduleCallback(callback, continuation.delay);
+        scheduler.scheduleCallback(callback, delay);
       }
     }
   };
@@ -22,11 +22,12 @@ function createCallback(
 export function schedule(
   this: HostSchedulerLike,
   continuation: SchedulerContinuationLike,
+  delay = 0,
 ): void {
   const callback = createCallback(this, continuation);
   const callbackSubscription = this.scheduleCallback(
     callback,
-    continuation.delay,
+    delay,
   );
   continuation.add(callbackSubscription);
 }

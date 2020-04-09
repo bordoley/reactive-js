@@ -25,7 +25,6 @@ class VirtualTimeSchedulerImpl
     EnumeratorLike<void, SchedulerContinuationLike> {
   readonly add = add;
   current: any = undefined;
-  readonly delay = 0;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
   hasCurrent = false;
@@ -75,9 +74,9 @@ class VirtualTimeSchedulerImpl
     return this.hasCurrent;
   }
 
-  run(shouldYield?: () => boolean) {
+  run(shouldYield?: () => boolean): number {
     if (this.isDisposed) {
-      return;
+      return 0;
     }
 
     if (
@@ -93,16 +92,16 @@ class VirtualTimeSchedulerImpl
         const continuation = this.current;
 
         this.inContinuation = true;
-        continuation.run(this.shouldYield);
+        const delay = continuation.run(this.shouldYield);
         this.inContinuation = false;
 
         if (!continuation.isDisposed) {
-          this.schedule(continuation);
+          this.schedule(continuation, delay);
         }
 
         if (shouldYield()) {
           this.runShouldYield = undefined;
-          return this;
+          return 0;
         }
       }
 
@@ -113,25 +112,25 @@ class VirtualTimeSchedulerImpl
         const continuation = this.current;
 
         this.inContinuation = true;
-        continuation.run(this.shouldYield);
+        const delay = continuation.run(this.shouldYield);
         this.inContinuation = false;
 
         if (!continuation.isDisposed) {
-          this.schedule(continuation);
+          this.schedule(continuation, delay);
         }
       }
     }
 
     this.dispose();
-    return;
+    return 0;
   }
 
-  schedule(continuation: SchedulerContinuationLike): void {
+  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
     this.add(continuation);
 
     const work: VirtualTask = {
       id: this.taskIDCount++,
-      dueTime: this.now + continuation.delay,
+      dueTime: this.now + delay,
       continuation,
     };
     this.taskQueue.push(work);

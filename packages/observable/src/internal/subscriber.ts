@@ -54,12 +54,12 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
 
   abstract notify(_: T): void;
 
-  schedule<T>(
-    this: SubscriberLike<T> & { scheduler: SchedulerLike },
+  schedule(
     continuation: SchedulerContinuationLike,
+    delay = 0
   ) {
     this.add(continuation);
-    this.scheduler.schedule(continuation);
+    this.scheduler.schedule(continuation, delay);
   }
 }
 

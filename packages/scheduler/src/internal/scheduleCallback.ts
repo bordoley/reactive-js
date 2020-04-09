@@ -12,7 +12,7 @@ class CallbackSchedulerContinuation implements SchedulerContinuationLike {
   readonly disposable = createDisposable();
   readonly dispose = dispose;
 
-  constructor(private readonly cb: () => void, readonly delay: number) {}
+  constructor(private readonly cb: () => void) {}
 
   get isDisposed(): boolean {
     return this.disposable.isDisposed;
@@ -28,6 +28,7 @@ class CallbackSchedulerContinuation implements SchedulerContinuationLike {
         this.dispose(error);
       }
     }
+    return 0;
   }
 }
 
@@ -35,7 +36,7 @@ export const scheduleCallback = (
   callback: () => void,
   delay = 0,
 ): OperatorLike<SchedulerLike, DisposableLike> => scheduler => {
-  const continuation = new CallbackSchedulerContinuation(callback, delay);
-  scheduler.schedule(continuation);
+  const continuation = new CallbackSchedulerContinuation(callback);
+  scheduler.schedule(continuation, delay);
   return continuation;
 };

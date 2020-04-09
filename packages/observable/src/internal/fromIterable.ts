@@ -1,6 +1,6 @@
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable } from "./observable";
+import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
 class FromIteratorProducer<T> extends AbstractProducer<T> {
@@ -9,13 +9,13 @@ class FromIteratorProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
     private readonly iterator: Iterator<T>,
-    readonly delay: number,
+    private readonly delay: number,
   ) {
     super(subscriber);
     this.next = iterator.next();
   }
 
-  produce(shouldYield?: () => boolean) {
+  produce(shouldYield?: () => boolean): number {
     const delay = this.delay;
     const iterator = this.iterator;
 
@@ -34,7 +34,7 @@ class FromIteratorProducer<T> extends AbstractProducer<T> {
         isDisposed = this.isDisposed;
         if (!done && !isDisposed && (delay > 0 || shouldYield())) {
           this.next = next;
-          return;
+          return delay;
         }
       }
     } else {
@@ -47,6 +47,7 @@ class FromIteratorProducer<T> extends AbstractProducer<T> {
     }
 
     this.dispose();
+    return 0;
   }
 }
 
@@ -64,7 +65,9 @@ export function fromIterator<T>(
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromIteratorProducer(subscriber, iterator, delay);
 
-  return createScheduledObservable(factory, delay === 0);
+  return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
 }
 
 /**
@@ -91,5 +94,7 @@ export function fromIterable<T>(
     return new FromIteratorProducer(subscriber, iterator, delay);
   };
 
-  return createScheduledObservable(factory, delay === 0);
+  return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
 }

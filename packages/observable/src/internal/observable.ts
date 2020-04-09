@@ -73,9 +73,9 @@ class EnumeratorSubscriber<T>
     this.hasCurrent = true;
   }
 
-  schedule(continuation: SchedulerContinuationLike): void {
+  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
     this.add(continuation);
-    if (!continuation.isDisposed && continuation.delay === 0) {
+    if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {
       continuation.dispose();
@@ -97,6 +97,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
       subscriber: SubscriberLike<T>,
     ) => SchedulerContinuationLike | (() => void),
     readonly isSynchronous: boolean,
+    private readonly delay: number
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -104,9 +105,9 @@ class ScheduledObservable<T> implements ObservableLike<T> {
     if (schedulerContinuation instanceof Function) {
       // Note: no need to add the returned disposable, since
       // subscriber already adds any callbacks scheduled on it.
-      pipe(subscriber, scheduleCallback(schedulerContinuation));
+      pipe(subscriber, scheduleCallback(schedulerContinuation, this.delay));
     } else {
-      subscriber.schedule(schedulerContinuation);
+      subscriber.schedule(schedulerContinuation, this.delay);
     }
   }
 }
@@ -117,4 +118,12 @@ export const createScheduledObservable = <T>(
     subscriber: SubscriberLike<T>,
   ) => SchedulerContinuationLike | (() => void),
   isSynchronous: boolean,
-): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous);
+): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous, 0);
+
+/** @ignore */
+export const createDelayedScheduledObservable = <T>(
+  factory: (
+    subscriber: SubscriberLike<T>,
+  ) => SchedulerContinuationLike | (() => void),
+  delay: number,
+): ObservableLike<T> => new ScheduledObservable(factory, false, delay);

@@ -25,20 +25,17 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
   readonly add = add;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = dispose;
-  dueTime: number;
 
   constructor(
     private readonly scheduler: PrioritySchedulerResourceImpl,
-    public delay: number,
-  ) {
-    this.dueTime = scheduler.now + delay;
-  }
+    public dueTime: number,
+  ) {}
 
   get isDisposed() {
     return this.disposable.isDisposed;
   }
 
-  run(hostShouldYield?: () => boolean) {
+  run(hostShouldYield?: () => boolean): number {
     const scheduler = this.scheduler;
     const shouldYield = () => {
       const current = scheduler.current;
@@ -69,22 +66,19 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
 
       if (delay > 0) {
         scheduler.inContinuation = false;
-        this.delay = delay;
         this.dueTime = now + delay;
-        return;
+        return delay;
       }
 
       scheduler.move();
 
       const continuation = task.continuation;
-      continuation.run(shouldYield);
+      const nextDelay = continuation.run(shouldYield);
 
       if (!continuation.isDisposed) {
-        const { delay } = continuation;
-
         // Reuse the existing task and avoid generating garbage.
         task.taskID = scheduler.taskIDCounter++;
-        task.dueTime = scheduler.now + delay;
+        task.dueTime = scheduler.now + nextDelay;
 
         scheduler.reschedule(task);
       }
@@ -94,14 +88,14 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       // will yield if the next task is delayed.
       if (!isDisposed && shouldYield()) {
         scheduler.inContinuation = false;
-        this.delay = 0;
         this.dueTime = scheduler.now;
-        return;
+        return 0;
       }
     }
 
     scheduler.inContinuation = false;
     this.dispose();
+    return 0;
   }
 }
 
@@ -192,12 +186,11 @@ class PrioritySchedulerResourceImpl
     return task;
   }
 
-  schedule(continuation: SchedulerContinuationLike, priority: number) {
+  schedule(continuation: SchedulerContinuationLike, priority: number, delay = 0) {
     this.add(continuation);
 
     if (!this.isDisposed) {
       const now = this.now;
-      const { delay } = continuation;
       const dueTime = now + delay;
 
       const task = {
@@ -222,14 +215,14 @@ class PrioritySchedulerResourceImpl
           priorityContinuation.dueTime <= dueTime);
 
       if (head === task && !continuationActive) {
-        const continuation = new PrioritySchedulerContinuation(this, delay).add(
+        const continuation = new PrioritySchedulerContinuation(this, dueTime).add(
           () => {
             this.continuation = undefined;
           },
         );
         this.disposable.inner = continuation;
         this.continuation = continuation;
-        this.hostScheduler.schedule(continuation);
+        this.hostScheduler.schedule(continuation, delay);
       }
     }
   }

@@ -52,14 +52,14 @@ const createCallback = (
 ): (() => void) => {
   const callback = () => {
     scheduler.inContinuation = true;
-    continuation.run(shouldYield);
+    const delay = continuation.run(shouldYield);
     scheduler.inContinuation = false;
 
     if (!continuation.isDisposed) {
       const disposable = scheduleCallback(
         callback,
         priority,
-        continuation.delay,
+        delay,
       );
       continuation.add(disposable);
     }
@@ -75,9 +75,9 @@ const priorityScheduler = {
     return unstable_now();
   },
 
-  schedule(continuation: SchedulerContinuationLike, priority: number): void {
+  schedule(continuation: SchedulerContinuationLike, priority: number, delay = 0): void {
     const callback = createCallback(continuation, priorityScheduler, priority);
-    const disposable = scheduleCallback(callback, priority, continuation.delay);
+    const disposable = scheduleCallback(callback, priority, delay);
     continuation.add(disposable);
   },
 };
