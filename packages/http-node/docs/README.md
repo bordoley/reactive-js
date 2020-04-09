@@ -33,7 +33,7 @@
 * [createHttpRequestListener](README.md#const-createhttprequestlistener)
 * [createReadableHttpContent](README.md#const-createreadablehttpcontent)
 * [createStringHttpContent](README.md#const-createstringhttpcontent)
-* [decodeDisposableHttpResponse](README.md#const-decodedisposablehttpresponse)
+* [decodeHttpContentResponse](README.md#const-decodehttpcontentresponse)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 
@@ -139,9 +139,9 @@ Name | Type | Default |
 
 ___
 
-### `Const` decodeDisposableHttpResponse
+### `Const` decodeHttpContentResponse
 
-▸ **decodeDisposableHttpResponse**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Parameters:**
 
@@ -149,13 +149,13 @@ Name | Type |
 ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |
 
-**Returns:** *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Parameters:**
 
@@ -163,19 +163,23 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *OperatorLike‹HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *OperatorLike‹HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**(`request`: HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, `options`: [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md) & BrotliOptions | ZlibOptions): *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequestLike‹TReq›, `options`: [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md) & BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+
+**Type parameters:**
+
+▪ **TReq**
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`request` | HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› | - |
+`request` | HttpContentRequestLike‹TReq› | - |
 `options` | [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md) & BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *OperatorLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*

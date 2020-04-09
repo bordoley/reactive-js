@@ -18,13 +18,13 @@
 
 ###  request
 
-• **request**: *HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+• **request**: *HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 
 ###  response
 
-• **response**: *DisposableValueLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+• **response**: *DisposableValueLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 

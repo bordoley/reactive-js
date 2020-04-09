@@ -10,6 +10,8 @@
 
 * **HttpResponseLike**
 
+  ↳ [HttpContentResponseLike](httpcontentresponselike.md)
+
 ## Index
 
 ### Properties
@@ -28,7 +30,7 @@
 
 ### `Optional` content
 
-• **content**? : *[HttpContentLike](httpcontentlike.md)‹T›*
+• **content**? : *T*
 
 ___
 

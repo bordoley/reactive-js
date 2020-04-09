@@ -23,6 +23,7 @@
 * [httpVersionMinor](httproutedrequestlike.md#httpversionminor)
 * [method](httproutedrequestlike.md#method)
 * [params](httproutedrequestlike.md#params)
+* [preconditions](httproutedrequestlike.md#optional-preconditions)
 * [preferences](httproutedrequestlike.md#optional-preferences)
 * [uri](httproutedrequestlike.md#uri)
 
@@ -30,7 +31,7 @@
 
 ### `Optional` content
 
-• **content**? : *HttpContentLike‹T›*
+• **content**? : *T*
 
 *Inherited from void*
 
@@ -83,6 +84,14 @@ ___
 #### Type declaration:
 
 * \[ **param**: *string*\]: string
+
+___
+
+### `Optional` preconditions
+
+• **preconditions**? : *HttpRequestPreconditionsLike*
+
+*Inherited from void*
 
 ___
 

@@ -27,7 +27,6 @@ const alwaysFalse = () => false;
 class ReactiveCacheSchedulerContinuation<T>
   implements SchedulerContinuationLike {
   readonly add = add;
-  readonly delay = 0;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
 
@@ -37,7 +36,7 @@ class ReactiveCacheSchedulerContinuation<T>
     return this.disposable.isDisposed;
   }
 
-  run(shouldYield?: () => boolean) {
+  run(shouldYield?: () => boolean): number {
     const { cache, maxCount, garbage } = this.cache;
 
     shouldYield = shouldYield || alwaysFalse;
@@ -49,13 +48,14 @@ class ReactiveCacheSchedulerContinuation<T>
       const hasMoreToCleanup = cache.size > maxCount;
 
       if (hasMoreToCleanup && shouldYield()) {
-        return;
+        return 0;
       } else if (!hasMoreToCleanup) {
         break;
       }
     }
 
     this.dispose();
+    return 0;
   }
 }
 

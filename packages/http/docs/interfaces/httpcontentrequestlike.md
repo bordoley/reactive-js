@@ -1,6 +1,6 @@
-[@reactive-js/http](../README.md) › [HttpServerRequestLike](httpserverrequestlike.md)
+[@reactive-js/http](../README.md) › [HttpContentRequestLike](httpcontentrequestlike.md)
 
-# Interface: HttpServerRequestLike <**T**>
+# Interface: HttpContentRequestLike <**T**>
 
 ## Type parameters
 
@@ -8,24 +8,25 @@
 
 ## Hierarchy
 
-  ↳ [HttpContentRequestLike](httpcontentrequestlike.md)‹T›
+* [HttpRequestLike](httprequestlike.md)‹[HttpContentLike](httpcontentlike.md)‹T››
 
-  ↳ **HttpServerRequestLike**
+  ↳ **HttpContentRequestLike**
+
+  ↳ [HttpServerRequestLike](httpserverrequestlike.md)
 
 ## Index
 
 ### Properties
 
-* [content](httpserverrequestlike.md#optional-content)
-* [expectContinue](httpserverrequestlike.md#expectcontinue)
-* [headers](httpserverrequestlike.md#headers)
-* [httpVersionMajor](httpserverrequestlike.md#httpversionmajor)
-* [httpVersionMinor](httpserverrequestlike.md#httpversionminor)
-* [isTransportSecure](httpserverrequestlike.md#istransportsecure)
-* [method](httpserverrequestlike.md#method)
-* [preconditions](httpserverrequestlike.md#optional-preconditions)
-* [preferences](httpserverrequestlike.md#optional-preferences)
-* [uri](httpserverrequestlike.md#uri)
+* [content](httpcontentrequestlike.md#optional-content)
+* [expectContinue](httpcontentrequestlike.md#expectcontinue)
+* [headers](httpcontentrequestlike.md#headers)
+* [httpVersionMajor](httpcontentrequestlike.md#httpversionmajor)
+* [httpVersionMinor](httpcontentrequestlike.md#httpversionminor)
+* [method](httpcontentrequestlike.md#method)
+* [preconditions](httpcontentrequestlike.md#optional-preconditions)
+* [preferences](httpcontentrequestlike.md#optional-preferences)
+* [uri](httpcontentrequestlike.md#uri)
 
 ## Properties
 
@@ -66,12 +67,6 @@ ___
 • **httpVersionMinor**: *number*
 
 *Inherited from [HttpRequestLike](httprequestlike.md).[httpVersionMinor](httprequestlike.md#httpversionminor)*
-
-___
-
-###  isTransportSecure
-
-• **isTransportSecure**: *boolean*
 
 ___
 

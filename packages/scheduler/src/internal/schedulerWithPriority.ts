@@ -19,8 +19,8 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     return this.priorityScheduler.now;
   }
 
-  schedule(continuation: SchedulerContinuationLike): void {
-    this.priorityScheduler.schedule(continuation, this.priority);
+  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
+    this.priorityScheduler.schedule(continuation, this.priority, delay);
   }
 }
 

@@ -12,7 +12,6 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 class SafeSubscriberSchedulerContinuation<T>
   implements SchedulerContinuationLike {
   readonly add = add;
-  readonly delay = 0;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
 
@@ -22,7 +21,7 @@ class SafeSubscriberSchedulerContinuation<T>
     return this.disposable.isDisposed;
   }
 
-  run(shouldYield?: () => boolean) {
+  run(shouldYield?: () => boolean): number {
     const subscriber = this.subscriber;
     const nextQueue = subscriber.nextQueue;
     const delegate = subscriber.delegate;
@@ -39,7 +38,7 @@ class SafeSubscriberSchedulerContinuation<T>
             subscriber.nextQueue.length > 0 || subscriber.isDisposed;
 
           if (hasRemainingEvents && shouldYield()) {
-            return;
+            return 0;
           }
         }
 
@@ -51,6 +50,7 @@ class SafeSubscriberSchedulerContinuation<T>
       }
       this.dispose();
     }
+    return 0;
   }
 }
 

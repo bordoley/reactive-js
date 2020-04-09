@@ -1,5 +1,5 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable } from "./observable";
+import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 import { alwaysTrue } from "./functions";
 
@@ -8,12 +8,12 @@ class GenerateProducer<T> extends AbstractProducer<T> {
     subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
-    readonly delay: number,
+    private readonly delay: number,
   ) {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean) {
+  produce(shouldYield?: () => boolean): number {
     const generator = this.generator;
     const delay = this.delay;
 
@@ -33,7 +33,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 
         if (!isDisposed && (delay > 0 || shouldYield())) {
           this.acc = acc;
-          return;
+          return delay;
         }
       }
     } else {
@@ -46,6 +46,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
         }
       }
     }
+    return delay;
   }
 }
 
@@ -66,5 +67,7 @@ export function generate<T>(
   const factory = (subscriber: SubscriberLike<T>) =>
     new GenerateProducer(subscriber, generator, initialValue(), delay);
 
-  return createScheduledObservable(factory, delay === 0);
+    return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
 }

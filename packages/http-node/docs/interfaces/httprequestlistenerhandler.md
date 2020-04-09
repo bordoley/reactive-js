@@ -8,12 +8,12 @@
 
 ## Callable
 
-▸ (`req`: HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››): *ObservableLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ (`req`: HttpServerRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››): *ObservableLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | HttpRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
+`req` | HttpServerRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
 
-**Returns:** *ObservableLike‹HttpResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *ObservableLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*

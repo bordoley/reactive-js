@@ -105,7 +105,6 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
 
 class ZipProducer<T> extends AbstractProducer<T> {
   current: any;
-  readonly delay = 0;
   hasCurrent = false;
 
   constructor(
@@ -116,7 +115,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean) {
+  produce(shouldYield?: () => boolean): number {
     const enumerators = this.enumerators;
     const selector = this.selector;
 
@@ -134,7 +133,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
         shouldEmitNext = shouldEmit(enumerators);
 
         if (shouldEmitNext && !isDisposed && shouldYield()) {
-          return;
+          return 0;
         }
       }
     } else {
@@ -149,6 +148,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
       }
     }
     this.dispose();
+    return 0;
   }
 }
 

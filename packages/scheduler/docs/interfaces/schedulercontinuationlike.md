@@ -14,28 +14,15 @@ A unit of work to be executed by a scheduler.
 
 ## Index
 
-### Properties
-
-* [delay](schedulercontinuationlike.md#delay)
-
 ### Methods
 
 * [run](schedulercontinuationlike.md#run)
-
-## Properties
-
-###  delay
-
-• **delay**: *number*
-
-An optional delay in ms that the scheduler should wait
-before invoking the continuation's `run` function.
 
 ## Methods
 
 ###  run
 
-▸ **run**(`shouldYield?`: undefined | function): *void*
+▸ **run**(`shouldYield?`: undefined | function): *number*
 
 Work function to be invoked by the scheduler after the specified delay.
 
@@ -45,4 +32,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `shouldYield?` | undefined &#124; function | An optional function that should be periodically checked when defined. If `shouldYield` returns true the continuation should return, yielding control back to the scheduler.  |
 
-**Returns:** *void*
+**Returns:** *number*

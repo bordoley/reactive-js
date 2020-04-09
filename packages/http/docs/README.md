@@ -13,6 +13,8 @@
 ### Interfaces
 
 * [HttpContentLike](interfaces/httpcontentlike.md)
+* [HttpContentRequestLike](interfaces/httpcontentrequestlike.md)
+* [HttpContentResponseLike](interfaces/httpcontentresponselike.md)
 * [HttpEntityTagLike](interfaces/httpentitytaglike.md)
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpPreferencesLike](interfaces/httppreferenceslike.md)
@@ -141,13 +143,13 @@ ___
 
 ### `Const` disallowProtocolAndHostForwarding
 
-▸ **disallowProtocolAndHostForwarding**<**T**>(): *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+▸ **disallowProtocolAndHostForwarding**<**T**>(): *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+**Returns:** *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T››*
 
 ___
 
@@ -171,7 +173,7 @@ ___
 
 ### `Const` parseHttpResponseFromHeaders
 
-▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `body`: T): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `body`: T): *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
 
 **Type parameters:**
 
@@ -185,7 +187,7 @@ Name | Type |
 `headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
 `body` | T |
 
-**Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+**Returns:** *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
 
 ___
 
@@ -218,7 +220,7 @@ ___
 
 ### `Const` writeHttpResponseHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
+▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -226,7 +228,7 @@ ___
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **response**: *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
 
 ▪ **writeHeader**: *function*
 

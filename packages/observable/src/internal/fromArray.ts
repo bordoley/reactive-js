@@ -1,6 +1,6 @@
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable } from "./observable";
+import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
 class FromArrayProducer<T> extends AbstractProducer<T> {
@@ -10,12 +10,12 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
-    readonly delay: number,
+    private readonly delay: number,
   ) {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean) {
+  produce(shouldYield?: () => boolean): number {
     const delay = this.delay;
     const values = this.values;
     const length = values.length;
@@ -32,7 +32,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
         isDisposed = this.isDisposed;
         if (index < length && !isDisposed && (delay > 0 || shouldYield())) {
           this.index = index;
-          return;
+          return delay;
         }
       }
     } else {
@@ -42,6 +42,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
       }
     }
     this.dispose();
+    return 0;
   }
 }
 
@@ -66,5 +67,7 @@ export function fromArray<T>(
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromArrayProducer(subscriber, values, startIndex, delay);
 
-  return createScheduledObservable(factory, delay === 0);
+  return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
 }

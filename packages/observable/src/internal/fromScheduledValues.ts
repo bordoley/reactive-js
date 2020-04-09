@@ -1,23 +1,19 @@
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable } from "./observable";
+import { createDelayedScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
 
 class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
   private index = 0;
-  delay: number;
 
   constructor(
     subscriber: SubscriberLike<T>,
     private readonly values: ReadonlyArray<[number, T]>,
   ) {
     super(subscriber);
-
-    const [delay] = this.values[0];
-    this.delay = delay;
   }
 
-  produce(shouldYield?: () => boolean) {
+  produce(shouldYield?: () => boolean): number {
     const values = this.values;
     const length = values.length;
 
@@ -41,12 +37,12 @@ class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
         (shouldYieldDueToDelay || shouldYield())
       ) {
         this.index = index;
-        this.delay = values[index][0];
-        return;
+        return values[index][0];
       }
     }
 
     this.dispose();
+    return 0;
   }
 }
 
@@ -64,6 +60,7 @@ export function fromScheduledValues<T>(
 ): ObservableLike<T> {
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromScheduledValuesProducer(subscriber, values);
-
-  return createScheduledObservable(factory, false);
+  
+  const [delay] = values[0];
+  return createDelayedScheduledObservable(factory, delay);
 }
