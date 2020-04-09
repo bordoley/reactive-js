@@ -19,6 +19,8 @@ import {
   writeHttpPreferenceHeaders,
   parseHttpPreferencesFromHeaders,
 } from "./httpPreferences";
+import { parseHttpDateTime, serializeHttpDateTime } from "./httpDateTime";
+import { serializeHttpEntityTag } from "./httpEntityTag";
 
 declare class URL implements URI {
   constructor(uri: string);
@@ -60,24 +62,12 @@ export const parseHttpResponseFromHeaders = <T>(
   body: T,
 ): HttpResponseLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
-
   const preferences = parseHttpPreferencesFromHeaders(headers);
 
-  const expiresDateValue = headers["expires"] || "";
-  const expiresDate = new Date(expiresDateValue);
-  const expiresTims = expiresDate.getTime();
-  const expires =
-    expiresDateValue !== "" && !Number.isNaN(expiresTims)
-      ? expiresTims
-      : undefined;
+  // FIXME: etag
 
-  const lastModifiedValue = headers["last-modified"] || "";
-  const lastModifiedDate = new Date(lastModifiedValue);
-  const lastModifiedTime = lastModifiedDate.getTime();
-  const lastModified =
-    lastModifiedValue !== "" && !Number.isNaN(lastModifiedTime)
-      ? lastModifiedTime
-      : undefined;
+  const expires = parseHttpDateTime(headers["expires"] || "");
+  const lastModified = parseHttpDateTime(headers["last-modified"] || "");
 
   const locationHeader = headers.location;
   const location =
@@ -101,6 +91,7 @@ export const parseHttpResponseFromHeaders = <T>(
 export const writeHttpResponseHeaders = <T>(
   {
     content,
+    etag,
     expires,
     headers,
     lastModified,
@@ -114,14 +105,16 @@ export const writeHttpResponseHeaders = <T>(
     writeHttpContentHeaders(content, writeHeader);
   }
 
+  if (etag !== undefined) {
+    writeHeader("ETag", serializeHttpEntityTag(etag));
+  }
+
   if (expires !== undefined) {
-    const date = new Date(expires);
-    writeHeader("Expires", date.toUTCString());
+    writeHeader("Expires", serializeHttpDateTime(expires));
   }
 
   if (lastModified !== undefined) {
-    const date = new Date(lastModified);
-    writeHeader("Last-Modified", date.toUTCString());
+    writeHeader("Last-Modified", serializeHttpDateTime(lastModified));
   }
 
   if (location !== undefined) {
@@ -146,29 +139,21 @@ export const checkIfNotModified = <T>({
   HttpResponseLike<T>,
   HttpResponseLike<T>
 > => response => {
-  const {
-    expires,
-    headers,
-    lastModified,
-    location,
-    preferences,
-    statusCode,
-    vary,
-  } = response;
+  const { statusCode, content, ...requestWithoutContent } = response;
   const methodSupportsFresh =
     method === HttpMethod.GET || method === HttpMethod.HEAD;
   const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
 
+  const headers: { [k: string]: string } = {};
+  writeHttpResponseHeaders(response, (k, v) => {
+    headers[k.toLowerCase()] = v;
+  });
+
   return methodSupportsFresh &&
     statusCodeSupportsFresh &&
+    // We assume a server request here with raw headers from the request
+    // so only serialize the response which is likely to be typed
     fresh(reqHeaders as any, headers as any)
-    ? createHttpResponse(HttpStatusCode.NotModified, {
-        expires,
-        headers,
-        lastModified,
-        location,
-        preferences,
-        vary,
-      })
+    ? createHttpResponse(HttpStatusCode.NotModified, requestWithoutContent)
     : response;
 };

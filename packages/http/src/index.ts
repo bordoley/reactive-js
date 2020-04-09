@@ -1,11 +1,14 @@
 export {
   HttpContentEncoding,
   HttpContentLike,
+  HttpDateTime,
+  HttpEntityTagLike,
   HttpHeadersLike,
   HttpMethod,
   HttpPreferencesLike,
   HttpRequestLike,
   HttpResponseLike,
+  HttpServerRequestLike,
   HttpStatusCode,
   URI,
 } from "./internal/interfaces";

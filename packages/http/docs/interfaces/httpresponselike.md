@@ -15,6 +15,7 @@
 ### Properties
 
 * [content](httpresponselike.md#optional-content)
+* [etag](httpresponselike.md#optional-etag)
 * [expires](httpresponselike.md#optional-expires)
 * [headers](httpresponselike.md#headers)
 * [lastModified](httpresponselike.md#optional-lastmodified)
@@ -31,9 +32,15 @@
 
 ___
 
+### `Optional` etag
+
+• **etag**? : *[HttpEntityTagLike](httpentitytaglike.md)*
+
+___
+
 ### `Optional` expires
 
-• **expires**? : *undefined | number*
+• **expires**? : *[HttpDateTime](../README.md#httpdatetime)*
 
 ___
 
@@ -45,7 +52,7 @@ ___
 
 ### `Optional` lastModified
 
-• **lastModified**? : *undefined | number*
+• **lastModified**? : *[HttpDateTime](../README.md#httpdatetime)*
 
 ___
 

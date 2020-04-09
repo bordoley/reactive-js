@@ -10,6 +10,8 @@
 
 * **HttpRequestLike**
 
+  ↳ [HttpServerRequestLike](httpserverrequestlike.md)
+
 ## Index
 
 ### Properties
@@ -20,6 +22,7 @@
 * [httpVersionMajor](httprequestlike.md#httpversionmajor)
 * [httpVersionMinor](httprequestlike.md#httpversionminor)
 * [method](httprequestlike.md#method)
+* [preconditions](httprequestlike.md#optional-preconditions)
 * [preferences](httprequestlike.md#optional-preferences)
 * [uri](httprequestlike.md#uri)
 
@@ -58,6 +61,12 @@ ___
 ###  method
 
 • **method**: *[HttpMethod](../enums/httpmethod.md)*
+
+___
+
+### `Optional` preconditions
+
+• **preconditions**? : *[HttpRequestPreconditionsLike](httprequestpreconditionslike.md)*
 
 ___
 

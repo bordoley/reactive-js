@@ -1,6 +1,6 @@
 import { RequestListener, ServerResponse, IncomingMessage } from "http";
 import {
-  HttpRequestLike,
+  HttpServerRequestLike,
   HttpResponseLike,
   HttpStatusCode,
   createHttpResponse,
@@ -95,7 +95,7 @@ export interface HttpRequestListenerOptions {
 
 export interface HttpRequestListenerHandler {
   (
-    req: HttpRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    req: HttpServerRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ): ObservableLike<
     HttpResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
@@ -127,7 +127,7 @@ export const createHttpRequestListener = (
       httpVersionMinor,
     } = req;
     const body = createReadableAsyncEnumerable(() => req);
-    const protocol = (req.socket as any).encrypted || false ? "https" : "http";
+    const isTransportSecure = (req.socket as any).encrypted || false;
 
     return pipe(
       parseHttpRequestFromHeaders({
@@ -136,7 +136,7 @@ export const createHttpRequestListener = (
         headers: headers as HttpHeadersLike,
         httpVersionMajor,
         httpVersionMinor,
-        protocol,
+        isTransportSecure,
         body,
       }),
       handler,
