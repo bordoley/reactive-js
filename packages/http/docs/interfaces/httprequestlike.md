@@ -17,6 +17,8 @@
 * [content](httprequestlike.md#optional-content)
 * [expectContinue](httprequestlike.md#expectcontinue)
 * [headers](httprequestlike.md#headers)
+* [httpVersionMajor](httprequestlike.md#httpversionmajor)
+* [httpVersionMinor](httprequestlike.md#httpversionminor)
 * [method](httprequestlike.md#method)
 * [preferences](httprequestlike.md#optional-preferences)
 * [uri](httprequestlike.md#uri)
@@ -38,6 +40,18 @@ ___
 ###  headers
 
 • **headers**: *[HttpHeadersLike](httpheaderslike.md)*
+
+___
+
+###  httpVersionMajor
+
+• **httpVersionMajor**: *number*
+
+___
+
+###  httpVersionMinor
+
+• **httpVersionMinor**: *number*
 
 ___
 

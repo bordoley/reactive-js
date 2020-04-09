@@ -8,4 +8,4 @@
 
 ## Indexable
 
-* \[ **header**: *string*\]: unknown
+* \[ **header**: *string*\]: string

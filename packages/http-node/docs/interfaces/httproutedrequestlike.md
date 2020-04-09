@@ -19,6 +19,8 @@
 * [content](httproutedrequestlike.md#optional-content)
 * [expectContinue](httproutedrequestlike.md#expectcontinue)
 * [headers](httproutedrequestlike.md#headers)
+* [httpVersionMajor](httproutedrequestlike.md#httpversionmajor)
+* [httpVersionMinor](httproutedrequestlike.md#httpversionminor)
 * [method](httproutedrequestlike.md#method)
 * [params](httproutedrequestlike.md#params)
 * [preferences](httproutedrequestlike.md#optional-preferences)
@@ -45,6 +47,22 @@ ___
 ###  headers
 
 • **headers**: *HttpHeadersLike*
+
+*Inherited from void*
+
+___
+
+###  httpVersionMajor
+
+• **httpVersionMajor**: *number*
+
+*Inherited from void*
+
+___
+
+###  httpVersionMinor
+
+• **httpVersionMinor**: *number*
 
 *Inherited from void*
 
