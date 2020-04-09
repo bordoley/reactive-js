@@ -11,7 +11,6 @@ import {
 } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { pipe } from "@reactive-js/pipe";
 import { assertSubscriberNotifyInContinuation } from "./subscriber";
 
 class EnumeratorSubscriber<T>
@@ -105,7 +104,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
     if (schedulerContinuation instanceof Function) {
       // Note: no need to add the returned disposable, since
       // subscriber already adds any callbacks scheduled on it.
-      pipe(subscriber, scheduleCallback(schedulerContinuation, this.delay));
+      scheduleCallback(subscriber, schedulerContinuation, this.delay);
     } else {
       subscriber.schedule(schedulerContinuation, this.delay);
     }
