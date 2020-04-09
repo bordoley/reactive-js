@@ -45,7 +45,7 @@ export interface SchedulerLike {
  */
 export interface VirtualTimeSchedulerLike
   extends DisposableLike,
-    EnumeratorLike<void, void>,
+    EnumeratorLike<void, SchedulerContinuationLike>,
     SchedulerLike,
     SchedulerContinuationLike {}
 

@@ -20,7 +20,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   readonly add = add;
-  readonly current = undefined;
+  current: any = undefined;
   readonly delay = 0;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
@@ -62,19 +62,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
         this.now = dueTime;
         this.microTaskTicks = 0;
 
-        continuation.run(this.shouldYield);
-
-        if (!continuation.isDisposed) {
-          const { delay } = continuation;
-
-          // This is to maintain consistency with the other
-          // scheduler implementation which always explicitly reschedule
-          // using the schedule function.
-          task.id = this.taskIDCount++;
-          task.dueTime = dueTime + delay;
-
-          taskQueue.push(task);
-        }
+        this.current = continuation;
       } else {
         this.dispose();
       }
@@ -98,6 +86,13 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     if (shouldYield !== undefined) {
       this.runShouldYield = shouldYield;
       while (this.move()) {
+        const continuation = this.current
+        continuation.run(this.shouldYield);
+
+        if (!continuation.isDisposed) {
+          this.schedule(continuation);
+        }
+
         if (shouldYield()) {
           this.runShouldYield = undefined;
           return this;
@@ -107,7 +102,14 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
       this.runShouldYield = undefined;
     } else {
       // eslint-disable-next-line no-empty
-      while (this.move()) {}
+      while (this.move()) {
+        const continuation = this.current
+        continuation.run(this.shouldYield);
+
+        if (!continuation.isDisposed) {
+          this.schedule(continuation);
+        }
+      }
     }
 
     this.dispose();
@@ -115,6 +117,8 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
   }
 
   schedule(continuation: SchedulerContinuationLike): void {
+    this.add(continuation);
+
     const work: VirtualTask = {
       id: this.taskIDCount++,
       dueTime: this.now + continuation.delay,
