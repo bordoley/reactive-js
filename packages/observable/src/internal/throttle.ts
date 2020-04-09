@@ -13,7 +13,10 @@ import {
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { ofValue } from "./ofValue";
 
 /**
@@ -70,6 +73,8 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       this.value = next;
       this.hasValue = true;

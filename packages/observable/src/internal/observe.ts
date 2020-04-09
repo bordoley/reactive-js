@@ -4,7 +4,10 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -24,6 +27,8 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       this.observer.onNotify(next);
       this.delegate.notify(next);

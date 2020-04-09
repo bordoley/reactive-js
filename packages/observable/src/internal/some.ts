@@ -1,6 +1,9 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { ofValue } from "./ofValue";
 
 class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
@@ -19,6 +22,8 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     const passesPredicate = this.predicate(next);
     if (passesPredicate) {
       const delegate = this.delegate;

@@ -47,6 +47,7 @@ const scheduleImmediate = (
 };
 
 class NodeScheduler implements SchedulerLike {
+  inContinuation = false;
   readonly schedule = schedule;
 
   protected readonly shouldYield = () => {

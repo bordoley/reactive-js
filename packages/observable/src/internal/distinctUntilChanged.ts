@@ -1,6 +1,9 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -18,6 +21,8 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     const shouldEmit =
       !this.isDisposed &&
       (!this.hasValue || !this.equals(this.prev as T, next));

@@ -1,7 +1,10 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractProducer } from "./producer";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { enumerate } from "./observable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
@@ -71,6 +74,8 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   }
 
   notify(next: unknown) {
+    assertSubscriberNotifyInContinuation(this);
+
     const enumerators = this.enumerators;
 
     if (!this.isDisposed) {

@@ -1,6 +1,9 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 interface CombineLatestCtx<T> {
   completedCount: number;
@@ -33,6 +36,8 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: unknown) {
+    assertSubscriberNotifyInContinuation(this);
+
     const ctx = this.ctx;
     const latest = ctx.latest;
     latest[this.index] = next;

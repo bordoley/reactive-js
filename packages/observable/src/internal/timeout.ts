@@ -13,7 +13,10 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { throws } from "./throws";
 import { concat } from "./concat";
 
@@ -42,6 +45,8 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     this.durationSubscription.dispose();
     this.delegate.notify(next);
   }

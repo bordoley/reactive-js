@@ -6,7 +6,9 @@ function createCallback(
 ): () => void {
   const callback = () => {
     if (!continuation.isDisposed) {
+      scheduler.inContinuation = true;
       continuation.run(scheduler.shouldYield);
+      scheduler.inContinuation = false;
 
       if (!continuation.isDisposed) {
         scheduler.scheduleCallback(callback, continuation.delay);

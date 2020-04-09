@@ -180,7 +180,7 @@ pipe(
     headers: {
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
-    }
+    },
   }),
   sendHttpRequest,
   createDefaultHttpResponseHandler(sendHttpRequest, 10),

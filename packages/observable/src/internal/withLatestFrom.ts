@@ -8,7 +8,10 @@ import { lift } from "./lift";
 import { observe } from "./observe";
 import { pipe } from "@reactive-js/pipe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
 class WithLatestFromSubscriber<TA, TB, TC>
@@ -29,6 +32,8 @@ class WithLatestFromSubscriber<TA, TB, TC>
   }
 
   notify(next: TA) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
       this.delegate.notify(result);

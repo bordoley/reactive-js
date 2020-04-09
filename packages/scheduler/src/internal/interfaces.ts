@@ -26,6 +26,8 @@ export interface SchedulerContinuationLike extends DisposableLike {
  * An object that schedules units of work on a runloop.
  */
 export interface SchedulerLike {
+  readonly inContinuation: boolean;
+
   /** The scheduler's current time in ms. */
   readonly now: number;
 
@@ -53,6 +55,8 @@ export interface VirtualTimeSchedulerLike
  * @noInheritDoc
  */
 export interface PrioritySchedulerLike {
+  readonly inContinuation: boolean;
+
   /** The scheduler's current time in ms. */
   readonly now: number;
 
@@ -84,6 +88,8 @@ export interface PrioritySchedulerResourceLike
  * @noInheritDoc
  */
 export interface HostSchedulerLike extends SchedulerLike {
+  inContinuation: boolean;
+
   /** Platform specific shouldYield function passed to continuations when they are run.*/
   readonly shouldYield: (() => boolean) | undefined;
 

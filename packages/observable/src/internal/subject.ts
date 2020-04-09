@@ -1,7 +1,10 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { SafeSubscriberLike, SubjectLike, SubscriberLike } from "./interfaces";
 import { enumerate } from "./observable";
-import { AbstractSubscriber } from "./subscriber";
+import {
+  AbstractSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
@@ -20,6 +23,8 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   }
 
   notify(next: T): void {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       const replayed = this.replayed;
       const replayCount = this.replayCount;

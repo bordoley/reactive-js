@@ -8,7 +8,10 @@ import { lift } from "./lift";
 import { map } from "./map";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { ErrorLike } from "@reactive-js/disposable";
 
 const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
@@ -59,6 +62,8 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: ObservableLike<T>) {
+    assertSubscriberNotifyInContinuation(this);
+
     const queue = this.queue;
     if (!this.isDisposed) {
       queue.push(next);

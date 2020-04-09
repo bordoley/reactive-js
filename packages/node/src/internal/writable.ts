@@ -14,6 +14,7 @@ import {
   lift,
   SubscriberOperatorLike,
   using,
+  assertSubscriberNotifyInContinuation,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -32,6 +33,8 @@ class WritableSubscriber extends AbstractDelegatingSubscriber<
   }
 
   notify(data: ReadableEvent) {
+    assertSubscriberNotifyInContinuation(this);
+
     switch (data.type) {
       case ReadableEventType.Data: {
         if (!this.writable.write(data.chunk)) {

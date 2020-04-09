@@ -10,7 +10,10 @@ export {
 } from "./internal/interfaces";
 
 export { enumerate } from "./internal/observable";
-export { AbstractDelegatingSubscriber } from "./internal/subscriber";
+export {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./internal/subscriber";
 
 export { combineLatest } from "./internal/combineLatest";
 export { compute } from "./internal/compute";

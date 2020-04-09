@@ -14,7 +14,6 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
-  PrioritySchedulerLike,
 } from "@reactive-js/scheduler";
 import { createDisposable, DisposableLike } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
@@ -48,10 +47,13 @@ const scheduleCallback = (
 
 const createCallback = (
   continuation: SchedulerContinuationLike,
+  scheduler: { inContinuation: boolean },
   priority: number,
 ): (() => void) => {
   const callback = () => {
+    scheduler.inContinuation = true;
     continuation.run(shouldYield);
+    scheduler.inContinuation = false;
 
     if (!continuation.isDisposed) {
       const disposable = scheduleCallback(
@@ -66,13 +68,15 @@ const createCallback = (
   return callback;
 };
 
-const priorityScheduler: PrioritySchedulerLike = {
+const priorityScheduler = {
+  inContinuation: false,
+
   get now(): number {
     return unstable_now();
   },
 
-  schedule(continuation: SchedulerContinuationLike, priority): void {
-    const callback = createCallback(continuation, priority);
+  schedule(continuation: SchedulerContinuationLike, priority: number): void {
+    const callback = createCallback(continuation, priorityScheduler, priority);
     const disposable = scheduleCallback(callback, priority, continuation.delay);
     continuation.add(disposable);
   },

@@ -12,6 +12,7 @@ import {
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
+import { assertSubscriberNotifyInContinuation } from "./subscriber";
 
 class EnumeratorSubscriber<T>
   implements EnumeratorLike<void, T>, SubscriberLike<T> {
@@ -22,6 +23,7 @@ class EnumeratorSubscriber<T>
   readonly dispose = dispose;
   private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
+  inContinuation = false;
   readonly now = 0;
 
   constructor() {
@@ -46,7 +48,9 @@ class EnumeratorSubscriber<T>
         break;
       }
 
+      this.inContinuation = true;
       continuation.run(alwaysTrue);
+      this.inContinuation = false;
 
       if (!continuation.isDisposed) {
         continuations.push(continuation);
@@ -63,6 +67,8 @@ class EnumeratorSubscriber<T>
   }
 
   notify(next: T): void {
+    assertSubscriberNotifyInContinuation(this);
+
     this.current = next;
     this.hasCurrent = true;
   }
