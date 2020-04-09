@@ -1,4 +1,5 @@
 import { add, createDisposable, dispose } from "@reactive-js/disposable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
@@ -18,7 +19,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
+class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike, EnumeratorLike<void, SchedulerContinuationLike> {
   readonly add = add;
   current: any = undefined;
   readonly delay = 0;
@@ -71,7 +72,7 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike {
     return this.hasCurrent;
   }
 
-  run(shouldYield?: () => boolean): SchedulerContinuationLike | void {
+  run(shouldYield?: () => boolean) {
     if (this.isDisposed) {
       return;
     }
