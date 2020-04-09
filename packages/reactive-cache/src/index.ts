@@ -18,25 +18,18 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerLike,
-  SchedulerContinuationLike,
+  AbstractSchedulerContinuation,
   scheduleCallback,
 } from "@reactive-js/scheduler";
 
 const alwaysFalse = () => false;
 
-class ReactiveCacheSchedulerContinuation<T>
-  implements SchedulerContinuationLike {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-
-  constructor(private readonly cache: ReactiveCacheImpl<T>) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+class ReactiveCacheSchedulerContinuation<T> extends AbstractSchedulerContinuation {
+  constructor(private readonly cache: ReactiveCacheImpl<T>) {
+    super()
   }
 
-  run(shouldYield?: () => boolean): number {
+  produce(shouldYield?: () => boolean): number {
     const { cache, maxCount, garbage } = this.cache;
 
     shouldYield = shouldYield || alwaysFalse;

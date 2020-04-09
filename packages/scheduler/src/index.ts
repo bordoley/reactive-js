@@ -7,6 +7,7 @@ export {
   HostSchedulerLike,
 } from "./internal/interfaces";
 
+export { AbstractSchedulerContinuation } from "./internal/abstractSchedulerContinuation";
 export { createPriorityScheduler } from "./internal/priorityScheduler";
 export { scheduleCallback } from "./internal/scheduleCallback";
 export { toSchedulerWithPriority } from "./internal/schedulerWithPriority";

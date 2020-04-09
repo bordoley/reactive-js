@@ -34,7 +34,7 @@ class SwitchSubscriber<T>
 
     this.inner.dispose();
 
-    const inner = pipe(next, observe(this), subscribe(this));
+    const inner = pipe(next, observe(this), subscribe(this.delegate));
     this.delegate.add(inner);
     this.inner = inner;
   }

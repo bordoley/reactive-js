@@ -1,27 +1,15 @@
-import {
-  add,
-  createDisposable,
-  dispose,
-  ErrorLike,
-} from "@reactive-js/disposable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
+import { ErrorLike } from "@reactive-js/disposable";
+import { AbstractSchedulerContinuation } from "@reactive-js/scheduler";
 import { alwaysFalse } from "./functions";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class SafeSubscriberSchedulerContinuation<T>
-  implements SchedulerContinuationLike {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-
-  constructor(private readonly subscriber: SafeSubscriberImpl<T>) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+class SafeSubscriberSchedulerContinuation<T> extends AbstractSchedulerContinuation {
+  constructor(private readonly subscriber: SafeSubscriberImpl<T>) {
+    super();
   }
 
-  run(shouldYield?: () => boolean): number {
+  produce(shouldYield?: () => boolean): number {
     const subscriber = this.subscriber;
     const nextQueue = subscriber.nextQueue;
     const delegate = subscriber.delegate;

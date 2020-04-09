@@ -4,6 +4,10 @@
 
 ## Index
 
+### Classes
+
+* [AbstractSchedulerContinuation](classes/abstractschedulercontinuation.md)
+
 ### Interfaces
 
 * [HostSchedulerLike](interfaces/hostschedulerlike.md)

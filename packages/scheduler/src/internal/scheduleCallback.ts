@@ -1,23 +1,13 @@
-import {
-  add,
-  createDisposable,
-  dispose,
-  DisposableLike,
-} from "@reactive-js/disposable";
-import { SchedulerContinuationLike, SchedulerLike } from "./interfaces";
+import { DisposableLike } from "@reactive-js/disposable";
+import { SchedulerLike } from "./interfaces";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
-class CallbackSchedulerContinuation implements SchedulerContinuationLike {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-
-  constructor(private readonly cb: () => void) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
+  constructor(private readonly cb: () => void) {
+    super();
   }
 
-  run(_?: () => boolean) {
+  produce(_?: () => boolean) {
     if (!this.isDisposed) {
       try {
         this.cb();

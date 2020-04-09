@@ -1,10 +1,10 @@
-import { add, createDisposable, dispose } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
 } from "./interfaces";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
 interface VirtualTask {
   readonly continuation: SchedulerContinuationLike;
@@ -19,14 +19,9 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl
-  implements
-    VirtualTimeSchedulerLike,
-    EnumeratorLike<void, SchedulerContinuationLike> {
-  readonly add = add;
+class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation
+  implements EnumeratorLike<void, SchedulerContinuationLike> {
   current: any = undefined;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
   hasCurrent = false;
   inContinuation = false;
   private microTaskTicks = 0;
@@ -45,10 +40,8 @@ class VirtualTimeSchedulerImpl
     VirtualTask
   > = createPriorityQueue(comparator);
 
-  constructor(private readonly maxMicroTaskTicks: number) {}
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
+  constructor(private readonly maxMicroTaskTicks: number) {
+    super();
   }
 
   move() {
@@ -74,7 +67,7 @@ class VirtualTimeSchedulerImpl
     return this.hasCurrent;
   }
 
-  run(shouldYield?: () => boolean): number {
+  produce(shouldYield?: () => boolean): number {
     if (this.isDisposed) {
       return 0;
     }
