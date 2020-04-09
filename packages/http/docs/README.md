@@ -25,6 +25,7 @@
 
 ### Functions
 
+* [checkIfNotModified](README.md#const-checkifnotmodified)
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
@@ -47,6 +48,24 @@
 ]
 
 ## Functions
+
+### `Const` checkIfNotModified
+
+▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *OperatorLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹T›, [HttpResponseLike](interfaces/httpresponselike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+
+**Returns:** *OperatorLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹T›, [HttpResponseLike](interfaces/httpresponselike.md)‹T››*
+
+___
 
 ### `Const` createHttpRequest
 
