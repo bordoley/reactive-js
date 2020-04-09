@@ -34,10 +34,9 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = add;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
-  private readonly scheduler: SchedulerLike;
 
-  constructor(scheduler: SchedulerLike) {
-    this.scheduler = (scheduler as any).scheduler || scheduler;
+  constructor(private readonly scheduler: SchedulerLike) {
+    this.scheduler = scheduler;
   }
 
   get inContinuation() {

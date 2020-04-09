@@ -1,19 +1,11 @@
-import { add, createDisposable, dispose } from "@reactive-js/disposable";
-import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
+import { AbstractSchedulerContinuation } from "@reactive-js/scheduler";
 
 /** @ignore */
-export abstract class AbstractProducer<T> implements SchedulerContinuationLike {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-
+export abstract class AbstractProducer<T> extends AbstractSchedulerContinuation {
   constructor(private readonly subscriber: SubscriberLike<T>) {
+    super();
     this.add(subscriber);
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
   }
 
   notify(next: T) {
@@ -21,16 +13,4 @@ export abstract class AbstractProducer<T> implements SchedulerContinuationLike {
   }
 
   abstract produce(shouldYield?: () => boolean): number;
-
-  run(shouldYield?: () => boolean) {
-    if (!this.isDisposed) {
-      try {
-        return this.produce(shouldYield);
-      } catch (cause) {
-        const error = { cause };
-        this.dispose(error);
-      }
-    }
-    return 0; 
-  }
 }

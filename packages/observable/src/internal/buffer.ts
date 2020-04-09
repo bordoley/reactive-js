@@ -53,7 +53,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
       durationSubscription.inner = pipe(
         this.durationSelector(next),
         observe(this),
-        subscribe(this),
+        subscribe(this.delegate),
       );
     }
   }

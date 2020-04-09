@@ -1,8 +1,6 @@
 import {
   add,
-  createDisposable,
   dispose,
-  DisposableLike,
   createSerialDisposable,
   SerialDisposableLike,
 } from "@reactive-js/disposable";
@@ -13,6 +11,7 @@ import {
   PrioritySchedulerResourceLike,
 } from "./interfaces";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
 interface ScheduledTaskLike {
   readonly continuation: SchedulerContinuationLike;
@@ -21,21 +20,15 @@ interface ScheduledTaskLike {
   taskID: number;
 }
 
-class PrioritySchedulerContinuation implements SchedulerContinuationLike {
-  readonly add = add;
-  readonly disposable: DisposableLike = createDisposable();
-  readonly dispose = dispose;
-
+class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
   constructor(
     private readonly scheduler: PrioritySchedulerResourceImpl,
     public dueTime: number,
-  ) {}
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
+  ) {
+    super();
   }
 
-  run(hostShouldYield?: () => boolean): number {
+  produce(hostShouldYield?: () => boolean): number {
     const scheduler = this.scheduler;
     const shouldYield = () => {
       const current = scheduler.current;

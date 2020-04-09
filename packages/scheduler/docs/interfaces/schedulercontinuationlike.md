@@ -12,6 +12,10 @@ A unit of work to be executed by a scheduler.
 
   ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
 
+## Implemented by
+
+* [AbstractSchedulerContinuation](../classes/abstractschedulercontinuation.md)
+
 ## Index
 
 ### Methods
