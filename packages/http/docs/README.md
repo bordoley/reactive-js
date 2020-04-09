@@ -21,7 +21,7 @@
 
 ### Variables
 
-* [contentEncodings](README.md#const-contentencodings)
+* [httpContentEncodings](README.md#const-httpcontentencodings)
 
 ### Functions
 
@@ -33,9 +33,9 @@
 
 ## Variables
 
-### `Const` contentEncodings
+### `Const` httpContentEncodings
 
-• **contentEncodings**: *[HttpContentEncoding](enums/httpcontentencoding.md)[]* =  [
+• **httpContentEncodings**: *[HttpContentEncoding](enums/httpcontentencoding.md)[]* =  [
   HttpContentEncoding.Brotli,
   HttpContentEncoding.Compress,
   HttpContentEncoding.Deflate,
