@@ -6,6 +6,7 @@ import {
   HttpPreferencesLike,
   HttpRequestLike,
   HttpResponseLike,
+  HttpServerRequestLike,
   HttpStatusCode,
 } from "./interfaces";
 import { OperatorLike } from "@reactive-js/pipe";
@@ -18,6 +19,7 @@ import {
   parseHttpPreferencesFromHeaders,
 } from "./httpPreferences";
 import { writeHttpHeaders } from "./httpHeaders";
+import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 
 declare class URL implements URI {
   constructor(uri: string);
@@ -110,7 +112,7 @@ export const parseHttpRequestFromHeaders = <T>({
   headers,
   httpVersionMajor,
   httpVersionMinor,
-  protocol,
+  isTransportSecure,
   body,
 }: {
   method: HttpMethod;
@@ -119,12 +121,16 @@ export const parseHttpRequestFromHeaders = <T>({
   body: T;
   httpVersionMajor: number;
   httpVersionMinor: number;
-  protocol: "http" | "https";
-}): HttpRequestLike<T> => {
+  isTransportSecure: boolean
+}): HttpServerRequestLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
   const rawExpectHeader = headers.expect;
   const expectContinue = rawExpectHeader === "100-continue";
+
+  // FIXME: Preconditions
+
   const preferences = parseHttpPreferencesFromHeaders(headers);
+  const protocol = isTransportSecure ? "https" : "http";
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
 
   return {
@@ -133,6 +139,7 @@ export const parseHttpRequestFromHeaders = <T>({
     headers,
     httpVersionMajor,
     httpVersionMinor,
+    isTransportSecure,
     method,
     preferences,
     uri,
@@ -140,7 +147,13 @@ export const parseHttpRequestFromHeaders = <T>({
 };
 
 export const writeHttpRequestHeaders = <T>(
-  { content, expectContinue, headers, preferences }: HttpRequestLike<T>,
+  {
+    content,
+    expectContinue,
+    headers,
+    preconditions,
+    preferences,
+  }: HttpRequestLike<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (expectContinue) {
@@ -151,6 +164,10 @@ export const writeHttpRequestHeaders = <T>(
     writeHttpContentHeaders(content, writeHeader);
   }
 
+  if (preconditions !== undefined) {
+    writeHttpRequestPreconditionsHeaders(preconditions, writeHeader);
+  }
+
   if (preferences !== undefined) {
     writeHttpPreferenceHeaders(preferences, writeHeader);
   }
@@ -158,15 +175,17 @@ export const writeHttpRequestHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
+// FIXME: Define HttpServerRequestLike and append isTransportSecureFlag to avoid the protocol
 export const disallowProtocolAndHostForwarding = <T>(
-  protocol: "http" | "https" = "http",
-): OperatorLike<HttpRequestLike<T>, HttpRequestLike<T>> => request => {
-  const { httpVersionMajor, headers: oldHeaders, uri: oldUri } = request;
+): OperatorLike<HttpServerRequestLike<T>, HttpRequestLike<T>> => request => {
+  const { httpVersionMajor, headers: oldHeaders, isTransportSecure, uri: oldUri } = request;
   const {
     "x-forwarded-proto": xForwardedProto,
     "x-forwarded-host": xForwardedHost,
     ...headers
   } = oldHeaders;
+
+  const protocol = isTransportSecure ? "https" : "http";
 
   if (xForwardedProto === undefined && xForwardedHost === undefined) {
     return request;

@@ -110,6 +110,21 @@ export interface HttpPreferencesLike {
   //acceptedRanges:Option<Choice<Set<RangeUnit>, AcceptsNone>>
 }
 
+export interface HttpEntityTagLike {
+  readonly isWeak: boolean;
+  readonly tag: string;
+}
+
+export type HttpDateTime = number;
+
+export interface HttpRequestPreconditionsLike {
+  ifMatch?: readonly HttpEntityTagLike[] | "*";
+  ifModifiedSince?: HttpDateTime;
+  ifNoneMatch?: readonly HttpEntityTagLike[] | "*";
+  ifUnmodifiedSince?: HttpDateTime;
+  ifRange?: HttpEntityTagLike | HttpDateTime;
+}
+
 export interface HttpRequestLike<T> {
   // readonly authorization?: Credentials;
   // readonly cacheControl: readonly CacheDirective[];
@@ -119,6 +134,7 @@ export interface HttpRequestLike<T> {
   readonly headers: HttpHeadersLike;
   readonly method: HttpMethod;
   // readonly pragma: readonly CacheDirective[];
+  readonly preconditions?: HttpRequestPreconditionsLike;
   readonly preferences?: HttpPreferencesLike;
   // readonly proxyAuthorization?: Credentials
   // readonly referer?: URI;
@@ -129,15 +145,19 @@ export interface HttpRequestLike<T> {
   readonly httpVersionMinor: number;
 }
 
+export interface HttpServerRequestLike<T> extends HttpRequestLike<T> {
+  readonly isTransportSecure: boolean
+}
+
 export interface HttpResponseLike<T> {
   // age:Option<TimeSpan>
   // allowed:Set<Method>
   // authenticate:Set<Challenge>
   // cacheControl: Set<CacheDirective>
   // date:Option<DateTime>
-  // etag:Option<EntityTag>
-  readonly expires?: number;
-  readonly lastModified?: number;
+  etag?: HttpEntityTagLike;
+  readonly expires?: HttpDateTime;
+  readonly lastModified?: HttpDateTime;
   // proxyAuthenticate:Set<Challenge>
   // retryAfter:Option<DateTime>
   // server:Option<Server>

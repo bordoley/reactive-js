@@ -13,11 +13,18 @@
 ### Interfaces
 
 * [HttpContentLike](interfaces/httpcontentlike.md)
+* [HttpEntityTagLike](interfaces/httpentitytaglike.md)
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpPreferencesLike](interfaces/httppreferenceslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
+* [HttpRequestPreconditionsLike](interfaces/httprequestpreconditionslike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
+* [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
 * [URI](interfaces/uri.md)
+
+### Type aliases
+
+* [HttpDateTime](README.md#httpdatetime)
 
 ### Variables
 
@@ -34,6 +41,12 @@
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
+
+## Type aliases
+
+###  HttpDateTime
+
+Ƭ **HttpDateTime**: *number*
 
 ## Variables
 
@@ -128,25 +141,19 @@ ___
 
 ### `Const` disallowProtocolAndHostForwarding
 
-▸ **disallowProtocolAndHostForwarding**<**T**>(`protocol`: "http" | "https"): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+▸ **disallowProtocolAndHostForwarding**<**T**>(): *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`protocol` | "http" &#124; "https" | "http" |
-
-**Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
+**Returns:** *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpRequestLike](interfaces/httprequestlike.md)‹T››*
 
 ___
 
 ### `Const` parseHttpRequestFromHeaders
 
-▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›*
 
 **Type parameters:**
 
@@ -158,7 +165,7 @@ Name | Type |
 ------ | ------ |
 `__namedParameters` | object |
 
-**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+**Returns:** *[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›*
 
 ___
 

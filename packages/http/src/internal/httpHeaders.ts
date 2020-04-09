@@ -8,8 +8,14 @@ const bannedHeaders = [
   "content-encoding",
   "content-length",
   "content-type",
+  "etag",
   "expect",
   "expires",
+  "if-match",
+  "if-none-match",
+  "if-modified-since",
+  "if-unmodified-since",
+  "if-range",
   "last-modified",
   "transfer-encoding",
   "vary",
@@ -25,6 +31,6 @@ export const writeHttpHeaders = (
   );
 
   for (const [header, value] of headerPairs) {
-    writeHeader(header, String(value));
+    writeHeader(header, value);
   }
 };
