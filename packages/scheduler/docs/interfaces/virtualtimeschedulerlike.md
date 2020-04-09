@@ -8,8 +8,6 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 * DisposableLike
 
-* EnumeratorLike‹void, [SchedulerContinuationLike](schedulercontinuationlike.md)›
-
 * [SchedulerLike](schedulerlike.md)
 
   ↳ [SchedulerContinuationLike](schedulercontinuationlike.md)
