@@ -148,17 +148,15 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
         this.garbage.delete(key);
       };
 
-      const onDisposeCleanup = (_?: ErrorLike) => {
+      const onDisposeCleanup = (_?: ErrorLike) =>
         pipe(
-          this.cleanupScheduler,
-          scheduleCallback(() => {
+          scheduleCallback(this.cleanupScheduler, () => {
             if (enumerator.subscriberCount === 0) {
               markAsGarbage(this, key, enumerator);
             }
           }),
           add.bind(this),
         );
-      };
 
       const observable = pipe(
         enumerator,

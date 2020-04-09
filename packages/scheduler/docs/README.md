@@ -76,9 +76,11 @@ ___
 
 ### `Const` scheduleCallback
 
-▸ **scheduleCallback**(`callback`: function, `delay`: number): *OperatorLike‹[SchedulerLike](interfaces/schedulerlike.md), DisposableLike›*
+▸ **scheduleCallback**(`scheduler`: [SchedulerLike](interfaces/schedulerlike.md), `callback`: function, `delay`: number): *DisposableLike*
 
 **Parameters:**
+
+▪ **scheduler**: *[SchedulerLike](interfaces/schedulerlike.md)*
 
 ▪ **callback**: *function*
 
@@ -86,7 +88,7 @@ ___
 
 ▪`Default value`  **delay**: *number*= 0
 
-**Returns:** *OperatorLike‹[SchedulerLike](interfaces/schedulerlike.md), DisposableLike›*
+**Returns:** *DisposableLike*
 
 ___
 

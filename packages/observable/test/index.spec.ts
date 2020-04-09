@@ -280,7 +280,8 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler(1);
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, scheduleCallback(
+    scheduleCallback(
+      subject,
       () => {
         subject.notify(1);
         subject.notify(2);
@@ -297,7 +298,7 @@ describe("createSubject", () => {
         expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
         expect(onDispose).toHaveBeenCalled();
       }
-    ));
+    );
    
     scheduler.run();
   });
@@ -306,7 +307,8 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, scheduleCallback(
+    scheduleCallback(
+      subject,
       () => {
         subject.notify(1);
         subject.notify(2);
@@ -333,7 +335,7 @@ describe("createSubject", () => {
         expect(subscriber.notify).toHaveBeenNthCalledWith(3, 4);
         expect(onDispose).toHaveBeenCalled();
       }
-    ));
+    );
 
     scheduler.run();
   });
@@ -342,13 +344,14 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, scheduleCallback(
+    scheduleCallback(
+      subject,
       () => {
         subject.notify(1);
         subject.notify(2);
         subject.notify(3);
       }
-    ));
+    );
 
     const subscriber = new MockSubscriber(scheduler);
 
@@ -375,12 +378,13 @@ describe("createSubject", () => {
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
 
-    pipe(subject, scheduleCallback(
+    scheduleCallback(
+      subject,
       () => {
         subject.notify(1);
         subject.dispose();
       }
-    ));
+    );
     
     scheduler.run();
 

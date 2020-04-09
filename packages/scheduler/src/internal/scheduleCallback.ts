@@ -4,7 +4,6 @@ import {
   dispose,
   DisposableLike,
 } from "@reactive-js/disposable";
-import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerContinuationLike, SchedulerLike } from "./interfaces";
 
 class CallbackSchedulerContinuation implements SchedulerContinuationLike {
@@ -33,9 +32,10 @@ class CallbackSchedulerContinuation implements SchedulerContinuationLike {
 }
 
 export const scheduleCallback = (
+  scheduler: SchedulerLike,
   callback: () => void,
   delay = 0,
-): OperatorLike<SchedulerLike, DisposableLike> => scheduler => {
+): DisposableLike => {
   const continuation = new CallbackSchedulerContinuation(callback);
   scheduler.schedule(continuation, delay);
   return continuation;
