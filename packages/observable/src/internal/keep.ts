@@ -1,6 +1,9 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class KeepTypeSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
@@ -12,6 +15,8 @@ class KeepTypeSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   }
 
   notify(next: TA) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed && this.predicate(next)) {
       this.delegate.notify(next);
     }

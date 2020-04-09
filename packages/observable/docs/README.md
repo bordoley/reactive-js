@@ -25,6 +25,7 @@
 
 ### Variables
 
+* [assertSubscriberNotifyInContinuation](README.md#const-assertsubscribernotifyincontinuation)
 * [timeoutError](README.md#const-timeouterror)
 
 ### Functions
@@ -102,6 +103,12 @@
 * [zip](README.md#zip)
 
 ## Variables
+
+### `Const` assertSubscriberNotifyInContinuation
+
+• **assertSubscriberNotifyInContinuation**: *assertSubscriberNotifyInContinuationProduction* =  _assertSubscriberNotifyInContinuation
+
+___
 
 ### `Const` timeoutError
 

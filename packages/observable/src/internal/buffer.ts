@@ -11,7 +11,10 @@ import {
 } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   implements ObserverLike<unknown> {
@@ -37,6 +40,8 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     const buffer = this.buffer;
     const durationSubscription = this.durationSubscription;
 

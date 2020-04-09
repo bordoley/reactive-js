@@ -1,6 +1,9 @@
 import { SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {
@@ -8,7 +11,9 @@ class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
     this.add(delegate);
   }
 
-  notify(_: TA) {}
+  notify(_: TA) {
+    assertSubscriberNotifyInContinuation(this);
+  }
 }
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>

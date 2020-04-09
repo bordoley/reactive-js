@@ -2,7 +2,10 @@ import { pipe } from "@reactive-js/pipe";
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { empty } from "./empty";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 import { fromArray } from "./fromArray";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -26,6 +29,8 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       const last = this.last;
 

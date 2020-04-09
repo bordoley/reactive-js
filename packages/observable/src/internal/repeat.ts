@@ -9,7 +9,10 @@ import {
 import { lift } from "./lift";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<T> {
@@ -32,6 +35,8 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       this.delegate.notify(next);
     }

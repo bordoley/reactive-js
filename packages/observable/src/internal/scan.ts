@@ -1,6 +1,9 @@
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
@@ -13,6 +16,8 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     const nextAcc = this.scanner(this.acc, next);
     this.acc = nextAcc;
 

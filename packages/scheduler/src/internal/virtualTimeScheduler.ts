@@ -19,14 +19,17 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike, EnumeratorLike<void, SchedulerContinuationLike> {
+class VirtualTimeSchedulerImpl
+  implements
+    VirtualTimeSchedulerLike,
+    EnumeratorLike<void, SchedulerContinuationLike> {
   readonly add = add;
   current: any = undefined;
   readonly delay = 0;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
-
   hasCurrent = false;
+  inContinuation = false;
   private microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
@@ -87,8 +90,11 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike, EnumeratorLi
     if (shouldYield !== undefined) {
       this.runShouldYield = shouldYield;
       while (this.move()) {
-        const continuation = this.current
+        const continuation = this.current;
+
+        this.inContinuation = true;
         continuation.run(this.shouldYield);
+        this.inContinuation = false;
 
         if (!continuation.isDisposed) {
           this.schedule(continuation);
@@ -104,8 +110,11 @@ class VirtualTimeSchedulerImpl implements VirtualTimeSchedulerLike, EnumeratorLi
     } else {
       // eslint-disable-next-line no-empty
       while (this.move()) {
-        const continuation = this.current
+        const continuation = this.current;
+
+        this.inContinuation = true;
         continuation.run(this.shouldYield);
+        this.inContinuation = false;
 
         if (!continuation.isDisposed) {
           this.schedule(continuation);

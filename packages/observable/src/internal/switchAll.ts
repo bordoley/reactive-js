@@ -10,7 +10,10 @@ import { lift } from "./lift";
 import { map } from "./map";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class SwitchSubscriber<T>
   extends AbstractDelegatingSubscriber<ObservableLike<T>, T>
@@ -27,6 +30,8 @@ class SwitchSubscriber<T>
   }
 
   notify(next: ObservableLike<T>) {
+    assertSubscriberNotifyInContinuation(this);
+
     this.inner.dispose();
 
     const inner = pipe(next, observe(this), subscribe(this));

@@ -14,6 +14,7 @@ A scheduler which schedules work according to it's priority.
 
 ### Properties
 
+* [inContinuation](priorityschedulerlike.md#incontinuation)
 * [now](priorityschedulerlike.md#now)
 
 ### Methods
@@ -21,6 +22,12 @@ A scheduler which schedules work according to it's priority.
 * [schedule](priorityschedulerlike.md#schedule)
 
 ## Properties
+
+###  inContinuation
+
+• **inContinuation**: *boolean*
+
+___
 
 ###  now
 

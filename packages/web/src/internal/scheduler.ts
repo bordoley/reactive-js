@@ -61,6 +61,7 @@ const scheduleDelayed = (
 
 class WebScheduler implements SchedulerLike {
   channel = new MessageChannel();
+  inContinuation = false;
   readonly schedule = schedule;
   readonly shouldYield =
     navigator !== undefined &&

@@ -14,6 +14,7 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 
 ### Properties
 
+* [inContinuation](hostschedulerlike.md#incontinuation)
 * [shouldYield](hostschedulerlike.md#shouldyield)
 
 ### Methods
@@ -21,6 +22,14 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 * [scheduleCallback](hostschedulerlike.md#schedulecallback)
 
 ## Properties
+
+###  inContinuation
+
+• **inContinuation**: *boolean*
+
+*Overrides [SchedulerLike](schedulerlike.md).[inContinuation](schedulerlike.md#incontinuation)*
+
+___
 
 ###  shouldYield
 

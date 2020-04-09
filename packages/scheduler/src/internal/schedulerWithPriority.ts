@@ -11,6 +11,10 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     private readonly priority: number,
   ) {}
 
+  get inContinuation() {
+    return this.priorityScheduler.inContinuation;
+  }
+
   get now(): number {
     return this.priorityScheduler.now;
   }

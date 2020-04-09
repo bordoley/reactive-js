@@ -26,6 +26,7 @@ import {
   reduce,
   map,
   onNotify,
+  assertSubscriberNotifyInContinuation,
 } from "@reactive-js/observable";
 import { pipe, OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -57,6 +58,8 @@ class ReadableSubscriber extends AbstractDelegatingSubscriber<
   }
 
   notify(data: ReadableMode) {
+    assertSubscriberNotifyInContinuation(this);
+
     const readable = this.readable;
     switch (data) {
       case ReadableMode.Pause:

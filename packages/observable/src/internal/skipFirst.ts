@@ -1,7 +1,10 @@
 import { pipe } from "@reactive-js/pipe";
 import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import {
+  AbstractDelegatingSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;
@@ -12,6 +15,8 @@ class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
     if (!this.isDisposed) {
       this.count++;
 

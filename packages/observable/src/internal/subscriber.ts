@@ -5,6 +5,26 @@ import {
 } from "@reactive-js/scheduler";
 import { SubscriberLike } from "./interfaces";
 
+const assertSubscriberNotifyInContinuationProduction = <T>(
+  _subscriber: SubscriberLike<T>,
+) => {};
+const assertSubscriberNotifyInContinuationDev = <T>(
+  subscriber: SubscriberLike<T>,
+) => {
+  if (!subscriber.inContinuation) {
+    throw new Error(
+      "Subscriber.notify() may only be invoked within a scheduled SchedulerContinuation",
+    );
+  }
+};
+
+const _assertSubscriberNotifyInContinuation =
+  process.env.NODE_ENV === "production"
+    ? assertSubscriberNotifyInContinuationProduction
+    : assertSubscriberNotifyInContinuationDev;
+
+export const assertSubscriberNotifyInContinuation = _assertSubscriberNotifyInContinuation;
+
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.
  *
@@ -18,6 +38,10 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
 
   constructor(scheduler: SchedulerLike) {
     this.scheduler = (scheduler as any).scheduler || scheduler;
+  }
+
+  get inContinuation() {
+    return this.scheduler.inContinuation;
   }
 
   get isDisposed(): boolean {

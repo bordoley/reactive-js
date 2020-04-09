@@ -2,10 +2,15 @@ import { DisposableLike } from "@reactive-js/disposable";
 import { OperatorLike } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike } from "./interfaces";
-import { AbstractSubscriber } from "./subscriber";
+import {
+  AbstractSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber";
 
 class DefaultSubscriber<T> extends AbstractSubscriber<T> {
-  notify(_: T) {}
+  notify(_: T) {
+    assertSubscriberNotifyInContinuation(this);
+  }
 }
 
 /**

@@ -25,8 +25,6 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
   readonly add = add;
   readonly disposable: DisposableLike = createDisposable();
   readonly dispose = dispose;
-
-  running = false;
   dueTime: number;
 
   constructor(
@@ -59,7 +57,7 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       return nextTaskIsHigherPriority || hostRequestedYield;
     };
 
-    this.running = true;
+    scheduler.inContinuation = true;
 
     for (
       let task = scheduler.peek(), isDisposed = this.isDisposed;
@@ -70,7 +68,7 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       const delay = task.dueTime - now;
 
       if (delay > 0) {
-        this.running = false;
+        scheduler.inContinuation = false;
         this.delay = delay;
         this.dueTime = now + delay;
         return;
@@ -95,14 +93,14 @@ class PrioritySchedulerContinuation implements SchedulerContinuationLike {
       // Yield if were not disposed. The next iteration of the loop
       // will yield if the next task is delayed.
       if (!isDisposed && shouldYield()) {
-        this.running = false;
+        scheduler.inContinuation = false;
         this.delay = 0;
         this.dueTime = scheduler.now;
         return;
       }
     }
 
-    this.running = false;
+    scheduler.inContinuation = false;
     this.dispose();
   }
 }
@@ -130,6 +128,7 @@ class PrioritySchedulerResourceImpl
     this.queue.clear(),
   );
   readonly dispose = dispose;
+  inContinuation = false;
 
   private readonly queue: PriorityQueueLike<
     ScheduledTaskLike
@@ -218,8 +217,8 @@ class PrioritySchedulerResourceImpl
 
       const priorityContinuation = this.continuation;
       const continuationActive =
-        priorityContinuation !== undefined &&
-        (priorityContinuation.running ||
+        this.inContinuation ||
+        (priorityContinuation !== undefined &&
           priorityContinuation.dueTime <= dueTime);
 
       if (head === task && !continuationActive) {
