@@ -39,10 +39,10 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
   }
 
   return scheduler.hasCurrent;
-}
+};
 
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
-  current: SchedulerContinuationLike = (undefined as any);
+  current: SchedulerContinuationLike = undefined as any;
   hasCurrent = false;
   inContinuation = false;
   microTaskTicks = 0;
@@ -57,9 +57,9 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     );
   };
   private taskIDCount = 0;
-  readonly taskQueue: PriorityQueueLike<
-    VirtualTask
-  > = createPriorityQueue(comparator);
+  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
+    comparator,
+  );
 
   constructor(private readonly maxMicroTaskTicks: number) {
     super();
@@ -76,7 +76,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     ) {
       this.shouldYield = undefined;
     }
-    
+
     while (move(this)) {
       const continuation = this.current;
 
@@ -91,7 +91,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
 
       // Perf hack
       if (shouldYieldIsDefined) {
-        if((shouldYield as any)()) {
+        if ((shouldYield as any)()) {
           this.runShouldYield = undefined;
           return 0;
         }
