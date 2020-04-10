@@ -22,7 +22,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
           if (result !== undefined) {
             result.subscribe(delegate);
           } else {
-            delegate.dispose(error);
+            delegate.dispose();
           }
         } catch (cause) {
           delegate.dispose({ cause, parent: error } as ErrorLike);
@@ -40,7 +40,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
- * the `ObservableLike` returned from the `onError` callback or propagates the error if
+ * the `ObservableLike` returned from the `onError` callback or swallows the error if
  * void is returned.
  *
  * @param onError a function that takes source error and either returns an `ObservableLike`

@@ -170,7 +170,7 @@ ___
 ▸ **catchError**<**T**>(`onError`: function): *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
 
 Returns an `ObservableLike` which catches errors produced by the source and either continues with
-the `ObservableLike` returned from the `onError` callback or propagates the error if
+the `ObservableLike` returned from the `onError` callback or swallows the error if
 void is returned.
 
 **Type parameters:**
