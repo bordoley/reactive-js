@@ -14,6 +14,7 @@
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
+* [SchedulerContinuationRunStatusChangedListenerLike](interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
 
