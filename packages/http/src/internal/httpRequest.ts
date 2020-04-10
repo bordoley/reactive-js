@@ -22,8 +22,6 @@ import { writeHttpHeaders } from "./httpHeaders";
 import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 
 declare class URL implements URI {
-  constructor(uri: string);
-
   readonly hash: string;
   readonly host: string;
   readonly hostname: string;
@@ -33,6 +31,7 @@ declare class URL implements URI {
   readonly port: string;
   readonly protocol: string;
   readonly search: string;
+  constructor(uri: string);
 
   toString(): string;
 }

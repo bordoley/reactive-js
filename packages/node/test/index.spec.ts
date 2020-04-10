@@ -43,7 +43,7 @@ describe("streams", () => {
     expect(data).toEqual("abcdefg");
   });
 
-  test("when the writable throws an exception", async () => {
+  test("when the writable throws an exception", () => {
     const cause = new Error();
 
     const writable = new Writable({
@@ -65,7 +65,7 @@ describe("streams", () => {
     expect(promise).rejects.toThrow(cause);
   });
 
-  test("when the readable throws an exception", async () => {
+  test("when the readable throws an exception", () => {
     const writable = new Writable({
       write(_chunk, _encoding, callback) {
         callback();

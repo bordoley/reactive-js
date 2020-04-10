@@ -5,5 +5,5 @@ export const serializeHttpEntityTag = ({
   isWeak,
   tag,
 }: HttpEntityTagLike): string => {
-  return isWeak ? `\W"${tag}"` : `"${tag}"`;
+  return isWeak ? `\\W"${tag}"` : `"${tag}"`;
 };

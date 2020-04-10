@@ -23,8 +23,6 @@ import { parseHttpDateTime, serializeHttpDateTime } from "./httpDateTime";
 import { serializeHttpEntityTag } from "./httpEntityTag";
 
 declare class URL implements URI {
-  constructor(uri: string);
-
   readonly hash: string;
   readonly host: string;
   readonly hostname: string;
@@ -34,6 +32,7 @@ declare class URL implements URI {
   readonly port: string;
   readonly protocol: string;
   readonly search: string;
+  constructor(uri: string);
 
   toString(): string;
 }
@@ -147,7 +146,7 @@ export const checkIfNotModified = <T>({
   HttpResponseLike<T>,
   HttpResponseLike<T>
 > => response => {
-  const { statusCode, content, ...requestWithoutContent } = response;
+  const { statusCode, content: _, ...requestWithoutContent } = response;
   const methodSupportsFresh =
     method === HttpMethod.GET || method === HttpMethod.HEAD;
   const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
