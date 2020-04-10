@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/reactive-cache",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "private": true,
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
@@ -39,11 +39,11 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.32",
-    "@reactive-js/disposable": "^0.0.32",
-    "@reactive-js/observable": "^0.0.32",
-    "@reactive-js/pipe": "^0.0.32",
-    "@reactive-js/scheduler": "^0.0.32"
+    "@reactive-js/async-enumerable": "^0.0.33",
+    "@reactive-js/disposable": "^0.0.33",
+    "@reactive-js/observable": "^0.0.33",
+    "@reactive-js/pipe": "^0.0.33",
+    "@reactive-js/scheduler": "^0.0.33"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",

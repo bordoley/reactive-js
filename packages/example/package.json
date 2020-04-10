@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "private": true,
   "keywords": [
     "asynchronous",
@@ -36,13 +36,13 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/http": "^0.0.32",
-    "@reactive-js/http-node": "^0.0.32",
-    "@reactive-js/http-router": "^0.0.32",
-    "@reactive-js/node": "^0.0.32",
-    "@reactive-js/observable": "^0.0.32",
-    "@reactive-js/pipe": "^0.0.32",
-    "@reactive-js/scheduler": "^0.0.32"
+    "@reactive-js/http": "^0.0.33",
+    "@reactive-js/http-node": "^0.0.33",
+    "@reactive-js/http-router": "^0.0.33",
+    "@reactive-js/node": "^0.0.33",
+    "@reactive-js/observable": "^0.0.33",
+    "@reactive-js/pipe": "^0.0.33",
+    "@reactive-js/scheduler": "^0.0.33"
   },
   "scripts": {
     "build": "tsc"
