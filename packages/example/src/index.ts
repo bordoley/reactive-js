@@ -57,14 +57,14 @@ pipe(
     x => x + 1,
     () => 0,
   ),
-  map(x => fromArray([x, x, x, x])),
+  map(x => fromArray([x, x, x, x], { delay: 500 })),
   exhaust(),
   map(_ => backgroundScheduler.now),
   scan(
     ([_, prev], next) => [prev, next],
     () => [backgroundScheduler.now, backgroundScheduler.now],
   ),
-  //onNotify(([prev, next]) => console.log(next - prev)),
+  onNotify(([prev, next]) => console.log(next - prev)),
   subscribe(backgroundScheduler),
 );
 
