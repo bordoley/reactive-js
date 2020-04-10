@@ -6,13 +6,12 @@ import {
 import { enumerate } from "./observable";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
+  readonly enumerate = enumerate;
+  readonly isSynchronous = false;
   constructor(
     private readonly src: ObservableLike<T>,
     private readonly f: () => void,
   ) {}
-
-  readonly enumerate = enumerate;
-  readonly isSynchronous = false;
 
   subscribe(subscriber: SubscriberLike<T>) {
     try {

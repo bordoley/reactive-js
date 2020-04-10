@@ -155,10 +155,6 @@ class SerialDisposableImpl implements SerialDisposableLike {
     return this._inner;
   }
 
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
-
   set inner(newInner: DisposableLike) {
     if (this.isDisposed) {
       newInner.dispose();
@@ -171,6 +167,10 @@ class SerialDisposableImpl implements SerialDisposableLike {
         oldInner.dispose();
       }
     }
+  }
+
+  get isDisposed() {
+    return this.disposable.isDisposed;
   }
 }
 

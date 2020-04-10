@@ -7,12 +7,11 @@ import { enumerate } from "./observable";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
+  readonly enumerate = enumerate;
+  readonly isSynchronous = false;
   constructor(
     private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
   ) {}
-
-  readonly enumerate = enumerate;
-  readonly isSynchronous = false;
 
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may

@@ -27,7 +27,7 @@ const createSegments = (path: string): Segment => {
   const root: Segment = { name: "" };
 
   let acc = root;
-  for (let name of path.split("/")) {
+  for (const name of path.split("/")) {
     const child: Segment = { name };
     acc.child = child;
     acc = child;

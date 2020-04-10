@@ -193,7 +193,7 @@ export const readableAsyncEnumerableToString = (
     try {
       decoder = (iconv as any).getDecoder(charset);
     } catch (err) {
-      if (!/^Encoding not recognized: /.test(err.message)) throw err;
+      if (!err.message.startsWith("Encoding not recognized: ")) throw err;
       throw unsupportedEncoding;
     }
 
