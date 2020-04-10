@@ -7,6 +7,7 @@ import {
   HttpContentLike,
   HttpContentRequestLike,
   HttpContentResponseLike,
+  HttpStatusCode,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -38,6 +39,8 @@ import {
   mapTo,
   ObservableLike,
   onNotify,
+  catchError,
+  throws,
 } from "@reactive-js/observable";
 import { pipe, compose, OperatorLike } from "@reactive-js/pipe";
 import {
@@ -120,6 +123,11 @@ const routerHandlerGlob: HttpRequestRouterHandler<
     ),
   );
 
+const routerHandlerThrow: HttpRequestRouterHandler<
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+> = _ => throws(() => new Error("internal error"));
+
 const notFound: OperatorLike<
   HttpContentRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
@@ -142,6 +150,7 @@ const router = createRouter(
     "/path/glob/*": routerHandlerGlob,
     "/path/:paramA/a/:paramB": routerHandlerB,
     "/path/:paramA/a/:paramB/*": routerHandlerB,
+    "/throws": routerHandlerThrow,
   },
   notFound,
 );
@@ -166,6 +175,20 @@ const listener = createHttpRequestListener(
       decodeHttpRequest(),
       router,
       map(encodeHttpResponse(req)),
+      catchError((e: unknown) => {
+        const content =
+          process.env.NODE_ENV === "production"
+            ? undefined
+            : e instanceof Error && e.stack !== undefined
+            ? createStringHttpContent(e.stack || "", "text/plain")
+            : createStringHttpContent(String(e), "text/plain");
+
+        return ofValue(
+          createHttpResponse(HttpStatusCode.InternalServerError, {
+            content,
+          }),
+        );
+      }),
     ),
   scheduler,
 );

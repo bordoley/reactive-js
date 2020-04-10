@@ -1,8 +1,6 @@
 import { RequestListener, ServerResponse, IncomingMessage } from "http";
 import {
   HttpServerRequestLike,
-  HttpStatusCode,
-  createHttpResponse,
   writeHttpResponseHeaders,
   HttpMethod,
   HttpHeadersLike,
@@ -22,13 +20,12 @@ import {
   catchError,
   createObservable,
   onNotify,
-  ofValue,
   subscribe,
   using,
+  empty,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { createStringHttpContent } from "./httpContent";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   createDisposableValue,
@@ -68,31 +65,10 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 
 // FIXME: Don't include content in prod mode
 // FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input
-const defaultOnError = (
-  e: unknown,
-): ObservableLike<HttpContentResponseLike<
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>
->> => {
-  const content =
-    process.env.NODE_ENV === "production"
-      ? undefined
-      : e instanceof Error && e.stack !== undefined
-      ? createStringHttpContent(e.stack || "", "text/plain")
-      : createStringHttpContent(String(e), "text/plain");
-
-  return ofValue(
-    createHttpResponse(HttpStatusCode.InternalServerError, {
-      content,
-    }),
-  );
-};
+const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
 export interface HttpRequestListenerOptions {
-  readonly onError?: (
-    e: unknown,
-  ) => ObservableLike<
-    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-  >;
+  readonly onError?: (e: unknown) => ObservableLike<unknown>;
 }
 
 export interface HttpRequestListenerHandler {
@@ -144,9 +120,9 @@ export const createHttpRequestListener = (
         body,
       }),
       handler,
-      catchError(onError),
       onNotify(writeResponseMessage(resp)),
       await_(writeResponseContentBody(resp)),
+      catchError(onError),
     );
   };
 
