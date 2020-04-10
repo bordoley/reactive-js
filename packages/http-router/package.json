@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/http-router",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -40,9 +40,9 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/http": "^0.0.32",
-    "@reactive-js/observable": "^0.0.32",
-    "@reactive-js/pipe": "^0.0.32",
+    "@reactive-js/http": "^0.0.33",
+    "@reactive-js/observable": "^0.0.33",
+    "@reactive-js/pipe": "^0.0.33",
     "negotiator": "^0.6.2"
   },
   "scripts": {
