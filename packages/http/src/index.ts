@@ -30,3 +30,5 @@ export {
   parseHttpResponseFromHeaders,
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
+
+export { HttpStandardHeaders } from "./internal/httpHeaders";

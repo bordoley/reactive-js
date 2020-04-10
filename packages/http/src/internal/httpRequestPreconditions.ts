@@ -1,6 +1,7 @@
 import { HttpRequestPreconditionsLike } from "./interfaces";
 import { serializeHttpEntityTag } from "./httpEntityTag";
 import { serializeHttpDateTime } from "./httpDateTime";
+import { HttpStandardHeader } from "./httpHeaders";
 
 /** @ignore */
 export const writeHttpRequestPreconditionsHeaders = (
@@ -15,7 +16,7 @@ export const writeHttpRequestPreconditionsHeaders = (
 ) => {
   if (ifMatch !== undefined) {
     writeHeader(
-      "If-Match",
+      HttpStandardHeader.IfMatch,
       Array.isArray(ifMatch)
         ? ifMatch.map(serializeHttpEntityTag).join(",")
         : "*",
@@ -24,7 +25,7 @@ export const writeHttpRequestPreconditionsHeaders = (
 
   if (ifNoneMatch !== undefined) {
     writeHeader(
-      "If-None-Match",
+      HttpStandardHeader.IfNoneMatch,
       Array.isArray(ifNoneMatch)
         ? ifNoneMatch.map(serializeHttpEntityTag).join(",")
         : "*",
@@ -32,19 +33,22 @@ export const writeHttpRequestPreconditionsHeaders = (
   }
 
   if (ifModifiedSince !== undefined) {
-    writeHeader("If-Modified-Since", serializeHttpDateTime(ifModifiedSince));
+    writeHeader(
+      HttpStandardHeader.IfModifiedSince,
+      serializeHttpDateTime(ifModifiedSince),
+    );
   }
 
   if (ifUnmodifiedSince !== undefined) {
     writeHeader(
-      "If-Unmodified-Since",
+      HttpStandardHeader.IfUnmodifiedSince,
       serializeHttpDateTime(ifUnmodifiedSince),
     );
   }
 
   if (ifRange !== undefined) {
     writeHeader(
-      "If-Range",
+      HttpStandardHeader.IfRange,
       typeof ifRange === "number"
         ? serializeHttpDateTime(ifRange)
         : serializeHttpEntityTag(ifRange),

@@ -12,6 +12,7 @@ import {
   decodeHttpContent,
 } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
+import { HttpStandardHeaders } from "@reactive-js/http/src";
 
 const responseIsCompressible = (
   response: HttpContentResponseLike<
@@ -69,7 +70,7 @@ export const encodeHttpResponse = <TReq>(
       encoding !== undefined && content !== undefined
         ? encodeHttpContent(content, encoding, zlibOptions)
         : content,
-    vary: encodeBody ? [...vary, "Accept-Encoding"] : vary,
+    vary: encodeBody ? [...vary, HttpStandardHeaders.AcceptEncoding] : vary,
   };
 };
 

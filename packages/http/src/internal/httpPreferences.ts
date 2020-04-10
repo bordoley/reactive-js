@@ -4,6 +4,7 @@ import {
   HttpHeadersLike,
   HttpContentEncoding,
 } from "./interfaces";
+import { HttpStandardHeader } from "./httpHeaders";
 
 /** @ignore */
 export const writeHttpPreferenceHeaders = (
@@ -18,19 +19,22 @@ export const writeHttpPreferenceHeaders = (
   } = preferences;
 
   if (acceptedCharsets.length > 0) {
-    writeHeader("Accept-Charset", acceptedCharsets.join(", "));
+    writeHeader(HttpStandardHeader.AcceptCharset, acceptedCharsets.join(", "));
   }
 
   if (acceptedEncodings.length > 0) {
-    writeHeader("Accept-Encoding", acceptedEncodings.join(","));
+    writeHeader(HttpStandardHeader.AcceptEncoding, acceptedEncodings.join(","));
   }
 
   if (acceptedLanguages.length > 0) {
-    writeHeader("Accept-Language", acceptedLanguages.join(", "));
+    writeHeader(
+      HttpStandardHeader.AcceptLanguage,
+      acceptedLanguages.join(", "),
+    );
   }
 
   if (acceptedMediaTypes.length > 0) {
-    writeHeader("Accept", acceptedMediaTypes.join(", "));
+    writeHeader(HttpStandardHeader.Accept, acceptedMediaTypes.join(", "));
   }
 };
 

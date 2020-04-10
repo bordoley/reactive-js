@@ -18,7 +18,12 @@ import {
   writeHttpPreferenceHeaders,
   parseHttpPreferencesFromHeaders,
 } from "./httpPreferences";
-import { writeHttpHeaders } from "./httpHeaders";
+import {
+  writeHttpHeaders,
+  HttpStandardHeader,
+  getHeaderValue,
+  HttpExtensiondHeader,
+} from "./httpHeaders";
 import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 
 declare class URL implements URI {
@@ -85,14 +90,20 @@ const parseURIFromHeaders = (
   httpVersionMajor: number,
   headers: HttpHeadersLike,
 ): URI => {
-  const forwardedProtocol = headers["x-forwarded-proto"];
+  const forwardedProtocol = getHeaderValue(
+    headers,
+    HttpExtensiondHeader.XForwardedProto,
+  );
   const uriProtocol =
     forwardedProtocol !== undefined
       ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
       : protocol;
-  const forwardedHost = headers["x-forwarded-host"];
+  const forwardedHost = getHeaderValue(
+    headers,
+    HttpExtensiondHeader.XForwardedHost,
+  );
   const http2Authority = headers[":authority"];
-  const http1Host = headers["host"];
+  const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
   const unfilteredHost =
     forwardedHost !== undefined
       ? forwardedHost
@@ -123,7 +134,7 @@ export const parseHttpRequestFromHeaders = <T>({
   isTransportSecure: boolean;
 }): HttpServerRequestLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
-  const rawExpectHeader = headers.expect;
+  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
   const expectContinue = rawExpectHeader === "100-continue";
 
   // FIXME: Preconditions
@@ -156,7 +167,7 @@ export const writeHttpRequestHeaders = <T>(
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (expectContinue) {
-    writeHeader("Expect", "100-continue");
+    writeHeader(HttpStandardHeader.Expect, "100-continue");
   }
 
   if (content !== undefined) {
@@ -174,7 +185,6 @@ export const writeHttpRequestHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
-// FIXME: Define HttpServerRequestLike and append isTransportSecureFlag to avoid the protocol
 export const disallowProtocolAndHostForwarding = <T>(): OperatorLike<
   HttpServerRequestLike<T>,
   HttpServerRequestLike<T>

@@ -14,7 +14,11 @@ import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
 } from "./httpContent";
-import { writeHttpHeaders } from "./httpHeaders";
+import {
+  writeHttpHeaders,
+  getHeaderValue,
+  HttpStandardHeader,
+} from "./httpHeaders";
 import {
   writeHttpPreferenceHeaders,
   parseHttpPreferencesFromHeaders,
@@ -65,8 +69,12 @@ export const parseHttpResponseFromHeaders = <T>(
 
   // FIXME: etag
 
-  const expires = parseHttpDateTime(headers["expires"] || "");
-  const lastModified = parseHttpDateTime(headers["last-modified"] || "");
+  const expires = parseHttpDateTime(
+    getHeaderValue(headers, HttpStandardHeader.Expires, ""),
+  );
+  const lastModified = parseHttpDateTime(
+    getHeaderValue(headers, HttpStandardHeader.LastModified, ""),
+  );
 
   const locationHeader = headers.location;
   const location =
@@ -100,19 +108,22 @@ const writeCoreHttpResponseHeaders = <T>(
   writeHeader: (header: string, value: string) => void,
 ) => {
   if (etag !== undefined) {
-    writeHeader("ETag", serializeHttpEntityTag(etag));
+    writeHeader(HttpStandardHeader.ETag, serializeHttpEntityTag(etag));
   }
 
   if (expires !== undefined) {
-    writeHeader("Expires", serializeHttpDateTime(expires));
+    writeHeader(HttpStandardHeader.Expires, serializeHttpDateTime(expires));
   }
 
   if (lastModified !== undefined) {
-    writeHeader("Last-Modified", serializeHttpDateTime(lastModified));
+    writeHeader(
+      HttpStandardHeader.LastModified,
+      serializeHttpDateTime(lastModified),
+    );
   }
 
   if (location !== undefined) {
-    writeHeader("Location", location.toString());
+    writeHeader(HttpStandardHeader.Location, location.toString());
   }
 
   if (preferences !== undefined) {
@@ -120,7 +131,7 @@ const writeCoreHttpResponseHeaders = <T>(
   }
 
   if (vary.length > 0) {
-    writeHeader("Vary", vary.join(","));
+    writeHeader(HttpStandardHeader.Vary, vary.join(","));
   }
 
   writeHttpHeaders(headers, writeHeader);
