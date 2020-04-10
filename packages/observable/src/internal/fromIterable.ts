@@ -1,6 +1,9 @@
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
+import {
+  createScheduledObservable,
+  createDelayedScheduledObservable,
+} from "./observable";
 import { AbstractProducer } from "./producer";
 
 class FromIteratorProducer<T> extends AbstractProducer<T> {
@@ -46,8 +49,7 @@ class FromIteratorProducer<T> extends AbstractProducer<T> {
       }
     }
 
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 

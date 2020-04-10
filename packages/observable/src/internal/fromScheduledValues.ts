@@ -1,4 +1,4 @@
-import { alwaysTrue } from "./functions";
+import { alwaysFalse } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createDelayedScheduledObservable } from "./observable";
 import { AbstractProducer } from "./producer";
@@ -20,7 +20,7 @@ class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
     let index = this.index;
     let isDisposed = this.isDisposed;
 
-    shouldYield = shouldYield || alwaysTrue;
+    shouldYield = shouldYield || alwaysFalse;
 
     while (index < length && !isDisposed) {
       const [, value] = values[index];
@@ -41,8 +41,7 @@ class FromScheduledValuesProducer<T> extends AbstractProducer<T> {
       }
     }
 
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 
@@ -60,7 +59,7 @@ export function fromScheduledValues<T>(
 ): ObservableLike<T> {
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromScheduledValuesProducer(subscriber, values);
-  
+
   const [delay] = values[0];
   return createDelayedScheduledObservable(factory, delay);
 }

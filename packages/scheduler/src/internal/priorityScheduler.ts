@@ -87,8 +87,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     }
 
     scheduler.inContinuation = false;
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 
@@ -179,7 +178,11 @@ class PrioritySchedulerResourceImpl
     return task;
   }
 
-  schedule(continuation: SchedulerContinuationLike, priority: number, delay = 0) {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    priority: number,
+    delay = 0,
+  ) {
     this.add(continuation);
 
     if (!this.isDisposed) {
@@ -208,11 +211,12 @@ class PrioritySchedulerResourceImpl
           priorityContinuation.dueTime <= dueTime);
 
       if (head === task && !continuationActive) {
-        const continuation = new PrioritySchedulerContinuation(this, dueTime).add(
-          () => {
-            this.continuation = undefined;
-          },
-        );
+        const continuation = new PrioritySchedulerContinuation(
+          this,
+          dueTime,
+        ).add(() => {
+          this.continuation = undefined;
+        });
         this.disposable.inner = continuation;
         this.continuation = continuation;
         this.hostScheduler.schedule(continuation, delay);

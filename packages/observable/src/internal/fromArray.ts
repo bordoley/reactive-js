@@ -1,6 +1,9 @@
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
+import {
+  createScheduledObservable,
+  createDelayedScheduledObservable,
+} from "./observable";
 import { AbstractProducer } from "./producer";
 
 class FromArrayProducer<T> extends AbstractProducer<T> {
@@ -41,8 +44,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
         index++;
       }
     }
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 

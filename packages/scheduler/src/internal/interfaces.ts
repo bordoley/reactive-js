@@ -1,11 +1,24 @@
 import { DisposableLike } from "@reactive-js/disposable";
 
+export interface SchedulerContinuationRunStatusChangedListenerLike {
+  onRunStatusChanged(state: boolean): void;
+}
+
 /**
  * A unit of work to be executed by a scheduler.
  *
  * @noInheritDoc
  */
 export interface SchedulerContinuationLike extends DisposableLike {
+  addListener(
+    ev: "onRunStatusChanged",
+    listener: SchedulerContinuationRunStatusChangedListenerLike,
+  ): void;
+  removeListener(
+    ev: "onRunStatusChanged",
+    listener: SchedulerContinuationRunStatusChangedListenerLike,
+  ): void;
+
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    *
@@ -64,7 +77,11 @@ export interface PrioritySchedulerLike {
    *
    * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
    */
-  schedule(continuation: SchedulerContinuationLike, priority: number, delay?: number): void;
+  schedule(
+    continuation: SchedulerContinuationLike,
+    priority: number,
+    delay?: number,
+  ): void;
 }
 
 /**

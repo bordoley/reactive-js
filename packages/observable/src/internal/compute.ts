@@ -1,5 +1,8 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
+import {
+  createScheduledObservable,
+  createDelayedScheduledObservable,
+} from "./observable";
 import { AbstractProducer } from "./producer";
 
 class ComputeProducer<T> extends AbstractProducer<T> {
@@ -13,8 +16,7 @@ class ComputeProducer<T> extends AbstractProducer<T> {
 
   produce(_?: () => boolean): number {
     this.notify(this.f());
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 
@@ -31,7 +33,7 @@ export const compute = <T>(
   const factory = (subscriber: SubscriberLike<T>) =>
     new ComputeProducer(subscriber, valueFactory, delay);
 
-  return (delay > 0) 
+  return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);
 };

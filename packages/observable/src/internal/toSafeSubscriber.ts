@@ -4,7 +4,9 @@ import { alwaysFalse } from "./functions";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
-class SafeSubscriberSchedulerContinuation<T> extends AbstractSchedulerContinuation {
+class SafeSubscriberSchedulerContinuation<
+  T
+> extends AbstractSchedulerContinuation {
   constructor(private readonly subscriber: SafeSubscriberImpl<T>) {
     super();
   }
@@ -16,29 +18,27 @@ class SafeSubscriberSchedulerContinuation<T> extends AbstractSchedulerContinuati
 
     shouldYield = shouldYield || alwaysFalse;
 
-    if (!this.isDisposed) {
-      try {
-        while (nextQueue.length > 0 && !delegate.isDisposed) {
-          const next = nextQueue.shift() as T;
-          delegate.notify(next);
+    try {
+      while (nextQueue.length > 0 && !delegate.isDisposed) {
+        const next = nextQueue.shift() as T;
+        delegate.notify(next);
 
-          const hasRemainingEvents =
-            subscriber.nextQueue.length > 0 || subscriber.isDisposed;
+        const hasRemainingEvents =
+          subscriber.nextQueue.length > 0 || subscriber.isDisposed;
 
-          if (hasRemainingEvents && shouldYield()) {
-            return 0;
-          }
+        if (hasRemainingEvents && shouldYield()) {
+          return 0;
         }
-
-        if (subscriber.isDisposed) {
-          delegate.dispose(subscriber.error);
-        }
-      } catch (cause) {
-        delegate.dispose({ cause });
       }
-      this.dispose();
+
+      if (subscriber.isDisposed) {
+        delegate.dispose(subscriber.error);
+      }
+    } catch (cause) {
+      delegate.dispose({ cause });
     }
-    return 0;
+
+    return -1;
   }
 }
 

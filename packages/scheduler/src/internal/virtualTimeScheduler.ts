@@ -68,10 +68,6 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation
   }
 
   produce(shouldYield?: () => boolean): number {
-    if (this.isDisposed) {
-      return 0;
-    }
-
     if (
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
       shouldYield === undefined
@@ -100,7 +96,6 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation
 
       this.runShouldYield = undefined;
     } else {
-      // eslint-disable-next-line no-empty
       while (this.move()) {
         const continuation = this.current;
 
@@ -114,8 +109,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation
       }
     }
 
-    this.dispose();
-    return 0;
+    return -1;
   }
 
   schedule(continuation: SchedulerContinuationLike, delay = 0): void {
