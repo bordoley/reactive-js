@@ -39,7 +39,6 @@
   },
   "dependencies": {
     "@reactive-js/disposable": "^0.0.32",
-    "@reactive-js/enumerable": "^0.0.32",
     "@reactive-js/pipe": "^0.0.32"
   },
   "devDependencies": {

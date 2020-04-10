@@ -85,15 +85,6 @@ export interface PrioritySchedulerLike {
 }
 
 /**
- * A priority scheduler which is also an unmanaged resource.
- *
- * @noInheritDoc
- * */
-export interface PrioritySchedulerResourceLike
-  extends PrioritySchedulerLike,
-    DisposableLike {}
-
-/**
  * Interface used by Scheduler implementations using the 'schedulerMixin' functions
  *
  * @noInheritDoc

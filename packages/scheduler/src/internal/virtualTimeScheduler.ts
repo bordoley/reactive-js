@@ -1,4 +1,3 @@
-import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
@@ -19,8 +18,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation
-  implements EnumeratorLike<void, SchedulerContinuationLike> {
+class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   current: any = undefined;
   hasCurrent = false;
   inContinuation = false;

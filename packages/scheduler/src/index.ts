@@ -4,7 +4,6 @@ export {
   SchedulerLike,
   VirtualTimeSchedulerLike,
   PrioritySchedulerLike,
-  PrioritySchedulerResourceLike,
   HostSchedulerLike,
 } from "./internal/interfaces";
 

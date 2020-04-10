@@ -3,12 +3,12 @@ import {
   dispose,
   createSerialDisposable,
   SerialDisposableLike,
+  DisposableLike,
 } from "@reactive-js/disposable";
-import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
-  PrioritySchedulerResourceLike,
+  PrioritySchedulerLike,
 } from "./interfaces";
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
@@ -107,8 +107,7 @@ const delayedComparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
 
 class PrioritySchedulerResourceImpl
   implements
-    EnumeratorLike<void, ScheduledTaskLike>,
-    PrioritySchedulerResourceLike {
+    PrioritySchedulerLike, DisposableLike {
   readonly add = add;
   readonly disposable: SerialDisposableLike = createSerialDisposable().add(() =>
     this.queue.clear(),
@@ -246,5 +245,5 @@ class PrioritySchedulerResourceImpl
  */
 export const createPriorityScheduler = (
   hostScheduler: SchedulerLike,
-): PrioritySchedulerResourceLike =>
+): DisposableLike & PrioritySchedulerLike =>
   new PrioritySchedulerResourceImpl(hostScheduler);
