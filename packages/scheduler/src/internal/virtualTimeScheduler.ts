@@ -47,9 +47,9 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   inContinuation = false;
   microTaskTicks = 0;
   now = 0;
-  private runShouldYield?: () => boolean;
+  private hostShouldYield?: () => boolean;
   private shouldYield: (() => boolean) | undefined = () => {
-    const runShouldYield = this.runShouldYield;
+    const runShouldYield = this.hostShouldYield;
     this.microTaskTicks++;
     return (
       this.microTaskTicks >= this.maxMicroTaskTicks ||
@@ -65,14 +65,14 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super();
   }
 
-  produce(shouldYield?: () => boolean): number {
-    const shouldYieldIsDefined = shouldYield !== undefined;
+  produce(hostShouldYield?: () => boolean): number {
+    const hostShouldYieldIsDefined = hostShouldYield !== undefined;
 
-    this.runShouldYield = shouldYield;
+    this.hostShouldYield = hostShouldYield;
 
     if (
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
-      !shouldYieldIsDefined
+      !hostShouldYieldIsDefined
     ) {
       this.shouldYield = undefined;
     }
@@ -90,15 +90,15 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
       }
 
       // Perf hack
-      if (shouldYieldIsDefined) {
-        if ((shouldYield as any)()) {
-          this.runShouldYield = undefined;
+      if (hostShouldYieldIsDefined) {
+        if ((hostShouldYield as any)()) {
+          this.hostShouldYield = undefined;
           return 0;
         }
       }
     }
 
-    this.runShouldYield = undefined;
+    this.hostShouldYield = undefined;
 
     return -1;
   }
