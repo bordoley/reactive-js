@@ -18,11 +18,34 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
+const move = (scheduler: VirtualTimeSchedulerImpl) => {
+  const taskQueue = scheduler.taskQueue;
+
+  scheduler.hasCurrent = false;
+
+  if (!scheduler.isDisposed) {
+    const task = taskQueue.pop();
+
+    if (task !== undefined) {
+      const { dueTime, continuation } = task;
+
+      scheduler.current = continuation;
+      scheduler.hasCurrent = true;
+      scheduler.microTaskTicks = 0;
+      scheduler.now = dueTime;
+    } else {
+      scheduler.dispose();
+    }
+  }
+
+  return scheduler.hasCurrent;
+}
+
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
-  current: any = undefined;
+  current: SchedulerContinuationLike = (undefined as any);
   hasCurrent = false;
   inContinuation = false;
-  private microTaskTicks = 0;
+  microTaskTicks = 0;
   now = 0;
   private runShouldYield?: () => boolean;
   private shouldYield: (() => boolean) | undefined = () => {
@@ -34,7 +57,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     );
   };
   private taskIDCount = 0;
-  private readonly taskQueue: PriorityQueueLike<
+  readonly taskQueue: PriorityQueueLike<
     VirtualTask
   > = createPriorityQueue(comparator);
 
@@ -42,70 +65,40 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super();
   }
 
-  move() {
-    this.hasCurrent = false;
-
-    if (!this.isDisposed) {
-      const taskQueue = this.taskQueue;
-      const task = taskQueue.pop();
-
-      if (task !== undefined) {
-        this.hasCurrent = true;
-        const { dueTime, continuation } = task;
-
-        this.now = dueTime;
-        this.microTaskTicks = 0;
-
-        this.current = continuation;
-      } else {
-        this.dispose();
-      }
-    }
-
-    return this.hasCurrent;
-  }
-
   produce(shouldYield?: () => boolean): number {
+    const shouldYieldIsDefined = shouldYield !== undefined;
+
+    this.runShouldYield = shouldYield;
+
     if (
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
-      shouldYield === undefined
+      !shouldYieldIsDefined
     ) {
       this.shouldYield = undefined;
     }
+    
+    while (move(this)) {
+      const continuation = this.current;
 
-    if (shouldYield !== undefined) {
-      this.runShouldYield = shouldYield;
-      while (this.move()) {
-        const continuation = this.current;
+      this.inContinuation = true;
+      const delay = continuation.run(this.shouldYield);
+      this.inContinuation = false;
 
-        this.inContinuation = true;
-        const delay = continuation.run(this.shouldYield);
-        this.inContinuation = false;
+      // Check here for perf. avoid an unnecessary function call
+      if (!continuation.isDisposed) {
+        this.schedule(continuation, delay);
+      }
 
-        if (!continuation.isDisposed) {
-          this.schedule(continuation, delay);
-        }
-
-        if (shouldYield()) {
+      // Perf hack
+      if (shouldYieldIsDefined) {
+        if((shouldYield as any)()) {
           this.runShouldYield = undefined;
           return 0;
         }
       }
-
-      this.runShouldYield = undefined;
-    } else {
-      while (this.move()) {
-        const continuation = this.current;
-
-        this.inContinuation = true;
-        const delay = continuation.run(this.shouldYield);
-        this.inContinuation = false;
-
-        if (!continuation.isDisposed) {
-          this.schedule(continuation, delay);
-        }
-      }
     }
+
+    this.runShouldYield = undefined;
 
     return -1;
   }
@@ -113,12 +106,14 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   schedule(continuation: SchedulerContinuationLike, delay = 0): void {
     this.add(continuation);
 
-    const work: VirtualTask = {
-      id: this.taskIDCount++,
-      dueTime: this.now + delay,
-      continuation,
-    };
-    this.taskQueue.push(work);
+    if (!continuation.isDisposed) {
+      const work: VirtualTask = {
+        id: this.taskIDCount++,
+        dueTime: this.now + delay,
+        continuation,
+      };
+      this.taskQueue.push(work);
+    }
   }
 }
 
