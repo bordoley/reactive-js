@@ -48,11 +48,14 @@ class EnumeratorSubscriber<T>
       }
 
       this.inContinuation = true;
-      continuation.run(alwaysTrue);
+      const result = continuation.run(alwaysTrue);
       this.inContinuation = false;
 
-      if (!continuation.isDisposed) {
+      // We don't support delayed continuations.
+      if (!continuation.isDisposed && result <= 0) {
         continuations.push(continuation);
+      } else {
+        continuation.dispose();
       }
 
       const error = this.error;
