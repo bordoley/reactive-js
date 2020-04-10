@@ -24,7 +24,9 @@
 
 ### Methods
 
+* [addListener](abstractschedulercontinuation.md#addlistener)
 * [produce](abstractschedulercontinuation.md#abstract-produce)
+* [removeListener](abstractschedulercontinuation.md#removelistener)
 * [run](abstractschedulercontinuation.md#run)
 
 ## Properties
@@ -37,7 +39,11 @@ ___
 
 ###  disposable
 
-• **disposable**: *DisposableLike‹›* =  createDisposable()
+• **disposable**: *DisposableLike‹›* =  createDisposable(() => {
+    if (!this.isActive) {
+      this.listeners.clear();
+    }
+  })
 
 ___
 
@@ -55,17 +61,53 @@ ___
 
 ## Methods
 
-### `Abstract` produce
+###  addListener
 
-▸ **produce**(`shouldYield?`: undefined | function): *number*
+▸ **addListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
+
+*Implementation of [SchedulerContinuationLike](../interfaces/schedulercontinuationlike.md)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`shouldYield?` | undefined &#124; function |
+`_ev` | "onRunStatusChanged" |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md) |
+
+**Returns:** *void*
+
+___
+
+### `Abstract` produce
+
+▸ **produce**(`shouldYield?`: undefined | function): *number*
+
+Return < 0 to signal done.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`shouldYield?` | undefined &#124; function |   |
 
 **Returns:** *number*
+
+___
+
+###  removeListener
+
+▸ **removeListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
+
+*Implementation of [SchedulerContinuationLike](../interfaces/schedulercontinuationlike.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`_ev` | "onRunStatusChanged" |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md) |
+
+**Returns:** *void*
 
 ___
 

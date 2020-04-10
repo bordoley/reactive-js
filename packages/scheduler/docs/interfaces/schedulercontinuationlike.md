@@ -20,9 +20,41 @@ A unit of work to be executed by a scheduler.
 
 ### Methods
 
+* [addListener](schedulercontinuationlike.md#addlistener)
+* [removeListener](schedulercontinuationlike.md#removelistener)
 * [run](schedulercontinuationlike.md#run)
 
 ## Methods
+
+###  addListener
+
+▸ **addListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ev` | "onRunStatusChanged" |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md) |
+
+**Returns:** *void*
+
+___
+
+###  removeListener
+
+▸ **removeListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`ev` | "onRunStatusChanged" |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md) |
+
+**Returns:** *void*
+
+___
 
 ###  run
 
