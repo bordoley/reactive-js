@@ -1,5 +1,8 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
+import {
+  createScheduledObservable,
+  createDelayedScheduledObservable,
+} from "./observable";
 import { AbstractProducer } from "./producer";
 import { alwaysTrue } from "./functions";
 
@@ -67,7 +70,7 @@ export function generate<T>(
   const factory = (subscriber: SubscriberLike<T>) =>
     new GenerateProducer(subscriber, generator, initialValue(), delay);
 
-    return delay > 0
+  return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);
 }

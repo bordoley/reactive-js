@@ -24,9 +24,11 @@ import {
 
 const alwaysFalse = () => false;
 
-class ReactiveCacheSchedulerContinuation<T> extends AbstractSchedulerContinuation {
+class ReactiveCacheSchedulerContinuation<
+  T
+> extends AbstractSchedulerContinuation {
   constructor(private readonly cache: ReactiveCacheImpl<T>) {
-    super()
+    super();
   }
 
   produce(shouldYield?: () => boolean): number {
@@ -47,8 +49,7 @@ class ReactiveCacheSchedulerContinuation<T> extends AbstractSchedulerContinuatio
       }
     }
 
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 

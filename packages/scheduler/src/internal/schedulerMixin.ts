@@ -25,9 +25,6 @@ export function schedule(
   delay = 0,
 ): void {
   const callback = createCallback(this, continuation);
-  const callbackSubscription = this.scheduleCallback(
-    callback,
-    delay,
-  );
+  const callbackSubscription = this.scheduleCallback(callback, delay);
   continuation.add(callbackSubscription);
 }

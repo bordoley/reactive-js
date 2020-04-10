@@ -1,4 +1,5 @@
 export {
+  SchedulerContinuationRunStatusChangedListenerLike,
   SchedulerContinuationLike,
   SchedulerLike,
   VirtualTimeSchedulerLike,

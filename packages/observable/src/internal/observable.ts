@@ -96,7 +96,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
       subscriber: SubscriberLike<T>,
     ) => SchedulerContinuationLike | (() => void),
     readonly isSynchronous: boolean,
-    private readonly delay: number
+    private readonly delay: number,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {

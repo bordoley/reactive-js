@@ -1,20 +1,21 @@
-import { ErrorLike } from "@reactive-js/disposable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { createScheduledObservable, createDelayedScheduledObservable } from "./observable";
+import {
+  createScheduledObservable,
+  createDelayedScheduledObservable,
+} from "./observable";
 import { AbstractProducer } from "./producer";
 
 class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
-    private readonly error: ErrorLike,
+    private readonly error: unknown,
     readonly delay: number,
   ) {
     super(subscriber);
   }
 
   produce(_?: () => boolean): number {
-    this.dispose(this.error);
-    return 0;
+    throw this.error;
   }
 }
 
@@ -29,9 +30,9 @@ export const throws = <T>(
   delay = 0,
 ): ObservableLike<T> => {
   const factory = (subscriber: SubscriberLike<T>) =>
-    new ThrowsProducer(subscriber, { cause: errorFactory() }, delay);
+    new ThrowsProducer(subscriber, errorFactory(), delay);
 
-    return delay > 0
-      ? createDelayedScheduledObservable(factory, delay)
-      : createScheduledObservable(factory, true);
+  return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
 };

@@ -147,8 +147,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
         this.notify(next);
       }
     }
-    this.dispose();
-    return 0;
+    return -1;
   }
 }
 

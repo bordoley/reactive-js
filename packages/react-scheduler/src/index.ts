@@ -56,11 +56,7 @@ const createCallback = (
     scheduler.inContinuation = false;
 
     if (!continuation.isDisposed) {
-      const disposable = scheduleCallback(
-        callback,
-        priority,
-        delay,
-      );
+      const disposable = scheduleCallback(callback, priority, delay);
       continuation.add(disposable);
     }
   };
@@ -75,7 +71,11 @@ const priorityScheduler = {
     return unstable_now();
   },
 
-  schedule(continuation: SchedulerContinuationLike, priority: number, delay = 0): void {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    priority: number,
+    delay = 0,
+  ): void {
     const callback = createCallback(continuation, priorityScheduler, priority);
     const disposable = scheduleCallback(callback, priority, delay);
     continuation.add(disposable);

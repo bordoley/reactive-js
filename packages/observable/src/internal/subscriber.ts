@@ -34,13 +34,10 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
   readonly add = add;
   readonly disposable = createDisposable();
   readonly dispose = dispose;
+  inContinuation = false;
 
   constructor(private readonly scheduler: SchedulerLike) {
     this.scheduler = scheduler;
-  }
-
-  get inContinuation() {
-    return this.scheduler.inContinuation;
   }
 
   get isDisposed(): boolean {
@@ -53,10 +50,12 @@ export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
 
   abstract notify(_: T): void;
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    delay = 0
-  ) {
+  onRunStatusChanged(status: boolean) {
+    this.inContinuation = status;
+  }
+
+  schedule(continuation: SchedulerContinuationLike, delay = 0) {
+    continuation.addListener("onRunStatusChanged", this);
     this.add(continuation);
     this.scheduler.schedule(continuation, delay);
   }

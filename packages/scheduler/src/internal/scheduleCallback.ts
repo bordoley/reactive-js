@@ -8,16 +8,8 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
   }
 
   produce(_?: () => boolean) {
-    if (!this.isDisposed) {
-      try {
-        this.cb();
-        this.dispose();
-      } catch (cause) {
-        const error = { cause };
-        this.dispose(error);
-      }
-    }
-    return 0;
+    this.cb();
+    return -1;
   }
 }
 
