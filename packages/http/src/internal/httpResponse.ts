@@ -94,7 +94,7 @@ export const parseHttpResponseFromHeaders = <T>(
     statusCode,
     vary,
   };
-}
+};
 
 const writeCoreHttpResponseHeaders = <T>(
   {
