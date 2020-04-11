@@ -32,7 +32,6 @@ export const parseHttpPreferencesFromHeaders = (
       };
 };
 
-
 /** @ignore */
 export const writeHttpPreferenceHeaders = (
   preferences: HttpPreferencesLike,

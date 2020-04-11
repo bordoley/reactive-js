@@ -3,7 +3,11 @@ import {
   StateUpdaterLike,
   lift,
 } from "@reactive-js/async-enumerable";
-import { createHttpRequest, HttpMethod, HttpContentLike } from "@reactive-js/http";
+import {
+  createHttpRequest,
+  HttpMethod,
+  HttpContentLike,
+} from "@reactive-js/http";
 import { sendHttpRequest } from "@reactive-js/http-web";
 import { useObservable } from "@reactive-js/react";
 import {
@@ -109,10 +113,13 @@ const location = pipe(
   .createRoot(document.getElementById("root"))
   .render(<Router location={location} notFound={NotFound} routes={routes} />);
 
-  const request = createHttpRequest<HttpContentLike<any>>(HttpMethod.GET, "http://localhost:8080/index.json");
+const request = createHttpRequest<HttpContentLike<any>>(
+  HttpMethod.GET,
+  "http://localhost:8080/index.json",
+);
 
-  pipe(
-    sendHttpRequest(request),
-    onNotify(console.log),
-    subscribe(normalPriority)
-  );
+pipe(
+  sendHttpRequest(request),
+  onNotify(console.log),
+  subscribe(normalPriority),
+);

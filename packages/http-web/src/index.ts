@@ -1,7 +1,21 @@
-import { HttpContentRequestLike, HttpContentResponseLike, writeHttpRequestHeaders, parseHttpResponseFromHeaders, HttpHeadersLike } from "@reactive-js/http";
+import {
+  HttpContentRequestLike,
+  HttpContentResponseLike,
+  writeHttpRequestHeaders,
+  parseHttpResponseFromHeaders,
+  HttpHeadersLike,
+} from "@reactive-js/http";
 import { ObservableLike, createObservable } from "@reactive-js/observable";
 
-export type HttpBody = string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>;
+export type HttpBody =
+  | string
+  | Document
+  | Blob
+  | ArrayBufferView
+  | ArrayBuffer
+  | FormData
+  | URLSearchParams
+  | ReadableStream<Uint8Array>;
 
 export const enum HttpClientRequestStatusType {
   Begin = 1,
@@ -39,24 +53,24 @@ export type HttpClientRequestStatus =
   | HttpClientRequestStatusResponseReady;
 
 const parseHeaders = (rawHeaders: string): HttpHeadersLike => {
-  const headers: { [header: string]: string; } = {};
+  const headers: { [header: string]: string } = {};
 
   // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
   // https://tools.ietf.org/html/rfc7230#section-3.2
-  const preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, ' ');
+  const preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, " ");
   const lines = preProcessedHeaders.split(/\r?\n/);
-  for(const line of lines) {
-    const parts = line.split(':')
+  for (const line of lines) {
+    const parts = line.split(":");
     const key = (parts.shift() as string).trim();
 
     if (key !== undefined && key !== "") {
-      const value = parts.join(':').trim()
-      headers[key.toLowerCase()] = value
+      const value = parts.join(":").trim();
+      headers[key.toLowerCase()] = value;
     }
   }
 
   return headers;
-}
+};
 
 export const sendHttpRequest = (
   request: HttpContentRequestLike<HttpBody>,
@@ -72,14 +86,13 @@ export const sendHttpRequest = (
     };
 
     xhr.onload = () => {
-      xhr.response
+      xhr.response;
 
       const headersRaw = xhr.getAllResponseHeaders() || "";
       const headers = parseHeaders(headersRaw);
 
-
-      // FIXME: Maybe update the request with the actual url? 
-      // is this even necessary if the header is set? 
+      // FIXME: Maybe update the request with the actual url?
+      // is this even necessary if the header is set?
       //const url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
 
       const body = xhr.response;
@@ -94,7 +107,7 @@ export const sendHttpRequest = (
         type: HttpClientRequestStatusType.ResponseReady,
         request,
         response,
-      })
+      });
       subscriber.dispose();
     };
 
@@ -119,9 +132,8 @@ export const sendHttpRequest = (
       subscriber.dispose({ cause });
     };
 
-
     // FIXME: We need a more typesafe body response
-    xhr.responseType = 'blob'
+    xhr.responseType = "blob";
 
     // FIXME: See https://developer.mozilla.org/en-US/docs/Web/API/Request
     /*if (request.credentials === 'include') {
@@ -129,7 +141,7 @@ export const sendHttpRequest = (
     } else if (request.credentials === 'omit') {
       xhr.withCredentials = false
     }*/
-   
+
     xhr.open(request.method, request.uri.toString(), true);
     writeHttpRequestHeaders(request, (k, v) => xhr.setRequestHeader(k, v));
     xhr.send(request?.content?.body);
