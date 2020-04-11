@@ -1,4 +1,4 @@
-import { HttpContentRequestLike, HttpContentResponseLike, writeHttpRequestHeaders, parseHttpResponseFromHeadersLight, HttpHeadersLike } from "@reactive-js/http";
+import { HttpContentRequestLike, HttpContentResponseLike, writeHttpRequestHeaders, parseHttpResponseFromHeaders, HttpHeadersLike } from "@reactive-js/http";
 import { ObservableLike, createObservable } from "@reactive-js/observable";
 
 export type HttpBody = string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>;
@@ -84,7 +84,7 @@ export const sendHttpRequest = (
 
       const body = xhr.response;
 
-      const response = parseHttpResponseFromHeadersLight<Blob>(
+      const response = parseHttpResponseFromHeaders<Blob>(
         xhr.status,
         headers,
         body,
