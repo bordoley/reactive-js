@@ -1,3 +1,20 @@
+
+import { OperatorLike } from "@reactive-js/pipe";
+import {
+  writeHttpContentHeaders,
+  parseHttpContentFromHeaders,
+} from "./httpContent";
+import {
+  writeHttpHeaders,
+  HttpStandardHeader,
+  getHeaderValue,
+  HttpExtensiondHeader,
+} from "./httpHeaders";
+import {
+  parseHttpPreferencesFromHeaders,
+  writeHttpPreferenceHeaders,
+} from "./httpPreferences";
+import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 import {
   HttpMethod,
   URI,
@@ -9,22 +26,6 @@ import {
   HttpStatusCode,
   HttpContentRequestLike,
 } from "./interfaces";
-import { OperatorLike } from "@reactive-js/pipe";
-import {
-  writeHttpContentHeaders,
-  parseHttpContentFromHeaders,
-} from "./httpContent";
-import {
-  writeHttpPreferenceHeaders,
-  parseHttpPreferencesFromHeaders,
-} from "./httpPreferences";
-import {
-  writeHttpHeaders,
-  HttpStandardHeader,
-  getHeaderValue,
-  HttpExtensiondHeader,
-} from "./httpHeaders";
-import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 
 declare class URL implements URI {
   readonly hash: string;

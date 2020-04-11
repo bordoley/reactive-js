@@ -14,17 +14,17 @@ import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
 } from "./httpContent";
+import { parseHttpDateTime, serializeHttpDateTime } from "./httpDateTime";
+import { serializeHttpEntityTag } from "./httpEntityTag";
 import {
   writeHttpHeaders,
   getHeaderValue,
   HttpStandardHeader,
 } from "./httpHeaders";
 import {
-  writeHttpPreferenceHeaders,
   parseHttpPreferencesFromHeaders,
+  writeHttpPreferenceHeaders,
 } from "./httpPreferences";
-import { parseHttpDateTime, serializeHttpDateTime } from "./httpDateTime";
-import { serializeHttpEntityTag } from "./httpEntityTag";
 
 declare class URL implements URI {
   readonly hash: string;
@@ -65,7 +65,6 @@ export const parseHttpResponseFromHeaders = <T>(
   body: T,
 ): HttpContentResponseLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
-  const preferences = parseHttpPreferencesFromHeaders(headers);
 
   // FIXME: etag
 
@@ -80,6 +79,8 @@ export const parseHttpResponseFromHeaders = <T>(
   const location =
     locationHeader !== undefined ? new URL(locationHeader) : undefined;
 
+  const preferences = parseHttpPreferencesFromHeaders(headers);
+
   // We're not going to use this so just return empty string.
   const vary: readonly string[] = [];
 
@@ -93,7 +94,7 @@ export const parseHttpResponseFromHeaders = <T>(
     statusCode,
     vary,
   };
-};
+}
 
 const writeCoreHttpResponseHeaders = <T>(
   {
