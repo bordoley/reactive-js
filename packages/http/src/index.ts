@@ -31,4 +31,4 @@ export {
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
 
-export { HttpStandardHeaders } from "./internal/httpHeaders";
+export { HttpStandardHeader } from "./internal/httpHeaders";
