@@ -7,7 +7,9 @@
 ### Enumerations
 
 * [HttpContentEncoding](enums/httpcontentencoding.md)
+* [HttpExtensiondHeader](enums/httpextensiondheader.md)
 * [HttpMethod](enums/httpmethod.md)
+* [HttpStandardHeader](enums/httpstandardheader.md)
 * [HttpStatusCode](enums/httpstatuscode.md)
 
 ### Interfaces
@@ -39,6 +41,7 @@
 * [createHttpResponse](README.md#const-createhttpresponse)
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
+* [getHeaderValue](README.md#getheadervalue)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
@@ -150,6 +153,56 @@ ___
 ▪ **T**
 
 **Returns:** *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T››*
+
+___
+
+###  getHeaderValue
+
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`key` | [HttpStandardHeader](enums/httpstandardheader.md) |
+
+**Returns:** *string*
+
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
+
+**Returns:** *string*
+
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md), `orDefault`: string): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`key` | [HttpStandardHeader](enums/httpstandardheader.md) |
+`orDefault` | string |
+
+**Returns:** *string*
+
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md), `orDefault`: string): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
+`orDefault` | string |
+
+**Returns:** *string*
 
 ___
 
