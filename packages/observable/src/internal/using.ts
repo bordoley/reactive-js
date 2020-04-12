@@ -1,11 +1,9 @@
 import { DisposableLike } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { enumerate } from "./observable";
 
 class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
   implements ObservableLike<T> {
-  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   constructor(

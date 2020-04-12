@@ -13,6 +13,7 @@ const notifyListeners = (
   }
 };
 
+/** @noInheritDoc */
 export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   implements SchedulerContinuationLike {
   private isActive = false;

@@ -5,7 +5,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { enumerate } from "./observable";
+import { toEnumerable } from "./toEnumerable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -152,7 +152,6 @@ class ZipProducer<T> extends AbstractProducer<T> {
 }
 
 class ZipObservable<T> implements ObservableLike<T> {
-  readonly enumerate = enumerate;
   readonly isSynchronous: boolean;
 
   constructor(
@@ -167,7 +166,7 @@ class ZipObservable<T> implements ObservableLike<T> {
     const count = observables.length;
 
     if (this.isSynchronous) {
-      const enumerators = observables.map(obs => obs.enumerate());
+      const enumerators = observables.map(obs => toEnumerable(obs).enumerate());
       for (const enumerator of enumerators) {
         enumerator.move();
       }
@@ -181,7 +180,7 @@ class ZipObservable<T> implements ObservableLike<T> {
         const observable = observables[index];
 
         if (observable.isSynchronous) {
-          const enumerator = observable.enumerate();
+          const enumerator = toEnumerable(observable).enumerate();
 
           enumerator.move();
           enumerators.push(enumerator);

@@ -1,6 +1,5 @@
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { enumerate } from "./observable";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -34,7 +33,6 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 }
 
 class ConcatObservable<T> implements ObservableLike<T> {
-  readonly enumerate = enumerate;
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: Array<ObservableLike<T>>) {

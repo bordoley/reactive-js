@@ -10,9 +10,7 @@ The source of notifications which notifies a `SubscriberLike` instance.
 
 ## Hierarchy
 
-* EnumerableLike‹void, T›
-
-  ↳ **ObservableLike**
+* **ObservableLike**
 
   ↳ [MulticastObservableLike](multicastobservablelike.md)
 

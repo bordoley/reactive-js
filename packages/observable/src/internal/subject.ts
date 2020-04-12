@@ -1,6 +1,5 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { SafeSubscriberLike, SubjectLike, SubscriberLike } from "./interfaces";
-import { enumerate } from "./observable";
 import {
   AbstractSubscriber,
   assertSubscriberNotifyInContinuation,
@@ -11,7 +10,6 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
   private readonly subscribers: Set<SafeSubscriberLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
-  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   constructor(scheduler: SchedulerLike, private readonly replayCount: number) {

@@ -10,7 +10,7 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
 ## Hierarchy
 
-  ↳ [ObservableLike](observablelike.md)‹T›
+* [ObservableLike](observablelike.md)‹T›
 
 * DisposableLike
 

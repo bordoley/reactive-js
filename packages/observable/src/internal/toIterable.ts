@@ -1,5 +1,6 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { ObservableLike } from "./interfaces";
+import { toEnumerable } from "./toEnumerable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };
 
@@ -31,7 +32,7 @@ class ObservableIterable<T> implements Iterable<T> {
   constructor(private readonly observable: ObservableLike<T>) {}
 
   [Symbol.iterator]() {
-    const enumerator = this.observable.enumerate();
+    const enumerator = toEnumerable(this.observable).enumerate();
     return new EnumeratorIterator(enumerator);
   }
 }

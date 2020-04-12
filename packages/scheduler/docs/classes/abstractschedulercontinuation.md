@@ -19,16 +19,9 @@
 
 * [constructor](abstractschedulercontinuation.md#constructor)
 
-### Accessors
-
-* [error](abstractschedulercontinuation.md#error)
-* [isDisposed](abstractschedulercontinuation.md#isdisposed)
-
 ### Methods
 
-* [add](abstractschedulercontinuation.md#add)
 * [addListener](abstractschedulercontinuation.md#addlistener)
-* [dispose](abstractschedulercontinuation.md#dispose)
 * [produce](abstractschedulercontinuation.md#abstract-produce)
 * [removeListener](abstractschedulercontinuation.md#removelistener)
 * [run](abstractschedulercontinuation.md#run)
@@ -41,43 +34,7 @@
 
 **Returns:** *[AbstractSchedulerContinuation](abstractschedulercontinuation.md)*
 
-## Accessors
-
-###  error
-
-• **get error**(): *ErrorLike | undefined*
-
-*Inherited from void*
-
-**Returns:** *ErrorLike | undefined*
-
-___
-
-###  isDisposed
-
-• **get isDisposed**(): *boolean*
-
-*Inherited from void*
-
-**Returns:** *boolean*
-
 ## Methods
-
-###  add
-
-▸ **add**(`disposable`: DisposableOrTeardown): *this*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`disposable` | DisposableOrTeardown |
-
-**Returns:** *this*
-
-___
 
 ###  addListener
 
@@ -91,22 +48,6 @@ Name | Type |
 ------ | ------ |
 `_ev` | "onRunStatusChanged" |
 `listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md) |
-
-**Returns:** *void*
-
-___
-
-###  dispose
-
-▸ **dispose**(`error?`: ErrorLike): *void*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error?` | ErrorLike |
 
 **Returns:** *void*
 

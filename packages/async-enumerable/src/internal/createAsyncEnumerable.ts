@@ -1,4 +1,3 @@
-import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   AbstractDelegatingSubscriber,
   createSubject,
@@ -37,10 +36,6 @@ export class AsyncEnumeratorImpl<TReq, T>
 
   dispatch(req: TReq) {
     (this.delegate as SafeSubscriberLike<TReq>).dispatch(req);
-  }
-
-  enumerate(): EnumeratorLike<void, T> {
-    return this.observable.enumerate();
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
