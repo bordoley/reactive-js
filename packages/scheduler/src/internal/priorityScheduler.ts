@@ -160,7 +160,8 @@ const peek = (
   return task || delayed.peek();
 };
 
-class PrioritySchedulerImpl extends AbstractSerialDisposable implements PrioritySchedulerLike, DisposableLike {
+class PrioritySchedulerImpl extends AbstractSerialDisposable
+  implements PrioritySchedulerLike, DisposableLike {
   inContinuation = false;
 
   readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
@@ -178,9 +179,7 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable implements Priority
 
   constructor(readonly hostScheduler: SchedulerLike) {
     super();
-    this.add(() =>
-      this.queue.clear(),
-    );
+    this.add(() => this.queue.clear());
   }
 
   get now(): number {

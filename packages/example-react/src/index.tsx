@@ -113,7 +113,7 @@ const location = pipe(
   .createRoot(document.getElementById("root"))
   .render(<Router location={location} notFound={NotFound} routes={routes} />);
 
-  /*
+/*
 const request = createHttpRequest<HttpContentLike<any>>(
   HttpMethod.GET,
   "http://localhost:8080/index.json",
