@@ -14,20 +14,20 @@
 
 ### Variables
 
-* [asterisk](README.md#const-asterisk)
-* [closeParen](README.md#const-closeparen)
-* [colon](README.md#const-colon)
-* [comma](README.md#const-comma)
-* [dash](README.md#const-dash)
-* [equals](README.md#const-equals)
-* [forwardSlash](README.md#const-forwardslash)
 * [many1Satisfy](README.md#const-many1satisfy)
 * [manySatisfy](README.md#const-manysatisfy)
-* [openParen](README.md#const-openparen)
-* [period](README.md#const-period)
-* [quote](README.md#const-quote)
-* [semicolon](README.md#const-semicolon)
-* [space](README.md#const-space)
+* [pAsterisk](README.md#const-pasterisk)
+* [pCloseParen](README.md#const-pcloseparen)
+* [pColon](README.md#const-pcolon)
+* [pComma](README.md#const-pcomma)
+* [pDash](README.md#const-pdash)
+* [pDquote](README.md#const-pdquote)
+* [pEquals](README.md#const-pequals)
+* [pForwardSlash](README.md#const-pforwardslash)
+* [pOpenParen](README.md#const-popenparen)
+* [pPeriod](README.md#const-pperiod)
+* [pSemicolon](README.md#const-psemicolon)
+* [pSpace](README.md#const-pspace)
 
 ### Functions
 
@@ -52,6 +52,7 @@
 * [parseWith](README.md#const-parsewith)
 * [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
+* [satisfyRangesInclusive](README.md#const-satisfyrangesinclusive)
 * [sepBy](README.md#const-sepby)
 * [sepBy1](README.md#const-sepby1)
 * [string](README.md#const-string)
@@ -65,48 +66,6 @@
 
 ## Variables
 
-### `Const` asterisk
-
-• **asterisk**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("*")
-
-___
-
-### `Const` closeParen
-
-• **closeParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(")")
-
-___
-
-### `Const` colon
-
-• **colon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(":")
-
-___
-
-### `Const` comma
-
-• **comma**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(",")
-
-___
-
-### `Const` dash
-
-• **dash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("-")
-
-___
-
-### `Const` equals
-
-• **equals**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("=")
-
-___
-
-### `Const` forwardSlash
-
-• **forwardSlash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("/")
-
-___
-
 ### `Const` many1Satisfy
 
 • **many1Satisfy**: *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹number›, [ParserLike](interfaces/parserlike.md)‹string››* =  manyMinMaxSatisfy(1, Number.MAX_SAFE_INTEGER)
@@ -119,33 +78,75 @@ ___
 
 ___
 
-### `Const` openParen
+### `Const` pAsterisk
 
-• **openParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("(")
-
-___
-
-### `Const` period
-
-• **period**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(".")
+• **pAsterisk**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("*")
 
 ___
 
-### `Const` quote
+### `Const` pCloseParen
 
-• **quote**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char('"')
-
-___
-
-### `Const` semicolon
-
-• **semicolon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(";")
+• **pCloseParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(")")
 
 ___
 
-### `Const` space
+### `Const` pColon
 
-• **space**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(" ")
+• **pColon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(":")
+
+___
+
+### `Const` pComma
+
+• **pComma**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(",")
+
+___
+
+### `Const` pDash
+
+• **pDash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("-")
+
+___
+
+### `Const` pDquote
+
+• **pDquote**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char('"')
+
+___
+
+### `Const` pEquals
+
+• **pEquals**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("=")
+
+___
+
+### `Const` pForwardSlash
+
+• **pForwardSlash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("/")
+
+___
+
+### `Const` pOpenParen
+
+• **pOpenParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("(")
+
+___
+
+### `Const` pPeriod
+
+• **pPeriod**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(".")
+
+___
+
+### `Const` pSemicolon
+
+• **pSemicolon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(";")
+
+___
+
+### `Const` pSpace
+
+• **pSpace**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(" ")
 
 ## Functions
 
@@ -683,14 +684,14 @@ ___
 
 ### `Const` regexp
 
-▸ **regexp**(`regexp`: RegExp, `group`: number): *[ParserLike](interfaces/parserlike.md)‹string›*
+▸ **regexp**(`input`: string, `options`: object): *[ParserLike](interfaces/parserlike.md)‹string›*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`regexp` | RegExp | - |
-`group` | number | 0 |
+`input` | string | - |
+`options` | object |  {} |
 
 **Returns:** *[ParserLike](interfaces/parserlike.md)‹string›*
 
@@ -711,6 +712,20 @@ ___
 Name | Type |
 ------ | ------ |
 `char` | [CharCode](README.md#charcode) |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+
+___
+
+### `Const` satisfyRangesInclusive
+
+▸ **satisfyRangesInclusive**(...`ranges`: [number, number][]): *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...ranges` | [number, number][] |
 
 **Returns:** *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
 
