@@ -5,6 +5,7 @@ import {
   using,
   onNotify,
   takeWhile,
+  toEnumerable,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
@@ -29,9 +30,9 @@ const createFactory = <T>(obs: ObservableLike<void>) => (
 export const fromIterable = <T>(
   iterable: Iterable<T>,
 ): AsyncEnumerableLike<void, T> => {
-  const enumerable = fromIterableObs(iterable);
+  const observable = fromIterableObs(iterable);
   const operator = (obs: ObservableLike<void>) =>
-    using(() => enumerable.enumerate(), createFactory<T>(obs));
+    using(() => toEnumerable(observable).enumerate(), createFactory<T>(obs));
 
   return createAsyncEnumerable(operator);
 };

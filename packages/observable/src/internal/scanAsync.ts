@@ -8,12 +8,10 @@ import { zip } from "./zip";
 import { createSubject } from "./subject";
 import { concatAll } from "./mergeAll";
 import { merge } from "./merge";
-import { enumerate } from "./observable";
 import { compute } from "./compute";
 import { skipFirst } from "./skipFirst";
 
 class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
-  readonly enumerate = enumerate;
   readonly isSynchronous = false;
 
   constructor(

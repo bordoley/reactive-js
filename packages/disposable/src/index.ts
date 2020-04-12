@@ -48,6 +48,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
   }
 };
 
+/** @noInheritDoc */
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
@@ -140,6 +141,7 @@ export interface SerialDisposableLike extends DisposableLike {
   inner: DisposableLike;
 }
 
+/** @noInheritDoc */
 export class AbstractSerialDisposable extends AbstractDisposable
   implements SerialDisposableLike {
   _inner: DisposableLike = disposed;

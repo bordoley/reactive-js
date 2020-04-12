@@ -9,7 +9,6 @@ export {
   SubscriberOperatorLike,
 } from "./internal/interfaces";
 
-export { enumerate } from "./internal/observable";
 export {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
@@ -75,6 +74,7 @@ export { withLatestFrom } from "./internal/withLatestFrom";
 export { zip } from "./internal/zip";
 
 export { toArray } from "./internal/toArray";
+export { toEnumerable } from "./internal/toEnumerable";
 export { toIterable } from "./internal/toIterable";
 export { toValue } from "./internal/toValue";
 export { toPromise } from "./internal/toPromise";

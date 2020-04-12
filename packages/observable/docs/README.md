@@ -44,7 +44,6 @@
 * [distinctUntilChanged](README.md#const-distinctuntilchanged)
 * [empty](README.md#empty)
 * [endWith](README.md#endwith)
-* [enumerate](README.md#enumerate)
 * [every](README.md#const-every)
 * [exhaust](README.md#const-exhaust)
 * [exhaustMap](README.md#const-exhaustmap)
@@ -94,6 +93,7 @@
 * [throws](README.md#const-throws)
 * [timeout](README.md#timeout)
 * [toArray](README.md#const-toarray)
+* [toEnumerable](README.md#const-toenumerable)
 * [toIterable](README.md#const-toiterable)
 * [toPromise](README.md#const-topromise)
 * [toSafeSubscriber](README.md#const-tosafesubscriber)
@@ -770,24 +770,6 @@ Name | Type |
 `...values` | T[] |
 
 **Returns:** *[ObservableOperatorLike](interfaces/observableoperatorlike.md)‹T, T›*
-
-___
-
-###  enumerate
-
-▸ **enumerate**<**T**>(`this`: [ObservableLike](interfaces/observablelike.md)‹T›): *EnumeratorLike‹void, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | [ObservableLike](interfaces/observablelike.md)‹T› |
-
-**Returns:** *EnumeratorLike‹void, T›*
 
 ___
 
@@ -2081,6 +2063,24 @@ values emitted by `source` into an array.
 ▸ (): *VirtualTimeSchedulerLike*
 
 **Returns:** *OperatorLike‹[ObservableLike](interfaces/observablelike.md)‹T›, T[]›*
+
+___
+
+### `Const` toEnumerable
+
+▸ **toEnumerable**<**T**>(`observable`: [ObservableLike](interfaces/observablelike.md)‹T›): *EnumerableLike‹void, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
+
+**Returns:** *EnumerableLike‹void, T›*
 
 ___
 

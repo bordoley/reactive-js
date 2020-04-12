@@ -3,11 +3,9 @@ import {
   SafeSubscriberLike,
   SubscriberLike,
 } from "./interfaces";
-import { enumerate } from "./observable";
 import { toSafeSubscriber } from "./toSafeSubscriber";
 
 class CreateObservable<T> implements ObservableLike<T> {
-  readonly enumerate = enumerate;
   readonly isSynchronous = false;
   constructor(
     private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,

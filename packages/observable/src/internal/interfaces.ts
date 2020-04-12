@@ -1,5 +1,4 @@
 import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
-import { EnumerableLike } from "@reactive-js/enumerable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
@@ -65,7 +64,7 @@ export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T> extends EnumerableLike<void, T> {
+export interface ObservableLike<T> {
   readonly isSynchronous: boolean;
 
   /**

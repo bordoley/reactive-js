@@ -3,10 +3,8 @@ import {
   SubscriberLike,
   ObservableOperatorLike,
 } from "./interfaces";
-import { enumerate } from "./observable";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
-  readonly enumerate = enumerate;
   readonly isSynchronous = false;
   constructor(
     private readonly src: ObservableLike<T>,
