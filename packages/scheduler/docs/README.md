@@ -12,7 +12,6 @@
 
 * [HostSchedulerLike](interfaces/hostschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
-* [PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
 * [SchedulerContinuationRunStatusChangedListenerLike](interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
@@ -30,7 +29,7 @@
 
 ### `Const` createPriorityScheduler
 
-▸ **createPriorityScheduler**(`hostScheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
+▸ **createPriorityScheduler**(`hostScheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
 
 Creates a new priority scheduler which schedules work using the provided
 host scheduler.
@@ -41,7 +40,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `hostScheduler` | [SchedulerLike](interfaces/schedulerlike.md) | The underlying platform scheduler used by the priority scheduler to schedule work.  |
 
-**Returns:** *[PrioritySchedulerResourceLike](interfaces/priorityschedulerresourcelike.md)*
+**Returns:** *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
 
 ___
 

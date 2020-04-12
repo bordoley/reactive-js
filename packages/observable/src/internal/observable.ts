@@ -1,9 +1,4 @@
-import {
-  ErrorLike,
-  add,
-  createDisposable,
-  dispose,
-} from "@reactive-js/disposable";
+import { AbstractDisposable } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import {
   scheduleCallback,
@@ -13,33 +8,18 @@ import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { assertSubscriberNotifyInContinuation } from "./subscriber";
 
-class EnumeratorSubscriber<T>
+class EnumeratorSubscriber<T> extends AbstractDisposable
   implements EnumeratorLike<void, T>, SubscriberLike<T> {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-  private error: ErrorLike | undefined = undefined;
   hasCurrent = false;
   inContinuation = false;
   readonly now = 0;
-
-  constructor() {
-    this.add(error => {
-      this.error = error;
-    });
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
-  }
 
   move(): boolean {
     const continuations = this.continuations;
     this.hasCurrent = false;
     this.current = undefined;
-    this.error = undefined;
 
     while (!this.hasCurrent) {
       const continuation = continuations.shift();

@@ -11,6 +11,11 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [DisposableValueLike](disposablevaluelike.md)
 
+## Implemented by
+
+* [AbstractDisposable](../classes/abstractdisposable.md)
+* [AbstractSerialDisposable](../classes/abstractserialdisposable.md)
+
 ## Index
 
 ### Properties

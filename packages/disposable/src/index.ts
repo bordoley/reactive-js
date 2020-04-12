@@ -48,10 +48,18 @@ const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
   }
 };
 
-class DisposableImpl implements DisposableLike {
-  isDisposed = false;
+export abstract class AbstractDisposable implements DisposableLike {
+  private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
-  private error?: ErrorLike = undefined;
+  private _error?: ErrorLike = undefined;
+
+  get error() {
+    return this._error;
+  }
+
+  get isDisposed() {
+    return this._isDisposed;
+  }
 
   add(disposable: DisposableOrTeardown) {
     const disposables = this.disposables;
@@ -73,8 +81,8 @@ class DisposableImpl implements DisposableLike {
 
   dispose(error?: ErrorLike) {
     if (!this.isDisposed) {
-      this.isDisposed = true;
-      this.error = error;
+      this._isDisposed = true;
+      this._error = error;
 
       const disposables = this.disposables;
       for (const disposable of disposables) {
@@ -84,6 +92,8 @@ class DisposableImpl implements DisposableLike {
     }
   }
 }
+
+class DisposableImpl extends AbstractDisposable {}
 
 /**
  * Creates an empty DisposableLike instance.
@@ -114,21 +124,6 @@ const _disposed: DisposableLike = {
  */
 export const disposed: DisposableLike = _disposed;
 
-export function add<This extends DisposableLike>(
-  this: { disposable: DisposableLike } & This,
-  disposable: DisposableLike | ((error?: ErrorLike) => void),
-): This {
-  this.disposable.add(disposable);
-  return this;
-}
-
-export function dispose(
-  this: { disposable: DisposableLike },
-  error?: ErrorLike,
-) {
-  this.disposable.dispose(error);
-}
-
 /**
  * A Disposable container that allows replacing an inner Disposable with another,
  * disposing the previous inner disposable in the process. Disposing the
@@ -145,11 +140,9 @@ export interface SerialDisposableLike extends DisposableLike {
   inner: DisposableLike;
 }
 
-class SerialDisposableImpl implements SerialDisposableLike {
+export class AbstractSerialDisposable extends AbstractDisposable
+  implements SerialDisposableLike {
   _inner: DisposableLike = disposed;
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
 
   get inner() {
     return this._inner;
@@ -168,11 +161,9 @@ class SerialDisposableImpl implements SerialDisposableLike {
       }
     }
   }
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
-  }
 }
+
+class SerialDisposableImpl extends AbstractSerialDisposable {}
 
 /**
  * Creates a new SerialDisposableLike instance containing a disposed instance.
@@ -189,15 +180,10 @@ export interface DisposableValueLike<T> extends DisposableLike {
   value: T;
 }
 
-class DisposableValueImpl<T> implements DisposableValueLike<T> {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
-
-  constructor(readonly value: T) {}
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
+class DisposableValueImpl<T> extends AbstractDisposable
+  implements DisposableValueLike<T> {
+  constructor(readonly value: T) {
+    super();
   }
 }
 

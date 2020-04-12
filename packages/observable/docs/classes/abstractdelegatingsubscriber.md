@@ -19,6 +19,7 @@ which delegate notifications to a parent `SubscriberLike` instance
 
 ## Implements
 
+* DisposableLike
 * [SubscriberLike](../interfaces/subscriberlike.md)‹TA›
 
 ## Index

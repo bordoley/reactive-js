@@ -1,4 +1,3 @@
-import { ErrorLike } from "@reactive-js/disposable";
 import { AbstractSchedulerContinuation } from "@reactive-js/scheduler";
 import { alwaysFalse } from "./functions";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces";
@@ -53,13 +52,11 @@ const scheduleDrainQueue = <T>(subscriber: SafeSubscriberImpl<T>) => {
 
 class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
   implements SafeSubscriberLike<T> {
-  error: ErrorLike | undefined;
   readonly nextQueue: Array<T> = [];
 
   constructor(readonly subscriber: SubscriberLike<T>) {
     super(subscriber);
-    this.add(error => {
-      this.error = error;
+    this.add(_ => {
       scheduleDrainQueue(this);
     });
   }

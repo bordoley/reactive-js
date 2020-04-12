@@ -1,4 +1,4 @@
-import { add, createDisposable, dispose } from "@reactive-js/disposable";
+import { AbstractDisposable } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -30,18 +30,13 @@ export const assertSubscriberNotifyInContinuation = _assertSubscriberNotifyInCon
  *
  * @ignore
  */
-export abstract class AbstractSubscriber<T> implements SubscriberLike<T> {
-  readonly add = add;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
+export abstract class AbstractSubscriber<T> extends AbstractDisposable
+  implements SubscriberLike<T> {
   inContinuation = false;
 
   constructor(private readonly scheduler: SchedulerLike) {
+    super();
     this.scheduler = scheduler;
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
   }
 
   get now() {

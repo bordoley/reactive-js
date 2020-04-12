@@ -4,10 +4,8 @@ import {
 } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
-  add,
-  createDisposable,
-  dispose,
   ErrorLike,
+  AbstractDisposable,
 } from "@reactive-js/disposable";
 import {
   ObservableLike,
@@ -79,15 +77,13 @@ const markAsGarbage = <T>(
   }
 };
 
-class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
-  readonly add = add;
+class ReactiveCacheImpl<T> extends AbstractDisposable
+  implements ReactiveCacheLike<T> {
   readonly cache: Map<
     string,
     [AsyncEnumeratorLike<ObservableLike<T>, T>, ObservableLike<T>]
   > = new Map();
   cleaning = false;
-  readonly disposable = createDisposable();
-  readonly dispose = dispose;
 
   // Set of keys that are eligible to be garbage collected
   readonly garbage: Map<
@@ -102,6 +98,8 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
     // Note don't delete cache entries that are actively being observed.
     readonly maxCount: number,
   ) {
+    super();
+
     this.add(() => {
       for (const value of this.cache.values()) {
         const [enumerator] = value;
@@ -110,10 +108,6 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
       this.cache.clear();
       this.garbage.clear();
     });
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
   }
 
   get(key: string): ObservableLike<T> | undefined {
@@ -143,13 +137,12 @@ class ReactiveCacheImpl<T> implements ReactiveCacheLike<T> {
       };
 
       const onDisposeCleanup = (_?: ErrorLike) =>
-        pipe(
+        this.add(
           scheduleCallback(this.cleanupScheduler, () => {
             if (enumerator.subscriberCount === 0) {
               markAsGarbage(this, key, enumerator);
             }
           }),
-          add.bind(this),
         );
 
       const observable = pipe(

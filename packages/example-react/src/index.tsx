@@ -3,20 +3,20 @@ import {
   StateUpdaterLike,
   lift,
 } from "@reactive-js/async-enumerable";
-import {
+/*import {
   createHttpRequest,
   HttpMethod,
   HttpContentLike,
 } from "@reactive-js/http";
-import { sendHttpRequest } from "@reactive-js/http-web";
+import { sendHttpRequest } from "@reactive-js/http-web";*/
 import { useObservable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
 } from "@reactive-js/react-router";
-import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate, onNotify, subscribe } from "@reactive-js/observable";
+import { idlePriority } from "@reactive-js/react-scheduler";
+import { generate, onNotify } from "@reactive-js/observable";
 import { history, LocationLike } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
@@ -113,6 +113,7 @@ const location = pipe(
   .createRoot(document.getElementById("root"))
   .render(<Router location={location} notFound={NotFound} routes={routes} />);
 
+  /*
 const request = createHttpRequest<HttpContentLike<any>>(
   HttpMethod.GET,
   "http://localhost:8080/index.json",
@@ -122,4 +123,4 @@ pipe(
   sendHttpRequest(request),
   onNotify(console.log),
   subscribe(normalPriority),
-);
+);*/
