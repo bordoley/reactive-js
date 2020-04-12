@@ -10,7 +10,7 @@
 
 ### Interfaces
 
-* [HostSchedulerLike](interfaces/hostschedulerlike.md)
+* [CallbackSchedulerLike](interfaces/callbackschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
 * [SchedulerContinuationRunStatusChangedListenerLike](interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)
@@ -62,7 +62,7 @@ ___
 
 ###  schedule
 
-▸ **schedule**(`this`: [HostSchedulerLike](interfaces/hostschedulerlike.md), `continuation`: [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md), `delay`: number): *void*
+▸ **schedule**(`this`: [CallbackSchedulerLike](interfaces/callbackschedulerlike.md), `continuation`: [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md), `delay`: number): *void*
 
 Mixin functions that can be used to implement the SchedulerLike interface
 
@@ -70,7 +70,7 @@ Mixin functions that can be used to implement the SchedulerLike interface
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`this` | [HostSchedulerLike](interfaces/hostschedulerlike.md) | - |
+`this` | [CallbackSchedulerLike](interfaces/callbackschedulerlike.md) | - |
 `continuation` | [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md) | - |
 `delay` | number | 0 |
 
