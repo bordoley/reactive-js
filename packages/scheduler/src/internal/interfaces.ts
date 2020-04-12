@@ -89,7 +89,7 @@ export interface PrioritySchedulerLike {
  *
  * @noInheritDoc
  */
-export interface HostSchedulerLike extends SchedulerLike {
+export interface CallbackSchedulerLike extends SchedulerLike {
   inContinuation: boolean;
 
   /** Platform specific shouldYield function passed to continuations when they are run.*/

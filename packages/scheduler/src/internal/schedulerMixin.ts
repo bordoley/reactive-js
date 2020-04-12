@@ -1,7 +1,7 @@
-import { SchedulerContinuationLike, HostSchedulerLike } from "./interfaces";
+import { SchedulerContinuationLike, CallbackSchedulerLike } from "./interfaces";
 
 function createCallback(
-  scheduler: HostSchedulerLike,
+  scheduler: CallbackSchedulerLike,
   continuation: SchedulerContinuationLike,
 ): () => void {
   const callback = () => {
@@ -20,7 +20,7 @@ function createCallback(
 
 /** Mixin functions that can be used to implement the SchedulerLike interface */
 export function schedule(
-  this: HostSchedulerLike,
+  this: CallbackSchedulerLike,
   continuation: SchedulerContinuationLike,
   delay = 0,
 ): void {

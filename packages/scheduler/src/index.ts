@@ -4,7 +4,7 @@ export {
   SchedulerLike,
   VirtualTimeSchedulerLike,
   PrioritySchedulerLike,
-  HostSchedulerLike,
+  CallbackSchedulerLike,
 } from "./internal/interfaces";
 
 export { AbstractSchedulerContinuation } from "./internal/abstractSchedulerContinuation";

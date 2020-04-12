@@ -10,7 +10,7 @@ An object that schedules units of work on a runloop.
 
   ↳ [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
 
-  ↳ [HostSchedulerLike](hostschedulerlike.md)
+  ↳ [CallbackSchedulerLike](callbackschedulerlike.md)
 
 ## Index
 
