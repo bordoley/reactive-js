@@ -1,0 +1,15 @@
+{
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "hideSources": true,
+  "hideBreadcrumbs": true,
+  "ignoreCompilerErrors": "true",
+  "mode": "file",
+  "module": "commonjs",
+  "moduleResolution": "node",
+  "out": "docs",
+  "preserveConstEnums": "true",
+  "readme": "none",
+  "target": "ES5",
+  "theme": "markdown"
+}
