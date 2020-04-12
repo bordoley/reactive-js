@@ -4,24 +4,48 @@
 
 ## Index
 
+### Enumerations
+
+* [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
+
+### Interfaces
+
+* [HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md)
+* [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)
+* [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md)
+* [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
+
+### Type aliases
+
+* [HttpBody](README.md#httpbody)
+* [HttpClientRequestStatus](README.md#httpclientrequeststatus)
+
 ### Functions
 
 * [sendHttpRequest](README.md#const-sendhttprequest)
+
+## Type aliases
+
+###  HttpBody
+
+Ƭ **HttpBody**: *string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream‹Uint8Array›*
+
+___
+
+###  HttpClientRequestStatus
+
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
 
 ## Functions
 
 ### `Const` sendHttpRequest
 
-▸ **sendHttpRequest**<**T**>(`request`: HttpRequestLike‹T›): *ObservableLike‹HttpResponseLike‹T››*
-
-**Type parameters:**
-
-▪ **T**
+▸ **sendHttpRequest**(`request`: HttpContentRequestLike‹[HttpBody](README.md#httpbody)›): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | HttpRequestLike‹T› |
+`request` | HttpContentRequestLike‹[HttpBody](README.md#httpbody)› |
 
-**Returns:** *ObservableLike‹HttpResponseLike‹T››*
+**Returns:** *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
