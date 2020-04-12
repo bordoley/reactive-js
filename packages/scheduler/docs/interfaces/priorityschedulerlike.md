@@ -8,8 +8,6 @@ A scheduler which schedules work according to it's priority.
 
 * **PrioritySchedulerLike**
 
-  ↳ [PrioritySchedulerResourceLike](priorityschedulerresourcelike.md)
-
 ## Index
 
 ### Properties

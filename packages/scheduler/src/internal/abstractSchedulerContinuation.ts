@@ -1,9 +1,4 @@
-import {
-  add,
-  createDisposable,
-  dispose,
-  ErrorLike,
-} from "@reactive-js/disposable";
+import { AbstractDisposable, ErrorLike } from "@reactive-js/disposable";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
@@ -18,19 +13,22 @@ const notifyListeners = (
   }
 };
 
-export abstract class AbstractSchedulerContinuation
+export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   implements SchedulerContinuationLike {
-  readonly add = add;
   private isActive = false;
-  readonly disposable = createDisposable(() => {
-    if (!this.isActive) {
-      this.listeners.clear();
-    }
-  });
-  readonly dispose = dispose;
   private readonly listeners: Set<
     SchedulerContinuationRunStatusChangedListenerLike
   > = new Set();
+
+  constructor() {
+    super();
+
+    this.add(() => {
+      if (!this.isActive) {
+        this.listeners.clear();
+      }
+    });
+  }
 
   addListener(
     _ev: "onRunStatusChanged",
@@ -46,10 +44,6 @@ export abstract class AbstractSchedulerContinuation
     listener: SchedulerContinuationRunStatusChangedListenerLike,
   ): void {
     this.listeners.delete(listener);
-  }
-
-  get isDisposed(): boolean {
-    return this.disposable.isDisposed;
   }
 
   /**

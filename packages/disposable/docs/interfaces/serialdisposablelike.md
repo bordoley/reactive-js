@@ -11,6 +11,10 @@ container also disposes the inner disposable.
 
   ↳ **SerialDisposableLike**
 
+## Implemented by
+
+* [AbstractSerialDisposable](../classes/abstractserialdisposable.md)
+
 ## Index
 
 ### Properties

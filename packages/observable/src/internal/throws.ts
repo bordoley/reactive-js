@@ -8,14 +8,15 @@ import { AbstractProducer } from "./producer";
 class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
-    private readonly error: unknown,
+    private readonly f: () => unknown,
     readonly delay: number,
   ) {
     super(subscriber);
   }
 
   produce(_?: () => boolean): number {
-    throw this.error;
+    const error = this.f();
+    throw error;
   }
 }
 
@@ -30,7 +31,7 @@ export const throws = <T>(
   delay = 0,
 ): ObservableLike<T> => {
   const factory = (subscriber: SubscriberLike<T>) =>
-    new ThrowsProducer(subscriber, errorFactory(), delay);
+    new ThrowsProducer(subscriber, errorFactory, delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

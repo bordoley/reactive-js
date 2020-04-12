@@ -1,8 +1,5 @@
 import {
-  add,
-  dispose,
-  createSerialDisposable,
-  SerialDisposableLike,
+  AbstractSerialDisposable,
   DisposableLike,
 } from "@reactive-js/disposable";
 import {
@@ -40,7 +37,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     return nextTaskIsHigherPriority || this.hostShouldYield();
   };
 
-  constructor(private readonly scheduler: PrioritySchedulerResourceImpl) {
+  constructor(private readonly scheduler: PrioritySchedulerImpl) {
     super();
   }
 
@@ -106,7 +103,7 @@ const delayedComparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
   return diff;
 };
 
-const move = (scheduler: PrioritySchedulerResourceImpl): boolean => {
+const move = (scheduler: PrioritySchedulerImpl): boolean => {
   // First fast forward through any disposed tasks.
   peek(scheduler);
 
@@ -120,7 +117,7 @@ const move = (scheduler: PrioritySchedulerResourceImpl): boolean => {
 };
 
 const peek = (
-  scheduler: PrioritySchedulerResourceImpl,
+  scheduler: PrioritySchedulerImpl,
 ): ScheduledTaskLike | undefined => {
   const { delayed, queue } = scheduler;
   const now = scheduler.now;
@@ -163,13 +160,7 @@ const peek = (
   return task || delayed.peek();
 };
 
-class PrioritySchedulerResourceImpl
-  implements PrioritySchedulerLike, DisposableLike {
-  readonly add = add;
-  readonly disposable: SerialDisposableLike = createSerialDisposable().add(() =>
-    this.queue.clear(),
-  );
-  readonly dispose = dispose;
+class PrioritySchedulerImpl extends AbstractSerialDisposable implements PrioritySchedulerLike, DisposableLike {
   inContinuation = false;
 
   readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
@@ -185,10 +176,11 @@ class PrioritySchedulerResourceImpl
   taskIDCounter = 0;
   dueTime = 0;
 
-  constructor(readonly hostScheduler: SchedulerLike) {}
-
-  get isDisposed() {
-    return this.disposable.isDisposed;
+  constructor(readonly hostScheduler: SchedulerLike) {
+    super();
+    this.add(() =>
+      this.queue.clear(),
+    );
   }
 
   get now(): number {
@@ -221,13 +213,13 @@ class PrioritySchedulerResourceImpl
 
       const continuationActive =
         this.inContinuation ||
-        (!this.disposable.inner.isDisposed && this.dueTime <= dueTime);
+        (!this.inner.isDisposed && this.dueTime <= dueTime);
 
       if (head === task && !continuationActive) {
         const continuation = new PrioritySchedulerContinuation(this);
 
         this.dueTime = dueTime;
-        this.disposable.inner = continuation;
+        this.inner = continuation;
         this.hostScheduler.schedule(continuation, delay);
       }
     }
@@ -244,4 +236,4 @@ class PrioritySchedulerResourceImpl
 export const createPriorityScheduler = (
   hostScheduler: SchedulerLike,
 ): DisposableLike & PrioritySchedulerLike =>
-  new PrioritySchedulerResourceImpl(hostScheduler);
+  new PrioritySchedulerImpl(hostScheduler);

@@ -3,6 +3,11 @@
 
 ## Index
 
+### Classes
+
+* [AbstractDisposable](classes/abstractdisposable.md)
+* [AbstractSerialDisposable](classes/abstractserialdisposable.md)
+
 ### Interfaces
 
 * [DisposableLike](interfaces/disposablelike.md)
@@ -16,11 +21,9 @@
 
 ### Functions
 
-* [add](README.md#add)
 * [createDisposable](README.md#const-createdisposable)
 * [createDisposableValue](README.md#const-createdisposablevalue)
 * [createSerialDisposable](README.md#const-createserialdisposable)
-* [dispose](README.md#dispose)
 
 ## Variables
 
@@ -31,25 +34,6 @@
 A disposed DisposableLike instance.
 
 ## Functions
-
-###  add
-
-▸ **add**<**This**>(`this`: object & This, `disposable`: [DisposableLike](interfaces/disposablelike.md) | function): *This*
-
-**Type parameters:**
-
-▪ **This**: *[DisposableLike](interfaces/disposablelike.md)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | object & This |
-`disposable` | [DisposableLike](interfaces/disposablelike.md) &#124; function |
-
-**Returns:** *This*
-
-___
 
 ### `Const` createDisposable
 
@@ -102,18 +86,3 @@ ___
 Creates a new SerialDisposableLike instance containing a disposed instance.
 
 **Returns:** *[SerialDisposableLike](interfaces/serialdisposablelike.md)*
-
-___
-
-###  dispose
-
-▸ **dispose**(`this`: object, `error?`: [ErrorLike](interfaces/errorlike.md)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`this` | object |
-`error?` | [ErrorLike](interfaces/errorlike.md) |
-
-**Returns:** *void*
