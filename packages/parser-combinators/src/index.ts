@@ -53,7 +53,7 @@ class ParserError {
   constructor(public readonly index: number) {}
 }
 
-export const parseError = <T>(charStream: CharStreamLike): T => {
+export const throwParseError = <T>(charStream: CharStreamLike): T => {
   const error = new ParserError(charStream.index);
   throw error;
 };
@@ -190,7 +190,7 @@ export const or = <T>(
 };
 
 export const eof = (charStream: CharStreamLike): undefined =>
-  charStream.move() ? parseError(charStream) : undefined;
+  charStream.move() ? throwParseError(charStream) : undefined;
 
 export const followedBy = (
   pnext: ParserLike<unknown>,
@@ -207,7 +207,7 @@ export const notFollowedBy = (
   const index = charStream.index;
   try {
     pnext(charStream);
-    return parseError(charStream);
+    return throwParseError(charStream);
   } catch (e) {
     if (isParseError(e)) {
       charStream.index = index;
@@ -244,7 +244,7 @@ export const manyMinMax = <T>(
     }
   }
 
-  return retval.length < min ? parseError(charStream) : retval;
+  return retval.length < min ? throwParseError(charStream) : retval;
 };
 
 export const many = <T>(): OperatorLike<
@@ -306,7 +306,7 @@ export const ofValue = <T>(value: T): ParserLike<T> => _ => value;
 export const compute = <T>(f: () => T): ParserLike<T> => _ => f();
 
 export const throws = <T>(charStream: CharStreamLike): T =>
-  parseError(charStream);
+  throwParseError(charStream);
 
 export const string = (str: string): ParserLike<string> => charStream => {
   charStream.move();
@@ -316,7 +316,7 @@ export const string = (str: string): ParserLike<string> => charStream => {
     charStream.index += str.length - 1;
     return str;
   } else {
-    return parseError(charStream);
+    return throwParseError(charStream);
   }
 };
 
@@ -331,23 +331,7 @@ export const satisfy = (
     }
   }
 
-  return parseError(charStream);
-};
-
-export const satisfyRangesInclusive = (
-  ...ranges: [number, number][]
-): ParserLike<CharCode> => charStream => {
-  if (charStream.move()) {
-    const current = charStream.current;
-
-    for (const [low, high] of ranges) {
-      if (current >= low && current <= high) {
-        return current;
-      }
-    }
-  }
-
-  return parseError(charStream);
+  return throwParseError(charStream);
 };
 
 export const char = (c: string): ParserLike<CharCode> => {
@@ -404,7 +388,7 @@ export const manyMinMaxSatisfy = (
 
   return length >= min
     ? charStream.src.substring(first, first + length)
-    : parseError(charStream);
+    : throwParseError(charStream);
 };
 
 export const manySatisfy = manyMinMaxSatisfy(0, Number.MAX_SAFE_INTEGER);
@@ -440,6 +424,6 @@ export const regexp = (
         return match[group];
       }
     }
-    return parseError(charStream);
+    return throwParseError(charStream);
   };
 };

@@ -50,14 +50,13 @@
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
-* [parseError](README.md#const-parseerror)
 * [parseWith](README.md#const-parsewith)
 * [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
-* [satisfyRangesInclusive](README.md#const-satisfyrangesinclusive)
 * [sepBy](README.md#const-sepby)
 * [sepBy1](README.md#const-sepby1)
 * [string](README.md#const-string)
+* [throwParseError](README.md#const-throwparseerror)
 * [throws](README.md#const-throws)
 
 ## Type aliases
@@ -680,24 +679,6 @@ Name | Type |
 
 ___
 
-### `Const` parseError
-
-▸ **parseError**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
-
-**Returns:** *T*
-
-___
-
 ### `Const` parseWith
 
 ▸ **parseWith**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
@@ -751,20 +732,6 @@ Name | Type |
 
 ___
 
-### `Const` satisfyRangesInclusive
-
-▸ **satisfyRangesInclusive**(...`ranges`: [number, number][]): *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`...ranges` | [number, number][] |
-
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
-
-___
-
 ### `Const` sepBy
 
 ▸ **sepBy**<**T**>(`separator`: [ParserLike](interfaces/parserlike.md)‹unknown›): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
@@ -812,6 +779,24 @@ Name | Type |
 `str` | string |
 
 **Returns:** *[ParserLike](interfaces/parserlike.md)‹string›*
+
+___
+
+### `Const` throwParseError
+
+▸ **throwParseError**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
+
+**Returns:** *T*
 
 ___
 
