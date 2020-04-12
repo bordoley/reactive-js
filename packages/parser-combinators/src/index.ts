@@ -65,6 +65,57 @@ export function concat<TA, TB, TC>(
   b: ParserLike<TB>,
   c: ParserLike<TC>,
 ): ParserLike<[TA, TB, TC]>;
+export function concat<TA, TB, TC, TD>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+): ParserLike<[TA, TB, TC, TD]>;
+export function concat<TA, TB, TC, TD, TE>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+  e: ParserLike<TE>,
+): ParserLike<[TA, TB, TC, TD, TE]>;
+export function concat<TA, TB, TC, TD, TE, TF>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+  e: ParserLike<TE>,
+  f: ParserLike<TF>,
+): ParserLike<[TA, TB, TC, TD, TE, TF]>;
+export function concat<TA, TB, TC, TD, TE, TF, TG>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+  e: ParserLike<TE>,
+  f: ParserLike<TF>,
+  g: ParserLike<TG>,
+): ParserLike<[TA, TB, TC, TD, TE, TF, TG]>;
+export function concat<TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+  e: ParserLike<TE>,
+  f: ParserLike<TF>,
+  g: ParserLike<TG>,
+  h: ParserLike<TH>,
+): ParserLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: ParserLike<TA>,
+  b: ParserLike<TB>,
+  c: ParserLike<TC>,
+  d: ParserLike<TD>,
+  e: ParserLike<TE>,
+  f: ParserLike<TF>,
+  g: ParserLike<TG>,
+  h: ParserLike<TH>,
+  i: ParserLike<TI>,
+): ParserLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
 export function concat(
   ...parsers: ParserLike<unknown>[]

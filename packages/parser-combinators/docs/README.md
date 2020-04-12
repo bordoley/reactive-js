@@ -220,6 +220,189 @@ Name | Type |
 
 **Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC]›*
 
+▸ **concat**<**TA**, **TB**, **TC**, **TD**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD]›*
+
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE]›*
+
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF]›*
+
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
+`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›, `h`: [ParserLike](interfaces/parserlike.md)‹TH›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
+`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
+`h` | [ParserLike](interfaces/parserlike.md)‹TH› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›, `h`: [ParserLike](interfaces/parserlike.md)‹TH›, `i`: [ParserLike](interfaces/parserlike.md)‹TI›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **TH**
+
+▪ **TI**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
+`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
+`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
+`h` | [ParserLike](interfaces/parserlike.md)‹TH› |
+`i` | [ParserLike](interfaces/parserlike.md)‹TI› |
+
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+
 ___
 
 ### `Const` createCharStream
