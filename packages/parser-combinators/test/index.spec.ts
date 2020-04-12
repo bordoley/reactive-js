@@ -5,7 +5,7 @@ import {
   map,
   mapTo,
   sepBy,
-  colon,
+  pColon,
   many,
   or,
   eof,
@@ -14,7 +14,7 @@ import {
   optional,
   orDefault,
   manySatisfy,
-  forwardSlash,
+  pForwardSlash,
   regexp,
   char,
 } from "../src";
@@ -29,7 +29,7 @@ test("many", () => {
 
 test("manySatisyf", () => {
   const parser = concat(
-    manySatisfy(forwardSlash),
+    manySatisfy(pForwardSlash),
     manySatisfy(char("z")),
   );
 
@@ -79,7 +79,7 @@ test("or", () => {
 });
 
 describe("regexp", () => {
-  const parser = regexp(/a+/);
+  const parser = regexp("a+");
 
   test("with match at the beginning of the string", () => {
     const result = pipe("aaabbb", parseWith(parser));
@@ -95,7 +95,7 @@ describe("regexp", () => {
 });
 
 test("sepBy", () => {
-  const parser = pipe(string("ab"), sepBy(colon));
+  const parser = pipe(string("ab"), sepBy(pColon));
   const result = pipe("ab:ab:ab:ab", parseWith(parser));
   expect(result).toEqual(["ab", "ab", "ab", "ab"]);
 });

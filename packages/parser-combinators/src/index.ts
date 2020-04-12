@@ -337,34 +337,50 @@ export const satisfy = (
   throw new ParserError(charStream.index);
 };
 
+export const satisfyRangesInclusive = (
+  ...ranges: [number, number][]
+): ParserLike<CharCode> => charStream => {
+  if (charStream.move()) {
+    const current = charStream.current;
+
+    for (const [low, high] of ranges) {
+      if (current >= low && current <= high) {
+        return current;
+      } 
+    }
+  }
+
+  throw new ParserError(charStream.index);
+};
+
 export const char = (c: string): ParserLike<CharCode> => {
   const charCode = c.charCodeAt(0);
   return satisfy(x => x === charCode);
 };
 
-export const semicolon = char(";");
+export const pSemicolon = char(";");
 
-export const comma = char(",");
+export const pComma = char(",");
 
-export const space = char(" ");
+export const pSpace = char(" ");
 
-export const colon = char(":");
+export const pColon = char(":");
 
-export const period = char(".");
+export const pPeriod = char(".");
 
-export const equals = char("=");
+export const pEquals = char("=");
 
-export const forwardSlash = char("/");
+export const pForwardSlash = char("/");
 
-export const dash = char("-");
+export const pDash = char("-");
 
-export const openParen = char("(");
+export const pOpenParen = char("(");
 
-export const closeParen = char(")");
+export const pCloseParen = char(")");
 
-export const quote = char('"');
+export const pDquote = char('"');
 
-export const asterisk = char("*");
+export const pAsterisk = char("*");
 
 export const manyMinMaxSatisfy = (
   min: number,
@@ -400,9 +416,10 @@ export const manySatisfy = manyMinMaxSatisfy(0, Number.MAX_SAFE_INTEGER);
 
 export const many1Satisfy = manyMinMaxSatisfy(1, Number.MAX_SAFE_INTEGER);
 
-export const regexp = (regexp: RegExp, group = 0): ParserLike<string> => {
-  /** following snipped adapted from Parsimmon */
-  const flags = regexp.flags;
+export const regexp = (input: string, options: { group?: number, flags?: string} = {}): ParserLike<string> => {
+  const { group = 0, flags = "" } = options;
+
+  /** following snippet adapted from Parsimmon */
   for (let i = 0; i < flags.length; i++) {
     const c = flags.charAt(i);
     // Only allow regexp flags [imu] for now, since [g] and [y] specifically
@@ -413,12 +430,13 @@ export const regexp = (regexp: RegExp, group = 0): ParserLike<string> => {
     }
   }
 
-  const anchoredRegexp = RegExp("^(?:" + regexp.source + ")", flags);
+  const anchoredRegexp = RegExp("^(?:" + input + ")", flags);
 
   return charStream => {
     if (charStream.move()) {
       const index = charStream.index;
       const src = charStream.src;
+
 
       const match = anchoredRegexp.exec(src.slice(index));
       if (match != null && group <= match.length) {
