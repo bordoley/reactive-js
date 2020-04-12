@@ -72,7 +72,6 @@ class ObservableEnumerableImpl<T> implements EnumerableLike<void, T> {
   }
 }
 
-
-
-export const toEnumerable = <T>(observable: ObservableLike<T>): EnumerableLike<void, T> => 
-  new ObservableEnumerableImpl(observable);
+export const toEnumerable = <T>(
+  observable: ObservableLike<T>,
+): EnumerableLike<void, T> => new ObservableEnumerableImpl(observable);
