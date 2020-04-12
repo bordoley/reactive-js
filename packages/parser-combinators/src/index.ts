@@ -53,6 +53,13 @@ class ParserError {
   constructor(public readonly index: number) {}
 }
 
+export const parseError = <T>(charStream: CharStreamLike): T => {
+  const error = new ParserError(charStream.index);
+  throw error;
+};
+
+export const isParseError = (e: unknown): boolean => e instanceof ParserError;
+
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
 
@@ -139,7 +146,8 @@ export const flatMap = <TA, TB>(
 
 export const map = <TA, TB>(
   mapper: (result: TA) => TB,
-): OperatorLike<ParserLike<TA>, ParserLike<TB>> => parser => compose(parser, mapper);
+): OperatorLike<ParserLike<TA>, ParserLike<TB>> => parser =>
+  compose(parser, mapper);
 
 export const mapTo = <TA, TB>(
   v: TB,
@@ -155,7 +163,7 @@ export const parseWith = <T>(
   try {
     return parse(charStream);
   } catch (e) {
-    if (e instanceof ParserError) {
+    if (isParseError(e)) {
       return undefined;
     }
     throw e;
@@ -172,7 +180,7 @@ export const or = <T>(
   try {
     return parse(charStream);
   } catch (e) {
-    if (e instanceof ParserError) {
+    if (isParseError(e)) {
       charStream.index = index;
       return otherParse(charStream);
     } else {
@@ -181,13 +189,8 @@ export const or = <T>(
   }
 };
 
-export const eof = (charStream: CharStreamLike): undefined => {
-  if (charStream.move()) {
-    throw new ParserError(charStream.index);
-  }
-
-  return undefined;
-};
+export const eof = (charStream: CharStreamLike): undefined =>
+  charStream.move() ? parseError(charStream) : undefined;
 
 export const followedBy = (
   pnext: ParserLike<unknown>,
@@ -200,14 +203,14 @@ export const followedBy = (
 
 export const notFollowedBy = (
   pnext: ParserLike<unknown>,
-): ParserLike<unknown> => charsStream => {
-  const index = charsStream.index;
+): ParserLike<unknown> => charStream => {
+  const index = charStream.index;
   try {
-    pnext(charsStream);
-    throw new ParserError(index + 1);
+    pnext(charStream);
+    return parseError(charStream);
   } catch (e) {
-    if (e instanceof ParserError) {
-      charsStream.index = index;
+    if (isParseError(e)) {
+      charStream.index = index;
       return undefined;
     } else {
       throw e;
@@ -232,7 +235,7 @@ export const manyMinMax = <T>(
       const next = parse(charStream);
       retval.push(next);
     } catch (e) {
-      if (e instanceof ParserError) {
+      if (isParseError(e)) {
         charStream.index = index;
         break;
       } else {
@@ -241,11 +244,7 @@ export const manyMinMax = <T>(
     }
   }
 
-  if (retval.length < min) {
-    throw new ParserError(index);
-  }
-
-  return retval;
+  return retval.length < min ? parseError(charStream) : retval;
 };
 
 export const many = <T>(): OperatorLike<
@@ -265,7 +264,7 @@ export const optional = <T>(
   try {
     return parse(charStream);
   } catch (e) {
-    if (e instanceof ParserError) {
+    if (isParseError(e)) {
       charStream.index = index;
       return undefined;
     } else {
@@ -306,20 +305,18 @@ export const ofValue = <T>(value: T): ParserLike<T> => _ => value;
 
 export const compute = <T>(f: () => T): ParserLike<T> => _ => f();
 
-export const throws: ParserLike<unknown> = charStream => {
-  throw new ParserError(charStream.index + 1);
-};
+export const throws = <T>(charStream: CharStreamLike): T =>
+  parseError(charStream);
 
 export const string = (str: string): ParserLike<string> => charStream => {
   charStream.move();
-  const index = charStream.index;
 
-  const match = charStream.src.startsWith(str, index);
+  const match = charStream.src.startsWith(str, charStream.index);
   if (match) {
-    charStream.index = index + str.length - 1;
+    charStream.index += str.length - 1;
     return str;
   } else {
-    throw new ParserError(index);
+    return parseError(charStream);
   }
 };
 
@@ -334,7 +331,7 @@ export const satisfy = (
     }
   }
 
-  throw new ParserError(charStream.index);
+  return parseError(charStream);
 };
 
 export const satisfyRangesInclusive = (
@@ -346,11 +343,11 @@ export const satisfyRangesInclusive = (
     for (const [low, high] of ranges) {
       if (current >= low && current <= high) {
         return current;
-      } 
+      }
     }
   }
 
-  throw new ParserError(charStream.index);
+  return parseError(charStream);
 };
 
 export const char = (c: string): ParserLike<CharCode> => {
@@ -398,25 +395,26 @@ export const manyMinMaxSatisfy = (
       length++;
     }
   } catch (e) {
-    if (e instanceof ParserError) {
+    if (isParseError(e)) {
       charStream.index--;
     } else {
       throw e;
     }
   }
 
-  if (length >= min) {
-    return charStream.src.substring(first, first + length);
-  } else {
-    throw new ParserError(charStream.index);
-  }
+  return length >= min
+    ? charStream.src.substring(first, first + length)
+    : parseError(charStream);
 };
 
 export const manySatisfy = manyMinMaxSatisfy(0, Number.MAX_SAFE_INTEGER);
 
 export const many1Satisfy = manyMinMaxSatisfy(1, Number.MAX_SAFE_INTEGER);
 
-export const regexp = (input: string, options: { group?: number, flags?: string} = {}): ParserLike<string> => {
+export const regexp = (
+  input: string,
+  options: { group?: number; flags?: string } = {},
+): ParserLike<string> => {
   const { group = 0, flags = "" } = options;
 
   /** following snippet adapted from Parsimmon */
@@ -437,12 +435,11 @@ export const regexp = (input: string, options: { group?: number, flags?: string}
       const index = charStream.index;
       const src = charStream.src;
 
-
       const match = anchoredRegexp.exec(src.slice(index));
       if (match != null && group <= match.length) {
         return match[group];
       }
     }
-    throw new ParserError(charStream.index);
+    return parseError(charStream);
   };
 };

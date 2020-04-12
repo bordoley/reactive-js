@@ -28,10 +28,7 @@ test("many", () => {
 });
 
 test("manySatisyf", () => {
-  const parser = concat(
-    manySatisfy(pForwardSlash),
-    manySatisfy(char("z")),
-  );
+  const parser = concat(manySatisfy(pForwardSlash), manySatisfy(char("z")));
 
   const result = pipe("////zzz", parseWith(parser));
   expect(result).toEqual(["////", "zzz"]);
@@ -101,10 +98,7 @@ test("sepBy", () => {
 });
 
 test("string", () => {
-  const parser = concat(
-    string("ab"),
-    string("cd")
-  );
+  const parser = concat(string("ab"), string("cd"));
 
   const result = pipe("abcdabcdabcd", parseWith(parser));
   expect(result).toEqual(["ab", "cd"]);
