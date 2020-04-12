@@ -144,7 +144,7 @@ export interface SerialDisposableLike extends DisposableLike {
 /** @noInheritDoc */
 export class AbstractSerialDisposable extends AbstractDisposable
   implements SerialDisposableLike {
-  _inner: DisposableLike = disposed;
+  private _inner: DisposableLike = disposed;
 
   get inner() {
     return this._inner;
