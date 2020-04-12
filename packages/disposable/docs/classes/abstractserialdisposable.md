@@ -14,19 +14,9 @@
 
 ## Index
 
-### Properties
-
-* [_inner](abstractserialdisposable.md#_inner)
-
 ### Accessors
 
 * [inner](abstractserialdisposable.md#inner)
-
-## Properties
-
-###  _inner
-
-• **_inner**: *[DisposableLike](../interfaces/disposablelike.md)* =  disposed
 
 ## Accessors
 
