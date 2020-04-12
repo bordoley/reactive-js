@@ -3,6 +3,7 @@ import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   HttpContentResponseLike,
   HttpContentRequestLike,
+  HttpStandardHeader,
 } from "@reactive-js/http";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
 import { OperatorLike } from "@reactive-js/pipe";
@@ -12,7 +13,6 @@ import {
   decodeHttpContent,
 } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
-import { HttpStandardHeader } from "@reactive-js/http/src";
 
 const responseIsCompressible = (
   response: HttpContentResponseLike<
