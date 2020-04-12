@@ -38,6 +38,7 @@
 * [eof](README.md#const-eof)
 * [flatMap](README.md#const-flatmap)
 * [followedBy](README.md#const-followedby)
+* [isParseError](README.md#const-isparseerror)
 * [many](README.md#const-many)
 * [many1](README.md#const-many1)
 * [manyMinMax](README.md#const-manyminmax)
@@ -49,6 +50,7 @@
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
+* [parseError](README.md#const-parseerror)
 * [parseWith](README.md#const-parsewith)
 * [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
@@ -474,6 +476,20 @@ Name | Type |
 
 ___
 
+### `Const` isParseError
+
+▸ **isParseError**(`e`: unknown): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`e` | unknown |
+
+**Returns:** *boolean*
+
+___
+
 ### `Const` many
 
 ▸ **many**<**T**>(): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
@@ -664,6 +680,24 @@ Name | Type |
 
 ___
 
+### `Const` parseError
+
+▸ **parseError**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
+
+**Returns:** *T*
+
+___
+
 ### `Const` parseWith
 
 ▸ **parseWith**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
@@ -783,12 +817,16 @@ ___
 
 ### `Const` throws
 
-▸ **throws**(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)‹›): *never*
+▸ **throws**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Type parameters:**
+
+▪ **T**
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`charStream` | [CharStreamLike](interfaces/charstreamlike.md)‹› |
+`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
 
-**Returns:** *never*
+**Returns:** *T*
