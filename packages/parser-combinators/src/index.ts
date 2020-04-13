@@ -174,33 +174,26 @@ export const mapTo = <TA, TB>(
 
 export const parseWithOrThrow = <T>(
   parse: ParserLike<T>,
-): OperatorLike<string, T | undefined> => input => {
+): OperatorLike<string, T> => input => {
   const charStream = createCharStream(input);
   return parse(charStream);
 };
 
-export function parseWith<T>(parser: ParserLike<T>): OperatorLike<string, T>;
-
-export function parseWith<T>(
-  parser: ParserLike<T>,
-): OperatorLike<string, T | undefined>;
-
-export function parseWith<T>(
+export const parseWith = <T>(
   parse: ParserLike<T>,
-  orElse?: T,
-): OperatorLike<string, T | undefined> {
+): OperatorLike<string, T | undefined> => {
   const doParse = parseWithOrThrow(parse);
   return input => {
     try {
       return doParse(input);
     } catch (e) {
       if (isParseError(e)) {
-        return orElse;
+        return undefined;
       }
       throw e;
     }
   };
-}
+};
 
 export const or = <T>(
   otherParse: ParserLike<T>,
