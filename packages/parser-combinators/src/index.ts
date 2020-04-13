@@ -212,8 +212,14 @@ export const or = <T>(
   }
 };
 
-export const eof = (charStream: CharStreamLike): undefined =>
+export const pEof = (charStream: CharStreamLike): undefined =>
   charStream.move() ? throwParseError(charStream) : undefined;
+
+export const eof = <T>(parser: ParserLike<T>): ParserLike<T> => charStream => {
+  const result = parser(charStream);
+  pEof(charStream);
+  return result;
+};
 
 export const followedBy = (
   pnext: ParserLike<unknown>,
@@ -241,13 +247,17 @@ export const notFollowedBy = (
   }
 };
 
-export const manyMinMax = <T>(
-  min: number,
-  max: number,
+export const many = <T>(
+  options: {
+    min?: number;
+    max?: number;
+  } = {},
 ): OperatorLike<
   ParserLike<T>,
   ParserLike<readonly T[]>
 > => parse => charStream => {
+  const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
+
   const retval: T[] = [];
 
   let index = -1;
@@ -267,16 +277,6 @@ export const manyMinMax = <T>(
 
   return retval.length < min ? throwParseError(charStream) : retval;
 };
-
-export const many = <T>(): OperatorLike<
-  ParserLike<T>,
-  ParserLike<readonly T[]>
-> => manyMinMax(0, Number.MAX_SAFE_INTEGER);
-
-export const many1 = <T>(): OperatorLike<
-  ParserLike<T>,
-  ParserLike<readonly T[]>
-> => manyMinMax(1, Number.MAX_SAFE_INTEGER);
 
 export const optional = <T>(
   parse: ParserLike<T>,
@@ -384,13 +384,16 @@ export const pDquote = char('"');
 
 export const pAsterisk = char("*");
 
-export const manyMinMaxSatisfy = (
-  min: number,
-  max: number,
+export const manySatisfy = (
+  options: {
+    min?: number;
+    max?: number;
+  } = {},
 ): OperatorLike<
   ParserLike<CharCode>,
   ParserLike<string>
 > => parse => charStream => {
+  const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
   const first = charStream.index + 1;
   let length = 0;
 
@@ -411,10 +414,6 @@ export const manyMinMaxSatisfy = (
     ? charStream.src.substring(first, first + length)
     : throwParseError(charStream);
 };
-
-export const manySatisfy = manyMinMaxSatisfy(0, Number.MAX_SAFE_INTEGER);
-
-export const many1Satisfy = manyMinMaxSatisfy(1, Number.MAX_SAFE_INTEGER);
 
 export const regexp = (
   input: string,
