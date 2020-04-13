@@ -258,19 +258,17 @@ export const manyMinMax = <T>(
   const retval: T[] = [];
 
   let index = -1;
-  while (retval.length < max) {
-    index = charStream.index;
-
-    try {
+  try {
+    while (retval.length < max) {
+      index = charStream.index;
       const next = parse(charStream);
       retval.push(next);
-    } catch (e) {
-      if (isParseError(e)) {
-        charStream.index = index;
-        break;
-      } else {
-        throw e;
-      }
+    }
+  } catch (e) {
+    if (isParseError(e)) {
+      charStream.index = index;
+    } else {
+      throw e;
     }
   }
 
