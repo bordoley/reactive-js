@@ -16,8 +16,6 @@ export {
   URILike,
 } from "./internal/interfaces";
 
-export { httpContentEncodings } from "./internal/httpContentEncodings";
-
 export {
   createHttpRequest,
   createRedirectHttpRequest,

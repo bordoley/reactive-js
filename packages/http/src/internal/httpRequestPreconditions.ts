@@ -1,4 +1,9 @@
-import { HttpRequestPreconditions, HttpHeaders, EntityTag, HttpDateTime } from "./interfaces";
+import {
+  HttpRequestPreconditions,
+  HttpHeaders,
+  EntityTag,
+  HttpDateTime,
+} from "./interfaces";
 import { entityTagToString, pETag, parseETag } from "./entityTag";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
@@ -23,20 +28,17 @@ const writeEtagPreferenceHeader = (
       Array.isArray(value) ? value.map(entityTagToString).join(",") : "*",
     );
   }
-}
+};
 
-const writeDateHeader =  (
+const writeDateHeader = (
   header: HttpStandardHeader,
   value: HttpDateTime | undefined,
   writeHeader: (header: string, value: string) => void,
 ) => {
   if (value !== undefined) {
-    writeHeader(
-      header,
-      httpDateTimeToString(value),
-    );
+    writeHeader(header, httpDateTimeToString(value));
   }
-}
+};
 
 /** @ignore */
 export const writeHttpRequestPreconditionsHeaders = (
@@ -50,9 +52,21 @@ export const writeHttpRequestPreconditionsHeaders = (
   writeHeader: (header: string, value: string) => void,
 ) => {
   writeEtagPreferenceHeader(HttpStandardHeader.IfMatch, ifMatch, writeHeader);
-  writeEtagPreferenceHeader(HttpStandardHeader.IfNoneMatch, ifNoneMatch, writeHeader);
-  writeDateHeader(HttpStandardHeader.IfModifiedSince, ifModifiedSince, writeHeader);
-  writeDateHeader(HttpStandardHeader.IfUnmodifiedSince, ifUnmodifiedSince, writeHeader);
+  writeEtagPreferenceHeader(
+    HttpStandardHeader.IfNoneMatch,
+    ifNoneMatch,
+    writeHeader,
+  );
+  writeDateHeader(
+    HttpStandardHeader.IfModifiedSince,
+    ifModifiedSince,
+    writeHeader,
+  );
+  writeDateHeader(
+    HttpStandardHeader.IfUnmodifiedSince,
+    ifUnmodifiedSince,
+    writeHeader,
+  );
 
   if (ifRange !== undefined) {
     writeHeader(
@@ -83,19 +97,28 @@ const parseOptionalETagPreference = (
 const parseOptionalDatePreference = (
   headers: HttpHeaders,
   header: HttpStandardHeader,
-) => pipe(
-  getHeaderValue(headers, header) || "",
-  parseHttpDateTime,
-);
+) => pipe(getHeaderValue(headers, header) || "", parseHttpDateTime);
 
 /** @ignore */
 export const parseHttpRequestPreconditionsFromHeaders = (
   headers: HttpHeaders,
 ): HttpRequestPreconditions | undefined => {
-  const ifMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfMatch);
-  const ifNoneMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfNoneMatch);
-  const ifModifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfModifiedSince);
-  const ifUnmodifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfUnmodifiedSince);
+  const ifMatch = parseOptionalETagPreference(
+    headers,
+    HttpStandardHeader.IfMatch,
+  );
+  const ifNoneMatch = parseOptionalETagPreference(
+    headers,
+    HttpStandardHeader.IfNoneMatch,
+  );
+  const ifModifiedSince = parseOptionalDatePreference(
+    headers,
+    HttpStandardHeader.IfModifiedSince,
+  );
+  const ifUnmodifiedSince = parseOptionalDatePreference(
+    headers,
+    HttpStandardHeader.IfUnmodifiedSince,
+  );
 
   const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
   const ifRange =

@@ -34,7 +34,6 @@
 
 ### Variables
 
-* [httpContentEncodings](README.md#const-httpcontentencodings)
 * [parseMediaType](README.md#const-parsemediatype)
 * [parseMediaTypeOrThrow](README.md#const-parsemediatypeorthrow)
 
@@ -151,18 +150,6 @@ ___
 #### Type declaration:
 
 ## Variables
-
-### `Const` httpContentEncodings
-
-• **httpContentEncodings**: *[HttpContentEncoding](enums/httpcontentencoding.md)[]* =  [
-  HttpContentEncoding.Brotli,
-  HttpContentEncoding.Compress,
-  HttpContentEncoding.Deflate,
-  HttpContentEncoding.GZip,
-  HttpContentEncoding.Identity,
-]
-
-___
 
 ### `Const` parseMediaType
 

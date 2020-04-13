@@ -1,7 +1,11 @@
-import { httpContentEncodings } from "./httpContentEncodings";
+import { parseWith, eof } from "@reactive-js/parser-combinators";
+import { pipe } from "@reactive-js/pipe";
+import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import { HttpContent, HttpHeaders, HttpContentEncoding } from "./interfaces";
 import { parseMediaType, mediaTypeToString } from "./mediaType";
+
+const parseTokenList = pipe(pToken, httpList, eof, parseWith);
 
 /** @ignore */
 export const parseHttpContentFromHeaders = <T>(
@@ -10,12 +14,9 @@ export const parseHttpContentFromHeaders = <T>(
 ): HttpContent<T> | undefined => {
   const contentEncodingString =
     getHeaderValue(headers, HttpStandardHeader.ContentEncoding) || "";
-  const contentEncodings = contentEncodingString
-    .split(",")
-    .map(x => x.trim())
-    .filter(x =>
-      httpContentEncodings.includes(x as HttpContentEncoding),
-    ) as readonly HttpContentEncoding[];
+  const contentEncodings = parseTokenList(
+    contentEncodingString,
+  ) as readonly HttpContentEncoding[];
 
   const contentLengthHeader =
     getHeaderValue(headers, HttpStandardHeader.ContentLength) || "0";
@@ -48,6 +49,6 @@ export const writeHttpContentHeaders = <T>(
   writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
 
   if (contentEncodings.length > 0) {
-    writeHeader(HttpStandardHeader.ContentEncoding, contentEncodings.join(","));
+    writeHeader(HttpStandardHeader.ContentEncoding, contentEncodings.join(", "));
   }
 };

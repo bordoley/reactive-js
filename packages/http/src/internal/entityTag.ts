@@ -14,9 +14,8 @@ import { ASCII } from "./httpGrammar";
 import { pipe } from "@reactive-js/pipe";
 
 /** @ignore */
-export const entityTagToString = ({ isWeak, tag }: EntityTag): string => {
-  return isWeak ? `\\W"${tag}"` : `"${tag}"`;
-};
+export const entityTagToString = ({ isWeak, tag }: EntityTag): string =>
+  isWeak ? `\\W"${tag}"` : `"${tag}"`;
 
 const pETagc = satisfy(
   c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE,

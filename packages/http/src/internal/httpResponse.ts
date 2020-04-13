@@ -15,7 +15,7 @@ import {
   parseHttpContentFromHeaders,
 } from "./httpContent";
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
-import { entityTagToString } from "./entityTag";
+import { entityTagToString, parseETag } from "./entityTag";
 import {
   writeHttpHeaders,
   getHeaderValue,
@@ -66,11 +66,14 @@ export const parseHttpResponseFromHeaders = <T>(
 ): HttpContentResponse<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
 
-  // FIXME: etag
+  const etag = parseETag(
+    getHeaderValue(headers, HttpStandardHeader.ETag) || "",
+  );
 
   const expires = parseHttpDateTime(
     getHeaderValue(headers, HttpStandardHeader.Expires) || "",
   );
+  
   const lastModified = parseHttpDateTime(
     getHeaderValue(headers, HttpStandardHeader.LastModified) || "",
   );
@@ -85,6 +88,7 @@ export const parseHttpResponseFromHeaders = <T>(
   const vary: readonly string[] = [];
 
   return {
+    etag,
     expires,
     lastModified,
     content,
