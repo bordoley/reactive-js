@@ -1,8 +1,4 @@
-import {
-  ObservableOperator,
-  ObserverLike,
-  SubscriberLike,
-} from "./interfaces";
+import { ObservableOperator, ObserverLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,

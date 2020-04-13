@@ -100,11 +100,11 @@ export interface SubjectLike<T>
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export type ObservableOperator<A, B> = {
   (observable: ObservableLike<A>): ObservableLike<B>;
-}
+};
 
 /**
  * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
  */
 export type SubscriberOperator<A, B> = {
   (observable: SubscriberLike<B>): SubscriberLike<A>;
-}
+};

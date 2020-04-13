@@ -159,19 +159,8 @@ const listener = createHttpRequestListener(
   req =>
     pipe(
       req,
-      req => (
-        console.log(req.uri.toString()),
-        console.log(req.headers),
-        console.log(),
-        req
-      ),
       disallowProtocolAndHostForwarding(),
-      req => (
-        console.log(req.uri.toString()),
-        console.log(req.headers),
-        console.log(),
-        req
-      ),
+      req => (console.log(JSON.stringify(req)), console.log(), req),
       decodeHttpRequest(),
       router,
       map(encodeHttpResponse(req)),

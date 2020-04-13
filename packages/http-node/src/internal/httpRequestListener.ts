@@ -69,17 +69,15 @@ const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
 export type HttpRequestListenerOptions = {
   readonly onError?: (e: unknown) => ObservableLike<unknown>;
-}
+};
 
 export type HttpRequestListenerHandler = {
   (
-    req: HttpServerRequest<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >,
+    req: HttpServerRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ): ObservableLike<
     HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
-}
+};
 
 const destroy = <T extends { destroy: () => void }>(val: T) => {
   val.destroy();

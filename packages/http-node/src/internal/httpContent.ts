@@ -25,9 +25,7 @@ import {
 
 /** @ignore */
 export const encodeHttpContent = (
-  contentBody: HttpContent<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+  contentBody: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
@@ -48,9 +46,7 @@ export const encodeHttpContent = (
 
 /** @ignore */
 export const decodeHttpContent = (
-  contentBody: HttpContent<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+  contentBody: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
   const { body, contentLength, contentEncodings } = contentBody;

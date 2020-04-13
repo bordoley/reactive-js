@@ -5,7 +5,7 @@
 export type Exception = {
   /** The underlying cause of the error. */
   readonly cause: unknown;
-}
+};
 
 type DisposableOrTeardown = DisposableLike | ((error?: Exception) => void);
 

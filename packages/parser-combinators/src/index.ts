@@ -10,7 +10,7 @@ export interface CharStreamLike extends EnumeratorLike<void, CharCode> {
 
 export type Parser<T> = {
   (input: CharStreamLike): T;
-}
+};
 
 class CharStreamImpl implements EnumeratorLike<void, CharCode> {
   private _index = -1;
@@ -79,10 +79,7 @@ export const isParseError =
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
 
-export function concat<TA, TB>(
-  a: Parser<TA>,
-  b: Parser<TB>,
-): Parser<[TA, TB]>;
+export function concat<TA, TB>(a: Parser<TA>, b: Parser<TB>): Parser<[TA, TB]>;
 export function concat<TA, TB, TC>(
   a: Parser<TA>,
   b: Parser<TB>,
@@ -140,9 +137,7 @@ export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   i: Parser<TI>,
 ): Parser<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
-export function concat(
-  ...parsers: Parser<unknown>[]
-): Parser<unknown[]> {
+export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   return charStream => {
     const result = [];
     for (const parse of parsers) {
@@ -162,12 +157,9 @@ export const flatMap = <TA, TB>(
 
 export const map = <TA, TB>(
   mapper: (result: TA) => TB,
-): Operator<Parser<TA>, Parser<TB>> => parser =>
-  compose(parser, mapper);
+): Operator<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
 
-export const mapTo = <TA, TB>(
-  v: TB,
-): Operator<Parser<TA>, Parser<TB>> => {
+export const mapTo = <TA, TB>(v: TB): Operator<Parser<TA>, Parser<TB>> => {
   const mapper = (_: TA) => v;
   return map(mapper);
 };
@@ -195,9 +187,9 @@ export const parseWith = <T>(
   };
 };
 
-export const or = <T>(
-  otherParse: Parser<T>,
-): Operator<Parser<T>, Parser<T>> => parse => charStream => {
+export const or = <TA, TB>(
+  otherParse: Parser<TB>,
+): Operator<Parser<TA>, Parser<TA | TB>> => parse => charStream => {
   const index = charStream.index;
 
   try {
@@ -252,10 +244,7 @@ export const many = <T>(
     min?: number;
     max?: number;
   } = {},
-): Operator<
-  Parser<T>,
-  Parser<readonly T[]>
-> => parse => charStream => {
+): Operator<Parser<T>, Parser<readonly T[]>> => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
 
   const retval: T[] = [];
@@ -389,10 +378,7 @@ export const manySatisfy = (
     min?: number;
     max?: number;
   } = {},
-): Operator<
-  Parser<CharCode>,
-  Parser<string>
-> => parse => charStream => {
+): Operator<Parser<CharCode>, Parser<string>> => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
   const first = charStream.index + 1;
   let length = 0;

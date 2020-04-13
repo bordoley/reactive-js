@@ -4,7 +4,7 @@ import { Operator } from "@reactive-js/pipe";
 
 export type HttpRoutedRequest<T> = HttpRequest<T> & {
   readonly params: { readonly [param: string]: string };
-}
+};
 
 export type HttpRequestRouterHandler<TReq, TResp> = Operator<
   HttpRoutedRequest<TReq>,
@@ -135,10 +135,7 @@ export const createRouter = <TReq, TResp>(
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>
   >,
-): Operator<
-  HttpRequest<TReq>,
-  ObservableLike<HttpResponse<TResp>>
-> => {
+): Operator<HttpRequest<TReq>, ObservableLike<HttpResponse<TResp>>> => {
   const router = Object.entries(routes).reduce(
     (acc, [path, handler]) => addHandler(acc, createSegments(path), handler),
     emptyRouter as Router<TReq, TResp>,

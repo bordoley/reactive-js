@@ -16,7 +16,7 @@ export type Location = {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
-}
+};
 
 const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
@@ -50,12 +50,8 @@ const historyOperator = (obs: ObservableLike<Location>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-const _history: AsyncEnumerableLike<
-  Location,
-  Location
-> = createAsyncEnumerable(historyOperator);
+const _history: AsyncEnumerableLike<Location, Location> = createAsyncEnumerable(
+  historyOperator,
+);
 
-export const history: AsyncEnumerableLike<
-  Location,
-  Location
-> = _history;
+export const history: AsyncEnumerableLike<Location, Location> = _history;

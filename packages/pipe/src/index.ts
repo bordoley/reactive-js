@@ -1,7 +1,7 @@
 /** A Unary function that transforms a value of type A into a value of type B */
 export type Operator<A, B> = {
   (src: A): B;
-}
+};
 
 export function pipe<T, A>(src: T, op1: Operator<T, A>): A;
 export function pipe<T, A, B>(

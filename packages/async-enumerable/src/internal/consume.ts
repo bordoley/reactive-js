@@ -52,7 +52,7 @@ export type ContinueRequest<TReq, TAcc> = {
    *
    */
   readonly acc: TAcc;
-}
+};
 
 /**
  *
@@ -67,7 +67,7 @@ export type DoneRequest<TAcc> = {
    *
    */
   readonly acc: TAcc;
-}
+};
 
 /**
  *
@@ -77,9 +77,7 @@ export type ReducerRequest<TReq, TAcc> =
   | DoneRequest<TAcc>;
 
 const createAcc = <TReq, T, TAcc>(enumerator: AsyncEnumeratorLike<TReq, T>) => {
-  const onNotifyDispatch = (
-    continueRequest: ContinueRequest<TReq, TAcc>,
-  ) => {
+  const onNotifyDispatch = (continueRequest: ContinueRequest<TReq, TAcc>) => {
     enumerator.dispatch(continueRequest.req);
   };
 
@@ -94,10 +92,7 @@ const createResources = <TReq, T, TAcc>(
 ) => (
   scheduler: SchedulerLike,
 ): [
-  AsyncEnumeratorLike<
-    ContinueRequest<TReq, TAcc>,
-    ContinueRequest<TReq, TAcc>
-  >,
+  AsyncEnumeratorLike<ContinueRequest<TReq, TAcc>, ContinueRequest<TReq, TAcc>>,
   AsyncEnumeratorLike<ObservableLike<T>, ObservableLike<T>>,
 ] => [
   createAcc<TReq, T, TAcc>(enumerator).enumerateAsync(scheduler),
@@ -156,10 +151,7 @@ const consumeImpl = <TReq, T, TAcc>(
     acc: ObservableLike<TAcc>,
   ) => ObservableOperator<T, ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): Operator<
-  AsyncEnumeratorLike<TReq, T>,
-  ObservableLike<TAcc>
-> => enumerator =>
+): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => enumerator =>
   using(
     createResources(enumerator),
     createFactory<TReq, T, TAcc>(withLatestFrom, initial, enumerator),

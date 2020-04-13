@@ -69,7 +69,7 @@ export type HttpClientRequestStatusBegin = {
   readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
-}
+};
 
 export type HttpClientRequestStatusUploading = {
   readonly type: HttpClientRequestStatusType.Uploaded;
@@ -77,16 +77,16 @@ export type HttpClientRequestStatusUploading = {
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
   readonly total: number;
-}
+};
 
 export type HttpClientRequestStatusUploadComplete = {
   readonly type: HttpClientRequestStatusType.UploadComplete;
   readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
-}
+};
 
-export type HttpClientRequestStatusResponseReady= {
+export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
   readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
@@ -94,7 +94,7 @@ export type HttpClientRequestStatusResponseReady= {
   readonly response: DisposableValueLike<
     HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
-}
+};
 
 export type HttpClientRequestStatus =
   | HttpClientRequestStatusBegin
@@ -111,9 +111,7 @@ const spyScanner = (
     : [-1, total + uploaded];
 
 const createOnSubscribe = (
-  request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   send: () => ClientRequest,
   encodeContent: AsyncEnumerableOperator<
     ReadableMode,
@@ -122,12 +120,8 @@ const createOnSubscribe = (
     ReadableEvent
   >,
   decodeHttpContentResponse: (
-    resp: HttpContentResponse<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >,
-  ) => HttpContentResponse<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+    resp: HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  ) => HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {
   subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
 
@@ -219,27 +213,26 @@ const createOnSubscribe = (
   // * information: Not much to do, we already support continue via the continue event, and will support upgrade.
 };
 
-export type HttpClientOptions = BrotliOptions & ZlibOptions & {
-  // Node options
-  readonly agent?: Agent | boolean;
-  readonly insecureHTTPParser?: boolean;
-  readonly maxHeaderSize?: number;
-  readonly shouldEncode?: (
-    req: HttpContentRequest<unknown>,
-  ) => boolean | undefined;
-}
+export type HttpClientOptions = BrotliOptions &
+  ZlibOptions & {
+    // Node options
+    readonly agent?: Agent | boolean;
+    readonly insecureHTTPParser?: boolean;
+    readonly maxHeaderSize?: number;
+    readonly shouldEncode?: (
+      req: HttpContentRequest<unknown>,
+    ) => boolean | undefined;
+  };
 
 export type HttpClientRequestOptions = {
   // The encodings accepted by the server
   readonly acceptedEncodings?: readonly HttpContentEncoding[];
-}
+};
 
 const identity = <T>(x: T): T => x;
 
 const requestIsCompressible = (
-  request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ): boolean => {
   const { content } = request;
   return content !== undefined ? contentIsCompressible(content) : false;
@@ -252,7 +245,7 @@ export type HttpClient = {
     >,
     requestOptions?: HttpClientRequestOptions,
   ): ObservableLike<HttpClientRequestStatus>;
-}
+};
 
 export const creatHttpClient = (
   clientOptions: HttpClientOptions = {},

@@ -12,7 +12,7 @@ type CombineLatestCtx<T> = {
   readonly selector: (...values: unknown[]) => T;
   readonly subscriber: SubscriberLike<T>;
   readonly totalCount: number;
-}
+};
 
 class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
   unknown,

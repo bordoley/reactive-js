@@ -27,24 +27,24 @@ export const enum HttpClientRequestStatusType {
 export type HttpClientRequestStatusBegin = {
   readonly type: HttpClientRequestStatusType.Begin;
   readonly request: HttpContentRequest<HttpBody>;
-}
+};
 
 export type HttpClientRequestStatusUploading = {
   readonly type: HttpClientRequestStatusType.Uploaded;
   readonly request: HttpContentRequest<HttpBody>;
   readonly total: number;
-}
+};
 
 export type HttpClientRequestStatusUploadComplete = {
   readonly type: HttpClientRequestStatusType.UploadComplete;
   readonly request: HttpContentRequest<HttpBody>;
-}
+};
 
 export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
   readonly request: HttpContentRequest<HttpBody>;
   readonly response: HttpContentResponse<Blob>;
-}
+};
 
 export type HttpClientRequestStatus =
   | HttpClientRequestStatusBegin
