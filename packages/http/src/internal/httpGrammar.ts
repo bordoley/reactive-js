@@ -10,10 +10,13 @@ import {
   manySatisfy,
   many,
   char,
+  pComma,
+  sepBy,
 } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 
-const enum ASCII {
+/** @ignore */
+export const enum ASCII {
   HTAB = 9,
   SPACE = 32,
   EXCLAMATION_MARK = 33,
@@ -109,7 +112,9 @@ const pQuotedString: Parser<string> = charStream => {
 
       const c = charStream.current;
       const isQuotedPairChar =
-        c === ASCII.HTAB || c === ASCII.SPACE || (c >= 33 && c <= 256);
+          c === ASCII.HTAB ||
+          c === ASCII.SPACE ||
+          (c >= 33 && c <= 256) /* VCHAR */;
       if (!isQuotedPairChar) {
         throwParseError(charStream);
       }
@@ -183,3 +188,9 @@ export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
     return params;
   }),
 );
+
+const owsCommaOws = concat(pOWS, pComma, pOWS);
+
+/** @ignore */
+export const httpList = <T>(parser: Parser<T>): Parser<readonly T[]> =>
+  pipe(parser, sepBy(owsCommaOws));
