@@ -28,7 +28,7 @@ export type EncodeHttpResponseOptions = {
     req: HttpContentRequest<T>,
     resp: HttpContentResponse<TResp>,
   ) => boolean | undefined;
-}
+};
 
 export const encodeHttpResponse = <TReq>(
   request: HttpContentRequest<TReq>,

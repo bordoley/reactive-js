@@ -15,7 +15,7 @@ type ScheduledTask = {
   dueTime: number;
   readonly priority: number;
   taskID: number;
-}
+};
 
 const alwaysFalse = () => false;
 
@@ -116,9 +116,7 @@ const move = (scheduler: PrioritySchedulerImpl): boolean => {
   return hasCurrent;
 };
 
-const peek = (
-  scheduler: PrioritySchedulerImpl,
-): ScheduledTask | undefined => {
+const peek = (scheduler: PrioritySchedulerImpl): ScheduledTask | undefined => {
   const { delayed, queue } = scheduler;
   const now = scheduler.now;
 

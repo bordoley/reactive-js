@@ -3,11 +3,7 @@ import {
   StateUpdater,
   lift,
 } from "@reactive-js/async-enumerable";
-import {
-  createHttpRequest,
-  HttpMethod,
-  HttpContent,
-} from "@reactive-js/http";
+import { createHttpRequest, HttpMethod, HttpContent } from "@reactive-js/http";
 import { sendHttpRequest } from "@reactive-js/http-web";
 import { useObservable } from "@reactive-js/react";
 import {

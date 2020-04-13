@@ -13,10 +13,7 @@ import { createSubject } from "./subject";
 export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): Operator<
-  ObservableLike<T>,
-  MulticastObservableLike<T>
-> => observable => {
+): Operator<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
   const subject = createSubject<T>(scheduler, replayCount);
   observable.subscribe(subject);
   return subject;

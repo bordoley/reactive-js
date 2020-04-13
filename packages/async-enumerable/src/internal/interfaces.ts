@@ -21,8 +21,8 @@ export type AsyncEnumerableOperator<TSrcReq, TSrc, TReq, T> = {
     TReq,
     T
   >;
-}
+};
 
 export type StateUpdater<T> = {
   (oldState: T): T;
-}
+};

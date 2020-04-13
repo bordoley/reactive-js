@@ -12,7 +12,7 @@ export type RelativeURI = {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
-}
+};
 
 const empty: RelativeURI = {
   path: "",
@@ -24,11 +24,11 @@ export type RoutableComponentProps = {
   readonly referer: RelativeURI | undefined;
   readonly uri: RelativeURI;
   readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
-}
+};
 
 type RouteMap = {
   [key: string]: React.ComponentType<RoutableComponentProps>;
-}
+};
 
 export type RouterProps = {
   readonly location: AsyncEnumerableLike<
@@ -41,7 +41,7 @@ export type RouterProps = {
     React.ComponentType<RoutableComponentProps>,
   ][];
   readonly scheduler?: SchedulerLike;
-}
+};
 
 const pairify = (
   [_, oldState]: [RelativeURI | undefined, RelativeURI],

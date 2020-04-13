@@ -9,7 +9,7 @@ type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
   dueTime: number;
   id: number;
-}
+};
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
   let diff = 0;
