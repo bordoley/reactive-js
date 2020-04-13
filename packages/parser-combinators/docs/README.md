@@ -14,6 +14,7 @@
 
 ### Variables
 
+* [isParseError](README.md#const-isparseerror)
 * [many1Satisfy](README.md#const-many1satisfy)
 * [manySatisfy](README.md#const-manysatisfy)
 * [pAsterisk](README.md#const-pasterisk)
@@ -28,6 +29,7 @@
 * [pPeriod](README.md#const-pperiod)
 * [pSemicolon](README.md#const-psemicolon)
 * [pSpace](README.md#const-pspace)
+* [throwParseError](README.md#const-throwparseerror)
 
 ### Functions
 
@@ -38,7 +40,6 @@
 * [eof](README.md#const-eof)
 * [flatMap](README.md#const-flatmap)
 * [followedBy](README.md#const-followedby)
-* [isParseError](README.md#const-isparseerror)
 * [many](README.md#const-many)
 * [many1](README.md#const-many1)
 * [manyMinMax](README.md#const-manyminmax)
@@ -56,7 +57,6 @@
 * [sepBy](README.md#const-sepby)
 * [sepBy1](README.md#const-sepby1)
 * [string](README.md#const-string)
-* [throwParseError](README.md#const-throwparseerror)
 * [throws](README.md#const-throws)
 
 ## Type aliases
@@ -66,6 +66,14 @@
 Ƭ **CharCode**: *number*
 
 ## Variables
+
+### `Const` isParseError
+
+• **isParseError**: *isParseErrorProd* =   process.env.NODE_ENV === "production"
+  ? isParseErrorProd
+  : isParseErrorDev
+
+___
 
 ### `Const` many1Satisfy
 
@@ -148,6 +156,14 @@ ___
 ### `Const` pSpace
 
 • **pSpace**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(" ")
+
+___
+
+### `Const` throwParseError
+
+• **throwParseError**: *throwParseErrorProd* =  process.env.NODE_ENV === "production"
+  ? throwParseErrorProd
+  : throwParseErrorDev
 
 ## Functions
 
@@ -475,20 +491,6 @@ Name | Type |
 
 ___
 
-### `Const` isParseError
-
-▸ **isParseError**(`e`: unknown): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`e` | unknown |
-
-**Returns:** *boolean*
-
-___
-
 ### `Const` many
 
 ▸ **many**<**T**>(): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
@@ -779,24 +781,6 @@ Name | Type |
 `str` | string |
 
 **Returns:** *[ParserLike](interfaces/parserlike.md)‹string›*
-
-___
-
-### `Const` throwParseError
-
-▸ **throwParseError**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
-
-**Returns:** *T*
 
 ___
 
