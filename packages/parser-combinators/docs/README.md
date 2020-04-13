@@ -51,7 +51,7 @@
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
-* [parseWith](README.md#parsewith)
+* [parseWith](README.md#const-parsewith)
 * [parseWithOrThrow](README.md#const-parsewithorthrow)
 * [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
@@ -682,41 +682,9 @@ Name | Type |
 
 ___
 
-###  parseWith
+### `Const` parseWith
 
-▸ **parseWith**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
-
-**Returns:** *OperatorLike‹string, T›*
-
-▸ **parseWith**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
-
-**Returns:** *OperatorLike‹string, T | undefined›*
-
-___
-
-### `Const` parseWithOrThrow
-
-▸ **parseWithOrThrow**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
+▸ **parseWith**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
 
 **Type parameters:**
 
@@ -729,6 +697,24 @@ Name | Type |
 `parse` | [ParserLike](interfaces/parserlike.md)‹T› |
 
 **Returns:** *OperatorLike‹string, T | undefined›*
+
+___
+
+### `Const` parseWithOrThrow
+
+▸ **parseWithOrThrow**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`parse` | [ParserLike](interfaces/parserlike.md)‹T› |
+
+**Returns:** *OperatorLike‹string, T›*
 
 ___
 
