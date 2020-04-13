@@ -6,6 +6,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 import { toEnumerable } from "./toEnumerable";
+import { DisposableLike } from "@reactive-js/disposable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -17,7 +18,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
 };
 
 const shouldComplete = (
-  enumerators: readonly EnumeratorLike<void, unknown>[],
+  enumerators: readonly (DisposableLike & EnumeratorLike<void, unknown>)[],
 ) => {
   for (const enumerator of enumerators) {
     enumerator.move();
@@ -40,7 +41,8 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly enumerators: readonly EnumeratorLike<void, any>[],
+    private readonly enumerators: readonly (DisposableLike &
+      EnumeratorLike<void, any>)[],
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
@@ -175,7 +177,8 @@ class ZipObservable<T> implements ObservableLike<T> {
         new ZipProducer(subscriber, enumerators, this.selector),
       );
     } else {
-      const enumerators: EnumeratorLike<void, unknown>[] = [];
+      const enumerators: (DisposableLike &
+        EnumeratorLike<void, unknown>)[] = [];
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 

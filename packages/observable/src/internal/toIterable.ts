@@ -1,11 +1,14 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { ObservableLike } from "./interfaces";
 import { toEnumerable } from "./toEnumerable";
+import { DisposableLike } from "@reactive-js/disposable";
 
 const done: IteratorResult<any> = { done: true, value: undefined };
 
 class EnumeratorIterator<T> implements Iterator<T> {
-  constructor(private readonly enumerator: EnumeratorLike<void, T>) {}
+  constructor(
+    private readonly enumerator: EnumeratorLike<void, T> & DisposableLike,
+  ) {}
 
   next<T>(): IteratorResult<T> {
     const enumerator = this.enumerator;

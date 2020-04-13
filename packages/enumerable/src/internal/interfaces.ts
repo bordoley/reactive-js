@@ -4,7 +4,7 @@ import { DisposableLike } from "@reactive-js/disposable";
  *
  * @noInheritDoc
  */
-export interface EnumeratorLike<TReq, T> extends DisposableLike {
+export interface EnumeratorLike<TReq, T> {
   /**
    * The current item, if present, at the current position of the enumerator.
    */
@@ -27,5 +27,5 @@ export interface EnumerableLike<TReq, T> {
   /**
    * Returns an `EnumeratorLike` to iterate through the source.
    */
-  enumerate(): EnumeratorLike<TReq, T>;
+  enumerate(): EnumeratorLike<TReq, T> & DisposableLike;
 }

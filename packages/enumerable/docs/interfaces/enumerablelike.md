@@ -22,8 +22,8 @@
 
 ###  enumerate
 
-▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹TReq, T›*
+▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹TReq, T› & DisposableLike*
 
 Returns an `EnumeratorLike` to iterate through the source.
 
-**Returns:** *[EnumeratorLike](enumeratorlike.md)‹TReq, T›*
+**Returns:** *[EnumeratorLike](enumeratorlike.md)‹TReq, T› & DisposableLike*
