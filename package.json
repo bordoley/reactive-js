@@ -6,6 +6,7 @@
     "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo packages/**/coverage",
     "docs": "lerna run docs",
     "example": "node ./packages/example/dist/index.js",
+    "example-debug": "node --inspect-brk ./packages/example/dist/index.js",
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
     "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",

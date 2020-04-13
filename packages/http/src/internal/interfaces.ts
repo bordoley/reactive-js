@@ -94,23 +94,36 @@ export interface HttpHeadersLike {
   readonly [header: string]: string;
 }
 
+export interface MediaType {
+  readonly type: string;
+  readonly subtype: string;
+  readonly params: { readonly [key: string]: string };
+}
+
+// Strictly speaking MediaRanges may have parameters, but no one uses them.
+export interface MediaRange {
+  readonly type: string | "*";
+  readonly subtype: string | "*";
+}
+
 export interface HttpContentLike<T> {
   readonly body: T;
   readonly contentEncodings: readonly HttpContentEncoding[];
   readonly contentLength: number;
-  readonly contentType: string;
+  readonly contentType: MediaType;
 }
 
+// All values should be sorted by preference
 export interface HttpPreferencesLike {
   readonly acceptedCharsets: readonly string[];
   readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly acceptedLanguages: readonly string[];
-  readonly acceptedMediaTypes: readonly string[];
+  readonly acceptedMediaRanges: readonly MediaRange[];
   //readonly ranges: Option<Choice<ByteRangesSpecifier, OtherRangesSpecifier>>
   //acceptedRanges:Option<Choice<Set<RangeUnit>, AcceptsNone>>
 }
 
-export interface HttpEntityTagLike {
+export interface EntityTag {
   readonly isWeak: boolean;
   readonly tag: string;
 }
@@ -118,11 +131,11 @@ export interface HttpEntityTagLike {
 export type HttpDateTime = number;
 
 export interface HttpRequestPreconditionsLike {
-  ifMatch?: readonly HttpEntityTagLike[] | "*";
+  ifMatch?: readonly EntityTag[] | "*";
   ifModifiedSince?: HttpDateTime;
-  ifNoneMatch?: readonly HttpEntityTagLike[] | "*";
+  ifNoneMatch?: readonly EntityTag[] | "*";
   ifUnmodifiedSince?: HttpDateTime;
-  ifRange?: HttpEntityTagLike | HttpDateTime;
+  ifRange?: EntityTag | HttpDateTime;
 }
 
 export interface HttpRequestLike<T> {
@@ -158,7 +171,7 @@ export interface HttpResponseLike<T> {
   // authenticate:Set<Challenge>
   // cacheControl: Set<CacheDirective>
   // date:Option<DateTime>
-  etag?: HttpEntityTagLike;
+  etag?: EntityTag;
   readonly expires?: HttpDateTime;
   readonly lastModified?: HttpDateTime;
   // proxyAuthenticate:Set<Challenge>

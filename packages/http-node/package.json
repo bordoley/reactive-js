@@ -48,12 +48,10 @@
     "@reactive-js/pipe": "^0.0.33",
     "@reactive-js/scheduler": "^0.0.33",
     "compressible": "^2.0.18",
-    "content-type": "^1.0.4",
     "iconv-lite": "^0.5.1"
   },
   "devDependencies": {
     "@types/compressible": "^2.0.0",
-    "@types/content-type": "^1.1.3",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
     "jest": "^24.9.0",

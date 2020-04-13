@@ -4,7 +4,6 @@ export {
   HttpContentRequestLike,
   HttpContentResponseLike,
   HttpDateTime,
-  HttpEntityTagLike,
   HttpHeadersLike,
   HttpMethod,
   HttpPreferencesLike,
@@ -12,6 +11,8 @@ export {
   HttpResponseLike,
   HttpServerRequestLike,
   HttpStatusCode,
+  EntityTag,
+  MediaType,
   URI,
 } from "./internal/interfaces";
 
@@ -33,3 +34,9 @@ export {
 } from "./internal/httpResponse";
 
 export { HttpStandardHeader } from "./internal/httpHeaders";
+
+export {
+  mediaTypeToString,
+  parseMediaType,
+  parseMediaTypeOrThrow,
+} from "./internal/mediaType";

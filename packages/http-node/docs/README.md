@@ -61,14 +61,14 @@ ___
 
 ### `Const` createBufferHttpContent
 
-▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `chunk` | Buffer |
-`contentType` | string |
+`contentType` | MediaType &#124; string |
 
 **Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
@@ -107,7 +107,7 @@ ___
 
 ### `Const` createReadableHttpContent
 
-▸ **createReadableHttpContent**(`factory`: function, `contentType`: string, `contentLength`: number): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
@@ -115,7 +115,7 @@ ___
 
 ▸ (): *Readable*
 
-▪ **contentType**: *string*
+▪ **contentType**: *MediaType | string*
 
 ▪`Default value`  **contentLength**: *number*=  -1
 
@@ -125,15 +125,14 @@ ___
 
 ### `Const` createStringHttpContent
 
-▸ **createStringHttpContent**(`content`: string, `contentType`: string, `charset`: string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`content` | string | - |
-`contentType` | string | - |
-`charset` | string | "utf-8" |
+Name | Type |
+------ | ------ |
+`content` | string |
+`contentType` | MediaType &#124; string |
 
 **Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 

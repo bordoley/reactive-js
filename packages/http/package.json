@@ -40,20 +40,25 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
+    "@reactive-js/parser-combinators": "^0.0.33",
     "@reactive-js/pipe": "^0.0.33",
-    "fresh": "^0.5.2",
-    "negotiator": "^0.6.2"
+    "fresh": "^0.5.2"
   },
   "devDependencies": {
     "@types/fresh": "^0.5.0",
-    "@types/negotiator": "^0.6.1"
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm5": "tsc -p tsconfig.esm5.json",
     "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json"
+    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
   "jest": {
     "preset": "ts-jest",

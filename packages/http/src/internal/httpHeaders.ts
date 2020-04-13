@@ -84,31 +84,18 @@ const bannedHeaders = [
 export function getHeaderValue(
   headers: HttpHeadersLike,
   key: HttpStandardHeader,
-): string;
+): string | undefined;
 
 export function getHeaderValue(
   headers: HttpHeadersLike,
   key: HttpExtensiondHeader,
-): string;
-
-export function getHeaderValue(
-  headers: HttpHeadersLike,
-  key: HttpStandardHeader,
-  orDefault: string,
-): string;
-
-export function getHeaderValue(
-  headers: HttpHeadersLike,
-  key: HttpExtensiondHeader,
-  orDefault: string,
-): string;
+): string | undefined;
 
 export function getHeaderValue(
   headers: HttpHeadersLike,
   key: string,
-  orDefault?: string,
 ): string | undefined {
-  return headers[key.toLowerCase()] || orDefault;
+  return headers[key.toLowerCase()];
 }
 
 /** @ignore */

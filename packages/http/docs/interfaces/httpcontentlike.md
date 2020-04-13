@@ -41,4 +41,4 @@ ___
 
 ###  contentType
 
-• **contentType**: *string*
+• **contentType**: *[MediaType](mediatype.md)*
