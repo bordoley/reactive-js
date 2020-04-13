@@ -747,19 +747,21 @@ ___
 
 ### `Const` or
 
-▸ **or**<**T**>(`otherParse`: [Parser](README.md#parser)‹T›): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
+▸ **or**<**TA**, **TB**>(`otherParse`: [Parser](README.md#parser)‹TB›): *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TA | TB››*
 
 **Type parameters:**
 
-▪ **T**
+▪ **TA**
+
+▪ **TB**
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`otherParse` | [Parser](README.md#parser)‹T› |
+`otherParse` | [Parser](README.md#parser)‹TB› |
 
-**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TA | TB››*
 
 ___
 
