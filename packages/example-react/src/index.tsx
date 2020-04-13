@@ -6,7 +6,7 @@ import {
 import {
   createHttpRequest,
   HttpMethod,
-  HttpContentLike,
+  HttpContent,
 } from "@reactive-js/http";
 import { sendHttpRequest } from "@reactive-js/http-web";
 import { useObservable } from "@reactive-js/react";
@@ -113,7 +113,7 @@ const location = pipe(
   .createRoot(document.getElementById("root"))
   .render(<Router location={location} notFound={NotFound} routes={routes} />);
 
-const request = createHttpRequest<HttpContentLike<any>>(
+const request = createHttpRequest<HttpContent<any>>(
   HttpMethod.GET,
   "http://localhost:8080/index.json",
 );
