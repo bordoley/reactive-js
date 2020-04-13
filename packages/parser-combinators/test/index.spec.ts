@@ -8,7 +8,6 @@ import {
   pColon,
   many,
   or,
-  eof,
   createCharStream,
   concat,
   optional,
@@ -17,6 +16,7 @@ import {
   pForwardSlash,
   regexp,
   char,
+  pEof,
 } from "../src";
 import { pipe } from "@reactive-js/pipe";
 
@@ -28,7 +28,7 @@ test("many", () => {
 });
 
 test("manySatisy", () => {
-  const parser = concat(manySatisfy(pForwardSlash), manySatisfy(char("z")));
+  const parser = concat(manySatisfy()(pForwardSlash), manySatisfy()(char("z")));
   const result = pipe("////zzz", parseWith(parser));
 
   expect(result).toEqual(["////", "zzz"]);
@@ -55,7 +55,7 @@ test("optional", () => {
   const parser = concat(
     string("ab"),
     pipe(optional(string("cd")), orDefault("ef")),
-    eof,
+    pEof,
   );
 
   const result1 = pipe("abcd", parseWith(parser));

@@ -15,8 +15,6 @@
 ### Variables
 
 * [isParseError](README.md#const-isparseerror)
-* [many1Satisfy](README.md#const-many1satisfy)
-* [manySatisfy](README.md#const-manysatisfy)
 * [pAsterisk](README.md#const-pasterisk)
 * [pCloseParen](README.md#const-pcloseparen)
 * [pColon](README.md#const-pcolon)
@@ -41,9 +39,7 @@
 * [flatMap](README.md#const-flatmap)
 * [followedBy](README.md#const-followedby)
 * [many](README.md#const-many)
-* [many1](README.md#const-many1)
-* [manyMinMax](README.md#const-manyminmax)
-* [manyMinMaxSatisfy](README.md#const-manyminmaxsatisfy)
+* [manySatisfy](README.md#const-manysatisfy)
 * [map](README.md#const-map)
 * [mapTo](README.md#const-mapto)
 * [notFollowedBy](README.md#const-notfollowedby)
@@ -51,6 +47,7 @@
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
+* [pEof](README.md#const-peof)
 * [parseWith](README.md#const-parsewith)
 * [parseWithOrThrow](README.md#const-parsewithorthrow)
 * [regexp](README.md#const-regexp)
@@ -72,18 +69,6 @@
 
 • **isParseError**: *isParseErrorProd* = 
   process.env.NODE_ENV === "production" ? isParseErrorProd : isParseErrorDev
-
-___
-
-### `Const` many1Satisfy
-
-• **many1Satisfy**: *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹number›, [ParserLike](interfaces/parserlike.md)‹string››* =  manyMinMaxSatisfy(1, Number.MAX_SAFE_INTEGER)
-
-___
-
-### `Const` manySatisfy
-
-• **manySatisfy**: *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹number›, [ParserLike](interfaces/parserlike.md)‹string››* =  manyMinMaxSatisfy(0, Number.MAX_SAFE_INTEGER)
 
 ___
 
@@ -440,15 +425,19 @@ ___
 
 ### `Const` eof
 
-▸ **eof**(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *undefined*
+▸ **eof**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *[ParserLike](interfaces/parserlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
+`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
 
-**Returns:** *undefined*
+**Returns:** *[ParserLike](interfaces/parserlike.md)‹T›*
 
 ___
 
@@ -494,31 +483,7 @@ ___
 
 ### `Const` many
 
-▸ **many**<**T**>(): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
-
-___
-
-### `Const` many1
-
-▸ **many1**<**T**>(): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
-
-___
-
-### `Const` manyMinMax
-
-▸ **manyMinMax**<**T**>(`min`: number, `max`: number): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+▸ **many**<**T**>(`options`: object): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -526,25 +491,23 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`min` | number |
-`max` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | object |  {} |
 
 **Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
 
 ___
 
-### `Const` manyMinMaxSatisfy
+### `Const` manySatisfy
 
-▸ **manyMinMaxSatisfy**(`min`: number, `max`: number): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›, [ParserLike](interfaces/parserlike.md)‹string››*
+▸ **manySatisfy**(`options`: object): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›, [ParserLike](interfaces/parserlike.md)‹string››*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`min` | number |
-`max` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | object |  {} |
 
 **Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›, [ParserLike](interfaces/parserlike.md)‹string››*
 
@@ -679,6 +642,20 @@ Name | Type |
 `default_` | T |
 
 **Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T | undefined›, [ParserLike](interfaces/parserlike.md)‹T››*
+
+___
+
+### `Const` pEof
+
+▸ **pEof**(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *undefined*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
+
+**Returns:** *undefined*
 
 ___
 
