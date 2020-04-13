@@ -24,6 +24,7 @@
 * [HttpRequestPreconditionsLike](interfaces/httprequestpreconditionslike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
 * [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
+* [MediaRange](interfaces/mediarange.md)
 * [MediaType](interfaces/mediatype.md)
 * [URI](interfaces/uri.md)
 
@@ -48,7 +49,6 @@
 * [mediaTypeToString](README.md#const-mediatypetostring)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
-* [toTokenOrQuotedString](README.md#const-totokenorquotedstring)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
@@ -74,13 +74,13 @@ ___
 
 ### `Const` parseMediaType
 
-• **parseMediaType**: *OperatorLike‹string, undefined | [MediaType](interfaces/mediatype.md)›* =  parseWith(pMediaType)
+• **parseMediaType**: *OperatorLike‹string, undefined | [MediaType](interfaces/mediatype.md)›* =  parseWith(pMediaTypeEof)
 
 ___
 
 ### `Const` parseMediaTypeOrThrow
 
-• **parseMediaTypeOrThrow**: *OperatorLike‹string, [MediaType](interfaces/mediatype.md)›* = parseWithOrThrow(pMediaType)
+• **parseMediaTypeOrThrow**: *OperatorLike‹string, [MediaType](interfaces/mediatype.md)›* =  parseWithOrThrow(pMediaTypeEof)
 
 ## Functions
 
@@ -175,7 +175,7 @@ ___
 
 ###  getHeaderValue
 
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string*
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string | undefined*
 
 **Parameters:**
 
@@ -184,32 +184,9 @@ Name | Type |
 `headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
 `key` | [HttpStandardHeader](enums/httpstandardheader.md) |
 
-**Returns:** *string*
+**Returns:** *string | undefined*
 
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
-`key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
-
-**Returns:** *string*
-
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md), `orDefault`: string): *string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
-`key` | [HttpStandardHeader](enums/httpstandardheader.md) |
-`orDefault` | string |
-
-**Returns:** *string*
-
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md), `orDefault`: string): *string*
+▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string | undefined*
 
 **Parameters:**
 
@@ -217,9 +194,8 @@ Name | Type |
 ------ | ------ |
 `headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
 `key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
-`orDefault` | string |
 
-**Returns:** *string*
+**Returns:** *string | undefined*
 
 ___
 
@@ -272,20 +248,6 @@ Name | Type |
 `body` | T |
 
 **Returns:** *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
-
-___
-
-### `Const` toTokenOrQuotedString
-
-▸ **toTokenOrQuotedString**(`input`: string): *string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`input` | string |
-
-**Returns:** *string*
 
 ___
 

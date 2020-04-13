@@ -13,7 +13,7 @@
 * [acceptedCharsets](httppreferenceslike.md#acceptedcharsets)
 * [acceptedEncodings](httppreferenceslike.md#acceptedencodings)
 * [acceptedLanguages](httppreferenceslike.md#acceptedlanguages)
-* [acceptedMediaTypes](httppreferenceslike.md#acceptedmediatypes)
+* [acceptedMediaRanges](httppreferenceslike.md#acceptedmediaranges)
 
 ## Properties
 
@@ -35,6 +35,6 @@ ___
 
 ___
 
-###  acceptedMediaTypes
+###  acceptedMediaRanges
 
-• **acceptedMediaTypes**: *keyof string[]*
+• **acceptedMediaRanges**: *keyof MediaRange[]*
