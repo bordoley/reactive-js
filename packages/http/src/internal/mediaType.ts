@@ -3,7 +3,7 @@ import {
   eof,
   pForwardSlash,
   map,
-  ParserLike,
+  Parser,
   parseWith,
   parseWithOrThrow,
 } from "@reactive-js/parser-combinators";
@@ -12,7 +12,7 @@ import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import { MediaType } from "./interfaces";
 
 /** @ignore */
-export const pMediaType: ParserLike<MediaType> = pipe(
+export const pMediaType: Parser<MediaType> = pipe(
   concat(pToken, pForwardSlash, pToken, pParams),
   map(([type, , subtype, params]) => ({
     type,

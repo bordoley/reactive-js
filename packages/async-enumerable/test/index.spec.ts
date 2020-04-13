@@ -19,7 +19,7 @@ import {
   ofValue,
   toValue,
 } from "@reactive-js/observable";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 
 test("reduce", () => {
   const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
@@ -126,7 +126,7 @@ test("fromIterable", () => {
   const enumerator = fromIterable([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
 
   const result: number[] = [];
-  let error: ErrorLike | undefined = undefined;
+  let error: Exception | undefined = undefined;
   pipe(
     enumerator,
     onNotify(x => result.push(x)),

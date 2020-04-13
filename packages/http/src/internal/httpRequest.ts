@@ -1,4 +1,4 @@
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
@@ -16,17 +16,17 @@ import {
 import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
 import {
   HttpMethod,
-  URI,
-  HttpHeadersLike,
-  HttpPreferencesLike,
-  HttpRequestLike,
-  HttpResponseLike,
-  HttpServerRequestLike,
+  URILike,
+  HttpHeaders,
+  HttpPreferences,
+  HttpRequest,
+  HttpResponse,
+  HttpServerRequest,
   HttpStatusCode,
-  HttpContentRequestLike,
+  HttpContentRequest,
 } from "./interfaces";
 
-declare class URL implements URI {
+declare class URL implements URILike {
   readonly hash: string;
   readonly host: string;
   readonly hostname: string;
@@ -43,16 +43,16 @@ declare class URL implements URI {
 
 export const createHttpRequest = <T>(
   method: HttpMethod,
-  uri: string | URI,
+  uri: string | URILike,
   options: {
     content?: T;
     expectContinue?: boolean;
-    headers?: HttpHeadersLike;
-    preferences?: HttpPreferencesLike;
+    headers?: HttpHeaders;
+    preferences?: HttpPreferences;
     httpVersionMajor?: number;
     httpVersionMinor?: number;
   } = {},
-): HttpRequestLike<T> => ({
+): HttpRequest<T> => ({
   ...options,
   expectContinue: options.expectContinue || false,
   headers: options.headers || {},
@@ -63,8 +63,8 @@ export const createHttpRequest = <T>(
 });
 
 export const createRedirectHttpRequest = <TReq, TResp>(
-  response: HttpResponseLike<TResp>,
-): OperatorLike<HttpRequestLike<TReq>, HttpRequestLike<TReq>> => request => {
+  response: HttpResponse<TResp>,
+): Operator<HttpRequest<TReq>, HttpRequest<TReq>> => request => {
   const { content, method } = request;
   const { location, statusCode } = response;
 
@@ -80,7 +80,7 @@ export const createRedirectHttpRequest = <TReq, TResp>(
     method: redirectToGet ? HttpMethod.GET : method,
 
     // This function is only called if location is undefined.
-    uri: location as URI,
+    uri: location as URILike,
   };
 };
 
@@ -88,8 +88,8 @@ const parseURIFromHeaders = (
   protocol: "http" | "https",
   path: string,
   httpVersionMajor: number,
-  headers: HttpHeadersLike,
-): URI => {
+  headers: HttpHeaders,
+): URILike => {
   const forwardedProtocol = getHeaderValue(
     headers,
     HttpExtensiondHeader.XForwardedProto,
@@ -127,12 +127,12 @@ export const parseHttpRequestFromHeaders = <T>({
 }: {
   method: HttpMethod;
   path: string;
-  headers: HttpHeadersLike;
+  headers: HttpHeaders;
   body: T;
   httpVersionMajor: number;
   httpVersionMinor: number;
   isTransportSecure: boolean;
-}): HttpServerRequestLike<T> => {
+}): HttpServerRequest<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
   const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
   const expectContinue = rawExpectHeader === "100-continue";
@@ -163,7 +163,7 @@ export const writeHttpRequestHeaders = <T>(
     headers,
     preconditions,
     preferences,
-  }: HttpContentRequestLike<T>,
+  }: HttpContentRequest<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   if (expectContinue) {
@@ -185,9 +185,9 @@ export const writeHttpRequestHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
-export const disallowProtocolAndHostForwarding = <T>(): OperatorLike<
-  HttpServerRequestLike<T>,
-  HttpServerRequestLike<T>
+export const disallowProtocolAndHostForwarding = <T>(): Operator<
+  HttpServerRequest<T>,
+  HttpServerRequest<T>
 > => request => {
   const {
     httpVersionMajor,

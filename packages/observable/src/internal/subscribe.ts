@@ -1,5 +1,5 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike } from "./interfaces";
 import {
@@ -22,7 +22,7 @@ class DefaultSubscriber<T> extends AbstractSubscriber<T> {
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,
-): OperatorLike<ObservableLike<T>, DisposableLike> => (
+): Operator<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
 ): DisposableLike => {
   const subscriber = new DefaultSubscriber(scheduler);

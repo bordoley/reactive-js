@@ -5,20 +5,20 @@ import {
 } from "@reactive-js/scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 import { subscribe } from "./subscribe";
 
 class ToValueObserver<T> implements ObserverLike<T> {
   private _result: T | undefined = undefined;
   private hasResult = false;
-  private error: ErrorLike | undefined = undefined;
+  private error: Exception | undefined = undefined;
 
   onNotify(next: T) {
     this._result = next;
     this.hasResult = true;
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     this.error = error;
   }
 

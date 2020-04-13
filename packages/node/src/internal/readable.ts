@@ -12,8 +12,8 @@ import {
   SafeSubscriberLike,
   toSafeSubscriber,
   lift,
-  ObservableOperatorLike,
-  SubscriberOperatorLike,
+  ObservableOperator,
+  SubscriberOperator,
   using,
   mapTo,
   keep,
@@ -28,7 +28,7 @@ import {
   onNotify,
   assertSubscriberNotifyInContinuation,
 } from "@reactive-js/observable";
-import { pipe, OperatorLike } from "@reactive-js/pipe";
+import { pipe, Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 export const enum ReadableMode {
@@ -74,7 +74,7 @@ class ReadableSubscriber extends AbstractDelegatingSubscriber<
 
 const subscriberOperator = (
   readable: Readable,
-): SubscriberOperatorLike<ReadableMode, ReadableEvent> => subscriber => {
+): SubscriberOperator<ReadableMode, ReadableEvent> => subscriber => {
   const safeSubscriber = toSafeSubscriber(subscriber).add(() => {
     readable.pause();
     readable.removeListener("data", onData);
@@ -121,7 +121,7 @@ const disposeReadable = (readable: Readable) => {
 
 const observableOperator = (
   factory: () => Readable,
-): ObservableOperatorLike<ReadableMode, ReadableEvent> => observable =>
+): ObservableOperator<ReadableMode, ReadableEvent> => observable =>
   using(
     _ => {
       const readable = factory();
@@ -171,7 +171,7 @@ export const createReadableAsyncEnumerableFromBuffer = (
 
 export const stringToReadableAsyncEnumerable = (
   charset: string,
-): OperatorLike<
+): Operator<
   string,
   AsyncEnumerableLike<ReadableMode, ReadableEvent>
 > => str => {
@@ -184,7 +184,7 @@ export const unsupportedEncoding = Symbol("unsupportedEncoding");
 export const readableAsyncEnumerableToString = (
   charset: string,
   limit = Number.MAX_SAFE_INTEGER,
-): OperatorLike<
+): Operator<
   AsyncEnumerableLike<ReadableMode, ReadableEvent>,
   ObservableLike<string>
 > => readable =>

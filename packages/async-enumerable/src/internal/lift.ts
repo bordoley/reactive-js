@@ -1,6 +1,6 @@
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   map,
   onNotify,
   ignoreElements,
@@ -9,7 +9,7 @@ import {
 } from "@reactive-js/observable";
 import {
   AsyncEnumerableLike,
-  AsyncEnumerableOperatorLike,
+  AsyncEnumerableOperator,
   AsyncEnumeratorLike,
 } from "./interfaces";
 import { AsyncEnumerableImpl } from "./createAsyncEnumerable";
@@ -20,9 +20,9 @@ class LiftedAsyncEnumerable<TReqA, TReqB, TA, TB> extends AsyncEnumerableImpl<
   TB
 > {
   constructor(
-    op: ObservableOperatorLike<TReqB, TB>,
+    op: ObservableOperator<TReqB, TB>,
     readonly src: AsyncEnumerableLike<TReqA, TA>,
-    readonly obsOps: ObservableOperatorLike<any, any>[],
+    readonly obsOps: ObservableOperator<any, any>[],
     readonly reqOps: ((req: any) => any)[],
   ) {
     super(op);
@@ -32,7 +32,7 @@ class LiftedAsyncEnumerable<TReqA, TReqB, TA, TB> extends AsyncEnumerableImpl<
 const reducer = <T>(acc: T, next: (req: T) => T): T => next(acc);
 
 const createFactory = <TReqA, TReqB, TA, TB>(
-  obsOps: ObservableOperatorLike<any, any>[],
+  obsOps: ObservableOperator<any, any>[],
   reqOps: ((req: unknown) => any)[],
   requests: ObservableLike<TReqB>,
 ) => (enumerator: AsyncEnumeratorLike<TReqA, TA>) => {
@@ -55,7 +55,7 @@ const createFactory = <TReqA, TReqB, TA, TB>(
 
 const liftImpl = <TReqA, TReqB, TA, TB>(
   enumerable: AsyncEnumerableLike<TReqA, TA>,
-  obsOps: ObservableOperatorLike<any, any>[],
+  obsOps: ObservableOperator<any, any>[],
   reqOps: ((req: any) => any)[],
 ) => {
   const src =
@@ -69,8 +69,8 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 };
 
 export const lift = <TReq, TA, TB>(
-  op: ObservableOperatorLike<TA, TB>,
-): AsyncEnumerableOperatorLike<TReq, TA, TReq, TB> => enumerable => {
+  op: ObservableOperator<TA, TB>,
+): AsyncEnumerableOperator<TReq, TA, TReq, TB> => enumerable => {
   const obsOps =
     enumerable instanceof LiftedAsyncEnumerable
       ? [...enumerable.obsOps, op]
@@ -83,7 +83,7 @@ export const lift = <TReq, TA, TB>(
 
 export const liftReq = <TReqA, TReqB, T>(
   op: (req: TReqB) => TReqA,
-): AsyncEnumerableOperatorLike<TReqA, T, TReqB, T> => enumerable => {
+): AsyncEnumerableOperator<TReqA, T, TReqB, T> => enumerable => {
   const obsOps =
     enumerable instanceof LiftedAsyncEnumerable ? enumerable.obsOps : [];
   const reqOps =

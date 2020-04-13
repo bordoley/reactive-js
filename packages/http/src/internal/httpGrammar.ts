@@ -1,5 +1,5 @@
 import {
-  ParserLike,
+  Parser,
   pEquals,
   concat,
   or,
@@ -64,7 +64,7 @@ const pTChar = satisfy(
 );
 
 /** @ignore */
-export const pOWS: ParserLike<undefined> = charStream => {
+export const pOWS: Parser<undefined> = charStream => {
   while (charStream.move()) {
     const c = charStream.current;
     if (c !== ASCII.SPACE && c !== ASCII.HTAB) {
@@ -75,7 +75,7 @@ export const pOWS: ParserLike<undefined> = charStream => {
   return undefined;
 };
 
-const pQuotedString: ParserLike<string> = charStream => {
+const pQuotedString: Parser<string> = charStream => {
   let builder: number[] | undefined = undefined;
 
   charStream.move();
@@ -130,7 +130,7 @@ export const pToken = pipe(pTChar, manySatisfy({ min: 1 }));
 const pParameterName = pToken;
 const pParameterValue = pipe(pToken, or(pQuotedString));
 /** @ignore */
-export const pParameter: ParserLike<[string, string]> = pipe(
+export const pParameter: Parser<[string, string]> = pipe(
   concat(pParameterName, pEquals, pParameterValue),
   map(([k, , v]) => [k, v]),
 );
@@ -171,7 +171,7 @@ export const toTokenOrQuotedString = (input: string) => {
 };
 
 /** @ignore */
-export const pParams: ParserLike<{ readonly [key: string]: string }> = pipe(
+export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
   concat(pOWS, char(";"), pOWS, pParameter),
   map(([, , , values]) => values),
   many(),

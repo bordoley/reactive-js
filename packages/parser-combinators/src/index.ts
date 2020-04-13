@@ -1,5 +1,5 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { OperatorLike, pipe, compose } from "@reactive-js/pipe";
+import { Operator, pipe, compose } from "@reactive-js/pipe";
 
 export type CharCode = number;
 
@@ -8,7 +8,7 @@ export interface CharStreamLike extends EnumeratorLike<void, CharCode> {
   readonly src: string;
 }
 
-export interface ParserLike<T> {
+export type Parser<T> = {
   (input: CharStreamLike): T;
 }
 
@@ -80,69 +80,69 @@ export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
 
 export function concat<TA, TB>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-): ParserLike<[TA, TB]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+): Parser<[TA, TB]>;
 export function concat<TA, TB, TC>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-): ParserLike<[TA, TB, TC]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+): Parser<[TA, TB, TC]>;
 export function concat<TA, TB, TC, TD>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-): ParserLike<[TA, TB, TC, TD]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+): Parser<[TA, TB, TC, TD]>;
 export function concat<TA, TB, TC, TD, TE>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-  e: ParserLike<TE>,
-): ParserLike<[TA, TB, TC, TD, TE]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+  e: Parser<TE>,
+): Parser<[TA, TB, TC, TD, TE]>;
 export function concat<TA, TB, TC, TD, TE, TF>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-  e: ParserLike<TE>,
-  f: ParserLike<TF>,
-): ParserLike<[TA, TB, TC, TD, TE, TF]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+  e: Parser<TE>,
+  f: Parser<TF>,
+): Parser<[TA, TB, TC, TD, TE, TF]>;
 export function concat<TA, TB, TC, TD, TE, TF, TG>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-  e: ParserLike<TE>,
-  f: ParserLike<TF>,
-  g: ParserLike<TG>,
-): ParserLike<[TA, TB, TC, TD, TE, TF, TG]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+  e: Parser<TE>,
+  f: Parser<TF>,
+  g: Parser<TG>,
+): Parser<[TA, TB, TC, TD, TE, TF, TG]>;
 export function concat<TA, TB, TC, TD, TE, TF, TG, TH>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-  e: ParserLike<TE>,
-  f: ParserLike<TF>,
-  g: ParserLike<TG>,
-  h: ParserLike<TH>,
-): ParserLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+  e: Parser<TE>,
+  f: Parser<TF>,
+  g: Parser<TG>,
+  h: Parser<TH>,
+): Parser<[TA, TB, TC, TD, TE, TF, TG, TH]>;
 export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
-  a: ParserLike<TA>,
-  b: ParserLike<TB>,
-  c: ParserLike<TC>,
-  d: ParserLike<TD>,
-  e: ParserLike<TE>,
-  f: ParserLike<TF>,
-  g: ParserLike<TG>,
-  h: ParserLike<TH>,
-  i: ParserLike<TI>,
-): ParserLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  a: Parser<TA>,
+  b: Parser<TB>,
+  c: Parser<TC>,
+  d: Parser<TD>,
+  e: Parser<TE>,
+  f: Parser<TF>,
+  g: Parser<TG>,
+  h: Parser<TH>,
+  i: Parser<TI>,
+): Parser<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
 export function concat(
-  ...parsers: ParserLike<unknown>[]
-): ParserLike<unknown[]> {
+  ...parsers: Parser<unknown>[]
+): Parser<unknown[]> {
   return charStream => {
     const result = [];
     for (const parse of parsers) {
@@ -154,34 +154,34 @@ export function concat(
 }
 
 export const flatMap = <TA, TB>(
-  mapper: (result: TA) => ParserLike<TB>,
-): OperatorLike<ParserLike<TA>, ParserLike<TB>> => parser => charStream => {
+  mapper: (result: TA) => Parser<TB>,
+): Operator<Parser<TA>, Parser<TB>> => parser => charStream => {
   const nextParser = pipe(charStream, parser, mapper);
   return nextParser(charStream);
 };
 
 export const map = <TA, TB>(
   mapper: (result: TA) => TB,
-): OperatorLike<ParserLike<TA>, ParserLike<TB>> => parser =>
+): Operator<Parser<TA>, Parser<TB>> => parser =>
   compose(parser, mapper);
 
 export const mapTo = <TA, TB>(
   v: TB,
-): OperatorLike<ParserLike<TA>, ParserLike<TB>> => {
+): Operator<Parser<TA>, Parser<TB>> => {
   const mapper = (_: TA) => v;
   return map(mapper);
 };
 
 export const parseWithOrThrow = <T>(
-  parse: ParserLike<T>,
-): OperatorLike<string, T> => input => {
+  parse: Parser<T>,
+): Operator<string, T> => input => {
   const charStream = createCharStream(input);
   return parse(charStream);
 };
 
 export const parseWith = <T>(
-  parse: ParserLike<T>,
-): OperatorLike<string, T | undefined> => {
+  parse: Parser<T>,
+): Operator<string, T | undefined> => {
   const doParse = parseWithOrThrow(parse);
   return input => {
     try {
@@ -196,8 +196,8 @@ export const parseWith = <T>(
 };
 
 export const or = <T>(
-  otherParse: ParserLike<T>,
-): OperatorLike<ParserLike<T>, ParserLike<T>> => parse => charStream => {
+  otherParse: Parser<T>,
+): Operator<Parser<T>, Parser<T>> => parse => charStream => {
   const index = charStream.index;
 
   try {
@@ -215,15 +215,15 @@ export const or = <T>(
 export const pEof = (charStream: CharStreamLike): undefined =>
   charStream.move() ? throwParseError(charStream) : undefined;
 
-export const eof = <T>(parser: ParserLike<T>): ParserLike<T> => charStream => {
+export const eof = <T>(parser: Parser<T>): Parser<T> => charStream => {
   const result = parser(charStream);
   pEof(charStream);
   return result;
 };
 
 export const followedBy = (
-  pnext: ParserLike<unknown>,
-): ParserLike<unknown> => charStream => {
+  pnext: Parser<unknown>,
+): Parser<unknown> => charStream => {
   const index = charStream.index;
   pnext(charStream);
   charStream.index = index;
@@ -231,8 +231,8 @@ export const followedBy = (
 };
 
 export const notFollowedBy = (
-  pnext: ParserLike<unknown>,
-): ParserLike<unknown> => charStream => {
+  pnext: Parser<unknown>,
+): Parser<unknown> => charStream => {
   const index = charStream.index;
   try {
     pnext(charStream);
@@ -252,9 +252,9 @@ export const many = <T>(
     min?: number;
     max?: number;
   } = {},
-): OperatorLike<
-  ParserLike<T>,
-  ParserLike<readonly T[]>
+): Operator<
+  Parser<T>,
+  Parser<readonly T[]>
 > => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
 
@@ -279,8 +279,8 @@ export const many = <T>(
 };
 
 export const optional = <T>(
-  parse: ParserLike<T>,
-): ParserLike<T | undefined> => charStream => {
+  parse: Parser<T>,
+): Parser<T | undefined> => charStream => {
   const index = charStream.index;
   try {
     return parse(charStream);
@@ -296,15 +296,15 @@ export const optional = <T>(
 
 export const orDefault = <T>(
   default_: T,
-): OperatorLike<ParserLike<T | undefined>, ParserLike<T>> =>
+): Operator<Parser<T | undefined>, Parser<T>> =>
   compose(
     optional,
     map(result => result || default_),
   );
 
 export const sepBy1 = <T>(
-  separator: ParserLike<unknown>,
-): OperatorLike<ParserLike<T>, ParserLike<readonly T[]>> => parser =>
+  separator: Parser<unknown>,
+): Operator<Parser<T>, Parser<readonly T[]>> => parser =>
   pipe(
     concat(
       parser,
@@ -318,18 +318,18 @@ export const sepBy1 = <T>(
   );
 
 export const sepBy = <T>(
-  separator: ParserLike<unknown>,
-): OperatorLike<ParserLike<T>, ParserLike<readonly T[]>> =>
+  separator: Parser<unknown>,
+): Operator<Parser<T>, Parser<readonly T[]>> =>
   compose(sepBy1(separator), orDefault<readonly T[]>([]));
 
-export const ofValue = <T>(value: T): ParserLike<T> => _ => value;
+export const ofValue = <T>(value: T): Parser<T> => _ => value;
 
-export const compute = <T>(f: () => T): ParserLike<T> => _ => f();
+export const compute = <T>(f: () => T): Parser<T> => _ => f();
 
 export const throws = <T>(charStream: CharStreamLike): T =>
   throwParseError(charStream);
 
-export const string = (str: string): ParserLike<string> => charStream => {
+export const string = (str: string): Parser<string> => charStream => {
   charStream.move();
 
   const match = charStream.src.startsWith(str, charStream.index);
@@ -343,7 +343,7 @@ export const string = (str: string): ParserLike<string> => charStream => {
 
 export const satisfy = (
   f: (char: CharCode) => boolean,
-): ParserLike<CharCode> => charStream => {
+): Parser<CharCode> => charStream => {
   if (charStream.move()) {
     const current = charStream.current;
 
@@ -355,7 +355,7 @@ export const satisfy = (
   return throwParseError(charStream);
 };
 
-export const char = (c: string): ParserLike<CharCode> => {
+export const char = (c: string): Parser<CharCode> => {
   const charCode = c.charCodeAt(0);
   return satisfy(x => x === charCode);
 };
@@ -389,9 +389,9 @@ export const manySatisfy = (
     min?: number;
     max?: number;
   } = {},
-): OperatorLike<
-  ParserLike<CharCode>,
-  ParserLike<string>
+): Operator<
+  Parser<CharCode>,
+  Parser<string>
 > => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
   const first = charStream.index + 1;
@@ -418,7 +418,7 @@ export const manySatisfy = (
 export const regexp = (
   input: string,
   options: { group?: number; flags?: string } = {},
-): ParserLike<string> => {
+): Parser<string> => {
   const { group = 0, flags = "" } = options;
 
   /** following snippet adapted from Parsimmon */

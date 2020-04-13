@@ -6,7 +6,7 @@ import {
   ObservableLike,
 } from "@reactive-js/observable";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
-import { StateUpdaterLike, AsyncEnumerableLike } from "./interfaces";
+import { StateUpdater, AsyncEnumerableLike } from "./interfaces";
 
 /**
  * Returns a new `AsyncEnumerableLike` instance that applies an accumulator function
@@ -36,12 +36,12 @@ export const createActionReducer = <TAction, T>(
   return createAsyncEnumerable(operator);
 };
 
-const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
+const stateStoreReducer = <T>(state: T, action: StateUpdater<T>) =>
   action(state);
 
 /**
  * Returns a new `AsyncEnumerableLike` instance that stores state which can
- * be updated by notifying the instance with a `StateUpdaterLike` that computes a
+ * be updated by notifying the instance with a `StateUpdater` that computes a
  * new state based upon the previous state.
  *
  * @param initialState The initial accumulation value.
@@ -51,5 +51,5 @@ const stateStoreReducer = <T>(state: T, action: StateUpdaterLike<T>) =>
 export const createStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): AsyncEnumerableLike<StateUpdaterLike<T>, T> =>
+): AsyncEnumerableLike<StateUpdater<T>, T> =>
   createActionReducer(stateStoreReducer, initialState, equals);

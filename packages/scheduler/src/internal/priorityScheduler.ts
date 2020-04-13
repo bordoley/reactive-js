@@ -10,7 +10,7 @@ import {
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
-interface ScheduledTaskLike {
+type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
   dueTime: number;
   readonly priority: number;
@@ -89,14 +89,14 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
   }
 }
 
-const comparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
+const comparator = (a: ScheduledTask, b: ScheduledTask) => {
   let diff = 0;
   diff = diff !== 0 ? diff : a.priority - b.priority;
   diff = diff !== 0 ? diff : a.taskID - b.taskID;
   return diff;
 };
 
-const delayedComparator = (a: ScheduledTaskLike, b: ScheduledTaskLike) => {
+const delayedComparator = (a: ScheduledTask, b: ScheduledTask) => {
   let diff = 0;
   diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
   diff = diff !== 0 ? diff : a.taskID - b.taskID;
@@ -118,7 +118,7 @@ const move = (scheduler: PrioritySchedulerImpl): boolean => {
 
 const peek = (
   scheduler: PrioritySchedulerImpl,
-): ScheduledTaskLike | undefined => {
+): ScheduledTask | undefined => {
   const { delayed, queue } = scheduler;
   const now = scheduler.now;
 
@@ -141,7 +141,7 @@ const peek = (
     }
   }
 
-  let task: ScheduledTaskLike | undefined = undefined;
+  let task: ScheduledTask | undefined = undefined;
   while (true) {
     task = queue.peek();
 
@@ -164,11 +164,11 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable
   implements PrioritySchedulerLike, DisposableLike {
   inContinuation = false;
 
-  readonly queue: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
+  readonly queue: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
     comparator,
   );
 
-  readonly delayed: PriorityQueueLike<ScheduledTaskLike> = createPriorityQueue(
+  readonly delayed: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
   );
 

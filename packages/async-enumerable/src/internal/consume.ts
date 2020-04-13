@@ -11,9 +11,9 @@ import {
   onDispose,
   empty,
   withLatestFrom,
-  ObservableOperatorLike,
+  ObservableOperator,
 } from "@reactive-js/observable";
-import { compose, pipe, OperatorLike } from "@reactive-js/pipe";
+import { compose, pipe, Operator } from "@reactive-js/pipe";
 import { identity } from "./identity";
 import { AsyncEnumeratorLike } from "./interfaces";
 import { lift } from "./lift";
@@ -37,7 +37,7 @@ export const enum ReducerRequestType {
 /**
  *
  */
-export interface ContinueRequestLike<TReq, TAcc> {
+export type ContinueRequest<TReq, TAcc> = {
   /**
    *
    */
@@ -57,7 +57,7 @@ export interface ContinueRequestLike<TReq, TAcc> {
 /**
  *
  */
-export interface DoneRequestLike<TAcc> {
+export type DoneRequest<TAcc> = {
   /**
    *
    */
@@ -73,18 +73,18 @@ export interface DoneRequestLike<TAcc> {
  *
  */
 export type ReducerRequest<TReq, TAcc> =
-  | ContinueRequestLike<TReq, TAcc>
-  | DoneRequestLike<TAcc>;
+  | ContinueRequest<TReq, TAcc>
+  | DoneRequest<TAcc>;
 
 const createAcc = <TReq, T, TAcc>(enumerator: AsyncEnumeratorLike<TReq, T>) => {
   const onNotifyDispatch = (
-    continueRequest: ContinueRequestLike<TReq, TAcc>,
+    continueRequest: ContinueRequest<TReq, TAcc>,
   ) => {
     enumerator.dispatch(continueRequest.req);
   };
 
   return pipe(
-    identity<ContinueRequestLike<TReq, TAcc>>(),
+    identity<ContinueRequest<TReq, TAcc>>(),
     lift(onNotify(onNotifyDispatch)),
   );
 };
@@ -95,8 +95,8 @@ const createResources = <TReq, T, TAcc>(
   scheduler: SchedulerLike,
 ): [
   AsyncEnumeratorLike<
-    ContinueRequestLike<TReq, TAcc>,
-    ContinueRequestLike<TReq, TAcc>
+    ContinueRequest<TReq, TAcc>,
+    ContinueRequest<TReq, TAcc>
   >,
   AsyncEnumeratorLike<ObservableLike<T>, ObservableLike<T>>,
 ] => [
@@ -107,17 +107,17 @@ const createResources = <TReq, T, TAcc>(
 const createFactory = <TReq, T, TAcc>(
   withLatestFrom: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperatorLike<T, ReducerRequest<TReq, TAcc>>,
+  ) => ObservableOperator<T, ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
   enumerator: AsyncEnumeratorLike<TReq, T>,
 ) => (
   request: AsyncEnumeratorLike<
-    ContinueRequestLike<TReq, TAcc>,
-    ContinueRequestLike<TReq, TAcc>
+    ContinueRequest<TReq, TAcc>,
+    ContinueRequest<TReq, TAcc>
   >,
   src: AsyncEnumeratorLike<ObservableLike<T>, ObservableLike<T>>,
 ): ObservableLike<TAcc> => {
-  const mapReducerRequestToAcc: ObservableOperatorLike<
+  const mapReducerRequestToAcc: ObservableOperator<
     ReducerRequest<TReq, TAcc>,
     TAcc
   > = map(({ acc }) => acc);
@@ -154,9 +154,9 @@ const createFactory = <TReq, T, TAcc>(
 const consumeImpl = <TReq, T, TAcc>(
   withLatestFrom: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperatorLike<T, ReducerRequest<TReq, TAcc>>,
+  ) => ObservableOperator<T, ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): OperatorLike<
+): Operator<
   AsyncEnumeratorLike<TReq, T>,
   ObservableLike<TAcc>
 > => enumerator =>
@@ -168,7 +168,7 @@ const consumeImpl = <TReq, T, TAcc>(
 export const consume = <TReq, T, TAcc>(
   reducer: (acc: TAcc, next: T) => ReducerRequest<TReq, TAcc>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): OperatorLike<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
+): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
   const withLatestSelector = (next: T, acc: TAcc) => reducer(acc, next);
 
   return consumeImpl(acc => withLatestFrom(acc, withLatestSelector), initial);
@@ -177,7 +177,7 @@ export const consume = <TReq, T, TAcc>(
 export const consumeAsync = <TReq, T, TAcc>(
   reducer: (acc: TAcc, next: T) => ObservableLike<ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): OperatorLike<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
+): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
   const withLatestSelector = (next: T, acc: TAcc) => reducer(acc, next);
 
   return consumeImpl(

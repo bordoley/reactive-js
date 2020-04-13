@@ -1932,7 +1932,7 @@ ___
 
 ### `Const` readableAsyncEnumerableToString
 
-▸ **readableAsyncEnumerableToString**(`charset`: string, `limit`: number): *OperatorLike‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
+▸ **readableAsyncEnumerableToString**(`charset`: string, `limit`: number): *Operator‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
 
 **Parameters:**
 
@@ -1941,7 +1941,7 @@ Name | Type | Default |
 `charset` | string | - |
 `limit` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *OperatorLike‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
+**Returns:** *Operator‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
 
 ___
 
@@ -1961,7 +1961,7 @@ ___
 
 ### `Const` stringToReadableAsyncEnumerable
 
-▸ **stringToReadableAsyncEnumerable**(`charset`: string): *OperatorLike‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
+▸ **stringToReadableAsyncEnumerable**(`charset`: string): *Operator‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
 
 **Parameters:**
 
@@ -1969,13 +1969,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *OperatorLike‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
+**Returns:** *Operator‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: function): *AsyncEnumerableOperatorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+▸ **transform**(`factory`: function): *AsyncEnumerableOperator‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
 
 **Parameters:**
 
@@ -1983,4 +1983,4 @@ ___
 
 ▸ (): *Transform*
 
-**Returns:** *AsyncEnumerableOperatorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+**Returns:** *AsyncEnumerableOperator‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*

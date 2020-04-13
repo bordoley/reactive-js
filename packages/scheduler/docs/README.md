@@ -13,9 +13,12 @@
 * [CallbackSchedulerLike](interfaces/callbackschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
-* [SchedulerContinuationRunStatusChangedListenerLike](interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
+
+### Type aliases
+
+* [SchedulerContinuationRunStatusChangedListenerLike](README.md#schedulercontinuationrunstatuschangedlistenerlike)
 
 ### Functions
 
@@ -24,6 +27,14 @@
 * [schedule](README.md#schedule)
 * [scheduleCallback](README.md#const-schedulecallback)
 * [toSchedulerWithPriority](README.md#const-toschedulerwithpriority)
+
+## Type aliases
+
+###  SchedulerContinuationRunStatusChangedListenerLike
+
+Ƭ **SchedulerContinuationRunStatusChangedListenerLike**: *object*
+
+#### Type declaration:
 
 ## Functions
 
@@ -98,7 +109,7 @@ ___
 
 ### `Const` toSchedulerWithPriority
 
-▸ **toSchedulerWithPriority**(`priority`: number): *OperatorLike‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), [SchedulerLike](interfaces/schedulerlike.md)›*
+▸ **toSchedulerWithPriority**(`priority`: number): *Operator‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), [SchedulerLike](interfaces/schedulerlike.md)›*
 
 Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
 
@@ -108,4 +119,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `priority` | number | The priority to schedule work at.  |
 
-**Returns:** *OperatorLike‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), [SchedulerLike](interfaces/schedulerlike.md)›*
+**Returns:** *Operator‹[PrioritySchedulerLike](interfaces/priorityschedulerlike.md), [SchedulerLike](interfaces/schedulerlike.md)›*

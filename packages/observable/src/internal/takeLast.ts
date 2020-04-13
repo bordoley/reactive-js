@@ -1,5 +1,5 @@
 import { pipe } from "@reactive-js/pipe";
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { empty } from "./empty";
 import {
@@ -48,7 +48,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast = <T>(count = 1): ObservableOperatorLike<T, T> => {
+export const takeLast = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeLastSubscriber(subscriber, count);
   return observable =>

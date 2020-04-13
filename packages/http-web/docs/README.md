@@ -8,17 +8,14 @@
 
 * [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
 
-### Interfaces
-
-* [HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md)
-* [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)
-* [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md)
-* [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
-
 ### Type aliases
 
 * [HttpBody](README.md#httpbody)
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
+* [HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin)
+* [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)
+* [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete)
+* [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading)
 
 ### Functions
 
@@ -34,18 +31,50 @@ ___
 
 ###  HttpClientRequestStatus
 
-Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin) | [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading) | [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete) | [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)*
+
+___
+
+###  HttpClientRequestStatusBegin
+
+Ƭ **HttpClientRequestStatusBegin**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusResponseReady
+
+Ƭ **HttpClientRequestStatusResponseReady**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusUploadComplete
+
+Ƭ **HttpClientRequestStatusUploadComplete**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusUploading
+
+Ƭ **HttpClientRequestStatusUploading**: *object*
+
+#### Type declaration:
 
 ## Functions
 
 ### `Const` sendHttpRequest
 
-▸ **sendHttpRequest**(`request`: HttpContentRequestLike‹[HttpBody](README.md#httpbody)›): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+▸ **sendHttpRequest**(`request`: HttpContentRequest‹[HttpBody](README.md#httpbody)›): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | HttpContentRequestLike‹[HttpBody](README.md#httpbody)› |
+`request` | HttpContentRequest‹[HttpBody](README.md#httpbody)› |
 
 **Returns:** *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*

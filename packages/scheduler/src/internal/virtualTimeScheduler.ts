@@ -5,7 +5,7 @@ import {
 import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
-interface VirtualTask {
+type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
   dueTime: number;
   id: number;

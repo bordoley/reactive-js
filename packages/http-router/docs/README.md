@@ -4,13 +4,10 @@
 
 ## Index
 
-### Interfaces
-
-* [HttpRoutedRequestLike](interfaces/httproutedrequestlike.md)
-
 ### Type aliases
 
 * [HttpRequestRouterHandler](README.md#httprequestrouterhandler)
+* [HttpRoutedRequest](README.md#httproutedrequest)
 
 ### Functions
 
@@ -20,13 +17,19 @@
 
 ###  HttpRequestRouterHandler
 
-Ƭ **HttpRequestRouterHandler**: *OperatorLike‹[HttpRoutedRequestLike](interfaces/httproutedrequestlike.md)‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
+Ƭ **HttpRequestRouterHandler**: *Operator‹[HttpRoutedRequest](README.md#httproutedrequest)‹TReq›, ObservableLike‹HttpResponse‹TResp›››*
+
+___
+
+###  HttpRoutedRequest
+
+Ƭ **HttpRoutedRequest**: *HttpRequest‹T› & object*
 
 ## Functions
 
 ### `Const` createRouter
 
-▸ **createRouter**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››): *OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
+▸ **createRouter**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: Operator‹HttpRequest‹TReq›, ObservableLike‹HttpResponse‹TResp›››): *Operator‹HttpRequest‹TReq›, ObservableLike‹HttpResponse‹TResp›››*
 
 **Type parameters:**
 
@@ -39,6 +42,6 @@
 Name | Type |
 ------ | ------ |
 `routes` | object |
-`notFoundHandler` | OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp››› |
+`notFoundHandler` | Operator‹HttpRequest‹TReq›, ObservableLike‹HttpResponse‹TResp››› |
 
-**Returns:** *OperatorLike‹HttpRequestLike‹TReq›, ObservableLike‹HttpResponseLike‹TResp›››*
+**Returns:** *Operator‹HttpRequest‹TReq›, ObservableLike‹HttpResponse‹TResp›››*

@@ -5,7 +5,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 
-interface CombineLatestCtx<T> {
+type CombineLatestCtx<T> = {
   completedCount: number;
   readonly latest: Array<unknown>;
   readyCount: number;

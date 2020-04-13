@@ -4,9 +4,9 @@
 
 ## Index
 
-### Interfaces
+### Type aliases
 
-* [LocationLike](interfaces/locationlike.md)
+* [Location](README.md#location)
 
 ### Variables
 
@@ -17,11 +17,19 @@
 * [fromEvent](README.md#const-fromevent)
 * [getHostScheduler](README.md#const-gethostscheduler)
 
+## Type aliases
+
+###  Location
+
+Ƭ **Location**: *object*
+
+#### Type declaration:
+
 ## Variables
 
 ### `Const` history
 
-• **history**: *AsyncEnumerableLike‹[LocationLike](interfaces/locationlike.md), [LocationLike](interfaces/locationlike.md)›* =  _history
+• **history**: *AsyncEnumerableLike‹[Location](README.md#location), [Location](README.md#location)›* =  _history
 
 ## Functions
 

@@ -1,17 +1,17 @@
 import { httpContentEncodings } from "./httpContentEncodings";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import {
-  HttpContentLike,
-  HttpHeadersLike,
+  HttpContent,
+  HttpHeaders,
   HttpContentEncoding,
 } from "./interfaces";
 import { parseMediaType, mediaTypeToString } from "./mediaType";
 
 /** @ignore */
 export const parseHttpContentFromHeaders = <T>(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   body: T,
-): HttpContentLike<T> | undefined => {
+): HttpContent<T> | undefined => {
   const contentEncodingString =
     getHeaderValue(headers, HttpStandardHeader.ContentEncoding) || "";
   const contentEncodings = contentEncodingString
@@ -41,7 +41,7 @@ export const parseHttpContentFromHeaders = <T>(
 
 /** @ignore */
 export const writeHttpContentHeaders = <T>(
-  content: HttpContentLike<T>,
+  content: HttpContent<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;

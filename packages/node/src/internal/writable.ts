@@ -9,10 +9,10 @@ import { createDisposableValue } from "@reactive-js/disposable";
 import {
   AbstractDelegatingSubscriber,
   SafeSubscriberLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   toSafeSubscriber,
   lift,
-  SubscriberOperatorLike,
+  SubscriberOperator,
   using,
   assertSubscriberNotifyInContinuation,
 } from "@reactive-js/observable";
@@ -52,7 +52,7 @@ class WritableSubscriber extends AbstractDelegatingSubscriber<
 
 const subscriberOperator = (
   writable: Writable,
-): SubscriberOperatorLike<ReadableEvent, ReadableMode> => subscriber => {
+): SubscriberOperator<ReadableEvent, ReadableMode> => subscriber => {
   const safeSubscriber = toSafeSubscriber(subscriber).add(() => {
     writable.removeListener("drain", onDrain);
     writable.removeListener("error", onError);
@@ -96,7 +96,7 @@ const disposeWritable = (writable: Writable) => {
 
 const observableOperator = (
   factory: () => Writable,
-): ObservableOperatorLike<ReadableEvent, ReadableMode> => observable =>
+): ObservableOperator<ReadableEvent, ReadableMode> => observable =>
   using(
     _ => createDisposableValue(factory(), disposeWritable),
     writable => pipe(observable, operator(writable.value)),

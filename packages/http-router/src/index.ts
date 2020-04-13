@@ -1,14 +1,14 @@
-import { HttpRequestLike, HttpResponseLike } from "@reactive-js/http";
+import { HttpRequest, HttpResponse } from "@reactive-js/http";
 import { ObservableLike } from "@reactive-js/observable";
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 
-export interface HttpRoutedRequestLike<T> extends HttpRequestLike<T> {
+export type HttpRoutedRequest<T> = HttpRequest<T> & {
   readonly params: { readonly [param: string]: string };
 }
 
-export type HttpRequestRouterHandler<TReq, TResp> = OperatorLike<
-  HttpRoutedRequestLike<TReq>,
-  ObservableLike<HttpResponseLike<TResp>>
+export type HttpRequestRouterHandler<TReq, TResp> = Operator<
+  HttpRoutedRequest<TReq>,
+  ObservableLike<HttpResponse<TResp>>
 >;
 
 // Prefix tree
@@ -131,26 +131,26 @@ const findHandler = <TReq, TResp>(
 
 export const createRouter = <TReq, TResp>(
   routes: { [path: string]: HttpRequestRouterHandler<TReq, TResp> },
-  notFoundHandler: OperatorLike<
-    HttpRequestLike<TReq>,
-    ObservableLike<HttpResponseLike<TResp>>
+  notFoundHandler: Operator<
+    HttpRequest<TReq>,
+    ObservableLike<HttpResponse<TResp>>
   >,
-): OperatorLike<
-  HttpRequestLike<TReq>,
-  ObservableLike<HttpResponseLike<TResp>>
+): Operator<
+  HttpRequest<TReq>,
+  ObservableLike<HttpResponse<TResp>>
 > => {
   const router = Object.entries(routes).reduce(
     (acc, [path, handler]) => addHandler(acc, createSegments(path), handler),
     emptyRouter as Router<TReq, TResp>,
   );
 
-  return (request: HttpRequestLike<TReq>) => {
+  return (request: HttpRequest<TReq>) => {
     const segments = createSegments(request.uri.pathname);
     const result = findHandler(router, segments, {});
 
     if (result !== undefined) {
       const [handler, params] = result;
-      const requestWithParams: HttpRoutedRequestLike<TReq> = {
+      const requestWithParams: HttpRoutedRequest<TReq> = {
         ...request,
         params,
       };

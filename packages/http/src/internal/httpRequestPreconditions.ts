@@ -1,4 +1,4 @@
-import { HttpRequestPreconditionsLike } from "./interfaces";
+import { HttpRequestPreconditions } from "./interfaces";
 import { entityTagToString } from "./entityTag";
 import { httpDateTimeToString } from "./httpDateTime";
 import { HttpStandardHeader } from "./httpHeaders";
@@ -11,7 +11,7 @@ export const writeHttpRequestPreconditionsHeaders = (
     ifNoneMatch,
     ifUnmodifiedSince,
     ifRange,
-  }: HttpRequestPreconditionsLike,
+  }: HttpRequestPreconditions,
   writeHeader: (header: string, value: string) => void,
 ) => {
   if (ifMatch !== undefined) {
@@ -57,8 +57,8 @@ export const writeHttpRequestPreconditionsHeaders = (
 /** @ignore */
 /*
 export const parseHttpRequestPreconditionsFromHeaders = <T>(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   body: T,
-): HttpRequestPreconditionsLike | undefined => {
+): HttpRequestPreconditions | undefined => {
 
 };*/

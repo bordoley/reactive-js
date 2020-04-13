@@ -4,20 +4,38 @@
 
 ## Index
 
-### Interfaces
+### Type aliases
 
-* [OperatorLike](interfaces/operatorlike.md)
+* [Operator](README.md#operator)
 
 ### Functions
 
 * [compose](README.md#compose)
 * [pipe](README.md#pipe)
 
+## Type aliases
+
+###  Operator
+
+Ƭ **Operator**: *function*
+
+A Unary function that transforms a value of type A into a value of type B
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
+
 ## Functions
 
 ###  compose
 
-▸ **compose**<**T**, **A**, **B**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›): *[OperatorLike](interfaces/operatorlike.md)‹T, B›*
+▸ **compose**<**T**, **A**, **B**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›): *[Operator](README.md#operator)‹T, B›*
 
 composes the source value through a series of unary functions.
 
@@ -33,12 +51,12 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, B›*
+**Returns:** *[Operator](README.md#operator)‹T, B›*
 
-▸ **compose**<**T**, **A**, **B**, **C**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›): *[OperatorLike](interfaces/operatorlike.md)‹T, C›*
+▸ **compose**<**T**, **A**, **B**, **C**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›): *[Operator](README.md#operator)‹T, C›*
 
 composes the source value through a series of unary functions.
 
@@ -56,13 +74,13 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, C›*
+**Returns:** *[Operator](README.md#operator)‹T, C›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›): *[OperatorLike](interfaces/operatorlike.md)‹T, D›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›): *[Operator](README.md#operator)‹T, D›*
 
 composes the source value through a series of unary functions.
 
@@ -82,14 +100,14 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, D›*
+**Returns:** *[Operator](README.md#operator)‹T, D›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›): *[OperatorLike](interfaces/operatorlike.md)‹T, E›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›): *[Operator](README.md#operator)‹T, E›*
 
 composes the source value through a series of unary functions.
 
@@ -111,15 +129,15 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, E›*
+**Returns:** *[Operator](README.md#operator)‹T, E›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›): *[OperatorLike](interfaces/operatorlike.md)‹T, F›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›): *[Operator](README.md#operator)‹T, F›*
 
 composes the source value through a series of unary functions.
 
@@ -143,16 +161,16 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, F›*
+**Returns:** *[Operator](README.md#operator)‹T, F›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›): *[OperatorLike](interfaces/operatorlike.md)‹T, G›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›): *[Operator](README.md#operator)‹T, G›*
 
 composes the source value through a series of unary functions.
 
@@ -178,17 +196,17 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, G›*
+**Returns:** *[Operator](README.md#operator)‹T, G›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›): *[OperatorLike](interfaces/operatorlike.md)‹T, H›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›): *[Operator](README.md#operator)‹T, H›*
 
 composes the source value through a series of unary functions.
 
@@ -216,18 +234,18 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, H›*
+**Returns:** *[Operator](README.md#operator)‹T, H›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›): *[OperatorLike](interfaces/operatorlike.md)‹T, I›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›): *[Operator](README.md#operator)‹T, I›*
 
 composes the source value through a series of unary functions.
 
@@ -257,19 +275,19 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, I›*
+**Returns:** *[Operator](README.md#operator)‹T, I›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›): *[OperatorLike](interfaces/operatorlike.md)‹T, J›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›): *[Operator](README.md#operator)‹T, J›*
 
 composes the source value through a series of unary functions.
 
@@ -301,20 +319,20 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, J›*
+**Returns:** *[Operator](README.md#operator)‹T, J›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›, `op11`: [OperatorLike](interfaces/operatorlike.md)‹J, K›): *[OperatorLike](interfaces/operatorlike.md)‹T, K›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›, `op11`: [Operator](README.md#operator)‹J, K›): *[Operator](README.md#operator)‹T, K›*
 
 composes the source value through a series of unary functions.
 
@@ -348,21 +366,21 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
-`op11` | [OperatorLike](interfaces/operatorlike.md)‹J, K› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
+`op11` | [Operator](README.md#operator)‹J, K› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, K›*
+**Returns:** *[Operator](README.md#operator)‹T, K›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›, `op11`: [OperatorLike](interfaces/operatorlike.md)‹J, K›, `op12`: [OperatorLike](interfaces/operatorlike.md)‹K, L›): *[OperatorLike](interfaces/operatorlike.md)‹T, L›*
+▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›, `op11`: [Operator](README.md#operator)‹J, K›, `op12`: [Operator](README.md#operator)‹K, L›): *[Operator](README.md#operator)‹T, L›*
 
 composes the source value through a series of unary functions.
 
@@ -398,26 +416,26 @@ composes the source value through a series of unary functions.
 
 Name | Type |
 ------ | ------ |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
-`op11` | [OperatorLike](interfaces/operatorlike.md)‹J, K› |
-`op12` | [OperatorLike](interfaces/operatorlike.md)‹K, L› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
+`op11` | [Operator](README.md#operator)‹J, K› |
+`op12` | [Operator](README.md#operator)‹K, L› |
 
-**Returns:** *[OperatorLike](interfaces/operatorlike.md)‹T, L›*
+**Returns:** *[Operator](README.md#operator)‹T, L›*
 
 ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›): *A*
+▸ **pipe**<**T**, **A**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›): *A*
 
 Pipes the source value through a series of unary functions.
 
@@ -432,11 +450,11 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
+`op1` | [Operator](README.md#operator)‹T, A› |
 
 **Returns:** *A*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›): *B*
+▸ **pipe**<**T**, **A**, **B**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›): *B*
 
 Pipes the source value through a series of unary functions.
 
@@ -453,12 +471,12 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
 
 **Returns:** *B*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›): *C*
+▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›): *C*
 
 Pipes the source value through a series of unary functions.
 
@@ -477,13 +495,13 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
 
 **Returns:** *C*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›): *D*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›): *D*
 
 Pipes the source value through a series of unary functions.
 
@@ -504,14 +522,14 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
 
 **Returns:** *D*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›): *E*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›): *E*
 
 Pipes the source value through a series of unary functions.
 
@@ -534,15 +552,15 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
 
 **Returns:** *E*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›): *F*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›): *F*
 
 Pipes the source value through a series of unary functions.
 
@@ -567,16 +585,16 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
 
 **Returns:** *F*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›): *G*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›): *G*
 
 Pipes the source value through a series of unary functions.
 
@@ -603,17 +621,17 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
 
 **Returns:** *G*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›): *H*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›): *H*
 
 Pipes the source value through a series of unary functions.
 
@@ -642,18 +660,18 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
 
 **Returns:** *H*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›): *I*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›): *I*
 
 Pipes the source value through a series of unary functions.
 
@@ -684,19 +702,19 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
 
 **Returns:** *I*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›): *J*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›): *J*
 
 Pipes the source value through a series of unary functions.
 
@@ -729,20 +747,20 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
 
 **Returns:** *J*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›, `op11`: [OperatorLike](interfaces/operatorlike.md)‹J, K›): *K*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›, `op11`: [Operator](README.md#operator)‹J, K›): *K*
 
 Pipes the source value through a series of unary functions.
 
@@ -777,21 +795,21 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
-`op11` | [OperatorLike](interfaces/operatorlike.md)‹J, K› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
+`op11` | [Operator](README.md#operator)‹J, K› |
 
 **Returns:** *K*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`src`: T, `op1`: [OperatorLike](interfaces/operatorlike.md)‹T, A›, `op2`: [OperatorLike](interfaces/operatorlike.md)‹A, B›, `op3`: [OperatorLike](interfaces/operatorlike.md)‹B, C›, `op4`: [OperatorLike](interfaces/operatorlike.md)‹C, D›, `op5`: [OperatorLike](interfaces/operatorlike.md)‹D, E›, `op6`: [OperatorLike](interfaces/operatorlike.md)‹E, F›, `op7`: [OperatorLike](interfaces/operatorlike.md)‹F, G›, `op8`: [OperatorLike](interfaces/operatorlike.md)‹G, H›, `op9`: [OperatorLike](interfaces/operatorlike.md)‹H, I›, `op10`: [OperatorLike](interfaces/operatorlike.md)‹I, J›, `op11`: [OperatorLike](interfaces/operatorlike.md)‹J, K›, `op12`: [OperatorLike](interfaces/operatorlike.md)‹K, L›): *L*
+▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`src`: T, `op1`: [Operator](README.md#operator)‹T, A›, `op2`: [Operator](README.md#operator)‹A, B›, `op3`: [Operator](README.md#operator)‹B, C›, `op4`: [Operator](README.md#operator)‹C, D›, `op5`: [Operator](README.md#operator)‹D, E›, `op6`: [Operator](README.md#operator)‹E, F›, `op7`: [Operator](README.md#operator)‹F, G›, `op8`: [Operator](README.md#operator)‹G, H›, `op9`: [Operator](README.md#operator)‹H, I›, `op10`: [Operator](README.md#operator)‹I, J›, `op11`: [Operator](README.md#operator)‹J, K›, `op12`: [Operator](README.md#operator)‹K, L›): *L*
 
 Pipes the source value through a series of unary functions.
 
@@ -828,17 +846,17 @@ Pipes the source value through a series of unary functions.
 Name | Type |
 ------ | ------ |
 `src` | T |
-`op1` | [OperatorLike](interfaces/operatorlike.md)‹T, A› |
-`op2` | [OperatorLike](interfaces/operatorlike.md)‹A, B› |
-`op3` | [OperatorLike](interfaces/operatorlike.md)‹B, C› |
-`op4` | [OperatorLike](interfaces/operatorlike.md)‹C, D› |
-`op5` | [OperatorLike](interfaces/operatorlike.md)‹D, E› |
-`op6` | [OperatorLike](interfaces/operatorlike.md)‹E, F› |
-`op7` | [OperatorLike](interfaces/operatorlike.md)‹F, G› |
-`op8` | [OperatorLike](interfaces/operatorlike.md)‹G, H› |
-`op9` | [OperatorLike](interfaces/operatorlike.md)‹H, I› |
-`op10` | [OperatorLike](interfaces/operatorlike.md)‹I, J› |
-`op11` | [OperatorLike](interfaces/operatorlike.md)‹J, K› |
-`op12` | [OperatorLike](interfaces/operatorlike.md)‹K, L› |
+`op1` | [Operator](README.md#operator)‹T, A› |
+`op2` | [Operator](README.md#operator)‹A, B› |
+`op3` | [Operator](README.md#operator)‹B, C› |
+`op4` | [Operator](README.md#operator)‹C, D› |
+`op5` | [Operator](README.md#operator)‹D, E› |
+`op6` | [Operator](README.md#operator)‹E, F› |
+`op7` | [Operator](README.md#operator)‹F, G› |
+`op8` | [Operator](README.md#operator)‹G, H› |
+`op9` | [Operator](README.md#operator)‹H, I› |
+`op10` | [Operator](README.md#operator)‹I, J› |
+`op11` | [Operator](README.md#operator)‹J, K› |
+`op12` | [Operator](README.md#operator)‹K, L› |
 
 **Returns:** *L*

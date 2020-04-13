@@ -1,28 +1,28 @@
-[@reactive-js/http](../README.md) › [URI](uri.md)
+[@reactive-js/http](../README.md) › [URILike](urilike.md)
 
-# Interface: URI
+# Interface: URILike
 
 ## Hierarchy
 
-* **URI**
+* **URILike**
 
 ## Index
 
 ### Properties
 
-* [hash](uri.md#hash)
-* [host](uri.md#host)
-* [hostname](uri.md#hostname)
-* [href](uri.md#href)
-* [origin](uri.md#origin)
-* [pathname](uri.md#pathname)
-* [port](uri.md#port)
-* [protocol](uri.md#protocol)
-* [search](uri.md#search)
+* [hash](urilike.md#hash)
+* [host](urilike.md#host)
+* [hostname](urilike.md#hostname)
+* [href](urilike.md#href)
+* [origin](urilike.md#origin)
+* [pathname](urilike.md#pathname)
+* [port](urilike.md#port)
+* [protocol](urilike.md#protocol)
+* [search](urilike.md#search)
 
 ### Methods
 
-* [toString](uri.md#tostring)
+* [toString](urilike.md#tostring)
 
 ## Properties
 

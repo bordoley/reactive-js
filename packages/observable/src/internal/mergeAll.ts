@@ -1,7 +1,7 @@
 import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
@@ -12,7 +12,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 
 const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
   if (subscriber.activeCount < subscriber.maxConcurrency) {
@@ -80,7 +80,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     this.delegate.notify(next);
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     this.activeCount--;
 
     if (error !== undefined) {
@@ -104,7 +104,7 @@ export const mergeAll = <T>(
     maxBufferSize?: number;
     maxConcurrency?: number;
   } = {},
-): ObservableOperatorLike<ObservableLike<T>, T> => {
+): ObservableOperator<ObservableLike<T>, T> => {
   const {
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
@@ -131,7 +131,7 @@ export const mergeMap = <TA, TB>(
  */
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableOperatorLike<ObservableLike<T>, T> =>
+): ObservableOperator<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
 export const concatMap = <TA, TB>(
@@ -147,7 +147,7 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
  * has not yet been disposed.
  */
 export const exhaust = <T>() =>
-  exhaustInstance as ObservableOperatorLike<ObservableLike<T>, T>;
+  exhaustInstance as ObservableOperator<ObservableLike<T>, T>;
 
 export const exhaustMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
   compose(map(mapper), exhaust());

@@ -1,4 +1,4 @@
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { createSubject } from "./subject";
@@ -13,7 +13,7 @@ import { createSubject } from "./subject";
 export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): OperatorLike<
+): Operator<
   ObservableLike<T>,
   MulticastObservableLike<T>
 > => observable => {

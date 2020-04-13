@@ -1,7 +1,7 @@
 import {
   ObservableLike,
   SubscriberLike,
-  ObservableOperatorLike,
+  ObservableOperator,
 } from "./interfaces";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
@@ -27,5 +27,5 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  */
 export const onSubscribe = <T>(
   f: () => void,
-): ObservableOperatorLike<T, T> => observable =>
+): ObservableOperator<T, T> => observable =>
   new OnSubscribeObservable(observable, f);

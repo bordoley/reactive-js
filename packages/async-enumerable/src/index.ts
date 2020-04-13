@@ -1,15 +1,15 @@
 export {
   AsyncEnumerableLike,
   AsyncEnumeratorLike,
-  AsyncEnumerableOperatorLike,
-  StateUpdaterLike,
+  AsyncEnumerableOperator,
+  StateUpdater,
 } from "./internal/interfaces";
 
 export {
   ReducerRequestType,
-  ContinueRequestLike,
+  ContinueRequest,
   ReducerRequest,
-  DoneRequestLike,
+  DoneRequest,
   consume,
   consumeAsync,
 } from "./internal/consume";

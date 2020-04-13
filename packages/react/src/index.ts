@@ -14,7 +14,7 @@ import {
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { useCallback, useEffect, useState } from "react";
-import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
+import { DisposableLike, Exception } from "@reactive-js/disposable";
 
 class UseObservableObserver<T> implements ObserverLike<T> {
   constructor(
@@ -22,11 +22,11 @@ class UseObservableObserver<T> implements ObserverLike<T> {
       React.SetStateAction<T | undefined>
     >,
     private readonly updateError: React.Dispatch<
-      React.SetStateAction<ErrorLike | undefined>
+      React.SetStateAction<Exception | undefined>
     >,
   ) {}
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     this.updateError(_ => error);
   }
 
@@ -38,7 +38,7 @@ class UseObservableObserver<T> implements ObserverLike<T> {
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
   updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
-  updateError: React.Dispatch<React.SetStateAction<ErrorLike | undefined>>,
+  updateError: React.Dispatch<React.SetStateAction<Exception | undefined>>,
   scheduler: SchedulerLike,
 ) =>
   pipe(
@@ -61,7 +61,7 @@ export const useObservable = <T>(
   scheduler: SchedulerLike = normalPriority,
 ): T | undefined => {
   const [state, updateState] = useState<T | undefined>(undefined);
-  const [error, updateError] = useState<ErrorLike | undefined>(undefined);
+  const [error, updateError] = useState<Exception | undefined>(undefined);
 
   useEffect(() => {
     const subscription = subscribeObservable(

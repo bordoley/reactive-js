@@ -2,18 +2,18 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { pipe } from "@reactive-js/pipe";
 import { createObservable } from "./createObservable";
 import {
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SafeSubscriberLike,
 } from "./interfaces";
 import { observe } from "./observe";
 import { subscribe } from "./subscribe";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 
 class SubscribeOnObserver<T> implements ObserverLike<T> {
   constructor(private readonly subscriber: SafeSubscriberLike<T>) {}
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     this.subscriber.dispose(error);
   }
 
@@ -29,7 +29,7 @@ class SubscribeOnObserver<T> implements ObserverLike<T> {
  */
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,
-): ObservableOperatorLike<T, T> => observable =>
+): ObservableOperator<T, T> => observable =>
   createObservable(subscriber => {
     subscriber.add(
       pipe(

@@ -1,5 +1,5 @@
 // A Proxy readonly interface for the what-wg URL api.
-export interface URI {
+export interface URILike {
   readonly hash: string;
   readonly host: string;
   readonly hostname: string;
@@ -90,23 +90,23 @@ export const enum HttpContentEncoding {
 }
 
 // FIXME: filter out headers for which we have strongly typed apis.
-export interface HttpHeadersLike {
+export type HttpHeaders = {
   readonly [header: string]: string;
 }
 
-export interface MediaType {
+export type MediaType = {
   readonly type: string;
   readonly subtype: string;
   readonly params: { readonly [key: string]: string };
 }
 
 // Strictly speaking MediaRanges may have parameters, but no one uses them.
-export interface MediaRange {
+export type MediaRange = {
   readonly type: string | "*";
   readonly subtype: string | "*";
 }
 
-export interface HttpContentLike<T> {
+export type HttpContent<T> = {
   readonly body: T;
   readonly contentEncodings: readonly HttpContentEncoding[];
   readonly contentLength: number;
@@ -114,7 +114,7 @@ export interface HttpContentLike<T> {
 }
 
 // All values should be sorted by preference
-export interface HttpPreferencesLike {
+export type HttpPreferences = {
   readonly acceptedCharsets: readonly string[];
   readonly acceptedEncodings: readonly HttpContentEncoding[];
   readonly acceptedLanguages: readonly string[];
@@ -123,49 +123,48 @@ export interface HttpPreferencesLike {
   //acceptedRanges:Option<Choice<Set<RangeUnit>, AcceptsNone>>
 }
 
-export interface EntityTag {
+export type EntityTag = {
   readonly isWeak: boolean;
   readonly tag: string;
 }
 
 export type HttpDateTime = number;
 
-export interface HttpRequestPreconditionsLike {
-  ifMatch?: readonly EntityTag[] | "*";
-  ifModifiedSince?: HttpDateTime;
-  ifNoneMatch?: readonly EntityTag[] | "*";
-  ifUnmodifiedSince?: HttpDateTime;
-  ifRange?: EntityTag | HttpDateTime;
+export type HttpRequestPreconditions = {
+  readonly ifMatch?: readonly EntityTag[] | "*";
+  readonly ifModifiedSince?: HttpDateTime;
+  readonly ifNoneMatch?: readonly EntityTag[] | "*";
+  readonly ifUnmodifiedSince?: HttpDateTime;
+  readonly ifRange?: EntityTag | HttpDateTime;
 }
 
-export interface HttpRequestLike<T> {
+export type HttpRequest<T> = {
   // readonly authorization?: Credentials;
   // readonly cacheControl: readonly CacheDirective[];
 
   readonly content?: T;
   readonly expectContinue: boolean;
-  readonly headers: HttpHeadersLike;
+  readonly headers: HttpHeaders;
   readonly method: HttpMethod;
   // readonly pragma: readonly CacheDirective[];
-  readonly preconditions?: HttpRequestPreconditionsLike;
-  readonly preferences?: HttpPreferencesLike;
+  readonly preconditions?: HttpRequestPreconditions;
+  readonly preferences?: HttpPreferences;
   // readonly proxyAuthorization?: Credentials
-  // readonly referer?: URI;
-  readonly uri: URI;
+  // readonly referer?: URILike;
+  readonly uri: URILike;
   // readonly userAgent?: UserAgent;
   // referer
   readonly httpVersionMajor: number;
   readonly httpVersionMinor: number;
 }
 
-export interface HttpContentRequestLike<T>
-  extends HttpRequestLike<HttpContentLike<T>> {}
+export type HttpContentRequest<T> = HttpRequest<HttpContent<T>>;
 
-export interface HttpServerRequestLike<T> extends HttpContentRequestLike<T> {
+export type HttpServerRequest<T> = HttpContentRequest<T> & {
   readonly isTransportSecure: boolean;
 }
 
-export interface HttpResponseLike<T> {
+export type HttpResponse<T> = {
   // age:Option<TimeSpan>
   // allowed:Set<Method>
   // authenticate:Set<Challenge>
@@ -179,12 +178,11 @@ export interface HttpResponseLike<T> {
   // server:Option<Server>
   // warning:Warning list
   readonly content?: T;
-  readonly headers: HttpHeadersLike;
-  readonly location?: URI;
-  readonly preferences?: HttpPreferencesLike;
+  readonly headers: HttpHeaders;
+  readonly location?: URILike;
+  readonly preferences?: HttpPreferences;
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 }
 
-export interface HttpContentResponseLike<T>
-  extends HttpResponseLike<HttpContentLike<T>> {}
+export type HttpContentResponseLike<T> = HttpResponse<HttpContent<T>>;

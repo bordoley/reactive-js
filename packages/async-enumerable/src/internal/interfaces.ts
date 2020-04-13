@@ -16,13 +16,13 @@ export interface AsyncEnumerableLike<TReq, T> {
   ): AsyncEnumeratorLike<TReq, T>;
 }
 
-export interface AsyncEnumerableOperatorLike<TSrcReq, TSrc, TReq, T> {
+export type AsyncEnumerableOperator<TSrcReq, TSrc, TReq, T> = {
   (enumerable: AsyncEnumerableLike<TSrcReq, TSrc>): AsyncEnumerableLike<
     TReq,
     T
   >;
 }
 
-export interface StateUpdaterLike<T> {
+export type StateUpdater<T> = {
   (oldState: T): T;
 }

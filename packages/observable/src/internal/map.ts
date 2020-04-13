@@ -1,4 +1,4 @@
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
@@ -25,11 +25,11 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
  */
 export const map = <TA, TB>(
   mapper: (data: TA) => TB,
-): ObservableOperatorLike<TA, TB> => {
+): ObservableOperator<TA, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new MapSubscriber(subscriber, mapper);
   return lift(operator, true);
 };
 
-export const mapTo = <TA, TB>(value: TB): ObservableOperatorLike<TA, TB> =>
+export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
   map(_ => value);

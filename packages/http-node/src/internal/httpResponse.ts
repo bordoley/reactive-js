@@ -2,11 +2,11 @@ import { BrotliOptions, ZlibOptions } from "zlib";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   HttpContentResponseLike,
-  HttpContentRequestLike,
+  HttpContentRequest,
   HttpStandardHeader,
 } from "@reactive-js/http";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import {
   contentIsCompressible,
   encodeHttpContent,
@@ -23,17 +23,17 @@ const responseIsCompressible = (
   return content !== undefined ? contentIsCompressible(content) : false;
 };
 
-export interface EncodeHttpResponseOptions {
+export type EncodeHttpResponseOptions = {
   readonly shouldEncode?: <T, TResp>(
-    req: HttpContentRequestLike<T>,
+    req: HttpContentRequest<T>,
     resp: HttpContentResponseLike<TResp>,
   ) => boolean | undefined;
 }
 
 export const encodeHttpResponse = <TReq>(
-  request: HttpContentRequestLike<TReq>,
+  request: HttpContentRequest<TReq>,
   options: EncodeHttpResponseOptions & (BrotliOptions | ZlibOptions) = {},
-): OperatorLike<
+): Operator<
   HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > => response => {
@@ -76,7 +76,7 @@ export const encodeHttpResponse = <TReq>(
 
 export const decodeHttpContentResponse = (
   options: BrotliOptions | ZlibOptions,
-): OperatorLike<
+): Operator<
   HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > => response => {

@@ -4,28 +4,52 @@
 
 ## Index
 
-### Interfaces
+### Type aliases
 
-* [RelativeURILike](interfaces/relativeurilike.md)
-* [RoutableComponentProps](interfaces/routablecomponentprops.md)
-* [RouterProps](interfaces/routerprops.md)
+* [RelativeURI](README.md#relativeuri)
+* [RoutableComponentProps](README.md#routablecomponentprops)
+* [RouterProps](README.md#routerprops)
 
 ### Functions
 
 * [Router](README.md#const-router)
 * [useRoutableState](README.md#const-useroutablestate)
 
+## Type aliases
+
+###  RelativeURI
+
+Ƭ **RelativeURI**: *object*
+
+#### Type declaration:
+
+___
+
+###  RoutableComponentProps
+
+Ƭ **RoutableComponentProps**: *object*
+
+#### Type declaration:
+
+___
+
+###  RouterProps
+
+Ƭ **RouterProps**: *object*
+
+#### Type declaration:
+
 ## Functions
 
 ### `Const` Router
 
-▸ **Router**(`props`: [RouterProps](interfaces/routerprops.md)): *ReactElement | null*
+▸ **Router**(`props`: [RouterProps](README.md#routerprops)): *ReactElement | null*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`props` | [RouterProps](interfaces/routerprops.md) |
+`props` | [RouterProps](README.md#routerprops) |
 
 **Returns:** *ReactElement | null*
 
@@ -33,7 +57,7 @@ ___
 
 ### `Const` useRoutableState
 
-▸ **useRoutableState**<**TState**>(`props`: [RoutableComponentProps](interfaces/routablecomponentprops.md), `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
+▸ **useRoutableState**<**TState**>(`props`: [RoutableComponentProps](README.md#routablecomponentprops), `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
 
 **Type parameters:**
 
@@ -41,7 +65,7 @@ ___
 
 **Parameters:**
 
-▪ **props**: *[RoutableComponentProps](interfaces/routablecomponentprops.md)*
+▪ **props**: *[RoutableComponentProps](README.md#routablecomponentprops)*
 
 ▪ **parse**: *function*
 

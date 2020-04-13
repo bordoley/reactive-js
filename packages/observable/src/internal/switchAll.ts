@@ -1,10 +1,10 @@
-import { ErrorLike, disposed } from "@reactive-js/disposable";
+import { Exception, disposed } from "@reactive-js/disposable";
 import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
   ObserverLike,
   SubscriberLike,
-  ObservableOperatorLike,
+  ObservableOperator,
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
@@ -39,7 +39,7 @@ class SwitchSubscriber<T>
     this.inner = inner;
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined || this.isDisposed) {
       this.delegate.dispose(error);
     }
@@ -59,7 +59,7 @@ const switchAllInstance = lift(operator, false);
  * values only from the most recent source.
  */
 export const switchAll = <T>() =>
-  switchAllInstance as ObservableOperatorLike<ObservableLike<T>, T>;
+  switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
 export const switchMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
   compose(map(mapper), switchAll());

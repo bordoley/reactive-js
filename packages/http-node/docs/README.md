@@ -8,22 +8,19 @@
 
 * [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
 
-### Interfaces
-
-* [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md)
-* [HttpClient](interfaces/httpclient.md)
-* [HttpClientOptions](interfaces/httpclientoptions.md)
-* [HttpClientRequestOptions](interfaces/httpclientrequestoptions.md)
-* [HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md)
-* [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)
-* [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md)
-* [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md)
-* [HttpRequestListenerHandler](interfaces/httprequestlistenerhandler.md)
-* [HttpRequestListenerOptions](interfaces/httprequestlisteneroptions.md)
-
 ### Type aliases
 
+* [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions)
+* [HttpClient](README.md#httpclient)
+* [HttpClientOptions](README.md#httpclientoptions)
+* [HttpClientRequestOptions](README.md#httpclientrequestoptions)
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
+* [HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin)
+* [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)
+* [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete)
+* [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading)
+* [HttpRequestListenerHandler](README.md#httprequestlistenerhandler)
+* [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)
 
 ### Functions
 
@@ -39,29 +36,124 @@
 
 ## Type aliases
 
+###  EncodeHttpResponseOptions
+
+Ƭ **EncodeHttpResponseOptions**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClient
+
+Ƭ **HttpClient**: *function*
+
+#### Type declaration:
+
+▸ (`request`: HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, `requestOptions?`: [HttpClientRequestOptions](README.md#httpclientrequestoptions)): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
+`requestOptions?` | [HttpClientRequestOptions](README.md#httpclientrequestoptions) |
+
+___
+
+###  HttpClientOptions
+
+Ƭ **HttpClientOptions**: *BrotliOptions & ZlibOptions & object*
+
+___
+
+###  HttpClientRequestOptions
+
+Ƭ **HttpClientRequestOptions**: *object*
+
+#### Type declaration:
+
+___
+
 ###  HttpClientRequestStatus
 
-Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](interfaces/httpclientrequeststatusbegin.md) | [HttpClientRequestStatusUploading](interfaces/httpclientrequeststatusuploading.md) | [HttpClientRequestStatusUploadComplete](interfaces/httpclientrequeststatusuploadcomplete.md) | [HttpClientRequestStatusResponseReady](interfaces/httpclientrequeststatusresponseready.md)*
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin) | [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading) | [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete) | [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)*
+
+___
+
+###  HttpClientRequestStatusBegin
+
+Ƭ **HttpClientRequestStatusBegin**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusResponseReady
+
+Ƭ **HttpClientRequestStatusResponseReady**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusUploadComplete
+
+Ƭ **HttpClientRequestStatusUploadComplete**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpClientRequestStatusUploading
+
+Ƭ **HttpClientRequestStatusUploading**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpRequestListenerHandler
+
+Ƭ **HttpRequestListenerHandler**: *function*
+
+#### Type declaration:
+
+▸ (`req`: HttpServerRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››): *ObservableLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | HttpServerRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
+
+___
+
+###  HttpRequestListenerOptions
+
+Ƭ **HttpRequestListenerOptions**: *object*
+
+#### Type declaration:
 
 ## Functions
 
 ### `Const` creatHttpClient
 
-▸ **creatHttpClient**(`clientOptions`: [HttpClientOptions](interfaces/httpclientoptions.md)): *[HttpClient](interfaces/httpclient.md)*
+▸ **creatHttpClient**(`clientOptions`: [HttpClientOptions](README.md#httpclientoptions)): *[HttpClient](README.md#httpclient)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`clientOptions` | [HttpClientOptions](interfaces/httpclientoptions.md) |  {} |
+`clientOptions` | [HttpClientOptions](README.md#httpclientoptions) |  {} |
 
-**Returns:** *[HttpClient](interfaces/httpclient.md)*
+**Returns:** *[HttpClient](README.md#httpclient)*
 
 ___
 
 ### `Const` createBufferHttpContent
 
-▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
@@ -70,36 +162,36 @@ Name | Type |
 `chunk` | Buffer |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 
 ### `Const` createDefaultHttpResponseHandler
 
-▸ **createDefaultHttpResponseHandler**(`sendHttpRequest`: [HttpClient](interfaces/httpclient.md), `maxRedirects`: number): *ObservableOperatorLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+▸ **createDefaultHttpResponseHandler**(`sendHttpRequest`: [HttpClient](README.md#httpclient), `maxRedirects`: number): *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`sendHttpRequest` | [HttpClient](interfaces/httpclient.md) | - |
+`sendHttpRequest` | [HttpClient](README.md#httpclient) | - |
 `maxRedirects` | number | 10 |
 
-**Returns:** *ObservableOperatorLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+**Returns:** *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: [HttpRequestListenerHandler](interfaces/httprequestlistenerhandler.md), `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](interfaces/httprequestlisteneroptions.md)): *RequestListener*
+▸ **createHttpRequestListener**(`handler`: [HttpRequestListenerHandler](README.md#httprequestlistenerhandler), `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *RequestListener*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | [HttpRequestListenerHandler](interfaces/httprequestlistenerhandler.md) | - |
+`handler` | [HttpRequestListenerHandler](README.md#httprequestlistenerhandler) | - |
 `scheduler` | SchedulerLike | - |
-`options` | [HttpRequestListenerOptions](interfaces/httprequestlisteneroptions.md) |  {} |
+`options` | [HttpRequestListenerOptions](README.md#httprequestlisteneroptions) |  {} |
 
 **Returns:** *RequestListener*
 
@@ -107,7 +199,7 @@ ___
 
 ### `Const` createReadableHttpContent
 
-▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
@@ -119,13 +211,13 @@ ___
 
 ▪`Default value`  **contentLength**: *number*=  -1
 
-**Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 
 ### `Const` createStringHttpContent
 
-▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 **Parameters:**
 
@@ -134,13 +226,13 @@ Name | Type |
 `content` | string |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContentLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
 
 ___
 
 ### `Const` decodeHttpContentResponse
 
-▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Parameters:**
 
@@ -148,13 +240,13 @@ Name | Type |
 ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |
 
-**Returns:** *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Parameters:**
 
@@ -162,13 +254,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *OperatorLike‹HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequestLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequestLike‹TReq›, `options`: [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md) & BrotliOptions | ZlibOptions): *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
 
 **Type parameters:**
 
@@ -178,7 +270,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`request` | HttpContentRequestLike‹TReq› | - |
-`options` | [EncodeHttpResponseOptions](interfaces/encodehttpresponseoptions.md) & BrotliOptions &#124; ZlibOptions |  {} |
+`request` | HttpContentRequest‹TReq› | - |
+`options` | [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *OperatorLike‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponseLike‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*

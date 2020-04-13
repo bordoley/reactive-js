@@ -9,8 +9,8 @@ import { pipe } from "@reactive-js/pipe";
 import { pToken, pParams } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {
-  HttpPreferencesLike,
-  HttpHeadersLike,
+  HttpPreferences,
+  HttpHeaders,
   MediaType,
   MediaRange,
   HttpContentEncoding,
@@ -82,8 +82,8 @@ const parseWeightedToken = pipe(
 
 /** @ignore */
 export const parseHttpPreferencesFromHeaders = (
-  headers: HttpHeadersLike,
-): HttpPreferencesLike | undefined => {
+  headers: HttpHeaders,
+): HttpPreferences | undefined => {
   const rawAcceptCharset = getHeaderValue(
     headers,
     HttpStandardHeader.AcceptCharset,
@@ -159,7 +159,7 @@ const writeWeightedTokenHeader = (
 
 /** @ignore */
 export const writeHttpPreferenceHeaders = (
-  preferences: HttpPreferencesLike,
+  preferences: HttpPreferences,
   writeHeader: (header: string, value: string) => void,
 ) => {
   const {

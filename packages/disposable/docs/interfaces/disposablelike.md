@@ -57,7 +57,7 @@ ___
 
 ###  dispose
 
-▸ **dispose**(`error?`: [ErrorLike](errorlike.md)): *void*
+▸ **dispose**(`error?`: [Exception](../README.md#exception)): *void*
 
 Dispose the resource. The operation is idempotent.
 
@@ -65,6 +65,6 @@ Dispose the resource. The operation is idempotent.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | [ErrorLike](errorlike.md) | An optional error that to signal that the resource is being disposed due to an error.  |
+`error?` | [Exception](../README.md#exception) | An optional error that to signal that the resource is being disposed due to an error.  |
 
 **Returns:** *void*

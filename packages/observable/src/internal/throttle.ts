@@ -1,12 +1,12 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
-  ErrorLike,
+  Exception,
 } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -93,7 +93,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined) {
       this.dispose(error);
     }
@@ -126,7 +126,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
 export function throttle<T>(
   duration: (next: T) => ObservableLike<unknown>,
   mode?: ThrottleMode,
-): ObservableOperatorLike<T, T>;
+): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` which emits a value from the source,
@@ -139,12 +139,12 @@ export function throttle<T>(
 export function throttle<T>(
   duration: number,
   mode?: ThrottleMode,
-): ObservableOperatorLike<T, T>;
+): ObservableOperator<T, T>;
 
 export function throttle<T>(
   duration: ((next: T) => ObservableLike<unknown>) | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableOperatorLike<T, T> {
+): ObservableOperator<T, T> {
   const durationSelector =
     typeof duration === "number"
       ? (_: T) => ofValue(undefined, duration)

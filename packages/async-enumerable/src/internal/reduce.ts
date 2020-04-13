@@ -1,5 +1,5 @@
 import { ObservableLike, using } from "@reactive-js/observable";
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import { AsyncEnumerableLike } from "./interfaces";
 import { consume, consumeAsync, ReducerRequest } from "./consume";
 
@@ -12,7 +12,7 @@ import { consume, consumeAsync, ReducerRequest } from "./consume";
 export const reduce = <TReq, TSrc, TAcc>(
   reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TReq, TAcc>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): OperatorLike<
+): Operator<
   AsyncEnumerableLike<TReq, TSrc>,
   ObservableLike<TAcc>
 > => enumerable =>
@@ -33,7 +33,7 @@ export const reduceAsync = <TReq, TSrc, TAcc>(
     next: TSrc,
   ) => ObservableLike<ReducerRequest<TReq, TAcc>>,
   initial: () => ReducerRequest<TReq, TAcc>,
-): OperatorLike<
+): Operator<
   AsyncEnumerableLike<TReq, TSrc>,
   ObservableLike<TAcc>
 > => enumerable =>

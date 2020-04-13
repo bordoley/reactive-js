@@ -1,8 +1,8 @@
-import { createSerialDisposable, ErrorLike } from "@reactive-js/disposable";
+import { createSerialDisposable, Exception } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -24,7 +24,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     private readonly observable: ObservableLike<T>,
     private readonly shouldRepeat: (
       count: number,
-      error?: ErrorLike,
+      error?: Exception,
     ) => boolean,
   ) {
     super(delegate);
@@ -42,13 +42,13 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     let shouldComplete = false;
     try {
       shouldComplete = !this.shouldRepeat(this.count, error);
     } catch (cause) {
       shouldComplete = true;
-      error = { cause, parent: error } as ErrorLike;
+      error = { cause, parent: error } as Exception;
     }
 
     const delegate = this.delegate;
@@ -70,15 +70,15 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
 }
 
 const repeatObs = <T>(
-  shouldRepeat: (count: number, error?: ErrorLike) => boolean,
-): ObservableOperatorLike<T, T> => observable => {
+  shouldRepeat: (count: number, error?: Exception) => boolean,
+): ObservableOperator<T, T> => observable => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new RepeatSubscriber(subscriber, observable, shouldRepeat);
 
   return lift(operator, true)(observable);
 };
 
-const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
+const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
   error === undefined;
 
 /**
@@ -89,42 +89,42 @@ const defaultRepeatPredicate = (_: number, error?: ErrorLike): boolean =>
  */
 export function repeat<T>(
   predicate: (count: number) => boolean,
-): ObservableOperatorLike<T, T>;
+): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that repeats the source count times.
  * @param count
  */
-export function repeat<T>(count: number): ObservableOperatorLike<T, T>;
+export function repeat<T>(count: number): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that continually repeats the source.
  */
-export function repeat<T>(): ObservableOperatorLike<T, T>;
+export function repeat<T>(): ObservableOperator<T, T>;
 
 export function repeat<T>(
   predicate?: ((count: number) => boolean) | number,
-): ObservableOperatorLike<T, T> {
+): ObservableOperator<T, T> {
   const repeatPredicate =
     predicate === undefined
       ? defaultRepeatPredicate
       : typeof predicate === "number"
-      ? (count: number, error?: ErrorLike) =>
+      ? (count: number, error?: Exception) =>
           error === undefined && count < predicate
-      : (count: number, error?: ErrorLike) =>
+      : (count: number, error?: Exception) =>
           error === undefined && predicate(count);
 
   return repeatObs(repeatPredicate);
 }
 
-const defaultRetryPredicate = (_: number, error?: ErrorLike): boolean =>
+const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
   error !== undefined;
 
 /**
  * Returns an `ObservableLike` that mirrors the source, re-subscribing
  * if the source completes with an error.
  */
-export function retry<T>(): ObservableOperatorLike<T, T>;
+export function retry<T>(): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that mirrors the source, resubscrbing
@@ -134,15 +134,15 @@ export function retry<T>(): ObservableOperatorLike<T, T>;
  */
 export function retry<T>(
   predicate: (count: number, error: unknown) => boolean,
-): ObservableOperatorLike<T, T>;
+): ObservableOperator<T, T>;
 
 export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableOperatorLike<T, T> {
+): ObservableOperator<T, T> {
   const retryPredicate =
     predicate === undefined
       ? defaultRetryPredicate
-      : (count: number, error?: ErrorLike) =>
+      : (count: number, error?: Exception) =>
           error !== undefined && predicate(count, error.cause);
 
   return repeatObs(retryPredicate);
