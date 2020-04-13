@@ -13,7 +13,10 @@ import {
   parseHttpPreferencesFromHeaders,
   writeHttpPreferenceHeaders,
 } from "./httpPreferences";
-import { writeHttpRequestPreconditionsHeaders } from "./httpRequestPreconditions";
+import {
+  writeHttpRequestPreconditionsHeaders,
+  parseHttpRequestPreconditionsFromHeaders,
+} from "./httpRequestPreconditions";
 import {
   HttpMethod,
   URILike,
@@ -136,9 +139,7 @@ export const parseHttpRequestFromHeaders = <T>({
   const content = parseHttpContentFromHeaders(headers, body);
   const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
   const expectContinue = rawExpectHeader === "100-continue";
-
-  // FIXME: Preconditions
-
+  const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
   const preferences = parseHttpPreferencesFromHeaders(headers);
   const protocol = isTransportSecure ? "https" : "http";
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
@@ -151,6 +152,7 @@ export const parseHttpRequestFromHeaders = <T>({
     httpVersionMinor,
     isTransportSecure,
     method,
+    preconditions,
     preferences,
     uri,
   };

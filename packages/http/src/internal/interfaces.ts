@@ -92,26 +92,26 @@ export const enum HttpContentEncoding {
 // FIXME: filter out headers for which we have strongly typed apis.
 export type HttpHeaders = {
   readonly [header: string]: string;
-}
+};
 
 export type MediaType = {
   readonly type: string;
   readonly subtype: string;
   readonly params: { readonly [key: string]: string };
-}
+};
 
 // Strictly speaking MediaRanges may have parameters, but no one uses them.
 export type MediaRange = {
   readonly type: string | "*";
   readonly subtype: string | "*";
-}
+};
 
 export type HttpContent<T> = {
   readonly body: T;
   readonly contentEncodings: readonly HttpContentEncoding[];
   readonly contentLength: number;
   readonly contentType: MediaType;
-}
+};
 
 // All values should be sorted by preference
 export type HttpPreferences = {
@@ -121,12 +121,12 @@ export type HttpPreferences = {
   readonly acceptedMediaRanges: readonly MediaRange[];
   //readonly ranges: Option<Choice<ByteRangesSpecifier, OtherRangesSpecifier>>
   //acceptedRanges:Option<Choice<Set<RangeUnit>, AcceptsNone>>
-}
+};
 
 export type EntityTag = {
   readonly isWeak: boolean;
   readonly tag: string;
-}
+};
 
 export type HttpDateTime = number;
 
@@ -136,7 +136,7 @@ export type HttpRequestPreconditions = {
   readonly ifNoneMatch?: readonly EntityTag[] | "*";
   readonly ifUnmodifiedSince?: HttpDateTime;
   readonly ifRange?: EntityTag | HttpDateTime;
-}
+};
 
 export type HttpRequest<T> = {
   // readonly authorization?: Credentials;
@@ -156,13 +156,13 @@ export type HttpRequest<T> = {
   // referer
   readonly httpVersionMajor: number;
   readonly httpVersionMinor: number;
-}
+};
 
 export type HttpContentRequest<T> = HttpRequest<HttpContent<T>>;
 
 export type HttpServerRequest<T> = HttpContentRequest<T> & {
   readonly isTransportSecure: boolean;
-}
+};
 
 export type HttpResponse<T> = {
   // age:Option<TimeSpan>
@@ -183,6 +183,6 @@ export type HttpResponse<T> = {
   readonly preferences?: HttpPreferences;
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
-}
+};
 
 export type HttpContentResponse<T> = HttpResponse<HttpContent<T>>;

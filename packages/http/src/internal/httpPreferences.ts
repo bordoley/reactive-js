@@ -1,12 +1,6 @@
-import {
-  many,
-  map,
-  eof,
-  parseWith,
-  concat,
-} from "@reactive-js/parser-combinators";
+import { map, eof, parseWith, concat } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
-import { pToken, pParams } from "./httpGrammar";
+import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {
   HttpPreferences,
@@ -41,7 +35,7 @@ const mediaRangeToMediaType = ({ type, subtype }: MediaType): MediaRange => ({
 
 const parseAccept = pipe(
   pMediaType,
-  many(),
+  httpList,
   map(mediaTypes => {
     // Mutate to avoid allocations. Kinda evil.
     (mediaTypes as MediaType[]).sort(mediaRangeCompare);
@@ -70,7 +64,7 @@ const weightedTokenToToken = ([token]: [string, unknown]) => token;
 
 const parseWeightedToken = pipe(
   concat(pToken, pParams),
-  many(),
+  httpList,
   map(values => {
     // Mutate to avoid allocations. Kinda evil.
     (values as any[]).sort(weightedTokenComparator);
@@ -131,11 +125,11 @@ export const parseHttpPreferencesFromHeaders = (
 };
 
 const writeWeightedTokenHeader = (
-  header: HttpStandardHeader, 
-  values: readonly string[], 
+  header: HttpStandardHeader,
+  values: readonly string[],
   writeHeader: (header: string, value: string) => void,
 ) => {
-  const length = values.length
+  const length = values.length;
   if (length > 0) {
     const incr = 1000 / length;
 
@@ -155,7 +149,6 @@ const writeWeightedTokenHeader = (
     writeHeader(header, result);
   }
 };
-  
 
 /** @ignore */
 export const writeHttpPreferenceHeaders = (
@@ -169,12 +162,28 @@ export const writeHttpPreferenceHeaders = (
     acceptedMediaRanges,
   } = preferences;
 
-  writeWeightedTokenHeader(HttpStandardHeader.AcceptCharset, acceptedCharsets, writeHeader);
-  writeWeightedTokenHeader(HttpStandardHeader.AcceptEncoding, acceptedEncodings, writeHeader);
-  writeWeightedTokenHeader(HttpStandardHeader.AcceptLanguage, acceptedLanguages, writeHeader);
+  writeWeightedTokenHeader(
+    HttpStandardHeader.AcceptCharset,
+    acceptedCharsets,
+    writeHeader,
+  );
+  writeWeightedTokenHeader(
+    HttpStandardHeader.AcceptEncoding,
+    acceptedEncodings,
+    writeHeader,
+  );
+  writeWeightedTokenHeader(
+    HttpStandardHeader.AcceptLanguage,
+    acceptedLanguages,
+    writeHeader,
+  );
 
   const tokenizedMediaRanges = acceptedMediaRanges.map(
     ({ type, subtype }) => `${type}/${subtype}`,
   );
-  writeWeightedTokenHeader(HttpStandardHeader.Accept, tokenizedMediaRanges, writeHeader);
+  writeWeightedTokenHeader(
+    HttpStandardHeader.Accept,
+    tokenizedMediaRanges,
+    writeHeader,
+  );
 };

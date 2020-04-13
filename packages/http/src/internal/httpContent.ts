@@ -1,10 +1,6 @@
 import { httpContentEncodings } from "./httpContentEncodings";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
-import {
-  HttpContent,
-  HttpHeaders,
-  HttpContentEncoding,
-} from "./interfaces";
+import { HttpContent, HttpHeaders, HttpContentEncoding } from "./interfaces";
 import { parseMediaType, mediaTypeToString } from "./mediaType";
 
 /** @ignore */
