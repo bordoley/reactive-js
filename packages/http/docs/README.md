@@ -14,16 +14,17 @@
 
 ### Interfaces
 
+* [EntityTag](interfaces/entitytag.md)
 * [HttpContentLike](interfaces/httpcontentlike.md)
 * [HttpContentRequestLike](interfaces/httpcontentrequestlike.md)
 * [HttpContentResponseLike](interfaces/httpcontentresponselike.md)
-* [HttpEntityTagLike](interfaces/httpentitytaglike.md)
 * [HttpHeadersLike](interfaces/httpheaderslike.md)
 * [HttpPreferencesLike](interfaces/httppreferenceslike.md)
 * [HttpRequestLike](interfaces/httprequestlike.md)
 * [HttpRequestPreconditionsLike](interfaces/httprequestpreconditionslike.md)
 * [HttpResponseLike](interfaces/httpresponselike.md)
 * [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
+* [MediaType](interfaces/mediatype.md)
 * [URI](interfaces/uri.md)
 
 ### Type aliases
@@ -33,6 +34,8 @@
 ### Variables
 
 * [httpContentEncodings](README.md#const-httpcontentencodings)
+* [parseMediaType](README.md#const-parsemediatype)
+* [parseMediaTypeOrThrow](README.md#const-parsemediatypeorthrow)
 
 ### Functions
 
@@ -42,8 +45,10 @@
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
+* [mediaTypeToString](README.md#const-mediatypetostring)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
+* [toTokenOrQuotedString](README.md#const-totokenorquotedstring)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
@@ -64,6 +69,18 @@
   HttpContentEncoding.GZip,
   HttpContentEncoding.Identity,
 ]
+
+___
+
+### `Const` parseMediaType
+
+• **parseMediaType**: *OperatorLike‹string, undefined | [MediaType](interfaces/mediatype.md)›* =  parseWith(pMediaType)
+
+___
+
+### `Const` parseMediaTypeOrThrow
+
+• **parseMediaTypeOrThrow**: *OperatorLike‹string, [MediaType](interfaces/mediatype.md)›* = parseWithOrThrow(pMediaType)
 
 ## Functions
 
@@ -206,6 +223,20 @@ Name | Type |
 
 ___
 
+### `Const` mediaTypeToString
+
+▸ **mediaTypeToString**(`__namedParameters`: object): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+
+**Returns:** *string*
+
+___
+
 ### `Const` parseHttpRequestFromHeaders
 
 ▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›*
@@ -241,6 +272,20 @@ Name | Type |
 `body` | T |
 
 **Returns:** *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
+
+___
+
+### `Const` toTokenOrQuotedString
+
+▸ **toTokenOrQuotedString**(`input`: string): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | string |
+
+**Returns:** *string*
 
 ___
 

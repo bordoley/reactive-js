@@ -14,8 +14,8 @@ import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
 } from "./httpContent";
-import { parseHttpDateTime, serializeHttpDateTime } from "./httpDateTime";
-import { serializeHttpEntityTag } from "./httpEntityTag";
+import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
+import { entityTagToString } from "./entityTag";
 import {
   writeHttpHeaders,
   getHeaderValue,
@@ -69,10 +69,10 @@ export const parseHttpResponseFromHeaders = <T>(
   // FIXME: etag
 
   const expires = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.Expires, ""),
+    getHeaderValue(headers, HttpStandardHeader.Expires) || "",
   );
   const lastModified = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.LastModified, ""),
+    getHeaderValue(headers, HttpStandardHeader.LastModified) || "",
   );
 
   const locationHeader = headers.location;
@@ -109,17 +109,17 @@ const writeCoreHttpResponseHeaders = <T>(
   writeHeader: (header: string, value: string) => void,
 ) => {
   if (etag !== undefined) {
-    writeHeader(HttpStandardHeader.ETag, serializeHttpEntityTag(etag));
+    writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
   }
 
   if (expires !== undefined) {
-    writeHeader(HttpStandardHeader.Expires, serializeHttpDateTime(expires));
+    writeHeader(HttpStandardHeader.Expires, httpDateTimeToString(expires));
   }
 
   if (lastModified !== undefined) {
     writeHeader(
       HttpStandardHeader.LastModified,
-      serializeHttpDateTime(lastModified),
+      httpDateTimeToString(lastModified),
     );
   }
 

@@ -208,6 +208,15 @@ pipe(
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
     },
+    preferences: {
+      acceptedCharsets: [],
+      acceptedEncodings: [],
+      acceptedLanguages: [],
+      acceptedMediaRanges: [
+        { type: "application", subtype: "json" },
+        { type: "text", subtype: "html" },
+      ],
+    },
   }),
   sendHttpRequest,
   createDefaultHttpResponseHandler(sendHttpRequest, 10),

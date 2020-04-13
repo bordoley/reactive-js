@@ -1,10 +1,15 @@
 import compressible from "compressible";
-import contentTypeParser from "content-type";
 import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { HttpContentEncoding, HttpContentLike } from "@reactive-js/http";
+import {
+  HttpContentEncoding,
+  HttpContentLike,
+  MediaType,
+  mediaTypeToString,
+  parseMediaTypeOrThrow,
+} from "@reactive-js/http";
 import {
   ReadableMode,
   ReadableEvent,
@@ -63,40 +68,43 @@ export const decodeHttpContent = (
 
 export const createBufferHttpContent = (
   chunk: Buffer,
-  contentType: string,
+  contentType: MediaType | string,
 ): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => ({
   body: createReadableAsyncEnumerableFromBuffer(chunk),
   contentEncodings: [],
   contentLength: chunk.length,
-  contentType,
+  contentType:
+    typeof contentType === "string"
+      ? parseMediaTypeOrThrow(contentType)
+      : contentType,
 });
 
 export const createReadableHttpContent = (
   factory: () => Readable,
-  contentType: string,
+  contentType: MediaType | string,
   contentLength = -1,
 ): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => ({
   body: createReadableAsyncEnumerable(factory),
   contentEncodings: [],
   contentLength,
-  contentType,
+  contentType:
+    typeof contentType === "string"
+      ? parseMediaTypeOrThrow(contentType)
+      : contentType,
 });
 
 export const createStringHttpContent = (
   content: string,
-  contentType: string,
-  charset = "utf-8",
+  contentType: MediaType | string,
 ): HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
+  contentType =
+    typeof contentType === "string"
+      ? parseMediaTypeOrThrow(contentType)
+      : contentType;
+  const charset = contentType.params["charset"] || "utf-8";
   const buffer = iconv.encode(content, charset);
-  const contentTypeParsed = contentTypeParser.parse(contentType);
-  const { type, parameters = {} } = contentTypeParsed;
-  const newParameters = { ...parameters, charset };
-  const newContentTypeParsed = {
-    type,
-    parameters: newParameters,
-  };
-  const newContentType = contentTypeParser.format(newContentTypeParsed);
-  return createBufferHttpContent(buffer, newContentType);
+
+  return createBufferHttpContent(buffer, contentType);
 };
 
 /** @ignore */
@@ -104,5 +112,8 @@ export const contentIsCompressible = (
   content: HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ): boolean => {
   const contentType = content?.contentType;
-  return (contentType !== undefined && compressible(contentType)) || false;
+  return (
+    contentType !== undefined &&
+    (compressible(mediaTypeToString(contentType)) || false)
+  );
 };

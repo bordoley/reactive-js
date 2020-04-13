@@ -8,7 +8,7 @@ export const parseHttpDateTime = (v: string): HttpDateTime | undefined => {
 };
 
 /** @ignore */
-export const serializeHttpDateTime = (v: HttpDateTime): string => {
+export const httpDateTimeToString = (v: HttpDateTime): string => {
   const date = new Date(v);
   return date.toUTCString();
 };

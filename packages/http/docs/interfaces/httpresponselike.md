@@ -36,7 +36,7 @@ ___
 
 ### `Optional` etag
 
-• **etag**? : *[HttpEntityTagLike](httpentitytaglike.md)*
+• **etag**? : *[EntityTag](entitytag.md)*
 
 ___
 

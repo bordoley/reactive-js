@@ -5,17 +5,15 @@ import {
   HttpHeadersLike,
   HttpContentEncoding,
 } from "./interfaces";
+import { parseMediaType, mediaTypeToString } from "./mediaType";
 
 /** @ignore */
 export const parseHttpContentFromHeaders = <T>(
   headers: HttpHeadersLike,
   body: T,
 ): HttpContentLike<T> | undefined => {
-  const contentEncodingString = getHeaderValue(
-    headers,
-    HttpStandardHeader.ContentEncoding,
-    "",
-  );
+  const contentEncodingString =
+    getHeaderValue(headers, HttpStandardHeader.ContentEncoding) || "";
   const contentEncodings = contentEncodingString
     .split(",")
     .map(x => x.trim())
@@ -23,21 +21,15 @@ export const parseHttpContentFromHeaders = <T>(
       httpContentEncodings.includes(x as HttpContentEncoding),
     ) as readonly HttpContentEncoding[];
 
-  const contentLengthHeader = getHeaderValue(
-    headers,
-    HttpStandardHeader.ContentLength,
-    "0",
-  );
+  const contentLengthHeader =
+    getHeaderValue(headers, HttpStandardHeader.ContentLength) || "0";
   const contentLength = ~~contentLengthHeader;
 
-  const contentType = getHeaderValue(
-    headers,
-    HttpStandardHeader.ContentType,
-    "",
+  const contentType = parseMediaType(
+    getHeaderValue(headers, HttpStandardHeader.ContentType) || "",
   );
-  const isUndefined = contentType === "" || contentLength === 0;
 
-  return isUndefined
+  return contentType === undefined
     ? undefined
     : {
         body,
@@ -57,9 +49,7 @@ export const writeHttpContentHeaders = <T>(
     writeHeader(HttpStandardHeader.ContentLength, contentLength.toString(10));
   }
 
-  if (contentType.length > 0) {
-    writeHeader(HttpStandardHeader.ContentType, contentType);
-  }
+  writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
 
   if (contentEncodings.length > 0) {
     writeHeader(HttpStandardHeader.ContentEncoding, contentEncodings.join(","));

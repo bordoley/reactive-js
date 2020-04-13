@@ -38,7 +38,7 @@ ___
 
 ### `Optional` etag
 
-• **etag**? : *[HttpEntityTagLike](httpentitytaglike.md)*
+• **etag**? : *[EntityTag](entitytag.md)*
 
 *Inherited from [HttpResponseLike](httpresponselike.md).[etag](httpresponselike.md#optional-etag)*
 

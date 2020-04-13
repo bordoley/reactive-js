@@ -1,6 +1,6 @@
 import { HttpRequestPreconditionsLike } from "./interfaces";
-import { serializeHttpEntityTag } from "./httpEntityTag";
-import { serializeHttpDateTime } from "./httpDateTime";
+import { entityTagToString } from "./entityTag";
+import { httpDateTimeToString } from "./httpDateTime";
 import { HttpStandardHeader } from "./httpHeaders";
 
 /** @ignore */
@@ -17,9 +17,7 @@ export const writeHttpRequestPreconditionsHeaders = (
   if (ifMatch !== undefined) {
     writeHeader(
       HttpStandardHeader.IfMatch,
-      Array.isArray(ifMatch)
-        ? ifMatch.map(serializeHttpEntityTag).join(",")
-        : "*",
+      Array.isArray(ifMatch) ? ifMatch.map(entityTagToString).join(",") : "*",
     );
   }
 
@@ -27,7 +25,7 @@ export const writeHttpRequestPreconditionsHeaders = (
     writeHeader(
       HttpStandardHeader.IfNoneMatch,
       Array.isArray(ifNoneMatch)
-        ? ifNoneMatch.map(serializeHttpEntityTag).join(",")
+        ? ifNoneMatch.map(entityTagToString).join(",")
         : "*",
     );
   }
@@ -35,14 +33,14 @@ export const writeHttpRequestPreconditionsHeaders = (
   if (ifModifiedSince !== undefined) {
     writeHeader(
       HttpStandardHeader.IfModifiedSince,
-      serializeHttpDateTime(ifModifiedSince),
+      httpDateTimeToString(ifModifiedSince),
     );
   }
 
   if (ifUnmodifiedSince !== undefined) {
     writeHeader(
       HttpStandardHeader.IfUnmodifiedSince,
-      serializeHttpDateTime(ifUnmodifiedSince),
+      httpDateTimeToString(ifUnmodifiedSince),
     );
   }
 
@@ -50,8 +48,8 @@ export const writeHttpRequestPreconditionsHeaders = (
     writeHeader(
       HttpStandardHeader.IfRange,
       typeof ifRange === "number"
-        ? serializeHttpDateTime(ifRange)
-        : serializeHttpEntityTag(ifRange),
+        ? httpDateTimeToString(ifRange)
+        : entityTagToString(ifRange),
     );
   }
 };

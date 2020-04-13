@@ -20,7 +20,7 @@
 
 ### `Optional` ifMatch
 
-• **ifMatch**? : *keyof HttpEntityTagLike[] | "*"*
+• **ifMatch**? : *keyof EntityTag[] | "*"*
 
 ___
 
@@ -32,13 +32,13 @@ ___
 
 ### `Optional` ifNoneMatch
 
-• **ifNoneMatch**? : *keyof HttpEntityTagLike[] | "*"*
+• **ifNoneMatch**? : *keyof EntityTag[] | "*"*
 
 ___
 
 ### `Optional` ifRange
 
-• **ifRange**? : *[HttpEntityTagLike](httpentitytaglike.md) | [HttpDateTime](../README.md#httpdatetime)*
+• **ifRange**? : *[EntityTag](entitytag.md) | [HttpDateTime](../README.md#httpdatetime)*
 
 ___
 
