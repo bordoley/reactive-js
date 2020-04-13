@@ -1,4 +1,4 @@
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -39,7 +39,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 export const reduce = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => {
+): ObservableOperator<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ReduceSubscriber(subscriber, reducer, initialValue());
   return lift(operator, true);

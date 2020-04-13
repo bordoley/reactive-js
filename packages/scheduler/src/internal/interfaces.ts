@@ -1,6 +1,6 @@
 import { DisposableLike } from "@reactive-js/disposable";
 
-export interface SchedulerContinuationRunStatusChangedListenerLike {
+export type SchedulerContinuationRunStatusChangedListenerLike = {
   onRunStatusChanged(state: boolean): void;
 }
 

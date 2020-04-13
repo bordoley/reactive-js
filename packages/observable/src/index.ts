@@ -2,11 +2,11 @@ export {
   MulticastObservableLike,
   ObserverLike,
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   SafeSubscriberLike,
   SubjectLike,
   SubscriberLike,
-  SubscriberOperatorLike,
+  SubscriberOperator,
 } from "./internal/interfaces";
 
 export {

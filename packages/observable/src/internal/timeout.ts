@@ -1,11 +1,11 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
-  ErrorLike,
+  Exception,
 } from "@reactive-js/disposable";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -51,7 +51,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     this.delegate.notify(next);
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined) {
       this.dispose(error);
     }
@@ -66,7 +66,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
  *
  * @param duration Time in ms within which the source must emit values.
  */
-export function timeout<T>(duration: number): ObservableOperatorLike<T, T>;
+export function timeout<T>(duration: number): ObservableOperator<T, T>;
 
 /**
  *
@@ -74,11 +74,11 @@ export function timeout<T>(duration: number): ObservableOperatorLike<T, T>;
  */
 export function timeout<T>(
   duration: ObservableLike<unknown>,
-): ObservableOperatorLike<T, T>;
+): ObservableOperator<T, T>;
 
 export function timeout<T>(
   duration: number | ObservableLike<unknown>,
-): ObservableOperatorLike<T, T> {
+): ObservableOperator<T, T> {
   const durationObs =
     typeof duration === "number"
       ? throws(() => timeoutError, duration)

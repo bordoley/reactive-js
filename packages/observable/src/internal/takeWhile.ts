@@ -1,4 +1,4 @@
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -36,7 +36,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeWhileSubscriber(subscriber, predicate);
   return lift(operator, true);

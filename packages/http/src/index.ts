@@ -1,19 +1,19 @@
 export {
   HttpContentEncoding,
-  HttpContentLike,
-  HttpContentRequestLike,
+  HttpContent,
+  HttpContentRequest,
   HttpContentResponseLike,
   HttpDateTime,
-  HttpHeadersLike,
+  HttpHeaders,
   HttpMethod,
-  HttpPreferencesLike,
-  HttpRequestLike,
-  HttpResponseLike,
-  HttpServerRequestLike,
+  HttpPreferences,
+  HttpRequest,
+  HttpResponse,
+  HttpServerRequest,
   HttpStatusCode,
   EntityTag,
   MediaType,
-  URI,
+  URILike,
 } from "./internal/interfaces";
 
 export { httpContentEncodings } from "./internal/httpContentEncodings";

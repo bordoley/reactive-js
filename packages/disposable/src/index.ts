@@ -2,12 +2,12 @@
  * A wrapper around a caught exception to handle corner cases such
  * as a function which throws undefined or string.
  */
-export interface ErrorLike {
+export type Exception = {
   /** The underlying cause of the error. */
   readonly cause: unknown;
 }
 
-type DisposableOrTeardown = DisposableLike | ((error?: ErrorLike) => void);
+type DisposableOrTeardown = DisposableLike | ((error?: Exception) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -24,17 +24,17 @@ export interface DisposableLike {
    * @param disposable
    * @returns `this`
    */
-  add(disposable: DisposableLike | ((error?: ErrorLike) => void)): this;
+  add(disposable: DisposableLike | ((error?: Exception) => void)): this;
 
   /**
    * Dispose the resource. The operation is idempotent.
    *
    * @param error An optional error that to signal that the resource is being disposed due to an error.
    */
-  dispose(error?: ErrorLike): void;
+  dispose(error?: Exception): void;
 }
 
-const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
+const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {
     try {
       disposable(error);
@@ -52,7 +52,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: ErrorLike) => {
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
-  private _error?: ErrorLike = undefined;
+  private _error?: Exception = undefined;
 
   get error() {
     return this._error;
@@ -80,7 +80,7 @@ export abstract class AbstractDisposable implements DisposableLike {
     return this;
   }
 
-  dispose(error?: ErrorLike) {
+  dispose(error?: Exception) {
     if (!this.isDisposed) {
       this._isDisposed = true;
       this._error = error;
@@ -102,7 +102,7 @@ class DisposableImpl extends AbstractDisposable {}
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
 export const createDisposable = (
-  onDispose?: (error?: ErrorLike) => void,
+  onDispose?: (error?: Exception) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
   if (onDispose !== undefined) {
@@ -117,7 +117,7 @@ const _disposed: DisposableLike = {
     return _disposed;
   },
   isDisposed: true,
-  dispose(_?: ErrorLike) {},
+  dispose(_?: Exception) {},
 };
 
 /**

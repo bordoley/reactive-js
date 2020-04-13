@@ -1,4 +1,4 @@
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -46,7 +46,7 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
  */
 export const distinctUntilChanged = <T>(
   equals: (a: T, b: T) => boolean = referenceEquality,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equals);
   return lift(operator, true);

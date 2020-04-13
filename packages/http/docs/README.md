@@ -14,23 +14,23 @@
 
 ### Interfaces
 
-* [EntityTag](interfaces/entitytag.md)
-* [HttpContentLike](interfaces/httpcontentlike.md)
-* [HttpContentRequestLike](interfaces/httpcontentrequestlike.md)
-* [HttpContentResponseLike](interfaces/httpcontentresponselike.md)
-* [HttpHeadersLike](interfaces/httpheaderslike.md)
-* [HttpPreferencesLike](interfaces/httppreferenceslike.md)
-* [HttpRequestLike](interfaces/httprequestlike.md)
-* [HttpRequestPreconditionsLike](interfaces/httprequestpreconditionslike.md)
-* [HttpResponseLike](interfaces/httpresponselike.md)
-* [HttpServerRequestLike](interfaces/httpserverrequestlike.md)
-* [MediaRange](interfaces/mediarange.md)
-* [MediaType](interfaces/mediatype.md)
-* [URI](interfaces/uri.md)
+* [URILike](interfaces/urilike.md)
 
 ### Type aliases
 
+* [EntityTag](README.md#entitytag)
+* [HttpContent](README.md#httpcontent)
+* [HttpContentRequest](README.md#httpcontentrequest)
+* [HttpContentResponseLike](README.md#httpcontentresponselike)
 * [HttpDateTime](README.md#httpdatetime)
+* [HttpHeaders](README.md#httpheaders)
+* [HttpPreferences](README.md#httppreferences)
+* [HttpRequest](README.md#httprequest)
+* [HttpRequestPreconditions](README.md#httprequestpreconditions)
+* [HttpResponse](README.md#httpresponse)
+* [HttpServerRequest](README.md#httpserverrequest)
+* [MediaRange](README.md#mediarange)
+* [MediaType](README.md#mediatype)
 
 ### Variables
 
@@ -54,9 +54,101 @@
 
 ## Type aliases
 
+###  EntityTag
+
+Ƭ **EntityTag**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpContent
+
+Ƭ **HttpContent**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpContentRequest
+
+Ƭ **HttpContentRequest**: *[HttpRequest](README.md#httprequest)‹[HttpContent](README.md#httpcontent)‹T››*
+
+___
+
+###  HttpContentResponseLike
+
+Ƭ **HttpContentResponseLike**: *[HttpResponse](README.md#httpresponse)‹[HttpContent](README.md#httpcontent)‹T››*
+
+___
+
 ###  HttpDateTime
 
 Ƭ **HttpDateTime**: *number*
+
+___
+
+###  HttpHeaders
+
+Ƭ **HttpHeaders**: *object*
+
+#### Type declaration:
+
+* \[ **header**: *string*\]: string
+
+___
+
+###  HttpPreferences
+
+Ƭ **HttpPreferences**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpRequest
+
+Ƭ **HttpRequest**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpRequestPreconditions
+
+Ƭ **HttpRequestPreconditions**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpResponse
+
+Ƭ **HttpResponse**: *object*
+
+#### Type declaration:
+
+___
+
+###  HttpServerRequest
+
+Ƭ **HttpServerRequest**: *[HttpContentRequest](README.md#httpcontentrequest)‹T› & object*
+
+___
+
+###  MediaRange
+
+Ƭ **MediaRange**: *object*
+
+#### Type declaration:
+
+___
+
+###  MediaType
+
+Ƭ **MediaType**: *object*
+
+#### Type declaration:
 
 ## Variables
 
@@ -74,19 +166,39 @@ ___
 
 ### `Const` parseMediaType
 
-• **parseMediaType**: *OperatorLike‹string, undefined | [MediaType](interfaces/mediatype.md)›* =  parseWith(pMediaTypeEof)
+• **parseMediaType**: *function* =  parseWith(pMediaTypeEof)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
 
 ___
 
 ### `Const` parseMediaTypeOrThrow
 
-• **parseMediaTypeOrThrow**: *OperatorLike‹string, [MediaType](interfaces/mediatype.md)›* =  parseWithOrThrow(pMediaTypeEof)
+• **parseMediaTypeOrThrow**: *function* =  parseWithOrThrow(pMediaTypeEof)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
 
 ## Functions
 
 ### `Const` checkIfNotModified
 
-▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *OperatorLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹T›, [HttpResponseLike](interfaces/httpresponselike.md)‹T››*
+▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *Operator‹[HttpResponse](README.md#httpresponse)‹T›, [HttpResponse](README.md#httpresponse)‹T››*
 
 **Type parameters:**
 
@@ -98,13 +210,13 @@ Name | Type |
 ------ | ------ |
 `__namedParameters` | object |
 
-**Returns:** *OperatorLike‹[HttpResponseLike](interfaces/httpresponselike.md)‹T›, [HttpResponseLike](interfaces/httpresponselike.md)‹T››*
+**Returns:** *Operator‹[HttpResponse](README.md#httpresponse)‹T›, [HttpResponse](README.md#httpresponse)‹T››*
 
 ___
 
 ### `Const` createHttpRequest
 
-▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `uri`: string | [URI](interfaces/uri.md), `options`: object): *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `uri`: string | [URILike](interfaces/urilike.md), `options`: object): *[HttpRequest](README.md#httprequest)‹T›*
 
 **Type parameters:**
 
@@ -115,16 +227,16 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `method` | [HttpMethod](enums/httpmethod.md) | - |
-`uri` | string &#124; [URI](interfaces/uri.md) | - |
+`uri` | string &#124; [URILike](interfaces/urilike.md) | - |
 `options` | object |  {} |
 
-**Returns:** *[HttpRequestLike](interfaces/httprequestlike.md)‹T›*
+**Returns:** *[HttpRequest](README.md#httprequest)‹T›*
 
 ___
 
 ### `Const` createHttpResponse
 
-▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `options`: object): *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `options`: object): *[HttpResponse](README.md#httpresponse)‹T›*
 
 **Type parameters:**
 
@@ -137,13 +249,13 @@ Name | Type | Default |
 `statusCode` | [HttpStatusCode](enums/httpstatuscode.md) | - |
 `options` | object |  {} |
 
-**Returns:** *[HttpResponseLike](interfaces/httpresponselike.md)‹T›*
+**Returns:** *[HttpResponse](README.md#httpresponse)‹T›*
 
 ___
 
 ### `Const` createRedirectHttpRequest
 
-▸ **createRedirectHttpRequest**<**TReq**, **TResp**>(`response`: [HttpResponseLike](interfaces/httpresponselike.md)‹TResp›): *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
+▸ **createRedirectHttpRequest**<**TReq**, **TResp**>(`response`: [HttpResponse](README.md#httpresponse)‹TResp›): *Operator‹[HttpRequest](README.md#httprequest)‹TReq›, [HttpRequest](README.md#httprequest)‹TReq››*
 
 **Type parameters:**
 
@@ -155,44 +267,44 @@ ___
 
 Name | Type |
 ------ | ------ |
-`response` | [HttpResponseLike](interfaces/httpresponselike.md)‹TResp› |
+`response` | [HttpResponse](README.md#httpresponse)‹TResp› |
 
-**Returns:** *OperatorLike‹[HttpRequestLike](interfaces/httprequestlike.md)‹TReq›, [HttpRequestLike](interfaces/httprequestlike.md)‹TReq››*
+**Returns:** *Operator‹[HttpRequest](README.md#httprequest)‹TReq›, [HttpRequest](README.md#httprequest)‹TReq››*
 
 ___
 
 ### `Const` disallowProtocolAndHostForwarding
 
-▸ **disallowProtocolAndHostForwarding**<**T**>(): *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T››*
+▸ **disallowProtocolAndHostForwarding**<**T**>(): *Operator‹[HttpServerRequest](README.md#httpserverrequest)‹T›, [HttpServerRequest](README.md#httpserverrequest)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *OperatorLike‹[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›, [HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T››*
+**Returns:** *Operator‹[HttpServerRequest](README.md#httpserverrequest)‹T›, [HttpServerRequest](README.md#httpserverrequest)‹T››*
 
 ___
 
 ###  getHeaderValue
 
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string | undefined*
+▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string | undefined*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`headers` | [HttpHeaders](README.md#httpheaders) |
 `key` | [HttpStandardHeader](enums/httpstandardheader.md) |
 
 **Returns:** *string | undefined*
 
-▸ **getHeaderValue**(`headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string | undefined*
+▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string | undefined*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`headers` | [HttpHeaders](README.md#httpheaders) |
 `key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
 
 **Returns:** *string | undefined*
@@ -215,7 +327,7 @@ ___
 
 ### `Const` parseHttpRequestFromHeaders
 
-▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›*
+▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequest](README.md#httpserverrequest)‹T›*
 
 **Type parameters:**
 
@@ -227,13 +339,13 @@ Name | Type |
 ------ | ------ |
 `__namedParameters` | object |
 
-**Returns:** *[HttpServerRequestLike](interfaces/httpserverrequestlike.md)‹T›*
+**Returns:** *[HttpServerRequest](README.md#httpserverrequest)‹T›*
 
 ___
 
 ### `Const` parseHttpResponseFromHeaders
 
-▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeadersLike](interfaces/httpheaderslike.md), `body`: T): *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
+▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](README.md#httpheaders), `body`: T): *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
 
 **Type parameters:**
 
@@ -244,10 +356,10 @@ ___
 Name | Type |
 ------ | ------ |
 `statusCode` | number |
-`headers` | [HttpHeadersLike](interfaces/httpheaderslike.md) |
+`headers` | [HttpHeaders](README.md#httpheaders) |
 `body` | T |
 
-**Returns:** *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
+**Returns:** *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
 
 ___
 
@@ -280,7 +392,7 @@ ___
 
 ### `Const` writeHttpResponseHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›, `writeHeader`: function): *void*
+▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponseLike](README.md#httpcontentresponselike)‹T›, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -288,7 +400,7 @@ ___
 
 **Parameters:**
 
-▪ **response**: *[HttpContentResponseLike](interfaces/httpcontentresponselike.md)‹T›*
+▪ **response**: *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
 
 ▪ **writeHeader**: *function*
 

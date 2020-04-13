@@ -6,7 +6,7 @@ import {
   SubscriberLike,
   SafeSubscriberLike,
   toSafeSubscriber,
-  ObservableOperatorLike,
+  ObservableOperator,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -44,7 +44,7 @@ export class AsyncEnumeratorImpl<TReq, T>
 }
 
 export const createAsyncEnumerator = <TReq, TData>(
-  op: ObservableOperatorLike<TReq, TData>,
+  op: ObservableOperator<TReq, TData>,
   scheduler: SchedulerLike,
   replayCount?: number,
 ): AsyncEnumeratorLike<TReq, TData> => {
@@ -58,7 +58,7 @@ export const createAsyncEnumerator = <TReq, TData>(
 /** @ignore */
 export class AsyncEnumerableImpl<TReq, TData>
   implements AsyncEnumerableLike<TReq, TData> {
-  constructor(private readonly op: ObservableOperatorLike<TReq, TData>) {}
+  constructor(private readonly op: ObservableOperator<TReq, TData>) {}
 
   enumerateAsync(
     scheduler: SchedulerLike,
@@ -69,5 +69,5 @@ export class AsyncEnumerableImpl<TReq, TData>
 }
 
 export const createAsyncEnumerable = <TReq, TData>(
-  op: ObservableOperatorLike<TReq, TData>,
+  op: ObservableOperator<TReq, TData>,
 ): AsyncEnumerableLike<TReq, TData> => new AsyncEnumerableImpl(op);

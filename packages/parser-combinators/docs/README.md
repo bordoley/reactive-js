@@ -6,11 +6,11 @@
 ### Interfaces
 
 * [CharStreamLike](interfaces/charstreamlike.md)
-* [ParserLike](interfaces/parserlike.md)
 
 ### Type aliases
 
 * [CharCode](README.md#charcode)
+* [Parser](README.md#parser)
 
 ### Variables
 
@@ -63,6 +63,22 @@
 
 Ƭ **CharCode**: *number*
 
+___
+
+###  Parser
+
+Ƭ **Parser**: *function*
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
+
 ## Variables
 
 ### `Const` isParseError
@@ -74,73 +90,193 @@ ___
 
 ### `Const` pAsterisk
 
-• **pAsterisk**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("*")
+• **pAsterisk**: *function* =  char("*")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pCloseParen
 
-• **pCloseParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(")")
+• **pCloseParen**: *function* =  char(")")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pColon
 
-• **pColon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(":")
+• **pColon**: *function* =  char(":")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pComma
 
-• **pComma**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(",")
+• **pComma**: *function* =  char(",")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pDash
 
-• **pDash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("-")
+• **pDash**: *function* =  char("-")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pDquote
 
-• **pDquote**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char('"')
+• **pDquote**: *function* =  char('"')
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pEquals
 
-• **pEquals**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("=")
+• **pEquals**: *function* =  char("=")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pForwardSlash
 
-• **pForwardSlash**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("/")
+• **pForwardSlash**: *function* =  char("/")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pOpenParen
 
-• **pOpenParen**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char("(")
+• **pOpenParen**: *function* =  char("(")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pPeriod
 
-• **pPeriod**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(".")
+• **pPeriod**: *function* =  char(".")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pSemicolon
 
-• **pSemicolon**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(";")
+• **pSemicolon**: *function* =  char(";")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
 ### `Const` pSpace
 
-• **pSpace**: *[ParserLike](interfaces/parserlike.md)‹number›* =  char(" ")
+• **pSpace**: *function* =  char(" ")
+
+#### Type declaration:
+
+▸ (`input`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`input` | [CharStreamLike](interfaces/charstreamlike.md) |
 
 ___
 
@@ -155,7 +291,7 @@ ___
 
 ### `Const` char
 
-▸ **char**(`c`: string): *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+▸ **char**(`c`: string): *[Parser](README.md#parser)‹[CharCode](README.md#charcode)›*
 
 **Parameters:**
 
@@ -163,13 +299,13 @@ Name | Type |
 ------ | ------ |
 `c` | string |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+**Returns:** *[Parser](README.md#parser)‹[CharCode](README.md#charcode)›*
 
 ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`f`: function): *[ParserLike](interfaces/parserlike.md)‹T›*
+▸ **compute**<**T**>(`f`: function): *[Parser](README.md#parser)‹T›*
 
 **Type parameters:**
 
@@ -181,13 +317,13 @@ ___
 
 ▸ (): *T*
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹T›*
+**Returns:** *[Parser](README.md#parser)‹T›*
 
 ___
 
 ###  concat
 
-▸ **concat**<**TA**, **TB**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB]›*
+▸ **concat**<**TA**, **TB**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›): *[Parser](README.md#parser)‹[TA, TB]›*
 
 **Type parameters:**
 
@@ -199,12 +335,12 @@ ___
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB]›*
 
-▸ **concat**<**TA**, **TB**, **TC**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC]›*
+▸ **concat**<**TA**, **TB**, **TC**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›): *[Parser](README.md#parser)‹[TA, TB, TC]›*
 
 **Type parameters:**
 
@@ -218,13 +354,13 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›): *[Parser](README.md#parser)‹[TA, TB, TC, TD]›*
 
 **Type parameters:**
 
@@ -240,14 +376,14 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›, `e`: [Parser](README.md#parser)‹TE›): *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE]›*
 
 **Type parameters:**
 
@@ -265,15 +401,15 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
-`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
+`e` | [Parser](README.md#parser)‹TE› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›, `e`: [Parser](README.md#parser)‹TE›, `f`: [Parser](README.md#parser)‹TF›): *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF]›*
 
 **Type parameters:**
 
@@ -293,16 +429,16 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
-`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
-`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
+`e` | [Parser](README.md#parser)‹TE› |
+`f` | [Parser](README.md#parser)‹TF› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›, `e`: [Parser](README.md#parser)‹TE›, `f`: [Parser](README.md#parser)‹TF›, `g`: [Parser](README.md#parser)‹TG›): *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG]›*
 
 **Type parameters:**
 
@@ -324,17 +460,17 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
-`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
-`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
-`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
+`e` | [Parser](README.md#parser)‹TE› |
+`f` | [Parser](README.md#parser)‹TF› |
+`g` | [Parser](README.md#parser)‹TG› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›, `h`: [ParserLike](interfaces/parserlike.md)‹TH›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›, `e`: [Parser](README.md#parser)‹TE›, `f`: [Parser](README.md#parser)‹TF›, `g`: [Parser](README.md#parser)‹TG›, `h`: [Parser](README.md#parser)‹TH›): *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
 **Type parameters:**
 
@@ -358,18 +494,18 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
-`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
-`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
-`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
-`h` | [ParserLike](interfaces/parserlike.md)‹TH› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
+`e` | [Parser](README.md#parser)‹TE› |
+`f` | [Parser](README.md#parser)‹TF› |
+`g` | [Parser](README.md#parser)‹TG› |
+`h` | [Parser](README.md#parser)‹TH› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
-▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`a`: [ParserLike](interfaces/parserlike.md)‹TA›, `b`: [ParserLike](interfaces/parserlike.md)‹TB›, `c`: [ParserLike](interfaces/parserlike.md)‹TC›, `d`: [ParserLike](interfaces/parserlike.md)‹TD›, `e`: [ParserLike](interfaces/parserlike.md)‹TE›, `f`: [ParserLike](interfaces/parserlike.md)‹TF›, `g`: [ParserLike](interfaces/parserlike.md)‹TG›, `h`: [ParserLike](interfaces/parserlike.md)‹TH›, `i`: [ParserLike](interfaces/parserlike.md)‹TI›): *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+▸ **concat**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›, `c`: [Parser](README.md#parser)‹TC›, `d`: [Parser](README.md#parser)‹TD›, `e`: [Parser](README.md#parser)‹TE›, `f`: [Parser](README.md#parser)‹TF›, `g`: [Parser](README.md#parser)‹TG›, `h`: [Parser](README.md#parser)‹TH›, `i`: [Parser](README.md#parser)‹TI›): *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
 
 **Type parameters:**
 
@@ -395,17 +531,17 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`a` | [ParserLike](interfaces/parserlike.md)‹TA› |
-`b` | [ParserLike](interfaces/parserlike.md)‹TB› |
-`c` | [ParserLike](interfaces/parserlike.md)‹TC› |
-`d` | [ParserLike](interfaces/parserlike.md)‹TD› |
-`e` | [ParserLike](interfaces/parserlike.md)‹TE› |
-`f` | [ParserLike](interfaces/parserlike.md)‹TF› |
-`g` | [ParserLike](interfaces/parserlike.md)‹TG› |
-`h` | [ParserLike](interfaces/parserlike.md)‹TH› |
-`i` | [ParserLike](interfaces/parserlike.md)‹TI› |
+`a` | [Parser](README.md#parser)‹TA› |
+`b` | [Parser](README.md#parser)‹TB› |
+`c` | [Parser](README.md#parser)‹TC› |
+`d` | [Parser](README.md#parser)‹TD› |
+`e` | [Parser](README.md#parser)‹TE› |
+`f` | [Parser](README.md#parser)‹TF› |
+`g` | [Parser](README.md#parser)‹TG› |
+`h` | [Parser](README.md#parser)‹TH› |
+`i` | [Parser](README.md#parser)‹TI› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+**Returns:** *[Parser](README.md#parser)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
 
 ___
 
@@ -425,7 +561,7 @@ ___
 
 ### `Const` eof
 
-▸ **eof**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *[ParserLike](interfaces/parserlike.md)‹T›*
+▸ **eof**<**T**>(`parser`: [Parser](README.md#parser)‹T›): *[Parser](README.md#parser)‹T›*
 
 **Type parameters:**
 
@@ -435,15 +571,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
+`parser` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹T›*
+**Returns:** *[Parser](README.md#parser)‹T›*
 
 ___
 
 ### `Const` flatMap
 
-▸ **flatMap**<**TA**, **TB**>(`mapper`: function): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+▸ **flatMap**<**TA**, **TB**>(`mapper`: function): *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 **Type parameters:**
 
@@ -455,7 +591,7 @@ ___
 
 ▪ **mapper**: *function*
 
-▸ (`result`: TA): *[ParserLike](interfaces/parserlike.md)‹TB›*
+▸ (`result`: TA): *[Parser](README.md#parser)‹TB›*
 
 **Parameters:**
 
@@ -463,27 +599,27 @@ Name | Type |
 ------ | ------ |
 `result` | TA |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 ___
 
 ### `Const` followedBy
 
-▸ **followedBy**(`pnext`: [ParserLike](interfaces/parserlike.md)‹unknown›): *[ParserLike](interfaces/parserlike.md)‹unknown›*
+▸ **followedBy**(`pnext`: [Parser](README.md#parser)‹unknown›): *[Parser](README.md#parser)‹unknown›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`pnext` | [ParserLike](interfaces/parserlike.md)‹unknown› |
+`pnext` | [Parser](README.md#parser)‹unknown› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹unknown›*
+**Returns:** *[Parser](README.md#parser)‹unknown›*
 
 ___
 
 ### `Const` many
 
-▸ **many**<**T**>(`options`: object): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+▸ **many**<**T**>(`options`: object): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -495,13 +631,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | object |  {} |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 ___
 
 ### `Const` manySatisfy
 
-▸ **manySatisfy**(`options`: object): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›, [ParserLike](interfaces/parserlike.md)‹string››*
+▸ **manySatisfy**(`options`: object): *Operator‹[Parser](README.md#parser)‹[CharCode](README.md#charcode)›, [Parser](README.md#parser)‹string››*
 
 **Parameters:**
 
@@ -509,13 +645,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | object |  {} |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›, [ParserLike](interfaces/parserlike.md)‹string››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹[CharCode](README.md#charcode)›, [Parser](README.md#parser)‹string››*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 **Type parameters:**
 
@@ -535,13 +671,13 @@ Name | Type |
 ------ | ------ |
 `result` | TA |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`v`: TB): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+▸ **mapTo**<**TA**, **TB**>(`v`: TB): *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 **Type parameters:**
 
@@ -555,27 +691,27 @@ Name | Type |
 ------ | ------ |
 `v` | TB |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹TA›, [ParserLike](interfaces/parserlike.md)‹TB››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
 
 ___
 
 ### `Const` notFollowedBy
 
-▸ **notFollowedBy**(`pnext`: [ParserLike](interfaces/parserlike.md)‹unknown›): *[ParserLike](interfaces/parserlike.md)‹unknown›*
+▸ **notFollowedBy**(`pnext`: [Parser](README.md#parser)‹unknown›): *[Parser](README.md#parser)‹unknown›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`pnext` | [ParserLike](interfaces/parserlike.md)‹unknown› |
+`pnext` | [Parser](README.md#parser)‹unknown› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹unknown›*
+**Returns:** *[Parser](README.md#parser)‹unknown›*
 
 ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T): *[ParserLike](interfaces/parserlike.md)‹T›*
+▸ **ofValue**<**T**>(`value`: T): *[Parser](README.md#parser)‹T›*
 
 **Type parameters:**
 
@@ -587,13 +723,13 @@ Name | Type |
 ------ | ------ |
 `value` | T |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹T›*
+**Returns:** *[Parser](README.md#parser)‹T›*
 
 ___
 
 ### `Const` optional
 
-▸ **optional**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *[ParserLike](interfaces/parserlike.md)‹T | undefined›*
+▸ **optional**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *[Parser](README.md#parser)‹T | undefined›*
 
 **Type parameters:**
 
@@ -603,15 +739,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parse` | [ParserLike](interfaces/parserlike.md)‹T› |
+`parse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹T | undefined›*
+**Returns:** *[Parser](README.md#parser)‹T | undefined›*
 
 ___
 
 ### `Const` or
 
-▸ **or**<**T**>(`otherParse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹T››*
+▸ **or**<**T**>(`otherParse`: [Parser](README.md#parser)‹T›): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -621,15 +757,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`otherParse` | [ParserLike](interfaces/parserlike.md)‹T› |
+`otherParse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹T››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
 
 ___
 
 ### `Const` orDefault
 
-▸ **orDefault**<**T**>(`default_`: T): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T | undefined›, [ParserLike](interfaces/parserlike.md)‹T››*
+▸ **orDefault**<**T**>(`default_`: T): *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -641,7 +777,7 @@ Name | Type |
 ------ | ------ |
 `default_` | T |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T | undefined›, [ParserLike](interfaces/parserlike.md)‹T››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
 
 ___
 
@@ -661,7 +797,7 @@ ___
 
 ### `Const` parseWith
 
-▸ **parseWith**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
+▸ **parseWith**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *Operator‹string, T | undefined›*
 
 **Type parameters:**
 
@@ -671,15 +807,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parse` | [ParserLike](interfaces/parserlike.md)‹T› |
+`parse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *OperatorLike‹string, T | undefined›*
+**Returns:** *Operator‹string, T | undefined›*
 
 ___
 
 ### `Const` parseWithOrThrow
 
-▸ **parseWithOrThrow**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T›*
+▸ **parseWithOrThrow**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *Operator‹string, T›*
 
 **Type parameters:**
 
@@ -689,15 +825,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parse` | [ParserLike](interfaces/parserlike.md)‹T› |
+`parse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *OperatorLike‹string, T›*
+**Returns:** *Operator‹string, T›*
 
 ___
 
 ### `Const` regexp
 
-▸ **regexp**(`input`: string, `options`: object): *[ParserLike](interfaces/parserlike.md)‹string›*
+▸ **regexp**(`input`: string, `options`: object): *[Parser](README.md#parser)‹string›*
 
 **Parameters:**
 
@@ -706,13 +842,13 @@ Name | Type | Default |
 `input` | string | - |
 `options` | object |  {} |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹string›*
+**Returns:** *[Parser](README.md#parser)‹string›*
 
 ___
 
 ### `Const` satisfy
 
-▸ **satisfy**(`f`: function): *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+▸ **satisfy**(`f`: function): *[Parser](README.md#parser)‹[CharCode](README.md#charcode)›*
 
 **Parameters:**
 
@@ -726,13 +862,13 @@ Name | Type |
 ------ | ------ |
 `char` | [CharCode](README.md#charcode) |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹[CharCode](README.md#charcode)›*
+**Returns:** *[Parser](README.md#parser)‹[CharCode](README.md#charcode)›*
 
 ___
 
 ### `Const` sepBy
 
-▸ **sepBy**<**T**>(`separator`: [ParserLike](interfaces/parserlike.md)‹unknown›): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+▸ **sepBy**<**T**>(`separator`: [Parser](README.md#parser)‹unknown›): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -742,15 +878,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`separator` | [ParserLike](interfaces/parserlike.md)‹unknown› |
+`separator` | [Parser](README.md#parser)‹unknown› |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 ___
 
 ### `Const` sepBy1
 
-▸ **sepBy1**<**T**>(`separator`: [ParserLike](interfaces/parserlike.md)‹unknown›): *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+▸ **sepBy1**<**T**>(`separator`: [Parser](README.md#parser)‹unknown›): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -760,15 +896,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`separator` | [ParserLike](interfaces/parserlike.md)‹unknown› |
+`separator` | [Parser](README.md#parser)‹unknown› |
 
-**Returns:** *OperatorLike‹[ParserLike](interfaces/parserlike.md)‹T›, [ParserLike](interfaces/parserlike.md)‹keyof T[]››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
 
 ___
 
 ### `Const` string
 
-▸ **string**(`str`: string): *[ParserLike](interfaces/parserlike.md)‹string›*
+▸ **string**(`str`: string): *[Parser](README.md#parser)‹string›*
 
 **Parameters:**
 
@@ -776,7 +912,7 @@ Name | Type |
 ------ | ------ |
 `str` | string |
 
-**Returns:** *[ParserLike](interfaces/parserlike.md)‹string›*
+**Returns:** *[Parser](README.md#parser)‹string›*
 
 ___
 

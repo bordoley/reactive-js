@@ -23,7 +23,7 @@ An observer of push-based notifications within an observable source.
 
 ###  onDispose
 
-▸ **onDispose**(`error?`: ErrorLike): *void*
+▸ **onDispose**(`error?`: Exception): *void*
 
 Notifies the observer that the provider has finished sending push-based notifications.
 
@@ -31,7 +31,7 @@ Notifies the observer that the provider has finished sending push-based notifica
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | ErrorLike | If present, indicates that the provider experienced an error condition.  |
+`error?` | Exception | If present, indicates that the provider experienced an error condition.  |
 
 **Returns:** *void*
 

@@ -1,4 +1,4 @@
-import { DisposableLike, ErrorLike } from "@reactive-js/disposable";
+import { DisposableLike, Exception } from "@reactive-js/disposable";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
 /**
@@ -10,7 +10,7 @@ export interface ObserverLike<T> {
    *
    * @param error If present, indicates that the provider experienced an error condition.
    */
-  onDispose(error?: ErrorLike): void;
+  onDispose(error?: Exception): void;
 
   /**
    * Provides the observer with the next item to observe.
@@ -98,13 +98,13 @@ export interface SubjectLike<T>
     MulticastObservableLike<T> {}
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
-export interface ObservableOperatorLike<A, B> {
+export type ObservableOperator<A, B> = {
   (observable: ObservableLike<A>): ObservableLike<B>;
 }
 
 /**
  * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
  */
-export interface SubscriberOperatorLike<A, B> {
+export type SubscriberOperator<A, B> = {
   (observable: SubscriberLike<B>): SubscriberLike<A>;
 }

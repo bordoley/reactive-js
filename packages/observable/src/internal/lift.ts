@@ -1,14 +1,14 @@
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   SubscriberLike,
-  SubscriberOperatorLike,
+  SubscriberOperator,
 } from "./interfaces";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
-    readonly operators: ReadonlyArray<SubscriberOperatorLike<any, any>>,
+    readonly operators: ReadonlyArray<SubscriberOperator<any, any>>,
     readonly isSynchronous: boolean,
   ) {}
 
@@ -29,9 +29,9 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
  * @param operator The operator function to apply.
  */
 export function lift<TA, TB>(
-  operator: SubscriberOperatorLike<TA, TB>,
+  operator: SubscriberOperator<TA, TB>,
   operatorIsSynchronous = false,
-): ObservableOperatorLike<TA, TB> {
+): ObservableOperator<TA, TB> {
   return source => {
     const sourceSource =
       source instanceof LiftedObservable ? source.source : source;

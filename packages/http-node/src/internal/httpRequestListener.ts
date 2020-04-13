@@ -1,9 +1,9 @@
 import { RequestListener, ServerResponse, IncomingMessage } from "http";
 import {
-  HttpServerRequestLike,
+  HttpServerRequest,
   writeHttpResponseHeaders,
   HttpMethod,
-  HttpHeadersLike,
+  HttpHeaders,
   parseHttpRequestFromHeaders,
   HttpContentResponseLike,
 } from "@reactive-js/http";
@@ -64,16 +64,16 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
   });
 
 // FIXME: Don't include content in prod mode
-// FIXME: Special case some exceptions like URI parsing exceptions that are due to bad user input
+// FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
-export interface HttpRequestListenerOptions {
+export type HttpRequestListenerOptions = {
   readonly onError?: (e: unknown) => ObservableLike<unknown>;
 }
 
-export interface HttpRequestListenerHandler {
+export type HttpRequestListenerHandler = {
   (
-    req: HttpServerRequestLike<
+    req: HttpServerRequest<
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
   ): ObservableLike<
@@ -113,7 +113,7 @@ export const createHttpRequestListener = (
       parseHttpRequestFromHeaders({
         method: method as HttpMethod,
         path,
-        headers: headers as HttpHeadersLike,
+        headers: headers as HttpHeaders,
         httpVersionMajor,
         httpVersionMinor,
         isTransportSecure,

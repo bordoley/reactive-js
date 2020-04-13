@@ -1,5 +1,5 @@
 import {
-  StateUpdaterLike,
+  StateUpdater,
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
 import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
@@ -8,32 +8,32 @@ import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo, ReactElement } from "react";
 
-export interface RelativeURILike {
+export type RelativeURI = {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
 }
 
-const empty: RelativeURILike = {
+const empty: RelativeURI = {
   path: "",
   query: "",
   fragment: "",
 };
 
-export interface RoutableComponentProps {
-  readonly referer: RelativeURILike | undefined;
-  readonly uri: RelativeURILike;
-  readonly uriUpdater: (updater: StateUpdaterLike<RelativeURILike>) => void;
+export type RoutableComponentProps = {
+  readonly referer: RelativeURI | undefined;
+  readonly uri: RelativeURI;
+  readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
 }
 
-interface RouteMap {
+type RouteMap = {
   [key: string]: React.ComponentType<RoutableComponentProps>;
 }
 
-export interface RouterProps {
+export type RouterProps = {
   readonly location: AsyncEnumerableLike<
-    StateUpdaterLike<RelativeURILike>,
-    RelativeURILike
+    StateUpdater<RelativeURI>,
+    RelativeURI
   >;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
@@ -44,9 +44,9 @@ export interface RouterProps {
 }
 
 const pairify = (
-  [_, oldState]: [RelativeURILike | undefined, RelativeURILike],
-  next: RelativeURILike,
-): [RelativeURILike | undefined, RelativeURILike] =>
+  [_, oldState]: [RelativeURI | undefined, RelativeURI],
+  next: RelativeURI,
+): [RelativeURI | undefined, RelativeURI] =>
   oldState === empty ? [undefined, next] : [oldState, next];
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
@@ -63,13 +63,13 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
         routeMap[path] = component;
       }
 
-      const uriUpdater = (updater: StateUpdaterLike<RelativeURILike>) => {
+      const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
         locationStore.dispatch(updater);
       };
 
       return pipe(
         locationStore,
-        scan(pairify, (): [RelativeURILike | undefined, RelativeURILike] => [
+        scan(pairify, (): [RelativeURI | undefined, RelativeURI] => [
           undefined,
           empty,
         ]),

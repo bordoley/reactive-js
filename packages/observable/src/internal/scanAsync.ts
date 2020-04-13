@@ -1,6 +1,6 @@
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
@@ -49,5 +49,5 @@ class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {
 export const scanAsync = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
   initialValue: () => TAcc,
-): ObservableOperatorLike<T, TAcc> => observable =>
+): ObservableOperator<T, TAcc> => observable =>
   new ScanAsyncObservable(observable, scanner, initialValue);

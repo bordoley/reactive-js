@@ -12,7 +12,7 @@ import {
   identity as identityEnumerable,
   lift,
   AsyncEnumerableLike,
-  AsyncEnumerableOperatorLike,
+  AsyncEnumerableOperator,
 } from "@reactive-js/async-enumerable";
 import {
   DisposableValueLike,
@@ -20,14 +20,14 @@ import {
 } from "@reactive-js/disposable";
 import {
   HttpContentEncoding,
-  HttpHeadersLike,
+  HttpHeaders,
   HttpStatusCode,
   createRedirectHttpRequest,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
-  HttpContentRequestLike,
+  HttpContentRequest,
   HttpContentResponseLike,
-  HttpContentLike,
+  HttpContent,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -46,7 +46,7 @@ import {
   concatMap,
   onNotify,
   scan,
-  ObservableOperatorLike,
+  ObservableOperator,
 } from "@reactive-js/observable";
 import { pipe, compose } from "@reactive-js/pipe";
 import {
@@ -64,31 +64,31 @@ export const enum HttpClientRequestStatusType {
   ResponseReady = 4,
 }
 
-export interface HttpClientRequestStatusBegin {
+export type HttpClientRequestStatusBegin = {
   readonly type: HttpClientRequestStatusType.Begin;
-  readonly request: HttpContentRequestLike<
+  readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
 }
 
-export interface HttpClientRequestStatusUploading {
+export type HttpClientRequestStatusUploading = {
   readonly type: HttpClientRequestStatusType.Uploaded;
-  readonly request: HttpContentRequestLike<
+  readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
   readonly total: number;
 }
 
-export interface HttpClientRequestStatusUploadComplete {
+export type HttpClientRequestStatusUploadComplete = {
   readonly type: HttpClientRequestStatusType.UploadComplete;
-  readonly request: HttpContentRequestLike<
+  readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
 }
 
-export interface HttpClientRequestStatusResponseReady {
+export type HttpClientRequestStatusResponseReady= {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: HttpContentRequestLike<
+  readonly request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
   readonly response: DisposableValueLike<
@@ -111,11 +111,11 @@ const spyScanner = (
     : [-1, total + uploaded];
 
 const createOnSubscribe = (
-  request: HttpContentRequestLike<
+  request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >,
   send: () => ClientRequest,
-  encodeContent: AsyncEnumerableOperatorLike<
+  encodeContent: AsyncEnumerableOperator<
     ReadableMode,
     ReadableEvent,
     ReadableMode,
@@ -145,7 +145,7 @@ const createOnSubscribe = (
     const response = pipe(
       parseHttpResponseFromHeaders(
         msg.statusCode || -1,
-        msg.headers as HttpHeadersLike,
+        msg.headers as HttpHeaders,
         createReadableAsyncEnumerable(() => msg),
       ),
       decodeHttpContentResponse,
@@ -219,17 +219,17 @@ const createOnSubscribe = (
   // * information: Not much to do, we already support continue via the continue event, and will support upgrade.
 };
 
-export interface HttpClientOptions extends BrotliOptions, ZlibOptions {
+export type HttpClientOptions = BrotliOptions & ZlibOptions & {
   // Node options
   readonly agent?: Agent | boolean;
   readonly insecureHTTPParser?: boolean;
   readonly maxHeaderSize?: number;
   readonly shouldEncode?: (
-    req: HttpContentRequestLike<unknown>,
+    req: HttpContentRequest<unknown>,
   ) => boolean | undefined;
 }
 
-export interface HttpClientRequestOptions {
+export type HttpClientRequestOptions = {
   // The encodings accepted by the server
   readonly acceptedEncodings?: readonly HttpContentEncoding[];
 }
@@ -237,7 +237,7 @@ export interface HttpClientRequestOptions {
 const identity = <T>(x: T): T => x;
 
 const requestIsCompressible = (
-  request: HttpContentRequestLike<
+  request: HttpContentRequest<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >,
 ): boolean => {
@@ -245,9 +245,9 @@ const requestIsCompressible = (
   return content !== undefined ? contentIsCompressible(content) : false;
 };
 
-export interface HttpClient {
+export type HttpClient = {
   (
-    request: HttpContentRequestLike<
+    request: HttpContentRequest<
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
     requestOptions?: HttpClientRequestOptions,
@@ -352,7 +352,7 @@ const redirectCodes = [
 export const createDefaultHttpResponseHandler = (
   sendHttpRequest: HttpClient,
   maxRedirects = 10,
-): ObservableOperatorLike<HttpClientRequestStatus, HttpClientRequestStatus> => {
+): ObservableOperator<HttpClientRequestStatus, HttpClientRequestStatus> => {
   const handleResponse = (
     status: HttpClientRequestStatus,
   ): ObservableLike<HttpClientRequestStatus> => {
@@ -369,8 +369,8 @@ export const createDefaultHttpResponseHandler = (
       const [newRequest, newAcceptedEncodings] = shouldRedirect
         ? [
             createRedirectHttpRequest<
-              HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-              HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+              HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+              HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
             >(response.value)(request),
           ]
         : statusCode === HttpStatusCode.ExpectationFailed

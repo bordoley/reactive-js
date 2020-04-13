@@ -1,7 +1,7 @@
 import { SchedulerLike } from "@reactive-js/scheduler";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   SubjectLike,
   SubscriberLike,
 } from "./interfaces";
@@ -52,7 +52,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperator<T, T> => {
   const factory = () => createSubject(scheduler, replayCount);
   return observable => new SharedObservable(factory, observable);
 };

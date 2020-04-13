@@ -1,11 +1,11 @@
-import { createSerialDisposable, ErrorLike } from "@reactive-js/disposable";
+import { createSerialDisposable, Exception } from "@reactive-js/disposable";
 import { pipe } from "@reactive-js/pipe";
 import { ofValue } from "./ofValue";
 import { lift } from "./lift";
 import { never } from "./never";
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -76,7 +76,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     }
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined) {
       this.dispose(error);
     }
@@ -97,7 +97,7 @@ export function buffer<T>(
     duration?: ((next: T) => ObservableLike<unknown>) | number;
     maxBufferSize?: number;
   } = {},
-): ObservableOperatorLike<T, readonly T[]> {
+): ObservableOperator<T, readonly T[]> {
   const duration = options.duration || Number.MAX_SAFE_INTEGER;
   const durationSelector =
     duration === Number.MAX_SAFE_INTEGER

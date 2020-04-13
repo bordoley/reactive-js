@@ -1,9 +1,9 @@
 import {
   DisposableLike,
   createSerialDisposable,
-  ErrorLike,
+  Exception,
 } from "@reactive-js/disposable";
-import { pipe, OperatorLike } from "@reactive-js/pipe";
+import { pipe, Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
@@ -25,7 +25,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
     this.hasResult = true;
   }
 
-  onDispose(err?: ErrorLike) {
+  onDispose(err?: Exception) {
     this.subscription.dispose();
 
     if (err !== undefined) {
@@ -47,7 +47,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
  */
 export const toPromise = <T>(
   scheduler: SchedulerLike,
-): OperatorLike<ObservableLike<T>, Promise<T>> => observable =>
+): Operator<ObservableLike<T>, Promise<T>> => observable =>
   new Promise((resolve, reject) => {
     const subscription = createSerialDisposable();
     const observer = new ToPromiseObserver(subscription, resolve, reject);

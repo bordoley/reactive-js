@@ -1,6 +1,6 @@
 import {
   ObservableLike,
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -12,7 +12,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 
 class WithLatestFromSubscriber<TA, TB, TC>
   extends AbstractDelegatingSubscriber<TA, TC>
@@ -40,7 +40,7 @@ class WithLatestFromSubscriber<TA, TB, TC>
     }
   }
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined) {
       this.dispose(error);
     }
@@ -62,7 +62,7 @@ class WithLatestFromSubscriber<TA, TB, TC>
 export const withLatestFrom = <TA, TB, TC>(
   other: ObservableLike<TB>,
   selector: (a: TA, b: TB) => TC,
-): ObservableOperatorLike<TA, TC> => {
+): ObservableOperator<TA, TC> => {
   const operator = (subscriber: SubscriberLike<TC>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);
   return lift(operator, false);

@@ -1,6 +1,6 @@
 import { Transform } from "stream";
 import {
-  AsyncEnumerableOperatorLike,
+  AsyncEnumerableOperator,
   createAsyncEnumerable,
 } from "@reactive-js/async-enumerable";
 import { createDisposable } from "@reactive-js/disposable";
@@ -14,7 +14,7 @@ import { createWritableAsyncEnumerator } from "./writable";
 
 export const transform = (
   factory: () => Transform,
-): AsyncEnumerableOperatorLike<
+): AsyncEnumerableOperator<
   ReadableMode,
   ReadableEvent,
   ReadableMode,

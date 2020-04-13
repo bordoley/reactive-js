@@ -1,9 +1,9 @@
 import {
-  HttpContentRequestLike,
+  HttpContentRequest,
   HttpContentResponseLike,
   writeHttpRequestHeaders,
   parseHttpResponseFromHeaders,
-  HttpHeadersLike,
+  HttpHeaders,
 } from "@reactive-js/http";
 import { ObservableLike, createObservable } from "@reactive-js/observable";
 
@@ -24,25 +24,25 @@ export const enum HttpClientRequestStatusType {
   ResponseReady = 4,
 }
 
-export interface HttpClientRequestStatusBegin {
+export type HttpClientRequestStatusBegin = {
   readonly type: HttpClientRequestStatusType.Begin;
-  readonly request: HttpContentRequestLike<HttpBody>;
+  readonly request: HttpContentRequest<HttpBody>;
 }
 
-export interface HttpClientRequestStatusUploading {
+export type HttpClientRequestStatusUploading = {
   readonly type: HttpClientRequestStatusType.Uploaded;
-  readonly request: HttpContentRequestLike<HttpBody>;
+  readonly request: HttpContentRequest<HttpBody>;
   readonly total: number;
 }
 
-export interface HttpClientRequestStatusUploadComplete {
+export type HttpClientRequestStatusUploadComplete = {
   readonly type: HttpClientRequestStatusType.UploadComplete;
-  readonly request: HttpContentRequestLike<HttpBody>;
+  readonly request: HttpContentRequest<HttpBody>;
 }
 
-export interface HttpClientRequestStatusResponseReady {
+export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: HttpContentRequestLike<HttpBody>;
+  readonly request: HttpContentRequest<HttpBody>;
   readonly response: HttpContentResponseLike<Blob>;
 }
 
@@ -52,7 +52,7 @@ export type HttpClientRequestStatus =
   | HttpClientRequestStatusUploadComplete
   | HttpClientRequestStatusResponseReady;
 
-const parseHeaders = (rawHeaders: string): HttpHeadersLike => {
+const parseHeaders = (rawHeaders: string): HttpHeaders => {
   const headers: { [header: string]: string } = {};
 
   // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
@@ -73,7 +73,7 @@ const parseHeaders = (rawHeaders: string): HttpHeadersLike => {
 };
 
 export const sendHttpRequest = (
-  request: HttpContentRequestLike<HttpBody>,
+  request: HttpContentRequest<HttpBody>,
 ): ObservableLike<HttpClientRequestStatus> =>
   createObservable(subscriber => {
     // FIXME: Wild idea. Use Fetch for GET/HEAD/DELETE requests. Only use XHR for post.

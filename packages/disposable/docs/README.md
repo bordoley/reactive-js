@@ -12,8 +12,11 @@
 
 * [DisposableLike](interfaces/disposablelike.md)
 * [DisposableValueLike](interfaces/disposablevaluelike.md)
-* [ErrorLike](interfaces/errorlike.md)
 * [SerialDisposableLike](interfaces/serialdisposablelike.md)
+
+### Type aliases
+
+* [Exception](README.md#exception)
 
 ### Variables
 
@@ -24,6 +27,17 @@
 * [createDisposable](README.md#const-createdisposable)
 * [createDisposableValue](README.md#const-createdisposablevalue)
 * [createSerialDisposable](README.md#const-createserialdisposable)
+
+## Type aliases
+
+###  Exception
+
+Ƭ **Exception**: *object*
+
+A wrapper around a caught exception to handle corner cases such
+as a function which throws undefined or string.
+
+#### Type declaration:
 
 ## Variables
 

@@ -27,9 +27,9 @@
 
 ###  error
 
-• **get error**(): *undefined | [ErrorLike](../interfaces/errorlike.md)*
+• **get error**(): *undefined | object*
 
-**Returns:** *undefined | [ErrorLike](../interfaces/errorlike.md)*
+**Returns:** *undefined | object*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 ###  dispose
 
-▸ **dispose**(`error?`: [ErrorLike](../interfaces/errorlike.md)): *void*
+▸ **dispose**(`error?`: [Exception](../README.md#exception)): *void*
 
 *Implementation of [DisposableLike](../interfaces/disposablelike.md)*
 
@@ -65,6 +65,6 @@ ___
 
 Name | Type |
 ------ | ------ |
-`error?` | [ErrorLike](../interfaces/errorlike.md) |
+`error?` | [Exception](../README.md#exception) |
 
 **Returns:** *void*

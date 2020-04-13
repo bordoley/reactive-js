@@ -4,8 +4,8 @@ import {
   createHttpRequest,
   createHttpResponse,
   disallowProtocolAndHostForwarding,
-  HttpContentLike,
-  HttpContentRequestLike,
+  HttpContent,
+  HttpContentRequest,
   HttpContentResponseLike,
   HttpStatusCode,
 } from "@reactive-js/http";
@@ -42,7 +42,7 @@ import {
   catchError,
   throws,
 } from "@reactive-js/observable";
-import { pipe, compose, OperatorLike } from "@reactive-js/pipe";
+import { pipe, compose, Operator } from "@reactive-js/pipe";
 import {
   createPriorityScheduler,
   toSchedulerWithPriority,
@@ -77,8 +77,8 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
-const routerHandlerA: OperatorLike<
-  HttpContentRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+const routerHandlerA: Operator<
+  HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
     HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >
@@ -92,8 +92,8 @@ const routerHandlerA: OperatorLike<
 );
 
 const routerHandlerB: HttpRequestRouterHandler<
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > = req =>
   pipe(
     ofValue(req),
@@ -108,8 +108,8 @@ const routerHandlerB: HttpRequestRouterHandler<
   );
 
 const routerHandlerGlob: HttpRequestRouterHandler<
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > = req =>
   pipe(
     ofValue(req),
@@ -124,12 +124,12 @@ const routerHandlerGlob: HttpRequestRouterHandler<
   );
 
 const routerHandlerThrow: HttpRequestRouterHandler<
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContentLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
 > = _ => throws(() => new Error("internal error"));
 
-const notFound: OperatorLike<
-  HttpContentRequestLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+const notFound: Operator<
+  HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
     HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >

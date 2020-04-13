@@ -4,7 +4,7 @@ import {
 } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
-  ErrorLike,
+  Exception,
   AbstractDisposable,
 } from "@reactive-js/disposable";
 import {
@@ -136,7 +136,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
         this.garbage.delete(key);
       };
 
-      const onDisposeCleanup = (_?: ErrorLike) =>
+      const onDisposeCleanup = (_?: Exception) =>
         this.add(
           scheduleCallback(this.cleanupScheduler, () => {
             if (enumerator.subscriberCount === 0) {

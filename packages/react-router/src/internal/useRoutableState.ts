@@ -1,13 +1,13 @@
-import { StateUpdaterLike } from "@reactive-js/async-enumerable";
+import { StateUpdater } from "@reactive-js/async-enumerable";
 import { useCallback, useMemo } from "react";
-import { RelativeURILike, RoutableComponentProps } from "./router";
+import { RelativeURI, RoutableComponentProps } from "./router";
 
 const createURIStateUpdater = <TState>(
-  stateUpdater: StateUpdaterLike<TState>,
+  stateUpdater: StateUpdater<TState>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery: boolean,
-) => (oldURI: RelativeURILike) => {
+) => (oldURI: RelativeURI) => {
   const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
 
   const oldState = parse(oldSerialized);
@@ -35,7 +35,7 @@ export const useRoutableState = <TState>(
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
   stateIsQuery = false,
-): [TState, (updater: StateUpdaterLike<TState>) => void] => {
+): [TState, (updater: StateUpdater<TState>) => void] => {
   const {
     uri: { query, fragment },
     uriUpdater,
@@ -47,7 +47,7 @@ export const useRoutableState = <TState>(
   }, [parse, query, fragment]);
 
   const notify = useCallback(
-    (stateUpdater: StateUpdaterLike<TState>) => {
+    (stateUpdater: StateUpdater<TState>) => {
       uriUpdater(
         createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );

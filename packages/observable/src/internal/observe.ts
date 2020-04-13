@@ -1,5 +1,5 @@
 import {
-  ObservableOperatorLike,
+  ObservableOperator,
   ObserverLike,
   SubscriberLike,
 } from "./interfaces";
@@ -8,7 +8,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { ErrorLike } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -20,7 +20,7 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       try {
         observer.onDispose(error);
       } catch (cause) {
-        error = { cause, parent: error } as ErrorLike;
+        error = { cause, parent: error } as Exception;
       }
       delegate.dispose(error);
     });
@@ -43,7 +43,7 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export function observe<T>(
   observer: ObserverLike<T>,
-): ObservableOperatorLike<T, T> {
+): ObservableOperator<T, T> {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ObserveSubscriber(subscriber, observer);
   return lift(operator, true);
@@ -57,8 +57,8 @@ const ignore = <T>(_: T) => {};
  * @param onDispose The function that is invoked when the observable subscription is disposed.
  */
 export const onDispose = <T>(
-  onDispose: (err?: ErrorLike) => void,
-): ObservableOperatorLike<T, T> =>
+  onDispose: (err?: Exception) => void,
+): ObservableOperator<T, T> =>
   observe({
     onNotify: ignore,
     onDispose,
@@ -67,7 +67,7 @@ export const onDispose = <T>(
 class OnErrorObserver<T> implements ObserverLike<T> {
   constructor(private readonly onError: (err: unknown) => void) {}
 
-  onDispose(error?: ErrorLike) {
+  onDispose(error?: Exception) {
     if (error !== undefined) {
       const { cause } = error;
       this.onError(cause);
@@ -84,7 +84,7 @@ class OnErrorObserver<T> implements ObserverLike<T> {
  */
 export const onError = <T>(
   onError: (err: unknown) => void,
-): ObservableOperatorLike<T, T> => observe(new OnErrorObserver(onError));
+): ObservableOperator<T, T> => observe(new OnErrorObserver(onError));
 
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
@@ -93,7 +93,7 @@ export const onError = <T>(
  */
 export const onNotify = <T>(
   onNotify: (next: T) => void,
-): ObservableOperatorLike<T, T> =>
+): ObservableOperator<T, T> =>
   observe({
     onNotify,
     onDispose: ignore,

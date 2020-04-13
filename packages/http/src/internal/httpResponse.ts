@@ -1,12 +1,12 @@
 import fresh from "fresh";
-import { OperatorLike } from "@reactive-js/pipe";
+import { Operator } from "@reactive-js/pipe";
 import {
   HttpStatusCode,
-  HttpHeadersLike,
-  URI,
-  HttpPreferencesLike,
-  HttpResponseLike,
-  HttpRequestLike,
+  HttpHeaders,
+  URILike,
+  HttpPreferences,
+  HttpResponse,
+  HttpRequest,
   HttpMethod,
   HttpContentResponseLike,
 } from "./interfaces";
@@ -26,7 +26,7 @@ import {
   writeHttpPreferenceHeaders,
 } from "./httpPreferences";
 
-declare class URL implements URI {
+declare class URL implements URILike {
   readonly hash: string;
   readonly host: string;
   readonly hostname: string;
@@ -46,13 +46,13 @@ export const createHttpResponse = <T>(
   options: {
     content?: T;
     expires?: number;
-    headers?: HttpHeadersLike;
+    headers?: HttpHeaders;
     lastModified?: number;
-    location?: URI;
-    preferences?: HttpPreferencesLike;
+    location?: URILike;
+    preferences?: HttpPreferences;
     vary?: readonly string[];
   } = {},
-): HttpResponseLike<T> => ({
+): HttpResponse<T> => ({
   ...options,
   headers: options.headers || {},
   statusCode,
@@ -61,7 +61,7 @@ export const createHttpResponse = <T>(
 
 export const parseHttpResponseFromHeaders = <T>(
   statusCode: number,
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   body: T,
 ): HttpContentResponseLike<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
@@ -105,7 +105,7 @@ const writeCoreHttpResponseHeaders = <T>(
     location,
     preferences,
     vary,
-  }: HttpResponseLike<T>,
+  }: HttpResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
   if (etag !== undefined) {
@@ -154,9 +154,9 @@ export const writeHttpResponseHeaders = <T>(
 export const checkIfNotModified = <T>({
   headers: reqHeaders,
   method,
-}: HttpRequestLike<unknown>): OperatorLike<
-  HttpResponseLike<T>,
-  HttpResponseLike<T>
+}: HttpRequest<unknown>): Operator<
+  HttpResponse<T>,
+  HttpResponse<T>
 > => response => {
   const { statusCode, content: _, ...requestWithoutContent } = response;
   const methodSupportsFresh =

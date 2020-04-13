@@ -11,15 +11,15 @@
 ### Interfaces
 
 * [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)
-* [AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)
 * [AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)
-* [ContinueRequestLike](interfaces/continuerequestlike.md)
-* [DoneRequestLike](interfaces/donerequestlike.md)
-* [StateUpdaterLike](interfaces/stateupdaterlike.md)
 
 ### Type aliases
 
+* [AsyncEnumerableOperator](README.md#asyncenumerableoperator)
+* [ContinueRequest](README.md#continuerequest)
+* [DoneRequest](README.md#donerequest)
 * [ReducerRequest](README.md#reducerrequest)
+* [StateUpdater](README.md#stateupdater)
 
 ### Functions
 
@@ -43,15 +43,63 @@
 
 ## Type aliases
 
+###  AsyncEnumerableOperator
+
+Ƭ **AsyncEnumerableOperator**: *function*
+
+#### Type declaration:
+
+▸ (`enumerable`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TSrcReq, TSrc›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TSrcReq, TSrc› |
+
+___
+
+###  ContinueRequest
+
+Ƭ **ContinueRequest**: *object*
+
+#### Type declaration:
+
+___
+
+###  DoneRequest
+
+Ƭ **DoneRequest**: *object*
+
+#### Type declaration:
+
+___
+
 ###  ReducerRequest
 
-Ƭ **ReducerRequest**: *[ContinueRequestLike](interfaces/continuerequestlike.md)‹TReq, TAcc› | [DoneRequestLike](interfaces/donerequestlike.md)‹TAcc›*
+Ƭ **ReducerRequest**: *[ContinueRequest](README.md#continuerequest)‹TReq, TAcc› | [DoneRequest](README.md#donerequest)‹TAcc›*
+
+___
+
+###  StateUpdater
+
+Ƭ **StateUpdater**: *function*
+
+#### Type declaration:
+
+▸ (`oldState`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`oldState` | T |
 
 ## Functions
 
 ### `Const` consume
 
-▸ **consume**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *OperatorLike‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+▸ **consume**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
@@ -78,13 +126,13 @@ Name | Type |
 
 ▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
 
-**Returns:** *OperatorLike‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
 
 ___
 
 ### `Const` consumeAsync
 
-▸ **consumeAsync**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *OperatorLike‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+▸ **consumeAsync**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
@@ -111,7 +159,7 @@ Name | Type |
 
 ▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
 
-**Returns:** *OperatorLike‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
 
 ___
 
@@ -160,7 +208,7 @@ ___
 
 ### `Const` createAsyncEnumerable
 
-▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
+▸ **createAsyncEnumerable**<**TReq**, **TData**>(`op`: ObservableOperator‹TReq, TData›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
 
 **Type parameters:**
 
@@ -172,7 +220,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | ObservableOperatorLike‹TReq, TData› |
+`op` | ObservableOperator‹TReq, TData› |
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
 
@@ -180,7 +228,7 @@ ___
 
 ### `Const` createAsyncEnumerator
 
-▸ **createAsyncEnumerator**<**TReq**, **TData**>(`op`: ObservableOperatorLike‹TReq, TData›, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
+▸ **createAsyncEnumerator**<**TReq**, **TData**>(`op`: ObservableOperator‹TReq, TData›, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
 
 **Type parameters:**
 
@@ -192,7 +240,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | ObservableOperatorLike‹TReq, TData› |
+`op` | ObservableOperator‹TReq, TData› |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
@@ -202,10 +250,10 @@ ___
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+▸ **createStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdater](README.md#stateupdater)‹T›, T›*
 
 Returns a new `AsyncEnumerableLike` instance that stores state which can
-be updated by notifying the instance with a `StateUpdaterLike` that computes a
+be updated by notifying the instance with a `StateUpdater` that computes a
 new state based upon the previous state.
 
 **Type parameters:**
@@ -225,7 +273,7 @@ The initial accumulation value.
 Optional equality function that is used to compare
 if a state value is distinct from the previous one.
 
-**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+**Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹[StateUpdater](README.md#stateupdater)‹T›, T›*
 
 ___
 
@@ -337,7 +385,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TReq**, **TA**, **TB**>(`op`: ObservableOperatorLike‹TA, TB›): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReq, TA, TReq, TB›*
+▸ **lift**<**TReq**, **TA**, **TB**>(`op`: ObservableOperator‹TA, TB›): *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -351,15 +399,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | ObservableOperatorLike‹TA, TB› |
+`op` | ObservableOperator‹TA, TB› |
 
-**Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReq, TA, TReq, TB›*
+**Returns:** *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
 ### `Const` liftReq
 
-▸ **liftReq**<**TReqA**, **TReqB**, **T**>(`op`: function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
+▸ **liftReq**<**TReqA**, **TReqB**, **T**>(`op`: function): *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReqA, T, TReqB, T›*
 
 **Type parameters:**
 
@@ -381,13 +429,13 @@ Name | Type |
 ------ | ------ |
 `req` | TReqB |
 
-**Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹TReqA, T, TReqB, T›*
+**Returns:** *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReqA, T, TReqB, T›*
 
 ___
 
 ### `Const` reduce
 
-▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
@@ -414,13 +462,13 @@ Name | Type |
 
 ▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
 
-**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 ___
 
 ### `Const` reduceAsync
 
-▸ **reduceAsync**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+▸ **reduceAsync**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
 
@@ -447,13 +495,13 @@ Name | Type |
 
 ▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
 
-**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
 
 ___
 
 ### `Const` sink
 
-▸ **sink**<**TReq**, **T**>(`dest`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq›): *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
+▸ **sink**<**TReq**, **T**>(`dest`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq›): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
 
 **Type parameters:**
 
@@ -467,15 +515,15 @@ Name | Type |
 ------ | ------ |
 `dest` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, TReq› |
 
-**Returns:** *OperatorLike‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
+**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›, ObservableLike‹void››*
 
 ___
 
 ### `Const` toStateStore
 
-▸ **toStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+▸ **toStateStore**<**T**>(`initialState`: function, `equals?`: undefined | function): *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹T, T, [StateUpdater](README.md#stateupdater)‹T›, T›*
 
-Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdaterLike<T>, T>`.
+Converts an `AsyncEnumerableLike<T, T>` to an `AsyncEnumerableLike<StateUpdater<T>, T>`.
 
 **Type parameters:**
 
@@ -494,4 +542,4 @@ Factory function to generate the initial state.
 Optional equality function that is used to compare
 if a state value is distinct from the previous one.
 
-**Returns:** *[AsyncEnumerableOperatorLike](interfaces/asyncenumerableoperatorlike.md)‹T, T, [StateUpdaterLike](interfaces/stateupdaterlike.md)‹T›, T›*
+**Returns:** *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹T, T, [StateUpdater](README.md#stateupdater)‹T›, T›*

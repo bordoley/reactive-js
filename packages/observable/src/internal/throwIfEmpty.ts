@@ -1,4 +1,4 @@
-import { ObservableOperatorLike, SubscriberLike } from "./interfaces";
+import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -37,7 +37,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export const throwIfEmpty = <T>(
   factory: () => unknown,
-): ObservableOperatorLike<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrowIfEmptySubscriber(subscriber, factory);
   return lift(operator, true);

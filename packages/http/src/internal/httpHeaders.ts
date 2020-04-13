@@ -1,4 +1,4 @@
-import { HttpHeadersLike } from "./interfaces";
+import { HttpHeaders } from "./interfaces";
 
 export const enum HttpStandardHeader {
   Accept = "Accept",
@@ -82,17 +82,17 @@ const bannedHeaders = [
 ].map(s => s.toLowerCase());
 
 export function getHeaderValue(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   key: HttpStandardHeader,
 ): string | undefined;
 
 export function getHeaderValue(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   key: HttpExtensiondHeader,
 ): string | undefined;
 
 export function getHeaderValue(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   key: string,
 ): string | undefined {
   return headers[key.toLowerCase()];
@@ -100,7 +100,7 @@ export function getHeaderValue(
 
 /** @ignore */
 export function writeHttpHeaders(
-  headers: HttpHeadersLike,
+  headers: HttpHeaders,
   writeHeader: (header: string, value: string) => void,
 ) {
   const headerPairs = Object.entries(headers).filter(

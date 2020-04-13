@@ -12,27 +12,27 @@ import {
 import { fromEvent } from "./event";
 import { pipe } from "@reactive-js/pipe";
 
-export interface LocationLike {
+export type Location = {
   readonly fragment: string;
   readonly path: string;
   readonly query: string;
 }
 
-const locationEquals = (a: LocationLike, b: LocationLike): boolean =>
+const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
   (a.path === b.path && a.query === b.query && a.fragment === b.fragment);
 
 const chopLeadingChar = (str: string) =>
   str.length > 0 ? str.substring(1) : "";
 
-const getCurrentLocation = (_?: unknown): LocationLike => {
+const getCurrentLocation = (_?: unknown): Location => {
   const path = window.location.pathname;
   const query = chopLeadingChar(window.location.search);
   const fragment = chopLeadingChar(window.location.hash);
   return { path, query, fragment };
 };
 
-const pushHistoryState = (newLocation: LocationLike) => {
+const pushHistoryState = (newLocation: Location) => {
   const currentLocation = getCurrentLocation();
   if (!locationEquals(currentLocation, newLocation)) {
     const { path, query, fragment } = newLocation;
@@ -43,7 +43,7 @@ const pushHistoryState = (newLocation: LocationLike) => {
   }
 };
 
-const historyOperator = (obs: ObservableLike<LocationLike>) =>
+const historyOperator = (obs: ObservableLike<Location>) =>
   merge(
     compute(getCurrentLocation),
     pipe(obs, throttle(15), onNotify(pushHistoryState)),
@@ -51,11 +51,11 @@ const historyOperator = (obs: ObservableLike<LocationLike>) =>
   );
 
 const _history: AsyncEnumerableLike<
-  LocationLike,
-  LocationLike
+  Location,
+  Location
 > = createAsyncEnumerable(historyOperator);
 
 export const history: AsyncEnumerableLike<
-  LocationLike,
-  LocationLike
+  Location,
+  Location
 > = _history;
