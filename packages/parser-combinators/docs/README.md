@@ -51,7 +51,8 @@
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
-* [parseWith](README.md#const-parsewith)
+* [parseWith](README.md#parsewith)
+* [parseWithOrThrow](README.md#const-parsewithorthrow)
 * [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
 * [sepBy](README.md#const-sepby)
@@ -69,9 +70,8 @@
 
 ### `Const` isParseError
 
-• **isParseError**: *isParseErrorProd* =   process.env.NODE_ENV === "production"
-  ? isParseErrorProd
-  : isParseErrorDev
+• **isParseError**: *isParseErrorProd* = 
+  process.env.NODE_ENV === "production" ? isParseErrorProd : isParseErrorDev
 
 ___
 
@@ -161,9 +161,10 @@ ___
 
 ### `Const` throwParseError
 
-• **throwParseError**: *throwParseErrorProd* =  process.env.NODE_ENV === "production"
-  ? throwParseErrorProd
-  : throwParseErrorDev
+• **throwParseError**: *throwParseErrorProd* = 
+  process.env.NODE_ENV === "production"
+    ? throwParseErrorProd
+    : throwParseErrorDev
 
 ## Functions
 
@@ -681,9 +682,41 @@ Name | Type |
 
 ___
 
-### `Const` parseWith
+###  parseWith
 
-▸ **parseWith**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
+▸ **parseWith**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
+
+**Returns:** *OperatorLike‹string, T›*
+
+▸ **parseWith**<**T**>(`parser`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`parser` | [ParserLike](interfaces/parserlike.md)‹T› |
+
+**Returns:** *OperatorLike‹string, T | undefined›*
+
+___
+
+### `Const` parseWithOrThrow
+
+▸ **parseWithOrThrow**<**T**>(`parse`: [ParserLike](interfaces/parserlike.md)‹T›): *OperatorLike‹string, T | undefined›*
 
 **Type parameters:**
 

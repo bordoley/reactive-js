@@ -59,22 +59,22 @@ class ParserError {
 const throwParseErrorDev = <T>(charStream: CharStreamLike): T => {
   const error = new ParserError(charStream.index);
   throw error;
-}
+};
 
 const parseErrorSymbol = Symbol("ParseError");
 const throwParseErrorProd = <T>(_: CharStreamLike): T => {
   throw parseErrorSymbol;
 };
 
-export const throwParseError = process.env.NODE_ENV === "production"
-  ? throwParseErrorProd
-  : throwParseErrorDev;
+export const throwParseError =
+  process.env.NODE_ENV === "production"
+    ? throwParseErrorProd
+    : throwParseErrorDev;
 
-const isParseErrorDev =  (e: unknown): boolean => e instanceof ParserError;
+const isParseErrorDev = (e: unknown): boolean => e instanceof ParserError;
 const isParseErrorProd = (e: unknown): boolean => e === parseErrorSymbol;
-export const isParseError =  process.env.NODE_ENV === "production"
-  ? isParseErrorProd
-  : isParseErrorDev;
+export const isParseError =
+  process.env.NODE_ENV === "production" ? isParseErrorProd : isParseErrorDev;
 
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
@@ -172,19 +172,35 @@ export const mapTo = <TA, TB>(
   return map(mapper);
 };
 
-export const parseWith = <T>(
+export const parseWithOrThrow = <T>(
   parse: ParserLike<T>,
 ): OperatorLike<string, T | undefined> => input => {
   const charStream = createCharStream(input);
-  try {
-    return parse(charStream);
-  } catch (e) {
-    if (isParseError(e)) {
-      return undefined;
-    }
-    throw e;
-  }
+  return parse(charStream);
 };
+
+export function parseWith<T>(parser: ParserLike<T>): OperatorLike<string, T>;
+
+export function parseWith<T>(
+  parser: ParserLike<T>,
+): OperatorLike<string, T | undefined>;
+
+export function parseWith<T>(
+  parse: ParserLike<T>,
+  orElse?: T,
+): OperatorLike<string, T | undefined> {
+  const doParse = parseWithOrThrow(parse);
+  return input => {
+    try {
+      return doParse(input);
+    } catch (e) {
+      if (isParseError(e)) {
+        return orElse;
+      }
+      throw e;
+    }
+  };
+}
 
 export const or = <T>(
   otherParse: ParserLike<T>,
@@ -208,10 +224,10 @@ export const eof = (charStream: CharStreamLike): undefined =>
 
 export const followedBy = (
   pnext: ParserLike<unknown>,
-): ParserLike<unknown> => charsStream => {
-  const index = charsStream.index;
-  pnext(charsStream);
-  charsStream.index = index;
+): ParserLike<unknown> => charStream => {
+  const index = charStream.index;
+  pnext(charStream);
+  charStream.index = index;
   return undefined;
 };
 
