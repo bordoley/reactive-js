@@ -2,7 +2,7 @@ export {
   HttpContentEncoding,
   HttpContent,
   HttpContentRequest,
-  HttpContentResponseLike,
+  HttpContentResponse,
   HttpDateTime,
   HttpHeaders,
   HttpMethod,

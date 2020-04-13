@@ -5,7 +5,7 @@ import {
   HttpMethod,
   HttpHeaders,
   parseHttpRequestFromHeaders,
-  HttpContentResponseLike,
+  HttpContentResponse,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -33,7 +33,7 @@ import {
 } from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
-  response: HttpContentResponseLike<
+  response: HttpContentResponse<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >,
 ) => {
@@ -46,7 +46,7 @@ const writeResponseMessage = (resp: ServerResponse) => (
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
+}: HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
       content?.body || emptyReadableAsyncEnumerable
@@ -77,7 +77,7 @@ export type HttpRequestListenerHandler = {
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
   ): ObservableLike<
-    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
 }
 

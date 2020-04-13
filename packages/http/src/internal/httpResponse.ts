@@ -8,7 +8,7 @@ import {
   HttpResponse,
   HttpRequest,
   HttpMethod,
-  HttpContentResponseLike,
+  HttpContentResponse,
 } from "./interfaces";
 import {
   writeHttpContentHeaders,
@@ -63,7 +63,7 @@ export const parseHttpResponseFromHeaders = <T>(
   statusCode: number,
   headers: HttpHeaders,
   body: T,
-): HttpContentResponseLike<T> => {
+): HttpContentResponse<T> => {
   const content = parseHttpContentFromHeaders(headers, body);
 
   // FIXME: etag
@@ -139,7 +139,7 @@ const writeCoreHttpResponseHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  response: HttpContentResponseLike<T>,
+  response: HttpContentResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   const { content } = response;

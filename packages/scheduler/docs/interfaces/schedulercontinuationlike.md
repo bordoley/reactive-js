@@ -28,14 +28,14 @@ A unit of work to be executed by a scheduler.
 
 ###  addListener
 
-▸ **addListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike)): *void*
+▸ **addListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike) |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md) |
 
 **Returns:** *void*
 
@@ -43,14 +43,14 @@ ___
 
 ###  removeListener
 
-▸ **removeListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike)): *void*
+▸ **removeListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike) |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](schedulercontinuationrunstatuschangedlistenerlike.md) |
 
 **Returns:** *void*
 

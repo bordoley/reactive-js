@@ -6,7 +6,7 @@ import {
   disallowProtocolAndHostForwarding,
   HttpContent,
   HttpContentRequest,
-  HttpContentResponseLike,
+  HttpContentResponse,
   HttpStatusCode,
 } from "@reactive-js/http";
 import {
@@ -80,7 +80,7 @@ const scheduler = pipe(
 const routerHandlerA: Operator<
   HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
-    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >
 > = compose(
   ofValue,
@@ -131,7 +131,7 @@ const routerHandlerThrow: HttpRequestRouterHandler<
 const notFound: Operator<
   HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   ObservableLike<
-    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >
 > = req =>
   pipe(

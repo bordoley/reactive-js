@@ -38,7 +38,7 @@
 
 ###  addListener
 
-▸ **addListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike)): *void*
+▸ **addListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
 
 *Implementation of [SchedulerContinuationLike](../interfaces/schedulercontinuationlike.md)*
 
@@ -47,7 +47,7 @@
 Name | Type |
 ------ | ------ |
 `_ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike) |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md) |
 
 **Returns:** *void*
 
@@ -71,7 +71,7 @@ ___
 
 ###  removeListener
 
-▸ **removeListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike)): *void*
+▸ **removeListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
 
 *Implementation of [SchedulerContinuationLike](../interfaces/schedulercontinuationlike.md)*
 
@@ -80,7 +80,7 @@ ___
 Name | Type |
 ------ | ------ |
 `_ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../README.md#schedulercontinuationrunstatuschangedlistenerlike) |
+`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/schedulercontinuationrunstatuschangedlistenerlike.md) |
 
 **Returns:** *void*
 

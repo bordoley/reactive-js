@@ -1,6 +1,6 @@
 import {
   toStateStore,
-  StateUpdaterLike,
+  StateUpdater,
   lift,
 } from "@reactive-js/async-enumerable";
 import {
@@ -17,15 +17,15 @@ import {
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate, onNotify, subscribe } from "@reactive-js/observable";
-import { history, LocationLike } from "@reactive-js/web";
+import { history, Location } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe } from "@reactive-js/pipe";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdaterLike<LocationLike>) => void,
+  uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdaterLike<LocationLike>) => () =>
+  const liftUpdater = (updater: StateUpdater<Location>) => () =>
     uriUpdater(updater);
   const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
 
@@ -106,7 +106,7 @@ const emptyLocation = {
 const location = pipe(
   history,
   toStateStore(() => emptyLocation),
-  lift(onNotify<LocationLike>(console.log)),
+  lift(onNotify<Location>(console.log)),
 );
 
 (ReactDOM as any)

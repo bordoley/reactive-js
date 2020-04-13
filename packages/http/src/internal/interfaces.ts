@@ -185,4 +185,4 @@ export type HttpResponse<T> = {
   readonly vary: readonly string[];
 }
 
-export type HttpContentResponseLike<T> = HttpResponse<HttpContent<T>>;
+export type HttpContentResponse<T> = HttpResponse<HttpContent<T>>;
