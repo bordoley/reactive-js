@@ -56,12 +56,25 @@ class ParserError {
   }
 }
 
-export const throwParseError = <T>(charStream: CharStreamLike): T => {
+const throwParseErrorDev = <T>(charStream: CharStreamLike): T => {
   const error = new ParserError(charStream.index);
   throw error;
+}
+
+const parseErrorSymbol = Symbol("ParseError");
+const throwParseErrorProd = <T>(_: CharStreamLike): T => {
+  throw parseErrorSymbol;
 };
 
-export const isParseError = (e: unknown): boolean => e instanceof ParserError;
+export const throwParseError = process.env.NODE_ENV === "production"
+  ? throwParseErrorProd
+  : throwParseErrorDev;
+
+const isParseErrorDev =  (e: unknown): boolean => e instanceof ParserError;
+const isParseErrorProd = (e: unknown): boolean => e === parseErrorSymbol;
+export const isParseError =  process.env.NODE_ENV === "production"
+  ? isParseErrorProd
+  : isParseErrorDev;
 
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
