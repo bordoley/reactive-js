@@ -22,15 +22,15 @@ import { pipe } from "@reactive-js/pipe";
 
 test("many", () => {
   const parser = pipe(string("abc"), many());
-
   const result = pipe("abcabcabcabc", parseWith(parser));
+
   expect(result).toEqual(["abc", "abc", "abc", "abc"]);
 });
 
-test("manySatisyf", () => {
+test("manySatisy", () => {
   const parser = concat(manySatisfy(pForwardSlash), manySatisfy(char("z")));
-
   const result = pipe("////zzz", parseWith(parser));
+
   expect(result).toEqual(["////", "zzz"]);
 });
 
@@ -46,8 +46,8 @@ test("map", () => {
 
 test("mapTo", () => {
   const parser = pipe(string("ab"), mapTo("xyz"));
-
   const result = pipe("ababababababababab", parseWith(parser));
+
   expect(result).toEqual("xyz");
 });
 
@@ -94,13 +94,14 @@ describe("regexp", () => {
 test("sepBy", () => {
   const parser = pipe(string("ab"), sepBy(pColon));
   const result = pipe("ab:ab:ab:ab", parseWith(parser));
+
   expect(result).toEqual(["ab", "ab", "ab", "ab"]);
 });
 
 test("string", () => {
   const parser = concat(string("ab"), string("cd"));
-
   const result = pipe("abcdabcdabcd", parseWith(parser));
+
   expect(result).toEqual(["ab", "cd"]);
 });
 

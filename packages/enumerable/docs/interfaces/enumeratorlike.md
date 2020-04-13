@@ -10,9 +10,7 @@
 
 ## Hierarchy
 
-* DisposableLike
-
-  ↳ **EnumeratorLike**
+* **EnumeratorLike**
 
 ## Index
 

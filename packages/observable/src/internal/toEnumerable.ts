@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "@reactive-js/disposable";
+import { AbstractDisposable, DisposableLike } from "@reactive-js/disposable";
 import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
@@ -65,7 +65,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
 class ObservableEnumerableImpl<T> implements EnumerableLike<void, T> {
   constructor(private readonly obs: ObservableLike<T>) {}
 
-  enumerate(): EnumeratorLike<void, T> {
+  enumerate(): EnumeratorLike<void, T> & DisposableLike {
     const subscriber = new EnumeratorSubscriber<T>();
     this.obs.subscribe(subscriber);
     return subscriber;

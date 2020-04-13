@@ -1,4 +1,3 @@
-import { AbstractDisposable } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
 import { OperatorLike, pipe, compose } from "@reactive-js/pipe";
 
@@ -13,16 +12,13 @@ export interface ParserLike<T> {
   (input: CharStreamLike): T;
 }
 
-class CharStreamImpl extends AbstractDisposable
-  implements EnumeratorLike<void, CharCode> {
+class CharStreamImpl implements EnumeratorLike<void, CharCode> {
   private _index = -1;
 
   current = -1;
   hasCurrent = false;
 
-  constructor(readonly src: string) {
-    super();
-  }
+  constructor(readonly src: string) {}
 
   get index() {
     return this._index;
@@ -50,7 +46,14 @@ class CharStreamImpl extends AbstractDisposable
 }
 
 class ParserError {
-  constructor(public readonly index: number) {}
+  private readonly error: Error;
+  constructor(public readonly index: number) {
+    this.error = new Error();
+  }
+
+  get stack() {
+    return this.error.stack;
+  }
 }
 
 export const throwParseError = <T>(charStream: CharStreamLike): T => {
@@ -167,8 +170,6 @@ export const parseWith = <T>(
       return undefined;
     }
     throw e;
-  } finally {
-    charStream.dispose();
   }
 };
 
