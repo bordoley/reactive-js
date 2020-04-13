@@ -1,6 +1,6 @@
 import {
   HttpContentRequest,
-  HttpContentResponseLike,
+  HttpContentResponse,
   writeHttpRequestHeaders,
   parseHttpResponseFromHeaders,
   HttpHeaders,
@@ -43,7 +43,7 @@ export type HttpClientRequestStatusUploadComplete = {
 export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
   readonly request: HttpContentRequest<HttpBody>;
-  readonly response: HttpContentResponseLike<Blob>;
+  readonly response: HttpContentResponse<Blob>;
 }
 
 export type HttpClientRequestStatus =

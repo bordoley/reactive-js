@@ -21,7 +21,7 @@
 * [EntityTag](README.md#entitytag)
 * [HttpContent](README.md#httpcontent)
 * [HttpContentRequest](README.md#httpcontentrequest)
-* [HttpContentResponseLike](README.md#httpcontentresponselike)
+* [HttpContentResponse](README.md#httpcontentresponse)
 * [HttpDateTime](README.md#httpdatetime)
 * [HttpHeaders](README.md#httpheaders)
 * [HttpPreferences](README.md#httppreferences)
@@ -76,9 +76,9 @@ ___
 
 ___
 
-###  HttpContentResponseLike
+###  HttpContentResponse
 
-Ƭ **HttpContentResponseLike**: *[HttpResponse](README.md#httpresponse)‹[HttpContent](README.md#httpcontent)‹T››*
+Ƭ **HttpContentResponse**: *[HttpResponse](README.md#httpresponse)‹[HttpContent](README.md#httpcontent)‹T››*
 
 ___
 
@@ -345,7 +345,7 @@ ___
 
 ### `Const` parseHttpResponseFromHeaders
 
-▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](README.md#httpheaders), `body`: T): *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
+▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](README.md#httpheaders), `body`: T): *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
 
 **Type parameters:**
 
@@ -359,7 +359,7 @@ Name | Type |
 `headers` | [HttpHeaders](README.md#httpheaders) |
 `body` | T |
 
-**Returns:** *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
+**Returns:** *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
 
 ___
 
@@ -392,7 +392,7 @@ ___
 
 ### `Const` writeHttpResponseHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponseLike](README.md#httpcontentresponselike)‹T›, `writeHeader`: function): *void*
+▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponse](README.md#httpcontentresponse)‹T›, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -400,7 +400,7 @@ ___
 
 **Parameters:**
 
-▪ **response**: *[HttpContentResponseLike](README.md#httpcontentresponselike)‹T›*
+▪ **response**: *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
 
 ▪ **writeHeader**: *function*
 

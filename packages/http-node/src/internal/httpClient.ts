@@ -26,7 +26,7 @@ import {
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
   HttpContentRequest,
-  HttpContentResponseLike,
+  HttpContentResponse,
   HttpContent,
 } from "@reactive-js/http";
 import {
@@ -92,7 +92,7 @@ export type HttpClientRequestStatusResponseReady= {
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >;
   readonly response: DisposableValueLike<
-    HttpContentResponseLike<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
   >;
 }
 
@@ -122,10 +122,10 @@ const createOnSubscribe = (
     ReadableEvent
   >,
   decodeHttpContentResponse: (
-    resp: HttpContentResponseLike<
+    resp: HttpContentResponse<
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
-  ) => HttpContentResponseLike<
+  ) => HttpContentResponse<
     AsyncEnumerableLike<ReadableMode, ReadableEvent>
   >,
 ) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {

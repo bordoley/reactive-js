@@ -13,12 +13,9 @@
 * [CallbackSchedulerLike](interfaces/callbackschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
+* [SchedulerContinuationRunStatusChangedListenerLike](interfaces/schedulercontinuationrunstatuschangedlistenerlike.md)
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
-
-### Type aliases
-
-* [SchedulerContinuationRunStatusChangedListenerLike](README.md#schedulercontinuationrunstatuschangedlistenerlike)
 
 ### Functions
 
@@ -27,14 +24,6 @@
 * [schedule](README.md#schedule)
 * [scheduleCallback](README.md#const-schedulecallback)
 * [toSchedulerWithPriority](README.md#const-toschedulerwithpriority)
-
-## Type aliases
-
-###  SchedulerContinuationRunStatusChangedListenerLike
-
-Ƭ **SchedulerContinuationRunStatusChangedListenerLike**: *object*
-
-#### Type declaration:
 
 ## Functions
 
