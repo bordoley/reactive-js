@@ -8,26 +8,25 @@
 
 * [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
 
+### Interfaces
+
+* [WebResponseBodyLike](interfaces/webresponsebodylike.md)
+
 ### Type aliases
 
-* [HttpBody](README.md#httpbody)
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
 * [HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin)
 * [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)
 * [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete)
 * [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading)
+* [HttpWebRequest](README.md#httpwebrequest)
+* [WebRequestBody](README.md#webrequestbody)
 
 ### Functions
 
 * [sendHttpRequest](README.md#const-sendhttprequest)
 
 ## Type aliases
-
-###  HttpBody
-
-Ƭ **HttpBody**: *string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream‹Uint8Array›*
-
-___
 
 ###  HttpClientRequestStatus
 
@@ -65,16 +64,28 @@ ___
 
 #### Type declaration:
 
+___
+
+###  HttpWebRequest
+
+Ƭ **HttpWebRequest**: *HttpContentRequest‹[WebRequestBody](README.md#webrequestbody)› & object*
+
+___
+
+###  WebRequestBody
+
+Ƭ **WebRequestBody**: *Blob | BufferSource | FormData | ReadableStream‹Uint8Array› | string | URLSearchParams*
+
 ## Functions
 
 ### `Const` sendHttpRequest
 
-▸ **sendHttpRequest**(`request`: HttpContentRequest‹[HttpBody](README.md#httpbody)›): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+▸ **sendHttpRequest**(`request`: [HttpWebRequest](README.md#httpwebrequest)): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | HttpContentRequest‹[HttpBody](README.md#httpbody)› |
+`request` | [HttpWebRequest](README.md#httpwebrequest) |
 
 **Returns:** *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*

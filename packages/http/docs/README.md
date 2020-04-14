@@ -45,6 +45,7 @@
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
+* [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
 * [mediaTypeToString](README.md#const-mediatypetostring)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
@@ -295,6 +296,22 @@ Name | Type |
 `key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
 
 **Returns:** *string | undefined*
+
+___
+
+### `Const` httpRequestToUntypedHeaders
+
+▸ **httpRequestToUntypedHeaders**(`request`: [HttpContentRequest](README.md#httpcontentrequest)‹unknown›): *object*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | [HttpContentRequest](README.md#httpcontentrequest)‹unknown› |
+
+**Returns:** *object*
+
+* \[ **key**: *string*\]: string
 
 ___
 

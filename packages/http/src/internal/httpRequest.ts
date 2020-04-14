@@ -218,3 +218,14 @@ export const disallowProtocolAndHostForwarding = <T>(): Operator<
     };
   }
 };
+
+export const httpRequestToUntypedHeaders = (
+  request: HttpContentRequest<unknown>,
+): { [key: string]: string } => {
+  const headers: { [key: string]: string } = {};
+  writeHttpRequestHeaders(
+    request,
+    (header: string, value: string) => (headers[header] = value),
+  );
+  return headers;
+};
