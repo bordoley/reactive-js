@@ -28,6 +28,7 @@ import {
   HttpContentRequest,
   HttpContentResponse,
   HttpContent,
+  httpRequestToUntypedHeaders,
 } from "@reactive-js/http";
 import {
   createWritableAsyncEnumerator,
@@ -279,12 +280,9 @@ export const creatHttpClient = (
       };
 
       const { method, uri } = requestWithAcceptEncodingsAndContentEncoding;
-      const headers: OutgoingHttpHeaders = {};
-      writeHttpRequestHeaders(
+      const headers = httpRequestToUntypedHeaders(
         requestWithAcceptEncodingsAndContentEncoding,
-        (header: string, value: string) => (headers[header] = value),
       );
-
       const nodeRequestUrl = uri instanceof URL ? uri : new URL(uri.toString());
       const nodeRequestOptions = {
         agent,

@@ -19,7 +19,7 @@ export const parseHttpContentFromHeaders = <T>(
   ) as readonly HttpContentEncoding[];
 
   const contentLengthHeader =
-    getHeaderValue(headers, HttpStandardHeader.ContentLength) || "0";
+    getHeaderValue(headers, HttpStandardHeader.ContentLength) || "-1";
   const contentLength = ~~contentLengthHeader;
 
   const contentType = parseMediaType(
@@ -49,6 +49,9 @@ export const writeHttpContentHeaders = <T>(
   writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
 
   if (contentEncodings.length > 0) {
-    writeHeader(HttpStandardHeader.ContentEncoding, contentEncodings.join(", "));
+    writeHeader(
+      HttpStandardHeader.ContentEncoding,
+      contentEncodings.join(", "),
+    );
   }
 };

@@ -78,10 +78,7 @@ const parseWeightedTokenHeader = (
   headers: HttpHeaders,
   header: HttpStandardHeader,
 ) => {
-  const rawValue = getHeaderValue(
-    headers,
-    header,
-  );
+  const rawValue = getHeaderValue(headers, header);
   return (rawValue !== undefined && parseWeightedToken(rawValue)) || [];
 };
 
@@ -89,11 +86,20 @@ const parseWeightedTokenHeader = (
 export const parseHttpPreferencesFromHeaders = (
   headers: HttpHeaders,
 ): HttpPreferences | undefined => {
-  const acceptedCharsets = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptCharset);
-  const acceptedEncodings = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptEncoding) as readonly HttpContentEncoding[];
+  const acceptedCharsets = parseWeightedTokenHeader(
+    headers,
+    HttpStandardHeader.AcceptCharset,
+  );
+  const acceptedEncodings = parseWeightedTokenHeader(
+    headers,
+    HttpStandardHeader.AcceptEncoding,
+  ) as readonly HttpContentEncoding[];
 
   // FIXME: This is overly lax. See: https://tools.ietf.org/html/draft-ietf-httpbis-semantics-07#section-8.4.5
-  const acceptedLanguages = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptLanguage);
+  const acceptedLanguages = parseWeightedTokenHeader(
+    headers,
+    HttpStandardHeader.AcceptLanguage,
+  );
 
   const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
   const acceptedMediaRanges =

@@ -21,6 +21,7 @@ export {
   createRedirectHttpRequest,
   disallowProtocolAndHostForwarding,
   parseHttpRequestFromHeaders,
+  httpRequestToUntypedHeaders,
   writeHttpRequestHeaders,
 } from "./internal/httpRequest";
 

@@ -73,7 +73,7 @@ export const parseHttpResponseFromHeaders = <T>(
   const expires = parseHttpDateTime(
     getHeaderValue(headers, HttpStandardHeader.Expires) || "",
   );
-  
+
   const lastModified = parseHttpDateTime(
     getHeaderValue(headers, HttpStandardHeader.LastModified) || "",
   );
