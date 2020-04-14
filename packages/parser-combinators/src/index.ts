@@ -136,7 +136,7 @@ export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   h: Parser<TH>,
   i: Parser<TI>,
 ): Parser<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-
+// concatIgnore
 export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   return charStream => {
     const result = [];
@@ -147,13 +147,6 @@ export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
     return result;
   };
 }
-
-export const flatMap = <TA, TB>(
-  mapper: (result: TA) => Parser<TB>,
-): Operator<Parser<TA>, Parser<TB>> => parser => charStream => {
-  const nextParser = pipe(charStream, parser, mapper);
-  return nextParser(charStream);
-};
 
 export const map = <TA, TB>(
   mapper: (result: TA) => TB,
@@ -211,32 +204,6 @@ export const eof = <T>(parser: Parser<T>): Parser<T> => charStream => {
   const result = parser(charStream);
   pEof(charStream);
   return result;
-};
-
-export const followedBy = (
-  pnext: Parser<unknown>,
-): Parser<unknown> => charStream => {
-  const index = charStream.index;
-  pnext(charStream);
-  charStream.index = index;
-  return undefined;
-};
-
-export const notFollowedBy = (
-  pnext: Parser<unknown>,
-): Parser<unknown> => charStream => {
-  const index = charStream.index;
-  try {
-    pnext(charStream);
-    return throwParseError(charStream);
-  } catch (e) {
-    if (isParseError(e)) {
-      charStream.index = index;
-      return undefined;
-    } else {
-      throw e;
-    }
-  }
 };
 
 export const many = <T>(
@@ -310,13 +277,6 @@ export const sepBy = <T>(
   separator: Parser<unknown>,
 ): Operator<Parser<T>, Parser<readonly T[]>> =>
   compose(sepBy1(separator), orDefault<readonly T[]>([]));
-
-export const ofValue = <T>(value: T): Parser<T> => _ => value;
-
-export const compute = <T>(f: () => T): Parser<T> => _ => f();
-
-export const throws = <T>(charStream: CharStreamLike): T =>
-  throwParseError(charStream);
 
 export const string = (str: string): Parser<string> => charStream => {
   charStream.move();
