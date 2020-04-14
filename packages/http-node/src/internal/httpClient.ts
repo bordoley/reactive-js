@@ -1,6 +1,5 @@
 import {
   IncomingMessage,
-  OutgoingHttpHeaders,
   request as httpRequest,
   Agent,
   ClientRequest,
@@ -24,7 +23,6 @@ import {
   HttpStatusCode,
   createRedirectHttpRequest,
   parseHttpResponseFromHeaders,
-  writeHttpRequestHeaders,
   HttpContentRequest,
   HttpContentResponse,
   HttpContent,
