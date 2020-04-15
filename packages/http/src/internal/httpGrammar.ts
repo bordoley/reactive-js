@@ -123,7 +123,7 @@ const pQuotedString: Parser<string> = charStream => {
 
   return builder !== undefined
     ? String.fromCharCode(...builder)
-    : charStream.src.substring(initialIndex + 1, charStream.index - 1);
+    : charStream.src.substring(initialIndex + 1, charStream.index);
 };
 
 /** @ignore */
@@ -137,8 +137,9 @@ const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
   return [key, value];
 };
 
-const toQuotedString = (input: string): string => {
-  const buffer = [ASCII.DQOUTE];
+/** @ignore */
+export const toTokenOrQuotedString = (input: string): string => {
+  let buffer = undefined;
 
   for (let i = 0; i < input.length; i++) {
     const c = input.charCodeAt(i);
@@ -158,23 +159,31 @@ const toQuotedString = (input: string): string => {
       (c >= 0x80 && c <= 0xff); // obs-text
 
     if (isQuotedPairChar && !isQDText) {
+      if (buffer === undefined) {
+        buffer = [ASCII.DQOUTE];
+        for (let j = 0; j < i; j++) {
+          const c = input.charCodeAt(j);
+          buffer.push(c);
+        }
+      }
+
       buffer.push(ASCII.BACKSLASH);
     } else if (!isQDText) {
       // FIXME: Error type?
       throw new Error();
     }
-
-    buffer.push(c);
+    
+    if (buffer !== undefined) {
+      buffer.push(c);
+    }
   }
 
-  buffer.push(ASCII.DQOUTE);
-  return String.fromCharCode(...buffer);
-};
-
-const parseToken = parseWith(pToken);
-/** @ignore */
-export const toTokenOrQuotedString = (input: string) => {
-  return parseToken(input) || toQuotedString(input);
+  if (buffer !== undefined) {
+    buffer.push(ASCII.DQOUTE);
+    return String.fromCharCode(...buffer);
+  } else {
+    return input;
+  }
 };
 
 const pParamsParam = (charStream: CharStreamLike) => {

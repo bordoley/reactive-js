@@ -100,6 +100,8 @@ export const createStringHttpContent = (
   const charset = contentType.params["charset"] || "utf-8";
   const buffer = iconv.encode(content, charset);
 
+  // FIXME: update the contentType if none is specfied in the content params provided.
+
   return createBufferHttpContent(buffer, contentType);
 };
 
