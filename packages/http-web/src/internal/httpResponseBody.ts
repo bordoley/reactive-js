@@ -23,7 +23,7 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
   };
 
   return createObservable(onSubscribe);
-}
+};
 
 const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
   const onSubscribe = (subscriber: SafeSubscriberLike<ArrayBuffer>) => {
@@ -37,7 +37,7 @@ const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
     };
 
     reader.readAsArrayBuffer(body);
-  }
+  };
 
   return createObservable(onSubscribe);
 };

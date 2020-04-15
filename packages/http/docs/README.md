@@ -154,7 +154,7 @@ ___
 
 ### `Const` parseMediaType
 
-• **parseMediaType**: *function* =  parseWith(pMediaTypeEof)
+• **parseMediaType**: *function* =  parseWith(pMediaType)
 
 #### Type declaration:
 
@@ -170,7 +170,7 @@ ___
 
 ### `Const` parseMediaTypeOrThrow
 
-• **parseMediaTypeOrThrow**: *function* =  parseWithOrThrow(pMediaTypeEof)
+• **parseMediaTypeOrThrow**: *function* =  parseWithOrThrow(pMediaType)
 
 #### Type declaration:
 

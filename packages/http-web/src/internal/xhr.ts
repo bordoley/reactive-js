@@ -34,6 +34,7 @@ const parseHeaders = (rawHeaders: string): HttpHeaders => {
   return headers;
 };
 
+/** @ignore */
 export const sendHttpRequestUsingXHR = (
   request: HttpWebRequest,
 ): ObservableLike<HttpClientRequestStatus> =>

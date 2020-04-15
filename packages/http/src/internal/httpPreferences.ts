@@ -1,4 +1,4 @@
-import { map, eof, parseWith, concat } from "@reactive-js/parser-combinators";
+import { concat, map, parseWith } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
@@ -41,7 +41,6 @@ const parseAccept = pipe(
     (mediaTypes as MediaType[]).sort(mediaRangeCompare);
     return mediaTypes.map(mediaRangeToMediaType);
   }),
-  eof,
   parseWith,
 );
 
@@ -70,7 +69,6 @@ const parseWeightedToken = pipe(
     (values as any[]).sort(weightedTokenComparator);
     return values.map(weightedTokenToToken);
   }),
-  eof,
   parseWith,
 );
 

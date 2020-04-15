@@ -1,11 +1,11 @@
-import { parseWith, eof } from "@reactive-js/parser-combinators";
+import { parseWith } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import { HttpContent, HttpHeaders, HttpContentEncoding } from "./interfaces";
 import { parseMediaType, mediaTypeToString } from "./mediaType";
 
-const parseTokenList = pipe(pToken, httpList, eof, parseWith);
+const parseTokenList = pipe(pToken, httpList, parseWith);
 
 /** @ignore */
 export const parseHttpContentFromHeaders = <T>(

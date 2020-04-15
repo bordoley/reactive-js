@@ -16,6 +16,7 @@ import {
   HttpClientRequestStatusType,
 } from "./interfaces";
 
+/** @ignore */
 export const sendHttpRequestUsingFetch = (
   request: HttpWebRequest,
 ): ObservableLike<HttpClientRequestStatus> => {

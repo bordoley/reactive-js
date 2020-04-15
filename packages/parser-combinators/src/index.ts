@@ -1,5 +1,5 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
-import { Operator, pipe, compose } from "@reactive-js/pipe";
+import { Operator, compose, pipe } from "@reactive-js/pipe";
 
 export type CharCode = number;
 
@@ -136,7 +136,7 @@ export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   h: Parser<TH>,
   i: Parser<TI>,
 ): Parser<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-// concatIgnore
+
 export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   return charStream => {
     const result = [];
@@ -148,6 +148,14 @@ export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   };
 }
 
+export const followedBy = <T>(
+  other: Parser<unknown>,
+): Operator<Parser<T>, Parser<T>> => parser => charStream => {
+  const result = parser(charStream);
+  other(charStream);
+  return result;
+};
+
 export const map = <TA, TB>(
   mapper: (result: TA) => TB,
 ): Operator<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
@@ -157,11 +165,12 @@ export const mapTo = <TA, TB>(v: TB): Operator<Parser<TA>, Parser<TB>> => {
   return map(mapper);
 };
 
-export const parseWithOrThrow = <T>(
-  parse: Parser<T>,
-): Operator<string, T> => input => {
-  const charStream = createCharStream(input);
-  return parse(charStream);
+export const parseWithOrThrow = <T>(parser: Parser<T>): Operator<string, T> => {
+  const parse = pipe(parser, followedBy(pEof));
+  return input => {
+    const charStream = createCharStream(input);
+    return parse(charStream);
+  };
 };
 
 export const parseWith = <T>(
@@ -197,15 +206,6 @@ export const or = <TA, TB>(
   }
 };
 
-export const pEof = (charStream: CharStreamLike): undefined =>
-  charStream.move() ? throwParseError(charStream) : undefined;
-
-export const eof = <T>(parser: Parser<T>): Parser<T> => charStream => {
-  const result = parser(charStream);
-  pEof(charStream);
-  return result;
-};
-
 export const many = <T>(
   options: {
     min?: number;
@@ -216,11 +216,13 @@ export const many = <T>(
 
   const retval: T[] = [];
 
+  let count = 0;
   let index = -1;
   try {
-    while (retval.length < max) {
+    while (count < max) {
       index = charStream.index;
       const next = parse(charStream);
+      count++;
       retval.push(next);
     }
   } catch (e) {
@@ -231,7 +233,34 @@ export const many = <T>(
     }
   }
 
-  return retval.length < min ? throwParseError(charStream) : retval;
+  return count < min ? throwParseError(charStream) : retval;
+};
+
+export const manyIgnore = <T>(
+  options: {
+    min?: number;
+    max?: number;
+  } = {},
+): Operator<Parser<T>, Parser<void>> => parse => charStream => {
+  const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
+
+  let count = 0;
+  let index = -1;
+  try {
+    while (count < max) {
+      index = charStream.index;
+      parse(charStream);
+      count++;
+    }
+  } catch (e) {
+    if (isParseError(e)) {
+      charStream.index = index;
+    } else {
+      throw e;
+    }
+  }
+
+  return count < min ? throwParseError(charStream) : undefined;
 };
 
 export const optional = <T>(
@@ -260,18 +289,23 @@ export const orDefault = <T>(
 
 export const sepBy1 = <T>(
   separator: Parser<unknown>,
-): Operator<Parser<T>, Parser<readonly T[]>> => parser =>
-  pipe(
-    concat(
-      parser,
-      pipe(
-        concat(separator, parser),
-        map(([, v]) => v),
-        many(),
-      ),
-    ),
-    map(([first, tail]) => [first, ...tail]),
-  );
+): Operator<Parser<T>, Parser<readonly T[]>> => parser => {
+  const parseTailValue = (charStream: CharStreamLike) => {
+    separator(charStream);
+    return parser(charStream);
+  };
+
+  const parseTail = many<T>()(parseTailValue);
+
+  return charStream => {
+    const first = parser(charStream);
+    const tail = parseTail(charStream);
+
+    // Perf hack to avoid allocations
+    (tail as T[]).unshift(first);
+    return tail;
+  };
+};
 
 export const sepBy = <T>(
   separator: Parser<unknown>,
@@ -304,10 +338,29 @@ export const satisfy = (
   return throwParseError(charStream);
 };
 
+export const manySatisfy = (
+  options: {
+    min?: number;
+    max?: number;
+  } = {},
+): Operator<Parser<CharCode>, Parser<string>> => parser => {
+  const parse = manyIgnore(options)(parser);
+
+  return charStream => {
+    const start = charStream.index + 1;
+    parse(charStream);
+    return charStream.src.substring(start,  charStream.index + 1);
+  };
+};
+
+
 export const char = (c: string): Parser<CharCode> => {
   const charCode = c.charCodeAt(0);
   return satisfy(x => x === charCode);
 };
+
+export const pEof = (charStream: CharStreamLike): undefined =>
+  charStream.move() ? throwParseError(charStream) : undefined;
 
 export const pSemicolon = char(";");
 
@@ -332,64 +385,3 @@ export const pCloseParen = char(")");
 export const pDquote = char('"');
 
 export const pAsterisk = char("*");
-
-export const manySatisfy = (
-  options: {
-    min?: number;
-    max?: number;
-  } = {},
-): Operator<Parser<CharCode>, Parser<string>> => parse => charStream => {
-  const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
-  const first = charStream.index + 1;
-  let length = 0;
-
-  try {
-    while (length < max) {
-      parse(charStream);
-      length++;
-    }
-  } catch (e) {
-    if (isParseError(e)) {
-      charStream.index--;
-    } else {
-      throw e;
-    }
-  }
-
-  return length >= min
-    ? charStream.src.substring(first, first + length)
-    : throwParseError(charStream);
-};
-
-export const regexp = (
-  input: string,
-  options: { group?: number; flags?: string } = {},
-): Parser<string> => {
-  const { group = 0, flags = "" } = options;
-
-  /** following snippet adapted from Parsimmon */
-  for (let i = 0; i < flags.length; i++) {
-    const c = flags.charAt(i);
-    // Only allow regexp flags [imu] for now, since [g] and [y] specifically
-    // mess up Parsimmon. If more non-stateful regexp flags are added in the
-    // future, this will need to be revisited.
-    if (c !== "i" && c !== "m" && c !== "u") {
-      throw new Error('unsupported regexp flag "' + c + '": ' + regexp);
-    }
-  }
-
-  const anchoredRegexp = RegExp("^(?:" + input + ")", flags);
-
-  return charStream => {
-    if (charStream.move()) {
-      const index = charStream.index;
-      const src = charStream.src;
-
-      const match = anchoredRegexp.exec(src.slice(index));
-      if (match != null && group <= match.length) {
-        return match[group];
-      }
-    }
-    return throwParseError(charStream);
-  };
-};

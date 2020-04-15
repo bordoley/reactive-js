@@ -34,6 +34,7 @@ export {
 
 export { HttpStandardHeader } from "./internal/httpHeaders";
 
+/** FIXME: Not sure we should export these. Instead we can export createContent function */
 export {
   mediaTypeToString,
   parseMediaType,

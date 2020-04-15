@@ -1,5 +1,5 @@
 import {
-  throws,
+  throwParseError,
   parseWith,
   string,
   map,
@@ -14,7 +14,6 @@ import {
   orDefault,
   manySatisfy,
   pForwardSlash,
-  regexp,
   char,
   pEof,
 } from "../src";
@@ -40,13 +39,13 @@ test("map", () => {
     map((x: string) => x + "cd"),
   );
 
-  const result = pipe("ababababababababab", parseWith(parser));
+  const result = pipe("ab", parseWith(parser));
   expect(result).toEqual("abcd");
 });
 
 test("mapTo", () => {
   const parser = pipe(string("ab"), mapTo("xyz"));
-  const result = pipe("ababababababababab", parseWith(parser));
+  const result = pipe("ab", parseWith(parser));
 
   expect(result).toEqual("xyz");
 });
@@ -68,27 +67,11 @@ test("optional", () => {
 test("or", () => {
   const parser = pipe(string("ab"), or(string("cd")));
 
-  const result1 = pipe("abcd", parseWith(parser));
+  const result1 = pipe("ab", parseWith(parser));
   expect(result1).toEqual("ab");
 
-  const result2 = pipe("cdab", parseWith(parser));
+  const result2 = pipe("cd", parseWith(parser));
   expect(result2).toEqual("cd");
-});
-
-describe("regexp", () => {
-  const parser = regexp("a+");
-
-  test("with match at the beginning of the string", () => {
-    const result = pipe("aaabbb", parseWith(parser));
-    expect(result).toEqual("aaa");
-  });
-
-  test("with match in the middle of the string", () => {
-    const stream = createCharStream("bbbaaabbb");
-    stream.index = 2;
-    const result = parser(stream);
-    expect(result).toEqual("aaa");
-  });
 });
 
 test("sepBy", () => {
@@ -100,11 +83,11 @@ test("sepBy", () => {
 
 test("string", () => {
   const parser = concat(string("ab"), string("cd"));
-  const result = pipe("abcdabcdabcd", parseWith(parser));
+  const result = pipe("abcd", parseWith(parser));
 
   expect(result).toEqual(["ab", "cd"]);
 });
 
-test("throws", () => {
-  expect(() => pipe("abc", createCharStream, throws)).toThrow();
+test("throwParseError", () => {
+  expect(() => pipe("abc", createCharStream, throwParseError)).toThrow();
 });

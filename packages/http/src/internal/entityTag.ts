@@ -3,15 +3,12 @@ import {
   string,
   manySatisfy,
   pDquote,
-  concat,
-  map,
   optional,
   parseWith,
-  eof,
+  CharStreamLike,
 } from "@reactive-js/parser-combinators";
 import { EntityTag } from "./interfaces";
 import { ASCII } from "./httpGrammar";
-import { pipe } from "@reactive-js/pipe";
 
 /** @ignore */
 export const entityTagToString = ({ isWeak, tag }: EntityTag): string =>
@@ -20,15 +17,17 @@ export const entityTagToString = ({ isWeak, tag }: EntityTag): string =>
 const pETagc = satisfy(
   c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE,
 );
+const parseIsWeak = optional(string("W/"));
+const parseTag = manySatisfy()(pETagc);
 
 /** @ignore */
-export const pETag = pipe(
-  concat(optional(string("W/")), pDquote, pipe(pETagc, manySatisfy()), pDquote),
-  map(([w, , tag]) => ({
-    isWeak: w !== undefined,
-    tag,
-  })),
-);
+export const pETag = (charStream: CharStreamLike): EntityTag => {
+  const isWeak = parseIsWeak(charStream) !== undefined;
+  pDquote(charStream);
+  const tag = parseTag(charStream);
+  pDquote(charStream);
+  return { isWeak, tag };
+};
 
 /** @ignore */
-export const parseETag = pipe(pETag, eof, parseWith);
+export const parseETag = parseWith(pETag);
