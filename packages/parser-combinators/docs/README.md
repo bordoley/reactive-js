@@ -32,30 +32,24 @@
 ### Functions
 
 * [char](README.md#const-char)
-* [compute](README.md#const-compute)
 * [concat](README.md#concat)
 * [createCharStream](README.md#const-createcharstream)
-* [eof](README.md#const-eof)
-* [flatMap](README.md#const-flatmap)
 * [followedBy](README.md#const-followedby)
 * [many](README.md#const-many)
+* [manyIgnore](README.md#const-manyignore)
 * [manySatisfy](README.md#const-manysatisfy)
 * [map](README.md#const-map)
 * [mapTo](README.md#const-mapto)
-* [notFollowedBy](README.md#const-notfollowedby)
-* [ofValue](README.md#const-ofvalue)
 * [optional](README.md#const-optional)
 * [or](README.md#const-or)
 * [orDefault](README.md#const-ordefault)
 * [pEof](README.md#const-peof)
 * [parseWith](README.md#const-parsewith)
 * [parseWithOrThrow](README.md#const-parsewithorthrow)
-* [regexp](README.md#const-regexp)
 * [satisfy](README.md#const-satisfy)
 * [sepBy](README.md#const-sepby)
 * [sepBy1](README.md#const-sepby1)
 * [string](README.md#const-string)
-* [throws](README.md#const-throws)
 
 ## Type aliases
 
@@ -303,24 +297,6 @@ Name | Type |
 
 ___
 
-### `Const` compute
-
-▸ **compute**<**T**>(`f`: function): *[Parser](README.md#parser)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **f**: *function*
-
-▸ (): *T*
-
-**Returns:** *[Parser](README.md#parser)‹T›*
-
-___
-
 ###  concat
 
 ▸ **concat**<**TA**, **TB**>(`a`: [Parser](README.md#parser)‹TA›, `b`: [Parser](README.md#parser)‹TB›): *[Parser](README.md#parser)‹[TA, TB]›*
@@ -559,9 +535,9 @@ Name | Type |
 
 ___
 
-### `Const` eof
+### `Const` followedBy
 
-▸ **eof**<**T**>(`parser`: [Parser](README.md#parser)‹T›): *[Parser](README.md#parser)‹T›*
+▸ **followedBy**<**T**>(`other`: [Parser](README.md#parser)‹unknown›): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -571,49 +547,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parser` | [Parser](README.md#parser)‹T› |
+`other` | [Parser](README.md#parser)‹unknown› |
 
-**Returns:** *[Parser](README.md#parser)‹T›*
-
-___
-
-### `Const` flatMap
-
-▸ **flatMap**<**TA**, **TB**>(`mapper`: function): *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Parameters:**
-
-▪ **mapper**: *function*
-
-▸ (`result`: TA): *[Parser](README.md#parser)‹TB›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`result` | TA |
-
-**Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
-
-___
-
-### `Const` followedBy
-
-▸ **followedBy**(`pnext`: [Parser](README.md#parser)‹unknown›): *[Parser](README.md#parser)‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`pnext` | [Parser](README.md#parser)‹unknown› |
-
-**Returns:** *[Parser](README.md#parser)‹unknown›*
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹T››*
 
 ___
 
@@ -632,6 +568,24 @@ Name | Type | Default |
 `options` | object |  {} |
 
 **Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹keyof T[]››*
+
+___
+
+### `Const` manyIgnore
+
+▸ **manyIgnore**<**T**>(`options`: object): *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹void››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | object |  {} |
+
+**Returns:** *Operator‹[Parser](README.md#parser)‹T›, [Parser](README.md#parser)‹void››*
 
 ___
 
@@ -692,38 +646,6 @@ Name | Type |
 `v` | TB |
 
 **Returns:** *Operator‹[Parser](README.md#parser)‹TA›, [Parser](README.md#parser)‹TB››*
-
-___
-
-### `Const` notFollowedBy
-
-▸ **notFollowedBy**(`pnext`: [Parser](README.md#parser)‹unknown›): *[Parser](README.md#parser)‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`pnext` | [Parser](README.md#parser)‹unknown› |
-
-**Returns:** *[Parser](README.md#parser)‹unknown›*
-
-___
-
-### `Const` ofValue
-
-▸ **ofValue**<**T**>(`value`: T): *[Parser](README.md#parser)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | T |
-
-**Returns:** *[Parser](README.md#parser)‹T›*
 
 ___
 
@@ -817,7 +739,7 @@ ___
 
 ### `Const` parseWithOrThrow
 
-▸ **parseWithOrThrow**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *Operator‹string, T›*
+▸ **parseWithOrThrow**<**T**>(`parser`: [Parser](README.md#parser)‹T›): *Operator‹string, T›*
 
 **Type parameters:**
 
@@ -827,24 +749,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`parse` | [Parser](README.md#parser)‹T› |
+`parser` | [Parser](README.md#parser)‹T› |
 
 **Returns:** *Operator‹string, T›*
-
-___
-
-### `Const` regexp
-
-▸ **regexp**(`input`: string, `options`: object): *[Parser](README.md#parser)‹string›*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`input` | string | - |
-`options` | object |  {} |
-
-**Returns:** *[Parser](README.md#parser)‹string›*
 
 ___
 
@@ -915,21 +822,3 @@ Name | Type |
 `str` | string |
 
 **Returns:** *[Parser](README.md#parser)‹string›*
-
-___
-
-### `Const` throws
-
-▸ **throws**<**T**>(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *T*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
-
-**Returns:** *T*

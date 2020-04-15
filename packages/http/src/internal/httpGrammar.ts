@@ -1,7 +1,6 @@
 import {
   Parser,
   pEquals,
-  concat,
   or,
   throwParseError,
   map,
@@ -9,9 +8,11 @@ import {
   parseWith,
   manySatisfy,
   many,
-  char,
   pComma,
   sepBy,
+  manyIgnore,
+  CharStreamLike,
+  pSemicolon,
 } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 
@@ -66,17 +67,9 @@ const pTChar = satisfy(
     (c >= ASCII._A && c <= ASCII._Z),
 );
 
-/** @ignore */
-export const pOWS: Parser<undefined> = charStream => {
-  while (charStream.move()) {
-    const c = charStream.current;
-    if (c !== ASCII.SPACE && c !== ASCII.HTAB) {
-      break;
-    }
-  }
-  charStream.index--;
-  return undefined;
-};
+const pWS = satisfy(c => c === ASCII.SPACE || c === ASCII.HTAB);
+
+const pOWS: Parser<void> = manyIgnore()(pWS);
 
 const pQuotedString: Parser<string> = charStream => {
   let builder: number[] | undefined = undefined;
@@ -132,13 +125,13 @@ const pQuotedString: Parser<string> = charStream => {
 /** @ignore */
 export const pToken = pipe(pTChar, manySatisfy({ min: 1 }));
 
-const pParameterName = pToken;
 const pParameterValue = pipe(pToken, or(pQuotedString));
-/** @ignore */
-export const pParameter: Parser<[string, string]> = pipe(
-  concat(pParameterName, pEquals, pParameterValue),
-  map(([k, , v]) => [k, v]),
-);
+const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
+  const key = pToken(charStream);
+  pEquals(charStream);
+  const value = pParameterValue(charStream);
+  return [key, value];
+};
 
 const toQuotedString = (input: string): string => {
   const buffer = [ASCII.DQOUTE];
@@ -175,10 +168,16 @@ export const toTokenOrQuotedString = (input: string) => {
   return parseToken(input) || toQuotedString(input);
 };
 
+const pParamsParam = (charStream: CharStreamLike) => {
+  pOWS(charStream);
+  pSemicolon(charStream);
+  pOWS(charStream);
+  return pParameter(charStream);
+};
+
 /** @ignore */
 export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
-  concat(pOWS, char(";"), pOWS, pParameter),
-  map(([, , , values]) => values),
+  pParamsParam,
   many(),
   map(results => {
     const params: { [key: string]: string } = {};
@@ -189,7 +188,11 @@ export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
   }),
 );
 
-const owsCommaOws = concat(pOWS, pComma, pOWS);
+const owsCommaOws = (charStream: CharStreamLike): void => {
+  pOWS(charStream);
+  pComma(charStream);
+  pOWS(charStream);
+};
 
 /** @ignore */
 export const httpList = <T>(parser: Parser<T>): Parser<readonly T[]> =>

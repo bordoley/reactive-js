@@ -11,7 +11,6 @@ import { httpList } from "./httpGrammar";
 import { pipe } from "@reactive-js/pipe";
 import {
   parseWith,
-  eof,
   pAsterisk,
   or,
   mapTo,
@@ -82,7 +81,6 @@ const parseETagPreference = pipe(
   pETag,
   httpList,
   or(pipe(pAsterisk, mapTo<number, "*">("*"))),
-  eof,
   parseWith,
 );
 
