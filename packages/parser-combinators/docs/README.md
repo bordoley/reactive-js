@@ -689,7 +689,7 @@ ___
 
 ### `Const` orDefault
 
-▸ **orDefault**<**T**>(`default_`: T): *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
+▸ **orDefault**<**T**>(`default_`: function): *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -697,9 +697,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`default_` | T |
+▪ **default_**: *function*
+
+▸ (): *T*
 
 **Returns:** *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
 

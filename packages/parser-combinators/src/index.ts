@@ -280,11 +280,11 @@ export const optional = <T>(
 };
 
 export const orDefault = <T>(
-  default_: T,
+  default_: () => T,
 ): Operator<Parser<T | undefined>, Parser<T>> =>
   compose(
     optional,
-    map(result => result || default_),
+    map(result => result || default_()),
   );
 
 export const sepBy1 = <T>(
@@ -310,7 +310,10 @@ export const sepBy1 = <T>(
 export const sepBy = <T>(
   separator: Parser<unknown>,
 ): Operator<Parser<T>, Parser<readonly T[]>> =>
-  compose(sepBy1(separator), orDefault<readonly T[]>([]));
+  compose(
+    sepBy1(separator),
+    orDefault<readonly T[]>(() => []),
+  );
 
 export const string = (str: string): Parser<string> => charStream => {
   charStream.move();
@@ -349,10 +352,9 @@ export const manySatisfy = (
   return charStream => {
     const start = charStream.index + 1;
     parse(charStream);
-    return charStream.src.substring(start,  charStream.index + 1);
+    return charStream.src.substring(start, charStream.index + 1);
   };
 };
-
 
 export const char = (c: string): Parser<CharCode> => {
   const charCode = c.charCodeAt(0);

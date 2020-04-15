@@ -47,6 +47,7 @@
 * [getHeaderValue](README.md#getheadervalue)
 * [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
 * [mediaTypeToString](README.md#const-mediatypetostring)
+* [parseHeaders](README.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
@@ -326,6 +327,20 @@ Name | Type |
 `__namedParameters` | object |
 
 **Returns:** *string*
+
+___
+
+### `Const` parseHeaders
+
+▸ **parseHeaders**(`rawHeaders`: string): *[HttpHeaders](README.md#httpheaders)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`rawHeaders` | string |
+
+**Returns:** *[HttpHeaders](README.md#httpheaders)*
 
 ___
 
