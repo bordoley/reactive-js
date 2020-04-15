@@ -109,9 +109,10 @@ const pQuotedString: Parser<string> = charStream => {
 
       const c = charStream.current;
       const isQuotedPairChar =
-          c === ASCII.HTAB ||
-          c === ASCII.SPACE ||
-          (c >= 33 && c <= 256) /* VCHAR */;
+        c === ASCII.HTAB ||
+        c === ASCII.SPACE ||
+        (c >= 0x21 && c <= 0x7e) || // VCHAR
+        (c >= 0x80 && c <= 0xff); // obs-text
       if (!isQuotedPairChar) {
         throwParseError(charStream);
       }
@@ -172,7 +173,7 @@ export const toTokenOrQuotedString = (input: string): string => {
       // FIXME: Error type?
       throw new Error();
     }
-    
+
     if (buffer !== undefined) {
       buffer.push(c);
     }
@@ -239,7 +240,7 @@ const pFieldValue = (charStream: CharStreamLike) => {
   pFieldVchar(charStream);
   parseManyFieldVCharSpHTab(charStream);
   // Backtrack the last char to make sure its not space.
-  charStream.index--
+  charStream.index--;
   pFieldVchar(charStream);
 
   return charStream.src.substring(index, charStream.index + 1);
