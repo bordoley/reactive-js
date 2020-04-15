@@ -1,7 +1,7 @@
 import { identity } from "@reactive-js/async-enumerable";
 import { createDisposableValue } from "@reactive-js/disposable";
 import {
-  HttpHeaders,
+  parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
 } from "@reactive-js/http";
@@ -13,26 +13,6 @@ import {
   HttpClientRequestStatus,
   HttpClientRequestStatusType,
 } from "./interfaces";
-
-const parseHeaders = (rawHeaders: string): HttpHeaders => {
-  const headers: { [header: string]: string } = {};
-
-  // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
-  // https://tools.ietf.org/html/rfc7230#section-3.2
-  const preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, " ");
-  const lines = preProcessedHeaders.split(/\r?\n/);
-  for (const line of lines) {
-    const parts = line.split(":");
-    const key = parts.shift()?.trim();
-
-    if (key !== undefined && key !== "") {
-      const value = parts.join(":").trim();
-      headers[key.toLowerCase()] = value;
-    }
-  }
-
-  return headers;
-};
 
 /** @ignore */
 export const sendHttpRequestUsingXHR = (

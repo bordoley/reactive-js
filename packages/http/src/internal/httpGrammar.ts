@@ -13,8 +13,12 @@ import {
   manyIgnore,
   CharStreamLike,
   pSemicolon,
+  pColon,
+  isParseError,
+  string,
 } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
+import { HttpHeaders } from "./interfaces";
 
 /** @ignore */
 export const enum ASCII {
@@ -138,8 +142,13 @@ const toQuotedString = (input: string): string => {
 
   for (let i = 0; i < input.length; i++) {
     const c = input.charCodeAt(i);
+
     const isQuotedPairChar =
-      c === ASCII.HTAB || c === ASCII.SPACE || (c >= 33 && c <= 256);
+      c === ASCII.HTAB ||
+      c === ASCII.SPACE ||
+      (c >= 0x21 && c <= 0x7e) || // VCHAR
+      (c >= 0x80 && c <= 0xff); // obs-text
+
     const isQDText =
       c === ASCII.HTAB ||
       c === ASCII.SPACE ||
@@ -148,7 +157,7 @@ const toQuotedString = (input: string): string => {
       (c >= 0x5d && c <= 0x7e) ||
       (c >= 0x80 && c <= 0xff); // obs-text
 
-    if (isQuotedPairChar) {
+    if (isQuotedPairChar && !isQDText) {
       buffer.push(ASCII.BACKSLASH);
     } else if (!isQDText) {
       // FIXME: Error type?
@@ -157,8 +166,8 @@ const toQuotedString = (input: string): string => {
 
     buffer.push(c);
   }
-  buffer.push(ASCII.DQOUTE);
 
+  buffer.push(ASCII.DQOUTE);
   return String.fromCharCode(...buffer);
 };
 
@@ -197,3 +206,70 @@ const owsCommaOws = (charStream: CharStreamLike): void => {
 /** @ignore */
 export const httpList = <T>(parser: Parser<T>): Parser<readonly T[]> =>
   pipe(parser, sepBy(owsCommaOws));
+
+const pFieldVchar = satisfy(
+  c => (c >= 0x21 && c <= 0x7e) || (c >= 0x80 && c <= 0xff),
+);
+
+const pFieldVCharSpHTab = satisfy(
+  c =>
+    c === ASCII.SPACE ||
+    c === ASCII.HTAB ||
+    (c >= 0x21 && c <= 0x7e) ||
+    (c >= 0x80 && c <= 0xff),
+);
+
+const parseManyFieldVCharSpHTab = manyIgnore()(pFieldVCharSpHTab);
+
+/**
+ * Fails if field value includes obs-fold, which is intentional per the spec:
+ * https://tools.ietf.org/html/rfc7230#section-3.2.4
+ */
+const pFieldValue = (charStream: CharStreamLike) => {
+  const index = charStream.index + 1;
+  pFieldVchar(charStream);
+  parseManyFieldVCharSpHTab(charStream);
+  // Backtrack the last char to make sure its not space.
+  charStream.index--
+  pFieldVchar(charStream);
+
+  return charStream.src.substring(index, charStream.index + 1);
+};
+
+const pCRLF = string("\r\n");
+
+const pHeaders = (charStream: CharStreamLike): HttpHeaders => {
+  const result: { [key: string]: string } = {};
+  let index = -1;
+
+  try {
+    while (true) {
+      index = charStream.index;
+
+      const fieldName = pToken(charStream);
+      pColon(charStream);
+      pOWS(charStream);
+      const value = pFieldValue(charStream);
+      pOWS(charStream);
+      pCRLF(charStream);
+
+      result[fieldName] = value;
+    }
+  } catch (e) {
+    if (isParseError(e)) {
+      charStream.index = index;
+    } else {
+      throw e;
+    }
+  }
+  return result;
+};
+
+const parsePreProcessedHeaders = parseWith(pHeaders);
+
+export const parseHeaders = (rawHeaders: string): HttpHeaders => {
+  // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
+  // https://tools.ietf.org/html/rfc7230#section-3.2
+  const preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, " ");
+  return parsePreProcessedHeaders(preProcessedHeaders) || {};
+};

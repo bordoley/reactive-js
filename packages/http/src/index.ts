@@ -40,3 +40,5 @@ export {
   parseMediaType,
   parseMediaTypeOrThrow,
 } from "./internal/mediaType";
+
+export { parseHeaders } from "./internal/httpGrammar";
