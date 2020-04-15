@@ -138,7 +138,10 @@ const notFound: Operator<
     ofValue(req),
     mapTo(
       createHttpResponse(404, {
-        content: createStringHttpContent(req.uri.toString(), 'text/plain; charset="utf-8"'),
+        content: createStringHttpContent(
+          req.uri.toString(),
+          'text/plain; charset="utf-8"',
+        ),
       }),
     ),
   );
