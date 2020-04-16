@@ -8,10 +8,13 @@
 
 * [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
 
+### Interfaces
+
+* [HttpClientLike](interfaces/httpclientlike.md)
+
 ### Type aliases
 
 * [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions)
-* [HttpClient](README.md#httpclient)
 * [HttpClientOptions](README.md#httpclientoptions)
 * [HttpClientRequestOptions](README.md#httpclientrequestoptions)
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
@@ -19,6 +22,7 @@
 * [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)
 * [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete)
 * [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading)
+* [HttpRequestListener](README.md#httprequestlistener)
 * [HttpRequestListenerHandler](README.md#httprequestlistenerhandler)
 * [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)
 
@@ -41,23 +45,6 @@
 Ƭ **EncodeHttpResponseOptions**: *object*
 
 #### Type declaration:
-
-___
-
-###  HttpClient
-
-Ƭ **HttpClient**: *function*
-
-#### Type declaration:
-
-▸ (`request`: HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, `requestOptions?`: [HttpClientRequestOptions](README.md#httpclientrequestoptions)): *ObservableLike‹[HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`request` | HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
-`requestOptions?` | [HttpClientRequestOptions](README.md#httpclientrequestoptions) |
 
 ___
 
@@ -113,6 +100,23 @@ ___
 
 ___
 
+###  HttpRequestListener
+
+Ƭ **HttpRequestListener**: *function*
+
+#### Type declaration:
+
+▸ (`req`: IncomingMessage | Http2ServerRequest, `resp`: ServerResponse | Http2ServerResponse): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | IncomingMessage &#124; Http2ServerRequest |
+`resp` | ServerResponse &#124; Http2ServerResponse |
+
+___
+
 ###  HttpRequestListenerHandler
 
 Ƭ **HttpRequestListenerHandler**: *function*
@@ -139,7 +143,7 @@ ___
 
 ### `Const` creatHttpClient
 
-▸ **creatHttpClient**(`clientOptions`: [HttpClientOptions](README.md#httpclientoptions)): *[HttpClient](README.md#httpclient)*
+▸ **creatHttpClient**(`clientOptions`: [HttpClientOptions](README.md#httpclientoptions)): *[HttpClientLike](interfaces/httpclientlike.md)*
 
 **Parameters:**
 
@@ -147,7 +151,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `clientOptions` | [HttpClientOptions](README.md#httpclientoptions) |  {} |
 
-**Returns:** *[HttpClient](README.md#httpclient)*
+**Returns:** *[HttpClientLike](interfaces/httpclientlike.md)*
 
 ___
 
@@ -168,13 +172,13 @@ ___
 
 ### `Const` createDefaultHttpResponseHandler
 
-▸ **createDefaultHttpResponseHandler**(`sendHttpRequest`: [HttpClient](README.md#httpclient), `maxRedirects`: number): *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+▸ **createDefaultHttpResponseHandler**(`httpClient`: [HttpClientLike](interfaces/httpclientlike.md), `maxRedirects`: number): *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`sendHttpRequest` | [HttpClient](README.md#httpclient) | - |
+`httpClient` | [HttpClientLike](interfaces/httpclientlike.md) | - |
 `maxRedirects` | number | 10 |
 
 **Returns:** *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
@@ -183,7 +187,7 @@ ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: [HttpRequestListenerHandler](README.md#httprequestlistenerhandler), `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *RequestListener*
+▸ **createHttpRequestListener**(`handler`: [HttpRequestListenerHandler](README.md#httprequestlistenerhandler), `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *[HttpRequestListener](README.md#httprequestlistener)*
 
 **Parameters:**
 
@@ -193,7 +197,7 @@ Name | Type | Default |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](README.md#httprequestlisteneroptions) |  {} |
 
-**Returns:** *RequestListener*
+**Returns:** *[HttpRequestListener](README.md#httprequestlistener)*
 
 ___
 

@@ -1,4 +1,6 @@
-import { createServer as createNodeHttpServer } from "http";
+import { createServer as createHttp1Server } from "http";
+import { createSecureServer as createHttp2Server } from "http2";
+import fs from "fs";
 import {
   HttpMethod,
   createHttpRequest,
@@ -185,9 +187,17 @@ const listener = createHttpRequestListener(
   scheduler,
 );
 
-createNodeHttpServer({}, listener).listen(8080);
+createHttp1Server({}, listener).listen(8080);
 
-const sendHttpRequest = creatHttpClient();
+// For instructions on generating local certs see: 
+// https://letsencrypt.org/docs/certificates-for-localhost/
+createHttp2Server({
+  //allowHTTP1: true,
+  key: fs.readFileSync('localhost.key'),
+  cert: fs.readFileSync('localhost.crt')
+}, listener).listen(8081);
+
+const httpClient = creatHttpClient();
 
 const chunk = Buffer.from(
   "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
@@ -210,8 +220,8 @@ pipe(
       ],
     },
   }),
-  sendHttpRequest,
-  createDefaultHttpResponseHandler(sendHttpRequest, 10),
+  httpClient.send.bind(httpClient),
+  createDefaultHttpResponseHandler(httpClient, 10),
   onNotify(status => {
     console.log("status: " + status.type);
     if (status.type === HttpClientRequestStatusType.ResponseReady) {
