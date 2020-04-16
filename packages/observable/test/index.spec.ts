@@ -1225,13 +1225,6 @@ describe("toIterable", () => {
     expect(() => (iterator as any).throw(error)).toThrowError(error);
   });
 
-  test("calling throw without an error returns done.", () => {
-    const iterable = pipe(fromArray([1, 2, 3, 4]), toIterable);
-    const result = (iterable[Symbol.iterator]() as any).throw();
-
-    expect(result.done).toBeTruthy();
-  });
-
   test("calling return, returns done", () => {
     const iterable = pipe(fromArray([1, 2, 3, 4]), toIterable);
     const result = (iterable[Symbol.iterator]() as any).return();
