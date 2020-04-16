@@ -189,13 +189,16 @@ const listener = createHttpRequestListener(
 
 createHttp1Server({}, listener).listen(8080);
 
-// For instructions on generating local certs see: 
+// For instructions on generating local certs see:
 // https://letsencrypt.org/docs/certificates-for-localhost/
-createHttp2Server({
-  //allowHTTP1: true,
-  key: fs.readFileSync('localhost.key'),
-  cert: fs.readFileSync('localhost.crt')
-}, listener).listen(8081);
+createHttp2Server(
+  {
+    //allowHTTP1: true,
+    key: fs.readFileSync("localhost.key"),
+    cert: fs.readFileSync("localhost.crt"),
+  },
+  listener,
+).listen(8081);
 
 const httpClient = creatHttpClient();
 

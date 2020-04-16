@@ -1,4 +1,3 @@
-
 import { EnumerableLike, EnumeratorLike } from "./interfaces";
 import { DisposableLike } from "@reactive-js/disposable";
 
