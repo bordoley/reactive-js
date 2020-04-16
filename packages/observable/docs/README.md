@@ -52,8 +52,9 @@
 * [exhaustMap](README.md#const-exhaustmap)
 * [forEach](README.md#const-foreach)
 * [fromArray](README.md#fromarray)
-* [fromIterable](README.md#fromiterable)
-* [fromIterator](README.md#fromiterator)
+* [fromEnumerable](README.md#fromenumerable)
+* [fromIterable](README.md#const-fromiterable)
+* [fromIterator](README.md#const-fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
 * [generate](README.md#generate)
@@ -978,7 +979,29 @@ Name | Type | Default | Description |
 
 ___
 
-###  fromIterable
+###  fromEnumerable
+
+▸ **fromEnumerable**<**T**>(`enumerable`: EnumerableLike‹void, T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+Creates an `ObservableLike` which enumerates through the values
+produced by the provided `Enumerable` with a specified `delay` between emitted items.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`enumerable` | EnumerableLike‹void, T› | - | - |
+`delay` | number | 0 | The requested delay between emitted items by the observable.  |
+
+**Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` fromIterable
 
 ▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
@@ -1000,9 +1023,9 @@ Name | Type | Default | Description |
 
 ___
 
-###  fromIterator
+### `Const` fromIterator
 
-▸ **fromIterator**<**T**>(`iterator`: Iterator‹T›, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromIterator**<**T**>(`f`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -1013,10 +1036,13 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`iterator` | Iterator‹T› | - | - |
-`delay` | number | 0 | The requested delay between emitted items by the observable.  |
+▪ **f**: *function*
+
+▸ (): *Iterator‹T›*
+
+▪`Default value`  **delay**: *number*= 0
+
+The requested delay between emitted items by the observable.
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
 

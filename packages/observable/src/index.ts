@@ -21,6 +21,7 @@ export { createObservable } from "./internal/createObservable";
 export { createSubject } from "./internal/subject";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
+export { fromEnumerable } from "./internal/fromEnumerable";
 export { fromIterable, fromIterator } from "./internal/fromIterable";
 export { fromPromise } from "./internal/fromPromise";
 export { fromScheduledValues } from "./internal/fromScheduledValues";
