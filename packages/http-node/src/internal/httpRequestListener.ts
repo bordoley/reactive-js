@@ -1,5 +1,5 @@
 import { ServerResponse, IncomingMessage } from "http";
-import { Http2ServerRequest,  Http2ServerResponse } from "http2";
+import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import {
   HttpServerRequest,
   writeHttpResponseHeaders,
@@ -85,7 +85,7 @@ const destroy = <T extends { destroy: () => void }>(val: T) => {
 };
 
 export type HttpRequestListener = (
-  req: IncomingMessage | Http2ServerRequest, 
+  req: IncomingMessage | Http2ServerRequest,
   resp: ServerResponse | Http2ServerResponse,
 ) => void;
 
