@@ -1,4 +1,5 @@
 export {
+  HttpClientLike,
   HttpClientOptions,
   HttpClientRequestStatusType,
   HttpClientRequestStatusUploading,
@@ -16,6 +17,7 @@ export {
 } from "./internal/httpContent";
 
 export {
+  HttpRequestListener,
   HttpRequestListenerHandler,
   HttpRequestListenerOptions,
   createHttpRequestListener,

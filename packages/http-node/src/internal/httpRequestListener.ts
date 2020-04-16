@@ -1,4 +1,5 @@
-import { RequestListener, ServerResponse, IncomingMessage } from "http";
+import { ServerResponse, IncomingMessage } from "http";
+import { Http2ServerRequest,  Http2ServerResponse } from "http2";
 import {
   HttpServerRequest,
   writeHttpResponseHeaders,
@@ -83,17 +84,23 @@ const destroy = <T extends { destroy: () => void }>(val: T) => {
   val.destroy();
 };
 
+export type HttpRequestListener = (
+  req: IncomingMessage | Http2ServerRequest, 
+  resp: ServerResponse | Http2ServerResponse,
+) => void;
+
 export const createHttpRequestListener = (
   handler: HttpRequestListenerHandler,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
-): RequestListener => {
+): HttpRequestListener => {
   const { onError = defaultOnError } = options;
 
   const handleRequest = (
     disposableRequest: DisposableValueLike<IncomingMessage>,
     disposableResponse: DisposableValueLike<ServerResponse>,
   ) => {
+    debugger;
     const req = disposableRequest.value;
     const resp = disposableResponse.value;
 
@@ -131,8 +138,8 @@ export const createHttpRequestListener = (
           DisposableValueLike<IncomingMessage>,
           DisposableValueLike<ServerResponse>,
         ] => [
-          createDisposableValue(req, destroy),
-          createDisposableValue(resp, destroy),
+          createDisposableValue(req as IncomingMessage, destroy),
+          createDisposableValue(resp as ServerResponse, destroy),
         ],
         handleRequest,
       ),

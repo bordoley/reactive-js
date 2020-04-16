@@ -2,9 +2,8 @@ import {
   IncomingMessage,
   request as httpRequest,
   Agent,
-  ClientRequest,
 } from "http";
-import { request as httpsRequest } from "https";
+import { request as httpsRequest, RequestOptions } from "https";
 import { URL } from "url";
 import { ZlibOptions, BrotliOptions } from "zlib";
 import {
@@ -16,6 +15,8 @@ import {
 import {
   DisposableValueLike,
   createDisposableValue,
+  DisposableLike,
+  AbstractDisposable,
 } from "@reactive-js/disposable";
 import {
   HttpContentEncoding,
@@ -109,9 +110,49 @@ const spyScanner = (
     ? [ev.chunk.length, total + uploaded]
     : [-1, total + uploaded];
 
+const send = (
+  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
+) => {
+  const { contentEncoding, ...nodeOptions } = requestOptions;
+  const { content } = request;
+  const newContent =
+    content !== undefined && contentEncoding !== undefined
+      ? {
+          ...content,
+          contentEncodings: [...content.contentEncodings, contentEncoding],
+        }
+      : content;
+
+  const requestWithAcceptEncodingsAndContentEncoding = {
+    ...request,
+    acceptedEncodings: supportedEncodings,
+    content: newContent,
+  };
+
+  const { method, uri } = requestWithAcceptEncodingsAndContentEncoding;
+  const headers = httpRequestToUntypedHeaders(
+    requestWithAcceptEncodingsAndContentEncoding,
+  );
+  const nodeRequestUrl = uri instanceof URL ? uri : new URL(uri.toString());
+  const nodeRequestOptions = {
+    ...nodeOptions,
+    headers,
+    method,
+  };
+
+  return uri.protocol === "https:"
+    ? httpsRequest(nodeRequestUrl, nodeRequestOptions)
+    : uri.protocol === "http:"
+    ? httpRequest(nodeRequestUrl, nodeRequestOptions)
+    : (() => {
+        throw new Error();
+      })();
+};
+
 const createOnSubscribe = (
   request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  send: () => ClientRequest,
+  requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
   encodeContent: AsyncEnumerableOperator<
     ReadableMode,
     ReadableEvent,
@@ -124,7 +165,7 @@ const createOnSubscribe = (
 ) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {
   subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
 
-  const req = send();
+  const req = send(request, requestOptions);
 
   const onError = (cause: any) => {
     // FIXME: Maybe we should dispatch a message instead of an error.
@@ -237,67 +278,34 @@ const requestIsCompressible = (
   return content !== undefined ? contentIsCompressible(content) : false;
 };
 
-export type HttpClient = {
-  (
+export interface HttpClientLike extends DisposableLike{
+  send(
     request: HttpContentRequest<
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
     requestOptions?: HttpClientRequestOptions,
   ): ObservableLike<HttpClientRequestStatus>;
-};
+} 
 
-export const creatHttpClient = (
-  clientOptions: HttpClientOptions = {},
-): HttpClient => {
-  const {
-    agent,
-    insecureHTTPParser,
-    maxHeaderSize,
-    shouldEncode: shouldEncodeOption,
-    ...zlibOptions
-  } = clientOptions;
+class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
+  constructor(private readonly clientOptions: HttpClientOptions) {
+    super();
+  }
 
-  return (request, requestOptions = {}) => {
-    const { acceptedEncodings = supportedEncodings } = requestOptions;
+  send(
+    request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    options: HttpClientRequestOptions = {},
+  ): ObservableLike<HttpClientRequestStatus> {
+    const {
+      agent,
+      insecureHTTPParser,
+      maxHeaderSize,
+      shouldEncode: shouldEncodeOption,
+      ...zlibOptions
+    } = this.clientOptions;
+
+    const { acceptedEncodings = supportedEncodings } = options;
     const contentEncoding = getFirstSupportedEncoding(acceptedEncodings);
-
-    const send = () => {
-      const { content } = request;
-      const newContent =
-        content === undefined || contentEncoding === undefined
-          ? content
-          : {
-              ...content,
-              contentEncodings: [...content.contentEncodings, contentEncoding],
-            };
-
-      const requestWithAcceptEncodingsAndContentEncoding = {
-        ...request,
-        acceptedEncodings: supportedEncodings,
-        content: newContent,
-      };
-
-      const { method, uri } = requestWithAcceptEncodingsAndContentEncoding;
-      const headers = httpRequestToUntypedHeaders(
-        requestWithAcceptEncodingsAndContentEncoding,
-      );
-      const nodeRequestUrl = uri instanceof URL ? uri : new URL(uri.toString());
-      const nodeRequestOptions = {
-        agent,
-        headers,
-        insecureHTTPParser,
-        maxHeaderSize,
-        method,
-      };
-
-      return uri.protocol === "https:"
-        ? httpsRequest(nodeRequestUrl, nodeRequestOptions)
-        : uri.protocol === "http:"
-        ? httpRequest(nodeRequestUrl, nodeRequestOptions)
-        : (() => {
-            throw new Error();
-          })();
-    };
 
     const shouldEncodeOptionResult =
       shouldEncodeOption !== undefined
@@ -319,16 +327,27 @@ export const creatHttpClient = (
       zlibOptions,
     );
 
+    const requestOptions = {
+      agent,
+      contentEncoding,
+      insecureHTTPParser,
+      maxHeaderSize,
+    }
+
     return createObservable(
       createOnSubscribe(
         request,
-        send,
+        requestOptions,
         contentEncoder,
         decodeHttpContentResponseWithOption,
       ),
     );
   };
-};
+}
+
+export const creatHttpClient = (
+  clientOptions: HttpClientOptions = {},
+): HttpClientLike => new HttpClientImpl(clientOptions);
 
 const redirectCodes = [
   HttpStatusCode.MovedPermanently,
@@ -339,7 +358,7 @@ const redirectCodes = [
 ];
 
 export const createDefaultHttpResponseHandler = (
-  sendHttpRequest: HttpClient,
+  httpClient: HttpClientLike,
   maxRedirects = 10,
 ): ObservableOperator<HttpClientRequestStatus, HttpClientRequestStatus> => {
   const handleResponse = (
@@ -373,10 +392,10 @@ export const createDefaultHttpResponseHandler = (
         response.dispose();
 
         return pipe(
-          sendHttpRequest(newRequest, {
+          httpClient.send(newRequest, {
             acceptedEncodings: newAcceptedEncodings,
           }),
-          createDefaultHttpResponseHandler(sendHttpRequest, maxRedirects - 1),
+          createDefaultHttpResponseHandler(httpClient, maxRedirects - 1),
         );
       }
       // Fallthrough
