@@ -11,11 +11,36 @@
 
 ### Functions
 
+* [forEach](README.md#const-foreach)
 * [fromIterable](README.md#const-fromiterable)
 * [fromIterator](README.md#const-fromiterator)
 * [toIterable](README.md#const-toiterable)
 
 ## Functions
+
+### `Const` forEach
+
+▸ **forEach**<**T**>(`f`: function): *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹void, T›, void›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (`v`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | T |
+
+**Returns:** *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹void, T›, void›*
+
+___
 
 ### `Const` fromIterable
 
