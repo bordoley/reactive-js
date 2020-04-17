@@ -1,13 +1,12 @@
+import { createKeyedQueue, createSetMultimap } from "@reactive-js/collections";
 import {
   AbstractDisposable,
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
 import {
-  EnumerableLike,
   first,
   forEach,
-  fromIterator,
   fromIterable,
 } from "@reactive-js/enumerable";
 import {
@@ -20,141 +19,6 @@ import {
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-
-interface SetMultimapLike<K, V> {
-  readonly count: number;
-  readonly values: EnumerableLike<void, V>;
-
-  add(key: K, value: V): void;
-  clear(): void;
-  get(key: K): ReadonlySet<V>;
-  remove(key: K, value: V): void;
-  removeAll(key: K): void;
-}
-
-function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
-  for (const values of multimap.map.values()) {
-    for (const value of values) {
-      yield value;
-    }
-  }
-}
-
-class SetMultimap<K, V> implements SetMultimapLike<K, V> {
-  count = 0;
-  readonly map: Map<K, Set<V>> = new Map();
-  readonly values: EnumerableLike<void, V> = fromIterator(() =>
-    iterateSetMultimapValues(this),
-  );
-
-  add(key: K, value: V) {
-    const map = this.map;
-    const values = map.get(key) || new Set<V>();
-    const valuesOldSize = values.size;
-    values.add(value);
-    const valuesNewSize = values.size;
-    this.count += valuesNewSize - valuesOldSize;
-
-    if (valuesOldSize === 0) {
-      map.set(key, values);
-    }
-  }
-
-  clear() {
-    this.map.clear();
-  }
-
-  get(key: K): ReadonlySet<V> {
-    return this.map.get(key) || new Set<V>();
-  }
-
-  remove(key: K, value: V) {
-    const map = this.map;
-    const values = map.get(key) || new Set<V>();
-    const valuesOldSize = values.size;
-    values.delete(value);
-    const valuesNewSize = values.size;
-
-    this.count -= valuesOldSize - valuesNewSize;
-
-    if (valuesNewSize === 0) {
-      map.delete(key);
-    }
-  }
-
-  removeAll(key: K) {
-    const map = this.map;
-    const values = map.get(key) || new Set<V>();
-    const valuesSize = values.size;
-    this.count -= valuesSize;
-    map.delete(key);
-  }
-}
-
-interface KeyedQueueLike<K, V> {
-  readonly count: number;
-  readonly values: EnumerableLike<void, V>;
-
-  clear(): void;
-  peek(key: K): V | undefined;
-  pop(key: K): V | undefined;
-  push(key: K, value: V): void;
-}
-
-function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
-  for (const values of queue.map.values()) {
-    for (const value of values) {
-      yield value;
-    }
-  }
-}
-
-class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
-  count = 0;
-  readonly map: Map<K, V[]> = new Map();
-
-  readonly values: EnumerableLike<void, V> = fromIterator(() =>
-    iterateKeyedQueueValues(this),
-  );
-
-  clear() {
-    this.map.clear();
-  }
-
-  peek(key: K): V | undefined {
-    const map = this.map;
-    const values = map.get(key) || [];
-    return values[0];
-  }
-
-  pop(key: K): V | undefined {
-    const map = this.map;
-    const values = map.get(key) || [];
-    const valuesOldSize = values.length;
-    const result = values.shift();
-    const valuesNewSize = values.length;
-
-    this.count -= valuesOldSize - valuesNewSize;
-
-    if (valuesNewSize === 0) {
-      map.delete(key);
-    }
-    return result;
-  }
-
-  push(key: K, value: V) {
-    const map = this.map;
-    const values = map.get(key) || [];
-    const valuesOldSize = values.length;
-    values.push(value);
-    const valuesNewSize = values.length;
-    this.count += valuesNewSize - valuesOldSize;
-
-    if (valuesOldSize === 0) {
-      map.set(key, values);
-    }
-  }
-}
 
 const tryDispatch = <TKey, TResource extends DisposableLike>(
   resourceManager: ResourceManagerImpl<TKey, TResource>,
@@ -300,15 +164,15 @@ export interface ResourceManagerLike<TKey, TResource> extends DisposableLike {
 class ResourceManagerImpl<TKey, TResource extends DisposableLike>
   extends AbstractDisposable
   implements ResourceManagerLike<TKey, TResource> {
-  readonly availableResources = new KeyedQueue<string, TResource>();
+  readonly availableResources = createKeyedQueue<string, TResource>();
   readonly availableResourcesTimeouts = new Map<TResource, DisposableLike>();
 
-  readonly inUseResources = new SetMultimap<
+  readonly inUseResources = createSetMultimap<
     string,
     SafeSubscriberLike<TResource>
   >();
 
-  readonly resourceRequests = new KeyedQueue<
+  readonly resourceRequests = createKeyedQueue<
     string,
     SafeSubscriberLike<TResource>
   >();

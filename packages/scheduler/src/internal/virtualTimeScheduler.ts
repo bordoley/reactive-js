@@ -1,8 +1,8 @@
+import { createPriorityQueue, PriorityQueueLike } from "@reactive-js/collections";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
 } from "./interfaces";
-import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
 type VirtualTask = {
