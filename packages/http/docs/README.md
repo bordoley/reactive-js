@@ -276,7 +276,7 @@ ___
 
 ###  getHeaderValue
 
-▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *string | undefined*
+▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpStandardHeader](enums/httpstandardheader.md)): *Option‹string›*
 
 **Parameters:**
 
@@ -285,9 +285,9 @@ Name | Type |
 `headers` | [HttpHeaders](README.md#httpheaders) |
 `key` | [HttpStandardHeader](enums/httpstandardheader.md) |
 
-**Returns:** *string | undefined*
+**Returns:** *Option‹string›*
 
-▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *string | undefined*
+▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *Option‹string›*
 
 **Parameters:**
 
@@ -296,7 +296,7 @@ Name | Type |
 `headers` | [HttpHeaders](README.md#httpheaders) |
 `key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
 
-**Returns:** *string | undefined*
+**Returns:** *Option‹string›*
 
 ___
 

@@ -98,24 +98,22 @@ const parseURIFromHeaders = (
     headers,
     HttpExtensiondHeader.XForwardedProto,
   );
-  const uriProtocol =
-    isSome(forwardedProtocol)
-      ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
-      : protocol;
+  const uriProtocol = isSome(forwardedProtocol)
+    ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+    : protocol;
   const forwardedHost = getHeaderValue(
     headers,
     HttpExtensiondHeader.XForwardedHost,
   );
   const http2Authority = headers[":authority"];
   const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
-  const unfilteredHost =
-    isSome(forwardedHost)
-      ? forwardedHost
-      : isSome(http2Authority) && httpVersionMajor >= 2
-      ? http2Authority
-      : isSome(http1Host)
-      ? http1Host
-      : "";
+  const unfilteredHost = isSome(forwardedHost)
+    ? forwardedHost
+    : isSome(http2Authority) && httpVersionMajor >= 2
+    ? http2Authority
+    : isSome(http1Host)
+    ? http1Host
+    : "";
   const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
   return new URL(`${uriProtocol}://${host}${path || ""}`);
 };

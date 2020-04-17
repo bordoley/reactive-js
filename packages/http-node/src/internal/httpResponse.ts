@@ -43,21 +43,17 @@ export const encodeHttpResponse = <TReq>(
   // Don't compress for Cache-Control: no-transform
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
 
-  const shouldEncodeOptionResult =
-    isSome(shouldEncodeOption)
-      ? shouldEncodeOption(request, response)
-      : none;
+  const shouldEncodeOptionResult = isSome(shouldEncodeOption)
+    ? shouldEncodeOption(request, response)
+    : none;
 
-  const shouldEncode =
-    isSome(shouldEncodeOptionResult)
-      ? shouldEncodeOptionResult
-      : responseIsCompressible(response);
+  const shouldEncode = isSome(shouldEncodeOptionResult)
+    ? shouldEncodeOptionResult
+    : responseIsCompressible(response);
 
   const { preferences } = request;
   const acceptedEncodings =
-    isSome(preferences) && shouldEncode
-      ? preferences.acceptedEncodings
-      : [];
+    isSome(preferences) && shouldEncode ? preferences.acceptedEncodings : [];
 
   const { content, vary } = response;
 
@@ -85,7 +81,6 @@ export const decodeHttpContentResponse = (
 
   return {
     ...response,
-    content:
-      isSome(content) ? decodeHttpContent(content, options) : none,
+    content: isSome(content) ? decodeHttpContent(content, options) : none,
   };
 };

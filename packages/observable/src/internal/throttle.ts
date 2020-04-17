@@ -147,9 +147,7 @@ export function throttle<T>(
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableOperator<T, T> {
   const durationSelector =
-    typeof duration === "number"
-      ? (_: T) => ofValue(none, duration)
-      : duration;
+    typeof duration === "number" ? (_: T) => ofValue(none, duration) : duration;
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
   return lift(operator, false);

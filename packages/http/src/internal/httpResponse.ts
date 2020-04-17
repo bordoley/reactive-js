@@ -80,8 +80,7 @@ export const parseHttpResponseFromHeaders = <T>(
   );
 
   const locationHeader = headers.location;
-  const location =
-    isSome(locationHeader) ? new URL(locationHeader) : none;
+  const location = isSome(locationHeader) ? new URL(locationHeader) : none;
 
   const preferences = parseHttpPreferencesFromHeaders(headers);
 

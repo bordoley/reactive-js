@@ -52,7 +52,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     const queue = this.queue;
 
     this.add(error => {
-      if (isSome(error)|| queue.length + this.activeCount === 0) {
+      if (isSome(error) || queue.length + this.activeCount === 0) {
         delegate.dispose(error);
       }
     });

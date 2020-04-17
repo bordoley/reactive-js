@@ -306,14 +306,12 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
     const { acceptedEncodings = supportedEncodings } = options;
     const contentEncoding = getFirstSupportedEncoding(acceptedEncodings);
 
-    const shouldEncodeOptionResult =
-      isSome(shouldEncodeOption)
-        ? shouldEncodeOption(request)
-        : none;
-    const shouldEncode =
-      isSome(shouldEncodeOptionResult)
-        ? shouldEncodeOptionResult
-        : requestIsCompressible(request);
+    const shouldEncodeOptionResult = isSome(shouldEncodeOption)
+      ? shouldEncodeOption(request)
+      : none;
+    const shouldEncode = isSome(shouldEncodeOptionResult)
+      ? shouldEncodeOptionResult
+      : requestIsCompressible(request);
 
     const contentEncoder =
       isSome(contentEncoding) && shouldEncode

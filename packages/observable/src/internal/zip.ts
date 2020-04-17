@@ -53,10 +53,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
       this.buffer.length = 0;
     });
     this.add(error => {
-      if (
-        isSome(error) ||
-        (this.buffer.length === 0 && !this.hasCurrent)
-      ) {
+      if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
         delegate.dispose(error);
       }
     });

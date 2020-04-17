@@ -33,7 +33,7 @@ ___
 
 ###  shouldYield
 
-• **shouldYield**: *function | undefined*
+• **shouldYield**: *Option‹function›*
 
 Platform specific shouldYield function passed to continuations when they are run.
 

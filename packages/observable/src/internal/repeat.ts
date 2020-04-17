@@ -106,14 +106,11 @@ export function repeat<T>(): ObservableOperator<T, T>;
 export function repeat<T>(
   predicate?: ((count: number) => boolean) | number,
 ): ObservableOperator<T, T> {
-  const repeatPredicate =
-    isNone(predicate)
-      ? defaultRepeatPredicate
-      : typeof predicate === "number"
-      ? (count: number, error?: Exception) =>
-          isNone(error) && count < predicate
-      : (count: number, error?: Exception) =>
-          isNone(error) && predicate(count);
+  const repeatPredicate = isNone(predicate)
+    ? defaultRepeatPredicate
+    : typeof predicate === "number"
+    ? (count: number, error?: Exception) => isNone(error) && count < predicate
+    : (count: number, error?: Exception) => isNone(error) && predicate(count);
 
   return repeatObs(repeatPredicate);
 }
@@ -140,11 +137,10 @@ export function retry<T>(
 export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
 ): ObservableOperator<T, T> {
-  const retryPredicate =
-    isNone(predicate)
-      ? defaultRetryPredicate
-      : (count: number, error?: Exception) =>
-          isSome(error) && predicate(count, error.cause);
+  const retryPredicate = isNone(predicate)
+    ? defaultRetryPredicate
+    : (count: number, error?: Exception) =>
+        isSome(error) && predicate(count, error.cause);
 
   return repeatObs(retryPredicate);
 }

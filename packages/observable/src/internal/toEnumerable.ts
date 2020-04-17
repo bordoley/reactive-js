@@ -21,7 +21,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
 
     while (!this.hasCurrent) {
       const continuation = continuations.shift();
-      if (isNone(continuation)|| continuation.isDisposed) {
+      if (isNone(continuation) || continuation.isDisposed) {
         break;
       }
 

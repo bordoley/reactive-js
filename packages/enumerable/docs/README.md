@@ -21,7 +21,7 @@
 
 ### `Const` first
 
-▸ **first**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›): *T | undefined*
+▸ **first**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›): *Option‹T›*
 
 **Type parameters:**
 
@@ -33,7 +33,7 @@ Name | Type |
 ------ | ------ |
 `enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› |
 
-**Returns:** *T | undefined*
+**Returns:** *Option‹T›*
 
 ___
 
