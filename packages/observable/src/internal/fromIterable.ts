@@ -1,4 +1,7 @@
-import { fromIterable as enumerableFromIterable, fromIterator as enumerableFromIterator } from "@reactive-js/enumerable";
+import {
+  fromIterable as enumerableFromIterable,
+  fromIterator as enumerableFromIterator,
+} from "@reactive-js/enumerable";
 import { ObservableLike } from "./interfaces";
 import { fromEnumerable } from "./fromEnumerable";
 
@@ -24,8 +27,4 @@ export const fromIterator = <T>(
 export const fromIterable = <T>(
   iterable: Iterable<T>,
   delay = 0,
-): ObservableLike<T> =>
-  fromEnumerable(
-    enumerableFromIterable(iterable),
-    delay,
-  );
+): ObservableLike<T> => fromEnumerable(enumerableFromIterable(iterable), delay);

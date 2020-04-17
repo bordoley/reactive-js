@@ -51,7 +51,4 @@ export const fromIterator = <T>(
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-):  EnumerableLike<void, T> =>
-  fromIterator(
-    () => iterable[Symbol.iterator](),
-  );
+): EnumerableLike<void, T> => fromIterator(() => iterable[Symbol.iterator]());
