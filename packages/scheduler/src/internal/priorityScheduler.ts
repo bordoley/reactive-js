@@ -1,3 +1,4 @@
+import { createPriorityQueue, PriorityQueueLike } from "@reactive-js/collections";
 import {
   AbstractSerialDisposable,
   DisposableLike,
@@ -7,7 +8,6 @@ import {
   SchedulerContinuationLike,
   PrioritySchedulerLike,
 } from "./interfaces";
-import { createPriorityQueue, PriorityQueueLike } from "./priorityQueue";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 
 type ScheduledTask = {
