@@ -1,3 +1,4 @@
+import { isNone, none, Option } from "@reactive-js/option";
 import { parseWith } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { pToken, httpList } from "./httpGrammar";
@@ -11,7 +12,7 @@ const parseTokenList = pipe(pToken, httpList, parseWith);
 export const parseHttpContentFromHeaders = <T>(
   headers: HttpHeaders,
   body: T,
-): HttpContent<T> | undefined => {
+): Option<HttpContent<T>> => {
   const contentEncodingString =
     getHeaderValue(headers, HttpStandardHeader.ContentEncoding) || "";
   const contentEncodings = parseTokenList(
@@ -26,8 +27,8 @@ export const parseHttpContentFromHeaders = <T>(
     getHeaderValue(headers, HttpStandardHeader.ContentType) || "",
   );
 
-  return contentType === undefined
-    ? undefined
+  return isNone(contentType)
+    ? none
     : {
         body,
         contentEncodings,

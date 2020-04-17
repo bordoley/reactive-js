@@ -6,6 +6,7 @@ import {
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { lift } from "./lift";
 import { Exception } from "@reactive-js/disposable";
+import { isSome, none } from "@reactive-js/option";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -15,11 +16,11 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
 
     this.add(error => {
-      if (error !== undefined) {
+      if (isSome(error)) {
         try {
           const { cause } = error;
-          const result = onError(cause) || undefined;
-          if (result !== undefined) {
+          const result = onError(cause) || none;
+          if (isSome(result)) {
             result.subscribe(delegate);
           } else {
             delegate.dispose();

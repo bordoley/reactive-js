@@ -1,4 +1,5 @@
 import { createSerialDisposable, Exception } from "@reactive-js/disposable";
+import { isNone, isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
@@ -79,7 +80,7 @@ const repeatObs = <T>(
 };
 
 const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
-  error === undefined;
+  isNone(error);
 
 /**
  * Returns an `ObservableLike` that applies the predicate function each time the source
@@ -106,19 +107,19 @@ export function repeat<T>(
   predicate?: ((count: number) => boolean) | number,
 ): ObservableOperator<T, T> {
   const repeatPredicate =
-    predicate === undefined
+    isNone(predicate)
       ? defaultRepeatPredicate
       : typeof predicate === "number"
       ? (count: number, error?: Exception) =>
-          error === undefined && count < predicate
+          isNone(error) && count < predicate
       : (count: number, error?: Exception) =>
-          error === undefined && predicate(count);
+          isNone(error) && predicate(count);
 
   return repeatObs(repeatPredicate);
 }
 
 const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
-  error !== undefined;
+  isSome(error);
 
 /**
  * Returns an `ObservableLike` that mirrors the source, re-subscribing
@@ -140,10 +141,10 @@ export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
 ): ObservableOperator<T, T> {
   const retryPredicate =
-    predicate === undefined
+    isNone(predicate)
       ? defaultRetryPredicate
       : (count: number, error?: Exception) =>
-          error !== undefined && predicate(count, error.cause);
+          isSome(error) && predicate(count, error.cause);
 
   return repeatObs(retryPredicate);
 }

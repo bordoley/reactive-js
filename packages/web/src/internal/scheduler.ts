@@ -1,4 +1,5 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
+import { none, Option, isSome } from "@reactive-js/option";
 import { SchedulerLike, schedule } from "@reactive-js/scheduler";
 
 const performance = window.performance;
@@ -63,9 +64,9 @@ class WebScheduler implements SchedulerLike {
   inContinuation = false;
   readonly schedule = schedule;
   readonly shouldYield =
-    navigator !== undefined &&
-    (navigator as any).scheduling !== undefined &&
-    (navigator as any).scheduling.isInputPending !== undefined
+    isSome(navigator) &&
+    isSome((navigator as any).scheduling) &&
+    isSome((navigator as any).scheduling.isInputPending)
       ? () => {
           const currentTime = now();
           const startTime = this.startTime;
@@ -95,7 +96,7 @@ class WebScheduler implements SchedulerLike {
   }
 }
 
-let hostScheduler: SchedulerLike | undefined = undefined;
+let hostScheduler: Option<SchedulerLike> = none;
 
 export const getHostScheduler = (): SchedulerLike => {
   hostScheduler = hostScheduler || new WebScheduler();

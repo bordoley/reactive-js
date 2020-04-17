@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
@@ -14,7 +15,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       const ctx = this.ctx;
       ctx.completedCount++;
 
-      if (error !== undefined || ctx.completedCount >= ctx.count) {
+      if (isSome(error) || ctx.completedCount >= ctx.count) {
         delegate.dispose(error);
       }
     });

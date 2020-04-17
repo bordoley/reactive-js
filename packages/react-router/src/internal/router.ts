@@ -2,6 +2,7 @@ import {
   StateUpdater,
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
+import { none, Option, isNone } from "@reactive-js/option";
 import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
 import { map, scan, never } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
@@ -21,7 +22,7 @@ const empty: RelativeURI = {
 };
 
 export type RoutableComponentProps = {
-  readonly referer: RelativeURI | undefined;
+  readonly referer: Option<RelativeURI>;
   readonly uri: RelativeURI;
   readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
 };
@@ -44,10 +45,10 @@ export type RouterProps = {
 };
 
 const pairify = (
-  [_, oldState]: [RelativeURI | undefined, RelativeURI],
+  [_, oldState]: [Option<RelativeURI>, RelativeURI],
   next: RelativeURI,
-): [RelativeURI | undefined, RelativeURI] =>
-  oldState === empty ? [undefined, next] : [oldState, next];
+): [Option<RelativeURI>, RelativeURI] =>
+  oldState === empty ? [none, next] : [oldState, next];
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
   const { location, notFound, routes, scheduler } = props;
@@ -55,7 +56,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
   const locationStore = useAsyncEnumerable(location, { replay: 1 });
 
   const observable = useMemo(() => {
-    if (locationStore === undefined) {
+    if (isNone(locationStore)) {
       return never<ReactElement>();
     } else {
       const routeMap: RouteMap = {};
@@ -69,8 +70,8 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
 
       return pipe(
         locationStore,
-        scan(pairify, (): [RelativeURI | undefined, RelativeURI] => [
-          undefined,
+        scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [
+          none,
           empty,
         ]),
         map(([referer, uri]) =>

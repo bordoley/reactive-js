@@ -1,8 +1,4 @@
-import {
-  IncomingMessage,
-  request as httpRequest,
-  Agent,
-} from "http";
+import { IncomingMessage, request as httpRequest, Agent } from "http";
 import { request as httpsRequest, RequestOptions } from "https";
 import { URL } from "url";
 import { ZlibOptions, BrotliOptions } from "zlib";
@@ -48,6 +44,7 @@ import {
   scan,
   ObservableOperator,
 } from "@reactive-js/observable";
+import { isSome, none, Option } from "@reactive-js/option";
 import { pipe, compose } from "@reactive-js/pipe";
 import {
   supportedEncodings,
@@ -117,7 +114,7 @@ const send = (
   const { contentEncoding, ...nodeOptions } = requestOptions;
   const { content } = request;
   const newContent =
-    content !== undefined && contentEncoding !== undefined
+    isSome(content) && isSome(contentEncoding)
       ? {
           ...content,
           contentEncodings: [...content.contentEncodings, contentEncoding],
@@ -261,7 +258,7 @@ export type HttpClientOptions = BrotliOptions &
     readonly maxHeaderSize?: number;
     readonly shouldEncode?: (
       req: HttpContentRequest<unknown>,
-    ) => boolean | undefined;
+    ) => Option<boolean>;
   };
 
 export type HttpClientRequestOptions = {
@@ -275,17 +272,17 @@ const requestIsCompressible = (
   request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ): boolean => {
   const { content } = request;
-  return content !== undefined ? contentIsCompressible(content) : false;
+  return isSome(content) ? contentIsCompressible(content) : false;
 };
 
-export interface HttpClientLike extends DisposableLike{
+export interface HttpClientLike extends DisposableLike {
   send(
     request: HttpContentRequest<
       AsyncEnumerableLike<ReadableMode, ReadableEvent>
     >,
     requestOptions?: HttpClientRequestOptions,
   ): ObservableLike<HttpClientRequestStatus>;
-} 
+}
 
 class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
   constructor(private readonly clientOptions: HttpClientOptions) {
@@ -293,7 +290,9 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
   }
 
   send(
-    request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    request: HttpContentRequest<
+      AsyncEnumerableLike<ReadableMode, ReadableEvent>
+    >,
     options: HttpClientRequestOptions = {},
   ): ObservableLike<HttpClientRequestStatus> {
     const {
@@ -308,16 +307,16 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
     const contentEncoding = getFirstSupportedEncoding(acceptedEncodings);
 
     const shouldEncodeOptionResult =
-      shouldEncodeOption !== undefined
+      isSome(shouldEncodeOption)
         ? shouldEncodeOption(request)
-        : undefined;
+        : none;
     const shouldEncode =
-      shouldEncodeOptionResult !== undefined
+      isSome(shouldEncodeOptionResult)
         ? shouldEncodeOptionResult
         : requestIsCompressible(request);
 
     const contentEncoder =
-      contentEncoding !== undefined && shouldEncode
+      isSome(contentEncoding) && shouldEncode
         ? transform(
             createEncodingCompressTransform(contentEncoding, zlibOptions),
           )
@@ -332,7 +331,7 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
       contentEncoding,
       insecureHTTPParser,
       maxHeaderSize,
-    }
+    };
 
     return createObservable(
       createOnSubscribe(
@@ -342,7 +341,7 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
         decodeHttpContentResponseWithOption,
       ),
     );
-  };
+  }
 }
 
 export const creatHttpClient = (
@@ -371,7 +370,7 @@ export const createDefaultHttpResponseHandler = (
       const acceptedEncodings = preferences?.acceptedEncodings || [];
       const shouldRedirect =
         redirectCodes.includes(statusCode) &&
-        location !== undefined &&
+        isSome(location) &&
         maxRedirects > 0;
 
       const [newRequest, newAcceptedEncodings] = shouldRedirect
@@ -388,7 +387,7 @@ export const createDefaultHttpResponseHandler = (
         ? [request, acceptedEncodings]
         : [request];
 
-      if (request !== newRequest || newAcceptedEncodings !== undefined) {
+      if (request !== newRequest || isSome(newAcceptedEncodings)) {
         response.dispose();
 
         return pipe(

@@ -1,3 +1,4 @@
+import { isNone } from "@reactive-js/option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
@@ -14,7 +15,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   ) {
     super(delegate);
     this.add(error => {
-      if (error === undefined && this.isEmpty) {
+      if (isNone(error) && this.isEmpty) {
         const cause = this.factory();
         error = { cause };
       }

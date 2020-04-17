@@ -1,3 +1,5 @@
+import { Exception } from "@reactive-js/disposable";
+import { isSome } from "@reactive-js/option";
 import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
@@ -12,13 +14,12 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { Exception } from "@reactive-js/disposable";
 
 const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
   if (subscriber.activeCount < subscriber.maxConcurrency) {
     const nextObs = subscriber.queue.shift();
 
-    if (nextObs !== undefined) {
+    if (isSome(nextObs)) {
       subscriber.activeCount++;
 
       const nextObsSubscription = pipe(
@@ -51,7 +52,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     const queue = this.queue;
 
     this.add(error => {
-      if (error !== undefined || queue.length + this.activeCount === 0) {
+      if (isSome(error)|| queue.length + this.activeCount === 0) {
         delegate.dispose(error);
       }
     });
@@ -83,7 +84,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   onDispose(error?: Exception) {
     this.activeCount--;
 
-    if (error !== undefined) {
+    if (isSome(error)) {
       this.delegate.dispose(error);
     } else {
       subscribeNext(this);

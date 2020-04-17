@@ -1,3 +1,4 @@
+import { isNone, isSome, none, Option } from "@reactive-js/option";
 import {
   Parser,
   pEquals,
@@ -76,7 +77,7 @@ const pWS = satisfy(c => c === ASCII.SPACE || c === ASCII.HTAB);
 const pOWS: Parser<void> = manyIgnore()(pWS);
 
 const pQuotedString: Parser<string> = charStream => {
-  let builder: number[] | undefined = undefined;
+  let builder: Option<number[]> = none;
 
   charStream.move();
   const initialIndex = charStream.index;
@@ -99,11 +100,12 @@ const pQuotedString: Parser<string> = charStream => {
     if (c === ASCII.DQOUTE) {
       break;
     } else if (isQDText) {
-      if (builder !== undefined) {
-        builder.push(c);
+      const refinableBuilder = builder;
+      if (isSome(refinableBuilder)) {
+        refinableBuilder.push(c);
       }
     } else if (c === ASCII.BACKSLASH && charStream.move()) {
-      if (builder === undefined) {
+      if (isNone(builder)) {
         builder = [];
       }
 
@@ -122,7 +124,7 @@ const pQuotedString: Parser<string> = charStream => {
     }
   }
 
-  return builder !== undefined
+  return isSome(builder)
     ? String.fromCharCode(...builder)
     : charStream.src.substring(initialIndex + 1, charStream.index);
 };
@@ -140,7 +142,7 @@ const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
 
 /** @ignore */
 export const toTokenOrQuotedString = (input: string): string => {
-  let buffer = undefined;
+  let buffer: Option<number []> = none;
 
   for (let i = 0; i < input.length; i++) {
     const c = input.charCodeAt(i);
@@ -160,7 +162,7 @@ export const toTokenOrQuotedString = (input: string): string => {
       (c >= 0x80 && c <= 0xff); // obs-text
 
     if (isQuotedPairChar && !isQDText) {
-      if (buffer === undefined) {
+      if (isNone(buffer)) {
         buffer = [ASCII.DQOUTE];
         for (let j = 0; j < i; j++) {
           const c = input.charCodeAt(j);
@@ -174,12 +176,12 @@ export const toTokenOrQuotedString = (input: string): string => {
       throw new Error();
     }
 
-    if (buffer !== undefined) {
+    if (isSome(buffer)) {
       buffer.push(c);
     }
   }
 
-  if (buffer !== undefined) {
+  if (isSome(buffer)) {
     buffer.push(ASCII.DQOUTE);
     return String.fromCharCode(...buffer);
   } else {

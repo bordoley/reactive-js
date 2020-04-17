@@ -1,20 +1,21 @@
 import { EnumerableLike } from "@reactive-js/enumerable";
+import { Option } from "@reactive-js/option";
 
 export interface KeyedQueueLike<K, V> {
   readonly count: number;
   readonly values: EnumerableLike<void, V>;
 
   clear(): void;
-  peek(key: K): V | undefined;
-  pop(key: K): V | undefined;
+  peek(key: K): Option<V>;
+  pop(key: K): Option<V>;
   push(key: K, value: V): void;
 }
 
 export interface PriorityQueueLike<T> {
   readonly count: number;
   clear(): void;
-  peek(): T | undefined;
-  pop(): T | undefined;
+  peek(): Option<T>;
+  pop(): Option<T>;
   push(item: T): void;
 }
 

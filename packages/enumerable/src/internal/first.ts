@@ -1,8 +1,7 @@
+import { none, Option } from "@reactive-js/option";
 import { EnumerableLike } from "./interfaces";
 
-export const first = <T>(
-  enumerable: EnumerableLike<void, T>,
-): T | undefined => {
+export const first = <T>(enumerable: EnumerableLike<void, T>): Option<T> => {
   const enumerator = enumerable.enumerate();
-  return enumerator.move() ? enumerator.current : undefined;
+  return enumerator.move() ? enumerator.current : none;
 };

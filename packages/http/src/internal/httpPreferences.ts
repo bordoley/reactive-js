@@ -1,3 +1,4 @@
+import { isSome, Option, none } from "@reactive-js/option";
 import { concat, map, parseWith } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { pToken, pParams, httpList } from "./httpGrammar";
@@ -77,13 +78,13 @@ const parseWeightedTokenHeader = (
   header: HttpStandardHeader,
 ) => {
   const rawValue = getHeaderValue(headers, header);
-  return (rawValue !== undefined && parseWeightedToken(rawValue)) || [];
+  return (isSome(rawValue) && parseWeightedToken(rawValue)) || [];
 };
 
 /** @ignore */
 export const parseHttpPreferencesFromHeaders = (
   headers: HttpHeaders,
-): HttpPreferences | undefined => {
+): Option<HttpPreferences> => {
   const acceptedCharsets = parseWeightedTokenHeader(
     headers,
     HttpStandardHeader.AcceptCharset,
@@ -101,7 +102,7 @@ export const parseHttpPreferencesFromHeaders = (
 
   const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
   const acceptedMediaRanges =
-    (rawAccept !== undefined && parseAccept(rawAccept)) || [];
+    (isSome(rawAccept) && parseAccept(rawAccept)) || [];
 
   const isUndefined =
     acceptedCharsets.length === 0 &&
@@ -110,7 +111,7 @@ export const parseHttpPreferencesFromHeaders = (
     acceptedMediaRanges.length === 0;
 
   return isUndefined
-    ? undefined
+    ? none
     : {
         acceptedCharsets,
         acceptedEncodings,

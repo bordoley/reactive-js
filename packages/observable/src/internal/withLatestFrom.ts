@@ -1,3 +1,5 @@
+import { Exception } from "@reactive-js/disposable";
+import { Option, isSome } from "@reactive-js/option";
 import {
   ObservableLike,
   ObservableOperator,
@@ -12,12 +14,11 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { Exception } from "@reactive-js/disposable";
 
 class WithLatestFromSubscriber<TA, TB, TC>
   extends AbstractDelegatingSubscriber<TA, TC>
   implements ObserverLike<TB> {
-  private otherLatest: TB | undefined;
+  private otherLatest: Option<TB>;
   private hasLatest = false;
 
   constructor(
@@ -41,7 +42,7 @@ class WithLatestFromSubscriber<TA, TB, TC>
   }
 
   onDispose(error?: Exception) {
-    if (error !== undefined) {
+    if (isSome(error)) {
       this.dispose(error);
     }
   }

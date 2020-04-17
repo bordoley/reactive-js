@@ -316,7 +316,7 @@ describe("createSubject", () => {
       subject.subscribe(subscriber);
 
       pipe(
-        ofValue(undefined),
+        ofValue(none),
         onNotify(_ => {
           subject.notify(4);
           subject.dispose();
@@ -858,8 +858,8 @@ test("onDispose", () => {
   pipe(empty(), onDispose(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.onDispose).toHaveBeenCalledWith(undefined);
-  expect(cb).toHaveBeenCalledWith(undefined);
+  expect(observer.onDispose).toHaveBeenCalledWith(none);
+  expect(cb).toHaveBeenCalledWith(none);
 });
 
 describe("onError", () => {
@@ -1002,7 +1002,7 @@ test("share", () => {
   let liftedSubscription = disposed;
 
   pipe(
-    ofValue(undefined, 1),
+    ofValue(none, 1),
     onNotify(_ => {
       liftedSubscription = pipe(
         replayed,
@@ -1017,7 +1017,7 @@ test("share", () => {
   let anotherLiftedSubscription = disposed;
 
   pipe(
-    ofValue(undefined, 3),
+    ofValue(none, 3),
     onNotify(_ => {
       replayedSubscription.dispose();
       liftedSubscription.dispose();

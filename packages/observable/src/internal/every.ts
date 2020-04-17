@@ -1,3 +1,4 @@
+import { isNone } from "@reactive-js/option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
@@ -13,7 +14,7 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   ) {
     super(delegate);
     this.add(error => {
-      if (error === undefined) {
+      if (isNone(error)) {
         ofValue(true).subscribe(delegate);
       } else {
         delegate.dispose(error);

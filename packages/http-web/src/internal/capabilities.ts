@@ -1,3 +1,5 @@
+import { isSome } from "@reactive-js/option";
+
 const global = self;
 
 /** @ignore */
@@ -17,4 +19,4 @@ export const supportsBlob =
   })();
 
 /** @ignore */
-export const fetchIsPolyfill = (fetch as any).polyfill !== undefined;
+export const fetchIsPolyfill = isSome((fetch as any).polyfill);

@@ -1,9 +1,10 @@
-import { EnumerableLike, EnumeratorLike } from "./interfaces";
 import { AbstractDisposable } from "@reactive-js/disposable";
+import { isSome, none } from "@reactive-js/option";
+import { EnumerableLike, EnumeratorLike } from "./interfaces";
 
 class IteratorEnumerator<T> extends AbstractDisposable
   implements EnumeratorLike<void, T> {
-  current: any = undefined;
+  current: any = none;
   hasCurrent = false;
 
   constructor(private readonly iterator: Iterator<T>) {
@@ -12,7 +13,7 @@ class IteratorEnumerator<T> extends AbstractDisposable
 
   move(_: void): boolean {
     this.hasCurrent = false;
-    this.current = undefined;
+    this.current = none;
 
     const next = this.iterator.next();
 
@@ -34,10 +35,10 @@ class IteratorEnumerable<T> implements EnumerableLike<void, T> {
     const iterator = this.f();
     const enumerator = new IteratorEnumerator(iterator);
     enumerator.add(error => {
-      if (error !== undefined && iterator.throw !== undefined) {
+      if (isSome(error) && isSome(iterator.throw)) {
         const { cause } = error;
         iterator.throw(cause);
-      } else if (iterator.return !== undefined) {
+      } else if (isSome(iterator.return)) {
         iterator.return();
       }
     });

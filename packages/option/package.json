@@ -1,0 +1,68 @@
+{
+  "name": "@reactive-js/option",
+  "version": "0.0.33",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm5/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "asynchronous",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "observable",
+    "observables",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "dependencies": {
+    "@reactive-js/pipe": "^0.0.33"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm5": "tsc -p tsconfig.esm5.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "test": "jest",
+    "test-coverage": "jest --coverage"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.cjs.json"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

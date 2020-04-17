@@ -1,10 +1,11 @@
+import { Exception } from "@reactive-js/disposable";
+import { isSome } from "@reactive-js/option";
 import { ObservableOperator, ObserverLike, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { Exception } from "@reactive-js/disposable";
 
 class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -64,7 +65,7 @@ class OnErrorObserver<T> implements ObserverLike<T> {
   constructor(private readonly onError: (err: unknown) => void) {}
 
   onDispose(error?: Exception) {
-    if (error !== undefined) {
+    if (isSome(error)) {
       const { cause } = error;
       this.onError(cause);
     }

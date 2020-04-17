@@ -6,6 +6,7 @@ import {
   HttpStandardHeader,
 } from "@reactive-js/http";
 import { ReadableMode, ReadableEvent } from "@reactive-js/node";
+import { isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
   contentIsCompressible,
@@ -20,14 +21,14 @@ const responseIsCompressible = (
   >,
 ): boolean => {
   const { content } = response;
-  return content !== undefined ? contentIsCompressible(content) : false;
+  return isSome(content) ? contentIsCompressible(content) : false;
 };
 
 export type EncodeHttpResponseOptions = {
   readonly shouldEncode?: <T, TResp>(
     req: HttpContentRequest<T>,
     resp: HttpContentResponse<TResp>,
-  ) => boolean | undefined;
+  ) => Option<boolean>;
 };
 
 export const encodeHttpResponse = <TReq>(
@@ -43,18 +44,18 @@ export const encodeHttpResponse = <TReq>(
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
 
   const shouldEncodeOptionResult =
-    shouldEncodeOption !== undefined
+    isSome(shouldEncodeOption)
       ? shouldEncodeOption(request, response)
-      : undefined;
+      : none;
 
   const shouldEncode =
-    shouldEncodeOptionResult !== undefined
+    isSome(shouldEncodeOptionResult)
       ? shouldEncodeOptionResult
       : responseIsCompressible(response);
 
   const { preferences } = request;
   const acceptedEncodings =
-    preferences !== undefined && shouldEncode
+    isSome(preferences) && shouldEncode
       ? preferences.acceptedEncodings
       : [];
 
@@ -62,12 +63,12 @@ export const encodeHttpResponse = <TReq>(
 
   const encoding = getFirstSupportedEncoding(acceptedEncodings || []);
 
-  const encodeBody = encoding !== undefined && content !== undefined;
+  const encodeBody = isSome(encoding) && isSome(content);
 
   return {
     ...response,
     content:
-      encoding !== undefined && content !== undefined
+      isSome(encoding) && isSome(content)
         ? encodeHttpContent(content, encoding, zlibOptions)
         : content,
     vary: encodeBody ? [...vary, HttpStandardHeader.AcceptEncoding] : vary,
@@ -85,6 +86,6 @@ export const decodeHttpContentResponse = (
   return {
     ...response,
     content:
-      content !== undefined ? decodeHttpContent(content, options) : undefined,
+      isSome(content) ? decodeHttpContent(content, options) : none,
   };
 };

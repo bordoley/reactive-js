@@ -44,6 +44,7 @@
     "@reactive-js/scheduler": "^0.0.33"
   },
   "devDependencies": {
+    "@reactive-js/option": "^0.0.33",
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0"

@@ -1,3 +1,5 @@
+import { none } from "@reactive-js/option";
+import { pipe } from "@reactive-js/pipe";
 import {
   throwParseError,
   parseWith,
@@ -17,7 +19,6 @@ import {
   char,
   pEof,
 } from "../src";
-import { pipe } from "@reactive-js/pipe";
 
 test("many", () => {
   const parser = pipe(string("abc"), many());
@@ -58,10 +59,10 @@ test("optional", () => {
   );
 
   const result1 = pipe("abcd", parseWith(parser));
-  expect(result1).toEqual(["ab", "cd", undefined]);
+  expect(result1).toEqual(["ab", "cd", none]);
 
   const result2 = pipe("ab", parseWith(parser));
-  expect(result2).toEqual(["ab", "ef", undefined]);
+  expect(result2).toEqual(["ab", "ef", none]);
 });
 
 test("or", () => {

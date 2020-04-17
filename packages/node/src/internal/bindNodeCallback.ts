@@ -1,4 +1,5 @@
 import { createObservable, ObservableLike } from "@reactive-js/observable";
+import { none } from "@reactive-js/option";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(
   callbackFunc: (
@@ -264,7 +265,7 @@ export function bindNodeCallback<T>(
             );
             subscriber.dispatch(result);
           } else {
-            subscriber.dispatch(undefined);
+            subscriber.dispatch(none);
           }
           subscriber.dispose();
         }

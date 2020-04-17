@@ -1,3 +1,5 @@
+import { isSome, none } from "@reactive-js/option";
+
 /**
  * A wrapper around a caught exception to handle corner cases such
  * as a function which throws undefined or string.
@@ -52,7 +54,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
-  private _error?: Exception = undefined;
+  private _error?: Exception = none;
 
   get error() {
     return this._error;
@@ -105,7 +107,7 @@ export const createDisposable = (
   onDispose?: (error?: Exception) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
-  if (onDispose !== undefined) {
+  if (isSome(onDispose)) {
     disposable.add(onDispose);
   }
   return disposable;

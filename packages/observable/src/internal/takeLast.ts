@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
@@ -20,7 +21,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     });
 
     this.add(error => {
-      if (error !== undefined) {
+      if (isSome(error)) {
         delegate.dispose(error);
       } else {
         fromArray(last).subscribe(delegate);

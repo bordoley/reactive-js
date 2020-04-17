@@ -1,4 +1,8 @@
-import { createPriorityQueue, PriorityQueueLike } from "@reactive-js/collections";
+import {
+  createPriorityQueue,
+  PriorityQueueLike,
+} from "@reactive-js/collections";
+import { none, Option, isSome } from "@reactive-js/option";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
@@ -26,7 +30,7 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
   if (!scheduler.isDisposed) {
     const task = taskQueue.pop();
 
-    if (task !== undefined) {
+    if (isSome(task)) {
       const { dueTime, continuation } = task;
 
       scheduler.current = continuation;
@@ -42,18 +46,18 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 };
 
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
-  current: SchedulerContinuationLike = undefined as any;
+  current: SchedulerContinuationLike = none as any;
   hasCurrent = false;
   inContinuation = false;
   microTaskTicks = 0;
   now = 0;
   private hostShouldYield?: () => boolean;
-  private shouldYield: (() => boolean) | undefined = () => {
+  private shouldYield: Option<() => boolean> = () => {
     const runShouldYield = this.hostShouldYield;
     this.microTaskTicks++;
     return (
       this.microTaskTicks >= this.maxMicroTaskTicks ||
-      (runShouldYield !== undefined && runShouldYield())
+      (isSome(runShouldYield) && runShouldYield())
     );
   };
   private taskIDCount = 0;
@@ -66,7 +70,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   }
 
   produce(hostShouldYield?: () => boolean): number {
-    const hostShouldYieldIsDefined = hostShouldYield !== undefined;
+    const hostShouldYieldIsDefined = isSome(hostShouldYield);
 
     this.hostShouldYield = hostShouldYield;
 
@@ -74,7 +78,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
       this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
       !hostShouldYieldIsDefined
     ) {
-      this.shouldYield = undefined;
+      this.shouldYield = none;
     }
 
     while (move(this)) {
@@ -92,13 +96,13 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
       // Perf hack
       if (hostShouldYieldIsDefined) {
         if ((hostShouldYield as any)()) {
-          this.hostShouldYield = undefined;
+          this.hostShouldYield = none;
           return 0;
         }
       }
     }
 
-    this.hostShouldYield = undefined;
+    this.hostShouldYield = none;
 
     return -1;
   }

@@ -4,11 +4,7 @@ import {
   DisposableLike,
   disposed,
 } from "@reactive-js/disposable";
-import {
-  first,
-  forEach,
-  fromIterable,
-} from "@reactive-js/enumerable";
+import { first, forEach, fromIterable } from "@reactive-js/enumerable";
 import {
   ObservableLike,
   SafeSubscriberLike,
@@ -17,6 +13,7 @@ import {
   ofValue,
   onNotify,
 } from "@reactive-js/observable";
+import { isSome, isNone, none } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
@@ -39,19 +36,19 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
 
   // Find the first not disposed subscriber but don't remove it from the queue.
   let peekedSubscriber = resourceRequests.peek(hashedKey);
-  while (peekedSubscriber !== undefined && peekedSubscriber.isDisposed) {
+  while (isSome(peekedSubscriber) && peekedSubscriber.isDisposed) {
     resourceRequests.pop(hashedKey);
     peekedSubscriber = resourceRequests.peek(hashedKey);
   }
 
-  if (peekedSubscriber === undefined) {
+  if (isNone(peekedSubscriber)) {
     // No work to do for the key
     return;
   }
 
   // Find the first not disposed resource but don't remove it from the queue.
   let peekedResource = availableResources.peek(hashedKey);
-  while (peekedResource !== undefined && peekedResource.isDisposed) {
+  while (isSome(peekedResource) && peekedResource.isDisposed) {
     availableResources.pop(hashedKey);
     peekedResource = availableResources.peek(hashedKey);
   }
@@ -59,7 +56,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   const inUseCount = inUseResources.get(hashedKey).size;
 
   if (
-    peekedResource === undefined &&
+    isNone(peekedResource) &&
     inUseCount < maxResourcesPerKey &&
     resourceManager.count >= maxTotalResources &&
     availableResources.count === 0
@@ -76,7 +73,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   }
 
   if (
-    peekedResource === undefined &&
+    isNone(peekedResource) &&
     inUseCount < maxResourcesPerKey &&
     resourceManager.count >= maxTotalResources
   ) {
@@ -91,11 +88,11 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   }
 
   const resource =
-    peekedResource === undefined && inUseCount < maxResourcesPerKey
+    isNone(peekedResource) && inUseCount < maxResourcesPerKey
       ? resourceManager.createResource(key)
       : availableResources.pop(hashedKey);
 
-  if (resource === undefined) {
+  if (isNone(resource)) {
     // Failed to allocate a resource because
     // we've hit the max resources per key.
     return;
@@ -121,10 +118,10 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
 
     // Setup the timeout subscription
     const timeoutSubscription = pipe(
-      ofValue(undefined, maxIdleTime),
+      ofValue(none, maxIdleTime),
       onNotify(_ => {
         const resource = availableResources.pop(hashedKey);
-        if (resource !== undefined) {
+        if (isSome(resource)) {
           resource.dispose();
         }
 
@@ -136,7 +133,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
           first,
         );
 
-        if (resourceKey !== undefined) {
+        if (isSome(resourceKey)) {
           const [hashedKey, key] = resourceKey;
           globalResourceWaitQueue.delete(hashedKey);
 

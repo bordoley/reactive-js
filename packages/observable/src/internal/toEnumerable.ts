@@ -1,5 +1,6 @@
 import { AbstractDisposable, DisposableLike } from "@reactive-js/disposable";
 import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
+import { none, isNone, isSome } from "@reactive-js/option";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
@@ -16,11 +17,11 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
   move(): boolean {
     const continuations = this.continuations;
     this.hasCurrent = false;
-    this.current = undefined;
+    this.current = none;
 
     while (!this.hasCurrent) {
       const continuation = continuations.shift();
-      if (continuation === undefined || continuation.isDisposed) {
+      if (isNone(continuation)|| continuation.isDisposed) {
         break;
       }
 
@@ -36,7 +37,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
       }
 
       const error = this.error;
-      if (error !== undefined) {
+      if (isSome(error)) {
         const { cause } = error;
         throw cause;
       }

@@ -3,6 +3,7 @@ import {
   SerialDisposableLike,
   Exception,
 } from "@reactive-js/disposable";
+import { isSome } from "@reactive-js/option";
 import {
   ObservableLike,
   ObservableOperator,
@@ -52,7 +53,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   onDispose(error?: Exception) {
-    if (error !== undefined) {
+    if (isSome(error)) {
       this.dispose(error);
     }
   }

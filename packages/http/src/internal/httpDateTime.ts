@@ -1,10 +1,11 @@
+import { none, Option } from "@reactive-js/option";
 import { HttpDateTime } from "./interfaces";
 
 /** @ignore */
-export const parseHttpDateTime = (v: string): HttpDateTime | undefined => {
+export const parseHttpDateTime = (v: string): Option<HttpDateTime> => {
   const asDate = new Date(v);
   const result = asDate.getTime();
-  return v !== "" && !Number.isNaN(result) ? result : undefined;
+  return v !== "" && !Number.isNaN(result) ? result : none;
 };
 
 /** @ignore */

@@ -1,8 +1,12 @@
-import { createPriorityQueue, PriorityQueueLike } from "@reactive-js/collections";
+import {
+  createPriorityQueue,
+  PriorityQueueLike,
+} from "@reactive-js/collections";
 import {
   AbstractSerialDisposable,
   DisposableLike,
 } from "@reactive-js/disposable";
+import { none, Option, isSome, isNone } from "@reactive-js/option";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
@@ -28,8 +32,8 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     const next = peek(scheduler);
 
     const nextTaskIsHigherPriority =
-      current !== undefined &&
-      next !== undefined &&
+      isSome(current) &&
+      isSome(next) &&
       current !== next &&
       next.dueTime <= scheduler.now &&
       next.priority < current.priority;
@@ -49,7 +53,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
 
     for (
       let task = peek(scheduler), isDisposed = this.isDisposed;
-      task !== undefined && !isDisposed;
+      isSome(task) && !isDisposed;
       task = peek(scheduler)
     ) {
       const { continuation, dueTime } = task;
@@ -108,7 +112,7 @@ const move = (scheduler: PrioritySchedulerImpl): boolean => {
   peek(scheduler);
 
   const task = scheduler.queue.pop();
-  const hasCurrent = task !== undefined;
+  const hasCurrent = isSome(task);
 
   scheduler.current = task;
   scheduler.hasCurrent = hasCurrent;
@@ -116,14 +120,14 @@ const move = (scheduler: PrioritySchedulerImpl): boolean => {
   return hasCurrent;
 };
 
-const peek = (scheduler: PrioritySchedulerImpl): ScheduledTask | undefined => {
+const peek = (scheduler: PrioritySchedulerImpl): Option<ScheduledTask> => {
   const { delayed, queue } = scheduler;
   const now = scheduler.now;
 
   while (true) {
     const task = delayed.peek();
 
-    if (task === undefined) {
+    if (isNone(task)) {
       break;
     }
 
@@ -139,11 +143,11 @@ const peek = (scheduler: PrioritySchedulerImpl): ScheduledTask | undefined => {
     }
   }
 
-  let task: ScheduledTask | undefined = undefined;
+  let task: Option<ScheduledTask> = none;
   while (true) {
     task = queue.peek();
 
-    if (task === undefined) {
+    if (isNone(task)) {
       break;
     }
 
@@ -170,7 +174,7 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable
     delayedComparator,
   );
 
-  current: any = undefined;
+  current: any = none;
   hasCurrent = false;
   taskIDCounter = 0;
   dueTime = 0;

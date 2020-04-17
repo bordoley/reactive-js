@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -24,7 +25,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     const length = values.length;
 
     let index = this.index;
-    if (delay > 0 || shouldYield !== undefined) {
+    if (delay > 0 || isSome(shouldYield)) {
       let isDisposed = this.isDisposed;
       shouldYield = shouldYield || alwaysTrue;
 

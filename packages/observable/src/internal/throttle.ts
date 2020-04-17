@@ -3,6 +3,7 @@ import {
   SerialDisposableLike,
   Exception,
 } from "@reactive-js/disposable";
+import { none, Option, isNone, isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
@@ -53,7 +54,7 @@ const setupDurationSubscription = <T>(
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   implements ObserverLike<unknown> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-  private value: T | undefined = undefined;
+  private value: Option<T> = none;
   private hasValue = false;
 
   constructor(
@@ -64,7 +65,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     super(delegate);
 
     this.add(this.durationSubscription).add(error => {
-      if (error === undefined && mode !== ThrottleMode.First && this.hasValue) {
+      if (isNone(error) && mode !== ThrottleMode.First && this.hasValue) {
         ofValue(this.value).subscribe(delegate);
       } else {
         delegate.dispose(error);
@@ -94,7 +95,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   }
 
   onDispose(error?: Exception) {
-    if (error !== undefined) {
+    if (isSome(error)) {
       this.dispose(error);
     }
     // FIXME: Should really schedule a call to onNotify here.
@@ -103,7 +104,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   onNotify(_?: unknown) {
     if (this.hasValue) {
       const value = this.value as T;
-      this.value = undefined;
+      this.value = none;
       this.hasValue = false;
 
       setupDurationSubscription(this, value);
@@ -147,7 +148,7 @@ export function throttle<T>(
 ): ObservableOperator<T, T> {
   const durationSelector =
     typeof duration === "number"
-      ? (_: T) => ofValue(undefined, duration)
+      ? (_: T) => ofValue(none, duration)
       : duration;
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);

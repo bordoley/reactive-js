@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
@@ -12,7 +13,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       const observables = this.observables;
       const next = this.next;
 
-      if (error !== undefined) {
+      if (isSome(error)) {
         delegate.dispose(error);
       } else if (next < observables.length) {
         const concatSubscriber = new ConcatSubscriber(
