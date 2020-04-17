@@ -65,7 +65,7 @@ const addHandler = <TReq, TResp>(
   } else {
     const childName = child.name.startsWith(":") ? ":" : child.name;
     const childRouter =
-      router.children[childName] || (emptyRouter as Router<TReq, TResp>);
+      router.children[childName] ?? (emptyRouter as Router<TReq, TResp>);
     const newChildRouter = addHandler(childRouter, child, handler);
 
     return {

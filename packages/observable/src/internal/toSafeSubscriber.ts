@@ -15,7 +15,7 @@ class SafeSubscriberSchedulerContinuation<
     const nextQueue = subscriber.nextQueue;
     const delegate = subscriber.delegate;
 
-    shouldYield = shouldYield || alwaysFalse;
+    shouldYield = shouldYield ?? alwaysFalse;
 
     try {
       while (nextQueue.length > 0 && !delegate.isDisposed) {

@@ -24,13 +24,13 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
   peek(key: K): Option<V> {
     const map = this.map;
-    const values = map.get(key) || [];
+    const values = map.get(key) ?? [];
     return values[0];
   }
 
   pop(key: K): Option<V> {
     const map = this.map;
-    const values = map.get(key) || [];
+    const values = map.get(key) ?? [];
     const valuesOldSize = values.length;
     const result = values.shift();
     const valuesNewSize = values.length;
@@ -45,7 +45,7 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
   push(key: K, value: V) {
     const map = this.map;
-    const values = map.get(key) || [];
+    const values = map.get(key) ?? [];
     const valuesOldSize = values.length;
     values.push(value);
     const valuesNewSize = values.length;

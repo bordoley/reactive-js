@@ -99,6 +99,6 @@ class WebScheduler implements SchedulerLike {
 let hostScheduler: Option<SchedulerLike> = none;
 
 export const getHostScheduler = (): SchedulerLike => {
-  hostScheduler = hostScheduler || new WebScheduler();
+  hostScheduler = hostScheduler ?? new WebScheduler();
   return hostScheduler;
 };

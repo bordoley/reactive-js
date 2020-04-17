@@ -54,7 +54,7 @@ test("mapTo", () => {
 test("optional", () => {
   const parser = concat(
     string("ab"),
-    pipe(optional(string("cd")), orDefault("ef")),
+    pipe(optional(string("cd")), orDefault(() => "ef")),
     pEof,
   );
 

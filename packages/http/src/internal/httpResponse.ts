@@ -57,9 +57,9 @@ export const createHttpResponse = <T>(
   } = {},
 ): HttpResponse<T> => ({
   ...options,
-  headers: options.headers || {},
+  headers: options.headers ?? {},
   statusCode,
-  vary: options.vary || [],
+  vary: options.vary ?? [],
 });
 
 export const parseHttpResponseFromHeaders = <T>(
@@ -70,15 +70,15 @@ export const parseHttpResponseFromHeaders = <T>(
   const content = parseHttpContentFromHeaders(headers, body);
 
   const etag = parseETag(
-    getHeaderValue(headers, HttpStandardHeader.ETag) || "",
+    getHeaderValue(headers, HttpStandardHeader.ETag) ?? "",
   );
 
   const expires = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.Expires) || "",
+    getHeaderValue(headers, HttpStandardHeader.Expires) ?? "",
   );
 
   const lastModified = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.LastModified) || "",
+    getHeaderValue(headers, HttpStandardHeader.LastModified) ?? "",
   );
 
   const locationHeader = headers.location;
