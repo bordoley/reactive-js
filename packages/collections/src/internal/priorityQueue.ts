@@ -93,7 +93,6 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   }
 }
 
-/** @ignore */
 export const createPriorityQueue = <T>(
   comparator: (a: T, b: T) => number,
 ): PriorityQueueLike<T> => new PriorityQueueImpl(comparator);
