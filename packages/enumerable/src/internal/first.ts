@@ -1,8 +1,8 @@
-import { EnumerableLike } from "./interfaces"
+import { EnumerableLike } from "./interfaces";
 
-export const first = <T>(enumerable: EnumerableLike<void, T>): T | undefined => {
+export const first = <T>(
+  enumerable: EnumerableLike<void, T>,
+): T | undefined => {
   const enumerator = enumerable.enumerate();
-  return enumerator.move()
-    ? enumerator.current
-    : undefined;
-}
+  return enumerator.move() ? enumerator.current : undefined;
+};
