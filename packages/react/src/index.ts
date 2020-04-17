@@ -126,8 +126,8 @@ export const useAsyncEnumerable = <TReq, T>(
     replay?: number;
   } = {},
 ): Option<AsyncEnumeratorLike<TReq, T>> => {
-  const scheduler = config.scheduler || normalPriority;
-  const replay = config.replay || 0;
+  const scheduler = config.scheduler ?? normalPriority;
+  const replay = config.replay ?? 0;
 
   const factory = useCallback(
     () => enumerable.enumerateAsync(scheduler, replay),

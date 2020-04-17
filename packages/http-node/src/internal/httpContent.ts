@@ -98,7 +98,7 @@ export const createStringHttpContent = (
     typeof contentType === "string"
       ? parseMediaTypeOrThrow(contentType)
       : contentType;
-  const charset = contentType.params["charset"] || "utf-8";
+  const charset = contentType.params["charset"] ?? "utf-8";
   const buffer = iconv.encode(content, charset);
 
   // FIXME: update the contentType if none is specfied in the content params provided.
@@ -111,6 +111,7 @@ export const contentIsCompressible = (
   content: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
 ): boolean => {
   const contentType = content?.contentType;
+  // FIXME: A little sketchy
   return (
     isSome(contentType) &&
     (compressible(mediaTypeToString(contentType)) || false)

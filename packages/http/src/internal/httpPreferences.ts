@@ -20,8 +20,8 @@ const weightedParamComparator = (
     readonly [key: string]: string;
   },
 ) => {
-  const qA = (Number.parseFloat(a["q"]) || 1) * 1000;
-  const qB = (Number.parseFloat(b["q"]) || 1) * 1000;
+  const qA = (Number.parseFloat(a["q"]) ?? 1) * 1000;
+  const qB = (Number.parseFloat(b["q"]) ?? 1) * 1000;
 
   return qA - qB;
 };
@@ -78,7 +78,7 @@ const parseWeightedTokenHeader = (
   header: HttpStandardHeader,
 ) => {
   const rawValue = getHeaderValue(headers, header);
-  return (isSome(rawValue) && parseWeightedToken(rawValue)) || [];
+  return isSome(rawValue) ? parseWeightedToken(rawValue) ?? [] : [];
 };
 
 /** @ignore */
@@ -102,7 +102,7 @@ export const parseHttpPreferencesFromHeaders = (
 
   const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
   const acceptedMediaRanges =
-    (isSome(rawAccept) && parseAccept(rawAccept)) || [];
+    isSome(rawAccept) ? parseAccept(rawAccept) ?? [] : [];
 
   const isUndefined =
     acceptedCharsets.length === 0 &&

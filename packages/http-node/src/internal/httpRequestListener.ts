@@ -50,7 +50,7 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 }: HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
-      content?.body || emptyReadableAsyncEnumerable
+      content?.body ?? emptyReadableAsyncEnumerable
     ).enumerateAsync(subscriber);
     const responseWritableEnumerator = createWritableAsyncEnumerator(
       resp,
@@ -112,7 +112,7 @@ export const createHttpRequestListener = (
       httpVersionMinor,
     } = req;
     const body = createReadableAsyncEnumerable(() => req);
-    const isTransportSecure = (req.socket as any).encrypted || false;
+    const isTransportSecure = (req.socket as any).encrypted ?? false;
 
     return pipe(
       parseHttpRequestFromHeaders({

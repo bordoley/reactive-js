@@ -14,17 +14,17 @@ export const parseHttpContentFromHeaders = <T>(
   body: T,
 ): Option<HttpContent<T>> => {
   const contentEncodingString =
-    getHeaderValue(headers, HttpStandardHeader.ContentEncoding) || "";
+    getHeaderValue(headers, HttpStandardHeader.ContentEncoding) ?? "";
   const contentEncodings = parseTokenList(
     contentEncodingString,
   ) as readonly HttpContentEncoding[];
 
   const contentLengthHeader =
-    getHeaderValue(headers, HttpStandardHeader.ContentLength) || "-1";
+    getHeaderValue(headers, HttpStandardHeader.ContentLength) ?? "-1";
   const contentLength = ~~contentLengthHeader;
 
   const contentType = parseMediaType(
-    getHeaderValue(headers, HttpStandardHeader.ContentType) || "",
+    getHeaderValue(headers, HttpStandardHeader.ContentType) ?? "",
   );
 
   return isNone(contentType)

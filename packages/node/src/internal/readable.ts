@@ -221,7 +221,7 @@ export const readableAsyncEnumerableToString = (
       buffer +=
         next.type === ReadableEventType.Data
           ? decoder.write(next.chunk)
-          : (enumerator.dispose(), decoder.end() || "");
+          : (enumerator.dispose(), decoder.end() ?? "");
 
       return { count: newCount, buffer };
     };

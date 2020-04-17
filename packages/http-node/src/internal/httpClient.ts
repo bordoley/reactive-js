@@ -175,7 +175,7 @@ const createOnSubscribe = (
 
     const response = pipe(
       parseHttpResponseFromHeaders(
-        msg.statusCode || -1,
+        msg.statusCode ?? -1,
         msg.headers as HttpHeaders,
         createReadableAsyncEnumerable(() => msg),
       ),
@@ -215,7 +215,7 @@ const createOnSubscribe = (
   ).enumerateAsync(subscriber);
 
   const contentEnumerator = pipe(
-    request.content?.body || emptyReadableAsyncEnumerable,
+    request.content?.body ?? emptyReadableAsyncEnumerable,
     lift(onNotify(ev => spyEnumerator.dispatch(ev))),
     encodeContent,
   ).enumerateAsync(subscriber);
@@ -365,7 +365,7 @@ export const createDefaultHttpResponseHandler = (
       const { request, response } = status;
 
       const { location, preferences, statusCode } = response.value;
-      const acceptedEncodings = preferences?.acceptedEncodings || [];
+      const acceptedEncodings = preferences?.acceptedEncodings ?? [];
       const shouldRedirect =
         redirectCodes.includes(statusCode) &&
         isSome(location) &&

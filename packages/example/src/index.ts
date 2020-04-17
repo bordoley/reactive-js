@@ -176,7 +176,7 @@ const listener = createHttpRequestListener(
           process.env.NODE_ENV === "production"
             ? none
             : e instanceof Error && isSome(e.stack)
-            ? createStringHttpContent(e.stack || "", "text/plain")
+            ? createStringHttpContent(e.stack ?? "", "text/plain")
             : createStringHttpContent(String(e), "text/plain");
 
         return ofValue(

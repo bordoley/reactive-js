@@ -283,5 +283,5 @@ export const parseHeaders = (rawHeaders: string): HttpHeaders => {
   // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
   // https://tools.ietf.org/html/rfc7230#section-3.2
   const preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, " ");
-  return parsePreProcessedHeaders(preProcessedHeaders) || {};
+  return parsePreProcessedHeaders(preProcessedHeaders) ?? {};
 };

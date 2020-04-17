@@ -1,6 +1,6 @@
 import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
 import { isSome } from "@reactive-js/option";
-import { alwaysTrue } from "./functions";
+import { alwaysFalse } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -23,7 +23,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
 
     if (delay > 0 || isSome(shouldYield)) {
       let isDisposed = this.isDisposed;
-      shouldYield = shouldYield || alwaysTrue;
+      shouldYield = shouldYield ?? alwaysFalse;
 
       while (enumerator.move() && !isDisposed) {
         this.notify(enumerator.current);

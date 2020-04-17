@@ -858,8 +858,8 @@ test("onDispose", () => {
   pipe(empty(), onDispose(cb), observe(observer), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.onDispose).toHaveBeenCalledWith(none);
-  expect(cb).toHaveBeenCalledWith(none);
+  expect(observer.onDispose).toHaveBeenCalledWith(undefined);
+  expect(cb).toHaveBeenCalledWith(undefined);
 });
 
 describe("onError", () => {

@@ -60,10 +60,10 @@ export const createHttpRequest = <T>(
   } = {},
 ): HttpRequest<T> => ({
   ...options,
-  expectContinue: options.expectContinue || false,
-  headers: options.headers || {},
-  httpVersionMajor: options.httpVersionMajor || 1,
-  httpVersionMinor: options.httpVersionMinor || 1,
+  expectContinue: options.expectContinue ?? false,
+  headers: options.headers ?? {},
+  httpVersionMajor: options.httpVersionMajor ?? 1,
+  httpVersionMinor: options.httpVersionMinor ?? 1,
   method,
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
@@ -117,7 +117,7 @@ const parseURIFromHeaders = (
     ? http1Host
     : "";
   const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
-  return new URL(`${uriProtocol}://${host}${path || ""}`);
+  return new URL(`${uriProtocol}://${host}${path ?? ""}`);
 };
 
 export const parseHttpRequestFromHeaders = <T>({

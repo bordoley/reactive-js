@@ -90,13 +90,13 @@ const parseOptionalETagPreference = (
   header: HttpStandardHeader,
 ) => {
   const value = getHeaderValue(headers, header);
-  return (isSome(value) && parseETagPreference(value)) || none;
+  return isSome(value) ? parseETagPreference(value) : none;
 };
 
 const parseOptionalDatePreference = (
   headers: HttpHeaders,
   header: HttpStandardHeader,
-) => pipe(getHeaderValue(headers, header) || "", parseHttpDateTime);
+) => pipe(getHeaderValue(headers, header) ?? "", parseHttpDateTime);
 
 /** @ignore */
 export const parseHttpRequestPreconditionsFromHeaders = (
@@ -121,6 +121,7 @@ export const parseHttpRequestPreconditionsFromHeaders = (
 
   const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
   const ifRange = isSome(ifRangeHeader)
+    // FIXME: This is sketchy
     ? parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
     : none;
 

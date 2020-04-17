@@ -33,7 +33,7 @@ class ReactiveCacheSchedulerContinuation<
   produce(shouldYield?: () => boolean): number {
     const { cache, maxCount, garbage } = this.cache;
 
-    shouldYield = shouldYield || alwaysFalse;
+    shouldYield = shouldYield ?? alwaysFalse;
 
     for (const [, enumerator] of garbage) {
       enumerator.dispose();
@@ -179,5 +179,5 @@ export const getOrSet = <T>(
   defaultValue: ObservableLike<T>,
 ): ObservableLike<T> => {
   const observable = cache.get(key);
-  return observable || cache.set(key, defaultValue);
+  return observable ?? cache.set(key, defaultValue);
 };

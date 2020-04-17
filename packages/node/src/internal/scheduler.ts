@@ -72,6 +72,6 @@ class NodeScheduler implements SchedulerLike {
 let hostScheduler: Option<SchedulerLike> = none;
 
 export const getHostScheduler = (): SchedulerLike => {
-  hostScheduler = hostScheduler || new NodeScheduler();
+  hostScheduler = hostScheduler ?? new NodeScheduler();
   return hostScheduler;
 };

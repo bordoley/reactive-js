@@ -18,7 +18,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
 
   add(key: K, value: V) {
     const map = this.map;
-    const values = map.get(key) || new Set<V>();
+    const values = map.get(key) ?? new Set<V>();
     const valuesOldSize = values.size;
     values.add(value);
     const valuesNewSize = values.size;
@@ -34,12 +34,12 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   }
 
   get(key: K): ReadonlySet<V> {
-    return this.map.get(key) || new Set<V>();
+    return this.map.get(key) ?? new Set<V>();
   }
 
   remove(key: K, value: V) {
     const map = this.map;
-    const values = map.get(key) || new Set<V>();
+    const values = map.get(key) ?? new Set<V>();
     const valuesOldSize = values.size;
     values.delete(value);
     const valuesNewSize = values.size;
@@ -53,7 +53,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
 
   removeAll(key: K) {
     const map = this.map;
-    const values = map.get(key) || new Set<V>();
+    const values = map.get(key) ?? new Set<V>();
     const valuesSize = values.size;
     this.count -= valuesSize;
     map.delete(key);

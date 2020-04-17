@@ -57,7 +57,7 @@ export const encodeHttpResponse = <TReq>(
 
   const { content, vary } = response;
 
-  const encoding = getFirstSupportedEncoding(acceptedEncodings || []);
+  const encoding = getFirstSupportedEncoding(acceptedEncodings ?? []);
 
   const encodeBody = isSome(encoding) && isSome(content);
 

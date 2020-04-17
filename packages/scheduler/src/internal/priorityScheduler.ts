@@ -46,7 +46,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
   }
 
   produce(hostShouldYield?: () => boolean): number {
-    this.hostShouldYield = hostShouldYield || alwaysFalse;
+    this.hostShouldYield = hostShouldYield ?? alwaysFalse;
 
     const { scheduler } = this;
     const { delayed, queue } = scheduler;
@@ -159,7 +159,7 @@ const peek = (scheduler: PrioritySchedulerImpl): Option<ScheduledTask> => {
     queue.pop();
   }
 
-  return task || delayed.peek();
+  return task ?? delayed.peek();
 };
 
 class PrioritySchedulerImpl extends AbstractSerialDisposable

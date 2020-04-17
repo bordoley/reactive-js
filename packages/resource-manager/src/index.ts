@@ -100,7 +100,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
 
   // Remove the timeout from the allocated resource
   const timeoutSubscription =
-    availableResourcesTimeouts.get(resource) || disposed;
+    availableResourcesTimeouts.get(resource) ?? disposed;
   availableResourcesTimeouts.delete(resource);
   timeoutSubscription.dispose();
 

@@ -36,7 +36,7 @@ export const sendHttpRequestUsingXHR = (
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 2) {
-        const headersRaw = xhr.getAllResponseHeaders() || "";
+        const headersRaw = xhr.getAllResponseHeaders() ?? "";
         const headers = parseHeaders(headersRaw);
 
         // FIXME: Maybe update the request with the actual url?

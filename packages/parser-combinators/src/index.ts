@@ -283,7 +283,7 @@ export const orDefault = <T>(
 ): Operator<Parser<Option<T>>, Parser<T>> =>
   compose(
     optional,
-    map(result => result || default_()),
+    map(result => result ?? default_()),
   );
 
 export const sepBy1 = <T>(

@@ -1,5 +1,5 @@
 import { isSome } from "@reactive-js/option";
-import { alwaysTrue } from "./functions";
+import { alwaysFalse } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -27,7 +27,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     let index = this.index;
     if (delay > 0 || isSome(shouldYield)) {
       let isDisposed = this.isDisposed;
-      shouldYield = shouldYield || alwaysTrue;
+      shouldYield = shouldYield ?? alwaysFalse;
 
       while (index < length && !isDisposed) {
         this.notify(values[index]);

@@ -99,7 +99,7 @@ export function buffer<T>(
     maxBufferSize?: number;
   } = {},
 ): ObservableOperator<T, readonly T[]> {
-  const duration = options.duration || Number.MAX_SAFE_INTEGER;
+  const duration = options.duration ?? Number.MAX_SAFE_INTEGER;
   const durationSelector =
     duration === Number.MAX_SAFE_INTEGER
       ? never
@@ -107,7 +107,7 @@ export function buffer<T>(
       ? (_: T) => ofValue(none, duration)
       : duration;
 
-  const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;
+  const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (subscriber: SubscriberLike<readonly T[]>) =>
     new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
 
