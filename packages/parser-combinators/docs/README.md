@@ -651,7 +651,7 @@ ___
 
 ### `Const` optional
 
-▸ **optional**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *[Parser](README.md#parser)‹T | undefined›*
+▸ **optional**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *[Parser](README.md#parser)‹Option‹T››*
 
 **Type parameters:**
 
@@ -663,7 +663,7 @@ Name | Type |
 ------ | ------ |
 `parse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *[Parser](README.md#parser)‹T | undefined›*
+**Returns:** *[Parser](README.md#parser)‹Option‹T››*
 
 ___
 
@@ -689,7 +689,7 @@ ___
 
 ### `Const` orDefault
 
-▸ **orDefault**<**T**>(`default_`: function): *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
+▸ **orDefault**<**T**>(`default_`: function): *Operator‹[Parser](README.md#parser)‹Option‹T››, [Parser](README.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -701,13 +701,13 @@ ___
 
 ▸ (): *T*
 
-**Returns:** *Operator‹[Parser](README.md#parser)‹T | undefined›, [Parser](README.md#parser)‹T››*
+**Returns:** *Operator‹[Parser](README.md#parser)‹Option‹T››, [Parser](README.md#parser)‹T››*
 
 ___
 
 ### `Const` pEof
 
-▸ **pEof**(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *undefined*
+▸ **pEof**(`charStream`: [CharStreamLike](interfaces/charstreamlike.md)): *void*
 
 **Parameters:**
 
@@ -715,13 +715,13 @@ Name | Type |
 ------ | ------ |
 `charStream` | [CharStreamLike](interfaces/charstreamlike.md) |
 
-**Returns:** *undefined*
+**Returns:** *void*
 
 ___
 
 ### `Const` parseWith
 
-▸ **parseWith**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *Operator‹string, T | undefined›*
+▸ **parseWith**<**T**>(`parse`: [Parser](README.md#parser)‹T›): *Operator‹string, Option‹T››*
 
 **Type parameters:**
 
@@ -733,7 +733,7 @@ Name | Type |
 ------ | ------ |
 `parse` | [Parser](README.md#parser)‹T› |
 
-**Returns:** *Operator‹string, T | undefined›*
+**Returns:** *Operator‹string, Option‹T››*
 
 ___
 

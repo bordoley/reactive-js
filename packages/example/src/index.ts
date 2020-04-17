@@ -50,7 +50,7 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
-import { isSome, none } from '@reactive-js/option';
+import { isSome, none } from "@reactive-js/option";
 
 const backgroundScheduler = pipe(
   getHostScheduler(),

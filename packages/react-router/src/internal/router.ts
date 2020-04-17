@@ -70,10 +70,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
 
       return pipe(
         locationStore,
-        scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [
-          none,
-          empty,
-        ]),
+        scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [none, empty]),
         map(([referer, uri]) =>
           createElement(routeMap[uri.path] || notFound, {
             referer,

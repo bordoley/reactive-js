@@ -142,7 +142,7 @@ const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
 
 /** @ignore */
 export const toTokenOrQuotedString = (input: string): string => {
-  let buffer: Option<number []> = none;
+  let buffer: Option<number[]> = none;
 
   for (let i = 0; i < input.length; i++) {
     const c = input.charCodeAt(i);

@@ -120,10 +120,9 @@ export const parseHttpRequestPreconditionsFromHeaders = (
   );
 
   const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
-  const ifRange =
-    isSome(ifRangeHeader)
-      ? parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
-      : none;
+  const ifRange = isSome(ifRangeHeader)
+    ? parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
+    : none;
 
   const isUndefined =
     isNone(ifMatch) &&

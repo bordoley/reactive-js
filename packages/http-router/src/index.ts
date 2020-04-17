@@ -97,22 +97,20 @@ const findHandler = <TReq, TResp>(
   }
 
   const nameRouter = router.children[child.name];
-  const nameRouterResult =
-    isSome(nameRouter)
-      ? findHandler(nameRouter, child, params)
-      : none;
+  const nameRouterResult = isSome(nameRouter)
+    ? findHandler(nameRouter, child, params)
+    : none;
   if (isSome(nameRouterResult)) {
     return nameRouterResult;
   }
 
   const paramRouter = router.children[":"];
-  const paramRouterResult =
-    isSome(paramRouter)
-      ? findHandler(paramRouter, child, {
-          ...params,
-          [paramRouter.name]: child.name,
-        })
-      : none;
+  const paramRouterResult = isSome(paramRouter)
+    ? findHandler(paramRouter, child, {
+        ...params,
+        [paramRouter.name]: child.name,
+      })
+    : none;
   if (isSome(paramRouterResult)) {
     return paramRouterResult;
   }

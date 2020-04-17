@@ -23,7 +23,7 @@
 
 ###  get
 
-▸ **get**(`key`: string): *ObservableLike‹T› | undefined*
+▸ **get**(`key`: string): *Option‹ObservableLike‹T››*
 
 **Parameters:**
 
@@ -31,7 +31,7 @@ Name | Type |
 ------ | ------ |
 `key` | string |
 
-**Returns:** *ObservableLike‹T› | undefined*
+**Returns:** *Option‹ObservableLike‹T››*
 
 ___
 
