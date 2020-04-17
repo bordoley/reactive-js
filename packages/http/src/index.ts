@@ -1,3 +1,5 @@
+export { parseETag, parseETagOrThrow } from "./internal/entityTag";
+
 export {
   HttpContentEncoding,
   HttpContent,

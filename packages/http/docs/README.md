@@ -34,6 +34,8 @@
 
 ### Variables
 
+* [parseETag](README.md#const-parseetag)
+* [parseETagOrThrow](README.md#const-parseetagorthrow)
 * [parseMediaType](README.md#const-parsemediatype)
 * [parseMediaTypeOrThrow](README.md#const-parsemediatypeorthrow)
 
@@ -152,6 +154,38 @@ ___
 #### Type declaration:
 
 ## Variables
+
+### `Const` parseETag
+
+• **parseETag**: *function* =  parseWith(pETag)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
+
+___
+
+### `Const` parseETagOrThrow
+
+• **parseETagOrThrow**: *function* =  parseWithOrThrow(pETag)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
+
+___
 
 ### `Const` parseMediaType
 

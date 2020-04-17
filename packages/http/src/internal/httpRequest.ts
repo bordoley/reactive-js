@@ -28,6 +28,7 @@ import {
   HttpServerRequest,
   HttpStatusCode,
   HttpContentRequest,
+  HttpRequestPreconditions,
 } from "./interfaces";
 
 declare class URL implements URILike {
@@ -52,6 +53,7 @@ export const createHttpRequest = <T>(
     content?: T;
     expectContinue?: boolean;
     headers?: HttpHeaders;
+    preconditions?: HttpRequestPreconditions;
     preferences?: HttpPreferences;
     httpVersionMajor?: number;
     httpVersionMinor?: number;

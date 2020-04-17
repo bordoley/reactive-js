@@ -170,15 +170,16 @@ export type HttpResponse<T> = {
   // authenticate:Set<Challenge>
   // cacheControl: Set<CacheDirective>
   // date:Option<DateTime>
-  etag?: EntityTag;
+  readonly content?: T;
+  readonly etag?: EntityTag;
   readonly expires?: HttpDateTime;
+  readonly headers: HttpHeaders;
   readonly lastModified?: HttpDateTime;
   // proxyAuthenticate:Set<Challenge>
   // retryAfter:Option<DateTime>
   // server:Option<Server>
   // warning:Warning list
-  readonly content?: T;
-  readonly headers: HttpHeaders;
+
   readonly location?: URILike;
   readonly preferences?: HttpPreferences;
   readonly statusCode: HttpStatusCode;

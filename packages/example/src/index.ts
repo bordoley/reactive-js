@@ -10,6 +10,7 @@ import {
   HttpContentRequest,
   HttpContentResponse,
   HttpStatusCode,
+  parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -219,8 +220,8 @@ pipe(
       acceptedEncodings: [],
       acceptedLanguages: [],
       acceptedMediaRanges: [
-        { type: "application", subtype: "json" },
-        { type: "text", subtype: "html" },
+        parseMediaTypeOrThrow("application/json"),
+        parseMediaTypeOrThrow("text/html"),
       ],
     },
   }),

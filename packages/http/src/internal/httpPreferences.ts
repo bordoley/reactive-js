@@ -29,7 +29,7 @@ const weightedParamComparator = (
 const mediaRangeCompare = (a: MediaType, b: MediaType): number =>
   weightedParamComparator(a.params, b.params);
 
-const mediaRangeToMediaType = ({ type, subtype }: MediaType): MediaRange => ({
+const mediaTypeToMediaRange = ({ type, subtype }: MediaType): MediaRange => ({
   type,
   subtype,
 });
@@ -40,7 +40,7 @@ const parseAccept = pipe(
   map(mediaTypes => {
     // Mutate to avoid allocations. Kinda evil.
     (mediaTypes as MediaType[]).sort(mediaRangeCompare);
-    return mediaTypes.map(mediaRangeToMediaType);
+    return mediaTypes.map(mediaTypeToMediaRange);
   }),
   parseWith,
 );
