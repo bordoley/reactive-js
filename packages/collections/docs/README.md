@@ -12,6 +12,7 @@
 ### Functions
 
 * [createKeyedQueue](README.md#const-createkeyedqueue)
+* [createPriorityQueue](README.md#const-createpriorityqueue)
 * [createSetMultimap](README.md#const-createsetmultimap)
 
 ## Functions
@@ -27,6 +28,31 @@
 ▪ **V**
 
 **Returns:** *[KeyedQueueLike](interfaces/keyedqueuelike.md)‹K, V›*
+
+___
+
+### `Const` createPriorityQueue
+
+▸ **createPriorityQueue**<**T**>(`comparator`: function): *[PriorityQueueLike](interfaces/priorityqueuelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **comparator**: *function*
+
+▸ (`a`: T, `b`: T): *number*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *[PriorityQueueLike](interfaces/priorityqueuelike.md)‹T›*
 
 ___
 
