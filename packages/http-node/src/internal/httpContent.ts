@@ -17,6 +17,7 @@ import {
   transform,
   createReadableAsyncEnumerable,
 } from "@reactive-js/node";
+import { isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   createEncodingCompressTransform,
@@ -111,7 +112,7 @@ export const contentIsCompressible = (
 ): boolean => {
   const contentType = content?.contentType;
   return (
-    contentType !== undefined &&
+    isSome(contentType) &&
     (compressible(mediaTypeToString(contentType)) || false)
   );
 };

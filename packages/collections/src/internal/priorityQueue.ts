@@ -1,3 +1,4 @@
+import { isSome, none, Option } from "@reactive-js/option";
 import { PriorityQueueLike } from "./interfaces";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
@@ -13,8 +14,8 @@ const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
     const left = values[leftIndex];
     const right = values[rightIndex];
 
-    if (left !== undefined && compare(left, item) < 0) {
-      if (right !== undefined && compare(right, left) < 0) {
+    if (isSome(left) && compare(left, item) < 0) {
+      if (isSome(right) && compare(right, left) < 0) {
         values[index] = right;
         values[rightIndex] = item;
         index = rightIndex;
@@ -23,7 +24,7 @@ const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
         values[leftIndex] = item;
         index = leftIndex;
       }
-    } else if (right !== undefined && compare(right, item) < 0) {
+    } else if (isSome(right) && compare(right, item) < 0) {
       values[index] = right;
       values[rightIndex] = item;
       index = rightIndex;
@@ -40,7 +41,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
     let index = values.length - 1,
       parentIndex = computeParentIndex(index),
       parent = values[parentIndex];
-    parent !== undefined && compare(parent, item) > 0;
+    isSome(parent) && compare(parent, item) > 0;
     index = parentIndex,
       parentIndex = computeParentIndex(index),
       parent = values[parentIndex]
@@ -67,11 +68,11 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
     return this.values[0];
   }
 
-  pop(): T | undefined {
+  pop(): Option<T> {
     const { values } = this;
     const length = values.length;
     if (length === 0) {
-      return undefined;
+      return none;
     } else if (length === 1) {
       return values.shift();
     } else {

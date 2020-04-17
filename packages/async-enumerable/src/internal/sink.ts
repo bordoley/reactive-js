@@ -5,6 +5,7 @@ import {
   endWith,
   SubscriberLike,
 } from "@reactive-js/observable";
+import { none } from "@reactive-js/option";
 import { Operator, pipe } from "@reactive-js/pipe";
 
 export const sink = <TReq, T>(
@@ -21,5 +22,5 @@ export const sink = <TReq, T>(
     destEnumerator.add(subscriber);
   };
 
-  return pipe(onSubscribe, createObservable, endWith(undefined as void));
+  return pipe(onSubscribe, createObservable, endWith(none as void));
 };

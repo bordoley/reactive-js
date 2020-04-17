@@ -1,27 +1,28 @@
-import {
-  HttpRequestPreconditions,
-  HttpHeaders,
-  EntityTag,
-  HttpDateTime,
-} from "./interfaces";
-import { entityTagToString, pETag, parseETag } from "./entityTag";
-import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
-import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
-import { httpList } from "./httpGrammar";
-import { pipe } from "@reactive-js/pipe";
+import { isNone, isSome, none, Option } from "@reactive-js/option";
 import {
   parseWith,
   pAsterisk,
   or,
   mapTo,
 } from "@reactive-js/parser-combinators";
+import { pipe } from "@reactive-js/pipe";
+import { entityTagToString, pETag, parseETag } from "./entityTag";
+import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
+import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
+import { httpList } from "./httpGrammar";
+import {
+  HttpRequestPreconditions,
+  HttpHeaders,
+  EntityTag,
+  HttpDateTime,
+} from "./interfaces";
 
 const writeEtagPreferenceHeader = (
   header: HttpStandardHeader,
-  value: readonly EntityTag[] | "*" | undefined,
+  value: Option<readonly EntityTag[] | "*">,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  if (value !== undefined) {
+  if (isSome(value)) {
     writeHeader(
       header,
       Array.isArray(value) ? value.map(entityTagToString).join(",") : "*",
@@ -31,10 +32,10 @@ const writeEtagPreferenceHeader = (
 
 const writeDateHeader = (
   header: HttpStandardHeader,
-  value: HttpDateTime | undefined,
+  value: Option<HttpDateTime>,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  if (value !== undefined) {
+  if (isSome(value)) {
     writeHeader(header, httpDateTimeToString(value));
   }
 };
@@ -67,7 +68,7 @@ export const writeHttpRequestPreconditionsHeaders = (
     writeHeader,
   );
 
-  if (ifRange !== undefined) {
+  if (isSome(ifRange)) {
     writeHeader(
       HttpStandardHeader.IfRange,
       typeof ifRange === "number"
@@ -89,7 +90,7 @@ const parseOptionalETagPreference = (
   header: HttpStandardHeader,
 ) => {
   const value = getHeaderValue(headers, header);
-  return (value !== undefined && parseETagPreference(value)) || undefined;
+  return (isSome(value) && parseETagPreference(value)) || none;
 };
 
 const parseOptionalDatePreference = (
@@ -100,7 +101,7 @@ const parseOptionalDatePreference = (
 /** @ignore */
 export const parseHttpRequestPreconditionsFromHeaders = (
   headers: HttpHeaders,
-): HttpRequestPreconditions | undefined => {
+): Option<HttpRequestPreconditions> => {
   const ifMatch = parseOptionalETagPreference(
     headers,
     HttpStandardHeader.IfMatch,
@@ -120,19 +121,19 @@ export const parseHttpRequestPreconditionsFromHeaders = (
 
   const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
   const ifRange =
-    ifRangeHeader !== undefined
+    isSome(ifRangeHeader)
       ? parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
-      : undefined;
+      : none;
 
   const isUndefined =
-    ifMatch === undefined &&
-    ifNoneMatch === undefined &&
-    ifModifiedSince === undefined &&
-    ifUnmodifiedSince === undefined &&
-    ifRangeHeader === undefined;
+    isNone(ifMatch) &&
+    isNone(ifNoneMatch) &&
+    isNone(ifModifiedSince) &&
+    isNone(ifUnmodifiedSince) &&
+    isNone(ifRangeHeader);
 
   return isUndefined
-    ? undefined
+    ? none
     : {
         ifMatch,
         ifModifiedSince,

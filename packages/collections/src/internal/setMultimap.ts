@@ -60,5 +60,5 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   }
 }
 
-export const createSetMultimap = <K, V>(): SetMultimapLike<K,V> => 
+export const createSetMultimap = <K, V>(): SetMultimapLike<K, V> =>
   new SetMultimap();

@@ -1,4 +1,6 @@
+import { DisposableLike } from "@reactive-js/disposable";
 import { EnumeratorLike } from "@reactive-js/enumerable";
+import { none, isSome } from "@reactive-js/option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractProducer } from "./producer";
 import {
@@ -6,7 +8,6 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 import { toEnumerable } from "./toEnumerable";
-import { DisposableLike } from "@reactive-js/disposable";
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -48,12 +49,12 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     super(delegate);
     delegate.add(() => {
       this.hasCurrent = false;
-      this.current = undefined;
+      this.current = none;
       this.buffer.length = 0;
     });
     this.add(error => {
       if (
-        error !== undefined ||
+        isSome(error) ||
         (this.buffer.length === 0 && !this.hasCurrent)
       ) {
         delegate.dispose(error);
@@ -70,7 +71,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
       return true;
     } else {
       this.hasCurrent = false;
-      this.current = undefined;
+      this.current = none;
       return false;
     }
   }
@@ -96,7 +97,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
 
         if (shouldCompleteResult) {
           this.hasCurrent = false;
-          this.current = undefined;
+          this.current = none;
           this.buffer.length = 0;
           this.dispose();
         }
@@ -121,7 +122,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
     const enumerators = this.enumerators;
     const selector = this.selector;
 
-    if (shouldYield !== undefined) {
+    if (isSome(shouldYield)) {
       let isDisposed = this.isDisposed;
       let shouldEmitNext = shouldEmit(enumerators);
       while (shouldEmitNext && !isDisposed) {

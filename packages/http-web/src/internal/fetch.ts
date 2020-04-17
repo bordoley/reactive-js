@@ -15,6 +15,7 @@ import {
   HttpClientRequestStatus,
   HttpClientRequestStatusType,
 } from "./interfaces";
+import { isSome } from "@reactive-js/option";
 
 /** @ignore */
 export const sendHttpRequestUsingFetch = (
@@ -86,13 +87,13 @@ export const sendHttpRequestUsingFetch = (
       });
 
       const content = contentResponse?.content;
-      if (content !== undefined) {
+      if (isSome(content)) {
         const {
           contentLength,
           contentType: { type, subtype, params },
         } = content;
 
-        const hasCharset = params["charset"] !== undefined;
+        const hasCharset = isSome(params["charset"]);
         const responseIsText =
           hasCharset ||
           type === "text" ||

@@ -1,4 +1,5 @@
 import { EnumerableLike, fromIterator } from "@reactive-js/enumerable";
+import { Option } from "@reactive-js/option";
 import { KeyedQueueLike } from "./interfaces";
 
 function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
@@ -21,13 +22,13 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
     this.map.clear();
   }
 
-  peek(key: K): V | undefined {
+  peek(key: K): Option<V> {
     const map = this.map;
     const values = map.get(key) || [];
     return values[0];
   }
 
-  pop(key: K): V | undefined {
+  pop(key: K): Option<V> {
     const map = this.map;
     const values = map.get(key) || [];
     const valuesOldSize = values.length;
@@ -58,4 +59,3 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
 export const createKeyedQueue = <K, V>(): KeyedQueueLike<K, V> =>
   new KeyedQueue();
-  

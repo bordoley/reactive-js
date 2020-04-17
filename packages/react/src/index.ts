@@ -1,9 +1,10 @@
+import { useCallback, useEffect, useState } from "react";
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
-import { pipe } from "@reactive-js/pipe";
-import { normalPriority } from "@reactive-js/react-scheduler";
+
+import { DisposableLike, Exception } from "@reactive-js/disposable";
 import {
   ObservableLike,
   observe,
@@ -12,17 +13,18 @@ import {
   subscribeOn,
   throttle,
 } from "@reactive-js/observable";
+import { none, Option, isSome } from "@reactive-js/option";
+import { pipe } from "@reactive-js/pipe";
+import { normalPriority } from "@reactive-js/react-scheduler";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { useCallback, useEffect, useState } from "react";
-import { DisposableLike, Exception } from "@reactive-js/disposable";
 
 class UseObservableObserver<T> implements ObserverLike<T> {
   constructor(
     private readonly updateState: React.Dispatch<
-      React.SetStateAction<T | undefined>
+      React.SetStateAction<Option<T>>
     >,
     private readonly updateError: React.Dispatch<
-      React.SetStateAction<Exception | undefined>
+      React.SetStateAction<Option<Exception>>
     >,
   ) {}
 
@@ -37,8 +39,8 @@ class UseObservableObserver<T> implements ObserverLike<T> {
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
-  updateState: React.Dispatch<React.SetStateAction<T | undefined>>,
-  updateError: React.Dispatch<React.SetStateAction<Exception | undefined>>,
+  updateState: React.Dispatch<React.SetStateAction<Option<T>>>,
+  updateError: React.Dispatch<React.SetStateAction<Option<Exception>>>,
   scheduler: SchedulerLike,
 ) =>
   pipe(
@@ -59,9 +61,9 @@ const subscribeObservable = <T>(
 export const useObservable = <T>(
   observable: ObservableLike<T>,
   scheduler: SchedulerLike = normalPriority,
-): T | undefined => {
-  const [state, updateState] = useState<T | undefined>(undefined);
-  const [error, updateError] = useState<Exception | undefined>(undefined);
+): Option<T> => {
+  const [state, updateState] = useState<Option<T>>(none);
+  const [error, updateError] = useState<Option<Exception>>(none);
 
   useEffect(() => {
     const subscription = subscribeObservable(
@@ -75,7 +77,7 @@ export const useObservable = <T>(
     };
   }, [observable, updateState, updateError, scheduler]);
 
-  if (error !== undefined) {
+  if (isSome(error)) {
     const { cause } = error;
     throw cause;
   }
@@ -91,16 +93,14 @@ export const useObservable = <T>(
 export const useAsyncEnumerator = <TReq, T>(
   enumerator: AsyncEnumeratorLike<TReq, T>,
   scheduler?: SchedulerLike,
-): [T | undefined, (req: TReq) => void] => {
+): [Option<T>, (req: TReq) => void] => {
   const notify = useCallback(req => enumerator.dispatch(req), [enumerator]);
   const value = useObservable(enumerator, scheduler);
   return [value, notify];
 };
 
-const useResource = <T extends DisposableLike>(
-  factory: () => T,
-): T | undefined => {
-  const [resource, updateResource] = useState<T | undefined>(undefined);
+const useResource = <T extends DisposableLike>(factory: () => T): Option<T> => {
+  const [resource, updateResource] = useState<Option<T>>(none);
 
   useEffect(() => {
     const resource = factory();
@@ -125,7 +125,7 @@ export const useAsyncEnumerable = <TReq, T>(
     scheduler?: SchedulerLike;
     replay?: number;
   } = {},
-): AsyncEnumeratorLike<TReq, T> | undefined => {
+): Option<AsyncEnumeratorLike<TReq, T>> => {
   const scheduler = config.scheduler || normalPriority;
   const replay = config.replay || 0;
 

@@ -10,13 +10,14 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
+import { createDisposable, DisposableLike } from "@reactive-js/disposable";
+import { none } from "@reactive-js/option";
+import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
-import { createDisposable, DisposableLike } from "@reactive-js/disposable";
-import { pipe } from "@reactive-js/pipe";
 
 const shouldYield = unstable_shouldYield;
 
@@ -39,7 +40,7 @@ const scheduleCallback = (
   const callbackNode = unstable_scheduleCallback(
     priority,
     scheduledCallback,
-    delay > 0 ? { delay } : undefined,
+    delay > 0 ? { delay } : none,
   );
 
   return disposable;

@@ -1,4 +1,5 @@
 import { Exception, disposed } from "@reactive-js/disposable";
+import { isSome } from "@reactive-js/option";
 import { compose, pipe } from "@reactive-js/pipe";
 import {
   ObservableLike,
@@ -23,7 +24,7 @@ class SwitchSubscriber<T>
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
     this.add(error => {
-      if (this.inner.isDisposed || error !== undefined) {
+      if (this.inner.isDisposed || isSome(error)) {
         this.delegate.dispose(error);
       }
     });
@@ -40,7 +41,7 @@ class SwitchSubscriber<T>
   }
 
   onDispose(error?: Exception) {
-    if (error !== undefined || this.isDisposed) {
+    if (isSome(error) || this.isDisposed) {
       this.delegate.dispose(error);
     }
   }

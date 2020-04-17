@@ -1,5 +1,6 @@
 import { HttpRequest, HttpResponse } from "@reactive-js/http";
 import { ObservableLike } from "@reactive-js/observable";
+import { isNone, isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 
 export type HttpRoutedRequest<T> = HttpRequest<T> & {
@@ -38,7 +39,7 @@ const createSegments = (path: string): Segment => {
 
 const serializeSegments = (segment: Segment): string => {
   let result = segment.name;
-  while (segment.child !== undefined) {
+  while (isSome(segment.child)) {
     segment = segment.child;
     result += `/${segment.name}`;
   }
@@ -55,7 +56,7 @@ const addHandler = <TReq, TResp>(
   { name, child }: Segment,
   handler: HttpRequestRouterHandler<TReq, TResp>,
 ): Router<TReq, TResp> => {
-  if (child === undefined) {
+  if (isNone(child)) {
     return {
       name,
       handler,
@@ -82,42 +83,43 @@ const findHandler = <TReq, TResp>(
   router: Router<TReq, TResp>,
   segment: Segment,
   params: { [param: string]: string },
-):
-  | [HttpRequestRouterHandler<TReq, TResp>, { [param: string]: string }]
-  | undefined => {
+): Option<[
+  HttpRequestRouterHandler<TReq, TResp>,
+  { [param: string]: string },
+]> => {
   const { child } = segment;
   const { handler } = router;
-  if (child === undefined && handler !== undefined) {
+  if (isNone(child) && isSome(handler)) {
     return [handler, params];
   }
-  if (child === undefined) {
-    return undefined;
+  if (isNone(child)) {
+    return none;
   }
 
   const nameRouter = router.children[child.name];
   const nameRouterResult =
-    nameRouter !== undefined
+    isSome(nameRouter)
       ? findHandler(nameRouter, child, params)
-      : undefined;
-  if (nameRouterResult !== undefined) {
+      : none;
+  if (isSome(nameRouterResult)) {
     return nameRouterResult;
   }
 
   const paramRouter = router.children[":"];
   const paramRouterResult =
-    paramRouter !== undefined
+    isSome(paramRouter)
       ? findHandler(paramRouter, child, {
           ...params,
           [paramRouter.name]: child.name,
         })
-      : undefined;
-  if (paramRouterResult !== undefined) {
+      : none;
+  if (isSome(paramRouterResult)) {
     return paramRouterResult;
   }
 
   const globRouter = router.children["*"];
   const globRouterHandler = globRouter?.handler;
-  if (globRouterHandler !== undefined) {
+  if (isSome(globRouterHandler)) {
     const newParams = {
       ...params,
       ["*"]: serializeSegments(child),
@@ -126,7 +128,7 @@ const findHandler = <TReq, TResp>(
     return [globRouterHandler, newParams];
   }
 
-  return undefined;
+  return none;
 };
 
 export const createRouter = <TReq, TResp>(
@@ -145,7 +147,7 @@ export const createRouter = <TReq, TResp>(
     const segments = createSegments(request.uri.pathname);
     const result = findHandler(router, segments, {});
 
-    if (result !== undefined) {
+    if (isSome(result)) {
       const [handler, params] = result;
       const requestWithParams: HttpRoutedRequest<TReq> = {
         ...request,

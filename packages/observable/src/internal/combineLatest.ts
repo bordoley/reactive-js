@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import {
@@ -29,7 +30,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
       const ctx = this.ctx;
       ctx.completedCount++;
 
-      if (error !== undefined || ctx.completedCount === ctx.totalCount) {
+      if (isSome(error) || ctx.completedCount === ctx.totalCount) {
         this.delegate.dispose(error);
       }
     });

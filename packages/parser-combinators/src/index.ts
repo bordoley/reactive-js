@@ -1,4 +1,5 @@
 import { EnumeratorLike } from "@reactive-js/enumerable";
+import { Option, none } from "@reactive-js/option";
 import { Operator, compose, pipe } from "@reactive-js/pipe";
 
 export type CharCode = number;
@@ -173,16 +174,14 @@ export const parseWithOrThrow = <T>(parser: Parser<T>): Operator<string, T> => {
   };
 };
 
-export const parseWith = <T>(
-  parse: Parser<T>,
-): Operator<string, T | undefined> => {
+export const parseWith = <T>(parse: Parser<T>): Operator<string, Option<T>> => {
   const doParse = parseWithOrThrow(parse);
   return input => {
     try {
       return doParse(input);
     } catch (e) {
       if (isParseError(e)) {
-        return undefined;
+        return none;
       }
       throw e;
     }
@@ -260,19 +259,19 @@ export const manyIgnore = <T>(
     }
   }
 
-  return count < min ? throwParseError(charStream) : undefined;
+  return count < min ? throwParseError(charStream) : none;
 };
 
 export const optional = <T>(
   parse: Parser<T>,
-): Parser<T | undefined> => charStream => {
+): Parser<Option<T>> => charStream => {
   const index = charStream.index;
   try {
     return parse(charStream);
   } catch (e) {
     if (isParseError(e)) {
       charStream.index = index;
-      return undefined;
+      return none;
     } else {
       throw e;
     }
@@ -281,7 +280,7 @@ export const optional = <T>(
 
 export const orDefault = <T>(
   default_: () => T,
-): Operator<Parser<T | undefined>, Parser<T>> =>
+): Operator<Parser<Option<T>>, Parser<T>> =>
   compose(
     optional,
     map(result => result || default_()),
@@ -361,8 +360,8 @@ export const char = (c: string): Parser<CharCode> => {
   return satisfy(x => x === charCode);
 };
 
-export const pEof = (charStream: CharStreamLike): undefined =>
-  charStream.move() ? throwParseError(charStream) : undefined;
+export const pEof = (charStream: CharStreamLike): void =>
+  charStream.move() ? throwParseError(charStream) : none;
 
 export const pSemicolon = char(";");
 

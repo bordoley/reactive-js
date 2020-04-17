@@ -1,3 +1,14 @@
+import { Exception } from "@reactive-js/disposable";
+import {
+  map as mapObs,
+  subscribe,
+  onNotify,
+  onDispose,
+  ofValue,
+  toValue,
+} from "@reactive-js/observable";
+import { none, Option } from "@reactive-js/option";
+import { pipe } from "@reactive-js/pipe";
 import { createVirtualTimeScheduler } from "@reactive-js/scheduler";
 import {
   reduce,
@@ -10,16 +21,6 @@ import {
   lift,
   liftReq,
 } from "../src/index";
-import { pipe } from "@reactive-js/pipe";
-import {
-  map as mapObs,
-  subscribe,
-  onNotify,
-  onDispose,
-  ofValue,
-  toValue,
-} from "@reactive-js/observable";
-import { Exception } from "@reactive-js/disposable";
 
 test("reduce", () => {
   const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
@@ -29,10 +30,10 @@ test("reduce", () => {
     reduce(
       (acc, next) => ({
         type: ReducerRequestType.Continue,
-        req: undefined,
+        req: none,
         acc: acc + next,
       }),
-      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -49,11 +50,11 @@ test("reduce", () => {
             }
           : {
               type: ReducerRequestType.Continue,
-              req: undefined,
+              req: none,
               acc: acc + next,
             },
 
-      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -69,10 +70,10 @@ test("reduceAsync", () => {
       (acc, next) =>
         ofValue({
           type: ReducerRequestType.Continue,
-          req: undefined,
+          req: none,
           acc: acc + next,
         }),
-      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -90,11 +91,11 @@ test("reduceAsync", () => {
               }
             : {
                 type: ReducerRequestType.Continue,
-                req: undefined,
+                req: none,
                 acc: acc + next,
               },
         ),
-      () => ({ type: ReducerRequestType.Continue, req: undefined, acc: 0 }),
+      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
     ),
     toValue(),
     expect,
@@ -126,7 +127,7 @@ test("fromIterable", () => {
   const enumerator = fromIterable([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
 
   const result: number[] = [];
-  let error: Exception | undefined = undefined;
+  let error: Option<Exception> = none;
   pipe(
     enumerator,
     onNotify(x => result.push(x)),

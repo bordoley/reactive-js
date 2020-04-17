@@ -1,3 +1,5 @@
+import { Exception } from "@reactive-js/disposable";
+import { none, Option, isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   VirtualTimeSchedulerLike,
@@ -5,13 +7,12 @@ import {
 } from "@reactive-js/scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { observe } from "./observe";
-import { Exception } from "@reactive-js/disposable";
 import { subscribe } from "./subscribe";
 
 class ToValueObserver<T> implements ObserverLike<T> {
-  private _result: T | undefined = undefined;
+  private _result: Option<T> = none;
   private hasResult = false;
-  private error: Exception | undefined = undefined;
+  private error: Option<Exception> = none;
 
   onNotify(next: T) {
     this._result = next;
@@ -24,7 +25,7 @@ class ToValueObserver<T> implements ObserverLike<T> {
 
   get result(): T {
     const error = this.error;
-    if (error !== undefined) {
+    if (isSome(error)) {
       const { cause } = error;
       throw cause;
     }

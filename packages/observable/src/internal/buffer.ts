@@ -1,4 +1,5 @@
 import { createSerialDisposable, Exception } from "@reactive-js/disposable";
+import { isNone, isSome, none } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import { ofValue } from "./ofValue";
 import { lift } from "./lift";
@@ -31,7 +32,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     this.add(this.durationSubscription).add(error => {
       const buffer = this.buffer;
       this.buffer = [];
-      if (error === undefined && buffer.length > 0) {
+      if (isNone(error) && buffer.length > 0) {
         ofValue(buffer).subscribe(delegate);
       } else {
         delegate.dispose(error);
@@ -77,7 +78,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
   }
 
   onDispose(error?: Exception) {
-    if (error !== undefined) {
+    if (isSome(error)) {
       this.dispose(error);
     }
 
@@ -103,7 +104,7 @@ export function buffer<T>(
     duration === Number.MAX_SAFE_INTEGER
       ? never
       : typeof duration === "number"
-      ? (_: T) => ofValue(undefined, duration)
+      ? (_: T) => ofValue(none, duration)
       : duration;
 
   const maxBufferSize = options.maxBufferSize || Number.MAX_SAFE_INTEGER;

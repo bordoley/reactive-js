@@ -1,3 +1,4 @@
+import { isNone } from "@reactive-js/option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
@@ -14,7 +15,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   ) {
     super(delegate);
     this.add(error => {
-      if (error === undefined) {
+      if (isNone(error)) {
         ofValue(this.acc).subscribe(delegate);
       } else {
         delegate.dispose(error);

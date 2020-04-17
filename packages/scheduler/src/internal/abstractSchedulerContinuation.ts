@@ -1,4 +1,5 @@
 import { AbstractDisposable, Exception } from "@reactive-js/disposable";
+import { none, Option, isSome } from "@reactive-js/option";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
@@ -56,7 +57,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   run(shouldYield?: () => boolean) {
     const listeners = this.listeners;
     let result = -1;
-    let error: Exception | undefined = undefined;
+    let error: Option<Exception> = none;
 
     if (!this.isDisposed) {
       this.isActive = true;
@@ -71,7 +72,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     }
 
     const isDisposed = this.isDisposed;
-    if (!isDisposed && error !== undefined) {
+    if (!isDisposed && isSome(error)) {
       this.dispose(error);
     } else if (!isDisposed && result < 0) {
       this.dispose();

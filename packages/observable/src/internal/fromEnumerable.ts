@@ -1,3 +1,5 @@
+import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
+import { isSome } from "@reactive-js/option";
 import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -5,7 +7,6 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
-import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -20,7 +21,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
     const delay = this.delay;
     const enumerator = this.enumerator;
 
-    if (delay > 0 || shouldYield !== undefined) {
+    if (delay > 0 || isSome(shouldYield)) {
       let isDisposed = this.isDisposed;
       shouldYield = shouldYield || alwaysTrue;
 

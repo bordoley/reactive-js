@@ -1,3 +1,4 @@
+import { Option } from "@reactive-js/option";
 import { HttpHeaders } from "./interfaces";
 
 export const enum HttpStandardHeader {
@@ -84,17 +85,17 @@ const bannedHeaders = [
 export function getHeaderValue(
   headers: HttpHeaders,
   key: HttpStandardHeader,
-): string | undefined;
+): Option<string>;
 
 export function getHeaderValue(
   headers: HttpHeaders,
   key: HttpExtensiondHeader,
-): string | undefined;
+): Option<string>;
 
 export function getHeaderValue(
   headers: HttpHeaders,
   key: string,
-): string | undefined {
+): Option<string> {
   return headers[key.toLowerCase()];
 }
 

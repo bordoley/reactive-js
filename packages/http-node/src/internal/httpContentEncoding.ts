@@ -10,6 +10,7 @@ import {
   BrotliOptions,
 } from "zlib";
 import { HttpContentEncoding } from "@reactive-js/http";
+import { Option } from "@reactive-js/option";
 
 /** @ignore */
 export const createEncodingCompressTransform = (
@@ -57,5 +58,5 @@ export const supportedEncodings = [
 /** @ignore */
 export const getFirstSupportedEncoding = (
   acceptedEncodings: readonly HttpContentEncoding[],
-): HttpContentEncoding | undefined =>
+): Option<HttpContentEncoding> =>
   acceptedEncodings.find(encoding => supportedEncodings.includes(encoding));

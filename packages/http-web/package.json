@@ -44,6 +44,7 @@
     "@reactive-js/disposable": "^0.0.33",
     "@reactive-js/http": "^0.0.33",
     "@reactive-js/observable": "^0.0.33",
+    "@reactive-js/option": "^0.0.33",
     "@reactive-js/pipe": "^0.0.33",
     "@reactive-js/scheduler": "^0.0.33"
   },

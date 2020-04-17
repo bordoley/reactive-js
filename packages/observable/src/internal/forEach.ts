@@ -1,3 +1,4 @@
+import { none, Option, isSome } from "@reactive-js/option";
 import { Operator, pipe } from "@reactive-js/pipe";
 import {
   VirtualTimeSchedulerLike,
@@ -9,7 +10,7 @@ import { Exception } from "@reactive-js/disposable";
 import { subscribe } from "./subscribe";
 
 class ForEachObserver<T> implements ObserverLike<T> {
-  error: Exception | undefined = undefined;
+  error: Option<Exception> = none;
 
   constructor(readonly onNotify: (next: T) => void) {}
 
@@ -44,7 +45,7 @@ export const forEach = <T>(
   scheduler.dispose();
 
   const error = observer.error;
-  if (error !== undefined) {
+  if (isSome(error)) {
     const { cause } = error;
     throw cause;
   }

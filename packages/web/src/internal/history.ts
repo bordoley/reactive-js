@@ -9,8 +9,9 @@ import {
   onNotify,
   throttle,
 } from "@reactive-js/observable";
-import { fromEvent } from "./event";
+import { none } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
+import { fromEvent } from "./event";
 
 export type Location = {
   readonly fragment: string;
@@ -39,7 +40,7 @@ const pushHistoryState = (newLocation: Location) => {
     let uriString = path;
     uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
     uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
-    window.history.pushState(undefined, "", uriString);
+    window.history.pushState(none, "", uriString);
   }
 };
 

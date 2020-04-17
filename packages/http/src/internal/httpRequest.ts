@@ -1,3 +1,4 @@
+import { isNone, isSome, none } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
   writeHttpContentHeaders,
@@ -79,7 +80,7 @@ export const createRedirectHttpRequest = <TReq, TResp>(
 
   return {
     ...request,
-    content: redirectToGet ? undefined : content,
+    content: redirectToGet ? none : content,
     method: redirectToGet ? HttpMethod.GET : method,
 
     // This function is only called if location is undefined.
@@ -98,7 +99,7 @@ const parseURIFromHeaders = (
     HttpExtensiondHeader.XForwardedProto,
   );
   const uriProtocol =
-    forwardedProtocol !== undefined
+    isSome(forwardedProtocol)
       ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
       : protocol;
   const forwardedHost = getHeaderValue(
@@ -108,11 +109,11 @@ const parseURIFromHeaders = (
   const http2Authority = headers[":authority"];
   const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
   const unfilteredHost =
-    forwardedHost !== undefined
+    isSome(forwardedHost)
       ? forwardedHost
-      : http2Authority !== undefined && httpVersionMajor >= 2
+      : isSome(http2Authority) && httpVersionMajor >= 2
       ? http2Authority
-      : http1Host !== undefined
+      : isSome(http1Host)
       ? http1Host
       : "";
   const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
@@ -172,15 +173,15 @@ export const writeHttpRequestHeaders = <T>(
     writeHeader(HttpStandardHeader.Expect, "100-continue");
   }
 
-  if (content !== undefined) {
+  if (isSome(content)) {
     writeHttpContentHeaders(content, writeHeader);
   }
 
-  if (preconditions !== undefined) {
+  if (isSome(preconditions)) {
     writeHttpRequestPreconditionsHeaders(preconditions, writeHeader);
   }
 
-  if (preferences !== undefined) {
+  if (isSome(preferences)) {
     writeHttpPreferenceHeaders(preferences, writeHeader);
   }
 
@@ -205,7 +206,7 @@ export const disallowProtocolAndHostForwarding = <T>(): Operator<
 
   const protocol = isTransportSecure ? "https" : "http";
 
-  if (xForwardedProto === undefined && xForwardedHost === undefined) {
+  if (isNone(xForwardedProto) && isNone(xForwardedHost)) {
     return request;
   } else {
     const path = oldUri.pathname;

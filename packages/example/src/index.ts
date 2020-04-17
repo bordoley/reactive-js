@@ -50,6 +50,7 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import { isSome, none } from '@reactive-js/option';
 
 const backgroundScheduler = pipe(
   getHostScheduler(),
@@ -172,8 +173,8 @@ const listener = createHttpRequestListener(
       catchError((e: unknown) => {
         const content =
           process.env.NODE_ENV === "production"
-            ? undefined
-            : e instanceof Error && e.stack !== undefined
+            ? none
+            : e instanceof Error && isSome(e.stack)
             ? createStringHttpContent(e.stack || "", "text/plain")
             : createStringHttpContent(String(e), "text/plain");
 

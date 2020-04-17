@@ -1,4 +1,5 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
+import { none, Option } from "@reactive-js/option";
 import { schedule, SchedulerLike } from "@reactive-js/scheduler";
 
 let timeout = 1;
@@ -68,7 +69,7 @@ class NodeScheduler implements SchedulerLike {
   }
 }
 
-let hostScheduler: SchedulerLike | undefined = undefined;
+let hostScheduler: Option<SchedulerLike> = none;
 
 export const getHostScheduler = (): SchedulerLike => {
   hostScheduler = hostScheduler || new NodeScheduler();

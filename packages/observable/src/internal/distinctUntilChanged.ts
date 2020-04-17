@@ -1,3 +1,4 @@
+import { Option } from "@reactive-js/option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
@@ -9,7 +10,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
   T
 > {
-  private prev: T | undefined;
+  private prev: Option<T>;
   private hasValue = false;
 
   constructor(

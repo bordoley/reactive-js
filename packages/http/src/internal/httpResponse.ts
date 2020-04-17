@@ -1,4 +1,5 @@
 import fresh from "fresh";
+import { isSome, none } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
   HttpStatusCode,
@@ -80,7 +81,7 @@ export const parseHttpResponseFromHeaders = <T>(
 
   const locationHeader = headers.location;
   const location =
-    locationHeader !== undefined ? new URL(locationHeader) : undefined;
+    isSome(locationHeader) ? new URL(locationHeader) : none;
 
   const preferences = parseHttpPreferencesFromHeaders(headers);
 
@@ -112,26 +113,26 @@ const writeCoreHttpResponseHeaders = <T>(
   }: HttpResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  if (etag !== undefined) {
+  if (isSome(etag)) {
     writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
   }
 
-  if (expires !== undefined) {
+  if (isSome(expires)) {
     writeHeader(HttpStandardHeader.Expires, httpDateTimeToString(expires));
   }
 
-  if (lastModified !== undefined) {
+  if (isSome(lastModified)) {
     writeHeader(
       HttpStandardHeader.LastModified,
       httpDateTimeToString(lastModified),
     );
   }
 
-  if (location !== undefined) {
+  if (isSome(location)) {
     writeHeader(HttpStandardHeader.Location, location.toString());
   }
 
-  if (preferences !== undefined) {
+  if (isSome(preferences)) {
     writeHttpPreferenceHeaders(preferences, writeHeader);
   }
 
@@ -150,7 +151,7 @@ export const writeHttpResponseHeaders = <T>(
 
   writeCoreHttpResponseHeaders(response, writeHeader);
 
-  if (content !== undefined) {
+  if (isSome(content)) {
     writeHttpContentHeaders(content, writeHeader);
   }
 };

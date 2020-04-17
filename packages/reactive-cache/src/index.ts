@@ -13,6 +13,7 @@ import {
   onSubscribe,
   onDispose,
 } from "@reactive-js/observable";
+import { Option, isNone, isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerLike,
@@ -53,7 +54,7 @@ class ReactiveCacheSchedulerContinuation<
 
 /** @noInheritDoc */
 export interface ReactiveCacheLike<T> extends DisposableLike {
-  get(key: string): ObservableLike<T> | undefined;
+  get(key: string): Option<ObservableLike<T>>;
   set(key: string, value: ObservableLike<T>): ObservableLike<T>;
 }
 
@@ -110,9 +111,9 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     });
   }
 
-  get(key: string): ObservableLike<T> | undefined {
+  get(key: string): Option<ObservableLike<T>> {
     const cachedValue = this.cache.get(key);
-    if (cachedValue !== undefined) {
+    if (isSome(cachedValue)) {
       const [, observable] = cachedValue;
       return observable;
     }
@@ -122,7 +123,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
   set(key: string, value: ObservableLike<T>): ObservableLike<T> {
     let cachedValue = this.cache.get(key);
 
-    if (cachedValue === undefined) {
+    if (isNone(cachedValue)) {
       const enumerator = createAsyncEnumerator<ObservableLike<T>, T>(
         switchAll(),
         this.dispatchScheduler,

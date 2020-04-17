@@ -1,10 +1,11 @@
+import { isSome } from "@reactive-js/option";
+import { alwaysTrue } from "./functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
-import { alwaysTrue } from "./functions";
 
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -23,7 +24,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
     let acc = this.acc;
     let isDisposed = this.isDisposed;
 
-    if (delay > 0 || shouldYield !== undefined) {
+    if (delay > 0 || isSome(shouldYield)) {
       shouldYield = shouldYield || alwaysTrue;
 
       while (!isDisposed) {

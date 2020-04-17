@@ -1,3 +1,4 @@
+import { isSome } from "@reactive-js/option";
 import {
   satisfy,
   string,
@@ -7,8 +8,9 @@ import {
   parseWith,
   CharStreamLike,
 } from "@reactive-js/parser-combinators";
-import { EntityTag } from "./interfaces";
+import { pipe } from "@reactive-js/pipe";
 import { ASCII } from "./httpGrammar";
+import { EntityTag } from "./interfaces";
 
 /** @ignore */
 export const entityTagToString = ({ isWeak, tag }: EntityTag): string =>
@@ -22,7 +24,7 @@ const parseTag = manySatisfy()(pETagc);
 
 /** @ignore */
 export const pETag = (charStream: CharStreamLike): EntityTag => {
-  const isWeak = parseIsWeak(charStream) !== undefined;
+  const isWeak = pipe(charStream, parseIsWeak, isSome);
   pDquote(charStream);
   const tag = parseTag(charStream);
   pDquote(charStream);

@@ -3,6 +3,7 @@ import {
   createSerialDisposable,
   Exception,
 } from "@reactive-js/disposable";
+import { none, Option, isSome } from "@reactive-js/option";
 import { pipe, Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
@@ -12,7 +13,7 @@ import { takeFirst } from "./takeFirst";
 
 class ToPromiseObserver<T> implements ObserverLike<T> {
   private hasResult = false;
-  private result: T | undefined = undefined;
+  private result: Option<T> = none;
 
   constructor(
     private readonly subscription: DisposableLike,
@@ -28,7 +29,7 @@ class ToPromiseObserver<T> implements ObserverLike<T> {
   onDispose(err?: Exception) {
     this.subscription.dispose();
 
-    if (err !== undefined) {
+    if (isSome(err)) {
       const { cause } = err;
       this.reject(cause);
     } else if (!this.hasResult) {

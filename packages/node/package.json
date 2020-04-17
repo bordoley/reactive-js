@@ -43,6 +43,7 @@
     "@reactive-js/async-enumerable": "^0.0.33",
     "@reactive-js/disposable": "^0.0.33",
     "@reactive-js/observable": "^0.0.33",
+    "@reactive-js/option": "^0.0.33",
     "@reactive-js/scheduler": "^0.0.33",
     "iconv-lite": "^0.5.1"
   },
