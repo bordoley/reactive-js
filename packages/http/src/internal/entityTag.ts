@@ -7,6 +7,7 @@ import {
   optional,
   parseWith,
   CharStreamLike,
+  parseWithOrThrow,
 } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { ASCII } from "./httpGrammar";
@@ -31,5 +32,5 @@ export const pETag = (charStream: CharStreamLike): EntityTag => {
   return { isWeak, tag };
 };
 
-/** @ignore */
 export const parseETag = parseWith(pETag);
+export const parseETagOrThrow = parseWithOrThrow(pETag);

@@ -10,6 +10,7 @@ import {
   HttpRequest,
   HttpMethod,
   HttpContentResponse,
+  EntityTag,
 } from "./interfaces";
 import {
   writeHttpContentHeaders,
@@ -46,6 +47,7 @@ export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
     content?: T;
+    etag?: EntityTag;
     expires?: number;
     headers?: HttpHeaders;
     lastModified?: number;
