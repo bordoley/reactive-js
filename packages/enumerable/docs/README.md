@@ -11,12 +11,31 @@
 
 ### Functions
 
+* [first](README.md#const-first)
 * [forEach](README.md#const-foreach)
 * [fromIterable](README.md#const-fromiterable)
 * [fromIterator](README.md#const-fromiterator)
 * [toIterable](README.md#const-toiterable)
 
 ## Functions
+
+### `Const` first
+
+▸ **first**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›): *T | undefined*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› |
+
+**Returns:** *T | undefined*
+
+___
 
 ### `Const` forEach
 

@@ -1,3 +1,4 @@
+export { first } from "./internal/first";
 export { forEach } from "./internal/forEach";
 export { fromIterable, fromIterator } from "./internal/fromIterator";
 export { EnumeratorLike, EnumerableLike } from "./internal/interfaces";
