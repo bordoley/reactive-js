@@ -6,12 +6,12 @@ import {
 import { AbstractDelegatingSubscriber } from "./subscriber";
 import { lift } from "./lift";
 import { Exception } from "@reactive-js/disposable";
-import { isSome, none } from "@reactive-js/option";
+import { isSome, Option } from "@reactive-js/option";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    onError: (error: unknown) => ObservableLike<T> | void,
+    onError: (error: unknown) => Option<ObservableLike<T>>,
   ) {
     super(delegate);
 
@@ -19,7 +19,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (isSome(error)) {
         try {
           const { cause } = error;
-          const result = onError(cause) || none;
+          const result = onError(cause);
           if (isSome(result)) {
             result.subscribe(delegate);
           } else {
@@ -48,7 +48,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * to continue with or void if the error should be propagated.
  */
 export const catchError = <T>(
-  onError: (error: unknown) => ObservableLike<T> | void,
+  onError: (error: unknown) => Option<ObservableLike<T>>,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);
