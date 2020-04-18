@@ -232,7 +232,7 @@ void is returned.
 a function that takes source error and either returns an `ObservableLike`
 to continue with or void if the error should be propagated.
 
-▸ (`error`: unknown): *[ObservableLike](interfaces/observablelike.md)‹T› | void*
+▸ (`error`: unknown): *Option‹[ObservableLike](interfaces/observablelike.md)‹T››*
 
 **Parameters:**
 
