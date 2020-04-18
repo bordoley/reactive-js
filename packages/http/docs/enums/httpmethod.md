@@ -1,4 +1,4 @@
-[@reactive-js/http](../README.md) › [HttpMethod](httpmethod.md)
+[@reactive-js/http - v0.0.33](../README.md) › [HttpMethod](httpmethod.md)
 
 # Enumeration: HttpMethod
 

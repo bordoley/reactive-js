@@ -1,4 +1,4 @@
-[@reactive-js/http](../README.md) › [URILike](urilike.md)
+[@reactive-js/http - v0.0.33](../README.md) › [URILike](urilike.md)
 
 # Interface: URILike
 

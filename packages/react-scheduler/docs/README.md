@@ -1,6 +1,5 @@
-[@reactive-js/react-scheduler](README.md)
 
-# @reactive-js/react-scheduler
+# @reactive-js/react-scheduler - v0.0.33
 
 ## Index
 

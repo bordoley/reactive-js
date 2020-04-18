@@ -1,6 +1,5 @@
-[@reactive-js/react](README.md)
 
-# @reactive-js/react
+# @reactive-js/react - v0.0.33
 
 ## Index
 

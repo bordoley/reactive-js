@@ -1,6 +1,6 @@
-[@reactive-js/pipe](README.md)
+[@reactive-js/pipe - v0.0.33](README.md)
 
-# @reactive-js/pipe
+# @reactive-js/pipe - v0.0.33
 
 ## Index
 

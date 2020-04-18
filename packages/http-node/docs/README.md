@@ -1,6 +1,6 @@
-[@reactive-js/http-node](README.md)
+[@reactive-js/http-node - v0.0.33](README.md)
 
-# @reactive-js/http-node
+# @reactive-js/http-node - v0.0.33
 
 ## Index
 
@@ -123,13 +123,13 @@ ___
 
 #### Type declaration:
 
-▸ (`req`: HttpServerRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››): *ObservableLike‹HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ (`req`: HttpServerRequest‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››): *ObservableLike‹HttpContentResponse‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer››››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | HttpServerRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
+`req` | HttpServerRequest‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer››› |
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 ### `Const` createBufferHttpContent
 
-▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ Name | Type |
 `chunk` | Buffer |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 ### `Const` createReadableHttpContent
 
-▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 **Parameters:**
 
@@ -215,13 +215,13 @@ ___
 
 ▪`Default value`  **contentLength**: *number*=  -1
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 ___
 
 ### `Const` createStringHttpContent
 
-▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 **Parameters:**
 
@@ -230,13 +230,13 @@ Name | Type |
 `content` | string |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››*
+**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
 
 ___
 
 ### `Const` decodeHttpContentResponse
 
-▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
 
 **Parameters:**
 
@@ -244,13 +244,13 @@ Name | Type |
 ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |
 
-**Returns:** *Operator‹HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
 
 ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
 
 **Parameters:**
 
@@ -258,13 +258,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *Operator‹HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
 
 **Type parameters:**
 
@@ -277,4 +277,4 @@ Name | Type | Default |
 `request` | HttpContentRequest‹TReq› | - |
 `options` | [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *Operator‹HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, HttpContentResponse‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›››*
+**Returns:** *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*

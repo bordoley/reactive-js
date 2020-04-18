@@ -1,4 +1,4 @@
-[@reactive-js/http-node](../README.md) › [HttpClientLike](httpclientlike.md)
+[@reactive-js/http-node - v0.0.33](../README.md) › [HttpClientLike](httpclientlike.md)
 
 # Interface: HttpClientLike
 
@@ -64,13 +64,13 @@ ___
 
 ###  send
 
-▸ **send**(`request`: HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent››, `requestOptions?`: [HttpClientRequestOptions](../README.md#httpclientrequestoptions)): *ObservableLike‹[HttpClientRequestStatus](../README.md#httpclientrequeststatus)›*
+▸ **send**(`request`: HttpContentRequest‹BufferStreamLike›, `requestOptions?`: [HttpClientRequestOptions](../README.md#httpclientrequestoptions)): *ObservableLike‹[HttpClientRequestStatus](../README.md#httpclientrequeststatus)›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | HttpContentRequest‹AsyncEnumerableLike‹ReadableMode, ReadableEvent›› |
+`request` | HttpContentRequest‹BufferStreamLike› |
 `requestOptions?` | [HttpClientRequestOptions](../README.md#httpclientrequestoptions) |
 
 **Returns:** *ObservableLike‹[HttpClientRequestStatus](../README.md#httpclientrequeststatus)›*

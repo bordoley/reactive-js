@@ -1,4 +1,4 @@
-[@reactive-js/async-enumerable](../README.md) › [AsyncEnumerableLike](asyncenumerablelike.md)
+[@reactive-js/async-enumerable - v0.0.33](../README.md) › [AsyncEnumerableLike](asyncenumerablelike.md)
 
 # Interface: AsyncEnumerableLike <**TReq, T**>
 
@@ -11,6 +11,10 @@
 ## Hierarchy
 
 * **AsyncEnumerableLike**
+
+  ↳ [StreamLike](streamlike.md)
+
+  ↳ [StreamSinkLike](streamsinklike.md)
 
 ## Index
 
