@@ -40,6 +40,7 @@
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
+* [generateStream](README.md#const-generatestream)
 * [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
@@ -401,6 +402,36 @@ Factory function to generate the initial accumulator.
 
 ___
 
+### `Const` generateStream
+
+▸ **generateStream**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[StreamLike](interfaces/streamlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **generator**: *function*
+
+▸ (`acc`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *T*
+
+▪`Default value`  **delay**: *number*= 0
+
+**Returns:** *[StreamLike](interfaces/streamlike.md)‹T›*
+
+___
+
 ### `Const` identity
 
 ▸ **identity**<**T**>(): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹T, T›*
@@ -467,7 +498,7 @@ ___
 
 ### `Const` ofValueStream
 
-▸ **ofValueStream**<**T**>(`data`: T): *[StreamLike](interfaces/streamlike.md)‹T›*
+▸ **ofValueStream**<**T**>(`value`: T): *[StreamLike](interfaces/streamlike.md)‹T›*
 
 **Type parameters:**
 
@@ -477,7 +508,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`data` | T |
+`value` | T |
 
 **Returns:** *[StreamLike](interfaces/streamlike.md)‹T›*
 
