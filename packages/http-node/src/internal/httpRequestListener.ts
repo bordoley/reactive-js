@@ -26,17 +26,11 @@ import {
   createObservable,
   onNotify,
   subscribe,
-  using,
   empty,
   compute,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-
-import {
-  createDisposableValue,
-  DisposableValueLike,
-} from "@reactive-js/disposable";
 
 const writeResponseMessage = (resp: ServerResponse) => (
   response: HttpContentResponse<
@@ -85,10 +79,6 @@ export type HttpRequestListenerHandler = {
   >;
 };
 
-const destroy = <T extends { destroy: () => void }>(val: T) => {
-  val.destroy();
-};
-
 export type HttpRequestListener = (
   req: IncomingMessage | Http2ServerRequest,
   resp: ServerResponse | Http2ServerResponse,
@@ -102,12 +92,9 @@ export const createHttpRequestListener = (
   const { onError = defaultOnError } = options;
 
   const handleRequest = (
-    disposableRequest: DisposableValueLike<IncomingMessage>,
-    disposableResponse: DisposableValueLike<ServerResponse>,
+    req: IncomingMessage,
+    resp: ServerResponse,
   ) => {
-    const req = disposableRequest.value;
-    const resp = disposableResponse.value;
-
     const {
       method,
       url: path = "/",
@@ -137,18 +124,24 @@ export const createHttpRequestListener = (
     );
   };
 
-  return (req, resp) =>
-    pipe(
-      using(
-        (): [
-          DisposableValueLike<IncomingMessage>,
-          DisposableValueLike<ServerResponse>,
-        ] => [
-          createDisposableValue(req as IncomingMessage, destroy),
-          createDisposableValue(resp as ServerResponse, destroy),
-        ],
-        handleRequest,
-      ),
+  return (req, resp) => {
+    const subscription = pipe(
+      handleRequest(req as IncomingMessage, resp as ServerResponse),
       subscribe(scheduler),
-    );
+    ).add(() => {
+      req.removeAllListeners();
+      resp.removeAllListeners();
+      req.destroy();
+    });
+
+    const dispose = () => subscription.dispose();
+
+    req.on("aborted",dispose);
+    req.on("close", dispose);
+    req.on("error", dispose);
+    
+    resp.on("close",dispose);
+    resp.on("error", dispose);
+    resp.on("finish", dispose);
+  }
 };
