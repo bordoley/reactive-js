@@ -3,6 +3,12 @@ export {
   AsyncEnumeratorLike,
   AsyncEnumerableOperator,
   StateUpdater,
+  StreamEvent,
+  StreamEventType,
+  StreamLike,
+  StreamMode,
+  StreamOperator,
+  StreamSinkLike,
 } from "./internal/interfaces";
 
 export {
@@ -26,6 +32,7 @@ export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
 export { sink } from "./internal/sink";
+export { emptyStream } from "./internal/stream";
 
 export {
   createActionReducer,

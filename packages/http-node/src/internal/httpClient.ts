@@ -5,8 +5,10 @@ import { ZlibOptions, BrotliOptions } from "zlib";
 import {
   identity as identityEnumerable,
   lift,
-  AsyncEnumerableLike,
-  AsyncEnumerableOperator,
+  StreamEvent,
+  StreamEventType,
+  StreamOperator,
+  emptyStream,
 } from "@reactive-js/async-enumerable";
 import {
   DisposableValueLike,
@@ -26,13 +28,10 @@ import {
   httpRequestToUntypedHeaders,
 } from "@reactive-js/http";
 import {
-  createWritableAsyncEnumerator,
-  ReadableEvent,
+  createBufferStreamSinkAsyncEnumeratorFromWritable,
   transform,
-  ReadableEventType,
-  ReadableMode,
-  emptyReadableAsyncEnumerable,
-  createReadableAsyncEnumerable,
+  createBufferStreamFromReadable,
+  BufferStreamLike,
 } from "@reactive-js/node";
 import {
   createObservable,
@@ -63,33 +62,25 @@ export const enum HttpClientRequestStatusType {
 
 export type HttpClientRequestStatusBegin = {
   readonly type: HttpClientRequestStatusType.Begin;
-  readonly request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >;
+  readonly request: HttpContentRequest<BufferStreamLike>;
 };
 
 export type HttpClientRequestStatusUploading = {
   readonly type: HttpClientRequestStatusType.Uploaded;
-  readonly request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >;
+  readonly request: HttpContentRequest<BufferStreamLike>;
   readonly total: number;
 };
 
 export type HttpClientRequestStatusUploadComplete = {
   readonly type: HttpClientRequestStatusType.UploadComplete;
-  readonly request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >;
+  readonly request: HttpContentRequest<BufferStreamLike>;
 };
 
 export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: HttpContentRequest<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >;
+  readonly request: HttpContentRequest<BufferStreamLike>;
   readonly response: DisposableValueLike<
-    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<BufferStreamLike>
   >;
 };
 
@@ -101,14 +92,14 @@ export type HttpClientRequestStatus =
 
 const spyScanner = (
   [uploaded, total]: [number, number],
-  ev: ReadableEvent,
+  ev: StreamEvent<Buffer>,
 ): [number, number] =>
-  ev.type === ReadableEventType.Data
+  ev.type === StreamEventType.Next
     ? [ev.chunk.length, total + uploaded]
     : [-1, total + uploaded];
 
 const send = (
-  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  request: HttpContentRequest<BufferStreamLike>,
   requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
 ) => {
   const { contentEncoding, ...nodeOptions } = requestOptions;
@@ -148,17 +139,12 @@ const send = (
 };
 
 const createOnSubscribe = (
-  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  request: HttpContentRequest<BufferStreamLike>,
   requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
-  encodeContent: AsyncEnumerableOperator<
-    ReadableMode,
-    ReadableEvent,
-    ReadableMode,
-    ReadableEvent
-  >,
+  encodeContent: StreamOperator<Buffer, Buffer>,
   decodeHttpContentResponse: (
-    resp: HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  ) => HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    resp: HttpContentResponse<BufferStreamLike>,
+  ) => HttpContentResponse<BufferStreamLike>,
 ) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {
   subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
 
@@ -177,7 +163,7 @@ const createOnSubscribe = (
       parseHttpResponseFromHeaders(
         msg.statusCode ?? -1,
         msg.headers as HttpHeaders,
-        createReadableAsyncEnumerable(() => msg),
+        createBufferStreamFromReadable(() => msg),
       ),
       decodeHttpContentResponse,
     );
@@ -194,7 +180,7 @@ const createOnSubscribe = (
   };
   req.on("response", onResponse);
 
-  const reqBodyEnumerator = createWritableAsyncEnumerator(req, subscriber);
+  const reqBodyEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(req, subscriber);
 
   const doOnNotify = ([count, total]: [number, number]) => {
     const ev: HttpClientRequestStatus =
@@ -205,7 +191,7 @@ const createOnSubscribe = (
   };
 
   const spyEnumerator = pipe(
-    identityEnumerable<ReadableEvent>(),
+    identityEnumerable<StreamEvent<Buffer>>(),
     lift(
       compose(
         scan(spyScanner, (): [number, number] => [0, 0]),
@@ -215,7 +201,7 @@ const createOnSubscribe = (
   ).enumerateAsync(subscriber);
 
   const contentEnumerator = pipe(
-    request.content?.body ?? emptyReadableAsyncEnumerable,
+    request.content?.body ?? emptyStream(),
     lift(onNotify(ev => spyEnumerator.dispatch(ev))),
     encodeContent,
   ).enumerateAsync(subscriber);
@@ -269,7 +255,7 @@ export type HttpClientRequestOptions = {
 const identity = <T>(x: T): T => x;
 
 const requestIsCompressible = (
-  request: HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  request: HttpContentRequest<BufferStreamLike>,
 ): boolean => {
   const { content } = request;
   return isSome(content) ? contentIsCompressible(content) : false;
@@ -277,9 +263,7 @@ const requestIsCompressible = (
 
 export interface HttpClientLike extends DisposableLike {
   send(
-    request: HttpContentRequest<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >,
+    request: HttpContentRequest<BufferStreamLike>,
     requestOptions?: HttpClientRequestOptions,
   ): ObservableLike<HttpClientRequestStatus>;
 }
@@ -290,9 +274,7 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
   }
 
   send(
-    request: HttpContentRequest<
-      AsyncEnumerableLike<ReadableMode, ReadableEvent>
-    >,
+    request: HttpContentRequest<BufferStreamLike>,
     options: HttpClientRequestOptions = {},
   ): ObservableLike<HttpClientRequestStatus> {
     const {
@@ -374,8 +356,8 @@ export const createDefaultHttpResponseHandler = (
       const [newRequest, newAcceptedEncodings] = shouldRedirect
         ? [
             createRedirectHttpRequest<
-              HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-              HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+              HttpContent<BufferStreamLike>,
+              HttpContent<BufferStreamLike>
             >(response.value)(request),
           ]
         : statusCode === HttpStatusCode.ExpectationFailed

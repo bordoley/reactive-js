@@ -3,6 +3,7 @@ import {
   SafeSubscriberLike,
 } from "@reactive-js/observable";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { Operator } from "@reactive-js/pipe";
 
 /** @noInheritDoc */
 export interface AsyncEnumeratorLike<TReq, T>
@@ -26,3 +27,25 @@ export type AsyncEnumerableOperator<TSrcReq, TSrc, TReq, T> = {
 export type StateUpdater<T> = {
   (oldState: T): T;
 };
+
+export const enum StreamMode {
+  Produce = 1,
+  Pause = 2,
+}
+
+export const enum StreamEventType {
+  Next = 1,
+  Complete = 2,
+}
+
+export type StreamEvent<T> =
+  | { type: StreamEventType.Next; chunk: T }
+  | { type: StreamEventType.Complete };
+
+export interface StreamLike<T>
+  extends AsyncEnumerableLike<StreamMode, StreamEvent<T>> {}
+
+export interface StreamSinkLike<T>
+  extends AsyncEnumerableLike<StreamEvent<T>, StreamMode> {}
+
+export type StreamOperator<TA, TB> = Operator<StreamLike<TA>,  StreamLike<TB>>;

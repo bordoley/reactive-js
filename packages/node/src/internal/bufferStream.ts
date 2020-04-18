@@ -2,9 +2,11 @@ import iconv from "iconv-lite";
 import { Readable } from "stream";
 import {
   createAsyncEnumerable,
-  AsyncEnumerableLike,
   createAsyncEnumerator,
   AsyncEnumeratorLike,
+  StreamEvent,
+  StreamEventType,
+  StreamMode,
 } from "@reactive-js/async-enumerable";
 import { createDisposableValue } from "@reactive-js/disposable";
 import {
@@ -15,7 +17,6 @@ import {
   ObservableOperator,
   SubscriberOperator,
   using,
-  mapTo,
   keep,
   fromArray,
   concat,
@@ -30,42 +31,29 @@ import {
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { BufferStreamLike } from "./interfaces";
 
-export const enum ReadableMode {
-  Resume = 1,
-  Pause = 2,
-}
-
-export const enum ReadableEventType {
-  Data = 1,
-  End = 2,
-}
-
-export type ReadableEvent =
-  | { type: ReadableEventType.Data; chunk: Buffer }
-  | { type: ReadableEventType.End };
-
-class ReadableSubscriber extends AbstractDelegatingSubscriber<
-  ReadableMode,
-  ReadableEvent
+class ReadableStreamModeSubscriber extends AbstractDelegatingSubscriber<
+  StreamMode,
+  StreamEvent<Buffer>
 > {
   constructor(
-    delegate: SafeSubscriberLike<ReadableEvent>,
+    delegate: SafeSubscriberLike<StreamEvent<Buffer>>,
     private readonly readable: Readable,
   ) {
     super(delegate);
     this.add(delegate);
   }
 
-  notify(data: ReadableMode) {
+  notify(data: StreamMode) {
     assertSubscriberNotifyInContinuation(this);
 
     const readable = this.readable;
     switch (data) {
-      case ReadableMode.Pause:
+      case StreamMode.Pause:
         readable.pause();
         break;
-      case ReadableMode.Resume:
+      case StreamMode.Produce:
         readable.resume();
         break;
     }
@@ -74,7 +62,7 @@ class ReadableSubscriber extends AbstractDelegatingSubscriber<
 
 const subscriberOperator = (
   readable: Readable,
-): SubscriberOperator<ReadableMode, ReadableEvent> => subscriber => {
+): SubscriberOperator<StreamMode, StreamEvent<Buffer>> => subscriber => {
   const safeSubscriber = toSafeSubscriber(subscriber).add(() => {
     readable.pause();
     readable.removeListener("data", onData);
@@ -83,12 +71,12 @@ const subscriberOperator = (
   });
 
   const onData = (chunk: Buffer) => {
-    safeSubscriber.dispatch({ type: ReadableEventType.Data, chunk });
+    safeSubscriber.dispatch({ type: StreamEventType.Next, chunk });
   };
   readable.on("data", onData);
 
   const onEnd = () => {
-    safeSubscriber.dispatch({ type: ReadableEventType.End });
+    safeSubscriber.dispatch({ type: StreamEventType.Complete });
     // Intentionally don't dispose the subscriber,
     // because it may be asynchronously consuming
     // the data.
@@ -102,17 +90,17 @@ const subscriberOperator = (
 
   readable.pause();
 
-  return new ReadableSubscriber(safeSubscriber, readable);
+  return new ReadableStreamModeSubscriber(safeSubscriber, readable);
 };
 
 const operator = (readable: Readable) =>
   lift(subscriberOperator(readable), false);
 
-export const createReadableAsyncEnumerator = (
+export const createBufferStreamAsyncEnumeratorFromReadable = (
   readable: Readable,
   scheduler: SchedulerLike,
   replayCount?: number,
-): AsyncEnumeratorLike<ReadableMode, ReadableEvent> =>
+): AsyncEnumeratorLike<StreamMode, StreamEvent<Buffer>> =>
   createAsyncEnumerator(operator(readable), scheduler, replayCount);
 
 const disposeReadable = (readable: Readable) => {
@@ -121,7 +109,7 @@ const disposeReadable = (readable: Readable) => {
 
 const observableOperator = (
   factory: () => Readable,
-): ObservableOperator<ReadableMode, ReadableEvent> => observable =>
+): ObservableOperator<StreamMode, StreamEvent<Buffer>> => observable =>
   using(
     _ => {
       const readable = factory();
@@ -137,28 +125,23 @@ const observableOperator = (
     readable => pipe(observable, operator(readable.value)),
   );
 
-export const createReadableAsyncEnumerable = (
+export const createBufferStreamFromReadable = (
   factory: () => Readable,
-): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
+): BufferStreamLike =>
   createAsyncEnumerable(observableOperator(factory));
 
-export const emptyReadableAsyncEnumerable = createAsyncEnumerable<
-  ReadableMode,
-  ReadableEvent
->(mapTo({ type: ReadableEventType.End }));
-
-export const createReadableAsyncEnumerableFromBuffer = (
+export const createBufferStreamFromBuffer = (
   chunk: Buffer,
-): AsyncEnumerableLike<ReadableMode, ReadableEvent> =>
+): BufferStreamLike =>
   createAsyncEnumerable(obs =>
     concat(
       pipe(
         obs,
-        keep(ev => ev === ReadableMode.Resume),
+        keep(ev => ev === StreamMode.Produce),
         await_(_ =>
-          fromArray<ReadableEvent>([
-            { type: ReadableEventType.Data, chunk },
-            { type: ReadableEventType.End },
+          fromArray<StreamEvent<Buffer>>([
+            { type: StreamEventType.Next, chunk },
+            { type: StreamEventType.Complete },
           ]),
         ),
       ),
@@ -169,25 +152,25 @@ export const createReadableAsyncEnumerableFromBuffer = (
     ),
   );
 
-export const stringToReadableAsyncEnumerable = (
+export const stringToBufferStream = (
   charset: string,
 ): Operator<
   string,
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>
+  BufferStreamLike
 > => str => {
   const buffer = iconv.encode(str, charset);
-  return createReadableAsyncEnumerableFromBuffer(buffer);
+  return createBufferStreamFromBuffer(buffer);
 };
 
 export const entityTooLarge = Symbol("EntityTooLarge");
 export const unsupportedEncoding = Symbol("unsupportedEncoding");
-export const readableAsyncEnumerableToString = (
+export const bufferStreamToString = (
   charset: string,
   limit = Number.MAX_SAFE_INTEGER,
 ): Operator<
-  AsyncEnumerableLike<ReadableMode, ReadableEvent>,
+  BufferStreamLike,
   ObservableLike<string>
-> => readable =>
+> => bufferStream =>
   createObservable(subscriber => {
     let decoder: any;
     try {
@@ -197,7 +180,7 @@ export const readableAsyncEnumerableToString = (
       throw unsupportedEncoding;
     }
 
-    const enumerator = readable.enumerateAsync(subscriber);
+    const enumerator = bufferStream.enumerateAsync(subscriber);
     subscriber.add(enumerator);
 
     const reducer = (
@@ -208,10 +191,10 @@ export const readableAsyncEnumerableToString = (
         count: number;
         buffer: string;
       },
-      next: ReadableEvent,
+      next: StreamEvent<Buffer>,
     ) => {
       const chunkSize =
-        next.type === ReadableEventType.Data ? next.chunk.length : 0;
+        next.type === StreamEventType.Next ? next.chunk.length : 0;
 
       const newCount = count + chunkSize;
       if (newCount > limit) {
@@ -219,7 +202,7 @@ export const readableAsyncEnumerableToString = (
       }
 
       buffer +=
-        next.type === ReadableEventType.Data
+        next.type === StreamEventType.Next
           ? decoder.write(next.chunk)
           : (enumerator.dispose(), decoder.end() ?? "");
 
@@ -233,5 +216,5 @@ export const readableAsyncEnumerableToString = (
       onNotify(buffer => subscriber.dispatch(buffer)),
     ).subscribe(subscriber);
 
-    enumerator.dispatch(ReadableMode.Resume);
+    enumerator.dispatch(StreamMode.Produce);
   });

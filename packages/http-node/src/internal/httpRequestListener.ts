@@ -1,5 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
+import { AsyncEnumerableLike, StreamMode, StreamEvent, emptyStream } from "@reactive-js/async-enumerable";
 import {
   HttpServerRequest,
   writeHttpResponseHeaders,
@@ -9,11 +10,9 @@ import {
   HttpContentResponse,
 } from "@reactive-js/http";
 import {
-  createWritableAsyncEnumerator,
-  emptyReadableAsyncEnumerable,
-  ReadableMode,
-  ReadableEvent,
-  createReadableAsyncEnumerable,
+  createBufferStreamFromReadable,
+  BufferStreamLike,
+  createBufferStreamSinkAsyncEnumeratorFromWritable,
 } from "@reactive-js/node";
 import {
   ObservableLike,
@@ -28,7 +27,7 @@ import {
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+
 import {
   createDisposableValue,
   DisposableValueLike,
@@ -36,7 +35,7 @@ import {
 
 const writeResponseMessage = (resp: ServerResponse) => (
   response: HttpContentResponse<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
+    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
   >,
 ) => {
   resp.statusCode = response.statusCode;
@@ -48,12 +47,12 @@ const writeResponseMessage = (resp: ServerResponse) => (
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>) =>
+}: HttpContentResponse<BufferStreamLike>) =>
   createObservable(subscriber => {
     const contentReadableEnumerator = (
-      content?.body ?? emptyReadableAsyncEnumerable
+      content?.body ?? emptyStream()
     ).enumerateAsync(subscriber);
-    const responseWritableEnumerator = createWritableAsyncEnumerator(
+    const responseWritableEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
       resp,
       subscriber,
     );
@@ -73,9 +72,9 @@ export type HttpRequestListenerOptions = {
 
 export type HttpRequestListenerHandler = {
   (
-    req: HttpServerRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+    req: HttpServerRequest<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
   ): ObservableLike<
-    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>
   >;
 };
 
@@ -109,19 +108,20 @@ export const createHttpRequestListener = (
       httpVersionMajor,
       httpVersionMinor,
     } = req;
-    const body = createReadableAsyncEnumerable(() => req);
+    const body = createBufferStreamFromReadable(() => req);
     const isTransportSecure = (req.socket as any).encrypted ?? false;
 
     return pipe(
-      () => parseHttpRequestFromHeaders({
-        method: method as HttpMethod,
-        path,
-        headers: headers as HttpHeaders,
-        httpVersionMajor,
-        httpVersionMinor,
-        isTransportSecure,
-        body,
-      }),
+      () =>
+        parseHttpRequestFromHeaders({
+          method: method as HttpMethod,
+          path,
+          headers: headers as HttpHeaders,
+          httpVersionMajor,
+          httpVersionMinor,
+          isTransportSecure,
+          body,
+        }),
       compute,
       await_(handler),
       onNotify(writeResponseMessage(resp)),

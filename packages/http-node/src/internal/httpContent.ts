@@ -2,7 +2,7 @@ import compressible from "compressible";
 import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
+import { AsyncEnumerableLike, StreamEvent, StreamMode } from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpContent,
@@ -11,11 +11,9 @@ import {
   parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import {
-  ReadableMode,
-  ReadableEvent,
-  createReadableAsyncEnumerableFromBuffer,
+  createBufferStreamFromBuffer,
   transform,
-  createReadableAsyncEnumerable,
+  createBufferStreamFromReadable,
 } from "@reactive-js/node";
 import { isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
@@ -26,10 +24,10 @@ import {
 
 /** @ignore */
 export const encodeHttpContent = (
-  contentBody: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  contentBody: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
-): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
+): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
   const { body, contentLength, contentEncodings } = contentBody;
 
   return contentLength === 0
@@ -47,9 +45,9 @@ export const encodeHttpContent = (
 
 /** @ignore */
 export const decodeHttpContent = (
-  contentBody: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  contentBody: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
   options: BrotliOptions | ZlibOptions,
-): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
+): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
   const { body, contentLength, contentEncodings } = contentBody;
 
   return contentEncodings.length === 0 || contentLength === 0
@@ -66,8 +64,8 @@ export const decodeHttpContent = (
 export const createBufferHttpContent = (
   chunk: Buffer,
   contentType: MediaType | string,
-): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => ({
-  body: createReadableAsyncEnumerableFromBuffer(chunk),
+): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => ({
+  body: createBufferStreamFromBuffer(chunk),
   contentEncodings: [],
   contentLength: chunk.length,
   contentType:
@@ -80,8 +78,8 @@ export const createReadableHttpContent = (
   factory: () => Readable,
   contentType: MediaType | string,
   contentLength = -1,
-): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => ({
-  body: createReadableAsyncEnumerable(factory),
+): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => ({
+  body: createBufferStreamFromReadable(factory),
   contentEncodings: [],
   contentLength,
   contentType:
@@ -93,7 +91,7 @@ export const createReadableHttpContent = (
 export const createStringHttpContent = (
   content: string,
   contentType: MediaType | string,
-): HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>> => {
+): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
   contentType =
     typeof contentType === "string"
       ? parseMediaTypeOrThrow(contentType)
@@ -108,7 +106,7 @@ export const createStringHttpContent = (
 
 /** @ignore */
 export const contentIsCompressible = (
-  content: HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  content: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
 ): boolean => {
   const contentType = content?.contentType;
   // FIXME: A little sketchy
