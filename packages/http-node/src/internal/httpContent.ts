@@ -2,7 +2,12 @@ import compressible from "compressible";
 import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
-import { AsyncEnumerableLike, StreamEvent, StreamMode } from "@reactive-js/async-enumerable";
+import {
+  AsyncEnumerableLike,
+  StreamEvent,
+  StreamMode,
+  ofValueStream,
+} from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpContent,
@@ -11,7 +16,6 @@ import {
   parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import {
-  createBufferStreamFromBuffer,
   transform,
   createBufferStreamFromReadable,
 } from "@reactive-js/node";
@@ -24,7 +28,9 @@ import {
 
 /** @ignore */
 export const encodeHttpContent = (
-  contentBody: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
+  contentBody: HttpContent<
+    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
+  >,
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
@@ -45,7 +51,9 @@ export const encodeHttpContent = (
 
 /** @ignore */
 export const decodeHttpContent = (
-  contentBody: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
+  contentBody: HttpContent<
+    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
+  >,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
   const { body, contentLength, contentEncodings } = contentBody;
@@ -65,7 +73,7 @@ export const createBufferHttpContent = (
   chunk: Buffer,
   contentType: MediaType | string,
 ): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => ({
-  body: createBufferStreamFromBuffer(chunk),
+  body: ofValueStream(chunk),
   contentEncodings: [],
   contentLength: chunk.length,
   contentType:

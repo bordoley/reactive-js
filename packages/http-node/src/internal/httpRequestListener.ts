@@ -1,6 +1,11 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import { AsyncEnumerableLike, StreamMode, StreamEvent, emptyStream } from "@reactive-js/async-enumerable";
+import {
+  AsyncEnumerableLike,
+  StreamMode,
+  StreamEvent,
+  emptyStream,
+} from "@reactive-js/async-enumerable";
 import {
   HttpServerRequest,
   writeHttpResponseHeaders,
@@ -72,7 +77,9 @@ export type HttpRequestListenerOptions = {
 
 export type HttpRequestListenerHandler = {
   (
-    req: HttpServerRequest<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
+    req: HttpServerRequest<
+      AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
+    >,
   ): ObservableLike<
     HttpContentResponse<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>
   >;

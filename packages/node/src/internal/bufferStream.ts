@@ -7,6 +7,7 @@ import {
   StreamEvent,
   StreamEventType,
   StreamMode,
+  ofValueStream,
 } from "@reactive-js/async-enumerable";
 import { createDisposableValue } from "@reactive-js/disposable";
 import {
@@ -17,16 +18,6 @@ import {
   ObservableOperator,
   SubscriberOperator,
   using,
-  keep,
-  fromArray,
-  concat,
-  never,
-  await_,
-  ObservableLike,
-  createObservable,
-  reduce,
-  map,
-  onNotify,
   assertSubscriberNotifyInContinuation,
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
@@ -70,8 +61,8 @@ const subscriberOperator = (
     readable.removeListener("error", onError);
   });
 
-  const onData = (chunk: Buffer) => {
-    safeSubscriber.dispatch({ type: StreamEventType.Next, chunk });
+  const onData = (data: Buffer) => {
+    safeSubscriber.dispatch({ type: StreamEventType.Next, data });
   };
   readable.on("data", onData);
 
@@ -127,94 +118,13 @@ const observableOperator = (
 
 export const createBufferStreamFromReadable = (
   factory: () => Readable,
-): BufferStreamLike =>
-  createAsyncEnumerable(observableOperator(factory));
+): BufferStreamLike => createAsyncEnumerable(observableOperator(factory));
 
-export const createBufferStreamFromBuffer = (
-  chunk: Buffer,
-): BufferStreamLike =>
-  createAsyncEnumerable(obs =>
-    concat(
-      pipe(
-        obs,
-        keep(ev => ev === StreamMode.Produce),
-        await_(_ =>
-          fromArray<StreamEvent<Buffer>>([
-            { type: StreamEventType.Next, chunk },
-            { type: StreamEventType.Complete },
-          ]),
-        ),
-      ),
-      // Intentionally don't dispose the subscriber,
-      // because it may be asynchronously consuming
-      // the data.
-      never(),
-    ),
-  );
 
+// FIXME: Maybe remove this
 export const stringToBufferStream = (
   charset: string,
-): Operator<
-  string,
-  BufferStreamLike
-> => str => {
+): Operator<string, BufferStreamLike> => str => {
   const buffer = iconv.encode(str, charset);
-  return createBufferStreamFromBuffer(buffer);
+  return ofValueStream(buffer);
 };
-
-export const entityTooLarge = Symbol("EntityTooLarge");
-export const unsupportedEncoding = Symbol("unsupportedEncoding");
-export const bufferStreamToString = (
-  charset: string,
-  limit = Number.MAX_SAFE_INTEGER,
-): Operator<
-  BufferStreamLike,
-  ObservableLike<string>
-> => bufferStream =>
-  createObservable(subscriber => {
-    let decoder: any;
-    try {
-      decoder = (iconv as any).getDecoder(charset);
-    } catch (err) {
-      if (!err.message.startsWith("Encoding not recognized: ")) throw err;
-      throw unsupportedEncoding;
-    }
-
-    const enumerator = bufferStream.enumerateAsync(subscriber);
-    subscriber.add(enumerator);
-
-    const reducer = (
-      {
-        count,
-        buffer,
-      }: {
-        count: number;
-        buffer: string;
-      },
-      next: StreamEvent<Buffer>,
-    ) => {
-      const chunkSize =
-        next.type === StreamEventType.Next ? next.chunk.length : 0;
-
-      const newCount = count + chunkSize;
-      if (newCount > limit) {
-        throw entityTooLarge;
-      }
-
-      buffer +=
-        next.type === StreamEventType.Next
-          ? decoder.write(next.chunk)
-          : (enumerator.dispose(), decoder.end() ?? "");
-
-      return { count: newCount, buffer };
-    };
-
-    pipe(
-      enumerator,
-      reduce(reducer, () => ({ count: 0, buffer: "" })),
-      map(({ buffer }) => buffer),
-      onNotify(buffer => subscriber.dispatch(buffer)),
-    ).subscribe(subscriber);
-
-    enumerator.dispatch(StreamMode.Produce);
-  });

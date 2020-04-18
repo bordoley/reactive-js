@@ -79,9 +79,7 @@ export type HttpClientRequestStatusUploadComplete = {
 export type HttpClientRequestStatusResponseReady = {
   readonly type: HttpClientRequestStatusType.ResponseReady;
   readonly request: HttpContentRequest<BufferStreamLike>;
-  readonly response: DisposableValueLike<
-    HttpContentResponse<BufferStreamLike>
-  >;
+  readonly response: DisposableValueLike<HttpContentResponse<BufferStreamLike>>;
 };
 
 export type HttpClientRequestStatus =
@@ -95,7 +93,7 @@ const spyScanner = (
   ev: StreamEvent<Buffer>,
 ): [number, number] =>
   ev.type === StreamEventType.Next
-    ? [ev.chunk.length, total + uploaded]
+    ? [ev.data.length, total + uploaded]
     : [-1, total + uploaded];
 
 const send = (
@@ -180,7 +178,10 @@ const createOnSubscribe = (
   };
   req.on("response", onResponse);
 
-  const reqBodyEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(req, subscriber);
+  const reqBodyEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
+    req,
+    subscriber,
+  );
 
   const doOnNotify = ([count, total]: [number, number]) => {
     const ev: HttpClientRequestStatus =

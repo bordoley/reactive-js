@@ -119,9 +119,7 @@ const routerHandlerThrow: HttpRequestRouterHandler<
 
 const notFound: Operator<
   HttpContentRequest<BufferStreamLike>,
-  ObservableLike<
-    HttpContentResponse<BufferStreamLike>
-  >
+  ObservableLike<HttpContentResponse<BufferStreamLike>>
 > = req =>
   pipe(
     createHttpResponse(404, {

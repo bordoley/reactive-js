@@ -34,12 +34,12 @@ class WritableStreamEventSubscriber extends AbstractDelegatingSubscriber<
     this.add(delegate.dispose);
   }
 
-  notify(data: StreamEvent<Buffer>) {
+  notify(ev: StreamEvent<Buffer>) {
     assertSubscriberNotifyInContinuation(this);
 
-    switch (data.type) {
+    switch (ev.type) {
       case StreamEventType.Next: {
-        if (!this.writable.write(data.chunk)) {
+        if (!this.writable.write(ev.data)) {
           this.delegate.notify(StreamMode.Pause);
         }
         break;

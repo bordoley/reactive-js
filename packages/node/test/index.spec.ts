@@ -1,17 +1,23 @@
 import { Readable, Writable } from "stream";
-import { sink } from "@reactive-js/async-enumerable";
+import {
+  sink,
+  ofValueStream,
+  StreamEventType,
+  StreamMode,
+} from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
-import { toPromise, toValue } from "@reactive-js/observable";
+import { toPromise, subscribe, onNotify, scan } from "@reactive-js/observable";
 import {
   createBufferStreamFromReadable,
   getHostScheduler,
   createBufferStreamSinkFromWritable,
   transform,
-  stringToBufferStream,
-  bufferStreamToString,
+  encode,
+  decode,
 } from "../src";
 import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
+import { createVirtualTimeScheduler } from "@reactive-js/scheduler";
 
 describe("streams", () => {
   test("sinking to the buffer", async () => {
@@ -121,14 +127,34 @@ describe("streams", () => {
     expect(data).toEqual("abcdefg");
   });
 
-  test("readableToString", () => {
+  test("encode/decode", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    const result = pipe(
-      str,
-      stringToBufferStream("utf-8"),
-      bufferStreamToString("utf-8"),
-      toValue(),
+    const scheduler = createVirtualTimeScheduler();
+
+    const transformed = pipe(
+      ofValueStream(str),
+      encode("utf-8"),
+      decode("utf-8"),
+    ).enumerateAsync(scheduler);
+
+    let result = "";
+    pipe(
+      transformed,
+      scan(
+        (acc, ev) => (
+          ev.type === StreamEventType.Next ? acc + ev.data : acc
+        ),
+        () => "",
+      ),
+      onNotify(x => {
+        result = x;
+      }),
+      subscribe(scheduler),
     );
+
+    transformed.dispatch(StreamMode.Produce);
+    scheduler.run();
+
     expect(result).toEqual(str);
   });
 });

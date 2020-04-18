@@ -43,6 +43,7 @@
 * [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
+* [ofValueStream](README.md#const-ofvaluestream)
 * [reduce](README.md#const-reduce)
 * [reduceAsync](README.md#const-reduceasync)
 * [sink](README.md#const-sink)
@@ -461,6 +462,24 @@ Name | Type |
 `req` | TReqB |
 
 **Returns:** *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReqA, T, TReqB, T›*
+
+___
+
+### `Const` ofValueStream
+
+▸ **ofValueStream**<**T**>(`data`: T): *[StreamLike](interfaces/streamlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *[StreamLike](interfaces/streamlike.md)‹T›*
 
 ___
 
