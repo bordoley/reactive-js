@@ -53,8 +53,7 @@ import {
 import { isSome, none } from "@reactive-js/option";
 import {
   generateStream,
-  lift,
-  StreamEventType,
+  mapStream,
 } from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
@@ -93,15 +92,8 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
             () => 0,
             1000,
           ),
-          lift(
-            map(ev =>
-              ev.type === StreamEventType.Next
-                ? {
-                    type: StreamEventType.Next,
-                    data: `id: ${ev.data.toString()}\nevent: test\ndata: ${ev.data.toString()}\n\n`,
-                  }
-                : { type: StreamEventType.Complete },
-            ),
+          mapStream(
+            data => `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
           ),
           encode("utf-8"),
         ),

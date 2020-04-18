@@ -1,6 +1,6 @@
 import {
   generate as generateObs,
-  map,
+  map as mapObs,
   keepType,
   takeFirst,
   never,
@@ -8,6 +8,7 @@ import {
   ObservableLike,
   fromArray,
   scanAsync,
+  ScanAsyncMode,
   switchAll,
   empty,
 } from "@reactive-js/observable";
@@ -20,7 +21,7 @@ import {
   StreamLike,
   StreamMode,
 } from "./interfaces";
-import { ScanAsyncMode } from "@reactive-js/observable/dist/types/internal/scanAsync";
+import { map } from "./map";
 
 const createStream = <T>(
   f: Operator<ObservableLike<StreamMode>, ObservableLike<StreamEvent<T>>>,
@@ -30,7 +31,7 @@ const emptyModeMapper = (mode: StreamMode) =>
   mode === StreamMode.Produce ? { type: StreamEventType.Complete } : none;
 
 const onEmptyOperator = compose(
-  map(emptyModeMapper),
+  mapObs(emptyModeMapper),
   keepType(isSome),
   takeFirst(),
 );
@@ -48,7 +49,7 @@ const ofValueModeMapper = <T>(data: T) => (mode: StreamMode) =>
 
 const ofValueOperator = <T>(value: T) =>
   compose(
-    map(ofValueModeMapper(value)),
+    mapObs(ofValueModeMapper(value)),
     keepType(isSome),
     takeFirst(),
     switchAll<StreamEvent<T>>(),
@@ -77,6 +78,18 @@ export const generateStream = <T>(
         initialValue,
         ScanAsyncMode.Switching,
       ),
-      map<T, StreamEvent<T>>(data => ({ type: StreamEventType.Next, data })),
+      mapObs<T, StreamEvent<T>>(data => ({ type: StreamEventType.Next, data })),
     ),
+  );
+
+export const mapStream = <TA, TB>(
+  mapper: (v: TA) => TB,
+): Operator<StreamLike<TA>, StreamLike<TB>> =>
+  map((ev: StreamEvent<TA>) =>
+    ev.type === StreamEventType.Next
+      ? {
+          type: StreamEventType.Next,
+          data: mapper(ev.data),
+        }
+      : { type: StreamEventType.Complete },
   );

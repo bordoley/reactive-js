@@ -20,6 +20,7 @@ import {
   identity,
   lift,
   liftReq,
+  map,
 } from "../src/index";
 
 test("reduce", () => {
@@ -205,8 +206,8 @@ test("liftReq", () => {
 
   const lifted = pipe(
     identity<number>(),
-    lift(mapObs(x => x + 100)),
-    lift(mapObs(x => ({ x }))),
+    map(x => x + 100),
+    map(x => ({ x })),
   );
 
   const enumerator = lifted.enumerateAsync(scheduler);
