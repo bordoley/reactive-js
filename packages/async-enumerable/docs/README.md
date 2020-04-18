@@ -44,6 +44,8 @@
 * [identity](README.md#const-identity)
 * [lift](README.md#const-lift)
 * [liftReq](README.md#const-liftreq)
+* [map](README.md#const-map)
+* [mapStream](README.md#const-mapstream)
 * [ofValueStream](README.md#const-ofvaluestream)
 * [reduce](README.md#const-reduce)
 * [reduceAsync](README.md#const-reduceasync)
@@ -493,6 +495,66 @@ Name | Type |
 `req` | TReqB |
 
 **Returns:** *[AsyncEnumerableOperator](README.md#asyncenumerableoperator)‹TReqA, T, TReqB, T›*
+
+___
+
+### `Const` map
+
+▸ **map**<**TA**, **TB**>(`mapper`: function): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`v`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TA |
+
+**Returns:** *function*
+
+▸ (`enumerable`: [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TSrcReq, TSrc›): *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TSrcReq, TSrc› |
+
+___
+
+### `Const` mapStream
+
+▸ **mapStream**<**TA**, **TB**>(`mapper`: function): *Operator‹[StreamLike](interfaces/streamlike.md)‹TA›, [StreamLike](interfaces/streamlike.md)‹TB››*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`v`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TA |
+
+**Returns:** *Operator‹[StreamLike](interfaces/streamlike.md)‹TA›, [StreamLike](interfaces/streamlike.md)‹TB››*
 
 ___
 
