@@ -120,7 +120,6 @@ export const createBufferStreamFromReadable = (
   factory: () => Readable,
 ): BufferStreamLike => createAsyncEnumerable(observableOperator(factory));
 
-
 // FIXME: Maybe remove this
 export const stringToBufferStream = (
   charset: string,
