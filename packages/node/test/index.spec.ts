@@ -141,9 +141,7 @@ describe("streams", () => {
     pipe(
       transformed,
       scan(
-        (acc, ev) => (
-          ev.type === StreamEventType.Next ? acc + ev.data : acc
-        ),
+        (acc, ev) => (ev.type === StreamEventType.Next ? acc + ev.data : acc),
         () => "",
       ),
       onNotify(x => {
