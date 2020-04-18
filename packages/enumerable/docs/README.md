@@ -1,6 +1,6 @@
-[@reactive-js/enumerable](README.md)
+[@reactive-js/enumerable - v0.0.33](README.md)
 
-# @reactive-js/enumerable
+# @reactive-js/enumerable - v0.0.33
 
 ## Index
 

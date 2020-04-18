@@ -1,4 +1,4 @@
-[@reactive-js/async-enumerable](../README.md) › [ReducerRequestType](reducerrequesttype.md)
+[@reactive-js/async-enumerable - v0.0.33](../README.md) › [ReducerRequestType](reducerrequesttype.md)
 
 # Enumeration: ReducerRequestType
 

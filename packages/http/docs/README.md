@@ -1,6 +1,6 @@
-[@reactive-js/http](README.md)
+[@reactive-js/http - v0.0.33](README.md)
 
-# @reactive-js/http
+# @reactive-js/http - v0.0.33
 
 ## Index
 

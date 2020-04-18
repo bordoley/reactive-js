@@ -1,17 +1,21 @@
-[@reactive-js/async-enumerable](README.md)
+[@reactive-js/async-enumerable - v0.0.33](README.md)
 
-# @reactive-js/async-enumerable
+# @reactive-js/async-enumerable - v0.0.33
 
 ## Index
 
 ### Enumerations
 
 * [ReducerRequestType](enums/reducerrequesttype.md)
+* [StreamEventType](enums/streameventtype.md)
+* [StreamMode](enums/streammode.md)
 
 ### Interfaces
 
 * [AsyncEnumerableLike](interfaces/asyncenumerablelike.md)
 * [AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)
+* [StreamLike](interfaces/streamlike.md)
+* [StreamSinkLike](interfaces/streamsinklike.md)
 
 ### Type aliases
 
@@ -20,6 +24,8 @@
 * [DoneRequest](README.md#donerequest)
 * [ReducerRequest](README.md#reducerrequest)
 * [StateUpdater](README.md#stateupdater)
+* [StreamEvent](README.md#streamevent)
+* [StreamOperator](README.md#streamoperator)
 
 ### Functions
 
@@ -30,6 +36,7 @@
 * [createAsyncEnumerator](README.md#const-createasyncenumerator)
 * [createStateStore](README.md#const-createstatestore)
 * [empty](README.md#const-empty)
+* [emptyStream](README.md#const-emptystream)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
 * [generate](README.md#const-generate)
@@ -94,6 +101,18 @@ ___
 Name | Type |
 ------ | ------ |
 `oldState` | T |
+
+___
+
+###  StreamEvent
+
+Ƭ **StreamEvent**: *object | object*
+
+___
+
+###  StreamOperator
+
+Ƭ **StreamOperator**: *Operator‹[StreamLike](interfaces/streamlike.md)‹TA›, [StreamLike](interfaces/streamlike.md)‹TB››*
 
 ## Functions
 
@@ -291,6 +310,18 @@ a disposed `AsyncEnumeratorLike` instance.
 ▪ **T**
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, T›*
+
+___
+
+### `Const` emptyStream
+
+▸ **emptyStream**<**T**>(): *[StreamLike](interfaces/streamlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[StreamLike](interfaces/streamlike.md)‹T›*
 
 ___
 

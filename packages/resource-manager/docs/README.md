@@ -1,6 +1,6 @@
-[@reactive-js/resource-manager](README.md)
+[@reactive-js/resource-manager - v0.0.33](README.md)
 
-# @reactive-js/resource-manager
+# @reactive-js/resource-manager - v0.0.33
 
 ## Index
 

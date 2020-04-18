@@ -1,54 +1,34 @@
-[@reactive-js/node](README.md)
+[@reactive-js/node - v0.0.33](README.md)
 
-# @reactive-js/node
+# @reactive-js/node - v0.0.33
 
 ## Index
 
-### Enumerations
+### Interfaces
 
-* [ReadableEventType](enums/readableeventtype.md)
-* [ReadableMode](enums/readablemode.md)
-
-### Type aliases
-
-* [ReadableEvent](README.md#readableevent)
+* [BufferStreamLike](interfaces/bufferstreamlike.md)
+* [BufferStreamSinkLike](interfaces/bufferstreamsinklike.md)
 
 ### Variables
 
-* [emptyReadableAsyncEnumerable](README.md#const-emptyreadableasyncenumerable)
 * [entityTooLarge](README.md#const-entitytoolarge)
 * [unsupportedEncoding](README.md#const-unsupportedencoding)
 
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
-* [createReadableAsyncEnumerable](README.md#const-createreadableasyncenumerable)
-* [createReadableAsyncEnumerableFromBuffer](README.md#const-createreadableasyncenumerablefrombuffer)
-* [createReadableAsyncEnumerator](README.md#const-createreadableasyncenumerator)
-* [createWritableAsyncEnumerable](README.md#const-createwritableasyncenumerable)
-* [createWritableAsyncEnumerator](README.md#const-createwritableasyncenumerator)
+* [bufferStreamToString](README.md#const-bufferstreamtostring)
+* [createBufferStreamAsyncEnumeratorFromReadable](README.md#const-createbufferstreamasyncenumeratorfromreadable)
+* [createBufferStreamFromBuffer](README.md#const-createbufferstreamfrombuffer)
+* [createBufferStreamFromReadable](README.md#const-createbufferstreamfromreadable)
+* [createBufferStreamSinkAsyncEnumeratorFromWritable](README.md#const-createbufferstreamsinkasyncenumeratorfromwritable)
+* [createBufferStreamSinkFromWritable](README.md#const-createbufferstreamsinkfromwritable)
 * [getHostScheduler](README.md#const-gethostscheduler)
-* [readableAsyncEnumerableToString](README.md#const-readableasyncenumerabletostring)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
-* [stringToReadableAsyncEnumerable](README.md#const-stringtoreadableasyncenumerable)
+* [stringToBufferStream](README.md#const-stringtobufferstream)
 * [transform](README.md#const-transform)
 
-## Type aliases
-
-###  ReadableEvent
-
-Ƭ **ReadableEvent**: *object | object*
-
 ## Variables
-
-### `Const` emptyReadableAsyncEnumerable
-
-• **emptyReadableAsyncEnumerable**: *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), object | object›* =  createAsyncEnumerable<
-  ReadableMode,
-  ReadableEvent
->(mapTo({ type: ReadableEventType.End }))
-
-___
 
 ### `Const` entityTooLarge
 
@@ -1848,37 +1828,24 @@ Name | Type |
 
 ___
 
-### `Const` createReadableAsyncEnumerable
+### `Const` bufferStreamToString
 
-▸ **createReadableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-▸ (): *Readable*
-
-**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
-
-___
-
-### `Const` createReadableAsyncEnumerableFromBuffer
-
-▸ **createReadableAsyncEnumerableFromBuffer**(`chunk`: Buffer): *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+▸ **bufferStreamToString**(`charset`: string, `limit`: number): *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), ObservableLike‹string››*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`chunk` | Buffer |
+Name | Type | Default |
+------ | ------ | ------ |
+`charset` | string | - |
+`limit` | number |  Number.MAX_SAFE_INTEGER |
 
-**Returns:** *AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+**Returns:** *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), ObservableLike‹string››*
 
 ___
 
-### `Const` createReadableAsyncEnumerator
+### `Const` createBufferStreamAsyncEnumeratorFromReadable
 
-▸ **createReadableAsyncEnumerator**(`readable`: Readable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+▸ **createBufferStreamAsyncEnumeratorFromReadable**(`readable`: Readable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
 
 **Parameters:**
 
@@ -1888,27 +1855,41 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *AsyncEnumeratorLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+**Returns:** *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
 
 ___
 
-### `Const` createWritableAsyncEnumerable
+### `Const` createBufferStreamFromBuffer
 
-▸ **createWritableAsyncEnumerable**(`factory`: function): *AsyncEnumerableLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+▸ **createBufferStreamFromBuffer**(`chunk`: Buffer): *[BufferStreamLike](interfaces/bufferstreamlike.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`chunk` | Buffer |
+
+**Returns:** *[BufferStreamLike](interfaces/bufferstreamlike.md)*
+
+___
+
+### `Const` createBufferStreamFromReadable
+
+▸ **createBufferStreamFromReadable**(`factory`: function): *[BufferStreamLike](interfaces/bufferstreamlike.md)*
 
 **Parameters:**
 
 ▪ **factory**: *function*
 
-▸ (): *Writable*
+▸ (): *Readable*
 
-**Returns:** *AsyncEnumerableLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+**Returns:** *[BufferStreamLike](interfaces/bufferstreamlike.md)*
 
 ___
 
-### `Const` createWritableAsyncEnumerator
+### `Const` createBufferStreamSinkAsyncEnumeratorFromWritable
 
-▸ **createWritableAsyncEnumerator**(`writable`: Writable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+▸ **createBufferStreamSinkAsyncEnumeratorFromWritable**(`writable`: Writable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamEvent‹Buffer›, StreamMode›*
 
 **Parameters:**
 
@@ -1918,7 +1899,21 @@ Name | Type |
 `scheduler` | SchedulerLike |
 `replayCount?` | undefined &#124; number |
 
-**Returns:** *AsyncEnumeratorLike‹[ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md)›*
+**Returns:** *AsyncEnumeratorLike‹StreamEvent‹Buffer›, StreamMode›*
+
+___
+
+### `Const` createBufferStreamSinkFromWritable
+
+▸ **createBufferStreamSinkFromWritable**(`factory`: function): *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *Writable*
+
+**Returns:** *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
 
 ___
 
@@ -1927,21 +1922,6 @@ ___
 ▸ **getHostScheduler**(): *SchedulerLike*
 
 **Returns:** *SchedulerLike*
-
-___
-
-### `Const` readableAsyncEnumerableToString
-
-▸ **readableAsyncEnumerableToString**(`charset`: string, `limit`: number): *Operator‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`charset` | string | - |
-`limit` | number |  Number.MAX_SAFE_INTEGER |
-
-**Returns:** *Operator‹AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›, ObservableLike‹string››*
 
 ___
 
@@ -1959,9 +1939,9 @@ Name | Type |
 
 ___
 
-### `Const` stringToReadableAsyncEnumerable
+### `Const` stringToBufferStream
 
-▸ **stringToReadableAsyncEnumerable**(`charset`: string): *Operator‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
+▸ **stringToBufferStream**(`charset`: string): *Operator‹string, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
 
 **Parameters:**
 
@@ -1969,13 +1949,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹string, AsyncEnumerableLike‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)››*
+**Returns:** *Operator‹string, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: function): *AsyncEnumerableOperator‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+▸ **transform**(`factory`: function): *StreamOperator‹Buffer, Buffer›*
 
 **Parameters:**
 
@@ -1983,4 +1963,4 @@ ___
 
 ▸ (): *Transform*
 
-**Returns:** *AsyncEnumerableOperator‹[ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent), [ReadableMode](enums/readablemode.md), [ReadableEvent](README.md#readableevent)›*
+**Returns:** *StreamOperator‹Buffer, Buffer›*

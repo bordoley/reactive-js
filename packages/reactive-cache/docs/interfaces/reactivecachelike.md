@@ -1,4 +1,4 @@
-[@reactive-js/reactive-cache](../README.md) › [ReactiveCacheLike](reactivecachelike.md)
+[@reactive-js/reactive-cache - v0.0.33](../README.md) › [ReactiveCacheLike](reactivecachelike.md)
 
 # Interface: ReactiveCacheLike <**T**>
 

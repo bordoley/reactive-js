@@ -1,4 +1,4 @@
-[@reactive-js/http](../README.md) › [HttpStatusCode](httpstatuscode.md)
+[@reactive-js/http - v0.0.33](../README.md) › [HttpStatusCode](httpstatuscode.md)
 
 # Enumeration: HttpStatusCode
 

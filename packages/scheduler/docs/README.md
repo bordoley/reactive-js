@@ -1,6 +1,6 @@
-[@reactive-js/scheduler](README.md)
+[@reactive-js/scheduler - v0.0.33](README.md)
 
-# @reactive-js/scheduler
+# @reactive-js/scheduler - v0.0.33
 
 ## Index
 
