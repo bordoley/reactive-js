@@ -11,30 +11,23 @@
 
 ### Variables
 
-* [entityTooLarge](README.md#const-entitytoolarge)
 * [unsupportedEncoding](README.md#const-unsupportedencoding)
 
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
-* [bufferStreamToString](README.md#const-bufferstreamtostring)
 * [createBufferStreamAsyncEnumeratorFromReadable](README.md#const-createbufferstreamasyncenumeratorfromreadable)
-* [createBufferStreamFromBuffer](README.md#const-createbufferstreamfrombuffer)
 * [createBufferStreamFromReadable](README.md#const-createbufferstreamfromreadable)
 * [createBufferStreamSinkAsyncEnumeratorFromWritable](README.md#const-createbufferstreamsinkasyncenumeratorfromwritable)
 * [createBufferStreamSinkFromWritable](README.md#const-createbufferstreamsinkfromwritable)
+* [decode](README.md#const-decode)
+* [encode](README.md#const-encode)
 * [getHostScheduler](README.md#const-gethostscheduler)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
 * [stringToBufferStream](README.md#const-stringtobufferstream)
 * [transform](README.md#const-transform)
 
 ## Variables
-
-### `Const` entityTooLarge
-
-• **entityTooLarge**: *unique symbol* =  Symbol("EntityTooLarge")
-
-___
 
 ### `Const` unsupportedEncoding
 
@@ -1828,21 +1821,6 @@ Name | Type |
 
 ___
 
-### `Const` bufferStreamToString
-
-▸ **bufferStreamToString**(`charset`: string, `limit`: number): *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), ObservableLike‹string››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`charset` | string | - |
-`limit` | number |  Number.MAX_SAFE_INTEGER |
-
-**Returns:** *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), ObservableLike‹string››*
-
-___
-
 ### `Const` createBufferStreamAsyncEnumeratorFromReadable
 
 ▸ **createBufferStreamAsyncEnumeratorFromReadable**(`readable`: Readable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
@@ -1856,20 +1834,6 @@ Name | Type |
 `replayCount?` | undefined &#124; number |
 
 **Returns:** *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
-
-___
-
-### `Const` createBufferStreamFromBuffer
-
-▸ **createBufferStreamFromBuffer**(`chunk`: Buffer): *[BufferStreamLike](interfaces/bufferstreamlike.md)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`chunk` | Buffer |
-
-**Returns:** *[BufferStreamLike](interfaces/bufferstreamlike.md)*
 
 ___
 
@@ -1914,6 +1878,34 @@ ___
 ▸ (): *Writable*
 
 **Returns:** *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+
+___
+
+### `Const` decode
+
+▸ **decode**(`charset`: string): *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), StreamLike‹string››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charset` | string |
+
+**Returns:** *Operator‹[BufferStreamLike](interfaces/bufferstreamlike.md), StreamLike‹string››*
+
+___
+
+### `Const` encode
+
+▸ **encode**(`charset`: string): *Operator‹StreamLike‹string›, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charset` | string |
+
+**Returns:** *Operator‹StreamLike‹string›, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
 
 ___
 

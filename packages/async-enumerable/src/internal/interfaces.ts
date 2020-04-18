@@ -39,8 +39,8 @@ export const enum StreamEventType {
 }
 
 export type StreamEvent<T> =
-  | { type: StreamEventType.Next; chunk: T }
-  | { type: StreamEventType.Complete };
+  | { readonly type: StreamEventType.Next; readonly data: T }
+  | { readonly type: StreamEventType.Complete };
 
 export interface StreamLike<T>
   extends AsyncEnumerableLike<StreamMode, StreamEvent<T>> {}
@@ -48,4 +48,4 @@ export interface StreamLike<T>
 export interface StreamSinkLike<T>
   extends AsyncEnumerableLike<StreamEvent<T>, StreamMode> {}
 
-export type StreamOperator<TA, TB> = Operator<StreamLike<TA>,  StreamLike<TB>>;
+export type StreamOperator<TA, TB> = Operator<StreamLike<TA>, StreamLike<TB>>;
