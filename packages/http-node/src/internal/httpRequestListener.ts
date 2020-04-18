@@ -24,6 +24,7 @@ import {
   subscribe,
   using,
   empty,
+  compute,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -64,8 +65,6 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
     responseWritableEnumerator.subscribe(contentReadableEnumerator);
   });
 
-// FIXME: Don't include content in prod mode
-// FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
 export type HttpRequestListenerOptions = {
@@ -100,7 +99,6 @@ export const createHttpRequestListener = (
     disposableRequest: DisposableValueLike<IncomingMessage>,
     disposableResponse: DisposableValueLike<ServerResponse>,
   ) => {
-    debugger;
     const req = disposableRequest.value;
     const resp = disposableResponse.value;
 
@@ -115,7 +113,7 @@ export const createHttpRequestListener = (
     const isTransportSecure = (req.socket as any).encrypted ?? false;
 
     return pipe(
-      parseHttpRequestFromHeaders({
+      () => parseHttpRequestFromHeaders({
         method: method as HttpMethod,
         path,
         headers: headers as HttpHeaders,
@@ -124,7 +122,8 @@ export const createHttpRequestListener = (
         isTransportSecure,
         body,
       }),
-      handler,
+      compute,
+      await_(handler),
       onNotify(writeResponseMessage(resp)),
       await_(writeResponseContentBody(resp)),
       catchError(onError),
