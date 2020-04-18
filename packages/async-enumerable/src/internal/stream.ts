@@ -1,4 +1,5 @@
 import {
+  generate as generateObs,
   map,
   keepType,
   takeFirst,
@@ -6,10 +7,12 @@ import {
   concat,
   ObservableLike,
   fromArray,
+  scanAsync,
   switchAll,
+  empty,
 } from "@reactive-js/observable";
 import { none, isSome } from "@reactive-js/option";
-import { pipe } from "@reactive-js/pipe";
+import { Operator, compose } from "@reactive-js/pipe";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
 import {
   StreamEvent,
@@ -17,18 +20,23 @@ import {
   StreamLike,
   StreamMode,
 } from "./interfaces";
+import { ScanAsyncMode } from "@reactive-js/observable/dist/types/internal/scanAsync";
+
+const createStream = <T>(
+  f: Operator<ObservableLike<StreamMode>, ObservableLike<StreamEvent<T>>>,
+) => createAsyncEnumerable(obs => concat(f(obs), never()));
 
 const emptyModeMapper = (mode: StreamMode) =>
   mode === StreamMode.Produce ? { type: StreamEventType.Complete } : none;
 
-const onEmptyOperator = (obs: ObservableLike<StreamMode>) =>
-  concat(
-    pipe(obs, map(emptyModeMapper), keepType(isSome), takeFirst()),
-    never(),
-  );
+const onEmptyOperator = compose(
+  map(emptyModeMapper),
+  keepType(isSome),
+  takeFirst(),
+);
 
 export const emptyStream = <T>(): StreamLike<T> =>
-  createAsyncEnumerable(onEmptyOperator);
+  createStream(onEmptyOperator);
 
 const ofValueModeMapper = <T>(data: T) => (mode: StreamMode) =>
   mode === StreamMode.Produce
@@ -38,17 +46,35 @@ const ofValueModeMapper = <T>(data: T) => (mode: StreamMode) =>
       ])
     : none;
 
-const ofValueOperator = <T>(data: T) => (obs: ObservableLike<StreamMode>) =>
-  concat(
-    pipe(
-      obs,
-      map(ofValueModeMapper(data)),
-      keepType(isSome),
-      takeFirst(),
-      switchAll<StreamEvent<T>>(),
-    ),
-    never<StreamEvent<T>>(),
+const ofValueOperator = <T>(value: T) =>
+  compose(
+    map(ofValueModeMapper(value)),
+    keepType(isSome),
+    takeFirst(),
+    switchAll<StreamEvent<T>>(),
   );
 
-export const ofValueStream = <T>(data: T): StreamLike<T> =>
-  createAsyncEnumerable(ofValueOperator(data));
+export const ofValueStream = <T>(value: T): StreamLike<T> =>
+  createStream(ofValueOperator(value));
+
+const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
+  acc: T,
+  ev: StreamMode,
+): ObservableLike<T> =>
+  ev === StreamMode.Produce ? generateObs(generator, () => acc, delay) : empty();
+
+export const generateStream = <T>(
+  generator: (acc: T) => T,
+  initialValue: () => T,
+  delay = 0,
+): StreamLike<T> =>
+  createStream(
+    compose(
+      scanAsync(
+        generateScanner(generator, delay),
+        initialValue,
+        ScanAsyncMode.Switching,
+      ),
+      map<T, StreamEvent<T>>(data => ({ type: StreamEventType.Next, data })),
+    ),
+  );

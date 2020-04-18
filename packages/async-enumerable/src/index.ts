@@ -32,7 +32,7 @@ export { generate } from "./internal/generate";
 export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
 export { sink } from "./internal/sink";
-export { emptyStream, ofValueStream } from "./internal/stream";
+export { emptyStream, generateStream, ofValueStream } from "./internal/stream";
 
 export {
   createActionReducer,
