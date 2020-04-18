@@ -121,8 +121,8 @@ export const parseHttpRequestPreconditionsFromHeaders = (
 
   const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
   const ifRange = isSome(ifRangeHeader)
-    // FIXME: This is sketchy
-    ? parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
+    ? // FIXME: This is sketchy
+      parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
     : none;
 
   const isUndefined =

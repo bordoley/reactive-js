@@ -101,8 +101,9 @@ export const parseHttpPreferencesFromHeaders = (
   );
 
   const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
-  const acceptedMediaRanges =
-    isSome(rawAccept) ? parseAccept(rawAccept) ?? [] : [];
+  const acceptedMediaRanges = isSome(rawAccept)
+    ? parseAccept(rawAccept) ?? []
+    : [];
 
   const isUndefined =
     acceptedCharsets.length === 0 &&
