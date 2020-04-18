@@ -13,7 +13,7 @@ import {
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate, onNotify, subscribe } from "@reactive-js/observable";
-import { history, Location } from "@reactive-js/web";
+import { history, Location, createEventSource } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe } from "@reactive-js/pipe";
@@ -116,6 +116,14 @@ const request = createHttpRequest<HttpContent<any>>(
 
 pipe(
   sendHttpRequest(request),
+  onNotify(console.log),
+  subscribe(normalPriority),
+);
+
+pipe(
+  createEventSource("http://localhost:8080/events", {
+    events: ["error", "message", "test"],
+  }),
   onNotify(console.log),
   subscribe(normalPriority),
 );

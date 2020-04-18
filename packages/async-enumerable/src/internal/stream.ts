@@ -61,7 +61,9 @@ const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
   acc: T,
   ev: StreamMode,
 ): ObservableLike<T> =>
-  ev === StreamMode.Produce ? generateObs(generator, () => acc, delay) : empty();
+  ev === StreamMode.Produce
+    ? generateObs(generator, () => acc, delay)
+    : empty();
 
 export const generateStream = <T>(
   generator: (acc: T) => T,
