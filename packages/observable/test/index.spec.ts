@@ -61,6 +61,7 @@ import {
   withLatestFrom,
   zip,
 } from "../src/index";
+import { ScanAsyncMode } from "../src/internal/scanAsync";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   notify = jest.fn();
@@ -952,40 +953,90 @@ test("scan", () => {
 });
 
 describe("scanAsync", () => {
-  test("with sync source and sync scan result", () => {
+  test("acc function produces multiple results in queueing mode, fast src, slow acc", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const result: number[] = [];
     pipe(
       fromArray([1, 2, 3]),
       scanAsync(
-        (acc, x) => ofValue(acc + x),
+        (_acc, x) => fromArray([1 * x, 2 * x, 3 * x], { delay: 4 }),
         () => 0,
+        ScanAsyncMode.Queuing,
       ),
-      toArray(),
-      expect,
-    ).toEqual([1, 3, 6]);
+      onNotify(x => {
+        result.push(x);
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    expect(result).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9]);
   });
 
-  test("with async source and async scan result", () => {
+  test("acc function produces multiple results in queueing mode, slow src, fast acc", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const result: number[] = [];
     pipe(
-      fromArray([1, 2, 3], { delay: 1 }),
+      fromArray([1, 2, 3], { delay: 4 }),
       scanAsync(
-        (acc, x) => ofValue(acc + x, 2),
+        (_acc, x) => fromArray([1 * x, 2 * x, 3 * x]),
         () => 0,
+        ScanAsyncMode.Queuing,
       ),
-      toArray(),
-      expect,
-    ).toEqual([1, 3, 6]);
+      onNotify(x => {
+        result.push(x);
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    expect(result).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9]);
   });
 
-  test("with async source and sync scan result", () => {
+  test("acc function produces multiple results in switching mode, fast src, slow acc", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const result: number[] = [];
+
     pipe(
-      fromArray([1, 2, 3], { delay: 1 }),
+      fromArray([1, 2, 3]),
       scanAsync(
-        (acc, x) => ofValue(acc + x),
+        (_acc, x) => fromArray([1 * x, 2 * x, 3 * x], { delay: 4 }),
         () => 0,
+        ScanAsyncMode.Switching,
       ),
-      toArray(),
-      expect,
-    ).toEqual([1, 3, 6]);
+      onNotify(x => {
+        result.push(x);
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    expect(result).toEqual([3, 6, 9]);
+  });
+
+  test("acc function produces multiple results in switching mode, slow src, fast acc", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const result: number[] = [];
+
+    pipe(
+      fromArray([1, 2, 3], { delay: 4 }),
+      scanAsync(
+        (_acc, x) => fromArray([1 * x, 2 * x, 3 * x]),
+        () => 0,
+        ScanAsyncMode.Switching,
+      ),
+      onNotify(x => {
+        result.push(x);
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    expect(result).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9]);
   });
 });
 
