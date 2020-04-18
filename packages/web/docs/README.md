@@ -14,6 +14,7 @@
 
 ### Functions
 
+* [createEventSource](README.md#const-createeventsource)
 * [fromEvent](README.md#const-fromevent)
 * [getHostScheduler](README.md#const-gethostscheduler)
 
@@ -32,6 +33,21 @@
 • **history**: *AsyncEnumerableLike‹[Location](README.md#location), [Location](README.md#location)›* =  _history
 
 ## Functions
+
+### `Const` createEventSource
+
+▸ **createEventSource**(`url`: string | URL, `options`: EventSourceInit & object): *ObservableLike‹object›*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`url` | string &#124; URL | - |
+`options` | EventSourceInit & object |  {} |
+
+**Returns:** *ObservableLike‹object›*
+
+___
 
 ### `Const` fromEvent
 

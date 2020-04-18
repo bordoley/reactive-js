@@ -32,6 +32,7 @@ import {
   BufferStreamLike,
   getHostScheduler,
   bindNodeCallback,
+  encode,
 } from "@reactive-js/node";
 import {
   map,
@@ -41,6 +42,8 @@ import {
   onNotify,
   catchError,
   throws,
+  compute,
+  await_,
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
 import {
@@ -48,6 +51,11 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
+import {
+  generateStream,
+  lift,
+  StreamEventType,
+} from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
   getHostScheduler(),
@@ -73,14 +81,37 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
   HttpContent<BufferStreamLike>,
   HttpContent<BufferStreamLike>
 > = _ =>
-  pipe(
+  compute(() =>
     createHttpResponse(200, {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
       content: {
+        body: pipe(
+          generateStream(
+            acc => acc + 1,
+            () => 0,
+            1000,
+          ),
+          lift(
+            map(ev =>
+              ev.type === StreamEventType.Next
+                ? {
+                    type: StreamEventType.Next,
+                    data: `id: ${ev.data.toString()}\nevent: test\ndata: ${ev.data.toString()}\n\n`,
+                  }
+                : { type: StreamEventType.Complete },
+            ),
+          ),
+          encode("utf-8"),
+        ),
         contentLength: -1,
-        contentType: parseMediaTypeOrThrow("text/event-stream"),
+        contentEncodings: [],
+        contentType: parseMediaTypeOrThrow(
+          'text/event-stream; charset="utf-8"',
+        ),
       },
     }),
-    ofValue,
   );
 
 const routerHandlerFiles: HttpRequestRouterHandler<
@@ -145,11 +176,11 @@ const router = createRouter(
 const listener = createHttpRequestListener(
   req =>
     pipe(
-      req,
-      disallowProtocolAndHostForwarding(),
-      decodeHttpRequest(),
-      router,
+      ofValue(req),
+      map(disallowProtocolAndHostForwarding()),
+      map(decodeHttpRequest()),
       onNotify(console.log),
+      await_(router),
       map(encodeHttpResponse(req)),
       // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
       catchError((e: unknown) => {

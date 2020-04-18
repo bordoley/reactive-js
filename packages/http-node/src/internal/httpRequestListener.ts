@@ -91,10 +91,7 @@ export const createHttpRequestListener = (
 ): HttpRequestListener => {
   const { onError = defaultOnError } = options;
 
-  const handleRequest = (
-    req: IncomingMessage,
-    resp: ServerResponse,
-  ) => {
+  const handleRequest = (req: IncomingMessage, resp: ServerResponse) => {
     const {
       method,
       url: path = "/",
@@ -136,12 +133,12 @@ export const createHttpRequestListener = (
 
     const dispose = () => subscription.dispose();
 
-    req.on("aborted",dispose);
+    req.on("aborted", dispose);
     req.on("close", dispose);
     req.on("error", dispose);
-    
-    resp.on("close",dispose);
+
+    resp.on("close", dispose);
     resp.on("error", dispose);
     resp.on("finish", dispose);
-  }
+  };
 };

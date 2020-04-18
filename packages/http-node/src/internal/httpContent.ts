@@ -16,7 +16,6 @@ import {
   parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import { transform, createBufferStreamFromReadable } from "@reactive-js/node";
-import { isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
   createEncodingCompressTransform,
@@ -109,14 +108,20 @@ export const createStringHttpContent = (
   return createBufferHttpContent(buffer, contentType);
 };
 
+const compressionBlacklist = [
+  "text/event-stream", // Browser's don't seem to support compressed event streams
+];
+
+// FIXME: This function should probably be the Http Package.
 /** @ignore */
 export const contentIsCompressible = (
   content: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
 ): boolean => {
-  const contentType = content?.contentType;
-  // FIXME: A little sketchy
+  const { type, subtype } = content.contentType;
+  const mediaType = mediaTypeToString({ type, subtype, params: {} });
+
   return (
-    isSome(contentType) &&
-    (compressible(mediaTypeToString(contentType)) || false)
+    !compressionBlacklist.includes(mediaType) &&
+    (compressible(mediaType) || false)
   );
 };
