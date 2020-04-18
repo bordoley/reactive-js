@@ -1,6 +1,7 @@
+import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
-import fs from "fs";
+import mime from "mime-types";
 import {
   HttpMethod,
   createHttpRequest,
@@ -21,6 +22,7 @@ import {
   decodeHttpRequest,
   encodeHttpResponse,
   createDefaultHttpResponseHandler,
+  createReadableHttpContent,
 } from "@reactive-js/http-node";
 import {
   HttpRequestRouterHandler,
@@ -30,22 +32,18 @@ import {
   getHostScheduler,
   ReadableEvent,
   ReadableMode,
+  bindNodeCallback,
 } from "@reactive-js/node";
 import {
-  exhaust,
-  fromArray,
-  generate,
   map,
   subscribe,
   ofValue,
-  scan,
-  mapTo,
   ObservableLike,
   onNotify,
   catchError,
   throws,
 } from "@reactive-js/observable";
-import { pipe, compose, Operator } from "@reactive-js/pipe";
+import { pipe, Operator } from "@reactive-js/pipe";
 import {
   createPriorityScheduler,
   toSchedulerWithPriority,
@@ -53,79 +51,52 @@ import {
 import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { isSome, none } from "@reactive-js/option";
 
-const backgroundScheduler = pipe(
-  getHostScheduler(),
-  createPriorityScheduler,
-  toSchedulerWithPriority(500),
-);
-
-pipe(
-  generate(
-    x => x + 1,
-    () => 0,
-  ),
-  map(x => fromArray([x, x, x, x], { delay: 500 })),
-  exhaust(),
-  map(_ => backgroundScheduler.now),
-  scan(
-    ([_, prev], next) => [prev, next],
-    () => [backgroundScheduler.now, backgroundScheduler.now],
-  ),
-  onNotify(([prev, next]) => console.log(next - prev)),
-  subscribe(backgroundScheduler),
-);
-
 const scheduler = pipe(
   getHostScheduler(),
   createPriorityScheduler,
   toSchedulerWithPriority(1),
 );
 
-const routerHandlerA: Operator<
-  HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  ObservableLike<
-    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-  >
-> = compose(
-  ofValue,
-  mapTo(
+const routerHandlerPrintParams: HttpRequestRouterHandler<
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+> = req =>
+  pipe(
     createHttpResponse(200, {
-      content: createStringHttpContent("a", "text/plain"),
+      content: createStringHttpContent(
+        JSON.stringify(req.params),
+        "text/plain",
+      ),
     }),
-  ),
-);
-
-const routerHandlerB: HttpRequestRouterHandler<
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-> = req =>
-  pipe(
-    ofValue(req),
-    mapTo(
-      createHttpResponse(200, {
-        content: createStringHttpContent(
-          JSON.stringify(req.params),
-          "text/plain",
-        ),
-      }),
-    ),
+    ofValue,
   );
 
-const routerHandlerGlob: HttpRequestRouterHandler<
+const routerHandlerFiles: HttpRequestRouterHandler<
   HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
   HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
-> = req =>
-  pipe(
-    ofValue(req),
-    mapTo(
-      createHttpResponse(200, {
-        content: createStringHttpContent(
-          JSON.stringify(req.params),
-          "text/plain",
-        ),
-      }),
+> = req => {
+  const path = req.params["*"] || "";
+  const contentType = parseMediaTypeOrThrow(mime.lookup(path) || "application/octet-stream");
+
+  return pipe(
+    bindNodeCallback(fs.stat, (r: fs.Stats) => r)(path),
+    map(next =>
+      next.isFile() && !next.isDirectory()
+        ? createHttpResponse(200, {
+            content: createReadableHttpContent(
+              () => fs.createReadStream(path),
+              contentType,
+            ),
+          })
+        : createHttpResponse(404, {
+          content: createStringHttpContent(
+            req.uri.toString(),
+            'text/plain; charset="utf-8"',
+          ),
+        }),
     ),
   );
+};
 
 const routerHandlerThrow: HttpRequestRouterHandler<
   HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
@@ -139,24 +110,20 @@ const notFound: Operator<
   >
 > = req =>
   pipe(
-    ofValue(req),
-    mapTo(
-      createHttpResponse(404, {
-        content: createStringHttpContent(
-          req.uri.toString(),
-          'text/plain; charset="utf-8"',
-        ),
-      }),
-    ),
+    createHttpResponse(404, {
+      content: createStringHttpContent(
+        req.uri.toString(),
+        'text/plain; charset="utf-8"',
+      ),
+    }),
+    ofValue,
   );
 
 const router = createRouter(
   {
-    "/a": routerHandlerA,
-    "/path/glob/b": routerHandlerB,
-    "/path/glob/*": routerHandlerGlob,
-    "/path/:paramA/a/:paramB": routerHandlerB,
-    "/path/:paramA/a/:paramB/*": routerHandlerB,
+    "/files/*": routerHandlerFiles,
+    "/users/:username/friends/:friendName": routerHandlerPrintParams,
+    "/users/:username/friends/:friendName/*": routerHandlerPrintParams,
     "/throws": routerHandlerThrow,
   },
   notFound,
@@ -167,10 +134,11 @@ const listener = createHttpRequestListener(
     pipe(
       req,
       disallowProtocolAndHostForwarding(),
-      req => (console.log(JSON.stringify(req)), console.log(), req),
       decodeHttpRequest(),
       router,
+      onNotify(console.log),
       map(encodeHttpResponse(req)),
+      // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
       catchError((e: unknown) => {
         const content =
           process.env.NODE_ENV === "production"
