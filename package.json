@@ -30,7 +30,7 @@
     "typedoc": "^0.15.3",
     "typedoc-plugin-markdown": "^2.2.11",
     "typedoc-plugin-no-inherit": "^1.1.10",
-    "typescript": "^3.7.2"
+    "typescript": "^3.8.3"
   },
   "workspaces": [
     "packages/*"
