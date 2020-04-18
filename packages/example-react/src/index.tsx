@@ -111,7 +111,7 @@ const location = pipe(
 
 const request = createHttpRequest<HttpContent<any>>(
   HttpMethod.GET,
-  "http://localhost:8080/index.json",
+  "http://localhost:8080/files/packages/example-react/index.json",
 );
 
 pipe(
