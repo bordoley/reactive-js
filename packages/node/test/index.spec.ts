@@ -3,12 +3,12 @@ import { sink } from "@reactive-js/async-enumerable";
 import { pipe } from "@reactive-js/pipe";
 import { toPromise, toValue } from "@reactive-js/observable";
 import {
-  createReadableAsyncEnumerable,
+  createBufferStreamFromReadable,
   getHostScheduler,
-  createWritableAsyncEnumerable,
+  createBufferStreamSinkFromWritable,
   transform,
-  stringToReadableAsyncEnumerable,
-  readableAsyncEnumerableToString,
+  stringToBufferStream,
+  bufferStreamToString,
 } from "../src";
 import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
@@ -30,14 +30,14 @@ describe("streams", () => {
       },
     });
 
-    const dest = createWritableAsyncEnumerable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => writable);
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createReadableAsyncEnumerable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
     await pipe(src, sink(dest), toPromise(getHostScheduler()));
     expect(data).toEqual("abcdefg");
@@ -52,14 +52,14 @@ describe("streams", () => {
       },
     });
 
-    const dest = createWritableAsyncEnumerable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => writable);
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createReadableAsyncEnumerable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
     const promise = pipe(src, sink(dest), toPromise(getHostScheduler()));
     expect(promise).rejects.toThrow(cause);
@@ -72,7 +72,7 @@ describe("streams", () => {
       },
     });
 
-    const dest = createWritableAsyncEnumerable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => writable);
 
     const cause = new Error();
 
@@ -82,7 +82,7 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createReadableAsyncEnumerable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
     const promise = pipe(src, sink(dest), toPromise(getHostScheduler()));
     expect(promise).rejects.toThrow(cause);
@@ -104,7 +104,7 @@ describe("streams", () => {
       },
     });
 
-    const dest = createWritableAsyncEnumerable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => writable);
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
@@ -112,7 +112,7 @@ describe("streams", () => {
     }
 
     await pipe(
-      createReadableAsyncEnumerable(() => Readable.from(generate())),
+      createBufferStreamFromReadable(() => Readable.from(generate())),
       transform(() => createGzip()),
       transform(() => createGunzip()),
       sink(dest),
@@ -125,8 +125,8 @@ describe("streams", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const result = pipe(
       str,
-      stringToReadableAsyncEnumerable("utf-8"),
-      readableAsyncEnumerableToString("utf-8"),
+      stringToBufferStream("utf-8"),
+      bufferStreamToString("utf-8"),
       toValue(),
     );
     expect(result).toEqual(str);

@@ -1,22 +1,19 @@
 export { setSchedulerTimeout, getHostScheduler } from "./internal/scheduler";
 
 export { bindNodeCallback } from "./internal/bindNodeCallback";
+export { BufferStreamLike, BufferStreamSinkLike } from "./internal/interfaces";
 
 export {
-  ReadableEvent,
-  ReadableEventType,
-  ReadableMode,
-  createReadableAsyncEnumerableFromBuffer,
-  createReadableAsyncEnumerator,
-  createReadableAsyncEnumerable,
-  emptyReadableAsyncEnumerable,
+  createBufferStreamFromReadable,
+  createBufferStreamAsyncEnumeratorFromReadable,
+  createBufferStreamFromBuffer,
   entityTooLarge,
-  readableAsyncEnumerableToString,
-  stringToReadableAsyncEnumerable,
+  bufferStreamToString,
+  stringToBufferStream,
   unsupportedEncoding,
-} from "./internal/readable";
+} from "./internal/bufferStream";
 export {
-  createWritableAsyncEnumerator,
-  createWritableAsyncEnumerable,
-} from "./internal/writable";
+  createBufferStreamSinkAsyncEnumeratorFromWritable,
+  createBufferStreamSinkFromWritable,
+} from "./internal/bufferStreamSink";
 export { transform } from "./internal/transform";

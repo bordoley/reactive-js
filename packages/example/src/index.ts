@@ -29,9 +29,8 @@ import {
   createRouter,
 } from "@reactive-js/http-router";
 import {
+  BufferStreamLike,
   getHostScheduler,
-  ReadableEvent,
-  ReadableMode,
   bindNodeCallback,
 } from "@reactive-js/node";
 import {
@@ -48,7 +47,6 @@ import {
   createPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import { isSome, none } from "@reactive-js/option";
 
 const scheduler = pipe(
@@ -58,8 +56,8 @@ const scheduler = pipe(
 );
 
 const routerHandlerPrintParams: HttpRequestRouterHandler<
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<BufferStreamLike>,
+  HttpContent<BufferStreamLike>
 > = req =>
   pipe(
     createHttpResponse(200, {
@@ -71,12 +69,28 @@ const routerHandlerPrintParams: HttpRequestRouterHandler<
     ofValue,
   );
 
+const routerHandlerEventStream: HttpRequestRouterHandler<
+  HttpContent<BufferStreamLike>,
+  HttpContent<BufferStreamLike>
+> = _ =>
+  pipe(
+    createHttpResponse(200, {
+      content: {
+        contentLength: -1,
+        contentType: parseMediaTypeOrThrow("text/event-stream"),
+      },
+    }),
+    ofValue,
+  );
+
 const routerHandlerFiles: HttpRequestRouterHandler<
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<BufferStreamLike>,
+  HttpContent<BufferStreamLike>
 > = req => {
   const path = req.params["*"] || "";
-  const contentType = parseMediaTypeOrThrow(mime.lookup(path) || "application/octet-stream");
+  const contentType = parseMediaTypeOrThrow(
+    mime.lookup(path) || "application/octet-stream",
+  );
 
   return pipe(
     bindNodeCallback(fs.stat, (r: fs.Stats) => r)(path),
@@ -89,24 +103,24 @@ const routerHandlerFiles: HttpRequestRouterHandler<
             ),
           })
         : createHttpResponse(404, {
-          content: createStringHttpContent(
-            req.uri.toString(),
-            'text/plain; charset="utf-8"',
-          ),
-        }),
+            content: createStringHttpContent(
+              req.uri.toString(),
+              'text/plain; charset="utf-8"',
+            ),
+          }),
     ),
   );
 };
 
 const routerHandlerThrow: HttpRequestRouterHandler<
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContent<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContent<BufferStreamLike>,
+  HttpContent<BufferStreamLike>
 > = _ => throws(() => new Error("internal error"));
 
 const notFound: Operator<
-  HttpContentRequest<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
+  HttpContentRequest<BufferStreamLike>,
   ObservableLike<
-    HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+    HttpContentResponse<BufferStreamLike>
   >
 > = req =>
   pipe(
@@ -121,6 +135,7 @@ const notFound: Operator<
 
 const router = createRouter(
   {
+    "/events": routerHandlerEventStream,
     "/files/*": routerHandlerFiles,
     "/users/:username/friends/:friendName": routerHandlerPrintParams,
     "/users/:username/friends/:friendName/*": routerHandlerPrintParams,

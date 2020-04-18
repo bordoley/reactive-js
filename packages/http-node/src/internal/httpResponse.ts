@@ -1,11 +1,10 @@
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { AsyncEnumerableLike } from "@reactive-js/async-enumerable";
 import {
   HttpContentResponse,
   HttpContentRequest,
   HttpStandardHeader,
 } from "@reactive-js/http";
-import { ReadableMode, ReadableEvent } from "@reactive-js/node";
+import { BufferStreamLike } from "@reactive-js/node";
 import { isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
@@ -16,9 +15,7 @@ import {
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
 
 const responseIsCompressible = (
-  response: HttpContentResponse<
-    AsyncEnumerableLike<ReadableMode, ReadableEvent>
-  >,
+  response: HttpContentResponse<BufferStreamLike>,
 ): boolean => {
   const { content } = response;
   return isSome(content) ? contentIsCompressible(content) : false;
@@ -35,8 +32,8 @@ export const encodeHttpResponse = <TReq>(
   request: HttpContentRequest<TReq>,
   options: EncodeHttpResponseOptions & (BrotliOptions | ZlibOptions) = {},
 ): Operator<
-  HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContentResponse<BufferStreamLike>,
+  HttpContentResponse<BufferStreamLike>
 > => response => {
   const { shouldEncode: shouldEncodeOption, ...zlibOptions } = options;
   // FIXME:
@@ -74,8 +71,8 @@ export const encodeHttpResponse = <TReq>(
 export const decodeHttpContentResponse = (
   options: BrotliOptions | ZlibOptions,
 ): Operator<
-  HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>,
-  HttpContentResponse<AsyncEnumerableLike<ReadableMode, ReadableEvent>>
+  HttpContentResponse<BufferStreamLike>,
+  HttpContentResponse<BufferStreamLike>
 > => response => {
   const { content } = response;
 

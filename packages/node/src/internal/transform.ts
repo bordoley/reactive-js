@@ -1,34 +1,29 @@
 import { Transform } from "stream";
 import {
-  AsyncEnumerableOperator,
   createAsyncEnumerable,
+  StreamMode,
+  StreamEvent,
+  StreamOperator,
 } from "@reactive-js/async-enumerable";
 import { createDisposable } from "@reactive-js/disposable";
 import { ObservableLike, createObservable } from "@reactive-js/observable";
 import {
-  ReadableEvent,
-  ReadableMode,
-  createReadableAsyncEnumerator,
-} from "./readable";
-import { createWritableAsyncEnumerator } from "./writable";
+  createBufferStreamAsyncEnumeratorFromReadable,
+} from "./bufferStream";
+import { createBufferStreamSinkAsyncEnumeratorFromWritable } from "./bufferStreamSink";
 
 export const transform = (
   factory: () => Transform,
-): AsyncEnumerableOperator<
-  ReadableMode,
-  ReadableEvent,
-  ReadableMode,
-  ReadableEvent
-> => src => {
-  const op = (modeObs: ObservableLike<ReadableMode>) =>
-    createObservable<ReadableEvent>(subscriber => {
+): StreamOperator<Buffer, Buffer> => src => {
+  const op = (modeObs: ObservableLike<StreamMode>) =>
+    createObservable<StreamEvent<Buffer>>(subscriber => {
       const transform = factory();
 
-      const transformWritableEnumerator = createWritableAsyncEnumerator(
+      const transformWritableEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
         transform,
         subscriber,
       );
-      const transformReadableEnumerator = createReadableAsyncEnumerator(
+      const transformReadableEnumerator = createBufferStreamAsyncEnumeratorFromReadable(
         transform,
         subscriber,
       );
