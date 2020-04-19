@@ -1,4 +1,4 @@
-export { setSchedulerTimeout, getHostScheduler } from "./internal/scheduler";
+export { setSchedulerTimeout, scheduler } from "./internal/scheduler";
 
 export { bindNodeCallback } from "./internal/bindNodeCallback";
 export { BufferStreamLike, BufferStreamSinkLike } from "./internal/interfaces";

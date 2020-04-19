@@ -11,12 +11,12 @@
 ### Variables
 
 * [history](README.md#const-history)
+* [scheduler](README.md#const-scheduler)
 
 ### Functions
 
 * [createEventSource](README.md#const-createeventsource)
 * [fromEvent](README.md#const-fromevent)
-* [getHostScheduler](README.md#const-gethostscheduler)
 
 ## Type aliases
 
@@ -31,6 +31,12 @@
 ### `Const` history
 
 • **history**: *AsyncEnumerableLike‹[Location](README.md#location), [Location](README.md#location)›* =  _history
+
+___
+
+### `Const` scheduler
+
+• **scheduler**: *SchedulerLike* =  schedulerImpl
 
 ## Functions
 
@@ -74,11 +80,3 @@ Name | Type |
 `ev` | Event |
 
 **Returns:** *ObservableLike‹T›*
-
-___
-
-### `Const` getHostScheduler
-
-▸ **getHostScheduler**(): *SchedulerLike*
-
-**Returns:** *SchedulerLike*
