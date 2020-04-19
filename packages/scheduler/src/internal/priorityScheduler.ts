@@ -58,6 +58,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
       const delay = dueTime - now;
 
       if (delay > 0) {
+        scheduler.dueTime = dueTime;
         return delay;
       }
 

@@ -47,17 +47,18 @@ import {
   await_,
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
-//import {
-//createPriorityScheduler,
-//toSchedulerWithPriority,
-//} from "@reactive-js/scheduler";
+import {
+  createPriorityScheduler,
+  toSchedulerWithPriority,
+} from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
 import { generateStream, mapStream } from "@reactive-js/async-enumerable";
 
-const scheduler = getHostScheduler(); //pipe(
-//createPriorityScheduler,
-//toSchedulerWithPriority(1),
-//);
+const scheduler = pipe(
+  getHostScheduler(),
+  createPriorityScheduler,
+  toSchedulerWithPriority(1),
+);
 
 const routerHandlerPrintParams: HttpRequestRouterHandler<
   HttpContent<BufferStreamLike>,
