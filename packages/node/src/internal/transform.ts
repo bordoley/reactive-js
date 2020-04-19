@@ -8,6 +8,7 @@ import {
   StreamLike,
   lift,
   StreamEventType,
+  sink,
 } from "@reactive-js/async-enumerable";
 import {
   createDisposable,
@@ -22,6 +23,7 @@ import {
   concatMap,
   ofValue,
   fromArray,
+  subscribe,
 } from "@reactive-js/observable";
 import { Option } from "@reactive-js/option";
 import { createBufferStreamAsyncEnumeratorFromReadable } from "./bufferStream";
@@ -38,16 +40,24 @@ export const transform = (
     createObservable<StreamEvent<Buffer>>(subscriber => {
       const transform = factory();
 
-      const transformWritableEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
-        transform,
-        subscriber,
-      );
+      const transformSink = {
+        enumerateAsync: (scheduler: SchedulerLike, replayCount?: number) =>
+          createBufferStreamSinkAsyncEnumeratorFromWritable(
+            transform,
+            scheduler,
+            replayCount,
+          ),
+      };
+
       const transformReadableEnumerator = createBufferStreamAsyncEnumeratorFromReadable(
         transform,
         subscriber,
       );
 
-      const srcEnumerator = src.enumerateAsync(subscriber);
+      const sinkSubscription = pipe(
+        sink(src, transformSink),
+        subscribe(subscriber),
+      );
 
       // When a tranform's read interface has been fully consumed
       // we can dispose the transform, its writableEnumerator
@@ -55,9 +65,7 @@ export const transform = (
       const tranformDisposable = createDisposable(() => {
         transform.removeListener("end", onEnd);
         transform.destroy();
-      })
-        .add(srcEnumerator)
-        .add(transformWritableEnumerator);
+      }).add(sinkSubscription);
 
       const onEnd = () => {
         tranformDisposable.dispose();
@@ -65,10 +73,6 @@ export const transform = (
       transform.on("end", onEnd);
 
       subscriber.add(transformReadableEnumerator).add(tranformDisposable);
-
-      // sink the src into the transform
-      transformWritableEnumerator.subscribe(srcEnumerator);
-      srcEnumerator.subscribe(transformWritableEnumerator);
 
       // Since the transform into the subcriber
       modeObs.subscribe(transformReadableEnumerator);
