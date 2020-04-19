@@ -16,7 +16,7 @@ export {
   ContinueRequest,
   ReducerRequest,
   DoneRequest,
-  reduce, 
+  reduce,
   reduceAsync,
 } from "./internal/reduce";
 

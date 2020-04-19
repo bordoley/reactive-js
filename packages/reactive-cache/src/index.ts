@@ -79,8 +79,14 @@ const markAsGarbage = <T>(
   }
 };
 
-const switchAllAsyncEnumerableInstance: AsyncEnumerableLike<ObservableLike<any>, any> = createAsyncEnumerable(switchAll());
-const switchAllAsyncEnumerable = <T>(): AsyncEnumerableLike<ObservableLike<T>, T> => switchAllAsyncEnumerableInstance;
+const switchAllAsyncEnumerableInstance: AsyncEnumerableLike<
+  ObservableLike<any>,
+  any
+> = createAsyncEnumerable(switchAll());
+const switchAllAsyncEnumerable = <T>(): AsyncEnumerableLike<
+  ObservableLike<T>,
+  T
+> => switchAllAsyncEnumerableInstance;
 
 class ReactiveCacheImpl<T> extends AbstractDisposable
   implements ReactiveCacheLike<T> {
@@ -128,10 +134,12 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const enumerator = switchAllAsyncEnumerable().enumerateAsync(this.dispatchScheduler).add(() => {
-        this.cache.delete(key);
-        this.garbage.delete(key);
-      });
+      const enumerator = switchAllAsyncEnumerable()
+        .enumerateAsync(this.dispatchScheduler)
+        .add(() => {
+          this.cache.delete(key);
+          this.garbage.delete(key);
+        });
 
       const onSubscribeUnmark = () => {
         this.garbage.delete(key);

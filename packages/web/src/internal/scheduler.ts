@@ -1,6 +1,10 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { Option, isSome } from "@reactive-js/option";
-import { SchedulerLike, schedule, CallbackSchedulerLike } from "@reactive-js/scheduler";
+import {
+  SchedulerLike,
+  schedule,
+  CallbackSchedulerLike,
+} from "@reactive-js/scheduler";
 
 const performance = window.performance;
 const Date = window.Date;
@@ -79,14 +83,17 @@ const schedulerImpl: CallbackSchedulerLike = {
     return now();
   },
   schedule,
-  scheduleCallback(callback: (shouldYield: Option<() => boolean>) => void, delay: number): DisposableLike {
+  scheduleCallback(
+    callback: (shouldYield: Option<() => boolean>) => void,
+    delay: number,
+  ): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4
       ? scheduleDelayed(callback, delay)
       : scheduleImmediate(callback);
-  }
-}
+  },
+};
 
 let startTime = now();
 

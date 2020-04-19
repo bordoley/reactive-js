@@ -9,7 +9,7 @@ import { pipe } from "@reactive-js/pipe";
 import { toPromise, subscribe, onNotify, scan } from "@reactive-js/observable";
 import {
   createBufferStreamFromReadable,
-  getHostScheduler,
+  scheduler,
   createBufferStreamSinkFromWritable,
   transform,
   encode,
@@ -25,6 +25,7 @@ describe("streams", () => {
     const decoder = new StringDecoder();
 
     const writable = new Writable({
+      autoDestroy: true,
       highWaterMark: 4,
 
       write(chunk, encoding, callback) {
@@ -45,7 +46,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    await pipe(sink(src, dest), toPromise(getHostScheduler()));
+    await pipe(sink(src, dest), toPromise(scheduler));
     expect(data).toEqual("abcdefg");
   });
 
@@ -67,7 +68,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    const promise = pipe(sink(src, dest), toPromise(getHostScheduler()));
+    const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
   });
 
@@ -90,7 +91,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    const promise = pipe(sink(src, dest), toPromise(getHostScheduler()));
+    const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
   });
 
@@ -122,7 +123,7 @@ describe("streams", () => {
       transform(() => createGzip()),
       transform(() => createGunzip()),
       src => sink(src, dest),
-      toPromise(getHostScheduler()),
+      toPromise(scheduler),
     );
     expect(data).toEqual("abcdefg");
   });

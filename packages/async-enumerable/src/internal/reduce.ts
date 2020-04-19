@@ -206,4 +206,3 @@ export const reduceAsync = <TSrc, TAcc>(
     scheduler => enumerable.enumerateAsync(scheduler),
     consumeAsync(reducer, initial),
   );
-
