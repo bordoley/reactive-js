@@ -33,7 +33,12 @@ export { identity } from "./internal/identity";
 export { lift, liftReq } from "./internal/lift";
 export { map } from "./internal/map";
 export { sink } from "./internal/sink";
-export { emptyStream, generateStream, mapStream, ofValueStream } from "./internal/stream";
+export {
+  emptyStream,
+  generateStream,
+  mapStream,
+  ofValueStream,
+} from "./internal/stream";
 
 export {
   createActionReducer,
