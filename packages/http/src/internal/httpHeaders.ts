@@ -66,6 +66,7 @@ const bannedHeaders = [
   HttpStandardHeader.AcceptCharset,
   HttpStandardHeader.AcceptEncoding,
   HttpStandardHeader.AcceptLanguage,
+  HttpStandardHeader.CacheControl,
   HttpStandardHeader.ContentEncoding,
   HttpStandardHeader.ContentLength,
   HttpStandardHeader.ContentType,

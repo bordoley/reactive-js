@@ -12,6 +12,7 @@ import {
   HttpContentResponse,
   HttpStatusCode,
   parseMediaTypeOrThrow,
+  noCache,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -79,9 +80,7 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
 > = _ =>
   compute(() =>
     createHttpResponse(200, {
-      headers: {
-        "Cache-Control": "no-cache",
-      },
+      cacheControl: [noCache()],
       content: {
         body: pipe(
           generateStream(

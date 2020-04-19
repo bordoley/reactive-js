@@ -260,7 +260,9 @@ const requestIsCompressible = (
   request: HttpContentRequest<BufferStreamLike>,
 ): boolean => {
   const { content } = request;
-  return isSome(content) ? mediaTypeIsCompressible(db)(content.contentType) : false;
+  return isSome(content)
+    ? mediaTypeIsCompressible(db)(content.contentType)
+    : false;
 };
 
 export interface HttpClientLike extends DisposableLike {

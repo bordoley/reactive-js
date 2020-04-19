@@ -132,11 +132,13 @@ const pQuotedString: Parser<string> = charStream => {
 /** @ignore */
 export const pToken = pipe(pTChar, manySatisfy({ min: 1 }));
 
-const pParameterValue = pipe(pToken, or(pQuotedString));
+/** @ignore */
+export const pTokenOrQuotedString = pipe(pToken, or(pQuotedString));
+
 const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
   const key = pToken(charStream);
   pEquals(charStream);
-  const value = pParameterValue(charStream);
+  const value = pTokenOrQuotedString(charStream);
   return [key, value];
 };
 

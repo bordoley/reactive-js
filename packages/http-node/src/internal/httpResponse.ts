@@ -16,7 +16,9 @@ const responseIsCompressible = (
   response: HttpContentResponse<BufferStreamLike>,
 ): boolean => {
   const { content } = response;
-  return isSome(content) ? mediaTypeIsCompressible(db)(content.contentType) : false;
+  return isSome(content)
+    ? mediaTypeIsCompressible(db)(content.contentType)
+    : false;
 };
 
 export type EncodeHttpResponseOptions = {
