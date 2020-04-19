@@ -5,6 +5,7 @@ import {
   StreamMode,
   StreamEvent,
   emptyStream,
+  sink,
 } from "@reactive-js/async-enumerable";
 import {
   HttpServerRequest,
@@ -17,13 +18,12 @@ import {
 import {
   createBufferStreamFromReadable,
   BufferStreamLike,
-  createBufferStreamSinkAsyncEnumeratorFromWritable,
+  createBufferStreamSinkFromWritable,
 } from "@reactive-js/node";
 import {
   ObservableLike,
   await_,
   catchError,
-  createObservable,
   onNotify,
   subscribe,
   empty,
@@ -46,22 +46,11 @@ const writeResponseMessage = (resp: ServerResponse) => (
 
 const writeResponseContentBody = (resp: ServerResponse) => ({
   content,
-}: HttpContentResponse<BufferStreamLike>) =>
-  createObservable(subscriber => {
-    const contentReadableEnumerator = (
-      content?.body ?? emptyStream()
-    ).enumerateAsync(subscriber);
-    const responseWritableEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
-      resp,
-      subscriber,
-    );
-
-    subscriber.add(contentReadableEnumerator).add(responseWritableEnumerator);
-    responseWritableEnumerator.add(subscriber);
-
-    contentReadableEnumerator.subscribe(responseWritableEnumerator);
-    responseWritableEnumerator.subscribe(contentReadableEnumerator);
-  });
+}: HttpContentResponse<BufferStreamLike>) => {
+  const body = content?.body ?? emptyStream();
+  const responseBodySink = createBufferStreamSinkFromWritable(() => resp);
+  return sink(responseBodySink)(body);
+}
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
