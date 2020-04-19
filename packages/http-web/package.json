@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/http-web",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -39,13 +39,13 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.33",
-    "@reactive-js/disposable": "^0.0.33",
-    "@reactive-js/http": "^0.0.33",
-    "@reactive-js/observable": "^0.0.33",
-    "@reactive-js/option": "^0.0.33",
-    "@reactive-js/pipe": "^0.0.33",
-    "@reactive-js/scheduler": "^0.0.33"
+    "@reactive-js/async-enumerable": "^0.0.34",
+    "@reactive-js/disposable": "^0.0.34",
+    "@reactive-js/http": "^0.0.34",
+    "@reactive-js/observable": "^0.0.34",
+    "@reactive-js/option": "^0.0.34",
+    "@reactive-js/pipe": "^0.0.34",
+    "@reactive-js/scheduler": "^0.0.34"
   },
   "scripts": {
     "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
