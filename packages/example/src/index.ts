@@ -51,10 +51,7 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
-import {
-  generateStream,
-  mapStream,
-} from "@reactive-js/async-enumerable";
+import { generateStream, mapStream } from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
   getHostScheduler(),
@@ -93,7 +90,8 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
             1000,
           ),
           mapStream(
-            data => `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
+            data =>
+              `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
           ),
           encode("utf-8"),
         ),
