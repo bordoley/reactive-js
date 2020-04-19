@@ -23,7 +23,8 @@ const makeCallbacks = (
 ) => {
   const liftUpdater = (updater: StateUpdater<Location>) => () =>
     uriUpdater(updater);
-  const goToPath = (pathname: string) => liftUpdater(state => ({ ...state, pathname }));
+  const goToPath = (pathname: string) =>
+    liftUpdater(state => ({ ...state, pathname }));
 
   const goToRoute1 = goToPath("/route1");
   const goToRoute2 = goToPath("/route2");
@@ -70,7 +71,7 @@ const StatefulComponent = (props: RoutableComponentProps) => {
   const [state, dispatch] = useRoutableState(
     props,
     compose(chopLeadingChar, decodeURIComponent),
-    s => s.length > 0 ? "#" + encodeURIComponent(s) : "",
+    s => (s.length > 0 ? "#" + encodeURIComponent(s) : ""),
   );
 
   const onChange = useCallback(
