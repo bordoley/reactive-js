@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/resource-manager",
   "version": "0.0.33",
-  "private": true,
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
