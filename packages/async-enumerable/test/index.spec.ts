@@ -29,10 +29,9 @@ test("reduce", () => {
     reduce(
       (acc, next) => ({
         type: ReducerRequestType.Continue,
-        req: none,
         acc: acc + next,
       }),
-      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
+      () => 0,
     ),
     toValue(),
     expect,
@@ -49,11 +48,10 @@ test("reduce", () => {
             }
           : {
               type: ReducerRequestType.Continue,
-              req: none,
               acc: acc + next,
             },
 
-      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
+      () => 0,
     ),
     toValue(),
     expect,
@@ -69,10 +67,9 @@ test("reduceAsync", () => {
       (acc, next) =>
         ofValue({
           type: ReducerRequestType.Continue,
-          req: none,
           acc: acc + next,
         }),
-      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
+      () =>  0,
     ),
     toValue(),
     expect,
@@ -90,11 +87,10 @@ test("reduceAsync", () => {
               }
             : {
                 type: ReducerRequestType.Continue,
-                req: none,
                 acc: acc + next,
               },
         ),
-      () => ({ type: ReducerRequestType.Continue, req: none, acc: 0 }),
+      () => 0,
     ),
     toValue(),
     expect,

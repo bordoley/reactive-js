@@ -9,11 +9,11 @@ import { consume, consumeAsync, ReducerRequest } from "./consume";
  * @param reducer
  * @param initial
  */
-export const reduce = <TReq, TSrc, TAcc>(
-  reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TReq, TAcc>,
-  initial: () => ReducerRequest<TReq, TAcc>,
+export const reduce = <TSrc, TAcc>(
+  reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TAcc>,
+  initial: () => TAcc,
 ): Operator<
-  AsyncEnumerableLike<TReq, TSrc>,
+  AsyncEnumerableLike<void, TSrc>,
   ObservableLike<TAcc>
 > => enumerable =>
   using(
@@ -27,14 +27,14 @@ export const reduce = <TReq, TSrc, TAcc>(
  * @param reducer
  * @param initial
  */
-export const reduceAsync = <TReq, TSrc, TAcc>(
+export const reduceAsync = <TSrc, TAcc>(
   reducer: (
     acc: TAcc,
     next: TSrc,
-  ) => ObservableLike<ReducerRequest<TReq, TAcc>>,
-  initial: () => ReducerRequest<TReq, TAcc>,
+  ) => ObservableLike<ReducerRequest<TAcc>>,
+  initial: () => TAcc,
 ): Operator<
-  AsyncEnumerableLike<TReq, TSrc>,
+  AsyncEnumerableLike<void, TSrc>,
   ObservableLike<TAcc>
 > => enumerable =>
   using(

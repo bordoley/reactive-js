@@ -38,16 +38,11 @@ export const enum ReducerRequestType {
 /**
  *
  */
-export type ContinueRequest<TReq, TAcc> = {
+export type ContinueRequest<TAcc> = {
   /**
    *
    */
   readonly type: ReducerRequestType.Continue;
-
-  /**
-   *
-   */
-  readonly req: TReq;
 
   /**
    *
@@ -73,48 +68,48 @@ export type DoneRequest<TAcc> = {
 /**
  *
  */
-export type ReducerRequest<TReq, TAcc> =
-  | ContinueRequest<TReq, TAcc>
+export type ReducerRequest<TAcc> =
+  | ContinueRequest<TAcc>
   | DoneRequest<TAcc>;
 
-const createAcc = <TReq, T, TAcc>(enumerator: AsyncEnumeratorLike<TReq, T>) => {
-  const onNotifyDispatch = (continueRequest: ContinueRequest<TReq, TAcc>) => {
-    enumerator.dispatch(continueRequest.req);
+const createAcc = <T, TAcc>(enumerator: AsyncEnumeratorLike<void, T>) => {
+  const onNotifyDispatch = (_: ContinueRequest<TAcc>) => {
+    enumerator.dispatch();
   };
 
   return pipe(
-    identity<ContinueRequest<TReq, TAcc>>(),
+    identity<ContinueRequest<TAcc>>(),
     lift(onNotify(onNotifyDispatch)),
   );
 };
 
-const createResources = <TReq, T, TAcc>(
-  enumerator: AsyncEnumeratorLike<TReq, T>,
+const createResources = <T, TAcc>(
+  enumerator: AsyncEnumeratorLike<void, T>,
 ) => (
   scheduler: SchedulerLike,
 ): [
-  AsyncEnumeratorLike<ContinueRequest<TReq, TAcc>, ContinueRequest<TReq, TAcc>>,
+  AsyncEnumeratorLike<ContinueRequest<TAcc>, ContinueRequest<TAcc>>,
   AsyncEnumeratorLike<ObservableLike<T>, ObservableLike<T>>,
 ] => [
-  createAcc<TReq, T, TAcc>(enumerator).enumerateAsync(scheduler),
+  createAcc<T, TAcc>(enumerator).enumerateAsync(scheduler),
   identity<ObservableLike<T>>().enumerateAsync(scheduler),
 ];
 
-const createFactory = <TReq, T, TAcc>(
+const createFactory = <T, TAcc>(
   withLatestFrom: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<T, ReducerRequest<TReq, TAcc>>,
-  initial: () => ReducerRequest<TReq, TAcc>,
-  enumerator: AsyncEnumeratorLike<TReq, T>,
+  ) => ObservableOperator<T, ReducerRequest<TAcc>>,
+  initial: () => TAcc,
+  enumerator: AsyncEnumeratorLike<void, T>,
 ) => (
   request: AsyncEnumeratorLike<
-    ContinueRequest<TReq, TAcc>,
-    ContinueRequest<TReq, TAcc>
+    ContinueRequest<TAcc>,
+    ContinueRequest<TAcc>
   >,
   src: AsyncEnumeratorLike<ObservableLike<T>, ObservableLike<T>>,
 ): ObservableLike<TAcc> => {
   const mapReducerRequestToAcc: ObservableOperator<
-    ReducerRequest<TReq, TAcc>,
+    ReducerRequest<TAcc>,
     TAcc
   > = map(({ acc }) => acc);
 
@@ -127,7 +122,7 @@ const createFactory = <TReq, T, TAcc>(
     src.dispatch(next);
   };
 
-  const notifySrc = (next: ReducerRequest<TReq, TAcc>) => {
+  const notifySrc = (next: ReducerRequest<TAcc>) => {
     if (next.type === ReducerRequestType.Continue) {
       request.dispatch(next);
     } else {
@@ -137,7 +132,10 @@ const createFactory = <TReq, T, TAcc>(
 
   return pipe(
     merge(
-      compute(initial),
+      compute(() => ({
+        type: ReducerRequestType.Continue,
+        acc: initial(),
+      })),
       pipe(src, switchAll(), withLatestFrom(mapReducerRequestToAcc(request))),
     ),
     onNotify(notifySrc),
@@ -147,30 +145,30 @@ const createFactory = <TReq, T, TAcc>(
   );
 };
 
-const consumeImpl = <TReq, T, TAcc>(
+const consumeImpl = <T, TAcc>(
   withLatestFrom: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<T, ReducerRequest<TReq, TAcc>>,
-  initial: () => ReducerRequest<TReq, TAcc>,
-): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => enumerator =>
+  ) => ObservableOperator<T, ReducerRequest<TAcc>>,
+  initial: () => TAcc,
+): Operator<AsyncEnumeratorLike<void, T>, ObservableLike<TAcc>> => enumerator =>
   using(
     createResources(enumerator),
-    createFactory<TReq, T, TAcc>(withLatestFrom, initial, enumerator),
+    createFactory<T, TAcc>(withLatestFrom, initial, enumerator),
   );
 
-export const consume = <TReq, T, TAcc>(
-  reducer: (acc: TAcc, next: T) => ReducerRequest<TReq, TAcc>,
-  initial: () => ReducerRequest<TReq, TAcc>,
-): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
+export const consume = <T, TAcc>(
+  reducer: (acc: TAcc, next: T) => ReducerRequest<TAcc>,
+  initial: () => TAcc,
+): Operator<AsyncEnumeratorLike<void, T>, ObservableLike<TAcc>> => {
   const withLatestSelector = (next: T, acc: TAcc) => reducer(acc, next);
 
   return consumeImpl(acc => withLatestFrom(acc, withLatestSelector), initial);
 };
 
-export const consumeAsync = <TReq, T, TAcc>(
-  reducer: (acc: TAcc, next: T) => ObservableLike<ReducerRequest<TReq, TAcc>>,
-  initial: () => ReducerRequest<TReq, TAcc>,
-): Operator<AsyncEnumeratorLike<TReq, T>, ObservableLike<TAcc>> => {
+export const consumeAsync = <T, TAcc>(
+  reducer: (acc: TAcc, next: T) => ObservableLike<ReducerRequest<TAcc>>,
+  initial: () => TAcc,
+): Operator<AsyncEnumeratorLike<void, T>, ObservableLike<TAcc>> => {
   const withLatestSelector = (next: T, acc: TAcc) => pipe(reducer(acc, next), takeFirst());
 
   return consumeImpl(
