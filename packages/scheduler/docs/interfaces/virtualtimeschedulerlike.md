@@ -1,4 +1,4 @@
-[@reactive-js/scheduler - v0.0.33](../README.md) › [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
+[@reactive-js/scheduler - v0.0.34](../README.md) › [VirtualTimeSchedulerLike](virtualtimeschedulerlike.md)
 
 # Interface: VirtualTimeSchedulerLike
 

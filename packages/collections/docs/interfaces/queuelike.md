@@ -1,5 +1,5 @@
 
-# Interface: PriorityQueueLike <**T**>
+# Interface: QueueLike <**T**>
 
 ## Type parameters
 
@@ -7,20 +7,20 @@
 
 ## Hierarchy
 
-* **PriorityQueueLike**
+* **QueueLike**
 
 ## Index
 
 ### Properties
 
-* [count](priorityqueuelike.md#count)
+* [count](queuelike.md#count)
 
 ### Methods
 
-* [clear](priorityqueuelike.md#clear)
-* [peek](priorityqueuelike.md#peek)
-* [pop](priorityqueuelike.md#pop)
-* [push](priorityqueuelike.md#push)
+* [clear](queuelike.md#clear)
+* [peek](queuelike.md#peek)
+* [pop](queuelike.md#pop)
+* [push](queuelike.md#push)
 
 ## Properties
 

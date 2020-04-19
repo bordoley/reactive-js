@@ -1,6 +1,6 @@
-[@reactive-js/resource-manager - v0.0.33](README.md)
+[@reactive-js/resource-manager - v0.0.34](README.md)
 
-# @reactive-js/resource-manager - v0.0.33
+# @reactive-js/resource-manager - v0.0.34
 
 ## Index
 
@@ -16,11 +16,9 @@
 
 ### `Const` createResourceManager
 
-▸ **createResourceManager**<**TKey**, **TResource**>(`createResource`: function, `hash`: function, `scheduler`: SchedulerLike, `options`: object): *[ResourceManagerLike](interfaces/resourcemanagerlike.md)‹TKey, TResource›*
+▸ **createResourceManager**<**TResource**>(`createResource`: function, `scheduler`: SchedulerLike, `options`: object): *[ResourceManagerLike](interfaces/resourcemanagerlike.md)‹TResource›*
 
 **Type parameters:**
-
-▪ **TKey**
 
 ▪ **TResource**: *DisposableLike*
 
@@ -28,26 +26,16 @@
 
 ▪ **createResource**: *function*
 
-▸ (`key`: TKey): *TResource*
+▸ (`key`: string): *TResource*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`key` | TKey |
-
-▪ **hash**: *function*
-
-▸ (`key`: TKey): *string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`key` | TKey |
+`key` | string |
 
 ▪ **scheduler**: *SchedulerLike*
 
 ▪`Default value`  **options**: *object*=  {}
 
-**Returns:** *[ResourceManagerLike](interfaces/resourcemanagerlike.md)‹TKey, TResource›*
+**Returns:** *[ResourceManagerLike](interfaces/resourcemanagerlike.md)‹TResource›*

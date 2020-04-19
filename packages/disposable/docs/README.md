@@ -1,5 +1,5 @@
 
-# @reactive-js/disposable - v0.0.33
+# @reactive-js/disposable - v0.0.34
 
 ## Index
 

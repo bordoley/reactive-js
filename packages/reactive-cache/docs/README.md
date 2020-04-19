@@ -1,6 +1,6 @@
-[@reactive-js/reactive-cache - v0.0.33](README.md)
+[@reactive-js/reactive-cache - v0.0.34](README.md)
 
-# @reactive-js/reactive-cache - v0.0.33
+# @reactive-js/reactive-cache - v0.0.34
 
 ## Index
 

@@ -1,10 +1,8 @@
-[@reactive-js/resource-manager - v0.0.33](../README.md) › [ResourceManagerLike](resourcemanagerlike.md)
+[@reactive-js/resource-manager - v0.0.34](../README.md) › [ResourceManagerLike](resourcemanagerlike.md)
 
-# Interface: ResourceManagerLike <**TKey, TResource**>
+# Interface: ResourceManagerLike <**TResource**>
 
 ## Type parameters
-
-▪ **TKey**
 
 ▪ **TResource**
 
@@ -77,12 +75,12 @@ ___
 
 ###  get
 
-▸ **get**(`key`: TKey): *ObservableLike‹TResource›*
+▸ **get**(`key`: string): *ObservableLike‹TResource›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`key` | TKey |
+`key` | string |
 
 **Returns:** *ObservableLike‹TResource›*

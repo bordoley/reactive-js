@@ -1,12 +1,12 @@
 
-# @reactive-js/collections - v0.0.33
+# @reactive-js/collections - v0.0.34
 
 ## Index
 
 ### Interfaces
 
 * [KeyedQueueLike](interfaces/keyedqueuelike.md)
-* [PriorityQueueLike](interfaces/priorityqueuelike.md)
+* [QueueLike](interfaces/queuelike.md)
 * [SetMultimapLike](interfaces/setmultimaplike.md)
 
 ### Functions
@@ -14,6 +14,7 @@
 * [createKeyedQueue](README.md#const-createkeyedqueue)
 * [createPriorityQueue](README.md#const-createpriorityqueue)
 * [createSetMultimap](README.md#const-createsetmultimap)
+* [createUniqueQueue](README.md#const-createuniquequeue)
 
 ## Functions
 
@@ -33,7 +34,7 @@ ___
 
 ### `Const` createPriorityQueue
 
-▸ **createPriorityQueue**<**T**>(`comparator`: function): *[PriorityQueueLike](interfaces/priorityqueuelike.md)‹T›*
+▸ **createPriorityQueue**<**T**>(`comparator`: function): *[QueueLike](interfaces/queuelike.md)‹T›*
 
 **Type parameters:**
 
@@ -52,7 +53,7 @@ Name | Type |
 `a` | T |
 `b` | T |
 
-**Returns:** *[PriorityQueueLike](interfaces/priorityqueuelike.md)‹T›*
+**Returns:** *[QueueLike](interfaces/queuelike.md)‹T›*
 
 ___
 
@@ -67,3 +68,15 @@ ___
 ▪ **V**
 
 **Returns:** *[SetMultimapLike](interfaces/setmultimaplike.md)‹K, V›*
+
+___
+
+### `Const` createUniqueQueue
+
+▸ **createUniqueQueue**<**T**>(): *[QueueLike](interfaces/queuelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[QueueLike](interfaces/queuelike.md)‹T›*
