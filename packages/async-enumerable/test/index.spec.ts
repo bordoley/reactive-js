@@ -1,6 +1,5 @@
 import { Exception } from "@reactive-js/disposable";
 import {
-  map as mapObs,
   subscribe,
   onNotify,
   onDispose,
@@ -18,7 +17,6 @@ import {
   fromIterable,
   generate,
   identity,
-  lift,
   liftReq,
   map,
 } from "../src/index";
