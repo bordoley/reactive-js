@@ -14,32 +14,29 @@ import { pipe } from "@reactive-js/pipe";
 import { fromEvent } from "./event";
 
 export type Location = {
-  readonly fragment: string;
-  readonly path: string;
-  readonly query: string;
+  readonly hash: string;
+  readonly pathname: string;
+  readonly search: string;
 };
 
 const locationEquals = (a: Location, b: Location): boolean =>
   a === b ||
-  (a.path === b.path && a.query === b.query && a.fragment === b.fragment);
-
-const chopLeadingChar = (str: string) =>
-  str.length > 0 ? str.substring(1) : "";
+  (a.pathname === b.pathname && a.search === b.search && a.hash === b.hash);
 
 const getCurrentLocation = (_?: unknown): Location => {
-  const path = window.location.pathname;
-  const query = chopLeadingChar(window.location.search);
-  const fragment = chopLeadingChar(window.location.hash);
-  return { path, query, fragment };
+  const pathname = window.location.pathname;
+  const search = window.location.search;
+  const hash = window.location.hash;
+  return { pathname, search, hash };
 };
 
 const pushHistoryState = (newLocation: Location) => {
   const currentLocation = getCurrentLocation();
   if (!locationEquals(currentLocation, newLocation)) {
-    const { path, query, fragment } = newLocation;
-    let uriString = path;
-    uriString = query.length > 0 ? `${uriString}?${query}` : uriString;
-    uriString = fragment.length > 0 ? `${uriString}#${fragment}` : uriString;
+    const { pathname, search, hash } = newLocation;
+    let uriString = pathname;
+    uriString = search.length > 0 ? `${uriString}${search}` : uriString;
+    uriString = hash.length > 0 ? `${uriString}${hash}` : uriString;
     window.history.pushState(none, "", uriString);
   }
 };

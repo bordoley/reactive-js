@@ -6,26 +6,26 @@ const createURIStateUpdater = <TState>(
   stateUpdater: StateUpdater<TState>,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
-  stateIsQuery: boolean,
+  stateIssearch: boolean,
 ) => (oldURI: RelativeURI) => {
-  const oldSerialized = stateIsQuery ? oldURI.query : oldURI.fragment;
+  const oldSerialized = stateIssearch ? oldURI.search : oldURI.hash;
 
   const oldState = parse(oldSerialized);
   const newState = stateUpdater(oldState);
 
   if (oldState === newState) {
     return oldURI;
-  } else if (stateIsQuery) {
-    const query = serialize(newState);
+  } else if (stateIssearch) {
+    const search = serialize(newState);
     return {
       ...oldURI,
-      query,
+      search,
     };
   } else {
-    const fragment = serialize(newState);
+    const hash = serialize(newState);
     return {
       ...oldURI,
-      fragment,
+      hash,
     };
   }
 };
@@ -34,25 +34,25 @@ export const useRoutableState = <TState>(
   props: RoutableComponentProps,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
-  stateIsQuery = false,
+  stateIssearch = false,
 ): [TState, (updater: StateUpdater<TState>) => void] => {
   const {
-    uri: { query, fragment },
+    uri: { search, hash },
     uriUpdater,
   } = props;
 
   const state = useMemo(() => {
-    const serialized = stateIsQuery ? query : fragment;
+    const serialized = stateIssearch ? search : hash;
     return parse(serialized);
-  }, [parse, query, fragment]);
+  }, [parse, search, hash]);
 
   const notify = useCallback(
     (stateUpdater: StateUpdater<TState>) => {
       uriUpdater(
-        createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
+        createURIStateUpdater(stateUpdater, parse, serialize, stateIssearch),
       );
     },
-    [uriUpdater, parse, serialize, stateIsQuery],
+    [uriUpdater, parse, serialize, stateIssearch],
   );
 
   return [state, notify];

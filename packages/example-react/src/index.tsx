@@ -16,14 +16,14 @@ import { generate, onNotify, subscribe } from "@reactive-js/observable";
 import { history, Location, createEventSource } from "@reactive-js/web";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
-import { pipe } from "@reactive-js/pipe";
+import { pipe, compose } from "@reactive-js/pipe";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
   const liftUpdater = (updater: StateUpdater<Location>) => () =>
     uriUpdater(updater);
-  const goToPath = (path: string) => liftUpdater(state => ({ ...state, path }));
+  const goToPath = (pathname: string) => liftUpdater(state => ({ ...state, pathname }));
 
   const goToRoute1 = goToPath("/route1");
   const goToRoute2 = goToPath("/route2");
@@ -57,17 +57,20 @@ const Component1 = (props: RoutableComponentProps) => {
 
   return (
     <>
-      <div>{props.uri.path}</div>
+      <div>{props.uri.pathname}</div>
       <div>{value}</div>
     </>
   );
 };
 
+const chopLeadingChar = (str: string) =>
+  str.length > 0 ? str.substring(1) : "";
+
 const StatefulComponent = (props: RoutableComponentProps) => {
   const [state, dispatch] = useRoutableState(
     props,
-    decodeURIComponent,
-    encodeURIComponent,
+    compose(chopLeadingChar, decodeURIComponent),
+    s => s.length > 0 ? "#" + encodeURIComponent(s) : "",
   );
 
   const onChange = useCallback(
@@ -94,9 +97,9 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
 ];
 
 const emptyLocation = {
-  fragment: "",
-  path: "",
-  query: "",
+  hash: "",
+  pathname: "",
+  search: "",
 };
 
 const location = pipe(

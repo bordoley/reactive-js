@@ -10,15 +10,15 @@ import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo, ReactElement } from "react";
 
 export type RelativeURI = {
-  readonly fragment: string;
-  readonly path: string;
-  readonly query: string;
+  readonly hash: string;
+  readonly pathname: string;
+  readonly search: string;
 };
 
 const empty: RelativeURI = {
-  path: "",
-  query: "",
-  fragment: "",
+  pathname: "",
+  search: "",
+  hash: "",
 };
 
 export type RoutableComponentProps = {
@@ -72,7 +72,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
         locationStore,
         scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [none, empty]),
         map(([referer, uri]) =>
-          createElement(routeMap[uri.path] ?? notFound, {
+          createElement(routeMap[uri.pathname] ?? notFound, {
             referer,
             uri,
             uriUpdater,
