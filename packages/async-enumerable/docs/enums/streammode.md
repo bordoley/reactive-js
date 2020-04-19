@@ -1,4 +1,4 @@
-[@reactive-js/async-enumerable - v0.0.33](../README.md) › [StreamMode](streammode.md)
+[@reactive-js/async-enumerable - v0.0.34](../README.md) › [StreamMode](streammode.md)
 
 # Enumeration: StreamMode
 

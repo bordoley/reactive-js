@@ -1,6 +1,6 @@
-[@reactive-js/observable - v0.0.33](README.md)
+[@reactive-js/observable - v0.0.34](README.md)
 
-# @reactive-js/observable - v0.0.33
+# @reactive-js/observable - v0.0.34
 
 ## Index
 

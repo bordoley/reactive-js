@@ -1,4 +1,4 @@
-[@reactive-js/http-web - v0.0.33](../README.md) › [HttpClientRequestStatusType](httpclientrequeststatustype.md)
+[@reactive-js/http-web - v0.0.34](../README.md) › [HttpClientRequestStatusType](httpclientrequeststatustype.md)
 
 # Enumeration: HttpClientRequestStatusType
 

@@ -1,4 +1,4 @@
-[@reactive-js/node - v0.0.33](../README.md) › [BufferStreamSinkLike](bufferstreamsinklike.md)
+[@reactive-js/node - v0.0.34](../README.md) › [BufferStreamSinkLike](bufferstreamsinklike.md)
 
 # Interface: BufferStreamSinkLike
 
