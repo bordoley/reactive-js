@@ -17,17 +17,17 @@ const maxYieldInterval = 300;
 
 const callCallbackAndDispose = (
   scheduler: WebScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
   disposable: DisposableLike,
 ) => {
   scheduler.startTime = scheduler.now;
-  callback();
+  callback(scheduler.shouldYield);
   disposable.dispose();
 };
 
 const scheduleImmediate = (
   scheduler: WebScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
 ): DisposableLike => {
   const disposable = createDisposable();
   const channel = scheduler.channel;
@@ -35,7 +35,7 @@ const scheduleImmediate = (
   channel.port1.onmessage = () => {
     if (!disposable.isDisposed) {
       scheduler.startTime = scheduler.now;
-      callback();
+      callback(scheduler.shouldYield);
       disposable.dispose();
     }
   };
@@ -45,7 +45,7 @@ const scheduleImmediate = (
 
 const scheduleDelayed = (
   scheduler: WebScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
   delay: number,
 ): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
@@ -87,7 +87,7 @@ class WebScheduler implements SchedulerLike {
     return now();
   }
 
-  scheduleCallback(callback: () => void, delay: number): DisposableLike {
+  scheduleCallback(callback: (shouldYield: Option<() => boolean>) => void, delay: number): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4

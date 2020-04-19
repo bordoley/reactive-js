@@ -93,9 +93,6 @@ export interface PrioritySchedulerLike {
 export interface CallbackSchedulerLike extends SchedulerLike {
   inContinuation: boolean;
 
-  /** Platform specific shouldYield function passed to continuations when they are run.*/
-  readonly shouldYield: Option<() => boolean>;
-
   /**
    * Schedules a callback with the specified delay to be executed in the future.
    *
@@ -103,5 +100,8 @@ export interface CallbackSchedulerLike extends SchedulerLike {
    * @param delay An optional delay in ms that the scheduler should wait
    * before invoking the callback function.
    */
-  scheduleCallback(callback: () => void, delay: number): DisposableLike;
+  scheduleCallback(
+    callback: (shouldYield: Option<() => boolean>) => void,
+    delay: number,
+  ): DisposableLike;
 }

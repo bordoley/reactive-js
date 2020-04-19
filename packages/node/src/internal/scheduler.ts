@@ -9,17 +9,17 @@ export const setSchedulerTimeout = (newTimeout: number) => {
 
 const callCallbackAndDispose = (
   scheduler: NodeScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
   disposable: DisposableLike,
 ) => {
   scheduler.startTime = scheduler.now;
-  callback();
+  callback(scheduler.shouldYield);
   disposable.dispose();
 };
 
 const scheduleDelayed = (
   scheduler: NodeScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
   delay: number,
 ): DisposableLike => {
   const disposable = createDisposable(() => clearTimeout(timeout));
@@ -35,7 +35,7 @@ const scheduleDelayed = (
 
 const scheduleImmediate = (
   scheduler: NodeScheduler,
-  callback: () => void,
+  callback: (shouldYield: Option<() => boolean>) => void,
 ): DisposableLike => {
   const disposable = createDisposable(() => clearImmediate(immediate));
   const immediate = setImmediate(
@@ -51,7 +51,7 @@ class NodeScheduler implements SchedulerLike {
   inContinuation = false;
   readonly schedule = schedule;
 
-  protected readonly shouldYield = () => {
+  readonly shouldYield = () => {
     return this.now > this.startTime + timeout;
   };
 
@@ -62,7 +62,7 @@ class NodeScheduler implements SchedulerLike {
     return hr[0] * 1000 + hr[1] / 1e6;
   }
 
-  scheduleCallback(callback: () => void, delay: number): DisposableLike {
+  scheduleCallback(callback: (shouldYield: Option<() => boolean>) => void, delay: number): DisposableLike {
     return delay > 0
       ? scheduleDelayed(this, callback, delay)
       : scheduleImmediate(this, callback);
