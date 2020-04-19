@@ -43,16 +43,11 @@ const compressionBlacklist = [
 
 const textSubtypes = ["html", "json", "text", "xml"];
 
-export const mediaTypeIsCompressible = (
-  db: {
-    [key: string]: { 
-      compressible?: boolean,
-    }
-  }
-) => ({
-  type,
-  subtype,
-}: MediaType): boolean => {
+export const mediaTypeIsCompressible = (db: {
+  [key: string]: {
+    compressible?: boolean;
+  };
+}) => ({ type, subtype }: MediaType): boolean => {
   const mediaType = mediaTypeToString({ type, subtype, params: {} });
   const blackListed = compressionBlacklist.includes(mediaType);
   const compressible = db[mediaType]?.compressible ?? false;

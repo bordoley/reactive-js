@@ -29,7 +29,12 @@ import {
   HttpStatusCode,
   HttpContentRequest,
   HttpRequestPreconditions,
+  CacheDirective,
 } from "./interfaces";
+import {
+  parseCacheControlFromHeaders,
+  writeHttpCacheControlHeader,
+} from "./cacheDirective";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -50,6 +55,7 @@ export const createHttpRequest = <T>(
   method: HttpMethod,
   uri: string | URILike,
   options: {
+    cacheControl?: readonly CacheDirective[];
     content?: T;
     expectContinue?: boolean;
     headers?: HttpHeaders;
@@ -60,6 +66,7 @@ export const createHttpRequest = <T>(
   } = {},
 ): HttpRequest<T> => ({
   ...options,
+  cacheControl: options.cacheControl ?? [],
   expectContinue: options.expectContinue ?? false,
   headers: options.headers ?? {},
   httpVersionMajor: options.httpVersionMajor ?? 1,
@@ -137,6 +144,7 @@ export const parseHttpRequestFromHeaders = <T>({
   httpVersionMinor: number;
   isTransportSecure: boolean;
 }): HttpServerRequest<T> => {
+  const cacheControl = parseCacheControlFromHeaders(headers);
   const content = parseHttpContentFromHeaders(headers, body);
   const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
   const expectContinue = rawExpectHeader === "100-continue";
@@ -146,6 +154,7 @@ export const parseHttpRequestFromHeaders = <T>({
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
 
   return {
+    cacheControl,
     content,
     expectContinue,
     headers,
@@ -161,6 +170,7 @@ export const parseHttpRequestFromHeaders = <T>({
 
 export const writeHttpRequestHeaders = <T>(
   {
+    cacheControl,
     content,
     expectContinue,
     headers,
@@ -169,12 +179,14 @@ export const writeHttpRequestHeaders = <T>(
   }: HttpContentRequest<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
-  if (expectContinue) {
-    writeHeader(HttpStandardHeader.Expect, "100-continue");
-  }
+  writeHttpCacheControlHeader(cacheControl, writeHeader);
 
   if (isSome(content)) {
     writeHttpContentHeaders(content, writeHeader);
+  }
+
+  if (expectContinue) {
+    writeHeader(HttpStandardHeader.Expect, "100-continue");
   }
 
   if (isSome(preconditions)) {

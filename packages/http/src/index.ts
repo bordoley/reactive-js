@@ -1,6 +1,24 @@
+export {
+  mustRevalidate,
+  noStore,
+  noTransform,
+  onlyIfCached,
+  public_,
+  proxyRevalidate,
+  parseCacheDirective,
+  parseCacheDirectiveOrThrow,
+  maxAge,
+  maxStale,
+  minFresh,
+  sharedMaxAge,
+  noCache,
+  private_,
+} from "./internal/cacheDirective";
+
 export { parseETag, parseETagOrThrow } from "./internal/entityTag";
 
 export {
+  CacheDirective,
   HttpContentEncoding,
   HttpContent,
   HttpContentRequest,

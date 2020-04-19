@@ -18,6 +18,7 @@
 
 ### Type aliases
 
+* [CacheDirective](README.md#cachedirective)
 * [EntityTag](README.md#entitytag)
 * [HttpContent](README.md#httpcontent)
 * [HttpContentRequest](README.md#httpcontentrequest)
@@ -34,6 +35,8 @@
 
 ### Variables
 
+* [parseCacheDirective](README.md#const-parsecachedirective)
+* [parseCacheDirectiveOrThrow](README.md#const-parsecachedirectiveorthrow)
 * [parseETag](README.md#const-parseetag)
 * [parseETagOrThrow](README.md#const-parseetagorthrow)
 * [parseMediaType](README.md#const-parsemediatype)
@@ -41,6 +44,7 @@
 
 ### Functions
 
+* [cacheDirectiveToString](README.md#const-cachedirectivetostring)
 * [checkIfNotModified](README.md#const-checkifnotmodified)
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
@@ -48,15 +52,38 @@
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
 * [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
+* [maxAge](README.md#const-maxage)
+* [maxStale](README.md#const-maxstale)
 * [mediaTypeIsCompressible](README.md#const-mediatypeiscompressible)
 * [mediaTypeToString](README.md#const-mediatypetostring)
+* [minFresh](README.md#const-minfresh)
+* [noCache](README.md#const-nocache)
 * [parseHeaders](README.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
+* [private_](README.md#const-private_)
+* [sharedMaxAge](README.md#const-sharedmaxage)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
+### Object literals
+
+* [mustRevalidate](README.md#const-mustrevalidate)
+* [noStore](README.md#const-nostore)
+* [noTransform](README.md#const-notransform)
+* [onlyIfCached](README.md#const-onlyifcached)
+* [proxyRevalidate](README.md#const-proxyrevalidate)
+* [public_](README.md#const-public_)
+
 ## Type aliases
+
+###  CacheDirective
+
+Ƭ **CacheDirective**: *object*
+
+#### Type declaration:
+
+___
 
 ###  EntityTag
 
@@ -156,6 +183,38 @@ ___
 
 ## Variables
 
+### `Const` parseCacheDirective
+
+• **parseCacheDirective**: *function* =  parseWith(pCacheDirective)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
+
+___
+
+### `Const` parseCacheDirectiveOrThrow
+
+• **parseCacheDirectiveOrThrow**: *function* =  parseWithOrThrow(pCacheDirective)
+
+#### Type declaration:
+
+▸ (`src`: A): *B*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | A |
+
+___
+
 ### `Const` parseETag
 
 • **parseETag**: *function* =  parseWith(pETag)
@@ -219,6 +278,20 @@ Name | Type |
 `src` | A |
 
 ## Functions
+
+### `Const` cacheDirectiveToString
+
+▸ **cacheDirectiveToString**(`__namedParameters`: object): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+
+**Returns:** *string*
+
+___
 
 ### `Const` checkIfNotModified
 
@@ -351,6 +424,34 @@ Name | Type |
 
 ___
 
+### `Const` maxAge
+
+▸ **maxAge**(`value`: number): *[CacheDirective](README.md#cachedirective)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | number |
+
+**Returns:** *[CacheDirective](README.md#cachedirective)*
+
+___
+
+### `Const` maxStale
+
+▸ **maxStale**(`value`: number): *[CacheDirective](README.md#cachedirective)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | number |
+
+**Returns:** *[CacheDirective](README.md#cachedirective)*
+
+___
+
 ### `Const` mediaTypeIsCompressible
 
 ▸ **mediaTypeIsCompressible**(`db`: object): *(Anonymous function)*
@@ -376,6 +477,34 @@ Name | Type |
 `__namedParameters` | object |
 
 **Returns:** *string*
+
+___
+
+### `Const` minFresh
+
+▸ **minFresh**(`value`: number): *[CacheDirective](README.md#cachedirective)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | number |
+
+**Returns:** *[CacheDirective](README.md#cachedirective)*
+
+___
+
+### `Const` noCache
+
+▸ **noCache**(`headers`: keyof string[]): *object*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`headers` | keyof string[] |  [] |
+
+**Returns:** *object*
 
 ___
 
@@ -431,6 +560,34 @@ Name | Type |
 
 ___
 
+### `Const` private_
+
+▸ **private_**(`headers`: keyof string[]): *object*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`headers` | keyof string[] |  [] |
+
+**Returns:** *object*
+
+___
+
+### `Const` sharedMaxAge
+
+▸ **sharedMaxAge**(`value`: number): *[CacheDirective](README.md#cachedirective)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | number |
+
+**Returns:** *[CacheDirective](README.md#cachedirective)*
+
+___
+
 ### `Const` writeHttpRequestHeaders
 
 ▸ **writeHttpRequestHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
@@ -482,3 +639,87 @@ Name | Type |
 `value` | string |
 
 **Returns:** *void*
+
+## Object literals
+
+### `Const` mustRevalidate
+
+### ▪ **mustRevalidate**: *object*
+
+###  directive
+
+• **directive**: *string* = "must-revalidate"
+
+###  value
+
+• **value**: *string* = ""
+
+___
+
+### `Const` noStore
+
+### ▪ **noStore**: *object*
+
+###  directive
+
+• **directive**: *string* = "no-store"
+
+###  value
+
+• **value**: *string* = ""
+
+___
+
+### `Const` noTransform
+
+### ▪ **noTransform**: *object*
+
+###  directive
+
+• **directive**: *string* = "no-transform"
+
+###  value
+
+• **value**: *string* = ""
+
+___
+
+### `Const` onlyIfCached
+
+### ▪ **onlyIfCached**: *object*
+
+###  directive
+
+• **directive**: *string* = "only-if-cached"
+
+###  value
+
+• **value**: *string* = ""
+
+___
+
+### `Const` proxyRevalidate
+
+### ▪ **proxyRevalidate**: *object*
+
+###  directive
+
+• **directive**: *string* = "proxy-revalidate"
+
+###  value
+
+• **value**: *string* = ""
+
+___
+
+### `Const` public_
+
+### ▪ **public_**: *object*
+
+###  directive
+
+• **directive**: *string* = "public"
+
+###  value
+
+• **value**: *string* = ""

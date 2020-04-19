@@ -11,6 +11,7 @@ import {
   HttpMethod,
   HttpContentResponse,
   EntityTag,
+  CacheDirective,
 } from "./interfaces";
 import {
   writeHttpContentHeaders,
@@ -27,6 +28,7 @@ import {
   parseHttpPreferencesFromHeaders,
   writeHttpPreferenceHeaders,
 } from "./httpPreferences";
+import { parseCacheControlFromHeaders, writeHttpCacheControlHeader } from "./cacheDirective";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -46,6 +48,7 @@ declare class URL implements URILike {
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
   options: {
+    cacheControl?: readonly CacheDirective[];
     content?: T;
     etag?: EntityTag;
     expires?: number;
@@ -57,6 +60,7 @@ export const createHttpResponse = <T>(
   } = {},
 ): HttpResponse<T> => ({
   ...options,
+  cacheControl: options.cacheControl ?? [],
   headers: options.headers ?? {},
   statusCode,
   vary: options.vary ?? [],
@@ -67,6 +71,8 @@ export const parseHttpResponseFromHeaders = <T>(
   headers: HttpHeaders,
   body: T,
 ): HttpContentResponse<T> => {
+  const cacheControl = parseCacheControlFromHeaders(headers);
+
   const content = parseHttpContentFromHeaders(headers, body);
 
   const etag = parseETag(
@@ -90,6 +96,7 @@ export const parseHttpResponseFromHeaders = <T>(
   const vary: readonly string[] = [];
 
   return {
+    cacheControl,
     etag,
     expires,
     lastModified,
@@ -104,6 +111,7 @@ export const parseHttpResponseFromHeaders = <T>(
 
 const writeCoreHttpResponseHeaders = <T>(
   {
+    cacheControl,
     etag,
     expires,
     headers,
@@ -114,6 +122,8 @@ const writeCoreHttpResponseHeaders = <T>(
   }: HttpResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
+  writeHttpCacheControlHeader(cacheControl, writeHeader);
+
   if (isSome(etag)) {
     writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
   }

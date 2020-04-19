@@ -138,9 +138,15 @@ export type HttpRequestPreconditions = {
   readonly ifRange?: EntityTag | HttpDateTime;
 };
 
+export type CacheDirective = {
+  readonly directive: string;
+  readonly value: string;
+};
+
 export type HttpRequest<T> = {
   // readonly authorization?: Credentials;
-  // readonly cacheControl: readonly CacheDirective[];
+
+  readonly cacheControl: readonly CacheDirective[];
 
   readonly content?: T;
   readonly expectContinue: boolean;
@@ -168,7 +174,7 @@ export type HttpResponse<T> = {
   // age:Option<TimeSpan>
   // allowed:Set<Method>
   // authenticate:Set<Challenge>
-  // cacheControl: Set<CacheDirective>
+  readonly cacheControl: readonly CacheDirective[];
   // date:Option<DateTime>
   readonly content?: T;
   readonly etag?: EntityTag;
