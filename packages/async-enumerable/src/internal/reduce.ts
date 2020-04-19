@@ -28,10 +28,7 @@ export const reduce = <TSrc, TAcc>(
  * @param initial
  */
 export const reduceAsync = <TSrc, TAcc>(
-  reducer: (
-    acc: TAcc,
-    next: TSrc,
-  ) => ObservableLike<ReducerRequest<TAcc>>,
+  reducer: (acc: TAcc, next: TSrc) => ObservableLike<ReducerRequest<TAcc>>,
   initial: () => TAcc,
 ): Operator<
   AsyncEnumerableLike<void, TSrc>,

@@ -201,12 +201,12 @@ export const checkIfNotModified = <T>({
     (preconditions?.ifModifiedSince ?? Number.MIN_SAFE_INTEGER);
 
   const match =
-    isSome(etag) && 
+    isSome(etag) &&
     isSome(preconditions?.ifNoneMatch) &&
-    isSome(lastModified) && 
+    isSome(lastModified) &&
     isSome(preconditions?.ifModifiedSince)
       ? notModifiedSince && etagMatch
-      : isSome(etag) && isSome(preconditions?.ifNoneMatch) 
+      : isSome(etag) && isSome(preconditions?.ifNoneMatch)
       ? etagMatch
       : notModifiedSince;
 

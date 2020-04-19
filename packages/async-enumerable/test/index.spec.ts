@@ -69,7 +69,7 @@ test("reduceAsync", () => {
           type: ReducerRequestType.Continue,
           acc: acc + next,
         }),
-      () =>  0,
+      () => 0,
     ),
     toValue(),
     expect,
