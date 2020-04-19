@@ -1,13 +1,14 @@
+import { Option } from "@reactive-js/option";
 import { SchedulerContinuationLike, CallbackSchedulerLike } from "./interfaces";
 
 function createCallback(
   scheduler: CallbackSchedulerLike,
   continuation: SchedulerContinuationLike,
-): () => void {
-  const callback = () => {
+): (shouldYield: Option<() => boolean>) => void {
+  const callback = (shouldYield: Option<() => boolean>) => {
     if (!continuation.isDisposed) {
       scheduler.inContinuation = true;
-      const delay = continuation.run(scheduler.shouldYield);
+      const delay = continuation.run(shouldYield);
       scheduler.inContinuation = false;
 
       if (!continuation.isDisposed) {

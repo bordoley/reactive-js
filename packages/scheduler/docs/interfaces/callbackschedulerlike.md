@@ -15,7 +15,6 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 ### Properties
 
 * [inContinuation](callbackschedulerlike.md#incontinuation)
-* [shouldYield](callbackschedulerlike.md#shouldyield)
 
 ### Methods
 
@@ -28,14 +27,6 @@ Interface used by Scheduler implementations using the 'schedulerMixin' functions
 • **inContinuation**: *boolean*
 
 *Overrides [SchedulerLike](schedulerlike.md).[inContinuation](schedulerlike.md#incontinuation)*
-
-___
-
-###  shouldYield
-
-• **shouldYield**: *Option‹function›*
-
-Platform specific shouldYield function passed to continuations when they are run.
 
 ## Methods
 
@@ -51,7 +42,13 @@ Schedules a callback with the specified delay to be executed in the future.
 
 The callback function to be executed.
 
-▸ (): *void*
+▸ (`shouldYield`: Option‹function›): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`shouldYield` | Option‹function› |
 
 ▪ **delay**: *number*
 
