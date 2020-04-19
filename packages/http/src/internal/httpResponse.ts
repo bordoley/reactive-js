@@ -1,4 +1,3 @@
-import fresh from "fresh";
 import { isSome, none } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
@@ -28,7 +27,10 @@ import {
   parseHttpPreferencesFromHeaders,
   writeHttpPreferenceHeaders,
 } from "./httpPreferences";
-import { parseCacheControlFromHeaders, writeHttpCacheControlHeader } from "./cacheDirective";
+import {
+  parseCacheControlFromHeaders,
+  writeHttpCacheControlHeader,
+} from "./cacheDirective";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -168,27 +170,50 @@ export const writeHttpResponseHeaders = <T>(
 };
 
 export const checkIfNotModified = <T>({
-  headers: reqHeaders,
+  cacheControl,
   method,
+  preconditions,
 }: HttpRequest<unknown>): Operator<
   HttpResponse<T>,
   HttpResponse<T>
 > => response => {
+  const { etag, lastModified } = response;
   const { statusCode, content: _, ...requestWithoutContent } = response;
-  const methodSupportsFresh =
+
+  const methodSupportsConditionalResponse =
     method === HttpMethod.GET || method === HttpMethod.HEAD;
-  const statusCodeSupportsFresh = statusCode >= 200 && statusCode < 300;
 
-  const headers: { [k: string]: string } = {};
-  writeCoreHttpResponseHeaders(response, (k, v) => {
-    headers[k.toLowerCase()] = v;
-  });
+  const statusCodeSupportsConditionalResponse =
+    statusCode >= 200 && statusCode < 300;
 
-  return methodSupportsFresh &&
-    statusCodeSupportsFresh &&
-    // We assume a server request here with raw headers from the request
-    // so only serialize the response which is likely to be typed
-    fresh(reqHeaders as any, headers as any)
+  const isNoCacheRequest =
+    cacheControl.findIndex(({ directive }) => directive === "no-cache") >= 0;
+
+  const etagMatch =
+    isSome(etag) &&
+    (preconditions?.ifNoneMatch === "*" ||
+      (preconditions?.ifNoneMatch || []).findIndex(
+        ({ tag }) => tag === etag.tag,
+      ) >= 0);
+
+  const notModifiedSince =
+    (lastModified ?? Number.MAX_SAFE_INTEGER) <=
+    (preconditions?.ifModifiedSince ?? Number.MIN_SAFE_INTEGER);
+
+  const match =
+    isSome(etag) && 
+    isSome(preconditions?.ifNoneMatch) &&
+    isSome(lastModified) && 
+    isSome(preconditions?.ifModifiedSince)
+      ? notModifiedSince && etagMatch
+      : isSome(etag) && isSome(preconditions?.ifNoneMatch) 
+      ? etagMatch
+      : notModifiedSince;
+
+  return methodSupportsConditionalResponse &&
+    statusCodeSupportsConditionalResponse &&
+    !isNoCacheRequest &&
+    match
     ? createHttpResponse(HttpStatusCode.NotModified, requestWithoutContent)
     : response;
 };
