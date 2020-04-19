@@ -31,7 +31,7 @@ import {
 } from "@reactive-js/http-router";
 import {
   BufferStreamLike,
-  getHostScheduler,
+  scheduler as nodeScheduler,
   bindNodeCallback,
   encode,
 } from "@reactive-js/node";
@@ -55,7 +55,7 @@ import { isSome, none } from "@reactive-js/option";
 import { generateStream, mapStream } from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
-  getHostScheduler(),
+  nodeScheduler,
   createPriorityScheduler,
   toSchedulerWithPriority(1),
 );

@@ -11,6 +11,7 @@
 
 ### Variables
 
+* [scheduler](README.md#const-scheduler)
 * [unsupportedEncoding](README.md#const-unsupportedencoding)
 
 ### Functions
@@ -22,12 +23,17 @@
 * [createBufferStreamSinkFromWritable](README.md#const-createbufferstreamsinkfromwritable)
 * [decode](README.md#const-decode)
 * [encode](README.md#const-encode)
-* [getHostScheduler](README.md#const-gethostscheduler)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
 * [stringToBufferStream](README.md#const-stringtobufferstream)
 * [transform](README.md#const-transform)
 
 ## Variables
+
+### `Const` scheduler
+
+• **scheduler**: *SchedulerLike* =  schedulerImpl
+
+___
 
 ### `Const` unsupportedEncoding
 
@@ -1906,14 +1912,6 @@ Name | Type |
 `charset` | string |
 
 **Returns:** *Operator‹StreamLike‹string›, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
-
-___
-
-### `Const` getHostScheduler
-
-▸ **getHostScheduler**(): *SchedulerLike*
-
-**Returns:** *SchedulerLike*
 
 ___
 

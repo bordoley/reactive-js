@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
-import { none, Option, isSome } from "@reactive-js/option";
-import { SchedulerLike, schedule } from "@reactive-js/scheduler";
+import { Option, isSome } from "@reactive-js/option";
+import { SchedulerLike, schedule, CallbackSchedulerLike } from "@reactive-js/scheduler";
 
 const performance = window.performance;
 const Date = window.Date;
@@ -16,26 +16,23 @@ const yieldInterval = 5;
 const maxYieldInterval = 300;
 
 const callCallbackAndDispose = (
-  scheduler: WebScheduler,
   callback: (shouldYield: Option<() => boolean>) => void,
   disposable: DisposableLike,
 ) => {
-  scheduler.startTime = scheduler.now;
-  callback(scheduler.shouldYield);
+  startTime = now();
+  callback(shouldYield);
   disposable.dispose();
 };
 
 const scheduleImmediate = (
-  scheduler: WebScheduler,
   callback: (shouldYield: Option<() => boolean>) => void,
 ): DisposableLike => {
   const disposable = createDisposable();
-  const channel = scheduler.channel;
 
   channel.port1.onmessage = () => {
     if (!disposable.isDisposed) {
-      scheduler.startTime = scheduler.now;
-      callback(scheduler.shouldYield);
+      startTime = now();
+      callback(shouldYield);
       disposable.dispose();
     }
   };
@@ -44,7 +41,6 @@ const scheduleImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: WebScheduler,
   callback: (shouldYield: Option<() => boolean>) => void,
   delay: number,
 ): DisposableLike => {
@@ -52,53 +48,46 @@ const scheduleDelayed = (
   const timeout = setTimeout(
     callCallbackAndDispose,
     delay,
-    scheduler,
     callback,
     disposable,
   );
   return disposable;
 };
 
-class WebScheduler implements SchedulerLike {
-  channel = new MessageChannel();
-  inContinuation = false;
-  readonly schedule = schedule;
-  readonly shouldYield =
-    isSome(navigator) &&
-    isSome((navigator as any).scheduling) &&
-    isSome((navigator as any).scheduling.isInputPending)
-      ? () => {
-          const currentTime = now();
-          const startTime = this.startTime;
-          const deadline = startTime + yieldInterval;
-          const maxDeadline = startTime + maxYieldInterval;
-          const inputPending = (navigator as any).scheduling.isInputPending();
+const shouldYield =
+  isSome(navigator) &&
+  isSome((navigator as any).scheduling) &&
+  isSome((navigator as any).scheduling.isInputPending)
+    ? () => {
+        const currentTime = now();
+        const deadline = startTime + yieldInterval;
+        const maxDeadline = startTime + maxYieldInterval;
+        const inputPending = (navigator as any).scheduling.isInputPending();
 
-          return (
-            (currentTime >= deadline && inputPending) ||
-            currentTime >= maxDeadline
-          );
-        }
-      : () => now() >= this.startTime + yieldInterval;
+        return (
+          (currentTime >= deadline && inputPending) ||
+          currentTime >= maxDeadline
+        );
+      }
+    : () => now() >= startTime + yieldInterval;
 
-  startTime = this.now;
+const channel = new MessageChannel();
 
-  get now(): number {
+const schedulerImpl: CallbackSchedulerLike = {
+  inContinuation: false,
+  get now() {
     return now();
-  }
-
+  },
+  schedule,
   scheduleCallback(callback: (shouldYield: Option<() => boolean>) => void, delay: number): DisposableLike {
     // setTimeout has a floor of 4ms so for lesser delays
     // just schedule immediately.
     return delay >= 4
-      ? scheduleDelayed(this, callback, delay)
-      : scheduleImmediate(this, callback);
+      ? scheduleDelayed(callback, delay)
+      : scheduleImmediate(callback);
   }
 }
 
-let hostScheduler: Option<SchedulerLike> = none;
+let startTime = now();
 
-export const getHostScheduler = (): SchedulerLike => {
-  hostScheduler = hostScheduler ?? new WebScheduler();
-  return hostScheduler;
-};
+export const scheduler: SchedulerLike = schedulerImpl;
