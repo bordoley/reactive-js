@@ -36,3 +36,29 @@ export const mediaTypeToString = ({
     stringParams.length > 0 ? ";" + stringParams : ""
   }`;
 };
+
+const compressionBlacklist = [
+  "text/event-stream", // Browser's don't seem to support compressed event streams
+];
+
+const textSubtypes = ["html", "json", "text", "xml"];
+
+export const mediaTypeIsCompressible = (
+  db: {
+    [key: string]: { 
+      compressible?: boolean,
+    }
+  }
+) => ({
+  type,
+  subtype,
+}: MediaType): boolean => {
+  const mediaType = mediaTypeToString({ type, subtype, params: {} });
+  const blackListed = compressionBlacklist.includes(mediaType);
+  const compressible = db[mediaType]?.compressible ?? false;
+  const typeIsText = type === "text";
+  const subtypeIsText =
+    textSubtypes.filter(x => subtype.endsWith(x)).length > 0;
+
+  return !blackListed && (compressible || typeIsText || subtypeIsText);
+};

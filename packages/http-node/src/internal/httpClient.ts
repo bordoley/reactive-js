@@ -1,5 +1,6 @@
 import { IncomingMessage, request as httpRequest, Agent } from "http";
 import { request as httpsRequest, RequestOptions } from "https";
+import db from "mime-db";
 import { URL } from "url";
 import { ZlibOptions, BrotliOptions } from "zlib";
 import {
@@ -21,6 +22,7 @@ import {
   HttpHeaders,
   HttpStatusCode,
   createRedirectHttpRequest,
+  mediaTypeIsCompressible,
   parseHttpResponseFromHeaders,
   HttpContentRequest,
   HttpContentResponse,
@@ -50,7 +52,6 @@ import {
   createEncodingCompressTransform,
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
-import { contentIsCompressible } from "./httpContent";
 import { decodeHttpContentResponse } from "./httpResponse";
 
 export const enum HttpClientRequestStatusType {
@@ -259,7 +260,7 @@ const requestIsCompressible = (
   request: HttpContentRequest<BufferStreamLike>,
 ): boolean => {
   const { content } = request;
-  return isSome(content) ? contentIsCompressible(content) : false;
+  return isSome(content) ? mediaTypeIsCompressible(db)(content.contentType) : false;
 };
 
 export interface HttpClientLike extends DisposableLike {
