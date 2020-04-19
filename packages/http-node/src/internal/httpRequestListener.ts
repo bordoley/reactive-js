@@ -49,8 +49,8 @@ const writeResponseContentBody = (resp: ServerResponse) => ({
 }: HttpContentResponse<BufferStreamLike>) => {
   const body = content?.body ?? emptyStream();
   const responseBodySink = createBufferStreamSinkFromWritable(() => resp);
-  return sink(responseBodySink)(body);
-}
+  return sink(body, responseBodySink);
+};
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 

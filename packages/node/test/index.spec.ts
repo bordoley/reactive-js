@@ -45,7 +45,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    await pipe(src, sink(dest), toPromise(getHostScheduler()));
+    await pipe(sink(src, dest), toPromise(getHostScheduler()));
     expect(data).toEqual("abcdefg");
   });
 
@@ -67,7 +67,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    const promise = pipe(src, sink(dest), toPromise(getHostScheduler()));
+    const promise = pipe(sink(src, dest), toPromise(getHostScheduler()));
     expect(promise).rejects.toThrow(cause);
   });
 
@@ -90,7 +90,7 @@ describe("streams", () => {
 
     const src = createBufferStreamFromReadable(() => Readable.from(generate()));
 
-    const promise = pipe(src, sink(dest), toPromise(getHostScheduler()));
+    const promise = pipe(sink(src, dest), toPromise(getHostScheduler()));
     expect(promise).rejects.toThrow(cause);
   });
 
@@ -121,7 +121,7 @@ describe("streams", () => {
       createBufferStreamFromReadable(() => Readable.from(generate())),
       transform(() => createGzip()),
       transform(() => createGunzip()),
-      sink(dest),
+      src => sink(src, dest),
       toPromise(getHostScheduler()),
     );
     expect(data).toEqual("abcdefg");
