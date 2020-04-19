@@ -1,7 +1,4 @@
-import {
-  createPriorityQueue,
-  PriorityQueueLike,
-} from "@reactive-js/collections";
+import { createPriorityQueue, QueueLike } from "@reactive-js/collections";
 import { none, Option, isSome } from "@reactive-js/option";
 import {
   SchedulerContinuationLike,
@@ -61,9 +58,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     );
   };
   private taskIDCount = 0;
-  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
-    comparator,
-  );
+  readonly taskQueue: QueueLike<VirtualTask> = createPriorityQueue(comparator);
 
   constructor(private readonly maxMicroTaskTicks: number) {
     super();

@@ -1,7 +1,4 @@
-import {
-  createPriorityQueue,
-  PriorityQueueLike,
-} from "@reactive-js/collections";
+import { createPriorityQueue, QueueLike } from "@reactive-js/collections";
 import {
   AbstractSerialDisposable,
   DisposableLike,
@@ -166,11 +163,9 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable
   implements PrioritySchedulerLike, DisposableLike {
   inContinuation = false;
 
-  readonly queue: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
-    comparator,
-  );
+  readonly queue: QueueLike<ScheduledTask> = createPriorityQueue(comparator);
 
-  readonly delayed: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
+  readonly delayed: QueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
   );
 

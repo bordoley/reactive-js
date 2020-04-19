@@ -1,5 +1,5 @@
-import { isSome, none, Option } from "@reactive-js/option";
-import { PriorityQueueLike } from "./interfaces";
+import { isSome, none } from "@reactive-js/option";
+import { QueueLike } from "./interfaces";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
@@ -51,7 +51,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   }
 };
 
-class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
+class PriorityQueueImpl<T> implements QueueLike<T> {
   readonly values: Array<T> = [];
 
   constructor(readonly compare: (a: T, b: T) => number) {}
@@ -68,7 +68,7 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
     return this.values[0];
   }
 
-  pop(): Option<T> {
+  pop() {
     const { values } = this;
     const length = values.length;
     if (length === 0) {
@@ -95,4 +95,4 @@ class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
 
 export const createPriorityQueue = <T>(
   comparator: (a: T, b: T) => number,
-): PriorityQueueLike<T> => new PriorityQueueImpl(comparator);
+): QueueLike<T> => new PriorityQueueImpl(comparator);

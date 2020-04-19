@@ -11,8 +11,9 @@ export interface KeyedQueueLike<K, V> {
   push(key: K, value: V): void;
 }
 
-export interface PriorityQueueLike<T> {
+export interface QueueLike<T> {
   readonly count: number;
+
   clear(): void;
   peek(): Option<T>;
   pop(): Option<T>;

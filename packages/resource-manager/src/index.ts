@@ -1,4 +1,8 @@
-import { createKeyedQueue, createSetMultimap } from "@reactive-js/collections";
+import {
+  createKeyedQueue,
+  createSetMultimap,
+  createUniqueQueue,
+} from "@reactive-js/collections";
 import {
   AbstractDisposable,
   DisposableLike,
@@ -17,10 +21,9 @@ import { isSome, isNone, none } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 
-const tryDispatch = <TKey, TResource extends DisposableLike>(
-  resourceManager: ResourceManagerImpl<TKey, TResource>,
-  key: TKey,
-  hashedKey: string,
+const tryDispatch = <TResource extends DisposableLike>(
+  resourceManager: ResourceManagerImpl<TResource>,
+  key: string,
 ) => {
   const {
     availableResources,
@@ -35,25 +38,25 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   } = resourceManager;
 
   // Find the first not disposed subscriber but don't remove it from the queue.
-  let peekedSubscriber = resourceRequests.peek(hashedKey);
+  let peekedSubscriber = resourceRequests.peek(key);
   while (isSome(peekedSubscriber) && peekedSubscriber.isDisposed) {
-    resourceRequests.pop(hashedKey);
-    peekedSubscriber = resourceRequests.peek(hashedKey);
+    resourceRequests.pop(key);
+    peekedSubscriber = resourceRequests.peek(key);
   }
 
   if (isNone(peekedSubscriber)) {
-    // No work to do for the key
+    // No work to do for the current key
     return;
   }
 
   // Find the first not disposed resource but don't remove it from the queue.
-  let peekedResource = availableResources.peek(hashedKey);
+  let peekedResource = availableResources.peek(key);
   while (isSome(peekedResource) && peekedResource.isDisposed) {
-    availableResources.pop(hashedKey);
-    peekedResource = availableResources.peek(hashedKey);
+    availableResources.pop(key);
+    peekedResource = availableResources.peek(key);
   }
 
-  const inUseCount = inUseResources.get(hashedKey).size;
+  const inUseCount = inUseResources.get(key).size;
 
   if (
     isNone(peekedResource) &&
@@ -66,9 +69,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
     // and there are no resources in the wait queue
     // so schedule the key for the next available
     // resource allocation.
-    if (!globalResourceWaitQueue.has(hashedKey)) {
-      globalResourceWaitQueue.set(hashedKey, key);
-    }
+    globalResourceWaitQueue.push(key);
     return;
   }
 
@@ -90,7 +91,7 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   const resource =
     isNone(peekedResource) && inUseCount < maxResourcesPerKey
       ? resourceManager.createResource(key)
-      : availableResources.pop(hashedKey);
+      : availableResources.pop(key);
 
   if (isNone(resource)) {
     // Failed to allocate a resource because
@@ -107,37 +108,30 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
   // We have resource to allocate so pop
   // the subscriber off the request queue
   // and mark the resource as in use
-  const subscriber = resourceRequests.pop(hashedKey) as SafeSubscriberLike<
-    TResource
-  >;
-  inUseResources.add(hashedKey, subscriber);
+  const subscriber = resourceRequests.pop(key) as SafeSubscriberLike<TResource>;
+  inUseResources.add(key, subscriber);
 
   subscriber.add(() => {
-    inUseResources.remove(hashedKey, subscriber);
-    availableResources.push(hashedKey, resource);
+    inUseResources.remove(key, subscriber);
+    availableResources.push(key, resource);
 
     // Setup the timeout subscription
     const timeoutSubscription = pipe(
       ofValue(none, maxIdleTime),
       onNotify(_ => {
-        const resource = availableResources.pop(hashedKey);
+        const resource = availableResources.pop(key);
         if (isSome(resource)) {
           resource.dispose();
-        }
 
-        // FIXME: Check the global queue for the next hashKey
-        // awaiting a resource and dispatch it.
-        const resourceKey = pipe(
-          globalResourceWaitQueue.entries(),
-          fromIterable,
-          first,
-        );
-
-        if (isSome(resourceKey)) {
-          const [hashedKey, key] = resourceKey;
-          globalResourceWaitQueue.delete(hashedKey);
-
-          tryDispatch(resourceManager, key, hashedKey);
+          // Check the global queue for the next key
+          // awaiting a resource and dispatch it.
+          const resourceKey = globalResourceWaitQueue.pop();
+          if (isSome(resourceKey)) {
+            // FIXME: What happens if all requests for this
+            // resource are disposed. We should move on to the next but
+            // don't afaict.
+            tryDispatch(resourceManager, resourceKey);
+          }
         }
       }),
       subscribe(scheduler),
@@ -146,21 +140,20 @@ const tryDispatch = <TKey, TResource extends DisposableLike>(
     });
     availableResourcesTimeouts.set(resource, timeoutSubscription);
 
-    tryDispatch(resourceManager, key, hashedKey);
+    tryDispatch(resourceManager, key);
   });
   subscriber.dispatch(resource);
-  return;
 };
 
-export interface ResourceManagerLike<TKey, TResource> extends DisposableLike {
+export interface ResourceManagerLike<TResource> extends DisposableLike {
   readonly count: number;
 
-  get(key: TKey): ObservableLike<TResource>;
+  get(key: string): ObservableLike<TResource>;
 }
 
-class ResourceManagerImpl<TKey, TResource extends DisposableLike>
+class ResourceManagerImpl<TResource extends DisposableLike>
   extends AbstractDisposable
-  implements ResourceManagerLike<TKey, TResource> {
+  implements ResourceManagerLike<TResource> {
   readonly availableResources = createKeyedQueue<string, TResource>();
   readonly availableResourcesTimeouts = new Map<TResource, DisposableLike>();
 
@@ -173,11 +166,10 @@ class ResourceManagerImpl<TKey, TResource extends DisposableLike>
     string,
     SafeSubscriberLike<TResource>
   >();
-  readonly globalResourceWaitQueue = new Map<string, TKey>();
+  readonly globalResourceWaitQueue = createUniqueQueue<string>();
 
   constructor(
-    readonly createResource: (key: TKey) => TResource,
-    readonly hash: (key: TKey) => string,
+    readonly createResource: (key: string) => TResource,
     readonly scheduler: SchedulerLike,
     readonly maxIdleTime: number,
     readonly maxResourcesPerKey: number,
@@ -203,26 +195,23 @@ class ResourceManagerImpl<TKey, TResource extends DisposableLike>
     return this.availableResources.count + this.inUseResources.count;
   }
 
-  get(key: TKey): ObservableLike<TResource> {
+  get(key: string): ObservableLike<TResource> {
     return createObservable(subscriber => {
-      const hashedKey = this.hash(key);
-
-      this.resourceRequests.push(hashedKey, subscriber);
-      tryDispatch(this, key, hashedKey);
+      this.resourceRequests.push(key, subscriber);
+      tryDispatch(this, key);
     });
   }
 }
 
-export const createResourceManager = <TKey, TResource extends DisposableLike>(
-  createResource: (key: TKey) => TResource,
-  hash: (key: TKey) => string,
+export const createResourceManager = <TResource extends DisposableLike>(
+  createResource: (key: string) => TResource,
   scheduler: SchedulerLike,
   options: {
     maxIdleTime?: number;
     maxResourcesPerKey?: number;
     maxTotalResources?: number;
   } = {},
-): ResourceManagerLike<TKey, TResource> => {
+): ResourceManagerLike<TResource> => {
   const {
     maxIdleTime = Number.MAX_SAFE_INTEGER,
     maxResourcesPerKey = 256,
@@ -230,7 +219,6 @@ export const createResourceManager = <TKey, TResource extends DisposableLike>(
   } = options;
   return new ResourceManagerImpl(
     createResource,
-    hash,
     scheduler,
     maxIdleTime,
     maxResourcesPerKey,

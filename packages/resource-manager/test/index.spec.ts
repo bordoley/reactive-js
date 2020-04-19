@@ -13,7 +13,6 @@ test("resource manager test", () => {
 
   const rm = createResourceManager(
     (k: string) => createDisposableValue(k, () => {}),
-    x => x,
     scheduler,
     { maxIdleTime: 10, maxResourcesPerKey: 1, maxTotalResources: 2 },
   );
