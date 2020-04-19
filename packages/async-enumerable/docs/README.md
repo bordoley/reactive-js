@@ -88,7 +88,7 @@ ___
 
 ###  ReducerRequest
 
-Ƭ **ReducerRequest**: *[ContinueRequest](README.md#continuerequest)‹TReq, TAcc› | [DoneRequest](README.md#donerequest)‹TAcc›*
+Ƭ **ReducerRequest**: *[ContinueRequest](README.md#continuerequest)‹TAcc› | [DoneRequest](README.md#donerequest)‹TAcc›*
 
 ___
 
@@ -122,11 +122,9 @@ ___
 
 ### `Const` consume
 
-▸ **consume**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+▸ **consume**<**T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
 
 **Type parameters:**
-
-▪ **TReq**
 
 ▪ **T**
 
@@ -136,7 +134,7 @@ ___
 
 ▪ **reducer**: *function*
 
-▸ (`acc`: TAcc, `next`: T): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (`acc`: TAcc, `next`: T): *[ReducerRequest](README.md#reducerrequest)‹TAcc›*
 
 **Parameters:**
 
@@ -147,19 +145,17 @@ Name | Type |
 
 ▪ **initial**: *function*
 
-▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (): *TAcc*
 
-**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
 
 ___
 
 ### `Const` consumeAsync
 
-▸ **consumeAsync**<**TReq**, **T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+▸ **consumeAsync**<**T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
 
 **Type parameters:**
-
-▪ **TReq**
 
 ▪ **T**
 
@@ -169,7 +165,7 @@ ___
 
 ▪ **reducer**: *function*
 
-▸ (`acc`: TAcc, `next`: T): *ObservableLike‹[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc››*
+▸ (`acc`: TAcc, `next`: T): *ObservableLike‹[ReducerRequest](README.md#reducerrequest)‹TAcc››*
 
 **Parameters:**
 
@@ -180,9 +176,9 @@ Name | Type |
 
 ▪ **initial**: *function*
 
-▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (): *TAcc*
 
-**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, T›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
 
 ___
 
@@ -578,11 +574,9 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+▸ **reduce**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
-
-▪ **TReq**
 
 ▪ **TSrc**
 
@@ -592,7 +586,7 @@ ___
 
 ▪ **reducer**: *function*
 
-▸ (`acc`: TAcc, `next`: TSrc): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (`acc`: TAcc, `next`: TSrc): *[ReducerRequest](README.md#reducerrequest)‹TAcc›*
 
 **Parameters:**
 
@@ -603,19 +597,17 @@ Name | Type |
 
 ▪ **initial**: *function*
 
-▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (): *TAcc*
 
-**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, TSrc›, ObservableLike‹TAcc››*
 
 ___
 
 ### `Const` reduceAsync
 
-▸ **reduceAsync**<**TReq**, **TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+▸ **reduceAsync**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, TSrc›, ObservableLike‹TAcc››*
 
 **Type parameters:**
-
-▪ **TReq**
 
 ▪ **TSrc**
 
@@ -625,7 +617,7 @@ ___
 
 ▪ **reducer**: *function*
 
-▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc››*
+▸ (`acc`: TAcc, `next`: TSrc): *ObservableLike‹[ReducerRequest](README.md#reducerrequest)‹TAcc››*
 
 **Parameters:**
 
@@ -636,9 +628,9 @@ Name | Type |
 
 ▪ **initial**: *function*
 
-▸ (): *[ReducerRequest](README.md#reducerrequest)‹TReq, TAcc›*
+▸ (): *TAcc*
 
-**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TSrc›, ObservableLike‹TAcc››*
+**Returns:** *Operator‹[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, TSrc›, ObservableLike‹TAcc››*
 
 ___
 
