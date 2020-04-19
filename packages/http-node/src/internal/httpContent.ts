@@ -1,4 +1,3 @@
-import compressible from "compressible";
 import iconv from "iconv-lite";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { Readable } from "stream";
@@ -12,7 +11,6 @@ import {
   HttpContentEncoding,
   HttpContent,
   MediaType,
-  mediaTypeToString,
   parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import { transform, createBufferStreamFromReadable } from "@reactive-js/node";
@@ -106,22 +104,4 @@ export const createStringHttpContent = (
   // FIXME: update the contentType if none is specfied in the content params provided.
 
   return createBufferHttpContent(buffer, contentType);
-};
-
-const compressionBlacklist = [
-  "text/event-stream", // Browser's don't seem to support compressed event streams
-];
-
-// FIXME: This function should probably be the Http Package.
-/** @ignore */
-export const contentIsCompressible = (
-  content: HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>,
-): boolean => {
-  const { type, subtype } = content.contentType;
-  const mediaType = mediaTypeToString({ type, subtype, params: {} });
-
-  return (
-    !compressionBlacklist.includes(mediaType) &&
-    (compressible(mediaType) || false)
-  );
 };

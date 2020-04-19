@@ -1,24 +1,22 @@
+import db from "mime-db";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import {
   HttpContentResponse,
   HttpContentRequest,
   HttpStandardHeader,
+  mediaTypeIsCompressible,
 } from "@reactive-js/http";
 import { BufferStreamLike } from "@reactive-js/node";
 import { isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
-import {
-  contentIsCompressible,
-  encodeHttpContent,
-  decodeHttpContent,
-} from "./httpContent";
+import { encodeHttpContent, decodeHttpContent } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
 
 const responseIsCompressible = (
   response: HttpContentResponse<BufferStreamLike>,
 ): boolean => {
   const { content } = response;
-  return isSome(content) ? contentIsCompressible(content) : false;
+  return isSome(content) ? mediaTypeIsCompressible(db)(content.contentType) : false;
 };
 
 export type EncodeHttpResponseOptions = {

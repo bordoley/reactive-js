@@ -48,6 +48,7 @@
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
 * [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
+* [mediaTypeIsCompressible](README.md#const-mediatypeiscompressible)
 * [mediaTypeToString](README.md#const-mediatypetostring)
 * [parseHeaders](README.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](README.md#const-parsehttprequestfromheaders)
@@ -347,6 +348,20 @@ Name | Type |
 **Returns:** *object*
 
 * \[ **key**: *string*\]: string
+
+___
+
+### `Const` mediaTypeIsCompressible
+
+▸ **mediaTypeIsCompressible**(`db`: object): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`db` | object |
+
+**Returns:** *(Anonymous function)*
 
 ___
 
