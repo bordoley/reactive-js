@@ -16,11 +16,10 @@ export {
   ContinueRequest,
   ReducerRequest,
   DoneRequest,
-  consume,
-  consumeAsync,
-} from "./internal/consume";
+  reduce, 
+  reduceAsync,
+} from "./internal/reduce";
 
-export { reduce, reduceAsync } from "./internal/reduce";
 export {
   createAsyncEnumerable,
   createAsyncEnumerator,

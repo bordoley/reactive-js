@@ -29,8 +29,6 @@
 
 ### Functions
 
-* [consume](README.md#const-consume)
-* [consumeAsync](README.md#const-consumeasync)
 * [createActionReducer](README.md#const-createactionreducer)
 * [createAsyncEnumerable](README.md#const-createasyncenumerable)
 * [createAsyncEnumerator](README.md#const-createasyncenumerator)
@@ -119,68 +117,6 @@ ___
 Ƭ **StreamOperator**: *Operator‹[StreamLike](interfaces/streamlike.md)‹TA›, [StreamLike](interfaces/streamlike.md)‹TB››*
 
 ## Functions
-
-### `Const` consume
-
-▸ **consume**<**T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **TAcc**
-
-**Parameters:**
-
-▪ **reducer**: *function*
-
-▸ (`acc`: TAcc, `next`: T): *[ReducerRequest](README.md#reducerrequest)‹TAcc›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initial**: *function*
-
-▸ (): *TAcc*
-
-**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
-
-___
-
-### `Const` consumeAsync
-
-▸ **consumeAsync**<**T**, **TAcc**>(`reducer`: function, `initial`: function): *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **TAcc**
-
-**Parameters:**
-
-▪ **reducer**: *function*
-
-▸ (`acc`: TAcc, `next`: T): *ObservableLike‹[ReducerRequest](README.md#reducerrequest)‹TAcc››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initial**: *function*
-
-▸ (): *TAcc*
-
-**Returns:** *Operator‹[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹void, T›, ObservableLike‹TAcc››*
-
-___
 
 ### `Const` createActionReducer
 
