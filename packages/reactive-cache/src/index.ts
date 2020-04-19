@@ -1,6 +1,7 @@
 import {
   AsyncEnumeratorLike,
-  createAsyncEnumerator,
+  createAsyncEnumerable,
+  AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
 import {
   DisposableLike,
@@ -78,6 +79,9 @@ const markAsGarbage = <T>(
   }
 };
 
+const switchAllAsyncEnumerableInstance: AsyncEnumerableLike<ObservableLike<any>, any> = createAsyncEnumerable(switchAll());
+const switchAllAsyncEnumerable = <T>(): AsyncEnumerableLike<ObservableLike<T>, T> => switchAllAsyncEnumerableInstance;
+
 class ReactiveCacheImpl<T> extends AbstractDisposable
   implements ReactiveCacheLike<T> {
   readonly cache: Map<
@@ -124,11 +128,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const enumerator = createAsyncEnumerator<ObservableLike<T>, T>(
-        switchAll(),
-        this.dispatchScheduler,
-        1,
-      ).add(() => {
+      const enumerator = switchAllAsyncEnumerable().enumerateAsync(this.dispatchScheduler).add(() => {
         this.cache.delete(key);
         this.garbage.delete(key);
       });
