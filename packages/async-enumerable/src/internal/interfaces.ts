@@ -29,7 +29,7 @@ export type StateUpdater<T> = {
 };
 
 export const enum StreamMode {
-  Produce = 1,
+  Resume = 1,
   Pause = 2,
 }
 

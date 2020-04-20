@@ -27,7 +27,7 @@ const createStream = <T>(
 ) => createAsyncEnumerable(obs => concat(f(obs), never()));
 
 const emptyModeMapper = (mode: StreamMode) =>
-  mode === StreamMode.Produce ? { type: StreamEventType.Complete } : none;
+  mode === StreamMode.Resume ? { type: StreamEventType.Complete } : none;
 
 const onEmptyOperator = compose(
   mapObs(emptyModeMapper),
@@ -41,7 +41,7 @@ export const emptyStream = <T>(): StreamLike<T> =>
 const ofValueOperator = <T>(data: T) =>
   genMap(function*(mode: StreamMode): Generator<StreamEvent<T>> {
     switch (mode) {
-      case StreamMode.Produce:
+      case StreamMode.Resume:
         yield { type: StreamEventType.Next, data };
         yield { type: StreamEventType.Complete };
     }
@@ -54,7 +54,7 @@ const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
   acc: T,
   ev: StreamMode,
 ): ObservableLike<T> =>
-  ev === StreamMode.Produce
+  ev === StreamMode.Resume
     ? generateObs(generator, () => acc, delay)
     : empty();
 
