@@ -36,6 +36,7 @@
 * [emptyStream](README.md#const-emptystream)
 * [fromArray](README.md#const-fromarray)
 * [fromIterable](README.md#const-fromiterable)
+* [fromObservableStream](README.md#const-fromobservablestream)
 * [generate](README.md#const-generate)
 * [generateStream](README.md#const-generatestream)
 * [identity](README.md#const-identity)
@@ -275,6 +276,24 @@ Name | Type | Description |
 `iterable` | Iterable‹T› |   |
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹void, T›*
+
+___
+
+### `Const` fromObservableStream
+
+▸ **fromObservableStream**<**T**>(`observable`: ObservableLike‹T›): *[StreamLike](interfaces/streamlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observable` | ObservableLike‹T› |
+
+**Returns:** *[StreamLike](interfaces/streamlike.md)‹T›*
 
 ___
 
