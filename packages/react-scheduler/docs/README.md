@@ -1,5 +1,5 @@
 
-# @reactive-js/react-scheduler - v0.0.34
+# @reactive-js/react-scheduler - v0.0.35
 
 ## Index
 

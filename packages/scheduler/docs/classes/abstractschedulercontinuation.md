@@ -1,4 +1,4 @@
-[@reactive-js/scheduler - v0.0.34](../README.md) › [AbstractSchedulerContinuation](abstractschedulercontinuation.md)
+[@reactive-js/scheduler - v0.0.35](../README.md) › [AbstractSchedulerContinuation](abstractschedulercontinuation.md)
 
 # Class: AbstractSchedulerContinuation
 

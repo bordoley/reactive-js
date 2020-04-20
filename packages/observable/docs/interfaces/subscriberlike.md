@@ -1,4 +1,4 @@
-[@reactive-js/observable - v0.0.34](../README.md) › [SubscriberLike](subscriberlike.md)
+[@reactive-js/observable - v0.0.35](../README.md) › [SubscriberLike](subscriberlike.md)
 
 # Interface: SubscriberLike <**T**>
 
