@@ -3,6 +3,7 @@ import { Operator } from "@reactive-js/pipe";
 import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
+  contentIsCompressible,
 } from "./httpContent";
 import {
   writeHttpHeaders,
@@ -277,4 +278,18 @@ export const httpRequestToUntypedHeaders = (
     (header: string, value: string) => (headers[header] = value),
   );
   return headers;
+};
+
+
+export const httpContentRequestIsCompressible = <T>(
+  response: HttpContentRequest<T>,
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    },
+  },
+): boolean => {
+  const { content } = response;
+  return isSome(content) &&
+    contentIsCompressible(content, db);
 };

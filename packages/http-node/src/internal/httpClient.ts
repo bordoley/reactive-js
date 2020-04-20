@@ -23,7 +23,7 @@ import {
   HttpHeaders,
   HttpStatusCode,
   createRedirectHttpRequest,
-  mediaTypeIsCompressible,
+  httpContentRequestIsCompressible,
   parseHttpResponseFromHeaders,
   HttpContentRequest,
   HttpContentResponse,
@@ -250,15 +250,6 @@ export type HttpClientRequestOptions = {
 
 const identity = <T>(x: T): T => x;
 
-const requestIsCompressible = (
-  request: HttpContentRequest<BufferStreamLike>,
-): boolean => {
-  const { content } = request;
-  return isSome(content)
-    ? mediaTypeIsCompressible(db)(content.contentType)
-    : false;
-};
-
 export interface HttpClientLike extends DisposableLike {
   send(
     request: HttpContentRequest<BufferStreamLike>,
@@ -291,7 +282,7 @@ class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
       : none;
     const shouldEncode = isSome(shouldEncodeOptionResult)
       ? shouldEncodeOptionResult
-      : requestIsCompressible(request);
+      : httpContentRequestIsCompressible(request, db);
 
     const contentEncoder =
       isSome(contentEncoding) && shouldEncode

@@ -4,22 +4,13 @@ import {
   HttpContentResponse,
   HttpContentRequest,
   HttpStandardHeader,
-  mediaTypeIsCompressible,
+  httpContentResponseIsCompressible,
 } from "@reactive-js/http";
 import { BufferStreamLike } from "@reactive-js/node";
 import { isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import { encodeHttpContent, decodeHttpContent } from "./httpContent";
 import { getFirstSupportedEncoding } from "./httpContentEncoding";
-
-const responseIsCompressible = (
-  response: HttpContentResponse<BufferStreamLike>,
-): boolean => {
-  const { content } = response;
-  return isSome(content)
-    ? mediaTypeIsCompressible(db)(content.contentType)
-    : false;
-};
 
 export type EncodeHttpResponseOptions = {
   readonly shouldEncode?: <T, TResp>(
@@ -36,9 +27,6 @@ export const encodeHttpResponse = <TReq>(
   HttpContentResponse<BufferStreamLike>
 > => response => {
   const { shouldEncode: shouldEncodeOption, ...zlibOptions } = options;
-  // FIXME:
-  // Don't compress for Cache-Control: no-transform
-  // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
 
   const shouldEncodeOptionResult = isSome(shouldEncodeOption)
     ? shouldEncodeOption(request, response)
@@ -46,7 +34,7 @@ export const encodeHttpResponse = <TReq>(
 
   const shouldEncode = isSome(shouldEncodeOptionResult)
     ? shouldEncodeOptionResult
-    : responseIsCompressible(response);
+    : httpContentResponseIsCompressible(response, db);
 
   const { preferences } = request;
   const acceptedEncodings =
