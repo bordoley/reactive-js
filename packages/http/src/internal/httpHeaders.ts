@@ -113,12 +113,14 @@ export const writeHttpHeaders = (
       writeHeader(header, headers[header]);
     }
   }
-}
+};
 
 /** @ignore */
 export const filterHeaders = (headers: HttpHeaders): HttpHeaders => {
-  const result: { [key: string]: string} = {};
-  const writeHeader = (k: string, v: string) => { result[k] = v; };
+  const result: { [key: string]: string } = {};
+  const writeHeader = (k: string, v: string) => {
+    result[k] = v;
+  };
   writeHttpHeaders(headers, writeHeader);
   return result;
 };

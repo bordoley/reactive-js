@@ -50,7 +50,11 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
-import { generateStream, mapStream, ofValueStream } from "@reactive-js/async-enumerable";
+import {
+  generateStream,
+  mapStream,
+  ofValueStream,
+} from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -203,7 +207,7 @@ pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
     content: createHttpContent({
       body: pipe(ofValueStream(chunk), encode("utf-8")),
-      contentType: "text/plain; charset=\"utf-8\"",
+      contentType: 'text/plain; charset="utf-8"',
     }),
     headers: {
       "x-forwarded-host": "www.google.com",
