@@ -46,7 +46,7 @@ import {
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
 import {
-  createPriorityScheduler,
+  toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
@@ -58,7 +58,7 @@ import {
 
 const scheduler = pipe(
   nodeScheduler,
-  createPriorityScheduler,
+  toPriorityScheduler,
   toSchedulerWithPriority(1),
 );
 

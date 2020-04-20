@@ -19,30 +19,14 @@
 
 ### Functions
 
-* [createPriorityScheduler](README.md#const-createpriorityscheduler)
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
 * [schedule](README.md#schedule)
 * [scheduleCallback](README.md#const-schedulecallback)
+* [toPausableScheduler](README.md#const-topausablescheduler)
+* [toPriorityScheduler](README.md#const-topriorityscheduler)
 * [toSchedulerWithPriority](README.md#const-toschedulerwithpriority)
 
 ## Functions
-
-### `Const` createPriorityScheduler
-
-▸ **createPriorityScheduler**(`hostScheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
-
-Creates a new priority scheduler which schedules work using the provided
-host scheduler.
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`hostScheduler` | [SchedulerLike](interfaces/schedulerlike.md) | The underlying platform scheduler used by the priority scheduler to schedule work.  |
-
-**Returns:** *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
-
-___
 
 ### `Const` createVirtualTimeScheduler
 
@@ -93,6 +77,37 @@ ___
 ▪`Default value`  **delay**: *number*= 0
 
 **Returns:** *DisposableLike*
+
+___
+
+### `Const` toPausableScheduler
+
+▸ **toPausableScheduler**(`hostScheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *DisposableLike & PausableSchedulerLike*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`hostScheduler` | [SchedulerLike](interfaces/schedulerlike.md) |
+
+**Returns:** *DisposableLike & PausableSchedulerLike*
+
+___
+
+### `Const` toPriorityScheduler
+
+▸ **toPriorityScheduler**(`hostScheduler`: [SchedulerLike](interfaces/schedulerlike.md)): *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
+
+Creates a new priority scheduler which schedules work using the provided
+host scheduler.
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`hostScheduler` | [SchedulerLike](interfaces/schedulerlike.md) | The underlying platform scheduler used by the priority scheduler to schedule work.  |
+
+**Returns:** *DisposableLike & [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)*
 
 ___
 

@@ -57,6 +57,12 @@ export interface VirtualTimeSchedulerLike
     SchedulerLike,
     SchedulerContinuationLike {}
 
+/** @ignore */
+export interface PausableSchedulerLike extends SchedulerLike {
+  pause(): void;
+  resume(): void;
+}
+
 /**
  * A scheduler which schedules work according to it's priority.
  *

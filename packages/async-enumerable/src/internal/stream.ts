@@ -25,7 +25,7 @@ import {
   StreamMode,
 } from "./interfaces";
 import { map } from "./map";
-import { createPausableScheduler } from "./pausableScheduler";
+import { toPausableScheduler } from "@reactive-js/scheduler";
 
 const createStream = <T>(
   f: Operator<ObservableLike<StreamMode>, ObservableLike<StreamEvent<T>>>,
@@ -96,7 +96,7 @@ export const fromObservableStream = <T>(
 ): StreamLike<T> =>
   createAsyncEnumerable(modeObs =>
     createObservable(subscriber => {
-      const pausableScheduler = createPausableScheduler(subscriber);
+      const pausableScheduler = toPausableScheduler(subscriber);
 
       const modeSubscription = pipe(
         modeObs,
