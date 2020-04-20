@@ -54,6 +54,8 @@ export const createBufferStreamSinkFromWritable = (
       writable.value.on("error", onError);
 
       const onFinish = () => {
+        // By default we don't dispose the writable
+        // because it could be a tranform.
         if (autoDispose) {
           subscriber.dispose();
         }
