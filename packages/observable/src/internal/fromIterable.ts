@@ -12,8 +12,8 @@ import { fromEnumerable } from "./fromEnumerable";
  * @param values The `Iterator`.
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromIterator = <T>(
-  f: () => Iterator<T>,
+export const fromIterator = <T, TReturn = any, TNext = unknown>(
+  f: () => Iterator<T, TReturn, TNext>,
   delay = 0,
 ): ObservableLike<T> => fromEnumerable(enumerableFromIterator(f), delay);
 

@@ -81,17 +81,21 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**>(`f`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
+▪ **TReturn**
+
+▪ **TNext**
+
 **Parameters:**
 
 ▪ **f**: *function*
 
-▸ (): *Iterator‹T›*
+▸ (): *Iterator‹T, TReturn, TNext›*
 
 **Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
 

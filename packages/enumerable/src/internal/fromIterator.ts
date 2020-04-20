@@ -2,12 +2,13 @@ import { AbstractDisposable } from "@reactive-js/disposable";
 import { isSome, none } from "@reactive-js/option";
 import { EnumerableLike, EnumeratorLike } from "./interfaces";
 
-class IteratorEnumerator<T> extends AbstractDisposable
+class IteratorEnumerator<T, TReturn = any, TNext = unknown>
+  extends AbstractDisposable
   implements EnumeratorLike<void, T> {
   current: any = none;
   hasCurrent = false;
 
-  constructor(private readonly iterator: Iterator<T>) {
+  constructor(private readonly iterator: Iterator<T, TReturn, TNext>) {
     super();
   }
 
@@ -28,8 +29,9 @@ class IteratorEnumerator<T> extends AbstractDisposable
   }
 }
 
-class IteratorEnumerable<T> implements EnumerableLike<void, T> {
-  constructor(private readonly f: () => Iterator<T>) {}
+class IteratorEnumerable<T, TReturn = any, TNext = unknown>
+  implements EnumerableLike<void, T> {
+  constructor(private readonly f: () => Iterator<T, TReturn, TNext>) {}
 
   enumerate() {
     const iterator = this.f();
@@ -46,8 +48,8 @@ class IteratorEnumerable<T> implements EnumerableLike<void, T> {
   }
 }
 
-export const fromIterator = <T>(
-  f: () => Iterator<T>,
+export const fromIterator = <T, TReturn = any, TNext = unknown>(
+  f: () => Iterator<T, TReturn, TNext>,
 ): EnumerableLike<void, T> => new IteratorEnumerable(f);
 
 export const fromIterable = <T>(

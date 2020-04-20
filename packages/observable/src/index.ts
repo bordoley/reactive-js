@@ -40,6 +40,7 @@ export { distinctUntilChanged } from "./internal/distinctUntilChanged";
 export { endWith } from "./internal/endWith";
 export { every, none } from "./internal/every";
 export { forEach } from "./internal/forEach";
+export { genMap } from "./internal/genMap";
 export { ignoreElements } from "./internal/ignoreElements";
 export { keep, keepType } from "./internal/keep";
 export { lift } from "./internal/lift";
