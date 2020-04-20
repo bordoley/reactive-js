@@ -37,11 +37,10 @@ export const transform = (
 ): StreamOperator<Buffer, Buffer> => src =>
   createAsyncEnumerable(modeObs =>
     createObservable<StreamEvent<Buffer>>(subscriber => {
-      const readable = createDisposableValue(factory(), disposeTransform);
-      const transform = factory();
+      const transform = createDisposableValue(factory(), disposeTransform);
 
       const transformSink = createBufferStreamSinkFromWritable(
-        () => transform,
+        () => transform.value,
         false,
       );
       const sinkSubscription = pipe(
@@ -50,12 +49,12 @@ export const transform = (
       );
 
       const transformReadableEnumerator = createBufferStreamFromReadable(
-        () => transform,
+        () => transform.value,
       ).enumerateAsync(subscriber);
       transformReadableEnumerator.subscribe(subscriber);
       modeObs.subscribe(transformReadableEnumerator);
 
-      subscriber.add(readable).add(sinkSubscription);
+      subscriber.add(transform).add(sinkSubscription);
     }),
   );
 
@@ -65,7 +64,7 @@ const onError = (e: unknown) =>
   e instanceof Error && e.message.startsWith("Encoding not recognized: ")
     ? unsupportedEncodingObservable
     : throws(() => e);
-    
+
 export const encode = (
   charset: string,
 ): Operator<StreamLike<string>, BufferStreamLike> => {
