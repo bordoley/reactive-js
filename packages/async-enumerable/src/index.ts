@@ -20,10 +20,7 @@ export {
   reduceAsync,
 } from "./internal/reduce";
 
-export {
-  createAsyncEnumerable,
-  createAsyncEnumerator,
-} from "./internal/createAsyncEnumerable";
+export { createAsyncEnumerable } from "./internal/createAsyncEnumerable";
 export { empty } from "./internal/empty";
 export { fromArray } from "./internal/fromArray";
 export { fromIterable } from "./internal/fromIterable";

@@ -31,7 +31,6 @@
 
 * [createActionReducer](README.md#const-createactionreducer)
 * [createAsyncEnumerable](README.md#const-createasyncenumerable)
-* [createAsyncEnumerator](README.md#const-createasyncenumerator)
 * [createStateStore](README.md#const-createstatestore)
 * [empty](README.md#const-empty)
 * [emptyStream](README.md#const-emptystream)
@@ -178,28 +177,6 @@ Name | Type |
 `op` | ObservableOperator‹TReq, TData› |
 
 **Returns:** *[AsyncEnumerableLike](interfaces/asyncenumerablelike.md)‹TReq, TData›*
-
-___
-
-### `Const` createAsyncEnumerator
-
-▸ **createAsyncEnumerator**<**TReq**, **TData**>(`op`: ObservableOperator‹TReq, TData›, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **TData**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`op` | ObservableOperator‹TReq, TData› |
-`scheduler` | SchedulerLike |
-`replayCount?` | undefined &#124; number |
-
-**Returns:** *[AsyncEnumeratorLike](interfaces/asyncenumeratorlike.md)‹TReq, TData›*
 
 ___
 
