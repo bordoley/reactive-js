@@ -65,7 +65,7 @@ const onError = (e: unknown) =>
   e instanceof Error && e.message.startsWith("Encoding not recognized: ")
     ? unsupportedEncodingObservable
     : throws(() => e);
-
+    
 export const encode = (
   charset: string,
 ): Operator<StreamLike<string>, BufferStreamLike> => {

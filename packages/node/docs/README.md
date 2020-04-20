@@ -22,7 +22,6 @@
 * [decode](README.md#const-decode)
 * [encode](README.md#const-encode)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
-* [stringToBufferStream](README.md#const-stringtobufferstream)
 * [transform](README.md#const-transform)
 
 ## Variables
@@ -1894,20 +1893,6 @@ Name | Type |
 `newTimeout` | number |
 
 **Returns:** *void*
-
-___
-
-### `Const` stringToBufferStream
-
-▸ **stringToBufferStream**(`charset`: string): *Operator‹string, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`charset` | string |
-
-**Returns:** *Operator‹string, [BufferStreamLike](interfaces/bufferstreamlike.md)›*
 
 ___
 

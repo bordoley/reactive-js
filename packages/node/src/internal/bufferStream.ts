@@ -1,14 +1,12 @@
-import iconv from "iconv-lite";
 import { Readable } from "stream";
 import {
   createAsyncEnumerable,
   StreamEventType,
   StreamMode,
-  ofValueStream,
 } from "@reactive-js/async-enumerable";
 import { createDisposableValue } from "@reactive-js/disposable";
 import { createObservable, onNotify, subscribe } from "@reactive-js/observable";
-import { pipe, Operator } from "@reactive-js/pipe";
+import { pipe } from "@reactive-js/pipe";
 import { BufferStreamLike } from "./interfaces";
 
 const disposeReadable = (readable: Readable) => {
@@ -59,11 +57,3 @@ export const createBufferStreamFromReadable = (
       readable.value.pause();
     }),
   );
-
-// FIXME: Maybe remove this
-export const stringToBufferStream = (
-  charset: string,
-): Operator<string, BufferStreamLike> => str => {
-  const buffer = iconv.encode(str, charset);
-  return ofValueStream(buffer);
-};

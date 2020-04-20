@@ -15,7 +15,6 @@ import {
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
-  createBufferHttpContent,
   createStringHttpContent,
   createHttpRequestListener,
   creatHttpClient,
@@ -51,7 +50,7 @@ import {
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
 import { isSome, none } from "@reactive-js/option";
-import { generateStream, mapStream } from "@reactive-js/async-enumerable";
+import { generateStream, mapStream, ofValueStream } from "@reactive-js/async-enumerable";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -198,13 +197,14 @@ createHttp2Server(
 
 const httpClient = creatHttpClient();
 
-const chunk = Buffer.from(
-  "aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnoooopppqqqrrrssstttuuuvvvwwwxxxyyyzzz",
-);
+const chunk = "some text";
 
 pipe(
   createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
-    content: createBufferHttpContent(chunk, "text/plain"),
+    content: createHttpContent({
+      body: pipe(ofValueStream(chunk), encode("utf-8")),
+      contentType: "text/plain; charset=\"utf-8\"",
+    }),
     headers: {
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
