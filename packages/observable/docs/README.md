@@ -58,6 +58,7 @@
 * [fromIterator](README.md#const-fromiterator)
 * [fromPromise](README.md#const-frompromise)
 * [fromScheduledValues](README.md#fromscheduledvalues)
+* [genMap](README.md#const-genmap)
 * [generate](README.md#generate)
 * [ignoreElements](README.md#const-ignoreelements)
 * [keep](README.md#const-keep)
@@ -1026,7 +1027,7 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**>(`f`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: function, `delay`: number): *[ObservableLike](interfaces/observablelike.md)‹T›*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -1035,11 +1036,15 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 
 ▪ **T**
 
+▪ **TReturn**
+
+▪ **TNext**
+
 **Parameters:**
 
 ▪ **f**: *function*
 
-▸ (): *Iterator‹T›*
+▸ (): *Iterator‹T, TReturn, TNext›*
 
 ▪`Default value`  **delay**: *number*= 0
 
@@ -1091,6 +1096,36 @@ Name | Type |
 `...values` | Array‹[number, T]› |
 
 **Returns:** *[ObservableLike](interfaces/observablelike.md)‹T›*
+
+___
+
+### `Const` genMap
+
+▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: function): *[ObservableOperator](README.md#observableoperator)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TReturn**
+
+▪ **TNext**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`v`: TA): *Generator‹TB, TReturn, TNext›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TA |
+
+**Returns:** *[ObservableOperator](README.md#observableoperator)‹TA, TB›*
 
 ___
 

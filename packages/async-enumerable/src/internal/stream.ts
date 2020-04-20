@@ -6,11 +6,10 @@ import {
   never,
   concat,
   ObservableLike,
-  fromArray,
   scanAsync,
   ScanAsyncMode,
-  switchAll,
   empty,
+  genMap,
 } from "@reactive-js/observable";
 import { none, isSome } from "@reactive-js/option";
 import { Operator, compose } from "@reactive-js/pipe";
@@ -39,21 +38,14 @@ const onEmptyOperator = compose(
 export const emptyStream = <T>(): StreamLike<T> =>
   createStream(onEmptyOperator);
 
-const ofValueModeMapper = <T>(data: T) => (mode: StreamMode) =>
-  mode === StreamMode.Produce
-    ? fromArray([
-        { type: StreamEventType.Next, data },
-        { type: StreamEventType.Complete },
-      ])
-    : none;
-
-const ofValueOperator = <T>(value: T) =>
-  compose(
-    mapObs(ofValueModeMapper(value)),
-    keepType(isSome),
-    takeFirst(),
-    switchAll<StreamEvent<T>>(),
-  );
+const ofValueOperator = <T>(data: T) =>
+  genMap(function*(mode: StreamMode): Generator<StreamEvent<T>> {
+    switch (mode) {
+      case StreamMode.Produce:
+        yield { type: StreamEventType.Next, data };
+        yield { type: StreamEventType.Complete };
+    }
+  });
 
 export const ofValueStream = <T>(value: T): StreamLike<T> =>
   createStream(ofValueOperator(value));

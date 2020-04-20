@@ -16,9 +16,7 @@ import {
   using,
   catchError,
   throws,
-  concatMap,
-  ofValue,
-  fromArray,
+  genMap,
   subscribe,
 } from "@reactive-js/observable";
 import { Option } from "@reactive-js/option";
@@ -79,20 +77,21 @@ export const encode = (
       using(createEncoder, encoder =>
         pipe(
           obs,
-          concatMap(ev => {
+          genMap(function*(ev) {
             switch (ev.type) {
               case StreamEventType.Next: {
                 const data = encoder.value.write(ev.data);
-                return ofValue({ type: StreamEventType.Next, data });
+                yield { type: StreamEventType.Next, data };
+                break;
               }
               case StreamEventType.Complete: {
                 const data: Option<Buffer> = encoder.value.end();
-                return isSome(data) && data.length > 0
-                  ? fromArray([
-                      { type: StreamEventType.Next, data },
-                      { type: StreamEventType.Complete },
-                    ])
-                  : ofValue({ type: StreamEventType.Complete });
+                if (isSome(data) && data.length > 0) {
+                  yield { type: StreamEventType.Next, data };
+                }
+
+                yield { type: StreamEventType.Complete };
+                break;
               }
             }
           }),
@@ -115,20 +114,21 @@ export const decode = (
       using(createDecoder, decoder =>
         pipe(
           obs,
-          concatMap(ev => {
+          genMap(function*(ev) {
             switch (ev.type) {
               case StreamEventType.Next: {
                 const data = decoder.value.write(ev.data);
-                return ofValue({ type: StreamEventType.Next, data });
+                yield { type: StreamEventType.Next, data };
+                break;
               }
               case StreamEventType.Complete: {
                 const data: Option<Buffer> = decoder.value.end();
-                return isSome(data) && data.length > 0
-                  ? fromArray([
-                      { type: StreamEventType.Next, data },
-                      { type: StreamEventType.Complete },
-                    ])
-                  : ofValue({ type: StreamEventType.Complete });
+                if (isSome(data) && data.length > 0) {
+                  yield { type: StreamEventType.Next, data };
+                }
+
+                yield { type: StreamEventType.Complete };
+                break;
               }
             }
           }),
