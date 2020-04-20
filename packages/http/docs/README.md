@@ -50,10 +50,11 @@
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
+* [httpContentRequestIsCompressible](README.md#const-httpcontentrequestiscompressible)
+* [httpContentResponseIsCompressible](README.md#const-httpcontentresponseiscompressible)
 * [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
 * [maxAge](README.md#const-maxage)
 * [maxStale](README.md#const-maxstale)
-* [mediaTypeIsCompressible](README.md#const-mediatypeiscompressible)
 * [mediaTypeToString](README.md#const-mediatypetostring)
 * [minFresh](README.md#const-minfresh)
 * [noCache](README.md#const-nocache)
@@ -393,6 +394,44 @@ Name | Type |
 
 ___
 
+### `Const` httpContentRequestIsCompressible
+
+▸ **httpContentRequestIsCompressible**<**T**>(`response`: [HttpContentRequest](README.md#httpcontentrequest)‹T›, `db`: object): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`response` | [HttpContentRequest](README.md#httpcontentrequest)‹T› |
+`db` | object |
+
+**Returns:** *boolean*
+
+___
+
+### `Const` httpContentResponseIsCompressible
+
+▸ **httpContentResponseIsCompressible**<**T**>(`response`: [HttpContentResponse](README.md#httpcontentresponse)‹T›, `db`: object): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`response` | [HttpContentResponse](README.md#httpcontentresponse)‹T› |
+`db` | object |
+
+**Returns:** *boolean*
+
+___
+
 ### `Const` httpRequestToUntypedHeaders
 
 ▸ **httpRequestToUntypedHeaders**(`request`: [HttpContentRequest](README.md#httpcontentrequest)‹unknown›): *object*
@@ -434,20 +473,6 @@ Name | Type |
 `value` | number |
 
 **Returns:** *[CacheDirective](README.md#cachedirective)*
-
-___
-
-### `Const` mediaTypeIsCompressible
-
-▸ **mediaTypeIsCompressible**(`db`: object): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`db` | object |
-
-**Returns:** *(Anonymous function)*
 
 ___
 

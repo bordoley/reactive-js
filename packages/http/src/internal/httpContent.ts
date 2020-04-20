@@ -13,6 +13,7 @@ import {
   parseMediaType,
   mediaTypeToString,
   parseMediaTypeOrThrow,
+  mediaTypeIsCompressible,
 } from "./mediaType";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
@@ -85,3 +86,14 @@ export const createHttpContent = <T>({
       ? parseMediaTypeOrThrow(contentType)
       : contentType,
 });
+
+/** @ignore */
+export const contentIsCompressible = <T>(
+  content: HttpContent<T>,
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    },
+  },
+): boolean => content.contentEncodings.length === 0 &&  // Don't double encode
+      mediaTypeIsCompressible(content.contentType, db);

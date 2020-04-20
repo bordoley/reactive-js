@@ -38,6 +38,7 @@ export {
   createHttpRequest,
   createRedirectHttpRequest,
   disallowProtocolAndHostForwarding,
+  httpContentRequestIsCompressible,
   parseHttpRequestFromHeaders,
   httpRequestToUntypedHeaders,
   writeHttpRequestHeaders,
@@ -46,6 +47,7 @@ export {
 export {
   checkIfNotModified,
   createHttpResponse,
+  httpContentResponseIsCompressible,
   parseHttpResponseFromHeaders,
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
@@ -55,8 +57,6 @@ export { HttpStandardHeader } from "./internal/httpHeaders";
 export { createHttpContent } from "./internal/httpContent";
 
 export {
-  mediaTypeIsCompressible,
-  //  mediaTypeToString,
   parseMediaType,
   parseMediaTypeOrThrow,
 } from "./internal/mediaType";

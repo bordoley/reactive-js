@@ -16,6 +16,7 @@ import {
 import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
+  contentIsCompressible,
 } from "./httpContent";
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
@@ -254,4 +255,21 @@ export const checkIfNotModified = <T>({
         statusCode: HttpStatusCode.NotModified,
       }
     : response;
+};
+
+export const httpContentResponseIsCompressible = <T>(
+  response: HttpContentResponse<T>,
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    },
+  },
+): boolean => {
+  // Don't compress for Cache-Control: no-transform
+  // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
+  const noTransformResponse = response.cacheControl.findIndex(({directive}) => directive === "no-transform") >= 0;
+
+  const { content } = response;
+  return !noTransformResponse && isSome(content) &&
+    contentIsCompressible(content, db);
 };
