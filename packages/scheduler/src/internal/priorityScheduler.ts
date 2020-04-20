@@ -36,7 +36,9 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
       next.dueTime <= scheduler.now &&
       next.priority < current.priority;
 
-    return scheduler.isPaused || nextTaskIsHigherPriority || this.hostShouldYield();
+    return (
+      scheduler.isPaused || nextTaskIsHigherPriority || this.hostShouldYield()
+    );
   };
 
   constructor(private readonly scheduler: PrioritySchedulerImpl) {
@@ -223,7 +225,6 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable
     priority = Number.MAX_SAFE_INTEGER,
     delay = 0,
   ) {
-
     this.add(continuation);
 
     if (!continuation.isDisposed) {
@@ -270,11 +271,10 @@ export const toPriorityScheduler = (
 ): DisposableLike & PrioritySchedulerLike =>
   new PrioritySchedulerImpl(hostScheduler);
 
-
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
 ): DisposableLike & PausableSchedulerLike => {
   const retval = new PrioritySchedulerImpl(hostScheduler);
   retval.pause();
   return retval;
-}
+};

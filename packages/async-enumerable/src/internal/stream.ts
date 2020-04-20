@@ -59,9 +59,7 @@ const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
   acc: T,
   ev: StreamMode,
 ): ObservableLike<T> =>
-  ev === StreamMode.Resume
-    ? generateObs(generator, () => acc, delay)
-    : empty();
+  ev === StreamMode.Resume ? generateObs(generator, () => acc, delay) : empty();
 
 export const generateStream = <T>(
   generator: (acc: T) => T,
@@ -122,7 +120,14 @@ export const fromObservableStream = <T>(
         never(),
       );
 
-      const eventStreamSubscription =pipe(eventStream, onNotify(x => subscriber.notify(x)), subscribe(pausableScheduler));
-      subscriber.add(pausableScheduler).add(modeSubscription).add(eventStreamSubscription);
+      const eventStreamSubscription = pipe(
+        eventStream,
+        onNotify(x => subscriber.notify(x)),
+        subscribe(pausableScheduler),
+      );
+      subscriber
+        .add(pausableScheduler)
+        .add(modeSubscription)
+        .add(eventStreamSubscription);
     }),
   );

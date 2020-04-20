@@ -10,7 +10,11 @@ import {
 } from "@reactive-js/async-enumerable";
 import { createHttpRequest, HttpMethod, HttpContent } from "@reactive-js/http";
 import { sendHttpRequest } from "@reactive-js/http-web";
-import { useObservable, useAsyncEnumerable, useAsyncEnumerator } from "@reactive-js/react";
+import {
+  useObservable,
+  useAsyncEnumerable,
+  useAsyncEnumerator,
+} from "@reactive-js/react";
 import {
   RoutableComponentProps,
   Router,
@@ -19,10 +23,16 @@ import {
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
 import { generate, onNotify, subscribe } from "@reactive-js/observable";
 import { history, Location, createEventSource } from "@reactive-js/web";
-import React, { ComponentType, useCallback, useMemo, useState, useEffect } from "react";
+import React, {
+  ComponentType,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe, compose } from "@reactive-js/pipe";
-import { isSome } from '@reactive-js/option';
+import { isSome } from "@reactive-js/option";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
@@ -99,42 +109,45 @@ const StatefulComponent = (props: RoutableComponentProps) => {
   );
 };
 
-const StreamPauseView = ({ events }: {
-  events: AsyncEnumeratorLike<StreamMode, StreamEvent<number>>,
+const StreamPauseView = ({
+  events,
+}: {
+  events: AsyncEnumeratorLike<StreamMode, StreamEvent<number>>;
 }) => {
   const [value, setMode] = useAsyncEnumerator(events);
   const [{ mode }, updateMode] = useState({ mode: StreamMode.Pause });
 
-  const onClick = useCallback(() => updateMode(({ mode }) => { 
-    const newMode = mode === StreamMode.Pause ? StreamMode.Resume : StreamMode.Pause;
-    return { mode: newMode };
-  }), [updateMode]);
-
-  useEffect(
-    () => setMode(mode),
-    [mode, setMode],
+  const onClick = useCallback(
+    () =>
+      updateMode(({ mode }) => {
+        const newMode =
+          mode === StreamMode.Pause ? StreamMode.Resume : StreamMode.Pause;
+        return { mode: newMode };
+      }),
+    [updateMode],
   );
 
+  useEffect(() => setMode(mode), [mode, setMode]);
+
   const label = mode === StreamMode.Pause ? "RESUME" : "PAUSE";
-  
-  const displayValue = isSome(value) && value.type === StreamEventType.Next
-    ? value.data
-    : 0;
-   
+
+  const displayValue =
+    isSome(value) && value.type === StreamEventType.Next ? value.data : 0;
+
   return (
     <>
       <div>{displayValue}</div>
-  <button onClick={onClick}>{ label }</button>
+      <button onClick={onClick}>{label}</button>
     </>
   );
-}
+};
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
   const stream = useMemo(() => fromObservableStream(obs), []);
-  const events = useAsyncEnumerable(stream, { scheduler: idlePriority })
+  const events = useAsyncEnumerable(stream, { scheduler: idlePriority });
 
-  return isSome(events) ? <StreamPauseView events={events}/> : null;
-}
+  return isSome(events) ? <StreamPauseView events={events} /> : null;
+};
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/route1", Component1],
