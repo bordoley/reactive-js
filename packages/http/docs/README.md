@@ -37,8 +37,6 @@
 
 * [parseCacheDirective](README.md#const-parsecachedirective)
 * [parseCacheDirectiveOrThrow](README.md#const-parsecachedirectiveorthrow)
-* [parseETag](README.md#const-parseetag)
-* [parseETagOrThrow](README.md#const-parseetagorthrow)
 * [parseMediaType](README.md#const-parsemediatype)
 * [parseMediaTypeOrThrow](README.md#const-parsemediatypeorthrow)
 
@@ -46,6 +44,7 @@
 
 * [cacheDirectiveToString](README.md#const-cachedirectivetostring)
 * [checkIfNotModified](README.md#const-checkifnotmodified)
+* [createHttpContent](README.md#const-createhttpcontent)
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
@@ -215,38 +214,6 @@ Name | Type |
 
 ___
 
-### `Const` parseETag
-
-• **parseETag**: *function* =  parseWith(pETag)
-
-#### Type declaration:
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
-
-___
-
-### `Const` parseETagOrThrow
-
-• **parseETagOrThrow**: *function* =  parseWithOrThrow(pETag)
-
-#### Type declaration:
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
-
-___
-
 ### `Const` parseMediaType
 
 • **parseMediaType**: *function* =  parseWith(pMediaType)
@@ -311,9 +278,27 @@ Name | Type |
 
 ___
 
+### `Const` createHttpContent
+
+▸ **createHttpContent**<**T**>(`__namedParameters`: object): *[HttpContent](README.md#httpcontent)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
+
+**Returns:** *[HttpContent](README.md#httpcontent)‹T›*
+
+___
+
 ### `Const` createHttpRequest
 
-▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `uri`: string | [URILike](interfaces/urilike.md), `options`: object): *[HttpRequest](README.md#httprequest)‹T›*
+▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `uri`: string | [URILike](interfaces/urilike.md), `__namedParameters`: object): *[HttpRequest](README.md#httprequest)‹T›*
 
 **Type parameters:**
 
@@ -325,7 +310,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `method` | [HttpMethod](enums/httpmethod.md) | - |
 `uri` | string &#124; [URILike](interfaces/urilike.md) | - |
-`options` | object |  {} |
+`__namedParameters` | object |  {} |
 
 **Returns:** *[HttpRequest](README.md#httprequest)‹T›*
 
@@ -333,7 +318,7 @@ ___
 
 ### `Const` createHttpResponse
 
-▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `options`: object): *[HttpResponse](README.md#httpresponse)‹T›*
+▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `__namedParameters`: object): *[HttpResponse](README.md#httpresponse)‹T›*
 
 **Type parameters:**
 
@@ -344,7 +329,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `statusCode` | [HttpStatusCode](enums/httpstatuscode.md) | - |
-`options` | object |  {} |
+`__namedParameters` | object |  {} |
 
 **Returns:** *[HttpResponse](README.md#httpresponse)‹T›*
 

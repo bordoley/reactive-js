@@ -7,7 +7,6 @@ import {
   createHttpResponse,
   HttpStatusCode,
   checkIfNotModified,
-  parseETagOrThrow,
   noCache,
 } from "../src";
 
@@ -53,11 +52,11 @@ describe("checkIfNotModified", () => {
       "when ETags match",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -65,11 +64,11 @@ describe("checkIfNotModified", () => {
       "when ETags mismatch",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"bar"'),
+        etag: '"bar"',
       }),
       HttpStatusCode.OK,
     ],
@@ -77,11 +76,11 @@ describe("checkIfNotModified", () => {
       "when at least one matches",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"'), parseETagOrThrow('"bar"')],
+          ifNoneMatch: ['"foo"', '"bar"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -89,7 +88,7 @@ describe("checkIfNotModified", () => {
       "when etag is missing",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK),
@@ -99,11 +98,11 @@ describe("checkIfNotModified", () => {
       "when ETag is weak on exact match",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('W/"foo"')],
+          ifNoneMatch: ['W/"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('W/"foo"'),
+        etag: 'W/"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -111,11 +110,11 @@ describe("checkIfNotModified", () => {
       "when ETag is weak on strong match",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('W/"foo"')],
+          ifNoneMatch: ['W/"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -123,11 +122,11 @@ describe("checkIfNotModified", () => {
       "when ETag is strong on exact match",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -135,11 +134,11 @@ describe("checkIfNotModified", () => {
       "when ETag is strong on weak match",
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('W/"foo"'),
+        etag: 'W/"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -151,7 +150,7 @@ describe("checkIfNotModified", () => {
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
@@ -195,11 +194,11 @@ describe("checkIfNotModified", () => {
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
           ifModifiedSince: 1,
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
         lastModified: 1,
       }),
       HttpStatusCode.NotModified,
@@ -210,11 +209,11 @@ describe("checkIfNotModified", () => {
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
           ifModifiedSince: 0,
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
         lastModified: 1,
       }),
       HttpStatusCode.OK,
@@ -225,11 +224,11 @@ describe("checkIfNotModified", () => {
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
           ifModifiedSince: 0,
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"bar"'),
+        etag: '"bar"',
         lastModified: 0,
       }),
       HttpStatusCode.OK,
@@ -239,11 +238,11 @@ describe("checkIfNotModified", () => {
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         preconditions: {
           ifModifiedSince: 0,
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"bar"'),
+        etag: '"bar"',
         lastModified: 1,
       }),
       HttpStatusCode.OK,
@@ -253,11 +252,11 @@ describe("checkIfNotModified", () => {
       createHttpRequest(HttpMethod.GET, "http://www.example.com", {
         cacheControl: [noCache()],
         preconditions: {
-          ifNoneMatch: [parseETagOrThrow('"foo"')],
+          ifNoneMatch: ['"foo"'],
         },
       }),
       createHttpResponse(HttpStatusCode.OK, {
-        etag: parseETagOrThrow('"foo"'),
+        etag: '"foo"',
       }),
       HttpStatusCode.OK,
     ],

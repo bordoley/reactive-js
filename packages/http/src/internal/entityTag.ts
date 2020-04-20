@@ -32,5 +32,8 @@ export const pETag = (charStream: CharStreamLike): EntityTag => {
   return { isWeak, tag };
 };
 
+/** @ignore */
 export const parseETag = parseWith(pETag);
+
+/** @ignore */
 export const parseETagOrThrow = parseWithOrThrow(pETag);

@@ -6,7 +6,12 @@ import {
   mapTo,
 } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
-import { entityTagToString, pETag, parseETag } from "./entityTag";
+import {
+  entityTagToString,
+  pETag,
+  parseETag,
+  parseETagOrThrow,
+} from "./entityTag";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import { httpList } from "./httpGrammar";
@@ -141,4 +146,69 @@ export const parseHttpRequestPreconditionsFromHeaders = (
         ifUnmodifiedSince,
         ifRange,
       };
+};
+
+const parseIfRange = (ifRange: string): Option<EntityTag | HttpDateTime> => {
+  const etag = parseETag(ifRange);
+  return isSome(etag) ? etag : parseHttpDateTime(ifRange);
+};
+
+/** @ignore */
+export const createHttpRequestPreconditions = ({
+  ifMatch,
+  ifModifiedSince,
+  ifNoneMatch,
+  ifUnmodifiedSince,
+  ifRange,
+}: {
+  ifMatch?: (string | EntityTag)[] | "*";
+  ifModifiedSince?: string | HttpDateTime | Date;
+  ifNoneMatch?: (string | EntityTag)[] | "*";
+  ifUnmodifiedSince?: string | HttpDateTime | Date;
+  ifRange?: string | EntityTag | HttpDateTime | Date;
+}): HttpRequestPreconditions => {
+  if (
+    [
+      ifMatch,
+      ifModifiedSince,
+      ifNoneMatch,
+      ifUnmodifiedSince,
+      ifRange,
+    ].findIndex(isSome) < 0 ||
+    (Array.isArray(ifMatch) && ifMatch.length === 0) ||
+    (Array.isArray(ifNoneMatch) && ifNoneMatch.length === 0)
+  ) {
+    throw new Error();
+  }
+
+  return {
+    ifMatch: Array.isArray(ifMatch)
+      ? ifMatch.map(etag =>
+          typeof etag === "string" ? parseETagOrThrow(etag) : etag,
+        )
+      : ifMatch,
+    ifModifiedSince:
+      typeof ifModifiedSince === "string"
+        ? parseHttpDateTime(ifModifiedSince)
+        : ifModifiedSince instanceof Date
+        ? ifModifiedSince.getTime()
+        : ifModifiedSince,
+    ifNoneMatch: Array.isArray(ifNoneMatch)
+      ? ifNoneMatch.map(etag =>
+          typeof etag === "string" ? parseETagOrThrow(etag) : etag,
+        )
+      : ifNoneMatch,
+    ifUnmodifiedSince:
+      typeof ifUnmodifiedSince === "string"
+        ? parseHttpDateTime(ifUnmodifiedSince)
+        : ifUnmodifiedSince instanceof Date
+        ? ifUnmodifiedSince.getTime()
+        : ifUnmodifiedSince,
+    ifRange:
+      typeof ifRange === "string"
+        ? parseIfRange(ifRange)
+        : ifRange instanceof Date
+        ? ifRange.getTime()
+        : ifRange,
+  };
 };

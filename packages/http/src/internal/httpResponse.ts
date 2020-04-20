@@ -4,32 +4,36 @@ import {
   HttpStatusCode,
   HttpHeaders,
   URILike,
-  HttpPreferences,
   HttpResponse,
   HttpRequest,
   HttpMethod,
   HttpContentResponse,
   EntityTag,
   CacheDirective,
+  HttpContentEncoding,
+  MediaRange,
 } from "./interfaces";
 import {
   writeHttpContentHeaders,
   parseHttpContentFromHeaders,
 } from "./httpContent";
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
-import { entityTagToString, parseETag } from "./entityTag";
+import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
 import {
   writeHttpHeaders,
   getHeaderValue,
   HttpStandardHeader,
+  filterHeaders,
 } from "./httpHeaders";
 import {
   parseHttpPreferencesFromHeaders,
   writeHttpPreferenceHeaders,
+  createHttpPreferences,
 } from "./httpPreferences";
 import {
   parseCacheControlFromHeaders,
   writeHttpCacheControlHeader,
+  parseCacheDirectiveOrThrow,
 } from "./cacheDirective";
 
 declare class URL implements URILike {
@@ -49,23 +53,54 @@ declare class URL implements URILike {
 
 export const createHttpResponse = <T>(
   statusCode: HttpStatusCode,
-  options: {
-    cacheControl?: readonly CacheDirective[];
+  {
+    cacheControl,
+    content,
+    etag,
+    expires,
+    headers,
+    lastModified,
+    location,
+    preferences,
+    vary,
+    ...rest
+  }: {
+    cacheControl?: readonly (string | CacheDirective)[];
     content?: T;
-    etag?: EntityTag;
+    etag?: string | EntityTag;
     expires?: number;
     headers?: HttpHeaders;
-    lastModified?: number;
-    location?: URILike;
-    preferences?: HttpPreferences;
+    lastModified?: number | string | Date;
+    location?: string | URILike;
+    preferences?: {
+      acceptedCharsets?: readonly string[];
+      acceptedEncodings?: readonly HttpContentEncoding[];
+      acceptedLanguages?: readonly string[];
+      acceptedMediaRanges?: readonly (string | MediaRange)[];
+    };
     vary?: readonly string[];
   } = {},
 ): HttpResponse<T> => ({
-  ...options,
-  cacheControl: options.cacheControl ?? [],
-  headers: options.headers ?? {},
+  ...rest,
+  cacheControl: (cacheControl ?? []).map(cc =>
+    typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
+  ),
+  content,
+  etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
+  expires,
+  headers: filterHeaders(headers ?? {}),
+  lastModified:
+    typeof lastModified === "string"
+      ? parseHttpDateTime(lastModified)
+      : lastModified instanceof Date
+      ? lastModified.getTime()
+      : lastModified,
+  location: typeof location === "string" ? new URL(location) : location,
+  preferences: isSome(preferences)
+    ? createHttpPreferences(preferences)
+    : undefined,
   statusCode,
-  vary: options.vary ?? [],
+  vary: vary ?? [],
 });
 
 export const parseHttpResponseFromHeaders = <T>(
@@ -178,7 +213,7 @@ export const checkIfNotModified = <T>({
   HttpResponse<T>
 > => response => {
   const { etag, lastModified } = response;
-  const { statusCode, content: _, ...requestWithoutContent } = response;
+  const { statusCode, content: _, ...responseWithoutContent } = response;
 
   const methodSupportsConditionalResponse =
     method === HttpMethod.GET || method === HttpMethod.HEAD;
@@ -214,6 +249,9 @@ export const checkIfNotModified = <T>({
     statusCodeSupportsConditionalResponse &&
     !isNoCacheRequest &&
     match
-    ? createHttpResponse(HttpStatusCode.NotModified, requestWithoutContent)
+    ? {
+        ...responseWithoutContent,
+        statusCode: HttpStatusCode.NotModified,
+      }
     : response;
 };
