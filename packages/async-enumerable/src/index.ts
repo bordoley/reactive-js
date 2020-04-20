@@ -31,6 +31,7 @@ export { map } from "./internal/map";
 export { sink } from "./internal/sink";
 export {
   emptyStream,
+  fromObservableStream,
   generateStream,
   mapStream,
   ofValueStream,

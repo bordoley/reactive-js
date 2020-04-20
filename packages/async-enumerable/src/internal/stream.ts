@@ -10,9 +10,13 @@ import {
   ScanAsyncMode,
   empty,
   genMap,
+  createObservable,
+  subscribe,
+  onNotify,
+  ofValue,
 } from "@reactive-js/observable";
 import { none, isSome } from "@reactive-js/option";
-import { Operator, compose } from "@reactive-js/pipe";
+import { Operator, compose, pipe } from "@reactive-js/pipe";
 import { createAsyncEnumerable } from "./createAsyncEnumerable";
 import {
   StreamEvent,
@@ -21,6 +25,7 @@ import {
   StreamMode,
 } from "./interfaces";
 import { map } from "./map";
+import { createPausableScheduler } from "./pausableScheduler";
 
 const createStream = <T>(
   f: Operator<ObservableLike<StreamMode>, ObservableLike<StreamEvent<T>>>,
@@ -84,4 +89,40 @@ export const mapStream = <TA, TB>(
           data: mapper(ev.data),
         }
       : { type: StreamEventType.Complete },
+  );
+
+export const fromObservableStream = <T>(
+  observable: ObservableLike<T>,
+): StreamLike<T> =>
+  createAsyncEnumerable(modeObs =>
+    createObservable(subscriber => {
+      const pausableScheduler = createPausableScheduler(subscriber);
+
+      const modeSubscription = pipe(
+        modeObs,
+        onNotify(mode => {
+          switch (mode) {
+            case StreamMode.Pause:
+              pausableScheduler.pause();
+              break;
+            case StreamMode.Resume:
+              pausableScheduler.resume();
+              break;
+          }
+        }),
+        subscribe(subscriber),
+      );
+
+      const eventStream = concat<StreamEvent<T>>(
+        pipe(
+          observable,
+          mapObs(data => ({ type: StreamEventType.Next, data })),
+        ),
+        ofValue({ type: StreamEventType.Complete }),
+        never(),
+      );
+
+      const eventStreamSubscription =pipe(eventStream, onNotify(x => subscriber.notify(x)), subscribe(pausableScheduler));
+      subscriber.add(pausableScheduler).add(modeSubscription).add(eventStreamSubscription);
+    }),
   );
