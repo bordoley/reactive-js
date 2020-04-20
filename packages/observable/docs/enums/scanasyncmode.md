@@ -1,4 +1,4 @@
-[@reactive-js/observable - v0.0.34](../README.md) › [ScanAsyncMode](scanasyncmode.md)
+[@reactive-js/observable - v0.0.35](../README.md) › [ScanAsyncMode](scanasyncmode.md)
 
 # Enumeration: ScanAsyncMode
 

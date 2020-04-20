@@ -1,4 +1,4 @@
-[@reactive-js/observable - v0.0.34](../README.md) › [SubjectLike](subjectlike.md)
+[@reactive-js/observable - v0.0.35](../README.md) › [SubjectLike](subjectlike.md)
 
 # Interface: SubjectLike <**T**>
 

@@ -1,6 +1,6 @@
-[@reactive-js/async-enumerable - v0.0.34](README.md)
+[@reactive-js/async-enumerable - v0.0.35](README.md)
 
-# @reactive-js/async-enumerable - v0.0.34
+# @reactive-js/async-enumerable - v0.0.35
 
 ## Index
 

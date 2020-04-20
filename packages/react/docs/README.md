@@ -1,5 +1,5 @@
 
-# @reactive-js/react - v0.0.34
+# @reactive-js/react - v0.0.35
 
 ## Index
 
