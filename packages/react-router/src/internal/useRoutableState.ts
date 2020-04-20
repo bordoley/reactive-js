@@ -34,7 +34,7 @@ export const useRoutableState = <TState>(
   props: RoutableComponentProps,
   parse: (serialized: string) => TState,
   serialize: (state: TState) => string,
-  stateIssearch = false,
+  stateIsQuery = false,
 ): [TState, (updater: StateUpdater<TState>) => void] => {
   const {
     uri: { search, hash },
@@ -42,17 +42,17 @@ export const useRoutableState = <TState>(
   } = props;
 
   const state = useMemo(() => {
-    const serialized = stateIssearch ? search : hash;
+    const serialized = stateIsQuery ? search : hash;
     return parse(serialized);
   }, [parse, search, hash]);
 
   const notify = useCallback(
     (stateUpdater: StateUpdater<TState>) => {
       uriUpdater(
-        createURIStateUpdater(stateUpdater, parse, serialize, stateIssearch),
+        createURIStateUpdater(stateUpdater, parse, serialize, stateIsQuery),
       );
     },
-    [uriUpdater, parse, serialize, stateIssearch],
+    [uriUpdater, parse, serialize, stateIsQuery],
   );
 
   return [state, notify];
