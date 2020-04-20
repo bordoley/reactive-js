@@ -2,7 +2,6 @@ import iconv from "iconv-lite";
 import { Transform } from "stream";
 import {
   createAsyncEnumerable,
-  StreamMode,
   StreamEvent,
   StreamOperator,
   StreamLike,
@@ -10,10 +9,7 @@ import {
   StreamEventType,
   sink,
 } from "@reactive-js/async-enumerable";
-import {
-  createDisposable,
-  createDisposableValue,
-} from "@reactive-js/disposable";
+import { createDisposableValue } from "@reactive-js/disposable";
 import {
   ObservableLike,
   createObservable,
@@ -26,61 +22,44 @@ import {
   subscribe,
 } from "@reactive-js/observable";
 import { Option } from "@reactive-js/option";
-import { createBufferStreamAsyncEnumeratorFromReadable } from "./bufferStream";
-import { createBufferStreamSinkAsyncEnumeratorFromWritable } from "./bufferStreamSink";
+import { createBufferStreamFromReadable } from "./bufferStream";
+import { createBufferStreamSinkFromWritable } from "./bufferStreamSink";
 import { Operator, pipe } from "@reactive-js/pipe";
 import { BufferStreamLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { isSome } from "@reactive-js/option";
 
+const disposeTransform = (readable: Transform) => {
+  readable.removeAllListeners();
+  readable.destroy();
+};
+
 export const transform = (
   factory: () => Transform,
-): StreamOperator<Buffer, Buffer> => src => {
-  const op = (modeObs: ObservableLike<StreamMode>) =>
+): StreamOperator<Buffer, Buffer> => src =>
+  createAsyncEnumerable(modeObs =>
     createObservable<StreamEvent<Buffer>>(subscriber => {
+      const readable = createDisposableValue(factory(), disposeTransform);
       const transform = factory();
 
-      const transformSink = {
-        enumerateAsync: (scheduler: SchedulerLike, replayCount?: number) =>
-          createBufferStreamSinkAsyncEnumeratorFromWritable(
-            transform,
-            scheduler,
-            replayCount,
-          ),
-      };
-
-      const transformReadableEnumerator = createBufferStreamAsyncEnumeratorFromReadable(
-        transform,
-        subscriber,
+      const transformSink = createBufferStreamSinkFromWritable(
+        () => transform,
+        false,
       );
-
       const sinkSubscription = pipe(
         sink(src, transformSink),
         subscribe(subscriber),
       );
 
-      // When a tranform's read interface has been fully consumed
-      // we can dispose the transform, its writableEnumerator
-      // and its upstream sources, but must not dispose the readableEnumerator.
-      const tranformDisposable = createDisposable(() => {
-        transform.removeListener("end", onEnd);
-        transform.destroy();
-      }).add(sinkSubscription);
-
-      const onEnd = () => {
-        tranformDisposable.dispose();
-      };
-      transform.on("end", onEnd);
-
-      subscriber.add(transformReadableEnumerator).add(tranformDisposable);
-
-      // Since the transform into the subcriber
-      modeObs.subscribe(transformReadableEnumerator);
+      const transformReadableEnumerator = createBufferStreamFromReadable(
+        () => transform,
+      ).enumerateAsync(subscriber);
       transformReadableEnumerator.subscribe(subscriber);
-    });
+      modeObs.subscribe(transformReadableEnumerator);
 
-  return createAsyncEnumerable(op);
-};
+      subscriber.add(readable).add(sinkSubscription);
+    }),
+  );
 
 export const unsupportedEncoding = Symbol("unsupportedEncoding");
 const unsupportedEncodingObservable = throws(() => unsupportedEncoding);
@@ -101,17 +80,20 @@ export const encode = (
         pipe(
           obs,
           concatMap(ev => {
-            if (ev.type === StreamEventType.Next) {
-              const data = encoder.value.write(ev.data);
-              return ofValue({ type: StreamEventType.Next, data });
-            } else {
-              const data: Option<Buffer> = encoder.value.end();
-              return isSome(data) && data.length > 0
-                ? fromArray([
-                    { type: StreamEventType.Next, data },
-                    { type: StreamEventType.Complete },
-                  ])
-                : ofValue({ type: StreamEventType.Complete });
+            switch (ev.type) {
+              case StreamEventType.Next: {
+                const data = encoder.value.write(ev.data);
+                return ofValue({ type: StreamEventType.Next, data });
+              }
+              case StreamEventType.Complete: {
+                const data: Option<Buffer> = encoder.value.end();
+                return isSome(data) && data.length > 0
+                  ? fromArray([
+                      { type: StreamEventType.Next, data },
+                      { type: StreamEventType.Complete },
+                    ])
+                  : ofValue({ type: StreamEventType.Complete });
+              }
             }
           }),
         ),
@@ -134,17 +116,20 @@ export const decode = (
         pipe(
           obs,
           concatMap(ev => {
-            if (ev.type === StreamEventType.Next) {
-              const data = decoder.value.write(ev.data);
-              return ofValue({ type: StreamEventType.Next, data });
-            } else {
-              const data: Option<string> = decoder.value.end();
-              return isSome(data) && data.length > 0
-                ? fromArray([
-                    { type: StreamEventType.Next, data },
-                    { type: StreamEventType.Complete },
-                  ])
-                : ofValue({ type: StreamEventType.Complete });
+            switch (ev.type) {
+              case StreamEventType.Next: {
+                const data = decoder.value.write(ev.data);
+                return ofValue({ type: StreamEventType.Next, data });
+              }
+              case StreamEventType.Complete: {
+                const data: Option<Buffer> = decoder.value.end();
+                return isSome(data) && data.length > 0
+                  ? fromArray([
+                      { type: StreamEventType.Next, data },
+                      { type: StreamEventType.Complete },
+                    ])
+                  : ofValue({ type: StreamEventType.Complete });
+              }
             }
           }),
         ),

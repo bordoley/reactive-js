@@ -5,13 +5,9 @@ export { BufferStreamLike, BufferStreamSinkLike } from "./internal/interfaces";
 
 export {
   createBufferStreamFromReadable,
-  createBufferStreamAsyncEnumeratorFromReadable,
   stringToBufferStream,
 } from "./internal/bufferStream";
-export {
-  createBufferStreamSinkAsyncEnumeratorFromWritable,
-  createBufferStreamSinkFromWritable,
-} from "./internal/bufferStreamSink";
+export { createBufferStreamSinkFromWritable } from "./internal/bufferStreamSink";
 export {
   transform,
   encode,

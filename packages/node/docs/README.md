@@ -17,9 +17,7 @@
 ### Functions
 
 * [bindNodeCallback](README.md#bindnodecallback)
-* [createBufferStreamAsyncEnumeratorFromReadable](README.md#const-createbufferstreamasyncenumeratorfromreadable)
 * [createBufferStreamFromReadable](README.md#const-createbufferstreamfromreadable)
-* [createBufferStreamSinkAsyncEnumeratorFromWritable](README.md#const-createbufferstreamsinkasyncenumeratorfromwritable)
 * [createBufferStreamSinkFromWritable](README.md#const-createbufferstreamsinkfromwritable)
 * [decode](README.md#const-decode)
 * [encode](README.md#const-encode)
@@ -1827,22 +1825,6 @@ Name | Type |
 
 ___
 
-### `Const` createBufferStreamAsyncEnumeratorFromReadable
-
-▸ **createBufferStreamAsyncEnumeratorFromReadable**(`readable`: Readable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`readable` | Readable |
-`scheduler` | SchedulerLike |
-`replayCount?` | undefined &#124; number |
-
-**Returns:** *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
-
-___
-
 ### `Const` createBufferStreamFromReadable
 
 ▸ **createBufferStreamFromReadable**(`factory`: function): *[BufferStreamLike](interfaces/bufferstreamlike.md)*
@@ -1857,31 +1839,17 @@ ___
 
 ___
 
-### `Const` createBufferStreamSinkAsyncEnumeratorFromWritable
-
-▸ **createBufferStreamSinkAsyncEnumeratorFromWritable**(`writable`: Writable, `scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamEvent‹Buffer›, StreamMode›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`writable` | Writable |
-`scheduler` | SchedulerLike |
-`replayCount?` | undefined &#124; number |
-
-**Returns:** *AsyncEnumeratorLike‹StreamEvent‹Buffer›, StreamMode›*
-
-___
-
 ### `Const` createBufferStreamSinkFromWritable
 
-▸ **createBufferStreamSinkFromWritable**(`factory`: function): *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+▸ **createBufferStreamSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
 
 **Parameters:**
 
 ▪ **factory**: *function*
 
 ▸ (): *Writable*
+
+▪`Default value`  **autoDispose**: *boolean*= true
 
 **Returns:** *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
 

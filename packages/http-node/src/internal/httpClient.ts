@@ -10,6 +10,7 @@ import {
   StreamEventType,
   StreamOperator,
   emptyStream,
+  sink,
 } from "@reactive-js/async-enumerable";
 import {
   DisposableValueLike,
@@ -30,7 +31,7 @@ import {
   httpRequestToUntypedHeaders,
 } from "@reactive-js/http";
 import {
-  createBufferStreamSinkAsyncEnumeratorFromWritable,
+  createBufferStreamSinkFromWritable,
   transform,
   createBufferStreamFromReadable,
   BufferStreamLike,
@@ -44,6 +45,7 @@ import {
   onNotify,
   scan,
   ObservableOperator,
+  subscribe,
 } from "@reactive-js/observable";
 import { isSome, none, Option } from "@reactive-js/option";
 import { pipe, compose } from "@reactive-js/pipe";
@@ -179,10 +181,7 @@ const createOnSubscribe = (
   };
   req.on("response", onResponse);
 
-  const reqBodyEnumerator = createBufferStreamSinkAsyncEnumeratorFromWritable(
-    req,
-    subscriber,
-  );
+  const reqBody = createBufferStreamSinkFromWritable(() => req, false);
 
   const doOnNotify = ([count, total]: [number, number]) => {
     const ev: HttpClientRequestStatus =
@@ -202,25 +201,20 @@ const createOnSubscribe = (
     ),
   ).enumerateAsync(subscriber);
 
-  const contentEnumerator = pipe(
+  const contentBody = pipe(
     request.content?.body ?? emptyStream(),
     lift(onNotify(ev => spyEnumerator.dispatch(ev))),
     encodeContent,
-  ).enumerateAsync(subscriber);
+  );
 
-  subscriber
-    .add(reqBodyEnumerator)
-    .add(spyEnumerator)
-    .add(contentEnumerator)
-    .add(_ => {
-      req.abort();
-      req.removeAllListeners();
-      req.destroy();
-    });
+  subscriber.add(spyEnumerator).add(_ => {
+    req.abort();
+    req.removeAllListeners();
+    req.destroy();
+  });
 
   const onContinue = () => {
-    contentEnumerator.subscribe(reqBodyEnumerator);
-    reqBodyEnumerator.subscribe(contentEnumerator);
+    subscriber.add(pipe(sink(contentBody, reqBody), subscribe(subscriber)));
   };
   if (request.expectContinue) {
     req.on("continue", onContinue);
