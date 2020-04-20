@@ -44,7 +44,7 @@ export const createBufferStreamSinkFromWritable = (
       subscriber.add(writable).add(streamEventsSubscription);
 
       const onDrain = () => {
-        subscriber.dispatch(StreamMode.Produce);
+        subscriber.dispatch(StreamMode.Resume);
       };
       writable.value.on("drain", onDrain);
 
@@ -62,6 +62,6 @@ export const createBufferStreamSinkFromWritable = (
       };
       writable.value.on("finish", onFinish);
 
-      subscriber.dispatch(StreamMode.Produce);
+      subscriber.dispatch(StreamMode.Resume);
     }),
   );

@@ -7,7 +7,7 @@
 ### Enumeration members
 
 * [Pause](streammode.md#pause)
-* [Produce](streammode.md#produce)
+* [Resume](streammode.md#resume)
 
 ## Enumeration members
 
@@ -17,6 +17,6 @@
 
 ___
 
-###  Produce
+###  Resume
 
-• **Produce**: = 1
+• **Resume**: = 1

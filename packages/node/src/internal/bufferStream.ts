@@ -28,7 +28,7 @@ export const createBufferStreamFromReadable = (
             case StreamMode.Pause:
               readable.value.pause();
               break;
-            case StreamMode.Produce:
+            case StreamMode.Resume:
               readable.value.resume();
               break;
           }

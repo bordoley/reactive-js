@@ -151,7 +151,7 @@ describe("streams", () => {
       subscribe(scheduler),
     );
 
-    transformed.dispatch(StreamMode.Produce);
+    transformed.dispatch(StreamMode.Resume);
     scheduler.run();
 
     expect(result).toEqual(str);
