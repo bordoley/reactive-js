@@ -11,8 +11,7 @@ import {
   HttpContentRequest,
   HttpContentResponse,
   HttpStatusCode,
-  parseMediaTypeOrThrow,
-  noCache,
+  createHttpContent,
 } from "@reactive-js/http";
 import {
   HttpClientRequestStatusType,
@@ -80,8 +79,8 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
 > = _ =>
   compute(() =>
     createHttpResponse(200, {
-      cacheControl: [noCache()],
-      content: {
+      cacheControl: ["no-cache"],
+      content: createHttpContent({
         body: pipe(
           generateStream(
             acc => acc + 1,
@@ -94,12 +93,8 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
           ),
           encode("utf-8"),
         ),
-        contentLength: -1,
-        contentEncodings: [],
-        contentType: parseMediaTypeOrThrow(
-          'text/event-stream; charset="utf-8"',
-        ),
-      },
+        contentType: 'text/event-stream; charset="utf-8"',
+      }),
     }),
   );
 
@@ -108,9 +103,7 @@ const routerHandlerFiles: HttpRequestRouterHandler<
   HttpContent<BufferStreamLike>
 > = req => {
   const path = req.params["*"] || "";
-  const contentType = parseMediaTypeOrThrow(
-    mime.lookup(path) || "application/octet-stream",
-  );
+  const contentType = mime.lookup(path) || "application/octet-stream";
 
   return pipe(
     bindNodeCallback(fs.stat, (r: fs.Stats) => r)(path),
@@ -217,13 +210,7 @@ pipe(
       "x-forwarded-proto": "https",
     },
     preferences: {
-      acceptedCharsets: [],
-      acceptedEncodings: [],
-      acceptedLanguages: [],
-      acceptedMediaRanges: [
-        parseMediaTypeOrThrow("application/json"),
-        parseMediaTypeOrThrow("text/html"),
-      ],
+      acceptedMediaRanges: ["application/json", "text/html"],
     },
   }),
   httpClient.send.bind(httpClient),

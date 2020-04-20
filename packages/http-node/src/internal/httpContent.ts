@@ -6,11 +6,13 @@ import {
   StreamEvent,
   StreamMode,
   ofValueStream,
+  StreamLike,
 } from "@reactive-js/async-enumerable";
 import {
   HttpContentEncoding,
   HttpContent,
   MediaType,
+  createHttpContent,
   parseMediaTypeOrThrow,
 } from "@reactive-js/http";
 import { transform, createBufferStreamFromReadable } from "@reactive-js/node";
@@ -22,18 +24,16 @@ import {
 
 /** @ignore */
 export const encodeHttpContent = (
-  contentBody: HttpContent<
-    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
-  >,
+  content: HttpContent<StreamLike<Buffer>>,
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
-  const { body, contentLength, contentEncodings } = contentBody;
+  const { body, contentLength, contentEncodings } = content;
 
   return contentLength === 0
-    ? contentBody
+    ? content
     : {
-        ...contentBody,
+        ...content,
         body: pipe(
           body,
           transform(createEncodingCompressTransform(encoding, options)),
@@ -45,9 +45,7 @@ export const encodeHttpContent = (
 
 /** @ignore */
 export const decodeHttpContent = (
-  contentBody: HttpContent<
-    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
-  >,
+  contentBody: HttpContent<StreamLike<Buffer>>,
   options: BrotliOptions | ZlibOptions,
 ): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
   const { body, contentLength, contentEncodings } = contentBody;
@@ -66,34 +64,28 @@ export const decodeHttpContent = (
 export const createBufferHttpContent = (
   chunk: Buffer,
   contentType: MediaType | string,
-): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => ({
-  body: ofValueStream(chunk),
-  contentEncodings: [],
-  contentLength: chunk.length,
-  contentType:
-    typeof contentType === "string"
-      ? parseMediaTypeOrThrow(contentType)
-      : contentType,
-});
+): HttpContent<StreamLike<Buffer>> =>
+  createHttpContent({
+    body: ofValueStream(chunk),
+    contentLength: chunk.length,
+    contentType,
+  });
 
 export const createReadableHttpContent = (
   factory: () => Readable,
   contentType: MediaType | string,
   contentLength = -1,
-): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => ({
-  body: createBufferStreamFromReadable(factory),
-  contentEncodings: [],
-  contentLength,
-  contentType:
-    typeof contentType === "string"
-      ? parseMediaTypeOrThrow(contentType)
-      : contentType,
-});
+): HttpContent<StreamLike<Buffer>> =>
+  createHttpContent({
+    body: createBufferStreamFromReadable(factory),
+    contentLength,
+    contentType,
+  });
 
 export const createStringHttpContent = (
   content: string,
   contentType: MediaType | string,
-): HttpContent<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>> => {
+): HttpContent<StreamLike<Buffer>> => {
   contentType =
     typeof contentType === "string"
       ? parseMediaTypeOrThrow(contentType)
@@ -101,7 +93,13 @@ export const createStringHttpContent = (
   const charset = contentType.params["charset"] ?? "utf-8";
   const buffer = iconv.encode(content, charset);
 
-  // FIXME: update the contentType if none is specfied in the content params provided.
+  contentType = {
+    ...contentType,
+    params: {
+      ...contentType.params,
+      charset,
+    },
+  };
 
   return createBufferHttpContent(buffer, contentType);
 };

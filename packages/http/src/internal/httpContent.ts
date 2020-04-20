@@ -3,8 +3,17 @@ import { parseWith } from "@reactive-js/parser-combinators";
 import { pipe } from "@reactive-js/pipe";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
-import { HttpContent, HttpHeaders, HttpContentEncoding } from "./interfaces";
-import { parseMediaType, mediaTypeToString } from "./mediaType";
+import {
+  HttpContent,
+  HttpHeaders,
+  HttpContentEncoding,
+  MediaType,
+} from "./interfaces";
+import {
+  parseMediaType,
+  mediaTypeToString,
+  parseMediaTypeOrThrow,
+} from "./mediaType";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 
@@ -56,3 +65,23 @@ export const writeHttpContentHeaders = <T>(
     );
   }
 };
+
+export const createHttpContent = <T>({
+  body,
+  contentEncodings,
+  contentLength,
+  contentType,
+}: {
+  body: T;
+  contentEncodings?: HttpContentEncoding[];
+  contentLength?: number;
+  contentType: MediaType | string;
+}): HttpContent<T> => ({
+  body,
+  contentEncodings: contentEncodings ?? [],
+  contentLength: contentLength ?? -1,
+  contentType:
+    typeof contentType === "string"
+      ? parseMediaTypeOrThrow(contentType)
+      : contentType,
+});

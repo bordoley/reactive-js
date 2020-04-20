@@ -10,7 +10,7 @@ import {
   MediaRange,
   HttpContentEncoding,
 } from "./interfaces";
-import { pMediaType } from "./mediaType";
+import { pMediaType, parseMediaTypeOrThrow } from "./mediaType";
 
 const weightedParamComparator = (
   a: {
@@ -119,6 +119,39 @@ export const parseHttpPreferencesFromHeaders = (
         acceptedLanguages,
         acceptedMediaRanges,
       };
+};
+
+/** @ignore */
+export const createHttpPreferences = ({
+  acceptedCharsets = [],
+  acceptedEncodings = [],
+  acceptedLanguages = [],
+  acceptedMediaRanges = [],
+}: {
+  acceptedCharsets?: readonly string[];
+  acceptedEncodings?: readonly HttpContentEncoding[];
+  acceptedLanguages?: readonly string[];
+  acceptedMediaRanges?: readonly (string | MediaRange)[];
+}): HttpPreferences => {
+  if (
+    [
+      acceptedCharsets,
+      acceptedEncodings,
+      acceptedLanguages,
+      acceptedMediaRanges,
+    ].findIndex(x => x.length > 0) < 0
+  ) {
+    throw new Error();
+  }
+
+  return {
+    acceptedCharsets,
+    acceptedEncodings,
+    acceptedLanguages,
+    acceptedMediaRanges: acceptedMediaRanges.map(mr =>
+      typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr,
+    ),
+  };
 };
 
 const writeWeightedTokenHeader = (

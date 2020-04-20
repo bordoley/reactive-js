@@ -15,8 +15,6 @@ export {
   private_,
 } from "./internal/cacheDirective";
 
-export { parseETag, parseETagOrThrow } from "./internal/entityTag";
-
 export {
   CacheDirective,
   HttpContentEncoding,
@@ -54,10 +52,11 @@ export {
 
 export { HttpStandardHeader } from "./internal/httpHeaders";
 
-/** FIXME: Not sure we should export these. Instead we can export createContent function */
+export { createHttpContent } from "./internal/httpContent";
+
 export {
   mediaTypeIsCompressible,
-  mediaTypeToString,
+  //  mediaTypeToString,
   parseMediaType,
   parseMediaTypeOrThrow,
 } from "./internal/mediaType";

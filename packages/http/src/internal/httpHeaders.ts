@@ -101,15 +101,24 @@ export function getHeaderValue(
 }
 
 /** @ignore */
-export function writeHttpHeaders(
+export const writeHttpHeaders = (
   headers: HttpHeaders,
   writeHeader: (header: string, value: string) => void,
-) {
-  const headerPairs = Object.entries(headers).filter(
-    ([key]) => !bannedHeaders.includes(key.toLowerCase()),
-  );
-
-  for (const [header, value] of headerPairs) {
-    writeHeader(header, value);
+) => {
+  for (const header in headers) {
+    if (
+      headers.hasOwnProperty(header) &&
+      !bannedHeaders.includes(header.toLowerCase())
+    ) {
+      writeHeader(header, headers[header]);
+    }
   }
 }
+
+/** @ignore */
+export const filterHeaders = (headers: HttpHeaders): HttpHeaders => {
+  const result: { [key: string]: string} = {};
+  const writeHeader = (k: string, v: string) => { result[k] = v; };
+  writeHttpHeaders(headers, writeHeader);
+  return result;
+};

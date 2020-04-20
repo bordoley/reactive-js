@@ -157,7 +157,7 @@ ___
 
 ### `Const` createBufferHttpContent
 
-▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹StreamLike‹Buffer››*
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ Name | Type |
 `chunk` | Buffer |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+**Returns:** *HttpContent‹StreamLike‹Buffer››*
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 ### `Const` createReadableHttpContent
 
-▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹StreamLike‹Buffer››*
 
 **Parameters:**
 
@@ -215,13 +215,13 @@ ___
 
 ▪`Default value`  **contentLength**: *number*=  -1
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+**Returns:** *HttpContent‹StreamLike‹Buffer››*
 
 ___
 
 ### `Const` createStringHttpContent
 
-▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹StreamLike‹Buffer››*
 
 **Parameters:**
 
@@ -230,7 +230,7 @@ Name | Type |
 `content` | string |
 `contentType` | MediaType &#124; string |
 
-**Returns:** *HttpContent‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››*
+**Returns:** *HttpContent‹StreamLike‹Buffer››*
 
 ___
 

@@ -9,31 +9,37 @@ import {
   HttpStandardHeader,
   getHeaderValue,
   HttpExtensiondHeader,
+  filterHeaders,
 } from "./httpHeaders";
 import {
   parseHttpPreferencesFromHeaders,
   writeHttpPreferenceHeaders,
+  createHttpPreferences,
 } from "./httpPreferences";
 import {
   writeHttpRequestPreconditionsHeaders,
   parseHttpRequestPreconditionsFromHeaders,
+  createHttpRequestPreconditions,
 } from "./httpRequestPreconditions";
 import {
   HttpMethod,
   URILike,
   HttpHeaders,
-  HttpPreferences,
   HttpRequest,
   HttpResponse,
   HttpServerRequest,
   HttpStatusCode,
   HttpContentRequest,
-  HttpRequestPreconditions,
   CacheDirective,
+  EntityTag,
+  HttpDateTime,
+  HttpContentEncoding,
+  MediaRange,
 } from "./interfaces";
 import {
   parseCacheControlFromHeaders,
   writeHttpCacheControlHeader,
+  parseCacheDirectiveOrThrow,
 } from "./cacheDirective";
 
 declare class URL implements URILike {
@@ -54,24 +60,54 @@ declare class URL implements URILike {
 export const createHttpRequest = <T>(
   method: HttpMethod,
   uri: string | URILike,
-  options: {
-    cacheControl?: readonly CacheDirective[];
+  {
+    cacheControl,
+    content,
+    expectContinue,
+    headers,
+    httpVersionMajor,
+    httpVersionMinor,
+    preconditions,
+    preferences,
+    ...rest
+  }: {
+    cacheControl?: readonly (string | CacheDirective)[];
     content?: T;
     expectContinue?: boolean;
     headers?: HttpHeaders;
-    preconditions?: HttpRequestPreconditions;
-    preferences?: HttpPreferences;
     httpVersionMajor?: number;
     httpVersionMinor?: number;
+    preconditions?: {
+      ifMatch?: (string | EntityTag)[] | "*";
+      ifModifiedSince?: string | HttpDateTime | Date;
+      ifNoneMatch?: (string | EntityTag)[] | "*";
+      ifUnmodifiedSince?: string | HttpDateTime | Date;
+      ifRange?: string | EntityTag | HttpDateTime | Date;
+    };
+    preferences?: {
+      acceptedCharsets?: readonly string[];
+      acceptedEncodings?: readonly HttpContentEncoding[];
+      acceptedLanguages?: readonly string[];
+      acceptedMediaRanges?: readonly (string | MediaRange)[];
+    };
   } = {},
 ): HttpRequest<T> => ({
-  ...options,
-  cacheControl: options.cacheControl ?? [],
-  expectContinue: options.expectContinue ?? false,
-  headers: options.headers ?? {},
-  httpVersionMajor: options.httpVersionMajor ?? 1,
-  httpVersionMinor: options.httpVersionMinor ?? 1,
+  ...rest,
+  cacheControl: (cacheControl ?? []).map(cc =>
+    typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
+  ),
+  content,
+  expectContinue: expectContinue ?? false,
+  headers: filterHeaders(headers ?? {}),
+  httpVersionMajor: httpVersionMajor ?? 1,
+  httpVersionMinor: httpVersionMinor ?? 1,
   method,
+  preconditions: isSome(preconditions)
+    ? createHttpRequestPreconditions(preconditions)
+    : undefined,
+  preferences: isSome(preferences)
+    ? createHttpPreferences(preferences)
+    : undefined,
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 
