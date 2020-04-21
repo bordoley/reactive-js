@@ -34,7 +34,7 @@ export {
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
 
-export { HttpStandardHeader } from "./internal/httpHeaders";
+export { HttpStandardHeader, HttpExtensionHeader } from "./internal/httpHeaders";
 
 export { parseMediaType, parseMediaTypeOrThrow } from "./internal/mediaType";
 

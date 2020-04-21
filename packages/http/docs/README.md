@@ -7,7 +7,7 @@
 ### Enumerations
 
 * [HttpContentEncoding](enums/httpcontentencoding.md)
-* [HttpExtensiondHeader](enums/httpextensiondheader.md)
+* [HttpExtensionHeader](enums/httpextensionheader.md)
 * [HttpMethod](enums/httpmethod.md)
 * [HttpStandardHeader](enums/httpstandardheader.md)
 * [HttpStatusCode](enums/httpstatuscode.md)
@@ -288,14 +288,14 @@ Name | Type |
 
 **Returns:** *Option‹string›*
 
-▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpExtensiondHeader](enums/httpextensiondheader.md)): *Option‹string›*
+▸ **getHeaderValue**(`headers`: [HttpHeaders](README.md#httpheaders), `key`: [HttpExtensionHeader](enums/httpextensionheader.md)): *Option‹string›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `headers` | [HttpHeaders](README.md#httpheaders) |
-`key` | [HttpExtensiondHeader](enums/httpextensiondheader.md) |
+`key` | [HttpExtensionHeader](enums/httpextensionheader.md) |
 
 **Returns:** *Option‹string›*
 
