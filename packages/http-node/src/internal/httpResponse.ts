@@ -5,6 +5,7 @@ import {
   httpResponseIsCompressible,
   HttpRequest,
   HttpResponse,
+  MediaType,
 } from "@reactive-js/http";
 import { BufferStreamLike, transform } from "@reactive-js/node";
 import { isSome, none, Option } from "@reactive-js/option";
@@ -12,8 +13,16 @@ import { Operator, pipe } from "@reactive-js/pipe";
 import {
   getFirstSupportedEncoding,
   createEncodingCompressTransform,
-  createEncodingDecompressTransform,
 } from "./httpContentEncoding";
+import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
+
+export const decodeHttpResponse = (
+  options: BrotliOptions | ZlibOptions,
+): Operator<
+  HttpResponse<BufferStreamLike>,
+  HttpResponse<BufferStreamLike>
+> => response =>
+  decodeHttpMessage(response, options);
 
 export type EncodeHttpResponseOptions = {
   readonly shouldEncode?: <T, TResp>(
@@ -66,25 +75,12 @@ export const encodeHttpResponse = <TReq>(
     : response;
 };
 
-export const decodeHttpResponse = (
-  options: BrotliOptions | ZlibOptions,
+export const encodeCharsetHttpResponse = (
+  contentType: string | MediaType,
 ): Operator<
-  HttpResponse<BufferStreamLike>,
+  HttpResponse<string>,
   HttpResponse<BufferStreamLike>
-> => response => {
-  const { body, contentInfo } = response;
-
-  return isSome(contentInfo) && contentInfo.contentEncodings.length > 0
-    ? {
-        ...response,
-        body: contentInfo.contentEncodings
-          .map(encoding => createEncodingDecompressTransform(encoding, options))
-          .reduceRight((acc, decoder) => pipe(acc, transform(decoder)), body),
-        content: {
-          ...contentInfo,
-          contentEncodings: [],
-          contentLength: -1,
-        },
-      }
-    : response;
-};
+> => {
+  const messageEncoder = encodeCharsetHttpMessage(contentType);
+  return resp => messageEncoder(resp) as HttpResponse<BufferStreamLike>;
+}

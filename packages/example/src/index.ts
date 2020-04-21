@@ -1,5 +1,4 @@
 import fs from "fs";
-import iconv from "iconv-lite";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import mime from "mime-types";
@@ -17,6 +16,8 @@ import {
   createHttpClient,
   decodeHttpRequest,
   encodeHttpResponse,
+  encodeCharsetHttpResponse,
+  encodeCharsetHttpRequest,
   withDefaultBehaviors,
 } from "@reactive-js/http-node";
 import {
@@ -54,7 +55,6 @@ import { isSome } from "@reactive-js/option";
 import {
   generateStream,
   mapStream,
-  ofValueStream,
 } from "@reactive-js/async-enumerable";
 import { HttpClientRequestStatusType } from "@reactive-js/http-common";
 
@@ -67,20 +67,14 @@ const scheduler = pipe(
 const routerHandlerPrintParams: HttpRequestRouterHandler<
   BufferStreamLike,
   BufferStreamLike
-> = req => {
-  const buffer = iconv.encode(JSON.stringify(req.params), "utf-8");
-  const body = ofValueStream(buffer);
-  return ofValue(
-    createHttpResponse({
-      statusCode: 200,
-      body,
-      contentInfo:{
-        contentLength: buffer.length, 
-        contentType: 'text/plain; charset="utf-8"',
-      },
-    })
-  );
-};
+> = req => pipe(
+  createHttpResponse({
+    statusCode: 200,
+    body: JSON.stringify(req.params),
+  }),
+  encodeCharsetHttpResponse("application/json"),
+  ofValue,
+)
 
 const routerHandlerEventStream: HttpRequestRouterHandler<
   BufferStreamLike,
@@ -131,16 +125,13 @@ const routerHandlerFiles: HttpRequestRouterHandler<
               contentType,
             },
           })
-        : createHttpResponse({
+        : pipe(
+          createHttpResponse({
             statusCode: 404,
-            body: pipe(
-              iconv.encode(JSON.stringify(req.params), "utf-8"),
-              ofValueStream,
-            ),
-            contentInfo: {
-              contentType: 'text/plain; charset="utf-8"',
-            },
+            body: JSON.stringify(req.params),
           }),
+          encodeCharsetHttpResponse("text/plain")
+        )
     ),
   );
 };
@@ -154,16 +145,12 @@ const notFound: Operator<
   HttpRequest<BufferStreamLike>,
   ObservableLike<HttpResponse<BufferStreamLike>>
 > = req => {
-  const buffer = iconv.encode(req.uri.toString(), "utf-8");
   return pipe(
     createHttpResponse({
       statusCode: 404,
-      body: ofValueStream(buffer),
-      contentInfo: {
-        contentLength: buffer.length,
-        contentType: 'text/plain; charset="utf-8"',
-      },
+      body: req.uri.toString(),
     }),
+    encodeCharsetHttpResponse("text/plain"),
     ofValue,
   );
 };
@@ -189,23 +176,20 @@ const listener = createHttpRequestListener(
       map(encodeHttpResponse(req)),
       // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
       catchError((e: unknown) => {
-        const message = process.env.NODE_ENV === "production"
+        const body = process.env.NODE_ENV === "production"
           ? ""
           : e instanceof Error && isSome(e.stack)
           ? e.stack
           : String(e);
-        const buffer = iconv.encode(message, "utf-8"); 
-        const body = ofValueStream(buffer);
 
-        return ofValue(
+
+        return pipe(
           createHttpResponse({
             statusCode: HttpStatusCode.InternalServerError,
-            body,
-            contentInfo: {
-              contentLength: buffer.length,
-              contentType: "text/plain",
-            },
+            body
           }),
+          encodeCharsetHttpResponse("text/plain"),
+          ofValue
         );
       }),
     ),
@@ -227,16 +211,11 @@ createHttp2Server(
 
 const httpClient = pipe(createHttpClient(), withDefaultBehaviors());
 
-const chunk = iconv.encode("some text", "utf-8");
 pipe(
   createHttpRequest({
     method: HttpMethod.POST,
     uri: "http://localhost:8080/index.html",
-    body: ofValueStream(chunk),
-    contentInfo: {
-      contentLength: chunk.length,
-      contentType: 'text/plain; charset="utf-8"',
-    },
+    body: "some text",
     headers: {
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
@@ -245,6 +224,7 @@ pipe(
       acceptedMediaRanges: ["application/json", "text/html"],
     },
   }),
+  encodeCharsetHttpRequest("text/plain"),
   httpClient,
   onNotify(status => {
     console.log("status: " + status.type);
