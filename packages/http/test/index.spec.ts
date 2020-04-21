@@ -7,7 +7,6 @@ import {
   createHttpResponse,
   HttpStatusCode,
   checkIfNotModified,
-  noCache,
 } from "../src";
 
 import { none } from "@reactive-js/option";
@@ -341,7 +340,7 @@ describe("checkIfNotModified", () => {
         method: HttpMethod.GET,
         uri: "http://www.example.com",
         body: none,
-        cacheControl: [noCache()],
+        cacheControl: ["no-cache"],
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
