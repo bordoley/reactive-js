@@ -142,19 +142,22 @@ export type CacheDirective = {
   readonly value: string;
 };
 
-export type HttpRequest<T> = {
+export type HttpMessage<T> = {
+  readonly body: T;
+  readonly cacheControl: readonly CacheDirective[];
+  readonly contentInfo?: HttpContentInfo;
+  readonly headers: HttpHeaders;
+  readonly preferences?: HttpPreferences;
+}
+
+export type HttpRequest<T> = HttpMessage<T> & {
   // readonly authorization?: Credentials;
 
-  readonly cacheControl: readonly CacheDirective[];
-
-  readonly body: T;
-  readonly contentInfo?: HttpContentInfo;
   readonly expectContinue: boolean;
-  readonly headers: HttpHeaders;
   readonly method: HttpMethod;
   // readonly pragma: readonly CacheDirective[];
   readonly preconditions?: HttpRequestPreconditions;
-  readonly preferences?: HttpPreferences;
+  
   // readonly proxyAuthorization?: Credentials
   // readonly referer?: URILike;
   readonly uri: URILike;
@@ -168,17 +171,14 @@ export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;
 };
 
-export type HttpResponse<T> = {
+export type HttpResponse<T> = HttpMessage<T> & {
   // age:Option<TimeSpan>
   // allowed:Set<Method>
   // authenticate:Set<Challenge>
-  readonly body: T;
-  readonly cacheControl: readonly CacheDirective[];
+
   // date:Option<DateTime>
-  readonly contentInfo?: HttpContentInfo;
   readonly etag?: EntityTag;
   readonly expires?: HttpDateTime;
-  readonly headers: HttpHeaders;
   readonly lastModified?: HttpDateTime;
   // proxyAuthenticate:Set<Challenge>
   // retryAfter:Option<DateTime>
@@ -186,7 +186,6 @@ export type HttpResponse<T> = {
   // warning:Warning list
 
   readonly location?: URILike;
-  readonly preferences?: HttpPreferences;
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 };

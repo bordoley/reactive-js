@@ -21,6 +21,7 @@ export {
   HttpContentInfo,
   HttpDateTime,
   HttpHeaders,
+  HttpMessage,
   HttpMethod,
   HttpPreferences,
   HttpRequest,
