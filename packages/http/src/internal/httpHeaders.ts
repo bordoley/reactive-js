@@ -53,7 +53,7 @@ export const enum HttpStandardHeader {
   WWWAuthenticate = "WWW-Authenticate",
 }
 
-export const enum HttpExtensiondHeader {
+export const enum HttpExtensionHeader {
   XForwardedProto = "X-Forwarded-Proto",
   XForwardedHost = "X-Forwarded-Host",
   XHttpMethod = "X-HTTP-Method",
@@ -90,7 +90,7 @@ export function getHeaderValue(
 
 export function getHeaderValue(
   headers: HttpHeaders,
-  key: HttpExtensiondHeader,
+  key: HttpExtensionHeader,
 ): Option<string>;
 
 export function getHeaderValue(

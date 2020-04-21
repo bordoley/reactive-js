@@ -8,7 +8,7 @@ import {
 import {
   HttpStandardHeader,
   getHeaderValue,
-  HttpExtensiondHeader,
+  HttpExtensionHeader,
   filterHeaders,
 } from "./httpHeaders";
 import {
@@ -151,14 +151,14 @@ const parseURIFromHeaders = (
 ): URILike => {
   const forwardedProtocol = getHeaderValue(
     headers,
-    HttpExtensiondHeader.XForwardedProto,
+    HttpExtensionHeader.XForwardedProto,
   );
   const uriProtocol = isSome(forwardedProtocol)
     ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
     : protocol;
   const forwardedHost = getHeaderValue(
     headers,
-    HttpExtensiondHeader.XForwardedHost,
+    HttpExtensionHeader.XForwardedHost,
   );
   const http2Authority = headers[":authority"];
   const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
