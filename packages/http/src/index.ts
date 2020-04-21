@@ -1,21 +1,4 @@
 export {
-  mustRevalidate,
-  noStore,
-  noTransform,
-  onlyIfCached,
-  public_,
-  proxyRevalidate,
-  parseCacheDirective,
-  parseCacheDirectiveOrThrow,
-  maxAge,
-  maxStale,
-  minFresh,
-  sharedMaxAge,
-  noCache,
-  private_,
-} from "./internal/cacheDirective";
-
-export {
   CacheDirective,
   HttpContentEncoding,
   HttpContentInfo,
