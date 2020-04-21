@@ -93,7 +93,8 @@ export const contentIsCompressible = <T>(
   db: {
     [key: string]: {
       compressible?: boolean;
-    },
+    };
   },
-): boolean => content.contentEncodings.length === 0 &&  // Don't double encode
-      mediaTypeIsCompressible(content.contentType, db);
+): boolean =>
+  content.contentEncodings.length === 0 && // Don't double encode
+  mediaTypeIsCompressible(content.contentType, db);

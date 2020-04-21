@@ -56,9 +56,6 @@ export { HttpStandardHeader } from "./internal/httpHeaders";
 
 export { createHttpContent } from "./internal/httpContent";
 
-export {
-  parseMediaType,
-  parseMediaTypeOrThrow,
-} from "./internal/mediaType";
+export { parseMediaType, parseMediaTypeOrThrow } from "./internal/mediaType";
 
 export { parseHeaders } from "./internal/httpGrammar";
