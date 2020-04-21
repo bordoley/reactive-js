@@ -69,7 +69,7 @@ const routerHandlerPrintParams: HttpRequestRouterHandler<
   BufferStreamLike
 > = req => pipe(
   createHttpResponse({
-    statusCode: 200,
+    statusCode: HttpStatusCode.OK,
     body: JSON.stringify(req.params),
   }),
   encodeCharsetHttpResponse("application/json"),
@@ -127,7 +127,7 @@ const routerHandlerFiles: HttpRequestRouterHandler<
           })
         : pipe(
           createHttpResponse({
-            statusCode: 404,
+            statusCode: HttpStatusCode.NotFound,
             body: JSON.stringify(req.params),
           }),
           encodeCharsetHttpResponse("text/plain")
@@ -144,16 +144,14 @@ const routerHandlerThrow: HttpRequestRouterHandler<
 const notFound: Operator<
   HttpRequest<BufferStreamLike>,
   ObservableLike<HttpResponse<BufferStreamLike>>
-> = req => {
-  return pipe(
-    createHttpResponse({
-      statusCode: 404,
-      body: req.uri.toString(),
-    }),
-    encodeCharsetHttpResponse("text/plain"),
-    ofValue,
-  );
-};
+> = req => pipe(
+  createHttpResponse({
+    statusCode: HttpStatusCode.NotFound,
+    body: req.uri.toString(),
+  }),
+  encodeCharsetHttpResponse("text/plain"),
+  ofValue,
+);
 
 const router = createRouter(
   {
@@ -174,7 +172,6 @@ const listener = createHttpRequestListener(
       map(decodeHttpRequest()),
       await_(router),
       map(encodeHttpResponse(req)),
-      // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
       catchError((e: unknown) => {
         const body = process.env.NODE_ENV === "production"
           ? ""
@@ -182,10 +179,13 @@ const listener = createHttpRequestListener(
           ? e.stack
           : String(e);
 
+        const statusCode = e instanceof URIError
+          ? HttpStatusCode.BadRequest
+          : HttpStatusCode.InternalServerError
 
         return pipe(
           createHttpResponse({
-            statusCode: HttpStatusCode.InternalServerError,
+            statusCode,
             body
           }),
           encodeCharsetHttpResponse("text/plain"),
