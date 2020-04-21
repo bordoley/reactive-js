@@ -1,13 +1,21 @@
-import { ObservableLike } from "@reactive-js/observable";
 import { isSome } from "@reactive-js/option";
 import { fetchIsPolyfill } from "./internal/capabilities";
 import { sendHttpRequestUsingFetch } from "./internal/fetch";
-import { HttpWebRequest, HttpClientRequestStatus } from "./internal/interfaces";
+import {
+  HttpWebRequest,
+  WebResponseBodyLike,
+} from "./internal/interfaces";
 import { sendHttpRequestUsingXHR } from "./internal/xhr";
+import { HttpClient } from "@reactive-js/http-common";
 
-export const sendHttpRequest = (
-  request: HttpWebRequest,
-): ObservableLike<HttpClientRequestStatus> =>
+export {
+  WebResponseBodyLike
+} from "./internal/interfaces";
+
+export const sendHttpRequest: HttpClient<
+  HttpWebRequest,
+  WebResponseBodyLike
+> = request =>
   // Only use fetch if it's the native implementation.
   fetchIsPolyfill || isSome(request.content)
     ? sendHttpRequestUsingXHR(request)

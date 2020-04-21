@@ -9,7 +9,7 @@ import {
   StreamEventType,
 } from "@reactive-js/async-enumerable";
 import { createHttpRequest, HttpMethod, HttpContent } from "@reactive-js/http";
-import { sendHttpRequest } from "@reactive-js/http-web";
+import { sendHttpRequest, WebResponseBodyLike } from "@reactive-js/http-web";
 import {
   useObservable,
   useAsyncEnumerable,
@@ -21,7 +21,16 @@ import {
   useRoutableState,
 } from "@reactive-js/react-router";
 import { idlePriority, normalPriority } from "@reactive-js/react-scheduler";
-import { generate, onNotify, subscribe } from "@reactive-js/observable";
+import {
+  generate,
+  onNotify,
+  subscribe,
+  ofValue,
+  concatMap,
+  using,
+  onError,
+  onDispose,
+} from "@reactive-js/observable";
 import { history, Location, createEventSource } from "@reactive-js/web";
 import React, {
   ComponentType,
@@ -33,6 +42,7 @@ import React, {
 import { default as ReactDOM } from "react-dom";
 import { pipe, compose } from "@reactive-js/pipe";
 import { isSome } from "@reactive-js/option";
+import { HttpClientRequestStatusType } from "@reactive-js/http-common";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
@@ -174,12 +184,21 @@ const location = pipe(
 
 const request = createHttpRequest<HttpContent<any>>(
   HttpMethod.GET,
-  "http://localhost:8080/files/packages/example-react/index.json",
+  "http://localhost:8080/files/packages/example-react/dist/rollup/bundle.js",
 );
 
 pipe(
   sendHttpRequest(request),
+  concatMap(status =>
+    status.type === HttpClientRequestStatusType.HeaderReceived
+      ? using(
+          _ => status.response.content?.body as WebResponseBodyLike,
+          _ => ofValue("done"),
+        )
+      : ofValue(JSON.stringify(status)),
+  ),
   onNotify(console.log),
+  onDispose(_ => console.log("dispose")),
   subscribe(normalPriority),
 );
 
@@ -188,5 +207,6 @@ pipe(
     events: ["error", "message", "test"],
   }),
   onNotify(console.log),
+  onError(console.log),
   subscribe(normalPriority),
 );

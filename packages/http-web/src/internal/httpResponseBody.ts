@@ -1,12 +1,13 @@
 import {
   ObservableLike,
   ofValue,
-  switchMap,
   createObservable,
   SafeSubscriberLike,
+  await_,
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { WebResponseBodyLike } from "./interfaces";
+import { AbstractDisposable, DisposableLike } from "@reactive-js/disposable";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (subscriber: SafeSubscriberLike<string>) => {
@@ -73,18 +74,23 @@ const bodyToText = (body: unknown): ObservableLike<string> => {
 };
 
 /** @ignore */
-export class HttpResponseBodyImpl implements WebResponseBodyLike {
-  constructor(readonly body: ObservableLike<unknown>) {}
+export class HttpResponseBodyImpl extends AbstractDisposable
+  implements WebResponseBodyLike {
+  constructor(readonly body: ObservableLike<unknown> & DisposableLike) {
+    super();
+    this.add(body);
+    body.add(this);
+  }
 
   arrayBuffer(): ObservableLike<ArrayBuffer> {
-    return pipe(this.body, switchMap(bodyToArrayBuffer));
+    return pipe(this.body, await_(bodyToArrayBuffer));
   }
 
   blob(): ObservableLike<Blob> {
-    return pipe(this.body, switchMap(bodyToBlob));
+    return pipe(this.body, await_(bodyToBlob));
   }
 
   text(): ObservableLike<string> {
-    return pipe(this.body, switchMap(bodyToText));
+    return pipe(this.body, await_(bodyToText));
   }
 }
