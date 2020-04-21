@@ -280,16 +280,11 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-
 export const httpContentRequestIsCompressible = <T>(
-  response: HttpContentRequest<T>,
+  { content }: HttpContentRequest<T>,
   db: {
     [key: string]: {
       compressible?: boolean;
-    },
+    };
   },
-): boolean => {
-  const { content } = response;
-  return isSome(content) &&
-    contentIsCompressible(content, db);
-};
+): boolean => isSome(content) && contentIsCompressible(content, db);

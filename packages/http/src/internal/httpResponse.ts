@@ -262,14 +262,20 @@ export const httpContentResponseIsCompressible = <T>(
   db: {
     [key: string]: {
       compressible?: boolean;
-    },
+    };
   },
 ): boolean => {
   // Don't compress for Cache-Control: no-transform
   // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
-  const noTransformResponse = response.cacheControl.findIndex(({directive}) => directive === "no-transform") >= 0;
+  const noTransformResponse =
+    response.cacheControl.findIndex(
+      ({ directive }) => directive === "no-transform",
+    ) >= 0;
 
   const { content } = response;
-  return !noTransformResponse && isSome(content) &&
-    contentIsCompressible(content, db);
+  return (
+    !noTransformResponse &&
+    isSome(content) &&
+    contentIsCompressible(content, db)
+  );
 };
