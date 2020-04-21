@@ -1,321 +1,253 @@
-import { IncomingMessage, request as httpRequest, Agent } from "http";
-import { request as httpsRequest, RequestOptions } from "https";
+import { ClientRequest, IncomingMessage, request as httpRequest } from "http";
+import { request as httpsRequest } from "https";
 import db from "mime-db";
 import { URL } from "url";
-import { ZlibOptions, BrotliOptions } from "zlib";
 import {
-  identity as identityEnumerable,
-  lift,
-  StreamEvent,
-  StreamEventType,
-  StreamOperator,
-  emptyStream,
-  sink,
-} from "@reactive-js/async-enumerable";
-import {
-  DisposableValueLike,
-  createDisposableValue,
-  DisposableLike,
-  AbstractDisposable,
-} from "@reactive-js/disposable";
-import {
-  HttpContentEncoding,
-  HttpHeaders,
-  HttpStatusCode,
-  createRedirectHttpRequest,
-  httpContentRequestIsCompressible,
-  parseHttpResponseFromHeaders,
-  HttpContentRequest,
-  HttpContentResponse,
-  HttpContent,
-  httpRequestToUntypedHeaders,
-} from "@reactive-js/http";
-import {
-  createBufferStreamSinkFromWritable,
-  transform,
-  createBufferStreamFromReadable,
   BufferStreamLike,
+  createBufferStreamFromReadable,
+  createBufferStreamSinkFromWritable,
+  BufferStreamSinkLike,
 } from "@reactive-js/node";
 import {
-  createObservable,
-  ObservableLike,
-  ofValue,
-  SafeSubscriberLike,
-  concatMap,
-  onNotify,
-  scan,
-  ObservableOperator,
-  subscribe,
-} from "@reactive-js/observable";
-import { isSome, none, Option } from "@reactive-js/option";
-import { pipe, compose } from "@reactive-js/pipe";
+  HttpClient,
+  HttpClientRequestStatusType,
+  HttpClientRequestStatus,
+} from "@reactive-js/http-common";
+import { Option, none, isSome } from "@reactive-js/option";
 import {
-  supportedEncodings,
-  createEncodingCompressTransform,
-  getFirstSupportedEncoding,
-} from "./httpContentEncoding";
-import { decodeHttpContentResponse } from "./httpResponse";
+  createObservable,
+  publish,
+  subscribe,
+  scan,
+  onNotify,
+  ofValue,
+  map,
+  concatMap,
+  switchMap,
+} from "@reactive-js/observable";
+import {
+  DisposableLike,
+  AbstractDisposable,
+  createSerialDisposable,
+} from "@reactive-js/disposable";
+import {
+  httpRequestToUntypedHeaders,
+  parseHttpResponseFromHeaders,
+  HttpHeaders,
+  httpContentRequestIsCompressible,
+  HttpContentEncoding,
+  HttpStatusCode,
+  HttpContentRequest,
+  createRedirectHttpRequest,
+} from "@reactive-js/http";
+import { SchedulerLike } from "@reactive-js/scheduler";
+import {
+  AsyncEnumeratorLike,
+  StreamMode,
+  StreamEvent,
+  emptyStream,
+  lift,
+  StreamEventType,
+  sink,
+} from "@reactive-js/async-enumerable";
+import { pipe } from "@reactive-js/pipe";
+import { BrotliOptions, ZlibOptions } from "zlib";
+import { encodeHttpRequest } from "./httpRequest";
+import { getFirstSupportedEncoding } from "./httpContentEncoding";
 
-export const enum HttpClientRequestStatusType {
-  Begin = 1,
-  Uploaded = 2,
-  UploadComplete = 3,
-  ResponseReady = 4,
-}
-
-export type HttpClientRequestStatusBegin = {
-  readonly type: HttpClientRequestStatusType.Begin;
-  readonly request: HttpContentRequest<BufferStreamLike>;
+export type HttpClientOptions = {
+  // Node options
+  // don't support agents, we'll build an api to get sockets
+  // built around resource-manager
+  // readonly agent?: Agent | boolean;
+  readonly insecureHTTPParser?: boolean;
+  readonly maxHeaderSize?: number;
 };
 
-export type HttpClientRequestStatusUploading = {
-  readonly type: HttpClientRequestStatusType.Uploaded;
-  readonly request: HttpContentRequest<BufferStreamLike>;
-  readonly total: number;
-};
+class RequestBody extends AbstractDisposable implements BufferStreamSinkLike {
+  private consumed = false;
 
-export type HttpClientRequestStatusUploadComplete = {
-  readonly type: HttpClientRequestStatusType.UploadComplete;
-  readonly request: HttpContentRequest<BufferStreamLike>;
-};
-
-export type HttpClientRequestStatusResponseReady = {
-  readonly type: HttpClientRequestStatusType.ResponseReady;
-  readonly request: HttpContentRequest<BufferStreamLike>;
-  readonly response: DisposableValueLike<HttpContentResponse<BufferStreamLike>>;
-};
-
-export type HttpClientRequestStatus =
-  | HttpClientRequestStatusBegin
-  | HttpClientRequestStatusUploading
-  | HttpClientRequestStatusUploadComplete
-  | HttpClientRequestStatusResponseReady;
-
-const spyScanner = (
-  [uploaded, total]: [number, number],
-  ev: StreamEvent<Buffer>,
-): [number, number] =>
-  ev.type === StreamEventType.Next
-    ? [ev.data.length, total + uploaded]
-    : [-1, total + uploaded];
-
-const send = (
-  request: HttpContentRequest<BufferStreamLike>,
-  requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
-) => {
-  const { contentEncoding, ...nodeOptions } = requestOptions;
-  const { content } = request;
-  const newContent =
-    isSome(content) && isSome(contentEncoding)
-      ? {
-          ...content,
-          contentEncodings: [...content.contentEncodings, contentEncoding],
-        }
-      : content;
-
-  const requestWithAcceptEncodingsAndContentEncoding = {
-    ...request,
-    acceptedEncodings: supportedEncodings,
-    content: newContent,
-  };
-
-  const { method, uri } = requestWithAcceptEncodingsAndContentEncoding;
-  const headers = httpRequestToUntypedHeaders(
-    requestWithAcceptEncodingsAndContentEncoding,
-  );
-  const nodeRequestUrl = uri instanceof URL ? uri : new URL(uri.toString());
-  const nodeRequestOptions = {
-    ...nodeOptions,
-    headers,
-    method,
-  };
-
-  return uri.protocol === "https:"
-    ? httpsRequest(nodeRequestUrl, nodeRequestOptions)
-    : uri.protocol === "http:"
-    ? httpRequest(nodeRequestUrl, nodeRequestOptions)
-    : (() => {
-        throw new Error();
-      })();
-};
-
-const createOnSubscribe = (
-  request: HttpContentRequest<BufferStreamLike>,
-  requestOptions: RequestOptions & { contentEncoding?: HttpContentEncoding },
-  encodeContent: StreamOperator<Buffer, Buffer>,
-  decodeHttpContentResponse: (
-    resp: HttpContentResponse<BufferStreamLike>,
-  ) => HttpContentResponse<BufferStreamLike>,
-) => (subscriber: SafeSubscriberLike<HttpClientRequestStatus>) => {
-  subscriber.dispatch({ type: HttpClientRequestStatusType.Begin, request });
-
-  const req = send(request, requestOptions);
-
-  const onError = (cause: any) => {
-    // FIXME: Maybe we should dispatch a message instead of an error.
-    subscriber.dispose({ cause });
-  };
-  req.on("error", onError);
-
-  const onResponse = (msg: IncomingMessage) => {
-    subscriber.add(() => msg.destroy());
-
-    const response = pipe(
-      parseHttpResponseFromHeaders(
-        msg.statusCode ?? -1,
-        msg.headers as HttpHeaders,
-        createBufferStreamFromReadable(() => msg),
-      ),
-      decodeHttpContentResponse,
-    );
-
-    const disposableResponse = createDisposableValue(response, _ => {
-      msg.destroy();
-    });
-
-    subscriber.dispatch({
-      type: HttpClientRequestStatusType.ResponseReady,
-      request,
-      response: disposableResponse,
-    });
-  };
-  req.on("response", onResponse);
-
-  const reqBody = createBufferStreamSinkFromWritable(() => req, false);
-
-  const doOnNotify = ([count, total]: [number, number]) => {
-    const ev: HttpClientRequestStatus =
-      count < 0
-        ? { type: HttpClientRequestStatusType.UploadComplete, request }
-        : { type: HttpClientRequestStatusType.Uploaded, request, total };
-    subscriber.dispatch(ev);
-  };
-
-  const spyEnumerator = pipe(
-    identityEnumerable<StreamEvent<Buffer>>(),
-    lift(
-      compose(
-        scan(spyScanner, (): [number, number] => [0, 0]),
-        onNotify(doOnNotify),
-      ),
-    ),
-  ).enumerateAsync(subscriber);
-
-  const contentBody = pipe(
-    request.content?.body ?? emptyStream(),
-    lift(onNotify(ev => spyEnumerator.dispatch(ev))),
-    encodeContent,
-  );
-
-  subscriber.add(spyEnumerator).add(_ => {
-    req.abort();
-    req.removeAllListeners();
-    req.destroy();
-  });
-
-  const onContinue = () => {
-    subscriber.add(pipe(sink(contentBody, reqBody), subscribe(subscriber)));
-  };
-  if (request.expectContinue) {
-    req.on("continue", onContinue);
-  } else {
-    onContinue();
-  }
-
-  // FIXME (ev: upgrade): Handle the upgrade header and either upgrade to https or http2 (once we have a client).
-
-  // Intentionally ignored events:
-  // * abort: The only way to abort is for the request to be disposed
-  // * connect: Used for request proxying. We don't support the connect method.
-  // * socket: Nothing really to do here.
-  // * timeout: reactive-js has a timeout operator. use it instead.
-  // * information: Not much to do, we already support continue via the continue event, and will support upgrade.
-};
-
-export type HttpClientOptions = BrotliOptions &
-  ZlibOptions & {
-    // Node options
-    readonly agent?: Agent | boolean;
-    readonly insecureHTTPParser?: boolean;
-    readonly maxHeaderSize?: number;
-    readonly shouldEncode?: (
-      req: HttpContentRequest<unknown>,
-    ) => Option<boolean>;
-  };
-
-export type HttpClientRequestOptions = {
-  // The encodings accepted by the server
-  readonly acceptedEncodings?: readonly HttpContentEncoding[];
-};
-
-const identity = <T>(x: T): T => x;
-
-export interface HttpClientLike extends DisposableLike {
-  send(
-    request: HttpContentRequest<BufferStreamLike>,
-    requestOptions?: HttpClientRequestOptions,
-  ): ObservableLike<HttpClientRequestStatus>;
-}
-
-class HttpClientImpl extends AbstractDisposable implements HttpClientLike {
-  constructor(private readonly clientOptions: HttpClientOptions) {
+  constructor(private readonly req: ClientRequest) {
     super();
+
+    this.add(_ => {
+      req.removeAllListeners();
+
+      // Calling destory can result in onError being called
+      // if we don't catch the error, it crashes the process.
+      // This kind of sucks, but its the best we can do;
+      req.once("error", () => {});
+      req.once("close", () => {
+        req.removeAllListeners();
+      });
+      req.destroy();
+    });
+
+    const onError = (cause: any) => {
+      this.dispose({ cause });
+    };
+    req.on("error", onError);
   }
 
-  send(
-    request: HttpContentRequest<BufferStreamLike>,
-    options: HttpClientRequestOptions = {},
-  ): ObservableLike<HttpClientRequestStatus> {
-    const {
-      agent,
-      insecureHTTPParser,
-      maxHeaderSize,
-      shouldEncode: shouldEncodeOption,
-      ...zlibOptions
-    } = this.clientOptions;
+  enumerateAsync(
+    scheduler: SchedulerLike,
+    replayCount?: number,
+  ): AsyncEnumeratorLike<StreamEvent<Buffer>, StreamMode> {
+    if (this.consumed) {
+      throw new Error("Request body already consumed");
+    }
+    this.consumed = true;
+    const sink = createBufferStreamSinkFromWritable(() => this.req, false)
+      .enumerateAsync(scheduler, replayCount)
+      .add(this);
+    this.add(sink);
+    return sink;
+  }
+}
 
-    const { acceptedEncodings = supportedEncodings } = options;
-    const contentEncoding = getFirstSupportedEncoding(acceptedEncodings);
+class ResponseBody extends AbstractDisposable implements BufferStreamLike {
+  private consumed = false;
 
-    const shouldEncodeOptionResult = isSome(shouldEncodeOption)
-      ? shouldEncodeOption(request)
-      : none;
-    const shouldEncode = isSome(shouldEncodeOptionResult)
-      ? shouldEncodeOptionResult
-      : httpContentRequestIsCompressible(request, db);
+  constructor(private readonly resp: IncomingMessage) {
+    super();
 
-    const contentEncoder =
-      isSome(contentEncoding) && shouldEncode
-        ? transform(
-            createEncodingCompressTransform(contentEncoding, zlibOptions),
-          )
-        : identity;
+    this.add(_ => {
+      resp.removeAllListeners();
+      resp.destroy();
+    });
 
-    const decodeHttpContentResponseWithOption = decodeHttpContentResponse(
-      zlibOptions,
-    );
+    const onError = (cause: any) => {
+      this.dispose({ cause });
+    };
+    resp.on("error", onError);
+  }
 
-    const requestOptions = {
-      agent,
-      contentEncoding,
-      insecureHTTPParser,
-      maxHeaderSize,
+  enumerateAsync(
+    scheduler: SchedulerLike,
+    replayCount?: number,
+  ): AsyncEnumeratorLike<StreamMode, StreamEvent<Buffer>> {
+    if (this.consumed) {
+      throw new Error("Response body already consumed");
+    }
+    this.consumed = true;
+    const stream = createBufferStreamFromReadable(() => this.resp)
+      .enumerateAsync(scheduler, replayCount)
+      .add(this);
+    this.add(stream);
+    return stream;
+  }
+}
+
+export const createHttpClient = (
+  options: HttpClientOptions = {},
+): HttpClient<
+  BufferStreamLike,
+  HttpContentRequest<BufferStreamLike>,
+  BufferStreamLike & DisposableLike
+> => request => {
+  return createObservable(subscriber => {
+    const { method, uri } = request;
+
+    const url = uri instanceof URL ? uri : new URL(uri.toString());
+    const headers = httpRequestToUntypedHeaders(request);
+
+    // FIXME: rework this to support http2
+    const nodeRequestOptions = {
+      ...options,
+      headers,
+      method,
     };
 
-    return createObservable(
-      createOnSubscribe(
-        request,
-        requestOptions,
-        contentEncoder,
-        decodeHttpContentResponseWithOption,
+    const req =
+      uri.protocol === "https:"
+        ? httpsRequest(url, nodeRequestOptions)
+        : uri.protocol === "http:"
+        ? httpRequest(url, nodeRequestOptions)
+        : (() => {
+            throw new Error();
+          })();
+
+    const reqBody = new RequestBody(req);
+    const sinkSubscription = createSerialDisposable().add(reqBody);
+    subscriber.add(sinkSubscription);
+
+    const onResponse = (resp: IncomingMessage) => {
+      sinkSubscription.dispose();
+
+      const body = new ResponseBody(resp);
+      subscriber.add(body);
+      body.add(subscriber);
+
+      const response = parseHttpResponseFromHeaders(
+        resp.statusCode ?? -1,
+        resp.headers as HttpHeaders,
+        body,
+      );
+
+      subscriber.dispatch({
+        type: HttpClientRequestStatusType.HeaderReceived,
+        response,
+      });
+    };
+    req.on("response", onResponse);
+
+    const content: BufferStreamLike = pipe(
+      request.content?.body ?? emptyStream(),
+      lift(content =>
+        createObservable(contentSubscriber => {
+          const publishedContent = pipe(content, publish(contentSubscriber));
+          const progressSubscription = pipe(
+            publishedContent,
+            scan(
+              ([incr, count], ev) =>
+                ev.type === StreamEventType.Next
+                  ? [ev.data.length, count + incr]
+                  : [-1, count + incr],
+
+              () => [0, 0],
+            ),
+            onNotify(([incr, count]) => {
+              const ev: Option<HttpClientRequestStatus<
+                BufferStreamLike & DisposableLike
+              >> =
+                incr < 0
+                  ? { type: HttpClientRequestStatusType.Completed }
+                  : count > 0
+                  ? {
+                      type: HttpClientRequestStatusType.Progress,
+                      count,
+                    }
+                  : none;
+              if (isSome(ev)) {
+                // Subtle, but we're subscribed on the subscriber's scheduler,
+                // so calling notify is safe.
+                subscriber.notify(ev);
+              }
+            }),
+            subscribe(contentSubscriber),
+          );
+
+          contentSubscriber.add(publishedContent).add(progressSubscription);
+          publishedContent.subscribe(contentSubscriber);
+        }),
       ),
     );
-  }
-}
 
-export const creatHttpClient = (
-  clientOptions: HttpClientOptions = {},
-): HttpClientLike => new HttpClientImpl(clientOptions);
+    subscriber.dispatch({ type: HttpClientRequestStatusType.Start });
+
+    const onContinue = () => {
+      sinkSubscription.inner = pipe(
+        sink(content, reqBody),
+        subscribe(subscriber),
+      );
+    };
+    if (request.expectContinue) {
+      req.on("continue", onContinue);
+    } else {
+      onContinue();
+    }
+  });
+};
 
 const redirectCodes = [
   HttpStatusCode.MovedPermanently,
@@ -325,51 +257,71 @@ const redirectCodes = [
   HttpStatusCode.PermanentRedirect,
 ];
 
-export const createDefaultHttpResponseHandler = (
-  httpClient: HttpClientLike,
-  maxRedirects = 10,
-): ObservableOperator<HttpClientRequestStatus, HttpClientRequestStatus> => {
-  const handleResponse = (
-    status: HttpClientRequestStatus,
-  ): ObservableLike<HttpClientRequestStatus> => {
-    if (status.type === HttpClientRequestStatusType.ResponseReady) {
-      const { request, response } = status;
+export type HttpClientRequest = HttpContentRequest<BufferStreamLike> & {
+  readonly acceptedEncodings?: readonly HttpContentEncoding[];
+  readonly maxRedirects?: number;
+};
 
-      const { location, preferences, statusCode } = response.value;
-      const acceptedEncodings = preferences?.acceptedEncodings ?? [];
-      const shouldRedirect =
-        redirectCodes.includes(statusCode) &&
-        isSome(location) &&
-        maxRedirects > 0;
-
-      const [newRequest, newAcceptedEncodings] = shouldRedirect
-        ? [
-            createRedirectHttpRequest<
-              HttpContent<BufferStreamLike>,
-              HttpContent<BufferStreamLike>
-            >(response.value)(request),
-          ]
-        : statusCode === HttpStatusCode.ExpectationFailed
-        ? [{ ...request, expectContinue: false }]
-        : statusCode === HttpStatusCode.UnsupportedMediaType &&
-          acceptedEncodings.length > 0
-        ? [request, acceptedEncodings]
-        : [request];
-
-      if (request !== newRequest || isSome(newAcceptedEncodings)) {
-        response.dispose();
-
-        return pipe(
-          httpClient.send(newRequest, {
-            acceptedEncodings: newAcceptedEncodings,
-          }),
-          createDefaultHttpResponseHandler(httpClient, maxRedirects - 1),
+export const withDefaultBehaviors = (
+  options?: ZlibOptions | (BrotliOptions & { maxRedirects: number }),
+) => (
+  httpClient: HttpClient<
+    BufferStreamLike,
+    HttpContentRequest<BufferStreamLike>,
+    BufferStreamLike & DisposableLike
+  >,
+): HttpClient<
+  BufferStreamLike,
+  HttpClientRequest,
+  BufferStreamLike & DisposableLike
+> => {
+  const sendRequest: HttpClient<
+    BufferStreamLike,
+    HttpClientRequest,
+    BufferStreamLike & DisposableLike
+  > = request =>
+    pipe(
+      ofValue(request),
+      map(request => {
+        const contentEncoding = getFirstSupportedEncoding(
+          request?.acceptedEncodings ?? [],
         );
-      }
-      // Fallthrough
-    }
-    return ofValue(status);
-  };
 
-  return concatMap(handleResponse);
+        return isSome(contentEncoding) &&
+          httpContentRequestIsCompressible(request, db)
+          ? encodeHttpRequest(contentEncoding, options)(request)
+          : request;
+      }),
+      switchMap(httpClient),
+      concatMap(status => {
+        // FIXME: Move this logic into http-common
+        if (status.type === HttpClientRequestStatusType.HeaderReceived) {
+          const { response } = status;
+          const { location, preferences, statusCode } = response;
+          const acceptedEncodings = preferences?.acceptedEncodings ?? [];
+          const shouldRedirect =
+            redirectCodes.includes(statusCode) &&
+            isSome(location) &&
+            (request?.maxRedirects ?? 10) > 0;
+
+          const newRequest = shouldRedirect
+            ? createRedirectHttpRequest(request, response)
+            : statusCode === HttpStatusCode.ExpectationFailed
+            ? { ...request, expectContinue: false }
+            : statusCode === HttpStatusCode.UnsupportedMediaType &&
+              acceptedEncodings.length > 0
+            ? { ...request, acceptedEncodings }
+            : request;
+
+          if (request !== newRequest) {
+            response.content?.body.dispose();
+            return sendRequest(newRequest);
+          }
+          // Fallthrough
+        }
+        return ofValue(status);
+      }),
+    );
+
+  return sendRequest;
 };

@@ -11,6 +11,13 @@ import { BufferStreamLike } from "./interfaces";
 
 const disposeReadable = (readable: Readable) => {
   readable.removeAllListeners();
+  // Calling destory can result in onError being called
+  // if we don't catch the error, it crashes the process.
+  // This kind of sucks, but its the best we can do;
+  readable.once("error", () => {});
+  readable.once("close", () => {
+    readable.removeAllListeners();
+  });
   readable.destroy();
 };
 
@@ -20,6 +27,7 @@ export const createBufferStreamFromReadable = (
   createAsyncEnumerable(mode =>
     createObservable(subscriber => {
       const readable = createDisposableValue(factory(), disposeReadable);
+      subscriber.add(readable);
 
       const modeSubscription = pipe(
         mode,
@@ -35,8 +43,7 @@ export const createBufferStreamFromReadable = (
         }),
         subscribe(subscriber),
       );
-
-      subscriber.add(readable).add(modeSubscription);
+      readable.add(modeSubscription);
 
       const onData = (data: Buffer) => {
         subscriber.dispatch({ type: StreamEventType.Next, data });

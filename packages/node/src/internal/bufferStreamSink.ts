@@ -12,6 +12,13 @@ import { pipe } from "@reactive-js/pipe";
 
 const disposeWritable = (writable: Writable) => {
   writable.removeAllListeners();
+  // Calling destory can result in onError being called
+  // if we don't catch the error, it crashes the process.
+  // This kind of sucks, but its the best we can do;
+  writable.once("error", () => {});
+  writable.once("close", () => {
+    writable.removeAllListeners();
+  });
   writable.destroy();
 };
 
@@ -22,6 +29,7 @@ export const createBufferStreamSinkFromWritable = (
   createAsyncEnumerable(streamEvents =>
     createObservable(subscriber => {
       const writable = createDisposableValue(factory(), disposeWritable);
+      subscriber.add(writable);
 
       const streamEventsSubscription = pipe(
         streamEvents,
@@ -41,7 +49,7 @@ export const createBufferStreamSinkFromWritable = (
         subscribe(subscriber),
       );
 
-      subscriber.add(writable).add(streamEventsSubscription);
+      writable.add(streamEventsSubscription);
 
       const onDrain = () => {
         subscriber.dispatch(StreamMode.Resume);

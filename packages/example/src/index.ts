@@ -14,14 +14,13 @@ import {
   createHttpContent,
 } from "@reactive-js/http";
 import {
-  HttpClientRequestStatusType,
   createStringHttpContent,
   createHttpRequestListener,
-  creatHttpClient,
+  createHttpClient,
   decodeHttpRequest,
   encodeHttpResponse,
-  createDefaultHttpResponseHandler,
   createReadableHttpContent,
+  withDefaultBehaviors,
 } from "@reactive-js/http-node";
 import {
   HttpRequestRouterHandler,
@@ -43,6 +42,10 @@ import {
   throws,
   compute,
   await_,
+  onError,
+  onDispose,
+  using,
+  concatMap,
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
 import {
@@ -54,7 +57,9 @@ import {
   generateStream,
   mapStream,
   ofValueStream,
+  emptyStream,
 } from "@reactive-js/async-enumerable";
+import { HttpClientRequestStatusType } from "@reactive-js/http-common";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -164,7 +169,6 @@ const listener = createHttpRequestListener(
       ofValue(req),
       map(disallowProtocolAndHostForwarding()),
       map(decodeHttpRequest()),
-      onNotify(console.log),
       await_(router),
       map(encodeHttpResponse(req)),
       // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
@@ -199,7 +203,7 @@ createHttp2Server(
   listener,
 ).listen(8081);
 
-const httpClient = creatHttpClient();
+const httpClient = pipe(createHttpClient(), withDefaultBehaviors());
 
 const chunk = "some text";
 
@@ -217,14 +221,47 @@ pipe(
       acceptedMediaRanges: ["application/json", "text/html"],
     },
   }),
-  httpClient.send.bind(httpClient),
-  createDefaultHttpResponseHandler(httpClient, 10),
+  httpClient,
   onNotify(status => {
     console.log("status: " + status.type);
-    if (status.type === HttpClientRequestStatusType.ResponseReady) {
+    if (status.type === HttpClientRequestStatusType.HeaderReceived) {
       const { response } = status;
-      response.dispose();
+      response?.content?.body?.dispose();
     }
   }),
+  onDispose(_ => console.log("dispose value case")),
+  onError(console.log),
+  subscribe(scheduler),
+);
+
+pipe(
+  createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
+    content: createReadableHttpContent(
+      () => fs.createReadStream("packages/example-react/dist/rollup/bundle.js"),
+      "application/octet-stream",
+    ),
+    headers: {
+      "x-forwarded-host": "www.google.com",
+      "x-forwarded-proto": "https",
+    },
+    preferences: {
+      acceptedMediaRanges: ["application/json", "text/html"],
+    },
+  }),
+  httpClient,
+  concatMap(status =>
+    status.type === HttpClientRequestStatusType.HeaderReceived
+      ? using(
+          scheduler =>
+            (status.response.content?.body ?? emptyStream()).enumerateAsync(
+              scheduler,
+            ),
+          _ => ofValue("done"),
+        )
+      : ofValue(JSON.stringify(status)),
+  ),
+  onNotify(console.log),
+  onError(console.log),
+  onDispose(_ => console.log("dispose")),
   subscribe(scheduler),
 );

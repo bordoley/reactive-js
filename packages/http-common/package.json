@@ -1,5 +1,5 @@
 {
-  "name": "@reactive-js/http-node",
+  "name": "@reactive-js/http-common",
   "version": "0.0.35",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
@@ -40,22 +40,14 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.35",
     "@reactive-js/disposable": "^0.0.35",
     "@reactive-js/http": "^0.0.35",
-    "@reactive-js/http-common": "^0.0.35",
-    "@reactive-js/node": "^0.0.35",
     "@reactive-js/observable": "^0.0.35",
     "@reactive-js/option": "^0.0.35",
-    "@reactive-js/pipe": "^0.0.35",
-    "@reactive-js/scheduler": "^0.0.35",
-    "iconv-lite": "^0.5.1",
-    "mime-db": "^1.43.0"
+    "@reactive-js/pipe": "^0.0.35"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
-    "@types/mime-db": "^1.27.1",
-    "@types/node": "^12.12.14",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0"
   },
@@ -64,7 +56,10 @@
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm5": "tsc -p tsconfig.esm5.json",
     "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json"
+    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
   "jest": {
     "preset": "ts-jest",
