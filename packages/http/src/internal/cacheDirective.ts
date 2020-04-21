@@ -16,60 +16,6 @@ import { isSome } from "@reactive-js/option";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import { pipe } from "@reactive-js/pipe";
 
-export const mustRevalidate: CacheDirective = {
-  directive: "must-revalidate",
-  value: "",
-};
-
-export const noStore: CacheDirective = { directive: "no-store", value: "" };
-
-export const noTransform: CacheDirective = {
-  directive: "no-transform",
-  value: "",
-};
-
-export const onlyIfCached: CacheDirective = {
-  directive: "only-if-cached",
-  value: "",
-};
-
-export const public_: CacheDirective = { directive: "public", value: "" };
-
-export const proxyRevalidate: CacheDirective = {
-  directive: "proxy-revalidate",
-  value: "",
-};
-
-export const maxAge = (value: number): CacheDirective => ({
-  directive: "max-age",
-  value: value.toFixed(0),
-});
-
-export const maxStale = (value: number): CacheDirective => ({
-  directive: "max-stale",
-  value: value.toFixed(0),
-});
-
-export const minFresh = (value: number): CacheDirective => ({
-  directive: "min-fresh",
-  value: value.toFixed(0),
-});
-
-export const sharedMaxAge = (value: number): CacheDirective => ({
-  directive: "s-maxage",
-  value: value.toFixed(0),
-});
-
-export const noCache = (headers: readonly string[] = []) => ({
-  directive: "no-cache",
-  value: headers.join(","),
-});
-
-export const private_ = (headers: readonly string[] = []) => ({
-  directive: "private",
-  value: headers.join(","),
-});
-
 const pOptionalEquals = optional(pEquals);
 
 const pCacheDirective = (charStream: CharStreamLike): CacheDirective => {
@@ -82,8 +28,13 @@ const pCacheDirective = (charStream: CharStreamLike): CacheDirective => {
   return { directive, value };
 };
 
+/** @ignore */
 export const parseCacheDirective = parseWith(pCacheDirective);
+
+/** @ignore */
 export const parseCacheDirectiveOrThrow = parseWithOrThrow(pCacheDirective);
+
+/** @ignore */
 export const cacheDirectiveToString = ({
   directive,
   value,
