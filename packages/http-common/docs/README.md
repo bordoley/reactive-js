@@ -1,6 +1,6 @@
-[@reactive-js/http-common - v0.0.35](README.md)
+[@reactive-js/http-common - v0.0.36](README.md)
 
-# @reactive-js/http-common - v0.0.35
+# @reactive-js/http-common - v0.0.36
 
 ## Index
 
@@ -13,7 +13,7 @@
 * [HttpClient](README.md#httpclient)
 * [HttpClientRequestStatus](README.md#httpclientrequeststatus)
 * [HttpClientRequestStatusComplete](README.md#httpclientrequeststatuscomplete)
-* [HttpClientRequestStatusHeaderReceived](README.md#httpclientrequeststatusheaderreceived)
+* [HttpClientRequestStatusHeadersReceived](README.md#httpclientrequeststatusheadersreceived)
 * [HttpClientRequestStatusProgress](README.md#httpclientrequeststatusprogress)
 * [HttpClientRequestStatusStart](README.md#httpclientrequeststatusstart)
 * [HttpServer](README.md#httpserver)
@@ -38,7 +38,7 @@ ___
 
 ###  HttpClientRequestStatus
 
-Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusStart](README.md#httpclientrequeststatusstart) | [HttpClientRequestStatusProgress](README.md#httpclientrequeststatusprogress) | [HttpClientRequestStatusComplete](README.md#httpclientrequeststatuscomplete) | [HttpClientRequestStatusHeaderReceived](README.md#httpclientrequeststatusheaderreceived)‹TResp›*
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusStart](README.md#httpclientrequeststatusstart) | [HttpClientRequestStatusProgress](README.md#httpclientrequeststatusprogress) | [HttpClientRequestStatusComplete](README.md#httpclientrequeststatuscomplete) | [HttpClientRequestStatusHeadersReceived](README.md#httpclientrequeststatusheadersreceived)‹TResp›*
 
 ___
 
@@ -50,9 +50,9 @@ ___
 
 ___
 
-###  HttpClientRequestStatusHeaderReceived
+###  HttpClientRequestStatusHeadersReceived
 
-Ƭ **HttpClientRequestStatusHeaderReceived**: *object*
+Ƭ **HttpClientRequestStatusHeadersReceived**: *object*
 
 #### Type declaration:
 

@@ -50,7 +50,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
         );
 
         subscriber.dispatch({
-          type: HttpClientRequestStatusType.HeaderReceived,
+          type: HttpClientRequestStatusType.HeadersReceived,
           response,
         });
 

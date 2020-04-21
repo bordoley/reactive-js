@@ -113,7 +113,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
       };
 
       subscriber.dispatch({
-        type: HttpClientRequestStatusType.HeaderReceived,
+        type: HttpClientRequestStatusType.HeadersReceived,
         response,
       });
     } catch (cause) {

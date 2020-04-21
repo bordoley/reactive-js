@@ -14,7 +14,7 @@ export const enum HttpClientRequestStatusType {
   Start = 1,
   Progress = 2,
   Completed = 3,
-  HeaderReceived = 4,
+  HeadersReceived = 4,
 }
 
 export type HttpClientRequestStatusStart = {
@@ -30,10 +30,10 @@ export type HttpClientRequestStatusComplete = {
   readonly type: HttpClientRequestStatusType.Completed;
 };
 
-export type HttpClientRequestStatusHeaderReceived<
+export type HttpClientRequestStatusHeadersReceived<
   TResp extends DisposableLike
 > = {
-  readonly type: HttpClientRequestStatusType.HeaderReceived;
+  readonly type: HttpClientRequestStatusType.HeadersReceived;
   readonly response: HttpResponse<TResp>;
 };
 
@@ -41,7 +41,7 @@ export type HttpClientRequestStatus<TResp extends DisposableLike> =
   | HttpClientRequestStatusStart
   | HttpClientRequestStatusProgress
   | HttpClientRequestStatusComplete
-  | HttpClientRequestStatusHeaderReceived<TResp>;
+  | HttpClientRequestStatusHeadersReceived<TResp>;
 
 export type HttpClient<
   THttpRequest extends HttpRequest<unknown>,

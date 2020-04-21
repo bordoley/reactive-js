@@ -1,4 +1,4 @@
-[@reactive-js/http-common - v0.0.35](../README.md) › [HttpClientRequestStatusType](httpclientrequeststatustype.md)
+[@reactive-js/http-common - v0.0.36](../README.md) › [HttpClientRequestStatusType](httpclientrequeststatustype.md)
 
 # Enumeration: HttpClientRequestStatusType
 
@@ -7,7 +7,7 @@
 ### Enumeration members
 
 * [Completed](httpclientrequeststatustype.md#completed)
-* [HeaderReceived](httpclientrequeststatustype.md#headerreceived)
+* [HeadersReceived](httpclientrequeststatustype.md#headersreceived)
 * [Progress](httpclientrequeststatustype.md#progress)
 * [Start](httpclientrequeststatustype.md#start)
 
@@ -19,9 +19,9 @@
 
 ___
 
-###  HeaderReceived
+###  HeadersReceived
 
-• **HeaderReceived**: = 4
+• **HeadersReceived**: = 4
 
 ___
 
