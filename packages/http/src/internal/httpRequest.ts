@@ -1,10 +1,11 @@
 import { isNone, isSome, none } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
-  writeHttpContentHeaders,
-  parseHttpContentFromHeaders,
+  writeHttpContentInfoHeaders,
+  parseHttpContentInfoFromHeaders,
   contentIsCompressible,
-} from "./httpContent";
+  createHttpContentInfo,
+} from "./httpContentInfo";
 import {
   writeHttpHeaders,
   HttpStandardHeader,
@@ -30,12 +31,12 @@ import {
   HttpResponse,
   HttpServerRequest,
   HttpStatusCode,
-  HttpContentRequest,
   CacheDirective,
   EntityTag,
   HttpDateTime,
   HttpContentEncoding,
   MediaRange,
+  MediaType,
 } from "./interfaces";
 import {
   parseCacheControlFromHeaders,
@@ -58,46 +59,53 @@ declare class URL implements URILike {
   toString(): string;
 }
 
-export const createHttpRequest = <T>(
-  method: HttpMethod,
-  uri: string | URILike,
-  {
-    cacheControl,
-    content,
-    expectContinue,
-    headers,
-    httpVersionMajor,
-    httpVersionMinor,
-    preconditions,
-    preferences,
-    ...rest
-  }: {
-    cacheControl?: readonly (string | CacheDirective)[];
-    content?: T;
-    expectContinue?: boolean;
-    headers?: HttpHeaders;
-    httpVersionMajor?: number;
-    httpVersionMinor?: number;
-    preconditions?: {
-      ifMatch?: (string | EntityTag)[] | "*";
-      ifModifiedSince?: string | HttpDateTime | Date;
-      ifNoneMatch?: (string | EntityTag)[] | "*";
-      ifUnmodifiedSince?: string | HttpDateTime | Date;
-      ifRange?: string | EntityTag | HttpDateTime | Date;
-    };
-    preferences?: {
-      acceptedCharsets?: readonly string[];
-      acceptedEncodings?: readonly HttpContentEncoding[];
-      acceptedLanguages?: readonly string[];
-      acceptedMediaRanges?: readonly (string | MediaRange)[];
-    };
-  } = {},
-): HttpRequest<T> => ({
+export const createHttpRequest = <T>({
+  body,
+  cacheControl,
+  contentInfo,
+  expectContinue,
+  headers,
+  httpVersionMajor,
+  httpVersionMinor,
+  method,
+  preconditions,
+  preferences,
+  uri,
+  ...rest
+}: {
+  body: T;
+  cacheControl?: readonly (string | CacheDirective)[];
+  contentInfo?: {
+    contentEncodings?: HttpContentEncoding[];
+    contentLength?: number;
+    contentType: MediaType | string;
+  };
+  expectContinue?: boolean;
+  headers?: HttpHeaders;
+  httpVersionMajor?: number;
+  httpVersionMinor?: number;
+  method: HttpMethod;
+  preconditions?: {
+    ifMatch?: (string | EntityTag)[] | "*";
+    ifModifiedSince?: string | HttpDateTime | Date;
+    ifNoneMatch?: (string | EntityTag)[] | "*";
+    ifUnmodifiedSince?: string | HttpDateTime | Date;
+    ifRange?: string | EntityTag | HttpDateTime | Date;
+  };
+  preferences?: {
+    acceptedCharsets?: readonly string[];
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    acceptedLanguages?: readonly string[];
+    acceptedMediaRanges?: readonly (string | MediaRange)[];
+  };
+  uri: string | URILike;
+}): HttpRequest<T> => ({
   ...rest,
+  body,
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  content,
+  contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
   expectContinue: expectContinue ?? false,
   headers: filterHeaders(headers ?? {}),
   httpVersionMajor: httpVersionMajor ?? 1,
@@ -105,10 +113,10 @@ export const createHttpRequest = <T>(
   method,
   preconditions: isSome(preconditions)
     ? createHttpRequestPreconditions(preconditions)
-    : undefined,
+    : none,
   preferences: isSome(preferences)
     ? createHttpPreferences(preferences)
-    : undefined,
+    : none,
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 
@@ -119,7 +127,7 @@ export const createRedirectHttpRequest = <
   request: THttpRequest,
   response: HttpResponse<unknown>,
 ): THttpRequest => {
-  const { content, method } = request;
+  const { contentInfo, method } = request;
   const { location, statusCode } = response;
 
   const redirectToGet =
@@ -130,7 +138,7 @@ export const createRedirectHttpRequest = <
 
   return {
     ...request,
-    content: redirectToGet ? none : content,
+    content: redirectToGet ? none : contentInfo,
     method: redirectToGet ? HttpMethod.GET : method,
 
     // This function is only called if location is undefined.
@@ -186,7 +194,7 @@ export const parseHttpRequestFromHeaders = <T>({
   isTransportSecure: boolean;
 }): HttpServerRequest<T> => {
   const cacheControl = parseCacheControlFromHeaders(headers);
-  const content = parseHttpContentFromHeaders(headers, body);
+  const contentInfo = parseHttpContentInfoFromHeaders(headers);
   const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
   const expectContinue = rawExpectHeader === "100-continue";
   const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
@@ -195,8 +203,9 @@ export const parseHttpRequestFromHeaders = <T>({
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
 
   return {
+    body,
     cacheControl,
-    content,
+    contentInfo,
     expectContinue,
     headers,
     httpVersionMajor,
@@ -212,18 +221,18 @@ export const parseHttpRequestFromHeaders = <T>({
 export const writeHttpRequestHeaders = <T>(
   {
     cacheControl,
-    content,
+    contentInfo,
     expectContinue,
     headers,
     preconditions,
     preferences,
-  }: HttpContentRequest<T>,
+  }: HttpRequest<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
   writeHttpCacheControlHeader(cacheControl, writeHeader);
 
-  if (isSome(content)) {
-    writeHttpContentHeaders(content, writeHeader);
+  if (isSome(contentInfo)) {
+    writeHttpContentInfoHeaders(contentInfo, writeHeader);
   }
 
   if (expectContinue) {
@@ -274,7 +283,7 @@ export const disallowProtocolAndHostForwarding = <T>(): Operator<
 };
 
 export const httpRequestToUntypedHeaders = (
-  request: HttpContentRequest<unknown>,
+  request: HttpRequest<unknown>,
 ): { [key: string]: string } => {
   const headers: { [key: string]: string } = {};
   writeHttpRequestHeaders(
@@ -284,11 +293,11 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const httpContentRequestIsCompressible = <T>(
-  { content }: HttpContentRequest<T>,
+export const httpRequestIsCompressible = <T>(
+  { contentInfo }: HttpRequest<T>,
   db: {
     [key: string]: {
       compressible?: boolean;
     };
   },
-): boolean => isSome(content) && contentIsCompressible(content, db);
+): boolean => isSome(contentInfo) && contentIsCompressible(contentInfo, db);

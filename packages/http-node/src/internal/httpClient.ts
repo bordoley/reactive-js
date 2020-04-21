@@ -1,6 +1,5 @@
 import { ClientRequest, IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
-import db from "mime-db";
 import { URL } from "url";
 import {
   BufferStreamLike,
@@ -34,10 +33,8 @@ import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
   HttpHeaders,
-  httpContentRequestIsCompressible,
-  HttpContentEncoding,
   HttpStatusCode,
-  HttpContentRequest,
+  HttpRequest,
   createRedirectHttpRequest,
 } from "@reactive-js/http";
 import { SchedulerLike } from "@reactive-js/scheduler";
@@ -45,7 +42,6 @@ import {
   AsyncEnumeratorLike,
   StreamMode,
   StreamEvent,
-  emptyStream,
   lift,
   StreamEventType,
   sink,
@@ -53,7 +49,7 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { encodeHttpRequest } from "./httpRequest";
-import { getFirstSupportedEncoding } from "./httpContentEncoding";
+import { HttpClientRequest } from "./interfaces";
 
 export type HttpClientOptions = {
   // Node options
@@ -141,7 +137,7 @@ class ResponseBody extends AbstractDisposable implements BufferStreamLike {
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  HttpContentRequest<BufferStreamLike>,
+  HttpRequest<BufferStreamLike>,
   BufferStreamLike & DisposableLike
 > => request => {
   return createObservable(subscriber => {
@@ -191,12 +187,12 @@ export const createHttpClient = (
     req.on("response", onResponse);
 
     const content: BufferStreamLike = pipe(
-      request.content?.body ?? emptyStream(),
-      lift(content =>
-        createObservable(contentSubscriber => {
-          const publishedContent = pipe(content, publish(contentSubscriber));
+      request.body,
+      lift(ev =>
+        createObservable(streamEventSubscriber => {
+          const publishedEvents = pipe(ev, publish(streamEventSubscriber));
           const progressSubscription = pipe(
-            publishedContent,
+            publishedEvents,
             scan(
               ([incr, count], ev) =>
                 ev.type === StreamEventType.Next
@@ -223,11 +219,11 @@ export const createHttpClient = (
                 subscriber.notify(ev);
               }
             }),
-            subscribe(contentSubscriber),
+            subscribe(streamEventSubscriber),
           );
 
-          contentSubscriber.add(publishedContent).add(progressSubscription);
-          publishedContent.subscribe(contentSubscriber);
+          streamEventSubscriber.add(publishedEvents).add(progressSubscription);
+          publishedEvents.subscribe(streamEventSubscriber);
         }),
       ),
     );
@@ -256,38 +252,21 @@ const redirectCodes = [
   HttpStatusCode.PermanentRedirect,
 ];
 
-export type HttpClientRequest = HttpContentRequest<BufferStreamLike> & {
-  readonly acceptedEncodings?: readonly HttpContentEncoding[];
-  readonly maxRedirects?: number;
-};
-
 export const withDefaultBehaviors = (
   options?: ZlibOptions | (BrotliOptions & { maxRedirects: number }),
 ) => (
   httpClient: HttpClient<
-    HttpContentRequest<BufferStreamLike>,
+    HttpRequest<BufferStreamLike>,
     BufferStreamLike & DisposableLike
   >,
-): HttpClient<
-  HttpClientRequest,
-  BufferStreamLike & DisposableLike
-> => {
+): HttpClient<HttpClientRequest, BufferStreamLike & DisposableLike> => {
   const sendRequest: HttpClient<
     HttpClientRequest,
     BufferStreamLike & DisposableLike
   > = request =>
     pipe(
       ofValue(request),
-      map(request => {
-        const contentEncoding = getFirstSupportedEncoding(
-          request?.acceptedEncodings ?? [],
-        );
-
-        return isSome(contentEncoding) &&
-          httpContentRequestIsCompressible(request, db)
-          ? encodeHttpRequest(contentEncoding, options)(request)
-          : request;
-      }),
+      map(encodeHttpRequest(options)),
       switchMap(httpClient),
       concatMap(status => {
         // FIXME: Move this logic into http-common
@@ -310,7 +289,7 @@ export const withDefaultBehaviors = (
             : request;
 
           if (request !== newRequest) {
-            response.content?.body.dispose();
+            response.body.dispose();
             return sendRequest(newRequest);
           }
           // Fallthrough

@@ -14,13 +14,10 @@
 
 ### Functions
 
-* [createBufferHttpContent](README.md#const-createbufferhttpcontent)
 * [createHttpClient](README.md#const-createhttpclient)
 * [createHttpRequestListener](README.md#const-createhttprequestlistener)
-* [createReadableHttpContent](README.md#const-createreadablehttpcontent)
-* [createStringHttpContent](README.md#const-createstringhttpcontent)
-* [decodeHttpContentResponse](README.md#const-decodehttpcontentresponse)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
+* [decodeHttpResponse](README.md#const-decodehttpresponse)
 * [encodeHttpRequest](README.md#const-encodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 * [withDefaultBehaviors](README.md#const-withdefaultbehaviors)
@@ -45,7 +42,7 @@ ___
 
 ###  HttpClientRequest
 
-Ƭ **HttpClientRequest**: *HttpContentRequest‹BufferStreamLike› & object*
+Ƭ **HttpClientRequest**: *HttpRequest‹BufferStreamLike› & object*
 
 ___
 
@@ -74,24 +71,9 @@ ___
 
 ## Functions
 
-### `Const` createBufferHttpContent
-
-▸ **createBufferHttpContent**(`chunk`: Buffer, `contentType`: MediaType | string): *HttpContent‹StreamLike‹Buffer››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`chunk` | Buffer |
-`contentType` | MediaType &#124; string |
-
-**Returns:** *HttpContent‹StreamLike‹Buffer››*
-
-___
-
 ### `Const` createHttpClient
 
-▸ **createHttpClient**(`options`: [HttpClientOptions](README.md#httpclientoptions)): *HttpClient‹BufferStreamLike, HttpContentRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
+▸ **createHttpClient**(`options`: [HttpClientOptions](README.md#httpclientoptions)): *HttpClient‹HttpRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
 
 **Parameters:**
 
@@ -99,7 +81,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | [HttpClientOptions](README.md#httpclientoptions) |  {} |
 
-**Returns:** *HttpClient‹BufferStreamLike, HttpContentRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
+**Returns:** *HttpClient‹HttpRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
 
 ___
 
@@ -119,42 +101,23 @@ Name | Type | Default |
 
 ___
 
-### `Const` createReadableHttpContent
+### `Const` decodeHttpRequest
 
-▸ **createReadableHttpContent**(`factory`: function, `contentType`: MediaType | string, `contentLength`: number): *HttpContent‹StreamLike‹Buffer››*
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-▸ (): *Readable*
-
-▪ **contentType**: *MediaType | string*
-
-▪`Default value`  **contentLength**: *number*=  -1
-
-**Returns:** *HttpContent‹StreamLike‹Buffer››*
-
-___
-
-### `Const` createStringHttpContent
-
-▸ **createStringHttpContent**(`content`: string, `contentType`: MediaType | string): *HttpContent‹StreamLike‹Buffer››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹BufferStreamLike›, HttpRequest‹BufferStreamLike››*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`content` | string |
-`contentType` | MediaType &#124; string |
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *HttpContent‹StreamLike‹Buffer››*
+**Returns:** *Operator‹HttpRequest‹BufferStreamLike›, HttpRequest‹BufferStreamLike››*
 
 ___
 
-### `Const` decodeHttpContentResponse
+### `Const` decodeHttpResponse
 
-▸ **decodeHttpContentResponse**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
+▸ **decodeHttpResponse**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹BufferStreamLike›, HttpResponse‹BufferStreamLike››*
 
 **Parameters:**
 
@@ -162,42 +125,27 @@ Name | Type |
 ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions |
 
-**Returns:** *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
-
-___
-
-### `Const` decodeHttpRequest
-
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | BrotliOptions &#124; ZlibOptions |  {} |
-
-**Returns:** *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
+**Returns:** *Operator‹HttpResponse‹BufferStreamLike›, HttpResponse‹BufferStreamLike››*
 
 ___
 
 ### `Const` encodeHttpRequest
 
-▸ **encodeHttpRequest**(`encoding`: HttpContentEncoding, `options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
+▸ **encodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹[HttpClientRequest](README.md#httpclientrequest), HttpRequest‹BufferStreamLike››*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`encoding` | HttpContentEncoding | - |
 `options` | BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
+**Returns:** *Operator‹[HttpClientRequest](README.md#httpclientrequest), HttpRequest‹BufferStreamLike››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹BufferStreamLike›, HttpResponse‹BufferStreamLike››*
 
 **Type parameters:**
 
@@ -207,10 +155,10 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`request` | HttpContentRequest‹TReq› | - |
+`request` | HttpRequest‹TReq› | - |
 `options` | [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions |  {} |
 
-**Returns:** *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
+**Returns:** *Operator‹HttpResponse‹BufferStreamLike›, HttpResponse‹BufferStreamLike››*
 
 ___
 

@@ -4,7 +4,7 @@ import { pipe } from "@reactive-js/pipe";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import {
-  HttpContent,
+  HttpContentInfo,
   HttpHeaders,
   HttpContentEncoding,
   MediaType,
@@ -19,10 +19,9 @@ import {
 const parseTokenList = pipe(pToken, httpList, parseWith);
 
 /** @ignore */
-export const parseHttpContentFromHeaders = <T>(
+export const parseHttpContentInfoFromHeaders = (
   headers: HttpHeaders,
-  body: T,
-): Option<HttpContent<T>> => {
+): Option<HttpContentInfo> => {
   const contentEncodingString =
     getHeaderValue(headers, HttpStandardHeader.ContentEncoding) ?? "";
   const contentEncodings = parseTokenList(
@@ -40,7 +39,6 @@ export const parseHttpContentFromHeaders = <T>(
   return isNone(contentType)
     ? none
     : {
-        body,
         contentEncodings,
         contentLength,
         contentType,
@@ -48,8 +46,8 @@ export const parseHttpContentFromHeaders = <T>(
 };
 
 /** @ignore */
-export const writeHttpContentHeaders = <T>(
-  content: HttpContent<T>,
+export const writeHttpContentInfoHeaders = (
+  content: HttpContentInfo,
   writeHeader: (header: string, value: string) => void,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
@@ -67,18 +65,16 @@ export const writeHttpContentHeaders = <T>(
   }
 };
 
-export const createHttpContent = <T>({
-  body,
+/** @ignore */
+export const createHttpContentInfo = ({
   contentEncodings,
   contentLength,
   contentType,
 }: {
-  body: T;
   contentEncodings?: HttpContentEncoding[];
   contentLength?: number;
   contentType: MediaType | string;
-}): HttpContent<T> => ({
-  body,
+}): HttpContentInfo => ({
   contentEncodings: contentEncodings ?? [],
   contentLength: contentLength ?? -1,
   contentType:
@@ -88,8 +84,8 @@ export const createHttpContent = <T>({
 });
 
 /** @ignore */
-export const contentIsCompressible = <T>(
-  content: HttpContent<T>,
+export const contentIsCompressible = (
+  content: HttpContentInfo,
   db: {
     [key: string]: {
       compressible?: boolean;

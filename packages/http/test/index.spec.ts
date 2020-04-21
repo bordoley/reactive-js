@@ -10,6 +10,8 @@ import {
   noCache,
 } from "../src";
 
+import { none } from "@reactive-js/option";
+
 describe("mediaType", () => {
   test("parseMediaType with params", () => {
     const result = parseMediaTypeOrThrow("application/json; charset=UTF-8");
@@ -44,160 +46,231 @@ describe("checkIfNotModified", () => {
   ([
     [
       "when a non-conditional GET is performed",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com"),
-      createHttpResponse(HttpStatusCode.OK),
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
+      }),
+      createHttpResponse({ statusCode: HttpStatusCode.OK, body: none }),
       HttpStatusCode.OK,
     ],
     [
       "when ETags match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when ETags mismatch",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"bar"',
       }),
       HttpStatusCode.OK,
     ],
     [
       "when at least one matches",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"', '"bar"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when etag is missing",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK),
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
+      }),
       HttpStatusCode.OK,
     ],
     [
       "when ETag is weak on exact match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['W/"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: 'W/"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when ETag is weak on strong match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['W/"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when ETag is strong on exact match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when ETag is strong on weak match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: 'W/"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when * is given",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifNoneMatch: "*",
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when modified since the date",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 0,
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         lastModified: 1,
       }),
       HttpStatusCode.OK,
     ],
     [
       "when unmodified since the date",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 1,
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         lastModified: 1,
       }),
       HttpStatusCode.NotModified,
     ],
     [
       "when Last-Modified is missing",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 1,
         },
       }),
-      createHttpResponse(HttpStatusCode.OK),
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
+      }),
       HttpStatusCode.OK,
     ],
 
     [
       "when requested with If-Modified-Since and If-None-Match and both match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 1,
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
         lastModified: 1,
       }),
@@ -206,13 +279,18 @@ describe("checkIfNotModified", () => {
 
     [
       "when requested with If-Modified-Since and If-None-Match when only ETag matches",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 0,
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
         lastModified: 1,
       }),
@@ -221,13 +299,18 @@ describe("checkIfNotModified", () => {
 
     [
       "when requested with If-Modified-Since and If-None-Match when only Last-Modified matches",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 0,
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"bar"',
         lastModified: 0,
       }),
@@ -235,13 +318,18 @@ describe("checkIfNotModified", () => {
     ],
     [
       "when none match",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         preconditions: {
           ifModifiedSince: 0,
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"bar"',
         lastModified: 1,
       }),
@@ -249,13 +337,18 @@ describe("checkIfNotModified", () => {
     ],
     [
       "when requested with Cache-Control: no-cache",
-      createHttpRequest(HttpMethod.GET, "http://www.example.com", {
+      createHttpRequest({
+        method: HttpMethod.GET,
+        uri: "http://www.example.com",
+        body: none,
         cacheControl: [noCache()],
         preconditions: {
           ifNoneMatch: ['"foo"'],
         },
       }),
-      createHttpResponse(HttpStatusCode.OK, {
+      createHttpResponse({
+        statusCode: HttpStatusCode.OK,
+        body: none,
         etag: '"foo"',
       }),
       HttpStatusCode.OK,

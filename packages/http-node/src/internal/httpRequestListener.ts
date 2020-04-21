@@ -1,10 +1,8 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import {
-  AsyncEnumerableLike,
   StreamMode,
   StreamEvent,
-  emptyStream,
   sink,
   AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
@@ -13,7 +11,7 @@ import {
   HttpMethod,
   HttpHeaders,
   parseHttpRequestFromHeaders,
-  HttpContentResponse,
+  HttpResponse,
 } from "@reactive-js/http";
 import { HttpServer } from "@reactive-js/http-common";
 import {
@@ -34,6 +32,7 @@ import {
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { AbstractDisposable } from "@reactive-js/disposable";
+import { isSome } from "@reactive-js/option";
 
 class RequestBody extends AbstractDisposable implements BufferStreamLike {
   private consumed = false;
@@ -118,9 +117,7 @@ class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
 }
 
 const writeResponseMessage = (responseBody: ResponseBody) => (
-  response: HttpContentResponse<
-    AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
-  >,
+  response: HttpResponse<BufferStreamLike>,
 ) => {
   responseBody.resp.statusCode = response.statusCode;
 
@@ -129,12 +126,11 @@ const writeResponseMessage = (responseBody: ResponseBody) => (
   );
 };
 
-const writeResponseContentBody = (responseBody: BufferStreamSinkLike) => ({
-  content,
-}: HttpContentResponse<BufferStreamLike>) => {
-  const body = content?.body ?? emptyStream();
-  return sink(body, responseBody);
-};
+const writeResponseBody = (responseBody: BufferStreamSinkLike) => ({
+  body,
+  contentInfo,
+}: HttpResponse<BufferStreamLike>) =>
+  isSome(contentInfo) ? sink(body, responseBody) : empty();
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
@@ -182,7 +178,7 @@ export const createHttpRequestListener = (
       compute,
       await_(handler),
       onNotify(writeResponseMessage(responseBody)),
-      await_(writeResponseContentBody(responseBody)),
+      await_(writeResponseBody(responseBody)),
       catchError(onError),
     );
   };
