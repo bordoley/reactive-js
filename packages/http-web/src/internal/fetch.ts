@@ -1,26 +1,31 @@
-import { identity } from "@reactive-js/async-enumerable";
-import {
-  createDisposable,
-  createDisposableValue,
-} from "@reactive-js/disposable";
 import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
+  HttpContentResponse,
 } from "@reactive-js/http";
-import { ObservableLike, createObservable } from "@reactive-js/observable";
+import {
+  createObservable,
+  fromPromise,
+  publish,
+} from "@reactive-js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import {
   HttpWebRequest,
-  HttpClientRequestStatus,
-  HttpClientRequestStatusType,
+  WebResponseBodyLike,
 } from "./interfaces";
 import { isSome } from "@reactive-js/option";
+import {
+  HttpClientRequestStatusType,
+  HttpClient,
+} from "@reactive-js/http-common";
+import { pipe } from "@reactive-js/pipe";
 
 /** @ignore */
-export const sendHttpRequestUsingFetch = (
-  request: HttpWebRequest,
-): ObservableLike<HttpClientRequestStatus> => {
+export const sendHttpRequestUsingFetch: HttpClient<
+  HttpWebRequest,
+  WebResponseBodyLike
+> = request => {
   const {
     cache,
     credentials,
@@ -36,22 +41,13 @@ export const sendHttpRequestUsingFetch = (
 
   return createObservable(async subscriber => {
     const abortController = new AbortController();
-    const abortControllerDisposable = createDisposable(() =>
-      abortController.abort(),
-    );
-    const bodyEnumerator = identity()
-      .enumerateAsync(subscriber, 1)
-      .add(subscriber);
-    const body = new HttpResponseBodyImpl(bodyEnumerator);
+    subscriber.add(() => abortController.abort());
 
-    subscriber.add(abortControllerDisposable).add(bodyEnumerator);
+    subscriber.dispatch({
+      type: HttpClientRequestStatusType.Start,
+    });
 
     try {
-      subscriber.dispatch({
-        type: HttpClientRequestStatusType.Begin,
-        request,
-      });
-
       const fetchResponse = await fetch(url, {
         cache,
         credentials,
@@ -64,57 +60,71 @@ export const sendHttpRequestUsingFetch = (
         signal: abortController.signal,
       });
 
-      const fetchResponseHeaders = fetchResponse.headers;
       const responseHeaders: { [key: string]: string } = {};
-      fetchResponseHeaders.forEach((v, k) => {
+      fetchResponse.headers.forEach((v, k) => {
         responseHeaders[k] = v;
       });
 
-      const contentResponse = parseHttpResponseFromHeaders(
+      const responseNoBody: HttpContentResponse<WebResponseBodyLike> = parseHttpResponseFromHeaders(
         fetchResponse.status,
         responseHeaders,
-        body,
+        undefined as any,
       );
 
-      const response = createDisposableValue(contentResponse, _ => {}).add(
-        subscriber,
+      const loadBodyContent = async (): Promise<unknown> => {
+        const content = responseNoBody?.content;
+        if (isSome(content)) {
+          const {
+            contentLength,
+            contentType: { type, subtype, params },
+          } = content;
+
+          const hasCharset = isSome(params["charset"]);
+          const responseIsText =
+            hasCharset ||
+            type === "text" ||
+            subtype.indexOf("json") >= 0 ||
+            subtype.indexOf("text") >= 0 ||
+            subtype.indexOf("xml") >= 0;
+
+          if (responseIsText) {
+            return fetchResponse.text();
+          } else if (contentLength > 0 && supportsArrayBuffer) {
+            return fetchResponse.arrayBuffer();
+          } else if (supportsBlob) {
+            return fetchResponse.blob();
+          } 
+          // Fallthrough
+        }
+        return await "";
+      };
+
+      const bodyObservable = pipe(
+        fromPromise(loadBodyContent),
+        publish(subscriber, 1),
       );
+
+      const body: WebResponseBodyLike = new HttpResponseBodyImpl(
+        bodyObservable,
+      );
+      subscriber.add(body);
+      body.add(subscriber);
+
+      const { content } = responseNoBody;
+      const response: HttpContentResponse<WebResponseBodyLike> = isSome(content)
+        ? {
+            ...responseNoBody,
+            content: {
+              ...content,
+              body,
+            },
+          }
+        : responseNoBody;
 
       subscriber.dispatch({
-        type: HttpClientRequestStatusType.ResponseReady,
-        request,
+        type: HttpClientRequestStatusType.HeaderReceived,
         response,
       });
-
-      const content = contentResponse?.content;
-      if (isSome(content)) {
-        const {
-          contentLength,
-          contentType: { type, subtype, params },
-        } = content;
-
-        const hasCharset = isSome(params["charset"]);
-        const responseIsText =
-          hasCharset ||
-          type === "text" ||
-          subtype.indexOf("json") >= 0 ||
-          subtype.indexOf("text") >= 0 ||
-          subtype.indexOf("xml") >= 0;
-
-        const responsePromise = responseIsText
-          ? fetchResponse.text.bind(fetchResponse)
-          : contentLength > 0 && supportsArrayBuffer
-          ? fetchResponse.arrayBuffer.bind(fetchResponse)
-          : supportsBlob
-          ? fetchResponse.blob.bind(fetchResponse)
-          : () => Promise.reject(new Error("invalid type"));
-
-        const response = await responsePromise();
-        bodyEnumerator.dispatch(response);
-        abortControllerDisposable.dispose();
-      }
-
-      subscriber.dispose();
     } catch (cause) {
       subscriber.dispose({ cause });
     }

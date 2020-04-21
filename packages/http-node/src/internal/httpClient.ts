@@ -141,7 +141,6 @@ class ResponseBody extends AbstractDisposable implements BufferStreamLike {
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  BufferStreamLike,
   HttpContentRequest<BufferStreamLike>,
   BufferStreamLike & DisposableLike
 > => request => {
@@ -266,17 +265,14 @@ export const withDefaultBehaviors = (
   options?: ZlibOptions | (BrotliOptions & { maxRedirects: number }),
 ) => (
   httpClient: HttpClient<
-    BufferStreamLike,
     HttpContentRequest<BufferStreamLike>,
     BufferStreamLike & DisposableLike
   >,
 ): HttpClient<
-  BufferStreamLike,
   HttpClientRequest,
   BufferStreamLike & DisposableLike
 > => {
   const sendRequest: HttpClient<
-    BufferStreamLike,
     HttpClientRequest,
     BufferStreamLike & DisposableLike
   > = request =>

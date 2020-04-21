@@ -1,33 +1,36 @@
 import { identity } from "@reactive-js/async-enumerable";
-import { createDisposableValue } from "@reactive-js/disposable";
 import {
   parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
 } from "@reactive-js/http";
-import { ObservableLike, createObservable } from "@reactive-js/observable";
+import { createObservable } from "@reactive-js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import {
   HttpWebRequest,
-  HttpClientRequestStatus,
-  HttpClientRequestStatusType,
+  WebResponseBodyLike,
 } from "./interfaces";
 import { isSome } from "@reactive-js/option";
+import {
+  HttpClient,
+  HttpClientRequestStatusType,
+} from "@reactive-js/http-common";
 
 /** @ignore */
-export const sendHttpRequestUsingXHR = (
-  request: HttpWebRequest,
-): ObservableLike<HttpClientRequestStatus> =>
+export const sendHttpRequestUsingXHR: HttpClient<
+  HttpWebRequest,
+  WebResponseBodyLike
+> = request =>
   createObservable(subscriber => {
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;
-    const bodyEnumerator = identity()
-      .enumerateAsync(subscriber, 1)
-      .add(subscriber);
-    const body = new HttpResponseBodyImpl(bodyEnumerator);
 
-    subscriber.add(() => xhr.abort()).add(bodyEnumerator);
+    const bodyEnumerator = identity().enumerateAsync(subscriber, 1);
+    const body = new HttpResponseBodyImpl(bodyEnumerator);
+    body.add(subscriber);
+
+    subscriber.add(() => xhr.abort()).add(body);
 
     xhr.onerror = () => {
       const cause = new Error("Network request failed");
@@ -43,24 +46,18 @@ export const sendHttpRequestUsingXHR = (
         // is this even necessary if the header is set?
         //const url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL')
 
-        const contentResponse = parseHttpResponseFromHeaders(
+        const response = parseHttpResponseFromHeaders(
           xhr.status,
           headers,
           body,
         );
 
-        const response = createDisposableValue(contentResponse, _ => {}).add(
-          subscriber,
-        );
-        subscriber.add(response);
-
         subscriber.dispatch({
-          type: HttpClientRequestStatusType.ResponseReady,
-          request,
+          type: HttpClientRequestStatusType.HeaderReceived,
           response,
         });
 
-        const content = contentResponse?.content;
+        const content = response?.content;
         if (xhrSupportsResponseType && isSome(content)) {
           const {
             contentLength,
@@ -82,32 +79,31 @@ export const sendHttpRequestUsingXHR = (
             : supportsBlob
             ? "blob"
             : "";
-        } else {
-          subscriber.dispose();
         }
       } else if (xhr.readyState === 4) {
         bodyEnumerator.dispatch(xhr.response);
-        subscriber.dispose();
       }
     };
 
     xhr.onloadstart = () => {
       subscriber.dispatch({
-        type: HttpClientRequestStatusType.Begin,
-        request,
+        type: HttpClientRequestStatusType.Start,
       });
     };
 
-    xhr.onprogress = ev => {
-      const { loaded: total } = ev;
+    xhr.upload.onprogress = ev => {
+      const { loaded: count } = ev;
 
-      if (xhr.readyState === 1) {
-        subscriber.dispatch({
-          type: HttpClientRequestStatusType.Uploaded,
-          request,
-          total,
-        });
-      }
+      subscriber.dispatch({
+        type: HttpClientRequestStatusType.Progress,
+        count,
+      });
+    };
+
+    xhr.upload.onload = _ => {
+      subscriber.dispatch({
+        type: HttpClientRequestStatusType.Completed,
+      });
     };
 
     xhr.ontimeout = () => {
