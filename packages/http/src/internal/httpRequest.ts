@@ -112,9 +112,13 @@ export const createHttpRequest = <T>(
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 
-export const createRedirectHttpRequest = <TReq, TResp>(
-  response: HttpResponse<TResp>,
-): Operator<HttpRequest<TReq>, HttpRequest<TReq>> => request => {
+export const createRedirectHttpRequest = <
+  THttpRequest extends HttpRequest<TReq>,
+  TReq
+>(
+  request: THttpRequest,
+  response: HttpResponse<unknown>,
+): THttpRequest => {
   const { content, method } = request;
   const { location, statusCode } = response;
 

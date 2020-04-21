@@ -6,19 +6,21 @@ import {
   StreamEvent,
   emptyStream,
   sink,
+  AsyncEnumeratorLike,
 } from "@reactive-js/async-enumerable";
 import {
-  HttpServerRequest,
   writeHttpResponseHeaders,
   HttpMethod,
   HttpHeaders,
   parseHttpRequestFromHeaders,
   HttpContentResponse,
 } from "@reactive-js/http";
+import { HttpServer } from "@reactive-js/http-common";
 import {
   createBufferStreamFromReadable,
   BufferStreamLike,
   createBufferStreamSinkFromWritable,
+  BufferStreamSinkLike,
 } from "@reactive-js/node";
 import {
   ObservableLike,
@@ -31,25 +33,107 @@ import {
 } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { SchedulerLike } from "@reactive-js/scheduler";
+import { AbstractDisposable } from "@reactive-js/disposable";
 
-const writeResponseMessage = (resp: ServerResponse) => (
+class RequestBody extends AbstractDisposable implements BufferStreamLike {
+  private consumed = false;
+
+  constructor(readonly req: IncomingMessage) {
+    super();
+
+    this.add(_ => {
+      req.removeAllListeners();
+
+      // Calling destory can result in onError being called
+      // if we don't catch the error, it crashes the process.
+      // This kind of sucks, but its the best we can do;
+      req.once("error", () => {});
+      req.once("close", () => {
+        req.removeAllListeners();
+      });
+      req.destroy();
+    });
+
+    const onError = (cause: any) => {
+      this.dispose({ cause });
+    };
+    req.on("error", onError);
+  }
+
+  enumerateAsync(
+    scheduler: SchedulerLike,
+    replayCount?: number,
+  ): AsyncEnumeratorLike<StreamMode, StreamEvent<Buffer>> {
+    if (this.consumed) {
+      throw new Error("Request body already consumed");
+    }
+    this.consumed = true;
+    const sink = createBufferStreamFromReadable(() => this.req)
+      .enumerateAsync(scheduler, replayCount)
+      .add(this);
+    this.add(sink);
+    return sink;
+  }
+}
+
+class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
+  private consumed = false;
+
+  constructor(readonly resp: ServerResponse) {
+    super();
+
+    this.add(_ => {
+      resp.removeAllListeners();
+
+      // Calling destory can result in onError being called
+      // if we don't catch the error, it crashes the process.
+      // This kind of sucks, but its the best we can do;
+      resp.once("error", () => {});
+      resp.once("close", () => {
+        resp.removeAllListeners();
+      });
+      resp.destroy();
+    });
+
+    const onError = (cause: any) => {
+      this.dispose({ cause });
+    };
+    resp.on("error", onError);
+  }
+
+  enumerateAsync(
+    scheduler: SchedulerLike,
+    replayCount?: number,
+  ): AsyncEnumeratorLike<StreamEvent<Buffer>, StreamMode> {
+    if (this.consumed) {
+      throw new Error("Response body already consumed");
+    }
+    this.consumed = true;
+    const sink = createBufferStreamSinkFromWritable(() => this.resp, true)
+      .enumerateAsync(scheduler, replayCount)
+      .add(this);
+    this.add(sink);
+    return sink;
+  }
+}
+
+const writeResponseMessage = (responseBody: ResponseBody) => (
   response: HttpContentResponse<
     AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
   >,
 ) => {
-  resp.statusCode = response.statusCode;
+  responseBody.resp.statusCode = response.statusCode;
 
   writeHttpResponseHeaders(response, (header, value) =>
-    resp.setHeader(header, value),
+    responseBody.resp.setHeader(header, value),
   );
 };
 
-const writeResponseContentBody = (resp: ServerResponse) => ({
+const writeResponseContentBody = (responseBody: BufferStreamSinkLike) => ({
   content,
 }: HttpContentResponse<BufferStreamLike>) => {
   const body = content?.body ?? emptyStream();
-  const responseBodySink = createBufferStreamSinkFromWritable(() => resp);
-  return sink(body, responseBodySink);
+  return sink(body, responseBody);
 };
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
@@ -58,38 +142,31 @@ export type HttpRequestListenerOptions = {
   readonly onError?: (e: unknown) => ObservableLike<unknown>;
 };
 
-export type HttpRequestListenerHandler = {
-  (
-    req: HttpServerRequest<
-      AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>
-    >,
-  ): ObservableLike<
-    HttpContentResponse<AsyncEnumerableLike<StreamMode, StreamEvent<Buffer>>>
-  >;
-};
-
 export type HttpRequestListener = (
   req: IncomingMessage | Http2ServerRequest,
   resp: ServerResponse | Http2ServerResponse,
 ) => void;
 
 export const createHttpRequestListener = (
-  handler: HttpRequestListenerHandler,
+  handler: HttpServer<BufferStreamLike, BufferStreamLike>,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
 ): HttpRequestListener => {
   const { onError = defaultOnError } = options;
 
-  const handleRequest = (req: IncomingMessage, resp: ServerResponse) => {
+  const handleRequest = (
+    requestBody: RequestBody,
+    responseBody: ResponseBody,
+  ) => {
     const {
       method,
       url: path = "/",
       headers,
       httpVersionMajor,
       httpVersionMinor,
-    } = req;
-    const body = createBufferStreamFromReadable(() => req);
-    const isTransportSecure = (req.socket as any).encrypted ?? false;
+    } = requestBody.req;
+    const isTransportSecure =
+      (requestBody.req.socket as any).encrypted ?? false;
 
     return pipe(
       () =>
@@ -100,34 +177,24 @@ export const createHttpRequestListener = (
           httpVersionMajor,
           httpVersionMinor,
           isTransportSecure,
-          body,
+          body: requestBody,
         }),
       compute,
       await_(handler),
-      onNotify(writeResponseMessage(resp)),
-      await_(writeResponseContentBody(resp)),
+      onNotify(writeResponseMessage(responseBody)),
+      await_(writeResponseContentBody(responseBody)),
       catchError(onError),
     );
   };
 
   return (req, resp) => {
-    const subscription = pipe(
-      handleRequest(req as IncomingMessage, resp as ServerResponse),
-      subscribe(scheduler),
-    ).add(() => {
-      req.removeAllListeners();
-      resp.removeAllListeners();
-      req.destroy();
-    });
+    const requestBody = new RequestBody(req as IncomingMessage);
+    const responseBody = new ResponseBody(resp as ServerResponse);
 
-    const dispose = () => subscription.dispose();
-
-    req.on("aborted", dispose);
-    req.on("close", dispose);
-    req.on("error", dispose);
-
-    resp.on("close", dispose);
-    resp.on("error", dispose);
-    resp.on("finish", dispose);
+    responseBody.add(
+      pipe(handleRequest(requestBody, responseBody), subscribe(scheduler)).add(
+        requestBody,
+      ),
+    );
   };
 };

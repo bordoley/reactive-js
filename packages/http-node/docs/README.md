@@ -4,39 +4,26 @@
 
 ## Index
 
-### Enumerations
-
-* [HttpClientRequestStatusType](enums/httpclientrequeststatustype.md)
-
-### Interfaces
-
-* [HttpClientLike](interfaces/httpclientlike.md)
-
 ### Type aliases
 
 * [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions)
 * [HttpClientOptions](README.md#httpclientoptions)
-* [HttpClientRequestOptions](README.md#httpclientrequestoptions)
-* [HttpClientRequestStatus](README.md#httpclientrequeststatus)
-* [HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin)
-* [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)
-* [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete)
-* [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading)
+* [HttpClientRequest](README.md#httpclientrequest)
 * [HttpRequestListener](README.md#httprequestlistener)
-* [HttpRequestListenerHandler](README.md#httprequestlistenerhandler)
 * [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)
 
 ### Functions
 
-* [creatHttpClient](README.md#const-creathttpclient)
 * [createBufferHttpContent](README.md#const-createbufferhttpcontent)
-* [createDefaultHttpResponseHandler](README.md#const-createdefaulthttpresponsehandler)
+* [createHttpClient](README.md#const-createhttpclient)
 * [createHttpRequestListener](README.md#const-createhttprequestlistener)
 * [createReadableHttpContent](README.md#const-createreadablehttpcontent)
 * [createStringHttpContent](README.md#const-createstringhttpcontent)
 * [decodeHttpContentResponse](README.md#const-decodehttpcontentresponse)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
+* [encodeHttpRequest](README.md#const-encodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
+* [withDefaultBehaviors](README.md#const-withdefaultbehaviors)
 
 ## Type aliases
 
@@ -50,53 +37,15 @@ ___
 
 ###  HttpClientOptions
 
-Ƭ **HttpClientOptions**: *BrotliOptions & ZlibOptions & object*
-
-___
-
-###  HttpClientRequestOptions
-
-Ƭ **HttpClientRequestOptions**: *object*
+Ƭ **HttpClientOptions**: *object*
 
 #### Type declaration:
 
 ___
 
-###  HttpClientRequestStatus
+###  HttpClientRequest
 
-Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusBegin](README.md#httpclientrequeststatusbegin) | [HttpClientRequestStatusUploading](README.md#httpclientrequeststatusuploading) | [HttpClientRequestStatusUploadComplete](README.md#httpclientrequeststatusuploadcomplete) | [HttpClientRequestStatusResponseReady](README.md#httpclientrequeststatusresponseready)*
-
-___
-
-###  HttpClientRequestStatusBegin
-
-Ƭ **HttpClientRequestStatusBegin**: *object*
-
-#### Type declaration:
-
-___
-
-###  HttpClientRequestStatusResponseReady
-
-Ƭ **HttpClientRequestStatusResponseReady**: *object*
-
-#### Type declaration:
-
-___
-
-###  HttpClientRequestStatusUploadComplete
-
-Ƭ **HttpClientRequestStatusUploadComplete**: *object*
-
-#### Type declaration:
-
-___
-
-###  HttpClientRequestStatusUploading
-
-Ƭ **HttpClientRequestStatusUploading**: *object*
-
-#### Type declaration:
+Ƭ **HttpClientRequest**: *HttpContentRequest‹BufferStreamLike› & object*
 
 ___
 
@@ -117,22 +66,6 @@ Name | Type |
 
 ___
 
-###  HttpRequestListenerHandler
-
-Ƭ **HttpRequestListenerHandler**: *function*
-
-#### Type declaration:
-
-▸ (`req`: HttpServerRequest‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer›››): *ObservableLike‹HttpContentResponse‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer››››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | HttpServerRequest‹AsyncEnumerableLike‹StreamMode, StreamEvent‹Buffer››› |
-
-___
-
 ###  HttpRequestListenerOptions
 
 Ƭ **HttpRequestListenerOptions**: *object*
@@ -140,20 +73,6 @@ ___
 #### Type declaration:
 
 ## Functions
-
-### `Const` creatHttpClient
-
-▸ **creatHttpClient**(`clientOptions`: [HttpClientOptions](README.md#httpclientoptions)): *[HttpClientLike](interfaces/httpclientlike.md)*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`clientOptions` | [HttpClientOptions](README.md#httpclientoptions) |  {} |
-
-**Returns:** *[HttpClientLike](interfaces/httpclientlike.md)*
-
-___
 
 ### `Const` createBufferHttpContent
 
@@ -170,30 +89,29 @@ Name | Type |
 
 ___
 
-### `Const` createDefaultHttpResponseHandler
+### `Const` createHttpClient
 
-▸ **createDefaultHttpResponseHandler**(`httpClient`: [HttpClientLike](interfaces/httpclientlike.md), `maxRedirects`: number): *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+▸ **createHttpClient**(`options`: [HttpClientOptions](README.md#httpclientoptions)): *HttpClient‹BufferStreamLike, HttpContentRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`httpClient` | [HttpClientLike](interfaces/httpclientlike.md) | - |
-`maxRedirects` | number | 10 |
+`options` | [HttpClientOptions](README.md#httpclientoptions) |  {} |
 
-**Returns:** *ObservableOperator‹[HttpClientRequestStatus](README.md#httpclientrequeststatus), [HttpClientRequestStatus](README.md#httpclientrequeststatus)›*
+**Returns:** *HttpClient‹BufferStreamLike, HttpContentRequest‹BufferStreamLike›, BufferStreamLike & DisposableLike›*
 
 ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: [HttpRequestListenerHandler](README.md#httprequestlistenerhandler), `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *[HttpRequestListener](README.md#httprequestlistener)*
+▸ **createHttpRequestListener**(`handler`: HttpServer‹BufferStreamLike, BufferStreamLike›, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *[HttpRequestListener](README.md#httprequestlistener)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | [HttpRequestListenerHandler](README.md#httprequestlistenerhandler) | - |
+`handler` | HttpServer‹BufferStreamLike, BufferStreamLike› | - |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](README.md#httprequestlisteneroptions) |  {} |
 
@@ -262,6 +180,21 @@ Name | Type | Default |
 
 ___
 
+### `Const` encodeHttpRequest
+
+▸ **encodeHttpRequest**(`encoding`: HttpContentEncoding, `options`: BrotliOptions | ZlibOptions): *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`encoding` | HttpContentEncoding | - |
+`options` | BrotliOptions &#124; ZlibOptions |  {} |
+
+**Returns:** *Operator‹HttpContentRequest‹BufferStreamLike›, HttpContentRequest‹BufferStreamLike››*
+
+___
+
 ### `Const` encodeHttpResponse
 
 ▸ **encodeHttpResponse**<**TReq**>(`request`: HttpContentRequest‹TReq›, `options`: [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
@@ -278,3 +211,17 @@ Name | Type | Default |
 `options` | [EncodeHttpResponseOptions](README.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions |  {} |
 
 **Returns:** *Operator‹HttpContentResponse‹BufferStreamLike›, HttpContentResponse‹BufferStreamLike››*
+
+___
+
+### `Const` withDefaultBehaviors
+
+▸ **withDefaultBehaviors**(`options?`: ZlibOptions | BrotliOptions & object): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options?` | ZlibOptions &#124; BrotliOptions & object |
+
+**Returns:** *(Anonymous function)*

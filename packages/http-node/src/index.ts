@@ -1,13 +1,7 @@
 export {
-  HttpClientLike,
   HttpClientOptions,
-  HttpClientRequestStatusType,
-  HttpClientRequestStatusUploading,
-  HttpClientRequestStatusUploadComplete,
-  HttpClientRequestStatusResponseReady,
-  HttpClientRequestStatus,
-  creatHttpClient,
-  createDefaultHttpResponseHandler,
+  createHttpClient,
+  withDefaultBehaviors,
 } from "./internal/httpClient";
 
 export {
@@ -18,7 +12,6 @@ export {
 
 export {
   HttpRequestListener,
-  HttpRequestListenerHandler,
   HttpRequestListenerOptions,
   createHttpRequestListener,
 } from "./internal/httpRequestListener";

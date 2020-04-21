@@ -338,21 +338,22 @@ ___
 
 ### `Const` createRedirectHttpRequest
 
-▸ **createRedirectHttpRequest**<**TReq**, **TResp**>(`response`: [HttpResponse](README.md#httpresponse)‹TResp›): *Operator‹[HttpRequest](README.md#httprequest)‹TReq›, [HttpRequest](README.md#httprequest)‹TReq››*
+▸ **createRedirectHttpRequest**<**THttpRequest**, **TReq**>(`request`: THttpRequest, `response`: [HttpResponse](README.md#httpresponse)‹unknown›): *THttpRequest*
 
 **Type parameters:**
 
-▪ **TReq**
+▪ **THttpRequest**: *[HttpRequest](README.md#httprequest)‹TReq›*
 
-▪ **TResp**
+▪ **TReq**
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`response` | [HttpResponse](README.md#httpresponse)‹TResp› |
+`request` | THttpRequest |
+`response` | [HttpResponse](README.md#httpresponse)‹unknown› |
 
-**Returns:** *Operator‹[HttpRequest](README.md#httprequest)‹TReq›, [HttpRequest](README.md#httprequest)‹TReq››*
+**Returns:** *THttpRequest*
 
 ___
 
@@ -396,7 +397,7 @@ ___
 
 ### `Const` httpContentRequestIsCompressible
 
-▸ **httpContentRequestIsCompressible**<**T**>(`response`: [HttpContentRequest](README.md#httpcontentrequest)‹T›, `db`: object): *boolean*
+▸ **httpContentRequestIsCompressible**<**T**>(`__namedParameters`: object, `db`: object): *boolean*
 
 **Type parameters:**
 
@@ -406,7 +407,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`response` | [HttpContentRequest](README.md#httpcontentrequest)‹T› |
+`__namedParameters` | object |
 `db` | object |
 
 **Returns:** *boolean*
