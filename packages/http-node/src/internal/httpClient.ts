@@ -180,7 +180,7 @@ export const createHttpClient = (
       );
 
       subscriber.dispatch({
-        type: HttpClientRequestStatusType.HeaderReceived,
+        type: HttpClientRequestStatusType.HeadersReceived,
         response,
       });
     };
@@ -270,7 +270,7 @@ export const withDefaultBehaviors = (
       switchMap(httpClient),
       concatMap(status => {
         // FIXME: Move this logic into http-common
-        if (status.type === HttpClientRequestStatusType.HeaderReceived) {
+        if (status.type === HttpClientRequestStatusType.HeadersReceived) {
           const { response } = status;
           const { location, preferences, statusCode } = response;
           const acceptedEncodings = preferences?.acceptedEncodings ?? [];

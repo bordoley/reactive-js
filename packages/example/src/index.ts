@@ -228,7 +228,7 @@ pipe(
   httpClient,
   onNotify(status => {
     console.log("status: " + status.type);
-    if (status.type === HttpClientRequestStatusType.HeaderReceived) {
+    if (status.type === HttpClientRequestStatusType.HeadersReceived) {
       const { response } = status;
       response.body.dispose();
     }
@@ -262,7 +262,7 @@ pipe(
   })),
   switchMap(httpClient),
   concatMap(status =>
-    status.type === HttpClientRequestStatusType.HeaderReceived
+    status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
           scheduler => status.response.body.enumerateAsync(scheduler),
           _ => ofValue("done"),
