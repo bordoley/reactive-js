@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/http-node",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -40,15 +40,15 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.36",
-    "@reactive-js/disposable": "^0.0.36",
-    "@reactive-js/http": "^0.0.36",
-    "@reactive-js/http-common": "^0.0.36",
-    "@reactive-js/node": "^0.0.36",
-    "@reactive-js/observable": "^0.0.36",
-    "@reactive-js/option": "^0.0.36",
-    "@reactive-js/pipe": "^0.0.36",
-    "@reactive-js/scheduler": "^0.0.36",
+    "@reactive-js/async-enumerable": "^0.0.37",
+    "@reactive-js/disposable": "^0.0.37",
+    "@reactive-js/http": "^0.0.37",
+    "@reactive-js/http-common": "^0.0.37",
+    "@reactive-js/node": "^0.0.37",
+    "@reactive-js/observable": "^0.0.37",
+    "@reactive-js/option": "^0.0.37",
+    "@reactive-js/pipe": "^0.0.37",
+    "@reactive-js/scheduler": "^0.0.37",
     "iconv-lite": "^0.5.1",
     "mime-db": "^1.43.0"
   },

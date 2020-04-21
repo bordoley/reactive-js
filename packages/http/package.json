@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/http",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "main": "dist/cjs/index.js",
   "module": "dist/esm5/index.js",
   "types": "dist/types/index.d.ts",
@@ -40,9 +40,9 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/option": "^0.0.36",
-    "@reactive-js/parser-combinators": "^0.0.36",
-    "@reactive-js/pipe": "^0.0.36"
+    "@reactive-js/option": "^0.0.37",
+    "@reactive-js/parser-combinators": "^0.0.37",
+    "@reactive-js/pipe": "^0.0.37"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
