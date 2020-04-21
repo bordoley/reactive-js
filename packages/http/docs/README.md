@@ -23,6 +23,7 @@
 * [HttpContentInfo](README.md#httpcontentinfo)
 * [HttpDateTime](README.md#httpdatetime)
 * [HttpHeaders](README.md#httpheaders)
+* [HttpMessage](README.md#httpmessage)
 * [HttpPreferences](README.md#httppreferences)
 * [HttpRequest](README.md#httprequest)
 * [HttpRequestPreconditions](README.md#httprequestpreconditions)
@@ -60,6 +61,7 @@
 * [parseHttpResponseFromHeaders](README.md#const-parsehttpresponsefromheaders)
 * [private_](README.md#const-private_)
 * [sharedMaxAge](README.md#const-sharedmaxage)
+* [writeHttpMessageHeaders](README.md#const-writehttpmessageheaders)
 * [writeHttpRequestHeaders](README.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](README.md#const-writehttpresponseheaders)
 
@@ -114,6 +116,14 @@ ___
 
 ___
 
+###  HttpMessage
+
+Ƭ **HttpMessage**: *object*
+
+#### Type declaration:
+
+___
+
 ###  HttpPreferences
 
 Ƭ **HttpPreferences**: *object*
@@ -124,9 +134,7 @@ ___
 
 ###  HttpRequest
 
-Ƭ **HttpRequest**: *object*
-
-#### Type declaration:
+Ƭ **HttpRequest**: *[HttpMessage](README.md#httpmessage)‹T› & object*
 
 ___
 
@@ -140,9 +148,7 @@ ___
 
 ###  HttpResponse
 
-Ƭ **HttpResponse**: *object*
-
-#### Type declaration:
+Ƭ **HttpResponse**: *[HttpMessage](README.md#httpmessage)‹T› & object*
 
 ___
 
@@ -563,9 +569,9 @@ Name | Type |
 
 ___
 
-### `Const` writeHttpRequestHeaders
+### `Const` writeHttpMessageHeaders
 
-▸ **writeHttpRequestHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
+▸ **writeHttpMessageHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -590,9 +596,9 @@ Name | Type |
 
 ___
 
-### `Const` writeHttpResponseHeaders
+### `Const` writeHttpRequestHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
+▸ **writeHttpRequestHeaders**<**T**>(`request`: [HttpRequest](README.md#httprequest)‹T›, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -600,7 +606,34 @@ ___
 
 **Parameters:**
 
-▪ **__namedParameters**: *object*
+▪ **request**: *[HttpRequest](README.md#httprequest)‹T›*
+
+▪ **writeHeader**: *function*
+
+▸ (`header`: string, `value`: string): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`header` | string |
+`value` | string |
+
+**Returns:** *void*
+
+___
+
+### `Const` writeHttpResponseHeaders
+
+▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpResponse](README.md#httpresponse)‹T›, `writeHeader`: function): *void*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **response**: *[HttpResponse](README.md#httpresponse)‹T›*
 
 ▪ **writeHeader**: *function*
 

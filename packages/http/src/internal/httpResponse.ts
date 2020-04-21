@@ -14,7 +14,6 @@ import {
   MediaType,
 } from "./interfaces";
 import {
-  writeHttpContentInfoHeaders,
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,
   createHttpContentInfo,
@@ -22,21 +21,19 @@ import {
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
 import {
-  writeHttpHeaders,
   getHeaderValue,
   HttpStandardHeader,
   filterHeaders,
 } from "./httpHeaders";
 import {
   parseHttpPreferencesFromHeaders,
-  writeHttpPreferenceHeaders,
   createHttpPreferences,
 } from "./httpPreferences";
 import {
   parseCacheControlFromHeaders,
-  writeHttpCacheControlHeader,
   parseCacheDirectiveOrThrow,
 } from "./cacheDirective";
+import { writeHttpMessageHeaders } from "./HttpMessage";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -156,24 +153,16 @@ export const parseHttpResponseFromHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  {
-    cacheControl,
-    contentInfo,
-    etag,
-    expires,
-    headers,
-    lastModified,
-    location,
-    preferences,
-    vary,
-  }: HttpResponse<T>,
+  response : HttpResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  writeHttpCacheControlHeader(cacheControl, writeHeader);
-
-  if (isSome(contentInfo)) {
-    writeHttpContentInfoHeaders(contentInfo, writeHeader);
-  }
+  const  {
+    etag,
+    expires,
+    lastModified,
+    location,
+    vary,
+  } = response;
 
   if (isSome(etag)) {
     writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
@@ -194,15 +183,11 @@ export const writeHttpResponseHeaders = <T>(
     writeHeader(HttpStandardHeader.Location, location.toString());
   }
 
-  if (isSome(preferences)) {
-    writeHttpPreferenceHeaders(preferences, writeHeader);
-  }
-
   if (vary.length > 0) {
     writeHeader(HttpStandardHeader.Vary, vary.join(","));
   }
 
-  writeHttpHeaders(headers, writeHeader);
+  writeHttpMessageHeaders(response, writeHeader);
 };
 
 export const checkIfNotModified = <T>({

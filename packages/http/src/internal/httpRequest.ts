@@ -1,13 +1,11 @@
 import { isNone, isSome, none } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
 import {
-  writeHttpContentInfoHeaders,
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,
   createHttpContentInfo,
 } from "./httpContentInfo";
 import {
-  writeHttpHeaders,
   HttpStandardHeader,
   getHeaderValue,
   HttpExtensiondHeader,
@@ -15,7 +13,6 @@ import {
 } from "./httpHeaders";
 import {
   parseHttpPreferencesFromHeaders,
-  writeHttpPreferenceHeaders,
   createHttpPreferences,
 } from "./httpPreferences";
 import {
@@ -40,9 +37,9 @@ import {
 } from "./interfaces";
 import {
   parseCacheControlFromHeaders,
-  writeHttpCacheControlHeader,
   parseCacheDirectiveOrThrow,
 } from "./cacheDirective";
+import { writeHttpMessageHeaders } from "./HttpMessage";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -219,21 +216,13 @@ export const parseHttpRequestFromHeaders = <T>({
 };
 
 export const writeHttpRequestHeaders = <T>(
-  {
-    cacheControl,
-    contentInfo,
-    expectContinue,
-    headers,
-    preconditions,
-    preferences,
-  }: HttpRequest<T>,
+  request: HttpRequest<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
-  writeHttpCacheControlHeader(cacheControl, writeHeader);
-
-  if (isSome(contentInfo)) {
-    writeHttpContentInfoHeaders(contentInfo, writeHeader);
-  }
+  const {
+    expectContinue,
+    preconditions,
+  } = request;
 
   if (expectContinue) {
     writeHeader(HttpStandardHeader.Expect, "100-continue");
@@ -243,11 +232,7 @@ export const writeHttpRequestHeaders = <T>(
     writeHttpRequestPreconditionsHeaders(preconditions, writeHeader);
   }
 
-  if (isSome(preferences)) {
-    writeHttpPreferenceHeaders(preferences, writeHeader);
-  }
-
-  writeHttpHeaders(headers, writeHeader);
+  writeHttpMessageHeaders(request, writeHeader);
 };
 
 export const disallowProtocolAndHostForwarding = <T>(): Operator<
