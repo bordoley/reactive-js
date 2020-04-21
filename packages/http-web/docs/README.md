@@ -33,12 +33,12 @@ ___
 
 ### `Const` sendHttpRequest
 
-▸ **sendHttpRequest**(`request`: object & object): *ObservableLike‹object | object | object | object›*
+▸ **sendHttpRequest**(`request`: object & object & object): *ObservableLike‹object | object | object | object›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | object & object |
+`request` | object & object & object |
 
 **Returns:** *ObservableLike‹object | object | object | object›*

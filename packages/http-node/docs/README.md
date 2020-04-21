@@ -18,6 +18,9 @@
 * [createHttpRequestListener](README.md#const-createhttprequestlistener)
 * [decodeHttpRequest](README.md#const-decodehttprequest)
 * [decodeHttpResponse](README.md#const-decodehttpresponse)
+* [encodeCharsetHttpMessage](README.md#const-encodecharsethttpmessage)
+* [encodeCharsetHttpRequest](README.md#const-encodecharsethttprequest)
+* [encodeCharsetHttpResponse](README.md#const-encodecharsethttpresponse)
 * [encodeHttpRequest](README.md#const-encodehttprequest)
 * [encodeHttpResponse](README.md#const-encodehttpresponse)
 * [withDefaultBehaviors](README.md#const-withdefaultbehaviors)
@@ -126,6 +129,48 @@ Name | Type |
 `options` | BrotliOptions &#124; ZlibOptions |
 
 **Returns:** *Operator‹HttpResponse‹BufferStreamLike›, HttpResponse‹BufferStreamLike››*
+
+___
+
+### `Const` encodeCharsetHttpMessage
+
+▸ **encodeCharsetHttpMessage**(`contentType`: string | MediaType): *Operator‹HttpMessage‹string›, HttpMessage‹BufferStreamLike››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`contentType` | string &#124; MediaType |
+
+**Returns:** *Operator‹HttpMessage‹string›, HttpMessage‹BufferStreamLike››*
+
+___
+
+### `Const` encodeCharsetHttpRequest
+
+▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹BufferStreamLike››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`contentType` | string &#124; MediaType |
+
+**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹BufferStreamLike››*
+
+___
+
+### `Const` encodeCharsetHttpResponse
+
+▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹BufferStreamLike››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`contentType` | string &#124; MediaType |
+
+**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹BufferStreamLike››*
 
 ___
 
