@@ -1,7 +1,7 @@
 import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
-  HttpContentResponse,
+  HttpResponse,
 } from "@reactive-js/http";
 import {
   createObservable,
@@ -10,11 +10,8 @@ import {
 } from "@reactive-js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
-import {
-  HttpWebRequest,
-  WebResponseBodyLike,
-} from "./interfaces";
-import { isSome } from "@reactive-js/option";
+import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
+import { isSome, none } from "@reactive-js/option";
 import {
   HttpClientRequestStatusType,
   HttpClient,
@@ -65,19 +62,19 @@ export const sendHttpRequestUsingFetch: HttpClient<
         responseHeaders[k] = v;
       });
 
-      const responseNoBody: HttpContentResponse<WebResponseBodyLike> = parseHttpResponseFromHeaders(
+      const responseNoBody = parseHttpResponseFromHeaders(
         fetchResponse.status,
         responseHeaders,
-        undefined as any,
+        none,
       );
 
       const loadBodyContent = async (): Promise<unknown> => {
-        const content = responseNoBody?.content;
-        if (isSome(content)) {
+        const { contentInfo } = responseNoBody;
+        if (isSome(contentInfo)) {
           const {
             contentLength,
             contentType: { type, subtype, params },
-          } = content;
+          } = contentInfo;
 
           const hasCharset = isSome(params["charset"]);
           const responseIsText =
@@ -93,7 +90,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
             return fetchResponse.arrayBuffer();
           } else if (supportsBlob) {
             return fetchResponse.blob();
-          } 
+          }
           // Fallthrough
         }
         return await "";
@@ -110,16 +107,10 @@ export const sendHttpRequestUsingFetch: HttpClient<
       subscriber.add(body);
       body.add(subscriber);
 
-      const { content } = responseNoBody;
-      const response: HttpContentResponse<WebResponseBodyLike> = isSome(content)
-        ? {
-            ...responseNoBody,
-            content: {
-              ...content,
-              body,
-            },
-          }
-        : responseNoBody;
+      const response: HttpResponse<WebResponseBodyLike> = {
+        ...responseNoBody,
+        body,
+      };
 
       subscriber.dispatch({
         type: HttpClientRequestStatusType.HeaderReceived,

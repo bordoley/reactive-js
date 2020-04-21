@@ -7,10 +7,7 @@ import {
 import { createObservable } from "@reactive-js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
-import {
-  HttpWebRequest,
-  WebResponseBodyLike,
-} from "./interfaces";
+import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
 import { isSome } from "@reactive-js/option";
 import {
   HttpClient,
@@ -57,12 +54,12 @@ export const sendHttpRequestUsingXHR: HttpClient<
           response,
         });
 
-        const content = response?.content;
-        if (xhrSupportsResponseType && isSome(content)) {
+        const { contentInfo } = response;
+        if (xhrSupportsResponseType && isSome(contentInfo)) {
           const {
             contentLength,
             contentType: { type, subtype, params },
-          } = content;
+          } = contentInfo;
 
           const hasCharset = isSome(params["charset"]);
           const responseIsText =
@@ -120,5 +117,5 @@ export const sendHttpRequestUsingXHR: HttpClient<
 
     xhr.open(request.method, request.uri.toString(), true);
     writeHttpRequestHeaders(request, (k, v) => xhr.setRequestHeader(k, v));
-    xhr.send(request?.content?.body);
+    xhr.send(request.body);
   });

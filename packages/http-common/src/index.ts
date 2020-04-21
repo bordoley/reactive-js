@@ -1,14 +1,14 @@
 import {
   HttpServerRequest,
-  HttpContentResponse,
-  HttpContentRequest,
+  HttpResponse,
+  HttpRequest,
 } from "@reactive-js/http";
 import { ObservableLike } from "@reactive-js/observable";
 import { DisposableLike } from "@reactive-js/disposable";
 
 export type HttpServer<TReq, TResp> = (
   req: HttpServerRequest<TReq>,
-) => ObservableLike<HttpContentResponse<TResp>>;
+) => ObservableLike<HttpResponse<TResp>>;
 
 export const enum HttpClientRequestStatusType {
   Start = 1,
@@ -34,7 +34,7 @@ export type HttpClientRequestStatusHeaderReceived<
   TResp extends DisposableLike
 > = {
   readonly type: HttpClientRequestStatusType.HeaderReceived;
-  readonly response: HttpContentResponse<TResp>;
+  readonly response: HttpResponse<TResp>;
 };
 
 export type HttpClientRequestStatus<TResp extends DisposableLike> =
@@ -44,6 +44,6 @@ export type HttpClientRequestStatus<TResp extends DisposableLike> =
   | HttpClientRequestStatusHeaderReceived<TResp>;
 
 export type HttpClient<
-  THttpRequest extends HttpContentRequest<unknown>,
+  THttpRequest extends HttpRequest<unknown>,
   TResp extends DisposableLike
 > = (req: THttpRequest) => ObservableLike<HttpClientRequestStatus<TResp>>;

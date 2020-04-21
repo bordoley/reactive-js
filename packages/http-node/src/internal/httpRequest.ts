@@ -1,37 +1,62 @@
+import db from "mime-db";
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { HttpContentRequest, HttpContentEncoding } from "@reactive-js/http";
-import { BufferStreamLike } from "@reactive-js/node";
+import { HttpRequest, httpRequestIsCompressible } from "@reactive-js/http";
+import { BufferStreamLike, transform } from "@reactive-js/node";
 import { isSome } from "@reactive-js/option";
-import { Operator } from "@reactive-js/pipe";
-import { decodeHttpContent, encodeHttpContent } from "./httpContent";
+import { Operator, pipe } from "@reactive-js/pipe";
+import {
+  createEncodingDecompressTransform,
+  createEncodingCompressTransform,
+  getFirstSupportedEncoding,
+} from "./httpContentEncoding";
+import { HttpClientRequest } from "./interfaces";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
 ): Operator<
-  HttpContentRequest<BufferStreamLike>,
-  HttpContentRequest<BufferStreamLike>
+  HttpRequest<BufferStreamLike>,
+  HttpRequest<BufferStreamLike>
 > => request => {
-  const { content } = request;
-  return isSome(content) && content.contentEncodings.length > 0
+  const { body, contentInfo } = request;
+  return isSome(contentInfo) && contentInfo.contentEncodings.length > 0
     ? {
         ...request,
-        content: decodeHttpContent(content, options),
+        body: contentInfo.contentEncodings
+          .map(encoding => createEncodingDecompressTransform(encoding, options))
+          .reduceRight((acc, decoder) => pipe(acc, transform(decoder)), body),
+        content: {
+          ...contentInfo,
+          contentEncodings: [],
+          contentLength: -1,
+        },
       }
     : request;
 };
 
 export const encodeHttpRequest = (
-  encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions = {},
-): Operator<
-  HttpContentRequest<BufferStreamLike>,
-  HttpContentRequest<BufferStreamLike>
-> => request => {
-  const { content } = request;
-  return isSome(content) && content.contentEncodings.length > 0
+): Operator<HttpClientRequest, HttpRequest<BufferStreamLike>> => request => {
+  const { body, contentInfo } = request;
+
+  const contentEncoding = getFirstSupportedEncoding(
+    request?.acceptedEncodings ?? [],
+  );
+
+  return isSome(contentEncoding) &&
+    isSome(contentInfo) &&
+    contentInfo.contentEncodings.length === 0 &&
+    httpRequestIsCompressible(request, db)
     ? {
         ...request,
-        content: encodeHttpContent(content, encoding, options),
+        body: pipe(
+          body,
+          transform(createEncodingCompressTransform(contentEncoding, options)),
+        ),
+        contentInfo: {
+          ...contentInfo,
+          contentEncodings: [contentEncoding],
+          contentLength: -1,
+        },
       }
     : request;
 };

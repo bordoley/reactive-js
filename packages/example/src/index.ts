@@ -1,4 +1,5 @@
 import fs from "fs";
+import iconv from "iconv-lite";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import mime from "mime-types";
@@ -7,19 +8,15 @@ import {
   createHttpRequest,
   createHttpResponse,
   disallowProtocolAndHostForwarding,
-  HttpContent,
-  HttpContentRequest,
-  HttpContentResponse,
+  HttpResponse,
   HttpStatusCode,
-  createHttpContent,
+  HttpRequest,
 } from "@reactive-js/http";
 import {
-  createStringHttpContent,
   createHttpRequestListener,
   createHttpClient,
   decodeHttpRequest,
   encodeHttpResponse,
-  createReadableHttpContent,
   withDefaultBehaviors,
 } from "@reactive-js/http-node";
 import {
@@ -31,6 +28,7 @@ import {
   scheduler as nodeScheduler,
   bindNodeCallback,
   encode,
+  createBufferStreamFromReadable,
 } from "@reactive-js/node";
 import {
   map,
@@ -40,24 +38,23 @@ import {
   onNotify,
   catchError,
   throws,
-  compute,
   await_,
   onError,
   onDispose,
   using,
   concatMap,
+  switchMap,
 } from "@reactive-js/observable";
 import { pipe, Operator } from "@reactive-js/pipe";
 import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
-import { isSome, none } from "@reactive-js/option";
+import { isSome } from "@reactive-js/option";
 import {
   generateStream,
   mapStream,
   ofValueStream,
-  emptyStream,
 } from "@reactive-js/async-enumerable";
 import { HttpClientRequestStatusType } from "@reactive-js/http-common";
 
@@ -68,47 +65,54 @@ const scheduler = pipe(
 );
 
 const routerHandlerPrintParams: HttpRequestRouterHandler<
-  HttpContent<BufferStreamLike>,
-  HttpContent<BufferStreamLike>
-> = req =>
-  pipe(
-    createHttpResponse(200, {
-      content: createStringHttpContent(
-        JSON.stringify(req.params),
-        "text/plain",
-      ),
-    }),
-    ofValue,
+  BufferStreamLike,
+  BufferStreamLike
+> = req => {
+  const buffer = iconv.encode(JSON.stringify(req.params), "utf-8");
+  const body = ofValueStream(buffer);
+  return ofValue(
+    createHttpResponse({
+      statusCode: 200,
+      body,
+      contentInfo:{
+        contentLength: buffer.length, 
+        contentType: 'text/plain; charset="utf-8"',
+      },
+    })
   );
+};
 
 const routerHandlerEventStream: HttpRequestRouterHandler<
-  HttpContent<BufferStreamLike>,
-  HttpContent<BufferStreamLike>
-> = _ =>
-  compute(() =>
-    createHttpResponse(200, {
-      cacheControl: ["no-cache"],
-      content: createHttpContent({
-        body: pipe(
-          generateStream(
-            acc => acc + 1,
-            () => 0,
-            1000,
-          ),
-          mapStream(
-            data =>
-              `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
-          ),
-          encode("utf-8"),
-        ),
-        contentType: 'text/event-stream; charset="utf-8"',
-      }),
-    }),
+  BufferStreamLike,
+  BufferStreamLike
+> = _ => {
+  const body = pipe(
+    generateStream(
+      acc => acc + 1,
+      () => 0,
+      1000,
+    ),
+    mapStream(
+      data =>
+        `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
+    ),
+    encode("utf-8"),
   );
+  const response = createHttpResponse({
+    statusCode: HttpStatusCode.OK,
+    body,
+    cacheControl: ["no-cache"],
+    contentInfo:{
+      contentType: 'text/event-stream; charset="utf-8"',
+    },
+  });
+
+  return ofValue(response);
+};
 
 const routerHandlerFiles: HttpRequestRouterHandler<
-  HttpContent<BufferStreamLike>,
-  HttpContent<BufferStreamLike>
+  BufferStreamLike,
+  BufferStreamLike
 > = req => {
   const path = req.params["*"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
@@ -117,40 +121,52 @@ const routerHandlerFiles: HttpRequestRouterHandler<
     bindNodeCallback(fs.stat, (r: fs.Stats) => r)(path),
     map(next =>
       next.isFile() && !next.isDirectory()
-        ? createHttpResponse(200, {
-            content: createReadableHttpContent(
-              () => fs.createReadStream(path),
+        ? createHttpResponse({
+            statusCode: HttpStatusCode.OK,
+            body: createBufferStreamFromReadable(() =>
+              fs.createReadStream(path),
+            ),
+            contentInfo: {
+              contentLength: next.size,
               contentType,
-            ),
+            },
           })
-        : createHttpResponse(404, {
-            content: createStringHttpContent(
-              req.uri.toString(),
-              'text/plain; charset="utf-8"',
+        : createHttpResponse({
+            statusCode: 404,
+            body: pipe(
+              iconv.encode(JSON.stringify(req.params), "utf-8"),
+              ofValueStream,
             ),
+            contentInfo: {
+              contentType: 'text/plain; charset="utf-8"',
+            },
           }),
     ),
   );
 };
 
 const routerHandlerThrow: HttpRequestRouterHandler<
-  HttpContent<BufferStreamLike>,
-  HttpContent<BufferStreamLike>
+  BufferStreamLike,
+  BufferStreamLike
 > = _ => throws(() => new Error("internal error"));
 
 const notFound: Operator<
-  HttpContentRequest<BufferStreamLike>,
-  ObservableLike<HttpContentResponse<BufferStreamLike>>
-> = req =>
-  pipe(
-    createHttpResponse(404, {
-      content: createStringHttpContent(
-        req.uri.toString(),
-        'text/plain; charset="utf-8"',
-      ),
+  HttpRequest<BufferStreamLike>,
+  ObservableLike<HttpResponse<BufferStreamLike>>
+> = req => {
+  const buffer = iconv.encode(req.uri.toString(), "utf-8");
+  return pipe(
+    createHttpResponse({
+      statusCode: 404,
+      body: ofValueStream(buffer),
+      contentInfo: {
+        contentLength: buffer.length,
+        contentType: 'text/plain; charset="utf-8"',
+      },
     }),
     ofValue,
   );
+};
 
 const router = createRouter(
   {
@@ -173,16 +189,22 @@ const listener = createHttpRequestListener(
       map(encodeHttpResponse(req)),
       // FIXME: Special case some exceptions like URILike parsing exceptions that are due to bad user input
       catchError((e: unknown) => {
-        const content =
-          process.env.NODE_ENV === "production"
-            ? none
-            : e instanceof Error && isSome(e.stack)
-            ? createStringHttpContent(e.stack ?? "", "text/plain")
-            : createStringHttpContent(String(e), "text/plain");
+        const message = process.env.NODE_ENV === "production"
+          ? ""
+          : e instanceof Error && isSome(e.stack)
+          ? e.stack
+          : String(e);
+        const buffer = iconv.encode(message, "utf-8"); 
+        const body = ofValueStream(buffer);
 
         return ofValue(
-          createHttpResponse(HttpStatusCode.InternalServerError, {
-            content,
+          createHttpResponse({
+            statusCode: HttpStatusCode.InternalServerError,
+            body,
+            contentInfo: {
+              contentLength: buffer.length,
+              contentType: "text/plain",
+            },
           }),
         );
       }),
@@ -205,14 +227,16 @@ createHttp2Server(
 
 const httpClient = pipe(createHttpClient(), withDefaultBehaviors());
 
-const chunk = "some text";
-
+const chunk = iconv.encode("some text", "utf-8");
 pipe(
-  createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
-    content: createHttpContent({
-      body: pipe(ofValueStream(chunk), encode("utf-8")),
+  createHttpRequest({
+    method: HttpMethod.POST,
+    uri: "http://localhost:8080/index.html",
+    body: ofValueStream(chunk),
+    contentInfo: {
+      contentLength: chunk.length,
       contentType: 'text/plain; charset="utf-8"',
-    }),
+    },
     headers: {
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
@@ -226,7 +250,7 @@ pipe(
     console.log("status: " + status.type);
     if (status.type === HttpClientRequestStatusType.HeaderReceived) {
       const { response } = status;
-      response?.content?.body?.dispose();
+      response.body.dispose();
     }
   }),
   onDispose(_ => console.log("dispose value case")),
@@ -234,12 +258,20 @@ pipe(
   subscribe(scheduler),
 );
 
+const file = "packages/example-react/dist/rollup/bundle.js";
 pipe(
-  createHttpRequest(HttpMethod.POST, "http://localhost:8080/index.html", {
-    content: createReadableHttpContent(
-      () => fs.createReadStream("packages/example-react/dist/rollup/bundle.js"),
-      "application/octet-stream",
+  file,
+  bindNodeCallback(fs.stat, (r: fs.Stats) => r),
+  map(stats => createHttpRequest({
+    method: HttpMethod.POST,
+    uri: "http://localhost:8080/index.html",
+    body: createBufferStreamFromReadable(() =>
+      fs.createReadStream(file),
     ),
+    contentInfo: {
+      contentLength: stats.size,
+      contentType: "application/octet-stream",
+    },
     headers: {
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
@@ -247,15 +279,12 @@ pipe(
     preferences: {
       acceptedMediaRanges: ["application/json", "text/html"],
     },
-  }),
-  httpClient,
+  })),
+  switchMap(httpClient),
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeaderReceived
       ? using(
-          scheduler =>
-            (status.response.content?.body ?? emptyStream()).enumerateAsync(
-              scheduler,
-            ),
+          scheduler => status.response.body.enumerateAsync(scheduler),
           _ => ofValue("done"),
         )
       : ofValue(JSON.stringify(status)),

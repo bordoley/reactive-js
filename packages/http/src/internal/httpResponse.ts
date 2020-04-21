@@ -7,17 +7,18 @@ import {
   HttpResponse,
   HttpRequest,
   HttpMethod,
-  HttpContentResponse,
   EntityTag,
   CacheDirective,
   HttpContentEncoding,
   MediaRange,
+  MediaType,
 } from "./interfaces";
 import {
-  writeHttpContentHeaders,
-  parseHttpContentFromHeaders,
+  writeHttpContentInfoHeaders,
+  parseHttpContentInfoFromHeaders,
   contentIsCompressible,
-} from "./httpContent";
+  createHttpContentInfo,
+} from "./httpContentInfo";
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
 import {
@@ -52,41 +53,47 @@ declare class URL implements URILike {
   toString(): string;
 }
 
-export const createHttpResponse = <T>(
-  statusCode: HttpStatusCode,
-  {
-    cacheControl,
-    content,
-    etag,
-    expires,
-    headers,
-    lastModified,
-    location,
-    preferences,
-    vary,
-    ...rest
-  }: {
-    cacheControl?: readonly (string | CacheDirective)[];
-    content?: T;
-    etag?: string | EntityTag;
-    expires?: number;
-    headers?: HttpHeaders;
-    lastModified?: number | string | Date;
-    location?: string | URILike;
-    preferences?: {
-      acceptedCharsets?: readonly string[];
-      acceptedEncodings?: readonly HttpContentEncoding[];
-      acceptedLanguages?: readonly string[];
-      acceptedMediaRanges?: readonly (string | MediaRange)[];
-    };
-    vary?: readonly string[];
-  } = {},
-): HttpResponse<T> => ({
+export const createHttpResponse = <T>({
+  body,
+  cacheControl,
+  contentInfo,
+  etag,
+  expires,
+  headers,
+  lastModified,
+  location,
+  preferences,
+  statusCode,
+  vary,
+  ...rest
+}: {
+  body: T;
+  cacheControl?: readonly (string | CacheDirective)[];
+  contentInfo?: {
+    contentEncodings?: HttpContentEncoding[];
+    contentLength?: number;
+    contentType: MediaType | string;
+  };
+  etag?: string | EntityTag;
+  expires?: number;
+  headers?: HttpHeaders;
+  lastModified?: number | string | Date;
+  location?: string | URILike;
+  preferences?: {
+    acceptedCharsets?: readonly string[];
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    acceptedLanguages?: readonly string[];
+    acceptedMediaRanges?: readonly (string | MediaRange)[];
+  };
+  statusCode: HttpStatusCode;
+  vary?: readonly string[];
+}): HttpResponse<T> => ({
   ...rest,
+  body,
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  content,
+  contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
   etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
   expires,
   headers: filterHeaders(headers ?? {}),
@@ -99,7 +106,7 @@ export const createHttpResponse = <T>(
   location: typeof location === "string" ? new URL(location) : location,
   preferences: isSome(preferences)
     ? createHttpPreferences(preferences)
-    : undefined,
+    : none,
   statusCode,
   vary: vary ?? [],
 });
@@ -108,10 +115,10 @@ export const parseHttpResponseFromHeaders = <T>(
   statusCode: number,
   headers: HttpHeaders,
   body: T,
-): HttpContentResponse<T> => {
+): HttpResponse<T> => {
   const cacheControl = parseCacheControlFromHeaders(headers);
 
-  const content = parseHttpContentFromHeaders(headers, body);
+  const contentInfo = parseHttpContentInfoFromHeaders(headers);
 
   const etag = parseETag(
     getHeaderValue(headers, HttpStandardHeader.ETag) ?? "",
@@ -134,11 +141,12 @@ export const parseHttpResponseFromHeaders = <T>(
   const vary: readonly string[] = [];
 
   return {
+    body,
     cacheControl,
+    contentInfo,
     etag,
     expires,
     lastModified,
-    content,
     headers,
     location,
     preferences,
@@ -147,9 +155,10 @@ export const parseHttpResponseFromHeaders = <T>(
   };
 };
 
-const writeCoreHttpResponseHeaders = <T>(
+export const writeHttpResponseHeaders = <T>(
   {
     cacheControl,
+    contentInfo,
     etag,
     expires,
     headers,
@@ -161,6 +170,10 @@ const writeCoreHttpResponseHeaders = <T>(
   writeHeader: (header: string, value: string) => void,
 ) => {
   writeHttpCacheControlHeader(cacheControl, writeHeader);
+
+  if (isSome(contentInfo)) {
+    writeHttpContentInfoHeaders(contentInfo, writeHeader);
+  }
 
   if (isSome(etag)) {
     writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
@@ -192,19 +205,6 @@ const writeCoreHttpResponseHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
-export const writeHttpResponseHeaders = <T>(
-  response: HttpContentResponse<T>,
-  writeHeader: (header: string, value: string) => void,
-): void => {
-  const { content } = response;
-
-  writeCoreHttpResponseHeaders(response, writeHeader);
-
-  if (isSome(content)) {
-    writeHttpContentHeaders(content, writeHeader);
-  }
-};
-
 export const checkIfNotModified = <T>({
   cacheControl,
   method,
@@ -214,7 +214,7 @@ export const checkIfNotModified = <T>({
   HttpResponse<T>
 > => response => {
   const { etag, lastModified } = response;
-  const { statusCode, content: _, ...responseWithoutContent } = response;
+  const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
 
   const methodSupportsConditionalResponse =
     method === HttpMethod.GET || method === HttpMethod.HEAD;
@@ -257,8 +257,8 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const httpContentResponseIsCompressible = <T>(
-  response: HttpContentResponse<T>,
+export const httpResponseIsCompressible = <T>(
+  response: HttpResponse<T>,
   db: {
     [key: string]: {
       compressible?: boolean;
@@ -272,10 +272,10 @@ export const httpContentResponseIsCompressible = <T>(
       ({ directive }) => directive === "no-transform",
     ) >= 0;
 
-  const { content } = response;
+  const { contentInfo } = response;
   return (
     !noTransformResponse &&
-    isSome(content) &&
-    contentIsCompressible(content, db)
+    isSome(contentInfo) &&
+    contentIsCompressible(contentInfo, db)
   );
 };

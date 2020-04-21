@@ -20,9 +20,7 @@
 
 * [CacheDirective](README.md#cachedirective)
 * [EntityTag](README.md#entitytag)
-* [HttpContent](README.md#httpcontent)
-* [HttpContentRequest](README.md#httpcontentrequest)
-* [HttpContentResponse](README.md#httpcontentresponse)
+* [HttpContentInfo](README.md#httpcontentinfo)
 * [HttpDateTime](README.md#httpdatetime)
 * [HttpHeaders](README.md#httpheaders)
 * [HttpPreferences](README.md#httppreferences)
@@ -44,15 +42,14 @@
 
 * [cacheDirectiveToString](README.md#const-cachedirectivetostring)
 * [checkIfNotModified](README.md#const-checkifnotmodified)
-* [createHttpContent](README.md#const-createhttpcontent)
 * [createHttpRequest](README.md#const-createhttprequest)
 * [createHttpResponse](README.md#const-createhttpresponse)
 * [createRedirectHttpRequest](README.md#const-createredirecthttprequest)
 * [disallowProtocolAndHostForwarding](README.md#const-disallowprotocolandhostforwarding)
 * [getHeaderValue](README.md#getheadervalue)
-* [httpContentRequestIsCompressible](README.md#const-httpcontentrequestiscompressible)
-* [httpContentResponseIsCompressible](README.md#const-httpcontentresponseiscompressible)
+* [httpRequestIsCompressible](README.md#const-httprequestiscompressible)
 * [httpRequestToUntypedHeaders](README.md#const-httprequesttountypedheaders)
+* [httpResponseIsCompressible](README.md#const-httpresponseiscompressible)
 * [maxAge](README.md#const-maxage)
 * [maxStale](README.md#const-maxstale)
 * [mediaTypeToString](README.md#const-mediatypetostring)
@@ -93,23 +90,11 @@ ___
 
 ___
 
-###  HttpContent
+###  HttpContentInfo
 
-Ƭ **HttpContent**: *object*
+Ƭ **HttpContentInfo**: *object*
 
 #### Type declaration:
-
-___
-
-###  HttpContentRequest
-
-Ƭ **HttpContentRequest**: *[HttpRequest](README.md#httprequest)‹[HttpContent](README.md#httpcontent)‹T››*
-
-___
-
-###  HttpContentResponse
-
-Ƭ **HttpContentResponse**: *[HttpResponse](README.md#httpresponse)‹[HttpContent](README.md#httpcontent)‹T››*
 
 ___
 
@@ -163,7 +148,7 @@ ___
 
 ###  HttpServerRequest
 
-Ƭ **HttpServerRequest**: *[HttpContentRequest](README.md#httpcontentrequest)‹T› & object*
+Ƭ **HttpServerRequest**: *[HttpRequest](README.md#httprequest)‹T› & object*
 
 ___
 
@@ -279,9 +264,9 @@ Name | Type |
 
 ___
 
-### `Const` createHttpContent
+### `Const` createHttpRequest
 
-▸ **createHttpContent**<**T**>(`__namedParameters`: object): *[HttpContent](README.md#httpcontent)‹T›*
+▸ **createHttpRequest**<**T**>(`__namedParameters`: object): *[HttpRequest](README.md#httprequest)‹T›*
 
 **Type parameters:**
 
@@ -293,33 +278,13 @@ Name | Type |
 ------ | ------ |
 `__namedParameters` | object |
 
-**Returns:** *[HttpContent](README.md#httpcontent)‹T›*
-
-___
-
-### `Const` createHttpRequest
-
-▸ **createHttpRequest**<**T**>(`method`: [HttpMethod](enums/httpmethod.md), `uri`: string | [URILike](interfaces/urilike.md), `__namedParameters`: object): *[HttpRequest](README.md#httprequest)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`method` | [HttpMethod](enums/httpmethod.md) | - |
-`uri` | string &#124; [URILike](interfaces/urilike.md) | - |
-`__namedParameters` | object |  {} |
-
 **Returns:** *[HttpRequest](README.md#httprequest)‹T›*
 
 ___
 
 ### `Const` createHttpResponse
 
-▸ **createHttpResponse**<**T**>(`statusCode`: [HttpStatusCode](enums/httpstatuscode.md), `__namedParameters`: object): *[HttpResponse](README.md#httpresponse)‹T›*
+▸ **createHttpResponse**<**T**>(`__namedParameters`: object): *[HttpResponse](README.md#httpresponse)‹T›*
 
 **Type parameters:**
 
@@ -327,10 +292,9 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`statusCode` | [HttpStatusCode](enums/httpstatuscode.md) | - |
-`__namedParameters` | object |  {} |
+Name | Type |
+------ | ------ |
+`__namedParameters` | object |
 
 **Returns:** *[HttpResponse](README.md#httpresponse)‹T›*
 
@@ -395,9 +359,9 @@ Name | Type |
 
 ___
 
-### `Const` httpContentRequestIsCompressible
+### `Const` httpRequestIsCompressible
 
-▸ **httpContentRequestIsCompressible**<**T**>(`__namedParameters`: object, `db`: object): *boolean*
+▸ **httpRequestIsCompressible**<**T**>(`__namedParameters`: object, `db`: object): *boolean*
 
 **Type parameters:**
 
@@ -414,9 +378,25 @@ Name | Type |
 
 ___
 
-### `Const` httpContentResponseIsCompressible
+### `Const` httpRequestToUntypedHeaders
 
-▸ **httpContentResponseIsCompressible**<**T**>(`response`: [HttpContentResponse](README.md#httpcontentresponse)‹T›, `db`: object): *boolean*
+▸ **httpRequestToUntypedHeaders**(`request`: [HttpRequest](README.md#httprequest)‹unknown›): *object*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | [HttpRequest](README.md#httprequest)‹unknown› |
+
+**Returns:** *object*
+
+* \[ **key**: *string*\]: string
+
+___
+
+### `Const` httpResponseIsCompressible
+
+▸ **httpResponseIsCompressible**<**T**>(`response`: [HttpResponse](README.md#httpresponse)‹T›, `db`: object): *boolean*
 
 **Type parameters:**
 
@@ -426,26 +406,10 @@ ___
 
 Name | Type |
 ------ | ------ |
-`response` | [HttpContentResponse](README.md#httpcontentresponse)‹T› |
+`response` | [HttpResponse](README.md#httpresponse)‹T› |
 `db` | object |
 
 **Returns:** *boolean*
-
-___
-
-### `Const` httpRequestToUntypedHeaders
-
-▸ **httpRequestToUntypedHeaders**(`request`: [HttpContentRequest](README.md#httpcontentrequest)‹unknown›): *object*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`request` | [HttpContentRequest](README.md#httpcontentrequest)‹unknown› |
-
-**Returns:** *object*
-
-* \[ **key**: *string*\]: string
 
 ___
 
@@ -553,7 +517,7 @@ ___
 
 ### `Const` parseHttpResponseFromHeaders
 
-▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](README.md#httpheaders), `body`: T): *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
+▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](README.md#httpheaders), `body`: T): *[HttpResponse](README.md#httpresponse)‹T›*
 
 **Type parameters:**
 
@@ -567,7 +531,7 @@ Name | Type |
 `headers` | [HttpHeaders](README.md#httpheaders) |
 `body` | T |
 
-**Returns:** *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
+**Returns:** *[HttpResponse](README.md#httpresponse)‹T›*
 
 ___
 
@@ -628,7 +592,7 @@ ___
 
 ### `Const` writeHttpResponseHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpContentResponse](README.md#httpcontentresponse)‹T›, `writeHeader`: function): *void*
+▸ **writeHttpResponseHeaders**<**T**>(`__namedParameters`: object, `writeHeader`: function): *void*
 
 **Type parameters:**
 
@@ -636,7 +600,7 @@ ___
 
 **Parameters:**
 
-▪ **response**: *[HttpContentResponse](README.md#httpcontentresponse)‹T›*
+▪ **__namedParameters**: *object*
 
 ▪ **writeHeader**: *function*
 

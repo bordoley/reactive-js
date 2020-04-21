@@ -8,8 +8,8 @@ import {
   AsyncEnumeratorLike,
   StreamEventType,
 } from "@reactive-js/async-enumerable";
-import { createHttpRequest, HttpMethod, HttpContent } from "@reactive-js/http";
-import { sendHttpRequest, WebResponseBodyLike } from "@reactive-js/http-web";
+import { createHttpRequest, HttpMethod } from "@reactive-js/http";
+import { sendHttpRequest } from "@reactive-js/http-web";
 import {
   useObservable,
   useAsyncEnumerable,
@@ -41,8 +41,9 @@ import React, {
 } from "react";
 import { default as ReactDOM } from "react-dom";
 import { pipe, compose } from "@reactive-js/pipe";
-import { isSome } from "@reactive-js/option";
+import { isSome, none } from "@reactive-js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/http-common";
+import { WebRequestBody } from "@reactive-js/http-web/dist/types/internal/interfaces";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
@@ -182,17 +183,18 @@ const location = pipe(
   .createRoot(document.getElementById("root"))
   .render(<Router location={location} notFound={NotFound} routes={routes} />);
 
-const request = createHttpRequest<HttpContent<any>>(
-  HttpMethod.GET,
-  "http://localhost:8080/files/packages/example-react/dist/rollup/bundle.js",
-);
+const request = createHttpRequest<WebRequestBody>({
+  method: HttpMethod.GET,
+  uri: "http://localhost:8080/files/packages/example-react/dist/rollup/bundle.js",
+  body: none,
+});
 
 pipe(
   sendHttpRequest(request),
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeaderReceived
       ? using(
-          _ => status.response.content?.body as WebResponseBodyLike,
+          _ => status.response.body,
           _ => ofValue("done"),
         )
       : ofValue(JSON.stringify(status)),

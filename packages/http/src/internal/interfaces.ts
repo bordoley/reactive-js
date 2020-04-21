@@ -106,8 +106,7 @@ export type MediaRange = {
   readonly subtype: string | "*";
 };
 
-export type HttpContent<T> = {
-  readonly body: T;
+export type HttpContentInfo = {
   readonly contentEncodings: readonly HttpContentEncoding[];
   readonly contentLength: number;
   readonly contentType: MediaType;
@@ -148,7 +147,8 @@ export type HttpRequest<T> = {
 
   readonly cacheControl: readonly CacheDirective[];
 
-  readonly content?: T;
+  readonly body: T;
+  readonly contentInfo?: HttpContentInfo;
   readonly expectContinue: boolean;
   readonly headers: HttpHeaders;
   readonly method: HttpMethod;
@@ -164,9 +164,7 @@ export type HttpRequest<T> = {
   readonly httpVersionMinor: number;
 };
 
-export type HttpContentRequest<T> = HttpRequest<HttpContent<T>>;
-
-export type HttpServerRequest<T> = HttpContentRequest<T> & {
+export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;
 };
 
@@ -174,9 +172,10 @@ export type HttpResponse<T> = {
   // age:Option<TimeSpan>
   // allowed:Set<Method>
   // authenticate:Set<Challenge>
+  readonly body: T;
   readonly cacheControl: readonly CacheDirective[];
   // date:Option<DateTime>
-  readonly content?: T;
+  readonly contentInfo?: HttpContentInfo;
   readonly etag?: EntityTag;
   readonly expires?: HttpDateTime;
   readonly headers: HttpHeaders;
@@ -191,5 +190,3 @@ export type HttpResponse<T> = {
   readonly statusCode: HttpStatusCode;
   readonly vary: readonly string[];
 };
-
-export type HttpContentResponse<T> = HttpResponse<HttpContent<T>>;

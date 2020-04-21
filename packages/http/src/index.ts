@@ -18,9 +18,7 @@ export {
 export {
   CacheDirective,
   HttpContentEncoding,
-  HttpContent,
-  HttpContentRequest,
-  HttpContentResponse,
+  HttpContentInfo,
   HttpDateTime,
   HttpHeaders,
   HttpMethod,
@@ -38,7 +36,7 @@ export {
   createHttpRequest,
   createRedirectHttpRequest,
   disallowProtocolAndHostForwarding,
-  httpContentRequestIsCompressible,
+  httpRequestIsCompressible,
   parseHttpRequestFromHeaders,
   httpRequestToUntypedHeaders,
   writeHttpRequestHeaders,
@@ -47,14 +45,12 @@ export {
 export {
   checkIfNotModified,
   createHttpResponse,
-  httpContentResponseIsCompressible,
+  httpResponseIsCompressible,
   parseHttpResponseFromHeaders,
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
 
 export { HttpStandardHeader } from "./internal/httpHeaders";
-
-export { createHttpContent } from "./internal/httpContent";
 
 export { parseMediaType, parseMediaTypeOrThrow } from "./internal/mediaType";
 
