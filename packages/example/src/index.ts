@@ -3,6 +3,10 @@ import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import mime from "mime-types";
 import {
+  generateStream,
+  mapStream,
+} from "@reactive-js/async-enumerable";
+import {
   HttpMethod,
   createHttpRequest,
   createHttpResponse,
@@ -11,6 +15,7 @@ import {
   HttpStatusCode,
   HttpRequest,
 } from "@reactive-js/http";
+import { HttpClientRequestStatusType, HttpServer } from "@reactive-js/http-common";
 import {
   createHttpRequestListener,
   createHttpClient,
@@ -21,8 +26,7 @@ import {
   withDefaultBehaviors,
 } from "@reactive-js/http-node";
 import {
-  HttpRequestRouterHandler,
-  createRouter,
+  createRouter, HttpRoutedRequest,
 } from "@reactive-js/http-router";
 import {
   BufferStreamLike,
@@ -47,17 +51,12 @@ import {
   concatMap,
   switchMap,
 } from "@reactive-js/observable";
+import { isSome } from "@reactive-js/option";
 import { pipe, Operator } from "@reactive-js/pipe";
 import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/scheduler";
-import { isSome } from "@reactive-js/option";
-import {
-  generateStream,
-  mapStream,
-} from "@reactive-js/async-enumerable";
-import { HttpClientRequestStatusType } from "@reactive-js/http-common";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -65,10 +64,8 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
-const routerHandlerPrintParams: HttpRequestRouterHandler<
-  BufferStreamLike,
-  BufferStreamLike
-> = req => pipe(
+const routerHandlerPrintParams: HttpServer<HttpRoutedRequest<BufferStreamLike>, HttpResponse<BufferStreamLike>>
+= req => pipe(
   createHttpResponse({
     statusCode: HttpStatusCode.OK,
     body: JSON.stringify(req.params),
@@ -77,10 +74,7 @@ const routerHandlerPrintParams: HttpRequestRouterHandler<
   ofValue,
 )
 
-const routerHandlerEventStream: HttpRequestRouterHandler<
-  BufferStreamLike,
-  BufferStreamLike
-> = _ => {
+const routerHandlerEventStream: HttpServer<HttpRoutedRequest<BufferStreamLike>, HttpResponse<BufferStreamLike>> = _ => {
   const body = pipe(
     generateStream(
       acc => acc + 1,
@@ -105,10 +99,7 @@ const routerHandlerEventStream: HttpRequestRouterHandler<
   return ofValue(response);
 };
 
-const routerHandlerFiles: HttpRequestRouterHandler<
-  BufferStreamLike,
-  BufferStreamLike
-> = req => {
+const routerHandlerFiles: HttpServer<HttpRoutedRequest<BufferStreamLike>, HttpResponse<BufferStreamLike>> = req => {
   const path = req.params["*"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
 
@@ -137,10 +128,7 @@ const routerHandlerFiles: HttpRequestRouterHandler<
   );
 };
 
-const routerHandlerThrow: HttpRequestRouterHandler<
-  BufferStreamLike,
-  BufferStreamLike
-> = _ => throws(() => new Error("internal error"));
+const routerHandlerThrow: HttpServer<HttpRoutedRequest<BufferStreamLike>, HttpResponse<BufferStreamLike>> = _ => throws(() => new Error("internal error"));
 
 const notFound: Operator<
   HttpRequest<BufferStreamLike>,

@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@reactive-js/http": "^0.0.37",
+    "@reactive-js/http-common": "^0.0.37",
     "@reactive-js/observable": "^0.0.37",
     "@reactive-js/option": "^0.0.37",
     "@reactive-js/pipe": "^0.0.37",

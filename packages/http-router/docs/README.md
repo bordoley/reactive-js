@@ -6,7 +6,6 @@
 
 ### Type aliases
 
-* [HttpRequestRouterHandler](README.md#httprequestrouterhandler)
 * [HttpRoutedRequest](README.md#httproutedrequest)
 
 ### Functions
@@ -14,12 +13,6 @@
 * [createRouter](README.md#const-createrouter)
 
 ## Type aliases
-
-###  HttpRequestRouterHandler
-
-Ƭ **HttpRequestRouterHandler**: *Operator‹[HttpRoutedRequest](README.md#httproutedrequest)‹TReq›, ObservableLike‹HttpResponse‹TResp›››*
-
-___
 
 ###  HttpRoutedRequest
 

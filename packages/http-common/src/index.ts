@@ -1,14 +1,16 @@
 import {
-  HttpServerRequest,
   HttpResponse,
   HttpRequest,
 } from "@reactive-js/http";
 import { ObservableLike } from "@reactive-js/observable";
 import { DisposableLike } from "@reactive-js/disposable";
 
-export type HttpServer<TReq, TResp> = (
-  req: HttpServerRequest<TReq>,
-) => ObservableLike<HttpResponse<TResp>>;
+export type HttpServer<
+  THttpRequest extends HttpRequest<unknown>, 
+  THttpResponse extends HttpResponse<unknown>,
+> = (
+  req: THttpRequest,
+) => ObservableLike<THttpResponse>;
 
 export const enum HttpClientRequestStatusType {
   Start = 1,
