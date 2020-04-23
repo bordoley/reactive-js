@@ -3,9 +3,7 @@ import {
   StateUpdater,
   lift,
   fromObservableStream,
-  StreamEvent,
   StreamMode,
-  AsyncEnumeratorLike,
   StreamEventType,
 } from "@reactive-js/async-enumerable";
 import { createHttpRequest, HttpMethod } from "@reactive-js/http";
@@ -13,7 +11,6 @@ import { sendHttpRequest } from "@reactive-js/http-web";
 import {
   useObservable,
   useAsyncEnumerable,
-  useAsyncEnumerator,
 } from "@reactive-js/react";
 import {
   RoutableComponentProps,
@@ -120,12 +117,9 @@ const StatefulComponent = (props: RoutableComponentProps) => {
   );
 };
 
-const StreamPauseView = ({
-  events,
-}: {
-  events: AsyncEnumeratorLike<StreamMode, StreamEvent<number>>;
-}) => {
-  const [value, setMode] = useAsyncEnumerator(events);
+const StreamPauseResume = (_props: RoutableComponentProps) => {
+  const stream = useMemo(() => fromObservableStream(obs), []);
+  const [value, setMode] = useAsyncEnumerable(stream, {scheduler: idlePriority});
   const [{ mode }, updateMode] = useState({ mode: StreamMode.Pause });
 
   const onClick = useCallback(
@@ -151,13 +145,6 @@ const StreamPauseView = ({
       <button onClick={onClick}>{label}</button>
     </>
   );
-};
-
-const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => fromObservableStream(obs), []);
-  const events = useAsyncEnumerable(stream, { scheduler: idlePriority });
-
-  return isSome(events) ? <StreamPauseView events={events} /> : null;
 };
 
 const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
@@ -192,7 +179,7 @@ const request = createHttpRequest<WebRequestBody>({
 pipe(
   sendHttpRequest(request),
   concatMap(status =>
-    status.type === HttpClientRequestStatusType.HeaderReceived
+    status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
           _ => status.response.body,
           _ => ofValue("done"),

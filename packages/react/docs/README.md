@@ -1,19 +1,18 @@
 
-# @reactive-js/react - v0.0.35
+# @reactive-js/react - v0.0.37
 
 ## Index
 
 ### Functions
 
 * [useAsyncEnumerable](README.md#const-useasyncenumerable)
-* [useAsyncEnumerator](README.md#const-useasyncenumerator)
 * [useObservable](README.md#const-useobservable)
 
 ## Functions
 
 ### `Const` useAsyncEnumerable
 
-▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *Option‹AsyncEnumeratorLike‹TReq, T››*
+▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *[Option‹T›, function]*
 
 **Type parameters:**
 
@@ -23,31 +22,10 @@
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`enumerable` | AsyncEnumerableLike‹TReq, T› | - | - |
-`config` | object |  {} |   |
-
-**Returns:** *Option‹AsyncEnumeratorLike‹TReq, T››*
-
-___
-
-### `Const` useAsyncEnumerator
-
-▸ **useAsyncEnumerator**<**TReq**, **T**>(`enumerator`: AsyncEnumeratorLike‹TReq, T›, `scheduler?`: SchedulerLike): *[Option‹T›, function]*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
+Name | Type | Default |
 ------ | ------ | ------ |
-`enumerator` | AsyncEnumeratorLike‹TReq, T› | - |
-`scheduler?` | SchedulerLike |   |
+`enumerable` | AsyncEnumerableLike‹TReq, T› | - |
+`config` | object |  {} |
 
 **Returns:** *[Option‹T›, function]*
 

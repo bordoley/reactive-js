@@ -1,12 +1,12 @@
 import {
   StateUpdater,
   AsyncEnumerableLike,
+  lift,
 } from "@reactive-js/async-enumerable";
-import { none, Option, isNone } from "@reactive-js/option";
-import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
-import { map, scan, never } from "@reactive-js/observable";
+import { none, Option, isSome } from "@reactive-js/option";
+import { useAsyncEnumerable } from "@reactive-js/react";
+import { scan } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
-import { SchedulerLike } from "@reactive-js/scheduler";
 import { createElement, useMemo, ReactElement } from "react";
 
 export type RelativeURI = {
@@ -41,7 +41,6 @@ export type RouterProps = {
     string,
     React.ComponentType<RoutableComponentProps>,
   ][];
-  readonly scheduler?: SchedulerLike;
 };
 
 const pairify = (
@@ -51,38 +50,39 @@ const pairify = (
   oldState === empty ? [none, next] : [oldState, next];
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
-  const { location, notFound, routes, scheduler } = props;
+  const { location, notFound, routes } = props;
 
-  const locationStore = useAsyncEnumerable(location, { replay: 1 });
-
-  const observable = useMemo(() => {
-    if (isNone(locationStore)) {
-      return never<ReactElement>();
-    } else {
-      const routeMap: RouteMap = {};
-      for (const [path, component] of routes) {
-        routeMap[path] = component;
-      }
-
-      const uriUpdater = (updater: StateUpdater<RelativeURI>) => {
-        locationStore.dispatch(updater);
-      };
-
-      return pipe(
-        locationStore,
-        scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [none, empty]),
-        map(([referer, uri]) =>
-          createElement(routeMap[uri.pathname] ?? notFound, {
-            referer,
-            uri,
-            uriUpdater,
-          }),
-        ),
-      );
+  const routeMap = useMemo(() => {
+    const routeMap: RouteMap = {};
+    for (const [path, component] of routes) {
+      routeMap[path] = component;
     }
-  }, [locationStore, notFound, routes]);
+    return routeMap;
+  }, [routes]);
 
-  const element = useObservable(observable, scheduler);
+  const pairifiedLocation = useMemo(
+    () => pipe(
+      location,
+      lift(
+        scan(
+          pairify, 
+          (): [Option<RelativeURI>, RelativeURI] => [none, empty],
+         )
+      )
+    ),
+    [location]
+  )
 
-  return element ?? null;
+  const [locationState, uriUpdater] = useAsyncEnumerable(pairifiedLocation, { replay: 1 });
+
+  if (isSome(locationState)) { 
+    const [referer, uri] = locationState;
+    return createElement(routeMap[uri.pathname] ?? notFound, {
+      referer,
+      uri,
+      uriUpdater,
+    });
+  } else {
+    return null;
+  }
 };
