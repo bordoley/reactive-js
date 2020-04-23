@@ -3,12 +3,13 @@ import {
   disposed,
   DisposableLike,
 } from "@reactive-js/disposable";
+import { Option } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
 import {
+  AbstractHostScheduler,
   SchedulerLike,
   schedule,
   createVirtualTimeScheduler,
-  scheduleCallback,
 } from "@reactive-js/scheduler";
 import { AbstractSubscriber } from "../src/internal/subscriber";
 import {
@@ -43,6 +44,7 @@ import {
   repeat,
   scan,
   scanAsync,
+  ScanAsyncMode,
   share,
   subscribe,
   switchAll,
@@ -61,7 +63,6 @@ import {
   withLatestFrom,
   zip,
 } from "../src/index";
-import { ScanAsyncMode } from "../src/internal/scanAsync";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   notify = jest.fn();
@@ -76,16 +77,19 @@ const callbackAndDispose = (
 };
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
-class PromiseTestScheduler implements SchedulerLike {
-  inContinuation = false;
-  readonly schedule = schedule;
-  readonly shouldYield = (): boolean => false;
-
+class PromiseTestScheduler extends AbstractHostScheduler {
   get now(): number {
     return Date.now();
   }
 
-  scheduleCallback(callback: () => void, _ = 0): DisposableLike {
+  scheduleDelayed (
+    callback: (shouldYield: Option<() => boolean>) => void,
+    delay: number,
+  ): DisposableLike {
+    return disposed;
+  }
+
+  scheduleImmediate(callback: (shouldYield: Option<() => boolean>) => void): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(callbackAndDispose, callback, disposable);
     return disposable;

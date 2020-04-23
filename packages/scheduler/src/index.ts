@@ -4,7 +4,7 @@ export {
   SchedulerLike,
   VirtualTimeSchedulerLike,
   PrioritySchedulerLike,
-  CallbackSchedulerLike,
+  CallbackContinuation,
 } from "./internal/interfaces";
 
 export { AbstractSchedulerContinuation } from "./internal/abstractSchedulerContinuation";
@@ -12,7 +12,7 @@ export {
   toPriorityScheduler,
   toPausableScheduler,
 } from "./internal/priorityScheduler";
-export { scheduleCallback } from "./internal/scheduleCallback";
+export { schedule } from "./internal/scheduleCallback";
 export { toSchedulerWithPriority } from "./internal/schedulerWithPriority";
-export { schedule } from "./internal/schedulerMixin";
+export { AbstractHostScheduler } from "./internal/abstractHostScheduler";
 export { createVirtualTimeScheduler } from "./internal/virtualTimeScheduler";

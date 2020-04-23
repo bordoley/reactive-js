@@ -1,8 +1,9 @@
 import {
-  scheduleCallback,
   SchedulerContinuationLike,
+  schedule,
 } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
+import { pipe } from "@reactive-js/pipe";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
@@ -18,7 +19,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
     if (schedulerContinuation instanceof Function) {
       // Note: no need to add the returned disposable, since
       // subscriber already adds any callbacks scheduled on it.
-      scheduleCallback(subscriber, schedulerContinuation, this.delay);
+      pipe(subscriber, schedule(schedulerContinuation, this.delay));
     } else {
       subscriber.schedule(schedulerContinuation, this.delay);
     }
