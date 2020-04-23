@@ -14,30 +14,22 @@ export type Parser<T> = {
 };
 
 class CharStreamImpl implements EnumeratorLike<void, CharCode> {
-  private _index = -1;
+  index = -1;
 
   current = -1;
   hasCurrent = false;
 
   constructor(readonly src: string) {}
 
-  get index() {
-    return this._index;
-  }
-
-  set index(index: number) {
-    this._index = index;
-  }
-
   move(_: void): boolean {
     this.hasCurrent = false;
     this.current = -1;
 
-    this._index++;
-    const index = this._index;
+    this.index++;
+    const index = this.index;
     const src = this.src;
 
-    if (this._index < src.length) {
+    if (this.index < src.length) {
       this.hasCurrent = true;
       this.current = src.charCodeAt(index);
     }
