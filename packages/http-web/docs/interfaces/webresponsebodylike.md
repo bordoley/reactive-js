@@ -1,4 +1,4 @@
-[@reactive-js/http-web - v0.0.35](../README.md) › [WebResponseBodyLike](webresponsebodylike.md)
+[@reactive-js/http-web - v0.0.37](../README.md) › [WebResponseBodyLike](webresponsebodylike.md)
 
 # Interface: WebResponseBodyLike
 

@@ -1,5 +1,5 @@
 
-# @reactive-js/collections - v0.0.35
+# @reactive-js/collections - v0.0.37
 
 ## Index
 

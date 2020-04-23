@@ -1,4 +1,4 @@
-[@reactive-js/async-enumerable - v0.0.35](../README.md) › [StreamEventType](streameventtype.md)
+[@reactive-js/async-enumerable - v0.0.37](../README.md) › [StreamEventType](streameventtype.md)
 
 # Enumeration: StreamEventType
 

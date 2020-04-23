@@ -1,4 +1,4 @@
-[@reactive-js/enumerable - v0.0.35](../README.md) › [EnumeratorLike](enumeratorlike.md)
+[@reactive-js/enumerable - v0.0.37](../README.md) › [EnumeratorLike](enumeratorlike.md)
 
 # Interface: EnumeratorLike <**TReq, T**>
 

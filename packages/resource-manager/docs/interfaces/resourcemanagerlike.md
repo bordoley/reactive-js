@@ -1,4 +1,4 @@
-[@reactive-js/resource-manager - v0.0.35](../README.md) › [ResourceManagerLike](resourcemanagerlike.md)
+[@reactive-js/resource-manager - v0.0.37](../README.md) › [ResourceManagerLike](resourcemanagerlike.md)
 
 # Interface: ResourceManagerLike <**TResource**>
 
