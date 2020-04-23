@@ -1,0 +1,69 @@
+{
+  "name": "@reactive-js/core",
+  "version": "0.0.37",
+  "keywords": [
+    "asynchronous",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "observable",
+    "observables",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams",
+    "web"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "jest": "^24.9.0",
+    "renamer": "^2.0.0",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "build": "yarn build-cjs && yarn build-esm && yarn make-dist && yarn dist-js && yarn dist-ts && yarn docs",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm": "tsc -p tsconfig.esm.json",
+    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js && renamer --find \".js\" --replace \".mjs\" ./dist/js/** ./dist/js/**/**/** && cp -r ./build/cjs/ ./dist/js",
+    "dist-ts": "rm -rf ./dist/ts && cp -r ./src/ ./dist/ts && renamer --find \".ts\" --replace \"\" ./dist/ts/** ./dist/ts/**/**/**",
+    "clean": "rm -rf build && rm -rf dist && rm -rf docs",
+    "docs": "node ./scripts/docs.mjs",
+    "make-dist": "mkdir -p ./dist",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.esm.json"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

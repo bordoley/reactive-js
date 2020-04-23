@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["DOM"],
+    "module": "ES2015",
+    "outDir": "./dist/esm",
+    "rootDir": "./src"
+  },
+  "exclude": ["./dist/cjs", "./dist/esm", "./dist/mjs", "./dist/ts", "./test", "./ts"]
+}

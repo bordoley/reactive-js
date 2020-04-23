@@ -2,54 +2,37 @@
   "name": "@reactive-js/example",
   "version": "0.0.37",
   "private": true,
-  "keywords": [
-    "asynchronous",
-    "data flow",
-    "data-flow",
-    "frp",
-    "functional programming",
-    "functional-reactive-programming",
-    "ix",
-    "observable",
-    "observables",
-    "react",
-    "reactjs",
-    "reactive",
-    "reactive-extensions",
-    "reactive-js",
-    "reactive-x",
-    "rx",
-    "rxjs",
-    "scheduler",
-    "state management",
-    "state-management",
-    "stream",
-    "streams"
-  ],
-  "author": {
-    "name": "David Bordoley",
-    "email": "bordoley@gmail.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bordoley/reactive-js.git"
-  },
   "dependencies": {
-    "@reactive-js/http": "^0.0.37",
-    "@reactive-js/http-node": "^0.0.37",
-    "@reactive-js/http-router": "^0.0.37",
+    "@reactive-js/core": "^0.0.37",
     "@reactive-js/node": "^0.0.37",
-    "@reactive-js/observable": "^0.0.37",
-    "@reactive-js/option": "^0.0.37",
-    "@reactive-js/pipe": "^0.0.37",
-    "@reactive-js/scheduler": "^0.0.37",
-    "mime-types": "^2.1.26"
+    "@reactive-js/react": "^0.0.37",
+    "@reactive-js/web": "^0.0.37",
+    "mime-types": "^2.1.26",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
   },
   "devDependencies": {
-    "@types/mime-types": "^2.1.0"
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-replace": "^2.2.1",
+    "@types/jest": "^24.0.23",
+    "@types/mime-types": "^2.1.0",
+    "@types/node":"13.13.2",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "jest": "^24.9.0",
+    "renamer": "^2.0.0",
+    "rollup": "^1.27.4",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "yarn build-cjs && yarn build-esm && yarn build-mjs && yarn rollup",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-esm": "tsc -p tsconfig.esm.json",
+    "build-mjs": "rm -rf ./dist/mjs && cp -r ./dist/esm ./dist/mjs && renamer --find \".js\" --replace \".mjs\" ./dist/mjs/** ./dist/mjs/**/**/** && cp  -r ./dist/cjs/ ./dist/mjs",
+    "clean": "rm -rf dist",
+    "rollup": "rollup -c",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
   }
 }

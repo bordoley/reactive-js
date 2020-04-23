@@ -1,0 +1,4 @@
+dist/cjs
+dist/esm
+dist/mjs
+dist/rollup
