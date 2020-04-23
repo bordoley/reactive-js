@@ -57,7 +57,6 @@ export interface VirtualTimeSchedulerLike
     SchedulerLike,
     SchedulerContinuationLike {}
 
-/** @ignore */
 export interface PausableSchedulerLike extends SchedulerLike {
   pause(): void;
   resume(): void;
