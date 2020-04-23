@@ -144,7 +144,7 @@ export interface SerialDisposableLike extends DisposableLike {
 }
 
 /** @noInheritDoc */
-export class AbstractSerialDisposable extends AbstractDisposable
+export abstract class AbstractSerialDisposable extends AbstractDisposable
   implements SerialDisposableLike {
   private _inner: DisposableLike = disposed;
 
