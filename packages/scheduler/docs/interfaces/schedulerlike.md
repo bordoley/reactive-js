@@ -12,7 +12,9 @@ An object that schedules units of work on a runloop.
 
   ↳ [PausableSchedulerLike](pausableschedulerlike.md)
 
-  ↳ [CallbackSchedulerLike](callbackschedulerlike.md)
+## Implemented by
+
+* [AbstractHostScheduler](../classes/abstracthostscheduler.md)
 
 ## Index
 

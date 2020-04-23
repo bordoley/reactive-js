@@ -2,8 +2,7 @@ import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { Option, isSome } from "@reactive-js/option";
 import {
   SchedulerLike,
-  schedule,
-  CallbackSchedulerLike,
+  AbstractHostScheduler,
 } from "@reactive-js/scheduler";
 
 const performance = window.performance;
@@ -28,36 +27,6 @@ const callCallbackAndDispose = (
   disposable.dispose();
 };
 
-const scheduleImmediate = (
-  callback: (shouldYield: Option<() => boolean>) => void,
-): DisposableLike => {
-  const disposable = createDisposable();
-
-  channel.port1.onmessage = () => {
-    if (!disposable.isDisposed) {
-      startTime = now();
-      callback(shouldYield);
-      disposable.dispose();
-    }
-  };
-  channel.port2.postMessage(null);
-  return disposable;
-};
-
-const scheduleDelayed = (
-  callback: (shouldYield: Option<() => boolean>) => void,
-  delay: number,
-): DisposableLike => {
-  const disposable = createDisposable(() => clearTimeout(timeout));
-  const timeout = setTimeout(
-    callCallbackAndDispose,
-    delay,
-    callback,
-    disposable,
-  );
-  return disposable;
-};
-
 const shouldYield =
   isSome(navigator) &&
   isSome((navigator as any).scheduling) &&
@@ -77,24 +46,50 @@ const shouldYield =
 
 const channel = new MessageChannel();
 
-const schedulerImpl: CallbackSchedulerLike = {
-  inContinuation: false,
-  get now() {
-    return now();
-  },
-  schedule,
-  scheduleCallback(
+class WebScheduler extends AbstractHostScheduler {
+  get now(): number {
+    const hr = process.hrtime();
+    return hr[0] * 1000 + hr[1] / 1e6;
+  }
+
+  scheduleImmediate(
+    callback: (shouldYield: Option<() => boolean>) => void,
+  ): DisposableLike {
+    const disposable = createDisposable();
+  
+    channel.port1.onmessage = () => {
+      if (!disposable.isDisposed) {
+        startTime = now();
+        callback(shouldYield);
+        disposable.dispose();
+      }
+    };
+    channel.port2.postMessage(null);
+    return disposable;
+  };
+  
+  scheduleDelayed(
     callback: (shouldYield: Option<() => boolean>) => void,
     delay: number,
   ): DisposableLike {
-    // setTimeout has a floor of 4ms so for lesser delays
-    // just schedule immediately.
-    return delay >= 4
-      ? scheduleDelayed(callback, delay)
-      : scheduleImmediate(callback);
-  },
-};
+    if (delay >= 4) {
+      // setTimeout has a floor of 4ms so for lesser delays
+      // just schedule immediately.
+      return this.scheduleImmediate(callback);
+    } else {
+      const disposable = createDisposable(() => clearTimeout(timeout));
+      const timeout = setTimeout(
+        callCallbackAndDispose,
+        delay,
+        callback,
+        disposable,
+      );
+      return disposable;
+    }
+  };
+}
 
-let startTime = now();
+const schedulerImpl = new WebScheduler();
+let startTime = schedulerImpl.now;
 
 export const scheduler: SchedulerLike = schedulerImpl;

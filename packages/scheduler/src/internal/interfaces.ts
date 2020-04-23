@@ -1,5 +1,4 @@
 import { DisposableLike } from "@reactive-js/disposable";
-import { Option } from "@reactive-js/option";
 
 export interface SchedulerContinuationRunStatusChangedListenerLike {
   onRunStatusChanged(state: boolean): void;
@@ -90,23 +89,5 @@ export interface PrioritySchedulerLike {
   ): void;
 }
 
-/**
- * Interface used by Scheduler implementations using the 'schedulerMixin' functions
- *
- * @noInheritDoc
- */
-export interface CallbackSchedulerLike extends SchedulerLike {
-  inContinuation: boolean;
-
-  /**
-   * Schedules a callback with the specified delay to be executed in the future.
-   *
-   * @param callback The callback function to be executed.
-   * @param delay An optional delay in ms that the scheduler should wait
-   * before invoking the callback function.
-   */
-  scheduleCallback(
-    callback: (shouldYield: Option<() => boolean>) => void,
-    delay: number,
-  ): DisposableLike;
-}
+export type CallbackContinuation = 
+  (shouldYield?: () => boolean) => CallbackContinuation | void;

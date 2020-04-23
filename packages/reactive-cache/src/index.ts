@@ -19,7 +19,7 @@ import { pipe } from "@reactive-js/pipe";
 import {
   SchedulerLike,
   AbstractSchedulerContinuation,
-  scheduleCallback,
+  schedule,
 } from "@reactive-js/scheduler";
 
 const alwaysFalse = () => false;
@@ -147,11 +147,14 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
 
       const onDisposeCleanup = (_?: Exception) =>
         this.add(
-          scheduleCallback(this.cleanupScheduler, () => {
-            if (enumerator.subscriberCount === 0) {
-              markAsGarbage(this, key, enumerator);
-            }
-          }),
+          pipe(
+            this.cleanupScheduler, 
+            schedule(() => {
+              if (enumerator.subscriberCount === 0) {
+                markAsGarbage(this, key, enumerator);
+              }
+            }),
+          ),
         );
 
       const observable = pipe(

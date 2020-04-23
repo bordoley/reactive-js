@@ -6,11 +6,11 @@
 
 ### Classes
 
+* [AbstractHostScheduler](classes/abstracthostscheduler.md)
 * [AbstractSchedulerContinuation](classes/abstractschedulercontinuation.md)
 
 ### Interfaces
 
-* [CallbackSchedulerLike](interfaces/callbackschedulerlike.md)
 * [PausableSchedulerLike](interfaces/pausableschedulerlike.md)
 * [PrioritySchedulerLike](interfaces/priorityschedulerlike.md)
 * [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md)
@@ -18,14 +18,33 @@
 * [SchedulerLike](interfaces/schedulerlike.md)
 * [VirtualTimeSchedulerLike](interfaces/virtualtimeschedulerlike.md)
 
+### Type aliases
+
+* [CallbackContinuation](README.md#callbackcontinuation)
+
 ### Functions
 
 * [createVirtualTimeScheduler](README.md#const-createvirtualtimescheduler)
-* [schedule](README.md#schedule)
-* [scheduleCallback](README.md#const-schedulecallback)
+* [schedule](README.md#const-schedule)
 * [toPausableScheduler](README.md#const-topausablescheduler)
 * [toPriorityScheduler](README.md#const-topriorityscheduler)
 * [toSchedulerWithPriority](README.md#const-toschedulerwithpriority)
+
+## Type aliases
+
+###  CallbackContinuation
+
+Ƭ **CallbackContinuation**: *function*
+
+#### Type declaration:
+
+▸ (`shouldYield?`: undefined | function): *[CallbackContinuation](README.md#callbackcontinuation) | void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`shouldYield?` | undefined &#124; function |
 
 ## Functions
 
@@ -45,39 +64,18 @@ Name | Type | Default | Description |
 
 ___
 
-###  schedule
+### `Const` schedule
 
-▸ **schedule**(`this`: [CallbackSchedulerLike](interfaces/callbackschedulerlike.md), `continuation`: [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md), `delay`: number): *void*
-
-Mixin functions that can be used to implement the SchedulerLike interface
+▸ **schedule**(`callback`: [CallbackContinuation](README.md#callbackcontinuation), `delay`: number): *(Anonymous function)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`this` | [CallbackSchedulerLike](interfaces/callbackschedulerlike.md) | - |
-`continuation` | [SchedulerContinuationLike](interfaces/schedulercontinuationlike.md) | - |
+`callback` | [CallbackContinuation](README.md#callbackcontinuation) | - |
 `delay` | number | 0 |
 
-**Returns:** *void*
-
-___
-
-### `Const` scheduleCallback
-
-▸ **scheduleCallback**(`scheduler`: [SchedulerLike](interfaces/schedulerlike.md), `callback`: function, `delay`: number): *DisposableLike*
-
-**Parameters:**
-
-▪ **scheduler**: *[SchedulerLike](interfaces/schedulerlike.md)*
-
-▪ **callback**: *function*
-
-▸ (): *void*
-
-▪`Default value`  **delay**: *number*= 0
-
-**Returns:** *DisposableLike*
+**Returns:** *(Anonymous function)*
 
 ___
 
