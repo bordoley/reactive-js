@@ -4,7 +4,7 @@ import { Operator, compose, pipe } from "@reactive-js/pipe";
 
 export type CharCode = number;
 
-export interface CharStreamLike extends EnumeratorLike<void, CharCode> {
+export interface CharStreamLike extends EnumeratorLike<CharCode> {
   index: number;
   readonly src: string;
 }
@@ -13,7 +13,7 @@ export type Parser<T> = {
   (input: CharStreamLike): T;
 };
 
-class CharStreamImpl implements EnumeratorLike<void, CharCode> {
+class CharStreamImpl implements EnumeratorLike<CharCode> {
   index = -1;
 
   current = -1;
@@ -21,7 +21,7 @@ class CharStreamImpl implements EnumeratorLike<void, CharCode> {
 
   constructor(readonly src: string) {}
 
-  move(_: void): boolean {
+  move(): boolean {
     this.hasCurrent = false;
     this.current = -1;
 

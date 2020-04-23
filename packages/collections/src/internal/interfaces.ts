@@ -3,7 +3,7 @@ import { Option } from "@reactive-js/option";
 
 export interface KeyedQueueLike<K, V> {
   readonly count: number;
-  readonly values: EnumerableLike<void, V>;
+  readonly values: EnumerableLike<V>;
 
   clear(): void;
   peek(key: K): Option<V>;
@@ -22,7 +22,7 @@ export interface QueueLike<T> {
 
 export interface SetMultimapLike<K, V> {
   readonly count: number;
-  readonly values: EnumerableLike<void, V>;
+  readonly values: EnumerableLike<V>;
 
   add(key: K, value: V): void;
   clear(): void;

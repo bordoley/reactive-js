@@ -21,7 +21,7 @@
 
 ### `Const` first
 
-▸ **first**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›): *Option‹T›*
+▸ **first**<**T**>(`enumerable`: [EnumerableLike](interfaces/enumerablelike.md)‹T›): *Option‹T›*
 
 **Type parameters:**
 
@@ -31,7 +31,7 @@
 
 Name | Type |
 ------ | ------ |
-`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› |
+`enumerable` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
 
 **Returns:** *Option‹T›*
 
@@ -39,7 +39,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`f`: function): *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹void, T›, void›*
+▸ **forEach**<**T**>(`f`: function): *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, void›*
 
 **Type parameters:**
 
@@ -57,13 +57,13 @@ Name | Type |
 ------ | ------ |
 `v` | T |
 
-**Returns:** *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹void, T›, void›*
+**Returns:** *Operator‹[EnumerableLike](interfaces/enumerablelike.md)‹T›, void›*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
+▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -75,13 +75,13 @@ Name | Type |
 ------ | ------ |
 `iterable` | Iterable‹T› |
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: function): *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -97,13 +97,13 @@ ___
 
 ▸ (): *Iterator‹T, TReturn, TNext›*
 
-**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹void, T›*
+**Returns:** *[EnumerableLike](interfaces/enumerablelike.md)‹T›*
 
 ___
 
 ### `Const` toIterable
 
-▸ **toIterable**<**T**>(`source`: [EnumerableLike](interfaces/enumerablelike.md)‹void, T›): *Iterable‹T›*
+▸ **toIterable**<**T**>(`source`: [EnumerableLike](interfaces/enumerablelike.md)‹T›): *Iterable‹T›*
 
 Converts an `EnumerableLike` into an `Iterable`.
 
@@ -115,6 +115,6 @@ Converts an `EnumerableLike` into an `Iterable`.
 
 Name | Type |
 ------ | ------ |
-`source` | [EnumerableLike](interfaces/enumerablelike.md)‹void, T› |
+`source` | [EnumerableLike](interfaces/enumerablelike.md)‹T› |
 
 **Returns:** *Iterable‹T›*

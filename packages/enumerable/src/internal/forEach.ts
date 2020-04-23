@@ -4,7 +4,7 @@ import { EnumerableLike } from "./interfaces";
 
 export const forEach = <T>(
   f: (v: T) => void,
-): Operator<EnumerableLike<void, T>, void> => enumerable => {
+): Operator<EnumerableLike<T>, void> => enumerable => {
   const enumerator = enumerable.enumerate();
   try {
     while (enumerator.move()) {
