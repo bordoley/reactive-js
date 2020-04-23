@@ -55,7 +55,6 @@ export function fromEnumerable<T>(
 ): ObservableLike<T> {
   const factory = (subscriber: SubscriberLike<T>) => {
     const enumerator = enumerable.enumerate();
-    subscriber.add(enumerator);
     return new FromEnumeratorProducer(subscriber, enumerator, delay);
   };
 

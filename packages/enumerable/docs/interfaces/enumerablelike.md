@@ -20,8 +20,8 @@
 
 ###  enumerate
 
-▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹T› & DisposableLike*
+▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹T›*
 
 Returns an `EnumeratorLike` to iterate through the source.
 
-**Returns:** *[EnumeratorLike](enumeratorlike.md)‹T› & DisposableLike*
+**Returns:** *[EnumeratorLike](enumeratorlike.md)‹T›*

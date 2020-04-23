@@ -6,12 +6,7 @@ export const forEach = <T>(
   f: (v: T) => void,
 ): Operator<EnumerableLike<T>, void> => enumerable => {
   const enumerator = enumerable.enumerate();
-  try {
-    while (enumerator.move()) {
-      f(enumerator.current);
-    }
-    enumerator.dispose();
-  } catch (e) {
-    enumerator.dispose(e);
+  while (enumerator.move()) {
+    f(enumerator.current);
   }
 };

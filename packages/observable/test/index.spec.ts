@@ -560,25 +560,6 @@ describe("fromIterable", () => {
     expect(observer.onNotify).toHaveBeenNthCalledWith(5, [15, 5]);
     expect(observer.onNotify).toHaveBeenNthCalledWith(6, [18, 6]);
   });
-
-  test("calls iterator.return when disposed", () => {
-    const iterator = {
-      next: jest.fn(),
-      return: jest.fn(),
-      throw: jest.fn(),
-    };
-    const mockIterable = {
-      [Symbol.iterator](): Iterator<unknown> {
-        return iterator;
-      },
-    };
-
-    const scheduler = createVirtualTimeScheduler(1);
-    const subscription = subscribe(scheduler)(fromIterable(mockIterable));
-    subscription.dispose();
-
-    expect(mockIterable[Symbol.iterator]().return).toHaveBeenCalledTimes(1);
-  });
 });
 
 describe("fromPromise", () => {

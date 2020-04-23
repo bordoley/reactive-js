@@ -1,5 +1,3 @@
-import { DisposableLike } from "@reactive-js/disposable";
-
 /**
  *
  * @noInheritDoc
@@ -27,5 +25,12 @@ export interface EnumerableLike<T> {
   /**
    * Returns an `EnumeratorLike` to iterate through the source.
    */
-  enumerate(): EnumeratorLike<T> & DisposableLike;
+  enumerate(): EnumeratorLike<T>;
 }
+
+export type EnumeratorOperator<TA, TB> = 
+  (a: EnumeratorLike<TA>) => EnumeratorLike<TB>
+
+
+export type EnumerableOperator<TA, TB> = 
+  (a: EnumerableLike<TA>) => EnumerableLike<TB>
