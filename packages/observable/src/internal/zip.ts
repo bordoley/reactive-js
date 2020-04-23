@@ -1,5 +1,5 @@
 import { DisposableLike, AbstractDisposable } from "@reactive-js/disposable";
-import { EnumeratorLike, EnumerableLike } from "@reactive-js/enumerable";
+import { EnumeratorLike } from "@reactive-js/enumerable";
 import { none, isSome, isNone } from "@reactive-js/option";
 import { SchedulerContinuationLike } from "@reactive-js/scheduler";
 import { alwaysTrue } from "./functions";
@@ -67,19 +67,11 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
   }
 }
 
-class ObservableEnumerableImpl<T> implements EnumerableLike<T> {
-  constructor(private readonly obs: ObservableLike<T>) {}
-
-  enumerate(): EnumeratorLike<T> & DisposableLike {
-    const subscriber = new EnumeratorSubscriber<T>();
-    this.obs.subscribe(subscriber);
-    return subscriber;
-  }
+const subscribeInteractive = <T>(obs: ObservableLike<T>): EnumeratorLike<T> & DisposableLike=> {
+  const subscriber = new EnumeratorSubscriber<T>();
+  obs.subscribe(subscriber);
+  return subscriber;
 }
-
-export const toEnumerable = <T>(
-  observable: ObservableLike<T>,
-): EnumerableLike<T> => new ObservableEnumerableImpl(observable);
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -238,7 +230,7 @@ class ZipObservable<T> implements ObservableLike<T> {
     const count = observables.length;
 
     if (this.isSynchronous) {
-      const enumerators = observables.map(obs => toEnumerable(obs).enumerate());
+      const enumerators = observables.map(obs => subscribeInteractive(obs));
       for (const enumerator of enumerators) {
         enumerator.move();
       }
@@ -252,7 +244,7 @@ class ZipObservable<T> implements ObservableLike<T> {
         const observable = observables[index];
 
         if (observable.isSynchronous) {
-          const enumerator = toEnumerable(observable).enumerate();
+          const enumerator = subscribeInteractive(observable);
 
           enumerator.move();
           enumerators.push(enumerator);

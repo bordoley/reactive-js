@@ -38,7 +38,6 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/disposable": "^0.0.37",
     "@reactive-js/option": "^0.0.37",
     "@reactive-js/pipe": "^0.0.37"
   },

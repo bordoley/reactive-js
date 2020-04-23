@@ -5,12 +5,8 @@ class EnumerableIterable<T> implements Iterable<T> {
 
   *[Symbol.iterator]() {
     const enumerator = this.enumerable.enumerate();
-    try {
-      while (enumerator.move()) {
-        yield enumerator.current;
-      }
-    } finally {
-      enumerator.dispose();
+    while (enumerator.move()) {
+      yield enumerator.current;
     }
   }
 }
