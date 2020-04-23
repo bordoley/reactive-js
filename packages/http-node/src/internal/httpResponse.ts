@@ -21,8 +21,7 @@ export const decodeHttpResponse = (
 ): Operator<
   HttpResponse<BufferStreamLike>,
   HttpResponse<BufferStreamLike>
-> => response =>
-  decodeHttpMessage(response, options);
+> => response => decodeHttpMessage(response, options);
 
 export type EncodeHttpResponseOptions = {
   readonly shouldEncode?: <T, TResp>(
@@ -77,10 +76,7 @@ export const encodeHttpResponse = <TReq>(
 
 export const encodeCharsetHttpResponse = (
   contentType: string | MediaType,
-): Operator<
-  HttpResponse<string>,
-  HttpResponse<BufferStreamLike>
-> => {
+): Operator<HttpResponse<string>, HttpResponse<BufferStreamLike>> => {
   const messageEncoder = encodeCharsetHttpMessage(contentType);
   return resp => messageEncoder(resp) as HttpResponse<BufferStreamLike>;
-}
+};

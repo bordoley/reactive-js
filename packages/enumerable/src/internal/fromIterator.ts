@@ -52,6 +52,5 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(
   f: () => Iterator<T, TReturn, TNext>,
 ): EnumerableLike<T> => new IteratorEnumerable(f);
 
-export const fromIterable = <T>(
-  iterable: Iterable<T>,
-): EnumerableLike<T> => fromIterator(() => iterable[Symbol.iterator]());
+export const fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
+  fromIterator(() => iterable[Symbol.iterator]());

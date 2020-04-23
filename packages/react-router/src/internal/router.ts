@@ -61,21 +61,24 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
   }, [routes]);
 
   const pairifiedLocation = useMemo(
-    () => pipe(
-      location,
-      lift(
-        scan(
-          pairify, 
-          (): [Option<RelativeURI>, RelativeURI] => [none, empty],
-         )
-      )
-    ),
-    [location]
-  )
+    () =>
+      pipe(
+        location,
+        lift(
+          scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [
+            none,
+            empty,
+          ]),
+        ),
+      ),
+    [location],
+  );
 
-  const [locationState, uriUpdater] = useAsyncEnumerable(pairifiedLocation, { replay: 1 });
+  const [locationState, uriUpdater] = useAsyncEnumerable(pairifiedLocation, {
+    replay: 1,
+  });
 
-  if (isSome(locationState)) { 
+  if (isSome(locationState)) {
     const [referer, uri] = locationState;
     return createElement(routeMap[uri.pathname] ?? notFound, {
       referer,

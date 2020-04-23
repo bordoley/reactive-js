@@ -126,7 +126,9 @@ const findHandler = <TReq, TResp>(
 };
 
 export const createRouter = <TReq, TResp>(
-  routes: { [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>, },
+  routes: {
+    [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
+  },
   notFoundHandler: Operator<
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>

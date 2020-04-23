@@ -111,9 +111,7 @@ export const createHttpRequest = <T>({
   preconditions: isSome(preconditions)
     ? createHttpRequestPreconditions(preconditions)
     : none,
-  preferences: isSome(preferences)
-    ? createHttpPreferences(preferences)
-    : none,
+  preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 
@@ -219,10 +217,7 @@ export const writeHttpRequestHeaders = <T>(
   request: HttpRequest<T>,
   writeHeader: (header: string, value: string) => void,
 ): void => {
-  const {
-    expectContinue,
-    preconditions,
-  } = request;
+  const { expectContinue, preconditions } = request;
 
   if (expectContinue) {
     writeHeader(HttpStandardHeader.Expect, "100-continue");

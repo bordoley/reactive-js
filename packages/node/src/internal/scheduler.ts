@@ -1,9 +1,6 @@
 import { DisposableLike, createDisposable } from "@reactive-js/disposable";
 import { Option } from "@reactive-js/option";
-import {
-  AbstractHostScheduler,
-  SchedulerLike,
-} from "@reactive-js/scheduler";
+import { AbstractHostScheduler, SchedulerLike } from "@reactive-js/scheduler";
 
 let timeout = 1;
 export const setSchedulerTimeout = (newTimeout: number) => {
@@ -29,7 +26,7 @@ class NodeScheduler extends AbstractHostScheduler {
     return hr[0] * 1000 + hr[1] / 1e6;
   }
 
-  scheduleDelayed (
+  scheduleDelayed(
     callback: (shouldYield: Option<() => boolean>) => void,
     delay: number,
   ): DisposableLike {
@@ -41,15 +38,19 @@ class NodeScheduler extends AbstractHostScheduler {
       disposable,
     );
     return disposable;
-  };
-  
-  scheduleImmediate (
+  }
+
+  scheduleImmediate(
     callback: (shouldYield: Option<() => boolean>) => void,
   ): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
-    const immediate = setImmediate(callCallbackAndDispose, callback, disposable);
+    const immediate = setImmediate(
+      callCallbackAndDispose,
+      callback,
+      disposable,
+    );
     return disposable;
-  };
+  }
 }
 
 const schedulerImpl = new NodeScheduler();

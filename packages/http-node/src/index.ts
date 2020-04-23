@@ -10,7 +10,10 @@ export {
   createHttpRequestListener,
 } from "./internal/httpRequestListener";
 
-export { decodeHttpRequest, encodeCharsetHttpRequest } from "./internal/httpRequest";
+export {
+  decodeHttpRequest,
+  encodeCharsetHttpRequest,
+} from "./internal/httpRequest";
 
 export {
   EncodeHttpResponseOptions,

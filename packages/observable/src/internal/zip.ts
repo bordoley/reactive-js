@@ -247,8 +247,7 @@ class ZipObservable<T> implements ObservableLike<T> {
         new ZipProducer(subscriber, enumerators, this.selector),
       );
     } else {
-      const enumerators: (DisposableLike &
-        EnumeratorLike<unknown>)[] = [];
+      const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 

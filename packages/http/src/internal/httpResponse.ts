@@ -101,9 +101,7 @@ export const createHttpResponse = <T>({
       ? lastModified.getTime()
       : lastModified,
   location: typeof location === "string" ? new URL(location) : location,
-  preferences: isSome(preferences)
-    ? createHttpPreferences(preferences)
-    : none,
+  preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
   statusCode,
   vary: vary ?? [],
 });
@@ -153,16 +151,10 @@ export const parseHttpResponseFromHeaders = <T>(
 };
 
 export const writeHttpResponseHeaders = <T>(
-  response : HttpResponse<T>,
+  response: HttpResponse<T>,
   writeHeader: (header: string, value: string) => void,
 ) => {
-  const  {
-    etag,
-    expires,
-    lastModified,
-    location,
-    vary,
-  } = response;
+  const { etag, expires, lastModified, location, vary } = response;
 
   if (isSome(etag)) {
     writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));

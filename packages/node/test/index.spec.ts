@@ -38,14 +38,18 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
+    const dest = createBufferStreamSinkFromWritable(() =>
+      createDisposableStream(writable),
+    );
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
+    const src = createBufferStreamFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableStream),
+    );
 
     await pipe(sink(src, dest), toPromise(scheduler));
     expect(data).toEqual("abcdefg");
@@ -60,14 +64,18 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
+    const dest = createBufferStreamSinkFromWritable(() =>
+      createDisposableStream(writable),
+    );
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
+    const src = createBufferStreamFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableStream),
+    );
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
@@ -80,7 +88,9 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
+    const dest = createBufferStreamSinkFromWritable(() =>
+      createDisposableStream(writable),
+    );
 
     const cause = new Error();
 
@@ -90,7 +100,9 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
+    const src = createBufferStreamFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableStream),
+    );
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
@@ -112,7 +124,9 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
+    const dest = createBufferStreamSinkFromWritable(() =>
+      createDisposableStream(writable),
+    );
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
@@ -120,7 +134,9 @@ describe("streams", () => {
     }
 
     await pipe(
-      createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream)),
+      createBufferStreamFromReadable(() =>
+        pipe(generate(), Readable.from, createDisposableStream),
+      ),
       transform(() => createDisposableStream(createGzip())),
       transform(() => createDisposableStream(createGunzip())),
       src => sink(src, dest),

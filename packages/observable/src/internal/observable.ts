@@ -1,7 +1,4 @@
-import {
-  SchedulerContinuationLike,
-  schedule,
-} from "@reactive-js/scheduler";
+import { SchedulerContinuationLike, schedule } from "@reactive-js/scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
 

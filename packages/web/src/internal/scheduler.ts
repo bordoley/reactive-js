@@ -37,7 +37,6 @@ class WebScheduler extends AbstractHostScheduler {
         }
       : () => now() >= this.startTime + yieldInterval;
 
-
   get now(): number {
     return now();
   }
@@ -46,7 +45,7 @@ class WebScheduler extends AbstractHostScheduler {
     callback: (shouldYield: Option<() => boolean>) => void,
   ): DisposableLike {
     const disposable = createDisposable();
-  
+
     channel.port1.onmessage = () => {
       if (!disposable.isDisposed) {
         this.startTime = this.now;
@@ -56,8 +55,8 @@ class WebScheduler extends AbstractHostScheduler {
     };
     channel.port2.postMessage(null);
     return disposable;
-  };
-  
+  }
+
   scheduleDelayed(
     callback: (shouldYield: Option<() => boolean>) => void,
     delay: number,
@@ -68,17 +67,14 @@ class WebScheduler extends AbstractHostScheduler {
       return this.scheduleImmediate(callback);
     } else {
       const disposable = createDisposable(() => clearTimeout(timeout));
-      const timeout = setTimeout(
-        () => {
-          this.startTime = now();
-          callback(this.shouldYield);
-          disposable.dispose();
-        },
-        delay,
-      );
+      const timeout = setTimeout(() => {
+        this.startTime = now();
+        callback(this.shouldYield);
+        disposable.dispose();
+      }, delay);
       return disposable;
     }
-  };
+  }
 }
 
 export const scheduler = /*@__PURE__*/ new WebScheduler();

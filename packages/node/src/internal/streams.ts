@@ -1,5 +1,8 @@
 import { Readable, Writable, Transform } from "stream";
-import { DisposableValueLike, createDisposableValue } from "@reactive-js/disposable";
+import {
+  DisposableValueLike,
+  createDisposableValue,
+} from "@reactive-js/disposable";
 
 const dispose = (writable: Readable | Writable | Transform) => {
   writable.removeAllListeners();
@@ -13,7 +16,8 @@ const dispose = (writable: Readable | Writable | Transform) => {
   writable.destroy();
 };
 
-export const createDisposableStream = <T extends (Readable | Writable | Transform)>(
+export const createDisposableStream = <
+  T extends Readable | Writable | Transform
+>(
   stream: T,
-): DisposableValueLike<T> => 
-  createDisposableValue<T>(stream, dispose);
+): DisposableValueLike<T> => createDisposableValue<T>(stream, dispose);

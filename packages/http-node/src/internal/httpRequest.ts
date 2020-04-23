@@ -1,6 +1,10 @@
 import db from "mime-db";
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { HttpRequest, httpRequestIsCompressible, MediaType } from "@reactive-js/http";
+import {
+  HttpRequest,
+  httpRequestIsCompressible,
+  MediaType,
+} from "@reactive-js/http";
 import { BufferStreamLike, transform } from "@reactive-js/node";
 import { isSome } from "@reactive-js/option";
 import { Operator, pipe } from "@reactive-js/pipe";
@@ -16,8 +20,7 @@ export const decodeHttpRequest = (
 ): Operator<
   HttpRequest<BufferStreamLike>,
   HttpRequest<BufferStreamLike>
-> => request =>
-  decodeHttpMessage(request, options);
+> => request => decodeHttpMessage(request, options);
 
 export const encodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
@@ -49,10 +52,7 @@ export const encodeHttpRequest = (
 
 export const encodeCharsetHttpRequest = (
   contentType: string | MediaType,
-): Operator<
-  HttpRequest<string>,
-  HttpRequest<BufferStreamLike>
-> => {
+): Operator<HttpRequest<string>, HttpRequest<BufferStreamLike>> => {
   const messageEncoder = encodeCharsetHttpMessage(contentType);
   return req => messageEncoder(req) as HttpRequest<BufferStreamLike>;
-}
+};

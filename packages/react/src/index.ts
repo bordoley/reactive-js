@@ -90,15 +90,16 @@ export const useAsyncEnumerable = <TReq, T>(
   config: {
     scheduler?: SchedulerLike;
     replay?: number;
-    stateScheduler?: SchedulerLike,
-    
+    stateScheduler?: SchedulerLike;
   } = {},
 ): [Option<T>, (req: TReq) => void] => {
   const scheduler = config.scheduler ?? normalPriority;
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const [enumerator, updateEnumerator] = useState<Option<AsyncEnumeratorLike<TReq, T>>>(none);
+  const [enumerator, updateEnumerator] = useState<
+    Option<AsyncEnumeratorLike<TReq, T>>
+  >(none);
   const enumeratorRef = useRef<Option<AsyncEnumeratorLike<TReq, T>>>(none);
 
   useEffect(() => {
@@ -113,13 +114,16 @@ export const useAsyncEnumerable = <TReq, T>(
     };
   }, [enumerable, scheduler, replay, updateEnumerator]);
 
-  const notify = useCallback(req => {
-    const enumerator = enumeratorRef.current;
-    if (isSome(enumerator)) {
-      enumerator.dispatch(req);
-    }
-  }, [enumeratorRef]);
-  
+  const notify = useCallback(
+    req => {
+      const enumerator = enumeratorRef.current;
+      if (isSome(enumerator)) {
+        enumerator.dispatch(req);
+      }
+    },
+    [enumeratorRef],
+  );
+
   const value = useObservable(enumerator ?? never<T>(), stateScheduler);
   return [value, notify];
-} 
+};
