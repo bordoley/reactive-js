@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AsyncEnumeratorLike,
   AsyncEnumerableLike,
 } from "@reactive-js/async-enumerable";
-
-import { DisposableLike, Exception } from "@reactive-js/disposable";
+import { Exception } from "@reactive-js/disposable";
 import {
   ObservableLike,
   observe,
@@ -12,6 +11,7 @@ import {
   subscribe,
   subscribeOn,
   throttle,
+  never,
 } from "@reactive-js/observable";
 import { none, Option, isSome } from "@reactive-js/option";
 import { pipe } from "@reactive-js/pipe";
@@ -85,54 +85,41 @@ export const useObservable = <T>(
   return state;
 };
 
-/**
- *
- * @param enumerator
- * @param scheduler
- */
-export const useAsyncEnumerator = <TReq, T>(
-  enumerator: AsyncEnumeratorLike<TReq, T>,
-  scheduler?: SchedulerLike,
-): [Option<T>, (req: TReq) => void] => {
-  const notify = useCallback(req => enumerator.dispatch(req), [enumerator]);
-  const value = useObservable(enumerator, scheduler);
-  return [value, notify];
-};
-
-const useResource = <T extends DisposableLike>(factory: () => T): Option<T> => {
-  const [resource, updateResource] = useState<Option<T>>(none);
-
-  useEffect(() => {
-    const resource = factory();
-    updateResource(_ => resource);
-
-    return () => {
-      resource.dispose();
-    };
-  }, [factory, updateResource]);
-
-  return resource;
-};
-
-/**
- *
- * @param enumerable
- * @param config
- */
 export const useAsyncEnumerable = <TReq, T>(
   enumerable: AsyncEnumerableLike<TReq, T>,
   config: {
     scheduler?: SchedulerLike;
     replay?: number;
+    stateScheduler?: SchedulerLike,
+    
   } = {},
-): Option<AsyncEnumeratorLike<TReq, T>> => {
+): [Option<T>, (req: TReq) => void] => {
   const scheduler = config.scheduler ?? normalPriority;
+  const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const factory = useCallback(
-    () => enumerable.enumerateAsync(scheduler, replay),
-    [enumerable, scheduler, replay],
-  );
+  const [enumerator, updateEnumerator] = useState<Option<AsyncEnumeratorLike<TReq, T>>>(none);
+  const enumeratorRef = useRef<Option<AsyncEnumeratorLike<TReq, T>>>(none);
 
-  return useResource<AsyncEnumeratorLike<TReq, T>>(factory);
-};
+  useEffect(() => {
+    const enumerator = enumerable.enumerateAsync(scheduler, replay);
+    enumeratorRef.current = enumerator;
+
+    updateEnumerator(_ => enumerator);
+
+    return () => {
+      enumeratorRef.current = undefined;
+      enumerator.dispose();
+    };
+  }, [enumerable, scheduler, replay, updateEnumerator]);
+
+  const notify = useCallback(req => {
+    const enumerator = enumeratorRef.current;
+    if (isSome(enumerator)) {
+      enumerator.dispatch(req);
+    }
+  }, [enumeratorRef]);
+  
+  const value = useObservable(enumerator ?? never<T>(), stateScheduler);
+  return [value, notify];
+} 
