@@ -12,6 +12,7 @@ import {
   HttpHeaders,
   parseHttpRequestFromHeaders,
   HttpResponse,
+  HttpServerRequest,
 } from "@reactive-js/http";
 import { HttpServer } from "@reactive-js/http-common";
 import {
@@ -145,7 +146,7 @@ export type HttpRequestListener = (
 ) => void;
 
 export const createHttpRequestListener = (
-  handler: HttpServer<BufferStreamLike, BufferStreamLike>,
+  handler: HttpServer<HttpServerRequest<BufferStreamLike>, HttpResponse<BufferStreamLike>>,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
 ): HttpRequestListener => {

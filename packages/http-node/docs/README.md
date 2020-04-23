@@ -90,13 +90,13 @@ ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: HttpServer‹BufferStreamLike, BufferStreamLike›, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *[HttpRequestListener](README.md#httprequestlistener)*
+▸ **createHttpRequestListener**(`handler`: HttpServer‹HttpServerRequest‹BufferStreamLike›, HttpResponse‹BufferStreamLike››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](README.md#httprequestlisteneroptions)): *[HttpRequestListener](README.md#httprequestlistener)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | HttpServer‹BufferStreamLike, BufferStreamLike› | - |
+`handler` | HttpServer‹HttpServerRequest‹BufferStreamLike›, HttpResponse‹BufferStreamLike›› | - |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](README.md#httprequestlisteneroptions) |  {} |
 

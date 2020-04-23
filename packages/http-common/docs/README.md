@@ -80,10 +80,10 @@ ___
 
 #### Type declaration:
 
-▸ (`req`: HttpServerRequest‹TReq›): *ObservableLike‹HttpResponse‹TResp››*
+▸ (`req`: THttpRequest): *ObservableLike‹THttpResponse›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`req` | HttpServerRequest‹TReq› |
+`req` | THttpRequest |

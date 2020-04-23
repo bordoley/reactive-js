@@ -36,7 +36,7 @@ ___
 
 ### `Const` scheduler
 
-• **scheduler**: *SchedulerLike* =  schedulerImpl
+• **scheduler**: *WebScheduler‹›* =  /*@__PURE__*/ new WebScheduler()
 
 ## Functions
 

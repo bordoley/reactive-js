@@ -2,20 +2,16 @@ import { HttpRequest, HttpResponse } from "@reactive-js/http";
 import { ObservableLike } from "@reactive-js/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/option";
 import { Operator } from "@reactive-js/pipe";
+import { HttpServer } from "@reactive-js/http-common";
 
 export type HttpRoutedRequest<T> = HttpRequest<T> & {
   readonly params: { readonly [param: string]: string };
 };
 
-export type HttpRequestRouterHandler<TReq, TResp> = Operator<
-  HttpRoutedRequest<TReq>,
-  ObservableLike<HttpResponse<TResp>>
->;
-
 // Prefix tree
 type Router<TReq, TResp> = {
   readonly name: string;
-  readonly handler?: HttpRequestRouterHandler<TReq, TResp>;
+  readonly handler?: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
   readonly children: { [segment: string]: Router<TReq, TResp> };
 };
 
@@ -54,7 +50,7 @@ const emptyRouter: Router<unknown, unknown> = {
 const addHandler = <TReq, TResp>(
   router: Router<TReq, TResp>,
   { name, child }: Segment,
-  handler: HttpRequestRouterHandler<TReq, TResp>,
+  handler: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>,
 ): Router<TReq, TResp> => {
   if (isNone(child)) {
     return {
@@ -84,7 +80,7 @@ const findHandler = <TReq, TResp>(
   segment: Segment,
   params: { [param: string]: string },
 ): Option<[
-  HttpRequestRouterHandler<TReq, TResp>,
+  HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>,
   { [param: string]: string },
 ]> => {
   const { child } = segment;
@@ -130,7 +126,7 @@ const findHandler = <TReq, TResp>(
 };
 
 export const createRouter = <TReq, TResp>(
-  routes: { [path: string]: HttpRequestRouterHandler<TReq, TResp> },
+  routes: { [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>, },
   notFoundHandler: Operator<
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>
