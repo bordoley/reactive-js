@@ -7,7 +7,9 @@
 
 ## Hierarchy
 
-* **QueueLike**
+  ↳ [Collection](collection.md)‹T›
+
+  ↳ **QueueLike**
 
 ## Index
 
@@ -18,6 +20,7 @@
 ### Methods
 
 * [clear](queuelike.md#clear)
+* [enumerate](queuelike.md#enumerate)
 * [peek](queuelike.md#peek)
 * [pop](queuelike.md#pop)
 * [push](queuelike.md#push)
@@ -28,6 +31,8 @@
 
 • **count**: *number*
 
+*Inherited from [Collection](collection.md).[count](collection.md#count)*
+
 ## Methods
 
 ###  clear
@@ -35,6 +40,16 @@
 ▸ **clear**(): *void*
 
 **Returns:** *void*
+
+___
+
+###  enumerate
+
+▸ **enumerate**(): *EnumeratorLike‹T›*
+
+*Inherited from void*
+
+**Returns:** *EnumeratorLike‹T›*
 
 ___
 

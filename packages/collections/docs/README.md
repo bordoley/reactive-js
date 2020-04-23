@@ -5,6 +5,9 @@
 
 ### Interfaces
 
+* [Collection](interfaces/collection.md)
+* [KeyedCollection](interfaces/keyedcollection.md)
+* [KeyedEnumerableLike](interfaces/keyedenumerablelike.md)
 * [KeyedQueueLike](interfaces/keyedqueuelike.md)
 * [QueueLike](interfaces/queuelike.md)
 * [SetMultimapLike](interfaces/setmultimaplike.md)

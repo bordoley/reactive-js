@@ -1,5 +1,6 @@
 import { isSome, none } from "@reactive-js/option";
 import { QueueLike } from "./interfaces";
+import { EnumeratorLike, fromArray } from "@reactive-js/enumerable";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
@@ -62,6 +63,10 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
   clear() {
     this.values.length = 0;
+  }
+
+  enumerate(): EnumeratorLike<T> {
+    return fromArray(this.values).enumerate();
   }
 
   peek() {

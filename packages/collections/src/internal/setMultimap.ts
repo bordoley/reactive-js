@@ -1,4 +1,4 @@
-import { EnumerableLike, fromIterator } from "@reactive-js/enumerable";
+import { EnumerableLike, fromIterator, EnumeratorLike } from "@reactive-js/enumerable";
 import { SetMultimapLike } from "./interfaces";
 
 function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
@@ -9,8 +9,21 @@ function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
   }
 }
 
+function* iterateKeyedQueueKeyValuePairs<K, V>(queue: SetMultimap<K, V>): Generator<[K, V]> {
+  const map = queue.map;
+  for (const key of map.keys()) {
+    const values = map.get(key) ?? new Set();
+    for (const value of values) {
+      yield [key, value];
+    }
+  }
+}
+
 class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   count = 0;
+  readonly keys: EnumerableLike<K> = fromIterator(() =>
+    this.map.keys(),
+  );
   readonly map: Map<K, Set<V>> = new Map();
   readonly values: EnumerableLike<V> = fromIterator(() =>
     iterateSetMultimapValues(this),
@@ -31,6 +44,10 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
 
   clear() {
     this.map.clear();
+  }
+
+  enumerate(): EnumeratorLike<[K, V]> {
+    return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
   }
 
   get(key: K): ReadonlySet<V> {
