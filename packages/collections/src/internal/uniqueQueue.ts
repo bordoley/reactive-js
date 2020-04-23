@@ -1,6 +1,6 @@
 import { QueueLike } from "./interfaces";
 import { pipe } from "@reactive-js/pipe";
-import { fromIterable, first } from "@reactive-js/enumerable";
+import { fromIterable, first, EnumeratorLike } from "@reactive-js/enumerable";
 import { isSome } from "@reactive-js/option";
 
 class UniqueQueueImpl<T> implements QueueLike<T> {
@@ -12,6 +12,10 @@ class UniqueQueueImpl<T> implements QueueLike<T> {
 
   clear() {
     this.values.clear();
+  }
+
+  enumerate(): EnumeratorLike<T> {
+    return fromIterable(this.values).enumerate();
   }
 
   peek() {

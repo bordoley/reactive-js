@@ -9,18 +9,22 @@
 
 ## Hierarchy
 
-* **KeyedQueueLike**
+  ↳ [KeyedCollection](keyedcollection.md)‹K, V›
+
+  ↳ **KeyedQueueLike**
 
 ## Index
 
 ### Properties
 
 * [count](keyedqueuelike.md#count)
+* [keys](keyedqueuelike.md#keys)
 * [values](keyedqueuelike.md#values)
 
 ### Methods
 
 * [clear](keyedqueuelike.md#clear)
+* [enumerate](keyedqueuelike.md#enumerate)
 * [peek](keyedqueuelike.md#peek)
 * [pop](keyedqueuelike.md#pop)
 * [push](keyedqueuelike.md#push)
@@ -31,11 +35,23 @@
 
 • **count**: *number*
 
+*Inherited from [KeyedCollection](keyedcollection.md).[count](keyedcollection.md#count)*
+
+___
+
+###  keys
+
+• **keys**: *EnumerableLike‹K›*
+
+*Inherited from [KeyedEnumerableLike](keyedenumerablelike.md).[keys](keyedenumerablelike.md#keys)*
+
 ___
 
 ###  values
 
 • **values**: *EnumerableLike‹V›*
+
+*Inherited from [KeyedEnumerableLike](keyedenumerablelike.md).[values](keyedenumerablelike.md#values)*
 
 ## Methods
 
@@ -44,6 +60,16 @@ ___
 ▸ **clear**(): *void*
 
 **Returns:** *void*
+
+___
+
+###  enumerate
+
+▸ **enumerate**(): *EnumeratorLike‹[K, V]›*
+
+*Inherited from void*
+
+**Returns:** *EnumeratorLike‹[K, V]›*
 
 ___
 

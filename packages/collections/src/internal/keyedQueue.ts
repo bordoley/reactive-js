@@ -1,4 +1,4 @@
-import { EnumerableLike, fromIterator } from "@reactive-js/enumerable";
+import { EnumerableLike, fromIterator, EnumeratorLike } from "@reactive-js/enumerable";
 import { Option } from "@reactive-js/option";
 import { KeyedQueueLike } from "./interfaces";
 
@@ -10,8 +10,23 @@ function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
   }
 }
 
+function* iterateKeyedQueueKeyValuePairs<K, V>(queue: KeyedQueue<K, V>): Generator<[K, V]> {
+  const map = queue.map;
+  for (const key of map.keys()) {
+    const values = map.get(key) ?? [];
+    for (const value of values) {
+      yield [key, value];
+    }
+  }
+}
+
 class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   count = 0;
+ 
+  readonly keys: EnumerableLike<K> = fromIterator(() =>
+    this.map.keys(),
+  );
+
   readonly map: Map<K, V[]> = new Map();
 
   readonly values: EnumerableLike<V> = fromIterator(() =>
@@ -20,6 +35,10 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
   clear() {
     this.map.clear();
+  }
+
+  enumerate(): EnumeratorLike<[K, V]> {
+    return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
   }
 
   peek(key: K): Option<V> {

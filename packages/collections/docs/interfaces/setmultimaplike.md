@@ -9,19 +9,23 @@
 
 ## Hierarchy
 
-* **SetMultimapLike**
+  ↳ [KeyedCollection](keyedcollection.md)‹K, V›
+
+  ↳ **SetMultimapLike**
 
 ## Index
 
 ### Properties
 
 * [count](setmultimaplike.md#count)
+* [keys](setmultimaplike.md#keys)
 * [values](setmultimaplike.md#values)
 
 ### Methods
 
 * [add](setmultimaplike.md#add)
 * [clear](setmultimaplike.md#clear)
+* [enumerate](setmultimaplike.md#enumerate)
 * [get](setmultimaplike.md#get)
 * [remove](setmultimaplike.md#remove)
 * [removeAll](setmultimaplike.md#removeall)
@@ -32,11 +36,23 @@
 
 • **count**: *number*
 
+*Inherited from [KeyedCollection](keyedcollection.md).[count](keyedcollection.md#count)*
+
+___
+
+###  keys
+
+• **keys**: *EnumerableLike‹K›*
+
+*Inherited from [KeyedEnumerableLike](keyedenumerablelike.md).[keys](keyedenumerablelike.md#keys)*
+
 ___
 
 ###  values
 
 • **values**: *EnumerableLike‹V›*
+
+*Inherited from [KeyedEnumerableLike](keyedenumerablelike.md).[values](keyedenumerablelike.md#values)*
 
 ## Methods
 
@@ -60,6 +76,16 @@ ___
 ▸ **clear**(): *void*
 
 **Returns:** *void*
+
+___
+
+###  enumerate
+
+▸ **enumerate**(): *EnumeratorLike‹[K, V]›*
+
+*Inherited from void*
+
+**Returns:** *EnumeratorLike‹[K, V]›*
 
 ___
 
