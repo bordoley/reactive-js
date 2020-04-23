@@ -4,29 +4,17 @@ import {
   StreamEventType,
   StreamMode,
 } from "@reactive-js/async-enumerable";
-import { createDisposableValue } from "@reactive-js/disposable";
+import { DisposableValueLike } from "@reactive-js/disposable";
 import { createObservable, onNotify, subscribe } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 import { BufferStreamLike } from "./interfaces";
 
-const disposeReadable = (readable: Readable) => {
-  readable.removeAllListeners();
-  // Calling destory can result in onError being called
-  // if we don't catch the error, it crashes the process.
-  // This kind of sucks, but its the best we can do;
-  readable.once("error", () => {});
-  readable.once("close", () => {
-    readable.removeAllListeners();
-  });
-  readable.destroy();
-};
-
 export const createBufferStreamFromReadable = (
-  factory: () => Readable,
+  factory: () => DisposableValueLike<Readable>,
 ): BufferStreamLike =>
   createAsyncEnumerable(mode =>
     createObservable(subscriber => {
-      const readable = createDisposableValue(factory(), disposeReadable);
+      const readable = factory();
       subscriber.add(readable);
 
       const modeSubscription = pipe(

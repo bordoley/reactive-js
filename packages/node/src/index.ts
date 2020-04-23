@@ -11,3 +11,5 @@ export {
   decode,
   unsupportedEncoding,
 } from "./internal/transform";
+
+export { createDisposableStream } from "./internal/streams";

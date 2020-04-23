@@ -11,19 +11,21 @@ import {
 } from "zlib";
 import { HttpContentEncoding } from "@reactive-js/http";
 import { Option } from "@reactive-js/option";
+import { DisposableValueLike } from "@reactive-js/disposable";
+import { createDisposableStream } from "@reactive-js/node";
 
 /** @ignore */
 export const createEncodingCompressTransform = (
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
-) => (): Transform => {
+) => (): DisposableValueLike<Transform> => {
   switch (encoding) {
     case HttpContentEncoding.Brotli:
-      return createBrotliCompress(options);
+      return createDisposableStream(createBrotliCompress(options));
     case HttpContentEncoding.Deflate:
-      return createDeflate(options);
+      return createDisposableStream(createDeflate(options));
     case HttpContentEncoding.GZip:
-      return createGzip(options);
+      return createDisposableStream(createGzip(options));
     case HttpContentEncoding.Compress:
     case HttpContentEncoding.Identity:
       throw new Error("unsupported encoding");
@@ -34,14 +36,14 @@ export const createEncodingCompressTransform = (
 export const createEncodingDecompressTransform = (
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
-) => (): Transform => {
+) => (): DisposableValueLike<Transform> => {
   switch (encoding) {
     case HttpContentEncoding.Brotli:
-      return createBrotliDecompress(options);
+      return createDisposableStream(createBrotliDecompress(options));
     case HttpContentEncoding.Deflate:
-      return createInflate(options);
+      return createDisposableStream(createInflate(options));
     case HttpContentEncoding.GZip:
-      return createGunzip(options);
+      return createDisposableStream(createGunzip(options));
     case HttpContentEncoding.Compress:
     case HttpContentEncoding.Identity:
       throw new Error("unsupported encoding");

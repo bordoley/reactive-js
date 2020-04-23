@@ -14,6 +14,7 @@ import {
   transform,
   encode,
   decode,
+  createDisposableStream,
 } from "../src";
 import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
@@ -37,14 +38,14 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
 
     await pipe(sink(src, dest), toPromise(scheduler));
     expect(data).toEqual("abcdefg");
@@ -59,14 +60,14 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
@@ -79,7 +80,7 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
 
     const cause = new Error();
 
@@ -89,7 +90,7 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() => Readable.from(generate()));
+    const src = createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream));
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
     expect(promise).rejects.toThrow(cause);
@@ -111,7 +112,7 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() => writable);
+    const dest = createBufferStreamSinkFromWritable(() => createDisposableStream(writable));
 
     function* generate() {
       yield Buffer.from("abc", "utf8");
@@ -119,9 +120,9 @@ describe("streams", () => {
     }
 
     await pipe(
-      createBufferStreamFromReadable(() => Readable.from(generate())),
-      transform(() => createGzip()),
-      transform(() => createGunzip()),
+      createBufferStreamFromReadable(() => pipe(generate(), Readable.from, createDisposableStream)),
+      transform(() => createDisposableStream(createGzip())),
+      transform(() => createDisposableStream(createGunzip())),
       src => sink(src, dest),
       toPromise(scheduler),
     );

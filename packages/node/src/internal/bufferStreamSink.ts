@@ -6,29 +6,17 @@ import {
   StreamEventType,
   StreamMode,
 } from "@reactive-js/async-enumerable";
-import { createDisposableValue } from "@reactive-js/disposable";
+import { DisposableValueLike } from "@reactive-js/disposable";
 import { createObservable, onNotify, subscribe } from "@reactive-js/observable";
 import { pipe } from "@reactive-js/pipe";
 
-const disposeWritable = (writable: Writable) => {
-  writable.removeAllListeners();
-  // Calling destory can result in onError being called
-  // if we don't catch the error, it crashes the process.
-  // This kind of sucks, but its the best we can do;
-  writable.once("error", () => {});
-  writable.once("close", () => {
-    writable.removeAllListeners();
-  });
-  writable.destroy();
-};
-
 export const createBufferStreamSinkFromWritable = (
-  factory: () => Writable,
+  factory: () => DisposableValueLike<Writable>,
   autoDispose = true,
 ): AsyncEnumerableLike<StreamEvent<Buffer>, StreamMode> =>
   createAsyncEnumerable(streamEvents =>
     createObservable(subscriber => {
-      const writable = createDisposableValue(factory(), disposeWritable);
+      const writable = factory();
       subscriber.add(writable);
 
       const streamEventsSubscription = pipe(
