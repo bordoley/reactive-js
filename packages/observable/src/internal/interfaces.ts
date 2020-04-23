@@ -106,5 +106,7 @@ export type ObservableOperator<A, B> = {
  * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
  */
 export type SubscriberOperator<A, B> = {
+  readonly isSynchronous: boolean;
+
   (observable: SubscriberLike<B>): SubscriberLike<A>;
 };

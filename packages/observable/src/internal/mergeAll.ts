@@ -112,8 +112,8 @@ export const mergeAll = <T>(
   } = options;
   const operator = (subscriber: SubscriberLike<T>) =>
     new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
-
-  return lift(operator, false);
+  operator.isSynchronous = false;
+  return lift(operator);
 };
 
 export const mergeMap = <TA, TB>(

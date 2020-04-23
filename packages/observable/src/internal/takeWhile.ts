@@ -39,5 +39,6 @@ export const takeWhile = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeWhileSubscriber(subscriber, predicate);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };

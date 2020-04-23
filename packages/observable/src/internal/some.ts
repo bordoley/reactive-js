@@ -45,7 +45,8 @@ export const some = <T>(
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new SomeSubscriber(subscriber, predicate);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };
 
 const referenceEquals = <T>(a: T, b: T) => a === b;

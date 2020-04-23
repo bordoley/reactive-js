@@ -28,7 +28,8 @@ export const map = <TA, TB>(
 ): ObservableOperator<TA, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new MapSubscriber(subscriber, mapper);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };
 
 export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>

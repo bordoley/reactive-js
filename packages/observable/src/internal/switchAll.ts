@@ -53,8 +53,9 @@ class SwitchSubscriber<T>
 
 const operator = <T>(subscriber: SubscriberLike<T>) =>
   new SwitchSubscriber(subscriber);
+operator.isSynchronous = false;
 
-const switchAllInstance = lift(operator, false);
+const switchAllInstance = lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.

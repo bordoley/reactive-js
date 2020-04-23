@@ -38,5 +38,6 @@ export const scan = <T, TAcc>(
 ): ObservableOperator<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ScanSubscriber(subscriber, scanner, initialValue());
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };

@@ -18,8 +18,9 @@ class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 
 const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>
   new IgnoreSubscriber<TA, TB>(subscriber);
+operator.isSynchronous = true;
 
 /**
  * Returns an `ObservableLike` that ignores all items emitted by the source.
  */
-export const ignoreElements = <TA, TB>() => lift<TA, TB>(operator, true);
+export const ignoreElements = <TA, TB>() => lift<TA, TB>(operator);

@@ -50,5 +50,6 @@ export const distinctUntilChanged = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equals);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };

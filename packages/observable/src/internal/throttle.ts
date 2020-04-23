@@ -150,5 +150,6 @@ export function throttle<T>(
     typeof duration === "number" ? (_: T) => ofValue(none, duration) : duration;
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
-  return lift(operator, false);
+  operator.isSynchronous = false;
+  return lift(operator);
 }

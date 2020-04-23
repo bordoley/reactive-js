@@ -110,6 +110,7 @@ export function buffer<T>(
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (subscriber: SubscriberLike<readonly T[]>) =>
     new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
+  operator.isSynchronous = duration === Number.MAX_SAFE_INTEGER;
 
-  return lift(operator, duration === Number.MAX_SAFE_INTEGER);
+  return lift(operator);
 }

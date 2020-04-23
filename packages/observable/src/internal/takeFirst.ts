@@ -36,6 +36,7 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const takeFirst = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeFirstSubscriber(subscriber, count);
+  operator.isSynchronous = true;
   return observable =>
-    count > 0 ? pipe(observable, lift(operator, true)) : empty();
+    count > 0 ? pipe(observable, lift(operator)) : empty();
 };
