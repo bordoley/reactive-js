@@ -89,5 +89,6 @@ export function timeout<T>(
         );
   const operator = (subscriber: SubscriberLike<T>) =>
     new TimeoutSubscriber(subscriber, durationObs);
-  return lift(operator, false);
+  operator.isSynchronous = false;
+  return lift(operator);
 }

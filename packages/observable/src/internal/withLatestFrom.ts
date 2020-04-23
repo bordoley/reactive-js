@@ -66,5 +66,6 @@ export const withLatestFrom = <TA, TB, TC>(
 ): ObservableOperator<TA, TC> => {
   const operator = (subscriber: SubscriberLike<TC>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);
-  return lift(operator, false);
+  operator.isSynchronous = false;
+  return lift(operator);
 };

@@ -43,7 +43,8 @@ export function observe<T>(
 ): ObservableOperator<T, T> {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ObserveSubscriber(subscriber, observer);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 }
 
 const ignore = <T>(_: T) => {};

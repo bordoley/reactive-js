@@ -35,6 +35,7 @@ class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const skipFirst = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new SkipFirstSubscriber(subscriber, count);
+  operator.isSynchronous = false;
   return observable =>
-    count > 0 ? pipe(observable, lift(operator, false)) : observable;
+    count > 0 ? pipe(observable, lift(operator)) : observable;
 };

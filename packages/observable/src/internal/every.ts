@@ -46,7 +46,8 @@ export const every = <T>(
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new EverySubscriber(subscriber, predicate);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };
 
 /**

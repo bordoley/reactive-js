@@ -1255,7 +1255,7 @@ ___
 
 ###  lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperator](README.md#subscriberoperator)‹TA, TB›, `operatorIsSynchronous`: boolean): *[ObservableOperator](README.md#observableoperator)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberOperator](README.md#subscriberoperator)‹TA, TB›): *[ObservableOperator](README.md#observableoperator)‹TA, TB›*
 
 Creates a new `ObservableLike` which applies the provided the operator function to
 subscriber when the source is subscribed to.
@@ -1268,10 +1268,9 @@ subscriber when the source is subscribed to.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`operator` | [SubscriberOperator](README.md#subscriberoperator)‹TA, TB› | - | The operator function to apply.  |
-`operatorIsSynchronous` | boolean | false | - |
+Name | Type | Description |
+------ | ------ | ------ |
+`operator` | [SubscriberOperator](README.md#subscriberoperator)‹TA, TB› | The operator function to apply.  |
 
 **Returns:** *[ObservableOperator](README.md#observableoperator)‹TA, TB›*
 

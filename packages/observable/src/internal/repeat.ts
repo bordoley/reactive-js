@@ -75,8 +75,8 @@ const repeatObs = <T>(
 ): ObservableOperator<T, T> => observable => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new RepeatSubscriber(subscriber, observable, shouldRepeat);
-
-  return lift(operator, true)(observable);
+  operator.isSynchronous = true;
+  return lift(operator)(observable);
 };
 
 const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>

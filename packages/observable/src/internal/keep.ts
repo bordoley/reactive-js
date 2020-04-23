@@ -34,7 +34,8 @@ export const keepType = <TA, TB>(
 ): ObservableOperator<TA, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new KeepTypeSubscriber(subscriber, predicate);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };
 
 /**

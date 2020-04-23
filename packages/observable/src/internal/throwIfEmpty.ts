@@ -41,5 +41,6 @@ export const throwIfEmpty = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrowIfEmptySubscriber(subscriber, factory);
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };

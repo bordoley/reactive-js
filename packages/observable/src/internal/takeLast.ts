@@ -52,6 +52,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const takeLast = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeLastSubscriber(subscriber, count);
+  operator.isSynchronous = false;
   return observable =>
-    count > 0 ? pipe(observable, lift(operator, true)) : empty();
+    count > 0 ? pipe(observable, lift(operator)) : empty();
 };

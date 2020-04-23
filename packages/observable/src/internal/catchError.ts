@@ -52,5 +52,6 @@ export const catchError = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);
-  return lift(operator, false);
+  operator.isSynchronous = false;
+  return lift(operator);
 };

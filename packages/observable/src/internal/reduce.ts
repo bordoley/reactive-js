@@ -43,5 +43,6 @@ export const reduce = <T, TAcc>(
 ): ObservableOperator<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ReduceSubscriber(subscriber, reducer, initialValue());
-  return lift(operator, true);
+  operator.isSynchronous = true;
+  return lift(operator);
 };
