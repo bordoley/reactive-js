@@ -57,7 +57,6 @@ import {
   throws,
   timeout,
   toArray,
-  toIterable,
   toPromise,
   toValue,
   withLatestFrom,
@@ -83,8 +82,8 @@ class PromiseTestScheduler extends AbstractHostScheduler {
   }
 
   scheduleDelayed (
-    callback: (shouldYield: Option<() => boolean>) => void,
-    delay: number,
+    _callback: (shouldYield: Option<() => boolean>) => void,
+    _delay: number,
   ): DisposableLike {
     return disposed;
   }
@@ -285,7 +284,7 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler(1);
     const subject = createSubject(scheduler, 2);
 
-    scheduleCallback(subject, () => {
+    pipe(subject, schedule(() => {
       subject.notify(1);
       subject.notify(2);
       subject.notify(3);
@@ -300,7 +299,7 @@ describe("createSubject", () => {
       expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
       expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
       expect(onDispose).toHaveBeenCalled();
-    });
+    }));
 
     scheduler.run();
   });
@@ -309,7 +308,7 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    scheduleCallback(subject, () => {
+    pipe(subject, schedule(() => {
       subject.notify(1);
       subject.notify(2);
       subject.notify(3);
@@ -334,7 +333,7 @@ describe("createSubject", () => {
       expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
       expect(subscriber.notify).toHaveBeenNthCalledWith(3, 4);
       expect(onDispose).toHaveBeenCalled();
-    });
+    }));
 
     scheduler.run();
   });
@@ -343,11 +342,11 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    scheduleCallback(subject, () => {
+    pipe(subject, schedule(() => {
       subject.notify(1);
       subject.notify(2);
       subject.notify(3);
-    });
+    }));
 
     const subscriber = new MockSubscriber(scheduler);
 
@@ -374,10 +373,10 @@ describe("createSubject", () => {
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
 
-    scheduleCallback(subject, () => {
+    pipe(subject, schedule(() => {
       subject.notify(1);
       subject.dispose();
-    });
+    }));
 
     scheduler.run();
 
@@ -1241,67 +1240,6 @@ describe("timeout", () => {
   test("when timeout is greater than observed time", () => {
     const result = pipe(ofValue(1, 2), timeout(3), toArray());
     expect(result).toEqual([1]);
-  });
-});
-
-describe("toIterable", () => {
-  test("iterate using a for of loop", () => {
-    const iterable = pipe(
-      fromArray([1, 2, 3, 4]),
-      map(x => x + 1),
-      toIterable,
-    );
-    const acc = [];
-    for (const v of iterable) {
-      acc.push(v);
-    }
-    expect(acc).toEqual([2, 3, 4, 5]);
-  });
-
-  test("rethrows an error when the source throws", () => {
-    const error = new Error();
-    const iterable = pipe(
-      throws(() => error),
-      toIterable,
-    );
-
-    expect(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-      for (const _ of iterable) {
-      }
-    }).toThrowError(error);
-  });
-
-  test("calling throw, throws the error", () => {
-    const error = new Error();
-    const iterable = pipe(fromArray([1, 2, 3, 4]), toIterable);
-    const iterator = iterable[Symbol.iterator]();
-
-    expect(() => (iterator as any).throw(error)).toThrowError(error);
-  });
-
-  test("calling return, returns done", () => {
-    const iterable = pipe(fromArray([1, 2, 3, 4]), toIterable);
-    const result = (iterable[Symbol.iterator]() as any).return();
-
-    expect(result.done).toBeTruthy();
-  });
-
-  test("with non-enumerable source", () => {
-    const obs = createObservable<number>(subscriber => {
-      subscriber.dispatch(1);
-      subscriber.dispatch(2);
-      subscriber.dispatch(3);
-      subscriber.dispose();
-    });
-
-    const result: number[] = [];
-    const iterable = pipe(obs, toIterable);
-    for (const v of iterable) {
-      result.push(v);
-    }
-
-    expect(result).toEqual([1, 2, 3]);
   });
 });
 

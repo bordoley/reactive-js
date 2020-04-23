@@ -100,7 +100,6 @@
 * [timeout](README.md#timeout)
 * [toArray](README.md#const-toarray)
 * [toEnumerable](README.md#const-toenumerable)
-* [toIterable](README.md#const-toiterable)
 * [toPromise](README.md#const-topromise)
 * [toSafeSubscriber](README.md#const-tosafesubscriber)
 * [toValue](README.md#const-tovalue)
@@ -2263,26 +2262,6 @@ Name | Type |
 `observable` | [ObservableLike](interfaces/observablelike.md)‹T› |
 
 **Returns:** *EnumerableLike‹void, T›*
-
-___
-
-### `Const` toIterable
-
-▸ **toIterable**<**T**>(`source`: [ObservableLike](interfaces/observablelike.md)‹T›): *Iterable‹T›*
-
-Converts an `ObservableLike` into an `Iterable`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`source` | [ObservableLike](interfaces/observablelike.md)‹T› |
-
-**Returns:** *Iterable‹T›*
 
 ___
 
