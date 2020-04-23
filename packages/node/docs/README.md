@@ -19,6 +19,7 @@
 * [bindNodeCallback](README.md#bindnodecallback)
 * [createBufferStreamFromReadable](README.md#const-createbufferstreamfromreadable)
 * [createBufferStreamSinkFromWritable](README.md#const-createbufferstreamsinkfromwritable)
+* [createDisposableStream](README.md#const-createdisposablestream)
 * [decode](README.md#const-decode)
 * [encode](README.md#const-encode)
 * [setSchedulerTimeout](README.md#const-setschedulertimeout)
@@ -1832,7 +1833,7 @@ ___
 
 ▪ **factory**: *function*
 
-▸ (): *Readable*
+▸ (): *DisposableValueLike‹Readable›*
 
 **Returns:** *[BufferStreamLike](interfaces/bufferstreamlike.md)*
 
@@ -1846,11 +1847,29 @@ ___
 
 ▪ **factory**: *function*
 
-▸ (): *Writable*
+▸ (): *DisposableValueLike‹Writable›*
 
 ▪`Default value`  **autoDispose**: *boolean*= true
 
 **Returns:** *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+
+___
+
+### `Const` createDisposableStream
+
+▸ **createDisposableStream**<**T**>(`stream`: T): *DisposableValueLike‹T›*
+
+**Type parameters:**
+
+▪ **T**: *Readable‹› | Writable‹› | Transform‹›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`stream` | T |
+
+**Returns:** *DisposableValueLike‹T›*
 
 ___
 
@@ -1904,6 +1923,6 @@ ___
 
 ▪ **factory**: *function*
 
-▸ (): *Transform*
+▸ (): *DisposableValueLike‹Transform›*
 
 **Returns:** *StreamOperator‹Buffer, Buffer›*

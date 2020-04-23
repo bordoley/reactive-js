@@ -30,6 +30,7 @@ import {
   bindNodeCallback,
   encode,
   createBufferStreamFromReadable,
+  createDisposableStream,
 } from "@reactive-js/node";
 import {
   map,
@@ -118,7 +119,7 @@ const routerHandlerFiles: HttpRequestRouterHandler<
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
             body: createBufferStreamFromReadable(() =>
-              fs.createReadStream(path),
+              createDisposableStream(fs.createReadStream(path)),
             ),
             contentInfo: {
               contentLength: next.size,
@@ -246,7 +247,7 @@ pipe(
     method: HttpMethod.POST,
     uri: "http://localhost:8080/index.html",
     body: createBufferStreamFromReadable(() =>
-      fs.createReadStream(file),
+      createDisposableStream(fs.createReadStream(file)),
     ),
     contentInfo: {
       contentLength: stats.size,

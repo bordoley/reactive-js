@@ -9,7 +9,7 @@ import {
   StreamEventType,
   sink,
 } from "@reactive-js/async-enumerable";
-import { createDisposableValue } from "@reactive-js/disposable";
+import { createDisposableValue, DisposableValueLike } from "@reactive-js/disposable";
 import {
   ObservableLike,
   createObservable,
@@ -27,20 +27,15 @@ import { BufferStreamLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/scheduler";
 import { isSome } from "@reactive-js/option";
 
-const disposeTransform = (readable: Transform) => {
-  readable.removeAllListeners();
-  readable.destroy();
-};
-
 export const transform = (
-  factory: () => Transform,
+  factory: () => DisposableValueLike<Transform>,
 ): StreamOperator<Buffer, Buffer> => src =>
   createAsyncEnumerable(modeObs =>
     createObservable<StreamEvent<Buffer>>(subscriber => {
-      const transform = createDisposableValue(factory(), disposeTransform);
+      const transform = factory();
 
       const transformSink = createBufferStreamSinkFromWritable(
-        () => transform.value,
+        () => transform,
         false,
       );
       const sinkSubscription = pipe(
@@ -49,7 +44,7 @@ export const transform = (
       );
 
       const transformReadableEnumerator = createBufferStreamFromReadable(
-        () => transform.value,
+        () => transform,
       ).enumerateAsync(subscriber);
       transformReadableEnumerator.subscribe(subscriber);
       modeObs.subscribe(transformReadableEnumerator);

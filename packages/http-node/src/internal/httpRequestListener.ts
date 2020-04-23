@@ -19,6 +19,7 @@ import {
   BufferStreamLike,
   createBufferStreamSinkFromWritable,
   BufferStreamSinkLike,
+  createDisposableStream,
 } from "@reactive-js/node";
 import {
   ObservableLike,
@@ -67,7 +68,7 @@ class RequestBody extends AbstractDisposable implements BufferStreamLike {
       throw new Error("Request body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamFromReadable(() => this.req)
+    const sink = createBufferStreamFromReadable(() => createDisposableStream(this.req))
       .enumerateAsync(scheduler, replayCount)
       .add(this);
     this.add(sink);
@@ -108,7 +109,7 @@ class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamSinkFromWritable(() => this.resp, true)
+    const sink = createBufferStreamSinkFromWritable(() => createDisposableStream(this.resp), true)
       .enumerateAsync(scheduler, replayCount)
       .add(this);
     this.add(sink);
