@@ -1,6 +1,6 @@
-[@reactive-js/react-router - v0.0.35](README.md)
+[@reactive-js/react-router - v0.0.37](README.md)
 
-# @reactive-js/react-router - v0.0.35
+# @reactive-js/react-router - v0.0.37
 
 ## Index
 

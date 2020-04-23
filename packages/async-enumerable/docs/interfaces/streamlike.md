@@ -1,4 +1,4 @@
-[@reactive-js/async-enumerable - v0.0.35](../README.md) › [StreamLike](streamlike.md)
+[@reactive-js/async-enumerable - v0.0.37](../README.md) › [StreamLike](streamlike.md)
 
 # Interface: StreamLike <**T**>
 

@@ -1,4 +1,4 @@
-[@reactive-js/scheduler - v0.0.35](../README.md) › [SchedulerLike](schedulerlike.md)
+[@reactive-js/scheduler - v0.0.37](../README.md) › [SchedulerLike](schedulerlike.md)
 
 # Interface: SchedulerLike
 
