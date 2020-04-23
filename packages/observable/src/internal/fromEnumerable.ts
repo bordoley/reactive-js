@@ -11,7 +11,7 @@ import { AbstractProducer } from "./producer";
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
-    private readonly enumerator: EnumeratorLike<void, T>,
+    private readonly enumerator: EnumeratorLike<T>,
     private readonly delay: number,
   ) {
     super(subscriber);
@@ -50,7 +50,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
  * @param delay The requested delay between emitted items by the observable.
  */
 export function fromEnumerable<T>(
-  enumerable: EnumerableLike<void, T>,
+  enumerable: EnumerableLike<T>,
   delay = 0,
 ): ObservableLike<T> {
   const factory = (subscriber: SubscriberLike<T>) => {

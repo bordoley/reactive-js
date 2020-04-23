@@ -12,7 +12,7 @@ import { EnumeratorLike, fromIterable as fromIterableEnumerable } from "@reactiv
 import { DisposableLike } from "@reactive-js/disposable";
 
 const createFactory = <T>(obs: ObservableLike<void>) => (
-  enumerator: EnumeratorLike<void, T> & DisposableLike,
+  enumerator: EnumerableLike<T> & DisposableLike,
 ) =>
   pipe(
     obs,

@@ -36,7 +36,7 @@ ___
 
 ###  values
 
-• **values**: *EnumerableLike‹void, V›*
+• **values**: *EnumerableLike‹V›*
 
 ## Methods
 

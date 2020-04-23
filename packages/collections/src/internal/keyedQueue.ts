@@ -14,7 +14,7 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   count = 0;
   readonly map: Map<K, V[]> = new Map();
 
-  readonly values: EnumerableLike<void, V> = fromIterator(() =>
+  readonly values: EnumerableLike<V> = fromIterator(() =>
     iterateKeyedQueueValues(this),
   );
 

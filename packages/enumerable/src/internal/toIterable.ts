@@ -1,7 +1,7 @@
 import { EnumerableLike } from "./interfaces";
 
 class EnumerableIterable<T> implements Iterable<T> {
-  constructor(private readonly enumerable: EnumerableLike<void, T>) {}
+  constructor(private readonly enumerable: EnumerableLike<T>) {}
 
   *[Symbol.iterator]() {
     const enumerator = this.enumerable.enumerate();
@@ -18,5 +18,5 @@ class EnumerableIterable<T> implements Iterable<T> {
 /**
  * Converts an `EnumerableLike` into an `Iterable`.
  */
-export const toIterable = <T>(source: EnumerableLike<void, T>): Iterable<T> =>
+export const toIterable = <T>(source: EnumerableLike<T>): Iterable<T> =>
   new EnumerableIterable(source);

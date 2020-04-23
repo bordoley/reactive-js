@@ -4,29 +4,6 @@
 
 ## Hierarchy
 
-* StreamLike‹Buffer›
+* any
 
   ↳ **BufferStreamLike**
-
-## Index
-
-### Methods
-
-* [enumerateAsync](bufferstreamlike.md#enumerateasync)
-
-## Methods
-
-###  enumerateAsync
-
-▸ **enumerateAsync**(`scheduler`: SchedulerLike, `replayCount?`: undefined | number): *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*
-
-*Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | SchedulerLike |
-`replayCount?` | undefined &#124; number |
-
-**Returns:** *AsyncEnumeratorLike‹StreamMode, StreamEvent‹Buffer››*

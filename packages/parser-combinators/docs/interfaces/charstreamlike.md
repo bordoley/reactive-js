@@ -3,7 +3,7 @@
 
 ## Hierarchy
 
-* EnumeratorLike‹void, [CharCode](../README.md#charcode)›
+* EnumeratorLike‹[CharCode](../README.md#charcode)›
 
   ↳ **CharStreamLike**
 
@@ -52,14 +52,8 @@ ___
 
 ###  move
 
-▸ **move**(`req`: void): *boolean*
+▸ **move**(): *boolean*
 
 *Inherited from void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | void |
 
 **Returns:** *boolean*

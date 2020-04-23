@@ -4,7 +4,7 @@ import { EnumerableLike, EnumeratorLike } from "./interfaces";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
   extends AbstractDisposable
-  implements EnumeratorLike<void, T> {
+  implements EnumeratorLike<T> {
   current: any = none;
   hasCurrent = false;
 
@@ -12,7 +12,7 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
     super();
   }
 
-  move(_: void): boolean {
+  move(): boolean {
     this.hasCurrent = false;
     this.current = none;
 
@@ -30,7 +30,7 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
 }
 
 class IteratorEnumerable<T, TReturn = any, TNext = unknown>
-  implements EnumerableLike<void, T> {
+  implements EnumerableLike<T> {
   constructor(private readonly f: () => Iterator<T, TReturn, TNext>) {}
 
   enumerate() {
@@ -50,8 +50,8 @@ class IteratorEnumerable<T, TReturn = any, TNext = unknown>
 
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
   f: () => Iterator<T, TReturn, TNext>,
-): EnumerableLike<void, T> => new IteratorEnumerable(f);
+): EnumerableLike<T> => new IteratorEnumerable(f);
 
 export const fromIterable = <T>(
   iterable: Iterable<T>,
-): EnumerableLike<void, T> => fromIterator(() => iterable[Symbol.iterator]());
+): EnumerableLike<T> => fromIterator(() => iterable[Symbol.iterator]());

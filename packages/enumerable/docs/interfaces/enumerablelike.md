@@ -1,10 +1,8 @@
 [@reactive-js/enumerable - v0.0.37](../README.md) › [EnumerableLike](enumerablelike.md)
 
-# Interface: EnumerableLike <**TReq, T**>
+# Interface: EnumerableLike <**T**>
 
 ## Type parameters
-
-▪ **TReq**
 
 ▪ **T**
 
@@ -22,8 +20,8 @@
 
 ###  enumerate
 
-▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹TReq, T› & DisposableLike*
+▸ **enumerate**(): *[EnumeratorLike](enumeratorlike.md)‹T› & DisposableLike*
 
 Returns an `EnumeratorLike` to iterate through the source.
 
-**Returns:** *[EnumeratorLike](enumeratorlike.md)‹TReq, T› & DisposableLike*
+**Returns:** *[EnumeratorLike](enumeratorlike.md)‹T› & DisposableLike*

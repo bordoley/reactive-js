@@ -11,7 +11,7 @@ import {
 } from "./subscriber";
 
 class EnumeratorSubscriber<T> extends AbstractDisposable
-  implements EnumeratorLike<void, T>, SubscriberLike<T> {
+  implements EnumeratorLike<T>, SubscriberLike<T> {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
   hasCurrent = false;
@@ -67,10 +67,10 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
   }
 }
 
-class ObservableEnumerableImpl<T> implements EnumerableLike<void, T> {
+class ObservableEnumerableImpl<T> implements EnumerableLike<T> {
   constructor(private readonly obs: ObservableLike<T>) {}
 
-  enumerate(): EnumeratorLike<void, T> & DisposableLike {
+  enumerate(): EnumeratorLike<T> & DisposableLike {
     const subscriber = new EnumeratorSubscriber<T>();
     this.obs.subscribe(subscriber);
     return subscriber;
@@ -79,9 +79,9 @@ class ObservableEnumerableImpl<T> implements EnumerableLike<void, T> {
 
 export const toEnumerable = <T>(
   observable: ObservableLike<T>,
-): EnumerableLike<void, T> => new ObservableEnumerableImpl(observable);
+): EnumerableLike<T> => new ObservableEnumerableImpl(observable);
 
-const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
+const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
     if (!enumerator.hasCurrent) {
       return false;
@@ -91,7 +91,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<void, unknown>[]) => {
 };
 
 const shouldComplete = (
-  enumerators: readonly (DisposableLike & EnumeratorLike<void, unknown>)[],
+  enumerators: readonly (DisposableLike & EnumeratorLike<unknown>)[],
 ) => {
   for (const enumerator of enumerators) {
     enumerator.move();
@@ -102,12 +102,12 @@ const shouldComplete = (
   return false;
 };
 
-const getCurrent = <T>(enumerator: EnumeratorLike<void, T>): T => {
+const getCurrent = <T>(enumerator: EnumeratorLike<T>): T => {
   return enumerator.current;
 };
 
 class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
-  implements EnumeratorLike<void, unknown> {
+  implements EnumeratorLike<unknown> {
   current: unknown;
   private readonly buffer: Array<unknown> = [];
   hasCurrent = false;
@@ -115,7 +115,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   constructor(
     delegate: SubscriberLike<T>,
     private readonly enumerators: readonly (DisposableLike &
-      EnumeratorLike<void, any>)[],
+      EnumeratorLike<any>)[],
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
@@ -181,7 +181,7 @@ class ZipProducer<T> extends AbstractProducer<T> {
 
   constructor(
     subscriber: SubscriberLike<T>,
-    private readonly enumerators: readonly EnumeratorLike<void, any>[],
+    private readonly enumerators: readonly EnumeratorLike<any>[],
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(subscriber);
@@ -248,7 +248,7 @@ class ZipObservable<T> implements ObservableLike<T> {
       );
     } else {
       const enumerators: (DisposableLike &
-        EnumeratorLike<void, unknown>)[] = [];
+        EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 

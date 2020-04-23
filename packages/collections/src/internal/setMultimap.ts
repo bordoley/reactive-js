@@ -12,7 +12,7 @@ function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
 class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   count = 0;
   readonly map: Map<K, Set<V>> = new Map();
-  readonly values: EnumerableLike<void, V> = fromIterator(() =>
+  readonly values: EnumerableLike<V> = fromIterator(() =>
     iterateSetMultimapValues(this),
   );
 
