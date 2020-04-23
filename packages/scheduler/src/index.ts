@@ -11,7 +11,7 @@ export { AbstractSchedulerContinuation } from "./internal/abstractSchedulerConti
 export {
   toPriorityScheduler,
   toPausableScheduler,
-} from "./internal/priorityScheduler";
+} from "./internal/priorityQueueScheduler";
 export { schedule } from "./internal/scheduleCallback";
 export { toSchedulerWithPriority } from "./internal/schedulerWithPriority";
 export { AbstractHostScheduler } from "./internal/abstractHostScheduler";
