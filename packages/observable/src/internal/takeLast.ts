@@ -53,6 +53,5 @@ export const takeLast = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeLastSubscriber(subscriber, count);
   operator.isSynchronous = false;
-  return observable =>
-    count > 0 ? pipe(observable, lift(operator)) : empty();
+  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

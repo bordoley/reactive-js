@@ -8,10 +8,7 @@ import {
 } from "@reactive-js/async-enumerable";
 import { createHttpRequest, HttpMethod } from "@reactive-js/http";
 import { sendHttpRequest } from "@reactive-js/http-web";
-import {
-  useObservable,
-  useAsyncEnumerable,
-} from "@reactive-js/react";
+import { useObservable, useAsyncEnumerable } from "@reactive-js/react";
 import {
   RoutableComponentProps,
   Router,
@@ -119,7 +116,9 @@ const StatefulComponent = (props: RoutableComponentProps) => {
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
   const stream = useMemo(() => fromObservableStream(obs), []);
-  const [value, setMode] = useAsyncEnumerable(stream, {scheduler: idlePriority});
+  const [value, setMode] = useAsyncEnumerable(stream, {
+    scheduler: idlePriority,
+  });
   const [{ mode }, updateMode] = useState({ mode: StreamMode.Pause });
 
   const onClick = useCallback(
@@ -172,7 +171,8 @@ const location = pipe(
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,
-  uri: "http://localhost:8080/files/packages/example-react/dist/rollup/bundle.js",
+  uri:
+    "http://localhost:8080/files/packages/example-react/dist/rollup/bundle.js",
   body: none,
 });
 

@@ -89,5 +89,6 @@ export interface PrioritySchedulerLike {
   ): void;
 }
 
-export type CallbackContinuation = 
-  (shouldYield?: () => boolean) => CallbackContinuation | void;
+export type CallbackContinuation = (
+  shouldYield?: () => boolean,
+) => CallbackContinuation | void;

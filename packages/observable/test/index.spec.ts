@@ -81,14 +81,16 @@ class PromiseTestScheduler extends AbstractHostScheduler {
     return Date.now();
   }
 
-  scheduleDelayed (
+  scheduleDelayed(
     _callback: (shouldYield: Option<() => boolean>) => void,
     _delay: number,
   ): DisposableLike {
     return disposed;
   }
 
-  scheduleImmediate(callback: (shouldYield: Option<() => boolean>) => void): DisposableLike {
+  scheduleImmediate(
+    callback: (shouldYield: Option<() => boolean>) => void,
+  ): DisposableLike {
     const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(callbackAndDispose, callback, disposable);
     return disposable;
@@ -284,22 +286,25 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler(1);
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, schedule(() => {
-      subject.notify(1);
-      subject.notify(2);
-      subject.notify(3);
-      subject.dispose();
+    pipe(
+      subject,
+      schedule(() => {
+        subject.notify(1);
+        subject.notify(2);
+        subject.notify(3);
+        subject.dispose();
 
-      const subscriber = new MockSubscriber(scheduler);
-      const onDispose = jest.fn();
-      subscriber.add(e => onDispose(e));
+        const subscriber = new MockSubscriber(scheduler);
+        const onDispose = jest.fn();
+        subscriber.add(e => onDispose(e));
 
-      subject.subscribe(subscriber);
-      expect(subject.subscriberCount).toEqual(0);
-      expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
-      expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
-      expect(onDispose).toHaveBeenCalled();
-    }));
+        subject.subscribe(subscriber);
+        expect(subject.subscriberCount).toEqual(0);
+        expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
+        expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
+        expect(onDispose).toHaveBeenCalled();
+      }),
+    );
 
     scheduler.run();
   });
@@ -308,32 +313,35 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, schedule(() => {
-      subject.notify(1);
-      subject.notify(2);
-      subject.notify(3);
+    pipe(
+      subject,
+      schedule(() => {
+        subject.notify(1);
+        subject.notify(2);
+        subject.notify(3);
 
-      const subscriber = new MockSubscriber(scheduler);
-      const onDispose = jest.fn();
-      subscriber.add(e => onDispose(e));
+        const subscriber = new MockSubscriber(scheduler);
+        const onDispose = jest.fn();
+        subscriber.add(e => onDispose(e));
 
-      subject.subscribe(subscriber);
+        subject.subscribe(subscriber);
 
-      pipe(
-        ofValue(none),
-        onNotify(_ => {
-          subject.notify(4);
-          subject.dispose();
-        }),
-        subscribe(scheduler),
-      );
+        pipe(
+          ofValue(none),
+          onNotify(_ => {
+            subject.notify(4);
+            subject.dispose();
+          }),
+          subscribe(scheduler),
+        );
 
-      expect(subject.subscriberCount).toEqual(1);
-      expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
-      expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
-      expect(subscriber.notify).toHaveBeenNthCalledWith(3, 4);
-      expect(onDispose).toHaveBeenCalled();
-    }));
+        expect(subject.subscriberCount).toEqual(1);
+        expect(subscriber.notify).toHaveBeenNthCalledWith(1, 2);
+        expect(subscriber.notify).toHaveBeenNthCalledWith(2, 3);
+        expect(subscriber.notify).toHaveBeenNthCalledWith(3, 4);
+        expect(onDispose).toHaveBeenCalled();
+      }),
+    );
 
     scheduler.run();
   });
@@ -342,11 +350,14 @@ describe("createSubject", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject(scheduler, 2);
 
-    pipe(subject, schedule(() => {
-      subject.notify(1);
-      subject.notify(2);
-      subject.notify(3);
-    }));
+    pipe(
+      subject,
+      schedule(() => {
+        subject.notify(1);
+        subject.notify(2);
+        subject.notify(3);
+      }),
+    );
 
     const subscriber = new MockSubscriber(scheduler);
 
@@ -373,10 +384,13 @@ describe("createSubject", () => {
     subject.dispose();
     expect(subject.isDisposed).toBeTruthy();
 
-    pipe(subject, schedule(() => {
-      subject.notify(1);
-      subject.dispose();
-    }));
+    pipe(
+      subject,
+      schedule(() => {
+        subject.notify(1);
+        subject.dispose();
+      }),
+    );
 
     scheduler.run();
 

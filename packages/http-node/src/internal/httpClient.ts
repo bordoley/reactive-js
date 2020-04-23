@@ -94,7 +94,10 @@ class RequestBody extends AbstractDisposable implements BufferStreamSinkLike {
       throw new Error("Request body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamSinkFromWritable(() => createDisposableStream(this.req), false)
+    const sink = createBufferStreamSinkFromWritable(
+      () => createDisposableStream(this.req),
+      false,
+    )
       .enumerateAsync(scheduler, replayCount)
       .add(this);
     this.add(sink);
@@ -127,7 +130,9 @@ class ResponseBody extends AbstractDisposable implements BufferStreamLike {
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createBufferStreamFromReadable(() => createDisposableStream(this.resp))
+    const stream = createBufferStreamFromReadable(() =>
+      createDisposableStream(this.resp),
+    )
       .enumerateAsync(scheduler, replayCount)
       .add(this);
     this.add(stream);

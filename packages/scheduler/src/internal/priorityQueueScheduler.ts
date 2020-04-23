@@ -163,7 +163,10 @@ const delayedComparator = (a: ScheduledTask, b: ScheduledTask) => {
   return diff;
 };
 
-const scheduleContinuation = (scheduler: PriorityQueueScheduler, task: ScheduledTask) => {
+const scheduleContinuation = (
+  scheduler: PriorityQueueScheduler,
+  task: ScheduledTask,
+) => {
   const continuation = new PrioritySchedulerContinuation(scheduler);
   scheduler.inner = continuation;
 
@@ -171,12 +174,12 @@ const scheduleContinuation = (scheduler: PriorityQueueScheduler, task: Scheduled
   scheduler.dueTime = dueTime;
 
   const delay = dueTime - scheduler.now;
-  
+
   scheduler.hostScheduler.schedule(continuation, delay);
-}
+};
 
 const scheduleWithPriority = (
-  scheduler: PriorityQueueScheduler, 
+  scheduler: PriorityQueueScheduler,
   continuation: SchedulerContinuationLike,
   priority: number,
   delay = 0,
@@ -208,7 +211,7 @@ const scheduleWithPriority = (
       scheduleContinuation(scheduler, head);
     }
   }
-}
+};
 
 abstract class PriorityQueueScheduler extends AbstractSerialDisposable {
   inContinuation = false;
@@ -235,7 +238,8 @@ abstract class PriorityQueueScheduler extends AbstractSerialDisposable {
   }
 }
 
-class PrioritySchedulerImpl extends PriorityQueueScheduler implements PrioritySchedulerLike {
+class PrioritySchedulerImpl extends PriorityQueueScheduler
+  implements PrioritySchedulerLike {
   schedule(
     continuation: SchedulerContinuationLike,
     priority: number,
@@ -257,7 +261,8 @@ export const toPriorityScheduler = (
 ): DisposableLike & PrioritySchedulerLike =>
   new PrioritySchedulerImpl(hostScheduler);
 
-class PausableSchedulerImpl extends PriorityQueueScheduler implements PausableSchedulerLike {
+class PausableSchedulerImpl extends PriorityQueueScheduler
+  implements PausableSchedulerLike {
   private isPaused = true;
 
   pause() {
@@ -274,10 +279,7 @@ class PausableSchedulerImpl extends PriorityQueueScheduler implements PausableSc
     }
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    delay = 0,
-  ) {
+  schedule(continuation: SchedulerContinuationLike, delay = 0) {
     scheduleWithPriority(this, continuation, 0, delay);
     if (this.isPaused) {
       this.inner = disposed;

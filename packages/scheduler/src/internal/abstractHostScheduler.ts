@@ -5,19 +5,20 @@ import { DisposableLike } from "@reactive-js/disposable";
 const createCallback = (
   scheduler: AbstractHostScheduler,
   continuation: SchedulerContinuationLike,
-): ((shouldYield: Option<() => boolean>) => void) =>
-  (shouldYield: Option<() => boolean>) => {
-    if (!continuation.isDisposed) {
-      scheduler.inContinuation = true;
-      const delay = continuation.run(shouldYield);
-      scheduler.inContinuation = false;
+): ((shouldYield: Option<() => boolean>) => void) => (
+  shouldYield: Option<() => boolean>,
+) => {
+  if (!continuation.isDisposed) {
+    scheduler.inContinuation = true;
+    const delay = continuation.run(shouldYield);
+    scheduler.inContinuation = false;
 
-      if (!continuation.isDisposed) {
-        scheduler.schedule(continuation, delay);
-      }
+    if (!continuation.isDisposed) {
+      scheduler.schedule(continuation, delay);
     }
-  };
-  
+  }
+};
+
 export abstract class AbstractHostScheduler implements SchedulerLike {
   inContinuation: boolean = false;
 
@@ -25,9 +26,10 @@ export abstract class AbstractHostScheduler implements SchedulerLike {
 
   schedule(continuation: SchedulerContinuationLike, delay = 0): void {
     const callback = createCallback(this, continuation);
-    const callbackSubscription = delay > 0
-      ? this.scheduleDelayed(callback, delay)
-      : this.scheduleImmediate(callback);
+    const callbackSubscription =
+      delay > 0
+        ? this.scheduleDelayed(callback, delay)
+        : this.scheduleImmediate(callback);
     continuation.add(callbackSubscription);
   }
 

@@ -148,7 +148,7 @@ export type HttpMessage<T> = {
   readonly contentInfo?: HttpContentInfo;
   readonly headers: HttpHeaders;
   readonly preferences?: HttpPreferences;
-}
+};
 
 export type HttpRequest<T> = HttpMessage<T> & {
   // readonly authorization?: Credentials;
@@ -157,7 +157,7 @@ export type HttpRequest<T> = HttpMessage<T> & {
   readonly method: HttpMethod;
   // readonly pragma: readonly CacheDirective[];
   readonly preconditions?: HttpRequestPreconditions;
-  
+
   // readonly proxyAuthorization?: Credentials
   // readonly referer?: URILike;
   readonly uri: URILike;

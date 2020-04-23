@@ -9,7 +9,10 @@ import {
   StreamEventType,
   sink,
 } from "@reactive-js/async-enumerable";
-import { createDisposableValue, DisposableValueLike } from "@reactive-js/disposable";
+import {
+  createDisposableValue,
+  DisposableValueLike,
+} from "@reactive-js/disposable";
 import {
   ObservableLike,
   createObservable,

@@ -13,14 +13,13 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     if (result) {
       this.cb = result;
     }
-    return isSome(result) ? 0: -1;
+    return isSome(result) ? 0 : -1;
   }
 }
 
-export const schedule = (
-  callback: CallbackContinuation,
-  delay = 0,
-) => (scheduler: SchedulerLike): DisposableLike => {
+export const schedule = (callback: CallbackContinuation, delay = 0) => (
+  scheduler: SchedulerLike,
+): DisposableLike => {
   const continuation = new CallbackSchedulerContinuation(callback);
   scheduler.schedule(continuation, delay);
   return continuation;
