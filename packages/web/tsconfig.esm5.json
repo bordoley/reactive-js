@@ -4,6 +4,7 @@
     "lib": ["dom"],
     "module": "es2015",
     "outDir": "dist/esm5",
+    "removeComments": false,
     "rootDir": "src"
   }
 }
