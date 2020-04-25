@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "lib": ["DOM"],
+    "module": "ES2015",
+    "outDir": "./build/esm",
+    "rootDir": "./src"
+  },
+  "exclude": ["./build/esm", "./dist/js", "./test"]
+}

@@ -1,6 +1,10 @@
+.gitignore
+.npmignore
+tsconfig.*
 *.tsbuildinfo
+
+build/cjs
 docs
+scripts
 src
 test
-tsconfig.*
-typedoc.json

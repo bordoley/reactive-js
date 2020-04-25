@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "rootDir": "./src"
+  },
+  "exclude": ["./build/esm", "./dist/js", "./test"]
+}

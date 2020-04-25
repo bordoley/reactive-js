@@ -1,9 +1,6 @@
 {
   "name": "@reactive-js/node",
   "version": "0.0.37",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm5/index.js",
-  "types": "dist/types/index.d.ts",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -12,8 +9,6 @@
     "functional programming",
     "functional-reactive-programming",
     "ix",
-    "node",
-    "nodejs",
     "observable",
     "observables",
     "react",
@@ -28,7 +23,8 @@
     "state management",
     "state-management",
     "stream",
-    "streams"
+    "streams",
+    "web"
   ],
   "author": {
     "name": "David Bordoley",
@@ -40,28 +36,29 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.37",
-    "@reactive-js/disposable": "^0.0.37",
-    "@reactive-js/observable": "^0.0.37",
-    "@reactive-js/option": "^0.0.37",
-    "@reactive-js/scheduler": "^0.0.37",
-    "iconv-lite": "^0.5.1"
+    "@reactive-js/core": "^0.0.37",
+    "iconv-lite": "^0.5.1",
+    "mime-db": "^1.43.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.14",
+    "@types/mime-db": "^1.27.1",
+    "@types/node":"13.13.2",
     "jest": "^24.9.0",
+    "renamer": "^2.0.0",
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
+    "build": "yarn build-cjs && yarn make-dist && yarn dist-js && yarn docs",
     "build-cjs": "tsc -p tsconfig.cjs.json",
-    "build-esm5": "tsc -p tsconfig.esm5.json",
-    "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json",
+    "dist-js": "rm -rf ./dist/js && cp  -r ./build/cjs/ ./dist/js",
+    "clean": "rm -rf build *rm -rf dist && rm -rf docs",
+    "docs": "node ./scripts/docs.mjs",
+    "make-dist": "mkdir -p ./dist",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
   },
   "jest": {
     "preset": "ts-jest",

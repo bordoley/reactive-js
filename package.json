@@ -3,16 +3,16 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "clean": "rimraf packages/**/dist packages/**/tsconfig.tsbuildinfo packages/**/coverage",
-    "docs": "lerna run docs",
-    "example": "node ./packages/example/dist/index.js",
-    "example-debug": "node --inspect-brk ./packages/example/dist/index.js",
+    "clean": "lerna run clean",
+    "example": "node ./packages/example/build/cjs/example-server",
+    "example-debug": "node --inspect-brk ./packages/example/build/cjs/example-server",
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
-    "perf": "NODE_ENV=production node ./packages/perf/dist/index.js",
+    "perf": "NODE_ENV=production node ./packages/perf/build/cjs/index.js",
     "test": "lerna run test",
     "test-coverage": "lerna run test-coverage"
   },
+  "type": "module",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
@@ -26,8 +26,7 @@
     "eslint-plugin-sort-class-members": "^1.6.0",
     "lerna": "^3.18.4",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
-    "typedoc": "^0.15.3",
+    "typedoc": "0.17.0-3",
     "typedoc-plugin-markdown": "^2.2.11",
     "typedoc-plugin-no-inherit": "^1.1.10",
     "typescript": "^3.8.3"

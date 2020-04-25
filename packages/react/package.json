@@ -1,9 +1,7 @@
 {
   "name": "@reactive-js/react",
   "version": "0.0.37",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm5/index.js",
-  "types": "dist/types/index.d.ts",
+  "type": "module",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -26,7 +24,8 @@
     "state management",
     "state-management",
     "stream",
-    "streams"
+    "streams",
+    "web"
   ],
   "author": {
     "name": "David Bordoley",
@@ -38,24 +37,33 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/async-enumerable": "^0.0.37",
-    "@reactive-js/disposable": "^0.0.37",
-    "@reactive-js/observable": "^0.0.37",
-    "@reactive-js/option": "^0.0.37",
-    "@reactive-js/pipe": "^0.0.37",
-    "@reactive-js/react-scheduler": "^0.0.37",
-    "@reactive-js/scheduler": "^0.0.37",
-    "react": "^16.11.0"
+    "@reactive-js/core": "^0.0.37",
+    "react": "^16.11.0",
+    "scheduler": "^0.17.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11"
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.11",
+    "@types/scheduler": "^0.16.1",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-cjs & yarn build-esm5 & yarn build-types",
-    "build-cjs": "tsc -p tsconfig.cjs.json",
-    "build-esm5": "tsc -p tsconfig.esm5.json",
-    "build-types": "tsc -p tsconfig.types.json",
-    "docs": "typedoc --tsconfig tsconfig.doc.json"
+    "build": "yarn build-esm && yarn make-dist && yarn dist-js && yarn docs",
+    "build-esm": "tsc -p tsconfig.esm.json",
+    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js",
+    "clean": "rm -rf build && rm -rf dist && rm -rf docs",
+    "docs": "node ./scripts/docs.js",
+    "make-dist": "mkdir -p ./dist",
+    "typecheck": "tsc -p tsconfig.typecheck.json"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.esm.json"
+      }
+    }
   },
   "publishConfig": {
     "access": "public"
