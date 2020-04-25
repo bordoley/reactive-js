@@ -1,0 +1,12 @@
+.gitignore
+.npmignore
+tsconfig.*
+*.tsbuildinfo
+
+build/cjs
+build/esm
+dist/ts
+docs
+scripts
+src
+test

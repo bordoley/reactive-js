@@ -1,7 +1,5 @@
 .DS_Store
 coverage
-dist
-dist.esnext
 node_modules
 
 lerna-debug.log

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["DOM"],
+    "module": "CommonJS",
+    "outDir": "./build/cjs",
+    "rootDir": "./src"
+  },
+  "include": ["./src/example-server.ts"],
+  "exclude": ["./build/cjs", "./build/esm", "./test"]
+}

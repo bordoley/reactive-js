@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "module": "ES2015",
+    "outDir": "./build/esm",
+    "rootDir": "./src"
+  },
+  "exclude": ["./build/cjs", "./build/esm", "./dist/js", "./dist/ts", "./test"]
+}

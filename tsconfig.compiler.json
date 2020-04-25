@@ -15,9 +15,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
-    "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES6"
+    "target": "ES2018"
   }
 }

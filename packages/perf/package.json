@@ -2,48 +2,15 @@
   "name": "@reactive-js/perf",
   "version": "0.0.37",
   "private": true,
-  "keywords": [
-    "asynchronous",
-    "data flow",
-    "data-flow",
-    "frp",
-    "functional programming",
-    "functional-reactive-programming",
-    "ix",
-    "observable",
-    "observables",
-    "react",
-    "reactjs",
-    "reactive",
-    "reactive-extensions",
-    "reactive-js",
-    "reactive-x",
-    "rx",
-    "rxjs",
-    "scheduler",
-    "state management",
-    "state-management",
-    "stream",
-    "streams"
-  ],
-  "author": {
-    "name": "David Bordoley",
-    "email": "bordoley@gmail.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bordoley/reactive-js.git"
-  },
   "dependencies": {
-    "@reactive-js/observable": "^0.0.37",
-    "@reactive-js/pipe": "^0.0.37",
-    "@reactive-js/scheduler": "^0.0.37",
+    "@reactive-js/core": "^0.0.37",
     "benchmark": "^2.1.4",
     "callbag-basics": "^3.2.0",
     "rxjs": "^6.5.3"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "yarn build-cjs",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "clean": "rm -rf build"
   }
 }
