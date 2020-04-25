@@ -19,8 +19,6 @@ export const run = (n: number) => {
       } = require("@reactive-js/core/dist/js/observable");
       const { run } = require("./reactive-js-runner");
 
-      debugger;
-
       const observable = pipe(
         fromArray(src),
         map(add1),

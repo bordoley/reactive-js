@@ -1,7 +1,9 @@
-import { Operator } from "../../pipe";
+import { observe } from "./observe";
+import { Operator, pipe } from "../../pipe";
 import { SchedulerLike } from "../../scheduler";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { createSubject } from "./subject";
+import { subscribe } from "./subscribe";
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -14,7 +16,7 @@ export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
 ): Operator<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
-  const subject = createSubject<T>(scheduler, replayCount);
-  observable.subscribe(subject);
+  const subject = createSubject<T>(replayCount);
+  subject.add(pipe(observable, observe(subject), subscribe(scheduler)));
   return subject;
 };

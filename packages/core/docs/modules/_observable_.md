@@ -763,7 +763,7 @@ ___
 
 ### `Const` createSubject
 
-▸ **createSubject**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
+▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
 Returns a new `SubjectLike` instance.
 
@@ -775,7 +775,6 @@ Returns a new `SubjectLike` instance.
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | The scheduler that should be used by sources to notify the `SubjectLike` instance. |
 `replayCount` | number | 0 | The number of events that should be replayed when the `SubjectLike` instance is subscribed to.  |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*

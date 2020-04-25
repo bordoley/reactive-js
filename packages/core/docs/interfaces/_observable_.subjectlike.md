@@ -10,7 +10,7 @@ A `MulticastObservableLike` that is also `SubscriberLike`.
 
 ## Hierarchy
 
-  ↳ [SubscriberLike](_observable_.subscriberlike.md)‹T›
+* [ObserverLike](_observable_.observerlike.md)‹T›
 
   ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)‹T›
 

@@ -94,7 +94,7 @@ export interface MulticastObservableLike<T>
  * @noInheritDoc
  */
 export interface SubjectLike<T>
-  extends SubscriberLike<T>,
+  extends ObserverLike<T>,
     MulticastObservableLike<T> {}
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */

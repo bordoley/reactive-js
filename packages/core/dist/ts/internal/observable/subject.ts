@@ -1,28 +1,22 @@
-import { SchedulerLike } from "../../scheduler.ts";
 import { SafeSubscriberLike, SubjectLike, SubscriberLike } from "./interfaces.ts";
-import {
-  AbstractSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
 import { toSafeSubscriber } from "./toSafeSubscriber.ts";
+import { AbstractDisposable } from "../../disposable.ts";
 
-class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
+class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   private readonly subscribers: Set<SafeSubscriberLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
   readonly isSynchronous = false;
 
-  constructor(scheduler: SchedulerLike, private readonly replayCount: number) {
-    super(scheduler);
+  constructor(private readonly replayCount: number) {
+    super();
   }
 
   get subscriberCount() {
     return this.subscribers.size;
   }
 
-  notify(next: T): void {
-    assertSubscriberNotifyInContinuation(this);
-
+  onNotify(next: T): void {
     if (!this.isDisposed) {
       const replayed = this.replayed;
       const replayCount = this.replayCount;
@@ -38,6 +32,10 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
         subscriber.dispatch(next);
       }
     }
+  }
+
+  onDispose() {
+    this.dispose();
   }
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -71,6 +69,5 @@ class SubjectImpl<T> extends AbstractSubscriber<T> implements SubjectLike<T> {
  * is subscribed to.
  */
 export const createSubject = <T>(
-  scheduler: SchedulerLike,
   replayCount = 0,
-): SubjectLike<T> => new SubjectImpl(scheduler, replayCount);
+): SubjectLike<T> => new SubjectImpl(replayCount);

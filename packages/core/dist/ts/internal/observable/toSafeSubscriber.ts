@@ -1,26 +1,26 @@
-import { AbstractSchedulerContinuation } from "../../scheduler.ts";
+import { AbstractSchedulerContinuation, SchedulerLike } from "../../scheduler.ts";
 import { alwaysFalse } from "./functions.ts";
 import { SafeSubscriberLike, SubscriberLike } from "./interfaces.ts";
-import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { AbstractSubscriber } from "./subscriber.ts";
+import { Exception } from "../../disposable.ts";
 
 class SafeSubscriberSchedulerContinuation<
   T
 > extends AbstractSchedulerContinuation {
-  constructor(private readonly subscriber: SafeSubscriberImpl<T>) {
+  constructor(private readonly subscriber: AbstractSafeSubscriber<T>) {
     super();
   }
 
   produce(shouldYield?: () => boolean): number {
     const subscriber = this.subscriber;
     const nextQueue = subscriber.nextQueue;
-    const delegate = subscriber.delegate;
 
     shouldYield = shouldYield ?? alwaysFalse;
 
     try {
-      while (nextQueue.length > 0 && !delegate.isDisposed) {
+      while (nextQueue.length > 0 && !this.isDisposed) {
         const next = nextQueue.shift() as T;
-        delegate.notify(next);
+        subscriber.onNotify(next);
 
         const hasRemainingEvents =
           subscriber.nextQueue.length > 0 || subscriber.isDisposed;
@@ -31,38 +31,42 @@ class SafeSubscriberSchedulerContinuation<
       }
 
       if (subscriber.isDisposed) {
-        delegate.dispose(subscriber.error);
+        subscriber.onDispose(subscriber.error);
       }
     } catch (cause) {
-      delegate.dispose({ cause });
+      subscriber.onDispose({ cause });
     }
 
     return -1;
   }
 }
 
-const scheduleDrainQueue = <T>(subscriber: SafeSubscriberImpl<T>) => {
+const scheduleDrainQueue = <T>(subscriber: AbstractSafeSubscriber<T>) => {
   const remainingEvents =
     subscriber.nextQueue.length + (subscriber.isDisposed ? 1 : 0);
   if (remainingEvents === 1) {
     const producer = new SafeSubscriberSchedulerContinuation(subscriber);
-    subscriber.delegate.schedule(producer);
+    subscriber.scheduler.schedule(producer);
   }
 };
 
-class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
+export abstract class AbstractSafeSubscriber<T> extends AbstractSubscriber<T>
   implements SafeSubscriberLike<T> {
   readonly nextQueue: Array<T> = [];
 
-  constructor(readonly subscriber: SubscriberLike<T>) {
-    super(subscriber);
+  constructor(scheduler: SchedulerLike) {
+    super(scheduler);
     this.add(_ => {
       scheduleDrainQueue(this);
     });
   }
 
+  abstract onNotify(next: T): void;
+
+  abstract onDispose(e?: Exception): void;
+
   notify(next: T): void {
-    this.delegate.notify(next);
+    this.onNotify(next)
   }
 
   dispatch(next: T): void {
@@ -70,6 +74,24 @@ class SafeSubscriberImpl<T> extends AbstractDelegatingSubscriber<T, T>
       this.nextQueue.push(next);
       scheduleDrainQueue(this);
     }
+  }
+}
+
+
+class SafeSubscriberImpl<T> extends AbstractSafeSubscriber<T>
+  implements SafeSubscriberLike<T> {
+
+  constructor(readonly delegate: SubscriberLike<T>) {
+    super(delegate);
+    delegate.add(this);
+  }
+
+  onDispose(e?: Exception) {
+    this.delegate.dispose(e);
+  }
+
+  onNotify(next: T): void {
+    this.delegate.notify(next);
   }
 }
 

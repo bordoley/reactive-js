@@ -21,8 +21,6 @@ to receive notifications.
 
   ↳ [SafeSubscriberLike](_observable_.safesubscriberlike.md)
 
-  ↳ [SubjectLike](_observable_.subjectlike.md)
-
 ## Implemented by
 
 * [AbstractDelegatingSubscriber](../classes/_observable_.abstractdelegatingsubscriber.md)
