@@ -16,6 +16,8 @@ import { publish } from "./publish";
 import { takeLast } from "./takeLast";
 import { share } from "./share";
 import { concat } from "./concat";
+import { observe } from "./observe";
+import { subscribe } from "./subscribe";
 
 const subscribeSwitchingMode = <T, TAcc>(
   subscriber: SubscriberLike<TAcc>,
@@ -23,20 +25,27 @@ const subscribeSwitchingMode = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
   initialValue: () => TAcc,
 ) => {
-  const accFeedbackSubject = createSubject<TAcc>(subscriber, 1);
+  const accFeedbackSubject = createSubject<TAcc>(1);
   subscriber.add(accFeedbackSubject);
 
-  concat(
-    compute(initialValue),
+  subscriber.add(
     pipe(
-      src,
-      withLatestFrom<T, TAcc, ObservableLike<TAcc>>(
-        accFeedbackSubject,
-        (next, acc) => scanner(acc, next),
+      concat(
+        compute(initialValue),
+        pipe(
+          src,
+          withLatestFrom<T, TAcc, ObservableLike<TAcc>>(
+            accFeedbackSubject,
+            (next, acc) => scanner(acc, next),
+          ),
+          switchAll<TAcc>(),
+        ),
+
       ),
-      switchAll<TAcc>(),
-    ),
-  ).subscribe(accFeedbackSubject);
+      observe(accFeedbackSubject),
+      subscribe(subscriber)
+    )
+  );
 
   pipe(accFeedbackSubject, skipFirst()).subscribe(subscriber);
 };
@@ -48,7 +57,7 @@ const subscribeQueingMode = <T, TAcc>(
   initialValue: () => TAcc,
 ) => {
   const createGenerator = (next: T) => (acc: TAcc) => scanner(acc, next);
-  const accFeedbackSubject = createSubject<TAcc>(subscriber);
+  const accFeedbackSubject = createSubject<TAcc>();
 
   const generatorStream = pipe(src, map(createGenerator));
   const acc = pipe(
@@ -58,8 +67,15 @@ const subscribeQueingMode = <T, TAcc>(
     publish(subscriber),
   );
 
-  concat(compute(initialValue), pipe(acc, concatMap(takeLast()))).subscribe(
-    accFeedbackSubject,
+  subscriber.add(
+    pipe(
+      concat(
+        compute(initialValue), 
+        pipe(acc, concatMap(takeLast())),
+      ),
+      observe(accFeedbackSubject),
+      subscribe(subscriber),
+    )
   );
 
   pipe(acc, concatAll()).subscribe(subscriber);

@@ -1,4 +1,8 @@
-import { StreamableLike, createStreamable, map as mapStream } from "./streamable.ts";
+import {
+  StreamableLike,
+  createStreamable,
+  map as mapStream,
+} from "./streamable.ts";
 import { Operator, compose, pipe } from "./pipe.ts";
 import {
   ObservableLike,
@@ -58,8 +62,7 @@ const onEmptyOperator = compose(
   takeFirst(),
 );
 
-export const empty = <T>(): FlowableLike<T> =>
-  createFlowable(onEmptyOperator);
+export const empty = <T>(): FlowableLike<T> => createFlowable(onEmptyOperator);
 
 const ofValueOperator = <T>(data: T) =>
   genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
@@ -77,7 +80,9 @@ const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
   acc: T,
   ev: FlowMode,
 ): ObservableLike<T> =>
-  ev === FlowMode.Resume ? generateObs(generator, () => acc, delay) : emptyObs();
+  ev === FlowMode.Resume
+    ? generateObs(generator, () => acc, delay)
+    : emptyObs();
 
 export const generate = <T>(
   generator: (acc: T) => T,

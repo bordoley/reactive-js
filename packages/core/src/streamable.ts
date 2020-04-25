@@ -3,7 +3,6 @@ import {
   SafeSubscriberLike,
   ObservableOperator,
   createSubject,
-  toSafeSubscriber,
   publish,
   SubscriberLike,
   AbstractDelegatingSubscriber,
@@ -23,6 +22,9 @@ import {
 import { SchedulerLike } from "./scheduler";
 import { pipe } from "./pipe";
 import { none } from "./option";
+import { AbstractSafeSubscriber } from "./internal/observable/toSafeSubscriber";
+import { SubjectLike } from "./internal/observable/interfaces";
+import { Exception } from "./disposable";
 
 /** @noInheritDoc */
 export interface StreamLike<TReq, T>
@@ -66,13 +68,28 @@ class StreamImpl<TReq, T> extends AbstractDelegatingSubscriber<TReq, TReq>
   }
 }
 
+class SafeSubjectSubscriber<T> extends AbstractSafeSubscriber<T> {
+  constructor(scheduler: SchedulerLike, private readonly subject: SubjectLike<T>) {
+    super(scheduler);
+    this.add(subject);
+  }
+
+  onDispose(e?: Exception) {
+    this.subject.onDispose(e);
+  }
+
+  onNotify(next: T): void {
+    this.subject.onNotify(next);
+  }
+}
+
 const createStream = <TReq, TData>(
   op: ObservableOperator<TReq, TData>,
   scheduler: SchedulerLike,
   replayCount?: number,
 ): StreamLike<TReq, TData> => {
-  const subject = createSubject<TReq>(scheduler);
-  const safeSubscriber = toSafeSubscriber(subject);
+  const subject = createSubject<TReq>();
+  const safeSubscriber = new SafeSubjectSubscriber(scheduler, subject);
   const observable = pipe(subject, op, publish(scheduler, replayCount));
 
   return new StreamImpl(safeSubscriber, observable);
@@ -95,8 +112,8 @@ export const createStreamable = <TReq, TData>(
 
 const _identity = {
   stream: (scheduler: SchedulerLike, replayCount = 0) => {
-    const subject = createSubject(scheduler, replayCount);
-    const safeSubscriber = toSafeSubscriber(subject);
+    const subject = createSubject(replayCount);
+    const safeSubscriber = new SafeSubjectSubscriber(scheduler, subject);
 
     return new StreamImpl(safeSubscriber, subject);
   },

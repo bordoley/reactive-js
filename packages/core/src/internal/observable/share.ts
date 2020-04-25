@@ -7,6 +7,9 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { createSubject } from "./subject";
+import { pipe } from "../../pipe";
+import { observe } from "./observe";
+import { subscribe } from "./subscribe";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private subscriberCount = 0;
@@ -25,12 +28,15 @@ class SharedObservable<T> implements ObservableLike<T> {
   constructor(
     private readonly factory: () => SubjectLike<T>,
     private readonly source: ObservableLike<T>,
+    private readonly scheduler: SchedulerLike,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>): void {
     if (this.subscriberCount === 0) {
       this.subject = this.factory();
-      this.source.subscribe(this.subject);
+      this.subject.add(
+        pipe(this.source, observe(this.subject), subscribe(this.scheduler))
+      );
     }
     this.subscriberCount++;
 
@@ -54,6 +60,6 @@ export const share = <T>(
   scheduler: SchedulerLike,
   replayCount?: number,
 ): ObservableOperator<T, T> => {
-  const factory = () => createSubject(scheduler, replayCount);
-  return observable => new SharedObservable(factory, observable);
+  const factory = () => createSubject(replayCount);
+  return observable => new SharedObservable(factory, observable, scheduler);
 };

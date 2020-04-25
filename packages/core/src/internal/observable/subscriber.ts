@@ -33,7 +33,7 @@ export abstract class AbstractSubscriber<T> extends AbstractDisposable
   implements SubscriberLike<T> {
   inContinuation = false;
 
-  constructor(private readonly scheduler: SchedulerLike) {
+  constructor(readonly scheduler: SchedulerLike) {
     super();
     this.scheduler = scheduler;
   }
