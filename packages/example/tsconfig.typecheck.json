@@ -6,5 +6,12 @@
     "noEmit": true,
     "rootDir": "./src"
   },
-  "exclude": ["./dist/cjs", "./dist/esm", "./dist/mjs", "./dist/ts", "./test", "./ts"]
+  "exclude": [
+    "./dist/cjs",
+    "./dist/esm",
+    "./dist/mjs",
+    "./dist/ts",
+    "./test",
+    "./ts"
+  ]
 }

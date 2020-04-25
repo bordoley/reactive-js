@@ -10,7 +10,10 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
-import { createDisposable, DisposableLike } from "@reactive-js/core/dist/js/disposable";
+import {
+  createDisposable,
+  DisposableLike,
+} from "@reactive-js/core/dist/js/disposable";
 import { none } from "@reactive-js/core/dist/js/option";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import {

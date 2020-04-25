@@ -16,7 +16,7 @@ const dispose = (writable: Readable | Writable | Transform) => {
   writable.destroy();
 };
 
-export const createDisposableStream = <
+export const createDisposableNodeStream = <
   T extends Readable | Writable | Transform
 >(
   stream: T,

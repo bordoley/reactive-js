@@ -3,11 +3,7 @@ import {
   createSetMultimap,
   createUniqueQueue,
 } from "./collections.ts";
-import {
-  AbstractDisposable,
-  DisposableLike,
-  disposed,
-} from "./disposable.ts";
+import { AbstractDisposable, DisposableLike, disposed } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import {
   ObservableLike,

@@ -53,7 +53,7 @@ ___
 
 #### Type declaration:
 
-* **location**: *AsyncEnumerableLike‹StateUpdater‹[RelativeURI](_router_.md#relativeuri)›, [RelativeURI](_router_.md#relativeuri)›*
+* **location**: *StateStoreLike‹[RelativeURI](_router_.md#relativeuri)›*
 
 * **notFound**: *React.ComponentType‹[RoutableComponentProps](_router_.md#routablecomponentprops)›*
 

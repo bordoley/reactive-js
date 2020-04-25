@@ -1,4 +1,7 @@
-import { createObservable, ObservableLike } from "@reactive-js/core/dist/js/observable";
+import {
+  createObservable,
+  ObservableLike,
+} from "@reactive-js/core/dist/js/observable";
 import { none } from "@reactive-js/core/dist/js/option";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(

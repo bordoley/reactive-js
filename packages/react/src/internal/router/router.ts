@@ -1,13 +1,13 @@
-import {
-  StateUpdater,
-  AsyncEnumerableLike,
-  lift,
-} from "@reactive-js/core/dist/js/async-enumerable";
+import { lift } from "@reactive-js/core/dist/js/streamable";
 import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
-import { useAsyncEnumerable } from "../../hooks";
+import { useStreamable } from "../../hooks";
 import { scan } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { createElement, useMemo, ReactElement } from "react";
+import {
+  StateUpdater,
+  StateStoreLike,
+} from "@reactive-js/core/dist/js/stateStore";
 
 export type RelativeURI = {
   readonly hash: string;
@@ -32,10 +32,7 @@ type RouteMap = {
 };
 
 export type RouterProps = {
-  readonly location: AsyncEnumerableLike<
-    StateUpdater<RelativeURI>,
-    RelativeURI
-  >;
+  readonly location: StateStoreLike<RelativeURI>;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: readonly [
     string,
@@ -74,7 +71,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
     [location],
   );
 
-  const [locationState, uriUpdater] = useAsyncEnumerable(pairifiedLocation, {
+  const [locationState, uriUpdater] = useStreamable(pairifiedLocation, {
     replay: 1,
   });
 

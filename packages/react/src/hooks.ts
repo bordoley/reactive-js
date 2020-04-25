@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  AsyncEnumeratorLike,
-  AsyncEnumerableLike,
-} from "@reactive-js/core/dist/js/async-enumerable";
+  StreamLike,
+  StreamableLike,
+} from "@reactive-js/core/dist/js/streamable";
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
@@ -85,8 +85,8 @@ export const useObservable = <T>(
   return state;
 };
 
-export const useAsyncEnumerable = <TReq, T>(
-  enumerable: AsyncEnumerableLike<TReq, T>,
+export const useStreamable = <TReq, T>(
+  streamable: StreamableLike<TReq, T>,
   config: {
     scheduler?: SchedulerLike;
     replay?: number;
@@ -97,33 +97,33 @@ export const useAsyncEnumerable = <TReq, T>(
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const [enumerator, updateEnumerator] = useState<
-    Option<AsyncEnumeratorLike<TReq, T>>
-  >(none);
-  const enumeratorRef = useRef<Option<AsyncEnumeratorLike<TReq, T>>>(none);
+  const [stream, updateEnumerator] = useState<Option<StreamLike<TReq, T>>>(
+    none,
+  );
+  const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
-    const enumerator = enumerable.enumerateAsync(scheduler, replay);
-    enumeratorRef.current = enumerator;
+    const stream = streamable.stream(scheduler, replay);
+    streamRef.current = stream;
 
-    updateEnumerator(_ => enumerator);
+    updateEnumerator(_ => stream);
 
     return () => {
-      enumeratorRef.current = undefined;
-      enumerator.dispose();
+      streamRef.current = undefined;
+      stream.dispose();
     };
-  }, [enumerable, scheduler, replay, updateEnumerator]);
+  }, [streamable, scheduler, replay, updateEnumerator]);
 
   const notify = useCallback(
     req => {
-      const enumerator = enumeratorRef.current;
-      if (isSome(enumerator)) {
-        enumerator.dispatch(req);
+      const stream = streamRef.current;
+      if (isSome(stream)) {
+        stream.dispatch(req);
       }
     },
-    [enumeratorRef],
+    [streamRef],
   );
 
-  const value = useObservable(enumerator ?? never<T>(), stateScheduler);
+  const value = useObservable(stream ?? never<T>(), stateScheduler);
   return [value, notify];
 };

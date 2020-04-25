@@ -37,7 +37,7 @@ ___
 
 • **isDisposed**: *boolean*
 
-*Inherited from void*
+*Inherited from [DisposableLike](_disposable_.disposablelike.md).[isDisposed](_disposable_.disposablelike.md#isdisposed)*
 
 `true` if this resource has been disposed, otherwise false
 
@@ -47,7 +47,7 @@ ___
 
 ▸ **add**(`disposable`: [DisposableLike](_disposable_.disposablelike.md) | function): *this*
 
-*Inherited from void*
+*Inherited from [DisposableLike](_disposable_.disposablelike.md).[add](_disposable_.disposablelike.md#add)*
 
 Adds the given disposable to this container or disposes it if the container has been disposed.
 
@@ -67,7 +67,7 @@ ___
 
 ▸ **dispose**(`error?`: [Exception](../modules/_disposable_.md#exception)): *void*
 
-*Inherited from void*
+*Inherited from [DisposableLike](_disposable_.disposablelike.md).[dispose](_disposable_.disposablelike.md#dispose)*
 
 Dispose the resource. The operation is idempotent.
 

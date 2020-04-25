@@ -28,9 +28,10 @@ export interface EnumerableLike<T> {
   enumerate(): EnumeratorLike<T>;
 }
 
-export type EnumeratorOperator<TA, TB> = 
-  (a: EnumeratorLike<TA>) => EnumeratorLike<TB>
+export type EnumeratorOperator<TA, TB> = (
+  a: EnumeratorLike<TA>,
+) => EnumeratorLike<TB>;
 
-
-export type EnumerableOperator<TA, TB> = 
-  (a: EnumerableLike<TA>) => EnumerableLike<TB>
+export type EnumerableOperator<TA, TB> = (
+  a: EnumerableLike<TA>,
+) => EnumerableLike<TB>;

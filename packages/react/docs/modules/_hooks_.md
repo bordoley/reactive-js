@@ -6,36 +6,10 @@
 
 ### Functions
 
-* [useAsyncEnumerable](_hooks_.md#const-useasyncenumerable)
 * [useObservable](_hooks_.md#const-useobservable)
+* [useStreamable](_hooks_.md#const-usestreamable)
 
 ## Functions
-
-### `Const` useAsyncEnumerable
-
-▸ **useAsyncEnumerable**<**TReq**, **T**>(`enumerable`: AsyncEnumerableLike‹TReq, T›, `config`: object): *[Option‹T›, function]*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **enumerable**: *AsyncEnumerableLike‹TReq, T›*
-
-▪`Default value`  **config**: *object*= {}
-
-Name | Type |
------- | ------ |
-`replay?` | number |
-`scheduler?` | SchedulerLike |
-`stateScheduler?` | SchedulerLike |
-
-**Returns:** *[Option‹T›, function]*
-
-___
 
 ### `Const` useObservable
 
@@ -55,3 +29,29 @@ Name | Type | Default | Description |
 `scheduler` | SchedulerLike | normalPriority | An optional scheduler used when subscribing to `observable`. The default is React's normal priority scheduler.  |
 
 **Returns:** *Option‹T›*
+
+___
+
+### `Const` useStreamable
+
+▸ **useStreamable**<**TReq**, **T**>(`streamable`: StreamableLike‹TReq, T›, `config`: object): *[Option‹T›, function]*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **streamable**: *StreamableLike‹TReq, T›*
+
+▪`Default value`  **config**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`replay?` | number |
+`scheduler?` | SchedulerLike |
+`stateScheduler?` | SchedulerLike |
+
+**Returns:** *[Option‹T›, function]*

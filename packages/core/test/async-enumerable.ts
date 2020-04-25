@@ -16,9 +16,6 @@ import {
   fromArray,
   fromIterable,
   generate,
-  identity,
-  liftReq,
-  map,
 } from "../src/async-enumerable";
 
 test("reduce", () => {
@@ -99,7 +96,7 @@ test("reduceAsync", () => {
 
 test("fromArray", () => {
   const scheduler = createVirtualTimeScheduler();
-  const enumerator = fromArray([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
+  const enumerator = fromArray([1, 2, 3, 4, 5, 6]).stream(scheduler);
 
   const result: number[] = [];
   pipe(
@@ -119,7 +116,7 @@ test("fromArray", () => {
 
 test("fromIterable", () => {
   const scheduler = createVirtualTimeScheduler();
-  const enumerator = fromIterable([1, 2, 3, 4, 5, 6]).enumerateAsync(scheduler);
+  const enumerator = fromIterable([1, 2, 3, 4, 5, 6]).stream(scheduler);
 
   const result: number[] = [];
   let error: Option<Exception> = none;
@@ -150,7 +147,7 @@ test("generate", () => {
   const enumerator = generate(
     x => x + 1,
     () => 0,
-  ).enumerateAsync(scheduler);
+  ).stream(scheduler);
 
   const result: number[] = [];
   pipe(
@@ -166,58 +163,4 @@ test("generate", () => {
   scheduler.run();
 
   expect(result).toEqual([1, 2, 3]);
-});
-
-test("liftReq", () => {
-  const scheduler = createVirtualTimeScheduler();
-
-  const lifted = pipe(
-    identity<string>(),
-    liftReq((x: number) => (x + 100).toLocaleString()),
-    liftReq(({ val }: { val: number }) => val),
-  );
-
-  const enumerator = lifted.enumerateAsync(scheduler);
-
-  const result: string[] = [];
-  pipe(
-    enumerator,
-    onNotify(x => result.push(x)),
-    subscribe(scheduler),
-  );
-
-  enumerator.dispatch({ val: 10 });
-  enumerator.dispatch({ val: 20 });
-  enumerator.dispatch({ val: 30 });
-
-  scheduler.run();
-
-  expect(result).toEqual(["110", "120", "130"]);
-});
-
-test("liftReq", () => {
-  const scheduler = createVirtualTimeScheduler();
-
-  const lifted = pipe(
-    identity<number>(),
-    map(x => x + 100),
-    map(x => ({ x })),
-  );
-
-  const enumerator = lifted.enumerateAsync(scheduler);
-
-  const result: { x: number }[] = [];
-  pipe(
-    enumerator,
-    onNotify(x => result.push(x)),
-    subscribe(scheduler),
-  );
-
-  enumerator.dispatch(0);
-  enumerator.dispatch(1);
-  enumerator.dispatch(2);
-
-  scheduler.run();
-
-  expect(result).toEqual([{ x: 100 }, { x: 101 }, { x: 102 }]);
 });

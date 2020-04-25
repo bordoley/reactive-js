@@ -3,11 +3,7 @@ import {
   createSetMultimap,
   createUniqueQueue,
 } from "./collections";
-import {
-  AbstractDisposable,
-  DisposableLike,
-  disposed,
-} from "./disposable";
+import { AbstractDisposable, DisposableLike, disposed } from "./disposable";
 import { first, forEach, fromIterable } from "./enumerable";
 import {
   ObservableLike,

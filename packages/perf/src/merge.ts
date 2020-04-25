@@ -27,7 +27,11 @@ export const run = (m: number, n: number) => {
   suite
     .add("reactive-js", () => {
       const { pipe } = require("@reactive-js/core/dist/js/pipe");
-      const { fromArray, merge, reduce } = require("@reactive-js/core/dist/js/observable");
+      const {
+        fromArray,
+        merge,
+        reduce,
+      } = require("@reactive-js/core/dist/js/observable");
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray(x));

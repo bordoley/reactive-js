@@ -10,6 +10,7 @@
 * ["collections"](modules/_collections_.md)
 * ["disposable"](modules/_disposable_.md)
 * ["enumerable"](modules/_enumerable_.md)
+* ["flowable"](modules/_flowable_.md)
 * ["http"](modules/_http_.md)
 * ["http-client"](modules/_http_client_.md)
 * ["http-server"](modules/_http_server_.md)
@@ -20,3 +21,5 @@
 * ["reactive-cache"](modules/_reactive_cache_.md)
 * ["resource-manager"](modules/_resource_manager_.md)
 * ["scheduler"](modules/_scheduler_.md)
+* ["stateStore"](modules/_statestore_.md)
+* ["streamable"](modules/_streamable_.md)

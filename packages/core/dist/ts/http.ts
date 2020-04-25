@@ -39,7 +39,9 @@ export {
   HttpExtensionHeader,
 } from "./internal/http/httpHeaders.ts";
 
-export { parseMediaType, parseMediaTypeOrThrow } from "./internal/http/mediaType.ts";
+export {
+  parseMediaType,
+  parseMediaTypeOrThrow,
+} from "./internal/http/mediaType.ts";
 
 export { parseHeaders } from "./internal/http/httpGrammar.ts";
-

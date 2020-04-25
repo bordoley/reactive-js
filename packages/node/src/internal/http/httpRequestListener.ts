@@ -1,11 +1,7 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import {
-  StreamMode,
-  StreamEvent,
-  sink,
-  AsyncEnumeratorLike,
-} from "@reactive-js/core/dist/js/async-enumerable";
+import { FlowMode, FlowEvent } from "@reactive-js/core/dist/js/flowable";
+import { sink, StreamLike } from "@reactive-js/core/dist/js/streamable";
 import {
   writeHttpResponseHeaders,
   HttpMethod,
@@ -16,11 +12,11 @@ import {
 } from "@reactive-js/core/dist/js/http";
 import { HttpServer } from "@reactive-js/core/dist/js/http-server";
 import {
-  createBufferStreamFromReadable,
-  BufferStreamLike,
-  createBufferStreamSinkFromWritable,
-  BufferStreamSinkLike,
-  createDisposableStream,
+  createBufferFlowableFromReadable,
+  BufferFlowableLike,
+  createBufferFlowableSinkFromWritable,
+  BufferFlowableSinkLike,
+  createDisposableNodeStream,
 } from "../../streams";
 import {
   ObservableLike,
@@ -36,7 +32,7 @@ import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { AbstractDisposable } from "@reactive-js/core/dist/js/disposable";
 import { isSome } from "@reactive-js/core/dist/js/option";
 
-class RequestBody extends AbstractDisposable implements BufferStreamLike {
+class RequestBody extends AbstractDisposable implements BufferFlowableLike {
   private consumed = false;
 
   constructor(readonly req: IncomingMessage) {
@@ -61,25 +57,26 @@ class RequestBody extends AbstractDisposable implements BufferStreamLike {
     req.on("error", onError);
   }
 
-  enumerateAsync(
+  stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorLike<StreamMode, StreamEvent<Buffer>> {
+  ): StreamLike<FlowMode, FlowEvent<Buffer>> {
     if (this.consumed) {
       throw new Error("Request body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamFromReadable(() =>
-      createDisposableStream(this.req),
+    const sink = createBufferFlowableFromReadable(() =>
+      createDisposableNodeStream(this.req),
     )
-      .enumerateAsync(scheduler, replayCount)
+      .stream(scheduler, replayCount)
       .add(this);
     this.add(sink);
     return sink;
   }
 }
 
-class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
+class ResponseBody extends AbstractDisposable
+  implements BufferFlowableSinkLike {
   private consumed = false;
 
   constructor(readonly resp: ServerResponse) {
@@ -104,19 +101,19 @@ class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
     resp.on("error", onError);
   }
 
-  enumerateAsync(
+  stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorLike<StreamEvent<Buffer>, StreamMode> {
+  ): StreamLike<FlowEvent<Buffer>, FlowMode> {
     if (this.consumed) {
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamSinkFromWritable(
-      () => createDisposableStream(this.resp),
+    const sink = createBufferFlowableSinkFromWritable(
+      () => createDisposableNodeStream(this.resp),
       true,
     )
-      .enumerateAsync(scheduler, replayCount)
+      .stream(scheduler, replayCount)
       .add(this);
     this.add(sink);
     return sink;
@@ -124,7 +121,7 @@ class ResponseBody extends AbstractDisposable implements BufferStreamSinkLike {
 }
 
 const writeResponseMessage = (responseBody: ResponseBody) => (
-  response: HttpResponse<BufferStreamLike>,
+  response: HttpResponse<BufferFlowableLike>,
 ) => {
   responseBody.resp.statusCode = response.statusCode;
 
@@ -133,10 +130,10 @@ const writeResponseMessage = (responseBody: ResponseBody) => (
   );
 };
 
-const writeResponseBody = (responseBody: BufferStreamSinkLike) => ({
+const writeResponseBody = (responseBody: BufferFlowableSinkLike) => ({
   body,
   contentInfo,
-}: HttpResponse<BufferStreamLike>) =>
+}: HttpResponse<BufferFlowableLike>) =>
   isSome(contentInfo) ? sink(body, responseBody) : empty();
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
@@ -152,8 +149,8 @@ export type HttpRequestListener = (
 
 export const createHttpRequestListener = (
   handler: HttpServer<
-    HttpServerRequest<BufferStreamLike>,
-    HttpResponse<BufferStreamLike>
+    HttpServerRequest<BufferFlowableLike>,
+    HttpResponse<BufferFlowableLike>
   >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},

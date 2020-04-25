@@ -1,4 +1,7 @@
-import { createObservable, ObservableLike } from "@reactive-js/core/dist/js/observable";
+import {
+  createObservable,
+  ObservableLike,
+} from "@reactive-js/core/dist/js/observable";
 
 const reservedEvents = ["error", "open"];
 

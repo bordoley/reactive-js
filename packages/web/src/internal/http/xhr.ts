@@ -1,4 +1,4 @@
-import { identity } from "@reactive-js/core/dist/js/async-enumerable";
+import { identity } from "@reactive-js/core/dist/js/streamable";
 import {
   parseHeaders,
   parseHttpResponseFromHeaders,
@@ -23,8 +23,8 @@ export const sendHttpRequestUsingXHR: HttpClient<
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;
 
-    const bodyEnumerator = identity().enumerateAsync(subscriber, 1);
-    const body = new HttpResponseBodyImpl(bodyEnumerator);
+    const bodyStream = identity().stream(subscriber, 1);
+    const body = new HttpResponseBodyImpl(bodyStream);
     body.add(subscriber);
 
     subscriber.add(() => xhr.abort()).add(body);
@@ -78,7 +78,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
             : "";
         }
       } else if (xhr.readyState === 4) {
-        bodyEnumerator.dispatch(xhr.response);
+        bodyStream.dispatch(xhr.response);
       }
     };
 

@@ -1,20 +1,20 @@
 import { Writable } from "stream";
-import {
-  createAsyncEnumerable,
-  AsyncEnumerableLike,
-  StreamEvent,
-  StreamEventType,
-  StreamMode,
-} from "@reactive-js/core/dist/js/async-enumerable";
+import { createStreamable } from "@reactive-js/core/dist/js/streamable";
+import { FlowEventType, FlowMode } from "@reactive-js/core/dist/js/flowable";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
-import { createObservable, onNotify, subscribe } from "@reactive-js/core/dist/js/observable";
+import {
+  createObservable,
+  onNotify,
+  subscribe,
+} from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { BufferFlowableSinkLike } from "./interfaces";
 
-export const createBufferStreamSinkFromWritable = (
+export const createBufferFlowableSinkFromWritable = (
   factory: () => DisposableValueLike<Writable>,
   autoDispose = true,
-): AsyncEnumerableLike<StreamEvent<Buffer>, StreamMode> =>
-  createAsyncEnumerable(streamEvents =>
+): BufferFlowableSinkLike =>
+  createStreamable(streamEvents =>
     createObservable(subscriber => {
       const writable = factory();
       subscriber.add(writable);
@@ -23,13 +23,13 @@ export const createBufferStreamSinkFromWritable = (
         streamEvents,
         onNotify(ev => {
           switch (ev.type) {
-            case StreamEventType.Next:
+            case FlowEventType.Next:
               if (!writable.value.write(ev.data)) {
                 // Safe. We're in a continuation running on the subscriber
-                subscriber.notify(StreamMode.Pause);
+                subscriber.notify(FlowMode.Pause);
               }
               break;
-            case StreamEventType.Complete:
+            case FlowEventType.Complete:
               writable.value.end();
               break;
           }
@@ -40,7 +40,7 @@ export const createBufferStreamSinkFromWritable = (
       writable.add(streamEventsSubscription);
 
       const onDrain = () => {
-        subscriber.dispatch(StreamMode.Resume);
+        subscriber.dispatch(FlowMode.Resume);
       };
       writable.value.on("drain", onDrain);
 
@@ -58,6 +58,6 @@ export const createBufferStreamSinkFromWritable = (
       };
       writable.value.on("finish", onFinish);
 
-      subscriber.dispatch(StreamMode.Resume);
+      subscriber.dispatch(FlowMode.Resume);
     }),
   );

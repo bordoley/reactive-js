@@ -1,13 +1,5 @@
-import {
-  AsyncEnumeratorLike,
-  createAsyncEnumerable,
-  AsyncEnumerableLike,
-} from "./async-enumerable";
-import {
-  DisposableLike,
-  Exception,
-  AbstractDisposable,
-} from "./disposable";
+import { StreamLike, createStreamable, StreamableLike } from "./streamable";
+import { DisposableLike, Exception, AbstractDisposable } from "./disposable";
 import {
   ObservableLike,
   switchAll,
@@ -36,8 +28,8 @@ class ReactiveCacheSchedulerContinuation<
 
     shouldYield = shouldYield ?? alwaysFalse;
 
-    for (const [, enumerator] of garbage) {
-      enumerator.dispose();
+    for (const [, stream] of garbage) {
+      stream.dispose();
 
       // only delete as many entries as we need to.
       const hasMoreToCleanup = cache.size > maxCount;
@@ -62,9 +54,9 @@ export interface ReactiveCacheLike<T> extends DisposableLike {
 const markAsGarbage = <T>(
   reactiveCache: ReactiveCacheImpl<T>,
   key: string,
-  enumerator: AsyncEnumeratorLike<ObservableLike<T>, T>,
+  stream: StreamLike<ObservableLike<T>, T>,
 ) => {
-  reactiveCache.garbage.set(key, enumerator);
+  reactiveCache.garbage.set(key, stream);
 
   if (
     reactiveCache.cache.size > reactiveCache.maxCount &&
@@ -79,28 +71,23 @@ const markAsGarbage = <T>(
   }
 };
 
-const switchAllAsyncEnumerableInstance: AsyncEnumerableLike<
+const switchAllAsyncEnumerableInstance: StreamableLike<
   ObservableLike<any>,
   any
-> = createAsyncEnumerable(switchAll());
-const switchAllAsyncEnumerable = <T>(): AsyncEnumerableLike<
-  ObservableLike<T>,
-  T
-> => switchAllAsyncEnumerableInstance;
+> = createStreamable(switchAll());
+const switchAllAsyncEnumerable = <T>(): StreamableLike<ObservableLike<T>, T> =>
+  switchAllAsyncEnumerableInstance;
 
 class ReactiveCacheImpl<T> extends AbstractDisposable
   implements ReactiveCacheLike<T> {
   readonly cache: Map<
     string,
-    [AsyncEnumeratorLike<ObservableLike<T>, T>, ObservableLike<T>]
+    [StreamLike<ObservableLike<T>, T>, ObservableLike<T>]
   > = new Map();
   cleaning = false;
 
   // Set of keys that are eligible to be garbage collected
-  readonly garbage: Map<
-    string,
-    AsyncEnumeratorLike<ObservableLike<T>, T>
-  > = new Map();
+  readonly garbage: Map<string, StreamLike<ObservableLike<T>, T>> = new Map();
 
   constructor(
     private readonly dispatchScheduler: SchedulerLike,
@@ -113,8 +100,8 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
 
     this.add(() => {
       for (const value of this.cache.values()) {
-        const [enumerator] = value;
-        enumerator.dispose();
+        const [stream] = value;
+        stream.dispose();
       }
       this.cache.clear();
       this.garbage.clear();
@@ -134,8 +121,8 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const enumerator = switchAllAsyncEnumerable()
-        .enumerateAsync(this.dispatchScheduler)
+      const stream = switchAllAsyncEnumerable()
+        .stream(this.dispatchScheduler)
         .add(() => {
           this.cache.delete(key);
           this.garbage.delete(key);
@@ -150,28 +137,28 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           pipe(
             this.cleanupScheduler,
             schedule(() => {
-              if (enumerator.subscriberCount === 0) {
-                markAsGarbage(this, key, enumerator);
+              if (stream.subscriberCount === 0) {
+                markAsGarbage(this, key, stream);
               }
             }),
           ),
         );
 
       const observable = pipe(
-        enumerator,
+        stream,
         onSubscribe(onSubscribeUnmark),
         onDispose(onDisposeCleanup),
       );
 
-      cachedValue = [enumerator, observable];
+      cachedValue = [stream, observable];
       this.cache.set(key, cachedValue);
 
       // Mark the key as garbage until it is subscribed to.
-      markAsGarbage(this, key, enumerator);
+      markAsGarbage(this, key, stream);
     }
 
-    const [enumerator, observable] = cachedValue;
-    enumerator.dispatch(value);
+    const [stream, observable] = cachedValue;
+    stream.dispatch(value);
 
     return observable;
   }

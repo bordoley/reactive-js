@@ -1,7 +1,7 @@
 import {
-  AsyncEnumerableLike,
-  createAsyncEnumerable,
-} from "@reactive-js/core/dist/js/async-enumerable";
+  StreamableLike,
+  createStreamable,
+} from "@reactive-js/core/dist/js/streamable";
 import {
   compute,
   merge,
@@ -48,8 +48,8 @@ const historyOperator = (obs: ObservableLike<Location>) =>
     fromEvent(window, "popstate", getCurrentLocation),
   );
 
-const _history: AsyncEnumerableLike<Location, Location> = createAsyncEnumerable(
+const _history: StreamableLike<Location, Location> = createStreamable(
   historyOperator,
 );
 
-export const history: AsyncEnumerableLike<Location, Location> = _history;
+export const history: StreamableLike<Location, Location> = _history;

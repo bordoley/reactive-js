@@ -1,4 +1,4 @@
-import { StateUpdater } from "@reactive-js/core/dist/js/async-enumerable";
+import { StateUpdater } from "@reactive-js/core/dist/js/stateStore";
 import { useCallback, useMemo } from "react";
 import { RelativeURI, RoutableComponentProps } from "./router";
 

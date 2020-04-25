@@ -1,4 +1,7 @@
-import { DisposableLike, createDisposable } from "@reactive-js/core/dist/js/disposable";
+import {
+  DisposableLike,
+  createDisposable,
+} from "@reactive-js/core/dist/js/disposable";
 import { Option, isSome } from "@reactive-js/core/dist/js/option";
 import { AbstractHostScheduler } from "@reactive-js/core/dist/js/scheduler";
 

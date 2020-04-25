@@ -2,7 +2,10 @@ import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import mime from "mime-types";
-import { generateStream, mapStream } from "@reactive-js/core/dist/js/async-enumerable";
+import {
+  generate,
+  map as mapFlowable,
+} from "@reactive-js/core/dist/js/flowable";
 import {
   HttpMethod,
   createHttpRequest,
@@ -12,12 +15,8 @@ import {
   HttpStatusCode,
   HttpRequest,
 } from "@reactive-js/core/dist/js/http";
-import {
-  HttpClientRequestStatusType,
-} from "@reactive-js/core/dist/js/http-client";
-import {
-  HttpServer,
-} from "@reactive-js/core/dist/js/http-server";
+import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
+import { HttpServer } from "@reactive-js/core/dist/js/http-server";
 import {
   createHttpRequestListener,
   createHttpClient,
@@ -27,12 +26,15 @@ import {
   encodeCharsetHttpRequest,
   withDefaultBehaviors,
 } from "@reactive-js/node/dist/js/http";
-import { createRouter, HttpRoutedRequest } from "@reactive-js/core/dist/js/http-server";
 import {
-  BufferStreamLike,
+  createRouter,
+  HttpRoutedRequest,
+} from "@reactive-js/core/dist/js/http-server";
+import {
+  BufferFlowableLike,
   encode,
-  createBufferStreamFromReadable,
-  createDisposableStream,
+  createBufferFlowableFromReadable,
+  createDisposableNodeStream,
 } from "@reactive-js/node/dist/js/streams";
 import { scheduler as nodeScheduler } from "@reactive-js/node/dist/js/scheduler";
 import { bindNodeCallback } from "@reactive-js/node/dist/js/utils";
@@ -65,8 +67,8 @@ const scheduler = pipe(
 );
 
 const routerHandlerPrintParams: HttpServer<
-  HttpRoutedRequest<BufferStreamLike>,
-  HttpResponse<BufferStreamLike>
+  HttpRoutedRequest<BufferFlowableLike>,
+  HttpResponse<BufferFlowableLike>
 > = req =>
   pipe(
     createHttpResponse({
@@ -78,16 +80,16 @@ const routerHandlerPrintParams: HttpServer<
   );
 
 const routerHandlerEventStream: HttpServer<
-  HttpRoutedRequest<BufferStreamLike>,
-  HttpResponse<BufferStreamLike>
+  HttpRoutedRequest<BufferFlowableLike>,
+  HttpResponse<BufferFlowableLike>
 > = _ => {
   const body = pipe(
-    generateStream(
+    generate(
       acc => acc + 1,
       () => 0,
       1000,
     ),
-    mapStream(
+    mapFlowable(
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
     ),
@@ -106,8 +108,8 @@ const routerHandlerEventStream: HttpServer<
 };
 
 const routerHandlerFiles: HttpServer<
-  HttpRoutedRequest<BufferStreamLike>,
-  HttpResponse<BufferStreamLike>
+  HttpRoutedRequest<BufferFlowableLike>,
+  HttpResponse<BufferFlowableLike>
 > = req => {
   const path = req.params["*"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
@@ -118,8 +120,8 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createBufferStreamFromReadable(() =>
-              createDisposableStream(fs.createReadStream(path)),
+            body: createBufferFlowableFromReadable(() =>
+              createDisposableNodeStream(fs.createReadStream(path)),
             ),
             contentInfo: {
               contentLength: next.size,
@@ -138,13 +140,13 @@ const routerHandlerFiles: HttpServer<
 };
 
 const routerHandlerThrow: HttpServer<
-  HttpRoutedRequest<BufferStreamLike>,
-  HttpResponse<BufferStreamLike>
+  HttpRoutedRequest<BufferFlowableLike>,
+  HttpResponse<BufferFlowableLike>
 > = _ => throws(() => new Error("internal error"));
 
 const notFound: Operator<
-  HttpRequest<BufferStreamLike>,
-  ObservableLike<HttpResponse<BufferStreamLike>>
+  HttpRequest<BufferFlowableLike>,
+  ObservableLike<HttpResponse<BufferFlowableLike>>
 > = req =>
   pipe(
     createHttpResponse({
@@ -250,8 +252,8 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createBufferStreamFromReadable(() =>
-        createDisposableStream(fs.createReadStream(file)),
+      body: createBufferFlowableFromReadable(() =>
+        createDisposableNodeStream(fs.createReadStream(file)),
       ),
       contentInfo: {
         contentLength: stats.size,
@@ -270,7 +272,7 @@ pipe(
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
-          scheduler => status.response.body.enumerateAsync(scheduler),
+          scheduler => status.response.body.stream(scheduler),
           _ => ofValue("done"),
         )
       : ofValue(JSON.stringify(status)),
