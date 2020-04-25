@@ -12,18 +12,18 @@ test("liftReq", () => {
     liftReq(({ val }: { val: number }) => val),
   );
 
-  const enumerator = lifted.stream(scheduler);
+  const stream = lifted.stream(scheduler);
 
   const result: string[] = [];
   pipe(
-    enumerator,
+    stream,
     onNotify(x => result.push(x)),
     subscribe(scheduler),
   );
 
-  enumerator.dispatch({ val: 10 });
-  enumerator.dispatch({ val: 20 });
-  enumerator.dispatch({ val: 30 });
+  stream.dispatch({ val: 10 });
+  stream.dispatch({ val: 20 });
+  stream.dispatch({ val: 30 });
 
   scheduler.run();
 
@@ -39,18 +39,18 @@ test("liftReq", () => {
     map(x => ({ x })),
   );
 
-  const enumerator = lifted.stream(scheduler);
+  const stream = lifted.stream(scheduler);
 
   const result: { x: number }[] = [];
   pipe(
-    enumerator,
+    stream,
     onNotify(x => result.push(x)),
     subscribe(scheduler),
   );
 
-  enumerator.dispatch(0);
-  enumerator.dispatch(1);
-  enumerator.dispatch(2);
+  stream.dispatch(0);
+  stream.dispatch(1);
+  stream.dispatch(2);
 
   scheduler.run();
 

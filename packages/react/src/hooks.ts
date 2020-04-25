@@ -97,7 +97,7 @@ export const useStreamable = <TReq, T>(
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const [stream, updateEnumerator] = useState<Option<StreamLike<TReq, T>>>(
+  const [stream, dispatch] = useState<Option<StreamLike<TReq, T>>>(
     none,
   );
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
@@ -106,13 +106,13 @@ export const useStreamable = <TReq, T>(
     const stream = streamable.stream(scheduler, replay);
     streamRef.current = stream;
 
-    updateEnumerator(_ => stream);
+    dispatch(_ => stream);
 
     return () => {
       streamRef.current = undefined;
       stream.dispose();
     };
-  }, [streamable, scheduler, replay, updateEnumerator]);
+  }, [streamable, scheduler, replay, dispatch]);
 
   const notify = useCallback(
     req => {
