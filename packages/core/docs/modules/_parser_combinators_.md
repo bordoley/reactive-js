@@ -78,7 +78,17 @@ Name | Type |
 
 ### `Const` isParseError
 
-• **isParseError**: *isParseErrorProd* = process.env.NODE_ENV === "production" ? isParseErrorProd : isParseErrorDev
+• **isParseError**: *function* = _isParseError
+
+#### Type declaration:
+
+▸ (`e`: unknown): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`e` | unknown |
 
 ___
 
@@ -276,9 +286,21 @@ ___
 
 ### `Const` throwParseError
 
-• **throwParseError**: *throwParseErrorProd* = process.env.NODE_ENV === "production"
-    ? throwParseErrorProd
-    : throwParseErrorDev
+• **throwParseError**: *function* = _throwParseError
+
+#### Type declaration:
+
+▸ <**T**>(`charStream`: [CharStreamLike](../interfaces/_parser_combinators_.charstreamlike.md)): *T*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`charStream` | [CharStreamLike](../interfaces/_parser_combinators_.charstreamlike.md) |
 
 ## Functions
 

@@ -1,6 +1,7 @@
 import { EnumeratorLike } from "./enumerable";
 import { Option, none } from "./option";
 import { Operator, compose, pipe } from "./pipe";
+import { __DEV__ } from "./internal/env";
 
 export type CharCode = number;
 
@@ -59,15 +60,15 @@ const throwParseErrorProd = <T>(_: CharStreamLike): T => {
   throw parseErrorSymbol;
 };
 
-export const throwParseError =
-  process.env.NODE_ENV === "production"
-    ? throwParseErrorProd
-    : throwParseErrorDev;
+const _throwParseError = __DEV__
+  ? throwParseErrorDev
+  : throwParseErrorProd;
+export const throwParseError: <T>(charStream: CharStreamLike) => T = _throwParseError;
 
 const isParseErrorDev = (e: unknown): boolean => e instanceof ParserError;
 const isParseErrorProd = (e: unknown): boolean => e === parseErrorSymbol;
-export const isParseError =
-  process.env.NODE_ENV === "production" ? isParseErrorProd : isParseErrorDev;
+const _isParseError = __DEV__ ? isParseErrorDev : isParseErrorProd;
+export const isParseError: (e: unknown) => boolean = _isParseError;
 
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);

@@ -4,6 +4,7 @@ import {
   SchedulerLike,
 } from "../../scheduler";
 import { SubscriberLike } from "./interfaces";
+import { __DEV__ } from "../env";
 
 const assertSubscriberNotifyInContinuationProduction = <T>(
   _subscriber: SubscriberLike<T>,
@@ -19,11 +20,11 @@ const assertSubscriberNotifyInContinuationDev = <T>(
 };
 
 const _assertSubscriberNotifyInContinuation =
-  process.env.NODE_ENV === "production"
-    ? assertSubscriberNotifyInContinuationProduction
-    : assertSubscriberNotifyInContinuationDev;
+  __DEV__
+    ? assertSubscriberNotifyInContinuationDev
+    : assertSubscriberNotifyInContinuationProduction;
 
-export const assertSubscriberNotifyInContinuation = _assertSubscriberNotifyInContinuation;
+export const assertSubscriberNotifyInContinuation: (subscriber: SubscriberLike<unknown>) => void = _assertSubscriberNotifyInContinuation;
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.

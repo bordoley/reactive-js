@@ -148,7 +148,17 @@ Name | Type |
 
 ### `Const` assertSubscriberNotifyInContinuation
 
-• **assertSubscriberNotifyInContinuation**: *assertSubscriberNotifyInContinuationProduction* = _assertSubscriberNotifyInContinuation
+• **assertSubscriberNotifyInContinuation**: *function* = _assertSubscriberNotifyInContinuation
+
+#### Type declaration:
+
+▸ (`subscriber`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown›): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`subscriber` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown› |
 
 ___
 
