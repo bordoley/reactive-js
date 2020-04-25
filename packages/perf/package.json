@@ -9,9 +9,8 @@
     "rxjs": "^6.5.3"
   },
   "scripts": {
-    "build": "yarn build-cjs && yarn build-mjs",
+    "build": "yarn build-cjs",
     "build-cjs": "tsc -p tsconfig.cjs.json",
-    "build-mjs": "rm -rf ./dist/mjs && cp -r ./dist/cjs ./dist/mjs",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf build"
   }
 }

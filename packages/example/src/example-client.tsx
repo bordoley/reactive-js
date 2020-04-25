@@ -7,14 +7,14 @@ import {
   StreamEventType,
 } from "@reactive-js/core/dist/js/async-enumerable";
 import { createHttpRequest, HttpMethod } from "@reactive-js/core/dist/js/http";
-import { sendHttpRequest } from "@reactive-js/web/dist/mjs/http";
-import { useObservable, useAsyncEnumerable } from "@reactive-js/react/dist/mjs/hooks";
+import { sendHttpRequest } from "@reactive-js/web/dist/js/http";
+import { useObservable, useAsyncEnumerable } from "@reactive-js/react/dist/js/hooks";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
-} from "@reactive-js/react/dist/mjs/router"
-import { idlePriority, normalPriority } from "@reactive-js/react/dist/mjs/scheduler";
+} from "@reactive-js/react/dist/js/router"
+import { idlePriority, normalPriority } from "@reactive-js/react/dist/js/scheduler";
 import {
   generate,
   onNotify,
@@ -25,7 +25,7 @@ import {
   onError,
   onDispose,
 } from "@reactive-js/core/dist/js/observable";
-import { history, Location, createEventSource } from "@reactive-js/web/dist/mjs/dom";
+import { history, Location, createEventSource } from "@reactive-js/web/dist/js/dom";
 import React, {
   ComponentType,
   useCallback,
@@ -37,7 +37,7 @@ import { default as ReactDOM } from "react-dom";
 import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
-import { WebRequestBody } from "@reactive-js/web/dist/mjs/http";
+import { WebRequestBody } from "@reactive-js/web/dist/js/http";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,

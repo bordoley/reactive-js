@@ -4,8 +4,9 @@
     "jsx": "react",
     "lib": ["DOM"],
     "module": "CommonJS",
-    "outDir": "./dist/cjs",
+    "outDir": "./build/cjs",
     "rootDir": "./src"
   },
-  "exclude": ["./dist/cjs", "./dist/esm", "./dist/mjs", "./dist/ts", "./test", "./ts"]
+  "include": ["./src/example-server.ts"],
+  "exclude": ["./build/cjs", "./build/esm", "./test"]
 }

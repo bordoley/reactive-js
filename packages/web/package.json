@@ -45,11 +45,12 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-esm && yarn build-mjs && yarn docs",
+    "build": "yarn build-esm && yarn make-dist && yarn dist-js && yarn docs",
     "build-esm": "tsc -p tsconfig.esm.json",
-    "build-mjs": "rm -rf ./dist/mjs && cp -r ./dist/esm ./dist/mjs",
-    "clean": "rm -rf dist && rm -rf docs",
-    "docs": "node ./scripts/docs",
+    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js",
+    "clean": "rm -rf build && rm -rf dist && rm -rf docs",
+    "docs": "node ./scripts/docs.js",
+    "make-dist": "mkdir -p ./dist",
     "typecheck": "tsc -p tsconfig.typecheck.json"
   },
   "jest": {

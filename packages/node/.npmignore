@@ -3,8 +3,7 @@
 tsconfig.*
 *.tsbuildinfo
 
-dist/esm
-dist/ts
+build/cjs
 docs
 scripts
 src

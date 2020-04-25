@@ -1,4 +1,3 @@
-dist/cjs
-dist/esm
-dist/mjs
+build/cjs
+build/esm
 dist/rollup

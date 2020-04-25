@@ -3,8 +3,8 @@
   "compilerOptions": {
     "lib": ["DOM"],
     "module": "ES2015",
-    "outDir": "./dist/esm",
+    "outDir": "./build/esm",
     "rootDir": "./src"
   },
-  "exclude": ["./dist/cjs", "./dist/esm", "./dist/mjs", "./dist/ts", "./test", "./ts"]
+  "exclude": ["./build/esm", "./dist/js", "./test"]
 }

@@ -4,8 +4,9 @@
     "jsx": "react",
     "lib": ["DOM"],
     "module": "ES2015",
-    "outDir": "./dist/esm",
+    "outDir": "./build/esm",
     "rootDir": "./src"
   },
-  "exclude": ["./dist/cjs", "./dist/esm", "./dist/mjs", "./dist/ts", "./test", "./ts"]
+  "include": ["./src/example-client.tsx"],
+  "exclude": ["./build/cjs", "./build/esm", "./test"]
 }

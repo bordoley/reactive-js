@@ -49,12 +49,12 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-cjs && yarn build-esm && yarn build-mjs && yarn docs",
+    "build": "yarn build-cjs && yarn make-dist && yarn dist-js && yarn docs",
     "build-cjs": "tsc -p tsconfig.cjs.json",
-    "build-esm": "tsc -p tsconfig.esm.json",
-    "build-mjs": "rm -rf ./dist/mjs && cp -r ./dist/esm ./dist/mjs && renamer --find \".js\" --replace \".mjs\" ./dist/mjs/** ./dist/mjs/**/**/** && cp  -r ./dist/cjs/ ./dist/mjs",
-    "clean": "rm -rf dist && rm -rf docs",
+    "dist-js": "rm -rf ./dist/js && cp  -r ./build/cjs/ ./dist/js",
+    "clean": "rm -rf build *rm -rf dist && rm -rf docs",
     "docs": "node ./scripts/docs.mjs",
+    "make-dist": "mkdir -p ./dist",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
@@ -64,7 +64,7 @@
     "preset": "ts-jest",
     "globals": {
       "ts-jest": {
-        "tsConfig": "./tsconfig.esm.json"
+        "tsConfig": "./tsconfig.cjs.json"
       }
     }
   },

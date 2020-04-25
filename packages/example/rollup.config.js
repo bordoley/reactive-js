@@ -7,7 +7,7 @@ import { terser } from "rollup-plugin-terser";
 export default {
   external: ["react", "react-dom", "scheduler"],
 
-  input: "dist/mjs/example-client.mjs",
+  input: "build/esm/example-client.js",
   output: {
     file: "dist/rollup/bundle.js",
     format: "iife",

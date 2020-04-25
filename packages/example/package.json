@@ -27,11 +27,10 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-cjs && yarn build-esm && yarn build-mjs && yarn rollup",
+    "build": "yarn build-cjs && yarn build-esm && yarn rollup",
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm": "tsc -p tsconfig.esm.json",
-    "build-mjs": "rm -rf ./dist/mjs && cp -r ./dist/esm ./dist/mjs && renamer --find \".js\" --replace \".mjs\" ./dist/mjs/** ./dist/mjs/**/**/** && cp  -r ./dist/cjs/ ./dist/mjs",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf build && rm -rf dist",
     "rollup": "rollup -c",
     "typecheck": "tsc -p tsconfig.typecheck.json"
   }

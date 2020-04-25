@@ -26,16 +26,16 @@ import {
   encodeCharsetHttpResponse,
   encodeCharsetHttpRequest,
   withDefaultBehaviors,
-} from "@reactive-js/node/dist/mjs/http";
+} from "@reactive-js/node/dist/js/http";
 import { createRouter, HttpRoutedRequest } from "@reactive-js/core/dist/js/http-server";
 import {
   BufferStreamLike,
   encode,
   createBufferStreamFromReadable,
   createDisposableStream,
-} from "@reactive-js/node/dist/mjs/streams";
-import { scheduler as nodeScheduler } from "@reactive-js/node/dist/mjs/scheduler";
-import { bindNodeCallback } from "@reactive-js/node/dist/mjs/utils";
+} from "@reactive-js/node/dist/js/streams";
+import { scheduler as nodeScheduler } from "@reactive-js/node/dist/js/scheduler";
+import { bindNodeCallback } from "@reactive-js/node/dist/js/utils";
 import {
   map,
   subscribe,
