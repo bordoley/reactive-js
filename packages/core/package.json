@@ -46,7 +46,7 @@
     "build": "yarn build-cjs && yarn build-esm && yarn make-dist && yarn dist-js && yarn dist-ts && yarn docs",
     "build-cjs": "tsc -p tsconfig.cjs.json",
     "build-esm": "tsc -p tsconfig.esm.json",
-    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js && renamer --find \".js\" --replace \".mjs\" ./dist/js/** ./dist/js/**/**/** && cp -r ./build/cjs/ ./dist/js",
+    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js && renamer --find \".js\" --replace \".mjs\" ./dist/js/** ./dist/js/**/**/** && replace 'from \"([.\\-\/\\w]+)\";' 'from \"$1.mjs\";' ./dist/js -r && cp -r ./build/cjs/ ./dist/js",
     "dist-ts": "rm -rf ./dist/ts && cp -r ./src/ ./dist/ts && replace 'from \"([.\\-\/\\w]+)\";' 'from \"$1.ts\";' ./dist/ts -r",
     "clean": "rm -rf build && rm -rf dist && rm -rf docs",
     "docs": "node ./scripts/docs.mjs",
