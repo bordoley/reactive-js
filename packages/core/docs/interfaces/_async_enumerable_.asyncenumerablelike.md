@@ -1,32 +1,30 @@
 [@reactive-js/core - v0.0.37](../README.md) › ["async-enumerable"](../modules/_async_enumerable_.md) › [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md)
 
-# Interface: AsyncEnumerableLike <**TReq, T**>
+# Interface: AsyncEnumerableLike <**T**>
 
 ## Type parameters
-
-▪ **TReq**
 
 ▪ **T**
 
 ## Hierarchy
 
-* **AsyncEnumerableLike**
+* [StreamableLike](_streamable_.streamablelike.md)‹void, T›
 
-  ↳ [StreamLike](_async_enumerable_.streamlike.md)
-
-  ↳ [StreamSinkLike](_async_enumerable_.streamsinklike.md)
+  ↳ **AsyncEnumerableLike**
 
 ## Index
 
 ### Methods
 
-* [enumerateAsync](_async_enumerable_.asyncenumerablelike.md#enumerateasync)
+* [stream](_async_enumerable_.asyncenumerablelike.md#stream)
 
 ## Methods
 
-###  enumerateAsync
+###  stream
 
-▸ **enumerateAsync**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[AsyncEnumeratorLike](_async_enumerable_.asyncenumeratorlike.md)‹TReq, T›*
+▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_streamable_.streamlike.md)‹void, T›*
+
+*Inherited from [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md).[stream](_async_enumerable_.asyncenumerablelike.md#stream)*
 
 **Parameters:**
 
@@ -35,4 +33,4 @@ Name | Type |
 `scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
 `replayCount?` | number |
 
-**Returns:** *[AsyncEnumeratorLike](_async_enumerable_.asyncenumeratorlike.md)‹TReq, T›*
+**Returns:** *[StreamLike](_streamable_.streamlike.md)‹void, T›*

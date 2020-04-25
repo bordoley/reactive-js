@@ -67,11 +67,13 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
   }
 }
 
-const subscribeInteractive = <T>(obs: ObservableLike<T>): EnumeratorLike<T> & DisposableLike=> {
+const subscribeInteractive = <T>(
+  obs: ObservableLike<T>,
+): EnumeratorLike<T> & DisposableLike => {
   const subscriber = new EnumeratorSubscriber<T>();
   obs.subscribe(subscriber);
   return subscriber;
-}
+};
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {

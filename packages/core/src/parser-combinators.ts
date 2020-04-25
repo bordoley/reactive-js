@@ -60,10 +60,10 @@ const throwParseErrorProd = <T>(_: CharStreamLike): T => {
   throw parseErrorSymbol;
 };
 
-const _throwParseError = __DEV__
-  ? throwParseErrorDev
-  : throwParseErrorProd;
-export const throwParseError: <T>(charStream: CharStreamLike) => T = _throwParseError;
+const _throwParseError = __DEV__ ? throwParseErrorDev : throwParseErrorProd;
+export const throwParseError: <T>(
+  charStream: CharStreamLike,
+) => T = _throwParseError;
 
 const isParseErrorDev = (e: unknown): boolean => e instanceof ParserError;
 const isParseErrorProd = (e: unknown): boolean => e === parseErrorSymbol;

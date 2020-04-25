@@ -43,7 +43,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/mime-db": "^1.27.1",
-    "@types/node":"13.13.2",
+    "@types/node": "13.13.2",
     "jest": "^24.9.0",
     "renamer": "^2.0.0",
     "ts-jest": "^24.1.0"

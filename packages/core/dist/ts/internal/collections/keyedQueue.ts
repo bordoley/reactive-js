@@ -10,7 +10,9 @@ function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
   }
 }
 
-function* iterateKeyedQueueKeyValuePairs<K, V>(queue: KeyedQueue<K, V>): Generator<[K, V]> {
+function* iterateKeyedQueueKeyValuePairs<K, V>(
+  queue: KeyedQueue<K, V>,
+): Generator<[K, V]> {
   const map = queue.map;
   for (const key of map.keys()) {
     const values = map.get(key) ?? [];
@@ -22,10 +24,8 @@ function* iterateKeyedQueueKeyValuePairs<K, V>(queue: KeyedQueue<K, V>): Generat
 
 class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   count = 0;
- 
-  readonly keys: EnumerableLike<K> = fromIterator(() =>
-    this.map.keys(),
-  );
+
+  readonly keys: EnumerableLike<K> = fromIterator(() => this.map.keys());
 
   readonly map: Map<K, V[]> = new Map();
 

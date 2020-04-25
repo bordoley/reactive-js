@@ -1,10 +1,11 @@
-import {none } from "../../option";
+import { none } from "../../option";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { DisposableLike, AbstractDisposable } from "../../disposable";
 import { lift } from "./lift";
 
-class KeepTypeEnumerator<TA, TB> extends AbstractDisposable implements EnumeratorLike<TB>, DisposableLike {
-  current: TB = none as unknown as TB;
+class KeepTypeEnumerator<TA, TB> extends AbstractDisposable
+  implements EnumeratorLike<TB>, DisposableLike {
+  current: TB = (none as unknown) as TB;
   hasCurrent = false;
 
   constructor(
@@ -16,12 +17,12 @@ class KeepTypeEnumerator<TA, TB> extends AbstractDisposable implements Enumerato
 
   move(): boolean {
     this.hasCurrent = false;
-    this.current = none as unknown as TB;
+    this.current = (none as unknown) as TB;
 
-    while(this.delegate.move() && !this.predicate(this.delegate.current)) {}
+    while (this.delegate.move() && !this.predicate(this.delegate.current)) {}
     const hasCurrent = this.delegate.hasCurrent;
     this.hasCurrent = hasCurrent;
-    this.current = this.delegate.current as unknown as TB;
+    this.current = (this.delegate.current as unknown) as TB;
     return hasCurrent;
   }
 }

@@ -1,21 +1,25 @@
 import { Readable, Writable } from "stream";
+import { sink } from "@reactive-js/core/dist/js/streamable";
 import {
-  sink,
-  ofValueStream,
-  StreamEventType,
-  StreamMode,
-} from "@reactive-js/core/dist/js/async-enumerable";
+  ofValue,
+  FlowEventType,
+  FlowMode,
+} from "@reactive-js/core/dist/js/flowable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
-import { toPromise, subscribe, onNotify, scan } from "@reactive-js/core/dist/js/observable";
-import { scheduler } from "../src/scheduler"; 
 import {
-  createBufferStreamFromReadable,
-
-  createBufferStreamSinkFromWritable,
+  toPromise,
+  subscribe,
+  onNotify,
+  scan,
+} from "@reactive-js/core/dist/js/observable";
+import { scheduler } from "../src/scheduler";
+import {
+  createBufferFlowableFromReadable,
+  createBufferFlowableSinkFromWritable,
   transform,
   encode,
   decode,
-  createDisposableStream,
+  createDisposableNodeStream,
 } from "../src/streams";
 import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
@@ -39,8 +43,8 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() =>
-      createDisposableStream(writable),
+    const dest = createBufferFlowableSinkFromWritable(() =>
+      createDisposableNodeStream(writable),
     );
 
     function* generate() {
@@ -48,8 +52,8 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableStream),
+    const src = createBufferFlowableFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
     await pipe(sink(src, dest), toPromise(scheduler));
@@ -65,8 +69,8 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() =>
-      createDisposableStream(writable),
+    const dest = createBufferFlowableSinkFromWritable(() =>
+      createDisposableNodeStream(writable),
     );
 
     function* generate() {
@@ -74,8 +78,8 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableStream),
+    const src = createBufferFlowableFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
@@ -89,8 +93,8 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() =>
-      createDisposableStream(writable),
+    const dest = createBufferFlowableSinkFromWritable(() =>
+      createDisposableNodeStream(writable),
     );
 
     const cause = new Error();
@@ -101,8 +105,8 @@ describe("streams", () => {
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferStreamFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableStream),
+    const src = createBufferFlowableFromReadable(() =>
+      pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
@@ -125,8 +129,8 @@ describe("streams", () => {
       },
     });
 
-    const dest = createBufferStreamSinkFromWritable(() =>
-      createDisposableStream(writable),
+    const dest = createBufferFlowableSinkFromWritable(() =>
+      createDisposableNodeStream(writable),
     );
 
     function* generate() {
@@ -135,11 +139,11 @@ describe("streams", () => {
     }
 
     await pipe(
-      createBufferStreamFromReadable(() =>
-        pipe(generate(), Readable.from, createDisposableStream),
+      createBufferFlowableFromReadable(() =>
+        pipe(generate(), Readable.from, createDisposableNodeStream),
       ),
-      transform(() => createDisposableStream(createGzip())),
-      transform(() => createDisposableStream(createGunzip())),
+      transform(() => createDisposableNodeStream(createGzip())),
+      transform(() => createDisposableNodeStream(createGunzip())),
       src => sink(src, dest),
       toPromise(scheduler),
     );
@@ -151,16 +155,16 @@ describe("streams", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const transformed = pipe(
-      ofValueStream(str),
+      ofValue(str),
       encode("utf-8"),
       decode("utf-8"),
-    ).enumerateAsync(scheduler);
+    ).stream(scheduler);
 
     let result = "";
     pipe(
       transformed,
       scan(
-        (acc, ev) => (ev.type === StreamEventType.Next ? acc + ev.data : acc),
+        (acc, ev) => (ev.type === FlowEventType.Next ? acc + ev.data : acc),
         () => "",
       ),
       onNotify(x => {
@@ -169,7 +173,7 @@ describe("streams", () => {
       subscribe(scheduler),
     );
 
-    transformed.dispatch(StreamMode.Resume);
+    transformed.dispatch(FlowMode.Resume);
     scheduler.run();
 
     expect(result).toEqual(str);

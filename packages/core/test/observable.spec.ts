@@ -1,8 +1,4 @@
-import {
-  createDisposable,
-  disposed,
-  DisposableLike,
-} from "../src/disposable";
+import { createDisposable, disposed, DisposableLike } from "../src/disposable";
 import { Option } from "../src/option";
 import { pipe } from "../src/pipe";
 import {

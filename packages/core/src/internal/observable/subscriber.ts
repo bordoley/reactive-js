@@ -1,8 +1,5 @@
 import { AbstractDisposable } from "../../disposable";
-import {
-  SchedulerContinuationLike,
-  SchedulerLike,
-} from "../../scheduler";
+import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler";
 import { SubscriberLike } from "./interfaces";
 import { __DEV__ } from "../env";
 
@@ -19,12 +16,13 @@ const assertSubscriberNotifyInContinuationDev = <T>(
   }
 };
 
-const _assertSubscriberNotifyInContinuation =
-  __DEV__
-    ? assertSubscriberNotifyInContinuationDev
-    : assertSubscriberNotifyInContinuationProduction;
+const _assertSubscriberNotifyInContinuation = __DEV__
+  ? assertSubscriberNotifyInContinuationDev
+  : assertSubscriberNotifyInContinuationProduction;
 
-export const assertSubscriberNotifyInContinuation: (subscriber: SubscriberLike<unknown>) => void = _assertSubscriberNotifyInContinuation;
+export const assertSubscriberNotifyInContinuation: (
+  subscriber: SubscriberLike<unknown>,
+) => void = _assertSubscriberNotifyInContinuation;
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.

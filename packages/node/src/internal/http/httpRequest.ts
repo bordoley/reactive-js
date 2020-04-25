@@ -5,7 +5,7 @@ import {
   httpRequestIsCompressible,
   MediaType,
 } from "@reactive-js/core/dist/js/http";
-import { BufferStreamLike, transform } from "../../streams";
+import { BufferFlowableLike, transform } from "../../streams";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import { Operator, pipe } from "@reactive-js/core/dist/js/pipe";
 import {
@@ -18,13 +18,13 @@ import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
 ): Operator<
-  HttpRequest<BufferStreamLike>,
-  HttpRequest<BufferStreamLike>
+  HttpRequest<BufferFlowableLike>,
+  HttpRequest<BufferFlowableLike>
 > => request => decodeHttpMessage(request, options);
 
 export const encodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
-): Operator<HttpClientRequest, HttpRequest<BufferStreamLike>> => request => {
+): Operator<HttpClientRequest, HttpRequest<BufferFlowableLike>> => request => {
   const { body, contentInfo } = request;
 
   const contentEncoding = getFirstSupportedEncoding(
@@ -52,7 +52,7 @@ export const encodeHttpRequest = (
 
 export const encodeCharsetHttpRequest = (
   contentType: string | MediaType,
-): Operator<HttpRequest<string>, HttpRequest<BufferStreamLike>> => {
+): Operator<HttpRequest<string>, HttpRequest<BufferFlowableLike>> => {
   const messageEncoder = encodeCharsetHttpMessage(contentType);
-  return req => messageEncoder(req) as HttpRequest<BufferStreamLike>;
+  return req => messageEncoder(req) as HttpRequest<BufferFlowableLike>;
 };

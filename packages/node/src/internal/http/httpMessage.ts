@@ -5,15 +5,15 @@ import {
   MediaType,
   parseMediaTypeOrThrow,
 } from "@reactive-js/core/dist/js/http";
-import { BufferStreamLike, transform } from "../../streams";
+import { BufferFlowableLike, transform } from "../../streams";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import { pipe, Operator } from "@reactive-js/core/dist/js/pipe";
 import { createEncodingDecompressTransform } from "./httpContentEncoding";
-import { ofValueStream } from "@reactive-js/core/dist/js/async-enumerable";
+import { ofValue } from "@reactive-js/core/dist/js/flowable";
 
 /** @ignore */
 export const decodeHttpMessage = <
-  TMessage extends HttpMessage<BufferStreamLike>
+  TMessage extends HttpMessage<BufferFlowableLike>
 >(
   message: TMessage,
   options: BrotliOptions | ZlibOptions = {},
@@ -36,7 +36,7 @@ export const decodeHttpMessage = <
 
 export const encodeCharsetHttpMessage = (
   contentType: string | MediaType,
-): Operator<HttpMessage<string>, HttpMessage<BufferStreamLike>> => {
+): Operator<HttpMessage<string>, HttpMessage<BufferFlowableLike>> => {
   const parsedContentType =
     typeof contentType === "string"
       ? parseMediaTypeOrThrow(contentType)
@@ -48,7 +48,7 @@ export const encodeCharsetHttpMessage = (
     const { body, ...responseWithoutBody } = response;
 
     const buffer = iconv.encode(response.body, charset);
-    const streamBody = ofValueStream(buffer);
+    const streamBody = ofValue(buffer);
 
     return {
       ...responseWithoutBody,

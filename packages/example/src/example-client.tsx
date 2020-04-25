@@ -1,20 +1,25 @@
+import { lift } from "@reactive-js/core/dist/js/streamable";
+import {
+  fromObservable,
+  FlowMode,
+  FlowEventType,
+} from "@reactive-js/core/dist/js/flowable";
 import {
   toStateStore,
   StateUpdater,
-  lift,
-  fromObservableStream,
-  StreamMode,
-  StreamEventType,
-} from "@reactive-js/core/dist/js/async-enumerable";
+} from "@reactive-js/core/dist/js/stateStore";
 import { createHttpRequest, HttpMethod } from "@reactive-js/core/dist/js/http";
 import { sendHttpRequest } from "@reactive-js/web/dist/js/http";
-import { useObservable, useAsyncEnumerable } from "@reactive-js/react/dist/js/hooks";
+import { useObservable, useStreamable } from "@reactive-js/react/dist/js/hooks";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
-} from "@reactive-js/react/dist/js/router"
-import { idlePriority, normalPriority } from "@reactive-js/react/dist/js/scheduler";
+} from "@reactive-js/react/dist/js/router";
+import {
+  idlePriority,
+  normalPriority,
+} from "@reactive-js/react/dist/js/scheduler";
 import {
   generate,
   onNotify,
@@ -25,7 +30,11 @@ import {
   onError,
   onDispose,
 } from "@reactive-js/core/dist/js/observable";
-import { history, Location, createEventSource } from "@reactive-js/web/dist/js/dom";
+import {
+  history,
+  Location,
+  createEventSource,
+} from "@reactive-js/web/dist/js/dom";
 import React, {
   ComponentType,
   useCallback,
@@ -115,17 +124,17 @@ const StatefulComponent = (props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => fromObservableStream(obs), []);
-  const [value, setMode] = useAsyncEnumerable(stream, {
+  const stream = useMemo(() => fromObservable(obs), []);
+  const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });
-  const [{ mode }, updateMode] = useState({ mode: StreamMode.Pause });
+  const [{ mode }, updateMode] = useState({ mode: FlowMode.Pause });
 
   const onClick = useCallback(
     () =>
       updateMode(({ mode }) => {
         const newMode =
-          mode === StreamMode.Pause ? StreamMode.Resume : StreamMode.Pause;
+          mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause;
         return { mode: newMode };
       }),
     [updateMode],
@@ -133,10 +142,10 @@ const StreamPauseResume = (_props: RoutableComponentProps) => {
 
   useEffect(() => setMode(mode), [mode, setMode]);
 
-  const label = mode === StreamMode.Pause ? "RESUME" : "PAUSE";
+  const label = mode === FlowMode.Pause ? "RESUME" : "PAUSE";
 
   const displayValue =
-    isSome(value) && value.type === StreamEventType.Next ? value.data : 0;
+    isSome(value) && value.type === FlowEventType.Next ? value.data : 0;
 
   return (
     <>
@@ -171,8 +180,7 @@ const location = pipe(
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,
-  uri:
-    "http://localhost:8080/files/packages/example/dist/rollup/bundle.js",
+  uri: "http://localhost:8080/files/packages/example/dist/rollup/bundle.js",
   body: none,
 });
 

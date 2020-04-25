@@ -2,13 +2,6 @@ import { ClientRequest, IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
-  BufferStreamLike,
-  createBufferStreamFromReadable,
-  createBufferStreamSinkFromWritable,
-  BufferStreamSinkLike,
-  createDisposableStream,
-} from "../../streams";
-import {
   HttpClient,
   HttpClientRequestStatusType,
   HttpClientRequestStatus,
@@ -39,18 +32,23 @@ import {
   createRedirectHttpRequest,
 } from "@reactive-js/core/dist/js/http";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import {
-  AsyncEnumeratorLike,
-  StreamMode,
-  StreamEvent,
-  lift,
-  StreamEventType,
-  sink,
-} from "@reactive-js/core/dist/js/async-enumerable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { encodeHttpRequest } from "./httpRequest";
 import { HttpClientRequest } from "./interfaces";
+import {
+  BufferFlowableSinkLike,
+  createBufferFlowableSinkFromWritable,
+  createDisposableNodeStream,
+  BufferFlowableLike,
+  createBufferFlowableFromReadable,
+} from "../../streams";
+import { StreamLike, sink, lift } from "@reactive-js/core/dist/js/streamable";
+import {
+  FlowEvent,
+  FlowMode,
+  FlowEventType,
+} from "@reactive-js/core/dist/js/flowable";
 
 export type HttpClientOptions = {
   // Node options
@@ -61,7 +59,7 @@ export type HttpClientOptions = {
   readonly maxHeaderSize?: number;
 };
 
-class RequestBody extends AbstractDisposable implements BufferStreamSinkLike {
+class RequestBody extends AbstractDisposable implements BufferFlowableSinkLike {
   private consumed = false;
 
   constructor(private readonly req: ClientRequest) {
@@ -86,26 +84,26 @@ class RequestBody extends AbstractDisposable implements BufferStreamSinkLike {
     req.on("error", onError);
   }
 
-  enumerateAsync(
+  stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorLike<StreamEvent<Buffer>, StreamMode> {
+  ): StreamLike<FlowEvent<Buffer>, FlowMode> {
     if (this.consumed) {
       throw new Error("Request body already consumed");
     }
     this.consumed = true;
-    const sink = createBufferStreamSinkFromWritable(
-      () => createDisposableStream(this.req),
+    const sink = createBufferFlowableSinkFromWritable(
+      () => createDisposableNodeStream(this.req),
       false,
     )
-      .enumerateAsync(scheduler, replayCount)
+      .stream(scheduler, replayCount)
       .add(this);
     this.add(sink);
     return sink;
   }
 }
 
-class ResponseBody extends AbstractDisposable implements BufferStreamLike {
+class ResponseBody extends AbstractDisposable implements BufferFlowableLike {
   private consumed = false;
 
   constructor(private readonly resp: IncomingMessage) {
@@ -122,18 +120,18 @@ class ResponseBody extends AbstractDisposable implements BufferStreamLike {
     resp.on("error", onError);
   }
 
-  enumerateAsync(
+  stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): AsyncEnumeratorLike<StreamMode, StreamEvent<Buffer>> {
+  ): StreamLike<FlowMode, FlowEvent<Buffer>> {
     if (this.consumed) {
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createBufferStreamFromReadable(() =>
-      createDisposableStream(this.resp),
+    const stream = createBufferFlowableFromReadable(() =>
+      createDisposableNodeStream(this.resp),
     )
-      .enumerateAsync(scheduler, replayCount)
+      .stream(scheduler, replayCount)
       .add(this);
     this.add(stream);
     return stream;
@@ -143,8 +141,8 @@ class ResponseBody extends AbstractDisposable implements BufferStreamLike {
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  HttpRequest<BufferStreamLike>,
-  BufferStreamLike & DisposableLike
+  HttpRequest<BufferFlowableLike>,
+  BufferFlowableLike & DisposableLike
 > => request => {
   return createObservable(subscriber => {
     const { method, uri } = request;
@@ -192,7 +190,7 @@ export const createHttpClient = (
     };
     req.on("response", onResponse);
 
-    const content: BufferStreamLike = pipe(
+    const content: BufferFlowableLike = pipe(
       request.body,
       lift(ev =>
         createObservable(streamEventSubscriber => {
@@ -201,7 +199,7 @@ export const createHttpClient = (
             publishedEvents,
             scan(
               ([incr, count], ev) =>
-                ev.type === StreamEventType.Next
+                ev.type === FlowEventType.Next
                   ? [ev.data.length, count + incr]
                   : [-1, count + incr],
 
@@ -209,7 +207,7 @@ export const createHttpClient = (
             ),
             onNotify(([incr, count]) => {
               const ev: Option<HttpClientRequestStatus<
-                BufferStreamLike & DisposableLike
+                BufferFlowableLike & DisposableLike
               >> =
                 incr < 0
                   ? { type: HttpClientRequestStatusType.Completed }
@@ -262,13 +260,13 @@ export const withDefaultBehaviors = (
   options?: ZlibOptions | (BrotliOptions & { maxRedirects: number }),
 ) => (
   httpClient: HttpClient<
-    HttpRequest<BufferStreamLike>,
-    BufferStreamLike & DisposableLike
+    HttpRequest<BufferFlowableLike>,
+    BufferFlowableLike & DisposableLike
   >,
-): HttpClient<HttpClientRequest, BufferStreamLike & DisposableLike> => {
+): HttpClient<HttpClientRequest, BufferFlowableLike & DisposableLike> => {
   const sendRequest: HttpClient<
     HttpClientRequest,
-    BufferStreamLike & DisposableLike
+    BufferFlowableLike & DisposableLike
   > = request =>
     pipe(
       ofValue(request),

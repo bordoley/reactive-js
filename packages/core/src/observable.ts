@@ -53,7 +53,12 @@ export {
   mergeAll,
   mergeMap,
 } from "./internal/observable/mergeAll";
-export { observe, onDispose, onError, onNotify } from "./internal/observable/observe";
+export {
+  observe,
+  onDispose,
+  onError,
+  onNotify,
+} from "./internal/observable/observe";
 export { onSubscribe } from "./internal/observable/onSubscribe";
 export { publish } from "./internal/observable/publish";
 export { reduce } from "./internal/observable/reduce";

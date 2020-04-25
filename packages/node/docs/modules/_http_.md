@@ -50,7 +50,7 @@ ___
 
 ###  HttpClientRequest
 
-Ƭ **HttpClientRequest**: *HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)› & object*
+Ƭ **HttpClientRequest**: *HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)› & object*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 ### `Const` createHttpClient
 
-▸ **createHttpClient**(`options`: [HttpClientOptions](_http_.md#httpclientoptions)): *HttpClient‹HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, [BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md) & DisposableLike›*
+▸ **createHttpClient**(`options`: [HttpClientOptions](_http_.md#httpclientoptions)): *HttpClient‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md) & DisposableLike›*
 
 **Parameters:**
 
@@ -93,19 +93,19 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | [HttpClientOptions](_http_.md#httpclientoptions) | {} |
 
-**Returns:** *HttpClient‹HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, [BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md) & DisposableLike›*
+**Returns:** *HttpClient‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md) & DisposableLike›*
 
 ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: HttpServer‹HttpServerRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)): *[HttpRequestListener](_http_.md#httprequestlistener)*
+▸ **createHttpRequestListener**(`handler`: HttpServer‹HttpServerRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)): *[HttpRequestListener](_http_.md#httprequestlistener)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | HttpServer‹HttpServerRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›› | - |
+`handler` | HttpServer‹HttpServerRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›› | - |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions) | {} |
 
@@ -115,7 +115,7 @@ ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 **Parameters:**
 
@@ -123,13 +123,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions | {} |
 
-**Returns:** *Operator‹HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+**Returns:** *Operator‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 ___
 
 ### `Const` encodeCharsetHttpRequest
 
-▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 **Parameters:**
 
@@ -137,13 +137,13 @@ Name | Type |
 ------ | ------ |
 `contentType` | string &#124; MediaType |
 
-**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 ___
 
 ### `Const` encodeCharsetHttpResponse
 
-▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 **Parameters:**
 
@@ -151,13 +151,13 @@ Name | Type |
 ------ | ------ |
 `contentType` | string &#124; MediaType |
 
-**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & ZlibOptions | BrotliOptions): *Operator‹HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & ZlibOptions | BrotliOptions): *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 **Type parameters:**
 
@@ -170,7 +170,7 @@ Name | Type | Default |
 `request` | HttpRequest‹TReq› | - |
 `options` | [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & ZlibOptions &#124; BrotliOptions | {} |
 
-**Returns:** *Operator‹HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›, HttpResponse‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)››*
+**Returns:** *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 ___
 

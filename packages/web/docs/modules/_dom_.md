@@ -36,7 +36,7 @@
 
 ### `Const` history
 
-• **history**: *AsyncEnumerableLike‹[Location](_dom_.md#location), [Location](_dom_.md#location)›* = _history
+• **history**: *StreamableLike‹[Location](_dom_.md#location), [Location](_dom_.md#location)›* = _history
 
 ___
 

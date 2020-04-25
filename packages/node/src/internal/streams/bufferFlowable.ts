@@ -1,18 +1,19 @@
 import { Readable } from "stream";
-import {
-  createAsyncEnumerable,
-  StreamEventType,
-  StreamMode,
-} from "@reactive-js/core/dist/js/async-enumerable";
+import { FlowEventType, FlowMode } from "@reactive-js/core/dist/js/flowable";
+import { createStreamable } from "@reactive-js/core/dist/js/streamable";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
-import { createObservable, onNotify, subscribe } from "@reactive-js/core/dist/js/observable";
+import {
+  createObservable,
+  onNotify,
+  subscribe,
+} from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
-import { BufferStreamLike } from "./interfaces";
+import { BufferFlowableLike } from "./interfaces";
 
-export const createBufferStreamFromReadable = (
+export const createBufferFlowableFromReadable = (
   factory: () => DisposableValueLike<Readable>,
-): BufferStreamLike =>
-  createAsyncEnumerable(mode =>
+): BufferFlowableLike =>
+  createStreamable(mode =>
     createObservable(subscriber => {
       const readable = factory();
       subscriber.add(readable);
@@ -21,10 +22,10 @@ export const createBufferStreamFromReadable = (
         mode,
         onNotify(ev => {
           switch (ev) {
-            case StreamMode.Pause:
+            case FlowMode.Pause:
               readable.value.pause();
               break;
-            case StreamMode.Resume:
+            case FlowMode.Resume:
               readable.value.resume();
               break;
           }
@@ -34,12 +35,12 @@ export const createBufferStreamFromReadable = (
       readable.add(modeSubscription);
 
       const onData = (data: Buffer) => {
-        subscriber.dispatch({ type: StreamEventType.Next, data });
+        subscriber.dispatch({ type: FlowEventType.Next, data });
       };
       readable.value.on("data", onData);
 
       const onEnd = () => {
-        subscriber.dispatch({ type: StreamEventType.Complete });
+        subscriber.dispatch({ type: FlowEventType.Complete });
         readable.dispose();
       };
       readable.value.on("end", onEnd);

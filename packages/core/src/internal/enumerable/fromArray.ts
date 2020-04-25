@@ -6,15 +6,14 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
   hasCurrent = false;
   index = -1;
 
-  constructor(private readonly array: readonly T[]) {
-  }
+  constructor(private readonly array: readonly T[]) {}
 
   move(): boolean {
     this.hasCurrent = false;
     this.current = none;
 
     this.index++;
-    
+
     const index = this.index;
     if (index < this.array.length) {
       this.hasCurrent = true;
@@ -25,8 +24,7 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
   }
 }
 
-class ArrayEnumerable<T>
-  implements EnumerableLike<T> {
+class ArrayEnumerable<T> implements EnumerableLike<T> {
   constructor(private readonly values: readonly T[]) {}
 
   enumerate() {

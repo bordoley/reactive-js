@@ -1,12 +1,12 @@
 import { none } from "../../option";
 import { EnumerableLike, EnumeratorLike } from "./interfaces";
 
-class IteratorEnumerator<T, TReturn = any, TNext = unknown> implements EnumeratorLike<T> {
+class IteratorEnumerator<T, TReturn = any, TNext = unknown>
+  implements EnumeratorLike<T> {
   current: any = none;
   hasCurrent = false;
 
-  constructor(private readonly iterator: Iterator<T, TReturn, TNext>) {
-  }
+  constructor(private readonly iterator: Iterator<T, TReturn, TNext>) {}
 
   move(): boolean {
     this.hasCurrent = false;

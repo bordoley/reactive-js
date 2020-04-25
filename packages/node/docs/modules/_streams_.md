@@ -6,8 +6,8 @@
 
 ### Interfaces
 
-* [BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)
-* [BufferStreamSinkLike](../interfaces/_streams_.bufferstreamsinklike.md)
+* [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)
+* [BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)
 
 ### Variables
 
@@ -15,9 +15,9 @@
 
 ### Functions
 
-* [createBufferStreamFromReadable](_streams_.md#const-createbufferstreamfromreadable)
-* [createBufferStreamSinkFromWritable](_streams_.md#const-createbufferstreamsinkfromwritable)
-* [createDisposableStream](_streams_.md#const-createdisposablestream)
+* [createBufferFlowableFromReadable](_streams_.md#const-createbufferflowablefromreadable)
+* [createBufferFlowableSinkFromWritable](_streams_.md#const-createbufferflowablesinkfromwritable)
+* [createDisposableNodeStream](_streams_.md#const-createdisposablenodestream)
 * [decode](_streams_.md#const-decode)
 * [encode](_streams_.md#const-encode)
 * [transform](_streams_.md#const-transform)
@@ -30,9 +30,9 @@
 
 ## Functions
 
-### `Const` createBufferStreamFromReadable
+### `Const` createBufferFlowableFromReadable
 
-▸ **createBufferStreamFromReadable**(`factory`: function): *[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)*
+▸ **createBufferFlowableFromReadable**(`factory`: function): *[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)*
 
 **Parameters:**
 
@@ -40,13 +40,13 @@
 
 ▸ (): *DisposableValueLike‹Readable›*
 
-**Returns:** *[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)*
+**Returns:** *[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)*
 
 ___
 
-### `Const` createBufferStreamSinkFromWritable
+### `Const` createBufferFlowableSinkFromWritable
 
-▸ **createBufferStreamSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+▸ **createBufferFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *[BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)*
 
 **Parameters:**
 
@@ -56,13 +56,13 @@ ___
 
 ▪`Default value`  **autoDispose**: *boolean*= true
 
-**Returns:** *AsyncEnumerableLike‹StreamEvent‹Buffer›, StreamMode›*
+**Returns:** *[BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)*
 
 ___
 
-### `Const` createDisposableStream
+### `Const` createDisposableNodeStream
 
-▸ **createDisposableStream**<**T**>(`stream`: T): *DisposableValueLike‹T›*
+▸ **createDisposableNodeStream**<**T**>(`stream`: T): *DisposableValueLike‹T›*
 
 **Type parameters:**
 
@@ -80,7 +80,7 @@ ___
 
 ### `Const` decode
 
-▸ **decode**(`charset`: string): *Operator‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md), StreamLike‹string››*
+▸ **decode**(`charset`: string): *Operator‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md), FlowableLike‹string››*
 
 **Parameters:**
 
@@ -88,13 +88,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹[BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md), StreamLike‹string››*
+**Returns:** *Operator‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md), FlowableLike‹string››*
 
 ___
 
 ### `Const` encode
 
-▸ **encode**(`charset`: string): *Operator‹StreamLike‹string›, [BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›*
+▸ **encode**(`charset`: string): *Operator‹FlowableLike‹string›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›*
 
 **Parameters:**
 
@@ -102,13 +102,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹StreamLike‹string›, [BufferStreamLike](../interfaces/_streams_.bufferstreamlike.md)›*
+**Returns:** *Operator‹FlowableLike‹string›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: function): *StreamOperator‹Buffer, Buffer›*
+▸ **transform**(`factory`: function): *FlowableOperator‹Buffer, Buffer›*
 
 **Parameters:**
 
@@ -116,4 +116,4 @@ ___
 
 ▸ (): *DisposableValueLike‹Transform›*
 
-**Returns:** *StreamOperator‹Buffer, Buffer›*
+**Returns:** *FlowableOperator‹Buffer, Buffer›*

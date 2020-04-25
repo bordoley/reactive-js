@@ -1,7 +1,10 @@
-export { BufferStreamLike, BufferStreamSinkLike } from "./internal/streams/interfaces";
+export {
+  BufferFlowableLike,
+  BufferFlowableSinkLike,
+} from "./internal/streams/interfaces";
 
-export { createBufferStreamFromReadable } from "./internal/streams/bufferStream";
-export { createBufferStreamSinkFromWritable } from "./internal/streams/bufferStreamSink";
+export { createBufferFlowableFromReadable } from "./internal/streams/bufferFlowable";
+export { createBufferFlowableSinkFromWritable } from "./internal/streams/bufferFlowableSink";
 export {
   transform,
   encode,
@@ -9,4 +12,4 @@ export {
   unsupportedEncoding,
 } from "./internal/streams/transform";
 
-export { createDisposableStream } from "./internal/streams/streams";
+export { createDisposableNodeStream } from "./internal/streams/nodeStream";

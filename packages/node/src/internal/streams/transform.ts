@@ -1,15 +1,6 @@
 import iconv from "iconv-lite";
 import { Transform } from "stream";
 import {
-  createAsyncEnumerable,
-  StreamEvent,
-  StreamOperator,
-  StreamLike,
-  lift,
-  StreamEventType,
-  sink,
-} from "@reactive-js/core/dist/js/async-enumerable";
-import {
   createDisposableValue,
   DisposableValueLike,
 } from "@reactive-js/core/dist/js/disposable";
@@ -23,21 +14,32 @@ import {
   subscribe,
 } from "@reactive-js/core/dist/js/observable";
 import { Option } from "@reactive-js/core/dist/js/option";
-import { createBufferStreamFromReadable } from "./bufferStream";
-import { createBufferStreamSinkFromWritable } from "./bufferStreamSink";
+import { createBufferFlowableFromReadable } from "./bufferFlowable";
+import { createBufferFlowableSinkFromWritable } from "./bufferFlowableSink";
 import { Operator, pipe } from "@reactive-js/core/dist/js/pipe";
-import { BufferStreamLike } from "./interfaces";
+import { BufferFlowableLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { isSome } from "@reactive-js/core/dist/js/option";
+import {
+  FlowableOperator,
+  FlowEvent,
+  FlowableLike,
+  FlowEventType,
+} from "@reactive-js/core/dist/js/flowable";
+import {
+  createStreamable,
+  sink,
+  lift,
+} from "@reactive-js/core/dist/js/streamable";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
-): StreamOperator<Buffer, Buffer> => src =>
-  createAsyncEnumerable(modeObs =>
-    createObservable<StreamEvent<Buffer>>(subscriber => {
+): FlowableOperator<Buffer, Buffer> => src =>
+  createStreamable(modeObs =>
+    createObservable<FlowEvent<Buffer>>(subscriber => {
       const transform = factory();
 
-      const transformSink = createBufferStreamSinkFromWritable(
+      const transformSink = createBufferFlowableSinkFromWritable(
         () => transform,
         false,
       );
@@ -46,11 +48,11 @@ export const transform = (
         subscribe(subscriber),
       );
 
-      const transformReadableEnumerator = createBufferStreamFromReadable(
+      const transformReadableStream = createBufferFlowableFromReadable(
         () => transform,
-      ).enumerateAsync(subscriber);
-      transformReadableEnumerator.subscribe(subscriber);
-      modeObs.subscribe(transformReadableEnumerator);
+      ).stream(subscriber);
+      transformReadableStream.subscribe(subscriber);
+      modeObs.subscribe(transformReadableStream);
 
       subscriber.add(transform).add(sinkSubscription);
     }),
@@ -65,29 +67,29 @@ const onError = (e: unknown) =>
 
 export const encode = (
   charset: string,
-): Operator<StreamLike<string>, BufferStreamLike> => {
+): Operator<FlowableLike<string>, BufferFlowableLike> => {
   const createEncoder = (_: SchedulerLike) =>
     createDisposableValue((iconv as any).getEncoder(charset), _ => {});
 
-  const mapObs = (obs: ObservableLike<StreamEvent<string>>) =>
+  const mapObs = (obs: ObservableLike<FlowEvent<string>>) =>
     pipe(
       using(createEncoder, encoder =>
         pipe(
           obs,
           genMap(function*(ev) {
             switch (ev.type) {
-              case StreamEventType.Next: {
+              case FlowEventType.Next: {
                 const data = encoder.value.write(ev.data);
-                yield { type: StreamEventType.Next, data };
+                yield { type: FlowEventType.Next, data };
                 break;
               }
-              case StreamEventType.Complete: {
+              case FlowEventType.Complete: {
                 const data: Option<Buffer> = encoder.value.end();
                 if (isSome(data) && data.length > 0) {
-                  yield { type: StreamEventType.Next, data };
+                  yield { type: FlowEventType.Next, data };
                 }
 
-                yield { type: StreamEventType.Complete };
+                yield { type: FlowEventType.Complete };
                 break;
               }
             }
@@ -102,29 +104,29 @@ export const encode = (
 
 export const decode = (
   charset: string,
-): Operator<BufferStreamLike, StreamLike<string>> => {
+): Operator<BufferFlowableLike, FlowableLike<string>> => {
   const createDecoder = (_: SchedulerLike) =>
     createDisposableValue((iconv as any).getDecoder(charset), _ => {});
 
-  const mapObs = (obs: ObservableLike<StreamEvent<Buffer>>) =>
+  const mapObs = (obs: ObservableLike<FlowEvent<Buffer>>) =>
     pipe(
       using(createDecoder, decoder =>
         pipe(
           obs,
           genMap(function*(ev) {
             switch (ev.type) {
-              case StreamEventType.Next: {
+              case FlowEventType.Next: {
                 const data = decoder.value.write(ev.data);
-                yield { type: StreamEventType.Next, data };
+                yield { type: FlowEventType.Next, data };
                 break;
               }
-              case StreamEventType.Complete: {
+              case FlowEventType.Complete: {
                 const data: Option<Buffer> = decoder.value.end();
                 if (isSome(data) && data.length > 0) {
-                  yield { type: StreamEventType.Next, data };
+                  yield { type: FlowEventType.Next, data };
                 }
 
-                yield { type: StreamEventType.Complete };
+                yield { type: FlowEventType.Complete };
                 break;
               }
             }

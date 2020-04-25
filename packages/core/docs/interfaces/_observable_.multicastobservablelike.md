@@ -16,9 +16,9 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
   ↳ **MulticastObservableLike**
 
-  ↳ [AsyncEnumeratorLike](_async_enumerable_.asyncenumeratorlike.md)
-
   ↳ [SubjectLike](_observable_.subjectlike.md)
+
+  ↳ [StreamLike](_streamable_.streamlike.md)
 
 ## Index
 

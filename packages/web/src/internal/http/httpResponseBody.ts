@@ -7,7 +7,10 @@ import {
 } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { WebResponseBodyLike } from "./interfaces";
-import { AbstractDisposable, DisposableLike } from "@reactive-js/core/dist/js/disposable";
+import {
+  AbstractDisposable,
+  DisposableLike,
+} from "@reactive-js/core/dist/js/disposable";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (subscriber: SafeSubscriberLike<string>) => {

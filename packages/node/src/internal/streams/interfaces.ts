@@ -1,5 +1,8 @@
-import { StreamLike, StreamSinkLike } from "@reactive-js/core/dist/js/async-enumerable";
+import {
+  FlowableLike,
+  FlowableSinkLike,
+} from "@reactive-js/core/dist/js/flowable";
 
-export interface BufferStreamLike extends StreamLike<Buffer> {}
+export interface BufferFlowableLike extends FlowableLike<Buffer> {}
 
-export interface BufferStreamSinkLike extends StreamSinkLike<Buffer> {}
+export interface BufferFlowableSinkLike extends FlowableSinkLike<Buffer> {}

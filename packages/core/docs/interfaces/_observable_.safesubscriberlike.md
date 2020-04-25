@@ -15,7 +15,7 @@ a backing subscriber from any context.
 
   ↳ **SafeSubscriberLike**
 
-  ↳ [AsyncEnumeratorLike](_async_enumerable_.asyncenumeratorlike.md)
+  ↳ [StreamLike](_streamable_.streamlike.md)
 
 ## Index
 

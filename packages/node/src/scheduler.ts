@@ -1,6 +1,12 @@
-import { DisposableLike, createDisposable } from "@reactive-js/core/dist/js/disposable";
+import {
+  DisposableLike,
+  createDisposable,
+} from "@reactive-js/core/dist/js/disposable";
 import { Option } from "@reactive-js/core/dist/js/option";
-import { AbstractHostScheduler, SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
+import {
+  AbstractHostScheduler,
+  SchedulerLike,
+} from "@reactive-js/core/dist/js/scheduler";
 
 let timeout = 1;
 export const setSchedulerTimeout = (newTimeout: number) => {
@@ -55,7 +61,6 @@ class NodeScheduler extends AbstractHostScheduler {
 
 const schedulerImpl = new NodeScheduler();
 let startTime = schedulerImpl.now;
-
 
 // FIXME: When compiling we should generate a wrapper in the mjs module
 // around the cjs module to avoid two global schedulers.

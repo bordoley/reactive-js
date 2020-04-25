@@ -1,10 +1,5 @@
 import { isNone, isSome, none, Option } from "../../option";
-import {
-  parseWith,
-  pAsterisk,
-  or,
-  mapTo,
-} from "../../parser-combinators";
+import { parseWith, pAsterisk, or, mapTo } from "../../parser-combinators";
 import { pipe } from "../../pipe";
 import {
   entityTagToString,
