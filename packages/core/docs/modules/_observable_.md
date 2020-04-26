@@ -73,9 +73,7 @@
 * [none](_observable_.md#const-none)
 * [observe](_observable_.md#observe)
 * [ofValue](_observable_.md#ofvalue)
-* [onDispose](_observable_.md#const-ondispose)
-* [onError](_observable_.md#const-onerror)
-* [onNotify](_observable_.md#const-onnotify)
+* [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
 * [reduce](_observable_.md#const-reduce)
@@ -943,7 +941,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`onNotify`: function, `schedulerFactory`: function): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: function): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
@@ -954,9 +952,7 @@ invoking the onNotify callback for each item emitted by the source.
 
 **Parameters:**
 
-▪ **onNotify**: *function*
-
-callback to invoke for each item emitted by the source.
+▪ **callback**: *function*
 
 ▸ (`next`: T): *void*
 
@@ -1526,69 +1522,11 @@ Name | Type | Default | Description |
 
 ___
 
-### `Const` onDispose
-
-▸ **onDispose**<**T**>(`onDispose`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
-
-Returns an observable that forwards dispose notifications to the provided `onDispose` function.
-
-The function that is invoked when the observable subscription is disposed.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **onDispose**: *function*
-
-▸ (`err?`: [Exception](_disposable_.md#exception)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`err?` | [Exception](_disposable_.md#exception) |
-
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
-
-___
-
-### `Const` onError
-
-▸ **onError**<**T**>(`onError`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
-
-Returns an `ObservableLike` that forwards error notifications to the provided `onError` function.
-
-The function that is invoked when the observable subscription is disposed with an error.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **onError**: *function*
-
-▸ (`err`: unknown): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`err` | unknown |
-
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
-
-___
-
-### `Const` onNotify
+###  onNotify
 
 ▸ **onNotify**<**T**>(`onNotify`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
-
-The function that is invoked when the observable source produces values.
 
 **Type parameters:**
 
@@ -1597,6 +1535,8 @@ The function that is invoked when the observable source produces values.
 **Parameters:**
 
 ▪ **onNotify**: *function*
+
+The function that is invoked when the observable source produces values.
 
 ▸ (`next`: T): *void*
 
@@ -1624,7 +1564,13 @@ Executes a side-effect when the observable is subscribed.
 
 ▪ **f**: *function*
 
-▸ (): *void*
+▸ (`subscriber`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T›): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`subscriber` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

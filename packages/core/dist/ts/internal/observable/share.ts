@@ -35,7 +35,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     if (this.subscriberCount === 0) {
       this.subject = this.factory();
       this.subject.add(
-        pipe(this.source, observe(this.subject), subscribe(this.scheduler))
+        pipe(this.source, observe(this.subject), subscribe(this.scheduler)),
       );
     }
     this.subscriberCount++;

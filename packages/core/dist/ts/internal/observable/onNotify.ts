@@ -1,14 +1,14 @@
-import { ObservableOperator, ObserverLike, SubscriberLike } from "./interfaces.ts";
+import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 
-class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly observer: ObserverLike<T>,
+    private readonly onNotify: (next: T) => void,
   ) {
     super(delegate);
   }
@@ -17,22 +17,22 @@ class ObserveSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     assertSubscriberNotifyInContinuation(this);
 
     if (!this.isDisposed) {
-      this.observer.onNotify(next);
+      this.onNotify(next);
       this.delegate.notify(next);
     }
   }
 }
 
 /**
- * Returns an observable that forwards notifications to the provided observer.
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
- * @param observer The observer that observes notifications.
+ * @param onNotify The function that is invoked when the observable source produces values.
  */
-export function observe<T>(
-  observer: ObserverLike<T>,
+export function onNotify<T>(
+  onNotify: (next: T) => void,
 ): ObservableOperator<T, T> {
   const operator = (subscriber: SubscriberLike<T>) =>
-    new ObserveSubscriber(subscriber, observer);
+    new OnNotifySubscriber(subscriber, onNotify);
   operator.isSynchronous = true;
   return lift(operator);
 }

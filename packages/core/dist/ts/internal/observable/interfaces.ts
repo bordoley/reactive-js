@@ -1,17 +1,10 @@
-import { DisposableLike, Exception } from "../../disposable.ts";
+import { DisposableLike } from "../../disposable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 
 /**
  * An observer of push-based notifications within an observable source.
  */
 export interface ObserverLike<T> {
-  /**
-   * Notifies the observer that the provider has finished sending push-based notifications.
-   *
-   * @param error If present, indicates that the provider experienced an error condition.
-   */
-  onDispose(error?: Exception): void;
-
   /**
    * Provides the observer with the next item to observe.
    *

@@ -48,7 +48,7 @@ const setupDurationSubscription = <T>(
     subscriber.durationSelector(next),
     observe(subscriber),
     subscribe(subscriber),
-  );
+  ).add(subscriber.onDurationDispose);
 };
 
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
@@ -56,6 +56,12 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: Option<T> = none;
   private hasValue = false;
+
+  readonly onDurationDispose = (error?: Exception) => {
+    if (isSome(error)) {
+      this.dispose(error);
+    }
+  }
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -92,13 +98,6 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
         setupDurationSubscription(this, next);
       }
     }
-  }
-
-  onDispose(error?: Exception) {
-    if (isSome(error)) {
-      this.dispose(error);
-    }
-    // FIXME: Should really schedule a call to onNotify here.
   }
 
   onNotify(_?: unknown) {

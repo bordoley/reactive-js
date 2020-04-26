@@ -34,8 +34,6 @@ import {
   observe,
   ObserverLike,
   ofValue,
-  onDispose,
-  onError,
   onNotify,
   repeat,
   scan,
@@ -97,7 +95,6 @@ const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
 
 const createMockObserver = <T>(): ObserverLike<T> => ({
   onNotify: jest.fn(),
-  onDispose: jest.fn(),
 });
 
 test("buffer", () => {
@@ -685,20 +682,21 @@ describe("generate", () => {
       return i + 1;
     };
 
+    const onDispose = jest.fn();
     pipe(
       generate(generator, () => 1, 5),
       map(x => [scheduler.now, x]),
       takeFirst(5),
       observe(observer),
       subscribe(scheduler),
-    );
+    ).add(e => onDispose(e));
     scheduler.run();
 
     expect(observer.onNotify).toHaveBeenCalledTimes(3);
     expect(observer.onNotify).toHaveBeenNthCalledWith(1, [5, 1]);
     expect(observer.onNotify).toHaveBeenNthCalledWith(2, [10, 2]);
     expect(observer.onNotify).toHaveBeenNthCalledWith(3, [15, 3]);
-    expect(observer.onDispose).toBeCalledWith({ cause });
+    expect(onDispose).toBeCalledWith({ cause });
   });
 });
 
@@ -711,11 +709,14 @@ test("ignoreElements", () => {
     throws(() => cause),
   );
 
-  pipe(src, ignoreElements(), observe(observer), subscribe(scheduler));
+  const onDispose = jest.fn();
+  pipe(src, ignoreElements(), observe(observer), subscribe(scheduler)).add(e =>
+    onDispose(e),
+  );
   scheduler.run();
 
   expect(observer.onNotify).toBeCalledTimes(0);
-  expect(observer.onDispose).toBeCalledWith({ cause });
+  expect(onDispose).toBeCalledWith({ cause });
 });
 
 test("keep", () => {
@@ -727,24 +728,24 @@ test("keep", () => {
     throws(() => cause),
   );
 
+  const onDispose = jest.fn();
   pipe(
     src,
     keep(x => x % 2 === 0),
     observe(observer),
     subscribe(scheduler),
-  );
+  ).add(e => onDispose(e));
   scheduler.run();
 
   expect(observer.onNotify).toHaveBeenNthCalledWith(1, 2);
   expect(observer.onNotify).toBeCalledTimes(1);
-  expect(observer.onDispose).toBeCalledWith({ cause });
+  expect(onDispose).toBeCalledWith({ cause });
 });
 
 test("liftObserable", () => {
   const onNotify = <T>(onNotify: (data: T) => void) =>
     observe({
       onNotify: onNotify,
-      onDispose: _ => {},
     });
   const scheduler = createVirtualTimeScheduler();
   const result: number[] = [];
@@ -772,6 +773,7 @@ test("merge", () => {
   const observer = createMockObserver();
   const cause = new Error();
 
+  const onDispose = jest.fn();
   pipe(
     merge(
       pipe(
@@ -794,7 +796,7 @@ test("merge", () => {
     ),
     observe(observer),
     subscribe(scheduler),
-  );
+  ).add(e => onDispose(e));
   scheduler.run();
 
   expect(observer.onNotify).toHaveBeenNthCalledWith(1, 3);
@@ -802,7 +804,7 @@ test("merge", () => {
   expect(observer.onNotify).toHaveBeenNthCalledWith(3, 5);
   expect(observer.onNotify).toHaveBeenNthCalledWith(4, 4);
   expect(observer.onNotify).toHaveBeenNthCalledWith(5, 7);
-  expect(observer.onDispose).toBeCalledWith({ cause });
+  expect(onDispose).toBeCalledWith({ cause });
 });
 
 describe("never", () => {
@@ -842,50 +844,6 @@ test("none", () => {
 describe("ofValue", () => {
   test("completes with the value when subscribed", () => {
     pipe(ofValue(1), toArray(), expect).toEqual([1]);
-  });
-});
-
-test("onDispose", () => {
-  const scheduler = createVirtualTimeScheduler();
-  const observer = createMockObserver();
-  const cb = jest.fn();
-
-  pipe(empty(), onDispose(cb), observe(observer), subscribe(scheduler));
-  scheduler.run();
-
-  expect(observer.onDispose).toHaveBeenCalledWith(undefined);
-  expect(cb).toHaveBeenCalledWith(undefined);
-});
-
-describe("onError", () => {
-  test("when completed with error", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const observer = createMockObserver();
-    const cause = new Error();
-    const cb = jest.fn();
-
-    pipe(
-      throws(() => cause),
-      onError(cb),
-      observe(observer),
-      subscribe(scheduler),
-    );
-    scheduler.run();
-
-    expect(observer.onDispose).toHaveBeenCalledWith({ cause });
-    expect(cb).toHaveBeenCalledWith(cause);
-  });
-
-  test("when completed without error", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const observer = createMockObserver();
-    const cb = jest.fn();
-
-    pipe(empty(), onError(cb), observe(observer), subscribe(scheduler));
-    scheduler.run();
-
-    expect(observer.onDispose).toHaveBeenCalledTimes(1);
-    expect(cb).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -943,7 +901,6 @@ test("scan", () => {
   expect(observer.onNotify).toHaveBeenNthCalledWith(1, 1);
   expect(observer.onNotify).toHaveBeenNthCalledWith(2, 3);
   expect(observer.onNotify).toHaveBeenNthCalledWith(3, 6);
-  expect(observer.onDispose).toBeCalledWith({ cause });
 });
 
 describe("scanAsync", () => {
@@ -1046,6 +1003,7 @@ test("share", () => {
   const liftedObserver = createMockObserver();
   let liftedSubscription = disposed;
 
+  const onDispose1 = jest.fn();
   pipe(
     ofValue(none, 1),
     onNotify(_ => {
@@ -1056,11 +1014,12 @@ test("share", () => {
       );
     }),
     subscribe(scheduler),
-  );
+  ).add(e => onDispose1(e));
 
   const anotherLiftedSubscriptionObserver = createMockObserver();
   let anotherLiftedSubscription = disposed;
 
+  const onDispose2 = jest.fn();
   pipe(
     ofValue(none, 3),
     onNotify(_ => {
@@ -1074,7 +1033,7 @@ test("share", () => {
       );
     }),
     subscribe(scheduler),
-  );
+  ).add(e => onDispose2(e));
 
   scheduler.run();
 
@@ -1082,10 +1041,10 @@ test("share", () => {
 
   expect(liftedObserver.onNotify).toBeCalledTimes(1);
   expect(liftedObserver.onNotify).toBeCalledWith(2);
-  expect(liftedObserver.onDispose).toBeCalledTimes(1);
+  expect(onDispose1).toBeCalledTimes(1);
 
   expect(anotherLiftedSubscriptionObserver.onNotify).toBeCalledTimes(3);
-  expect(anotherLiftedSubscriptionObserver.onDispose).toBeCalledTimes(1);
+  expect(onDispose2).toBeCalledTimes(1);
 });
 
 test("switchAll", () => {
@@ -1211,15 +1170,16 @@ describe("throws", () => {
     const observer = createMockObserver();
     const cause = new Error();
 
+    const onDispose = jest.fn();
     pipe(
       throws(() => cause),
       observe(observer),
       subscribe(scheduler),
-    );
+    ).add(e => onDispose(e));
     scheduler.run();
 
     expect(observer.onNotify).toBeCalledTimes(0);
-    expect(observer.onDispose).toBeCalledWith({ cause });
+    expect(onDispose).toBeCalledWith({ cause });
   });
 });
 

@@ -1,11 +1,6 @@
 import { StreamLike, createStreamable, StreamableLike } from "./streamable";
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable";
-import {
-  ObservableLike,
-  switchAll,
-  onSubscribe,
-  onDispose,
-} from "./observable";
+import { ObservableLike, switchAll, onSubscribe } from "./observable";
 import { Option, isNone, isSome } from "./option";
 import { pipe } from "./pipe";
 import {
@@ -13,6 +8,7 @@ import {
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler";
+import { SubscriberLike } from "./internal/observable/interfaces";
 
 const alwaysFalse = () => false;
 
@@ -128,10 +124,6 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           this.garbage.delete(key);
         });
 
-      const onSubscribeUnmark = () => {
-        this.garbage.delete(key);
-      };
-
       const onDisposeCleanup = (_?: Exception) =>
         this.add(
           pipe(
@@ -144,11 +136,12 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           ),
         );
 
-      const observable = pipe(
-        stream,
-        onSubscribe(onSubscribeUnmark),
-        onDispose(onDisposeCleanup),
-      );
+      const onSubscribeUnmark = (subscriber: SubscriberLike<T>) => {
+        this.garbage.delete(key);
+        subscriber.add(onDisposeCleanup);
+      };
+
+      const observable = pipe(stream, onSubscribe(onSubscribeUnmark));
 
       cachedValue = [stream, observable];
       this.cache.set(key, cachedValue);

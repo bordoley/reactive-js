@@ -34,10 +34,6 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     }
   }
 
-  onDispose() {
-    this.dispose();
-  }
-
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
@@ -68,6 +64,5 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
  * @param replayCount The number of events that should be replayed when the `SubjectLike` instance
  * is subscribed to.
  */
-export const createSubject = <T>(
-  replayCount = 0,
-): SubjectLike<T> => new SubjectImpl(replayCount);
+export const createSubject = <T>(replayCount = 0): SubjectLike<T> =>
+  new SubjectImpl(replayCount);

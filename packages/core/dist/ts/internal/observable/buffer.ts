@@ -1,4 +1,4 @@
-import { createSerialDisposable, Exception } from "../../disposable.ts";
+import { createSerialDisposable } from "../../disposable.ts";
 import { isNone, isSome, none } from "../../option.ts";
 import { pipe } from "../../pipe.ts";
 import { ofValue } from "./ofValue.ts";
@@ -55,7 +55,11 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
         this.durationSelector(next),
         observe(this),
         subscribe(this.delegate),
-      );
+      ).add(e => {
+        if (isSome(e)) {
+          this.dispose(e);
+        }
+      });
     }
   }
 
@@ -75,14 +79,6 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     if (this.isDisposed) {
       delegate.dispose();
     }
-  }
-
-  onDispose(error?: Exception) {
-    if (isSome(error)) {
-      this.dispose(error);
-    }
-
-    // FIXME: should schedule onNotify if the duration subscription has been disposed as well.
   }
 }
 

@@ -1,39 +1,22 @@
 import { Exception } from "../../disposable.ts";
 import { none, Option, isSome } from "../../option.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe, Operator } from "../../pipe.ts";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
+  SchedulerLike,
 } from "../../scheduler.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { observe } from "./observe.ts";
 import { subscribe } from "./subscribe.ts";
 
 class ToValueObserver<T> implements ObserverLike<T> {
-  private _result: Option<T> = none;
-  private hasResult = false;
-  private error: Option<Exception> = none;
+  result: Option<T> = none;
+  hasResult = false;
 
   onNotify(next: T) {
-    this._result = next;
+    this.result = next;
     this.hasResult = true;
-  }
-
-  onDispose(error?: Exception) {
-    this.error = error;
-  }
-
-  get result(): T {
-    const error = this.error;
-    if (isSome(error)) {
-      const { cause } = error;
-      throw cause;
-    }
-
-    if (!this.hasResult) {
-      throw new Error("Observable did not produce any values");
-    }
-    return this._result as T;
   }
 }
 
@@ -46,12 +29,54 @@ export const toValue = (
 ) => <T>(source: ObservableLike<T>): T => {
   const scheduler = schedulerFactory();
   const observer = new ToValueObserver<T>();
-  const subscription = pipe(source, observe(observer), subscribe(scheduler));
+
+  let error: Option<Exception> = none;
+  const subscription = pipe(
+    source,
+    observe(observer),
+    subscribe(scheduler),
+  ).add(e => {
+    error = e;
+  });
 
   scheduler.run();
 
   subscription.dispose();
   scheduler.dispose();
 
-  return observer.result;
+  const reifiedError: Option<Exception> = error;
+  // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason
+  if (reifiedError !== none) {
+    const { cause } = reifiedError as Exception;
+    throw cause;
+  }
+
+  if (!observer.hasResult) {
+    throw new Error("Observable did not produce any values");
+  }
+
+  return observer.result as T;
 };
+
+/**
+ * Returns a Promise that completes with the last value produced by
+ * the source.
+ *
+ * @param scheduler The scheduler upon which to subscribe to the source.
+ */
+export const toPromise = <T>(
+  scheduler: SchedulerLike,
+): Operator<ObservableLike<T>, Promise<T>> => observable =>
+  new Promise((resolve, reject) => {
+    const observer = new ToValueObserver();
+    pipe(observable, observe(observer), subscribe(scheduler)).add(err => {
+      if (isSome(err)) {
+        const { cause } = err;
+        reject(cause);
+      } else if (!observer.hasResult) {
+        reject(new Error("Observable completed without producing a value"));
+      } else {
+        resolve(observer.result as T);
+      }
+    });
+  });

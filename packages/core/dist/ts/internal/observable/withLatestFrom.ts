@@ -1,4 +1,3 @@
-import { Exception } from "../../disposable.ts";
 import { Option, isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -30,6 +29,11 @@ class WithLatestFromSubscriber<TA, TB, TC>
     this.selector = selector;
 
     this.add(pipe(other, observe(this), subscribe(this))).add(delegate);
+    delegate.add(e => {
+      if (isSome(e)) {
+        this.dispose(e);
+      }
+    });
   }
 
   notify(next: TA) {
@@ -38,12 +42,6 @@ class WithLatestFromSubscriber<TA, TB, TC>
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
       this.delegate.notify(result);
-    }
-  }
-
-  onDispose(error?: Exception) {
-    if (isSome(error)) {
-      this.dispose(error);
     }
   }
 

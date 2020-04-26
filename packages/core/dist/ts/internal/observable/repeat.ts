@@ -20,30 +20,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   private readonly innerSubscription = createSerialDisposable();
   private count = 1;
 
-  constructor(
-    delegate: SubscriberLike<T>,
-    private readonly observable: ObservableLike<T>,
-    private readonly shouldRepeat: (
-      count: number,
-      error?: Exception,
-    ) => boolean,
-  ) {
-    super(delegate);
-    delegate.add(this.innerSubscription);
-    this.add(error => {
-      this.onDispose(error);
-    });
-  }
-
-  notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
-
-    if (!this.isDisposed) {
-      this.delegate.notify(next);
-    }
-  }
-
-  onDispose(error?: Exception) {
+  private readonly onDispose = (error?: Exception) => {
     let shouldComplete = false;
     try {
       shouldComplete = !this.shouldRepeat(this.count, error);
@@ -61,7 +38,28 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
         this.observable,
         observe(this),
         subscribe(delegate),
-      );
+      ).add(this.onDispose);
+    }
+  }
+
+  constructor(
+    delegate: SubscriberLike<T>,
+    private readonly observable: ObservableLike<T>,
+    private readonly shouldRepeat: (
+      count: number,
+      error?: Exception,
+    ) => boolean,
+  ) {
+    super(delegate);
+    delegate.add(this.innerSubscription);
+    this.add(this.onDispose);
+  }
+
+  notify(next: T) {
+    assertSubscriberNotifyInContinuation(this);
+
+    if (!this.isDisposed) {
+      this.delegate.notify(next);
     }
   }
 

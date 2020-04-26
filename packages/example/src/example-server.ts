@@ -47,8 +47,6 @@ import {
   catchError,
   throws,
   await_,
-  onError,
-  onDispose,
   using,
   concatMap,
   switchMap,
@@ -239,10 +237,11 @@ pipe(
       response.body.dispose();
     }
   }),
-  onDispose(_ => console.log("dispose value case")),
-  onError(console.log),
   subscribe(scheduler),
-);
+).add(e => {
+  console.log("dispose value case");
+  console.log(e);
+});
 
 const file = "packages/example/dist/rollup/bundle.js";
 pipe(
@@ -278,7 +277,8 @@ pipe(
       : ofValue(JSON.stringify(status)),
   ),
   onNotify(console.log),
-  onError(console.log),
-  onDispose(_ => console.log("dispose")),
   subscribe(scheduler),
-);
+).add(e => {
+  console.log("dispose");
+  console.log(e);
+});

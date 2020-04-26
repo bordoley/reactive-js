@@ -26,7 +26,7 @@ const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
         nextObs,
         observe(subscriber),
         subscribe(subscriber.delegate),
-      );
+      ).add(subscriber.onDispose);
 
       subscriber.delegate.add(nextObsSubscription);
     } else if (subscriber.isDisposed) {
@@ -40,6 +40,17 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   T
 > {
   activeCount = 0;
+
+  readonly onDispose = (error?: Exception) => {
+    this.activeCount--;
+
+    if (isSome(error)) {
+      this.delegate.dispose(error);
+    } else {
+      subscribeNext(this);
+    }
+  };
+
   readonly queue: Array<ObservableLike<T>> = [];
 
   constructor(
@@ -79,16 +90,6 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
 
   onNotify(next: T) {
     this.delegate.notify(next);
-  }
-
-  onDispose(error?: Exception) {
-    this.activeCount--;
-
-    if (isSome(error)) {
-      this.delegate.dispose(error);
-    } else {
-      subscribeNext(this);
-    }
   }
 }
 
