@@ -6,9 +6,9 @@ import {
   SubjectLike,
   SubscriberLike,
 } from "./interfaces.ts";
-import { createSubject } from "./subject.ts";
+import { createSubject } from "./createSubject.ts";
 import { pipe } from "../../pipe.ts";
-import { observe } from "./observe.ts";
+import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 
 class SharedObservable<T> implements ObservableLike<T> {
@@ -25,6 +25,8 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   readonly isSynchronous = false;
 
+  private readonly onNotify = (next: T) => (this.subject as SubjectLike<T>).dispatch(next);
+
   constructor(
     private readonly factory: () => SubjectLike<T>,
     private readonly source: ObservableLike<T>,
@@ -35,7 +37,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     if (this.subscriberCount === 0) {
       this.subject = this.factory();
       this.subject.add(
-        pipe(this.source, observe(this.subject), subscribe(this.scheduler)),
+        pipe(this.source, onNotify(this.onNotify), subscribe(this.scheduler)),
       );
     }
     this.subscriberCount++;

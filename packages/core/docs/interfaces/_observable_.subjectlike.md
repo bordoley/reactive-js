@@ -2,16 +2,12 @@
 
 # Interface: SubjectLike <**T**>
 
-A `MulticastObservableLike` that is also `SubscriberLike`.
-
 ## Type parameters
 
 ▪ **T**
 
 ## Hierarchy
 
-* [ObserverLike](_observable_.observerlike.md)‹T›
-
-  ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)‹T›
+  ↳ [StreamLike](_observable_.streamlike.md)‹T, T›
 
   ↳ **SubjectLike**

@@ -1,8 +1,8 @@
-import { observe } from "./observe";
+import { onNotify } from "./onNotify";
+import { createSubject } from "./createSubject";
 import { Operator, pipe } from "../../pipe";
 import { SchedulerLike } from "../../scheduler";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
-import { createSubject } from "./subject";
 import { subscribe } from "./subscribe";
 
 /**
@@ -17,6 +17,11 @@ export const publish = <T>(
   replayCount = 0,
 ): Operator<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
   const subject = createSubject<T>(replayCount);
-  subject.add(pipe(observable, observe(subject), subscribe(scheduler)));
+  const srcSubscription = pipe(
+    observable,
+    onNotify(next => subject.dispatch(next)),
+    subscribe(scheduler),
+  ).add(subject);
+  subject.add(srcSubscription);
   return subject;
 };

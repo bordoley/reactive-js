@@ -1,6 +1,6 @@
-import { StreamLike, createStreamable, StreamableLike } from "./streamable";
+import { createStreamable, StreamableLike } from "./streamable";
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable";
-import { ObservableLike, switchAll, onSubscribe } from "./observable";
+import { ObservableLike, StreamLike, switchAll, onSubscribe } from "./observable";
 import { Option, isNone, isSome } from "./option";
 import { pipe } from "./pipe";
 import {

@@ -50,6 +50,8 @@ ___
 
 ▸ **add**(`disposable`: DisposableOrTeardown): *this*
 
+*Implementation of [DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
 **Parameters:**
 
 Name | Type |

@@ -1,35 +1,5 @@
-/*
-
-export {
-  ReducerRequestType,
-  ContinueRequest,
-  ReducerRequest,
-  DoneRequest,
-  reduce,
-  reduceAsync,
-} from "./internal/async-enumerable/reduce.ts";
-
-export { createAsyncEnumerable } from "./internal/async-enumerable/createAsyncEnumerable.ts";
-export { empty } from "./internal/async-enumerable/empty.ts";
-export { fromArray } from "./internal/async-enumerable/fromArray.ts";
-export { fromIterable } from "./internal/async-enumerable/fromIterable.ts";
-export { generate } from "./internal/async-enumerable/generate.ts";
-
-
-
-export { sink } from "./internal/async-enumerable/sink.ts";
-
-
-export {
-  createActionReducer,
-  createStateStore,
-} from "./internal/async-enumerable/actionReducer.ts";
-export { toStateStore } from "./internal/async-enumerable/toStateStore.ts";
-*/
-
 import {
   StreamableLike,
-  StreamLike,
   identity,
   lift,
   createStreamable,
@@ -49,7 +19,7 @@ import {
   ObservableOperator,
   takeFirst,
   scan,
-  createObservable,
+  StreamLike,
   takeWhile,
 } from "./observable.ts";
 import { compose, pipe, Operator } from "./pipe.ts";
@@ -258,17 +228,19 @@ export const fromArray = <T>(values: readonly T[]): AsyncEnumerableLike<T> => {
 export const fromIterable = <T>(
   iterable: Iterable<T>,
 ): AsyncEnumerableLike<T> => {
-  const operator = (obs: ObservableLike<void>) =>
-    createObservable(subscriber => {
-      const enumerator = fromIterableEnumerable(iterable).enumerate();
-
-      pipe(
-        obs,
-        onNotify(() => enumerator.move()),
-        takeWhile(_ => enumerator.hasCurrent),
-        map(_ => enumerator.current),
-      ).subscribe(subscriber);
-    });
+  const enumerable = fromIterableEnumerable(iterable);
+  const operator = (obs: ObservableLike<void>) => {
+    return pipe(
+      obs,
+      withLatestFrom(
+        compute(() => enumerable.enumerate()),
+        (_, enumerator) => enumerator, 
+      ),
+      onNotify(enumerator => enumerator.move()),
+      takeWhile(enumerator=> enumerator.hasCurrent),
+      map(enumerator => enumerator.current),
+    )
+  };
 
   return createStreamable(operator);
 };

@@ -12,6 +12,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [DisposableValueLike](_disposable_.disposablevaluelike.md)
 
+  ↳ [DispatcherLike](_observable_.dispatcherlike.md)
+
   ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)
 
   ↳ [SubscriberLike](_observable_.subscriberlike.md)
@@ -54,7 +56,7 @@ Represents an unmanaged resource that can be disposed.
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableLike](_disposable_.disposablelike.md) | function): *this*
+▸ **add**(`disposable`: DisposableOrTeardown): *this*
 
 Adds the given disposable to this container or disposes it if the container has been disposed.
 
@@ -62,7 +64,7 @@ Adds the given disposable to this container or disposes it if the container has 
 
 Name | Type |
 ------ | ------ |
-`disposable` | [DisposableLike](_disposable_.disposablelike.md) &#124; function |
+`disposable` | DisposableOrTeardown |
 
 **Returns:** *this*
 

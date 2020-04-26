@@ -1,10 +1,6 @@
-import { StreamLike, createStreamable, StreamableLike } from "./streamable.ts";
+import { createStreamable, StreamableLike } from "./streamable.ts";
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable.ts";
-import {
-  ObservableLike,
-  switchAll,
-  onSubscribe,
-} from "./observable.ts";
+import { ObservableLike, StreamLike, switchAll, onSubscribe } from "./observable.ts";
 import { Option, isNone, isSome } from "./option.ts";
 import { pipe } from "./pipe.ts";
 import {
@@ -145,10 +141,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
         subscriber.add(onDisposeCleanup);
       };
 
-      const observable = pipe(
-        stream,
-        onSubscribe(onSubscribeUnmark),
-      );
+      const observable = pipe(stream, onSubscribe(onSubscribeUnmark));
 
       cachedValue = [stream, observable];
       this.cache.set(key, cachedValue);

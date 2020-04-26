@@ -5,7 +5,7 @@ import {
 } from "./interfaces.ts";
 import { pipe } from "../../pipe.ts";
 import { zip } from "./zip.ts";
-import { createSubject } from "./subject.ts";
+import { createSubject } from "./createSubject.ts";
 import { concatAll, concatMap } from "./mergeAll.ts";
 import { compute } from "./compute.ts";
 import { skipFirst } from "./skipFirst.ts";
@@ -16,7 +16,7 @@ import { publish } from "./publish.ts";
 import { takeLast } from "./takeLast.ts";
 import { share } from "./share.ts";
 import { concat } from "./concat.ts";
-import { observe } from "./observe.ts";
+import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 
 const subscribeSwitchingMode = <T, TAcc>(
@@ -25,8 +25,8 @@ const subscribeSwitchingMode = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
   initialValue: () => TAcc,
 ) => {
-  const accFeedbackSubject = createSubject<TAcc>(1);
-  subscriber.add(accFeedbackSubject);
+  const accFeedbackStream = createSubject<TAcc>(1);
+  subscriber.add(accFeedbackStream);
 
   subscriber.add(
     pipe(
@@ -35,18 +35,18 @@ const subscribeSwitchingMode = <T, TAcc>(
         pipe(
           src,
           withLatestFrom<T, TAcc, ObservableLike<TAcc>>(
-            accFeedbackSubject,
+            accFeedbackStream,
             (next, acc) => scanner(acc, next),
           ),
           switchAll<TAcc>(),
         ),
       ),
-      observe(accFeedbackSubject),
+      onNotify(next => accFeedbackStream.dispatch(next)),
       subscribe(subscriber),
     ),
   );
 
-  pipe(accFeedbackSubject, skipFirst()).subscribe(subscriber);
+  pipe(accFeedbackStream, skipFirst()).subscribe(subscriber);
 };
 
 const subscribeQueingMode = <T, TAcc>(
@@ -56,11 +56,11 @@ const subscribeQueingMode = <T, TAcc>(
   initialValue: () => TAcc,
 ) => {
   const createGenerator = (next: T) => (acc: TAcc) => scanner(acc, next);
-  const accFeedbackSubject = createSubject<TAcc>();
+  const accFeedbackStream = createSubject<TAcc>();
 
   const generatorStream = pipe(src, map(createGenerator));
   const acc = pipe(
-    zip([generatorStream, accFeedbackSubject], (generateNext, acc) =>
+    zip([generatorStream, accFeedbackStream], (generateNext, acc) =>
       pipe(generateNext(acc), share(subscriber)),
     ),
     publish(subscriber),
@@ -69,14 +69,14 @@ const subscribeQueingMode = <T, TAcc>(
   subscriber.add(
     pipe(
       concat(compute(initialValue), pipe(acc, concatMap(takeLast()))),
-      observe(accFeedbackSubject),
+      onNotify(next => accFeedbackStream.dispatch(next)),
       subscribe(subscriber),
     ),
   );
 
   pipe(acc, concatAll()).subscribe(subscriber);
 
-  subscriber.add(acc).add(accFeedbackSubject);
+  subscriber.add(acc).add(accFeedbackStream);
 };
 
 class ScanAsyncObservable<T, TAcc> implements ObservableLike<TAcc> {

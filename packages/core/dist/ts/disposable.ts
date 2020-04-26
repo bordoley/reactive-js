@@ -26,7 +26,7 @@ export interface DisposableLike {
    * @param disposable
    * @returns `this`
    */
-  add(disposable: DisposableLike | ((error?: Exception) => void)): this;
+  add(disposable: DisposableOrTeardown): this;
 
   /**
    * Dispose the resource. The operation is idempotent.

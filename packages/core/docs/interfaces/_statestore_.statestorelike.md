@@ -22,7 +22,7 @@
 
 ###  stream
 
-▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_streamable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*
+▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*
 
 *Inherited from [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md).[stream](_async_enumerable_.asyncenumerablelike.md#stream)*
 
@@ -33,4 +33,4 @@ Name | Type |
 `scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
 `replayCount?` | number |
 
-**Returns:** *[StreamLike](_streamable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*
+**Returns:** *[StreamLike](_observable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*

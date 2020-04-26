@@ -6,12 +6,12 @@ import {
 } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
-  createObservable,
   using,
   catchError,
   throws,
   genMap,
   subscribe,
+  onNotify,
 } from "@reactive-js/core/dist/js/observable";
 import { Option } from "@reactive-js/core/dist/js/option";
 import { createBufferFlowableFromReadable } from "./bufferFlowable";
@@ -35,28 +35,30 @@ import {
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
 ): FlowableOperator<Buffer, Buffer> => src =>
-  createStreamable(modeObs =>
-    createObservable<FlowEvent<Buffer>>(subscriber => {
+  createStreamable(modeObs => using(
+    scheduler => {
       const transform = factory();
 
       const transformSink = createBufferFlowableSinkFromWritable(
         () => transform,
         false,
       );
+
       const sinkSubscription = pipe(
         sink(src, transformSink),
-        subscribe(subscriber),
+        subscribe(scheduler),
       );
 
       const transformReadableStream = createBufferFlowableFromReadable(
         () => transform,
-      ).stream(subscriber);
-      transformReadableStream.subscribe(subscriber);
-      modeObs.subscribe(transformReadableStream);
+      ).stream(scheduler);
 
-      subscriber.add(transform).add(sinkSubscription);
-    }),
-  );
+      const modeSubscription = pipe(modeObs, onNotify(mode => transformReadableStream.dispatch(mode)), subscribe(scheduler));
+
+      return transformReadableStream.add(sinkSubscription).add(transform).add(modeSubscription);
+    },
+    t => t
+  ));
 
 export const unsupportedEncoding = Symbol("unsupportedEncoding");
 const unsupportedEncodingObservable = throws(() => unsupportedEncoding);

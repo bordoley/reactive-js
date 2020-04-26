@@ -1,9 +1,9 @@
-import { SafeSubscriberLike, SubjectLike, SubscriberLike } from "./interfaces";
-import { toSafeSubscriber } from "./toSafeSubscriber";
+import { SubjectLike, SubscriberLike, DispatcherLike } from "./interfaces";
+import { toDispatcher } from "./toDispatcher";
 import { AbstractDisposable } from "../../disposable";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
-  private readonly subscribers: Set<SafeSubscriberLike<T>> = new Set();
+  private readonly subscribers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
   readonly isSynchronous = false;
@@ -16,7 +16,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     return this.subscribers.size;
   }
 
-  onNotify(next: T): void {
+  dispatch(next: T): void {
     if (!this.isDisposed) {
       const replayed = this.replayed;
       const replayCount = this.replayCount;
@@ -38,31 +38,24 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const safeSubscriber = toSafeSubscriber(subscriber);
+    const dispatcher = toDispatcher(subscriber);
 
     if (!this.isDisposed) {
       const subscribers = this.subscribers;
-      subscribers.add(safeSubscriber);
+      subscribers.add(dispatcher);
 
       subscriber.add(() => {
-        subscribers.delete(safeSubscriber);
+        subscribers.delete(dispatcher);
       });
     }
 
     for (const next of this.replayed) {
-      safeSubscriber.dispatch(next);
+      dispatcher.dispatch(next);
     }
 
-    this.add(safeSubscriber);
+    this.add(dispatcher);
   }
 }
 
-/**
- * Returns a new `SubjectLike` instance.
- *
- * @param scheduler The scheduler that should be used by sources to notify the `SubjectLike` instance.
- * @param replayCount The number of events that should be replayed when the `SubjectLike` instance
- * is subscribed to.
- */
 export const createSubject = <T>(replayCount = 0): SubjectLike<T> =>
   new SubjectImpl(replayCount);

@@ -1,35 +1,5 @@
-/*
-
-export {
-  ReducerRequestType,
-  ContinueRequest,
-  ReducerRequest,
-  DoneRequest,
-  reduce,
-  reduceAsync,
-} from "./internal/async-enumerable/reduce";
-
-export { createAsyncEnumerable } from "./internal/async-enumerable/createAsyncEnumerable";
-export { empty } from "./internal/async-enumerable/empty";
-export { fromArray } from "./internal/async-enumerable/fromArray";
-export { fromIterable } from "./internal/async-enumerable/fromIterable";
-export { generate } from "./internal/async-enumerable/generate";
-
-
-
-export { sink } from "./internal/async-enumerable/sink";
-
-
-export {
-  createActionReducer,
-  createStateStore,
-} from "./internal/async-enumerable/actionReducer";
-export { toStateStore } from "./internal/async-enumerable/toStateStore";
-*/
-
 import {
   StreamableLike,
-  StreamLike,
   identity,
   lift,
   createStreamable,
@@ -49,7 +19,7 @@ import {
   ObservableOperator,
   takeFirst,
   scan,
-  createObservable,
+  StreamLike,
   takeWhile,
 } from "./observable";
 import { compose, pipe, Operator } from "./pipe";
@@ -258,17 +228,19 @@ export const fromArray = <T>(values: readonly T[]): AsyncEnumerableLike<T> => {
 export const fromIterable = <T>(
   iterable: Iterable<T>,
 ): AsyncEnumerableLike<T> => {
-  const operator = (obs: ObservableLike<void>) =>
-    createObservable(subscriber => {
-      const enumerator = fromIterableEnumerable(iterable).enumerate();
-
-      pipe(
-        obs,
-        onNotify(() => enumerator.move()),
-        takeWhile(_ => enumerator.hasCurrent),
-        map(_ => enumerator.current),
-      ).subscribe(subscriber);
-    });
+  const enumerable = fromIterableEnumerable(iterable);
+  const operator = (obs: ObservableLike<void>) => {
+    return pipe(
+      obs,
+      withLatestFrom(
+        compute(() => enumerable.enumerate()),
+        (_, enumerator) => enumerator, 
+      ),
+      onNotify(enumerator => enumerator.move()),
+      takeWhile(enumerator=> enumerator.hasCurrent),
+      map(enumerator => enumerator.current),
+    )
+  };
 
   return createStreamable(operator);
 };

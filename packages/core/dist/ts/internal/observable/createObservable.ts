@@ -1,23 +1,20 @@
-import {
-  ObservableLike,
-  SafeSubscriberLike,
-  SubscriberLike,
-} from "./interfaces.ts";
-import { toSafeSubscriber } from "./toSafeSubscriber.ts";
+import { ObservableLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
+import { toDispatcher } from "./toDispatcher.ts";
 
 class CreateObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
   constructor(
-    private readonly onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
+    private readonly onSubscribe: (dispatcher: DispatcherLike<T>) => void,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const safeSubscriber = toSafeSubscriber(subscriber);
+    const dispatcher = toDispatcher(subscriber);
+
     try {
-      this.onSubscribe(safeSubscriber);
+      this.onSubscribe(dispatcher);
     } catch (cause) {
       subscriber.dispose({ cause });
     }
@@ -34,5 +31,5 @@ class CreateObservable<T> implements ObservableLike<T> {
  * @param onSubscribe
  */
 export const createObservable = <T>(
-  onSubscribe: (subscriber: SafeSubscriberLike<T>) => void,
+  onSubscribe: (dispatcher: DispatcherLike<T>) => void,
 ): ObservableLike<T> => new CreateObservable(onSubscribe);

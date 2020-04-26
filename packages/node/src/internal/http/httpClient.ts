@@ -1,27 +1,29 @@
-import { ClientRequest, IncomingMessage, request as httpRequest } from "http";
+import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
   HttpClient,
   HttpClientRequestStatusType,
-  HttpClientRequestStatus,
 } from "@reactive-js/core/dist/js/http-client";
-import { Option, none, isSome } from "@reactive-js/core/dist/js/option";
+import { none, isSome } from "@reactive-js/core/dist/js/option";
 import {
-  createObservable,
-  publish,
   subscribe,
   scan,
   onNotify,
   ofValue,
   map,
   concatMap,
+  keepType,
   switchMap,
+  StreamLike,
+  using,
+  createSubject,
+  merge,
+  SubjectLike,
 } from "@reactive-js/core/dist/js/observable";
 import {
   DisposableLike,
   AbstractDisposable,
-  createSerialDisposable,
 } from "@reactive-js/core/dist/js/disposable";
 import {
   httpRequestToUntypedHeaders,
@@ -30,6 +32,7 @@ import {
   HttpStatusCode,
   HttpRequest,
   createRedirectHttpRequest,
+  HttpResponse,
 } from "@reactive-js/core/dist/js/http";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
@@ -37,13 +40,11 @@ import { BrotliOptions, ZlibOptions } from "zlib";
 import { encodeHttpRequest } from "./httpRequest";
 import { HttpClientRequest } from "./interfaces";
 import {
-  BufferFlowableSinkLike,
   createBufferFlowableSinkFromWritable,
   createDisposableNodeStream,
   BufferFlowableLike,
   createBufferFlowableFromReadable,
 } from "../../streams";
-import { StreamLike, sink, lift } from "@reactive-js/core/dist/js/streamable";
 import {
   FlowEvent,
   FlowMode,
@@ -58,50 +59,6 @@ export type HttpClientOptions = {
   readonly insecureHTTPParser?: boolean;
   readonly maxHeaderSize?: number;
 };
-
-class RequestBody extends AbstractDisposable implements BufferFlowableSinkLike {
-  private consumed = false;
-
-  constructor(private readonly req: ClientRequest) {
-    super();
-
-    this.add(_ => {
-      req.removeAllListeners();
-
-      // Calling destory can result in onError being called
-      // if we don't catch the error, it crashes the process.
-      // This kind of sucks, but its the best we can do;
-      req.once("error", () => {});
-      req.once("close", () => {
-        req.removeAllListeners();
-      });
-      req.destroy();
-    });
-
-    const onError = (cause: any) => {
-      this.dispose({ cause });
-    };
-    req.on("error", onError);
-  }
-
-  stream(
-    scheduler: SchedulerLike,
-    replayCount?: number,
-  ): StreamLike<FlowEvent<Buffer>, FlowMode> {
-    if (this.consumed) {
-      throw new Error("Request body already consumed");
-    }
-    this.consumed = true;
-    const sink = createBufferFlowableSinkFromWritable(
-      () => createDisposableNodeStream(this.req),
-      false,
-    )
-      .stream(scheduler, replayCount)
-      .add(this);
-    this.add(sink);
-    return sink;
-  }
-}
 
 class ResponseBody extends AbstractDisposable implements BufferFlowableLike {
   private consumed = false;
@@ -143,110 +100,99 @@ export const createHttpClient = (
 ): HttpClient<
   HttpRequest<BufferFlowableLike>,
   BufferFlowableLike & DisposableLike
-> => request => {
-  return createObservable(subscriber => {
-    const { method, uri } = request;
+> => request =>
+  using(
+    (scheduler: SchedulerLike): [
+      StreamLike<FlowMode, FlowEvent<Buffer>>,
+      SubjectLike<HttpResponse<ResponseBody>>
+    ] => {
+      const { method, uri } = request;
 
-    const url = uri instanceof URL ? uri : new URL(uri.toString());
-    const headers = httpRequestToUntypedHeaders(request);
+      const url = uri instanceof URL ? uri : new URL(uri.toString());
+      const headers = httpRequestToUntypedHeaders(request);
+  
+      // FIXME: rework this to support http2
+      const nodeRequestOptions = {
+        ...options,
+        headers,
+        method,
+      };
+      const req =
+        uri.protocol === "https:"
+          ? httpsRequest(url, nodeRequestOptions)
+          : uri.protocol === "http:"
+          ? httpRequest(url, nodeRequestOptions)
+          : (() => {
+              throw new Error();
+            })();
 
-    // FIXME: rework this to support http2
-    const nodeRequestOptions = {
-      ...options,
-      headers,
-      method,
-    };
+      const requestSink = createBufferFlowableSinkFromWritable(
+        () => createDisposableNodeStream(req),
+      ).stream(scheduler)
 
-    const req =
-      uri.protocol === "https:"
-        ? httpsRequest(url, nodeRequestOptions)
-        : uri.protocol === "http:"
-        ? httpRequest(url, nodeRequestOptions)
-        : (() => {
-            throw new Error();
-          })();
+      const requestBody = request.body.stream(scheduler).add(requestSink);
 
-    const reqBody = new RequestBody(req);
-    const sinkSubscription = createSerialDisposable().add(reqBody);
-    subscriber.add(sinkSubscription);
+      const onContinue = () => {       
+        const reqSubscription = pipe(
+          requestSink, onNotify(next => requestBody.dispatch(next)), subscribe(scheduler)
+        ); 
+        const dataSubscription = pipe(requestBody, onNotify(next => requestSink.dispatch(next)), subscribe(scheduler)).add(reqSubscription);
+        requestBody.add(dataSubscription);
+      };
 
-    const onResponse = (resp: IncomingMessage) => {
-      sinkSubscription.dispose();
+      if (request.expectContinue) {
+        req.on("continue", onContinue);
+      } else {
+        onContinue();
+      }
 
-      const body = new ResponseBody(resp);
-      subscriber.add(body);
-      body.add(subscriber);
+      const responseSubject = createSubject<HttpResponse<ResponseBody>>();
+      const onResponse = (resp: IncomingMessage) => {
+        requestBody.dispose();
+  
+        const body = new ResponseBody(resp);
+        responseSubject.add(body);
+        body.add(responseSubject);
+  
+        const response = parseHttpResponseFromHeaders(
+          resp.statusCode ?? -1,
+          resp.headers as HttpHeaders,
+          body,
+        );
+  
+        responseSubject.dispatch(response);
+      };
+      req.on("response", onResponse);
 
-      const response = parseHttpResponseFromHeaders(
-        resp.statusCode ?? -1,
-        resp.headers as HttpHeaders,
-        body,
-      );
+      return [requestBody, responseSubject];
+    },
+    (requestBody: StreamLike<FlowMode, FlowEvent<Buffer>>, responseSubject: SubjectLike<HttpResponse<ResponseBody>>) => merge(
+      pipe(requestBody, 
+        scan(
+          ([incr, count], ev) =>
+            ev.type === FlowEventType.Next
+              ? [ev.data.length, count + incr]
+              : [-1, count + incr],
 
-      subscriber.dispatch({
+          () => [0, 0],
+        ),
+        map(([incr, count]) => incr < 0
+          ? { type: HttpClientRequestStatusType.Completed }
+          : count > 0
+          ? {
+              type: HttpClientRequestStatusType.Progress,
+              count,
+            }
+          : none
+        ),
+        keepType(isSome),
+      ),
+      pipe(responseSubject, map(response => ({
         type: HttpClientRequestStatusType.HeadersReceived,
         response,
-      });
-    };
-    req.on("response", onResponse);
-
-    const content: BufferFlowableLike = pipe(
-      request.body,
-      lift(ev =>
-        createObservable(streamEventSubscriber => {
-          const publishedEvents = pipe(ev, publish(streamEventSubscriber));
-          const progressSubscription = pipe(
-            publishedEvents,
-            scan(
-              ([incr, count], ev) =>
-                ev.type === FlowEventType.Next
-                  ? [ev.data.length, count + incr]
-                  : [-1, count + incr],
-
-              () => [0, 0],
-            ),
-            onNotify(([incr, count]) => {
-              const ev: Option<HttpClientRequestStatus<
-                BufferFlowableLike & DisposableLike
-              >> =
-                incr < 0
-                  ? { type: HttpClientRequestStatusType.Completed }
-                  : count > 0
-                  ? {
-                      type: HttpClientRequestStatusType.Progress,
-                      count,
-                    }
-                  : none;
-              if (isSome(ev)) {
-                // Subtle, but we're subscribed on the subscriber's scheduler,
-                // so calling notify is safe.
-                subscriber.notify(ev);
-              }
-            }),
-            subscribe(streamEventSubscriber),
-          );
-
-          streamEventSubscriber.add(publishedEvents).add(progressSubscription);
-          publishedEvents.subscribe(streamEventSubscriber);
-        }),
-      ),
-    );
-
-    subscriber.dispatch({ type: HttpClientRequestStatusType.Start });
-
-    const onContinue = () => {
-      sinkSubscription.inner = pipe(
-        sink(content, reqBody),
-        subscribe(subscriber),
-      );
-    };
-    if (request.expectContinue) {
-      req.on("continue", onContinue);
-    } else {
-      onContinue();
-    }
-  });
-};
+      }))),
+    ),
+  );
 
 const redirectCodes = [
   HttpStatusCode.MovedPermanently,

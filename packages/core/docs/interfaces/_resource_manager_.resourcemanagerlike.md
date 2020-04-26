@@ -45,7 +45,7 @@ ___
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableLike](_disposable_.disposablelike.md) | function): *this*
+▸ **add**(`disposable`: DisposableOrTeardown): *this*
 
 *Inherited from [DisposableLike](_disposable_.disposablelike.md).[add](_disposable_.disposablelike.md#add)*
 
@@ -55,7 +55,7 @@ Adds the given disposable to this container or disposes it if the container has 
 
 Name | Type |
 ------ | ------ |
-`disposable` | [DisposableLike](_disposable_.disposablelike.md) &#124; function |
+`disposable` | DisposableOrTeardown |
 
 **Returns:** *this*
 

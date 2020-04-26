@@ -1,7 +1,7 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { FlowMode, FlowEvent } from "@reactive-js/core/dist/js/flowable";
-import { sink, StreamLike } from "@reactive-js/core/dist/js/streamable";
+import { sink } from "@reactive-js/core/dist/js/streamable";
 import {
   writeHttpResponseHeaders,
   HttpMethod,
@@ -26,6 +26,7 @@ import {
   subscribe,
   empty,
   compute,
+  StreamLike,
 } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";

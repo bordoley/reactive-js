@@ -2,8 +2,8 @@ import {
   ObservableLike,
   ofValue,
   createObservable,
-  SafeSubscriberLike,
   await_,
+  DispatcherLike,
 } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { WebResponseBodyLike } from "./interfaces";
@@ -13,7 +13,7 @@ import {
 } from "@reactive-js/core/dist/js/disposable";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
-  const onSubscribe = (subscriber: SafeSubscriberLike<string>) => {
+  const onSubscribe = (subscriber: DispatcherLike<string>) => {
     const reader = new FileReader();
     reader.onload = () => {
       subscriber.dispatch(reader.result as string);
@@ -30,7 +30,7 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
 };
 
 const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
-  const onSubscribe = (subscriber: SafeSubscriberLike<ArrayBuffer>) => {
+  const onSubscribe = (subscriber: DispatcherLike<ArrayBuffer>) => {
     const reader = new FileReader();
     reader.onload = () => {
       subscriber.dispatch(reader.result as ArrayBuffer);

@@ -37,7 +37,7 @@ export const forEach = <T>(
   subscription.dispose();
   scheduler.dispose();
 
-  const reifiedError = error
+  const reifiedError = error;
   // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason
   if (reifiedError !== none) {
     const { cause } = reifiedError as Exception;

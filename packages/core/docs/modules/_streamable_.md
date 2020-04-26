@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-* [StreamLike](../interfaces/_streamable_.streamlike.md)
 * [StreamableLike](../interfaces/_streamable_.streamablelike.md)
 
 ### Type aliases
@@ -22,6 +21,7 @@
 * [lift](_streamable_.md#const-lift)
 * [liftReq](_streamable_.md#const-liftreq)
 * [map](_streamable_.md#const-map)
+* [onNotify](_streamable_.md#const-onnotify)
 * [sink](_streamable_.md#const-sink)
 
 ## Type aliases
@@ -214,6 +214,38 @@ ___
 Name | Type |
 ------ | ------ |
 `v` | TA |
+
+**Returns:** *function*
+
+▸ (`enumerable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+
+___
+
+### `Const` onNotify
+
+▸ **onNotify**<**T**>(`onNotify`: function): *function*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **onNotify**: *function*
+
+▸ (`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
 
 **Returns:** *function*
 

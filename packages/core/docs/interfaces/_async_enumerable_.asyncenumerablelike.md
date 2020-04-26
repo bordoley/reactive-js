@@ -22,7 +22,7 @@
 
 ###  stream
 
-▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_streamable_.streamlike.md)‹void, T›*
+▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹void, T›*
 
 *Inherited from [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md).[stream](_async_enumerable_.asyncenumerablelike.md#stream)*
 
@@ -33,4 +33,4 @@ Name | Type |
 `scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
 `replayCount?` | number |
 
-**Returns:** *[StreamLike](_streamable_.streamlike.md)‹void, T›*
+**Returns:** *[StreamLike](_observable_.streamlike.md)‹void, T›*

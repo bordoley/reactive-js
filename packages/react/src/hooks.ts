@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  StreamLike,
   StreamableLike,
 } from "@reactive-js/core/dist/js/streamable";
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
   onNotify,
+  StreamLike,
   subscribe,
   subscribeOn,
   throttle,

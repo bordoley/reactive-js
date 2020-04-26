@@ -1,7 +1,6 @@
 import {
   StreamableLike,
   createActionReducer,
-  StreamLike,
   StreamableOperator,
   createStreamable,
 } from "./streamable.ts";
@@ -13,6 +12,7 @@ import {
   distinctUntilChanged,
   onNotify,
   using,
+  StreamLike,
 } from "./observable.ts";
 import { pipe } from "./pipe.ts";
 
