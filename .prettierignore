@@ -13,3 +13,5 @@ dist
 *.re
 .merlin
 .npmignore
+dist
+build
