@@ -68,6 +68,5 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
  * @param replayCount The number of events that should be replayed when the `SubjectLike` instance
  * is subscribed to.
  */
-export const createSubject = <T>(
-  replayCount = 0,
-): SubjectLike<T> => new SubjectImpl(replayCount);
+export const createSubject = <T>(replayCount = 0): SubjectLike<T> =>
+  new SubjectImpl(replayCount);

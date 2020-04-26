@@ -69,7 +69,10 @@ class StreamImpl<TReq, T> extends AbstractDelegatingSubscriber<TReq, TReq>
 }
 
 class SafeSubjectSubscriber<T> extends AbstractSafeSubscriber<T> {
-  constructor(scheduler: SchedulerLike, private readonly subject: SubjectLike<T>) {
+  constructor(
+    scheduler: SchedulerLike,
+    private readonly subject: SubjectLike<T>,
+  ) {
     super(scheduler);
     this.add(subject);
   }
