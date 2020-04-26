@@ -8,11 +8,10 @@ import { pipe } from "../../pipe";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { observe } from "./observe";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
@@ -46,13 +45,12 @@ const setupDurationSubscription = <T>(
 ) => {
   subscriber.durationSubscription.inner = pipe(
     subscriber.durationSelector(next),
-    observe(subscriber),
+    onNotify(subscriber.onNotify),
     subscribe(subscriber),
   ).add(subscriber.onDurationDispose);
 };
 
-class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
-  implements ObserverLike<unknown> {
+class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: Option<T> = none;
   private hasValue = false;
@@ -60,6 +58,22 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
   readonly onDurationDispose = (error?: Exception) => {
     if (isSome(error)) {
       this.dispose(error);
+    }
+  };
+
+  readonly onNotify = (_?: unknown) => {
+    if (this.hasValue) {
+      const value = this.value as T;
+      this.value = none;
+      this.hasValue = false;
+
+      setupDurationSubscription(this, value);
+
+      try {
+        this.delegate.notify(value);
+      } catch (cause) {
+        this.delegate.dispose({ cause });
+      }
     }
   };
 
@@ -100,21 +114,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     }
   }
 
-  onNotify(_?: unknown) {
-    if (this.hasValue) {
-      const value = this.value as T;
-      this.value = none;
-      this.hasValue = false;
-
-      setupDurationSubscription(this, value);
-
-      try {
-        this.delegate.notify(value);
-      } catch (cause) {
-        this.delegate.dispose({ cause });
-      }
-    }
-  }
+  
 }
 
 /**

@@ -11,6 +11,7 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     private readonly onNotify: (next: T) => void,
   ) {
     super(delegate);
+    this.add(delegate);
   }
 
   notify(next: T) {

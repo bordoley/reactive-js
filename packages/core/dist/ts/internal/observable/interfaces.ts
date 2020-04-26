@@ -2,18 +2,6 @@ import { DisposableLike } from "../../disposable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 
 /**
- * An observer of push-based notifications within an observable source.
- */
-export interface ObserverLike<T> {
-  /**
-   * Provides the observer with the next item to observe.
-   *
-   * @param data
-   */
-  onNotify(next: T): void;
-}
-
-/**
  * The underlying mechanism for receiving and transforming notifications from an
  * observable source. The `SubscriberLike` interface composes the `SchedulerLike` and
  * `DisposableLike` interfaces into a single unified type, while adding the capability
@@ -34,23 +22,13 @@ export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
 }
 
 /**
- * A variant of the `SubscriberLike` interface that can be used to safely notify
- * a backing subscriber from any context.
- *
- * @noInheritDoc
+ * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
  */
-export interface SafeSubscriberLike<T> extends SubscriberLike<T> {
-  /**
-   * Notifies the the subscriber of the next notification produced by the observable source.
-   *
-   * Notifications are queued and scheduled to be dispatched to the underlying subscriber
-   * on a `SchedulerContinuationLike` run on the underlying subscriber's `schedule` method.
-   * Hence, it is safe to call `notifyNext` from any context.
-   *
-   * @param next The next notification value.
-   */
-  dispatch(next: T): void;
-}
+export type SubscriberOperator<A, B> = {
+  readonly isSynchronous: boolean;
+
+  (observable: SubscriberLike<B>): SubscriberLike<A>;
+};
 
 /**
  * The source of notifications which notifies a `SubscriberLike` instance.
@@ -67,6 +45,11 @@ export interface ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>): void;
 }
 
+/** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
+export type ObservableOperator<A, B> = {
+  (observable: ObservableLike<A>): ObservableLike<B>;
+};
+
 /**
  * An `ObservableLike` that shares a common subscription to an underlying observable source.
  *
@@ -81,25 +64,21 @@ export interface MulticastObservableLike<T>
   readonly subscriberCount: number;
 }
 
+export interface DispatcherLike<T> extends DisposableLike {
+  /**
+   * Dispatches the next request
+   * @param req
+   */
+  dispatch(req: T): void;
+}
+
 /**
- * A `MulticastObservableLike` that is also `SubscriberLike`.
+ * Represents a duplex stream
  *
  * @noInheritDoc
  */
-export interface SubjectLike<T>
-  extends ObserverLike<T>,
+export interface StreamLike<TReq, T>
+  extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
 
-/** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
-export type ObservableOperator<A, B> = {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-};
-
-/**
- * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
- */
-export type SubscriberOperator<A, B> = {
-  readonly isSynchronous: boolean;
-
-  (observable: SubscriberLike<B>): SubscriberLike<A>;
-};
+export interface SubjectLike<T> extends StreamLike<T, T> {}

@@ -8,7 +8,7 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
-import { observe } from "./observe";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
@@ -24,7 +24,7 @@ const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
 
       const nextObsSubscription = pipe(
         nextObs,
-        observe(subscriber),
+        onNotify(subscriber.onNotify),
         subscribe(subscriber.delegate),
       ).add(subscriber.onDispose);
 
@@ -49,6 +49,10 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     } else {
       subscribeNext(this);
     }
+  };
+
+  readonly onNotify = (next: T) => {
+    this.delegate.notify(next);
   };
 
   readonly queue: Array<ObservableLike<T>> = [];
@@ -86,10 +90,6 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
       }
       subscribeNext(this);
     }
-  }
-
-  onNotify(next: T) {
-    this.delegate.notify(next);
   }
 }
 

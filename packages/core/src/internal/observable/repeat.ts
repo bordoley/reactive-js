@@ -4,19 +4,17 @@ import { pipe } from "../../pipe";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { observe } from "./observe";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 
-class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
-  implements ObserverLike<T> {
+class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly innerSubscription = createSerialDisposable();
   private count = 1;
 
@@ -36,11 +34,13 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
       this.count++;
       this.innerSubscription.inner = pipe(
         this.observable,
-        observe(this),
+        onNotify(this.onNotify),
         subscribe(delegate),
       ).add(this.onDispose);
     }
   };
+
+  private readonly onNotify = (next: T) => this.delegate.notify(next);
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -61,10 +61,6 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     if (!this.isDisposed) {
       this.delegate.notify(next);
     }
-  }
-
-  onNotify(next: T) {
-    this.delegate.notify(next);
   }
 }
 

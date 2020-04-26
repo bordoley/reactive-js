@@ -3,13 +3,12 @@ import { isSome } from "../../option";
 import { compose, pipe } from "../../pipe";
 import {
   ObservableLike,
-  ObserverLike,
   SubscriberLike,
   ObservableOperator,
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
-import { observe } from "./observe";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
@@ -17,9 +16,12 @@ import {
 } from "./subscriber";
 
 class SwitchSubscriber<T>
-  extends AbstractDelegatingSubscriber<ObservableLike<T>, T>
-  implements ObserverLike<T> {
+  extends AbstractDelegatingSubscriber<ObservableLike<T>, T> {
   private inner = disposed;
+
+  private readonly onNotify = (next: T) => {
+    this.delegate.notify(next);
+  };
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
@@ -35,7 +37,7 @@ class SwitchSubscriber<T>
 
     this.inner.dispose();
 
-    const inner = pipe(next, observe(this), subscribe(this.delegate)).add(e => {
+    const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate)).add(e => {
       if (isSome(e) || this.isDisposed) {
         this.delegate.dispose(e);
       }
@@ -44,9 +46,7 @@ class SwitchSubscriber<T>
     this.inner = inner;
   }
 
-  onNotify(next: T) {
-    this.delegate.notify(next);
-  }
+
 }
 
 const operator = <T>(subscriber: SubscriberLike<T>) =>

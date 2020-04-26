@@ -1,24 +1,13 @@
 import { Exception } from "../../disposable";
-import { none, Option, isSome } from "../../option";
-import { pipe, Operator } from "../../pipe";
+import { none, Option } from "../../option";
+import { pipe } from "../../pipe";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
-  SchedulerLike,
 } from "../../scheduler";
-import { ObservableLike, ObserverLike } from "./interfaces";
-import { observe } from "./observe";
+import { ObservableLike } from "./interfaces";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-
-class ToValueObserver<T> implements ObserverLike<T> {
-  result: Option<T> = none;
-  hasResult = false;
-
-  onNotify(next: T) {
-    this.result = next;
-    this.hasResult = true;
-  }
-}
 
 /**
  * Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
@@ -28,12 +17,17 @@ export const toValue = (
   schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
 ) => <T>(source: ObservableLike<T>): T => {
   const scheduler = schedulerFactory();
-  const observer = new ToValueObserver<T>();
 
   let error: Option<Exception> = none;
+  let result: Option<T> = none;
+  let hasResult = false;
+
   const subscription = pipe(
     source,
-    observe(observer),
+    onNotify((next: T) => {
+      result = next;
+      hasResult = true;
+    }),
     subscribe(scheduler),
   ).add(e => {
     error = e;
@@ -51,32 +45,9 @@ export const toValue = (
     throw cause;
   }
 
-  if (!observer.hasResult) {
+  if (!hasResult) {
     throw new Error("Observable did not produce any values");
   }
 
-  return observer.result as T;
+  return result as unknown as T;
 };
-
-/**
- * Returns a Promise that completes with the last value produced by
- * the source.
- *
- * @param scheduler The scheduler upon which to subscribe to the source.
- */
-export const toPromise = <T>(
-  scheduler: SchedulerLike,
-): Operator<ObservableLike<T>, Promise<T>> => observable =>
-  new Promise((resolve, reject) => {
-    const observer = new ToValueObserver();
-    pipe(observable, observe(observer), subscribe(scheduler)).add(err => {
-      if (isSome(err)) {
-        const { cause } = err;
-        reject(cause);
-      } else if (!observer.hasResult) {
-        reject(new Error("Observable completed without producing a value"));
-      } else {
-        resolve(observer.result as T);
-      }
-    });
-  });

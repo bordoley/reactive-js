@@ -7,20 +7,39 @@ import { never } from "./never.ts";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubscriberLike,
 } from "./interfaces.ts";
-import { observe } from "./observe.ts";
+import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 
-class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
-  implements ObserverLike<unknown> {
+class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
+  T,
+  readonly T[]
+> {
   private readonly durationSubscription = createSerialDisposable();
   private buffer: Array<T> = [];
+
+  readonly onNotify = () => {
+    this.durationSubscription.inner.dispose();
+    const buffer = this.buffer;
+    this.buffer = [];
+
+    const delegate = this.delegate;
+
+    try {
+      delegate.notify(buffer);
+    } catch (cause) {
+      delegate.dispose({ cause });
+    }
+
+    if (this.isDisposed) {
+      delegate.dispose();
+    }
+  };
 
   constructor(
     delegate: SubscriberLike<readonly T[]>,
@@ -53,31 +72,13 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<T, readonly T[]>
     } else if (durationSubscription.inner.isDisposed) {
       durationSubscription.inner = pipe(
         this.durationSelector(next),
-        observe(this),
+        onNotify(this.onNotify),
         subscribe(this.delegate),
       ).add(e => {
         if (isSome(e)) {
           this.dispose(e);
         }
       });
-    }
-  }
-
-  onNotify() {
-    this.durationSubscription.inner.dispose();
-    const buffer = this.buffer;
-    this.buffer = [];
-
-    const delegate = this.delegate;
-
-    try {
-      delegate.notify(buffer);
-    } catch (cause) {
-      delegate.dispose({ cause });
-    }
-
-    if (this.isDisposed) {
-      delegate.dispose();
     }
   }
 }

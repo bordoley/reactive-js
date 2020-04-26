@@ -34,7 +34,7 @@
 
 ###  add
 
-▸ **add**(`disposable`: DisposableLike | function): *this*
+▸ **add**(`disposable`: DisposableOrTeardown): *this*
 
 *Inherited from [WebResponseBodyLike](_http_.webresponsebodylike.md).[add](_http_.webresponsebodylike.md#add)*
 
@@ -42,7 +42,7 @@
 
 Name | Type |
 ------ | ------ |
-`disposable` | DisposableLike &#124; function |
+`disposable` | DisposableOrTeardown |
 
 **Returns:** *this*
 

@@ -15,10 +15,10 @@
 
 ### Interfaces
 
+* [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)
 * [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)
 * [ObservableLike](../interfaces/_observable_.observablelike.md)
-* [ObserverLike](../interfaces/_observable_.observerlike.md)
-* [SafeSubscriberLike](../interfaces/_observable_.safesubscriberlike.md)
+* [StreamLike](../interfaces/_observable_.streamlike.md)
 * [SubjectLike](../interfaces/_observable_.subjectlike.md)
 * [SubscriberLike](../interfaces/_observable_.subscriberlike.md)
 
@@ -71,7 +71,6 @@
 * [mergeMap](_observable_.md#const-mergemap)
 * [never](_observable_.md#const-never)
 * [none](_observable_.md#const-none)
-* [observe](_observable_.md#observe)
 * [ofValue](_observable_.md#ofvalue)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
@@ -98,7 +97,6 @@
 * [timeout](_observable_.md#timeout)
 * [toArray](_observable_.md#const-toarray)
 * [toPromise](_observable_.md#const-topromise)
-* [toSafeSubscriber](_observable_.md#const-tosafesubscriber)
 * [toValue](_observable_.md#const-tovalue)
 * [using](_observable_.md#using)
 * [withLatestFrom](_observable_.md#const-withlatestfrom)
@@ -747,13 +745,13 @@ the onSubscribe function.
 
 ▪ **onSubscribe**: *function*
 
-▸ (`subscriber`: [SafeSubscriberLike](../interfaces/_observable_.safesubscriberlike.md)‹T›): *void*
+▸ (`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`subscriber` | [SafeSubscriberLike](../interfaces/_observable_.safesubscriberlike.md)‹T› |
+`dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -763,17 +761,15 @@ ___
 
 ▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
-Returns a new `SubjectLike` instance.
-
 **Type parameters:**
 
 ▪ **T**
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`replayCount` | number | 0 | The number of events that should be replayed when the `SubjectLike` instance is subscribed to.  |
+Name | Type | Default |
+------ | ------ | ------ |
+`replayCount` | number | 0 |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
@@ -1091,7 +1087,13 @@ is invoked for each subscriber to the observable.
 
 Factory function to create a new `Promise` instance.
 
-▸ (): *Promise‹T›*
+▸ (`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *Promise‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -1478,26 +1480,6 @@ Name | Type |
 `next` | T |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
-
-___
-
-###  observe
-
-▸ **observe**<**T**>(`observer`: [ObserverLike](../interfaces/_observable_.observerlike.md)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
-
-Returns an observable that forwards notifications to the provided observer.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`observer` | [ObserverLike](../interfaces/_observable_.observerlike.md)‹T› | The observer that observes notifications.  |
-
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -2248,26 +2230,6 @@ Name | Type | Description |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The scheduler upon which to subscribe to the source.  |
 
 **Returns:** *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
-
-___
-
-### `Const` toSafeSubscriber
-
-▸ **toSafeSubscriber**<**T**>(`subscriber`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T›): *[SafeSubscriberLike](../interfaces/_observable_.safesubscriberlike.md)‹T›*
-
-Returns a `SafeSubscriberLike` that delegates to the provided subscriber.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`subscriber` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T› | The `SubscriberLike` instance to wrap in a `SafeSubscriberLike`.  |
-
-**Returns:** *[SafeSubscriberLike](../interfaces/_observable_.safesubscriberlike.md)‹T›*
 
 ___
 

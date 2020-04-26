@@ -1,9 +1,9 @@
 export {
+  DispatcherLike,
   MulticastObservableLike,
-  ObserverLike,
   ObservableLike,
   ObservableOperator,
-  SafeSubscriberLike,
+  StreamLike,
   SubjectLike,
   SubscriberLike,
   SubscriberOperator,
@@ -18,7 +18,7 @@ export { combineLatest } from "./internal/observable/combineLatest";
 export { compute } from "./internal/observable/compute";
 export { concat } from "./internal/observable/concat";
 export { createObservable } from "./internal/observable/createObservable";
-export { createSubject } from "./internal/observable/subject";
+export { createSubject } from "./internal/observable/createSubject";
 export { empty } from "./internal/observable/empty";
 export { fromArray } from "./internal/observable/fromArray";
 export { fromEnumerable } from "./internal/observable/fromEnumerable";
@@ -53,7 +53,6 @@ export {
   mergeAll,
   mergeMap,
 } from "./internal/observable/mergeAll";
-export { observe } from "./internal/observable/observe";
 export { onNotify } from "./internal/observable/onNotify";
 export { onSubscribe } from "./internal/observable/onSubscribe";
 export { publish } from "./internal/observable/publish";
@@ -77,5 +76,5 @@ export { withLatestFrom } from "./internal/observable/withLatestFrom";
 export { zip } from "./internal/observable/zip";
 
 export { toArray } from "./internal/observable/toArray";
-export { toPromise, toValue } from "./internal/observable/toValue";
-export { toSafeSubscriber } from "./internal/observable/toSafeSubscriber";
+export { toPromise } from "./internal/observable/toPromise";
+export { toValue } from "./internal/observable/toValue";

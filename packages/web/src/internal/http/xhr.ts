@@ -1,10 +1,9 @@
-import { identity } from "@reactive-js/core/dist/js/streamable";
 import {
   parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
 } from "@reactive-js/core/dist/js/http";
-import { createObservable } from "@reactive-js/core/dist/js/observable";
+import { createObservable, createSubject } from "@reactive-js/core/dist/js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
@@ -23,7 +22,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;
 
-    const bodyStream = identity().stream(subscriber, 1);
+    const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
     body.add(subscriber);
 

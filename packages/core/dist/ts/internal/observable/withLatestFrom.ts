@@ -2,23 +2,26 @@ import { Option, isSome } from "../../option.ts";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { observe } from "./observe.ts";
 import { pipe } from "../../pipe.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { onNotify } from "./onNotify.ts";
 
 class WithLatestFromSubscriber<TA, TB, TC>
-  extends AbstractDelegatingSubscriber<TA, TC>
-  implements ObserverLike<TB> {
+  extends AbstractDelegatingSubscriber<TA, TC> {
   private otherLatest: Option<TB>;
   private hasLatest = false;
+
+  private readonly onNotify = (next: TB) => {
+    this.hasLatest = true;
+    this.otherLatest = next;
+  }
 
   constructor(
     delegate: SubscriberLike<TC>,
@@ -28,12 +31,15 @@ class WithLatestFromSubscriber<TA, TB, TC>
     super(delegate);
     this.selector = selector;
 
-    this.add(pipe(other, observe(this), subscribe(this))).add(delegate);
-    delegate.add(e => {
-      if (isSome(e)) {
-        this.dispose(e);
-      }
-    });
+    const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this)).add(
+      e => {
+        if (isSome(e)) {
+          this.dispose(e);
+        }
+      },
+    );
+
+    this.add(otherSubscription).add(delegate);
   }
 
   notify(next: TA) {
@@ -43,11 +49,6 @@ class WithLatestFromSubscriber<TA, TB, TC>
       const result = this.selector(next, this.otherLatest as TB);
       this.delegate.notify(result);
     }
-  }
-
-  onNotify(next: TB) {
-    this.hasLatest = true;
-    this.otherLatest = next;
   }
 }
 

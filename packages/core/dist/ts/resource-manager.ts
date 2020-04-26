@@ -6,8 +6,8 @@ import {
 import { AbstractDisposable, DisposableLike, disposed } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import {
+  DispatcherLike,
   ObservableLike,
-  SafeSubscriberLike,
   createObservable,
   subscribe,
   ofValue,
@@ -104,7 +104,7 @@ const tryDispatch = <TResource extends DisposableLike>(
   // We have resource to allocate so pop
   // the subscriber off the request queue
   // and mark the resource as in use
-  const subscriber = resourceRequests.pop(key) as SafeSubscriberLike<TResource>;
+  const subscriber = resourceRequests.pop(key) as DispatcherLike<TResource>;
   inUseResources.add(key, subscriber);
 
   subscriber.add(() => {
@@ -155,12 +155,12 @@ class ResourceManagerImpl<TResource extends DisposableLike>
 
   readonly inUseResources = createSetMultimap<
     string,
-    SafeSubscriberLike<TResource>
+    DispatcherLike<TResource>
   >();
 
   readonly resourceRequests = createKeyedQueue<
     string,
-    SafeSubscriberLike<TResource>
+    DispatcherLike<TResource>
   >();
   readonly globalResourceWaitQueue = createUniqueQueue<string>();
 

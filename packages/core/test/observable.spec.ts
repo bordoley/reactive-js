@@ -31,8 +31,6 @@ import {
   merge,
   never,
   none,
-  observe,
-  ObserverLike,
   ofValue,
   onNotify,
   repeat,
@@ -92,10 +90,6 @@ class PromiseTestScheduler extends AbstractHostScheduler {
 }
 
 const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
-
-const createMockObserver = <T>(): ObserverLike<T> => ({
-  onNotify: jest.fn(),
-});
 
 test("buffer", () => {
   pipe(
@@ -282,9 +276,9 @@ describe("createSubject", () => {
     pipe(
       scheduler,
       schedule(() => {
-        subject.onNotify(1);
-        subject.onNotify(2);
-        subject.onNotify(3);
+        subject.dispatch(1);
+        subject.dispatch(2);
+        subject.dispatch(3);
         subject.dispose();
 
         const subscriber = new MockSubscriber(scheduler);
@@ -309,9 +303,9 @@ describe("createSubject", () => {
     pipe(
       scheduler,
       schedule(() => {
-        subject.onNotify(1);
-        subject.onNotify(2);
-        subject.onNotify(3);
+        subject.dispatch(1);
+        subject.dispatch(2);
+        subject.dispatch(3);
 
         const subscriber = new MockSubscriber(scheduler);
         const onDispose = jest.fn();
@@ -322,7 +316,7 @@ describe("createSubject", () => {
         pipe(
           ofValue(none),
           onNotify(_ => {
-            subject.onNotify(4);
+            subject.dispatch(4);
             subject.dispose();
           }),
           subscribe(scheduler),
@@ -346,9 +340,9 @@ describe("createSubject", () => {
     pipe(
       scheduler,
       schedule(() => {
-        subject.onNotify(1);
-        subject.onNotify(2);
-        subject.onNotify(3);
+        subject.dispatch(1);
+        subject.dispatch(2);
+        subject.dispatch(3);
       }),
     );
 
@@ -380,7 +374,7 @@ describe("createSubject", () => {
     pipe(
       scheduler,
       schedule(() => {
-        subject.onNotify(1);
+        subject.dispatch(1);
         subject.dispose();
       }),
     );
@@ -501,22 +495,23 @@ describe("fromArray", () => {
   test("with delay", () => {
     const observable = fromArray([1, 2, 3, 4, 5, 6], { delay: 3 });
     const scheduler = createVirtualTimeScheduler(1);
-    const observer = createMockObserver();
+
+    const cb = jest.fn();
 
     pipe(
       observable,
       map(v => [scheduler.now, v]),
-      observe(observer),
+      onNotify(x => cb(x)),
       subscribe(scheduler),
     );
     scheduler.run();
 
-    expect(observer.onNotify).toHaveBeenNthCalledWith(1, [3, 1]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(2, [6, 2]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(3, [9, 3]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(4, [12, 4]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(5, [15, 5]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(6, [18, 6]);
+    expect(cb).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(cb).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(cb).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(cb).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(cb).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(cb).toHaveBeenNthCalledWith(6, [18, 6]);
   });
 });
 
@@ -536,22 +531,23 @@ describe("fromIterable", () => {
   test("with delay", () => {
     const observable = fromIterable([1, 2, 3, 4, 5, 6], 3);
     const scheduler = createVirtualTimeScheduler(1);
-    const observer = createMockObserver();
+    
+    const cb = jest.fn();
 
     pipe(
       observable,
       map(v => [scheduler.now, v]),
-      observe(observer),
+      onNotify(x => cb(x)),
       subscribe(scheduler),
     );
     scheduler.run();
 
-    expect(observer.onNotify).toHaveBeenNthCalledWith(1, [3, 1]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(2, [6, 2]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(3, [9, 3]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(4, [12, 4]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(5, [15, 5]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(6, [18, 6]);
+    expect(cb).toHaveBeenNthCalledWith(1, [3, 1]);
+    expect(cb).toHaveBeenNthCalledWith(2, [6, 2]);
+    expect(cb).toHaveBeenNthCalledWith(3, [9, 3]);
+    expect(cb).toHaveBeenNthCalledWith(4, [12, 4]);
+    expect(cb).toHaveBeenNthCalledWith(5, [15, 5]);
+    expect(cb).toHaveBeenNthCalledWith(6, [18, 6]);
   });
 });
 
@@ -578,7 +574,6 @@ describe("fromPromise", () => {
 
 test("fromScheduledValues", () => {
   const scheduler = createVirtualTimeScheduler(1);
-  const observer = createMockObserver();
   const observable = fromScheduledValues(
     [0, 1],
     [0, 1],
@@ -588,20 +583,22 @@ test("fromScheduledValues", () => {
     [3, 4],
   );
 
+  const cb = jest.fn();
+
   pipe(
     observable,
     map(v => [scheduler.now, v]),
-    observe(observer),
+    onNotify(x => cb(x)),
     subscribe(scheduler),
   );
   scheduler.run();
 
-  expect(observer.onNotify).toHaveBeenNthCalledWith(1, [0, 1]);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(2, [0, 1]);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(3, [0, 1]);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(4, [1, 2]);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(5, [3, 3]);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(6, [6, 4]);
+  expect(cb).toHaveBeenNthCalledWith(1, [0, 1]);
+  expect(cb).toHaveBeenNthCalledWith(2, [0, 1]);
+  expect(cb).toHaveBeenNthCalledWith(3, [0, 1]);
+  expect(cb).toHaveBeenNthCalledWith(4, [1, 2]);
+  expect(cb).toHaveBeenNthCalledWith(5, [3, 3]);
+  expect(cb).toHaveBeenNthCalledWith(6, [6, 4]);
 });
 
 describe("generate", () => {
@@ -646,7 +643,8 @@ describe("generate", () => {
 
   test("with delay", () => {
     const scheduler = createVirtualTimeScheduler(1);
-    const observer = createMockObserver();
+
+    const cb = jest.fn();
 
     pipe(
       generate(
@@ -656,22 +654,22 @@ describe("generate", () => {
       ),
       map(x => [scheduler.now, x]),
       takeFirst(5),
-      observe(observer),
+      onNotify(cb),
       subscribe(scheduler),
     );
     scheduler.run();
 
-    expect(observer.onNotify).toHaveBeenCalledTimes(5);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(1, [5, 1]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(2, [10, 2]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(3, [15, 3]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(4, [20, 4]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(5, [25, 5]);
+    expect(cb).toHaveBeenCalledTimes(5);
+    expect(cb).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(cb).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(cb).toHaveBeenNthCalledWith(3, [15, 3]);
+    expect(cb).toHaveBeenNthCalledWith(4, [20, 4]);
+    expect(cb).toHaveBeenNthCalledWith(5, [25, 5]);
   });
 
   test("with delay, generate throws", () => {
     const scheduler = createVirtualTimeScheduler(1);
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
 
     const generator = (i: number) => {
@@ -683,26 +681,27 @@ describe("generate", () => {
     };
 
     const onDispose = jest.fn();
+  
     pipe(
       generate(generator, () => 1, 5),
       map(x => [scheduler.now, x]),
       takeFirst(5),
-      observe(observer),
+      onNotify(x => cb(x)),
       subscribe(scheduler),
     ).add(e => onDispose(e));
     scheduler.run();
 
-    expect(observer.onNotify).toHaveBeenCalledTimes(3);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(1, [5, 1]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(2, [10, 2]);
-    expect(observer.onNotify).toHaveBeenNthCalledWith(3, [15, 3]);
+    expect(cb).toHaveBeenCalledTimes(3);
+    expect(cb).toHaveBeenNthCalledWith(1, [5, 1]);
+    expect(cb).toHaveBeenNthCalledWith(2, [10, 2]);
+    expect(cb).toHaveBeenNthCalledWith(3, [15, 3]);
     expect(onDispose).toBeCalledWith({ cause });
   });
 });
 
 test("ignoreElements", () => {
   const scheduler = createVirtualTimeScheduler(1);
-  const observer = createMockObserver();
+  const cb = jest.fn();
   const cause = new Error();
   const src = concat(
     fromArray([1, 2, 3]),
@@ -710,18 +709,18 @@ test("ignoreElements", () => {
   );
 
   const onDispose = jest.fn();
-  pipe(src, ignoreElements(), observe(observer), subscribe(scheduler)).add(e =>
+  pipe(src, ignoreElements(), onNotify(x => cb(x)), subscribe(scheduler)).add(e =>
     onDispose(e),
   );
   scheduler.run();
 
-  expect(observer.onNotify).toBeCalledTimes(0);
+  expect(cb).toBeCalledTimes(0);
   expect(onDispose).toBeCalledWith({ cause });
 });
 
 test("keep", () => {
   const scheduler = createVirtualTimeScheduler(1);
-  const observer = createMockObserver();
+  const cb = jest.fn();
   const cause = new Error();
   const src = concat(
     fromArray([1, 2, 3]),
@@ -732,45 +731,19 @@ test("keep", () => {
   pipe(
     src,
     keep(x => x % 2 === 0),
-    observe(observer),
+    onNotify(x => cb(x)),
     subscribe(scheduler),
   ).add(e => onDispose(e));
   scheduler.run();
 
-  expect(observer.onNotify).toHaveBeenNthCalledWith(1, 2);
-  expect(observer.onNotify).toBeCalledTimes(1);
+  expect(cb).toHaveBeenNthCalledWith(1, 2);
+  expect(cb).toBeCalledTimes(1);
   expect(onDispose).toBeCalledWith({ cause });
-});
-
-test("liftObserable", () => {
-  const onNotify = <T>(onNotify: (data: T) => void) =>
-    observe({
-      onNotify: onNotify,
-    });
-  const scheduler = createVirtualTimeScheduler();
-  const result: number[] = [];
-
-  const liftedObservable = pipe(
-    createObservable(subscriber => {
-      subscriber.dispatch(1);
-      return disposed;
-    }),
-    onNotify(_ => result.push(1)),
-  );
-
-  pipe(
-    liftedObservable,
-    onNotify(_ => result.push(3)),
-    subscribe(scheduler),
-  );
-  scheduler.run();
-
-  expect(result).toEqual([1, 3]);
 });
 
 test("merge", () => {
   const scheduler = createVirtualTimeScheduler(1);
-  const observer = createMockObserver();
+  const cb = jest.fn();
   const cause = new Error();
 
   const onDispose = jest.fn();
@@ -794,26 +767,26 @@ test("merge", () => {
       ),
       throws(() => cause, 10),
     ),
-    observe(observer),
+    onNotify(x => cb(x)),
     subscribe(scheduler),
   ).add(e => onDispose(e));
   scheduler.run();
 
-  expect(observer.onNotify).toHaveBeenNthCalledWith(1, 3);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(2, 2);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(3, 5);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(4, 4);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(5, 7);
+  expect(cb).toHaveBeenNthCalledWith(1, 3);
+  expect(cb).toHaveBeenNthCalledWith(2, 2);
+  expect(cb).toHaveBeenNthCalledWith(3, 5);
+  expect(cb).toHaveBeenNthCalledWith(4, 4);
+  expect(cb).toHaveBeenNthCalledWith(5, 7);
   expect(onDispose).toBeCalledWith({ cause });
 });
 
 describe("never", () => {
   test("produces no values", () => {
-    const observer = createMockObserver();
+    const cb = jest.fn();
 
-    expect(() => pipe(never(), observe(observer), toArray())).toThrow();
+    expect(() => pipe(never(), onNotify(x => cb(x)), toArray())).toThrow();
 
-    expect(observer.onNotify).toHaveBeenCalledTimes(0);
+    expect(cb).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -849,13 +822,11 @@ describe("ofValue", () => {
 
 test("onNotify", () => {
   const scheduler = createVirtualTimeScheduler();
-  const observer = createMockObserver();
   const cb = jest.fn();
 
-  pipe(ofValue(1), onNotify(cb), observe(observer), subscribe(scheduler));
+  pipe(ofValue(1), onNotify(x => cb(x)), subscribe(scheduler));
   scheduler.run();
 
-  expect(observer.onNotify).toHaveBeenCalledWith(1);
   expect(cb).toHaveBeenCalledWith(1);
 });
 
@@ -879,7 +850,7 @@ describe("repeat", () => {
 });
 
 test("scan", () => {
-  const observer = createMockObserver();
+  const cb = jest.fn();
   const cause = new Error();
   const src = concat(
     fromArray([1, 2, 3]),
@@ -893,14 +864,14 @@ test("scan", () => {
         (acc, x) => acc + x,
         () => 0,
       ),
-      observe(observer),
+      onNotify(x => cb(x)),
       toArray(),
     ),
   ).toThrow(cause);
 
-  expect(observer.onNotify).toHaveBeenNthCalledWith(1, 1);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(2, 3);
-  expect(observer.onNotify).toHaveBeenNthCalledWith(3, 6);
+  expect(cb).toHaveBeenNthCalledWith(1, 1);
+  expect(cb).toHaveBeenNthCalledWith(2, 3);
+  expect(cb).toHaveBeenNthCalledWith(3, 6);
 });
 
 describe("scanAsync", () => {
@@ -1000,7 +971,7 @@ test("share", () => {
   );
   const replayedSubscription = subscribe(scheduler)(replayed);
 
-  const liftedObserver = createMockObserver();
+  const liftedCb = jest.fn();
   let liftedSubscription = disposed;
 
   const onDispose1 = jest.fn();
@@ -1009,14 +980,14 @@ test("share", () => {
     onNotify(_ => {
       liftedSubscription = pipe(
         replayed,
-        observe(liftedObserver),
+        onNotify(x => liftedCb(x)),
         subscribe(scheduler),
       );
     }),
     subscribe(scheduler),
   ).add(e => onDispose1(e));
 
-  const anotherLiftedSubscriptionObserver = createMockObserver();
+  const anotherLiftedCb = jest.fn();
   let anotherLiftedSubscription = disposed;
 
   const onDispose2 = jest.fn();
@@ -1028,7 +999,7 @@ test("share", () => {
 
       anotherLiftedSubscription = pipe(
         replayed,
-        observe(anotherLiftedSubscriptionObserver),
+        onNotify(anotherLiftedCb),
         subscribe(scheduler),
       );
     }),
@@ -1039,11 +1010,11 @@ test("share", () => {
 
   anotherLiftedSubscription.dispose();
 
-  expect(liftedObserver.onNotify).toBeCalledTimes(1);
-  expect(liftedObserver.onNotify).toBeCalledWith(2);
+  expect(liftedCb).toBeCalledTimes(1);
+  expect(liftedCb).toBeCalledWith(2);
   expect(onDispose1).toBeCalledTimes(1);
 
-  expect(anotherLiftedSubscriptionObserver.onNotify).toBeCalledTimes(3);
+  expect(anotherLiftedCb).toBeCalledTimes(3);
   expect(onDispose2).toBeCalledTimes(1);
 });
 
@@ -1074,17 +1045,17 @@ describe("takeLast", () => {
   });
 
   test("immediately completes with an error if completed with an error", () => {
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
     const src = merge(
       fromArray([1, 2, 3, 4], { delay: 4 }),
       throws(() => cause, 2),
     );
 
-    expect(() => pipe(src, takeLast(3), observe(observer), toArray())).toThrow(
+    expect(() => pipe(src, takeLast(3), onNotify(x => cb(x)), toArray())).toThrow(
       cause,
     );
-    expect(observer.onNotify).toHaveBeenCalledTimes(0);
+    expect(cb).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -1167,18 +1138,18 @@ test("throwIfEmpty", () => {
 describe("throws", () => {
   test("completes with an exception when subscribed", () => {
     const scheduler = createVirtualTimeScheduler();
-    const observer = createMockObserver();
+    const cb = jest.fn();
     const cause = new Error();
 
     const onDispose = jest.fn();
     pipe(
       throws(() => cause),
-      observe(observer),
+      onNotify(x => cb(x)),
       subscribe(scheduler),
     ).add(e => onDispose(e));
     scheduler.run();
 
-    expect(observer.onNotify).toBeCalledTimes(0);
+    expect(cb).toBeCalledTimes(0);
     expect(onDispose).toBeCalledWith({ cause });
   });
 });

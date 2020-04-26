@@ -7,6 +7,7 @@ import { Operator, compose, pipe } from "./pipe.ts";
 import {
   ObservableLike,
   concat,
+  endWith,
   generate as generateObs,
   map as mapObs,
   never,
@@ -14,12 +15,12 @@ import {
   takeFirst,
   genMap,
   empty as emptyObs,
-  createObservable,
-  ofValue as ofValueObs,
   onNotify,
   subscribe,
+  subscribeOn,
   ScanAsyncMode,
   scanAsync,
+  using,
 } from "./observable.ts";
 import { none, isSome } from "./option.ts";
 import { toPausableScheduler } from "./scheduler.ts";
@@ -114,11 +115,10 @@ export const map = <TA, TB>(
 
 export const fromObservable = <T>(
   observable: ObservableLike<T>,
-): FlowableLike<T> =>
-  createStreamable(modeObs =>
-    createObservable(subscriber => {
-      const pausableScheduler = toPausableScheduler(subscriber);
-
+): FlowableLike<T> => createStreamable(
+  modeObs => using(
+    scheduler => {
+      const pausableScheduler = toPausableScheduler(scheduler);
       const modeSubscription = pipe(
         modeObs,
         onNotify(mode => {
@@ -131,26 +131,17 @@ export const fromObservable = <T>(
               break;
           }
         }),
-        subscribe(subscriber),
+        subscribe(scheduler),
       );
 
-      const eventStream = concat<FlowEvent<T>>(
-        pipe(
-          observable,
-          mapObs(data => ({ type: FlowEventType.Next, data })),
-        ),
-        ofValueObs({ type: FlowEventType.Complete }),
-        never(),
-      );
+      return pausableScheduler.add(modeSubscription);
+    },
 
-      const eventStreamSubscription = pipe(
-        eventStream,
-        onNotify(x => subscriber.notify(x)),
-        subscribe(pausableScheduler),
-      );
-      subscriber
-        .add(pausableScheduler)
-        .add(modeSubscription)
-        .add(eventStreamSubscription);
-    }),
-  );
+    pausableScheduler => pipe(
+      observable,
+      mapObs(data => ({ type: FlowEventType.Next, data })),
+      endWith({ type: FlowEventType.Complete }),
+      subscribeOn(pausableScheduler),
+    )
+  )
+)
