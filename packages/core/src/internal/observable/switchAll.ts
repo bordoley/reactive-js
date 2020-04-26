@@ -1,4 +1,4 @@
-import { Exception, disposed } from "../../disposable";
+import { disposed } from "../../disposable";
 import { isSome } from "../../option";
 import { compose, pipe } from "../../pipe";
 import {
@@ -35,15 +35,13 @@ class SwitchSubscriber<T>
 
     this.inner.dispose();
 
-    const inner = pipe(next, observe(this), subscribe(this.delegate));
+    const inner = pipe(next, observe(this), subscribe(this.delegate)).add(e => {
+      if (isSome(e) || this.isDisposed) {
+        this.delegate.dispose(e);
+      }
+    });
     this.delegate.add(inner);
     this.inner = inner;
-  }
-
-  onDispose(error?: Exception) {
-    if (isSome(error) || this.isDisposed) {
-      this.delegate.dispose(error);
-    }
   }
 
   onNotify(next: T) {

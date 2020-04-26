@@ -34,10 +34,6 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     }
   }
 
-  onDispose() {
-    this.dispose();
-  }
-
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
@@ -48,7 +44,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
       const subscribers = this.subscribers;
       subscribers.add(safeSubscriber);
 
-      safeSubscriber.add(() => {
+      subscriber.add(() => {
         subscribers.delete(safeSubscriber);
       });
     }

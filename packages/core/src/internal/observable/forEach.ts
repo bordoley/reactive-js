@@ -1,23 +1,13 @@
-import { none, Option, isSome } from "../../option";
+import { none, Option } from "../../option";
 import { Operator, pipe } from "../../pipe";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
 } from "../../scheduler";
-import { ObservableLike, ObserverLike } from "./interfaces";
-import { observe } from "./observe";
+import { ObservableLike } from "./interfaces";
+import { onNotify } from "./onNotify";
 import { Exception } from "../../disposable";
 import { subscribe } from "./subscribe";
-
-class ForEachObserver<T> implements ObserverLike<T> {
-  error: Option<Exception> = none;
-
-  constructor(readonly onNotify: (next: T) => void) {}
-
-  onDispose(error?: Exception) {
-    this.error = error;
-  }
-}
 
 /**
  * Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
@@ -28,25 +18,29 @@ class ForEachObserver<T> implements ObserverLike<T> {
  * @throws an error if the source is disposed with an error.
  */
 export const forEach = <T>(
-  onNotify: (next: T) => void,
+  callback: (next: T) => void,
   schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
 ): Operator<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
-  const observer = new ForEachObserver<T>(onNotify);
+
+  let error: Option<Exception> = none;
   const subscription = pipe(
     observable,
-    observe(observer),
+    onNotify(callback),
     subscribe(scheduler),
-  );
+  ).add(e => {
+    error = e;
+  });
 
   scheduler.run();
 
   subscription.dispose();
   scheduler.dispose();
 
-  const error = observer.error;
-  if (isSome(error)) {
-    const { cause } = error;
+  const reifiedError = error;
+  // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason
+  if (reifiedError !== none) {
+    const { cause } = reifiedError as Exception;
     throw cause;
   }
 };

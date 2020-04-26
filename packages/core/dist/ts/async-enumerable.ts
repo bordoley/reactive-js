@@ -44,7 +44,6 @@ import {
   takeLast,
   using,
   onSubscribe,
-  onDispose,
   empty,
   withLatestFrom,
   ObservableOperator,
@@ -145,14 +144,9 @@ const createFactory = <T, TAcc>(
     TAcc
   > = map(({ acc }) => acc);
 
-  const doOnDispose = (_: unknown) => {
+  enumerator.add(_ => {
     src.dispose();
-  };
-
-  const setupOnSubscribe = () => {
-    const next = pipe(enumerator, onDispose(doOnDispose));
-    src.dispatch(next);
-  };
+  });
 
   const notifySrc = (next: ReducerRequest<TAcc>) => {
     if (next.type === ReducerRequestType.Continue) {
@@ -173,7 +167,9 @@ const createFactory = <T, TAcc>(
     onNotify(notifySrc),
     mapReducerRequestToAcc,
     takeLast(),
-    onSubscribe(setupOnSubscribe),
+    onSubscribe(() => {
+      src.dispatch(enumerator);
+    }),
   );
 };
 

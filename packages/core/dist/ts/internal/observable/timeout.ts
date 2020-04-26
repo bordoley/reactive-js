@@ -7,11 +7,9 @@ import { isSome } from "../../option.ts";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { observe } from "./observe.ts";
 import { pipe } from "../../pipe.ts";
 import { subscribe } from "./subscribe.ts";
 import {
@@ -27,14 +25,18 @@ export const timeoutError = Symbol("TimeoutError");
 const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
   subscriber.durationSubscription.inner = pipe(
     subscriber.duration,
-    observe(subscriber),
     subscribe(subscriber),
-  );
+  ).add(subscriber.onDispose);
 };
 
-class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
-  implements ObserverLike<unknown> {
+class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+
+  readonly onDispose = (error?: Exception) => {
+    if (isSome(error)) {
+      this.dispose(error);
+    }
+  };
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -51,14 +53,6 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T>
     this.durationSubscription.dispose();
     this.delegate.notify(next);
   }
-
-  onDispose(error?: Exception) {
-    if (isSome(error)) {
-      this.dispose(error);
-    }
-  }
-
-  onNotify(_: unknown) {}
 }
 
 /**

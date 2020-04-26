@@ -4,7 +4,6 @@ import {
   ObservableLike,
   switchAll,
   onSubscribe,
-  onDispose,
 } from "./observable.ts";
 import { Option, isNone, isSome } from "./option.ts";
 import { pipe } from "./pipe.ts";
@@ -13,6 +12,7 @@ import {
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler.ts";
+import { SubscriberLike } from "./internal/observable/interfaces.ts";
 
 const alwaysFalse = () => false;
 
@@ -128,10 +128,6 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           this.garbage.delete(key);
         });
 
-      const onSubscribeUnmark = () => {
-        this.garbage.delete(key);
-      };
-
       const onDisposeCleanup = (_?: Exception) =>
         this.add(
           pipe(
@@ -144,10 +140,14 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           ),
         );
 
+      const onSubscribeUnmark = (subscriber: SubscriberLike<T>) => {
+        this.garbage.delete(key);
+        subscriber.add(onDisposeCleanup);
+      };
+
       const observable = pipe(
         stream,
         onSubscribe(onSubscribeUnmark),
-        onDispose(onDisposeCleanup),
       );
 
       cachedValue = [stream, observable];

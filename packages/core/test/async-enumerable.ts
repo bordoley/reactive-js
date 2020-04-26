@@ -1,11 +1,5 @@
 import { Exception } from "../src/disposable";
-import {
-  subscribe,
-  onNotify,
-  onDispose,
-  ofValue,
-  toValue,
-} from "../src/observable";
+import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
 import { none, Option } from "../src/option";
 import { pipe } from "../src/pipe";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -123,11 +117,10 @@ test("fromIterable", () => {
   pipe(
     enumerator,
     onNotify(x => result.push(x)),
-    onDispose(e => {
-      error = e;
-    }),
     subscribe(scheduler),
-  );
+  ).add(e => {
+    error = e;
+  });
 
   enumerator.dispatch();
   enumerator.dispatch();

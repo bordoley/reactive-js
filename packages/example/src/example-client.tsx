@@ -27,8 +27,6 @@ import {
   ofValue,
   concatMap,
   using,
-  onError,
-  onDispose,
 } from "@reactive-js/core/dist/js/observable";
 import {
   history,
@@ -195,15 +193,13 @@ pipe(
       : ofValue(JSON.stringify(status)),
   ),
   onNotify(console.log),
-  onDispose(_ => console.log("dispose")),
   subscribe(normalPriority),
-);
+).add(_ => console.log("dispose"));
 
 pipe(
   createEventSource("http://localhost:8080/events", {
     events: ["error", "message", "test"],
   }),
   onNotify(console.log),
-  onError(console.log),
   subscribe(normalPriority),
-);
+).add(console.log);

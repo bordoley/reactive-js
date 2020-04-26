@@ -6,8 +6,7 @@ import {
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
-  observe,
-  ObserverLike,
+  onNotify,
   subscribe,
   subscribeOn,
   throttle,
@@ -17,25 +16,6 @@ import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-
-class UseObservableObserver<T> implements ObserverLike<T> {
-  constructor(
-    private readonly updateState: React.Dispatch<
-      React.SetStateAction<Option<T>>
-    >,
-    private readonly updateError: React.Dispatch<
-      React.SetStateAction<Option<Exception>>
-    >,
-  ) {}
-
-  onDispose(error?: Exception) {
-    this.updateError(_ => error);
-  }
-
-  onNotify(next: T) {
-    this.updateState(_ => next);
-  }
-}
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -47,9 +27,11 @@ const subscribeObservable = <T>(
     observable,
     throttle(8),
     subscribeOn(scheduler),
-    observe(new UseObservableObserver(updateState, updateError)),
+    onNotify(next => updateState(_ => next)),
     subscribe(normalPriority),
-  );
+  ).add(e => {
+    updateError(_ => e);
+  });
 
 /**
  * Returns the current value, if defined, of `observable`.

@@ -135,8 +135,6 @@ ___
 
 ▸ **identity**<**T**>(): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹T, T›*
 
-Returns an `StreamableLike` that publishes it's notifications.
-
 **Type parameters:**
 
 ▪ **T**

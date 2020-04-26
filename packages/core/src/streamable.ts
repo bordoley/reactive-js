@@ -22,9 +22,12 @@ import {
 import { SchedulerLike } from "./scheduler";
 import { pipe } from "./pipe";
 import { none } from "./option";
-import { AbstractSafeSubscriber } from "./internal/observable/toSafeSubscriber";
+import { toSafeSubscriber } from "./internal/observable/toSafeSubscriber";
 import { SubjectLike } from "./internal/observable/interfaces";
-import { Exception } from "./disposable";
+import {
+  AbstractSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./internal/observable/subscriber";
 
 /** @noInheritDoc */
 export interface StreamLike<TReq, T>
@@ -68,20 +71,17 @@ class StreamImpl<TReq, T> extends AbstractDelegatingSubscriber<TReq, TReq>
   }
 }
 
-class SafeSubjectSubscriber<T> extends AbstractSafeSubscriber<T> {
+class SubjectSubscriber<T> extends AbstractSubscriber<T> {
   constructor(
-    scheduler: SchedulerLike,
     private readonly subject: SubjectLike<T>,
+    scheduler: SchedulerLike,
   ) {
     super(scheduler);
     this.add(subject);
   }
 
-  onDispose(e?: Exception) {
-    this.subject.onDispose(e);
-  }
-
-  onNotify(next: T): void {
+  notify(next: T): void {
+    assertSubscriberNotifyInContinuation(this);
     this.subject.onNotify(next);
   }
 }
@@ -92,7 +92,10 @@ const createStream = <TReq, TData>(
   replayCount?: number,
 ): StreamLike<TReq, TData> => {
   const subject = createSubject<TReq>();
-  const safeSubscriber = new SafeSubjectSubscriber(scheduler, subject);
+  const safeSubscriber = pipe(
+    new SubjectSubscriber(subject, scheduler),
+    toSafeSubscriber,
+  );
   const observable = pipe(subject, op, publish(scheduler, replayCount));
 
   return new StreamImpl(safeSubscriber, observable);
@@ -116,13 +119,16 @@ export const createStreamable = <TReq, TData>(
 const _identity = {
   stream: (scheduler: SchedulerLike, replayCount = 0) => {
     const subject = createSubject(replayCount);
-    const safeSubscriber = new SafeSubjectSubscriber(scheduler, subject);
+    const safeSubscriber = pipe(
+      new SubjectSubscriber(subject, scheduler),
+      toSafeSubscriber,
+    );
 
     return new StreamImpl(safeSubscriber, subject);
   },
 };
 
-/**
+/*
  * Returns an `StreamableLike` that publishes it's notifications.
  */
 export const identity = <T>(): StreamableLike<T, T> =>

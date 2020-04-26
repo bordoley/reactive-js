@@ -8,13 +8,13 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
   constructor(
     private readonly src: ObservableLike<T>,
-    private readonly f: () => void,
+    private readonly f: (subscriber: SubscriberLike<T>) => void,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     try {
       this.src.subscribe(subscriber);
-      this.f();
+      this.f(subscriber);
     } catch (cause) {
       subscriber.dispose({ cause });
     }
@@ -26,6 +26,6 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  * @param f
  */
 export const onSubscribe = <T>(
-  f: () => void,
+  f: (subscriber: SubscriberLike<T>) => void,
 ): ObservableOperator<T, T> => observable =>
   new OnSubscribeObservable(observable, f);

@@ -53,12 +53,8 @@ export {
   mergeAll,
   mergeMap,
 } from "./internal/observable/mergeAll.ts";
-export {
-  observe,
-  onDispose,
-  onError,
-  onNotify,
-} from "./internal/observable/observe.ts";
+export { observe } from "./internal/observable/observe.ts";
+export { onNotify } from "./internal/observable/onNotify.ts";
 export { onSubscribe } from "./internal/observable/onSubscribe.ts";
 export { publish } from "./internal/observable/publish.ts";
 export { reduce } from "./internal/observable/reduce.ts";
@@ -81,6 +77,5 @@ export { withLatestFrom } from "./internal/observable/withLatestFrom.ts";
 export { zip } from "./internal/observable/zip.ts";
 
 export { toArray } from "./internal/observable/toArray.ts";
-export { toValue } from "./internal/observable/toValue.ts";
-export { toPromise } from "./internal/observable/toPromise.ts";
+export { toPromise, toValue } from "./internal/observable/toValue.ts";
 export { toSafeSubscriber } from "./internal/observable/toSafeSubscriber.ts";

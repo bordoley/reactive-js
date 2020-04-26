@@ -1,26 +1,9 @@
 import { SchedulerLike } from "../../scheduler";
 import { pipe } from "../../pipe";
 import { createObservable } from "./createObservable";
-import {
-  ObservableOperator,
-  ObserverLike,
-  SafeSubscriberLike,
-} from "./interfaces";
-import { observe } from "./observe";
+import { ObservableOperator } from "./interfaces";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { Exception } from "../../disposable";
-
-class SubscribeOnObserver<T> implements ObserverLike<T> {
-  constructor(private readonly subscriber: SafeSubscriberLike<T>) {}
-
-  onDispose(error?: Exception) {
-    this.subscriber.dispose(error);
-  }
-
-  onNotify(next: T) {
-    this.subscriber.dispatch(next);
-  }
-}
 
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
@@ -34,8 +17,8 @@ export const subscribeOn = <T>(
     subscriber.add(
       pipe(
         observable,
-        observe(new SubscribeOnObserver(subscriber)),
+        onNotify(next => subscriber.dispatch(next)),
         subscribe(scheduler),
-      ),
+      ).add(e => subscriber.dispose(e)),
     );
   });
