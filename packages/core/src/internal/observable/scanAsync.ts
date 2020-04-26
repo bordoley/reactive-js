@@ -40,11 +40,10 @@ const subscribeSwitchingMode = <T, TAcc>(
           ),
           switchAll<TAcc>(),
         ),
-
       ),
       observe(accFeedbackSubject),
-      subscribe(subscriber)
-    )
+      subscribe(subscriber),
+    ),
   );
 
   pipe(accFeedbackSubject, skipFirst()).subscribe(subscriber);
@@ -69,13 +68,10 @@ const subscribeQueingMode = <T, TAcc>(
 
   subscriber.add(
     pipe(
-      concat(
-        compute(initialValue), 
-        pipe(acc, concatMap(takeLast())),
-      ),
+      concat(compute(initialValue), pipe(acc, concatMap(takeLast()))),
       observe(accFeedbackSubject),
       subscribe(subscriber),
-    )
+    ),
   );
 
   pipe(acc, concatAll()).subscribe(subscriber);

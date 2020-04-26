@@ -66,7 +66,7 @@ export abstract class AbstractSafeSubscriber<T> extends AbstractSubscriber<T>
   abstract onDispose(e?: Exception): void;
 
   notify(next: T): void {
-    this.onNotify(next)
+    this.onNotify(next);
   }
 
   dispatch(next: T): void {
@@ -77,10 +77,8 @@ export abstract class AbstractSafeSubscriber<T> extends AbstractSubscriber<T>
   }
 }
 
-
 class SafeSubscriberImpl<T> extends AbstractSafeSubscriber<T>
   implements SafeSubscriberLike<T> {
-
   constructor(readonly delegate: SubscriberLike<T>) {
     super(delegate);
     delegate.add(this);

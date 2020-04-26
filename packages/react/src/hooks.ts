@@ -97,9 +97,7 @@ export const useStreamable = <TReq, T>(
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const [stream, dispatch] = useState<Option<StreamLike<TReq, T>>>(
-    none,
-  );
+  const [stream, dispatch] = useState<Option<StreamLike<TReq, T>>>(none);
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
