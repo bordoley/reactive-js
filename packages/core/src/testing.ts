@@ -1,4 +1,4 @@
-import { Option, isSome } from "./option";
+import { Option, isSome, isNone } from "./option";
 
 export const enum TestGroupType {
   Describe = 1,
@@ -84,6 +84,13 @@ export const expectFalse = (v: boolean) => {
 export const expectNone = (v: Option<unknown>) => {
   if (isSome(v)) {
     throw new Error(`expected none but recieved ${v}`);
+  }
+};
+
+
+export const expectSome = (v: Option<unknown>) => {
+  if (isNone(v)) {
+    throw new Error(`expected Some(?) but recieved None`);
   }
 };
 

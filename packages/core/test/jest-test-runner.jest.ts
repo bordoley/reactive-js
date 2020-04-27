@@ -4,6 +4,7 @@ import { tests as disposableTests } from "./disposable.test";
 import { tests as enumerableTests } from "./enumerable.test";
 import { tests as httpTests } from "./http.test";
 import { tests as parserCombinatorTests } from "./parser-combinators.test";
+import { tests as reactiveCacheTests } from "./reactive-cache.test";
 import { tests as resourceManagerTests } from "./resource-manager.test";
 import { tests as streamableTests } from "./streamable.test";
 
@@ -26,5 +27,6 @@ toJestTest(disposableTests);
 toJestTest(enumerableTests);
 toJestTest(httpTests);
 toJestTest(parserCombinatorTests);
+toJestTest(reactiveCacheTests);
 toJestTest(resourceManagerTests);
 toJestTest(streamableTests);
