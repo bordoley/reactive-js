@@ -10,7 +10,7 @@ export const run = (n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { pipe } = require("@reactive-js/core/dist/js/pipe");
+      const { pipe } = require("@reactive-js/core/dist/js/functions");
       const {
         fromArray,
         keep,

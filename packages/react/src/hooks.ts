@@ -11,10 +11,9 @@ import {
   never,
 } from "@reactive-js/core/dist/js/observable";
 import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
-import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
+import { pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
 import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { returns } from "@reactive-js/core/dist/js/functions";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,

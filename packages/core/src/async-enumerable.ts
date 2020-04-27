@@ -22,7 +22,7 @@ import {
   StreamLike,
   takeWhile,
 } from "./observable";
-import { compose, pipe, Operator } from "./pipe";
+import { compose, pipe, Operator } from "./functions";
 import { SchedulerLike } from "./scheduler";
 import { fromIterable as fromIterableEnumerable } from "./enumerable";
 import { returns } from "./functions";

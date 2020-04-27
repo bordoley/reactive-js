@@ -1,6 +1,6 @@
 import { test, describe, expectToEqual } from "../src/testing";
 import { subscribe, onNotify } from "../src/observable";
-import { pipe } from "../src/pipe";
+import { pipe } from "../src/functions";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { identity, liftReq, map } from "../src/streamable";
 

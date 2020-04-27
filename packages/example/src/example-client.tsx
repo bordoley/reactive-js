@@ -42,11 +42,10 @@ import React, {
   useEffect,
 } from "react";
 import { default as ReactDOM } from "react-dom";
-import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
-import { returns, incr } from "@reactive-js/core/dist/js/functions";
+import { pipe, compose, returns, increment } from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
@@ -82,7 +81,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const obs = generate(incr, returns<number>(0));
+const obs = generate(increment, returns<number>(0));
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, idlePriority);
 

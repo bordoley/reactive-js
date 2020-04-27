@@ -1,6 +1,6 @@
 import { isNone, isSome, none, Option } from "../../option.ts";
 import { parseWith, pAsterisk, or, mapTo } from "../../parser-combinators.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import {
   entityTagToString,
   pETag,

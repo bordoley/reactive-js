@@ -3,7 +3,7 @@ import {
   createStreamable,
   map as mapStream,
 } from "./streamable.ts";
-import { Operator, compose, pipe } from "./pipe.ts";
+import { Operator, compose, pipe } from "./functions.ts";
 import {
   ObservableLike,
   endWith,

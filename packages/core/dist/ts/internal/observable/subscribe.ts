@@ -1,5 +1,5 @@
 import { DisposableLike } from "../../disposable.ts";
-import { Operator } from "../../pipe.ts";
+import { Operator } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
 import {

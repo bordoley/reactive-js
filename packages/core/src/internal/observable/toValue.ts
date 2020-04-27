@@ -1,6 +1,6 @@
 import { Exception } from "../../disposable";
 import { none, Option } from "../../option";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,

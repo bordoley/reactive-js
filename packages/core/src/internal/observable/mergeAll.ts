@@ -1,6 +1,6 @@
 import { Exception } from "../../disposable";
 import { isSome } from "../../option";
-import { compose, pipe } from "../../pipe";
+import { compose, pipe } from "../../functions";
 import {
   ObservableLike,
   ObservableOperator,

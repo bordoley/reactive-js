@@ -1,8 +1,7 @@
 import { EnumeratorLike } from "./enumerable";
 import { Option, none, orCompute as orComputeOption } from "./option";
-import { Operator, compose, pipe } from "./pipe";
+import { Operator, compose, pipe, returns } from "./functions";
 import { __DEV__ } from "./internal/env";
-import { returns } from "./functions";
 
 export type CharCode = number;
 

@@ -7,7 +7,7 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { createSubject } from "./createSubject";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

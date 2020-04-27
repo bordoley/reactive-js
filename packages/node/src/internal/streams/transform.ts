@@ -15,7 +15,7 @@ import {
 import { Option } from "@reactive-js/core/dist/js/option";
 import { createBufferFlowableFromReadable } from "./bufferFlowable";
 import { createBufferFlowableSinkFromWritable } from "./bufferFlowableSink";
-import { Operator, pipe, compose } from "@reactive-js/core/dist/js/pipe";
+import { Operator, pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
 import { BufferFlowableLike } from "./interfaces";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import {
@@ -29,7 +29,6 @@ import {
   sink,
   lift,
 } from "@reactive-js/core/dist/js/streamable";
-import { returns } from "@reactive-js/core/dist/js/functions";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,

@@ -13,7 +13,7 @@ import {
   ObservableLike,
   using,
 } from "@reactive-js/core/dist/js/observable";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe } from "@reactive-js/core/dist/js/functions";
 import { BufferFlowableSinkLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 

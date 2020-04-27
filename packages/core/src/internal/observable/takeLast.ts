@@ -1,5 +1,5 @@
 import { isSome } from "../../option";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { empty } from "./empty";

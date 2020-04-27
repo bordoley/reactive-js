@@ -10,7 +10,7 @@ import {
   SubscriberLike,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
   (enumerable: StreamableLike<TSrcReq, TSrc>): StreamableLike<TReq, T>;

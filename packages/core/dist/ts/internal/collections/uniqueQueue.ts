@@ -1,5 +1,5 @@
 import { QueueLike } from "./interfaces.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { fromIterable, first, EnumeratorLike } from "../../enumerable.ts";
 import { isSome } from "../../option.ts";
 

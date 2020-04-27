@@ -4,7 +4,7 @@ import {
   EnumerableOperator,
   EnumeratorOperator,
 } from "./interfaces.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(

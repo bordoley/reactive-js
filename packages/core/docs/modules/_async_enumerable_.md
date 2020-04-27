@@ -135,7 +135,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_pipe_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **reduce**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -160,13 +160,13 @@ Name | Type |
 
 ▸ (): *TAcc*
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 
 ### `Const` reduceAsync
 
-▸ **reduceAsync**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_pipe_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **reduceAsync**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -191,4 +191,4 @@ Name | Type |
 
 ▸ (): *TAcc*
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_async_enumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*

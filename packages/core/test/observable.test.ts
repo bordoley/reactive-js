@@ -1,7 +1,7 @@
 import { test, describe, testAsync } from "../src/testing";
 import { createDisposable, disposed, DisposableLike } from "../src/disposable";
 import { Option } from "../src/option";
-import { pipe } from "../src/pipe";
+import { pipe, returns, increment, alwaysFalse, alwaysTrue } from "../src/functions";
 import {
   AbstractHostScheduler,
   SchedulerLike,
@@ -55,7 +55,6 @@ import {
   withLatestFrom,
   zip,
 } from "../src/observable";
-import { returns, incr, alwaysFalse, alwaysTrue } from "../src/functions";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   notify = jest.fn();
@@ -237,7 +236,7 @@ export const tests = describe(
     pipe(empty<number>(), contains(1), toValue(), expect).toBeFalsy();
 
     pipe(
-      generate(incr, returns<number>(0)),
+      generate(increment, returns<number>(0)),
       contains(1),
       toValue(),
       expect,
@@ -617,7 +616,7 @@ export const tests = describe(
     "generate",
     test("without delay", () => {
       pipe(
-        generate(incr, returns<number>(1)),
+        generate(increment, returns<number>(1)),
         takeFirst(5),
         toArray(),
         expect,
@@ -657,7 +656,7 @@ export const tests = describe(
       const cb = jest.fn();
 
       pipe(
-        generate(incr, returns<number>(1), 5),
+        generate(increment, returns<number>(1), 5),
         map(x => [scheduler.now, x]),
         takeFirst(5),
         onNotify(cb),
@@ -1076,7 +1075,7 @@ export const tests = describe(
 
   test("takeWhile", () => {
     pipe(
-      generate(incr, returns<number>(0)),
+      generate(increment, returns<number>(0)),
       takeWhile(x => x < 3),
       toArray(),
       expect,
@@ -1087,7 +1086,7 @@ export const tests = describe(
     "throttle",
     test("first", () => {
       const result = pipe(
-        generate(incr, returns<number>(0), 1),
+        generate(increment, returns<number>(0), 1),
         takeFirst(100),
         throttle(50, ThrottleMode.First),
         toArray(),
@@ -1098,7 +1097,7 @@ export const tests = describe(
 
     test("last", () => {
       const result = pipe(
-        generate(incr, returns<number>(0), 1),
+        generate(increment, returns<number>(0), 1),
         takeFirst(200),
         throttle(50, ThrottleMode.Last),
         toArray(),
@@ -1109,7 +1108,7 @@ export const tests = describe(
 
     test("interval", () => {
       const result = pipe(
-        generate(incr, returns<number>(0), 1),
+        generate(increment, returns<number>(0), 1),
         takeFirst(200),
         throttle(75, ThrottleMode.Interval),
         toArray(),
@@ -1219,8 +1218,8 @@ export const tests = describe(
         zip(
           [
             fromArray([1, 2]),
-            pipe(fromArray([1, 2]), map(incr)),
-            generate(incr, returns<number>(3)),
+            pipe(fromArray([1, 2]), map(increment)),
+            generate(increment, returns<number>(3)),
           ],
           (x, y, z) => [x, y, z],
         ),

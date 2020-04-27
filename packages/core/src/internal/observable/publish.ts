@@ -1,6 +1,6 @@
 import { onNotify } from "./onNotify";
 import { createSubject } from "./createSubject";
-import { Operator, pipe } from "../../pipe";
+import { Operator, pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { subscribe } from "./subscribe";

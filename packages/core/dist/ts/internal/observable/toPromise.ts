@@ -1,5 +1,5 @@
 import { none, Option, isSome } from "../../option.ts";
-import { pipe, Operator } from "../../pipe.ts";
+import { pipe, Operator } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";

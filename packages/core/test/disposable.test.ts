@@ -12,7 +12,7 @@ import {
   createSerialDisposable,
   disposed,
 } from "../src/disposable";
-import { pipe } from "../src/pipe";
+import { pipe } from "../src/functions";
 import { fromArray, forEach, map } from "../src/enumerable";
 
 export const tests = describe(

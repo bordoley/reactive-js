@@ -10,7 +10,7 @@ import {
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe, returns } from "../../functions.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingSubscriber,
@@ -18,7 +18,6 @@ import {
 } from "./subscriber.ts";
 import { throws } from "./throws.ts";
 import { concat } from "./concat.ts";
-import { returns } from "../../functions.ts";
 
 /** Symbol thrown when the timeout operator times out */
 export const timeoutError = Symbol("TimeoutError");

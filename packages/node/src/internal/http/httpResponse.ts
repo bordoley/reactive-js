@@ -9,7 +9,7 @@ import {
 } from "@reactive-js/core/dist/js/http";
 import { BufferFlowableLike, transform } from "../../streams";
 import { isSome, none, Option } from "@reactive-js/core/dist/js/option";
-import { Operator, pipe } from "@reactive-js/core/dist/js/pipe";
+import { Operator, pipe } from "@reactive-js/core/dist/js/functions";
 import {
   getFirstSupportedEncoding,
   createEncodingCompressTransform,

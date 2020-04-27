@@ -16,6 +16,7 @@
 
 ### Functions
 
+* [empty](_enumerable_.md#const-empty)
 * [first](_enumerable_.md#const-first)
 * [forEach](_enumerable_.md#const-foreach)
 * [fromArray](_enumerable_.md#const-fromarray)
@@ -24,7 +25,9 @@
 * [keep](_enumerable_.md#const-keep)
 * [keepType](_enumerable_.md#const-keeptype)
 * [lift](_enumerable_.md#const-lift)
+* [map](_enumerable_.md#const-map)
 * [reduce](_enumerable_.md#const-reduce)
+* [toArray](_enumerable_.md#const-toarray)
 * [toIterable](_enumerable_.md#const-toiterable)
 
 ## Type aliases
@@ -61,6 +64,18 @@ Name | Type |
 
 ## Functions
 
+### `Const` empty
+
+▸ **empty**<**T**>(): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
 ### `Const` first
 
 ▸ **first**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[Option](_option_.md#option)‹T›*
@@ -81,7 +96,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`f`: function): *[Operator](_pipe_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`f`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
 
 **Type parameters:**
 
@@ -99,7 +114,7 @@ Name | Type |
 ------ | ------ |
 `v` | T |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
+**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
 
 ___
 
@@ -241,9 +256,35 @@ Name | Type |
 
 ___
 
+### `Const` map
+
+▸ **map**<**TA**, **TB**>(`mapper`: function): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+▪ **mapper**: *function*
+
+▸ (`v`: TA): *TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TA |
+
+**Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+
+___
+
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[Operator](_pipe_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
+▸ **reduce**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
 
 **Type parameters:**
 
@@ -268,7 +309,25 @@ Name | Type |
 
 ▸ (): *TAcc*
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
+**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
+
+___
+
+### `Const` toArray
+
+▸ **toArray**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *keyof T[]*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
+
+**Returns:** *keyof T[]*
 
 ___
 

@@ -15,7 +15,7 @@ import {
   onNotify,
   never,
 } from "../src/observable";
-import { pipe } from "../src/pipe";
+import { pipe } from "../src/functions";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { createReactiveCache, getOrSet } from "../src/reactive-cache";
 import { disposed } from "../src/disposable";

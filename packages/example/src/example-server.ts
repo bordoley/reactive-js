@@ -52,12 +52,11 @@ import {
   switchMap,
 } from "@reactive-js/core/dist/js/observable";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import { pipe, Operator } from "@reactive-js/core/dist/js/pipe";
+import { pipe, Operator, returns, increment } from "@reactive-js/core/dist/js/functions";
 import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/dist/js/scheduler";
-import { returns, incr } from "@reactive-js/core/dist/js/functions";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -83,7 +82,7 @@ const routerHandlerEventStream: HttpServer<
   HttpResponse<BufferFlowableLike>
 > = _ => {
   const body = pipe(
-    generate(incr, returns<number>(0), 1000),
+    generate(increment, returns<number>(0), 1000),
     mapFlowable(
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,

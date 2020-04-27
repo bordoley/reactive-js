@@ -1,4 +1,4 @@
-import { Operator } from "../../pipe";
+import { Operator } from "../../functions";
 import { EnumerableLike } from "./interfaces";
 
 export const reduce = <T, TAcc>(

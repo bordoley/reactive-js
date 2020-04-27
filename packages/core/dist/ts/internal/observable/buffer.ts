@@ -1,6 +1,6 @@
 import { createSerialDisposable } from "../../disposable.ts";
 import { isNone, isSome, none } from "../../option.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { ofValue } from "./ofValue.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";

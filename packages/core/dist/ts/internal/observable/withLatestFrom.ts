@@ -5,7 +5,7 @@ import {
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingSubscriber,

@@ -35,7 +35,7 @@ import {
   HttpResponse,
 } from "@reactive-js/core/dist/js/http";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe, returns } from "@reactive-js/core/dist/js/functions";
 import { BrotliOptions, ZlibOptions } from "zlib";
 import { encodeHttpRequest } from "./httpRequest";
 import { HttpClientRequest } from "./interfaces";
@@ -50,7 +50,6 @@ import {
   FlowMode,
   FlowEventType,
 } from "@reactive-js/core/dist/js/flowable";
-import { returns } from "@reactive-js/core/dist/js/functions";
 
 export type HttpClientOptions = {
   // Node options
@@ -183,15 +182,15 @@ export const createHttpClient = (
         pipe(
           requestBody,
           scan(
-            ([incr, count], ev): [number, number] =>
+            ([increment, count], ev): [number, number] =>
               ev.type === FlowEventType.Next
-                ? [ev.data.length, count + incr]
-                : [-1, count + incr],
+                ? [ev.data.length, count + increment]
+                : [-1, count + increment],
 
             returns<[number, number]>([0, 0]),
           ),
-          map(([incr, count]) =>
-            incr < 0
+          map(([increment, count]) =>
+            increment < 0
               ? { type: HttpClientRequestStatusType.Completed }
               : count > 0
               ? {

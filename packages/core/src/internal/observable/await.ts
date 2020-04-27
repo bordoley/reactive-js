@@ -1,4 +1,4 @@
-import { compose } from "../../pipe";
+import { compose } from "../../functions";
 import { ObservableLike } from "./interfaces";
 import { switchMap } from "./switchAll";
 import { takeFirst } from "./takeFirst";

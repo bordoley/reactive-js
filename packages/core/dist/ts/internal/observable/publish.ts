@@ -1,6 +1,6 @@
 import { onNotify } from "./onNotify.ts";
 import { createSubject } from "./createSubject.ts";
-import { Operator, pipe } from "../../pipe.ts";
+import { Operator, pipe } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { MulticastObservableLike, ObservableLike } from "./interfaces.ts";
 import { subscribe } from "./subscribe.ts";

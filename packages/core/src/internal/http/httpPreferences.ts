@@ -1,6 +1,6 @@
 import { isSome, Option, none } from "../../option";
 import { concat, map, parseWith } from "../../parser-combinators";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {
@@ -161,14 +161,14 @@ const writeWeightedTokenHeader = (
 ) => {
   const length = values.length;
   if (length > 0) {
-    const incr = 1000 / length;
+    const increment = 1000 / length;
 
     let result = "";
     for (let i = 0; i < length; i++) {
       result += values[i];
 
       if (i > 0) {
-        const q = (i * incr) / 1000;
+        const q = (i * increment) / 1000;
         result += `; q=${q.toFixed(1)}`;
       }
 

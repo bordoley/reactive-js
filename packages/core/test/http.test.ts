@@ -11,7 +11,7 @@ import {
 } from "../src/http";
 
 import { none } from "../src/option";
-import { pipe } from "../src/pipe";
+import { pipe } from "../src/functions";
 
 export const tests = describe(
   "http",

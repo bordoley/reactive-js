@@ -1,4 +1,4 @@
-import { compose } from "../../pipe";
+import { compose } from "../../functions";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
