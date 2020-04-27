@@ -11,11 +11,16 @@
 ### Type aliases
 
 * [HttpClient](_http_client_.md#httpclient)
+* [HttpClientRequest](_http_client_.md#httpclientrequest)
 * [HttpClientRequestStatus](_http_client_.md#httpclientrequeststatus)
 * [HttpClientRequestStatusComplete](_http_client_.md#httpclientrequeststatuscomplete)
 * [HttpClientRequestStatusHeadersReceived](_http_client_.md#httpclientrequeststatusheadersreceived)
 * [HttpClientRequestStatusProgress](_http_client_.md#httpclientrequeststatusprogress)
 * [HttpClientRequestStatusStart](_http_client_.md#httpclientrequeststatusstart)
+
+### Functions
+
+* [withDefaultBehaviors](_http_client_.md#const-withdefaultbehaviors)
 
 ## Type aliases
 
@@ -32,6 +37,12 @@
 Name | Type |
 ------ | ------ |
 `req` | THttpRequest |
+
+___
+
+###  HttpClientRequest
+
+Ƭ **HttpClientRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
 
 ___
 
@@ -82,3 +93,29 @@ ___
 #### Type declaration:
 
 * **type**: *[Start](../enums/_http_client_.httpclientrequeststatustype.md#start)*
+
+## Functions
+
+### `Const` withDefaultBehaviors
+
+▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: function): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TResp**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+**Parameters:**
+
+▪`Default value`  **encodeHttpRequest**: *function*= identity
+
+▸ (`req`: [HttpClientRequest](_http_client_.md#httpclientrequest)‹TReq›): *[HttpClientRequest](_http_client_.md#httpclientrequest)‹TReq›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | [HttpClientRequest](_http_client_.md#httpclientrequest)‹TReq› |
+
+**Returns:** *(Anonymous function)*

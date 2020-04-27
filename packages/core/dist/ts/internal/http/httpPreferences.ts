@@ -81,7 +81,6 @@ const parseWeightedTokenHeader = (
   return isSome(rawValue) ? parseWeightedToken(rawValue) ?? [] : [];
 };
 
-
 export const parseHttpPreferencesFromHeaders = (
   headers: HttpHeaders,
 ): Option<HttpPreferences> => {
@@ -120,7 +119,6 @@ export const parseHttpPreferencesFromHeaders = (
         acceptedMediaRanges,
       };
 };
-
 
 export const createHttpPreferences = ({
   acceptedCharsets = [],
@@ -179,7 +177,6 @@ const writeWeightedTokenHeader = (
     writeHeader(header, result);
   }
 };
-
 
 export const writeHttpPreferenceHeaders = (
   preferences: HttpPreferences,

@@ -12,8 +12,8 @@ import {
   createEncodingCompressTransform,
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
-import { HttpClientRequest } from "./interfaces";
 import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
+import { HttpClientRequest } from "@reactive-js/core/dist/js/http-client";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
@@ -22,9 +22,12 @@ export const decodeHttpRequest = (
   HttpRequest<BufferFlowableLike>
 > => request => decodeHttpMessage(request, options);
 
-export const encodeHttpRequest = (
+export const encodeHttpClientRequest = (
   options: BrotliOptions | ZlibOptions = {},
-): Operator<HttpClientRequest, HttpRequest<BufferFlowableLike>> => request => {
+): Operator<
+  HttpClientRequest<BufferFlowableLike>,
+  HttpClientRequest<BufferFlowableLike>
+> => request => {
   const { body, contentInfo } = request;
 
   const contentEncoding = getFirstSupportedEncoding(

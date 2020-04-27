@@ -15,7 +15,12 @@ import {
 import { Option } from "@reactive-js/core/dist/js/option";
 import { createBufferFlowableFromReadable } from "./bufferFlowable";
 import { createBufferFlowableSinkFromWritable } from "./bufferFlowableSink";
-import { Operator, pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
+import {
+  Operator,
+  pipe,
+  compose,
+  returns,
+} from "@reactive-js/core/dist/js/functions";
 import { BufferFlowableLike } from "./interfaces";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import {

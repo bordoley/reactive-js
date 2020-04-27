@@ -76,7 +76,6 @@ const bodyToText = (body: unknown): ObservableLike<string> => {
     : throwTypeError();
 };
 
-
 export class HttpResponseBodyImpl extends AbstractDisposable
   implements WebResponseBodyLike {
   constructor(readonly body: ObservableLike<unknown> & DisposableLike) {

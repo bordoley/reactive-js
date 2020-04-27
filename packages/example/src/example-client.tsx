@@ -45,7 +45,12 @@ import { default as ReactDOM } from "react-dom";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
-import { pipe, compose, returns, increment } from "@reactive-js/core/dist/js/functions";
+import {
+  pipe,
+  compose,
+  returns,
+  increment,
+} from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,

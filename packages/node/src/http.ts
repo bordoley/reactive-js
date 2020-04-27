@@ -1,7 +1,6 @@
 export {
   HttpClientOptions,
   createHttpClient,
-  withDefaultBehaviors,
 } from "./internal/http/httpClient";
 
 export {
@@ -11,6 +10,7 @@ export {
 } from "./internal/http/httpRequestListener";
 
 export {
+  encodeHttpClientRequest,
   decodeHttpRequest,
   encodeCharsetHttpRequest,
 } from "./internal/http/httpRequest";
@@ -20,5 +20,3 @@ export {
   encodeHttpResponse,
   encodeCharsetHttpResponse,
 } from "./internal/http/httpResponse";
-
-export { HttpClientRequest } from "./internal/http/interfaces";

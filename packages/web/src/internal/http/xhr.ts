@@ -16,7 +16,6 @@ import {
   HttpClientRequestStatusType,
 } from "@reactive-js/core/dist/js/http-client";
 
-
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,
   WebResponseBodyLike

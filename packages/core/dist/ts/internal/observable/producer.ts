@@ -1,7 +1,6 @@
 import { SubscriberLike } from "./interfaces.ts";
 import { AbstractSchedulerContinuation } from "../../scheduler.ts";
 
-
 export abstract class AbstractProducer<
   T
 > extends AbstractSchedulerContinuation {
