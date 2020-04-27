@@ -42,13 +42,7 @@ class DenoScheduler extends AbstractHostScheduler {
   scheduleImmediate(
     callback: (shouldYield: Option<() => boolean>) => void,
   ): DisposableLike {
-    const disposable = createDisposable();
-    queueMicrotask(
-      () => {
-        callCallbackAndDispose(callback, disposable);
-      }
-    );
-    return disposable;
+    return this.scheduleDelayed(callback, 0);
   }
 }
 
