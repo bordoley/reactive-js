@@ -531,7 +531,7 @@ describe("fromIterable", () => {
   test("with delay", () => {
     const observable = fromIterable([1, 2, 3, 4, 5, 6], 3);
     const scheduler = createVirtualTimeScheduler(1);
-    
+
     const cb = jest.fn();
 
     pipe(
@@ -681,7 +681,7 @@ describe("generate", () => {
     };
 
     const onDispose = jest.fn();
-  
+
     pipe(
       generate(generator, () => 1, 5),
       map(x => [scheduler.now, x]),
@@ -709,9 +709,12 @@ test("ignoreElements", () => {
   );
 
   const onDispose = jest.fn();
-  pipe(src, ignoreElements(), onNotify(x => cb(x)), subscribe(scheduler)).add(e =>
-    onDispose(e),
-  );
+  pipe(
+    src,
+    ignoreElements(),
+    onNotify(x => cb(x)),
+    subscribe(scheduler),
+  ).add(e => onDispose(e));
   scheduler.run();
 
   expect(cb).toBeCalledTimes(0);
@@ -784,7 +787,13 @@ describe("never", () => {
   test("produces no values", () => {
     const cb = jest.fn();
 
-    expect(() => pipe(never(), onNotify(x => cb(x)), toArray())).toThrow();
+    expect(() =>
+      pipe(
+        never(),
+        onNotify(x => cb(x)),
+        toArray(),
+      ),
+    ).toThrow();
 
     expect(cb).toHaveBeenCalledTimes(0);
   });
@@ -824,7 +833,11 @@ test("onNotify", () => {
   const scheduler = createVirtualTimeScheduler();
   const cb = jest.fn();
 
-  pipe(ofValue(1), onNotify(x => cb(x)), subscribe(scheduler));
+  pipe(
+    ofValue(1),
+    onNotify(x => cb(x)),
+    subscribe(scheduler),
+  );
   scheduler.run();
 
   expect(cb).toHaveBeenCalledWith(1);
@@ -1052,9 +1065,14 @@ describe("takeLast", () => {
       throws(() => cause, 2),
     );
 
-    expect(() => pipe(src, takeLast(3), onNotify(x => cb(x)), toArray())).toThrow(
-      cause,
-    );
+    expect(() =>
+      pipe(
+        src,
+        takeLast(3),
+        onNotify(x => cb(x)),
+        toArray(),
+      ),
+    ).toThrow(cause);
     expect(cb).toHaveBeenCalledTimes(0);
   });
 });

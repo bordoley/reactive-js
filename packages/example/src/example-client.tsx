@@ -123,7 +123,7 @@ const StatefulComponent = (props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => pipe(obs, throttle(15),fromObservable), []);
+  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable), []);
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });

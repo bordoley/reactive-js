@@ -49,5 +49,5 @@ export const toValue = (
     throw new Error("Observable did not produce any values");
   }
 
-  return result as unknown as T;
+  return (result as unknown) as T;
 };

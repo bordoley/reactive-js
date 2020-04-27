@@ -1,5 +1,10 @@
 import { StreamableLike } from "./interfaces";
-import { ObservableLike, scan, startWith, distinctUntilChanged } from "../../observable";
+import {
+  ObservableLike,
+  scan,
+  startWith,
+  distinctUntilChanged,
+} from "../../observable";
 import { pipe } from "../../pipe";
 import { createStreamable } from "./streamable";
 

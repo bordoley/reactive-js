@@ -1,5 +1,10 @@
 import { StreamableLike } from "./interfaces.ts";
-import { ObservableLike, scan, startWith, distinctUntilChanged } from "../../observable.ts";
+import {
+  ObservableLike,
+  scan,
+  startWith,
+  distinctUntilChanged,
+} from "../../observable.ts";
 import { pipe } from "../../pipe.ts";
 import { createStreamable } from "./streamable.ts";
 

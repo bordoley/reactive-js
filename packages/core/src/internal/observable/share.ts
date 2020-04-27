@@ -25,7 +25,8 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   readonly isSynchronous = false;
 
-  private readonly onNotify = (next: T) => (this.subject as SubjectLike<T>).dispatch(next);
+  private readonly onNotify = (next: T) =>
+    (this.subject as SubjectLike<T>).dispatch(next);
 
   constructor(
     private readonly factory: () => SubjectLike<T>,

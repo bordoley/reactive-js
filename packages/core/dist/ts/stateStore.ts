@@ -40,29 +40,6 @@ export const createStateStore = <T>(
 ): StateStoreLike<T> =>
   createActionReducer(stateStoreReducer, initialState, equals);
 
-const reducer = <T>(acc: T, next: StateUpdater<T>) => next(acc);
-
-const createFactory = <T>(
-  observable: ObservableLike<StateUpdater<T>>,
-  initialState: () => T,
-  equals?: (a: T, b: T) => boolean,
-) => (stream: StreamLike<T, T>) => {
-  const src = merge(
-    observable,
-    pipe(
-      stream,
-      map(v => _ => v),
-    ),
-  );
-
-  return pipe(
-    src,
-    scan(reducer, initialState),
-    distinctUntilChanged(equals),
-    onNotify((next: T) => stream.dispatch(next)),
-  );
-};
-
 /**
  * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
  *
@@ -73,12 +50,25 @@ const createFactory = <T>(
 export const toStateStore = <T>(
   initialState: () => T,
   equals?: (a: T, b: T) => boolean,
-): StreamableOperator<T, T, StateUpdater<T>, T> => enumerable => {
-  const operator = (observable: ObservableLike<StateUpdater<T>>) =>
-    using(
-      scheduler => enumerable.stream(scheduler),
-      createFactory(observable, initialState, equals),
+): StreamableOperator<T, T, StateUpdater<T>, T> => {
+  const createFactory = (observable: ObservableLike<StateUpdater<T>>) => (
+    stream: StreamLike<T, T>,
+  ) =>
+    pipe(
+      merge(
+        observable,
+        map<T, StateUpdater<T>>(v => _ => v)(stream),
+      ),
+      scan(stateStoreReducer, initialState),
+      distinctUntilChanged(equals),
+      onNotify((next: T) => stream.dispatch(next)),
     );
 
-  return createStreamable(operator);
+  return enumerable =>
+    createStreamable(observable =>
+      using(
+        scheduler => enumerable.stream(scheduler),
+        createFactory(observable),
+      ),
+    );
 };

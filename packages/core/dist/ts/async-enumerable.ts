@@ -1,9 +1,4 @@
-import {
-  StreamableLike,
-  identity,
-  lift,
-  createStreamable,
-} from "./streamable.ts";
+import { StreamableLike, identity, lift, createStreamable } from "./streamable.ts";
 import {
   compute,
   map,
@@ -234,12 +229,12 @@ export const fromIterable = <T>(
       obs,
       withLatestFrom(
         compute(() => enumerable.enumerate()),
-        (_, enumerator) => enumerator, 
+        (_, enumerator) => enumerator,
       ),
       onNotify(enumerator => enumerator.move()),
-      takeWhile(enumerator=> enumerator.hasCurrent),
+      takeWhile(enumerator => enumerator.hasCurrent),
       map(enumerator => enumerator.current),
-    )
+    );
   };
 
   return createStreamable(operator);
