@@ -25,8 +25,6 @@ export const assertSubscriberNotifyInContinuation: (
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.
- *
- * @ignore
  */
 export abstract class AbstractSubscriber<T> extends AbstractDisposable
   implements SubscriberLike<T> {

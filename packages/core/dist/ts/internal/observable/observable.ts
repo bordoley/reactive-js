@@ -23,7 +23,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
   }
 }
 
-/** @ignore */
+
 export const createScheduledObservable = <T>(
   factory: (
     subscriber: SubscriberLike<T>,
@@ -31,7 +31,7 @@ export const createScheduledObservable = <T>(
   isSynchronous: boolean,
 ): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous, 0);
 
-/** @ignore */
+
 export const createDelayedScheduledObservable = <T>(
   factory: (
     subscriber: SubscriberLike<T>,

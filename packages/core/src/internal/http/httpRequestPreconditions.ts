@@ -40,7 +40,7 @@ const writeDateHeader = (
   }
 };
 
-/** @ignore */
+
 export const writeHttpRequestPreconditionsHeaders = (
   {
     ifMatch,
@@ -98,7 +98,7 @@ const parseOptionalDatePreference = (
   header: HttpStandardHeader,
 ) => pipe(getHeaderValue(headers, header) ?? "", parseHttpDateTime);
 
-/** @ignore */
+
 export const parseHttpRequestPreconditionsFromHeaders = (
   headers: HttpHeaders,
 ): Option<HttpRequestPreconditions> => {
@@ -148,7 +148,7 @@ const parseIfRange = (ifRange: string): Option<EntityTag | HttpDateTime> => {
   return isSome(etag) ? etag : parseHttpDateTime(ifRange);
 };
 
-/** @ignore */
+
 export const createHttpRequestPreconditions = ({
   ifMatch,
   ifModifiedSince,
