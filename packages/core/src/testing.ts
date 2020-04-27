@@ -51,7 +51,7 @@ export const expectToThrow = (f: () => void) => {
   }
 };
 
-export function expectArraysEqual<T>(a: T[], b: T[]) {
+export function expectArraysEqual<T>(a: readonly T[], b: readonly T[]) {
   if (a.length !== b.length || !a.every((v, i) => b[i] === v)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
