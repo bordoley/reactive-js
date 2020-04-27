@@ -1,5 +1,6 @@
 import { TestGroup, TestGroupType } from "../src/testing";
 import { tests as collectionTests } from "./collections.test";
+import { tests as disposableTests } from "./disposable.test";
 import { tests as enumerableTests } from "./enumerable.test";
 import { tests as httpTests } from "./http.test";
 import { tests as parserCombinatorTest } from "./parser-combinators.test";
@@ -19,6 +20,7 @@ const toJestTest = (testGroup: TestGroup) => {
 };
 
 toJestTest(collectionTests);
+toJestTest(disposableTests);
 toJestTest(enumerableTests);
 toJestTest(httpTests);
 toJestTest(parserCombinatorTest);
