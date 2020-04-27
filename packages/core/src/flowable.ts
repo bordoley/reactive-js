@@ -23,6 +23,7 @@ import {
 import { none, isSome } from "./option";
 import { toPausableScheduler } from "./scheduler";
 import { SchedulerLike } from "./internal/scheduler/interfaces";
+import { returns } from "./functions";
 
 export const enum FlowMode {
   Resume = 1,
@@ -79,7 +80,7 @@ export const generate = <T>(
 ): FlowableLike<T> => {
   const reducer = (acc: T, ev: FlowMode): ObservableLike<T> =>
     ev === FlowMode.Resume
-      ? generateObs(generator, () => acc, delay)
+      ? generateObs(generator, returns(acc), delay)
       : emptyObs();
 
   const op = compose(

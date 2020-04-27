@@ -2,6 +2,7 @@ import { EnumeratorLike } from "./enumerable.ts";
 import { Option, none } from "./option.ts";
 import { Operator, compose, pipe } from "./pipe.ts";
 import { __DEV__ } from "./internal/env.ts";
+import { returns } from "./functions.ts";
 
 export type CharCode = number;
 
@@ -302,10 +303,7 @@ export const sepBy1 = <T>(
 export const sepBy = <T>(
   separator: Parser<unknown>,
 ): Operator<Parser<T>, Parser<readonly T[]>> =>
-  compose(
-    sepBy1(separator),
-    orDefault<readonly T[]>(() => []),
-  );
+  compose(sepBy1(separator), orDefault<readonly T[]>(returns([])));
 
 export const string = (str: string): Parser<string> => charStream => {
   charStream.move();

@@ -1,13 +1,12 @@
-import { lift } from "@reactive-js/core/dist/js/streamable";
+import { scan } from "@reactive-js/core/dist/js/streamable";
 import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
 import { useStreamable } from "../../hooks";
-import { scan } from "@reactive-js/core/dist/js/observable";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { createElement, useMemo, ReactElement } from "react";
 import {
   StateUpdater,
   StateStoreLike,
 } from "@reactive-js/core/dist/js/stateStore";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
 export type RelativeURI = {
   readonly hash: string;
@@ -59,15 +58,10 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
 
   const pairifiedLocation = useMemo(
     () =>
-      pipe(
-        location,
-        lift(
-          scan(pairify, (): [Option<RelativeURI>, RelativeURI] => [
-            none,
-            empty,
-          ]),
-        ),
-      ),
+      scan(
+        pairify,
+        returns<[Option<RelativeURI>, RelativeURI]>([none, empty]),
+      )(location),
     [location],
   );
 

@@ -1,6 +1,5 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import { FlowMode, FlowEvent } from "@reactive-js/core/dist/js/flowable";
 import { sink } from "@reactive-js/core/dist/js/streamable";
 import {
   writeHttpResponseHeaders,
@@ -26,108 +25,20 @@ import {
   subscribe,
   empty,
   compute,
-  StreamLike,
 } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { AbstractDisposable } from "@reactive-js/core/dist/js/disposable";
+import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import { isSome } from "@reactive-js/core/dist/js/option";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
-class RequestBody extends AbstractDisposable implements BufferFlowableLike {
-  private consumed = false;
-
-  constructor(readonly req: IncomingMessage) {
-    super();
-
-    this.add(_ => {
-      req.removeAllListeners();
-
-      // Calling destory can result in onError being called
-      // if we don't catch the error, it crashes the process.
-      // This kind of sucks, but its the best we can do;
-      req.once("error", () => {});
-      req.once("close", () => {
-        req.removeAllListeners();
-      });
-      req.destroy();
-    });
-
-    const onError = (cause: any) => {
-      this.dispose({ cause });
-    };
-    req.on("error", onError);
-  }
-
-  stream(
-    scheduler: SchedulerLike,
-    replayCount?: number,
-  ): StreamLike<FlowMode, FlowEvent<Buffer>> {
-    if (this.consumed) {
-      throw new Error("Request body already consumed");
-    }
-    this.consumed = true;
-    const sink = createBufferFlowableFromReadable(() =>
-      createDisposableNodeStream(this.req),
-    )
-      .stream(scheduler, replayCount)
-      .add(this);
-    this.add(sink);
-    return sink;
-  }
-}
-
-class ResponseBody extends AbstractDisposable
-  implements BufferFlowableSinkLike {
-  private consumed = false;
-
-  constructor(readonly resp: ServerResponse) {
-    super();
-
-    this.add(_ => {
-      resp.removeAllListeners();
-
-      // Calling destory can result in onError being called
-      // if we don't catch the error, it crashes the process.
-      // This kind of sucks, but its the best we can do;
-      resp.once("error", () => {});
-      resp.once("close", () => {
-        resp.removeAllListeners();
-      });
-      resp.destroy();
-    });
-
-    const onError = (cause: any) => {
-      this.dispose({ cause });
-    };
-    resp.on("error", onError);
-  }
-
-  stream(
-    scheduler: SchedulerLike,
-    replayCount?: number,
-  ): StreamLike<FlowEvent<Buffer>, FlowMode> {
-    if (this.consumed) {
-      throw new Error("Response body already consumed");
-    }
-    this.consumed = true;
-    const sink = createBufferFlowableSinkFromWritable(
-      () => createDisposableNodeStream(this.resp),
-      true,
-    )
-      .stream(scheduler, replayCount)
-      .add(this);
-    this.add(sink);
-    return sink;
-  }
-}
-
-const writeResponseMessage = (responseBody: ResponseBody) => (
+const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<BufferFlowableLike>,
 ) => {
-  responseBody.resp.statusCode = response.statusCode;
+  serverResponse.statusCode = response.statusCode;
 
   writeHttpResponseHeaders(response, (header, value) =>
-    responseBody.resp.setHeader(header, value),
+    serverResponse.setHeader(header, value),
   );
 };
 
@@ -159,8 +70,8 @@ export const createHttpRequestListener = (
   const { onError = defaultOnError } = options;
 
   const handleRequest = (
-    requestBody: RequestBody,
-    responseBody: ResponseBody,
+    request: DisposableValueLike<IncomingMessage>,
+    response: DisposableValueLike<ServerResponse>,
   ) => {
     const {
       method,
@@ -168,9 +79,14 @@ export const createHttpRequestListener = (
       headers,
       httpVersionMajor,
       httpVersionMinor,
-    } = requestBody.req;
-    const isTransportSecure =
-      (requestBody.req.socket as any).encrypted ?? false;
+    } = request.value;
+    const isTransportSecure = (request.value.socket as any).encrypted ?? false;
+
+    const requestBody = createBufferFlowableFromReadable(returns(request));
+    const responseBody = createBufferFlowableSinkFromWritable(
+      returns(response),
+      true,
+    );
 
     return pipe(
       () =>
@@ -185,20 +101,18 @@ export const createHttpRequestListener = (
         }),
       compute,
       await_(handler),
-      onNotify(writeResponseMessage(responseBody)),
+      onNotify(writeResponseMessage(response.value)),
       await_(writeResponseBody(responseBody)),
       catchError(onError),
     );
   };
 
   return (req, resp) => {
-    const requestBody = new RequestBody(req as IncomingMessage);
-    const responseBody = new ResponseBody(resp as ServerResponse);
+    const request = createDisposableNodeStream(req as IncomingMessage);
+    const response = createDisposableNodeStream(resp as ServerResponse);
 
-    responseBody.add(
-      pipe(handleRequest(requestBody, responseBody), subscribe(scheduler)).add(
-        requestBody,
-      ),
+    response.add(
+      pipe(handleRequest(request, response), subscribe(scheduler)).add(request),
     );
   };
 };

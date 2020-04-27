@@ -11,6 +11,7 @@
 * ["disposable"](modules/_disposable_.md)
 * ["enumerable"](modules/_enumerable_.md)
 * ["flowable"](modules/_flowable_.md)
+* ["functions"](modules/_functions_.md)
 * ["http"](modules/_http_.md)
 * ["http-client"](modules/_http_client_.md)
 * ["http-server"](modules/_http_server_.md)

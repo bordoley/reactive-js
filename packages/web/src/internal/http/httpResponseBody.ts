@@ -85,15 +85,15 @@ export class HttpResponseBodyImpl extends AbstractDisposable
     body.add(this);
   }
 
-  arrayBuffer(): ObservableLike<ArrayBuffer> {
+  get arrayBuffer(): ObservableLike<ArrayBuffer> {
     return pipe(this.body, await_(bodyToArrayBuffer));
   }
 
-  blob(): ObservableLike<Blob> {
+  get blob(): ObservableLike<Blob> {
     return pipe(this.body, await_(bodyToBlob));
   }
 
-  text(): ObservableLike<string> {
+  get text(): ObservableLike<string> {
     return pipe(this.body, await_(bodyToText));
   }
 }

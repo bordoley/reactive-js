@@ -22,6 +22,7 @@
 * [liftReq](_streamable_.md#const-liftreq)
 * [map](_streamable_.md#const-map)
 * [onNotify](_streamable_.md#const-onnotify)
+* [scan](_streamable_.md#const-scan)
 * [sink](_streamable_.md#const-sink)
 
 ## Type aliases
@@ -246,6 +247,45 @@ ___
 Name | Type |
 ------ | ------ |
 `next` | T |
+
+**Returns:** *function*
+
+▸ (`enumerable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+
+___
+
+### `Const` scan
+
+▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initalValue`: function): *function*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **scanner**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initalValue**: *function*
+
+▸ (): *TAcc*
 
 **Returns:** *function*
 

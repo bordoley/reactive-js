@@ -22,7 +22,7 @@ export type HttpWebRequest = HttpRequest<WebRequestBody> & {
 };
 
 export interface WebResponseBodyLike extends DisposableLike {
-  arrayBuffer(): ObservableLike<ArrayBuffer>;
-  blob(): ObservableLike<Blob>;
-  text(): ObservableLike<string>;
+  arrayBuffer: ObservableLike<ArrayBuffer>;
+  blob: ObservableLike<Blob>;
+  text: ObservableLike<string>;
 }

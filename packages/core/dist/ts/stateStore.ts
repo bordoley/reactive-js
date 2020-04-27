@@ -15,6 +15,7 @@ import {
   StreamLike,
 } from "./observable.ts";
 import { pipe } from "./pipe.ts";
+import { returns } from "./functions.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
@@ -55,10 +56,7 @@ export const toStateStore = <T>(
     stream: StreamLike<T, T>,
   ) =>
     pipe(
-      merge(
-        observable,
-        map<T, StateUpdater<T>>(v => _ => v)(stream),
-      ),
+      merge(observable, map<T, StateUpdater<T>>(returns)(stream)),
       scan(stateStoreReducer, initialState),
       distinctUntilChanged(equals),
       onNotify((next: T) => stream.dispatch(next)),

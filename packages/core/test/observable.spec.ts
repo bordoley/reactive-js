@@ -54,6 +54,7 @@ import {
   withLatestFrom,
   zip,
 } from "../src/observable";
+import { returns, incr, alwaysFalse, alwaysTrue } from "../src/functions";
 
 class MockSubscriber<T> extends AbstractSubscriber<T> {
   notify = jest.fn();
@@ -224,8 +225,8 @@ test("contains", () => {
 
   pipe(
     generate(
-      x => x + 1,
-      () => 0,
+      incr,
+      returns<number>(0),
     ),
     contains(1),
     toValue(),
@@ -457,20 +458,20 @@ describe("empty", () => {
 test("every", () => {
   pipe(
     empty(),
-    every(_ => false),
+    every(alwaysFalse),
     toValue(),
     expect,
   ).toBeTruthy();
 
   pipe(
     fromArray([1, 2, 3]),
-    every(_ => true),
+    every(alwaysTrue),
     toValue(),
     expect,
   ).toBeTruthy();
   pipe(
     fromArray([1, 2, 3]),
-    every(_ => false),
+    every(alwaysFalse),
     toValue(),
     expect,
   ).toBeFalsy();
@@ -605,8 +606,8 @@ describe("generate", () => {
   test("without delay", () => {
     pipe(
       generate(
-        i => i + 1,
-        () => 1,
+        incr,
+        returns<number>(1),
       ),
       takeFirst(5),
       toArray(),
@@ -648,8 +649,8 @@ describe("generate", () => {
 
     pipe(
       generate(
-        i => i + 1,
-        () => 1,
+        incr,
+        returns<number>(1),
         5,
       ),
       map(x => [scheduler.now, x]),
@@ -803,21 +804,21 @@ test("none", () => {
   expect(
     pipe(
       empty(),
-      none(_ => false),
+      none(alwaysFalse),
       toValue(),
     ),
   ).toBeTruthy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
-      none(_ => true),
+      none(alwaysTrue),
       toValue(),
     ),
   ).toBeFalsy();
   expect(
     pipe(
       fromArray([1, 2, 3]),
-      none(_ => false),
+      none(alwaysFalse),
       toValue(),
     ),
   ).toBeTruthy();
@@ -1080,8 +1081,8 @@ describe("takeLast", () => {
 test("takeWhile", () => {
   pipe(
     generate(
-      x => x + 1,
-      () => 0,
+      incr,
+      returns<number>(0),
     ),
     takeWhile(x => x < 3),
     toArray(),
@@ -1093,8 +1094,8 @@ describe("throttle", () => {
   test("first", () => {
     const result = pipe(
       generate(
-        x => x + 1,
-        () => 0,
+        incr,
+        returns<number>(0),
         1,
       ),
       takeFirst(100),
@@ -1108,8 +1109,8 @@ describe("throttle", () => {
   test("last", () => {
     const result = pipe(
       generate(
-        x => x + 1,
-        () => 0,
+        incr,
+        returns<number>(0),
         1,
       ),
       takeFirst(200),
@@ -1123,8 +1124,8 @@ describe("throttle", () => {
   test("interval", () => {
     const result = pipe(
       generate(
-        x => x + 1,
-        () => 0,
+        incr,
+        returns<number>(0),
         1,
       ),
       takeFirst(200),
@@ -1234,11 +1235,11 @@ describe("zip", () => {
           fromArray([1, 2]),
           pipe(
             fromArray([1, 2]),
-            map(x => x + 1),
+            map(incr),
           ),
           generate(
-            x => x + 1,
-            () => 3,
+            incr,
+            returns<number>(3),
           ),
         ],
         (x, y, z) => [x, y, z],

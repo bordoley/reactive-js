@@ -11,6 +11,7 @@ import {
   fromIterable,
   generate,
 } from "../src/async-enumerable";
+import { incr, returns } from "../src/functions";
 
 test("reduce", () => {
   const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
@@ -22,7 +23,7 @@ test("reduce", () => {
         type: ReducerRequestType.Continue,
         acc: acc + next,
       }),
-      () => 0,
+      returns<number>(0),
     ),
     toValue(),
     expect,
@@ -42,7 +43,7 @@ test("reduce", () => {
               acc: acc + next,
             },
 
-      () => 0,
+      returns<number>(0),
     ),
     toValue(),
     expect,
@@ -60,7 +61,7 @@ test("reduceAsync", () => {
           type: ReducerRequestType.Continue,
           acc: acc + next,
         }),
-      () => 0,
+      returns<number>(0),
     ),
     toValue(),
     expect,
@@ -81,7 +82,7 @@ test("reduceAsync", () => {
                 acc: acc + next,
               },
         ),
-      () => 0,
+      returns<number>(0),
     ),
     toValue(),
     expect,
@@ -138,8 +139,8 @@ test("fromIterable", () => {
 test("generate", () => {
   const scheduler = createVirtualTimeScheduler();
   const enumerator = generate(
-    x => x + 1,
-    () => 0,
+    incr,
+    returns<number>(0),
   ).stream(scheduler);
 
   const result: number[] = [];

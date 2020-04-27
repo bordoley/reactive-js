@@ -1,5 +1,5 @@
 import { AbstractSchedulerContinuation } from "../../scheduler.ts";
-import { alwaysFalse } from "./functions.ts";
+import { alwaysFalse } from "../../functions.ts";
 import { DispatcherLike, SubscriberLike } from "./interfaces.ts";
 import { isSome } from "../../option.ts";
 import { AbstractDisposable } from "../../disposable.ts";

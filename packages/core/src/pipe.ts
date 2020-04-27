@@ -115,12 +115,17 @@ export function pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op12: Operator<K, L>,
 ): L;
 
+export function pipe(
+  source: unknown,
+  ...operators: Operator<any, unknown>[]
+): unknown;
+
 /**
  * Pipes the source value through a series of unary functions.
  */
 export function pipe(
   source: unknown,
-  ...operators: Array<Operator<unknown, unknown>>
+  ...operators: Operator<unknown, unknown>[]
 ): unknown {
   return operators.reduce((acc, next) => next(acc), source);
 }
