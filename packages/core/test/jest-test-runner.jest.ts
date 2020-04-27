@@ -1,6 +1,7 @@
 import { TestGroup, TestGroupType } from "../src/testing";
 import { tests as collectionTests } from "./collections.test";
 import { tests as enumerableTests } from "./enumerable.test";
+import { tests as parserCombinatorTest } from "./parser-combinators.test";
 import { tests as streamableTests } from "./streamable.test";
 
 const toJestTest = (testGroup: TestGroup) => {
@@ -18,4 +19,5 @@ const toJestTest = (testGroup: TestGroup) => {
 
 toJestTest(collectionTests);
 toJestTest(enumerableTests);
+toJestTest(parserCombinatorTest);
 toJestTest(streamableTests);
