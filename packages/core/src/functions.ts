@@ -12,3 +12,4 @@ export const incr = (x: number) => x + 1;
 
 export const decr = (x: number) => x
 
+export const referenceEquals = <T>(a: T, b: T) => a === b;
