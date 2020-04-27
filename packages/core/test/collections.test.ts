@@ -1,3 +1,8 @@
+import {
+  test,
+  describe,
+  expectArraysEqual,
+} from "../src/testing";
 import { createPriorityQueue } from "../src/collections";
 
 const compare = (a: number, b: number): number => a - b;
@@ -24,7 +29,7 @@ const makeShuffledArray = (n: number) => {
   return result;
 };
 
-describe("priority queue", () => {
+export const tests = describe("priority queue",
   test("push", () => {
     const queue = createPriorityQueue(compare);
     const shuffledArray = makeShuffledArray(100);
@@ -37,6 +42,6 @@ describe("priority queue", () => {
       acc.push(queue.pop());
     }
 
-    expect(acc).toEqual(makeSortedArray(100));
-  });
-});
+    expectArraysEqual(acc, makeSortedArray(100));
+  })
+);
