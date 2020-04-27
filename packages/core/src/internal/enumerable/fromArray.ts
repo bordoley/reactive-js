@@ -34,3 +34,6 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
 
 export const fromArray = <T>(values: readonly T[]): EnumerableLike<T> =>
   new ArrayEnumerable(values);
+
+const _empty = fromArray([]);
+export const empty = <T>(): EnumerableLike<T> => _empty;

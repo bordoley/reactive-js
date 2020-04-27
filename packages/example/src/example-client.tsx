@@ -51,7 +51,8 @@ import { returns, incr } from "@reactive-js/core/dist/js/functions";
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<Location>) => () => uriUpdater(updater);
+  const liftUpdater = (updater: StateUpdater<Location>) => () =>
+    uriUpdater(updater);
 
   const goToPath = (pathname: string) =>
     liftUpdater(state => ({ ...state, pathname }));

@@ -55,10 +55,7 @@ test("mapTo", () => {
 test("optional", () => {
   const parser = concat(
     string("ab"),
-    pipe(
-      optional(string("cd")),
-      orCompute(returns("ef")),
-    ),
+    pipe(optional(string("cd")), orCompute(returns("ef"))),
     pEof,
   );
 
