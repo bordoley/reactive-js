@@ -273,10 +273,7 @@ export const optional = <T>(
 export const orCompute = <T>(
   compute: () => T,
 ): Operator<Parser<Option<T>>, Parser<T>> =>
-  compose(
-    optional,
-    map(orComputeOption(compute)),
-  );
+  compose(optional, map(orComputeOption(compute)));
 
 export const sepBy1 = <T>(
   separator: Parser<unknown>,
