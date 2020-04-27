@@ -17,7 +17,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "../../parser-combinators.ts";
+} from "../../parserCombinators.ts";
 import { pipe } from "../../functions.ts";
 import { HttpHeaders } from "./interfaces.ts";
 

@@ -8,7 +8,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "../../parser-combinators.ts";
+} from "../../parserCombinators.ts";
 import { pipe } from "../../functions.ts";
 import { ASCII } from "./httpGrammar.ts";
 import { EntityTag } from "./interfaces.ts";

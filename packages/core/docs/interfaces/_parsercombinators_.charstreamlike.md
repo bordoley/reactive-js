@@ -1,10 +1,10 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["parser-combinators"](../modules/_parser_combinators_.md) › [CharStreamLike](_parser_combinators_.charstreamlike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["parserCombinators"](../modules/_parsercombinators_.md) › [CharStreamLike](_parsercombinators_.charstreamlike.md)
 
 # Interface: CharStreamLike
 
 ## Hierarchy
 
-* [EnumeratorLike](_enumerable_.enumeratorlike.md)‹[CharCode](../modules/_parser_combinators_.md#charcode)›
+* [EnumeratorLike](_enumerable_.enumeratorlike.md)‹[CharCode](../modules/_parsercombinators_.md#charcode)›
 
   ↳ **CharStreamLike**
 
@@ -12,20 +12,20 @@
 
 ### Properties
 
-* [current](_parser_combinators_.charstreamlike.md#current)
-* [hasCurrent](_parser_combinators_.charstreamlike.md#hascurrent)
-* [index](_parser_combinators_.charstreamlike.md#index)
-* [src](_parser_combinators_.charstreamlike.md#src)
+* [current](_parsercombinators_.charstreamlike.md#current)
+* [hasCurrent](_parsercombinators_.charstreamlike.md#hascurrent)
+* [index](_parsercombinators_.charstreamlike.md#index)
+* [src](_parsercombinators_.charstreamlike.md#src)
 
 ### Methods
 
-* [move](_parser_combinators_.charstreamlike.md#move)
+* [move](_parsercombinators_.charstreamlike.md#move)
 
 ## Properties
 
 ###  current
 
-• **current**: *[CharCode](../modules/_parser_combinators_.md#charcode)*
+• **current**: *[CharCode](../modules/_parsercombinators_.md#charcode)*
 
 *Inherited from [EnumeratorLike](_enumerable_.enumeratorlike.md).[current](_enumerable_.enumeratorlike.md#current)*
 

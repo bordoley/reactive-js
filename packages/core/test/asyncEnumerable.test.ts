@@ -11,7 +11,7 @@ import {
   fromArray,
   fromIterable,
   generate,
-} from "../src/async-enumerable";
+} from "../src/asyncEnumerable";
 
 export const tests = describe(
   "async-enumerable",

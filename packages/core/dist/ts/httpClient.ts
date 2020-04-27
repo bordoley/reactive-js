@@ -74,7 +74,9 @@ export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
 ) => (
   httpClient: HttpClient<HttpClientRequest<TReq>, TResp>,
 ): HttpClient<HttpClientRequest<TReq>, TResp> => {
-  const sendRequest = (request: HttpClientRequest<TReq>): ObservableLike<HttpClientRequestStatus<TResp>> =>
+  const sendRequest = (
+    request: HttpClientRequest<TReq>,
+  ): ObservableLike<HttpClientRequestStatus<TResp>> =>
     pipe(
       ofValue(request),
       map(encodeHttpRequest),

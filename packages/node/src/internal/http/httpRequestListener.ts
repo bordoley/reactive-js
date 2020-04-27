@@ -9,7 +9,7 @@ import {
   HttpResponse,
   HttpServerRequest,
 } from "@reactive-js/core/dist/js/http";
-import { HttpServer } from "@reactive-js/core/dist/js/http-server";
+import { HttpServer } from "@reactive-js/core/dist/js/httpServer";
 import {
   createBufferFlowableFromReadable,
   BufferFlowableLike,

@@ -5,7 +5,7 @@ import {
   pEquals,
   parseWith,
   parseWithOrThrow,
-} from "../../parser-combinators";
+} from "../../parserCombinators";
 import {
   pToken,
   pTokenOrQuotedString,

@@ -24,7 +24,7 @@
 
 ▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹[FlowEvent](../modules/_flowable_.md#flowevent)‹T›, [FlowMode](../enums/_flowable_.flowmode.md)›*
 
-*Inherited from [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md).[stream](_async_enumerable_.asyncenumerablelike.md#stream)*
+*Inherited from [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md).[stream](_asyncenumerable_.asyncenumerablelike.md#stream)*
 
 **Parameters:**
 

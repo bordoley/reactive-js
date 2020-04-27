@@ -43,7 +43,7 @@ import React, {
 } from "react";
 import { default as ReactDOM } from "react-dom";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
-import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
+import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/httpClient";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
 import {
   pipe,

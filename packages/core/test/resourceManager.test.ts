@@ -1,7 +1,7 @@
 import { test, describe } from "../src/testing";
 import { createDisposableValue, disposed } from "../src/disposable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { createResourceManager } from "../src/resource-manager";
+import { createResourceManager } from "../src/resourceManager";
 import { onNotify, subscribe, fromScheduledValues } from "../src/observable";
 import { pipe } from "../src/functions";
 

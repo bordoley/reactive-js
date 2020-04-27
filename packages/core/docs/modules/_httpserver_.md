@@ -1,17 +1,17 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["http-server"](_http_server_.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["httpServer"](_httpserver_.md)
 
-# Module: "http-server"
+# Module: "httpServer"
 
 ## Index
 
 ### Type aliases
 
-* [HttpRoutedRequest](_http_server_.md#httproutedrequest)
-* [HttpServer](_http_server_.md#httpserver)
+* [HttpRoutedRequest](_httpserver_.md#httproutedrequest)
+* [HttpServer](_httpserver_.md#httpserver)
 
 ### Functions
 
-* [createRouter](_http_server_.md#const-createrouter)
+* [createRouter](_httpserver_.md#const-createrouter)
 
 ## Type aliases
 

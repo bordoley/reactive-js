@@ -1,5 +1,5 @@
 import { isNone, isSome, none, Option } from "../../option.ts";
-import { parseWith, pAsterisk, or, mapTo } from "../../parser-combinators.ts";
+import { parseWith, pAsterisk, or, mapTo } from "../../parserCombinators.ts";
 import { pipe } from "../../functions.ts";
 import {
   entityTagToString,

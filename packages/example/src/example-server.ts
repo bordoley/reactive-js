@@ -18,8 +18,9 @@ import {
 import {
   HttpClientRequestStatusType,
   withDefaultBehaviors,
-} from "@reactive-js/core/dist/js/http-client";
-import { HttpServer } from "@reactive-js/core/dist/js/http-server";
+} from "@reactive-js/core/dist/js/httpClient";
+import { HttpServer, createRouter,
+  HttpRoutedRequest, } from "@reactive-js/core/dist/js/httpServer";
 import {
   createHttpRequestListener,
   createHttpClient,
@@ -29,10 +30,6 @@ import {
   encodeCharsetHttpResponse,
   encodeCharsetHttpRequest,
 } from "@reactive-js/node/dist/js/http";
-import {
-  createRouter,
-  HttpRoutedRequest,
-} from "@reactive-js/core/dist/js/http-server";
 import {
   BufferFlowableLike,
   encode,

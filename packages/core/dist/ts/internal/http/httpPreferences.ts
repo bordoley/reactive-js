@@ -1,5 +1,5 @@
 import { isSome, Option, none } from "../../option.ts";
-import { concat, map, parseWith } from "../../parser-combinators.ts";
+import { concat, map, parseWith } from "../../parserCombinators.ts";
 import { pipe } from "../../functions.ts";
 import { pToken, pParams, httpList } from "./httpGrammar.ts";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders.ts";

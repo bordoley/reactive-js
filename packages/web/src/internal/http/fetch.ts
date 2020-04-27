@@ -21,7 +21,7 @@ import {
   HttpClientRequestStatusType,
   HttpClient,
   HttpClientRequestStatus,
-} from "@reactive-js/core/dist/js/http-client";
+} from "@reactive-js/core/dist/js/httpClient";
 import { pipe } from "@reactive-js/core/dist/js/functions";
 
 const loadBodyContent = async (

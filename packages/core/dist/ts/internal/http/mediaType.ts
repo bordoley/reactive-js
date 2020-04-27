@@ -3,7 +3,7 @@ import {
   Parser,
   parseWith,
   parseWithOrThrow,
-} from "../../parser-combinators.ts";
+} from "../../parserCombinators.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 import { MediaType } from "./interfaces.ts";
 
