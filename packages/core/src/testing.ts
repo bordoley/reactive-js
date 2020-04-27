@@ -51,7 +51,7 @@ export const expectToThrow = (f: () => void) => {
   }
 };
 
- const expectArraysEqual = <T>(a: readonly T[], b: readonly T[]) => {
+const expectArraysEqual = <T>(a: readonly T[], b: readonly T[]) => {
   if (a.length !== b.length || !a.every((v, i) => b[i] === v)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
@@ -88,14 +88,15 @@ export const expectNone = (v: Option<unknown>) => {
 };
 
 type MockFunction = {
-  (...v: any[]): void;
-  calls: any[][];
+  (...v: any[]): any;
+  readonly calls: any[][];
 };
 
-export const mockFn = (): MockFunction => {
+export const mockFn = (retval?: any): MockFunction => {
   const calls: any[][] = [];
   const cb = (...args: any[]) => {
     calls.push(args);
+    return retval;
   };
   cb.calls = calls;
 
@@ -103,19 +104,11 @@ export const mockFn = (): MockFunction => {
 };
 
 export const expectToHaveBeenCalledTimes = (
-  fn: MockFunction,
   times: number,
-) => {
-  if (fn.calls.length === times) {
+) => (fn: MockFunction) => {
+  if (fn.calls.length !== times) {
     throw new Error(
       `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
     );
   }
 };
-
-describe(
-  "observable",
-  test("dfjkdlsfj", () => {}),
-  test("", () => {}),
-  test("", () => {}),
-);

@@ -20,7 +20,9 @@ class MapEnumerator<TA, TB> extends AbstractDisposable
     this.delegate.move();
     const hasCurrent = this.delegate.hasCurrent;
     this.hasCurrent = hasCurrent;
-    this.current = this.mapper(this.delegate.current);
+    if (this.hasCurrent) {
+      this.current = this.mapper(this.delegate.current);
+    }
     return hasCurrent;
   }
 }

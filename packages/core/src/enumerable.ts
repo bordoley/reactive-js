@@ -10,6 +10,7 @@ export {
 } from "./internal/enumerable/interfaces";
 export { lift } from "./internal/enumerable/lift";
 export { keep, keepType } from "./internal/enumerable/keep";
+export { map } from "./internal/enumerable/map";
 export { reduce } from "./internal/enumerable/reduce";
 export { toArray } from "./internal/enumerable/toArray";
 export { toIterable } from "./internal/enumerable/toIterable";
