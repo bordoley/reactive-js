@@ -38,6 +38,12 @@ export const test = (name: string, f: () => void): Test => ({
   f,
 });
 
+export const testAsync = (name: string, f: () => Promise<void>): TestAsync => ({
+  type: TestGroupType.TestAsync,
+  name,
+  f,
+});
+
 export const expectToThrow = (f: () => void) => {
   let didThrow = false;
   try {
