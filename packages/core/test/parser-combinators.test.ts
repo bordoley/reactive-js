@@ -1,8 +1,7 @@
 import {
   test,
   describe,
-  expectArraysEqual,
-  expectEqual,
+  expectToEqual,
   expectToThrow,
 } from "../src/testing";
 import { none } from "../src/option";
@@ -33,16 +32,12 @@ export const tests = describe(
 
   test("many", () => {
     const parser = pipe(string("abc"), many());
-    const result = pipe("abcabcabcabc", parseWithOrThrow(parser));
-
-    expectArraysEqual(result, ["abc", "abc", "abc", "abc"]);
+    pipe("abcabcabcabc", parseWithOrThrow(parser), expectToEqual(["abc", "abc", "abc", "abc"]));
   }),
 
   test("many", () => {
     const parser = pipe(string("abc"), many());
-    const result = pipe("abcabcabcabc", parseWithOrThrow(parser));
-
-    expectArraysEqual(result, ["abc", "abc", "abc", "abc"]);
+    pipe("abcabcabcabc", parseWithOrThrow(parser), expectToEqual(["abc", "abc", "abc", "abc"]));
   }),
 
   test("manySatisy", () => {
@@ -50,9 +45,7 @@ export const tests = describe(
       manySatisfy()(pForwardSlash),
       manySatisfy()(char("z")),
     );
-    const result = pipe("////zzz", parseWithOrThrow(parser));
-
-    expectArraysEqual(result, ["////", "zzz"]);
+    pipe("////zzz", parseWithOrThrow(parser), expectToEqual(["////", "zzz"]));
   }),
 
   test("map", () => {
@@ -61,14 +54,12 @@ export const tests = describe(
       map((x: string) => x + "cd"),
     );
 
-    const result = pipe("ab", parseWithOrThrow(parser));
-    expectEqual(result, "abcd");
+    pipe("ab", parseWithOrThrow(parser), expectToEqual("abcd"));
   }),
 
   test("mapTo", () => {
     const parser = pipe(string("ab"), mapTo("xyz"));
-    const result = pipe("ab", parseWithOrThrow(parser));
-    expectEqual(result, "xyz");
+    pipe("ab", parseWithOrThrow(parser), expectToEqual("xyz"));
   }),
 
   test("optional", () => {
@@ -78,35 +69,25 @@ export const tests = describe(
       pEof,
     );
 
-    const result1 = pipe("abcd", parseWithOrThrow(parser));
-    expectArraysEqual(result1, ["ab", "cd", none]);
-
-    const result2 = pipe("ab", parseWithOrThrow(parser));
-    expectArraysEqual(result2, ["ab", "ef", none]);
+    pipe("abcd", parseWithOrThrow(parser), expectToEqual(["ab", "cd", none]));
+    pipe("ab", parseWithOrThrow(parser)), expectToEqual(["ab", "ef", none]);
   }),
 
   test("or", () => {
     const parser = pipe(string("ab"), or(string("cd")));
 
-    const result1 = pipe("ab", parseWithOrThrow(parser));
-    expectEqual(result1, "ab");
-
-    const result2 = pipe("cd", parseWithOrThrow(parser));
-    expectEqual(result2, "cd");
+    pipe("ab", parseWithOrThrow(parser), expectToEqual("ab"));
+    pipe("cd", parseWithOrThrow(parser), expectToEqual("cd"));
   }),
 
   test("sepBy", () => {
     const parser = pipe(string("ab"), sepBy(pColon));
-    const result = pipe("ab:ab:ab:ab", parseWithOrThrow(parser));
-
-    expectArraysEqual(result, ["ab", "ab", "ab", "ab"]);
+    pipe("ab:ab:ab:ab", parseWithOrThrow(parser), expectToEqual(["ab", "ab", "ab", "ab"]));
   }),
 
   test("string", () => {
     const parser = concat(string("ab"), string("cd"));
-    const result = pipe("abcd", parseWithOrThrow(parser));
-
-    expectArraysEqual(result, ["ab", "cd"]);
+    pipe("abcd", parseWithOrThrow(parser), expectToEqual(["ab", "cd"]));
   }),
 
   test("throwParseError", () => {

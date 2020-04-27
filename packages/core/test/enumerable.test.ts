@@ -1,9 +1,8 @@
 import {
   test,
   describe,
-  expectEqual,
+  expectToEqual,
   expectNone,
-  expectArraysEqual,
 } from "../src/testing";
 import { fromArray, first, empty, keep, toArray } from "../src/enumerable";
 import { pipe } from "../src/pipe";
@@ -13,20 +12,18 @@ export const tests = describe(
   describe(
     "first",
     test("when enumerable is not empty", () => {
-      const v = pipe(fromArray([1, 2, 3]), first);
-      expectEqual(v, 1);
+      pipe(fromArray([1, 2, 3]), first, expectToEqual(1));
     }),
     test("when enumerable is empty", () => {
-      const v = pipe(empty(), first);
-      expectNone(v);
+      pipe(empty(), first, expectNone);
     }),
   ),
   test("keep", () => {
-    const result = pipe(
+    pipe(
       fromArray([4, 8, 10, 7]),
       keep(x => x > 5),
       toArray,
-    ) as number[];
-    expectArraysEqual(result, [8, 10, 7]);
+      expectToEqual([8, 10, 7]),
+    );
   }),
 );

@@ -1,4 +1,4 @@
-import { test, describe, expectArraysEqual } from "../src/testing";
+import { test, describe, expectToEqual } from "../src/testing";
 import { subscribe, onNotify } from "../src/observable";
 import { pipe } from "../src/pipe";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -30,7 +30,7 @@ export const tests = describe(
 
     scheduler.run();
 
-    expectArraysEqual(result, ["110", "120", "130"]);
+    pipe(result, expectToEqual(["110", "120", "130"]));
   }),
   test("liftReq", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -56,6 +56,6 @@ export const tests = describe(
 
     scheduler.run();
 
-    expectArraysEqual(result, [100, 101, 102]);
+    pipe(result, expectToEqual([100, 101, 102]));
   }),
 );

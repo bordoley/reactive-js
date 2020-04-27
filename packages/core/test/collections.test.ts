@@ -1,5 +1,6 @@
-import { test, describe, expectArraysEqual } from "../src/testing";
+import { test, describe, expectToEqual } from "../src/testing";
 import { createPriorityQueue } from "../src/collections";
+import { pipe } from "../src/pipe";
 
 const compare = (a: number, b: number): number => a - b;
 
@@ -39,6 +40,6 @@ export const tests = describe(
       acc.push(queue.pop());
     }
 
-    expectArraysEqual(acc, makeSortedArray(100));
+    pipe(acc, expectToEqual(makeSortedArray(100)));
   }),
 );
