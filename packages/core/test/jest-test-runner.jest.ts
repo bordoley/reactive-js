@@ -3,8 +3,10 @@ import { tests as collectionTests } from "./collections.test";
 import { tests as disposableTests } from "./disposable.test";
 import { tests as enumerableTests } from "./enumerable.test";
 import { tests as httpTests } from "./http.test";
-import { tests as parserCombinatorTest } from "./parser-combinators.test";
+import { tests as parserCombinatorTests } from "./parser-combinators.test";
+import { tests as resourceManagerTests } from "./resource-manager.test";
 import { tests as streamableTests } from "./streamable.test";
+
 
 const toJestTest = (testGroup: TestGroup) => {
   if (testGroup.type === TestGroupType.Describe) {
@@ -23,5 +25,6 @@ toJestTest(collectionTests);
 toJestTest(disposableTests);
 toJestTest(enumerableTests);
 toJestTest(httpTests);
-toJestTest(parserCombinatorTest);
+toJestTest(parserCombinatorTests);
+toJestTest(resourceManagerTests);
 toJestTest(streamableTests);
