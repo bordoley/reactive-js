@@ -1,8 +1,7 @@
 import { EnumeratorLike } from "./enumerable.ts";
 import { Option, none, orCompute as orComputeOption } from "./option.ts";
-import { Operator, compose, pipe } from "./pipe.ts";
+import { Operator, compose, pipe, returns } from "./functions.ts";
 import { __DEV__ } from "./internal/env.ts";
-import { returns } from "./functions.ts";
 
 export type CharCode = number;
 
@@ -273,10 +272,7 @@ export const optional = <T>(
 export const orCompute = <T>(
   compute: () => T,
 ): Operator<Parser<Option<T>>, Parser<T>> =>
-  compose(
-    optional,
-    map(orComputeOption(compute)),
-  );
+  compose(optional, map(orComputeOption(compute)));
 
 export const sepBy1 = <T>(
   separator: Parser<unknown>,

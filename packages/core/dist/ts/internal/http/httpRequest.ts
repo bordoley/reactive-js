@@ -1,5 +1,5 @@
 import { isNone, isSome, none } from "../../option.ts";
-import { Operator } from "../../pipe.ts";
+import { Operator } from "../../functions.ts";
 import {
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,

@@ -1,4 +1,4 @@
-import { Operator } from "../../pipe.ts";
+import { Operator } from "../../functions.ts";
 
 import { EnumerableLike } from "./interfaces.ts";
 

@@ -5,7 +5,7 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,

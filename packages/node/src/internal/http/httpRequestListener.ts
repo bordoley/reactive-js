@@ -26,11 +26,10 @@ import {
   empty,
   compute,
 } from "@reactive-js/core/dist/js/observable";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe, returns } from "@reactive-js/core/dist/js/functions";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import { returns } from "@reactive-js/core/dist/js/functions";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<BufferFlowableLike>,

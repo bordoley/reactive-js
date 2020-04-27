@@ -3,7 +3,7 @@ import {
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { zip } from "./zip.ts";
 import { createSubject } from "./createSubject.ts";
 import { concatAll, concatMap } from "./mergeAll.ts";

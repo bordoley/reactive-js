@@ -1,5 +1,5 @@
 import { isSome, none } from "../../option";
-import { Operator } from "../../pipe";
+import { Operator } from "../../functions";
 import {
   HttpStatusCode,
   HttpHeaders,

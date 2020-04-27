@@ -5,7 +5,7 @@ import {
   FlowEventType,
   FlowMode,
 } from "@reactive-js/core/dist/js/flowable";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe } from "@reactive-js/core/dist/js/functions";
 import {
   toPromise,
   subscribe,

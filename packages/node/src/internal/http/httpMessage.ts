@@ -7,7 +7,7 @@ import {
 } from "@reactive-js/core/dist/js/http";
 import { BufferFlowableLike, transform } from "../../streams";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import { pipe, Operator } from "@reactive-js/core/dist/js/pipe";
+import { pipe, Operator } from "@reactive-js/core/dist/js/functions";
 import { createEncodingDecompressTransform } from "./httpContentEncoding";
 import { ofValue } from "@reactive-js/core/dist/js/flowable";
 

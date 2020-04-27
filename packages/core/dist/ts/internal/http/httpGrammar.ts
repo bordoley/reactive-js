@@ -18,7 +18,7 @@ import {
   isParseError,
   string,
 } from "../../parser-combinators.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { HttpHeaders } from "./interfaces.ts";
 
 /** @ignore */

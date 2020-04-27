@@ -4,7 +4,7 @@ import {
   EnumerableOperator,
   EnumeratorOperator,
 } from "./interfaces";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(

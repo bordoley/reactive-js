@@ -22,7 +22,7 @@ import {
   StreamLike,
   takeWhile,
 } from "./observable.ts";
-import { compose, pipe, Operator } from "./pipe.ts";
+import { compose, pipe, Operator } from "./functions.ts";
 import { SchedulerLike } from "./scheduler.ts";
 import { fromIterable as fromIterableEnumerable } from "./enumerable.ts";
 import { returns } from "./functions.ts";

@@ -7,7 +7,7 @@ import {
   SubscriberLike,
 } from "./interfaces.ts";
 import { createSubject } from "./createSubject.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 

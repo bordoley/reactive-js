@@ -4,7 +4,7 @@ import {
   Exception,
 } from "../../disposable";
 import { none, Option, isNone, isSome } from "../../option";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import {
   ObservableLike,
   ObservableOperator,

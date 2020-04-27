@@ -937,7 +937,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: function): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: function): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
@@ -962,7 +962,7 @@ Name | Type |
 
 ▸ (): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
+**Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 ___
 
@@ -1560,7 +1560,7 @@ ___
 
 ### `Const` publish
 
-▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -1575,7 +1575,7 @@ Name | Type | Default | Description |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source observable. |
 `replayCount` | number | 0 | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to.  |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 ___
 
@@ -1885,7 +1885,7 @@ ___
 
 ### `Const` subscribe
 
-▸ **subscribe**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
+▸ **subscribe**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 Safely subscribes to an `ObservableLike` with a `SubscriberLike` instance
 using the provided scheduler. The returned `DisposableLike`
@@ -1901,7 +1901,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The SchedulerLike instance that should be used by the source to notify it's subscriber.  |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
+**Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 ___
 
@@ -2214,7 +2214,7 @@ ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
+▸ **toPromise**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
 
 Returns a Promise that completes with the last value produced by
 the source.
@@ -2229,7 +2229,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The scheduler upon which to subscribe to the source.  |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
 
 ___
 

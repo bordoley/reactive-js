@@ -26,7 +26,7 @@ export const run = (m: number, n: number) => {
 
   suite
     .add("reactive-js", () => {
-      const { pipe } = require("@reactive-js/core/dist/js/pipe");
+      const { pipe } = require("@reactive-js/core/dist/js/functions");
       const {
         fromArray,
         merge,

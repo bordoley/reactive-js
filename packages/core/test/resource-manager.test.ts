@@ -3,7 +3,7 @@ import { createDisposableValue, disposed } from "../src/disposable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { createResourceManager } from "../src/resource-manager";
 import { onNotify, subscribe, fromScheduledValues } from "../src/observable";
-import { pipe } from "../src/pipe";
+import { pipe } from "../src/functions";
 
 export const tests = describe(
   "resource manager",

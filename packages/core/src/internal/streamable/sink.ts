@@ -1,7 +1,7 @@
 import { StreamableLike } from "./interfaces";
 import { ObservableLike, onNotify, using, endWith } from "../../observable";
 import { StreamLike } from "../observable/interfaces";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { subscribe } from "../observable/subscribe";
 import { ignoreElements } from "../observable/ignoreElements";
 import { none } from "../../option";

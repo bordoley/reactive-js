@@ -4,7 +4,7 @@ import {
   Exception,
 } from "../../disposable.ts";
 import { none, Option, isNone, isSome } from "../../option.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import {
   ObservableLike,
   ObservableOperator,

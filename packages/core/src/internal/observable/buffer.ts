@@ -1,6 +1,6 @@
 import { createSerialDisposable } from "../../disposable";
 import { isNone, isSome, none } from "../../option";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { ofValue } from "./ofValue";
 import { lift } from "./lift";
 import { never } from "./never";

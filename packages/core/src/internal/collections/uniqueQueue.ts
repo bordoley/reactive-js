@@ -1,5 +1,5 @@
 import { QueueLike } from "./interfaces";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { fromIterable, first, EnumeratorLike } from "../../enumerable";
 import { isSome } from "../../option";
 

@@ -14,7 +14,7 @@ import {
   onNotify,
 } from "./observable";
 import { isSome, isNone, none } from "./option";
-import { pipe } from "./pipe";
+import { pipe } from "./functions";
 import { SchedulerLike } from "./scheduler";
 
 const tryDispatch = <TResource extends DisposableLike>(

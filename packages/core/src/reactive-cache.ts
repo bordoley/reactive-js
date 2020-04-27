@@ -7,14 +7,13 @@ import {
   onSubscribe,
 } from "./observable";
 import { Option, isNone, isSome } from "./option";
-import { pipe } from "./pipe";
 import {
   SchedulerLike,
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler";
 import { SubscriberLike } from "./internal/observable/interfaces";
-import { alwaysFalse } from "./functions";
+import { pipe, alwaysFalse } from "./functions";
 
 class ReactiveCacheSchedulerContinuation<
   T

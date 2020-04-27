@@ -3,7 +3,7 @@ import {
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { zip } from "./zip";
 import { createSubject } from "./createSubject";
 import { concatAll, concatMap } from "./mergeAll";

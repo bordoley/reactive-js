@@ -1,6 +1,6 @@
 import { Exception } from "../../disposable.ts";
 import { none, Option } from "../../option.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,

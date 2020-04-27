@@ -4,7 +4,7 @@ import {
   SubscriberLike,
   SubscriberOperator,
 } from "./interfaces.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(

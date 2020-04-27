@@ -1,5 +1,5 @@
 import { isNone, isSome, none } from "../../option";
-import { Operator } from "../../pipe";
+import { Operator } from "../../functions";
 import {
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,

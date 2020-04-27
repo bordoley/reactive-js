@@ -558,7 +558,7 @@ ___
 
 ### `Const` followedBy
 
-▸ **followedBy**<**T**>(`other`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹T››*
+▸ **followedBy**<**T**>(`other`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -570,13 +570,13 @@ Name | Type |
 ------ | ------ |
 `other` | [Parser](_parser_combinators_.md#parser)‹unknown› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹T››*
 
 ___
 
 ### `Const` many
 
-▸ **many**<**T**>(`options`: object): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+▸ **many**<**T**>(`options`: object): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -591,13 +591,13 @@ Name | Type |
 `max?` | number |
 `min?` | number |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 ___
 
 ### `Const` manyIgnore
 
-▸ **manyIgnore**<**T**>(`options`: object): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹void››*
+▸ **manyIgnore**<**T**>(`options`: object): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹void››*
 
 **Type parameters:**
 
@@ -612,13 +612,13 @@ Name | Type |
 `max?` | number |
 `min?` | number |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹void››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹void››*
 
 ___
 
 ### `Const` manySatisfy
 
-▸ **manySatisfy**(`options`: object): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[CharCode](_parser_combinators_.md#charcode)›, [Parser](_parser_combinators_.md#parser)‹string››*
+▸ **manySatisfy**(`options`: object): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[CharCode](_parser_combinators_.md#charcode)›, [Parser](_parser_combinators_.md#parser)‹string››*
 
 **Parameters:**
 
@@ -629,13 +629,13 @@ Name | Type |
 `max?` | number |
 `min?` | number |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[CharCode](_parser_combinators_.md#charcode)›, [Parser](_parser_combinators_.md#parser)‹string››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[CharCode](_parser_combinators_.md#charcode)›, [Parser](_parser_combinators_.md#parser)‹string››*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
 
 **Type parameters:**
 
@@ -655,13 +655,13 @@ Name | Type |
 ------ | ------ |
 `result` | TA |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`v`: TB): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
+▸ **mapTo**<**TA**, **TB**>(`v`: TB): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
 
 **Type parameters:**
 
@@ -675,7 +675,7 @@ Name | Type |
 ------ | ------ |
 `v` | TB |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TB››*
 
 ___
 
@@ -699,7 +699,7 @@ ___
 
 ### `Const` or
 
-▸ **or**<**TA**, **TB**>(`otherParse`: [Parser](_parser_combinators_.md#parser)‹TB›): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TA | TB››*
+▸ **or**<**TA**, **TB**>(`otherParse`: [Parser](_parser_combinators_.md#parser)‹TB›): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TA | TB››*
 
 **Type parameters:**
 
@@ -713,13 +713,13 @@ Name | Type |
 ------ | ------ |
 `otherParse` | [Parser](_parser_combinators_.md#parser)‹TB› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TA | TB››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹TA›, [Parser](_parser_combinators_.md#parser)‹TA | TB››*
 
 ___
 
 ### `Const` orCompute
 
-▸ **orCompute**<**T**>(`compute`: function): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
+▸ **orCompute**<**T**>(`compute`: function): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -731,7 +731,7 @@ ___
 
 ▸ (): *T*
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
 
 ___
 
@@ -751,7 +751,7 @@ ___
 
 ### `Const` parseWith
 
-▸ **parseWith**<**T**>(`parse`: [Parser](_parser_combinators_.md#parser)‹T›): *[Operator](_pipe_.md#operator)‹string, [Option](_option_.md#option)‹T››*
+▸ **parseWith**<**T**>(`parse`: [Parser](_parser_combinators_.md#parser)‹T›): *[Operator](_functions_.md#operator)‹string, [Option](_option_.md#option)‹T››*
 
 **Type parameters:**
 
@@ -763,13 +763,13 @@ Name | Type |
 ------ | ------ |
 `parse` | [Parser](_parser_combinators_.md#parser)‹T› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹string, [Option](_option_.md#option)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹string, [Option](_option_.md#option)‹T››*
 
 ___
 
 ### `Const` parseWithOrThrow
 
-▸ **parseWithOrThrow**<**T**>(`parser`: [Parser](_parser_combinators_.md#parser)‹T›): *[Operator](_pipe_.md#operator)‹string, T›*
+▸ **parseWithOrThrow**<**T**>(`parser`: [Parser](_parser_combinators_.md#parser)‹T›): *[Operator](_functions_.md#operator)‹string, T›*
 
 **Type parameters:**
 
@@ -781,7 +781,7 @@ Name | Type |
 ------ | ------ |
 `parser` | [Parser](_parser_combinators_.md#parser)‹T› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹string, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹string, T›*
 
 ___
 
@@ -807,7 +807,7 @@ ___
 
 ### `Const` sepBy
 
-▸ **sepBy**<**T**>(`separator`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+▸ **sepBy**<**T**>(`separator`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -819,13 +819,13 @@ Name | Type |
 ------ | ------ |
 `separator` | [Parser](_parser_combinators_.md#parser)‹unknown› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 ___
 
 ### `Const` sepBy1
 
-▸ **sepBy1**<**T**>(`separator`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+▸ **sepBy1**<**T**>(`separator`: [Parser](_parser_combinators_.md#parser)‹unknown›): *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 **Type parameters:**
 
@@ -837,7 +837,7 @@ Name | Type |
 ------ | ------ |
 `separator` | [Parser](_parser_combinators_.md#parser)‹unknown› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹T›, [Parser](_parser_combinators_.md#parser)‹keyof T[]››*
 
 ___
 

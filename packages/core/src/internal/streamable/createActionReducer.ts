@@ -5,9 +5,8 @@ import {
   startWith,
   distinctUntilChanged,
 } from "../../observable";
-import { pipe } from "../../pipe";
+import { pipe, returns } from "../../functions";
 import { createStreamable } from "./streamable";
-import { returns } from "../../functions";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

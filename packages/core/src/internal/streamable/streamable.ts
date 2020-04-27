@@ -12,7 +12,7 @@ import {
   merge,
   using,
 } from "../../observable";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { StreamableOperator } from "./createStream";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {

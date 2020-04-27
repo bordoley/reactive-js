@@ -1,4 +1,4 @@
-import { compose } from "../../pipe.ts";
+import { compose } from "../../functions.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { switchMap } from "./switchAll.ts";
 import { takeFirst } from "./takeFirst.ts";

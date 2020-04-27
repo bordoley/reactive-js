@@ -1,5 +1,5 @@
 import { none, Option } from "../../option.ts";
-import { Operator, pipe } from "../../pipe.ts";
+import { Operator, pipe } from "../../functions.ts";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,

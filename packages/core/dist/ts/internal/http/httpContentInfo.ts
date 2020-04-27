@@ -1,6 +1,6 @@
 import { isNone, none, Option } from "../../option.ts";
 import { parseWith } from "../../parser-combinators.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 import {

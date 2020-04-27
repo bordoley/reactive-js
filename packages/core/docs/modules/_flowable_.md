@@ -37,7 +37,7 @@ ___
 
 ###  FlowableOperator
 
-Ƭ **FlowableOperator**: *[Operator](_pipe_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+Ƭ **FlowableOperator**: *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ## Functions
 
@@ -103,7 +103,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[Operator](_pipe_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: function): *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -123,7 +123,7 @@ Name | Type |
 ------ | ------ |
 `v` | TA |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+**Returns:** *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ___
 

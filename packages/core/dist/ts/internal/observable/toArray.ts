@@ -1,4 +1,4 @@
-import { compose } from "../../pipe.ts";
+import { compose } from "../../functions.ts";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,

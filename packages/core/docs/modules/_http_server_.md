@@ -39,7 +39,7 @@ Name | Type |
 
 ### `Const` createRouter
 
-▸ **createRouter**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: [Operator](_pipe_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[Operator](_pipe_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››*
+▸ **createRouter**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: [Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››*
 
 **Type parameters:**
 
@@ -52,6 +52,6 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `routes` | object |
-`notFoundHandler` | [Operator](_pipe_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
+`notFoundHandler` | [Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››*
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››*

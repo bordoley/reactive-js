@@ -9,7 +9,7 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../../parser-combinators";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { ASCII } from "./httpGrammar";
 import { EntityTag } from "./interfaces";
 

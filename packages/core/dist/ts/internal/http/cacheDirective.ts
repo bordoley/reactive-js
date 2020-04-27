@@ -14,7 +14,7 @@ import {
 } from "./httpGrammar.ts";
 import { isSome } from "../../option.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 
 const pOptionalEquals = optional(pEquals);
 

@@ -14,8 +14,7 @@ import {
   using,
   StreamLike,
 } from "./observable.ts";
-import { pipe } from "./pipe.ts";
-import { returns } from "./functions.ts";
+import { pipe, returns } from "./functions.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;

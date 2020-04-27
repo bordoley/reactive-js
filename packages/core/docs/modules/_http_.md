@@ -207,7 +207,7 @@ Name | Type |
 
 ### `Const` checkIfNotModified
 
-▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *[Operator](_pipe_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
+▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
 
 **Type parameters:**
 
@@ -223,7 +223,7 @@ Name | Type |
 `method` | [HttpMethod](../enums/_http_.httpmethod.md) |
 `preconditions` | object |
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
 
 ___
 
@@ -312,13 +312,13 @@ ___
 
 ### `Const` disallowProtocolAndHostForwarding
 
-▸ **disallowProtocolAndHostForwarding**<**T**>(): *[Operator](_pipe_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
+▸ **disallowProtocolAndHostForwarding**<**T**>(): *[Operator](_functions_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Operator](_pipe_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
 
 ___
 

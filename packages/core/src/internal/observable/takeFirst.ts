@@ -1,4 +1,4 @@
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { empty } from "./empty";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";

@@ -1,5 +1,5 @@
 import { none, Option } from "../../option";
-import { Operator, pipe } from "../../pipe";
+import { Operator, pipe } from "../../functions";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,

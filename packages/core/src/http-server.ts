@@ -1,7 +1,7 @@
 import { HttpResponse, HttpRequest } from "./http";
 import { ObservableLike } from "./observable";
 import { isNone, isSome, none, Option } from "./option";
-import { Operator } from "./pipe";
+import { Operator } from "./functions";
 
 export type HttpServer<
   THttpRequest extends HttpRequest<unknown>,

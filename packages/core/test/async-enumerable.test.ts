@@ -2,7 +2,7 @@ import { test, describe, expectToEqual, expectNone } from "../src/testing";
 import { Exception } from "../src/disposable";
 import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
 import { none, Option } from "../src/option";
-import { pipe } from "../src/pipe";
+import { pipe, increment, returns } from "../src/functions";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
   reduce,
@@ -12,7 +12,6 @@ import {
   fromIterable,
   generate,
 } from "../src/async-enumerable";
-import { incr, returns } from "../src/functions";
 
 export const tests = describe(
   "async-enumerable",
@@ -141,7 +140,7 @@ export const tests = describe(
 
   test("generate", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = generate(incr, returns<number>(0)).stream(scheduler);
+    const enumerator = generate(increment, returns<number>(0)).stream(scheduler);
 
     const result: number[] = [];
     pipe(

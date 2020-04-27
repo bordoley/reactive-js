@@ -18,7 +18,7 @@ import {
   isParseError,
   string,
 } from "../../parser-combinators";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { HttpHeaders } from "./interfaces";
 
 /** @ignore */

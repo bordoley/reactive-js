@@ -1,5 +1,5 @@
 import { DisposableLike } from "../../disposable";
-import { Operator } from "../../pipe";
+import { Operator } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import {

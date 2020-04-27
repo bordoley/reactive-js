@@ -15,7 +15,7 @@ import {
   DisposableLike,
 } from "@reactive-js/core/dist/js/disposable";
 import { none } from "@reactive-js/core/dist/js/option";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe } from "@reactive-js/core/dist/js/functions";
 import {
   SchedulerLike,
   SchedulerContinuationLike,

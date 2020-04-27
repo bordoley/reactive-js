@@ -1,4 +1,4 @@
-import { pipe } from "../../pipe.ts";
+import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";

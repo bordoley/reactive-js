@@ -1,6 +1,6 @@
 import { test, describe, expectToEqual, expectToThrow } from "../src/testing";
 import { none } from "../src/option";
-import { pipe } from "../src/pipe";
+import { pipe, returns } from "../src/functions";
 import {
   string,
   map,
@@ -20,7 +20,6 @@ import {
   parseWithOrThrow,
   throwParseError,
 } from "../src/parser-combinators";
-import { returns } from "../src/functions";
 
 export const tests = describe(
   "parser combinators",

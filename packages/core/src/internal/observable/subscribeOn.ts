@@ -1,5 +1,5 @@
 import { SchedulerLike } from "../../scheduler";
-import { pipe } from "../../pipe";
+import { pipe } from "../../functions";
 import { createObservable } from "./createObservable";
 import { ObservableOperator } from "./interfaces";
 import { onNotify } from "./onNotify";

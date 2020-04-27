@@ -5,7 +5,7 @@ import {
   await_,
   DispatcherLike,
 } from "@reactive-js/core/dist/js/observable";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe } from "@reactive-js/core/dist/js/functions";
 import { WebResponseBodyLike } from "./interfaces";
 import {
   AbstractDisposable,
