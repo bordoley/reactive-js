@@ -138,10 +138,7 @@ test("fromIterable", () => {
 
 test("generate", () => {
   const scheduler = createVirtualTimeScheduler();
-  const enumerator = generate(
-    incr,
-    returns<number>(0),
-  ).stream(scheduler);
+  const enumerator = generate(incr, returns<number>(0)).stream(scheduler);
 
   const result: number[] = [];
   pipe(

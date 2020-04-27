@@ -1,4 +1,9 @@
-import { onNotify as onNotifyStream, StreamableLike, identity, createStreamable } from "./streamable.ts";
+import {
+  onNotify as onNotifyStream,
+  StreamableLike,
+  identity,
+  createStreamable,
+} from "./streamable.ts";
 import {
   compute,
   map,

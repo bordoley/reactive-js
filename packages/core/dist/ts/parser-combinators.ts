@@ -1,5 +1,5 @@
 import { EnumeratorLike } from "./enumerable.ts";
-import { Option, none } from "./option.ts";
+import { Option, none, orCompute as orComputeOption } from "./option.ts";
 import { Operator, compose, pipe } from "./pipe.ts";
 import { __DEV__ } from "./internal/env.ts";
 import { returns } from "./functions.ts";
@@ -155,10 +155,8 @@ export const map = <TA, TB>(
   mapper: (result: TA) => TB,
 ): Operator<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
 
-export const mapTo = <TA, TB>(v: TB): Operator<Parser<TA>, Parser<TB>> => {
-  const mapper = (_: TA) => v;
-  return map(mapper);
-};
+export const mapTo = <TA, TB>(v: TB): Operator<Parser<TA>, Parser<TB>> =>
+  map(returns(v));
 
 export const parseWithOrThrow = <T>(parser: Parser<T>): Operator<string, T> => {
   const parse = pipe(parser, followedBy(pEof));
@@ -272,12 +270,12 @@ export const optional = <T>(
   }
 };
 
-export const orDefault = <T>(
-  default_: () => T,
+export const orCompute = <T>(
+  compute: () => T,
 ): Operator<Parser<Option<T>>, Parser<T>> =>
   compose(
     optional,
-    map(result => result ?? default_()),
+    map(orComputeOption(compute)),
   );
 
 export const sepBy1 = <T>(
@@ -303,7 +301,7 @@ export const sepBy1 = <T>(
 export const sepBy = <T>(
   separator: Parser<unknown>,
 ): Operator<Parser<T>, Parser<readonly T[]>> =>
-  compose(sepBy1(separator), orDefault<readonly T[]>(returns([])));
+  compose(sepBy1(separator), orCompute<readonly T[]>(returns([])));
 
 export const string = (str: string): Parser<string> => charStream => {
   charStream.move();

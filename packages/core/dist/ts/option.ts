@@ -6,3 +6,6 @@ export const isSome = <T>(option: Option<T>): option is T => option !== none;
 
 export const isNone = <T>(option: Option<T>): option is undefined =>
   option === none;
+
+export const orCompute = <T>(compute: () => T) => (value: Option<T>) =>
+  value ?? compute();

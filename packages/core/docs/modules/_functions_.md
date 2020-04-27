@@ -15,6 +15,7 @@
 * [decr](_functions_.md#const-decr)
 * [identity](_functions_.md#const-identity)
 * [incr](_functions_.md#const-incr)
+* [referenceEquals](_functions_.md#const-referenceequals)
 * [returns](_functions_.md#const-returns)
 
 ## Variables
@@ -80,6 +81,25 @@ Name | Type |
 `x` | number |
 
 **Returns:** *number*
+
+___
+
+### `Const` referenceEquals
+
+▸ **referenceEquals**<**T**>(`a`: T, `b`: T): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *boolean*
 
 ___
 

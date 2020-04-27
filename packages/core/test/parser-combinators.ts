@@ -13,12 +13,13 @@ import {
   createCharStream,
   concat,
   optional,
-  orDefault,
+  orCompute,
   manySatisfy,
   pForwardSlash,
   char,
   pEof,
 } from "../src/parser-combinators";
+import { returns } from "../src/functions";
 
 test("many", () => {
   const parser = pipe(string("abc"), many());
@@ -56,7 +57,7 @@ test("optional", () => {
     string("ab"),
     pipe(
       optional(string("cd")),
-      orDefault(() => "ef"),
+      orCompute(returns("ef")),
     ),
     pEof,
   );

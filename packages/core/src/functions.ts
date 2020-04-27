@@ -10,6 +10,6 @@ export const alwaysVoid = returns<void>(undefined);
 
 export const incr = (x: number) => x + 1;
 
-export const decr = (x: number) => x
+export const decr = (x: number) => x - 1;
 
 export const referenceEquals = <T>(a: T, b: T) => a === b;

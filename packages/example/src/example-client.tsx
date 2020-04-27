@@ -46,12 +46,13 @@ import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
-import { returns } from "@reactive-js/core/dist/js/functions";
+import { returns, incr } from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<Location>) => returns(uriUpdater(updater));
+  const liftUpdater = (updater: StateUpdater<Location>) => () => uriUpdater(updater);
+
   const goToPath = (pathname: string) =>
     liftUpdater(state => ({ ...state, pathname }));
 
@@ -80,10 +81,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   );
 };
 
-const obs = generate(
-  x => x + 1,
-  returns<number>(0),
-);
+const obs = generate(incr, returns<number>(0));
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, idlePriority);
 
@@ -187,10 +185,7 @@ pipe(
   sendHttpRequest(request),
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeadersReceived
-      ? using(
-          returns(status.response.body),
-          body => body.text
-        )
+      ? using(returns(status.response.body), body => body.text)
       : ofValue(JSON.stringify(status)),
   ),
   onNotify(console.log),
