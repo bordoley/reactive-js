@@ -4,6 +4,3 @@ export { createStreamable, empty, lift, liftReq } from "./internal/streamable/st
 export { identity } from "./internal/streamable/identity";
 export { map, onNotify } from "./internal/streamable/operators";
 export { sink } from "./internal/streamable/sink";
-
-
-

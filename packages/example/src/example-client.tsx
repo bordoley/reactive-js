@@ -27,6 +27,7 @@ import {
   ofValue,
   concatMap,
   using,
+  throttle,
 } from "@reactive-js/core/dist/js/observable";
 import {
   history,
@@ -122,7 +123,7 @@ const StatefulComponent = (props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => fromObservable(obs), []);
+  const stream = useMemo(() => pipe(obs, throttle(15),fromObservable), []);
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });

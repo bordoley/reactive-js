@@ -6,7 +6,6 @@ import {
 import { Operator, compose, pipe } from "./pipe";
 import {
   ObservableLike,
-  concat,
   endWith,
   generate as generateObs,
   map as mapObs,

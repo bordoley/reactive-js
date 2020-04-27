@@ -6,11 +6,9 @@ import {
 import { Operator, compose, pipe } from "./pipe.ts";
 import {
   ObservableLike,
-  concat,
   endWith,
   generate as generateObs,
   map as mapObs,
-  never,
   keepType,
   takeFirst,
   genMap,
@@ -52,7 +50,7 @@ export type FlowableOperator<TA, TB> = Operator<
 
 const createFlowable = <T>(
   f: Operator<ObservableLike<FlowMode>, ObservableLike<FlowEvent<T>>>,
-) => createStreamable(obs => concat(f(obs), never()));
+) => createStreamable(obs => f(obs));
 
 const emptyModeMapper = (mode: FlowMode) =>
   mode === FlowMode.Resume ? { type: FlowEventType.Complete } : none;
