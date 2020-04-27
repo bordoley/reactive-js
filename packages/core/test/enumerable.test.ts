@@ -1,9 +1,4 @@
-import {
-  test,
-  describe,
-  expectToEqual,
-  expectNone,
-} from "../src/testing";
+import { test, describe, expectToEqual, expectNone } from "../src/testing";
 import { fromArray, first, empty, keep, toArray } from "../src/enumerable";
 import { pipe } from "../src/pipe";
 

@@ -1,4 +1,11 @@
-import { test, describe, expectNone, expectSome, expectTrue, expectToEqual } from "../src/testing";
+import {
+  test,
+  describe,
+  expectNone,
+  expectSome,
+  expectTrue,
+  expectToEqual,
+} from "../src/testing";
 import {
   fromArray,
   subscribe,
@@ -13,7 +20,8 @@ import { createVirtualTimeScheduler } from "../src/scheduler";
 import { createReactiveCache, getOrSet } from "../src/reactive-cache";
 import { disposed } from "../src/disposable";
 
-export const tests = describe("reactive-cache",
+export const tests = describe(
+  "reactive-cache",
   test("lifecycle integration", () => {
     // Use microticks to test yielding
     const scheduler = createVirtualTimeScheduler(1);

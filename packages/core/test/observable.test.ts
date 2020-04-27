@@ -93,7 +93,8 @@ class PromiseTestScheduler extends AbstractHostScheduler {
 
 const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
 
-export const tests = describe("observable",
+export const tests = describe(
+  "observable",
   test("buffer", () => {
     pipe(
       fromScheduledValues(
@@ -145,9 +146,13 @@ export const tests = describe("observable",
     ]);
   }),
 
-  describe("concat",
+  describe(
+    "concat",
     test("concats the observable and completes", () => {
-      const result = pipe(concat(ofValue(1), ofValue(2), ofValue(3)), toArray());
+      const result = pipe(
+        concat(ofValue(1), ofValue(2), ofValue(3)),
+        toArray(),
+      );
       expect(result).toEqual([1, 2, 3]);
     }),
 
@@ -175,11 +180,17 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("concatAll",
+  describe(
+    "concatAll",
     test("concats observables", () => {
       const observableA = fromArray([1, 2]);
       const observableB = fromArray([3, 4]);
-      const src = fromArray([observableA, observableB, observableB, observableA]);
+      const src = fromArray([
+        observableA,
+        observableB,
+        observableB,
+        observableA,
+      ]);
       const result = pipe(src, concatAll(), toArray());
       expect(result).toEqual([1, 2, 3, 4, 3, 4, 1, 2]);
     }),
@@ -235,7 +246,8 @@ export const tests = describe("observable",
     pipe(ofValue(0), contains(1), toValue(), expect).toBeFalsy();
   }),
 
-  describe("createObservable",
+  describe(
+    "createObservable",
     test("completes the subscriber if onSubscribe throws", () => {
       const cause = new Error();
       const observable = createObservable(_ => {
@@ -268,7 +280,8 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("createSubject",
+  describe(
+    "createSubject",
     test("when subject is completed", () => {
       const scheduler = createVirtualTimeScheduler(1);
       const subject = createSubject(2);
@@ -448,7 +461,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenCalledTimes(3);
   }),
 
-  describe("empty",
+  describe(
+    "empty",
     test("produces no values and completes", () => {
       pipe(empty(), toArray(), expect).toEqual([]);
     }),
@@ -457,8 +471,18 @@ export const tests = describe("observable",
   test("every", () => {
     pipe(empty(), every(alwaysFalse), toValue(), expect).toBeTruthy();
 
-    pipe(fromArray([1, 2, 3]), every(alwaysTrue), toValue(), expect).toBeTruthy();
-    pipe(fromArray([1, 2, 3]), every(alwaysFalse), toValue(), expect).toBeFalsy();
+    pipe(
+      fromArray([1, 2, 3]),
+      every(alwaysTrue),
+      toValue(),
+      expect,
+    ).toBeTruthy();
+    pipe(
+      fromArray([1, 2, 3]),
+      every(alwaysFalse),
+      toValue(),
+      expect,
+    ).toBeFalsy();
   }),
 
   test("forEach", () => {
@@ -470,7 +494,8 @@ export const tests = describe("observable",
     expect(result).toEqual([1, 2, 3]);
   }),
 
-  describe("fromArray",
+  describe(
+    "fromArray",
     test("with no delay", () => {
       const src = [1, 2, 3, 4, 5, 6];
       const observable = fromArray(src);
@@ -500,7 +525,8 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("fromIterable",
+  describe(
+    "fromIterable",
     test("with no delay when scheduler does not request yields", () => {
       const src = [1, 2, 3, 4, 5, 6];
       const observable = fromIterable(src);
@@ -536,7 +562,8 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("fromPromise",
+  describe(
+    "fromPromise",
     testAsync("when the promise resolves", async () => {
       const factory = () => Promise.resolve(1);
       const result = await pipe(
@@ -586,7 +613,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenNthCalledWith(6, [6, 4]);
   }),
 
-  describe("generate",
+  describe(
+    "generate",
     test("without delay", () => {
       pipe(
         generate(incr, returns<number>(1)),
@@ -761,7 +789,8 @@ export const tests = describe("observable",
     expect(onDispose).toBeCalledWith({ cause });
   }),
 
-  describe("never",
+  describe(
+    "never",
     test("produces no values", () => {
       const cb = jest.fn();
 
@@ -780,10 +809,13 @@ export const tests = describe("observable",
   test("none", () => {
     expect(pipe(empty(), none(alwaysFalse), toValue())).toBeTruthy();
     expect(pipe(fromArray([1, 2, 3]), none(alwaysTrue), toValue())).toBeFalsy();
-    expect(pipe(fromArray([1, 2, 3]), none(alwaysFalse), toValue())).toBeTruthy();
+    expect(
+      pipe(fromArray([1, 2, 3]), none(alwaysFalse), toValue()),
+    ).toBeTruthy();
   }),
 
-  describe("ofValue",
+  describe(
+    "ofValue",
     test("completes with the value when subscribed", () => {
       pipe(ofValue(1), toArray(), expect).toEqual([1]);
     }),
@@ -803,7 +835,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenCalledWith(1);
   }),
 
-  describe("repeat",
+  describe(
+    "repeat",
     test("repeats the observable n times", () => {
       pipe(ofValue(1), repeat(3), toArray(), expect).toEqual([1, 1, 1]);
     }),
@@ -847,7 +880,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenNthCalledWith(3, 6);
   }),
 
-  describe("scanAsync",
+  describe(
+    "scanAsync",
     test("acc function produces multiple results in queueing mode, fast src, slow acc", () => {
       const scheduler = createVirtualTimeScheduler();
       const result: number[] = [];
@@ -1002,7 +1036,9 @@ export const tests = describe("observable",
       },
     );
 
-    expect(() => pipe(src, switchAll(), onNotify(cb), toArray())).toThrow(cause);
+    expect(() => pipe(src, switchAll(), onNotify(cb), toArray())).toThrow(
+      cause,
+    );
 
     expect(cb).toBeCalledTimes(4);
     expect(cb).toHaveBeenNthCalledWith(1, 1);
@@ -1011,7 +1047,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenNthCalledWith(4, 2);
   }),
 
-  describe("takeLast",
+  describe(
+    "takeLast",
     test("publishes the last n values when completed", () => {
       const src = fromArray([1, 2, 3, 4]);
       pipe(src, takeLast(3), toArray(), expect).toEqual([2, 3, 4]);
@@ -1046,7 +1083,8 @@ export const tests = describe("observable",
     ).toEqual([0, 1, 2]);
   }),
 
-  describe("throttle",
+  describe(
+    "throttle",
     test("first", () => {
       const result = pipe(
         generate(incr, returns<number>(0), 1),
@@ -1098,7 +1136,8 @@ export const tests = describe("observable",
     ).toEqual(1);
   }),
 
-  describe("throws",
+  describe(
+    "throws",
     test("completes with an exception when subscribed", () => {
       const scheduler = createVirtualTimeScheduler();
       const cb = jest.fn();
@@ -1117,7 +1156,8 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("timeout",
+  describe(
+    "timeout",
     test("throws when a timeout occurs", () => {
       expect(() => pipe(ofValue(1, 2), timeout(1), toArray())).toThrow();
     }),
@@ -1128,7 +1168,8 @@ export const tests = describe("observable",
     }),
   ),
 
-  describe("toPromise",
+  describe(
+    "toPromise",
     test("when the observable produces no values", () => {
       const promise = pipe(empty(), toPromise(promiseScheduler));
 
@@ -1171,7 +1212,8 @@ export const tests = describe("observable",
     expect(cb).toHaveBeenNthCalledWith(3, [3, 3]);
   }),
 
-  describe("zip",
+  describe(
+    "zip",
     test("zip non-delayed sources", () => {
       const result = pipe(
         zip(

@@ -1,9 +1,4 @@
-import {
-  test,
-  describe,
-  expectToEqual,
-  expectToThrow,
-} from "../src/testing";
+import { test, describe, expectToEqual, expectToThrow } from "../src/testing";
 import { none } from "../src/option";
 import { pipe } from "../src/pipe";
 import {
@@ -32,12 +27,20 @@ export const tests = describe(
 
   test("many", () => {
     const parser = pipe(string("abc"), many());
-    pipe("abcabcabcabc", parseWithOrThrow(parser), expectToEqual(["abc", "abc", "abc", "abc"]));
+    pipe(
+      "abcabcabcabc",
+      parseWithOrThrow(parser),
+      expectToEqual(["abc", "abc", "abc", "abc"]),
+    );
   }),
 
   test("many", () => {
     const parser = pipe(string("abc"), many());
-    pipe("abcabcabcabc", parseWithOrThrow(parser), expectToEqual(["abc", "abc", "abc", "abc"]));
+    pipe(
+      "abcabcabcabc",
+      parseWithOrThrow(parser),
+      expectToEqual(["abc", "abc", "abc", "abc"]),
+    );
   }),
 
   test("manySatisy", () => {
@@ -82,7 +85,11 @@ export const tests = describe(
 
   test("sepBy", () => {
     const parser = pipe(string("ab"), sepBy(pColon));
-    pipe("ab:ab:ab:ab", parseWithOrThrow(parser), expectToEqual(["ab", "ab", "ab", "ab"]));
+    pipe(
+      "ab:ab:ab:ab",
+      parseWithOrThrow(parser),
+      expectToEqual(["ab", "ab", "ab", "ab"]),
+    );
   }),
 
   test("string", () => {

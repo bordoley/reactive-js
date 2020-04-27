@@ -13,10 +13,14 @@ import {
 import { none } from "../src/option";
 import { pipe } from "../src/pipe";
 
-export const tests = describe("http",
-  describe("mediaType", 
+export const tests = describe(
+  "http",
+  describe(
+    "mediaType",
     test("parseMediaType with params", () => {
-      const { type, subtype, params } = parseMediaTypeOrThrow("application/json; charset=UTF-8");
+      const { type, subtype, params } = parseMediaTypeOrThrow(
+        "application/json; charset=UTF-8",
+      );
       pipe(type, expectToEqual("application"));
       pipe(subtype, expectToEqual("json"));
       pipe(params["charset"], expectToEqual("UTF-8"));
@@ -37,14 +41,17 @@ export const tests = describe("http",
     }),
 
     test("parseMediaRange", () => {
-      const { type, subtype, params } = parseMediaTypeOrThrow("*/*; q=0.1; charset=UTF-8");
+      const { type, subtype, params } = parseMediaTypeOrThrow(
+        "*/*; q=0.1; charset=UTF-8",
+      );
       pipe(type, expectToEqual("*"));
       pipe(subtype, expectToEqual("*"));
       pipe(params["q"], expectToEqual("0.1"));
     }),
   ),
 
-  describe("checkIfNotModified",
+  describe(
+    "checkIfNotModified",
     ...([
       [
         "when a non-conditional GET is performed",

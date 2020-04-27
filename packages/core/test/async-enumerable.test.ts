@@ -14,7 +14,8 @@ import {
 } from "../src/async-enumerable";
 import { incr, returns } from "../src/functions";
 
-export const tests = describe("async-enumerable",
+export const tests = describe(
+  "async-enumerable",
   test("reduce", () => {
     const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
 
