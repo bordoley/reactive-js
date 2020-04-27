@@ -50,6 +50,7 @@ import {
   FlowMode,
   FlowEventType,
 } from "@reactive-js/core/dist/js/flowable";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
 export type HttpClientOptions = {
   // Node options
@@ -182,12 +183,12 @@ export const createHttpClient = (
         pipe(
           requestBody,
           scan(
-            ([incr, count], ev) =>
+            ([incr, count], ev): [number, number] =>
               ev.type === FlowEventType.Next
                 ? [ev.data.length, count + incr]
                 : [-1, count + incr],
 
-            () => [0, 0],
+            returns<[number, number]>([0, 0]),
           ),
           map(([incr, count]) =>
             incr < 0

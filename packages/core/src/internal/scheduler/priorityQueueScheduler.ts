@@ -12,6 +12,7 @@ import {
   PausableSchedulerLike,
 } from "./interfaces";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
+import { alwaysFalse } from "../../functions";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -19,8 +20,6 @@ type ScheduledTask = {
   readonly priority: number;
   taskID: number;
 };
-
-const alwaysFalse = () => false;
 
 const move = (scheduler: PriorityQueueScheduler): boolean => {
   // First fast forward through any disposed tasks.

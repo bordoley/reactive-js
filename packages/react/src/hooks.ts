@@ -11,9 +11,10 @@ import {
   never,
 } from "@reactive-js/core/dist/js/observable";
 import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
-import { pipe } from "@reactive-js/core/dist/js/pipe";
+import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -25,11 +26,9 @@ const subscribeObservable = <T>(
     observable,
     throttle(8),
     subscribeOn(scheduler),
-    onNotify(next => updateState(_ => next)),
+    onNotify(compose(returns, updateState)),
     subscribe(normalPriority),
-  ).add(e => {
-    updateError(_ => e);
-  });
+  ).add(compose(returns, updateError));
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -84,7 +83,7 @@ export const useStreamable = <TReq, T>(
     const stream = streamable.stream(scheduler, replay);
     streamRef.current = stream;
 
-    dispatch(_ => stream);
+    pipe(stream, returns, dispatch);
 
     return () => {
       streamRef.current = undefined;

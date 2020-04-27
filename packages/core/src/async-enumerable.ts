@@ -1,4 +1,4 @@
-import { StreamableLike, identity, lift, createStreamable } from "./streamable";
+import { onNotify as onNotifyStream, StreamableLike, identity, createStreamable } from "./streamable";
 import {
   compute,
   map,
@@ -20,6 +20,7 @@ import {
 import { compose, pipe, Operator } from "./pipe";
 import { SchedulerLike } from "./scheduler";
 import { fromIterable as fromIterableEnumerable } from "./enumerable";
+import { returns } from "./functions";
 
 export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
 
@@ -80,7 +81,7 @@ const createAcc = <T, TAcc>(enumerator: StreamLike<void, T>) => {
 
   return pipe(
     identity<ContinueRequest<TAcc>>(),
-    lift(onNotify(onNotifyDispatch)),
+    onNotifyStream(onNotifyDispatch),
   );
 };
 
@@ -207,7 +208,7 @@ const fromArrayScanner = (acc: number, _: void): number => acc + 1;
  */
 export const fromArray = <T>(values: readonly T[]): AsyncEnumerableLike<T> => {
   const operator: ObservableOperator<void, T> = compose(
-    scan(fromArrayScanner, () => -1),
+    scan(fromArrayScanner, returns(-1)),
     map((i: number) => values[i]),
     takeFirst(values.length),
   );

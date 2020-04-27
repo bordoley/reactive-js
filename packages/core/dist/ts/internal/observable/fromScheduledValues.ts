@@ -1,4 +1,4 @@
-import { alwaysFalse } from "./functions.ts";
+import { alwaysFalse } from "../../functions.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import { createDelayedScheduledObservable } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";

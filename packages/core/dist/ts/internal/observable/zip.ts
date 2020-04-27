@@ -2,7 +2,7 @@ import { DisposableLike, AbstractDisposable } from "../../disposable.ts";
 import { EnumeratorLike } from "../../enumerable.ts";
 import { none, isSome, isNone } from "../../option.ts";
 import { SchedulerContinuationLike } from "../../scheduler.ts";
-import { alwaysTrue } from "./functions.ts";
+import { alwaysTrue } from "../../functions.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import { AbstractProducer } from "./producer.ts";
 import {

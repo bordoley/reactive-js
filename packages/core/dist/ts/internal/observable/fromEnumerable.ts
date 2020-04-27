@@ -1,6 +1,6 @@
 import { EnumeratorLike, EnumerableLike } from "../../enumerable.ts";
 import { isSome } from "../../option.ts";
-import { alwaysFalse } from "./functions.ts";
+import { alwaysFalse } from "../../functions.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
   createScheduledObservable,

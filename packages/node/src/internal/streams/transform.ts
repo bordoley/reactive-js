@@ -1,24 +1,22 @@
 import iconv from "iconv-lite";
 import { Transform } from "stream";
+import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import {
-  createDisposableValue,
-  DisposableValueLike,
-} from "@reactive-js/core/dist/js/disposable";
-import {
-  ObservableLike,
   using,
   catchError,
   throws,
-  genMap,
   subscribe,
   onNotify,
+  withLatestFrom,
+  compute,
+  concatMap,
+  fromIterator,
 } from "@reactive-js/core/dist/js/observable";
 import { Option } from "@reactive-js/core/dist/js/option";
 import { createBufferFlowableFromReadable } from "./bufferFlowable";
 import { createBufferFlowableSinkFromWritable } from "./bufferFlowableSink";
-import { Operator, pipe } from "@reactive-js/core/dist/js/pipe";
+import { Operator, pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { BufferFlowableLike } from "./interfaces";
-import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import {
   FlowableOperator,
@@ -31,6 +29,7 @@ import {
   sink,
   lift,
 } from "@reactive-js/core/dist/js/streamable";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
@@ -41,7 +40,7 @@ export const transform = (
         const transform = factory();
 
         const transformSink = createBufferFlowableSinkFromWritable(
-          () => transform,
+          returns(transform),
           false,
         );
 
@@ -51,7 +50,7 @@ export const transform = (
         );
 
         const transformReadableStream = createBufferFlowableFromReadable(
-          () => transform,
+          returns(transform),
         ).stream(scheduler);
 
         const modeSubscription = pipe(
@@ -70,82 +69,57 @@ export const transform = (
   );
 
 export const unsupportedEncoding = Symbol("unsupportedEncoding");
-const unsupportedEncodingObservable = throws(() => unsupportedEncoding);
+const unsupportedEncodingObservable = pipe(
+  unsupportedEncoding,
+  returns,
+  throws,
+);
 const onError = (e: unknown) =>
   e instanceof Error && e.message.startsWith("Encoding not recognized: ")
     ? unsupportedEncodingObservable
-    : throws(() => e);
+    : throws(returns(e));
+
+const convert = <TA, TB extends { length: number }>(
+  getConverter: () => {
+    write(a: TA): TB;
+    end(): TB;
+  },
+) => {
+  const op = compose(
+    withLatestFrom(compute(getConverter), function*(
+      ev: FlowEvent<TA>,
+      decoder,
+    ) {
+      switch (ev.type) {
+        case FlowEventType.Next: {
+          const data = decoder.write(ev.data);
+          yield { type: FlowEventType.Next, data };
+          break;
+        }
+        case FlowEventType.Complete: {
+          const data: Option<TB> = decoder.end();
+          if (isSome(data) && data.length > 0) {
+            yield { type: FlowEventType.Next, data };
+          }
+
+          yield { type: FlowEventType.Complete };
+          break;
+        }
+      }
+    }),
+    concatMap(compose(returns, fromIterator)),
+    catchError(onError),
+  );
+
+  return lift(op);
+};
 
 export const encode = (
   charset: string,
-): Operator<FlowableLike<string>, BufferFlowableLike> => {
-  const createEncoder = (_: SchedulerLike) =>
-    createDisposableValue((iconv as any).getEncoder(charset), _ => {});
-
-  const mapObs = (obs: ObservableLike<FlowEvent<string>>) =>
-    pipe(
-      using(createEncoder, encoder =>
-        pipe(
-          obs,
-          genMap(function*(ev) {
-            switch (ev.type) {
-              case FlowEventType.Next: {
-                const data = encoder.value.write(ev.data);
-                yield { type: FlowEventType.Next, data };
-                break;
-              }
-              case FlowEventType.Complete: {
-                const data: Option<Buffer> = encoder.value.end();
-                if (isSome(data) && data.length > 0) {
-                  yield { type: FlowEventType.Next, data };
-                }
-
-                yield { type: FlowEventType.Complete };
-                break;
-              }
-            }
-          }),
-        ),
-      ),
-      catchError(onError),
-    );
-
-  return lift(mapObs);
-};
+): Operator<FlowableLike<string>, BufferFlowableLike> =>
+  convert(() => (iconv as any).getEncoder(charset));
 
 export const decode = (
   charset: string,
-): Operator<BufferFlowableLike, FlowableLike<string>> => {
-  const createDecoder = (_: SchedulerLike) =>
-    createDisposableValue((iconv as any).getDecoder(charset), _ => {});
-
-  const mapObs = (obs: ObservableLike<FlowEvent<Buffer>>) =>
-    pipe(
-      using(createDecoder, decoder =>
-        pipe(
-          obs,
-          genMap(function*(ev) {
-            switch (ev.type) {
-              case FlowEventType.Next: {
-                const data = decoder.value.write(ev.data);
-                yield { type: FlowEventType.Next, data };
-                break;
-              }
-              case FlowEventType.Complete: {
-                const data: Option<Buffer> = decoder.value.end();
-                if (isSome(data) && data.length > 0) {
-                  yield { type: FlowEventType.Next, data };
-                }
-
-                yield { type: FlowEventType.Complete };
-                break;
-              }
-            }
-          }),
-        ),
-      ),
-      catchError(onError),
-    );
-
-  return lift(mapObs);
-};
+): Operator<BufferFlowableLike, FlowableLike<string>> =>
+  convert(() => (iconv as any).getDecoder(charset));

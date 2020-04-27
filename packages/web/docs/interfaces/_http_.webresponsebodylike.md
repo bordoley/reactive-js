@@ -12,23 +12,41 @@
 
 ### Properties
 
+* [arrayBuffer](_http_.webresponsebodylike.md#arraybuffer)
+* [blob](_http_.webresponsebodylike.md#blob)
 * [isDisposed](_http_.webresponsebodylike.md#isdisposed)
+* [text](_http_.webresponsebodylike.md#text)
 
 ### Methods
 
 * [add](_http_.webresponsebodylike.md#add)
-* [arrayBuffer](_http_.webresponsebodylike.md#arraybuffer)
-* [blob](_http_.webresponsebodylike.md#blob)
 * [dispose](_http_.webresponsebodylike.md#dispose)
-* [text](_http_.webresponsebodylike.md#text)
 
 ## Properties
+
+###  arrayBuffer
+
+• **arrayBuffer**: *ObservableLike‹ArrayBuffer›*
+
+___
+
+###  blob
+
+• **blob**: *ObservableLike‹Blob›*
+
+___
 
 ###  isDisposed
 
 • **isDisposed**: *boolean*
 
 *Inherited from [WebResponseBodyLike](_http_.webresponsebodylike.md).[isDisposed](_http_.webresponsebodylike.md#isdisposed)*
+
+___
+
+###  text
+
+• **text**: *ObservableLike‹string›*
 
 ## Methods
 
@@ -48,22 +66,6 @@ Name | Type |
 
 ___
 
-###  arrayBuffer
-
-▸ **arrayBuffer**(): *ObservableLike‹ArrayBuffer›*
-
-**Returns:** *ObservableLike‹ArrayBuffer›*
-
-___
-
-###  blob
-
-▸ **blob**(): *ObservableLike‹Blob›*
-
-**Returns:** *ObservableLike‹Blob›*
-
-___
-
 ###  dispose
 
 ▸ **dispose**(`error?`: Exception): *void*
@@ -77,11 +79,3 @@ Name | Type |
 `error?` | Exception |
 
 **Returns:** *void*
-
-___
-
-###  text
-
-▸ **text**(): *ObservableLike‹string›*
-
-**Returns:** *ObservableLike‹string›*

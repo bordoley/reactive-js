@@ -7,6 +7,7 @@ import {
 } from "../../observable.ts";
 import { pipe } from "../../pipe.ts";
 import { createStreamable } from "./streamable.ts";
+import { returns } from "../../functions.ts";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -27,7 +28,7 @@ export const createActionReducer = <TAction, T>(
 
     return pipe(
       src,
-      scan(reducer, () => acc),
+      scan(reducer, returns(acc)),
       startWith(acc),
       distinctUntilChanged(equals),
     );

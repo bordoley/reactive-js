@@ -860,3 +860,16 @@ Name | Type |
 `op12` | [Operator](_pipe_.md#operator)‹K, L› |
 
 **Returns:** *L*
+
+▸ **pipe**(`source`: unknown, ...`operators`: [Operator](_pipe_.md#operator)‹any, unknown›[]): *unknown*
+
+Pipes the source value through a series of unary functions.
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | unknown |
+`...operators` | [Operator](_pipe_.md#operator)‹any, unknown›[] |
+
+**Returns:** *unknown*

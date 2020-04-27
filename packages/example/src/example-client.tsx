@@ -1,4 +1,4 @@
-import { lift } from "@reactive-js/core/dist/js/streamable";
+import { onNotify as onNotifyStream } from "@reactive-js/core/dist/js/streamable";
 import {
   fromObservable,
   FlowMode,
@@ -46,12 +46,12 @@ import { pipe, compose } from "@reactive-js/core/dist/js/pipe";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
+import { returns } from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<Location>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<Location>) => () =>
-    uriUpdater(updater);
+  const liftUpdater = (updater: StateUpdater<Location>) => returns(uriUpdater(updater));
   const goToPath = (pathname: string) =>
     liftUpdater(state => ({ ...state, pathname }));
 
@@ -65,7 +65,7 @@ const makeCallbacks = (
 
 const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   const { goToRoute1, goToRoute2, goToRoute3, stream } = useMemo(
-    () => makeCallbacks(uriUpdater),
+    returns(makeCallbacks(uriUpdater)),
     [uriUpdater],
   );
 
@@ -82,7 +82,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
 
 const obs = generate(
   x => x + 1,
-  () => 0,
+  returns<number>(0),
 );
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, idlePriority);
@@ -108,7 +108,7 @@ const StatefulComponent = (props: RoutableComponentProps) => {
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = ev.target;
-      dispatch(_ => value);
+      dispatch(returns(value));
     },
     [dispatch],
   );
@@ -169,8 +169,8 @@ const emptyLocation = {
 
 const location = pipe(
   history,
-  toStateStore(() => emptyLocation),
-  lift(onNotify<Location>(console.log)),
+  toStateStore(returns(emptyLocation)),
+  onNotifyStream<Location>(console.log),
 );
 
 (ReactDOM as any)
@@ -188,8 +188,8 @@ pipe(
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
-          _ => status.response.body,
-          _ => ofValue("done"),
+          returns(status.response.body),
+          body => body.text
         )
       : ofValue(JSON.stringify(status)),
   ),

@@ -4,6 +4,7 @@ import {
   SubscriberLike,
   SubscriberOperator,
 } from "./interfaces";
+import { pipe } from "../../pipe";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
@@ -13,10 +14,10 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   ) {}
 
   subscribe(subscriber: SubscriberLike<TOut>) {
-    const liftedSubscrber: SubscriberLike<any> = this.operators.reduceRight(
-      (acc, next) => next(acc),
+    const liftedSubscrber = pipe(
       subscriber,
-    );
+      ...this.operators,
+    ) as SubscriberLike<any>;
 
     this.source.subscribe(liftedSubscrber);
   }
@@ -36,7 +37,7 @@ export const lift = <TA, TB>(
 
   const allOperators =
     source instanceof LiftedObservable
-      ? [...source.operators, operator]
+      ? [operator, ...source.operators]
       : [operator];
 
   const isSynchronous = source.isSynchronous && operator.isSynchronous;

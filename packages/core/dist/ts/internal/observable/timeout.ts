@@ -18,6 +18,7 @@ import {
 } from "./subscriber.ts";
 import { throws } from "./throws.ts";
 import { concat } from "./concat.ts";
+import { returns } from "../../functions.ts";
 
 /** Symbol thrown when the timeout operator times out */
 export const timeoutError = Symbol("TimeoutError");
@@ -55,6 +56,8 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 }
 
+const returnTimeoutError = returns(timeoutError);
+
 /**
  * Returns an `ObservableLike` that completes with an error if the source
  * does not emit a value in given time span.
@@ -76,11 +79,8 @@ export function timeout<T>(
 ): ObservableOperator<T, T> {
   const durationObs =
     typeof duration === "number"
-      ? throws(() => timeoutError, duration)
-      : concat(
-          duration,
-          throws(() => timeoutError),
-        );
+      ? throws(returnTimeoutError, duration)
+      : concat(duration, throws(returnTimeoutError));
   const operator = (subscriber: SubscriberLike<T>) =>
     new TimeoutSubscriber(subscriber, durationObs);
   operator.isSynchronous = false;

@@ -1,5 +1,5 @@
 import { AbstractSchedulerContinuation } from "../../scheduler";
-import { alwaysFalse } from "./functions";
+import { alwaysFalse } from "../../functions";
 import { DispatcherLike, SubscriberLike } from "./interfaces";
 import { isSome } from "../../option";
 import { AbstractDisposable } from "../../disposable";

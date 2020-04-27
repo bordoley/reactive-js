@@ -14,8 +14,7 @@ import {
   schedule,
 } from "./scheduler";
 import { SubscriberLike } from "./internal/observable/interfaces";
-
-const alwaysFalse = () => false;
+import { alwaysFalse } from "./functions";
 
 class ReactiveCacheSchedulerContinuation<
   T

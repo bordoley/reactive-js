@@ -38,16 +38,14 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
   }
 }
 
-const reducer = <T>(acc: T, next: (req: T) => T): T => next(acc);
-
 const createFactory = <TReqA, TReqB, TA, TB>(
   obsOps: ObservableOperator<any, any>[],
   reqOps: ((req: unknown) => any)[],
   requests: ObservableLike<TReqB>,
 ) => (stream: StreamLike<TReqA, TA>) => {
-  const observable: ObservableLike<TB> = obsOps.reduce<any>(reducer, stream);
+  const observable = pipe(stream, ...obsOps) as ObservableLike<TB>;
 
-  const mapRequest = (req: TReqB): TReqA => reqOps.reduce<any>(reducer, req);
+  const mapRequest = (req: TReqB): TReqA => pipe(req, ...reqOps) as TReqA;
 
   const onRequest: ObservableLike<TB> = pipe(
     requests,

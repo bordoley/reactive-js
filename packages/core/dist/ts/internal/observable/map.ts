@@ -1,6 +1,7 @@
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { returns } from "../../functions.ts";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
@@ -33,4 +34,4 @@ export const map = <TA, TB>(
 };
 
 export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
-  map(_ => value);
+  map(returns(value));

@@ -57,6 +57,7 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/dist/js/scheduler";
+import { returns, incr } from "@reactive-js/core/dist/js/functions";
 
 const scheduler = pipe(
   nodeScheduler,
@@ -82,11 +83,7 @@ const routerHandlerEventStream: HttpServer<
   HttpResponse<BufferFlowableLike>
 > = _ => {
   const body = pipe(
-    generate(
-      acc => acc + 1,
-      () => 0,
-      1000,
-    ),
+    generate(incr, returns<number>(0), 1000),
     mapFlowable(
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
@@ -140,7 +137,7 @@ const routerHandlerFiles: HttpServer<
 const routerHandlerThrow: HttpServer<
   HttpRoutedRequest<BufferFlowableLike>,
   HttpResponse<BufferFlowableLike>
-> = _ => throws(() => new Error("internal error"));
+> = returns(throws(() => new Error("internal error")));
 
 const notFound: Operator<
   HttpRequest<BufferFlowableLike>,
@@ -272,7 +269,7 @@ pipe(
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
           scheduler => status.response.body.stream(scheduler),
-          _ => ofValue("done"),
+          pipe("done", ofValue, returns),
         )
       : ofValue(JSON.stringify(status)),
   ),
