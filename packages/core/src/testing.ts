@@ -63,17 +63,17 @@ const expectArraysEqual = <T>(a: readonly T[], b: readonly T[]) => {
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
-}
+};
 
 export const expectToEqual = <T>(b: T) => (a: T) => {
-  if(Array.isArray(a) && Array.isArray(b)) {
+  if (Array.isArray(a) && Array.isArray(b)) {
     expectArraysEqual(a, b);
   } else if (a !== b) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
-}
+};
 
 export const expectTrue = (v: boolean) => {
   if (!v) {
@@ -92,7 +92,6 @@ export const expectNone = (v: Option<unknown>) => {
     throw new Error(`expected none but recieved ${v}`);
   }
 };
-
 
 export const expectSome = (v: Option<unknown>) => {
   if (isNone(v)) {
@@ -116,9 +115,9 @@ export const mockFn = (retval?: any): MockFunction => {
   return cb;
 };
 
-export const expectToHaveBeenCalledTimes = (
-  times: number,
-) => (fn: MockFunction) => {
+export const expectToHaveBeenCalledTimes = (times: number) => (
+  fn: MockFunction,
+) => {
   if (fn.calls.length !== times) {
     throw new Error(
       `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,

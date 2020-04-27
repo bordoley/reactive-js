@@ -5,7 +5,8 @@ import { createResourceManager } from "../src/resource-manager";
 import { onNotify, subscribe, fromScheduledValues } from "../src/observable";
 import { pipe } from "../src/pipe";
 
-export const tests = describe("resource manager",
+export const tests = describe(
+  "resource manager",
   test("integration test", () => {
     const scheduler = createVirtualTimeScheduler();
 
@@ -142,5 +143,5 @@ export const tests = describe("resource manager",
     );
 
     scheduler.run();
-  })
+  }),
 );

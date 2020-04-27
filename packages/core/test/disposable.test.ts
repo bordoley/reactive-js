@@ -1,4 +1,12 @@
-import { test, describe, expectToEqual, expectFalse, expectTrue, mockFn, expectToHaveBeenCalledTimes } from "../src/testing";
+import {
+  test,
+  describe,
+  expectToEqual,
+  expectFalse,
+  expectTrue,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+} from "../src/testing";
 import {
   createDisposable,
   createSerialDisposable,
@@ -7,7 +15,8 @@ import {
 import { pipe } from "../src/pipe";
 import { fromArray, forEach, map } from "../src/enumerable";
 
-export const tests = describe("Disposable",
+export const tests = describe(
+  "Disposable",
   test("create", () => {
     const disposable = createDisposable();
     pipe(disposable.isDisposed, expectFalse);
@@ -29,11 +38,21 @@ export const tests = describe("Disposable",
       disposable.add(child);
     }
 
-    pipe(children, fromArray, map(d => d.isDisposed), forEach(expectFalse));
+    pipe(
+      children,
+      fromArray,
+      map(d => d.isDisposed),
+      forEach(expectFalse),
+    );
 
     disposable.dispose();
 
-    pipe(children, fromArray,  map(d => d.isDisposed), forEach(expectTrue));
+    pipe(
+      children,
+      fromArray,
+      map(d => d.isDisposed),
+      forEach(expectTrue),
+    );
 
     const anotherDisposable = createDisposable();
     disposable.add(anotherDisposable);
@@ -88,7 +107,8 @@ export const tests = describe("Disposable",
     pipe(teardown2.calls[0], expectToEqual([error]));
   }),
 
-  describe("SerialDisposable",
+  describe(
+    "SerialDisposable",
     test("create", () => {
       const serialDisposable = createSerialDisposable();
       pipe(serialDisposable.isDisposed, expectFalse);
@@ -96,28 +116,27 @@ export const tests = describe("Disposable",
       serialDisposable.dispose();
       pipe(serialDisposable.isDisposed, expectTrue);
     }),
-  
+
     test("set disposable", () => {
       const serialDisposable = createSerialDisposable();
       const disposable = createDisposable();
-  
+
       serialDisposable.inner = disposable;
       pipe(serialDisposable.inner, expectToEqual(disposable));
-  
+
       const anotherDisposable = createDisposable();
       serialDisposable.inner = anotherDisposable;
       pipe(serialDisposable.inner, expectToEqual(anotherDisposable));
 
       pipe(disposable.isDisposed, expectTrue);
-  
+
       pipe(anotherDisposable.isDisposed, expectFalse);
       serialDisposable.dispose();
       pipe(anotherDisposable.isDisposed, expectTrue);
-  
+
       const yetAnotherDisposable = createDisposable();
       serialDisposable.inner = yetAnotherDisposable;
       pipe(yetAnotherDisposable.isDisposed, expectTrue);
     }),
   ),
 );
-

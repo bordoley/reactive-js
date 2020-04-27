@@ -10,7 +10,6 @@ import { tests as reactiveCacheTests } from "./reactive-cache.test";
 import { tests as resourceManagerTests } from "./resource-manager.test";
 import { tests as streamableTests } from "./streamable.test";
 
-
 const toJestTest = (testGroup: TestGroup) => {
   if (testGroup.type === TestGroupType.Describe) {
     describe(testGroup.name, () => {
