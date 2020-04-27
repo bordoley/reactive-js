@@ -1,4 +1,5 @@
 import { TestGroup, TestGroupType } from "../src/testing";
+import { tests as asyncEnumerableTests } from "./async-enumerable.test";
 import { tests as collectionTests } from "./collections.test";
 import { tests as disposableTests } from "./disposable.test";
 import { tests as enumerableTests } from "./enumerable.test";
@@ -22,6 +23,7 @@ const toJestTest = (testGroup: TestGroup) => {
   }
 };
 
+toJestTest(asyncEnumerableTests);
 toJestTest(collectionTests);
 toJestTest(disposableTests);
 toJestTest(enumerableTests);
