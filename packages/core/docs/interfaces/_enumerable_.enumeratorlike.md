@@ -10,7 +10,7 @@
 
 * **EnumeratorLike**
 
-  ↳ [CharStreamLike](_parser_combinators_.charstreamlike.md)
+  ↳ [CharStreamLike](_parsercombinators_.charstreamlike.md)
 
 ## Index
 

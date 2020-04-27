@@ -17,7 +17,7 @@ import {
 } from "../src/observable";
 import { pipe } from "../src/functions";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { createReactiveCache, getOrSet } from "../src/reactive-cache";
+import { createReactiveCache, getOrSet } from "../src/reactiveCache";
 import { disposed } from "../src/disposable";
 
 export const tests = describe(

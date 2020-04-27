@@ -17,7 +17,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "../../parser-combinators";
+} from "../../parserCombinators";
 import { pipe } from "../../functions";
 import { HttpHeaders } from "./interfaces";
 

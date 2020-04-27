@@ -19,7 +19,7 @@ import {
   pEof,
   parseWithOrThrow,
   throwParseError,
-} from "../src/parser-combinators";
+} from "../src/parserCombinators";
 
 export const tests = describe(
   "parser combinators",

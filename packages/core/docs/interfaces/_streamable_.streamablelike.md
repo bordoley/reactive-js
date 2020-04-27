@@ -12,7 +12,7 @@
 
 * **StreamableLike**
 
-  ↳ [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md)
+  ↳ [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md)
 
   ↳ [FlowableLike](_flowable_.flowablelike.md)
 

@@ -1,5 +1,5 @@
 import { isNone, none, Option } from "../../option";
-import { parseWith } from "../../parser-combinators";
+import { parseWith } from "../../parserCombinators";
 import { pipe } from "../../functions";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";

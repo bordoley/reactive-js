@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["reactive-cache"](../modules/_reactive_cache_.md) › [ReactiveCacheLike](_reactive_cache_.reactivecachelike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["reactiveCache"](../modules/_reactivecache_.md) › [ReactiveCacheLike](_reactivecache_.reactivecachelike.md)
 
 # Interface: ReactiveCacheLike <**T**>
 
@@ -16,8 +16,8 @@
 
 ### Methods
 
-* [get](_reactive_cache_.reactivecachelike.md#get)
-* [set](_reactive_cache_.reactivecachelike.md#set)
+* [get](_reactivecache_.reactivecachelike.md#get)
+* [set](_reactivecache_.reactivecachelike.md#set)
 
 ## Methods
 

@@ -13,7 +13,7 @@ import {
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
 import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
-import { HttpClientRequest } from "@reactive-js/core/dist/js/http-client";
+import { HttpClientRequest } from "@reactive-js/core/dist/js/httpClient";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},

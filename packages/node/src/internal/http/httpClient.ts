@@ -4,7 +4,7 @@ import { URL } from "url";
 import {
   HttpClient,
   HttpClientRequestStatusType,
-} from "@reactive-js/core/dist/js/http-client";
+} from "@reactive-js/core/dist/js/httpClient";
 import { none, isSome } from "@reactive-js/core/dist/js/option";
 import {
   subscribe,

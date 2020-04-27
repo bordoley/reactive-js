@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["resource-manager"](../modules/_resource_manager_.md) › [ResourceManagerLike](_resource_manager_.resourcemanagerlike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["resourceManager"](../modules/_resourcemanager_.md) › [ResourceManagerLike](_resourcemanager_.resourcemanagerlike.md)
 
 # Interface: ResourceManagerLike <**TResource**>
 
@@ -16,14 +16,14 @@
 
 ### Properties
 
-* [count](_resource_manager_.resourcemanagerlike.md#count)
-* [isDisposed](_resource_manager_.resourcemanagerlike.md#isdisposed)
+* [count](_resourcemanager_.resourcemanagerlike.md#count)
+* [isDisposed](_resourcemanager_.resourcemanagerlike.md#isdisposed)
 
 ### Methods
 
-* [add](_resource_manager_.resourcemanagerlike.md#add)
-* [dispose](_resource_manager_.resourcemanagerlike.md#dispose)
-* [get](_resource_manager_.resourcemanagerlike.md#get)
+* [add](_resourcemanager_.resourcemanagerlike.md#add)
+* [dispose](_resourcemanager_.resourcemanagerlike.md#dispose)
+* [get](_resourcemanager_.resourcemanagerlike.md#get)
 
 ## Properties
 

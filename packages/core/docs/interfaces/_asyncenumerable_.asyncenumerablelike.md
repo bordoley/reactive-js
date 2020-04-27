@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["async-enumerable"](../modules/_async_enumerable_.md) › [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["asyncEnumerable"](../modules/_asyncenumerable_.md) › [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md)
 
 # Interface: AsyncEnumerableLike <**T**>
 
@@ -16,7 +16,7 @@
 
 ### Methods
 
-* [stream](_async_enumerable_.asyncenumerablelike.md#stream)
+* [stream](_asyncenumerable_.asyncenumerablelike.md#stream)
 
 ## Methods
 
@@ -24,7 +24,7 @@
 
 ▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹void, T›*
 
-*Inherited from [AsyncEnumerableLike](_async_enumerable_.asyncenumerablelike.md).[stream](_async_enumerable_.asyncenumerablelike.md#stream)*
+*Inherited from [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md).[stream](_asyncenumerable_.asyncenumerablelike.md#stream)*
 
 **Parameters:**
 

@@ -8,7 +8,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "../../parser-combinators";
+} from "../../parserCombinators";
 import { pipe } from "../../functions";
 import { ASCII } from "./httpGrammar";
 import { EntityTag } from "./interfaces";

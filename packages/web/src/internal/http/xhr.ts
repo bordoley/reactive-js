@@ -14,7 +14,7 @@ import { isSome } from "@reactive-js/core/dist/js/option";
 import {
   HttpClient,
   HttpClientRequestStatusType,
-} from "@reactive-js/core/dist/js/http-client";
+} from "@reactive-js/core/dist/js/httpClient";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,

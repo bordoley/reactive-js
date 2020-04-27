@@ -12,7 +12,7 @@ import {
   WebResponseBodyLike,
 } from "./internal/http/interfaces";
 import { sendHttpRequestUsingXHR } from "./internal/http/xhr";
-import { HttpClient } from "@reactive-js/core/dist/js/http-client";
+import { HttpClient } from "@reactive-js/core/dist/js/httpClient";
 
 export const sendHttpRequest: HttpClient<
   HttpWebRequest,
