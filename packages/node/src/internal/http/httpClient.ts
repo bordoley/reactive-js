@@ -102,15 +102,17 @@ export const createHttpClient = (
   BufferFlowableLike & DisposableLike
 > => request =>
   using(
-    (scheduler: SchedulerLike): [
+    (
+      scheduler: SchedulerLike,
+    ): [
       StreamLike<FlowMode, FlowEvent<Buffer>>,
-      SubjectLike<HttpResponse<ResponseBody>>
+      SubjectLike<HttpResponse<ResponseBody>>,
     ] => {
       const { method, uri } = request;
 
       const url = uri instanceof URL ? uri : new URL(uri.toString());
       const headers = httpRequestToUntypedHeaders(request);
-  
+
       // FIXME: rework this to support http2
       const nodeRequestOptions = {
         ...options,
@@ -126,17 +128,23 @@ export const createHttpClient = (
               throw new Error();
             })();
 
-      const requestSink = createBufferFlowableSinkFromWritable(
-        () => createDisposableNodeStream(req),
-      ).stream(scheduler)
+      const requestSink = createBufferFlowableSinkFromWritable(() =>
+        createDisposableNodeStream(req),
+      ).stream(scheduler);
 
       const requestBody = request.body.stream(scheduler).add(requestSink);
 
-      const onContinue = () => {       
+      const onContinue = () => {
         const reqSubscription = pipe(
-          requestSink, onNotify(next => requestBody.dispatch(next)), subscribe(scheduler)
-        ); 
-        const dataSubscription = pipe(requestBody, onNotify(next => requestSink.dispatch(next)), subscribe(scheduler)).add(reqSubscription);
+          requestSink,
+          onNotify(next => requestBody.dispatch(next)),
+          subscribe(scheduler),
+        );
+        const dataSubscription = pipe(
+          requestBody,
+          onNotify(next => requestSink.dispatch(next)),
+          subscribe(scheduler),
+        ).add(reqSubscription);
         requestBody.add(dataSubscription);
       };
 
@@ -149,49 +157,58 @@ export const createHttpClient = (
       const responseSubject = createSubject<HttpResponse<ResponseBody>>();
       const onResponse = (resp: IncomingMessage) => {
         requestBody.dispose();
-  
+
         const body = new ResponseBody(resp);
         responseSubject.add(body);
         body.add(responseSubject);
-  
+
         const response = parseHttpResponseFromHeaders(
           resp.statusCode ?? -1,
           resp.headers as HttpHeaders,
           body,
         );
-  
+
         responseSubject.dispatch(response);
       };
       req.on("response", onResponse);
 
       return [requestBody, responseSubject];
     },
-    (requestBody: StreamLike<FlowMode, FlowEvent<Buffer>>, responseSubject: SubjectLike<HttpResponse<ResponseBody>>) => merge(
-      pipe(requestBody, 
-        scan(
-          ([incr, count], ev) =>
-            ev.type === FlowEventType.Next
-              ? [ev.data.length, count + incr]
-              : [-1, count + incr],
+    (
+      requestBody: StreamLike<FlowMode, FlowEvent<Buffer>>,
+      responseSubject: SubjectLike<HttpResponse<ResponseBody>>,
+    ) =>
+      merge(
+        pipe(
+          requestBody,
+          scan(
+            ([incr, count], ev) =>
+              ev.type === FlowEventType.Next
+                ? [ev.data.length, count + incr]
+                : [-1, count + incr],
 
-          () => [0, 0],
+            () => [0, 0],
+          ),
+          map(([incr, count]) =>
+            incr < 0
+              ? { type: HttpClientRequestStatusType.Completed }
+              : count > 0
+              ? {
+                  type: HttpClientRequestStatusType.Progress,
+                  count,
+                }
+              : none,
+          ),
+          keepType(isSome),
         ),
-        map(([incr, count]) => incr < 0
-          ? { type: HttpClientRequestStatusType.Completed }
-          : count > 0
-          ? {
-              type: HttpClientRequestStatusType.Progress,
-              count,
-            }
-          : none
+        pipe(
+          responseSubject,
+          map(response => ({
+            type: HttpClientRequestStatusType.HeadersReceived,
+            response,
+          })),
         ),
-        keepType(isSome),
       ),
-      pipe(responseSubject, map(response => ({
-        type: HttpClientRequestStatusType.HeadersReceived,
-        response,
-      }))),
-    ),
   );
 
 const redirectCodes = [

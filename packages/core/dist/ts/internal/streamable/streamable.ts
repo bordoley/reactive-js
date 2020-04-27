@@ -1,17 +1,24 @@
 import { StreamableLike } from "../../streamable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { createStream } from "./createStream.ts";
-import { ObservableOperator, ObservableLike, StreamLike, onNotify, empty as emptyObs, ignoreElements, map, merge, using } from "../../observable.ts";
+import {
+  ObservableOperator,
+  ObservableLike,
+  StreamLike,
+  onNotify,
+  empty as emptyObs,
+  ignoreElements,
+  map,
+  merge,
+  using,
+} from "../../observable.ts";
 import { pipe } from "../../pipe.ts";
 import { StreamableOperator } from "./createStream.ts";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
 
-  stream(
-    scheduler: SchedulerLike,
-    replayCount = 0,
-  ): StreamLike<TReq, TData> {
+  stream(scheduler: SchedulerLike, replayCount = 0): StreamLike<TReq, TData> {
     return createStream(this.op, scheduler, replayCount);
   }
 }
@@ -19,7 +26,6 @@ class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
 export const createStreamable = <TReq, TData>(
   op: ObservableOperator<TReq, TData>,
 ): StreamableLike<TReq, TData> => new StreamableImpl(op);
-
 
 class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
   constructor(
@@ -89,7 +95,6 @@ export const liftReq = <TReqA, TReqB, T>(
 
   return liftImpl(enumerable, obsOps, reqOps);
 };
-
 
 const _empty = createStreamable<any, any>(_ => emptyObs());
 

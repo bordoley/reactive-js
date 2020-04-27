@@ -24,7 +24,9 @@ import {
 } from "@reactive-js/core/dist/js/http-client";
 import { pipe } from "@reactive-js/core/dist/js/pipe";
 
-const loadBodyContent = async (response: HttpResponse<Response>): Promise<unknown> => {
+const loadBodyContent = async (
+  response: HttpResponse<Response>,
+): Promise<unknown> => {
   const { body, contentInfo } = response;
   if (isSome(contentInfo)) {
     const {
@@ -70,59 +72,64 @@ export const sendHttpRequestUsingFetch: HttpClient<
   const url = uri.toString();
   const headers = httpRequestToUntypedHeaders(request);
 
-  const fetchResponse = fromPromise(
-      async (subscription) => {
-        const abortController = new AbortController();
-        subscription.add(() => abortController.abort());
+  const fetchResponse = fromPromise(async subscription => {
+    const abortController = new AbortController();
+    subscription.add(() => abortController.abort());
 
-        const fetchResponse =  await fetch(url, {
-          cache,
-          credentials,
-          headers,
-          integrity,
-          method,
-          mode,
-          redirect,
-          referrerPolicy,
-          signal: abortController.signal,
-        });
+    const fetchResponse = await fetch(url, {
+      cache,
+      credentials,
+      headers,
+      integrity,
+      method,
+      mode,
+      redirect,
+      referrerPolicy,
+      signal: abortController.signal,
+    });
 
-        const responseHeaders: { [key: string]: string } = {};
-        fetchResponse.headers.forEach((v, k) => {
-          responseHeaders[k] = v;
-        });
-  
-        return parseHttpResponseFromHeaders(
-          fetchResponse.status,
-          responseHeaders,
-          fetchResponse,
-        );
-      }
+    const responseHeaders: { [key: string]: string } = {};
+    fetchResponse.headers.forEach((v, k) => {
+      responseHeaders[k] = v;
+    });
+
+    return parseHttpResponseFromHeaders(
+      fetchResponse.status,
+      responseHeaders,
+      fetchResponse,
     );
+  });
 
   const mapResponseBody = switchMap(
-    (response: HttpResponse<Response>): ObservableLike<HttpResponse<WebResponseBodyLike>> => using(
-      scheduler => pipe(
-        fromPromise(() => loadBodyContent(response)),
-        publish(scheduler, 1),
-        body => new HttpResponseBodyImpl(body),
-      ), 
-      body => ofValue({
-        ...response,
-        body,
-      })
-    )
+    (
+      response: HttpResponse<Response>,
+    ): ObservableLike<HttpResponse<WebResponseBodyLike>> =>
+      using(
+        scheduler =>
+          pipe(
+            fromPromise(() => loadBodyContent(response)),
+            publish(scheduler, 1),
+            body => new HttpResponseBodyImpl(body),
+          ),
+        body =>
+          ofValue({
+            ...response,
+            body,
+          }),
+      ),
   );
 
   return concat(
-    ofValue<HttpClientRequestStatus<WebResponseBodyLike>>({ type: HttpClientRequestStatusType.Start }),
+    ofValue<HttpClientRequestStatus<WebResponseBodyLike>>({
+      type: HttpClientRequestStatusType.Start,
+    }),
     pipe(
       fetchResponse,
       mapResponseBody,
       map(response => ({
         type: HttpClientRequestStatusType.HeadersReceived,
         response,
-      }))
+      })),
     ),
   );
-}
+};

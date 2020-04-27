@@ -35,30 +35,39 @@ import {
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
 ): FlowableOperator<Buffer, Buffer> => src =>
-  createStreamable(modeObs => using(
-    scheduler => {
-      const transform = factory();
+  createStreamable(modeObs =>
+    using(
+      scheduler => {
+        const transform = factory();
 
-      const transformSink = createBufferFlowableSinkFromWritable(
-        () => transform,
-        false,
-      );
+        const transformSink = createBufferFlowableSinkFromWritable(
+          () => transform,
+          false,
+        );
 
-      const sinkSubscription = pipe(
-        sink(src, transformSink),
-        subscribe(scheduler),
-      );
+        const sinkSubscription = pipe(
+          sink(src, transformSink),
+          subscribe(scheduler),
+        );
 
-      const transformReadableStream = createBufferFlowableFromReadable(
-        () => transform,
-      ).stream(scheduler);
+        const transformReadableStream = createBufferFlowableFromReadable(
+          () => transform,
+        ).stream(scheduler);
 
-      const modeSubscription = pipe(modeObs, onNotify(mode => transformReadableStream.dispatch(mode)), subscribe(scheduler));
+        const modeSubscription = pipe(
+          modeObs,
+          onNotify(mode => transformReadableStream.dispatch(mode)),
+          subscribe(scheduler),
+        );
 
-      return transformReadableStream.add(sinkSubscription).add(transform).add(modeSubscription);
-    },
-    t => t
-  ));
+        return transformReadableStream
+          .add(sinkSubscription)
+          .add(transform)
+          .add(modeSubscription);
+      },
+      t => t,
+    ),
+  );
 
 export const unsupportedEncoding = Symbol("unsupportedEncoding");
 const unsupportedEncodingObservable = throws(() => unsupportedEncoding);

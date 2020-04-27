@@ -15,8 +15,10 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 
-class SwitchSubscriber<T>
-  extends AbstractDelegatingSubscriber<ObservableLike<T>, T> {
+class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
+  ObservableLike<T>,
+  T
+> {
   private inner = disposed;
 
   private readonly onNotify = (next: T) => {
@@ -37,7 +39,11 @@ class SwitchSubscriber<T>
 
     this.inner.dispose();
 
-    const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate)).add(e => {
+    const inner = pipe(
+      next,
+      onNotify(this.onNotify),
+      subscribe(this.delegate),
+    ).add(e => {
       if (isSome(e) || this.isDisposed) {
         this.delegate.dispose(e);
       }
@@ -45,8 +51,6 @@ class SwitchSubscriber<T>
     this.delegate.add(inner);
     this.inner = inner;
   }
-
-
 }
 
 const operator = <T>(subscriber: SubscriberLike<T>) =>

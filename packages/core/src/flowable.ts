@@ -22,6 +22,7 @@ import {
 } from "./observable";
 import { none, isSome } from "./option";
 import { toPausableScheduler } from "./scheduler";
+import { SchedulerLike } from "./internal/scheduler/interfaces";
 
 export const enum FlowMode {
   Resume = 1,
@@ -48,56 +49,46 @@ export type FlowableOperator<TA, TB> = Operator<
   FlowableLike<TB>
 >;
 
-const createFlowable = <T>(
-  f: Operator<ObservableLike<FlowMode>, ObservableLike<FlowEvent<T>>>,
-) => createStreamable(obs => f(obs));
-
-const emptyModeMapper = (mode: FlowMode) =>
-  mode === FlowMode.Resume ? { type: FlowEventType.Complete } : none;
-
-const onEmptyOperator = compose(
-  mapObs(emptyModeMapper),
-  keepType(isSome),
-  takeFirst(),
+const _empty = createStreamable(
+  compose(
+    mapObs(mode =>
+      mode === FlowMode.Resume ? { type: FlowEventType.Complete } : none,
+    ),
+    keepType(isSome),
+    takeFirst(),
+  ),
 );
+export const empty = <T>(): FlowableLike<T> => _empty;
 
-export const empty = <T>(): FlowableLike<T> => createFlowable(onEmptyOperator);
-
-const ofValueOperator = <T>(data: T) =>
-  genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
-    switch (mode) {
-      case FlowMode.Resume:
-        yield { type: FlowEventType.Next, data };
-        yield { type: FlowEventType.Complete };
-    }
-  });
-
-export const ofValue = <T>(value: T): FlowableLike<T> =>
-  createFlowable(ofValueOperator(value));
-
-const generateScanner = <T>(generator: (acc: T) => T, delay: number) => (
-  acc: T,
-  ev: FlowMode,
-): ObservableLike<T> =>
-  ev === FlowMode.Resume
-    ? generateObs(generator, () => acc, delay)
-    : emptyObs();
+export const ofValue = <T>(data: T): FlowableLike<T> =>
+  pipe(
+    genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
+      switch (mode) {
+        case FlowMode.Resume:
+          yield { type: FlowEventType.Next, data };
+          yield { type: FlowEventType.Complete };
+      }
+    }),
+    createStreamable,
+  );
 
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
   delay = 0,
-): FlowableLike<T> =>
-  createFlowable(
-    compose(
-      scanAsync(
-        generateScanner(generator, delay),
-        initialValue,
-        ScanAsyncMode.Switching,
-      ),
-      mapObs<T, FlowEvent<T>>(data => ({ type: FlowEventType.Next, data })),
-    ),
+): FlowableLike<T> => {
+  const reducer = (acc: T, ev: FlowMode): ObservableLike<T> =>
+    ev === FlowMode.Resume
+      ? generateObs(generator, () => acc, delay)
+      : emptyObs();
+
+  const op = compose(
+    scanAsync(reducer, initialValue, ScanAsyncMode.Switching),
+    mapObs(data => ({ type: FlowEventType.Next, data })),
   );
+
+  return createStreamable(op);
+};
 
 export const map = <TA, TB>(
   mapper: (v: TA) => TB,
@@ -113,33 +104,44 @@ export const map = <TA, TB>(
 
 export const fromObservable = <T>(
   observable: ObservableLike<T>,
-): FlowableLike<T> => createStreamable(
-  modeObs => using(
-    scheduler => {
-      const pausableScheduler = toPausableScheduler(scheduler);
-      const modeSubscription = pipe(
-        modeObs,
-        onNotify(mode => {
-          switch (mode) {
-            case FlowMode.Pause:
-              pausableScheduler.pause();
-              break;
-            case FlowMode.Resume:
-              pausableScheduler.resume();
-              break;
-          }
-        }),
-        subscribe(scheduler),
-      );
+): FlowableLike<T> => {
+  const createScheduler = (modeObs: ObservableLike<FlowMode>) => (
+    scheduler: SchedulerLike,
+  ) => {
+    const pausableScheduler = toPausableScheduler(scheduler);
 
-      return pausableScheduler.add(modeSubscription);
-    },
+    const onModeChange = (mode: FlowMode) => {
+      switch (mode) {
+        case FlowMode.Pause:
+          pausableScheduler.pause();
+          break;
+        case FlowMode.Resume:
+          pausableScheduler.resume();
+          break;
+      }
+    };
 
-    pausableScheduler => pipe(
-      observable,
-      subscribeOn(pausableScheduler),
-      mapObs(data => ({ type: FlowEventType.Next, data })),
-      endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
-    )
-  )
-)
+    const modeSubscription = pipe(
+      modeObs,
+      onNotify(onModeChange),
+      subscribe(scheduler),
+    );
+
+    return pausableScheduler.add(modeSubscription);
+  };
+
+  const op = (modeObs: ObservableLike<FlowMode>) =>
+    using(
+      createScheduler(modeObs),
+
+      pausableScheduler =>
+        pipe(
+          observable,
+          subscribeOn(pausableScheduler),
+          mapObs(data => ({ type: FlowEventType.Next, data })),
+          endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
+        ),
+    );
+
+  return createStreamable(op);
+};

@@ -1,6 +1,10 @@
 import { Writable } from "stream";
 import { createStreamable } from "@reactive-js/core/dist/js/streamable";
-import { FlowEventType, FlowMode, FlowEvent } from "@reactive-js/core/dist/js/flowable";
+import {
+  FlowEventType,
+  FlowMode,
+  FlowEvent,
+} from "@reactive-js/core/dist/js/flowable";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import {
   createObservable,
@@ -15,8 +19,10 @@ import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
-const createWritableEventsObservable = (autoDispose: boolean) => (writable: DisposableValueLike<Writable>) => createObservable(
-  dispatcher => {
+const createWritableEventsObservable = (autoDispose: boolean) => (
+  writable: DisposableValueLike<Writable>,
+) =>
+  createObservable(dispatcher => {
     const onDrain = () => {
       dispatcher.dispatch(FlowMode.Resume);
     };
@@ -42,8 +48,7 @@ const createWritableEventsObservable = (autoDispose: boolean) => (writable: Disp
     writable.value.on(NODE_JS_PAUSE_EVENT, onPause);
 
     dispatcher.dispatch(FlowMode.Resume);
-  }
-);
+  });
 
 const createWritableAndSetupEventSubscription = (
   factory: () => DisposableValueLike<Writable>,
@@ -69,13 +74,15 @@ const createWritableAndSetupEventSubscription = (
   );
 
   return writable.add(streamEventsSubscription);
-}
+};
 
 export const createBufferFlowableSinkFromWritable = (
   factory: () => DisposableValueLike<Writable>,
   autoDispose = true,
 ): BufferFlowableSinkLike =>
-  createStreamable(events => using(
-    createWritableAndSetupEventSubscription(factory, events),
-    createWritableEventsObservable(autoDispose),
-  ));
+  createStreamable(events =>
+    using(
+      createWritableAndSetupEventSubscription(factory, events),
+      createWritableEventsObservable(autoDispose),
+    ),
+  );

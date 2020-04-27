@@ -113,8 +113,6 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       }
     }
   }
-
-  
 }
 
 /**

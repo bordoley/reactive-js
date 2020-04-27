@@ -9,16 +9,28 @@ import { none } from "../../option.ts";
 export const sink = <TReq, T>(
   src: StreamableLike<TReq, T>,
   dest: StreamableLike<T, TReq>,
-): ObservableLike<void> => using(
-  scheduler => {
-    const srcStream = src.stream(scheduler);
-    const destStream = dest.stream(scheduler);
+): ObservableLike<void> =>
+  using(
+    scheduler => {
+      const srcStream = src.stream(scheduler);
+      const destStream = dest.stream(scheduler);
 
-    const dataSubscription = pipe(srcStream, onNotify(next => destStream.dispatch(next)), subscribe(scheduler));
-    const reqSubscription = pipe(destStream, onNotify(next => srcStream.dispatch(next)), subscribe(scheduler)); 
-    
-    return destStream.add(srcStream).add(dataSubscription).add(reqSubscription);
+      const dataSubscription = pipe(
+        srcStream,
+        onNotify(next => destStream.dispatch(next)),
+        subscribe(scheduler),
+      );
+      const reqSubscription = pipe(
+        destStream,
+        onNotify(next => srcStream.dispatch(next)),
+        subscribe(scheduler),
+      );
 
-  },
-  (destStream: StreamLike<T, TReq>) =>  pipe(destStream, ignoreElements(), endWith(none as void))
-);
+      return destStream
+        .add(srcStream)
+        .add(dataSubscription)
+        .add(reqSubscription);
+    },
+    (destStream: StreamLike<T, TReq>) =>
+      pipe(destStream, ignoreElements(), endWith(none as void)),
+  );

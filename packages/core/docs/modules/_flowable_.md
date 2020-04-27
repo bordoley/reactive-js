@@ -129,7 +129,7 @@ ___
 
 ### `Const` ofValue
 
-▸ **ofValue**<**T**>(`value`: T): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+▸ **ofValue**<**T**>(`data`: T): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -139,6 +139,6 @@ ___
 
 Name | Type |
 ------ | ------ |
-`value` | T |
+`data` | T |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*

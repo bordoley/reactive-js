@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  StreamableLike,
-} from "@reactive-js/core/dist/js/streamable";
+import { StreamableLike } from "@reactive-js/core/dist/js/streamable";
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
