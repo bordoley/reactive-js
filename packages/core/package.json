@@ -58,6 +58,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "testRegex": "(/__tests__/.*|(\\.|/)(jest|spec))\\.[jt]sx?$",
     "globals": {
       "ts-jest": {
         "tsConfig": "./tsconfig.esm.json"

@@ -26,10 +26,7 @@ export type TestAsync = {
 
 export type TestGroup = Describe | Test | TestAsync;
 
-export const describe = (
-  name: string,
-  ...tests: TestGroup[]
-): Describe => ({
+export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
   type: TestGroupType.Describe,
   name,
   tests,
@@ -83,15 +80,15 @@ export const expectFalse = (v: boolean) => {
 };
 
 export const expectNone = (v: Option<unknown>) => {
-  if(isSome(v)) {
-    throw new Error(`expected none but recieved ${v}`)
+  if (isSome(v)) {
+    throw new Error(`expected none but recieved ${v}`);
   }
-}
+};
 
 type MockFunction = {
-  (...v: any[]): void
-  calls: any[][],
-}
+  (...v: any[]): void;
+  calls: any[][];
+};
 
 export const mockFn = (): MockFunction => {
   const calls: any[][] = [];
@@ -101,13 +98,18 @@ export const mockFn = (): MockFunction => {
   cb.calls = calls;
 
   return cb;
-}
+};
 
-export const expectToHaveBeenCalledTimes = (fn: MockFunction, times: number) => {
+export const expectToHaveBeenCalledTimes = (
+  fn: MockFunction,
+  times: number,
+) => {
   if (fn.calls.length === times) {
-    throw new Error(`expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`);
+    throw new Error(
+      `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
+    );
   }
-}
+};
 
 describe(
   "observable",
