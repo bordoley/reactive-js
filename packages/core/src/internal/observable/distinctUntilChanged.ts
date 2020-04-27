@@ -5,6 +5,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { referenceEquals } from "../../functions";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -36,8 +37,6 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
-const referenceEquality = <T>(a: T, b: T): boolean => a === b;
-
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -46,7 +45,7 @@ const referenceEquality = <T>(a: T, b: T): boolean => a === b;
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equals: (a: T, b: T) => boolean = referenceEquality,
+  equals: (a: T, b: T) => boolean = referenceEquals,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equals);
