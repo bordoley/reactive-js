@@ -7,7 +7,7 @@ import {
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 import { MediaType } from "./interfaces.ts";
 
-/** @ignore */
+
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
   pForwardSlash(charStream);
@@ -43,7 +43,7 @@ const compressionBlacklist = [
 
 const textSubtypes = ["html", "json", "text", "xml"];
 
-/** @ignore */
+
 export const mediaTypeIsCompressible = (
   { type, subtype }: MediaType,
   db: {

@@ -21,7 +21,7 @@ import {
 import { pipe } from "../../functions.ts";
 import { HttpHeaders } from "./interfaces.ts";
 
-/** @ignore */
+
 export const enum ASCII {
   HTAB = 9,
   SPACE = 32,
@@ -129,10 +129,10 @@ const pQuotedString: Parser<string> = charStream => {
     : charStream.src.substring(initialIndex + 1, charStream.index);
 };
 
-/** @ignore */
+
 export const pToken = pipe(pTChar, manySatisfy({ min: 1 }));
 
-/** @ignore */
+
 export const pTokenOrQuotedString = pipe(pToken, or(pQuotedString));
 
 const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
@@ -142,7 +142,7 @@ const pParameter: Parser<[string, string]> = (charStream: CharStreamLike) => {
   return [key, value];
 };
 
-/** @ignore */
+
 export const toTokenOrQuotedString = (input: string): string => {
   let buffer: Option<number[]> = none;
 
@@ -198,7 +198,7 @@ const pParamsParam = (charStream: CharStreamLike) => {
   return pParameter(charStream);
 };
 
-/** @ignore */
+
 export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
   pParamsParam,
   many(),
@@ -217,7 +217,7 @@ const owsCommaOws = (charStream: CharStreamLike): void => {
   pOWS(charStream);
 };
 
-/** @ignore */
+
 export const httpList = <T>(parser: Parser<T>): Parser<readonly T[]> =>
   pipe(parser, sepBy(owsCommaOws));
 

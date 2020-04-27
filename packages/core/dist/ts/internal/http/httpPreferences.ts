@@ -81,7 +81,7 @@ const parseWeightedTokenHeader = (
   return isSome(rawValue) ? parseWeightedToken(rawValue) ?? [] : [];
 };
 
-/** @ignore */
+
 export const parseHttpPreferencesFromHeaders = (
   headers: HttpHeaders,
 ): Option<HttpPreferences> => {
@@ -121,7 +121,7 @@ export const parseHttpPreferencesFromHeaders = (
       };
 };
 
-/** @ignore */
+
 export const createHttpPreferences = ({
   acceptedCharsets = [],
   acceptedEncodings = [],
@@ -180,7 +180,7 @@ const writeWeightedTokenHeader = (
   }
 };
 
-/** @ignore */
+
 export const writeHttpPreferenceHeaders = (
   preferences: HttpPreferences,
   writeHeader: (header: string, value: string) => void,

@@ -28,13 +28,13 @@ const pCacheDirective = (charStream: CharStreamLike): CacheDirective => {
   return { directive, value };
 };
 
-/** @ignore */
+
 export const parseCacheDirective = parseWith(pCacheDirective);
 
-/** @ignore */
+
 export const parseCacheDirectiveOrThrow = parseWithOrThrow(pCacheDirective);
 
-/** @ignore */
+
 export const cacheDirectiveToString = ({
   directive,
   value,
@@ -45,7 +45,7 @@ export const cacheDirectiveToString = ({
 
 const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
 
-/** @ignore */
+
 export const parseCacheControlFromHeaders = (
   headers: HttpHeaders,
 ): readonly CacheDirective[] => {
@@ -56,7 +56,7 @@ export const parseCacheControlFromHeaders = (
     : [];
 };
 
-/** @ignore */
+
 export const writeHttpCacheControlHeader = (
   cacheControl: readonly CacheDirective[],
   writeHeader: (header: string, value: string) => void,
