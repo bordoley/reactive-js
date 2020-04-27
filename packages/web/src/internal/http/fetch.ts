@@ -54,7 +54,6 @@ const loadBodyContent = async (
   return await "";
 };
 
-
 export const sendHttpRequestUsingFetch: HttpClient<
   HttpWebRequest,
   WebResponseBodyLike

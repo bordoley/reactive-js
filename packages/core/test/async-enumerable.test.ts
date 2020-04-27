@@ -140,7 +140,9 @@ export const tests = describe(
 
   test("generate", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = generate(increment, returns<number>(0)).stream(scheduler);
+    const enumerator = generate(increment, returns<number>(0)).stream(
+      scheduler,
+    );
 
     const result: number[] = [];
     pipe(

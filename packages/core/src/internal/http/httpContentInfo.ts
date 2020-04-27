@@ -18,7 +18,6 @@ import {
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 
-
 export const parseHttpContentInfoFromHeaders = (
   headers: HttpHeaders,
 ): Option<HttpContentInfo> => {
@@ -45,7 +44,6 @@ export const parseHttpContentInfoFromHeaders = (
       };
 };
 
-
 export const writeHttpContentInfoHeaders = (
   content: HttpContentInfo,
   writeHeader: (header: string, value: string) => void,
@@ -65,7 +63,6 @@ export const writeHttpContentInfoHeaders = (
   }
 };
 
-
 export const createHttpContentInfo = ({
   contentEncodings,
   contentLength,
@@ -82,7 +79,6 @@ export const createHttpContentInfo = ({
       ? parseMediaTypeOrThrow(contentType)
       : contentType,
 });
-
 
 export const contentIsCompressible = (
   content: HttpContentInfo,

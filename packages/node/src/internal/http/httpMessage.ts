@@ -11,7 +11,6 @@ import { pipe, Operator } from "@reactive-js/core/dist/js/functions";
 import { createEncodingDecompressTransform } from "./httpContentEncoding";
 import { ofValue } from "@reactive-js/core/dist/js/flowable";
 
-
 export const decodeHttpMessage = <
   TMessage extends HttpMessage<BufferFlowableLike>
 >(

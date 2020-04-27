@@ -100,7 +100,6 @@ export function getHeaderValue(
   return headers[key.toLowerCase()];
 }
 
-
 export const writeHttpHeaders = (
   headers: HttpHeaders,
   writeHeader: (header: string, value: string) => void,
@@ -114,7 +113,6 @@ export const writeHttpHeaders = (
     }
   }
 };
-
 
 export const filterHeaders = (headers: HttpHeaders): HttpHeaders => {
   const result: { [key: string]: string } = {};

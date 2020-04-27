@@ -14,7 +14,6 @@ import { Option } from "@reactive-js/core/dist/js/option";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import { createDisposableNodeStream } from "../../streams";
 
-
 export const createEncodingCompressTransform = (
   encoding: HttpContentEncoding,
   options: BrotliOptions | ZlibOptions,
@@ -31,7 +30,6 @@ export const createEncodingCompressTransform = (
       throw new Error("unsupported encoding");
   }
 };
-
 
 export const createEncodingDecompressTransform = (
   encoding: HttpContentEncoding,
@@ -50,13 +48,11 @@ export const createEncodingDecompressTransform = (
   }
 };
 
-
 export const supportedEncodings = [
   HttpContentEncoding.GZip,
   HttpContentEncoding.Deflate,
   HttpContentEncoding.Brotli,
 ];
-
 
 export const getFirstSupportedEncoding = (
   acceptedEncodings: readonly HttpContentEncoding[],

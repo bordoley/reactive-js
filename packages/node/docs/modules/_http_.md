@@ -8,7 +8,6 @@
 
 * [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions)
 * [HttpClientOptions](_http_.md#httpclientoptions)
-* [HttpClientRequest](_http_.md#httpclientrequest)
 * [HttpRequestListener](_http_.md#httprequestlistener)
 * [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)
 
@@ -19,8 +18,8 @@
 * [decodeHttpRequest](_http_.md#const-decodehttprequest)
 * [encodeCharsetHttpRequest](_http_.md#const-encodecharsethttprequest)
 * [encodeCharsetHttpResponse](_http_.md#const-encodecharsethttpresponse)
+* [encodeHttpClientRequest](_http_.md#const-encodehttpclientrequest)
 * [encodeHttpResponse](_http_.md#const-encodehttpresponse)
-* [withDefaultBehaviors](_http_.md#const-withdefaultbehaviors)
 
 ## Type aliases
 
@@ -45,12 +44,6 @@ ___
 * **insecureHTTPParser**? : *boolean*
 
 * **maxHeaderSize**? : *number*
-
-___
-
-###  HttpClientRequest
-
-Ƭ **HttpClientRequest**: *HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)› & object*
 
 ___
 
@@ -155,9 +148,23 @@ Name | Type |
 
 ___
 
+### `Const` encodeHttpClientRequest
+
+▸ **encodeHttpClientRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions | {} |
+
+**Returns:** *Operator‹HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+
+___
+
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & ZlibOptions | BrotliOptions): *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
 
 **Type parameters:**
 
@@ -168,20 +175,6 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `request` | HttpRequest‹TReq› | - |
-`options` | [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & ZlibOptions &#124; BrotliOptions | {} |
+`options` | [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions | {} |
 
 **Returns:** *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
-
-___
-
-### `Const` withDefaultBehaviors
-
-▸ **withDefaultBehaviors**(`options?`: ZlibOptions | BrotliOptions & object): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`options?` | ZlibOptions &#124; BrotliOptions & object |
-
-**Returns:** *(Anonymous function)*

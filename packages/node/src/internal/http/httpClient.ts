@@ -10,11 +10,8 @@ import {
   subscribe,
   scan,
   onNotify,
-  ofValue,
   map,
-  concatMap,
   keepType,
-  switchMap,
   StreamLike,
   using,
   createSubject,
@@ -29,16 +26,11 @@ import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
   HttpHeaders,
-  HttpStatusCode,
   HttpRequest,
-  createRedirectHttpRequest,
   HttpResponse,
 } from "@reactive-js/core/dist/js/http";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { pipe, returns } from "@reactive-js/core/dist/js/functions";
-import { BrotliOptions, ZlibOptions } from "zlib";
-import { encodeHttpRequest } from "./httpRequest";
-import { HttpClientRequest } from "./interfaces";
 import {
   createBufferFlowableSinkFromWritable,
   createDisposableNodeStream,
@@ -210,60 +202,3 @@ export const createHttpClient = (
         ),
       ),
   );
-
-const redirectCodes = [
-  HttpStatusCode.MovedPermanently,
-  HttpStatusCode.Found,
-  HttpStatusCode.SeeOther,
-  HttpStatusCode.TemporaryRedirect,
-  HttpStatusCode.PermanentRedirect,
-];
-
-export const withDefaultBehaviors = (
-  options?: ZlibOptions | (BrotliOptions & { maxRedirects: number }),
-) => (
-  httpClient: HttpClient<
-    HttpRequest<BufferFlowableLike>,
-    BufferFlowableLike & DisposableLike
-  >,
-): HttpClient<HttpClientRequest, BufferFlowableLike & DisposableLike> => {
-  const sendRequest: HttpClient<
-    HttpClientRequest,
-    BufferFlowableLike & DisposableLike
-  > = request =>
-    pipe(
-      ofValue(request),
-      map(encodeHttpRequest(options)),
-      switchMap(httpClient),
-      concatMap(status => {
-        // FIXME: Move this logic into http-common
-        if (status.type === HttpClientRequestStatusType.HeadersReceived) {
-          const { response } = status;
-          const { location, preferences, statusCode } = response;
-          const acceptedEncodings = preferences?.acceptedEncodings ?? [];
-          const shouldRedirect =
-            redirectCodes.includes(statusCode) &&
-            isSome(location) &&
-            (request?.maxRedirects ?? 10) > 0;
-
-          const newRequest = shouldRedirect
-            ? createRedirectHttpRequest(request, response)
-            : statusCode === HttpStatusCode.ExpectationFailed
-            ? { ...request, expectContinue: false }
-            : statusCode === HttpStatusCode.UnsupportedMediaType &&
-              acceptedEncodings.length > 0
-            ? { ...request, acceptedEncodings }
-            : request;
-
-          if (request !== newRequest) {
-            response.body.dispose();
-            return sendRequest(newRequest);
-          }
-          // Fallthrough
-        }
-        return ofValue(status);
-      }),
-    );
-
-  return sendRequest;
-};

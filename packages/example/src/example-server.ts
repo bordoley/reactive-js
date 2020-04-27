@@ -15,16 +15,19 @@ import {
   HttpStatusCode,
   HttpRequest,
 } from "@reactive-js/core/dist/js/http";
-import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/http-client";
+import {
+  HttpClientRequestStatusType,
+  withDefaultBehaviors,
+} from "@reactive-js/core/dist/js/http-client";
 import { HttpServer } from "@reactive-js/core/dist/js/http-server";
 import {
   createHttpRequestListener,
   createHttpClient,
   decodeHttpRequest,
+  encodeHttpClientRequest,
   encodeHttpResponse,
   encodeCharsetHttpResponse,
   encodeCharsetHttpRequest,
-  withDefaultBehaviors,
 } from "@reactive-js/node/dist/js/http";
 import {
   createRouter,
@@ -52,7 +55,12 @@ import {
   switchMap,
 } from "@reactive-js/core/dist/js/observable";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import { pipe, Operator, returns, increment } from "@reactive-js/core/dist/js/functions";
+import {
+  pipe,
+  Operator,
+  returns,
+  increment,
+} from "@reactive-js/core/dist/js/functions";
 import {
   toPriorityScheduler,
   toSchedulerWithPriority,
@@ -209,7 +217,10 @@ createHttp2Server(
   listener,
 ).listen(8081);
 
-const httpClient = pipe(createHttpClient(), withDefaultBehaviors());
+const httpClient = pipe(
+  createHttpClient(),
+  withDefaultBehaviors(encodeHttpClientRequest()),
+);
 
 pipe(
   createHttpRequest({

@@ -1,7 +1,13 @@
 import { test, describe, testAsync } from "../src/testing";
 import { createDisposable, disposed, DisposableLike } from "../src/disposable";
 import { Option } from "../src/option";
-import { pipe, returns, increment, alwaysFalse, alwaysTrue } from "../src/functions";
+import {
+  pipe,
+  returns,
+  increment,
+  alwaysFalse,
+  alwaysTrue,
+} from "../src/functions";
 import {
   AbstractHostScheduler,
   SchedulerLike,

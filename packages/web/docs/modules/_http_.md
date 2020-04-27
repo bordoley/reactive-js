@@ -21,7 +21,7 @@
 
 ###  HttpWebRequest
 
-Ƭ **HttpWebRequest**: *HttpRequest‹[WebRequestBody](_http_.md#webrequestbody)› & object*
+Ƭ **HttpWebRequest**: *HttpClientRequest‹[WebRequestBody](_http_.md#webrequestbody)› & object*
 
 ___
 
@@ -33,12 +33,12 @@ ___
 
 ### `Const` sendHttpRequest
 
-▸ **sendHttpRequest**(`request`: object & object & object): *ObservableLike‹object | object | object | object›*
+▸ **sendHttpRequest**(`request`: object & object & object & object): *ObservableLike‹object | object | object | object›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`request` | object & object & object |
+`request` | object & object & object & object |
 
 **Returns:** *ObservableLike‹object | object | object | object›*

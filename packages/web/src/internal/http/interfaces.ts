@@ -1,6 +1,6 @@
 import { DisposableLike } from "@reactive-js/core/dist/js/disposable";
-import { HttpRequest } from "@reactive-js/core/dist/js/http";
 import { ObservableLike } from "@reactive-js/core/dist/js/observable";
+import { HttpClientRequest } from "@reactive-js/core/dist/js/http-client";
 
 // BodyInit
 export type WebRequestBody =
@@ -12,7 +12,7 @@ export type WebRequestBody =
   | URLSearchParams
   | undefined;
 
-export type HttpWebRequest = HttpRequest<WebRequestBody> & {
+export type HttpWebRequest = HttpClientRequest<WebRequestBody> & {
   cache?: RequestCache;
   credentials?: RequestCredentials;
   integrity?: string;
