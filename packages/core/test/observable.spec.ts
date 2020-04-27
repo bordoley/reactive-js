@@ -224,10 +224,7 @@ test("contains", () => {
   pipe(empty<number>(), contains(1), toValue(), expect).toBeFalsy();
 
   pipe(
-    generate(
-      incr,
-      returns<number>(0),
-    ),
+    generate(incr, returns<number>(0)),
     contains(1),
     toValue(),
     expect,
@@ -456,25 +453,10 @@ describe("empty", () => {
 });
 
 test("every", () => {
-  pipe(
-    empty(),
-    every(alwaysFalse),
-    toValue(),
-    expect,
-  ).toBeTruthy();
+  pipe(empty(), every(alwaysFalse), toValue(), expect).toBeTruthy();
 
-  pipe(
-    fromArray([1, 2, 3]),
-    every(alwaysTrue),
-    toValue(),
-    expect,
-  ).toBeTruthy();
-  pipe(
-    fromArray([1, 2, 3]),
-    every(alwaysFalse),
-    toValue(),
-    expect,
-  ).toBeFalsy();
+  pipe(fromArray([1, 2, 3]), every(alwaysTrue), toValue(), expect).toBeTruthy();
+  pipe(fromArray([1, 2, 3]), every(alwaysFalse), toValue(), expect).toBeFalsy();
 });
 
 test("forEach", () => {
@@ -605,10 +587,7 @@ test("fromScheduledValues", () => {
 describe("generate", () => {
   test("without delay", () => {
     pipe(
-      generate(
-        incr,
-        returns<number>(1),
-      ),
+      generate(incr, returns<number>(1)),
       takeFirst(5),
       toArray(),
       expect,
@@ -648,11 +627,7 @@ describe("generate", () => {
     const cb = jest.fn();
 
     pipe(
-      generate(
-        incr,
-        returns<number>(1),
-        5,
-      ),
+      generate(incr, returns<number>(1), 5),
       map(x => [scheduler.now, x]),
       takeFirst(5),
       onNotify(cb),
@@ -801,27 +776,9 @@ describe("never", () => {
 });
 
 test("none", () => {
-  expect(
-    pipe(
-      empty(),
-      none(alwaysFalse),
-      toValue(),
-    ),
-  ).toBeTruthy();
-  expect(
-    pipe(
-      fromArray([1, 2, 3]),
-      none(alwaysTrue),
-      toValue(),
-    ),
-  ).toBeFalsy();
-  expect(
-    pipe(
-      fromArray([1, 2, 3]),
-      none(alwaysFalse),
-      toValue(),
-    ),
-  ).toBeTruthy();
+  expect(pipe(empty(), none(alwaysFalse), toValue())).toBeTruthy();
+  expect(pipe(fromArray([1, 2, 3]), none(alwaysTrue), toValue())).toBeFalsy();
+  expect(pipe(fromArray([1, 2, 3]), none(alwaysFalse), toValue())).toBeTruthy();
 });
 
 describe("ofValue", () => {
@@ -1080,10 +1037,7 @@ describe("takeLast", () => {
 
 test("takeWhile", () => {
   pipe(
-    generate(
-      incr,
-      returns<number>(0),
-    ),
+    generate(incr, returns<number>(0)),
     takeWhile(x => x < 3),
     toArray(),
     expect,
@@ -1093,11 +1047,7 @@ test("takeWhile", () => {
 describe("throttle", () => {
   test("first", () => {
     const result = pipe(
-      generate(
-        incr,
-        returns<number>(0),
-        1,
-      ),
+      generate(incr, returns<number>(0), 1),
       takeFirst(100),
       throttle(50, ThrottleMode.First),
       toArray(),
@@ -1108,11 +1058,7 @@ describe("throttle", () => {
 
   test("last", () => {
     const result = pipe(
-      generate(
-        incr,
-        returns<number>(0),
-        1,
-      ),
+      generate(incr, returns<number>(0), 1),
       takeFirst(200),
       throttle(50, ThrottleMode.Last),
       toArray(),
@@ -1123,11 +1069,7 @@ describe("throttle", () => {
 
   test("interval", () => {
     const result = pipe(
-      generate(
-        incr,
-        returns<number>(0),
-        1,
-      ),
+      generate(incr, returns<number>(0), 1),
       takeFirst(200),
       throttle(75, ThrottleMode.Interval),
       toArray(),
@@ -1233,14 +1175,8 @@ describe("zip", () => {
       zip(
         [
           fromArray([1, 2]),
-          pipe(
-            fromArray([1, 2]),
-            map(incr),
-          ),
-          generate(
-            incr,
-            returns<number>(3),
-          ),
+          pipe(fromArray([1, 2]), map(incr)),
+          generate(incr, returns<number>(3)),
         ],
         (x, y, z) => [x, y, z],
       ),

@@ -6,6 +6,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 import { ofValue } from "./ofValue.ts";
+import { referenceEquals } from "../../functions.ts";
 
 class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(
@@ -48,8 +49,6 @@ export const some = <T>(
   operator.isSynchronous = true;
   return lift(operator);
 };
-
-const referenceEquals = <T>(a: T, b: T) => a === b;
 
 /**
  * Returns an `ObservableLike` that emits a single `true` value if the source

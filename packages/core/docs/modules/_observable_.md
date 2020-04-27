@@ -788,7 +788,7 @@ are distinct by comparison from the previous item.
 
 **Parameters:**
 
-▪`Default value`  **equals**: *function*= referenceEquality
+▪`Default value`  **equals**: *function*= referenceEquals
 
 Optional equality function that is used to compare
 if an item is distinct from the previous item.

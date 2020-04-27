@@ -16,6 +16,7 @@
 
 * [isNone](_option_.md#const-isnone)
 * [isSome](_option_.md#const-issome)
+* [orCompute](_option_.md#const-orcompute)
 
 ## Type aliases
 
@@ -64,3 +65,21 @@ Name | Type |
 `option` | [Option](_option_.md#option)‹T› |
 
 **Returns:** *option is T*
+
+___
+
+### `Const` orCompute
+
+▸ **orCompute**<**T**>(`compute`: function): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **compute**: *function*
+
+▸ (): *T*
+
+**Returns:** *(Anonymous function)*

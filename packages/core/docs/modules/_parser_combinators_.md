@@ -43,7 +43,7 @@
 * [mapTo](_parser_combinators_.md#const-mapto)
 * [optional](_parser_combinators_.md#const-optional)
 * [or](_parser_combinators_.md#const-or)
-* [orDefault](_parser_combinators_.md#const-ordefault)
+* [orCompute](_parser_combinators_.md#const-orcompute)
 * [pEof](_parser_combinators_.md#const-peof)
 * [parseWith](_parser_combinators_.md#const-parsewith)
 * [parseWithOrThrow](_parser_combinators_.md#const-parsewithorthrow)
@@ -717,9 +717,9 @@ Name | Type |
 
 ___
 
-### `Const` orDefault
+### `Const` orCompute
 
-▸ **orDefault**<**T**>(`default_`: function): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
+▸ **orCompute**<**T**>(`compute`: function): *[Operator](_pipe_.md#operator)‹[Parser](_parser_combinators_.md#parser)‹[Option](_option_.md#option)‹T››, [Parser](_parser_combinators_.md#parser)‹T››*
 
 **Type parameters:**
 
@@ -727,7 +727,7 @@ ___
 
 **Parameters:**
 
-▪ **default_**: *function*
+▪ **compute**: *function*
 
 ▸ (): *T*
 
