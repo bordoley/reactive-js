@@ -139,9 +139,9 @@ export const fromObservable = <T>(
 
     pausableScheduler => pipe(
       observable,
-      mapObs(data => ({ type: FlowEventType.Next, data })),
-      endWith({ type: FlowEventType.Complete }),
       subscribeOn(pausableScheduler),
+      mapObs(data => ({ type: FlowEventType.Next, data })),
+      endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
     )
   )
 )

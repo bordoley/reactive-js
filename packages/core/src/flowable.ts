@@ -10,7 +10,6 @@ import {
   endWith,
   generate as generateObs,
   map as mapObs,
-  never,
   keepType,
   takeFirst,
   genMap,
@@ -52,7 +51,7 @@ export type FlowableOperator<TA, TB> = Operator<
 
 const createFlowable = <T>(
   f: Operator<ObservableLike<FlowMode>, ObservableLike<FlowEvent<T>>>,
-) => createStreamable(obs => concat(f(obs), never()));
+) => createStreamable(obs => f(obs));
 
 const emptyModeMapper = (mode: FlowMode) =>
   mode === FlowMode.Resume ? { type: FlowEventType.Complete } : none;
@@ -139,9 +138,9 @@ export const fromObservable = <T>(
 
     pausableScheduler => pipe(
       observable,
-      mapObs(data => ({ type: FlowEventType.Next, data })),
-      endWith({ type: FlowEventType.Complete }),
       subscribeOn(pausableScheduler),
+      mapObs(data => ({ type: FlowEventType.Next, data })),
+      endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
     )
   )
 )
