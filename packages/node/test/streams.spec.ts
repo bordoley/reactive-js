@@ -1,4 +1,4 @@
-import { runTests } from "../../../jestTestRunner";
+import { runTests } from "../../../scripts/jestTestRunner";
 
 import {
   test,
