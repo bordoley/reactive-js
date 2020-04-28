@@ -4,7 +4,7 @@ import { StreamLike } from "../observable/interfaces";
 import { pipe } from "../../functions";
 import { subscribe } from "../observable/subscribe";
 import { ignoreElements } from "../observable/ignoreElements";
-import { none } from "../../option";
+import { isSome, none } from "../../option";
 
 export const sink = <TReq, T>(
   src: StreamableLike<TReq, T>,
@@ -19,7 +19,12 @@ export const sink = <TReq, T>(
         srcStream,
         onNotify(next => destStream.dispatch(next)),
         subscribe(scheduler),
-      );
+      ).add(e => {
+        if(isSome(e)) {
+          destStream.dispose(e);
+        }
+      });
+
       const reqSubscription = pipe(
         destStream,
         onNotify(next => srcStream.dispatch(next)),

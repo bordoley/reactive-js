@@ -3,8 +3,6 @@ import {
   describe,
   testAsync,
   expectArrayEquals,
-  mockFn,
-  expectToHaveBeenCalledTimes,
   expectToThrowError,
   expectTrue,
   expectFalse,
@@ -26,18 +24,14 @@ import {
 import {
   AbstractHostScheduler,
   SchedulerLike,
-  schedule,
   createVirtualTimeScheduler,
 } from "../src/scheduler";
-import { AbstractSubscriber } from "../src/internal/observable/subscriber";
 import {
   buffer,
   combineLatest,
   concat,
-  concatAll,
   contains,
   createObservable,
-  createSubject,
   distinctUntilChanged,
   empty,
   every,
@@ -57,8 +51,6 @@ import {
   onNotify,
   repeat,
   scan,
-  scanAsync,
-  ScanAsyncMode,
   share,
   subscribe,
   takeFirst,
@@ -82,7 +74,6 @@ import {
   skipFirst,
   switchMap,
   onSubscribe,
-  subscribeOn,
 } from "../src/observable";
 
 // A simple scheduler for testing promise functions where a VTS cannot be used
@@ -142,7 +133,7 @@ export const tests = describe(
     const error = new Error();
     pipe(
       throws(returns(error)),
-      catchError(e => ofValue(1)),
+      catchError(_ => ofValue(1)),
       toValue(),
       expectEquals(1),
     );
@@ -255,7 +246,7 @@ export const tests = describe(
         () =>
           pipe(
             throws(returns(error)),
-            forEach(v => {}),
+            forEach(_ => {}),
           ),
         expectToThrowError(error),
       );
@@ -289,7 +280,7 @@ export const tests = describe(
   test("genMap", () =>
     pipe(
       ofValue(undefined),
-      genMap(function*(ev) {
+      genMap(function*(_) {
         yield 1;
         yield 2;
         yield 3;
@@ -388,7 +379,7 @@ export const tests = describe(
       onNotify(x => {
         result = x;
       }),
-      onSubscribe(x => scheduler.run()),
+      onSubscribe(_ => scheduler.run()),
       subscribe(scheduler),
     );
 

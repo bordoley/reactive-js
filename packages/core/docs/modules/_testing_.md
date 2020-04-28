@@ -18,12 +18,15 @@
 ### Functions
 
 * [describe](_testing_.md#const-describe)
+* [expectArrayEquals](_testing_.md#const-expectarrayequals)
+* [expectEquals](_testing_.md#const-expectequals)
 * [expectFalse](_testing_.md#const-expectfalse)
 * [expectNone](_testing_.md#const-expectnone)
+* [expectPromiseToThrow](_testing_.md#const-expectpromisetothrow)
 * [expectSome](_testing_.md#const-expectsome)
-* [expectToEqual](_testing_.md#const-expecttoequal)
 * [expectToHaveBeenCalledTimes](_testing_.md#const-expecttohavebeencalledtimes)
 * [expectToThrow](_testing_.md#const-expecttothrow)
+* [expectToThrowError](_testing_.md#const-expecttothrowerror)
 * [expectTrue](_testing_.md#const-expecttrue)
 * [mockFn](_testing_.md#const-mockfn)
 * [test](_testing_.md#const-test)
@@ -98,6 +101,52 @@ Name | Type |
 
 ___
 
+### `Const` expectArrayEquals
+
+▸ **expectArrayEquals**<**T**>(`b`: keyof T[], `valuesAreEqual?`: function): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **b**: *keyof T[]*
+
+▪`Optional`  **valuesAreEqual**: *function*
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *(Anonymous function)*
+
+___
+
+### `Const` expectEquals
+
+▸ **expectEquals**<**T**>(`b`: T, `valuesAreEqual`: referenceEquals): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`b` | T | - |
+`valuesAreEqual` | referenceEquals | referenceEquals |
+
+**Returns:** *(Anonymous function)*
+
+___
+
 ### `Const` expectFalse
 
 ▸ **expectFalse**(`v`: boolean): *void*
@@ -126,6 +175,20 @@ Name | Type |
 
 ___
 
+### `Const` expectPromiseToThrow
+
+▸ **expectPromiseToThrow**(`promise`: Promise‹any›): *Promise‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`promise` | Promise‹any› |
+
+**Returns:** *Promise‹void›*
+
+___
+
 ### `Const` expectSome
 
 ▸ **expectSome**(`v`: [Option](_option_.md#option)‹unknown›): *void*
@@ -137,24 +200,6 @@ Name | Type |
 `v` | [Option](_option_.md#option)‹unknown› |
 
 **Returns:** *void*
-
-___
-
-### `Const` expectToEqual
-
-▸ **expectToEqual**<**T**>(`b`: T): *(Anonymous function)*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`b` | T |
-
-**Returns:** *(Anonymous function)*
 
 ___
 
@@ -183,6 +228,20 @@ ___
 ▸ (): *void*
 
 **Returns:** *void*
+
+___
+
+### `Const` expectToThrowError
+
+▸ **expectToThrowError**(`error`: unknown): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`error` | unknown |
+
+**Returns:** *(Anonymous function)*
 
 ___
 

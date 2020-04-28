@@ -1,4 +1,5 @@
 import { Option, isSome, isNone } from "./option.ts";
+import { referenceEquals, arrayEquals } from "./functions.ts";
 
 export const enum TestGroupType {
   Describe = 1,
@@ -57,18 +58,46 @@ export const expectToThrow = (f: () => void) => {
   }
 };
 
-const expectArraysEqual = <T>(a: readonly T[], b: readonly T[]) => {
-  if (a.length !== b.length || !a.every((v, i) => b[i] === v)) {
+export const expectToThrowError = (error: unknown) => (f: () => void) => {
+  let didThrow = false;
+  let errorThrown = undefined;
+  try {
+    f();
+  } catch (e) {
+    didThrow = true;
+    errorThrown = e;
+  }
+
+  if (!didThrow) {
+    throw new Error("expected function to throw");
+  } else if (errorThrown !== error) {
+    throw new Error(
+      `expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(
+        errorThrown,
+      )}`,
+    );
+  }
+};
+
+export const expectEquals = <T>(b: T, valuesAreEqual = referenceEquals) => (
+  a: T,
+) => {
+  if (!valuesAreEqual(a, b)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
 };
 
-export const expectToEqual = <T>(b: T) => (a: T) => {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    expectArraysEqual(a, b);
-  } else if (a !== b) {
+const arrayReferenceEquals = arrayEquals(referenceEquals);
+export const expectArrayEquals = <T>(
+  b: readonly T[],
+  valuesAreEqual?: (a: T, b: T) => boolean,
+) => (a: readonly T[]) => {
+  const equals = isNone(valuesAreEqual)
+    ? arrayReferenceEquals
+    : arrayEquals(valuesAreEqual);
+  if (!equals(a, b)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
@@ -122,5 +151,18 @@ export const expectToHaveBeenCalledTimes = (times: number) => (
     throw new Error(
       `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
     );
+  }
+};
+
+export const expectPromiseToThrow = async (promise: Promise<any>) => {
+  let didThrow = false;
+  try {
+    await promise;
+  } catch (_) {
+    didThrow = true;
+  }
+
+  if (!didThrow) {
+    throw new Error("expected function to throw");
   }
 };
