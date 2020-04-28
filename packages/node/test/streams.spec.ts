@@ -1,11 +1,11 @@
+import { runTests } from "../../../jestTestRunner";
+
 import {
   test,
   describe,
   testAsync,
   expectEquals,
   expectPromiseToThrow,
-  TestGroup,
-  TestGroupType,
 } from "@reactive-js/core/dist/js/testing";
 
 import { Readable, Writable } from "stream";
@@ -189,17 +189,4 @@ export const tests = describe("streams",
   }),
 );
 
-const toJestTest = (testGroup: TestGroup) => {
-  if (testGroup.type === TestGroupType.Describe) {
-    (global as any).describe(testGroup.name, () => {
-      const tests = testGroup.tests;
-      for (const testGroup of tests) {
-        toJestTest(testGroup);
-      }
-    });
-  } else {
-    (global as any).test(testGroup.name, testGroup.f);
-  }
-};
-
-toJestTest(tests);
+runTests([tests]);
