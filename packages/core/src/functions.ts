@@ -14,6 +14,12 @@ export const decrement = (x: number) => x - 1;
 
 export const referenceEquals = <T>(a: T, b: T) => a === b;
 
+// FIXME: Would prefer not to have this here.
+export const arrayEquals = <T>(valuesAreEqual: (a: T, b: T) => boolean) => (
+  a: readonly T[],
+  b: readonly T[],
+) => a.length === b.length && a.every((v, i) => valuesAreEqual(b[i], v));
+
 /** A Unary function that transforms a value of type A into a value of type B */
 export type Operator<A, B> = {
   (src: A): B;

@@ -4,7 +4,7 @@ import {
   expectNone,
   expectSome,
   expectTrue,
-  expectToEqual,
+  expectEquals,
 } from "../src/testing";
 import {
   fromArray,
@@ -131,7 +131,7 @@ export const tests = describe(
           );
         },
         () => {
-          pipe(value, expectToEqual(""));
+          pipe(value, expectEquals(""));
         },
       ]),
       forEach(
@@ -162,7 +162,7 @@ export const tests = describe(
             );
           },
           () => {
-            pipe(value, expectToEqual("a"));
+            pipe(value, expectEquals("a"));
           },
         ],
         { delay: 1 },
