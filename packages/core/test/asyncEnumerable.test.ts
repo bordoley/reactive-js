@@ -1,4 +1,10 @@
-import { test, describe, expectToEqual, expectNone } from "../src/testing";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectNone,
+  expectArrayEquals,
+} from "../src/testing";
 import { Exception } from "../src/disposable";
 import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
 import { none, Option } from "../src/option";
@@ -28,7 +34,7 @@ export const tests = describe(
         returns<number>(0),
       ),
       toValue(),
-      expectToEqual(21),
+      expectEquals(21),
     );
 
     pipe(
@@ -48,7 +54,7 @@ export const tests = describe(
         returns<number>(0),
       ),
       toValue(),
-      expectToEqual(3),
+      expectEquals(3),
     );
   }),
 
@@ -66,7 +72,7 @@ export const tests = describe(
         returns<number>(0),
       ),
       toValue(),
-      expectToEqual(21),
+      expectEquals(21),
     );
 
     pipe(
@@ -87,7 +93,7 @@ export const tests = describe(
         returns<number>(0),
       ),
       toValue(),
-      expectToEqual(3),
+      expectEquals(3),
     );
   }),
 
@@ -108,7 +114,7 @@ export const tests = describe(
 
     scheduler.run();
 
-    pipe(result, expectToEqual([1, 2, 3]));
+    pipe(result, expectArrayEquals([1, 2, 3]));
   }),
 
   test("fromIterable", () => {
@@ -134,7 +140,7 @@ export const tests = describe(
 
     scheduler.run();
 
-    pipe(result, expectToEqual([1, 2, 3, 4, 5, 6]));
+    pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
   }),
 
@@ -157,6 +163,6 @@ export const tests = describe(
 
     scheduler.run();
 
-    pipe(result, expectToEqual([1, 2, 3]));
+    pipe(result, expectArrayEquals([1, 2, 3]));
   }),
 );

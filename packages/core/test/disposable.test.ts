@@ -1,11 +1,12 @@
 import {
   test,
   describe,
-  expectToEqual,
   expectFalse,
   expectTrue,
   mockFn,
   expectToHaveBeenCalledTimes,
+  expectArrayEquals,
+  expectEquals,
 } from "../src/testing";
 import {
   createDisposable,
@@ -95,16 +96,16 @@ export const tests = describe(
     disposable.add(child2);
 
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
-    pipe(childTeardown.calls[0], expectToEqual([error]));
+    pipe(childTeardown.calls[0], expectArrayEquals([error]));
 
     pipe(teardown, expectToHaveBeenCalledTimes(1));
-    pipe(teardown.calls[0], expectToEqual([error]));
+    pipe(teardown.calls[0], expectArrayEquals([error]));
 
     pipe(childTeardown2, expectToHaveBeenCalledTimes(1));
-    pipe(childTeardown2.calls[0], expectToEqual([error]));
+    pipe(childTeardown2.calls[0], expectArrayEquals([error]));
 
     pipe(teardown2, expectToHaveBeenCalledTimes(1));
-    pipe(teardown2.calls[0], expectToEqual([error]));
+    pipe(teardown2.calls[0], expectArrayEquals([error]));
   }),
 
   describe(
@@ -122,11 +123,11 @@ export const tests = describe(
       const disposable = createDisposable();
 
       serialDisposable.inner = disposable;
-      pipe(serialDisposable.inner, expectToEqual(disposable));
+      pipe(serialDisposable.inner, expectEquals(disposable));
 
       const anotherDisposable = createDisposable();
       serialDisposable.inner = anotherDisposable;
-      pipe(serialDisposable.inner, expectToEqual(anotherDisposable));
+      pipe(serialDisposable.inner, expectEquals(anotherDisposable));
 
       pipe(disposable.isDisposed, expectTrue);
 

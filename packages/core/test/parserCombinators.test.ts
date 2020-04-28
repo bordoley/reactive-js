@@ -1,4 +1,10 @@
-import { test, describe, expectToEqual, expectToThrow } from "../src/testing";
+import {
+  test,
+  describe,
+  expectToThrow,
+  expectArrayEquals,
+  expectEquals,
+} from "../src/testing";
 import { none } from "../src/option";
 import { pipe, returns } from "../src/functions";
 import {
@@ -29,7 +35,7 @@ export const tests = describe(
     pipe(
       "abcabcabcabc",
       parseWithOrThrow(parser),
-      expectToEqual(["abc", "abc", "abc", "abc"]),
+      expectArrayEquals(["abc", "abc", "abc", "abc"]),
     );
   }),
 
@@ -38,7 +44,7 @@ export const tests = describe(
     pipe(
       "abcabcabcabc",
       parseWithOrThrow(parser),
-      expectToEqual(["abc", "abc", "abc", "abc"]),
+      expectArrayEquals(["abc", "abc", "abc", "abc"]),
     );
   }),
 
@@ -47,7 +53,11 @@ export const tests = describe(
       manySatisfy()(pForwardSlash),
       manySatisfy()(char("z")),
     );
-    pipe("////zzz", parseWithOrThrow(parser), expectToEqual(["////", "zzz"]));
+    pipe(
+      "////zzz",
+      parseWithOrThrow(parser),
+      expectArrayEquals(["////", "zzz"]),
+    );
   }),
 
   test("map", () => {
@@ -56,12 +66,12 @@ export const tests = describe(
       map((x: string) => x + "cd"),
     );
 
-    pipe("ab", parseWithOrThrow(parser), expectToEqual("abcd"));
+    pipe("ab", parseWithOrThrow(parser), expectEquals("abcd"));
   }),
 
   test("mapTo", () => {
     const parser = pipe(string("ab"), mapTo("xyz"));
-    pipe("ab", parseWithOrThrow(parser), expectToEqual("xyz"));
+    pipe("ab", parseWithOrThrow(parser), expectEquals("xyz"));
   }),
 
   test("optional", () => {
@@ -71,15 +81,19 @@ export const tests = describe(
       pEof,
     );
 
-    pipe("abcd", parseWithOrThrow(parser), expectToEqual(["ab", "cd", none]));
-    pipe("ab", parseWithOrThrow(parser)), expectToEqual(["ab", "ef", none]);
+    pipe(
+      "abcd",
+      parseWithOrThrow(parser),
+      expectArrayEquals(["ab", "cd", none]),
+    );
+    pipe("ab", parseWithOrThrow(parser)), expectArrayEquals(["ab", "ef", none]);
   }),
 
   test("or", () => {
     const parser = pipe(string("ab"), or(string("cd")));
 
-    pipe("ab", parseWithOrThrow(parser), expectToEqual("ab"));
-    pipe("cd", parseWithOrThrow(parser), expectToEqual("cd"));
+    pipe("ab", parseWithOrThrow(parser), expectEquals("ab"));
+    pipe("cd", parseWithOrThrow(parser), expectEquals("cd"));
   }),
 
   test("sepBy", () => {
@@ -87,13 +101,13 @@ export const tests = describe(
     pipe(
       "ab:ab:ab:ab",
       parseWithOrThrow(parser),
-      expectToEqual(["ab", "ab", "ab", "ab"]),
+      expectArrayEquals(["ab", "ab", "ab", "ab"]),
     );
   }),
 
   test("string", () => {
     const parser = concat(string("ab"), string("cd"));
-    pipe("abcd", parseWithOrThrow(parser), expectToEqual(["ab", "cd"]));
+    pipe("abcd", parseWithOrThrow(parser), expectArrayEquals(["ab", "cd"]));
   }),
 
   test("throwParseError", () => {

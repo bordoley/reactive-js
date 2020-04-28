@@ -1,4 +1,4 @@
-import { test, describe, expectToEqual, expectToThrow } from "../src/testing";
+import { test, describe, expectToThrow, expectEquals } from "../src/testing";
 import {
   parseMediaTypeOrThrow,
   HttpRequest,
@@ -21,32 +21,30 @@ export const tests = describe(
       const { type, subtype, params } = parseMediaTypeOrThrow(
         "application/json; charset=UTF-8",
       );
-      pipe(type, expectToEqual("application"));
-      pipe(subtype, expectToEqual("json"));
-      pipe(params["charset"], expectToEqual("UTF-8"));
+      pipe(type, expectEquals("application"));
+      pipe(subtype, expectEquals("json"));
+      pipe(params["charset"], expectEquals("UTF-8"));
     }),
 
     test("parseMediaType without params", () => {
       const { type, subtype } = parseMediaTypeOrThrow("application/json");
-      pipe(type, expectToEqual("application"));
-      pipe(subtype, expectToEqual("json"));
+      pipe(type, expectEquals("application"));
+      pipe(subtype, expectEquals("json"));
     }),
 
-    test("parseMediaType with invalid params", () => {
-      expectToThrow(() => parseMediaTypeOrThrow("application/json; ="));
-    }),
+    test("parseMediaType with invalid params", () =>
+      expectToThrow(() => parseMediaTypeOrThrow("application/json; ="))),
 
-    test("parseMediaType with empty params", () => {
-      expectToThrow(() => parseMediaTypeOrThrow("application/json; charset="));
-    }),
+    test("parseMediaType with empty params", () =>
+      expectToThrow(() => parseMediaTypeOrThrow("application/json; charset="))),
 
     test("parseMediaRange", () => {
       const { type, subtype, params } = parseMediaTypeOrThrow(
         "*/*; q=0.1; charset=UTF-8",
       );
-      pipe(type, expectToEqual("*"));
-      pipe(subtype, expectToEqual("*"));
-      pipe(params["q"], expectToEqual("0.1"));
+      pipe(type, expectEquals("*"));
+      pipe(subtype, expectEquals("*"));
+      pipe(params["q"], expectEquals("0.1"));
     }),
   ),
 
@@ -362,11 +360,15 @@ export const tests = describe(
         }),
         HttpStatusCode.OK,
       ],
-    ] as [string, HttpRequest<any>, HttpResponse<any>, number][]).map(
-      ([name, req, resp, status]) =>
-        test(name, () => {
-          pipe(checkIfNotModified(req)(resp).statusCode, expectToEqual(status));
-        }),
+    ] as [
+      string,
+      HttpRequest<any>,
+      HttpResponse<any>,
+      number,
+    ][]).map(([name, req, resp, status]) =>
+      test(name, () =>
+        pipe(checkIfNotModified(req)(resp).statusCode, expectEquals(status)),
+      ),
     ),
   ),
 );
