@@ -1,4 +1,4 @@
-import { runTests } from "../../../jestTestRunner";
+import { runTests } from "../../../scripts/jestTestRunner";
 import { tests as asyncEnumerableTests } from "./asyncEnumerable.test";
 import { tests as collectionTests } from "./collections.test";
 import { tests as disposableTests } from "./disposable.test";
