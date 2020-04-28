@@ -16,6 +16,7 @@
 
 ### Functions
 
+* [arrayEquals](_functions_.md#const-arrayequals)
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
 * [identity](_functions_.md#const-identity)
@@ -61,6 +62,31 @@ ___
 • **alwaysVoid**: *(Anonymous function)* = returns<void>(undefined)
 
 ## Functions
+
+### `Const` arrayEquals
+
+▸ **arrayEquals**<**T**>(`valuesAreEqual`: function): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **valuesAreEqual**: *function*
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *(Anonymous function)*
+
+___
 
 ###  compose
 

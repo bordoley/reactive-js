@@ -1,3 +1,13 @@
+import {
+  test,
+  describe,
+  testAsync,
+  expectEquals,
+  expectPromiseToThrow,
+  TestGroup,
+  TestGroupType,
+} from "@reactive-js/core/dist/js/testing";
+
 import { Readable, Writable } from "stream";
 import { sink } from "@reactive-js/core/dist/js/streamable";
 import {
@@ -25,8 +35,8 @@ import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
 import { createVirtualTimeScheduler } from "@reactive-js/core/dist/js/scheduler";
 
-describe("streams", () => {
-  test("sinking to the buffer", async () => {
+export const tests = describe("streams",
+  testAsync("sinking to the buffer", async () => {
     let data = "";
     const decoder = new StringDecoder();
 
@@ -57,10 +67,10 @@ describe("streams", () => {
     );
 
     await pipe(sink(src, dest), toPromise(scheduler));
-    expect(data).toEqual("abcdefg");
-  });
+    pipe(data, expectEquals("abcdefg"));
+  }),
 
-  test("when the writable throws an exception", () => {
+  testAsync("when the writable throws an exception", async () => {
     const cause = new Error();
 
     const writable = new Writable({
@@ -83,10 +93,10 @@ describe("streams", () => {
     );
 
     const promise = pipe(sink(src, dest), toPromise(scheduler));
-    expect(promise).rejects.toThrow(cause);
-  });
+    await pipe(promise, expectPromiseToThrow);
+  }),
 
-  test("when the readable throws an exception", () => {
+  testAsync("when the readable throws an exception", async () => {
     const writable = new Writable({
       write(_chunk, _encoding, callback) {
         callback();
@@ -109,11 +119,10 @@ describe("streams", () => {
       pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
-    const promise = pipe(sink(src, dest), toPromise(scheduler));
-    expect(promise).rejects.toThrow(cause);
-  });
+    await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
+  }),
 
-  test("transform", async () => {
+  testAsync("transform", async () => {
     let data = "";
     const decoder = new StringDecoder();
 
@@ -147,8 +156,8 @@ describe("streams", () => {
       src => sink(src, dest),
       toPromise(scheduler),
     );
-    expect(data).toEqual("abcdefg");
-  });
+    pipe(data, expectEquals("abcdefg"));
+  }),
 
   test("encode/decode", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
@@ -176,6 +185,21 @@ describe("streams", () => {
     transformed.dispatch(FlowMode.Resume);
     scheduler.run();
 
-    expect(result).toEqual(str);
-  });
-});
+    pipe(result, expectEquals(str));
+  }),
+);
+
+const toJestTest = (testGroup: TestGroup) => {
+  if (testGroup.type === TestGroupType.Describe) {
+    (global as any).describe(testGroup.name, () => {
+      const tests = testGroup.tests;
+      for (const testGroup of tests) {
+        toJestTest(testGroup);
+      }
+    });
+  } else {
+    (global as any).test(testGroup.name, testGroup.f);
+  }
+};
+
+toJestTest(tests);
