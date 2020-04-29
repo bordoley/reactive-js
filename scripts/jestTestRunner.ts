@@ -15,4 +15,4 @@ export const runTests = (testGroups: any[]) => {
   for (const test of testGroups) {
     toJestTest(test);
   }
-}
+};

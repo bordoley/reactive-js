@@ -1,6 +1,6 @@
 import { DisposableLike } from "@reactive-js/core/dist/js/disposable";
 import { ObservableLike } from "@reactive-js/core/dist/js/observable";
-import { HttpClientRequest } from "@reactive-js/core/dist/js/httpClient";
+import { HttpClientRequest } from "@reactive-js/core/dist/js/http";
 
 // BodyInit
 export type WebRequestBody =

@@ -35,7 +35,8 @@ import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
 import { createVirtualTimeScheduler } from "@reactive-js/core/dist/js/scheduler";
 
-export const tests = describe("streams",
+export const tests = describe(
+  "streams",
   testAsync("sinking to the buffer", async () => {
     let data = "";
     const decoder = new StringDecoder();

@@ -1,20 +1,20 @@
 import {
-  HttpResponse,
-  HttpRequest,
   HttpContentEncoding,
-  createRedirectHttpRequest,
+  HttpRequest,
+  HttpResponse,
   HttpStatusCode,
-} from "./http";
+} from "./interfaces";
+import { createRedirectHttpRequest } from "./httpRequest";
 import {
   ObservableLike,
   ofValue,
   map,
   switchMap,
   concatMap,
-} from "./observable";
-import { DisposableLike } from "./disposable";
-import { pipe, identity } from "./functions";
-import { isSome } from "./option";
+} from "../../observable";
+import { DisposableLike } from "../../disposable";
+import { pipe, identity } from "../../functions";
+import { isSome } from "../../option";
 
 export const enum HttpClientRequestStatusType {
   Start = 1,

@@ -13,8 +13,6 @@
 * ["flowable"](modules/_flowable_.md)
 * ["functions"](modules/_functions_.md)
 * ["http"](modules/_http_.md)
-* ["httpClient"](modules/_httpclient_.md)
-* ["httpServer"](modules/_httpserver_.md)
 * ["observable"](modules/_observable_.md)
 * ["option"](modules/_option_.md)
 * ["parserCombinators"](modules/_parsercombinators_.md)

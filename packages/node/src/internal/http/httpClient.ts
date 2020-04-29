@@ -1,10 +1,6 @@
 import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
-import {
-  HttpClient,
-  HttpClientRequestStatusType,
-} from "@reactive-js/core/dist/js/httpClient";
 import { none, isSome } from "@reactive-js/core/dist/js/option";
 import {
   subscribe,
@@ -28,6 +24,8 @@ import {
   HttpHeaders,
   HttpRequest,
   HttpResponse,
+  HttpClient,
+  HttpClientRequestStatusType,
 } from "@reactive-js/core/dist/js/http";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { pipe, returns } from "@reactive-js/core/dist/js/functions";

@@ -8,7 +8,11 @@ import {
   toStateStore,
   StateUpdater,
 } from "@reactive-js/core/dist/js/stateStore";
-import { createHttpRequest, HttpMethod } from "@reactive-js/core/dist/js/http";
+import {
+  HttpClientRequestStatusType,
+  createHttpRequest,
+  HttpMethod,
+} from "@reactive-js/core/dist/js/http";
 import { sendHttpRequest } from "@reactive-js/web/dist/js/http";
 import { useObservable, useStreamable } from "@reactive-js/react/dist/js/hooks";
 import {
@@ -43,7 +47,6 @@ import React, {
 } from "react";
 import { default as ReactDOM } from "react-dom";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
-import { HttpClientRequestStatusType } from "@reactive-js/core/dist/js/httpClient";
 import { WebRequestBody } from "@reactive-js/web/dist/js/http";
 import {
   pipe,

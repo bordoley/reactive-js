@@ -2,6 +2,9 @@ import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
   HttpResponse,
+  HttpClientRequestStatusType,
+  HttpClient,
+  HttpClientRequestStatus,
 } from "@reactive-js/core/dist/js/http";
 import {
   fromPromise,
@@ -17,11 +20,6 @@ import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import {
-  HttpClientRequestStatusType,
-  HttpClient,
-  HttpClientRequestStatus,
-} from "@reactive-js/core/dist/js/httpClient";
 import { pipe } from "@reactive-js/core/dist/js/functions";
 
 const loadBodyContent = async (
