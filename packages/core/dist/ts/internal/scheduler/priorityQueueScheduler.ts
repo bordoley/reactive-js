@@ -1,4 +1,4 @@
-import { createPriorityQueue, QueueLike } from "../../collections.ts";
+import { createPriorityQueue, QueueLike } from "../queues.ts";
 import {
   AbstractSerialDisposable,
   DisposableLike,

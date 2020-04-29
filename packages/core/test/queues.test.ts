@@ -1,5 +1,5 @@
 import { test, describe, expectArrayEquals } from "../src/testing";
-import { createPriorityQueue } from "../src/collections";
+import { createPriorityQueue } from "../src/internal/queues";
 import { pipe } from "../src/functions";
 
 const compare = (a: number, b: number): number => a - b;

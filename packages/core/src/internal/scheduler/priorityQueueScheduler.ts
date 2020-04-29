@@ -1,4 +1,4 @@
-import { createPriorityQueue, QueueLike } from "../../collections";
+import { createPriorityQueue, QueueLike } from "../queues";
 import {
   AbstractSerialDisposable,
   DisposableLike,
