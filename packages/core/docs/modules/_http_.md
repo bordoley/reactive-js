@@ -6,6 +6,7 @@
 
 ### Enumerations
 
+* [HttpClientRequestStatusType](../enums/_http_.httpclientrequeststatustype.md)
 * [HttpContentEncoding](../enums/_http_.httpcontentencoding.md)
 * [HttpExtensionHeader](../enums/_http_.httpextensionheader.md)
 * [HttpMethod](../enums/_http_.httpmethod.md)
@@ -20,6 +21,13 @@
 
 * [CacheDirective](_http_.md#cachedirective)
 * [EntityTag](_http_.md#entitytag)
+* [HttpClient](_http_.md#httpclient)
+* [HttpClientRequest](_http_.md#httpclientrequest)
+* [HttpClientRequestStatus](_http_.md#httpclientrequeststatus)
+* [HttpClientRequestStatusComplete](_http_.md#httpclientrequeststatuscomplete)
+* [HttpClientRequestStatusHeadersReceived](_http_.md#httpclientrequeststatusheadersreceived)
+* [HttpClientRequestStatusProgress](_http_.md#httpclientrequeststatusprogress)
+* [HttpClientRequestStatusStart](_http_.md#httpclientrequeststatusstart)
 * [HttpContentInfo](_http_.md#httpcontentinfo)
 * [HttpDateTime](_http_.md#httpdatetime)
 * [HttpHeaders](_http_.md#httpheaders)
@@ -27,6 +35,8 @@
 * [HttpPreferences](_http_.md#httppreferences)
 * [HttpRequest](_http_.md#httprequest)
 * [HttpResponse](_http_.md#httpresponse)
+* [HttpRoutedRequest](_http_.md#httproutedrequest)
+* [HttpServer](_http_.md#httpserver)
 * [HttpServerRequest](_http_.md#httpserverrequest)
 * [MediaType](_http_.md#mediatype)
 
@@ -41,6 +51,7 @@
 * [createHttpRequest](_http_.md#const-createhttprequest)
 * [createHttpResponse](_http_.md#const-createhttpresponse)
 * [createRedirectHttpRequest](_http_.md#const-createredirecthttprequest)
+* [createRoutingHttpServer](_http_.md#const-createroutinghttpserver)
 * [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
 * [httpRequestIsCompressible](_http_.md#const-httprequestiscompressible)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
@@ -48,6 +59,7 @@
 * [parseHeaders](_http_.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](_http_.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](_http_.md#const-parsehttpresponsefromheaders)
+* [withDefaultBehaviors](_http_.md#const-withdefaultbehaviors)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](_http_.md#const-writehttpresponseheaders)
 
@@ -74,6 +86,78 @@ ___
 * **isWeak**: *boolean*
 
 * **tag**: *string*
+
+___
+
+###  HttpClient
+
+Ƭ **HttpClient**: *function*
+
+#### Type declaration:
+
+▸ (`req`: THttpRequest): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpClientRequestStatus](_http_.md#httpclientrequeststatus)‹TResp››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | THttpRequest |
+
+___
+
+###  HttpClientRequest
+
+Ƭ **HttpClientRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
+
+___
+
+###  HttpClientRequestStatus
+
+Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusStart](_http_.md#httpclientrequeststatusstart) | [HttpClientRequestStatusProgress](_http_.md#httpclientrequeststatusprogress) | [HttpClientRequestStatusComplete](_http_.md#httpclientrequeststatuscomplete) | [HttpClientRequestStatusHeadersReceived](_http_.md#httpclientrequeststatusheadersreceived)‹TResp›*
+
+___
+
+###  HttpClientRequestStatusComplete
+
+Ƭ **HttpClientRequestStatusComplete**: *object*
+
+#### Type declaration:
+
+* **type**: *[Completed](../enums/_http_.httpclientrequeststatustype.md#completed)*
+
+___
+
+###  HttpClientRequestStatusHeadersReceived
+
+Ƭ **HttpClientRequestStatusHeadersReceived**: *object*
+
+#### Type declaration:
+
+* **response**: *[HttpResponse](_http_.md#httpresponse)‹TResp›*
+
+* **type**: *[HeadersReceived](../enums/_http_.httpclientrequeststatustype.md#headersreceived)*
+
+___
+
+###  HttpClientRequestStatusProgress
+
+Ƭ **HttpClientRequestStatusProgress**: *object*
+
+#### Type declaration:
+
+* **count**: *number*
+
+* **type**: *[Progress](../enums/_http_.httpclientrequeststatustype.md#progress)*
+
+___
+
+###  HttpClientRequestStatusStart
+
+Ƭ **HttpClientRequestStatusStart**: *object*
+
+#### Type declaration:
+
+* **type**: *[Start](../enums/_http_.httpclientrequeststatustype.md#start)*
 
 ___
 
@@ -150,6 +234,28 @@ ___
 ###  HttpResponse
 
 Ƭ **HttpResponse**: *[HttpMessage](_http_.md#httpmessage)‹T› & object*
+
+___
+
+###  HttpRoutedRequest
+
+Ƭ **HttpRoutedRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
+
+___
+
+###  HttpServer
+
+Ƭ **HttpServer**: *function*
+
+#### Type declaration:
+
+▸ (`req`: THttpRequest): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹THttpResponse›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | THttpRequest |
 
 ___
 
@@ -310,6 +416,27 @@ Name | Type |
 
 ___
 
+### `Const` createRoutingHttpServer
+
+▸ **createRoutingHttpServer**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: [Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TResp**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`routes` | object |
+`notFoundHandler` | [Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
+
+**Returns:** *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
+
+___
+
 ### `Const` disallowProtocolAndHostForwarding
 
 ▸ **disallowProtocolAndHostForwarding**<**T**>(): *[Operator](_functions_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
@@ -436,6 +563,32 @@ Name | Type |
 `body` | T |
 
 **Returns:** *[HttpResponse](_http_.md#httpresponse)‹T›*
+
+___
+
+### `Const` withDefaultBehaviors
+
+▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: function): *(Anonymous function)*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TResp**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+**Parameters:**
+
+▪`Default value`  **encodeHttpRequest**: *function*= identity
+
+▸ (`req`: [HttpClientRequest](_http_.md#httpclientrequest)‹TReq›): *[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | [HttpClientRequest](_http_.md#httpclientrequest)‹TReq› |
+
+**Returns:** *(Anonymous function)*
 
 ___
 

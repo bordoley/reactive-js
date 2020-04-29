@@ -4,6 +4,7 @@ import {
   HttpRequest,
   httpRequestIsCompressible,
   MediaType,
+  HttpClientRequest,
 } from "@reactive-js/core/dist/js/http";
 import { BufferFlowableLike, transform } from "../../streams";
 import { isSome } from "@reactive-js/core/dist/js/option";
@@ -13,7 +14,6 @@ import {
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
 import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
-import { HttpClientRequest } from "@reactive-js/core/dist/js/httpClient";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},

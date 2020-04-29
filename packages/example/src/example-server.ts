@@ -14,16 +14,12 @@ import {
   HttpResponse,
   HttpStatusCode,
   HttpRequest,
-} from "@reactive-js/core/dist/js/http";
-import {
+  HttpServer,
+  createRoutingHttpServer,
+  HttpRoutedRequest,
   HttpClientRequestStatusType,
   withDefaultBehaviors,
-} from "@reactive-js/core/dist/js/httpClient";
-import {
-  HttpServer,
-  createRouter,
-  HttpRoutedRequest,
-} from "@reactive-js/core/dist/js/httpServer";
+} from "@reactive-js/core/dist/js/http";
 import {
   createHttpRequestListener,
   createHttpClient,
@@ -159,7 +155,7 @@ const notFound: Operator<
     ofValue,
   );
 
-const router = createRouter(
+const router = createRoutingHttpServer(
   {
     "/events": routerHandlerEventStream,
     "/files/*": routerHandlerFiles,

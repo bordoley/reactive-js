@@ -8,8 +8,8 @@ import {
   parseHttpRequestFromHeaders,
   HttpResponse,
   HttpServerRequest,
+  HttpServer,
 } from "@reactive-js/core/dist/js/http";
-import { HttpServer } from "@reactive-js/core/dist/js/httpServer";
 import {
   createBufferFlowableFromReadable,
   BufferFlowableLike,

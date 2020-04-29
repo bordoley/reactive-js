@@ -45,3 +45,21 @@ export {
 } from "./internal/http/mediaType.ts";
 
 export { parseHeaders } from "./internal/http/httpGrammar.ts";
+
+export {
+  HttpServer,
+  HttpRoutedRequest,
+  createRoutingHttpServer,
+} from "./internal/http/httpServer.ts";
+
+export {
+  HttpClientRequestStatusType,
+  HttpClientRequestStatusStart,
+  HttpClientRequestStatusProgress,
+  HttpClientRequestStatusComplete,
+  HttpClientRequestStatusHeadersReceived,
+  HttpClientRequestStatus,
+  HttpClientRequest,
+  HttpClient,
+  withDefaultBehaviors,
+} from "./internal/http/httpClient.ts";

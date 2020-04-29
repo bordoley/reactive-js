@@ -20,7 +20,7 @@ export const sink = <TReq, T>(
         onNotify(next => destStream.dispatch(next)),
         subscribe(scheduler),
       ).add(e => {
-        if(isSome(e)) {
+        if (isSome(e)) {
           destStream.dispose(e);
         }
       });

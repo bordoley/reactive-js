@@ -1,7 +1,7 @@
-import { HttpResponse, HttpRequest } from "./http.ts";
-import { ObservableLike } from "./observable.ts";
-import { isNone, isSome, none, Option } from "./option.ts";
-import { Operator } from "./functions.ts";
+import { HttpResponse, HttpRequest } from "./interfaces";
+import { ObservableLike } from "../../observable";
+import { isNone, isSome, none, Option } from "../../option";
+import { Operator } from "../../functions";
 
 export type HttpServer<
   THttpRequest extends HttpRequest<unknown>,
@@ -129,7 +129,7 @@ const findHandler = <TReq, TResp>(
   return none;
 };
 
-export const createRouter = <TReq, TResp>(
+export const createRoutingHttpServer = <TReq, TResp>(
   routes: {
     [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
   },
@@ -137,7 +137,7 @@ export const createRouter = <TReq, TResp>(
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>
   >,
-): Operator<HttpRequest<TReq>, ObservableLike<HttpResponse<TResp>>> => {
+): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
   const router = Object.entries(routes).reduce(
     (acc, [path, handler]) => addHandler(acc, createSegments(path), handler),
     emptyRouter as Router<TReq, TResp>,

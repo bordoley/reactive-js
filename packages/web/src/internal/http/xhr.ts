@@ -1,4 +1,6 @@
 import {
+  HttpClient,
+  HttpClientRequestStatusType,
   parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
@@ -11,10 +13,6 @@ import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
 import { isSome } from "@reactive-js/core/dist/js/option";
-import {
-  HttpClient,
-  HttpClientRequestStatusType,
-} from "@reactive-js/core/dist/js/httpClient";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,
