@@ -1,8 +1,6 @@
-import {
-  createKeyedQueue,
-  createSetMultimap,
-  createUniqueQueue,
-} from "./collections";
+import { createUniqueQueue } from "./internal/queues";
+import { createKeyedQueue } from "./internal/keyedQueue";
+import { createSetMultimap } from "./internal/multimaps";
 import { AbstractDisposable, DisposableLike, disposed } from "./disposable";
 import { first, forEach, fromIterable } from "./enumerable";
 import {

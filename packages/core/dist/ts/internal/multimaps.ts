@@ -1,5 +1,5 @@
-import { EnumerableLike, fromIterator, EnumeratorLike } from "../../enumerable.ts";
-import { SetMultimapLike } from "./interfaces.ts";
+import { EnumerableLike, fromIterator, EnumeratorLike } from "../enumerable.ts";
+import { KeyedCollection } from "./collections.ts";
 
 function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
   for (const values of multimap.map.values()) {
@@ -19,6 +19,14 @@ function* iterateKeyedQueueKeyValuePairs<K, V>(
       yield [key, value];
     }
   }
+}
+
+export interface SetMultimapLike<K, V> extends KeyedCollection<K, V> {
+  add(key: K, value: V): void;
+  clear(): void;
+  get(key: K): ReadonlySet<V>;
+  remove(key: K, value: V): void;
+  removeAll(key: K): void;
 }
 
 class SetMultimap<K, V> implements SetMultimapLike<K, V> {

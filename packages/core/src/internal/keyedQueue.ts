@@ -1,6 +1,13 @@
-import { EnumerableLike, fromIterator, EnumeratorLike } from "../../enumerable.ts";
-import { Option } from "../../option.ts";
-import { KeyedQueueLike } from "./interfaces.ts";
+import { EnumerableLike, fromIterator, EnumeratorLike } from "../enumerable";
+import { Option } from "../option";
+import { KeyedCollection } from "./collections";
+
+export interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {
+  clear(): void;
+  peek(key: K): Option<V>;
+  pop(key: K): Option<V>;
+  push(key: K, value: V): void;
+}
 
 function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
   for (const values of queue.map.values()) {

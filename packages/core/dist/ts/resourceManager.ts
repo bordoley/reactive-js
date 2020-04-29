@@ -1,8 +1,6 @@
-import {
-  createKeyedQueue,
-  createSetMultimap,
-  createUniqueQueue,
-} from "./collections.ts";
+import { createUniqueQueue } from "./internal/queues.ts";
+import { createKeyedQueue } from "./internal/keyedQueue.ts";
+import { createSetMultimap } from "./internal/multimaps.ts";
 import { AbstractDisposable, DisposableLike, disposed } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import {
