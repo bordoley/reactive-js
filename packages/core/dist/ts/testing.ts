@@ -1,4 +1,4 @@
-import { Option, isSome, isNone } from "./option.ts";
+import { Option, isSome, isNone, none } from "./option.ts";
 import { referenceEquals, arrayEquals } from "./functions.ts";
 
 export const enum TestGroupType {
@@ -60,7 +60,7 @@ export const expectToThrow = (f: () => void) => {
 
 export const expectToThrowError = (error: unknown) => (f: () => void) => {
   let didThrow = false;
-  let errorThrown = undefined;
+  let errorThrown = none;
   try {
     f();
   } catch (e) {

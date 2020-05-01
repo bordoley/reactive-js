@@ -59,7 +59,7 @@ ___
 
 ### `Const` alwaysVoid
 
-• **alwaysVoid**: *(Anonymous function)* = returns<void>(undefined)
+• **alwaysVoid**: *(Anonymous function)* = returns<void>(none)
 
 ## Functions
 

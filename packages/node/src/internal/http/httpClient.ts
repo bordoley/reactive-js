@@ -50,7 +50,8 @@ export type HttpClientOptions = {
   readonly maxHeaderSize?: number;
 };
 
-class ResponseBody extends AbstractDisposable implements FlowableLike<Uint8Array> {
+class ResponseBody extends AbstractDisposable
+  implements FlowableLike<Uint8Array> {
   private consumed = false;
 
   constructor(private readonly resp: IncomingMessage) {

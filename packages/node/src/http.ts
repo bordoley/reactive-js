@@ -9,14 +9,14 @@ export {
   createHttpRequestListener,
 } from "./internal/http/httpRequestListener";
 
-export {
-  encodeHttpClientRequest,
-  decodeHttpRequest,
-  encodeCharsetHttpRequest,
-} from "./internal/http/httpRequest";
+export { createHttpClientRequestContentEncoder } from "./internal/http/httpRequest";
 
 export {
   EncodeHttpResponseOptions,
   encodeHttpResponse,
-  encodeCharsetHttpResponse,
 } from "./internal/http/httpResponse";
+
+export {
+  createContentEncodingDecompressTransform,
+  createContentEncodingCompressTransform,
+} from "./internal/http/httpContentEncoding";

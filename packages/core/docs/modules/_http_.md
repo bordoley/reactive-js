@@ -40,11 +40,6 @@
 * [HttpServerRequest](_http_.md#httpserverrequest)
 * [MediaType](_http_.md#mediatype)
 
-### Variables
-
-* [parseMediaType](_http_.md#const-parsemediatype)
-* [parseMediaTypeOrThrow](_http_.md#const-parsemediatypeorthrow)
-
 ### Functions
 
 * [checkIfNotModified](_http_.md#const-checkifnotmodified)
@@ -52,13 +47,20 @@
 * [createHttpResponse](_http_.md#const-createhttpresponse)
 * [createRedirectHttpRequest](_http_.md#const-createredirecthttprequest)
 * [createRoutingHttpServer](_http_.md#const-createroutinghttpserver)
+* [decodeHttpRequestContent](_http_.md#const-decodehttprequestcontent)
+* [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
 * [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
+* [encodeHttpClientRequestContent](_http_.md#const-encodehttpclientrequestcontent)
+* [encodeHttpRequestWithCharset](_http_.md#const-encodehttprequestwithcharset)
+* [encodeHttpResponseWithCharset](_http_.md#const-encodehttpresponsewithcharset)
 * [httpRequestIsCompressible](_http_.md#const-httprequestiscompressible)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
 * [httpResponseIsCompressible](_http_.md#const-httpresponseiscompressible)
 * [parseHeaders](_http_.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](_http_.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](_http_.md#const-parsehttpresponsefromheaders)
+* [toFlowableHttpRequest](_http_.md#const-toflowablehttprequest)
+* [toFlowableHttpResponse](_http_.md#const-toflowablehttpresponse)
 * [withDefaultBehaviors](_http_.md#const-withdefaultbehaviors)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](_http_.md#const-writehttpresponseheaders)
@@ -277,38 +279,6 @@ ___
 
 * **type**: *string*
 
-## Variables
-
-### `Const` parseMediaType
-
-• **parseMediaType**: *function* = parseWith(pMediaType)
-
-#### Type declaration:
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
-
-___
-
-### `Const` parseMediaTypeOrThrow
-
-• **parseMediaTypeOrThrow**: *function* = parseWithOrThrow(pMediaType)
-
-#### Type declaration:
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
-
 ## Functions
 
 ### `Const` checkIfNotModified
@@ -437,6 +407,46 @@ Name | Type |
 
 ___
 
+### `Const` decodeHttpRequestContent
+
+▸ **decodeHttpRequestContent**(`decoderProvider`: function): *[Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+**Parameters:**
+
+▪ **decoderProvider**: *function*
+
+▸ (`encoding`: [HttpContentEncoding](../enums/_http_.httpcontentencoding.md)): *[Option](_option_.md#option)‹[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`encoding` | [HttpContentEncoding](../enums/_http_.httpcontentencoding.md) |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+___
+
+### `Const` decodeHttpResponseContent
+
+▸ **decodeHttpResponseContent**(`decoderProvider`: function): *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+**Parameters:**
+
+▪ **decoderProvider**: *function*
+
+▸ (`encoding`: [HttpContentEncoding](../enums/_http_.httpcontentencoding.md)): *[Option](_option_.md#option)‹[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array››*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`encoding` | [HttpContentEncoding](../enums/_http_.httpcontentencoding.md) |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+___
+
 ### `Const` disallowProtocolAndHostForwarding
 
 ▸ **disallowProtocolAndHostForwarding**<**T**>(): *[Operator](_functions_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
@@ -446,6 +456,68 @@ ___
 ▪ **T**
 
 **Returns:** *[Operator](_functions_.md#operator)‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
+
+___
+
+### `Const` encodeHttpClientRequestContent
+
+▸ **encodeHttpClientRequestContent**(`encoderProvider`: function): *[Operator](_functions_.md#operator)‹[HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+**Parameters:**
+
+▪ **encoderProvider**: *function*
+
+▸ (`request`: [HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››): *[Option](_option_.md#option)‹object›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`request` | [HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›› |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+___
+
+### `Const` encodeHttpRequestWithCharset
+
+▸ **encodeHttpRequestWithCharset**(`encode`: function): *(Anonymous function)*
+
+**Parameters:**
+
+▪ **encode**: *function*
+
+▸ (`v`: string, `charset`: string): *Uint8Array*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | string |
+`charset` | string |
+
+**Returns:** *(Anonymous function)*
+
+___
+
+### `Const` encodeHttpResponseWithCharset
+
+▸ **encodeHttpResponseWithCharset**(`encode`: function): *(Anonymous function)*
+
+**Parameters:**
+
+▪ **encode**: *function*
+
+▸ (`v`: string, `charset`: string): *Uint8Array*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | string |
+`charset` | string |
+
+**Returns:** *(Anonymous function)*
 
 ___
 
@@ -566,27 +638,51 @@ Name | Type |
 
 ___
 
+### `Const` toFlowableHttpRequest
+
+▸ **toFlowableHttpRequest**<**TBody**>(`req`: [HttpRequest](_http_.md#httprequest)‹TBody›): *[HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TBody››*
+
+**Type parameters:**
+
+▪ **TBody**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`req` | [HttpRequest](_http_.md#httprequest)‹TBody› |
+
+**Returns:** *[HttpRequest](_http_.md#httprequest)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TBody››*
+
+___
+
+### `Const` toFlowableHttpResponse
+
+▸ **toFlowableHttpResponse**<**TBody**>(`resp`: [HttpResponse](_http_.md#httpresponse)‹TBody›): *[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TBody››*
+
+**Type parameters:**
+
+▪ **TBody**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`resp` | [HttpResponse](_http_.md#httpresponse)‹TBody› |
+
+**Returns:** *[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TBody››*
+
+___
+
 ### `Const` withDefaultBehaviors
 
-▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: function): *(Anonymous function)*
+▸ **withDefaultBehaviors**<**TReq**, **TResp**>(): *(Anonymous function)*
 
 **Type parameters:**
 
 ▪ **TReq**
 
 ▪ **TResp**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
-
-**Parameters:**
-
-▪`Default value`  **encodeHttpRequest**: *function*= identity
-
-▸ (`req`: [HttpClientRequest](_http_.md#httpclientrequest)‹TReq›): *[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | [HttpClientRequest](_http_.md#httpclientrequest)‹TReq› |
 
 **Returns:** *(Anonymous function)*
 

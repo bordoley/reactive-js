@@ -1,4 +1,5 @@
 import fs from "fs";
+import iconv from "iconv-lite";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import mime from "mime-types";
@@ -11,24 +12,28 @@ import {
   HttpMethod,
   createHttpRequest,
   createHttpResponse,
+  decodeHttpRequestContent,
   disallowProtocolAndHostForwarding,
   HttpResponse,
   HttpStatusCode,
   HttpRequest,
   HttpServer,
   createRoutingHttpServer,
+  encodeHttpResponseWithCharset,
+  encodeHttpRequestWithCharset,
   HttpRoutedRequest,
   HttpClientRequestStatusType,
   withDefaultBehaviors,
+  toFlowableHttpResponse,
+  toFlowableHttpRequest,
+  encodeHttpClientRequestContent,
 } from "@reactive-js/core/dist/js/http";
 import {
   createHttpRequestListener,
   createHttpClient,
-  decodeHttpRequest,
-  encodeHttpClientRequest,
+  createContentEncodingDecompressTransform,
+  createHttpClientRequestContentEncoder,
   encodeHttpResponse,
-  encodeCharsetHttpResponse,
-  encodeCharsetHttpRequest,
 } from "@reactive-js/node/dist/js/http";
 import {
   encode,
@@ -56,6 +61,7 @@ import {
   Operator,
   returns,
   increment,
+  compose,
 } from "@reactive-js/core/dist/js/functions";
 import {
   toPriorityScheduler,
@@ -68,6 +74,9 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
+const encodeHttpRequestWithIConv = encodeHttpRequestWithCharset(iconv.encode);
+const encodeHttpResponseWithIConv = encodeHttpResponseWithCharset(iconv.encode);
+
 const routerHandlerPrintParams: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
@@ -77,7 +86,8 @@ const routerHandlerPrintParams: HttpServer<
       statusCode: HttpStatusCode.OK,
       body: JSON.stringify(req.params),
     }),
-    encodeCharsetHttpResponse("application/json"),
+    encodeHttpResponseWithIConv("application/json"),
+    toFlowableHttpResponse,
     ofValue,
   );
 
@@ -131,7 +141,8 @@ const routerHandlerFiles: HttpServer<
               statusCode: HttpStatusCode.NotFound,
               body: JSON.stringify(req.params),
             }),
-            encodeCharsetHttpResponse("text/plain"),
+            encodeHttpResponseWithIConv("text/plain"),
+            toFlowableHttpResponse,
           ),
     ),
   );
@@ -151,7 +162,8 @@ const notFound: Operator<
       statusCode: HttpStatusCode.NotFound,
       body: req.uri.toString(),
     }),
-    encodeCharsetHttpResponse("text/plain"),
+    encodeHttpResponseWithIConv("text/plain"),
+    toFlowableHttpResponse,
     ofValue,
   );
 
@@ -170,8 +182,12 @@ const listener = createHttpRequestListener(
   req =>
     pipe(
       ofValue(req),
-      map(disallowProtocolAndHostForwarding()),
-      map(decodeHttpRequest()),
+      map(
+        compose(
+          disallowProtocolAndHostForwarding(),
+          decodeHttpRequestContent(createContentEncodingDecompressTransform()),
+        ),
+      ),
       await_(router),
       map(encodeHttpResponse(req)),
       catchError((e: unknown) => {
@@ -192,7 +208,8 @@ const listener = createHttpRequestListener(
             statusCode,
             body,
           }),
-          encodeCharsetHttpResponse("text/plain"),
+          encodeHttpResponseWithIConv("text/plain"),
+          toFlowableHttpResponse,
           ofValue,
         );
       }),
@@ -215,7 +232,11 @@ createHttp2Server(
 
 const httpClient = pipe(
   createHttpClient(),
-  withDefaultBehaviors(encodeHttpClientRequest()),
+  pipe(
+    createHttpClientRequestContentEncoder(),
+    encodeHttpClientRequestContent,
+    withDefaultBehaviors(),
+  ),
 );
 
 pipe(
@@ -231,7 +252,8 @@ pipe(
       acceptedMediaRanges: ["application/json", "text/html"],
     },
   }),
-  encodeCharsetHttpRequest("text/plain"),
+  encodeHttpRequestWithIConv("text/plain"),
+  toFlowableHttpRequest,
   httpClient,
   onNotify(status => {
     console.log("status: " + status.type);

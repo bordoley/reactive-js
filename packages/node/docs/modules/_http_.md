@@ -13,12 +13,11 @@
 
 ### Functions
 
+* [createContentEncodingCompressTransform](_http_.md#const-createcontentencodingcompresstransform)
+* [createContentEncodingDecompressTransform](_http_.md#const-createcontentencodingdecompresstransform)
 * [createHttpClient](_http_.md#const-createhttpclient)
+* [createHttpClientRequestContentEncoder](_http_.md#const-createhttpclientrequestcontentencoder)
 * [createHttpRequestListener](_http_.md#const-createhttprequestlistener)
-* [decodeHttpRequest](_http_.md#const-decodehttprequest)
-* [encodeCharsetHttpRequest](_http_.md#const-encodecharsethttprequest)
-* [encodeCharsetHttpResponse](_http_.md#const-encodecharsethttpresponse)
-* [encodeHttpClientRequest](_http_.md#const-encodehttpclientrequest)
 * [encodeHttpResponse](_http_.md#const-encodehttpresponse)
 
 ## Type aliases
@@ -76,6 +75,34 @@ ___
 
 ## Functions
 
+### `Const` createContentEncodingCompressTransform
+
+▸ **createContentEncodingCompressTransform**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions |
+
+**Returns:** *(Anonymous function)*
+
+___
+
+### `Const` createContentEncodingDecompressTransform
+
+▸ **createContentEncodingDecompressTransform**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions | {} |
+
+**Returns:** *(Anonymous function)*
+
+___
+
 ### `Const` createHttpClient
 
 ▸ **createHttpClient**(`options`: [HttpClientOptions](_http_.md#httpclientoptions)): *HttpClient‹HttpRequest‹FlowableLike‹Uint8Array››, FlowableLike‹Uint8Array› & DisposableLike›*
@@ -87,6 +114,20 @@ Name | Type | Default |
 `options` | [HttpClientOptions](_http_.md#httpclientoptions) | {} |
 
 **Returns:** *HttpClient‹HttpRequest‹FlowableLike‹Uint8Array››, FlowableLike‹Uint8Array› & DisposableLike›*
+
+___
+
+### `Const` createHttpClientRequestContentEncoder
+
+▸ **createHttpClientRequestContentEncoder**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions | {} |
+
+**Returns:** *(Anonymous function)*
 
 ___
 
@@ -103,62 +144,6 @@ Name | Type | Default |
 `options` | [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions) | {} |
 
 **Returns:** *[HttpRequestListener](_http_.md#httprequestlistener)*
-
-___
-
-### `Const` decodeHttpRequest
-
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹FlowableLike‹Uint8Array››, HttpRequest‹FlowableLike‹Uint8Array›››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | BrotliOptions &#124; ZlibOptions | {} |
-
-**Returns:** *Operator‹HttpRequest‹FlowableLike‹Uint8Array››, HttpRequest‹FlowableLike‹Uint8Array›››*
-
-___
-
-### `Const` encodeCharsetHttpRequest
-
-▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹FlowableLike‹Uint8Array›››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`contentType` | string &#124; MediaType |
-
-**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹FlowableLike‹Uint8Array›››*
-
-___
-
-### `Const` encodeCharsetHttpResponse
-
-▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹FlowableLike‹Uint8Array›››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`contentType` | string &#124; MediaType |
-
-**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹FlowableLike‹Uint8Array›››*
-
-___
-
-### `Const` encodeHttpClientRequest
-
-▸ **encodeHttpClientRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpClientRequest‹FlowableLike‹Uint8Array››, HttpClientRequest‹FlowableLike‹Uint8Array›››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | BrotliOptions &#124; ZlibOptions | {} |
-
-**Returns:** *Operator‹HttpClientRequest‹FlowableLike‹Uint8Array››, HttpClientRequest‹FlowableLike‹Uint8Array›››*
 
 ___
 
