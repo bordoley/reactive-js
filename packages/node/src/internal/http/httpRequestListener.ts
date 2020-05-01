@@ -11,8 +11,8 @@ import {
   HttpServer,
 } from "@reactive-js/core/dist/js/http";
 import {
-  createBufferFlowableFromReadable,
-  createBufferFlowableSinkFromWritable,
+  createFlowableFromReadable,
+  createFlowableSinkFromWritable,
   createDisposableNodeStream,
 } from "../../streams";
 import {
@@ -80,8 +80,8 @@ export const createHttpRequestListener = (
     } = request.value;
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
 
-    const requestBody = createBufferFlowableFromReadable(returns(request));
-    const responseBody = createBufferFlowableSinkFromWritable(
+    const requestBody = createFlowableFromReadable(returns(request));
+    const responseBody = createFlowableSinkFromWritable(
       returns(response),
       true,
     );

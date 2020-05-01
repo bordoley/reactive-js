@@ -10,9 +10,9 @@
 
 ### Functions
 
-* [createBufferFlowableFromReadable](_streams_.md#const-createbufferflowablefromreadable)
-* [createBufferFlowableSinkFromWritable](_streams_.md#const-createbufferflowablesinkfromwritable)
 * [createDisposableNodeStream](_streams_.md#const-createdisposablenodestream)
+* [createFlowableFromReadable](_streams_.md#const-createflowablefromreadable)
+* [createFlowableSinkFromWritable](_streams_.md#const-createflowablesinkfromwritable)
 * [decode](_streams_.md#const-decode)
 * [encode](_streams_.md#const-encode)
 * [transform](_streams_.md#const-transform)
@@ -24,36 +24,6 @@
 • **unsupportedEncoding**: *unique symbol* = Symbol("unsupportedEncoding")
 
 ## Functions
-
-### `Const` createBufferFlowableFromReadable
-
-▸ **createBufferFlowableFromReadable**(`factory`: function): *FlowableLike‹Uint8Array›*
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-▸ (): *DisposableValueLike‹Readable›*
-
-**Returns:** *FlowableLike‹Uint8Array›*
-
-___
-
-### `Const` createBufferFlowableSinkFromWritable
-
-▸ **createBufferFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *FlowableSinkLike‹Uint8Array›*
-
-**Parameters:**
-
-▪ **factory**: *function*
-
-▸ (): *DisposableValueLike‹Writable›*
-
-▪`Default value`  **autoDispose**: *boolean*= true
-
-**Returns:** *FlowableSinkLike‹Uint8Array›*
-
-___
 
 ### `Const` createDisposableNodeStream
 
@@ -70,6 +40,36 @@ Name | Type |
 `stream` | T |
 
 **Returns:** *DisposableValueLike‹T›*
+
+___
+
+### `Const` createFlowableFromReadable
+
+▸ **createFlowableFromReadable**(`factory`: function): *FlowableLike‹Uint8Array›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *DisposableValueLike‹Readable›*
+
+**Returns:** *FlowableLike‹Uint8Array›*
+
+___
+
+### `Const` createFlowableSinkFromWritable
+
+▸ **createFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *FlowableSinkLike‹Uint8Array›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *DisposableValueLike‹Writable›*
+
+▪`Default value`  **autoDispose**: *boolean*= true
+
+**Returns:** *FlowableSinkLike‹Uint8Array›*
 
 ___
 

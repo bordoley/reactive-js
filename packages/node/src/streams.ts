@@ -1,5 +1,5 @@
-export { createBufferFlowableFromReadable } from "./internal/streams/bufferFlowable";
-export { createBufferFlowableSinkFromWritable } from "./internal/streams/bufferFlowableSink";
+export { createFlowableFromReadable } from "./internal/streams/flowable";
+export { createFlowableSinkFromWritable } from "./internal/streams/flowableSink";
 export {
   transform,
   encode,

@@ -13,8 +13,8 @@ import {
   fromIterator,
 } from "@reactive-js/core/dist/js/observable";
 import { Option } from "@reactive-js/core/dist/js/option";
-import { createBufferFlowableFromReadable } from "./bufferFlowable";
-import { createBufferFlowableSinkFromWritable } from "./bufferFlowableSink";
+import { createFlowableFromReadable } from "./flowable";
+import { createFlowableSinkFromWritable } from "./flowableSink";
 import {
   Operator,
   pipe,
@@ -42,7 +42,7 @@ export const transform = (
       scheduler => {
         const transform = factory();
 
-        const transformSink = createBufferFlowableSinkFromWritable(
+        const transformSink = createFlowableSinkFromWritable(
           returns(transform),
           false,
         );
@@ -52,7 +52,7 @@ export const transform = (
           subscribe(scheduler),
         );
 
-        const transformReadableStream = createBufferFlowableFromReadable(
+        const transformReadableStream = createFlowableFromReadable(
           returns(transform),
         ).stream(scheduler);
 
