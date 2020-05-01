@@ -51,6 +51,23 @@ export const encodeHttpMessageWithCharset = (
   };
 };
 
+export const decodeHttpMessageWithCharset = (
+  decoder: (v: Uint8Array, charset: string) => string,
+): Operator<HttpMessage<Uint8Array>, HttpMessage<string>> => ({
+  contentInfo,
+  ...msg
+}) => {
+  const params = contentInfo?.contentType?.params ?? {};
+  const charset = params["charset"] ?? "utf-8";
+
+  const body = decoder(msg.body, charset);
+
+  return {
+    ...msg,
+    body,
+  };
+};
+
 export const toFlowableHttpMessage = <TBody>({
   body,
   ...msg

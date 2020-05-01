@@ -12,11 +12,9 @@
 
 ### Functions
 
-* [createContentEncodingCompressTransform](_http_.md#const-createcontentencodingcompresstransform)
-* [createContentEncodingDecompressTransform](_http_.md#const-createcontentencodingdecompresstransform)
+* [createContentEncodingCompressTransforms](_http_.md#const-createcontentencodingcompresstransforms)
+* [createContentEncodingDecompressTransforms](_http_.md#const-createcontentencodingdecompresstransforms)
 * [createHttpClient](_http_.md#const-createhttpclient)
-* [createHttpClientRequestContentEncoderProvider](_http_.md#const-createhttpclientrequestcontentencoderprovider)
-* [createHttpClientResponseContentEncoderProvider](_http_.md#const-createhttpclientresponsecontentencoderprovider)
 * [createHttpRequestListener](_http_.md#const-createhttprequestlistener)
 
 ## Type aliases
@@ -62,23 +60,9 @@ ___
 
 ## Functions
 
-### `Const` createContentEncodingCompressTransform
+### `Const` createContentEncodingCompressTransforms
 
-▸ **createContentEncodingCompressTransform**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`options` | BrotliOptions &#124; ZlibOptions |
-
-**Returns:** *(Anonymous function)*
-
-___
-
-### `Const` createContentEncodingDecompressTransform
-
-▸ **createContentEncodingDecompressTransform**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+▸ **createContentEncodingCompressTransforms**(`options`: BrotliOptions | ZlibOptions): *object*
 
 **Parameters:**
 
@@ -86,7 +70,25 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions | {} |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *object*
+
+* \[ **key**: *string*\]: FlowableOperator‹Uint8Array, Uint8Array›
+
+___
+
+### `Const` createContentEncodingDecompressTransforms
+
+▸ **createContentEncodingDecompressTransforms**(`options`: BrotliOptions | ZlibOptions): *object*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions | {} |
+
+**Returns:** *object*
+
+* \[ **key**: *string*\]: FlowableOperator‹Uint8Array, Uint8Array›
 
 ___
 
@@ -101,34 +103,6 @@ Name | Type | Default |
 `options` | [HttpClientOptions](_http_.md#httpclientoptions) | {} |
 
 **Returns:** *HttpClient‹HttpRequest‹FlowableLike‹Uint8Array››, FlowableLike‹Uint8Array› & DisposableLike›*
-
-___
-
-### `Const` createHttpClientRequestContentEncoderProvider
-
-▸ **createHttpClientRequestContentEncoderProvider**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | BrotliOptions &#124; ZlibOptions | {} |
-
-**Returns:** *(Anonymous function)*
-
-___
-
-### `Const` createHttpClientResponseContentEncoderProvider
-
-▸ **createHttpClientResponseContentEncoderProvider**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | BrotliOptions &#124; ZlibOptions | {} |
-
-**Returns:** *(Anonymous function)*
 
 ___
 

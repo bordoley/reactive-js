@@ -67,7 +67,7 @@ const redirectCodes = [
   HttpStatusCode.PermanentRedirect,
 ];
 
-export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>() => (
+export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
   encodeHttpRequest: (
     req: HttpClientRequest<TReq>,
   ) => HttpClientRequest<TReq> = identity,

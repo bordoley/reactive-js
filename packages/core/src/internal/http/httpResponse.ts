@@ -1,4 +1,4 @@
-import { Option, isNone, isSome, none } from "../../option";
+import { isNone, isSome, none } from "../../option";
 import { Operator } from "../../functions";
 import {
   HttpStatusCode,
@@ -37,6 +37,7 @@ import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithCharset,
   toFlowableHttpMessage,
+  decodeHttpMessageWithCharset,
 } from "./HttpMessage";
 import { FlowableLike, FlowableOperator, empty } from "../../flowable";
 
@@ -239,37 +240,20 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const httpResponseIsCompressible = <T>(
-  response: HttpResponse<T>,
-  db: {
-    [key: string]: {
-      compressible?: boolean;
-    };
-  },
-): boolean => {
-  // Don't compress for Cache-Control: no-transform
-  // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
-  const noTransformResponse =
-    response.cacheControl.findIndex(
-      ({ directive }) => directive === "no-transform",
-    ) >= 0;
-
-  const { contentInfo } = response;
-  return (
-    !noTransformResponse &&
-    isSome(contentInfo) &&
-    contentIsCompressible(contentInfo, db)
-  );
-};
-
 export const encodeHttpResponseWithCharset = (
   encode: (v: string, charset: string) => Uint8Array,
 ) => (
   contentType: string | MediaType,
 ): Operator<HttpResponse<string>, HttpResponse<Uint8Array>> => {
   const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
+  return resp => messageEncoder(resp) as HttpResponse<Uint8Array>;
+};
 
-  return req => messageEncoder(req) as HttpResponse<Uint8Array>;
+export const decodeHttpResponseWithCharset = (
+  decode: (v: Uint8Array, charset: string) => string,
+): Operator<HttpResponse<Uint8Array>, HttpResponse<string>> => {
+  const messageEncoder = decodeHttpMessageWithCharset(decode);
+  return resp => messageEncoder(resp) as HttpResponse<string>;
 };
 
 export const toFlowableHttpResponse = <TBody>(
@@ -277,19 +261,17 @@ export const toFlowableHttpResponse = <TBody>(
 ): HttpResponse<FlowableLike<TBody>> =>
   toFlowableHttpMessage(resp) as HttpResponse<FlowableLike<TBody>>;
 
-export const decodeHttpResponseContent = (
-  decoderProvider: (
-    encoding: HttpContentEncoding,
-  ) => Option<FlowableOperator<Uint8Array, Uint8Array>>,
-): Operator<
+export const decodeHttpResponseContent = (decoderProvider: {
+  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+}): Operator<
   HttpResponse<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
 > => resp => {
   const { body, contentInfo, ...rest } = resp;
 
   if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-    const decoders = contentInfo.contentEncodings.map(encoding =>
-      decoderProvider(encoding),
+    const decoders = contentInfo.contentEncodings.map(
+      encoding => decoderProvider[encoding],
     );
     const supportsDecodings = decoders.every(isSome);
 
@@ -318,35 +300,77 @@ export const decodeHttpResponseContent = (
 };
 
 export const encodeHttpResponseContent = (
-  encoderProvider: (
-    response: HttpResponse<unknown>,
-  ) => Option<{
-    encode: Operator<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>>;
-    encoding: HttpContentEncoding;
-  }>,
-): Operator<
-  HttpResponse<FlowableLike<Uint8Array>>,
-  HttpResponse<FlowableLike<Uint8Array>>
-> => response => {
-  const { body, contentInfo, vary } = response;
+  encoderProvider: {
+    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+  },
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    };
+  } = {},
+) => {
+  const supportedEncodings = Object.keys(encoderProvider);
 
-  if (isNone(contentInfo)) {
-    return response;
-  }
+  const httpResponseIsCompressible = <T>(
+    response: HttpResponse<T>,
+  ): boolean => {
+    // Don't compress for Cache-Control: no-transform
+    // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
+    const noTransformResponse =
+      response.cacheControl.findIndex(
+        ({ directive }) => directive === "no-transform",
+      ) >= 0;
 
-  const encoder = encoderProvider(response);
-  if (isNone(encoder)) {
-    return response;
-  }
+    const { contentInfo } = response;
+    return (
+      !noTransformResponse &&
+      isSome(contentInfo) &&
+      contentIsCompressible(contentInfo, db)
+    );
+  };
 
-  return {
-    ...response,
-    body: encoder.encode(body),
-    contentInfo: {
-      contentType: contentInfo.contentType,
-      contentEncodings: [encoder.encoding],
-      contentLength: -1,
-    },
-    vary: [...vary, HttpStandardHeader.AcceptEncoding],
+  return (
+    request: HttpRequest<unknown>,
+  ): Operator<
+    HttpResponse<FlowableLike<Uint8Array>>,
+    HttpResponse<FlowableLike<Uint8Array>>
+  > => response => {
+    const { body, contentInfo, vary } = response;
+
+    if (isNone(contentInfo)) {
+      return response;
+    }
+
+    const { preferences } = request;
+    const shouldEncode = httpResponseIsCompressible(response);
+    const acceptedEncodings =
+      shouldEncode && isSome(preferences) ? preferences.acceptedEncodings : [];
+
+    const contentEncoding = acceptedEncodings.find(encoding =>
+      supportedEncodings.includes(encoding),
+    );
+
+    if (isNone(contentEncoding)) {
+      return response;
+    }
+
+    const encode = isSome(contentEncoding)
+      ? encoderProvider[contentEncoding]
+      : none;
+
+    if (isNone(encode)) {
+      return response;
+    }
+
+    return {
+      ...response,
+      body: encode(body),
+      contentInfo: {
+        contentType: contentInfo.contentType,
+        contentEncodings: [contentEncoding],
+        contentLength: -1,
+      },
+      vary: [...vary, HttpStandardHeader.AcceptEncoding],
+    };
   };
 };
