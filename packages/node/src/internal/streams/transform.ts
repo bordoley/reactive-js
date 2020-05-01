@@ -21,7 +21,6 @@ import {
   compose,
   returns,
 } from "@reactive-js/core/dist/js/functions";
-import { BufferFlowableLike } from "./interfaces";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import {
   FlowableOperator,
@@ -37,7 +36,7 @@ import {
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
-): FlowableOperator<Buffer, Buffer> => src =>
+): FlowableOperator<Uint8Array, Uint8Array> => src =>
   createStreamable(modeObs =>
     using(
       scheduler => {
@@ -120,10 +119,10 @@ const convert = <TA, TB extends { length: number }>(
 
 export const encode = (
   charset: string,
-): Operator<FlowableLike<string>, BufferFlowableLike> =>
+): Operator<FlowableLike<string>, FlowableLike<Uint8Array>> =>
   convert(() => (iconv as any).getEncoder(charset));
 
 export const decode = (
   charset: string,
-): Operator<BufferFlowableLike, FlowableLike<string>> =>
+): Operator<FlowableLike<Uint8Array>, FlowableLike<string>> =>
   convert(() => (iconv as any).getDecoder(charset));

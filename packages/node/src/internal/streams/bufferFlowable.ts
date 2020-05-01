@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { FlowEventType, FlowMode } from "@reactive-js/core/dist/js/flowable";
+import { FlowEventType, FlowMode, FlowableLike } from "@reactive-js/core/dist/js/flowable";
 import { createStreamable } from "@reactive-js/core/dist/js/streamable";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import {
@@ -10,14 +10,13 @@ import {
   ObservableLike,
 } from "@reactive-js/core/dist/js/observable";
 import { pipe } from "@reactive-js/core/dist/js/functions";
-import { BufferFlowableLike } from "./interfaces";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 
 const createReadableEventsObservable = (
   readable: DisposableValueLike<Readable>,
 ) =>
   createObservable(dispatcher => {
-    const onData = (data: Buffer) => {
+    const onData = (data: Uint8Array) => {
       dispatcher.dispatch({ type: FlowEventType.Next, data });
     };
     readable.value.on("data", onData);
@@ -61,7 +60,7 @@ const createReadableAndSetupModeSubscription = (
 
 export const createBufferFlowableFromReadable = (
   factory: () => DisposableValueLike<Readable>,
-): BufferFlowableLike =>
+): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),

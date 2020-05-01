@@ -32,13 +32,13 @@ import { pipe, returns } from "@reactive-js/core/dist/js/functions";
 import {
   createBufferFlowableSinkFromWritable,
   createDisposableNodeStream,
-  BufferFlowableLike,
   createBufferFlowableFromReadable,
 } from "../../streams";
 import {
   FlowEvent,
   FlowMode,
   FlowEventType,
+  FlowableLike,
 } from "@reactive-js/core/dist/js/flowable";
 
 export type HttpClientOptions = {
@@ -50,7 +50,7 @@ export type HttpClientOptions = {
   readonly maxHeaderSize?: number;
 };
 
-class ResponseBody extends AbstractDisposable implements BufferFlowableLike {
+class ResponseBody extends AbstractDisposable implements FlowableLike<Uint8Array> {
   private consumed = false;
 
   constructor(private readonly resp: IncomingMessage) {
@@ -70,7 +70,7 @@ class ResponseBody extends AbstractDisposable implements BufferFlowableLike {
   stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): StreamLike<FlowMode, FlowEvent<Buffer>> {
+  ): StreamLike<FlowMode, FlowEvent<Uint8Array>> {
     if (this.consumed) {
       throw new Error("Response body already consumed");
     }
@@ -88,14 +88,14 @@ class ResponseBody extends AbstractDisposable implements BufferFlowableLike {
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  HttpRequest<BufferFlowableLike>,
-  BufferFlowableLike & DisposableLike
+  HttpRequest<FlowableLike<Uint8Array>>,
+  FlowableLike<Uint8Array> & DisposableLike
 > => request =>
   using(
     (
       scheduler: SchedulerLike,
     ): [
-      StreamLike<FlowMode, FlowEvent<Buffer>>,
+      StreamLike<FlowMode, FlowEvent<Uint8Array>>,
       SubjectLike<HttpResponse<ResponseBody>>,
     ] => {
       const { method, uri } = request;
@@ -165,7 +165,7 @@ export const createHttpClient = (
       return [requestBody, responseSubject];
     },
     (
-      requestBody: StreamLike<FlowMode, FlowEvent<Buffer>>,
+      requestBody: StreamLike<FlowMode, FlowEvent<Uint8Array>>,
       responseSubject: SubjectLike<HttpResponse<ResponseBody>>,
     ) =>
       merge(

@@ -5,6 +5,7 @@ import mime from "mime-types";
 import {
   generate,
   map as mapFlowable,
+  FlowableLike,
 } from "@reactive-js/core/dist/js/flowable";
 import {
   HttpMethod,
@@ -30,7 +31,6 @@ import {
   encodeCharsetHttpRequest,
 } from "@reactive-js/node/dist/js/http";
 import {
-  BufferFlowableLike,
   encode,
   createBufferFlowableFromReadable,
   createDisposableNodeStream,
@@ -69,8 +69,8 @@ const scheduler = pipe(
 );
 
 const routerHandlerPrintParams: HttpServer<
-  HttpRoutedRequest<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpRoutedRequest<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > = req =>
   pipe(
     createHttpResponse({
@@ -82,8 +82,8 @@ const routerHandlerPrintParams: HttpServer<
   );
 
 const routerHandlerEventStream: HttpServer<
-  HttpRoutedRequest<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpRoutedRequest<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > = _ => {
   const body = pipe(
     generate(increment, returns<number>(0), 1000),
@@ -106,8 +106,8 @@ const routerHandlerEventStream: HttpServer<
 };
 
 const routerHandlerFiles: HttpServer<
-  HttpRoutedRequest<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpRoutedRequest<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > = req => {
   const path = req.params["*"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
@@ -138,13 +138,13 @@ const routerHandlerFiles: HttpServer<
 };
 
 const routerHandlerThrow: HttpServer<
-  HttpRoutedRequest<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpRoutedRequest<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > = returns(throws(() => new Error("internal error")));
 
 const notFound: Operator<
-  HttpRequest<BufferFlowableLike>,
-  ObservableLike<HttpResponse<BufferFlowableLike>>
+  HttpRequest<FlowableLike<Uint8Array>>,
+  ObservableLike<HttpResponse<FlowableLike<Uint8Array>>>
 > = req =>
   pipe(
     createHttpResponse({

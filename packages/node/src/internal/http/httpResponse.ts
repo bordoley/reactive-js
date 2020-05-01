@@ -7,7 +7,6 @@ import {
   HttpResponse,
   MediaType,
 } from "@reactive-js/core/dist/js/http";
-import { BufferFlowableLike, transform } from "../../streams";
 import { isSome, none, Option } from "@reactive-js/core/dist/js/option";
 import { Operator, pipe } from "@reactive-js/core/dist/js/functions";
 import {
@@ -15,12 +14,14 @@ import {
   createEncodingCompressTransform,
 } from "./httpContentEncoding";
 import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
+import { FlowableLike } from "@reactive-js/core/dist/js/flowable";
+import { transform } from "../../streams";
 
 export const decodeHttpResponse = (
   options: BrotliOptions | ZlibOptions,
 ): Operator<
-  HttpResponse<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpResponse<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > => response => decodeHttpMessage(response, options);
 
 export type EncodeHttpResponseOptions = {
@@ -34,8 +35,8 @@ export const encodeHttpResponse = <TReq>(
   request: HttpRequest<TReq>,
   options: EncodeHttpResponseOptions & (BrotliOptions | ZlibOptions) = {},
 ): Operator<
-  HttpResponse<BufferFlowableLike>,
-  HttpResponse<BufferFlowableLike>
+  HttpResponse<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
 > => response => {
   const { shouldEncode: shouldEncodeOption, ...zlibOptions } = options;
 
@@ -76,7 +77,7 @@ export const encodeHttpResponse = <TReq>(
 
 export const encodeCharsetHttpResponse = (
   contentType: string | MediaType,
-): Operator<HttpResponse<string>, HttpResponse<BufferFlowableLike>> => {
+): Operator<HttpResponse<string>, HttpResponse<FlowableLike<Uint8Array>>> => {
   const messageEncoder = encodeCharsetHttpMessage(contentType);
-  return resp => messageEncoder(resp) as HttpResponse<BufferFlowableLike>;
+  return resp => messageEncoder(resp) as HttpResponse<FlowableLike<Uint8Array>>;
 };

@@ -1,8 +1,3 @@
-export {
-  BufferFlowableLike,
-  BufferFlowableSinkLike,
-} from "./internal/streams/interfaces";
-
 export { createBufferFlowableFromReadable } from "./internal/streams/bufferFlowable";
 export { createBufferFlowableSinkFromWritable } from "./internal/streams/bufferFlowableSink";
 export {

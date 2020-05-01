@@ -4,11 +4,6 @@
 
 ## Index
 
-### Interfaces
-
-* [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)
-* [BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)
-
 ### Variables
 
 * [unsupportedEncoding](_streams_.md#const-unsupportedencoding)
@@ -32,7 +27,7 @@
 
 ### `Const` createBufferFlowableFromReadable
 
-▸ **createBufferFlowableFromReadable**(`factory`: function): *[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)*
+▸ **createBufferFlowableFromReadable**(`factory`: function): *FlowableLike‹Uint8Array›*
 
 **Parameters:**
 
@@ -40,13 +35,13 @@
 
 ▸ (): *DisposableValueLike‹Readable›*
 
-**Returns:** *[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)*
+**Returns:** *FlowableLike‹Uint8Array›*
 
 ___
 
 ### `Const` createBufferFlowableSinkFromWritable
 
-▸ **createBufferFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *[BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)*
+▸ **createBufferFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *FlowableSinkLike‹Uint8Array›*
 
 **Parameters:**
 
@@ -56,7 +51,7 @@ ___
 
 ▪`Default value`  **autoDispose**: *boolean*= true
 
-**Returns:** *[BufferFlowableSinkLike](../interfaces/_streams_.bufferflowablesinklike.md)*
+**Returns:** *FlowableSinkLike‹Uint8Array›*
 
 ___
 
@@ -80,7 +75,7 @@ ___
 
 ### `Const` decode
 
-▸ **decode**(`charset`: string): *Operator‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md), FlowableLike‹string››*
+▸ **decode**(`charset`: string): *Operator‹FlowableLike‹Uint8Array›, FlowableLike‹string››*
 
 **Parameters:**
 
@@ -88,13 +83,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md), FlowableLike‹string››*
+**Returns:** *Operator‹FlowableLike‹Uint8Array›, FlowableLike‹string››*
 
 ___
 
 ### `Const` encode
 
-▸ **encode**(`charset`: string): *Operator‹FlowableLike‹string›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›*
+▸ **encode**(`charset`: string): *Operator‹FlowableLike‹string›, FlowableLike‹Uint8Array››*
 
 **Parameters:**
 
@@ -102,13 +97,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹FlowableLike‹string›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›*
+**Returns:** *Operator‹FlowableLike‹string›, FlowableLike‹Uint8Array››*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: function): *FlowableOperator‹Buffer, Buffer›*
+▸ **transform**(`factory`: function): *FlowableOperator‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -116,4 +111,4 @@ ___
 
 ▸ (): *DisposableValueLike‹Transform›*
 
-**Returns:** *FlowableOperator‹Buffer, Buffer›*
+**Returns:** *FlowableOperator‹Uint8Array, Uint8Array›*

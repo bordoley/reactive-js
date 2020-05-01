@@ -78,7 +78,7 @@ ___
 
 ### `Const` createHttpClient
 
-▸ **createHttpClient**(`options`: [HttpClientOptions](_http_.md#httpclientoptions)): *HttpClient‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md) & DisposableLike›*
+▸ **createHttpClient**(`options`: [HttpClientOptions](_http_.md#httpclientoptions)): *HttpClient‹HttpRequest‹FlowableLike‹Uint8Array››, FlowableLike‹Uint8Array› & DisposableLike›*
 
 **Parameters:**
 
@@ -86,19 +86,19 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | [HttpClientOptions](_http_.md#httpclientoptions) | {} |
 
-**Returns:** *HttpClient‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, [BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md) & DisposableLike›*
+**Returns:** *HttpClient‹HttpRequest‹FlowableLike‹Uint8Array››, FlowableLike‹Uint8Array› & DisposableLike›*
 
 ___
 
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: HttpServer‹HttpServerRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)): *[HttpRequestListener](_http_.md#httprequestlistener)*
+▸ **createHttpRequestListener**(`handler`: HttpServer‹HttpServerRequest‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array›››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)): *[HttpRequestListener](_http_.md#httprequestlistener)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | HttpServer‹HttpServerRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›› | - |
+`handler` | HttpServer‹HttpServerRequest‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array››› | - |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions) | {} |
 
@@ -108,7 +108,7 @@ ___
 
 ### `Const` decodeHttpRequest
 
-▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **decodeHttpRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpRequest‹FlowableLike‹Uint8Array››, HttpRequest‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -116,13 +116,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions | {} |
 
-**Returns:** *Operator‹HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+**Returns:** *Operator‹HttpRequest‹FlowableLike‹Uint8Array››, HttpRequest‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` encodeCharsetHttpRequest
 
-▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **encodeCharsetHttpRequest**(`contentType`: string | MediaType): *Operator‹HttpRequest‹string›, HttpRequest‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -130,13 +130,13 @@ Name | Type |
 ------ | ------ |
 `contentType` | string &#124; MediaType |
 
-**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+**Returns:** *Operator‹HttpRequest‹string›, HttpRequest‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` encodeCharsetHttpResponse
 
-▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **encodeCharsetHttpResponse**(`contentType`: string | MediaType): *Operator‹HttpResponse‹string›, HttpResponse‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -144,13 +144,13 @@ Name | Type |
 ------ | ------ |
 `contentType` | string &#124; MediaType |
 
-**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+**Returns:** *Operator‹HttpResponse‹string›, HttpResponse‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` encodeHttpClientRequest
 
-▸ **encodeHttpClientRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **encodeHttpClientRequest**(`options`: BrotliOptions | ZlibOptions): *Operator‹HttpClientRequest‹FlowableLike‹Uint8Array››, HttpClientRequest‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -158,13 +158,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions &#124; ZlibOptions | {} |
 
-**Returns:** *Operator‹HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpClientRequest‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+**Returns:** *Operator‹HttpClientRequest‹FlowableLike‹Uint8Array››, HttpClientRequest‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` encodeHttpResponse
 
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array›››*
 
 **Type parameters:**
 
@@ -177,4 +177,4 @@ Name | Type | Default |
 `request` | HttpRequest‹TReq› | - |
 `options` | [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions | {} |
 
-**Returns:** *Operator‹HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)›, HttpResponse‹[BufferFlowableLike](../interfaces/_streams_.bufferflowablelike.md)››*
+**Returns:** *Operator‹HttpResponse‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array›››*
