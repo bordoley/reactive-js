@@ -21,4 +21,13 @@ export const createDisposableNodeStream = <
   T extends Readable | Writable | Transform
 >(
   stream: T,
-): DisposableValueLike<T> => createDisposableValue<T>(stream, dispose);
+): DisposableValueLike<T> => {
+  const retval = createDisposableValue<T>(stream, dispose);
+
+  const onError = (cause: any) => {
+    retval.dispose({ cause });
+  };
+  stream.on("error", onError);
+
+  return retval;
+}

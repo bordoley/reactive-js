@@ -13,24 +13,18 @@ import { pipe } from "@reactive-js/core/dist/js/functions";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 
 const createReadableEventsObservable = (
-  readable: DisposableValueLike<Readable>,
-) =>
-  createObservable(dispatcher => {
+  readable: Readable,
+) => createObservable(dispatcher => {
     const onData = (data: Uint8Array) => {
       dispatcher.dispatch({ type: FlowEventType.Next, data });
     };
-    readable.value.on("data", onData);
+    readable.on("data", onData);
 
     const onEnd = () => {
       dispatcher.dispatch({ type: FlowEventType.Complete });
-      readable.dispose();
+      dispatcher.dispose();
     };
-    readable.value.on("end", onEnd);
-
-    const onError = (cause: any) => {
-      dispatcher.dispose({ cause });
-    };
-    readable.value.on("error", onError);
+    readable.on("end", onEnd);
   });
 
 const createReadableAndSetupModeSubscription = (
@@ -64,6 +58,6 @@ export const createFlowableFromReadable = (
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),
-      createReadableEventsObservable,
+      disp => createReadableEventsObservable(disp.value),
     ),
   );

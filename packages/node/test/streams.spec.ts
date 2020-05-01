@@ -24,8 +24,8 @@ import {
 } from "@reactive-js/core/dist/js/observable";
 import { scheduler } from "../src/scheduler";
 import {
-  createBufferFlowableFromReadable,
-  createBufferFlowableSinkFromWritable,
+  createFlowableFromReadable,
+  createFlowableSinkFromWritable,
   transform,
   encode,
   decode,
@@ -54,7 +54,7 @@ export const tests = describe(
       },
     });
 
-    const dest = createBufferFlowableSinkFromWritable(() =>
+    const dest = createFlowableSinkFromWritable(() =>
       createDisposableNodeStream(writable),
     );
 
@@ -63,7 +63,7 @@ export const tests = describe(
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferFlowableFromReadable(() =>
+    const src = createFlowableFromReadable(() =>
       pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
@@ -80,7 +80,7 @@ export const tests = describe(
       },
     });
 
-    const dest = createBufferFlowableSinkFromWritable(() =>
+    const dest = createFlowableSinkFromWritable(() =>
       createDisposableNodeStream(writable),
     );
 
@@ -89,7 +89,7 @@ export const tests = describe(
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferFlowableFromReadable(() =>
+    const src = createFlowableFromReadable(() =>
       pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
@@ -104,7 +104,7 @@ export const tests = describe(
       },
     });
 
-    const dest = createBufferFlowableSinkFromWritable(() =>
+    const dest = createFlowableSinkFromWritable(() =>
       createDisposableNodeStream(writable),
     );
 
@@ -116,7 +116,7 @@ export const tests = describe(
       yield Buffer.from("defg", "utf8");
     }
 
-    const src = createBufferFlowableFromReadable(() =>
+    const src = createFlowableFromReadable(() =>
       pipe(generate(), Readable.from, createDisposableNodeStream),
     );
 
@@ -139,7 +139,7 @@ export const tests = describe(
       },
     });
 
-    const dest = createBufferFlowableSinkFromWritable(() =>
+    const dest = createFlowableSinkFromWritable(() =>
       createDisposableNodeStream(writable),
     );
 
@@ -149,7 +149,7 @@ export const tests = describe(
     }
 
     await pipe(
-      createBufferFlowableFromReadable(() =>
+      createFlowableFromReadable(() =>
         pipe(generate(), Readable.from, createDisposableNodeStream),
       ),
       transform(() => createDisposableNodeStream(createGzip())),

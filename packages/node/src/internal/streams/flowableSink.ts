@@ -19,19 +19,14 @@ import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
-const createWritableEventsObservable = (autoDispose: boolean) => (
-  writable: DisposableValueLike<Writable>,
-) =>
-  createObservable(dispatcher => {
+const createWritableEventsObservable = (
+  writable: Writable,
+  autoDispose: boolean,
+) => createObservable(dispatcher => {
     const onDrain = () => {
       dispatcher.dispatch(FlowMode.Resume);
     };
-    writable.value.on("drain", onDrain);
-
-    const onError = (cause: unknown) => {
-      dispatcher.dispose({ cause });
-    };
-    writable.value.on("error", onError);
+    writable.on("drain", onDrain);
 
     const onFinish = () => {
       // By default we don't dispose the writable
@@ -40,12 +35,12 @@ const createWritableEventsObservable = (autoDispose: boolean) => (
         dispatcher.dispose();
       }
     };
-    writable.value.on("finish", onFinish);
+    writable.on("finish", onFinish);
 
     const onPause = () => {
       dispatcher.dispatch(FlowMode.Pause);
     };
-    writable.value.on(NODE_JS_PAUSE_EVENT, onPause);
+    writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
     dispatcher.dispatch(FlowMode.Resume);
   });
@@ -83,6 +78,6 @@ export const createFlowableSinkFromWritable = (
   createStreamable(events =>
     using(
       createWritableAndSetupEventSubscription(factory, events),
-      createWritableEventsObservable(autoDispose),
+      disp => createWritableEventsObservable(disp.value, autoDispose),
     ),
   );
