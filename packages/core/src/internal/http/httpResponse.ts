@@ -1,4 +1,4 @@
-import { isSome, none } from "../../option";
+import { Option, isSome, none } from "../../option";
 import { Operator } from "../../functions";
 import {
   HttpStatusCode,
@@ -33,7 +33,12 @@ import {
   parseCacheControlFromHeaders,
   parseCacheDirectiveOrThrow,
 } from "./cacheDirective";
-import { writeHttpMessageHeaders } from "./HttpMessage";
+import {
+  writeHttpMessageHeaders,
+  encodeHttpMessageWithCharset,
+  toFlowableHttpMessage,
+} from "./HttpMessage";
+import { FlowableLike, FlowableOperator, empty } from "../../flowable";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -255,4 +260,59 @@ export const httpResponseIsCompressible = <T>(
     isSome(contentInfo) &&
     contentIsCompressible(contentInfo, db)
   );
+};
+
+export const encodeHttpResponseWithCharset = (
+  encode: (v: string, charset: string) => Uint8Array,
+) => (
+  contentType: string | MediaType,
+): Operator<HttpResponse<string>, HttpResponse<Uint8Array>> => {
+  const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
+
+  return req => messageEncoder(req) as HttpResponse<Uint8Array>;
+};
+
+export const toFlowableHttpResponse = <TBody>(
+  resp: HttpResponse<TBody>,
+): HttpResponse<FlowableLike<TBody>> =>
+  toFlowableHttpMessage(resp) as HttpResponse<FlowableLike<TBody>>;
+
+export const decodeHttpResponseContent = (
+  decoderProvider: (
+    encoding: HttpContentEncoding,
+  ) => Option<FlowableOperator<Uint8Array, Uint8Array>>,
+): Operator<
+  HttpResponse<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
+> => resp => {
+  const { body, contentInfo, ...rest } = resp;
+
+  if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
+    const decoders = contentInfo.contentEncodings.map(encoding =>
+      decoderProvider(encoding),
+    );
+    const supportsDecodings = decoders.every(isSome);
+
+    if (supportsDecodings) {
+      return {
+        ...rest,
+        contentInfo: {
+          contentType: contentInfo.contentType,
+          contentEncodings: [],
+          contentLength: -1,
+        },
+        body: decoders.reduceRight(
+          (acc, decoder) => (decoder as any)(acc),
+          body,
+        ),
+      };
+    } else {
+      return createHttpResponse({
+        statusCode: HttpStatusCode.UnsupportedMediaType,
+        body: empty<Uint8Array>(),
+      });
+    }
+  } else {
+    return resp;
+  }
 };

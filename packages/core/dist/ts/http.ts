@@ -19,18 +19,25 @@ export {
 export {
   createHttpRequest,
   createRedirectHttpRequest,
+  decodeHttpRequestContent,
   disallowProtocolAndHostForwarding,
+  encodeHttpRequestWithCharset,
+  encodeHttpClientRequestContent,
   httpRequestIsCompressible,
-  parseHttpRequestFromHeaders,
   httpRequestToUntypedHeaders,
+  parseHttpRequestFromHeaders,
+  toFlowableHttpRequest,
   writeHttpRequestHeaders,
 } from "./internal/http/httpRequest.ts";
 
 export {
   checkIfNotModified,
   createHttpResponse,
+  decodeHttpResponseContent,
+  encodeHttpResponseWithCharset,
   httpResponseIsCompressible,
   parseHttpResponseFromHeaders,
+  toFlowableHttpResponse,
   writeHttpResponseHeaders,
 } from "./internal/http/httpResponse.ts";
 
@@ -38,11 +45,6 @@ export {
   HttpStandardHeader,
   HttpExtensionHeader,
 } from "./internal/http/httpHeaders.ts";
-
-export {
-  parseMediaType,
-  parseMediaTypeOrThrow,
-} from "./internal/http/mediaType.ts";
 
 export { parseHeaders } from "./internal/http/httpGrammar.ts";
 

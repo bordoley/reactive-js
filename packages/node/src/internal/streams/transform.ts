@@ -15,17 +15,11 @@ import {
 import { Option } from "@reactive-js/core/dist/js/option";
 import { createFlowableFromReadable } from "./flowable";
 import { createFlowableSinkFromWritable } from "./flowableSink";
-import {
-  Operator,
-  pipe,
-  compose,
-  returns,
-} from "@reactive-js/core/dist/js/functions";
+import { pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import {
   FlowableOperator,
   FlowEvent,
-  FlowableLike,
   FlowEventType,
 } from "@reactive-js/core/dist/js/flowable";
 import {
@@ -117,12 +111,8 @@ const convert = <TA, TB extends { length: number }>(
   return lift(op);
 };
 
-export const encode = (
-  charset: string,
-): Operator<FlowableLike<string>, FlowableLike<Uint8Array>> =>
+export const encode = (charset: string): FlowableOperator<string, Uint8Array> =>
   convert(() => (iconv as any).getEncoder(charset));
 
-export const decode = (
-  charset: string,
-): Operator<FlowableLike<Uint8Array>, FlowableLike<string>> =>
+export const decode = (charset: string): FlowableOperator<Uint8Array, string> =>
   convert(() => (iconv as any).getDecoder(charset));

@@ -30,4 +30,4 @@ export const createDisposableNodeStream = <
   stream.on("error", onError);
 
   return retval;
-}
+};

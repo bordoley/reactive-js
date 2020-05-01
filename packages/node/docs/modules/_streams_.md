@@ -75,7 +75,7 @@ ___
 
 ### `Const` decode
 
-▸ **decode**(`charset`: string): *Operator‹FlowableLike‹Uint8Array›, FlowableLike‹string››*
+▸ **decode**(`charset`: string): *FlowableOperator‹Uint8Array, string›*
 
 **Parameters:**
 
@@ -83,13 +83,13 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹FlowableLike‹Uint8Array›, FlowableLike‹string››*
+**Returns:** *FlowableOperator‹Uint8Array, string›*
 
 ___
 
 ### `Const` encode
 
-▸ **encode**(`charset`: string): *Operator‹FlowableLike‹string›, FlowableLike‹Uint8Array››*
+▸ **encode**(`charset`: string): *FlowableOperator‹string, Uint8Array›*
 
 **Parameters:**
 
@@ -97,7 +97,7 @@ Name | Type |
 ------ | ------ |
 `charset` | string |
 
-**Returns:** *Operator‹FlowableLike‹string›, FlowableLike‹Uint8Array››*
+**Returns:** *FlowableOperator‹string, Uint8Array›*
 
 ___
 

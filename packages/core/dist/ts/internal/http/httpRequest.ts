@@ -1,4 +1,4 @@
-import { isNone, isSome, none } from "../../option.ts";
+import { Option, isNone, isSome, none } from "../../option.ts";
 import { Operator } from "../../functions.ts";
 import {
   parseHttpContentInfoFromHeaders,
@@ -39,7 +39,14 @@ import {
   parseCacheControlFromHeaders,
   parseCacheDirectiveOrThrow,
 } from "./cacheDirective.ts";
-import { writeHttpMessageHeaders } from "./HttpMessage.ts";
+import {
+  writeHttpMessageHeaders,
+  encodeHttpMessageWithCharset,
+  toFlowableHttpMessage,
+} from "./HttpMessage.ts";
+import { FlowableLike, FlowableOperator } from "../../flowable.ts";
+import { HttpClientRequest } from "./httpClient.ts";
+import { createHttpResponse } from "./httpResponse.ts";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -281,3 +288,89 @@ export const httpRequestIsCompressible = <T>(
     };
   },
 ): boolean => isSome(contentInfo) && contentIsCompressible(contentInfo, db);
+
+export const encodeHttpRequestWithCharset = (
+  encode: (v: string, charset: string) => Uint8Array,
+) => (
+  contentType: string | MediaType,
+): Operator<HttpRequest<string>, HttpRequest<Uint8Array>> => {
+  const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
+
+  return req => messageEncoder(req) as HttpRequest<Uint8Array>;
+};
+
+export const toFlowableHttpRequest = <TBody>(
+  req: HttpRequest<TBody>,
+): HttpRequest<FlowableLike<TBody>> =>
+  toFlowableHttpMessage(req) as HttpRequest<FlowableLike<TBody>>;
+
+export const decodeHttpRequestContent = (
+  decoderProvider: (
+    encoding: HttpContentEncoding,
+  ) => Option<FlowableOperator<Uint8Array, Uint8Array>>,
+): Operator<
+  HttpRequest<FlowableLike<Uint8Array>>,
+  HttpRequest<FlowableLike<Uint8Array>>
+> => req => {
+  const { body, contentInfo, ...rest } = req;
+
+  if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
+    const newBody = contentInfo.contentEncodings
+      .map(encoding => {
+        const decoder = decoderProvider(encoding);
+        if (isNone(decoder)) {
+          throw createHttpResponse({
+            statusCode: HttpStatusCode.UnsupportedMediaType,
+            body: none,
+          });
+        }
+        return decoder;
+      })
+      .reduceRight((acc, decoder) => decoder(acc), body);
+
+    return {
+      ...rest,
+      contentInfo: {
+        contentType: contentInfo.contentType,
+        contentEncodings: [],
+        contentLength: -1,
+      },
+      body: newBody,
+    };
+  } else {
+    return req;
+  }
+};
+
+export const encodeHttpClientRequestContent = (
+  encoderProvider: (
+    request: HttpClientRequest<FlowableLike<Uint8Array>>,
+  ) => Option<{
+    readonly encoding: HttpContentEncoding;
+    readonly encode: FlowableOperator<Uint8Array, Uint8Array>;
+  }>,
+): Operator<
+  HttpClientRequest<FlowableLike<Uint8Array>>,
+  HttpClientRequest<FlowableLike<Uint8Array>>
+> => request => {
+  const { body, contentInfo } = request;
+
+  if (isNone(contentInfo)) {
+    return request;
+  }
+
+  const encoder = encoderProvider(request);
+  if (isNone(encoder)) {
+    return request;
+  }
+
+  return {
+    ...request,
+    body: encoder.encode(body),
+    contentInfo: {
+      contentType: contentInfo.contentType,
+      contentEncodings: [encoder.encoding],
+      contentLength: -1,
+    },
+  };
+};

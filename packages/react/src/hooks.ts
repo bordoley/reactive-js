@@ -85,7 +85,7 @@ export const useStreamable = <TReq, T>(
     pipe(stream, returns, dispatch);
 
     return () => {
-      streamRef.current = undefined;
+      streamRef.current = none;
       stream.dispose();
     };
   }, [streamable, scheduler, replay, dispatch]);

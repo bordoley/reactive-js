@@ -19,9 +19,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     const resources = this.resourceFactory(subscriber);
     const observableFactory = this.observableFactory;
 
-    const resourcesArray = Array.isArray(resources) 
-      ? resources
-      : [resources];
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
 
     for (const resource of resourcesArray) {
       subscriber.add(resource as DisposableLike);

@@ -22,7 +22,8 @@ const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 const createWritableEventsObservable = (
   writable: Writable,
   autoDispose: boolean,
-) => createObservable(dispatcher => {
+) =>
+  createObservable(dispatcher => {
     const onDrain = () => {
       dispatcher.dispatch(FlowMode.Resume);
     };
@@ -76,8 +77,7 @@ export const createFlowableSinkFromWritable = (
   autoDispose = true,
 ): FlowableSinkLike<Uint8Array> =>
   createStreamable(events =>
-    using(
-      createWritableAndSetupEventSubscription(factory, events),
-      disp => createWritableEventsObservable(disp.value, autoDispose),
+    using(createWritableAndSetupEventSubscription(factory, events), disp =>
+      createWritableEventsObservable(disp.value, autoDispose),
     ),
   );
