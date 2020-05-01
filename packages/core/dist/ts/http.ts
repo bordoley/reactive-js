@@ -35,6 +35,7 @@ export {
   createHttpResponse,
   decodeHttpResponseContent,
   encodeHttpResponseWithCharset,
+  encodeHttpResponseContent,
   httpResponseIsCompressible,
   parseHttpResponseFromHeaders,
   toFlowableHttpResponse,

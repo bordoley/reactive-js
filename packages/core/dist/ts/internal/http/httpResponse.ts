@@ -1,4 +1,4 @@
-import { Option, isSome, none } from "../../option.ts";
+import { Option, isNone, isSome, none } from "../../option.ts";
 import { Operator } from "../../functions.ts";
 import {
   HttpStatusCode,
@@ -315,4 +315,38 @@ export const decodeHttpResponseContent = (
   } else {
     return resp;
   }
+};
+
+export const encodeHttpResponseContent = (
+  encoderProvider: (
+    response: HttpResponse<unknown>,
+  ) => Option<{
+    encode: Operator<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>>;
+    encoding: HttpContentEncoding;
+  }>,
+): Operator<
+  HttpResponse<FlowableLike<Uint8Array>>,
+  HttpResponse<FlowableLike<Uint8Array>>
+> => response => {
+  const { body, contentInfo, vary } = response;
+
+  if (isNone(contentInfo)) {
+    return response;
+  }
+
+  const encoder = encoderProvider(response);
+  if (isNone(encoder)) {
+    return response;
+  }
+
+  return {
+    ...response,
+    body: encoder.encode(body),
+    contentInfo: {
+      contentType: contentInfo.contentType,
+      contentEncodings: [encoder.encoding],
+      contentLength: -1,
+    },
+    vary: [...vary, HttpStandardHeader.AcceptEncoding],
+  };
 };

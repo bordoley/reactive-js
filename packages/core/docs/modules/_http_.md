@@ -52,6 +52,7 @@
 * [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
 * [encodeHttpClientRequestContent](_http_.md#const-encodehttpclientrequestcontent)
 * [encodeHttpRequestWithCharset](_http_.md#const-encodehttprequestwithcharset)
+* [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
 * [encodeHttpResponseWithCharset](_http_.md#const-encodehttpresponsewithcharset)
 * [httpRequestIsCompressible](_http_.md#const-httprequestiscompressible)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
@@ -497,6 +498,26 @@ Name | Type |
 `charset` | string |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+### `Const` encodeHttpResponseContent
+
+▸ **encodeHttpResponseContent**(`encoderProvider`: function): *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
+
+**Parameters:**
+
+▪ **encoderProvider**: *function*
+
+▸ (`response`: [HttpResponse](_http_.md#httpresponse)‹unknown›): *[Option](_option_.md#option)‹object›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`response` | [HttpResponse](_http_.md#httpresponse)‹unknown› |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›››*
 
 ___
 
