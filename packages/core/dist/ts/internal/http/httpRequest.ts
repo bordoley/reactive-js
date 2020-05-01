@@ -1,4 +1,4 @@
-import { Option, isNone, isSome, none } from "../../option.ts";
+import { isNone, isSome, none } from "../../option.ts";
 import { Operator } from "../../functions.ts";
 import {
   parseHttpContentInfoFromHeaders,
@@ -43,6 +43,7 @@ import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithCharset,
   toFlowableHttpMessage,
+  decodeHttpMessageWithCharset,
 } from "./HttpMessage.ts";
 import { FlowableLike, FlowableOperator } from "../../flowable.ts";
 import { HttpClientRequest } from "./httpClient.ts";
@@ -280,23 +281,20 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const httpRequestIsCompressible = <T>(
-  { contentInfo }: HttpRequest<T>,
-  db: {
-    [key: string]: {
-      compressible?: boolean;
-    };
-  },
-): boolean => isSome(contentInfo) && contentIsCompressible(contentInfo, db);
-
 export const encodeHttpRequestWithCharset = (
   encode: (v: string, charset: string) => Uint8Array,
 ) => (
   contentType: string | MediaType,
 ): Operator<HttpRequest<string>, HttpRequest<Uint8Array>> => {
   const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
-
   return req => messageEncoder(req) as HttpRequest<Uint8Array>;
+};
+
+export const decodeHttpRequestWithCharset = (
+  decode: (v: Uint8Array, charset: string) => string,
+): Operator<HttpRequest<Uint8Array>, HttpRequest<string>> => {
+  const messageEncoder = decodeHttpMessageWithCharset(decode);
+  return req => messageEncoder(req) as HttpRequest<string>;
 };
 
 export const toFlowableHttpRequest = <TBody>(
@@ -304,11 +302,9 @@ export const toFlowableHttpRequest = <TBody>(
 ): HttpRequest<FlowableLike<TBody>> =>
   toFlowableHttpMessage(req) as HttpRequest<FlowableLike<TBody>>;
 
-export const decodeHttpRequestContent = (
-  decoderProvider: (
-    encoding: HttpContentEncoding,
-  ) => Option<FlowableOperator<Uint8Array, Uint8Array>>,
-): Operator<
+export const decodeHttpRequestContent = (decoderProvider: {
+  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+}): Operator<
   HttpRequest<FlowableLike<Uint8Array>>,
   HttpRequest<FlowableLike<Uint8Array>>
 > => req => {
@@ -317,7 +313,7 @@ export const decodeHttpRequestContent = (
   if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
     const newBody = contentInfo.contentEncodings
       .map(encoding => {
-        const decoder = decoderProvider(encoding);
+        const decoder = decoderProvider[encoding];
         if (isNone(decoder)) {
           throw createHttpResponse({
             statusCode: HttpStatusCode.UnsupportedMediaType,
@@ -342,35 +338,58 @@ export const decodeHttpRequestContent = (
   }
 };
 
-export const encodeHttpClientRequestContent = (
-  encoderProvider: (
-    request: HttpClientRequest<FlowableLike<Uint8Array>>,
-  ) => Option<{
-    readonly encoding: HttpContentEncoding;
-    readonly encode: FlowableOperator<Uint8Array, Uint8Array>;
-  }>,
+export const encodeHttpClientRequestContent = ( 
+  encoderProvider: {
+    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+  },
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    };
+  } = {},
 ): Operator<
   HttpClientRequest<FlowableLike<Uint8Array>>,
   HttpClientRequest<FlowableLike<Uint8Array>>
-> => request => {
-  const { body, contentInfo } = request;
+> => {
+  const supportedEncodings = Object.keys(encoderProvider);
 
-  if (isNone(contentInfo)) {
-    return request;
-  }
+  const httpRequestIsCompressible = <T>({
+    contentInfo,
+  }: HttpRequest<T>): boolean =>
+    isSome(contentInfo) && contentIsCompressible(contentInfo, db);
 
-  const encoder = encoderProvider(request);
-  if (isNone(encoder)) {
-    return request;
-  }
+  return request => {
+    const { body, contentInfo } = request;
 
-  return {
-    ...request,
-    body: encoder.encode(body),
-    contentInfo: {
-      contentType: contentInfo.contentType,
-      contentEncodings: [encoder.encoding],
-      contentLength: -1,
-    },
+    if (isNone(contentInfo)) {
+      return request;
+    }
+
+    const contentEncoding = (request?.acceptedEncodings ?? []).find(encoding =>
+      supportedEncodings.includes(encoding),
+    );
+
+    if (isNone(contentEncoding)) {
+      return request;
+    }
+
+    const encode =
+      isSome(contentEncoding) && httpRequestIsCompressible(request)
+        ? encoderProvider[contentEncoding]
+        : none;
+
+    if (isNone(encode)) {
+      return request;
+    }
+
+    return {
+      ...request,
+      body: encode(body),
+      contentInfo: {
+        contentType: contentInfo.contentType,
+        contentEncodings: [contentEncoding],
+        contentLength: -1,
+      },
+    };
   };
 };

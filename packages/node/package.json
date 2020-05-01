@@ -37,12 +37,10 @@
   },
   "dependencies": {
     "@reactive-js/core": "^0.0.37",
-    "iconv-lite": "^0.5.1",
-    "mime-db": "^1.43.0"
+    "iconv-lite": "^0.5.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
-    "@types/mime-db": "^1.27.1",
     "@types/node": "13.13.2",
     "jest": "^24.9.0",
     "renamer": "^2.0.0",

@@ -2,6 +2,7 @@ import fs from "fs";
 import iconv from "iconv-lite";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
+import db from "mime-db";
 import mime from "mime-types";
 import {
   generate,
@@ -32,9 +33,8 @@ import {
 import {
   createHttpRequestListener,
   createHttpClient,
-  createContentEncodingDecompressTransform,
-  createHttpClientRequestContentEncoderProvider,
-  createHttpClientResponseContentEncoderProvider,
+  createContentEncodingDecompressTransforms,
+  createContentEncodingCompressTransforms,
 } from "@reactive-js/node/dist/js/http";
 import {
   encode,
@@ -179,8 +179,6 @@ const router = createRoutingHttpServer(
   notFound,
 );
 
-const httpResponseContentEncoder = createHttpClientResponseContentEncoderProvider();
-
 const listener = createHttpRequestListener(
   req =>
     pipe(
@@ -188,15 +186,15 @@ const listener = createHttpRequestListener(
       map(
         compose(
           disallowProtocolAndHostForwarding(),
-          decodeHttpRequestContent(createContentEncodingDecompressTransform()),
+          decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
         ),
       ),
       await_(router),
       map(
-        pipe(
-          httpResponseContentEncoder(req),
-          encodeHttpResponseContent,
-        ),
+        encodeHttpResponseContent(
+          createContentEncodingCompressTransforms(),
+          db,
+        )(req),
       ),
       catchError((e: unknown) => {
         const body =
@@ -240,10 +238,11 @@ createHttp2Server(
 
 const httpClient = pipe(
   createHttpClient(),
-  pipe(
-    createHttpClientRequestContentEncoderProvider(),
-    encodeHttpClientRequestContent,
-    withDefaultBehaviors(),
+  withDefaultBehaviors(
+    encodeHttpClientRequestContent(
+      createContentEncodingCompressTransforms(),
+      db,
+    ),
   ),
 );
 
