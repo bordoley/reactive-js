@@ -12,9 +12,7 @@ import {
 } from "@reactive-js/core/dist/js/http";
 import {
   createBufferFlowableFromReadable,
-  BufferFlowableLike,
   createBufferFlowableSinkFromWritable,
-  BufferFlowableSinkLike,
   createDisposableNodeStream,
 } from "../../streams";
 import {
@@ -30,9 +28,10 @@ import { pipe, returns } from "@reactive-js/core/dist/js/functions";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
 import { isSome } from "@reactive-js/core/dist/js/option";
+import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/dist/js/flowable";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
-  response: HttpResponse<BufferFlowableLike>,
+  response: HttpResponse<FlowableLike<Uint8Array>>,
 ) => {
   serverResponse.statusCode = response.statusCode;
 
@@ -41,10 +40,10 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
   );
 };
 
-const writeResponseBody = (responseBody: BufferFlowableSinkLike) => ({
+const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
   body,
   contentInfo,
-}: HttpResponse<BufferFlowableLike>) =>
+}: HttpResponse<FlowableLike<Uint8Array>>) =>
   isSome(contentInfo) ? sink(body, responseBody) : empty();
 
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
@@ -60,8 +59,8 @@ export type HttpRequestListener = (
 
 export const createHttpRequestListener = (
   handler: HttpServer<
-    HttpServerRequest<BufferFlowableLike>,
-    HttpResponse<BufferFlowableLike>
+    HttpServerRequest<FlowableLike<Uint8Array>>,
+    HttpResponse<FlowableLike<Uint8Array>>
   >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},

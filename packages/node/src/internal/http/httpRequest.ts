@@ -6,7 +6,6 @@ import {
   MediaType,
   HttpClientRequest,
 } from "@reactive-js/core/dist/js/http";
-import { BufferFlowableLike, transform } from "../../streams";
 import { isSome } from "@reactive-js/core/dist/js/option";
 import { Operator, pipe } from "@reactive-js/core/dist/js/functions";
 import {
@@ -14,19 +13,21 @@ import {
   getFirstSupportedEncoding,
 } from "./httpContentEncoding";
 import { decodeHttpMessage, encodeCharsetHttpMessage } from "./httpMessage";
+import { FlowableLike } from "@reactive-js/core/dist/js/flowable";
+import { transform } from "../../streams";
 
 export const decodeHttpRequest = (
   options: BrotliOptions | ZlibOptions = {},
 ): Operator<
-  HttpRequest<BufferFlowableLike>,
-  HttpRequest<BufferFlowableLike>
+  HttpRequest<FlowableLike<Uint8Array>>,
+  HttpRequest<FlowableLike<Uint8Array>>
 > => request => decodeHttpMessage(request, options);
 
 export const encodeHttpClientRequest = (
   options: BrotliOptions | ZlibOptions = {},
 ): Operator<
-  HttpClientRequest<BufferFlowableLike>,
-  HttpClientRequest<BufferFlowableLike>
+  HttpClientRequest<FlowableLike<Uint8Array>>,
+  HttpClientRequest<FlowableLike<Uint8Array>>
 > => request => {
   const { body, contentInfo } = request;
 
@@ -55,7 +56,7 @@ export const encodeHttpClientRequest = (
 
 export const encodeCharsetHttpRequest = (
   contentType: string | MediaType,
-): Operator<HttpRequest<string>, HttpRequest<BufferFlowableLike>> => {
+): Operator<HttpRequest<string>, HttpRequest<FlowableLike<Uint8Array>>> => {
   const messageEncoder = encodeCharsetHttpMessage(contentType);
-  return req => messageEncoder(req) as HttpRequest<BufferFlowableLike>;
+  return req => messageEncoder(req) as HttpRequest<FlowableLike<Uint8Array>>;
 };
