@@ -32,7 +32,7 @@ import {
 } from "@reactive-js/node/dist/js/http";
 import {
   encode,
-  createBufferFlowableFromReadable,
+  createFlowableFromReadable,
   createDisposableNodeStream,
 } from "@reactive-js/node/dist/js/streams";
 import { scheduler as nodeScheduler } from "@reactive-js/node/dist/js/scheduler";
@@ -118,7 +118,7 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createBufferFlowableFromReadable(() =>
+            body: createFlowableFromReadable(() =>
               createDisposableNodeStream(fs.createReadStream(path)),
             ),
             contentInfo: {
@@ -254,7 +254,7 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createBufferFlowableFromReadable(() =>
+      body: createFlowableFromReadable(() =>
         createDisposableNodeStream(fs.createReadStream(file)),
       ),
       contentInfo: {

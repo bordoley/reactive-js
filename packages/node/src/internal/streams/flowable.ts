@@ -58,7 +58,7 @@ const createReadableAndSetupModeSubscription = (
   return readable.add(modeSubscription);
 };
 
-export const createBufferFlowableFromReadable = (
+export const createFlowableFromReadable = (
   factory: () => DisposableValueLike<Readable>,
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>

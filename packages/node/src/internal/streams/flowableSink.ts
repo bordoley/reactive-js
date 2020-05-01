@@ -76,7 +76,7 @@ const createWritableAndSetupEventSubscription = (
   return writable.add(streamEventsSubscription);
 };
 
-export const createBufferFlowableSinkFromWritable = (
+export const createFlowableSinkFromWritable = (
   factory: () => DisposableValueLike<Writable>,
   autoDispose = true,
 ): FlowableSinkLike<Uint8Array> =>

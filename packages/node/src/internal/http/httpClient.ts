@@ -30,9 +30,9 @@ import {
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
 import { pipe, returns } from "@reactive-js/core/dist/js/functions";
 import {
-  createBufferFlowableSinkFromWritable,
+  createFlowableSinkFromWritable,
   createDisposableNodeStream,
-  createBufferFlowableFromReadable,
+  createFlowableFromReadable,
 } from "../../streams";
 import {
   FlowEvent,
@@ -75,7 +75,7 @@ class ResponseBody extends AbstractDisposable implements FlowableLike<Uint8Array
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createBufferFlowableFromReadable(() =>
+    const stream = createFlowableFromReadable(() =>
       createDisposableNodeStream(this.resp),
     )
       .stream(scheduler, replayCount)
@@ -118,7 +118,7 @@ export const createHttpClient = (
               throw new Error();
             })();
 
-      const requestSink = createBufferFlowableSinkFromWritable(() =>
+      const requestSink = createFlowableSinkFromWritable(() =>
         createDisposableNodeStream(req),
       ).stream(scheduler);
 
