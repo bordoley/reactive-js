@@ -6,7 +6,6 @@
 
 ### Type aliases
 
-* [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions)
 * [HttpClientOptions](_http_.md#httpclientoptions)
 * [HttpRequestListener](_http_.md#httprequestlistener)
 * [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions)
@@ -16,23 +15,11 @@
 * [createContentEncodingCompressTransform](_http_.md#const-createcontentencodingcompresstransform)
 * [createContentEncodingDecompressTransform](_http_.md#const-createcontentencodingdecompresstransform)
 * [createHttpClient](_http_.md#const-createhttpclient)
-* [createHttpClientRequestContentEncoder](_http_.md#const-createhttpclientrequestcontentencoder)
+* [createHttpClientRequestContentEncoderProvider](_http_.md#const-createhttpclientrequestcontentencoderprovider)
+* [createHttpClientResponseContentEncoderProvider](_http_.md#const-createhttpclientresponsecontentencoderprovider)
 * [createHttpRequestListener](_http_.md#const-createhttprequestlistener)
-* [encodeHttpResponse](_http_.md#const-encodehttpresponse)
 
 ## Type aliases
-
-###  EncodeHttpResponseOptions
-
-Ƭ **EncodeHttpResponseOptions**: *object*
-
-#### Type declaration:
-
-* **shouldEncode**(): *function*
-
-  * <**T**, **TResp**>(`req`: HttpRequest‹T›, `resp`: HttpResponse‹TResp›): *Option‹boolean›*
-
-___
 
 ###  HttpClientOptions
 
@@ -117,9 +104,23 @@ Name | Type | Default |
 
 ___
 
-### `Const` createHttpClientRequestContentEncoder
+### `Const` createHttpClientRequestContentEncoderProvider
 
-▸ **createHttpClientRequestContentEncoder**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+▸ **createHttpClientRequestContentEncoderProvider**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions &#124; ZlibOptions | {} |
+
+**Returns:** *(Anonymous function)*
+
+___
+
+### `Const` createHttpClientResponseContentEncoderProvider
+
+▸ **createHttpClientResponseContentEncoderProvider**(`options`: BrotliOptions | ZlibOptions): *(Anonymous function)*
 
 **Parameters:**
 
@@ -144,22 +145,3 @@ Name | Type | Default |
 `options` | [HttpRequestListenerOptions](_http_.md#httprequestlisteneroptions) | {} |
 
 **Returns:** *[HttpRequestListener](_http_.md#httprequestlistener)*
-
-___
-
-### `Const` encodeHttpResponse
-
-▸ **encodeHttpResponse**<**TReq**>(`request`: HttpRequest‹TReq›, `options`: [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions | ZlibOptions): *Operator‹HttpResponse‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array›››*
-
-**Type parameters:**
-
-▪ **TReq**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`request` | HttpRequest‹TReq› | - |
-`options` | [EncodeHttpResponseOptions](_http_.md#encodehttpresponseoptions) & BrotliOptions &#124; ZlibOptions | {} |
-
-**Returns:** *Operator‹HttpResponse‹FlowableLike‹Uint8Array››, HttpResponse‹FlowableLike‹Uint8Array›››*

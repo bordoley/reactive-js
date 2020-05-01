@@ -9,12 +9,8 @@ export {
   createHttpRequestListener,
 } from "./internal/http/httpRequestListener";
 
-export { createHttpClientRequestContentEncoder } from "./internal/http/httpRequest";
-
-export {
-  EncodeHttpResponseOptions,
-  encodeHttpResponse,
-} from "./internal/http/httpResponse";
+export { createHttpClientRequestContentEncoderProvider } from "./internal/http/httpRequest";
+export { createHttpClientResponseContentEncoderProvider } from "./internal/http/httpResponse";
 
 export {
   createContentEncodingDecompressTransform,

@@ -27,13 +27,14 @@ import {
   toFlowableHttpResponse,
   toFlowableHttpRequest,
   encodeHttpClientRequestContent,
+  encodeHttpResponseContent,
 } from "@reactive-js/core/dist/js/http";
 import {
   createHttpRequestListener,
   createHttpClient,
   createContentEncodingDecompressTransform,
-  createHttpClientRequestContentEncoder,
-  encodeHttpResponse,
+  createHttpClientRequestContentEncoderProvider,
+  createHttpClientResponseContentEncoderProvider,
 } from "@reactive-js/node/dist/js/http";
 import {
   encode,
@@ -178,6 +179,8 @@ const router = createRoutingHttpServer(
   notFound,
 );
 
+const httpResponseContentEncoder = createHttpClientResponseContentEncoderProvider();
+
 const listener = createHttpRequestListener(
   req =>
     pipe(
@@ -189,7 +192,12 @@ const listener = createHttpRequestListener(
         ),
       ),
       await_(router),
-      map(encodeHttpResponse(req)),
+      map(
+        pipe(
+          httpResponseContentEncoder(req),
+          encodeHttpResponseContent,
+        ),
+      ),
       catchError((e: unknown) => {
         const body =
           process.env.NODE_ENV === "production"
@@ -233,7 +241,7 @@ createHttp2Server(
 const httpClient = pipe(
   createHttpClient(),
   pipe(
-    createHttpClientRequestContentEncoder(),
+    createHttpClientRequestContentEncoderProvider(),
     encodeHttpClientRequestContent,
     withDefaultBehaviors(),
   ),

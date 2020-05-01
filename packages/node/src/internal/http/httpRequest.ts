@@ -15,7 +15,7 @@ import {
   FlowableLike,
 } from "@reactive-js/core/dist/js/flowable";
 
-export const createHttpClientRequestContentEncoder = (
+export const createHttpClientRequestContentEncoderProvider = (
   options: BrotliOptions | ZlibOptions = {},
 ) => {
   const getEncoder = createContentEncodingCompressTransform(options);
