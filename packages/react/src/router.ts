@@ -56,7 +56,7 @@ export type RouteMap = {
 };
 
 export type RouterProps = {
-  readonly history: StateStoreLike<string>;
+  readonly stateStore: StateStoreLike<string>;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
   readonly routes: RouteMap,
 };
@@ -82,18 +82,18 @@ const mapRequest = (
 }
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
-  const { history, notFound, routes } = props;
+  const { stateStore, notFound, routes } = props;
 
   const relativeURIStore = useMemo(
     () => pipe(
-      history,
+      stateStore,
       mapReq(mapRequest),
       scan(
         pairify,
         returns<[Option<RelativeURI>, RelativeURI]>([none, empty]),
       ),
     ),
-    [history],
+    [stateStore],
   );
 
   const [locationState, uriUpdater] = useStreamable(relativeURIStore, { replay: 1 });

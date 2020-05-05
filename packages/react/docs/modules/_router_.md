@@ -63,11 +63,11 @@ ___
 
 #### Type declaration:
 
-* **history**: *StateStoreLike‹string›*
-
 * **notFound**: *React.ComponentType‹[RoutableComponentProps](_router_.md#routablecomponentprops)›*
 
 * **routes**: *[RouteMap](_router_.md#routemap)*
+
+* **stateStore**: *StateStoreLike‹string›*
 
 ## Functions
 

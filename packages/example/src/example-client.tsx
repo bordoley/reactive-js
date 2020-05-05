@@ -33,7 +33,7 @@ import {
   throttle,
 } from "@reactive-js/core/dist/js/observable";
 import {
-  history,
+  historyStateStore,
   createEventSource,
   historyHashStateStore,
 } from "@reactive-js/core/dist/js/dom";
@@ -48,9 +48,9 @@ import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { WebRequestBody } from "@reactive-js/http/dist/js/dom";
 import {
   pipe,
-  compose,
   returns,
   increment,
+  identity,
 } from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
@@ -99,17 +99,11 @@ const Component1 = (props: RoutableComponentProps) => {
   );
 };
 
-const chopLeadingChar = (str: string) =>
-  str.length > 0 ? str.substring(1) : "";
-
-const parseState = compose(chopLeadingChar, decodeURIComponent);
-const serializeState = (s: string) => (s.length > 0 ? "#" + encodeURIComponent(s) : "");
-
 const StatefulComponent = (_props: RoutableComponentProps) => {
   const [state = "", dispatch] = useSerializedState(
     historyHashStateStore,
-    parseState,
-    serializeState,
+    identity,
+    identity,
   );
 
   const onChange = useCallback(
@@ -168,14 +162,14 @@ const routes = {
   "/stream": StreamPauseResume,
 };
 
-const loggedHistory = pipe(
-  history,
+const loggedHistoryStateStore = pipe(
+  historyStateStore,
   onNotifyStream(console.log),
 );
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
-  .render(<Router history={loggedHistory} notFound={NotFound} routes={routes} />);
+  .render(<Router stateStore={loggedHistoryStateStore} notFound={NotFound} routes={routes} />);
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,
