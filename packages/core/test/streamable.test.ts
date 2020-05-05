@@ -2,17 +2,17 @@ import { test, describe, expectArrayEquals } from "../src/testing";
 import { subscribe, onNotify } from "../src/observable";
 import { pipe } from "../src/functions";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { identity, liftReq, map } from "../src/streamable";
+import { identity, mapReq, map } from "../src/streamable";
 
 export const tests = describe(
   "streamable",
-  test("liftReq", () => {
+  test("mapReq", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const lifted = pipe(
       identity<string>(),
-      liftReq((x: number) => (x + 100).toLocaleString()),
-      liftReq(({ val }: { val: number }) => val),
+      mapReq((x: number) => (x + 100).toLocaleString()),
+      mapReq(({ val }: { val: number }) => val),
     );
 
     const stream = lifted.stream(scheduler);
@@ -32,7 +32,7 @@ export const tests = describe(
 
     pipe(result, expectArrayEquals(["110", "120", "130"]));
   }),
-  test("liftReq", () => {
+  test("map", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const lifted = pipe(

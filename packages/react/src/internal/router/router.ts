@@ -1,4 +1,4 @@
-import { scan, StreamableLike, liftReq } from "@reactive-js/core/dist/js/streamable";
+import { scan, StreamableLike, mapReq } from "@reactive-js/core/dist/js/streamable";
 import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
 import { useStreamable } from "../../hooks";
 import { createElement, useMemo, ReactElement } from "react";
@@ -94,7 +94,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
     () => pipe(
       history,
       toStateStore(() => ""),
-      liftReq(mapRequest),
+      mapReq(mapRequest),
       scan(
         pairify,
         returns<[Option<RelativeURI>, RelativeURI]>([none, empty]),

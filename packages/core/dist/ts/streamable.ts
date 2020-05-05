@@ -7,7 +7,7 @@ export {
   createStreamable,
   empty,
   lift,
-  liftReq,
+  mapReq,
 } from "./internal/streamable/streamable.ts";
 export { identity } from "./internal/streamable/identity.ts";
 export { map, onNotify, scan } from "./internal/streamable/operators.ts";
