@@ -83,7 +83,7 @@ export const lift = <TReq, TA, TB>(
   return liftImpl(enumerable, obsOps, reqOps);
 };
 
-export const liftReq = <TReqA, TReqB, T>(
+export const mapReq = <TReqA, TReqB, T>(
   op: (req: TReqB) => TReqA,
 ): StreamableOperator<TReqA, T, TReqB, T> => enumerable => {
   const obsOps =
