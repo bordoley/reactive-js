@@ -42,45 +42,60 @@ const _historyStateStore: StateStoreLike<string> = pipe(
 
 export const historyStateStore: StateStoreLike<string> = _historyStateStore;
 
-const parseState = (str: string) =>
-  str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
+type ParamMap = {readonly [key: string]: string };
+
+const parseQueryState = (searchParams: URLSearchParams): ParamMap => {
+  const retval: { [key: string]: string } = {};
+
+  searchParams.forEach((v, k) => {
+    retval[k] = v;
+  });
+
+  return retval;
+}
 
 const getSearchState = (
   state: string,
-): string => {
+): ParamMap => {
   const url = new URL(state);
-  return parseState(url.search);
+  return parseQueryState(url.searchParams);
 };
 
 const searchStateRequestMapper = (
-  stateUpdater: StateUpdater<string>
+  stateUpdater: StateUpdater<ParamMap>
 ): StateUpdater<string> => (
   prevStateString: string,
 ) => {
   const prevStateURL = new URL(prevStateString);
-  const prevState = parseState(prevStateURL.search);
+  const prevState = parseQueryState(prevStateURL.searchParams);
   const newState = stateUpdater(prevState);
 
   if (newState === prevState) {
     return prevStateString;
   } else {
     const newURL = new URL("", prevStateURL);
-    newURL.search = newState.length > 0 ? "?" + encodeURIComponent(newState) : "";
+    
+    const searchParams = new URLSearchParams(newState);
+    const searchParamsStr = searchParams.toString();
+    newURL.search = searchParamsStr.length > 0 ? `?${searchParamsStr}` : ""
     return newURL.href;
   }
 }
 
-export const historySearchStateStore: StateStoreLike<string> = pipe(
+export const historySearchStateStore: StateStoreLike<{readonly [key: string]: string }> = pipe(
   historyStateStore,
   mapReq(searchStateRequestMapper),
   map(getSearchState)
 );
 
+const parseHashState = (str: string) =>
+  str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
+
 const getHashState = (
   state: string,
 ): string => {
   const url = new URL(state);
-  return parseState(url.hash);
+  return parseHashState(url.hash);
 };
 
 const hashStateRequestMapper = (
@@ -89,7 +104,7 @@ const hashStateRequestMapper = (
   prevStateString: string,
 ) => {
   const prevStateURL = new URL(prevStateString);
-  const prevState = parseState(prevStateURL.hash);
+  const prevState = parseHashState(prevStateURL.hash);
   const newState = stateUpdater(prevState);
 
   if (newState === prevState) {
