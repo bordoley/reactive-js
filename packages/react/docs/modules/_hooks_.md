@@ -7,6 +7,7 @@
 ### Functions
 
 * [useObservable](_hooks_.md#const-useobservable)
+* [useSerializedState](_hooks_.md#const-useserializedstate)
 * [useStreamable](_hooks_.md#const-usestreamable)
 
 ## Functions
@@ -29,6 +30,42 @@ Name | Type | Default | Description |
 `scheduler` | SchedulerLike | normalPriority | An optional scheduler used when subscribing to `observable`. The default is React's normal priority scheduler.  |
 
 **Returns:** *Option‹T›*
+
+___
+
+### `Const` useSerializedState
+
+▸ **useSerializedState**<**TState**>(`store`: StateStoreLike‹string›, `parse`: function, `serialize`: function): *[Option‹TState›, function]*
+
+**Type parameters:**
+
+▪ **TState**
+
+**Parameters:**
+
+▪ **store**: *StateStoreLike‹string›*
+
+▪ **parse**: *function*
+
+▸ (`serialized`: string): *TState*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`serialized` | string |
+
+▪ **serialize**: *function*
+
+▸ (`state`: TState): *string*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`state` | TState |
+
+**Returns:** *[Option‹TState›, function]*
 
 ___
 

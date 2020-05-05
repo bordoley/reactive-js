@@ -8,12 +8,12 @@
 
 * [RelativeURI](_router_.md#relativeuri)
 * [RoutableComponentProps](_router_.md#routablecomponentprops)
+* [RouteMap](_router_.md#routemap)
 * [RouterProps](_router_.md#routerprops)
 
 ### Functions
 
 * [Router](_router_.md#const-router)
-* [useRoutableState](_router_.md#const-useroutablestate)
 
 ## Type aliases
 
@@ -47,17 +47,27 @@ ___
 
 ___
 
+###  RouteMap
+
+Ƭ **RouteMap**: *object*
+
+#### Type declaration:
+
+* \[ **key**: *string*\]: React.ComponentType‹[RoutableComponentProps](_router_.md#routablecomponentprops)›
+
+___
+
 ###  RouterProps
 
 Ƭ **RouterProps**: *object*
 
 #### Type declaration:
 
-* **history**: *StreamableLike‹string, string›*
+* **history**: *StateStoreLike‹string›*
 
 * **notFound**: *React.ComponentType‹[RoutableComponentProps](_router_.md#routablecomponentprops)›*
 
-* **routes**: *keyof [string, React.ComponentType<RoutableComponentProps>][]*
+* **routes**: *[RouteMap](_router_.md#routemap)*
 
 ## Functions
 
@@ -72,41 +82,3 @@ Name | Type |
 `props` | [RouterProps](_router_.md#routerprops) |
 
 **Returns:** *ReactElement | null*
-
-___
-
-### `Const` useRoutableState
-
-▸ **useRoutableState**<**TState**>(`props`: [RoutableComponentProps](_router_.md#routablecomponentprops), `parse`: function, `serialize`: function, `stateIsQuery`: boolean): *[TState, function]*
-
-**Type parameters:**
-
-▪ **TState**
-
-**Parameters:**
-
-▪ **props**: *[RoutableComponentProps](_router_.md#routablecomponentprops)*
-
-▪ **parse**: *function*
-
-▸ (`serialized`: string): *TState*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`serialized` | string |
-
-▪ **serialize**: *function*
-
-▸ (`state`: TState): *string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`state` | TState |
-
-▪`Default value`  **stateIsQuery**: *boolean*= false
-
-**Returns:** *[TState, function]*

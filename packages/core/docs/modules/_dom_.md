@@ -7,6 +7,8 @@
 ### Variables
 
 * [history](_dom_.md#const-history)
+* [historyHashStateStore](_dom_.md#const-historyhashstatestore)
+* [historySearchStateStore](_dom_.md#const-historysearchstatestore)
 
 ### Functions
 
@@ -17,7 +19,27 @@
 
 ### `Const` history
 
-• **history**: *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹string, string›* = _history
+• **history**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _history
+
+___
+
+### `Const` historyHashStateStore
+
+• **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
+  history,
+  mapReq(hashStateRequestMapper),
+  map(getHashState)
+)
+
+___
+
+### `Const` historySearchStateStore
+
+• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
+  history,
+  mapReq(searchStateRequestMapper),
+  map(getSearchState)
+)
 
 ## Functions
 
