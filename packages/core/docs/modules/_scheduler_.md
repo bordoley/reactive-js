@@ -6,7 +6,6 @@
 
 ### Classes
 
-* [AbstractHostScheduler](../classes/_scheduler_.abstracthostscheduler.md)
 * [AbstractSchedulerContinuation](../classes/_scheduler_.abstractschedulercontinuation.md)
 
 ### Interfaces
@@ -23,6 +22,7 @@
 
 ### Functions
 
+* [createHostScheduler](_scheduler_.md#const-createhostscheduler)
 * [createVirtualTimeScheduler](_scheduler_.md#const-createvirtualtimescheduler)
 * [schedule](_scheduler_.md#const-schedule)
 * [toPausableScheduler](_scheduler_.md#const-topausablescheduler)
@@ -46,6 +46,24 @@
 ▸ (): *boolean*
 
 ## Functions
+
+### `Const` createHostScheduler
+
+▸ **createHostScheduler**(`config`: object): *HostScheduler‹›*
+
+**Parameters:**
+
+▪`Default value`  **config**: *object*= {
+    yieldInterval: 5,
+  }
+
+Name | Type |
+------ | ------ |
+`yieldInterval` | number |
+
+**Returns:** *HostScheduler‹›*
+
+___
 
 ### `Const` createVirtualTimeScheduler
 

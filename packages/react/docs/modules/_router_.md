@@ -53,7 +53,7 @@ ___
 
 #### Type declaration:
 
-* **location**: *StateStoreLike‹[RelativeURI](_router_.md#relativeuri)›*
+* **history**: *StreamableLike‹string, string›*
 
 * **notFound**: *React.ComponentType‹[RoutableComponentProps](_router_.md#routablecomponentprops)›*
 

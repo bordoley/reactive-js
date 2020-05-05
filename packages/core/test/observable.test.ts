@@ -10,8 +10,6 @@ import {
   expectToThrow,
   expectPromiseToThrow,
 } from "../src/testing";
-import { createDisposable, disposed, DisposableLike } from "../src/disposable";
-import { Option } from "../src/option";
 import {
   pipe,
   returns,
@@ -22,8 +20,7 @@ import {
   referenceEquals,
 } from "../src/functions";
 import {
-  AbstractHostScheduler,
-  SchedulerLike,
+  createHostScheduler,
   createVirtualTimeScheduler,
 } from "../src/scheduler";
 import {
@@ -76,36 +73,7 @@ import {
   onSubscribe,
 } from "../src/observable";
 
-// A simple scheduler for testing promise functions where a VTS cannot be used
-class PromiseTestScheduler extends AbstractHostScheduler {
-  get now(): number {
-    return Date.now();
-  }
-
-  scheduleDelayed(
-    _callback: (shouldYield: Option<() => boolean>) => void,
-    _delay: number,
-  ): DisposableLike {
-    return disposed;
-  }
-
-  scheduleImmediate(
-    callback: (shouldYield: Option<() => boolean>) => void,
-  ): DisposableLike {
-    const disposable = createDisposable();
-    new Promise((resolve, reject) => {
-      try {
-        callback(undefined);
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    }).then();
-    return disposable;
-  }
-}
-
-const promiseScheduler: SchedulerLike = new PromiseTestScheduler();
+const scheduler = createHostScheduler();
 
 const arrayOfArraysEqual = arrayEquals<number>(referenceEquals);
 
@@ -260,7 +228,7 @@ export const tests = describe(
       const result = await pipe(
         factory,
         fromPromise,
-        toPromise(promiseScheduler),
+        toPromise(scheduler),
       );
 
       pipe(result, expectEquals(1));
@@ -271,7 +239,7 @@ export const tests = describe(
       const factory = () => Promise.reject(error);
 
       await pipe(
-        pipe(factory, fromPromise, toPromise(promiseScheduler)),
+        pipe(factory, fromPromise, toPromise(scheduler)),
         expectPromiseToThrow,
       );
     }),

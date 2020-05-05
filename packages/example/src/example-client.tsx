@@ -5,20 +5,20 @@ import {
   FlowEventType,
 } from "@reactive-js/core/dist/js/flowable";
 import {
-  toStateStore,
   StateUpdater,
 } from "@reactive-js/core/dist/js/stateStore";
 import {
   HttpClientRequestStatusType,
   createHttpRequest,
   HttpMethod,
-} from "@reactive-js/core/dist/js/http";
-import { sendHttpRequest } from "@reactive-js/web/dist/js/http";
+} from "@reactive-js/http/dist/js/http";
+import { sendHttpRequest } from "@reactive-js/http/dist/js/dom";
 import { useObservable, useStreamable } from "@reactive-js/react/dist/js/hooks";
 import {
   RoutableComponentProps,
   Router,
   useRoutableState,
+  RelativeURI,
 } from "@reactive-js/react/dist/js/router";
 import {
   idlePriority,
@@ -35,9 +35,8 @@ import {
 } from "@reactive-js/core/dist/js/observable";
 import {
   history,
-  Location,
   createEventSource,
-} from "@reactive-js/web/dist/js/dom";
+} from "@reactive-js/core/dist/js/dom";
 import React, {
   ComponentType,
   useCallback,
@@ -47,7 +46,7 @@ import React, {
 } from "react";
 import { default as ReactDOM } from "react-dom";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
-import { WebRequestBody } from "@reactive-js/web/dist/js/http";
+import { WebRequestBody } from "@reactive-js/http/dist/js/dom";
 import {
   pipe,
   compose,
@@ -56,9 +55,9 @@ import {
 } from "@reactive-js/core/dist/js/functions";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdater<Location>) => void,
+  uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<Location>) => () =>
+  const liftUpdater = (updater: StateUpdater<RelativeURI>) => () =>
     uriUpdater(updater);
 
   const goToPath = (pathname: string) =>
@@ -167,21 +166,14 @@ const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
   ["/stream", StreamPauseResume],
 ];
 
-const emptyLocation = {
-  hash: "",
-  pathname: "",
-  search: "",
-};
-
-const location = pipe(
+const loggedHistory = pipe(
   history,
-  toStateStore(returns(emptyLocation)),
-  onNotifyStream<Location>(console.log),
+  onNotifyStream<string, string>(console.log),
 );
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
-  .render(<Router location={location} notFound={NotFound} routes={routes} />);
+  .render(<Router history={loggedHistory} notFound={NotFound} routes={routes} />);
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,

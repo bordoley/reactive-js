@@ -1,0 +1,1861 @@
+[@reactive-js/core - v0.0.37](../README.md) › ["node"](_node_.md)
+
+# Module: "node"
+
+## Index
+
+### Functions
+
+* [bindNodeCallback](_node_.md#bindnodecallback)
+* [createDisposableNodeStream](_node_.md#const-createdisposablenodestream)
+* [createFlowableFromReadable](_node_.md#const-createflowablefromreadable)
+* [createFlowableSinkFromWritable](_node_.md#const-createflowablesinkfromwritable)
+* [transform](_node_.md#const-transform)
+
+## Functions
+
+###  bindNodeCallback
+
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+▸ **bindNodeCallback**(`callbackFunc`: function): *function*
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+
+▸ **bindNodeCallback**<**A1**>(`callbackFunc`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+
+▸ **bindNodeCallback**<**A1**, **A2**>(`callbackFunc`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**>(`callbackFunc`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**>(`callbackFunc`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **A5**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **R4**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **arg5**: *A5*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+`res4` | R4 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+`r4` | R4 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+`arg5` | A5 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **A5**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **R3**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **arg5**: *A5*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+`res3` | R3 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+`r3` | R3 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+`arg5` | A5 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **A5**
+
+▪ **R1**
+
+▪ **R2**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **arg5**: *A5*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+`res2` | R2 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1, `r2`: R2): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+`r2` | R2 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+`arg5` | A5 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **A5**
+
+▪ **R1**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **arg5**: *A5*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown, `res1`: R1): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+`res1` | R1 |
+
+▪ **selector**: *function*
+
+▸ (`r1`: R1): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`r1` | R1 |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+`arg5` | A5 |
+
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**>(`callbackFunc`: function): *function*
+
+**Type parameters:**
+
+▪ **A1**
+
+▪ **A2**
+
+▪ **A3**
+
+▪ **A4**
+
+▪ **A5**
+
+**Parameters:**
+
+▪ **callbackFunc**: *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
+
+**Parameters:**
+
+▪ **arg1**: *A1*
+
+▪ **arg2**: *A2*
+
+▪ **arg3**: *A3*
+
+▪ **arg4**: *A4*
+
+▪ **arg5**: *A5*
+
+▪ **callback**: *function*
+
+▸ (`err`: unknown): *unknown*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`err` | unknown |
+
+**Returns:** *function*
+
+▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arg1` | A1 |
+`arg2` | A2 |
+`arg3` | A3 |
+`arg4` | A4 |
+`arg5` | A5 |
+
+___
+
+### `Const` createDisposableNodeStream
+
+▸ **createDisposableNodeStream**<**T**>(`stream`: T): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**: *Readable | Writable | Transform*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`stream` | T |
+
+**Returns:** *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
+
+___
+
+### `Const` createFlowableFromReadable
+
+▸ **createFlowableFromReadable**(`factory`: function): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›*
+
+**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+
+___
+
+### `Const` createFlowableSinkFromWritable
+
+▸ **createFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›*
+
+▪`Default value`  **autoDispose**: *boolean*= true
+
+**Returns:** *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+
+___
+
+### `Const` transform
+
+▸ **transform**(`factory`: function): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+
+**Parameters:**
+
+▪ **factory**: *function*
+
+▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›*
+
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*

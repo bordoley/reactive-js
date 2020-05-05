@@ -5,12 +5,12 @@ import {
   scan as scanObs,
 } from "../../observable.ts";
 
-export const map = <TA, TB>(mapper: (v: TA) => TB) => lift(mapObs(mapper));
+export const map = <TReq, TA, TB>(mapper: (v: TA) => TB) => lift<TReq, TA, TB>(mapObs(mapper));
 
-export const onNotify = <T>(onNotify: (next: T) => void) =>
-  lift(onNotifyObs(onNotify));
+export const onNotify = <TReq, T>(onNotify: (next: T) => void) =>
+  lift<TReq, T, T>(onNotifyObs(onNotify));
 
-export const scan = <T, TAcc>(
+export const scan = <TReq, T, TAcc>(
   scanner: (acc: TAcc, next: T) => TAcc,
   initalValue: () => TAcc,
-) => lift(scanObs(scanner, initalValue));
+) => lift<TReq, T, TAcc>(scanObs(scanner, initalValue));
