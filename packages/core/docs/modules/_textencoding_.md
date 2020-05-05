@@ -16,17 +16,7 @@
 
 ### `Const` encode
 
-• **encode**: *function* = lift(encodingOp)
-
-#### Type declaration:
-
-▸ (`enumerable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`enumerable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+• **encode**: *[FlowableOperator](_flowable_.md#flowableoperator)‹string, Uint8Array›* = lift(encodingOp)
 
 ## Functions
 

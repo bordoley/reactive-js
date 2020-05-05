@@ -15,6 +15,7 @@ import {
   using,
   switchMap,
   ObservableLike,
+  createObservable,
 } from "@reactive-js/core/dist/js/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
@@ -69,32 +70,40 @@ export const sendHttpRequestUsingFetch: HttpClient<
   const url = uri.toString();
   const headers = httpRequestToUntypedHeaders(request);
 
-  const fetchResponse = fromPromise(async subscription => {
-    const abortController = new AbortController();
-    subscription.add(() => abortController.abort());
+  const fetchResponse = createObservable(
+    async subscriber => {
+      const abortController = new AbortController();
+      subscriber.add(() => abortController.abort());
 
-    const fetchResponse = await fetch(url, {
-      cache,
-      credentials,
-      headers,
-      integrity,
-      method,
-      mode,
-      redirect,
-      referrerPolicy,
-      signal: abortController.signal,
-    });
+      try {
+        const fetchResponse = await fetch(url, {
+          cache,
+          credentials,
+          headers,
+          integrity,
+          method,
+          mode,
+          redirect,
+          referrerPolicy,
+          signal: abortController.signal,
+        });
+    
+        const responseHeaders: { [key: string]: string } = {};
+        fetchResponse.headers.forEach((v, k) => {
+          responseHeaders[k] = v;
+        });
 
-    const responseHeaders: { [key: string]: string } = {};
-    fetchResponse.headers.forEach((v, k) => {
-      responseHeaders[k] = v;
-    });
+        const response = parseHttpResponseFromHeaders(
+          fetchResponse.status,
+          responseHeaders,
+          fetchResponse,
+        );
 
-    return parseHttpResponseFromHeaders(
-      fetchResponse.status,
-      responseHeaders,
-      fetchResponse,
-    );
+        subscriber.dispatch(response);
+        subscriber.dispose();
+    } catch (cause){
+      subscriber.dispose({ cause });
+    }
   });
 
   const mapResponseBody = switchMap(
