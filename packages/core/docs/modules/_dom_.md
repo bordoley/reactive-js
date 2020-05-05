@@ -29,7 +29,7 @@ ___
 
 ### `Const` historySearchStateStore
 
-• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
+• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹object›* = pipe(
   historyStateStore,
   mapReq(searchStateRequestMapper),
   map(getSearchState)
