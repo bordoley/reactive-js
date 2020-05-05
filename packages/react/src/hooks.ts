@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { StreamableLike } from "@reactive-js/core/dist/js/streamable";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import { StreamableLike, mapReq, map } from "@reactive-js/core/dist/js/streamable";
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
@@ -14,6 +14,7 @@ import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
 import { pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
 import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
+import { StateStoreLike, StateUpdater } from "@reactive-js/core/dist/js/stateStore";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -75,22 +76,22 @@ export const useStreamable = <TReq, T>(
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
 
-  const [stream, dispatch] = useState<Option<StreamLike<TReq, T>>>(none);
+  const [stream, updateStream] = useState<Option<StreamLike<TReq, T>>>(none);
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
     const stream = streamable.stream(scheduler, replay);
     streamRef.current = stream;
 
-    pipe(stream, returns, dispatch);
+    pipe(stream, returns, updateStream);
 
     return () => {
       streamRef.current = none;
       stream.dispose();
     };
-  }, [streamable, scheduler, replay, dispatch]);
+  }, [streamable, scheduler, replay, updateStream]);
 
-  const notify = useCallback(
+  const dispatch = useCallback(
     req => {
       const stream = streamRef.current;
       if (isSome(stream)) {
@@ -101,5 +102,36 @@ export const useStreamable = <TReq, T>(
   );
 
   const value = useObservable(stream ?? never<T>(), stateScheduler);
-  return [value, notify];
+  return [value, dispatch];
 };
+
+const requestMapper = <TState>(
+  parse: (serialized: string) => TState,
+  serialize: (state: TState) => string,
+) => (
+  stateUpdater: StateUpdater<TState>,
+): StateUpdater<string> => oldStateString => {
+  const oldState = parse(oldStateString);
+  const newState = stateUpdater(oldState);
+
+  return oldState === newState
+    ? oldStateString
+    : serialize(newState);
+};
+
+export const useSerializedState = <TState>(
+  store: StateStoreLike<string>,
+  parse: (serialized: string) => TState,
+  serialize: (state: TState) => string,
+): [Option<TState>, (updater: StateUpdater<TState>) => void] => {
+  const mappedStore = useMemo(
+    () => pipe(
+      store,
+      mapReq(requestMapper(parse, serialize)),
+      map(parse),
+    ),
+    [store, parse, serialize],
+  );
+
+  return useStreamable(mappedStore,  { replay: 1 });
+}

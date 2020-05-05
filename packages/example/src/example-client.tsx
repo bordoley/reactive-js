@@ -13,11 +13,10 @@ import {
   HttpMethod,
 } from "@reactive-js/http/dist/js/http";
 import { sendHttpRequest } from "@reactive-js/http/dist/js/dom";
-import { useObservable, useStreamable } from "@reactive-js/react/dist/js/hooks";
+import { useObservable, useStreamable, useSerializedState } from "@reactive-js/react/dist/js/hooks";
 import {
   RoutableComponentProps,
   Router,
-  useRoutableState,
   RelativeURI,
 } from "@reactive-js/react/dist/js/router";
 import {
@@ -36,9 +35,9 @@ import {
 import {
   history,
   createEventSource,
+  historyHashStateStore,
 } from "@reactive-js/core/dist/js/dom";
 import React, {
-  ComponentType,
   useCallback,
   useMemo,
   useState,
@@ -103,11 +102,14 @@ const Component1 = (props: RoutableComponentProps) => {
 const chopLeadingChar = (str: string) =>
   str.length > 0 ? str.substring(1) : "";
 
-const StatefulComponent = (props: RoutableComponentProps) => {
-  const [state, dispatch] = useRoutableState(
-    props,
-    compose(chopLeadingChar, decodeURIComponent),
-    s => (s.length > 0 ? "#" + encodeURIComponent(s) : ""),
+const parseState = compose(chopLeadingChar, decodeURIComponent);
+const serializeState = (s: string) => (s.length > 0 ? "#" + encodeURIComponent(s) : "");
+
+const StatefulComponent = (_props: RoutableComponentProps) => {
+  const [state = "", dispatch] = useSerializedState(
+    historyHashStateStore,
+    parseState,
+    serializeState,
   );
 
   const onChange = useCallback(
@@ -159,16 +161,16 @@ const StreamPauseResume = (_props: RoutableComponentProps) => {
   );
 };
 
-const routes: readonly [string, ComponentType<RoutableComponentProps>][] = [
-  ["/route1", Component1],
-  ["/route2", Component1],
-  ["/route3", StatefulComponent],
-  ["/stream", StreamPauseResume],
-];
+const routes = {
+  "/route1": Component1,
+  "/route2": Component1,
+  "/route3": StatefulComponent,
+  "/stream": StreamPauseResume,
+};
 
 const loggedHistory = pipe(
   history,
-  onNotifyStream<string, string>(console.log),
+  onNotifyStream(console.log),
 );
 
 (ReactDOM as any)

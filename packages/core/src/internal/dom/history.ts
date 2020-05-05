@@ -1,9 +1,11 @@
 import {
-  StreamableLike,
   createStreamable,
+  map,
+  mapReq,
 } from "../../streamable";
 import {
   compute,
+  distinctUntilChanged,
   merge,
   ObservableLike,
   onNotify,
@@ -12,7 +14,7 @@ import {
 import { none } from "../../option";
 import { pipe } from "../../functions";
 import { fromEvent } from "./event";
-import { distinctUntilChanged } from "../../observable";
+import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore";
 
 const getCurrentLocation = (_?: unknown): string => 
   window.location.href;
@@ -33,8 +35,72 @@ const historyOperator = (obs: ObservableLike<string>) => pipe(
   distinctUntilChanged(),
 );
 
-const _history: StreamableLike<string, string> = createStreamable(
-  historyOperator,
+const _history: StateStoreLike<string> = pipe(
+  createStreamable(historyOperator),
+  toStateStore(() => ""),
 );
 
-export const history: StreamableLike<string, string> = _history;
+export const history: StateStoreLike<string> = _history;
+
+const getSearchState = (
+  state: string,
+): string => {
+  const url = new URL(state);
+  return url.search;
+};
+
+const searchStateRequestMapper = (
+  stateUpdater: StateUpdater<string>
+): StateUpdater<string> => (
+  prevStateString: string,
+) => {
+  const prevStateURL = new URL(prevStateString);
+  const prevState = prevStateURL.search;
+  const newState = stateUpdater(prevState);
+
+  if (newState === prevState) {
+    return prevStateString;
+  } else {
+    const newURL = new URL("", prevStateURL);
+    newURL.search = newState;
+    return newURL.href;
+  }
+}
+
+export const historySearchStateStore: StateStoreLike<string> = pipe(
+  history,
+  mapReq(searchStateRequestMapper),
+  map(getSearchState)
+);
+
+
+const getHashState = (
+  state: string,
+): string => {
+  const url = new URL(state);
+  return url.hash;
+};
+
+const hashStateRequestMapper = (
+  stateUpdater: StateUpdater<string>
+): StateUpdater<string> => (
+  prevStateString: string,
+) => {
+  const prevStateURL = new URL(prevStateString);
+  const prevState = prevStateURL.hash;
+  const newState = stateUpdater(prevState);
+
+  if (newState === prevState) {
+    return prevStateString;
+  } else {
+    const newURL = new URL("", prevStateURL);
+    newURL.hash = newState;
+    return newURL.href;
+  }
+}
+
+export const historyHashStateStore: StateStoreLike<string> = pipe(
+  history,
+  mapReq(hashStateRequestMapper),
+  map(getHashState)
+);
