@@ -29,20 +29,19 @@ import {
   toFlowableHttpRequest,
   encodeHttpClientRequestContent,
   encodeHttpResponseContent,
-} from "@reactive-js/core/dist/js/http";
+} from "@reactive-js/http/dist/js/http";
 import {
   createHttpRequestListener,
   createHttpClient,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
-} from "@reactive-js/node/dist/js/http";
+} from "@reactive-js/http/dist/js/node";
 import {
-  encode,
   createFlowableFromReadable,
   createDisposableNodeStream,
-} from "@reactive-js/node/dist/js/streams";
-import { scheduler as nodeScheduler } from "@reactive-js/node/dist/js/scheduler";
-import { bindNodeCallback } from "@reactive-js/node/dist/js/utils";
+} from "@reactive-js/core/dist/js/node";
+import { createHostScheduler} from "@reactive-js/core/dist/js/scheduler";
+import { bindNodeCallback } from "@reactive-js/core/dist/js/node";
 import {
   map,
   subscribe,
@@ -68,9 +67,10 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/dist/js/scheduler";
+import { encode } from "@reactive-js/core/dist/js/textEncoding";
 
 const scheduler = pipe(
-  nodeScheduler,
+  createHostScheduler(),
   toPriorityScheduler,
   toSchedulerWithPriority(1),
 );
@@ -102,7 +102,7 @@ const routerHandlerEventStream: HttpServer<
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
     ),
-    encode("utf-8"),
+    encode,
   );
   const response = createHttpResponse({
     statusCode: HttpStatusCode.OK,

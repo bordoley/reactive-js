@@ -10,8 +10,6 @@
 
 * **EnumeratorLike**
 
-  ↳ [CharStreamLike](_parsercombinators_.charstreamlike.md)
-
 ## Index
 
 ### Properties

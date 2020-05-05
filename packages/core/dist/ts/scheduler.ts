@@ -14,5 +14,5 @@ export {
 } from "./internal/scheduler/priorityQueueScheduler.ts";
 export { schedule } from "./internal/scheduler/scheduleCallback.ts";
 export { toSchedulerWithPriority } from "./internal/scheduler/schedulerWithPriority.ts";
-export { AbstractHostScheduler } from "./internal/scheduler/abstractHostScheduler.ts";
+export { createHostScheduler } from "./internal/scheduler/hostScheduler.ts";
 export { createVirtualTimeScheduler } from "./internal/scheduler/virtualTimeScheduler.ts";

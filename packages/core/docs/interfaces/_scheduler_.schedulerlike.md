@@ -12,10 +12,6 @@ An object that schedules units of work on a runloop.
 
   ↳ [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
 
-## Implemented by
-
-* [AbstractHostScheduler](../classes/_scheduler_.abstracthostscheduler.md)
-
 ## Index
 
 ### Properties

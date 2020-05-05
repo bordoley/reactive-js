@@ -196,9 +196,11 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *function*
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: function): *function*
 
 **Type parameters:**
+
+▪ **TReq**
 
 ▪ **TA**
 
@@ -230,9 +232,11 @@ ___
 
 ### `Const` onNotify
 
-▸ **onNotify**<**T**>(`onNotify`: function): *function*
+▸ **onNotify**<**TReq**, **T**>(`onNotify`: function): *function*
 
 **Type parameters:**
+
+▪ **TReq**
 
 ▪ **T**
 
@@ -262,9 +266,11 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initalValue`: function): *function*
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: function, `initalValue`: function): *function*
 
 **Type parameters:**
+
+▪ **TReq**
 
 ▪ **T**
 
