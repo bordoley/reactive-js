@@ -56,4 +56,4 @@ const encodingOp: ObservableOperator<FlowEvent<string>, FlowEvent<Uint8Array>> =
   concatMap(compose(returns, fromIterator)),
 );
 
-export const encode = lift(encodingOp);
+export const encode: FlowableOperator<string, Uint8Array> = lift(encodingOp);

@@ -1087,13 +1087,7 @@ is invoked for each subscriber to the observable.
 
 Factory function to create a new `Promise` instance.
 
-▸ (`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *Promise‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
+▸ (): *Promise‹T›*
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
