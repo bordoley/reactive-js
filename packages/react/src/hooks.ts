@@ -105,12 +105,12 @@ export const useStreamable = <TReq, T>(
   return [value, dispatch];
 };
 
-const requestMapper = <TState>(
-  parse: (serialized: string) => TState,
-  serialize: (state: TState) => string,
+const requestMapper = <TSerialized, TState>(
+  parse: (serialized: TSerialized) => TState,
+  serialize: (state: TState) => TSerialized,
 ) => (
   stateUpdater: StateUpdater<TState>,
-): StateUpdater<string> => oldStateString => {
+): StateUpdater<TSerialized> => oldStateString => {
   const oldState = parse(oldStateString);
   const newState = stateUpdater(oldState);
 
@@ -119,10 +119,10 @@ const requestMapper = <TState>(
     : serialize(newState);
 };
 
-export const useSerializedState = <TState>(
-  store: StateStoreLike<string>,
-  parse: (serialized: string) => TState,
-  serialize: (state: TState) => string,
+export const useSerializedState = <TSerialized, TState>(
+  store: StateStoreLike<TSerialized>,
+  parse: (serialized: TSerialized) => TState,
+  serialize: (state: TState) => TSerialized,
 ): [Option<TState>, (updater: StateUpdater<TState>) => void] => {
   const mappedStore = useMemo(
     () => pipe(
@@ -133,5 +133,5 @@ export const useSerializedState = <TState>(
     [store, parse, serialize],
   );
 
-  return useStreamable(mappedStore,  { replay: 1 });
+  return useStreamable(mappedStore, { replay: 1 });
 }

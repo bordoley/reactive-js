@@ -35,29 +35,31 @@ ___
 
 ### `Const` useSerializedState
 
-▸ **useSerializedState**<**TState**>(`store`: StateStoreLike‹string›, `parse`: function, `serialize`: function): *[Option‹TState›, function]*
+▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: function, `serialize`: function): *[Option‹TState›, function]*
 
 **Type parameters:**
+
+▪ **TSerialized**
 
 ▪ **TState**
 
 **Parameters:**
 
-▪ **store**: *StateStoreLike‹string›*
+▪ **store**: *StateStoreLike‹TSerialized›*
 
 ▪ **parse**: *function*
 
-▸ (`serialized`: string): *TState*
+▸ (`serialized`: TSerialized): *TState*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`serialized` | string |
+`serialized` | TSerialized |
 
 ▪ **serialize**: *function*
 
-▸ (`state`: TState): *string*
+▸ (`state`: TState): *TSerialized*
 
 **Parameters:**
 
