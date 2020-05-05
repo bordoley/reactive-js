@@ -6,9 +6,9 @@
 
 ### Variables
 
-* [history](_dom_.md#const-history)
 * [historyHashStateStore](_dom_.md#const-historyhashstatestore)
 * [historySearchStateStore](_dom_.md#const-historysearchstatestore)
+* [historyStateStore](_dom_.md#const-historystatestore)
 
 ### Functions
 
@@ -17,16 +17,10 @@
 
 ## Variables
 
-### `Const` history
-
-• **history**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _history
-
-___
-
 ### `Const` historyHashStateStore
 
 • **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
-  history,
+  historyStateStore,
   mapReq(hashStateRequestMapper),
   map(getHashState)
 )
@@ -36,10 +30,16 @@ ___
 ### `Const` historySearchStateStore
 
 • **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
-  history,
+  historyStateStore,
   mapReq(searchStateRequestMapper),
   map(getSearchState)
 )
+
+___
+
+### `Const` historyStateStore
+
+• **historyStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyStateStore
 
 ## Functions
 

@@ -35,18 +35,21 @@ const historyOperator = (obs: ObservableLike<string>) => pipe(
   distinctUntilChanged(),
 );
 
-const _history: StateStoreLike<string> = pipe(
+const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyOperator),
   toStateStore(() => ""),
 );
 
-export const history: StateStoreLike<string> = _history;
+export const historyStateStore: StateStoreLike<string> = _historyStateStore;
+
+const parseState = (str: string) =>
+  str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
 
 const getSearchState = (
   state: string,
 ): string => {
   const url = new URL(state);
-  return url.search;
+  return parseState(url.search);
 };
 
 const searchStateRequestMapper = (
@@ -55,30 +58,29 @@ const searchStateRequestMapper = (
   prevStateString: string,
 ) => {
   const prevStateURL = new URL(prevStateString);
-  const prevState = prevStateURL.search;
+  const prevState = parseState(prevStateURL.search);
   const newState = stateUpdater(prevState);
 
   if (newState === prevState) {
     return prevStateString;
   } else {
     const newURL = new URL("", prevStateURL);
-    newURL.search = newState;
+    newURL.search = newState.length > 0 ? "?" + encodeURIComponent(newState) : "";
     return newURL.href;
   }
 }
 
 export const historySearchStateStore: StateStoreLike<string> = pipe(
-  history,
+  historyStateStore,
   mapReq(searchStateRequestMapper),
   map(getSearchState)
 );
-
 
 const getHashState = (
   state: string,
 ): string => {
   const url = new URL(state);
-  return url.hash;
+  return parseState(url.hash);
 };
 
 const hashStateRequestMapper = (
@@ -87,20 +89,20 @@ const hashStateRequestMapper = (
   prevStateString: string,
 ) => {
   const prevStateURL = new URL(prevStateString);
-  const prevState = prevStateURL.hash;
+  const prevState = parseState(prevStateURL.hash);
   const newState = stateUpdater(prevState);
 
   if (newState === prevState) {
     return prevStateString;
   } else {
     const newURL = new URL("", prevStateURL);
-    newURL.hash = newState;
+    newURL.hash = newState.length > 0 ? "#" + encodeURIComponent(newState) : "";
     return newURL.href;
   }
 }
 
 export const historyHashStateStore: StateStoreLike<string> = pipe(
-  history,
+  historyStateStore,
   mapReq(hashStateRequestMapper),
   map(getHashState)
 );
