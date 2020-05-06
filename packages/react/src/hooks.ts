@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
-import { StreamableLike, mapReq, map } from "@reactive-js/core/dist/js/streamable";
+import {
+  StreamableLike,
+  mapReq,
+  map,
+} from "@reactive-js/core/dist/js/streamable";
 import { Exception } from "@reactive-js/core/dist/js/disposable";
 import {
   ObservableLike,
@@ -14,7 +18,10 @@ import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
 import { pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
 import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { StateStoreLike, StateUpdater } from "@reactive-js/core/dist/js/stateStore";
+import {
+  StateStoreLike,
+  StateUpdater,
+} from "@reactive-js/core/dist/js/stateStore";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -114,9 +121,7 @@ const requestMapper = <TSerialized, TState>(
   const oldState = parse(oldStateString);
   const newState = stateUpdater(oldState);
 
-  return oldState === newState
-    ? oldStateString
-    : serialize(newState);
+  return oldState === newState ? oldStateString : serialize(newState);
 };
 
 export const useSerializedState = <TSerialized, TState>(
@@ -125,13 +130,9 @@ export const useSerializedState = <TSerialized, TState>(
   serialize: (state: TState) => TSerialized,
 ): [Option<TState>, (updater: StateUpdater<TState>) => void] => {
   const mappedStore = useMemo(
-    () => pipe(
-      store,
-      mapReq(requestMapper(parse, serialize)),
-      map(parse),
-    ),
+    () => pipe(store, mapReq(requestMapper(parse, serialize)), map(parse)),
     [store, parse, serialize],
   );
 
   return useStreamable(mappedStore, { replay: 1 });
-}
+};

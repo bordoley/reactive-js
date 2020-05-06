@@ -39,7 +39,11 @@ import {
   toFlowableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage";
-import { FlowableLike, FlowableOperator, empty } from "@reactive-js/core/dist/js/flowable";
+import {
+  FlowableLike,
+  FlowableOperator,
+  empty,
+} from "@reactive-js/core/dist/js/flowable";
 
 declare class URL implements URILike {
   readonly hash: string;

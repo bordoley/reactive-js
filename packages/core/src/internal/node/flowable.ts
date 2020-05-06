@@ -1,9 +1,5 @@
 import { Readable } from "stream";
-import {
-  FlowEventType,
-  FlowMode,
-  FlowableLike,
-} from "../../flowable";
+import { FlowEventType, FlowMode, FlowableLike } from "../../flowable";
 import { createStreamable } from "../../streamable";
 import { DisposableValueLike } from "../../disposable";
 import {

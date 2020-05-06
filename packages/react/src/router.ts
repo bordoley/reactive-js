@@ -25,25 +25,26 @@ const urlToRelativeURI = (url: URL): RelativeURI => {
   const search = url.search;
   const hash = url.hash;
   return { pathname, search, hash };
-}
+};
 
 const parseRelativeURIOrThrow = (str: string): RelativeURI => {
   const url = new URL(str);
   return urlToRelativeURI(url);
 };
 
-const serializeRelativeURI = ({
-  pathname,
-  search, 
-  hash,
-}: RelativeURI, base: URL) => {
+const serializeRelativeURI = (
+  { pathname, search, hash }: RelativeURI,
+  base: URL,
+) => {
   let newRelativeString = pathname;
-  newRelativeString = search.length > 0 ? `${newRelativeString}${search}` : newRelativeString;
-  newRelativeString = hash.length > 0 ? `${newRelativeString}${hash}` : newRelativeString;
+  newRelativeString =
+    search.length > 0 ? `${newRelativeString}${search}` : newRelativeString;
+  newRelativeString =
+    hash.length > 0 ? `${newRelativeString}${hash}` : newRelativeString;
 
-  const newURL = new URL(newRelativeString, base)
+  const newURL = new URL(newRelativeString, base);
   return newURL.href;
-}
+};
 
 export type RoutableComponentProps = {
   readonly referer: Option<RelativeURI>;
@@ -58,7 +59,7 @@ export type RouteMap = {
 export type RouterProps = {
   readonly stateStore: StateStoreLike<string>;
   readonly notFound: React.ComponentType<RoutableComponentProps>;
-  readonly routes: RouteMap,
+  readonly routes: RouteMap;
 };
 
 const pairify = (
@@ -76,27 +77,30 @@ const mapRequest = (
   const newStateRelativeURI = pipe(
     prevStateURL,
     urlToRelativeURI,
-    stateUpdater
+    stateUpdater,
   );
   return serializeRelativeURI(newStateRelativeURI, prevStateURL);
-}
+};
 
 export const Router = function Router(props: RouterProps): ReactElement | null {
   const { stateStore, notFound, routes } = props;
 
   const relativeURIStore = useMemo(
-    () => pipe(
-      stateStore,
-      mapReq(mapRequest),
-      scan(
-        pairify,
-        returns<[Option<RelativeURI>, RelativeURI]>([none, empty]),
+    () =>
+      pipe(
+        stateStore,
+        mapReq(mapRequest),
+        scan(
+          pairify,
+          returns<[Option<RelativeURI>, RelativeURI]>([none, empty]),
+        ),
       ),
-    ),
     [stateStore],
   );
 
-  const [locationState, uriUpdater] = useStreamable(relativeURIStore, { replay: 1 });
+  const [locationState, uriUpdater] = useStreamable(relativeURIStore, {
+    replay: 1,
+  });
 
   if (isSome(locationState)) {
     const [referer, uri] = locationState;

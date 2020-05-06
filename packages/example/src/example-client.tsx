@@ -4,16 +4,18 @@ import {
   FlowMode,
   FlowEventType,
 } from "@reactive-js/core/dist/js/flowable";
-import {
-  StateUpdater,
-} from "@reactive-js/core/dist/js/stateStore";
+import { StateUpdater } from "@reactive-js/core/dist/js/stateStore";
 import {
   HttpClientRequestStatusType,
   createHttpRequest,
   HttpMethod,
 } from "@reactive-js/http/dist/js/http";
 import { sendHttpRequest } from "@reactive-js/http/dist/js/dom";
-import { useObservable, useStreamable, useSerializedState } from "@reactive-js/react/dist/js/hooks";
+import {
+  useObservable,
+  useStreamable,
+  useSerializedState,
+} from "@reactive-js/react/dist/js/hooks";
 import {
   RoutableComponentProps,
   Router,
@@ -37,12 +39,7 @@ import {
   createEventSource,
   historyHashStateStore,
 } from "@reactive-js/core/dist/js/dom";
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-} from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 import { isSome, none } from "@reactive-js/core/dist/js/option";
 import { WebRequestBody } from "@reactive-js/http/dist/js/dom";
@@ -169,7 +166,13 @@ const loggedHistoryStateStore = pipe(
 
 (ReactDOM as any)
   .createRoot(document.getElementById("root"))
-  .render(<Router stateStore={loggedHistoryStateStore} notFound={NotFound} routes={routes} />);
+  .render(
+    <Router
+      stateStore={loggedHistoryStateStore}
+      notFound={NotFound}
+      routes={routes}
+    />,
+  );
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,

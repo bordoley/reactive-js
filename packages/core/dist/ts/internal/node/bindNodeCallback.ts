@@ -1,7 +1,4 @@
-import {
-  createObservable,
-  ObservableLike,
-} from "../../observable.ts";
+import { createObservable, ObservableLike } from "../../observable.ts";
 import { none } from "../../option.ts";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(

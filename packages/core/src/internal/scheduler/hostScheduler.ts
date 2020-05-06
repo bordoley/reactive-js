@@ -1,42 +1,34 @@
-import {
-  DisposableLike,
-  createDisposable,
-} from "../../disposable";
-import {
-  SchedulerLike, SchedulerContinuationLike
-} from "./interfaces";
+import { DisposableLike, createDisposable } from "../../disposable";
+import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
 
-const supportsPerformanceNow =  
-  typeof performance === "object" &&
-  typeof performance.now === "function";
+const supportsPerformanceNow =
+  typeof performance === "object" && typeof performance.now === "function";
 
 const supportsProcessHRTime =
-  typeof process === "object" &&
-  typeof process.hrtime === "function";
+  typeof process === "object" && typeof process.hrtime === "function";
 
 const supportsMessageChannel = typeof MessageChannel === "function";
 
 const supportsSetImmediate = typeof setImmediate === "function";
 
-const now: () => number =
-  supportsPerformanceNow
-    ? () => performance.now()
-    : supportsProcessHRTime
-    ? () => {
+const now: () => number = supportsPerformanceNow
+  ? () => performance.now()
+  : supportsProcessHRTime
+  ? () => {
       const hr = process.hrtime();
       return hr[0] * 1000 + hr[1] / 1e6;
     }
-    : () => Date.now();
+  : () => Date.now();
 
 const scheduleImmediateWithSetImmediate = (cb: () => void) => {
   const disposable = createDisposable(() => clearImmediate(immediate));
-  const immediate = setImmediate(
-    cb
-  );
+  const immediate = setImmediate(cb);
   return disposable;
 };
 
-const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (cb: () => void) => {
+const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
+  cb: () => void,
+) => {
   const disposable = createDisposable();
 
   channel.port1.onmessage = () => {
@@ -51,29 +43,28 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (cb: ()
 
 const scheduleDelayed = (cb: () => void, delay: number) => {
   const disposable = createDisposable(() => clearTimeout(timeout));
-  const timeout = setTimeout(() => { 
+  const timeout = setTimeout(() => {
     cb();
     disposable.dispose();
   }, delay);
   return disposable;
 };
 
-const scheduleImmediateWithSetTimeout = (cb: () => void) => 
+const scheduleImmediateWithSetTimeout = (cb: () => void) =>
   scheduleDelayed(cb, 0);
 
 const scheduleImmediate: (
   callback: () => void,
-) => DisposableLike = 
-  supportsSetImmediate
-    ? scheduleImmediateWithSetImmediate
-    : supportsMessageChannel
-    ? scheduleImmediateWithMessageChannel(new MessageChannel())
-    : scheduleImmediateWithSetTimeout;
+) => DisposableLike = supportsSetImmediate
+  ? scheduleImmediateWithSetImmediate
+  : supportsMessageChannel
+  ? scheduleImmediateWithMessageChannel(new MessageChannel())
+  : scheduleImmediateWithSetTimeout;
 
 const createCallback = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
-): () => void => () => {
+): (() => void) => () => {
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
@@ -111,11 +102,11 @@ class HostScheduler implements SchedulerLike {
     }
   }
 }
-    
+
 export const createHostScheduler = (
   config: {
-    yieldInterval: number,
+    yieldInterval: number;
   } = {
     yieldInterval: 5,
-  }
+  },
 ) => new HostScheduler(config.yieldInterval);

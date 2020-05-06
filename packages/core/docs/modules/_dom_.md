@@ -22,7 +22,7 @@
 • **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
   historyStateStore,
   mapReq(hashStateRequestMapper),
-  map(getHashState)
+  map(getHashState),
 )
 
 ___
@@ -32,7 +32,7 @@ ___
 • **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹object›* = pipe(
   historyStateStore,
   mapReq(searchStateRequestMapper),
-  map(getSearchState)
+  map(getSearchState),
 )
 
 ___

@@ -1,8 +1,5 @@
 import { Readable, Writable, Transform } from "stream.ts";
-import {
-  DisposableValueLike,
-  createDisposableValue,
-} from "../../disposable.ts";
+import { DisposableValueLike, createDisposableValue } from "../../disposable.ts";
 import { alwaysVoid } from "../../functions.ts";
 
 const dispose = (writable: Readable | Writable | Transform) => {

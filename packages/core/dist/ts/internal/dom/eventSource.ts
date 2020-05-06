@@ -1,7 +1,4 @@
-import {
-  createObservable,
-  ObservableLike,
-} from "../../observable.ts";
+import { createObservable, ObservableLike } from "../../observable.ts";
 
 const reservedEvents = ["error", "open"];
 

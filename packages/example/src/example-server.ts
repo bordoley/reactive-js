@@ -40,7 +40,7 @@ import {
   createFlowableFromReadable,
   createDisposableNodeStream,
 } from "@reactive-js/core/dist/js/node";
-import { createHostScheduler} from "@reactive-js/core/dist/js/scheduler";
+import { createHostScheduler } from "@reactive-js/core/dist/js/scheduler";
 import { bindNodeCallback } from "@reactive-js/core/dist/js/node";
 import {
   map,

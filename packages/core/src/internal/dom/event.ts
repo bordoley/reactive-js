@@ -1,7 +1,4 @@
-import {
-  createObservable,
-  ObservableLike,
-} from "../../observable";
+import { createObservable, ObservableLike } from "../../observable";
 
 export const fromEvent = <T>(
   target: EventTarget,
