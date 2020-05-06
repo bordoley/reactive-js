@@ -1,6 +1,6 @@
 import { compose, returns } from "./functions.ts";
 import { withLatestFrom, compute, concatMap, fromIterator, ObservableOperator } from "./observable.ts";
-import { FlowEvent, FlowEventType, FlowableOperator } from "./flowable.ts";
+import { FlowEvent, FlowEventType, FlowableOperator, FlowMode } from "./flowable.ts";
 import { lift } from "./streamable.ts";
 import { TextDecoder } from "util.ts";
 
@@ -36,24 +36,21 @@ export const decode = (
   return lift(op);
 };
 
-const encodingOp: ObservableOperator<FlowEvent<string>, FlowEvent<Uint8Array>> = compose(
-  withLatestFrom(compute(() => new TextEncoder()), function*(
+const encodingOp: ObservableOperator<FlowEvent<string>, FlowEvent<Uint8Array>> = 
+  withLatestFrom(compute(() => new TextEncoder()),(
     ev: FlowEvent<string>,
-    decoder,
-  ) {
+    textEncoder,
+  ) => {
     switch (ev.type) {
       case FlowEventType.Next: {
-        const data = decoder.encode(ev.data);
-        yield { type: FlowEventType.Next, data };
-        break;
+        const data = textEncoder.encode(ev.data);
+        return { type: FlowEventType.Next, data };
       }
       case FlowEventType.Complete: {
-        yield ev;
-        break;
+        return ev;
       }
     }
-  }),
-  concatMap(compose(returns, fromIterator)),
-);
+  });
 
-export const encode: FlowableOperator<string, Uint8Array> = lift(encodingOp);
+
+export const encode = lift<FlowMode, FlowEvent<string>, FlowEvent<Uint8Array>>(encodingOp);
