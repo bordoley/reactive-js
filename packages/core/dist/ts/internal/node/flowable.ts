@@ -1,9 +1,5 @@
 import { Readable } from "stream.ts";
-import {
-  FlowEventType,
-  FlowMode,
-  FlowableLike,
-} from "../../flowable.ts";
+import { FlowEventType, FlowMode, FlowableLike } from "../../flowable.ts";
 import { createStreamable } from "../../streamable.ts";
 import { DisposableValueLike } from "../../disposable.ts";
 import {

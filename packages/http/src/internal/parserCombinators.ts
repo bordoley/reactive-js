@@ -1,6 +1,15 @@
 import { EnumeratorLike } from "@reactive-js/core/dist/js/enumerable";
-import { Option, none, orCompute as orComputeOption } from "@reactive-js/core/dist/js/option";
-import { Operator, compose, pipe, returns } from "@reactive-js/core/dist/js/functions";
+import {
+  Option,
+  none,
+  orCompute as orComputeOption,
+} from "@reactive-js/core/dist/js/option";
+import {
+  Operator,
+  compose,
+  pipe,
+  returns,
+} from "@reactive-js/core/dist/js/functions";
 
 // FIXME: BAD!
 import { __DEV__ } from "@reactive-js/core/dist/js/internal/env";

@@ -1,24 +1,17 @@
-import {
-  test,
-  describe,
-  expectEquals,
-} from "../src/testing";
+import { test, describe, expectEquals } from "../src/testing";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { pipe } from "../src/functions";
 import { ofValue, FlowMode, FlowEventType } from "../src/flowable";
 import { encode, decode } from "../src/textEncoding";
 import { onNotify, scan, subscribe } from "../src/observable";
 
-export const tests = describe("textEncoding",
+export const tests = describe(
+  "textEncoding",
   test("encode/decode", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
 
-    const transformed = pipe(
-      ofValue(str),
-      encode,
-      decode(),
-    ).stream(scheduler);
+    const transformed = pipe(ofValue(str), encode, decode()).stream(scheduler);
 
     let result = "";
     pipe(

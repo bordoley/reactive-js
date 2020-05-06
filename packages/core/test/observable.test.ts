@@ -225,11 +225,7 @@ export const tests = describe(
     "fromPromise",
     testAsync("when the promise resolves", async () => {
       const factory = () => Promise.resolve(1);
-      const result = await pipe(
-        factory,
-        fromPromise,
-        toPromise(scheduler),
-      );
+      const result = await pipe(factory, fromPromise, toPromise(scheduler));
 
       pipe(result, expectEquals(1));
     }),

@@ -1,8 +1,4 @@
-import {
-  createStreamable,
-  map,
-  mapReq,
-} from "../../streamable";
+import { createStreamable, map, mapReq } from "../../streamable";
 import {
   compute,
   distinctUntilChanged,
@@ -16,8 +12,7 @@ import { pipe } from "../../functions";
 import { fromEvent } from "./event";
 import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore";
 
-const getCurrentLocation = (_?: unknown): string => 
-  window.location.href;
+const getCurrentLocation = (_?: unknown): string => window.location.href;
 
 const pushHistoryState = (newLocation: string) => {
   const currentLocation = getCurrentLocation();
@@ -26,14 +21,15 @@ const pushHistoryState = (newLocation: string) => {
   }
 };
 
-const historyOperator = (obs: ObservableLike<string>) => pipe(
-  merge(
-    compute(getCurrentLocation),
-    pipe(obs, throttle(15), onNotify(pushHistoryState)),
-    fromEvent(window, "popstate", getCurrentLocation),
-  ),
-  distinctUntilChanged(),
-);
+const historyOperator = (obs: ObservableLike<string>) =>
+  pipe(
+    merge(
+      compute(getCurrentLocation),
+      pipe(obs, throttle(15), onNotify(pushHistoryState)),
+      fromEvent(window, "popstate", getCurrentLocation),
+    ),
+    distinctUntilChanged(),
+  );
 
 const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyOperator),
@@ -42,7 +38,7 @@ const _historyStateStore: StateStoreLike<string> = pipe(
 
 export const historyStateStore: StateStoreLike<string> = _historyStateStore;
 
-type ParamMap = {readonly [key: string]: string };
+type ParamMap = { readonly [key: string]: string };
 
 const parseQueryState = (searchParams: URLSearchParams): ParamMap => {
   const retval: { [key: string]: string } = {};
@@ -52,20 +48,16 @@ const parseQueryState = (searchParams: URLSearchParams): ParamMap => {
   });
 
   return retval;
-}
+};
 
-const getSearchState = (
-  state: string,
-): ParamMap => {
+const getSearchState = (state: string): ParamMap => {
   const url = new URL(state);
   return parseQueryState(url.searchParams);
 };
 
 const searchStateRequestMapper = (
-  stateUpdater: StateUpdater<ParamMap>
-): StateUpdater<string> => (
-  prevStateString: string,
-) => {
+  stateUpdater: StateUpdater<ParamMap>,
+): StateUpdater<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseQueryState(prevStateURL.searchParams);
   const newState = stateUpdater(prevState);
@@ -74,35 +66,33 @@ const searchStateRequestMapper = (
     return prevStateString;
   } else {
     const newURL = new URL("", prevStateURL);
-    
+
     const searchParams = new URLSearchParams(newState);
     const searchParamsStr = searchParams.toString();
-    newURL.search = searchParamsStr.length > 0 ? `?${searchParamsStr}` : ""
+    newURL.search = searchParamsStr.length > 0 ? `?${searchParamsStr}` : "";
     return newURL.href;
   }
-}
+};
 
-export const historySearchStateStore: StateStoreLike<{readonly [key: string]: string }> = pipe(
+export const historySearchStateStore: StateStoreLike<{
+  readonly [key: string]: string;
+}> = pipe(
   historyStateStore,
   mapReq(searchStateRequestMapper),
-  map(getSearchState)
+  map(getSearchState),
 );
 
 const parseHashState = (str: string) =>
   str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
 
-const getHashState = (
-  state: string,
-): string => {
+const getHashState = (state: string): string => {
   const url = new URL(state);
   return parseHashState(url.hash);
 };
 
 const hashStateRequestMapper = (
-  stateUpdater: StateUpdater<string>
-): StateUpdater<string> => (
-  prevStateString: string,
-) => {
+  stateUpdater: StateUpdater<string>,
+): StateUpdater<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseHashState(prevStateURL.hash);
   const newState = stateUpdater(prevState);
@@ -114,10 +104,10 @@ const hashStateRequestMapper = (
     newURL.hash = newState.length > 0 ? "#" + encodeURIComponent(newState) : "";
     return newURL.href;
   }
-}
+};
 
 export const historyHashStateStore: StateStoreLike<string> = pipe(
   historyStateStore,
   mapReq(hashStateRequestMapper),
-  map(getHashState)
+  map(getHashState),
 );

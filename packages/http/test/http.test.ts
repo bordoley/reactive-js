@@ -1,4 +1,9 @@
-import { test, describe, expectToThrow, expectEquals } from "../../core/src/testing";
+import {
+  test,
+  describe,
+  expectToThrow,
+  expectEquals,
+} from "../../core/src/testing";
 import {
   parseMediaTypeOrThrow,
   HttpRequest,

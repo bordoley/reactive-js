@@ -16,7 +16,9 @@
 
 ### `Const` encode
 
-• **encode**: *function* = lift<FlowMode, FlowEvent<string>, FlowEvent<Uint8Array>>(encodingOp)
+• **encode**: *function* = lift<FlowMode, FlowEvent<string>, FlowEvent<Uint8Array>>(
+  encodingOp,
+)
 
 #### Type declaration:
 

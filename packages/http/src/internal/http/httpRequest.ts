@@ -45,7 +45,10 @@ import {
   toFlowableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage";
-import { FlowableLike, FlowableOperator } from "@reactive-js/core/dist/js/flowable";
+import {
+  FlowableLike,
+  FlowableOperator,
+} from "@reactive-js/core/dist/js/flowable";
 import { HttpClientRequest } from "./httpClient";
 import { createHttpResponse } from "./httpResponse";
 

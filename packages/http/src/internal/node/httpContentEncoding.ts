@@ -9,7 +9,10 @@ import {
   BrotliOptions,
 } from "zlib";
 import { HttpContentEncoding } from "../../http";
-import { createDisposableNodeStream, transform } from "@reactive-js/core/dist/js/node";
+import {
+  createDisposableNodeStream,
+  transform,
+} from "@reactive-js/core/dist/js/node";
 import { FlowableOperator } from "@reactive-js/core/dist/js/flowable";
 
 export const createContentEncodingDecompressTransforms = (
