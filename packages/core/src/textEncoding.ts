@@ -16,7 +16,7 @@ import {
 import { lift } from "./streamable";
 
 export const decode = (
-  charset: string = "utf-8",
+  charset = "utf-8",
   options?: TextDecoderOptions,
 ): FlowableOperator<ArrayBuffer, string> => {
   const op: ObservableOperator<

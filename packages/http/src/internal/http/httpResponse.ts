@@ -215,7 +215,7 @@ export const checkIfNotModified = <T>({
   const etagMatch =
     isSome(etag) &&
     (preconditions?.ifNoneMatch === "*" ||
-      (preconditions?.ifNoneMatch || []).findIndex(
+      (preconditions?.ifNoneMatch ?? []).findIndex(
         ({ tag }) => tag === etag.tag,
       ) >= 0);
 

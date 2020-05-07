@@ -33,15 +33,14 @@ const parseOptionalETagPreference = (headers, header) => {
 };
 const parseOptionalDatePreference = (headers, header) => { var _a; return pipe((_a = getHeaderValue(headers, header)) !== null && _a !== void 0 ? _a : "", parseHttpDateTime); };
 export const parseHttpRequestPreconditionsFromHeaders = (headers) => {
+    var _a;
     const ifMatch = parseOptionalETagPreference(headers, "If-Match");
     const ifNoneMatch = parseOptionalETagPreference(headers, "If-None-Match");
     const ifModifiedSince = parseOptionalDatePreference(headers, "If-Modified-Since");
     const ifUnmodifiedSince = parseOptionalDatePreference(headers, "If-Unmodified-Since");
     const ifRangeHeader = getHeaderValue(headers, "If-Range");
     const ifRange = isSome(ifRangeHeader)
-        ?
-            parseHttpDateTime(ifRangeHeader) || parseETag(ifRangeHeader)
-        : none;
+        ? (_a = parseHttpDateTime(ifRangeHeader)) !== null && _a !== void 0 ? _a : parseETag(ifRangeHeader) : none;
     const isUndefined = isNone(ifMatch) &&
         isNone(ifNoneMatch) &&
         isNone(ifModifiedSince) &&

@@ -30,9 +30,9 @@ export const sendHttpRequestUsingXHR = request => createObservable(subscriber =>
                 const hasCharset = isSome(params["charset"]);
                 const responseIsText = hasCharset ||
                     type === "text" ||
-                    subtype.indexOf("json") >= 0 ||
-                    subtype.indexOf("text") >= 0 ||
-                    subtype.indexOf("xml") >= 0;
+                    subtype.includes("json") ||
+                    subtype.includes("text") ||
+                    subtype.includes("xml");
                 xhr.responseType = responseIsText
                     ? "text"
                     : contentLength > 0 && supportsArrayBuffer
