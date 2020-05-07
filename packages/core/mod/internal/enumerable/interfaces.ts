@@ -1,6 +1,7 @@
+import { Operator } from "../../functions.ts";
+
 /**
- *
- * @noInheritDoc
+ * Inteface that enables iteration over a collection.
  */
 export interface EnumeratorLike<T> {
   /**
@@ -21,17 +22,24 @@ export interface EnumeratorLike<T> {
   move(): boolean;
 }
 
+/**
+ * Interface for iterating a collection of items.
+ */
 export interface EnumerableLike<T> {
   /**
-   * Returns an `EnumeratorLike` to iterate through the source.
+   * Returns an `EnumeratorLike` to iterate through the collection.
    */
   enumerate(): EnumeratorLike<T>;
 }
 
-export type EnumeratorOperator<TA, TB> = (
-  a: EnumeratorLike<TA>,
-) => EnumeratorLike<TB>;
+/** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */
+export type EnumeratorOperator<TA, TB> = Operator<
+  EnumeratorLike<TA>,
+  EnumeratorLike<TB>
+>;
 
-export type EnumerableOperator<TA, TB> = (
-  a: EnumerableLike<TA>,
-) => EnumerableLike<TB>;
+/** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
+export type EnumerableOperator<TA, TB> = Operator<
+  EnumerableLike<TA>,
+  EnumerableLike<TB>
+>;

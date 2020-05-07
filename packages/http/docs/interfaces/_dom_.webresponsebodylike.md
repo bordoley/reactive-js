@@ -14,6 +14,7 @@
 
 * [arrayBuffer](_dom_.webresponsebodylike.md#arraybuffer)
 * [blob](_dom_.webresponsebodylike.md#blob)
+* [error](_dom_.webresponsebodylike.md#error)
 * [isDisposed](_dom_.webresponsebodylike.md#isdisposed)
 * [text](_dom_.webresponsebodylike.md#text)
 
@@ -33,6 +34,14 @@ ___
 ###  blob
 
 • **blob**: *ObservableLike‹Blob›*
+
+___
+
+###  error
+
+• **error**: *Option‹Exception›*
+
+*Inherited from [WebResponseBodyLike](_dom_.webresponsebodylike.md).[error](_dom_.webresponsebodylike.md#error)*
 
 ___
 

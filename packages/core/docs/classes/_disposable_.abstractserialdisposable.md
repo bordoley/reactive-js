@@ -2,6 +2,8 @@
 
 # Class: AbstractSerialDisposable
 
+Abstract base class for implementing the SerialDisposableLike interface.
+
 ## Hierarchy
 
 * [AbstractDisposable](_disposable_.abstractdisposable.md)

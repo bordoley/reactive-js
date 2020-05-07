@@ -1,20 +1,19 @@
-import { AbstractDisposable } from "../../disposable.js";
 import { none } from "../../option.js";
 import { lift } from "./lift.js";
-class MapEnumerator extends AbstractDisposable {
+class MapEnumerator {
     constructor(delegate, mapper) {
-        super();
         this.delegate = delegate;
         this.mapper = mapper;
         this.current = none;
-        this.hasCurrent = false;
+    }
+    get hasCurrent() {
+        return this.delegate.hasCurrent;
     }
     move() {
         this.current = none;
         this.delegate.move();
-        const hasCurrent = this.delegate.hasCurrent;
-        this.hasCurrent = hasCurrent;
-        if (this.hasCurrent) {
+        const hasCurrent = this.hasCurrent;
+        if (hasCurrent) {
             this.current = this.mapper(this.delegate.current);
         }
         return hasCurrent;

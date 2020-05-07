@@ -2,6 +2,8 @@
 
 # Interface: EnumerableLike <**T**>
 
+Interface for iterating a collection of items.
+
 ## Type parameters
 
 ▪ **T**
@@ -22,6 +24,6 @@
 
 ▸ **enumerate**(): *[EnumeratorLike](_enumerable_.enumeratorlike.md)‹T›*
 
-Returns an `EnumeratorLike` to iterate through the source.
+Returns an `EnumeratorLike` to iterate through the collection.
 
 **Returns:** *[EnumeratorLike](_enumerable_.enumeratorlike.md)‹T›*
