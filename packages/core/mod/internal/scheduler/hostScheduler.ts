@@ -78,7 +78,7 @@ const createCallback = (
 };
 
 class HostScheduler implements SchedulerLike {
-  inContinuation: boolean = false;
+  inContinuation = false;
   startTime = this.now;
 
   readonly shouldYield = () => {

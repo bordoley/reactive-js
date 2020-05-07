@@ -70,7 +70,7 @@ export const writeHttpResponseHeaders = (response, writeHeader) => {
     writeHttpMessageHeaders(response, writeHeader);
 };
 export const checkIfNotModified = ({ cacheControl, method, preconditions, }) => response => {
-    var _a;
+    var _a, _b;
     const { etag, lastModified } = response;
     const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
     const methodSupportsConditionalResponse = method === "GET" || method === "HEAD";
@@ -78,9 +78,9 @@ export const checkIfNotModified = ({ cacheControl, method, preconditions, }) => 
     const isNoCacheRequest = cacheControl.findIndex(({ directive }) => directive === "no-cache") >= 0;
     const etagMatch = isSome(etag) &&
         ((preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) === "*" ||
-            ((preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) || []).findIndex(({ tag }) => tag === etag.tag) >= 0);
+            ((_a = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) !== null && _a !== void 0 ? _a : []).findIndex(({ tag }) => tag === etag.tag) >= 0);
     const notModifiedSince = (lastModified !== null && lastModified !== void 0 ? lastModified : Number.MAX_SAFE_INTEGER) <=
-        ((_a = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince) !== null && _a !== void 0 ? _a : Number.MIN_SAFE_INTEGER);
+        ((_b = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince) !== null && _b !== void 0 ? _b : Number.MIN_SAFE_INTEGER);
     const match = isSome(etag) &&
         isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) &&
         isSome(lastModified) &&
