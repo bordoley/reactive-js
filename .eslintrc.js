@@ -9,7 +9,16 @@ module.exports = {
     "prettier",
     "prettier/@typescript-eslint",
   ],
-  ignorePatterns: ["build", "coverage", "docs", "lib", "mod", "node_modules", "scripts/jestTestRunner.ts", "test"],
+  ignorePatterns: [
+    "build",
+    "coverage",
+    "docs",
+    "lib",
+    "mod",
+    "node_modules",
+    "scripts/jestTestRunner.ts",
+    "test",
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
@@ -66,11 +75,11 @@ module.exports = {
     "@typescript-eslint/prefer-optional-chain": "error",
 
     //"@typescript-eslint/prefer-readonly-parameter-types": "error",
-    
+
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
 
     //"@typescript-eslint/restrict-plus-operands": "error",
-    
+
     //"@typescript-eslint/restrict-template-expressions": "error",
 
     //"@typescript-eslint/strict-boolean-expressions": "error",

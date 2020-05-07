@@ -20,7 +20,8 @@ import {
 export const tests = describe(
   "Disposable",
 
-  describe("AbstractDisposable",
+  describe(
+    "AbstractDisposable",
     test("disposes child disposable when disposed", () => {
       const disposable = createDisposable();
       const child = createDisposable();
