@@ -1,7 +1,7 @@
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 import { ofValue } from "./ofValue.js";
+import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class ReduceSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, reducer, acc) {
         super(delegate);

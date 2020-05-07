@@ -1,7 +1,7 @@
 import { DisposableLike } from "../../disposable";
-import { SchedulerLike, CallbackContinuation } from "./interfaces";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 import { isSome } from "../../option";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
+import { SchedulerLike, CallbackContinuation } from "./interfaces";
 
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
   constructor(private cb: CallbackContinuation) {

@@ -1,6 +1,6 @@
-import { AbstractDelegatingSubscriber } from "./subscriber.js";
-import { lift } from "./lift.js";
 import { isSome } from "../../option.js";
+import { lift } from "./lift.js";
+import { AbstractDelegatingSubscriber } from "./subscriber.js";
 class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, onError) {
         super(delegate);

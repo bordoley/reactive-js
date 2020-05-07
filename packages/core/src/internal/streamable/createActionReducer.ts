@@ -1,11 +1,11 @@
-import { StreamableLike } from "./interfaces";
+import { pipe, returns } from "../../functions";
 import {
   ObservableLike,
   scan,
   startWith,
   distinctUntilChanged,
 } from "../../observable";
-import { pipe, returns } from "../../functions";
+import { StreamableLike } from "./interfaces";
 import { createStreamable } from "./streamable";
 
 /**

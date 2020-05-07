@@ -1,6 +1,6 @@
+import { DisposableLike, AbstractDisposable } from "../../disposable.ts";
 import { none } from "../../option.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
-import { DisposableLike, AbstractDisposable } from "../../disposable.ts";
 import { lift } from "./lift.ts";
 
 class MapEnumerator<TA, TB> extends AbstractDisposable

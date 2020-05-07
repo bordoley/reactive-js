@@ -1,18 +1,18 @@
 import {
+  createObservable,
+  createSubject,
+} from "@reactive-js/core/lib/observable";
+import { isSome } from "@reactive-js/core/lib/option";
+import {
   HttpClient,
   HttpClientRequestStatusType,
   parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
 } from "../../http";
-import {
-  createObservable,
-  createSubject,
-} from "@reactive-js/core/lib/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { isSome } from "@reactive-js/core/lib/option";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,

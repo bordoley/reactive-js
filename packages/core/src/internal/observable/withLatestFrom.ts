@@ -1,3 +1,4 @@
+import { pipe } from "../../functions";
 import { Option, isSome } from "../../option";
 import {
   ObservableLike,
@@ -5,13 +6,12 @@ import {
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { pipe } from "../../functions";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { onNotify } from "./onNotify";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
   TA,

@@ -1,7 +1,7 @@
-import { QueueLike } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
 import { fromIterable, first, EnumeratorLike } from "../../enumerable.ts";
+import { pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
+import { QueueLike } from "./interfaces.ts";
 
 class UniqueQueueImpl<T> implements QueueLike<T> {
   readonly values: Set<T> = new Set();

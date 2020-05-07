@@ -1,23 +1,22 @@
-import {
-  describe,
-  testAsync,
-  expectEquals,
-  expectPromiseToThrow,
-} from "../src/testing";
-
 import { Readable, Writable } from "stream";
-import { sink } from "../src/streamable";
+import { StringDecoder } from "string_decoder";
+import { createGzip, createGunzip } from "zlib";
 import { pipe } from "../src/functions";
-import { toPromise } from "../src/observable";
-import { createHostScheduler } from "../src/scheduler";
 import {
   createFlowableFromReadable,
   createFlowableSinkFromWritable,
   transform,
   createDisposableNodeStream,
 } from "../src/node";
-import { StringDecoder } from "string_decoder";
-import { createGzip, createGunzip } from "zlib";
+import { toPromise } from "../src/observable";
+import { createHostScheduler } from "../src/scheduler";
+import { sink } from "../src/streamable";
+import {
+  describe,
+  testAsync,
+  expectEquals,
+  expectPromiseToThrow,
+} from "../src/testing";
 
 const scheduler = createHostScheduler();
 

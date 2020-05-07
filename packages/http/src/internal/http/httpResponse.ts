@@ -1,5 +1,36 @@
-import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import {
+  FlowableLike,
+  FlowableOperator,
+  empty,
+} from "@reactive-js/core/lib/flowable";
 import { Operator } from "@reactive-js/core/lib/functions";
+import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import {
+  writeHttpMessageHeaders,
+  encodeHttpMessageWithCharset,
+  toFlowableHttpMessage,
+  decodeHttpMessageWithCharset,
+} from "./HttpMessage";
+import {
+  parseCacheControlFromHeaders,
+  parseCacheDirectiveOrThrow,
+} from "./cacheDirective";
+import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
+import {
+  parseHttpContentInfoFromHeaders,
+  contentIsCompressible,
+  createHttpContentInfo,
+} from "./httpContentInfo";
+import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
+import {
+  getHeaderValue,
+  HttpStandardHeader,
+  filterHeaders,
+} from "./httpHeaders";
+import {
+  parseHttpPreferencesFromHeaders,
+  createHttpPreferences,
+} from "./httpPreferences";
 import {
   HttpStatusCode,
   HttpHeaders,
@@ -13,37 +44,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces";
-import {
-  parseHttpContentInfoFromHeaders,
-  contentIsCompressible,
-  createHttpContentInfo,
-} from "./httpContentInfo";
-import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime";
-import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag";
-import {
-  getHeaderValue,
-  HttpStandardHeader,
-  filterHeaders,
-} from "./httpHeaders";
-import {
-  parseHttpPreferencesFromHeaders,
-  createHttpPreferences,
-} from "./httpPreferences";
-import {
-  parseCacheControlFromHeaders,
-  parseCacheDirectiveOrThrow,
-} from "./cacheDirective";
-import {
-  writeHttpMessageHeaders,
-  encodeHttpMessageWithCharset,
-  toFlowableHttpMessage,
-  decodeHttpMessageWithCharset,
-} from "./HttpMessage";
-import {
-  FlowableLike,
-  FlowableOperator,
-  empty,
-} from "@reactive-js/core/lib/flowable";
 
 declare class URL implements URILike {
   readonly hash: string;

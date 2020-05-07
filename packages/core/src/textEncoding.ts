@@ -1,3 +1,10 @@
+import { TextDecoder } from "util";
+import {
+  FlowEvent,
+  FlowEventType,
+  FlowableOperator,
+  FlowMode,
+} from "./flowable";
 import { compose, returns } from "./functions";
 import {
   withLatestFrom,
@@ -6,14 +13,7 @@ import {
   fromIterator,
   ObservableOperator,
 } from "./observable";
-import {
-  FlowEvent,
-  FlowEventType,
-  FlowableOperator,
-  FlowMode,
-} from "./flowable";
 import { lift } from "./streamable";
-import { TextDecoder } from "util";
 
 export const decode = (
   charset: string = "utf-8",

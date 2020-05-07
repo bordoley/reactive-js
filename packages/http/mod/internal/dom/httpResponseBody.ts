@@ -1,16 +1,16 @@
 import {
+  AbstractDisposable,
+  DisposableLike,
+} from "../../../../core/lib/disposable.ts";
+import { pipe } from "../../../../core/lib/functions.ts";
+import {
   ObservableLike,
   ofValue,
   createObservable,
   await_,
   DispatcherLike,
 } from "../../../../core/lib/observable.ts";
-import { pipe } from "../../../../core/lib/functions.ts";
 import { WebResponseBodyLike } from "./interfaces.ts";
-import {
-  AbstractDisposable,
-  DisposableLike,
-} from "../../../../core/lib/disposable.ts";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (subscriber: DispatcherLike<string>) => {

@@ -1,5 +1,5 @@
-import { isSome, none } from "../../option.js";
 import { fromArray } from "../../enumerable.js";
+import { isSome, none } from "../../option.js";
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;

@@ -1,10 +1,10 @@
 import { isNone, isSome, none } from "../../../../core/lib/option.js";
+import { writeHttpMessageHeaders, encodeHttpMessageWithCharset, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
+import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
-import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
-import { writeHttpMessageHeaders, encodeHttpMessageWithCharset, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { createHttpResponse } from "./httpResponse.js";
 export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue, headers, httpVersionMajor, httpVersionMinor, method, preconditions, preferences, uri, ...rest }) => ({
     ...rest,

@@ -1,6 +1,6 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { createSubject, publish, } from "../../observable.js";
 import { pipe } from "../../functions.js";
+import { createSubject, publish, } from "../../observable.js";
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, replayCount) {
         super();

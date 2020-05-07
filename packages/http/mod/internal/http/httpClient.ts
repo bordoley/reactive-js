@@ -1,10 +1,5 @@
-import {
-  HttpContentEncoding,
-  HttpRequest,
-  HttpResponse,
-  HttpStatusCode,
-} from "./interfaces.ts";
-import { createRedirectHttpRequest } from "./httpRequest.ts";
+import { DisposableLike } from "../../../../core/lib/disposable.ts";
+import { pipe, identity } from "../../../../core/lib/functions.ts";
 import {
   ObservableLike,
   ofValue,
@@ -12,9 +7,14 @@ import {
   switchMap,
   concatMap,
 } from "../../../../core/lib/observable.ts";
-import { DisposableLike } from "../../../../core/lib/disposable.ts";
-import { pipe, identity } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
+import { createRedirectHttpRequest } from "./httpRequest.ts";
+import {
+  HttpContentEncoding,
+  HttpRequest,
+  HttpResponse,
+  HttpStatusCode,
+} from "./interfaces.ts";
 
 export const enum HttpClientRequestStatusType {
   Start = 1,

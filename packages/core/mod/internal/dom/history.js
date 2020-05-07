@@ -1,9 +1,9 @@
-import { createStreamable, map, mapReq } from "../../streamable.js";
+import { pipe } from "../../functions.js";
 import { compute, distinctUntilChanged, merge, onNotify, throttle, } from "../../observable.js";
 import { none } from "../../option.js";
-import { pipe } from "../../functions.js";
-import { fromEvent } from "./event.js";
 import { toStateStore } from "../../stateStore.js";
+import { createStreamable, map, mapReq } from "../../streamable.js";
+import { fromEvent } from "./event.js";
 const getCurrentLocation = (_) => window.location.href;
 const pushHistoryState = (newLocation) => {
     const currentLocation = getCurrentLocation();

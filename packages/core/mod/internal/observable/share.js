@@ -1,6 +1,6 @@
+import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { createSubject } from "./createSubject.js";
-import { pipe } from "../../functions.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 class SharedObservable {

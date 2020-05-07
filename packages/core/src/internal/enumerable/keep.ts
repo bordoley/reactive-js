@@ -1,6 +1,6 @@
+import { DisposableLike, AbstractDisposable } from "../../disposable";
 import { none } from "../../option";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
-import { DisposableLike, AbstractDisposable } from "../../disposable";
 import { lift } from "./lift";
 
 class KeepTypeEnumerator<TA, TB> extends AbstractDisposable

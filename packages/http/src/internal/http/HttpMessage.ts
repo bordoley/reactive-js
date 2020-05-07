@@ -1,11 +1,11 @@
-import { HttpMessage, MediaType } from "./interfaces";
+import { FlowableLike, ofValue } from "@reactive-js/core/lib/flowable";
+import { Operator } from "@reactive-js/core/lib/functions";
+import { isSome } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";
-import { isSome } from "@reactive-js/core/lib/option";
-import { writeHttpPreferenceHeaders } from "./httpPreferences";
 import { writeHttpHeaders } from "./httpHeaders";
-import { Operator } from "@reactive-js/core/lib/functions";
-import { FlowableLike, ofValue } from "@reactive-js/core/lib/flowable";
+import { writeHttpPreferenceHeaders } from "./httpPreferences";
+import { HttpMessage, MediaType } from "./interfaces";
 import { parseMediaTypeOrThrow } from "./mediaType";
 
 export const writeHttpMessageHeaders = <T>(

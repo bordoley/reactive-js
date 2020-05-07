@@ -1,4 +1,4 @@
-import { createStreamable, map, mapReq } from "../../streamable.ts";
+import { pipe } from "../../functions.ts";
 import {
   compute,
   distinctUntilChanged,
@@ -8,9 +8,9 @@ import {
   throttle,
 } from "../../observable.ts";
 import { none } from "../../option.ts";
-import { pipe } from "../../functions.ts";
-import { fromEvent } from "./event.ts";
 import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore.ts";
+import { createStreamable, map, mapReq } from "../../streamable.ts";
+import { fromEvent } from "./event.ts";
 
 const getCurrentLocation = (_?: unknown): string => window.location.href;
 

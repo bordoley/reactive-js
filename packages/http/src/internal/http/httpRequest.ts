@@ -1,5 +1,17 @@
-import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
 import { Operator } from "@reactive-js/core/lib/functions";
+import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import {
+  writeHttpMessageHeaders,
+  encodeHttpMessageWithCharset,
+  toFlowableHttpMessage,
+  decodeHttpMessageWithCharset,
+} from "./HttpMessage";
+import {
+  parseCacheControlFromHeaders,
+  parseCacheDirectiveOrThrow,
+} from "./cacheDirective";
+import { HttpClientRequest } from "./httpClient";
 import {
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,
@@ -20,6 +32,7 @@ import {
   parseHttpRequestPreconditionsFromHeaders,
   createHttpRequestPreconditions,
 } from "./httpRequestPreconditions";
+import { createHttpResponse } from "./httpResponse";
 import {
   HttpMethod,
   URILike,
@@ -35,19 +48,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces";
-import {
-  parseCacheControlFromHeaders,
-  parseCacheDirectiveOrThrow,
-} from "./cacheDirective";
-import {
-  writeHttpMessageHeaders,
-  encodeHttpMessageWithCharset,
-  toFlowableHttpMessage,
-  decodeHttpMessageWithCharset,
-} from "./HttpMessage";
-import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
-import { HttpClientRequest } from "./httpClient";
-import { createHttpResponse } from "./httpResponse";
 
 declare class URL implements URILike {
   readonly hash: string;

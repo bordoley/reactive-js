@@ -1,18 +1,18 @@
 import { pipe } from "../../functions.js";
-import { zip } from "./zip.js";
-import { createSubject } from "./createSubject.js";
-import { concatAll, concatMap } from "./mergeAll.js";
 import { compute } from "./compute.js";
-import { skipFirst } from "./skipFirst.js";
-import { switchAll } from "./switchAll.js";
-import { withLatestFrom } from "./withLatestFrom.js";
-import { map } from "./map.js";
-import { publish } from "./publish.js";
-import { takeLast } from "./takeLast.js";
-import { share } from "./share.js";
 import { concat } from "./concat.js";
+import { createSubject } from "./createSubject.js";
+import { map } from "./map.js";
+import { concatAll, concatMap } from "./mergeAll.js";
 import { onNotify } from "./onNotify.js";
+import { publish } from "./publish.js";
+import { share } from "./share.js";
+import { skipFirst } from "./skipFirst.js";
 import { subscribe } from "./subscribe.js";
+import { switchAll } from "./switchAll.js";
+import { takeLast } from "./takeLast.js";
+import { withLatestFrom } from "./withLatestFrom.js";
+import { zip } from "./zip.js";
 const subscribeSwitchingMode = (subscriber, src, scanner, initialValue) => {
     const accFeedbackStream = createSubject(1);
     subscriber.add(accFeedbackStream);

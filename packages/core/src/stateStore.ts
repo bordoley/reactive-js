@@ -1,9 +1,4 @@
-import {
-  StreamableLike,
-  createActionReducer,
-  StreamableOperator,
-  createStreamable,
-} from "./streamable";
+import { pipe, returns } from "./functions";
 import {
   ObservableLike,
   merge,
@@ -14,7 +9,12 @@ import {
   using,
   StreamLike,
 } from "./observable";
-import { pipe, returns } from "./functions";
+import {
+  StreamableLike,
+  createActionReducer,
+  StreamableOperator,
+  createStreamable,
+} from "./streamable";
 
 export type StateUpdater<T> = {
   (oldState: T): T;

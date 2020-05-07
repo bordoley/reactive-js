@@ -1,5 +1,5 @@
-import { ObservableLike } from "./interfaces";
 import { fromArray } from "./fromArray";
+import { ObservableLike } from "./interfaces";
 
 const defaultEmpty = fromArray([]);
 

@@ -1,18 +1,18 @@
 import {
+  createObservable,
+  createSubject,
+} from "../../../../core/lib/observable.ts";
+import { isSome } from "../../../../core/lib/option.ts";
+import {
   HttpClient,
   HttpClientRequestStatusType,
   parseHeaders,
   parseHttpResponseFromHeaders,
   writeHttpRequestHeaders,
 } from "../../http.ts";
-import {
-  createObservable,
-  createSubject,
-} from "../../../../core/lib/observable.ts";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces.ts";
-import { isSome } from "../../../../core/lib/option.ts";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,

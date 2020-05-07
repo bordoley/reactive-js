@@ -1,9 +1,9 @@
-import { test, describe, expectEquals } from "../src/testing";
-import { createVirtualTimeScheduler } from "../src/scheduler";
-import { pipe } from "../src/functions";
 import { ofValue, FlowMode, FlowEventType } from "../src/flowable";
-import { encode, decode } from "../src/textEncoding";
+import { pipe } from "../src/functions";
 import { onNotify, scan, subscribe } from "../src/observable";
+import { createVirtualTimeScheduler } from "../src/scheduler";
+import { test, describe, expectEquals } from "../src/testing";
+import { encode, decode } from "../src/textEncoding";
 
 export const tests = describe(
   "textEncoding",

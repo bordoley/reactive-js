@@ -1,8 +1,7 @@
-import { onNotify as onNotifyStream, identity, createStreamable, } from "./streamable.js";
-import { compute, map, merge, onNotify, switchAll, takeLast, using, onSubscribe, empty, withLatestFrom, takeFirst, scan, takeWhile, } from "./observable.js";
-import { compose, pipe } from "./functions.js";
 import { fromIterable as fromIterableEnumerable } from "./enumerable.js";
-import { returns } from "./functions.js";
+import { compose, pipe, returns } from "./functions.js";
+import { compute, map, merge, onNotify, switchAll, takeLast, using, onSubscribe, empty, withLatestFrom, takeFirst, scan, takeWhile, } from "./observable.js";
+import { onNotify as onNotifyStream, identity, createStreamable, } from "./streamable.js";
 const createAcc = (enumerator) => {
     const onNotifyDispatch = (_) => {
         enumerator.dispatch();

@@ -1,3 +1,4 @@
+import { pipe } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import {
   satisfy,
@@ -9,7 +10,6 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../parserCombinators.ts";
-import { pipe } from "../../../../core/lib/functions.ts";
 import { ASCII } from "./httpGrammar.ts";
 import { EntityTag } from "./interfaces.ts";
 

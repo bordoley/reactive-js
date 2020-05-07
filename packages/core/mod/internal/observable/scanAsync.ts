@@ -1,23 +1,23 @@
+import { pipe } from "../../functions.ts";
+import { compute } from "./compute.ts";
+import { concat } from "./concat.ts";
+import { createSubject } from "./createSubject.ts";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
-import { zip } from "./zip.ts";
-import { createSubject } from "./createSubject.ts";
-import { concatAll, concatMap } from "./mergeAll.ts";
-import { compute } from "./compute.ts";
-import { skipFirst } from "./skipFirst.ts";
-import { switchAll } from "./switchAll.ts";
-import { withLatestFrom } from "./withLatestFrom.ts";
 import { map } from "./map.ts";
-import { publish } from "./publish.ts";
-import { takeLast } from "./takeLast.ts";
-import { share } from "./share.ts";
-import { concat } from "./concat.ts";
+import { concatAll, concatMap } from "./mergeAll.ts";
 import { onNotify } from "./onNotify.ts";
+import { publish } from "./publish.ts";
+import { share } from "./share.ts";
+import { skipFirst } from "./skipFirst.ts";
 import { subscribe } from "./subscribe.ts";
+import { switchAll } from "./switchAll.ts";
+import { takeLast } from "./takeLast.ts";
+import { withLatestFrom } from "./withLatestFrom.ts";
+import { zip } from "./zip.ts";
 
 const subscribeSwitchingMode = <T, TAcc>(
   subscriber: SubscriberLike<TAcc>,

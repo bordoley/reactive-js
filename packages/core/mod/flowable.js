@@ -1,9 +1,8 @@
-import { createStreamable, map as mapStream, } from "./streamable.js";
-import { compose, pipe } from "./functions.js";
+import { compose, pipe, returns } from "./functions.js";
 import { endWith, generate as generateObs, map as mapObs, keepType, takeFirst, genMap, empty as emptyObs, onNotify, subscribe, subscribeOn, scanAsync, using, } from "./observable.js";
 import { none, isSome } from "./option.js";
 import { toPausableScheduler } from "./scheduler.js";
-import { returns } from "./functions.js";
+import { createStreamable, map as mapStream, } from "./streamable.js";
 const _empty = createStreamable(compose(mapObs(mode => mode === 1 ? { type: 2 } : none), keepType(isSome), takeFirst()));
 export const empty = () => _empty;
 export const ofValue = (data) => pipe(genMap(function* (mode) {

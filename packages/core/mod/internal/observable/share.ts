@@ -1,13 +1,13 @@
+import { pipe } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import { SchedulerLike } from "../../scheduler.ts";
+import { createSubject } from "./createSubject.ts";
 import {
   ObservableLike,
   ObservableOperator,
   SubjectLike,
   SubscriberLike,
 } from "./interfaces.ts";
-import { createSubject } from "./createSubject.ts";
-import { pipe } from "../../functions.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 

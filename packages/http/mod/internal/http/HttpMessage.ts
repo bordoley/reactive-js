@@ -1,11 +1,11 @@
-import { HttpMessage, MediaType } from "./interfaces.ts";
+import { FlowableLike, ofValue } from "../../../../core/lib/flowable.ts";
+import { Operator } from "../../../../core/lib/functions.ts";
+import { isSome } from "../../../../core/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.ts";
-import { isSome } from "../../../../core/lib/option.ts";
-import { writeHttpPreferenceHeaders } from "./httpPreferences.ts";
 import { writeHttpHeaders } from "./httpHeaders.ts";
-import { Operator } from "../../../../core/lib/functions.ts";
-import { FlowableLike, ofValue } from "../../../../core/lib/flowable.ts";
+import { writeHttpPreferenceHeaders } from "./httpPreferences.ts";
+import { HttpMessage, MediaType } from "./interfaces.ts";
 import { parseMediaTypeOrThrow } from "./mediaType.ts";
 
 export const writeHttpMessageHeaders = <T>(

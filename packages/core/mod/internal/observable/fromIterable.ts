@@ -2,8 +2,8 @@ import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
 } from "../../enumerable.ts";
-import { ObservableLike } from "./interfaces.ts";
 import { fromEnumerable } from "./fromEnumerable.ts";
+import { ObservableLike } from "./interfaces.ts";
 
 /**
  * Creates an `ObservableLike` which iterates through the values

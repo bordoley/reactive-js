@@ -1,4 +1,11 @@
 import {
+  createDisposable,
+  createSerialDisposable,
+  disposed,
+} from "../src/disposable";
+import { fromArray, forEach, map } from "../src/enumerable";
+import { pipe } from "../src/functions";
+import {
   test,
   describe,
   expectFalse,
@@ -8,13 +15,6 @@ import {
   expectArrayEquals,
   expectEquals,
 } from "../src/testing";
-import {
-  createDisposable,
-  createSerialDisposable,
-  disposed,
-} from "../src/disposable";
-import { pipe } from "../src/functions";
-import { fromArray, forEach, map } from "../src/enumerable";
 
 export const tests = describe(
   "Disposable",

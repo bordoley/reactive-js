@@ -1,5 +1,5 @@
-import { none } from "../../option.js";
 import { pipe } from "../../functions.js";
+import { none } from "../../option.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";

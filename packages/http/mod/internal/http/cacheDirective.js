@@ -1,8 +1,8 @@
+import { pipe } from "../../../../core/lib/functions.js";
+import { isSome } from "../../../../core/lib/option.js";
 import { optional, pEquals, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
 import { pToken, pTokenOrQuotedString, toTokenOrQuotedString, httpList, } from "./httpGrammar.js";
-import { isSome } from "../../../../core/lib/option.js";
 import { getHeaderValue } from "./httpHeaders.js";
-import { pipe } from "../../../../core/lib/functions.js";
 const pOptionalEquals = optional(pEquals);
 const pCacheDirective = (charStream) => {
     const directive = pToken(charStream);

@@ -1,6 +1,6 @@
 import { createSerialDisposable, Exception } from "../../disposable.ts";
-import { isNone, isSome } from "../../option.ts";
 import { pipe } from "../../functions.ts";
+import { isNone, isSome } from "../../option.ts";
 import {
   ObservableLike,
   ObservableOperator,

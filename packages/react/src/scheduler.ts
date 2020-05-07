@@ -1,5 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import {
+  createDisposable,
+  DisposableLike,
+} from "@reactive-js/core/lib/disposable";
+import { pipe } from "@reactive-js/core/lib/functions";
+import { none } from "@reactive-js/core/lib/option";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+  toSchedulerWithPriority,
+} from "@reactive-js/core/lib/scheduler";
+import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
   unstable_LowPriority,
@@ -10,17 +21,6 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
-import {
-  createDisposable,
-  DisposableLike,
-} from "@reactive-js/core/lib/disposable";
-import { none } from "@reactive-js/core/lib/option";
-import { pipe } from "@reactive-js/core/lib/functions";
-import {
-  SchedulerLike,
-  SchedulerContinuationLike,
-  toSchedulerWithPriority,
-} from "@reactive-js/core/lib/scheduler";
 
 const shouldYield = unstable_shouldYield;
 

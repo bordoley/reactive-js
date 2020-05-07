@@ -1,11 +1,11 @@
 import { isNone } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
+import { ofValue } from "./ofValue";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { ofValue } from "./ofValue";
 
 class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(

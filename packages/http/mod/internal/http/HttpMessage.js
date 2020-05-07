@@ -1,9 +1,9 @@
+import { ofValue } from "../../../../core/lib/flowable.js";
+import { isSome } from "../../../../core/lib/option.js";
 import { writeHttpCacheControlHeader } from "./cacheDirective.js";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.js";
-import { isSome } from "../../../../core/lib/option.js";
-import { writeHttpPreferenceHeaders } from "./httpPreferences.js";
 import { writeHttpHeaders } from "./httpHeaders.js";
-import { ofValue } from "../../../../core/lib/flowable.js";
+import { writeHttpPreferenceHeaders } from "./httpPreferences.js";
 import { parseMediaTypeOrThrow } from "./mediaType.js";
 export const writeHttpMessageHeaders = ({ cacheControl, contentInfo, headers, preferences }, writeHeader) => {
     writeHttpCacheControlHeader(cacheControl, writeHeader);

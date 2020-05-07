@@ -1,9 +1,9 @@
-import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
+import { pipe } from "../../../../core/lib/functions.js";
 import { fromPromise, publish, ofValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
+import { isSome } from "../../../../core/lib/option.js";
+import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
-import { isSome } from "../../../../core/lib/option.js";
-import { pipe } from "../../../../core/lib/functions.js";
 const loadBodyContent = async (response) => {
     const { body, contentInfo } = response;
     if (isSome(contentInfo)) {

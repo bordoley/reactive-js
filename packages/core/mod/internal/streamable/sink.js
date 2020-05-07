@@ -1,8 +1,8 @@
-import { onNotify, using, endWith } from "../../observable.js";
 import { pipe } from "../../functions.js";
-import { subscribe } from "../observable/subscribe.js";
-import { ignoreElements } from "../observable/ignoreElements.js";
+import { onNotify, using, endWith } from "../../observable.js";
 import { isSome, none } from "../../option.js";
+import { ignoreElements } from "../observable/ignoreElements.js";
+import { subscribe } from "../observable/subscribe.js";
 export const sink = (src, dest) => using(scheduler => {
     const srcStream = src.stream(scheduler);
     const destStream = dest.stream(scheduler);

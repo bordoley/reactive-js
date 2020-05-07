@@ -1,13 +1,13 @@
-import { isSome } from "../../option.ts";
 import { pipe } from "../../functions.ts";
+import { isSome } from "../../option.ts";
+import { empty } from "./empty.ts";
+import { fromArray } from "./fromArray.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { empty } from "./empty.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { fromArray } from "./fromArray.ts";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];

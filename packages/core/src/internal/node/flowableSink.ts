@@ -1,12 +1,12 @@
 import { Writable } from "stream";
-import { createStreamable } from "../../streamable";
+import { DisposableValueLike } from "../../disposable";
 import {
   FlowEventType,
   FlowMode,
   FlowEvent,
   FlowableSinkLike,
 } from "../../flowable";
-import { DisposableValueLike } from "../../disposable";
+import { pipe } from "../../functions";
 import {
   createObservable,
   onNotify,
@@ -14,8 +14,8 @@ import {
   ObservableLike,
   using,
 } from "../../observable";
-import { pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
+import { createStreamable } from "../../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 

@@ -1,5 +1,5 @@
-import { none, isSome } from "../../option.js";
 import { pipe } from "../../functions.js";
+import { none, isSome } from "../../option.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 export const toPromise = (scheduler) => observable => new Promise((resolve, reject) => {

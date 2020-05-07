@@ -1,12 +1,12 @@
-import { none, Option } from "../../option.ts";
+import { Exception } from "../../disposable.ts";
 import { Operator, pipe } from "../../functions.ts";
+import { none, Option } from "../../option.ts";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
 } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
-import { Exception } from "../../disposable.ts";
 import { subscribe } from "./subscribe.ts";
 
 /**

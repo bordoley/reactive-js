@@ -1,11 +1,11 @@
 import { Transform } from "stream";
 import { DisposableValueLike } from "../../disposable";
+import { FlowableOperator } from "../../flowable";
+import { pipe, returns } from "../../functions";
 import { using, subscribe, onNotify } from "../../observable";
+import { createStreamable, sink } from "../../streamable";
 import { createFlowableFromReadable } from "./flowable";
 import { createFlowableSinkFromWritable } from "./flowableSink";
-import { pipe, returns } from "../../functions";
-import { FlowableOperator } from "../../flowable";
-import { createStreamable, sink } from "../../streamable";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,

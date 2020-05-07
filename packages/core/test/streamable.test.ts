@@ -1,8 +1,8 @@
-import { test, describe, expectArrayEquals } from "../src/testing";
-import { subscribe, onNotify } from "../src/observable";
 import { pipe } from "../src/functions";
+import { subscribe, onNotify } from "../src/observable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { identity, mapReq, map } from "../src/streamable";
+import { test, describe, expectArrayEquals } from "../src/testing";
 
 export const tests = describe(
   "streamable",

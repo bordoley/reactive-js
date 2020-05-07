@@ -1,5 +1,5 @@
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 import { isSome } from "../../option.js";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(cb) {
         super();

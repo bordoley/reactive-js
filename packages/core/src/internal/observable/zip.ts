@@ -1,8 +1,8 @@
 import { DisposableLike, AbstractDisposable } from "../../disposable";
 import { EnumeratorLike } from "../../enumerable";
+import { alwaysTrue } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
-import { alwaysTrue } from "../../functions";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import { AbstractProducer } from "./producer";
 import {

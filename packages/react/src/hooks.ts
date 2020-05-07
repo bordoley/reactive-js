@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef, useState, useMemo } from "react";
-import { StreamableLike, mapReq, map } from "@reactive-js/core/lib/streamable";
 import { Exception } from "@reactive-js/core/lib/disposable";
+import { pipe, compose, returns } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   onNotify,
@@ -11,10 +10,11 @@ import {
   never,
 } from "@reactive-js/core/lib/observable";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
-import { pipe, compose, returns } from "@reactive-js/core/lib/functions";
-import { normalPriority } from "./scheduler";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { StateStoreLike, StateUpdater } from "@reactive-js/core/lib/stateStore";
+import { StreamableLike, mapReq, map } from "@reactive-js/core/lib/streamable";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import { normalPriority } from "./scheduler";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,

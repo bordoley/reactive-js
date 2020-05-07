@@ -1,9 +1,9 @@
-import { isSome } from "../../option.js";
 import { pipe } from "../../functions.js";
-import { lift } from "./lift.js";
+import { isSome } from "../../option.js";
 import { empty } from "./empty.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 import { fromArray } from "./fromArray.js";
+import { lift } from "./lift.js";
+import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class TakeLastSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, maxCount) {
         super(delegate);

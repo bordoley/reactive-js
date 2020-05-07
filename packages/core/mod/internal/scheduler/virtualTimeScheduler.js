@@ -1,5 +1,5 @@
-import { createPriorityQueue } from "../queues.js";
 import { none, isSome } from "../../option.js";
+import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 const comparator = (a, b) => {
     let diff = 0;

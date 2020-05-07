@@ -1,8 +1,8 @@
-import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { createObservable, createSubject, } from "../../../../core/lib/observable.js";
+import { isSome } from "../../../../core/lib/option.js";
+import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
-import { isSome } from "../../../../core/lib/option.js";
 export const sendHttpRequestUsingXHR = request => createObservable(subscriber => {
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;

@@ -1,5 +1,17 @@
-import { isNone, isSome, none } from "../../../../core/lib/option.ts";
+import { FlowableLike, FlowableOperator } from "../../../../core/lib/flowable.ts";
 import { Operator } from "../../../../core/lib/functions.ts";
+import { isNone, isSome, none } from "../../../../core/lib/option.ts";
+import {
+  writeHttpMessageHeaders,
+  encodeHttpMessageWithCharset,
+  toFlowableHttpMessage,
+  decodeHttpMessageWithCharset,
+} from "./HttpMessage.ts";
+import {
+  parseCacheControlFromHeaders,
+  parseCacheDirectiveOrThrow,
+} from "./cacheDirective.ts";
+import { HttpClientRequest } from "./httpClient.ts";
 import {
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,
@@ -20,6 +32,7 @@ import {
   parseHttpRequestPreconditionsFromHeaders,
   createHttpRequestPreconditions,
 } from "./httpRequestPreconditions.ts";
+import { createHttpResponse } from "./httpResponse.ts";
 import {
   HttpMethod,
   URILike,
@@ -35,22 +48,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces.ts";
-import {
-  parseCacheControlFromHeaders,
-  parseCacheDirectiveOrThrow,
-} from "./cacheDirective.ts";
-import {
-  writeHttpMessageHeaders,
-  encodeHttpMessageWithCharset,
-  toFlowableHttpMessage,
-  decodeHttpMessageWithCharset,
-} from "./HttpMessage.ts";
-import {
-  FlowableLike,
-  FlowableOperator,
-} from "../../../../core/lib/flowable.ts";
-import { HttpClientRequest } from "./httpClient.ts";
-import { createHttpResponse } from "./httpResponse.ts";
 
 declare class URL implements URILike {
   readonly hash: string;

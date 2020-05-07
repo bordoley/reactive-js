@@ -1,10 +1,5 @@
-import {
-  HttpContentEncoding,
-  HttpRequest,
-  HttpResponse,
-  HttpStatusCode,
-} from "./interfaces";
-import { createRedirectHttpRequest } from "./httpRequest";
+import { DisposableLike } from "@reactive-js/core/lib/disposable";
+import { pipe, identity } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   ofValue,
@@ -12,9 +7,14 @@ import {
   switchMap,
   concatMap,
 } from "@reactive-js/core/lib/observable";
-import { DisposableLike } from "@reactive-js/core/lib/disposable";
-import { pipe, identity } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
+import { createRedirectHttpRequest } from "./httpRequest";
+import {
+  HttpContentEncoding,
+  HttpRequest,
+  HttpResponse,
+  HttpStatusCode,
+} from "./interfaces";
 
 export const enum HttpClientRequestStatusType {
   Start = 1,

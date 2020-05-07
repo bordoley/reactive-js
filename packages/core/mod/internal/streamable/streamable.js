@@ -1,6 +1,6 @@
-import { createStream } from "./createStream.js";
-import { onNotify, empty as emptyObs, ignoreElements, map, merge, using, } from "../../observable.js";
 import { pipe } from "../../functions.js";
+import { onNotify, empty as emptyObs, ignoreElements, map, merge, using, } from "../../observable.js";
+import { createStream } from "./createStream.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;

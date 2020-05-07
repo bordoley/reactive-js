@@ -1,14 +1,43 @@
 import fs from "fs";
-import iconv from "iconv-lite";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
-import db from "mime-db";
-import mime from "mime-types";
 import {
   generate,
   map as mapFlowable,
   FlowableLike,
 } from "@reactive-js/core/lib/flowable";
+import {
+  pipe,
+  Operator,
+  returns,
+  increment,
+  compose,
+} from "@reactive-js/core/lib/functions";
+import {
+  createFlowableFromReadable,
+  createDisposableNodeStream,
+  bindNodeCallback,
+} from "@reactive-js/core/lib/node";
+import {
+  map,
+  subscribe,
+  ofValue,
+  ObservableLike,
+  onNotify,
+  catchError,
+  throws,
+  await_,
+  using,
+  concatMap,
+  switchMap,
+} from "@reactive-js/core/lib/observable";
+import { isSome } from "@reactive-js/core/lib/option";
+import {
+  createHostScheduler,
+  toPriorityScheduler,
+  toSchedulerWithPriority,
+} from "@reactive-js/core/lib/scheduler";
+import { encode } from "@reactive-js/core/lib/textEncoding";
 import {
   HttpMethod,
   createHttpRequest,
@@ -36,38 +65,9 @@ import {
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
-import {
-  createFlowableFromReadable,
-  createDisposableNodeStream,
-} from "@reactive-js/core/lib/node";
-import { createHostScheduler } from "@reactive-js/core/lib/scheduler";
-import { bindNodeCallback } from "@reactive-js/core/lib/node";
-import {
-  map,
-  subscribe,
-  ofValue,
-  ObservableLike,
-  onNotify,
-  catchError,
-  throws,
-  await_,
-  using,
-  concatMap,
-  switchMap,
-} from "@reactive-js/core/lib/observable";
-import { isSome } from "@reactive-js/core/lib/option";
-import {
-  pipe,
-  Operator,
-  returns,
-  increment,
-  compose,
-} from "@reactive-js/core/lib/functions";
-import {
-  toPriorityScheduler,
-  toSchedulerWithPriority,
-} from "@reactive-js/core/lib/scheduler";
-import { encode } from "@reactive-js/core/lib/textEncoding";
+import iconv from "iconv-lite";
+import db from "mime-db";
+import mime from "mime-types";
 
 const scheduler = pipe(
   createHostScheduler(),

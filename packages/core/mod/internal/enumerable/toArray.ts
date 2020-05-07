@@ -1,6 +1,6 @@
+import { pipe } from "../../functions.ts";
 import { EnumerableLike } from "./interfaces.ts";
 import { reduce } from "./reduce.ts";
-import { pipe } from "../../functions.ts";
 
 export const toArray = <T>(enumerable: EnumerableLike<T>): readonly T[] =>
   pipe(

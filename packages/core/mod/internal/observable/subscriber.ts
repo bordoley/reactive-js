@@ -1,8 +1,8 @@
 import { AbstractDisposable } from "../../disposable.ts";
-import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
-import { SubscriberLike } from "./interfaces.ts";
-import { __DEV__ } from "../env.ts";
 import { alwaysVoid } from "../../functions.ts";
+import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
+import { __DEV__ } from "../env.ts";
+import { SubscriberLike } from "./interfaces.ts";
 
 const assertSubscriberNotifyInContinuationProduction = alwaysVoid;
 const assertSubscriberNotifyInContinuationDev = <T>(

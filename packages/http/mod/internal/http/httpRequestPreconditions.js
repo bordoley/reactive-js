@@ -1,10 +1,10 @@
+import { pipe } from "../../../../core/lib/functions.js";
 import { isNone, isSome, none } from "../../../../core/lib/option.js";
 import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators.js";
-import { pipe } from "../../../../core/lib/functions.js";
 import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entityTag.js";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime.js";
-import { getHeaderValue } from "./httpHeaders.js";
 import { httpList } from "./httpGrammar.js";
+import { getHeaderValue } from "./httpHeaders.js";
 const writeEtagPreferenceHeader = (header, value, writeHeader) => {
     if (isSome(value)) {
         writeHeader(header, Array.isArray(value) ? value.map(entityTagToString).join(",") : "*");

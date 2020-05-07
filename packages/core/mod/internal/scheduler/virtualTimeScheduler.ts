@@ -1,10 +1,10 @@
-import { createPriorityQueue, QueueLike } from "../queues.ts";
 import { none, Option, isSome } from "../../option.ts";
+import { createPriorityQueue, QueueLike } from "../queues.ts";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
 } from "./interfaces.ts";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;

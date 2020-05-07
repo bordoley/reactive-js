@@ -1,5 +1,5 @@
-import { isSome, isNone, none } from "./option.js";
 import { referenceEquals, arrayEquals } from "./functions.js";
+import { isSome, isNone, none } from "./option.js";
 export const describe = (name, ...tests) => ({
     type: 1,
     name,

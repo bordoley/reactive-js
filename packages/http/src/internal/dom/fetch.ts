@@ -1,11 +1,4 @@
-import {
-  httpRequestToUntypedHeaders,
-  parseHttpResponseFromHeaders,
-  HttpResponse,
-  HttpClientRequestStatusType,
-  HttpClient,
-  HttpClientRequestStatus,
-} from "../../http";
+import { pipe } from "@reactive-js/core/lib/functions";
 import {
   fromPromise,
   publish,
@@ -17,11 +10,18 @@ import {
   ObservableLike,
   createObservable,
 } from "@reactive-js/core/lib/observable";
+import { isSome } from "@reactive-js/core/lib/option";
+import {
+  httpRequestToUntypedHeaders,
+  parseHttpResponseFromHeaders,
+  HttpResponse,
+  HttpClientRequestStatusType,
+  HttpClient,
+  HttpClientRequestStatus,
+} from "../../http";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { isSome } from "@reactive-js/core/lib/option";
-import { pipe } from "@reactive-js/core/lib/functions";
 
 const loadBodyContent = async (
   response: HttpResponse<Response>,

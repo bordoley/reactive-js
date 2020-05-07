@@ -1,6 +1,6 @@
+import { pipe } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators";
-import { pipe } from "@reactive-js/core/lib/functions";
 import {
   entityTagToString,
   pETag,
@@ -8,8 +8,8 @@ import {
   parseETagOrThrow,
 } from "./entityTag";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
-import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import { httpList } from "./httpGrammar";
+import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {
   HttpRequestPreconditions,
   HttpHeaders,

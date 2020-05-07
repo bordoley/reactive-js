@@ -1,16 +1,4 @@
 import {
-  test,
-  describe,
-  expectEquals,
-  expectNone,
-  expectArrayEquals,
-} from "../src/testing";
-import { Exception } from "../src/disposable";
-import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
-import { none, Option } from "../src/option";
-import { pipe, increment, returns } from "../src/functions";
-import { createVirtualTimeScheduler } from "../src/scheduler";
-import {
   reduce,
   reduceAsync,
   ReducerRequestType,
@@ -18,6 +6,18 @@ import {
   fromIterable,
   generate,
 } from "../src/asyncEnumerable";
+import { Exception } from "../src/disposable";
+import { pipe, increment, returns } from "../src/functions";
+import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
+import { none, Option } from "../src/option";
+import { createVirtualTimeScheduler } from "../src/scheduler";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectNone,
+  expectArrayEquals,
+} from "../src/testing";
 
 export const tests = describe(
   "async-enumerable",

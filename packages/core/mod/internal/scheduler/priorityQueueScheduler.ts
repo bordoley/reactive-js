@@ -1,18 +1,18 @@
-import { createPriorityQueue, QueueLike } from "../queues.ts";
 import {
   AbstractSerialDisposable,
   DisposableLike,
   disposed,
 } from "../../disposable.ts";
+import { alwaysFalse } from "../../functions.ts";
 import { none, Option, isSome, isNone } from "../../option.ts";
+import { createPriorityQueue, QueueLike } from "../queues.ts";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
   PrioritySchedulerLike,
   PausableSchedulerLike,
 } from "./interfaces.ts";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
-import { alwaysFalse } from "../../functions.ts";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
