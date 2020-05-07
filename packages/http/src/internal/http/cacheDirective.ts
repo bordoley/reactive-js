@@ -12,9 +12,9 @@ import {
   toTokenOrQuotedString,
   httpList,
 } from "./httpGrammar";
-import { isSome } from "@reactive-js/core/dist/js/option";
+import { isSome } from "@reactive-js/core/lib/option";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
-import { pipe } from "@reactive-js/core/dist/js/functions";
+import { pipe } from "@reactive-js/core/lib/functions";
 
 const pOptionalEquals = optional(pEquals);
 

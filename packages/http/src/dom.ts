@@ -4,7 +4,7 @@ export {
   WebResponseBodyLike,
 } from "./internal/dom/interfaces";
 
-import { isSome } from "@reactive-js/core/dist/js/option";
+import { isSome } from "@reactive-js/core/lib/option";
 import { fetchIsPolyfill } from "./internal/dom/capabilities";
 import { sendHttpRequestUsingFetch } from "./internal/dom/fetch";
 import { HttpWebRequest, WebResponseBodyLike } from "./internal/dom/interfaces";

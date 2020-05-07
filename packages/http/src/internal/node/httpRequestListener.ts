@@ -1,6 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import { sink } from "@reactive-js/core/dist/js/streamable";
+import { sink } from "@reactive-js/core/lib/streamable";
 import {
   writeHttpResponseHeaders,
   HttpMethod,
@@ -14,7 +14,7 @@ import {
   createFlowableFromReadable,
   createFlowableSinkFromWritable,
   createDisposableNodeStream,
-} from "@reactive-js/core/dist/js/node";
+} from "@reactive-js/core/lib/node";
 import {
   ObservableLike,
   await_,
@@ -23,15 +23,15 @@ import {
   subscribe,
   empty,
   compute,
-} from "@reactive-js/core/dist/js/observable";
-import { pipe, returns } from "@reactive-js/core/dist/js/functions";
-import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { DisposableValueLike } from "@reactive-js/core/dist/js/disposable";
-import { isSome } from "@reactive-js/core/dist/js/option";
+} from "@reactive-js/core/lib/observable";
+import { pipe, returns } from "@reactive-js/core/lib/functions";
+import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
+import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
+import { isSome } from "@reactive-js/core/lib/option";
 import {
   FlowableLike,
   FlowableSinkLike,
-} from "@reactive-js/core/dist/js/flowable";
+} from "@reactive-js/core/lib/flowable";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<FlowableLike<Uint8Array>>,

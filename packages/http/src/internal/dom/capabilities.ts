@@ -1,4 +1,4 @@
-import { isSome } from "@reactive-js/core/dist/js/option";
+import { isSome } from "@reactive-js/core/lib/option";
 
 const global = self;
 

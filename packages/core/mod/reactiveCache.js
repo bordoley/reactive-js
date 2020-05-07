@@ -11,7 +11,7 @@ class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
     }
     produce(shouldYield) {
         const { cache, maxCount, garbage } = this.cache;
-        shouldYield = shouldYield ?? alwaysFalse;
+        shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
         for (const [, stream] of garbage) {
             stream.dispose();
             const hasMoreToCleanup = cache.size > maxCount;
@@ -96,5 +96,5 @@ class ReactiveCacheImpl extends AbstractDisposable {
 export const createReactiveCache = (dispatchScheduler, cleanupScheduler, maxCount = Number.MAX_SAFE_INTEGER) => new ReactiveCacheImpl(dispatchScheduler, cleanupScheduler, maxCount);
 export const getOrSet = (cache, key, defaultValue) => {
     const observable = cache.get(key);
-    return observable ?? cache.set(key, defaultValue);
+    return observable !== null && observable !== void 0 ? observable : cache.set(key, defaultValue);
 };

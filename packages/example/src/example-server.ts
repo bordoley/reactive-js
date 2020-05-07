@@ -8,7 +8,7 @@ import {
   generate,
   map as mapFlowable,
   FlowableLike,
-} from "@reactive-js/core/dist/js/flowable";
+} from "@reactive-js/core/lib/flowable";
 import {
   HttpMethod,
   createHttpRequest,
@@ -29,19 +29,19 @@ import {
   toFlowableHttpRequest,
   encodeHttpClientRequestContent,
   encodeHttpResponseContent,
-} from "@reactive-js/http/dist/js/http";
+} from "@reactive-js/http/lib/http";
 import {
   createHttpRequestListener,
   createHttpClient,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
-} from "@reactive-js/http/dist/js/node";
+} from "@reactive-js/http/lib/node";
 import {
   createFlowableFromReadable,
   createDisposableNodeStream,
-} from "@reactive-js/core/dist/js/node";
-import { createHostScheduler } from "@reactive-js/core/dist/js/scheduler";
-import { bindNodeCallback } from "@reactive-js/core/dist/js/node";
+} from "@reactive-js/core/lib/node";
+import { createHostScheduler } from "@reactive-js/core/lib/scheduler";
+import { bindNodeCallback } from "@reactive-js/core/lib/node";
 import {
   map,
   subscribe,
@@ -54,20 +54,20 @@ import {
   using,
   concatMap,
   switchMap,
-} from "@reactive-js/core/dist/js/observable";
-import { isSome } from "@reactive-js/core/dist/js/option";
+} from "@reactive-js/core/lib/observable";
+import { isSome } from "@reactive-js/core/lib/option";
 import {
   pipe,
   Operator,
   returns,
   increment,
   compose,
-} from "@reactive-js/core/dist/js/functions";
+} from "@reactive-js/core/lib/functions";
 import {
   toPriorityScheduler,
   toSchedulerWithPriority,
-} from "@reactive-js/core/dist/js/scheduler";
-import { encode } from "@reactive-js/core/dist/js/textEncoding";
+} from "@reactive-js/core/lib/scheduler";
+import { encode } from "@reactive-js/core/lib/textEncoding";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -275,7 +275,7 @@ pipe(
   console.log(e);
 });
 
-const file = "packages/example/dist/rollup/bundle.js";
+const file = "packages/example/build/bundle.js";
 pipe(
   file,
   bindNodeCallback(fs.stat, (r: fs.Stats) => r),

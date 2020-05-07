@@ -15,7 +15,7 @@ class GenerateProducer extends AbstractProducer {
         let acc = this.acc;
         let isDisposed = this.isDisposed;
         if (delay > 0 || isSome(shouldYield)) {
-            shouldYield = shouldYield ?? alwaysFalse;
+            shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
             while (!isDisposed) {
                 this.notify(acc);
                 isDisposed = this.isDisposed;

@@ -1,10 +1,8 @@
 {
-  "extends": "../../tsconfig.compiler.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM"],
     "module": "ES2015",
     "outDir": "./build/esm",
-    "rootDir": "./src"
+    "target": "ES2019",
   },
-  "exclude": ["./build/cjs", "./build/esm", "./dist/js", "./dist/ts", "./test"]
 }

@@ -1,6 +1,6 @@
-import { isNone, isSome, none, Option } from "@reactive-js/core/dist/js/option";
+import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators";
-import { pipe } from "@reactive-js/core/dist/js/functions";
+import { pipe } from "@reactive-js/core/lib/functions";
 import {
   entityTagToString,
   pETag,

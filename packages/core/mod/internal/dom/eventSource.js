@@ -7,10 +7,11 @@ export const createEventSource = (url, options = {}) => {
     return createObservable(subscriber => {
         const eventSource = new EventSource(requestURL, options);
         const listener = (ev) => {
+            var _a, _b, _c;
             subscriber.dispatch({
-                id: ev.lastEventId ?? "",
-                type: ev.type ?? "",
-                data: ev.data ?? "",
+                id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
+                type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
+                data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
             });
         };
         subscriber.add(_ => {

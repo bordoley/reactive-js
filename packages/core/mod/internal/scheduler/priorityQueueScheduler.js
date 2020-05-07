@@ -39,7 +39,7 @@ const peek = (scheduler) => {
         }
         queue.pop();
     }
-    return task ?? delayed.peek();
+    return task !== null && task !== void 0 ? task : delayed.peek();
 };
 class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(scheduler) {
@@ -59,7 +59,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
         };
     }
     produce(hostShouldYield) {
-        this.hostShouldYield = hostShouldYield ?? alwaysFalse;
+        this.hostShouldYield = hostShouldYield !== null && hostShouldYield !== void 0 ? hostShouldYield : alwaysFalse;
         const { scheduler } = this;
         const { delayed, queue } = scheduler;
         for (let task = peek(scheduler), isDisposed = this.isDisposed; isSome(task) && !isDisposed; task = peek(scheduler)) {

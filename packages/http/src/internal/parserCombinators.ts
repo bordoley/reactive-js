@@ -1,18 +1,18 @@
-import { EnumeratorLike } from "@reactive-js/core/dist/js/enumerable";
+import { EnumeratorLike } from "@reactive-js/core/lib/enumerable";
 import {
   Option,
   none,
   orCompute as orComputeOption,
-} from "@reactive-js/core/dist/js/option";
+} from "@reactive-js/core/lib/option";
 import {
   Operator,
   compose,
   pipe,
   returns,
-} from "@reactive-js/core/dist/js/functions";
+} from "@reactive-js/core/lib/functions";
 
 // FIXME: BAD!
-import { __DEV__ } from "@reactive-js/core/dist/js/internal/env";
+import { __DEV__ } from "@reactive-js/core/lib/internal/env";
 
 export type CharCode = number;
 

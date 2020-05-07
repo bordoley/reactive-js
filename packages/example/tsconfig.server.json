@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "./build/cjs",
+    "rootDir": "./src",
+    "target": "ES2015",
+  },
+  "include": ["./src/example-server.ts"],
+}

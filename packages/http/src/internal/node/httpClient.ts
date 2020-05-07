@@ -1,7 +1,7 @@
 import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
-import { none, isSome } from "@reactive-js/core/dist/js/option";
+import { none, isSome } from "@reactive-js/core/lib/option";
 import {
   subscribe,
   scan,
@@ -13,11 +13,11 @@ import {
   createSubject,
   merge,
   SubjectLike,
-} from "@reactive-js/core/dist/js/observable";
+} from "@reactive-js/core/lib/observable";
 import {
   DisposableLike,
   AbstractDisposable,
-} from "@reactive-js/core/dist/js/disposable";
+} from "@reactive-js/core/lib/disposable";
 import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
@@ -27,19 +27,19 @@ import {
   HttpClient,
   HttpClientRequestStatusType,
 } from "../../http";
-import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
-import { pipe, returns } from "@reactive-js/core/dist/js/functions";
+import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
+import { pipe, returns } from "@reactive-js/core/lib/functions";
 import {
   createFlowableSinkFromWritable,
   createDisposableNodeStream,
   createFlowableFromReadable,
-} from "@reactive-js/core/dist/js/node";
+} from "@reactive-js/core/lib/node";
 import {
   FlowEvent,
   FlowMode,
   FlowEventType,
   FlowableLike,
-} from "@reactive-js/core/dist/js/flowable";
+} from "@reactive-js/core/lib/flowable";
 
 export type HttpClientOptions = {
   // Node options

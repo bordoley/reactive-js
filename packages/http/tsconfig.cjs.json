@@ -1,10 +1,8 @@
 {
-  "extends": "../../tsconfig.compiler.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM"],
     "module": "CommonJS",
     "outDir": "./build/cjs",
-    "rootDir": "./src"
+    "target": "ES2015",
   },
-  "exclude": ["./build/cjs", "./build/esm", "./dist/js", "./dist/ts", "./test"]
 }

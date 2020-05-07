@@ -58,13 +58,14 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export function buffer(options = {}) {
-    const duration = options.duration ?? Number.MAX_SAFE_INTEGER;
+    var _a, _b;
+    const duration = (_a = options.duration) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER;
     const durationSelector = duration === Number.MAX_SAFE_INTEGER
         ? never
         : typeof duration === "number"
             ? (_) => ofValue(none, duration)
             : duration;
-    const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
+    const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
     const operator = (subscriber) => new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
     operator.isSynchronous = duration === Number.MAX_SAFE_INTEGER;
     return lift(operator);

@@ -1,5 +1,5 @@
-import { DisposableLike } from "@reactive-js/core/dist/js/disposable";
-import { ObservableLike } from "@reactive-js/core/dist/js/observable";
+import { DisposableLike } from "@reactive-js/core/lib/disposable";
+import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { HttpClientRequest } from "../../http";
 
 // BodyInit

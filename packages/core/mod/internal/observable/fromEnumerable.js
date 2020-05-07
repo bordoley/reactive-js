@@ -13,7 +13,7 @@ class FromEnumeratorProducer extends AbstractProducer {
         const enumerator = this.enumerator;
         if (delay > 0 || isSome(shouldYield)) {
             let isDisposed = this.isDisposed;
-            shouldYield = shouldYield ?? alwaysFalse;
+            shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
             while (enumerator.move() && !isDisposed) {
                 this.notify(enumerator.current);
                 isDisposed = this.isDisposed;

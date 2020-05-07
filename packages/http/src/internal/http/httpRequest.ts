@@ -1,5 +1,5 @@
-import { isNone, isSome, none } from "@reactive-js/core/dist/js/option";
-import { Operator } from "@reactive-js/core/dist/js/functions";
+import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import { Operator } from "@reactive-js/core/lib/functions";
 import {
   parseHttpContentInfoFromHeaders,
   contentIsCompressible,
@@ -48,7 +48,7 @@ import {
 import {
   FlowableLike,
   FlowableOperator,
-} from "@reactive-js/core/dist/js/flowable";
+} from "@reactive-js/core/lib/flowable";
 import { HttpClientRequest } from "./httpClient";
 import { createHttpResponse } from "./httpResponse";
 

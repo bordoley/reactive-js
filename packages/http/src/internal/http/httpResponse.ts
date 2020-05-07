@@ -1,5 +1,5 @@
-import { isNone, isSome, none } from "@reactive-js/core/dist/js/option";
-import { Operator } from "@reactive-js/core/dist/js/functions";
+import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import { Operator } from "@reactive-js/core/lib/functions";
 import {
   HttpStatusCode,
   HttpHeaders,
@@ -43,7 +43,7 @@ import {
   FlowableLike,
   FlowableOperator,
   empty,
-} from "@reactive-js/core/dist/js/flowable";
+} from "@reactive-js/core/lib/flowable";
 
 declare class URL implements URILike {
   readonly hash: string;
