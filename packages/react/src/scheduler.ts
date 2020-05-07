@@ -13,14 +13,14 @@ import {
 import {
   createDisposable,
   DisposableLike,
-} from "@reactive-js/core/dist/js/disposable";
-import { none } from "@reactive-js/core/dist/js/option";
-import { pipe } from "@reactive-js/core/dist/js/functions";
+} from "@reactive-js/core/lib/disposable";
+import { none } from "@reactive-js/core/lib/option";
+import { pipe } from "@reactive-js/core/lib/functions";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
-} from "@reactive-js/core/dist/js/scheduler";
+} from "@reactive-js/core/lib/scheduler";
 
 const shouldYield = unstable_shouldYield;
 

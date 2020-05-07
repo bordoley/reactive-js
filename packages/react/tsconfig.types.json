@@ -1,8 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "ES2015",
-    "outDir": "./build/esm",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./build/types",
     "target": "ES2020",
   },
 }

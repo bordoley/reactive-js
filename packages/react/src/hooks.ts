@@ -3,8 +3,8 @@ import {
   StreamableLike,
   mapReq,
   map,
-} from "@reactive-js/core/dist/js/streamable";
-import { Exception } from "@reactive-js/core/dist/js/disposable";
+} from "@reactive-js/core/lib/streamable";
+import { Exception } from "@reactive-js/core/lib/disposable";
 import {
   ObservableLike,
   onNotify,
@@ -13,15 +13,15 @@ import {
   subscribeOn,
   throttle,
   never,
-} from "@reactive-js/core/dist/js/observable";
-import { none, Option, isSome } from "@reactive-js/core/dist/js/option";
-import { pipe, compose, returns } from "@reactive-js/core/dist/js/functions";
+} from "@reactive-js/core/lib/observable";
+import { none, Option, isSome } from "@reactive-js/core/lib/option";
+import { pipe, compose, returns } from "@reactive-js/core/lib/functions";
 import { normalPriority } from "./scheduler";
-import { SchedulerLike } from "@reactive-js/core/dist/js/scheduler";
+import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import {
   StateStoreLike,
   StateUpdater,
-} from "@reactive-js/core/dist/js/stateStore";
+} from "@reactive-js/core/lib/stateStore";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
