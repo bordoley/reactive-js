@@ -9,7 +9,9 @@ export type Exception = {
   readonly cause: unknown;
 };
 
-export type DisposableOrTeardown = DisposableLike | ((error?: Exception) => void);
+export type DisposableOrTeardown =
+  | DisposableLike
+  | ((error?: Exception) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
