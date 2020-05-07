@@ -17,6 +17,7 @@
 
 ### Type aliases
 
+* [DisposableOrTeardown](_disposable_.md#disposableorteardown)
 * [Exception](_disposable_.md#exception)
 
 ### Variables
@@ -31,11 +32,17 @@
 
 ## Type aliases
 
+###  DisposableOrTeardown
+
+Ƭ **DisposableOrTeardown**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md) | function*
+
+___
+
 ###  Exception
 
 Ƭ **Exception**: *object*
 
-A wrapper around a caught exception to handle corner cases such
+A wrapper around a caught error to handle corner cases such
 as a function which throws undefined or string.
 
 #### Type declaration:

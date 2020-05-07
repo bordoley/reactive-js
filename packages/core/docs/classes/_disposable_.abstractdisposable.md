@@ -48,7 +48,7 @@ ___
 
 ###  add
 
-▸ **add**(`disposable`: DisposableOrTeardown): *this*
+▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *this*
 
 *Implementation of [DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
@@ -56,7 +56,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`disposable` | DisposableOrTeardown |
+`disposable` | [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown) |
 
 **Returns:** *this*
 
