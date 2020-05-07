@@ -30,6 +30,12 @@ class FromEnumeratorProducer extends AbstractProducer {
         return -1;
     }
 }
+export function fromEnumerator(enumerator, delay = 0) {
+    const factory = (subscriber) => new FromEnumeratorProducer(subscriber, enumerator, delay);
+    return delay > 0
+        ? createDelayedScheduledObservable(factory, delay)
+        : createScheduledObservable(factory, true);
+}
 export function fromEnumerable(enumerable, delay = 0) {
     const factory = (subscriber) => {
         const enumerator = enumerable.enumerate();

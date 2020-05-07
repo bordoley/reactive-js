@@ -1,8 +1,8 @@
-import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
-import { lift } from "./lift.ts";
+import { pipe } from "../../functions.ts";
 import { isNone, Option, none } from "../../option.ts";
 import { fromArray, empty } from "./fromArray.ts";
-import { pipe } from "../../functions.ts";
+import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
+import { lift } from "./lift.ts";
 
 class TakeLastEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: Option<EnumeratorLike<T>> = none;

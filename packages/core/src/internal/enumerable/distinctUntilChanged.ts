@@ -1,5 +1,5 @@
-import { EnumerableOperator, EnumeratorLike } from "./interfaces";
 import { referenceEquals } from "../../functions";
+import { EnumerableOperator, EnumeratorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {

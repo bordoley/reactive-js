@@ -1,10 +1,10 @@
+import { alwaysTrue } from "../../functions";
+import { isNone } from "../../option";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces";
-import { isNone } from "../../option";
-import { alwaysTrue } from "../../functions";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: EnumeratorLike<T>;

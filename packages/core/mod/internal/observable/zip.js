@@ -1,8 +1,10 @@
 import { AbstractDisposable } from "../../disposable.js";
 import { alwaysTrue } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
-import { AbstractProducer } from "./producer.js";
+import { zipEnumerators } from "../enumerable/zip.js";
+import { fromEnumerator } from "./fromEnumerable.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { using } from "./using.js";
 class EnumeratorSubscriber extends AbstractDisposable {
     constructor() {
         super(...arguments);
@@ -134,44 +136,6 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
         }
     }
 }
-class ZipProducer extends AbstractProducer {
-    constructor(subscriber, enumerators, selector) {
-        super(subscriber);
-        this.enumerators = enumerators;
-        this.selector = selector;
-        this.hasCurrent = false;
-    }
-    produce(shouldYield) {
-        const enumerators = this.enumerators;
-        const selector = this.selector;
-        if (isSome(shouldYield)) {
-            let isDisposed = this.isDisposed;
-            let shouldEmitNext = shouldEmit(enumerators);
-            while (shouldEmitNext && !isDisposed) {
-                const next = selector(...enumerators.map(getCurrent));
-                this.notify(next);
-                isDisposed = this.isDisposed;
-                for (const buffer of enumerators) {
-                    buffer.move();
-                }
-                shouldEmitNext = shouldEmit(enumerators);
-                if (shouldEmitNext && !isDisposed && shouldYield()) {
-                    return 0;
-                }
-            }
-        }
-        else {
-            while (shouldEmit(enumerators) && !this.isDisposed) {
-                const next = selector(...enumerators.map(getCurrent));
-                for (const enumerator of enumerators) {
-                    enumerator.move();
-                }
-                this.notify(next);
-            }
-        }
-        return -1;
-    }
-}
 class ZipObservable {
     constructor(observables, selector) {
         this.observables = observables;
@@ -182,11 +146,7 @@ class ZipObservable {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            const enumerators = observables.map(obs => subscribeInteractive(obs));
-            for (const enumerator of enumerators) {
-                enumerator.move();
-            }
-            subscriber.schedule(new ZipProducer(subscriber, enumerators, this.selector));
+            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator(zipEnumerators(enumerators, this.selector))).subscribe(subscriber);
         }
         else {
             const enumerators = [];

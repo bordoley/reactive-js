@@ -1,5 +1,5 @@
-import { EnumerableLike } from "./interfaces";
 import { fromArray } from "./fromArray";
+import { EnumerableLike } from "./interfaces";
 
 class ComputeEnumerable<T> implements EnumerableLike<T> {
   constructor(private readonly f: () => T) {}

@@ -1,7 +1,7 @@
-import { EnumerableLike } from "./interfaces.ts";
 import { pipe } from "../../functions.ts";
-import { fromArray } from "./fromArray.ts";
 import { flatten } from "./flatten.ts";
+import { fromArray } from "./fromArray.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.

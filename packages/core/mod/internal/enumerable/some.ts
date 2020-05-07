@@ -1,6 +1,5 @@
-import { referenceEquals } from "../../functions.ts";
+import { referenceEquals, Operator } from "../../functions.ts";
 import { EnumerableLike } from "./interfaces.ts";
-import { Operator } from "../../functions.ts";
 
 /**
  * Returns `true` value if the any item satisfies the predicate, otherwise `false`.

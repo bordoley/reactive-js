@@ -1,11 +1,11 @@
+import { compose } from "../../functions";
+import { isNone, isSome, none, Option } from "../../option";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces";
-import { isNone, isSome, none, Option } from "../../option";
 import { lift } from "./lift";
-import { compose } from "../../functions";
 import { map } from "./map";
 
 class FlattenEnumerator<T> implements EnumeratorLike<T> {

@@ -1,5 +1,5 @@
-import { EnumerableOperator, EnumeratorLike } from "./interfaces.ts";
 import { referenceEquals } from "../../functions.ts";
+import { EnumerableOperator, EnumeratorLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 
 class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {

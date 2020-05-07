@@ -1,5 +1,5 @@
-import { EnumerableLike } from "./interfaces";
 import { Operator } from "../../functions";
+import { EnumerableLike } from "./interfaces";
 
 /**
  * Returns `true` if the predicate is satisfied for

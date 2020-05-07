@@ -28,13 +28,16 @@ class ZipEnumerator {
         return hasCurrent;
     }
 }
+export function zipEnumerators(enumerators, selector) {
+    return new ZipEnumerator(enumerators, selector);
+}
 class ZipEnumerable {
     constructor(enumerables, selector) {
         this.enumerables = enumerables;
         this.selector = selector;
     }
     enumerate() {
-        return new ZipEnumerator(this.enumerables.map(enumerate), this.selector);
+        return zipEnumerators(this.enumerables.map(enumerate), this.selector);
     }
 }
 export function zip(enumerables, selector) {

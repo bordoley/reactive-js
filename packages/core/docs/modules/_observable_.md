@@ -2450,6 +2450,41 @@ Name | Type |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
+▸ **using**<**TResource**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+Creates an `ObservableLike` that uses one or more resources which
+will be disposed when the ObservableLike disposes it's only subscription.
+
+**Type parameters:**
+
+▪ **TResource**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)[] | [DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+▪ **T**
+
+**Parameters:**
+
+▪ **resourceFactory**: *function*
+
+▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *TResource | TResource[]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+
+▪ **observableFactory**: *function*
+
+▸ (...`resources`: TResource[]): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...resources` | TResource[] |
+
+**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
 ___
 
 ### `Const` withLatestFrom

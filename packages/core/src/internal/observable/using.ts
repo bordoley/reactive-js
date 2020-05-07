@@ -23,7 +23,6 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
 
     for (const resource of resourcesArray) {
       subscriber.add(resource as DisposableLike);
-      (resource as DisposableLike).add(subscriber);
     }
     observableFactory(...resourcesArray).subscribe(subscriber);
   }
@@ -96,11 +95,16 @@ export function using<
   ) => ObservableLike<T>,
 ): ObservableLike<T>;
 
+export function using<TResource extends DisposableLike[] | DisposableLike, T>(
+  resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
+  observableFactory: (...resources: TResource[]) => ObservableLike<T>,
+): ObservableLike<T>;
+
 /**
  * Creates an `ObservableLike` that uses one or more resources which
  * will be disposed when the ObservableLike disposes it's only subscription.
  */
-export function using<TResource extends DisposableLike[] | DisposableLike, T>(
+export function using<TResource extends DisposableLike, T>(
   resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,
 ): ObservableLike<T> {
