@@ -1,0 +1,64 @@
+import { createSerialDisposable } from "../../disposable.js";
+import { isNone, isSome } from "../../option.js";
+import { pipe } from "../../functions.js";
+import { lift } from "./lift.js";
+import { onNotify } from "./onNotify.js";
+import { subscribe } from "./subscribe.js";
+import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+class RepeatSubscriber extends AbstractDelegatingSubscriber {
+    constructor(delegate, observable, shouldRepeat) {
+        super(delegate);
+        this.observable = observable;
+        this.shouldRepeat = shouldRepeat;
+        this.innerSubscription = createSerialDisposable();
+        this.count = 1;
+        this.onDispose = (error) => {
+            let shouldComplete = false;
+            try {
+                shouldComplete = !this.shouldRepeat(this.count, error);
+            }
+            catch (cause) {
+                shouldComplete = true;
+                error = { cause, parent: error };
+            }
+            const delegate = this.delegate;
+            if (shouldComplete) {
+                delegate.dispose(error);
+            }
+            else {
+                this.count++;
+                this.innerSubscription.inner = pipe(this.observable, onNotify(this.onNotify), subscribe(delegate)).add(this.onDispose);
+            }
+        };
+        this.onNotify = (next) => this.delegate.notify(next);
+        delegate.add(this.innerSubscription);
+        this.add(this.onDispose);
+    }
+    notify(next) {
+        assertSubscriberNotifyInContinuation(this);
+        if (!this.isDisposed) {
+            this.delegate.notify(next);
+        }
+    }
+}
+const repeatObs = (shouldRepeat) => observable => {
+    const operator = (subscriber) => new RepeatSubscriber(subscriber, observable, shouldRepeat);
+    operator.isSynchronous = true;
+    return lift(operator)(observable);
+};
+const defaultRepeatPredicate = (_, error) => isNone(error);
+export function repeat(predicate) {
+    const repeatPredicate = isNone(predicate)
+        ? defaultRepeatPredicate
+        : typeof predicate === "number"
+            ? (count, error) => isNone(error) && count < predicate
+            : (count, error) => isNone(error) && predicate(count);
+    return repeatObs(repeatPredicate);
+}
+const defaultRetryPredicate = (_, error) => isSome(error);
+export function retry(predicate) {
+    const retryPredicate = isNone(predicate)
+        ? defaultRetryPredicate
+        : (count, error) => isSome(error) && predicate(count, error.cause);
+    return repeatObs(retryPredicate);
+}

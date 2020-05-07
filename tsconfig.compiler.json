@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "composite": true,
-    "forceConsistentCasingInFileNames": true,
+    "composite": false,
+    "declaration": false,
     "esModuleInterop": true,
-    "importHelpers": true,
-    "lib": ["es2015"],
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "newLine": "LF",
     "noFallthroughCasesInSwitch": true,
@@ -17,6 +16,6 @@
     "removeComments": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES2018"
-  }
+  },
+  "exclude": ["**/build", "**/lib", "**/mod", "**/test"],
 }

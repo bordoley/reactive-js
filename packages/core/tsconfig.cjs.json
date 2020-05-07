@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.compiler.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM"],
+    "downlevelIteration": true,
+    "importHelpers": true,
     "module": "CommonJS",
     "outDir": "./build/cjs",
-    "rootDir": "./src"
+    "target": "ES5",
   },
-  "exclude": ["./build/cjs", "./build/esm", "./dist/js", "./dist/ts", "./test"]
 }

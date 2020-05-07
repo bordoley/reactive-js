@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.compiler.json",
+  "compilerOptions": {
+    "lib": ["DOM"],
+    "rootDir": "./src",
+  },
+}
