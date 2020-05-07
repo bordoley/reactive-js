@@ -12,7 +12,7 @@ class FromScheduledValuesProducer extends AbstractProducer {
         const length = values.length;
         let index = this.index;
         let isDisposed = this.isDisposed;
-        shouldYield = shouldYield ?? alwaysFalse;
+        shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
         while (index < length && !isDisposed) {
             const [, value] = values[index];
             this.notify(value);

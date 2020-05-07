@@ -7,9 +7,10 @@ function* iterateKeyedQueueValues(queue) {
     }
 }
 function* iterateKeyedQueueKeyValuePairs(queue) {
+    var _a;
     const map = queue.map;
     for (const key of map.keys()) {
-        const values = map.get(key) ?? [];
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
         for (const value of values) {
             yield [key, value];
         }
@@ -29,13 +30,15 @@ class KeyedQueue {
         return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
     }
     peek(key) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? [];
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
         return values[0];
     }
     pop(key) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? [];
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
         const valuesOldSize = values.length;
         const result = values.shift();
         const valuesNewSize = values.length;
@@ -46,8 +49,9 @@ class KeyedQueue {
         return result;
     }
     push(key, value) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? [];
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
         const valuesOldSize = values.length;
         values.push(value);
         const valuesNewSize = values.length;

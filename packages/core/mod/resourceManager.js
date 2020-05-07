@@ -7,6 +7,7 @@ import { createObservable, subscribe, ofValue, onNotify, } from "./observable.js
 import { isSome, isNone, none } from "./option.js";
 import { pipe } from "./functions.js";
 const tryDispatch = (resourceManager, key) => {
+    var _a;
     const { availableResources, availableResourcesTimeouts, maxIdleTime, maxResourcesPerKey, maxTotalResources, inUseResources, scheduler, resourceRequests, globalResourceWaitQueue, } = resourceManager;
     let peekedSubscriber = resourceRequests.peek(key);
     while (isSome(peekedSubscriber) && peekedSubscriber.isDisposed) {
@@ -42,7 +43,7 @@ const tryDispatch = (resourceManager, key) => {
     if (isNone(resource)) {
         return;
     }
-    const timeoutSubscription = availableResourcesTimeouts.get(resource) ?? disposed;
+    const timeoutSubscription = (_a = availableResourcesTimeouts.get(resource)) !== null && _a !== void 0 ? _a : disposed;
     availableResourcesTimeouts.delete(resource);
     timeoutSubscription.dispose();
     const subscriber = resourceRequests.pop(key);

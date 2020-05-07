@@ -17,7 +17,7 @@ class FromArrayProducer extends AbstractProducer {
         let index = this.index;
         if (delay > 0 || isSome(shouldYield)) {
             let isDisposed = this.isDisposed;
-            shouldYield = shouldYield ?? alwaysFalse;
+            shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
             while (index < length && !isDisposed) {
                 this.notify(values[index]);
                 index++;
@@ -38,8 +38,9 @@ class FromArrayProducer extends AbstractProducer {
     }
 }
 export function fromArray(values, options = {}) {
-    const delay = Math.max(options.delay ?? 0, 0);
-    const startIndex = Math.min(options.startIndex ?? 0, values.length);
+    var _a, _b;
+    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
+    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, values.length);
     const factory = (subscriber) => new FromArrayProducer(subscriber, values, startIndex, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)

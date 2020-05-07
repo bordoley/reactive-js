@@ -7,9 +7,10 @@ function* iterateSetMultimapValues(multimap) {
     }
 }
 function* iterateKeyedQueueKeyValuePairs(queue) {
+    var _a;
     const map = queue.map;
     for (const key of map.keys()) {
-        const values = map.get(key) ?? new Set();
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
         for (const value of values) {
             yield [key, value];
         }
@@ -23,8 +24,9 @@ class SetMultimap {
         this.values = fromIterator(() => iterateSetMultimapValues(this));
     }
     add(key, value) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? new Set();
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
         const valuesOldSize = values.size;
         values.add(value);
         const valuesNewSize = values.size;
@@ -40,11 +42,13 @@ class SetMultimap {
         return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
     }
     get(key) {
-        return this.map.get(key) ?? new Set();
+        var _a;
+        return (_a = this.map.get(key)) !== null && _a !== void 0 ? _a : new Set();
     }
     remove(key, value) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? new Set();
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
         const valuesOldSize = values.size;
         values.delete(value);
         const valuesNewSize = values.size;
@@ -54,8 +58,9 @@ class SetMultimap {
         }
     }
     removeAll(key) {
+        var _a;
         const map = this.map;
-        const values = map.get(key) ?? new Set();
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
         const valuesSize = values.size;
         this.count -= valuesSize;
         map.delete(key);

@@ -1,4 +1,4 @@
-import { none, Option } from "@reactive-js/core/dist/js/option";
+import { none, Option } from "@reactive-js/core/lib/option";
 import { HttpDateTime } from "./interfaces";
 
 export const parseHttpDateTime = (v: string): Option<HttpDateTime> => {

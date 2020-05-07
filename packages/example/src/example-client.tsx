@@ -1,30 +1,30 @@
-import { onNotify as onNotifyStream } from "@reactive-js/core/dist/js/streamable";
+import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
 import {
   fromObservable,
   FlowMode,
   FlowEventType,
-} from "@reactive-js/core/dist/js/flowable";
-import { StateUpdater } from "@reactive-js/core/dist/js/stateStore";
+} from "@reactive-js/core/lib/flowable";
+import { StateUpdater } from "@reactive-js/core/lib/stateStore";
 import {
   HttpClientRequestStatusType,
   createHttpRequest,
   HttpMethod,
-} from "@reactive-js/http/dist/js/http";
-import { sendHttpRequest } from "@reactive-js/http/dist/js/dom";
+} from "@reactive-js/http/lib/http";
+import { sendHttpRequest } from "@reactive-js/http/lib/dom";
 import {
   useObservable,
   useStreamable,
   useSerializedState,
-} from "@reactive-js/react/dist/js/hooks";
+} from "@reactive-js/react/lib/hooks";
 import {
   RoutableComponentProps,
   Router,
   RelativeURI,
-} from "@reactive-js/react/dist/js/router";
+} from "@reactive-js/react/lib/router";
 import {
   idlePriority,
   normalPriority,
-} from "@reactive-js/react/dist/js/scheduler";
+} from "@reactive-js/react/lib/scheduler";
 import {
   generate,
   onNotify,
@@ -33,22 +33,22 @@ import {
   concatMap,
   using,
   throttle,
-} from "@reactive-js/core/dist/js/observable";
+} from "@reactive-js/core/lib/observable";
 import {
   historyStateStore,
   createEventSource,
   historyHashStateStore,
-} from "@reactive-js/core/dist/js/dom";
+} from "@reactive-js/core/lib/dom";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
-import { isSome, none } from "@reactive-js/core/dist/js/option";
-import { WebRequestBody } from "@reactive-js/http/dist/js/dom";
+import { isSome, none } from "@reactive-js/core/lib/option";
+import { WebRequestBody } from "@reactive-js/http/lib/dom";
 import {
   pipe,
   returns,
   increment,
   identity,
-} from "@reactive-js/core/dist/js/functions";
+} from "@reactive-js/core/lib/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
@@ -176,7 +176,7 @@ const loggedHistoryStateStore = pipe(
 
 const request = createHttpRequest<WebRequestBody>({
   method: HttpMethod.GET,
-  uri: "http://localhost:8080/files/packages/example/dist/rollup/bundle.js",
+  uri: "http://localhost:8080/files/packages/example/build/bundle.js",
   body: none,
 });
 

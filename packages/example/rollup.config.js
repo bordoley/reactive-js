@@ -9,7 +9,7 @@ export default {
 
   input: "build/esm/example-client.js",
   output: {
-    file: "dist/rollup/bundle.js",
+    file: "build/bundle.js",
     format: "iife",
     name: "ExampleReact",
     globals: {

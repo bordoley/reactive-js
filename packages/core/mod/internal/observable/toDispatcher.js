@@ -10,7 +10,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
     produce(shouldYield) {
         const dispatcher = this.dispatcher;
         const nextQueue = dispatcher.nextQueue;
-        shouldYield = shouldYield ?? alwaysFalse;
+        shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
         while (nextQueue.length > 0 && !this.isDisposed) {
             const next = nextQueue.shift();
             dispatcher.subscriber.notify(next);
@@ -25,7 +25,7 @@ const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
         const producer = new SubscriberDelegatingDispatcherSchedulerContinuation(dispatcher);
         producer.add(e => {
-            const error = e ?? dispatcher.error;
+            const error = e !== null && e !== void 0 ? e : dispatcher.error;
             if (isSome(error) || dispatcher.isDisposed) {
                 dispatcher.subscriber.dispose(error);
             }

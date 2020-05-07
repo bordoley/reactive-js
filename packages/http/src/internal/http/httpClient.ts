@@ -11,10 +11,10 @@ import {
   map,
   switchMap,
   concatMap,
-} from "@reactive-js/core/dist/js/observable";
-import { DisposableLike } from "@reactive-js/core/dist/js/disposable";
-import { pipe, identity } from "@reactive-js/core/dist/js/functions";
-import { isSome } from "@reactive-js/core/dist/js/option";
+} from "@reactive-js/core/lib/observable";
+import { DisposableLike } from "@reactive-js/core/lib/disposable";
+import { pipe, identity } from "@reactive-js/core/lib/functions";
+import { isSome } from "@reactive-js/core/lib/option";
 
 export const enum HttpClientRequestStatusType {
   Start = 1,

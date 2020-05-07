@@ -1,6 +1,6 @@
-import { isSome, Option, none } from "@reactive-js/core/dist/js/option";
+import { isSome, Option, none } from "@reactive-js/core/lib/option";
 import { concat, map, parseWith } from "../parserCombinators";
-import { pipe } from "@reactive-js/core/dist/js/functions";
+import { pipe } from "@reactive-js/core/lib/functions";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {

@@ -35,9 +35,6 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
-  "dependencies": {
-    "tslib": "^1.11.2"
-  },
   "devDependencies": {
     "@types/node": "13.13.2",
     "jest": "^24.9.0",
@@ -72,7 +69,6 @@
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-node" : "rm -rf ./mod/node.* ./mod/internal/node",
-    "mod-remove-node": "",
     "docs": "node ./scripts/docs.mjs",
     "test": "jest",
     "test-coverage": "jest --coverage",

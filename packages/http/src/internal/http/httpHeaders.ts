@@ -1,4 +1,4 @@
-import { Option } from "@reactive-js/core/dist/js/option";
+import { Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./interfaces";
 
 export const enum HttpStandardHeader {

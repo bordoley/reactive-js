@@ -16,12 +16,12 @@ import {
   switchMap,
   ObservableLike,
   createObservable,
-} from "@reactive-js/core/dist/js/observable";
+} from "@reactive-js/core/lib/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { isSome } from "@reactive-js/core/dist/js/option";
-import { pipe } from "@reactive-js/core/dist/js/functions";
+import { isSome } from "@reactive-js/core/lib/option";
+import { pipe } from "@reactive-js/core/lib/functions";
 
 const loadBodyContent = async (
   response: HttpResponse<Response>,

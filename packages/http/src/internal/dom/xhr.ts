@@ -8,11 +8,11 @@ import {
 import {
   createObservable,
   createSubject,
-} from "@reactive-js/core/dist/js/observable";
+} from "@reactive-js/core/lib/observable";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { isSome } from "@reactive-js/core/dist/js/option";
+import { isSome } from "@reactive-js/core/lib/option";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,
