@@ -28,10 +28,7 @@ import { pipe, returns } from "@reactive-js/core/lib/functions";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
 import { isSome } from "@reactive-js/core/lib/option";
-import {
-  FlowableLike,
-  FlowableSinkLike,
-} from "@reactive-js/core/lib/flowable";
+import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<FlowableLike<Uint8Array>>,

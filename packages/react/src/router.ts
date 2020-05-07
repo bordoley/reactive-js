@@ -2,10 +2,7 @@ import { scan, mapReq } from "@reactive-js/core/lib/streamable";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { useStreamable } from "./hooks";
 import { createElement, useMemo, ReactElement } from "react";
-import {
-  StateUpdater,
-  StateStoreLike,
-} from "@reactive-js/core/lib/stateStore";
+import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import { returns, pipe } from "@reactive-js/core/lib/functions";
 
 export type RelativeURI = {

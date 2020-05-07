@@ -15,7 +15,7 @@
     "noUnusedParameters": true,
     "removeComments": true,
     "strict": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
-  "exclude": ["**/build", "**/lib", "**/mod", "**/test"],
+  "exclude": ["**/build", "**/lib", "**/mod", "**/test"]
 }

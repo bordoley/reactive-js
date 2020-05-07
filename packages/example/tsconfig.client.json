@@ -6,7 +6,7 @@
     "module": "ES2015",
     "outDir": "./build/esm",
     "rootDir": "./src",
-    "target": "ES2019",
+    "target": "ES2019"
   },
-  "include": ["./src/example-client.tsx"],
+  "include": ["./src/example-client.tsx"]
 }
