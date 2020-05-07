@@ -1,5 +1,5 @@
-import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 import { none } from "../../option.ts";
+import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
@@ -42,6 +42,13 @@ class ZipEnumerator<T> implements EnumeratorLike<T> {
   }
 }
 
+export function zipEnumerators<T>(
+  enumerators: EnumeratorLike<unknown>[],
+  selector: (...values: unknown[]) => T,
+): EnumeratorLike<T> {
+  return new ZipEnumerator(enumerators, selector);
+}
+
 class ZipEnumerable<T> implements EnumerableLike<T> {
   constructor(
     private readonly enumerables: EnumerableLike<unknown>[],
@@ -49,7 +56,7 @@ class ZipEnumerable<T> implements EnumerableLike<T> {
   ) {}
 
   enumerate() {
-    return new ZipEnumerator(this.enumerables.map(enumerate), this.selector);
+    return zipEnumerators(this.enumerables.map(enumerate), this.selector);
   }
 }
 

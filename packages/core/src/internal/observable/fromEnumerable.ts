@@ -44,6 +44,25 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
+ * produced by the provided `EnumeratorLike` with a specified `delay` between emitted items.
+ *
+ * @param values The `Enumerator`.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+export function fromEnumerator<T>(
+  enumerator: EnumeratorLike<T>,
+  delay = 0,
+): ObservableLike<T> {
+  const factory = (subscriber: SubscriberLike<T>) =>
+    new FromEnumeratorProducer(subscriber, enumerator, delay);
+
+  return delay > 0
+    ? createDelayedScheduledObservable(factory, delay)
+    : createScheduledObservable(factory, true);
+}
+
+/**
+ * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
  *
  * @param values The `Enumerable`.

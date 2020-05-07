@@ -1,7 +1,7 @@
-import { EnumerableLike } from "./interfaces";
 import { pipe } from "../../functions";
-import { fromArray } from "./fromArray";
 import { flatten } from "./flatten";
+import { fromArray } from "./fromArray";
+import { EnumerableLike } from "./interfaces";
 
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.

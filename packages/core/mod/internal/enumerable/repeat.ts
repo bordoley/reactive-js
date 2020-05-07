@@ -1,10 +1,10 @@
+import { alwaysTrue } from "../../functions.ts";
+import { isNone } from "../../option.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
-import { isNone } from "../../option.ts";
-import { alwaysTrue } from "../../functions.ts";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: EnumeratorLike<T>;
@@ -48,7 +48,6 @@ class RepeatEnumerable<T> implements EnumerableLike<T> {
     return new RepeatEnumerator(this.src, this.shouldRepeat);
   }
 }
-
 
 /**
  * Returns an EnumerableLike that applies the predicate function each time the source

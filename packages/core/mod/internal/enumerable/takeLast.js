@@ -1,7 +1,7 @@
-import { lift } from "./lift.js";
+import { pipe } from "../../functions.js";
 import { isNone, none } from "../../option.js";
 import { fromArray, empty } from "./fromArray.js";
-import { pipe } from "../../functions.js";
+import { lift } from "./lift.js";
 class TakeLastEnumerator {
     constructor(delegate, maxCount) {
         this.delegate = delegate;

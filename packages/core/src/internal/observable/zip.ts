@@ -3,12 +3,14 @@ import { EnumeratorLike } from "../../enumerable";
 import { alwaysTrue } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
+import { zipEnumerators } from "../enumerable/zip";
+import { fromEnumerator } from "./fromEnumerable";
 import { ObservableLike, SubscriberLike } from "./interfaces";
-import { AbstractProducer } from "./producer";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { using } from "./using";
 
 class EnumeratorSubscriber<T> extends AbstractDisposable
   implements EnumeratorLike<T>, SubscriberLike<T> {
@@ -69,7 +71,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
 
 const subscribeInteractive = <T>(
   obs: ObservableLike<T>,
-): EnumeratorLike<T> & DisposableLike => {
+): EnumeratorSubscriber<T> => {
   const subscriber = new EnumeratorSubscriber<T>();
   obs.subscribe(subscriber);
   return subscriber;
@@ -169,54 +171,6 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   }
 }
 
-class ZipProducer<T> extends AbstractProducer<T> {
-  current: any;
-  hasCurrent = false;
-
-  constructor(
-    subscriber: SubscriberLike<T>,
-    private readonly enumerators: readonly EnumeratorLike<any>[],
-    private readonly selector: (...values: unknown[]) => T,
-  ) {
-    super(subscriber);
-  }
-
-  produce(shouldYield?: () => boolean): number {
-    const enumerators = this.enumerators;
-    const selector = this.selector;
-
-    if (isSome(shouldYield)) {
-      let isDisposed = this.isDisposed;
-      let shouldEmitNext = shouldEmit(enumerators);
-      while (shouldEmitNext && !isDisposed) {
-        const next = selector(...enumerators.map(getCurrent));
-        this.notify(next);
-
-        isDisposed = this.isDisposed;
-        for (const buffer of enumerators) {
-          buffer.move();
-        }
-        shouldEmitNext = shouldEmit(enumerators);
-
-        if (shouldEmitNext && !isDisposed && shouldYield()) {
-          return 0;
-        }
-      }
-    } else {
-      while (shouldEmit(enumerators) && !this.isDisposed) {
-        const next = selector(...enumerators.map(getCurrent));
-
-        for (const enumerator of enumerators) {
-          enumerator.move();
-        }
-
-        this.notify(next);
-      }
-    }
-    return -1;
-  }
-}
-
 class ZipObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;
 
@@ -232,14 +186,11 @@ class ZipObservable<T> implements ObservableLike<T> {
     const count = observables.length;
 
     if (this.isSynchronous) {
-      const enumerators = observables.map(obs => subscribeInteractive(obs));
-      for (const enumerator of enumerators) {
-        enumerator.move();
-      }
-
-      subscriber.schedule(
-        new ZipProducer(subscriber, enumerators, this.selector),
-      );
+      using(
+        _ => this.observables.map(subscribeInteractive),
+        (...enumerators: EnumeratorSubscriber<any>[]) =>
+          fromEnumerator(zipEnumerators(enumerators, this.selector)),
+      ).subscribe(subscriber);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {

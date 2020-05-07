@@ -1,6 +1,5 @@
-import { referenceEquals } from "../../functions";
+import { referenceEquals, Operator } from "../../functions";
 import { EnumerableLike } from "./interfaces";
-import { Operator } from "../../functions";
 
 /**
  * Returns `true` value if the any item satisfies the predicate, otherwise `false`.

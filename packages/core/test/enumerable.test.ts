@@ -27,7 +27,13 @@ import {
   zip,
   every,
 } from "../src/enumerable";
-import { pipe, returns, alwaysFalse, increment } from "../src/functions";
+import {
+  pipe,
+  returns,
+  alwaysFalse,
+  alwaysTrue,
+  increment,
+} from "../src/functions";
 import {
   test,
   describe,
@@ -39,7 +45,6 @@ import {
   expectTrue,
   expectFalse,
 } from "../src/testing";
-import { alwaysTrue } from "../lib/functions";
 
 export const tests = describe(
   "enumerable",

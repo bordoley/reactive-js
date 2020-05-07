@@ -10,7 +10,6 @@ class UsingObservable {
         const resourcesArray = Array.isArray(resources) ? resources : [resources];
         for (const resource of resourcesArray) {
             subscriber.add(resource);
-            resource.add(subscriber);
         }
         observableFactory(...resourcesArray).subscribe(subscriber);
     }

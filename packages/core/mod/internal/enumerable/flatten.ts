@@ -1,11 +1,11 @@
+import { compose } from "../../functions.ts";
+import { isNone, isSome, none, Option } from "../../option.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
-import { isNone, isSome, none, Option } from "../../option.ts";
 import { lift } from "./lift.ts";
-import { compose } from "../../functions.ts";
 import { map } from "./map.ts";
 
 class FlattenEnumerator<T> implements EnumeratorLike<T> {
@@ -56,8 +56,8 @@ export const flatten = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
 
 /**
  * Maps each item yielded by the sourc using a mapping function, then flattens the result.
- * 
- * @param mapper 
+ *
+ * @param mapper
  */
 export const flatMap = <TA, TB>(
   mapper: (v: TA) => EnumerableLike<TB>,

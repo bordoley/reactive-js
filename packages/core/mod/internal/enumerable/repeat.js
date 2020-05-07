@@ -1,5 +1,5 @@
-import { isNone } from "../../option.js";
 import { alwaysTrue } from "../../functions.js";
+import { isNone } from "../../option.js";
 class RepeatEnumerator {
     constructor(src, shouldRepeat) {
         this.src = src;
