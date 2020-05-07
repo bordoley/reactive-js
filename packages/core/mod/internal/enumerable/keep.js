@@ -1,27 +1,23 @@
-import { AbstractDisposable } from "../../disposable.js";
-import { none } from "../../option.js";
 import { lift } from "./lift.js";
-class KeepTypeEnumerator extends AbstractDisposable {
+class KeepTypeEnumerator {
     constructor(delegate, predicate) {
-        super();
         this.delegate = delegate;
         this.predicate = predicate;
-        this.current = none;
-        this.hasCurrent = false;
+    }
+    get current() {
+        return this.delegate.current;
+    }
+    get hasCurrent() {
+        return this.delegate.hasCurrent;
     }
     move() {
-        this.hasCurrent = false;
-        this.current = none;
-        while (this.delegate.move() && !this.predicate(this.delegate.current)) { }
-        const hasCurrent = this.delegate.hasCurrent;
-        this.hasCurrent = hasCurrent;
-        this.current = this.delegate.current;
-        return hasCurrent;
+        const delegate = this.delegate;
+        while (delegate.move() && !this.predicate(delegate.current)) { }
+        return delegate.hasCurrent;
     }
 }
 export const keepType = (predicate) => {
     const operator = (enumerator) => new KeepTypeEnumerator(enumerator, predicate);
-    operator.isSynchronous = true;
     return lift(operator);
 };
 export const keep = (predicate) => keepType(predicate);

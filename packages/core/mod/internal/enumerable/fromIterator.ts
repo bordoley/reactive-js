@@ -34,9 +34,20 @@ class IteratorEnumerable<T, TReturn = any, TNext = unknown>
   }
 }
 
+/**
+ * Returns a single use EnumerableLike over the javascript Iterator
+ * returned by the function `f`.
+ *
+ * @param f
+ */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
   f: () => Iterator<T, TReturn, TNext>,
 ): EnumerableLike<T> => new IteratorEnumerable(f);
 
+/**
+ * Converts a javascript Iterable to an EnumerableLike.
+ *
+ * @param iterable
+ */
 export const fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
   fromIterator(() => iterable[Symbol.iterator]());

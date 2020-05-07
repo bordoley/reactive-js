@@ -12,7 +12,7 @@ class EnumerableIterable<T> implements Iterable<T> {
 }
 
 /**
- * Converts an `EnumerableLike` into an `Iterable`.
+ * Converts an EnumerableLike into a javascript Iterable.
  */
 export const toIterable = <T>(source: EnumerableLike<T>): Iterable<T> =>
   new EnumerableIterable(source);

@@ -2,6 +2,8 @@
 
 # Interface: EnumeratorLike <**T**>
 
+Inteface that enables iteration over a collection.
+
 ## Type parameters
 
 ▪ **T**

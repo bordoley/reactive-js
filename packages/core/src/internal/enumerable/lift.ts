@@ -18,6 +18,12 @@ class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   }
 }
 
+/**
+ * Returns an EnumerableOperator that applies `operator` to
+ * the EnumeratorLike returned by the source when enumerated.
+ *
+ * @param operator
+ */
 export const lift = <TA, TB>(
   operator: EnumeratorOperator<TA, TB>,
 ): EnumerableOperator<TA, TB> => enumerable => {

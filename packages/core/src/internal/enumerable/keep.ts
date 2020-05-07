@@ -1,29 +1,25 @@
-import { DisposableLike, AbstractDisposable } from "../../disposable";
-import { none } from "../../option";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
 
-class KeepTypeEnumerator<TA, TB> extends AbstractDisposable
-  implements EnumeratorLike<TB>, DisposableLike {
-  current: TB = (none as unknown) as TB;
-  hasCurrent = false;
-
+class KeepTypeEnumerator<TA, TB> implements EnumeratorLike<TB> {
   constructor(
     private readonly delegate: EnumeratorLike<TA>,
     private readonly predicate: (data: unknown) => data is TB,
-  ) {
-    super();
+  ) {}
+
+  get current() {
+    return (this.delegate.current as unknown) as TB;
+  }
+
+  get hasCurrent() {
+    return this.delegate.hasCurrent;
   }
 
   move(): boolean {
-    this.hasCurrent = false;
-    this.current = (none as unknown) as TB;
+    const delegate = this.delegate;
 
-    while (this.delegate.move() && !this.predicate(this.delegate.current)) {}
-    const hasCurrent = this.delegate.hasCurrent;
-    this.hasCurrent = hasCurrent;
-    this.current = (this.delegate.current as unknown) as TB;
-    return hasCurrent;
+    while (delegate.move() && !this.predicate(delegate.current)) {}
+    return delegate.hasCurrent;
   }
 }
 
@@ -38,7 +34,6 @@ export const keepType = <TA, TB>(
 ): EnumerableOperator<TA, TB> => {
   const operator = (enumerator: EnumeratorLike<TA>) =>
     new KeepTypeEnumerator(enumerator, predicate);
-  operator.isSynchronous = true;
   return lift(operator);
 };
 
