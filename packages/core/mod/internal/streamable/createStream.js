@@ -1,0 +1,24 @@
+import { AbstractDisposable } from "../../disposable.js";
+import { createSubject, publish, } from "../../observable.js";
+import { pipe } from "../../functions.js";
+class StreamImpl extends AbstractDisposable {
+    constructor(op, scheduler, replayCount) {
+        super();
+        this.isSynchronous = false;
+        const subject = createSubject();
+        const observable = pipe(subject, op, publish(scheduler, replayCount)).add(subject);
+        this.add(subject).add(observable);
+        this.dispatcher = subject;
+        this.observable = observable;
+    }
+    get subscriberCount() {
+        return this.observable.subscriberCount;
+    }
+    dispatch(req) {
+        this.dispatcher.dispatch(req);
+    }
+    subscribe(subscriber) {
+        this.observable.subscribe(subscriber);
+    }
+}
+export const createStream = (op, scheduler, replayCount) => new StreamImpl(op, scheduler, replayCount);

@@ -35,6 +35,9 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
+  "dependencies": {
+    "tslib": "^1.11.2"
+  },
   "devDependencies": {
     "@types/node": "13.13.2",
     "jest": "^24.9.0",
@@ -43,18 +46,37 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-cjs && yarn build-esm && yarn make-dist && yarn dist-js && yarn dist-ts && yarn docs",
-    "build-cjs": "tsc -p tsconfig.cjs.json",
-    "build-esm": "tsc -p tsconfig.esm.json",
-    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js && renamer --find \".js\" --replace \".mjs\" ./dist/js/** ./dist/js/**/** ./dist/js/**/**/** && replace 'from \"([.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./dist/js -r && cp -r ./build/cjs/ ./dist/js",
-    "dist-ts": "rm -rf ./dist/ts && cp -r ./src/ ./dist/ts && replace 'from \"([.\\-/\\w]+)\";' 'from \"$1.ts\";' ./dist/ts -r",
-    "clean": "rm -rf build && rm -rf dist && rm -rf docs",
+    "build": "yarn compile && yarn lib && yarn mod && yarn docs",
+    "clean": "yarn clean-build && yarn clean-coverage && yarn clean-docs && yarn clean-mod && yarn clean-lib",
+    "clean-build": "rm -rf ./build",
+    "clean-coverage": "rm -rf ./coverage",
+    "clean-docs": "rm -rf ./docs",
+    "clean-mod": "rm -rf ./mod",
+    "clean-lib": "rm -rf ./lib",
+    "compile": "yarn compile-cjs && yarn compile-esm && yarn compile-types",
+    "compile-cjs": "tsc -p tsconfig.cjs.json",
+    "compile-esm": "tsc -p tsconfig.esm.json",
+    "compile-types": "tsc -p tsconfig.types.json",
+    "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
+    "lib-js": "cp -r ./build/cjs/ ./lib",
+    "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
+    "lib-mjs-copy": "cp -r ./build/esm ./lib",
+    "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
+    "lib-mjs-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
+    "lib-types": "cp -r ./build/types/ ./lib",
+    "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-node",
+    "mod-esm": "yarn mod-esm-copy && yarn mod-esm-replace",
+    "mod-esm-copy": "cp -r ./build/esm/ ./mod",
+    "mod-esm-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.js\";' ./mod -r --include=\"*.js\"",
+    "mod-ts": "yarn mod-ts-copy && yarn mod-ts-replace",
+    "mod-ts-copy": "cp -r ./src/ ./mod",
+    "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
+    "mod-rm-node" : "rm -rf ./mod/node.* ./mod/internal/node",
+    "mod-remove-node": "",
     "docs": "node ./scripts/docs.mjs",
-    "make-dist": "mkdir -p ./dist",
     "test": "jest",
     "test-coverage": "jest --coverage",
-    "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
-    "typecheck": "tsc -p tsconfig.typecheck.json"
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
   "jest": {
     "preset": "ts-jest",

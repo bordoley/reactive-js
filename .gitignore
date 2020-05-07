@@ -3,15 +3,12 @@ coverage
 node_modules
 
 lerna-debug.log
-yarn-error.log
-
-*.tsbuildinfo
-bundle.js
-
-.merlin
-.bsb.lock
 npm-debug.log
-**/lib/bs
+yarn-error.log
 
 *.crt
 *.key
+*.tsbuildinfo
+
+build
+lib

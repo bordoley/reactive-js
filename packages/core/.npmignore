@@ -1,12 +1,10 @@
-.gitignore
 .npmignore
 tsconfig.*
 *.tsbuildinfo
 
-build/cjs
-build/esm
-dist/ts
+build
 docs
+mod
 scripts
 src
 test
