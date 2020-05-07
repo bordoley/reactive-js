@@ -73,7 +73,7 @@
     "mod-ts-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-node": "rm -rf ./mod/node.* ./mod/internal/node",
     "mod-alias-reactive-js-core": "replace '@reactive-js/core/' '../../core/' ./mod/* && replace '@reactive-js/core/' '../../../core/' ./mod/internal/* && replace '@reactive-js/core/' '../../../../core/' ./mod/internal/**/*",
-    "docs": "node ./scripts/docs.mjs",
+    "docs": "node ../../scripts/docs.mjs",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
