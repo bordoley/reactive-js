@@ -1,7 +1,6 @@
 {
   "name": "@reactive-js/react",
   "version": "0.0.37",
-  "type": "module",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -39,7 +38,8 @@
   "dependencies": {
     "@reactive-js/core": "^0.0.37",
     "react": "^16.11.0",
-    "scheduler": "^0.17.0"
+    "scheduler": "^0.17.0",
+    "tslib": "^1.11.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -49,13 +49,27 @@
     "ts-jest": "^24.1.0"
   },
   "scripts": {
-    "build": "yarn build-esm && yarn make-dist && yarn dist-js && yarn docs",
-    "build-esm": "tsc -p tsconfig.esm.json",
-    "dist-js": "rm -rf ./dist/js && cp -r ./build/esm ./dist/js",
-    "clean": "rm -rf build && rm -rf dist && rm -rf docs",
-    "docs": "node ./scripts/docs.js",
-    "make-dist": "mkdir -p ./dist",
-    "typecheck": "tsc -p tsconfig.typecheck.json"
+    "build": "yarn compile && yarn lib && yarn docs",
+    "clean": "yarn clean-build && yarn clean-coverage && yarn clean-docs && yarn clean-lib",
+    "clean-build": "rm -rf ./build",
+    "clean-coverage": "rm -rf ./coverage",
+    "clean-docs": "rm -rf ./docs",
+    "clean-lib": "rm -rf ./lib",
+    "compile": "yarn compile-cjs && yarn compile-esm && yarn compile-types",
+    "compile-cjs": "tsc -p tsconfig.cjs.json",
+    "compile-esm": "tsc -p tsconfig.esm.json",
+    "compile-types": "tsc -p tsconfig.types.json",
+    "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
+    "lib-js": "cp -r ./build/cjs/ ./lib",
+    "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
+    "lib-mjs-copy": "cp -r ./build/esm ./lib",
+    "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
+    "lib-mjs-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
+    "lib-types": "cp -r ./build/types/ ./lib",
+    "docs": "node ./scripts/docs.mjs",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
   "jest": {
     "preset": "ts-jest",

@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "module": "CommonJS",
+    "outDir": "./build/cjs",
+    "target": "ES5",
+  },
+}
