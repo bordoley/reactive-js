@@ -1,5 +1,5 @@
-import { SubscriberLike } from "./interfaces";
 import { AbstractSchedulerContinuation } from "../../scheduler";
+import { SubscriberLike } from "./interfaces";
 
 export abstract class AbstractProducer<
   T

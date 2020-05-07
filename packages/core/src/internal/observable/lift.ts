@@ -1,10 +1,10 @@
+import { pipe } from "../../functions";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
   SubscriberOperator,
 } from "./interfaces";
-import { pipe } from "../../functions";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(

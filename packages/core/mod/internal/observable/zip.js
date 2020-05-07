@@ -1,6 +1,6 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { none, isSome, isNone } from "../../option.js";
 import { alwaysTrue } from "../../functions.js";
+import { none, isSome, isNone } from "../../option.js";
 import { AbstractProducer } from "./producer.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class EnumeratorSubscriber extends AbstractDisposable {

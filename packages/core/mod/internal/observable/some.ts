@@ -1,12 +1,12 @@
+import { referenceEquals } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { ofValue } from "./ofValue.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { ofValue } from "./ofValue.ts";
-import { referenceEquals } from "../../functions.ts";
 
 class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(

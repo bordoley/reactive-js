@@ -1,16 +1,37 @@
-import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
+import {
+  historyStateStore,
+  createEventSource,
+  historyHashStateStore,
+} from "@reactive-js/core/lib/dom";
 import {
   fromObservable,
   FlowMode,
   FlowEventType,
 } from "@reactive-js/core/lib/flowable";
+import {
+  pipe,
+  returns,
+  increment,
+  identity,
+} from "@reactive-js/core/lib/functions";
+import {
+  generate,
+  onNotify,
+  subscribe,
+  ofValue,
+  concatMap,
+  using,
+  throttle,
+} from "@reactive-js/core/lib/observable";
+import { isSome, none } from "@reactive-js/core/lib/option";
 import { StateUpdater } from "@reactive-js/core/lib/stateStore";
+import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
+import { sendHttpRequest, WebRequestBody } from "@reactive-js/http/lib/dom";
 import {
   HttpClientRequestStatusType,
   createHttpRequest,
   HttpMethod,
 } from "@reactive-js/http/lib/http";
-import { sendHttpRequest } from "@reactive-js/http/lib/dom";
 import {
   useObservable,
   useStreamable,
@@ -22,30 +43,8 @@ import {
   RelativeURI,
 } from "@reactive-js/react/lib/router";
 import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
-import {
-  generate,
-  onNotify,
-  subscribe,
-  ofValue,
-  concatMap,
-  using,
-  throttle,
-} from "@reactive-js/core/lib/observable";
-import {
-  historyStateStore,
-  createEventSource,
-  historyHashStateStore,
-} from "@reactive-js/core/lib/dom";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
-import { isSome, none } from "@reactive-js/core/lib/option";
-import { WebRequestBody } from "@reactive-js/http/lib/dom";
-import {
-  pipe,
-  returns,
-  increment,
-  identity,
-} from "@reactive-js/core/lib/functions";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<RelativeURI>) => void,

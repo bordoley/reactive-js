@@ -1,7 +1,7 @@
+import { returns } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { returns } from "../../functions";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(

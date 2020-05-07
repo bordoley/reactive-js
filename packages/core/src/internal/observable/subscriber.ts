@@ -1,8 +1,8 @@
 import { AbstractDisposable } from "../../disposable";
-import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler";
-import { SubscriberLike } from "./interfaces";
-import { __DEV__ } from "../env";
 import { alwaysVoid } from "../../functions";
+import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler";
+import { __DEV__ } from "../env";
+import { SubscriberLike } from "./interfaces";
 
 const assertSubscriberNotifyInContinuationProduction = alwaysVoid;
 const assertSubscriberNotifyInContinuationDev = <T>(

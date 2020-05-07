@@ -1,5 +1,5 @@
-import { isSome } from "../../option.js";
 import { alwaysFalse } from "../../functions.js";
+import { isSome } from "../../option.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class FromArrayProducer extends AbstractProducer {

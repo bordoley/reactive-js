@@ -1,3 +1,5 @@
+import { fromArray, first, empty, keep, toArray } from "../src/enumerable";
+import { pipe } from "../src/functions";
 import {
   test,
   describe,
@@ -5,8 +7,6 @@ import {
   expectEquals,
   expectArrayEquals,
 } from "../src/testing";
-import { fromArray, first, empty, keep, toArray } from "../src/enumerable";
-import { pipe } from "../src/functions";
 
 export const tests = describe(
   "enumerable",

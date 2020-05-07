@@ -1,4 +1,5 @@
-import { CacheDirective, HttpHeaders } from "./interfaces.ts";
+import { pipe } from "../../../../core/lib/functions.ts";
+import { isSome } from "../../../../core/lib/option.ts";
 import {
   CharStreamLike,
   optional,
@@ -12,9 +13,8 @@ import {
   toTokenOrQuotedString,
   httpList,
 } from "./httpGrammar.ts";
-import { isSome } from "../../../../core/lib/option.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
-import { pipe } from "../../../../core/lib/functions.ts";
+import { CacheDirective, HttpHeaders } from "./interfaces.ts";
 
 const pOptionalEquals = optional(pEquals);
 

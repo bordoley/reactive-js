@@ -1,3 +1,5 @@
+import { pipe } from "../../core/src/functions";
+import { none } from "../../core/src/option";
 import {
   test,
   describe,
@@ -5,7 +7,6 @@ import {
   expectEquals,
 } from "../../core/src/testing";
 import {
-  parseMediaTypeOrThrow,
   HttpRequest,
   HttpResponse,
   createHttpRequest,
@@ -14,9 +15,7 @@ import {
   HttpStatusCode,
   checkIfNotModified,
 } from "../src/http";
-
-import { none } from "../../core/src/option";
-import { pipe } from "../../core/src/functions";
+import { parseMediaTypeOrThrow } from "../src/internal/http/mediaType";
 
 export const tests = describe(
   "http",

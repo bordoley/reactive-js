@@ -1,6 +1,6 @@
+import { pipe } from "../../../../core/lib/functions.ts";
 import { isNone, isSome, none, Option } from "../../../../core/lib/option.ts";
 import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators.ts";
-import { pipe } from "../../../../core/lib/functions.ts";
 import {
   entityTagToString,
   pETag,
@@ -8,8 +8,8 @@ import {
   parseETagOrThrow,
 } from "./entityTag.ts";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime.ts";
-import { HttpStandardHeader, getHeaderValue } from "./httpHeaders.ts";
 import { httpList } from "./httpGrammar.ts";
+import { HttpStandardHeader, getHeaderValue } from "./httpHeaders.ts";
 import {
   HttpRequestPreconditions,
   HttpHeaders,

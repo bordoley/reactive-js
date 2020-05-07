@@ -1,9 +1,5 @@
-import {
-  onNotify as onNotifyStream,
-  StreamableLike,
-  identity,
-  createStreamable,
-} from "./streamable";
+import { fromIterable as fromIterableEnumerable } from "./enumerable";
+import { compose, pipe, Operator, returns } from "./functions";
 import {
   compute,
   map,
@@ -22,10 +18,13 @@ import {
   StreamLike,
   takeWhile,
 } from "./observable";
-import { compose, pipe, Operator } from "./functions";
 import { SchedulerLike } from "./scheduler";
-import { fromIterable as fromIterableEnumerable } from "./enumerable";
-import { returns } from "./functions";
+import {
+  onNotify as onNotifyStream,
+  StreamableLike,
+  identity,
+  createStreamable,
+} from "./streamable";
 
 export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
 

@@ -1,8 +1,9 @@
-import { createUniqueQueue } from "./internal/queues.ts";
-import { createKeyedQueue } from "./internal/keyedQueue.ts";
-import { createSetMultimap } from "./internal/multimaps.ts";
 import { AbstractDisposable, DisposableLike, disposed } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
+import { pipe } from "./functions.ts";
+import { createKeyedQueue } from "./internal/keyedQueue.ts";
+import { createSetMultimap } from "./internal/multimaps.ts";
+import { createUniqueQueue } from "./internal/queues.ts";
 import {
   DispatcherLike,
   ObservableLike,
@@ -12,7 +13,6 @@ import {
   onNotify,
 } from "./observable.ts";
 import { isSome, isNone, none } from "./option.ts";
-import { pipe } from "./functions.ts";
 import { SchedulerLike } from "./scheduler.ts";
 
 const tryDispatch = <TResource extends DisposableLike>(

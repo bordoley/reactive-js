@@ -1,4 +1,5 @@
-import { CacheDirective, HttpHeaders } from "./interfaces";
+import { pipe } from "@reactive-js/core/lib/functions";
+import { isSome } from "@reactive-js/core/lib/option";
 import {
   CharStreamLike,
   optional,
@@ -12,9 +13,8 @@ import {
   toTokenOrQuotedString,
   httpList,
 } from "./httpGrammar";
-import { isSome } from "@reactive-js/core/lib/option";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
-import { pipe } from "@reactive-js/core/lib/functions";
+import { CacheDirective, HttpHeaders } from "./interfaces";
 
 const pOptionalEquals = optional(pEquals);
 

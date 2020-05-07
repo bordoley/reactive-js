@@ -5,11 +5,11 @@ export {
 } from "./internal/dom/interfaces";
 
 import { isSome } from "@reactive-js/core/lib/option";
+import { HttpClient } from "./http";
 import { fetchIsPolyfill } from "./internal/dom/capabilities";
 import { sendHttpRequestUsingFetch } from "./internal/dom/fetch";
 import { HttpWebRequest, WebResponseBodyLike } from "./internal/dom/interfaces";
 import { sendHttpRequestUsingXHR } from "./internal/dom/xhr";
-import { HttpClient } from "./http";
 
 export const sendHttpRequest: HttpClient<
   HttpWebRequest,

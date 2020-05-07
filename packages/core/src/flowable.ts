@@ -1,9 +1,5 @@
-import {
-  StreamableLike,
-  createStreamable,
-  map as mapStream,
-} from "./streamable";
-import { Operator, compose, pipe } from "./functions";
+import { Operator, compose, pipe, returns } from "./functions";
+import { SchedulerLike } from "./internal/scheduler/interfaces";
 import {
   ObservableLike,
   endWith,
@@ -22,8 +18,11 @@ import {
 } from "./observable";
 import { none, isSome } from "./option";
 import { toPausableScheduler } from "./scheduler";
-import { SchedulerLike } from "./internal/scheduler/interfaces";
-import { returns } from "./functions";
+import {
+  StreamableLike,
+  createStreamable,
+  map as mapStream,
+} from "./streamable";
 
 export const enum FlowMode {
   Resume = 1,

@@ -1,7 +1,7 @@
 import { Readable } from "stream";
-import { FlowEventType, FlowMode, FlowableLike } from "../../flowable";
-import { createStreamable } from "../../streamable";
 import { DisposableValueLike } from "../../disposable";
+import { FlowEventType, FlowMode, FlowableLike } from "../../flowable";
+import { pipe } from "../../functions";
 import {
   createObservable,
   onNotify,
@@ -9,8 +9,8 @@ import {
   using,
   ObservableLike,
 } from "../../observable";
-import { pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
+import { createStreamable } from "../../streamable";
 
 const createReadableEventsObservable = (readable: Readable) =>
   createObservable(dispatcher => {

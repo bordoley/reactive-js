@@ -1,6 +1,6 @@
+import { EnumeratorLike, fromArray } from "../../enumerable.ts";
 import { isSome, none } from "../../option.ts";
 import { QueueLike } from "./interfaces.ts";
-import { EnumeratorLike, fromArray } from "../../enumerable.ts";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 

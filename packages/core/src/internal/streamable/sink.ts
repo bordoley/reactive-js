@@ -1,10 +1,10 @@
-import { StreamableLike } from "./interfaces";
-import { ObservableLike, onNotify, using, endWith } from "../../observable";
-import { StreamLike } from "../observable/interfaces";
 import { pipe } from "../../functions";
-import { subscribe } from "../observable/subscribe";
-import { ignoreElements } from "../observable/ignoreElements";
+import { ObservableLike, onNotify, using, endWith } from "../../observable";
 import { isSome, none } from "../../option";
+import { ignoreElements } from "../observable/ignoreElements";
+import { StreamLike } from "../observable/interfaces";
+import { subscribe } from "../observable/subscribe";
+import { StreamableLike } from "./interfaces";
 
 export const sink = <TReq, T>(
   src: StreamableLike<TReq, T>,

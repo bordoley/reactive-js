@@ -1,16 +1,4 @@
 import {
-  test,
-  describe,
-  testAsync,
-  expectArrayEquals,
-  expectToThrowError,
-  expectTrue,
-  expectFalse,
-  expectEquals,
-  expectToThrow,
-  expectPromiseToThrow,
-} from "../src/testing";
-import {
   pipe,
   returns,
   increment,
@@ -19,10 +7,6 @@ import {
   arrayEquals,
   referenceEquals,
 } from "../src/functions";
-import {
-  createHostScheduler,
-  createVirtualTimeScheduler,
-} from "../src/scheduler";
 import {
   buffer,
   combineLatest,
@@ -72,6 +56,22 @@ import {
   switchMap,
   onSubscribe,
 } from "../src/observable";
+import {
+  createHostScheduler,
+  createVirtualTimeScheduler,
+} from "../src/scheduler";
+import {
+  test,
+  describe,
+  testAsync,
+  expectArrayEquals,
+  expectToThrowError,
+  expectTrue,
+  expectFalse,
+  expectEquals,
+  expectToThrow,
+  expectPromiseToThrow,
+} from "../src/testing";
 
 const scheduler = createHostScheduler();
 

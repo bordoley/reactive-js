@@ -1,8 +1,7 @@
 import { compose, returns } from "../../functions.ts";
-import { ObservableOperator } from "./interfaces.ts";
-
-import { map } from "./map.ts";
 import { fromIterator } from "./fromIterable.ts";
+import { ObservableOperator } from "./interfaces.ts";
+import { map } from "./map.ts";
 import { concatMap } from "./mergeAll.ts";
 
 export const genMap = <TA, TB, TReturn = any, TNext = unknown>(

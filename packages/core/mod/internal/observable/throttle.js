@@ -1,11 +1,11 @@
 import { createSerialDisposable, } from "../../disposable.js";
-import { none, isNone, isSome } from "../../option.js";
 import { pipe } from "../../functions.js";
+import { none, isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
+import { ofValue } from "./ofValue.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { ofValue } from "./ofValue.js";
 const setupDurationSubscription = (subscriber, next) => {
     subscriber.durationSubscription.inner = pipe(subscriber.durationSelector(next), onNotify(subscriber.onNotify), subscribe(subscriber)).add(subscriber.onDurationDispose);
 };

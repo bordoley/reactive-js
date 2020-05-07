@@ -1,3 +1,4 @@
+import { referenceEquals } from "../../functions";
 import { Option } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
@@ -5,7 +6,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { referenceEquals } from "../../functions";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,

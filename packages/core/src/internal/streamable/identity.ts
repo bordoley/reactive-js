@@ -1,5 +1,5 @@
-import { SchedulerLike } from "../../scheduler";
 import { createSubject } from "../../observable";
+import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "./interfaces";
 
 const _identity = {

@@ -1,13 +1,13 @@
+import { pipe } from "../../functions";
 import { none, Option } from "../../option";
 import { SchedulerLike } from "../../scheduler";
+import { createSubject } from "./createSubject";
 import {
   ObservableLike,
   ObservableOperator,
   SubjectLike,
   SubscriberLike,
 } from "./interfaces";
-import { createSubject } from "./createSubject";
-import { pipe } from "../../functions";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

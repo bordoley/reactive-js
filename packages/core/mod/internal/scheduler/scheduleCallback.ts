@@ -1,7 +1,7 @@
 import { DisposableLike } from "../../disposable.ts";
-import { SchedulerLike, CallbackContinuation } from "./interfaces.ts";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import { isSome } from "../../option.ts";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
+import { SchedulerLike, CallbackContinuation } from "./interfaces.ts";
 
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
   constructor(private cb: CallbackContinuation) {

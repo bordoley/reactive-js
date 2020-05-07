@@ -1,61 +1,33 @@
 module.exports = {
-  root: true,
-  ignorePatterns: ["coverage", "dist", "docs", "node_modules"],
-  plugins: [
-    "eslint-plugin",
-    "@typescript-eslint",
-    "jest",
-    "import",
-    "eslint-comments",
-    "sort-class-members",
-  ],
   env: {
     es6: true,
     node: true,
   },
   extends: [
-    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/typescript",
     "prettier",
     "prettier/@typescript-eslint",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
   ],
-  rules: {
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/unbound-method": "off",
-    "import/no-duplicates": "error",
-    "comma-dangle": ["error", "always-multiline"],
-    "sort-class-members/sort-class-members": [
-      2,
-      {
-        order: [
-          "[static-properties]",
-          "[static-methods]",
-          "[conventional-private-properties]",
-          "[properties]",
-          "constructor",
-          "[accessor-pairs]",
-          "[methods]",
-          "[conventional-private-methods]",
-        ],
-        accessorPairPositioning: "getThenSet",
-      },
-    ],
-  },
+  ignorePatterns: ["build", "coverage", "docs", "lib", "mod", "node_modules"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
-    project: ["./tsconfig.eslint.json"],
-    tsconfigRootDir: __dirname,
+  },
+  plugins: ["@typescript-eslint", "import"],
+  root: true,
+  rules: {
+    "import/no-duplicates": "error",
+    "import/order": [
+      "error",
+      {
+        alphabetize: {
+          order: "asc",
+        },
+      },
+    ],
   },
 };

@@ -1,5 +1,5 @@
-import { StreamableLike } from "../../streamable";
 import { AbstractDisposable } from "../../disposable";
+import { pipe } from "../../functions";
 import {
   StreamLike,
   DispatcherLike,
@@ -10,7 +10,7 @@ import {
   SubscriberLike,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
-import { pipe } from "../../functions";
+import { StreamableLike } from "../../streamable";
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
   (enumerable: StreamableLike<TSrcReq, TSrc>): StreamableLike<TReq, T>;

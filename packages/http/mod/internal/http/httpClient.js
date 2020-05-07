@@ -1,7 +1,7 @@
-import { createRedirectHttpRequest } from "./httpRequest.js";
-import { ofValue, map, switchMap, concatMap, } from "../../../../core/lib/observable.js";
 import { pipe, identity } from "../../../../core/lib/functions.js";
+import { ofValue, map, switchMap, concatMap, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
+import { createRedirectHttpRequest } from "./httpRequest.js";
 const redirectCodes = [
     301,
     302,

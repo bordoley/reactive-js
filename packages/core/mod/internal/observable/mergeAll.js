@@ -1,5 +1,5 @@
-import { isSome } from "../../option.js";
 import { compose, pipe } from "../../functions.js";
+import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";

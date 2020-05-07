@@ -1,7 +1,7 @@
-import { HttpResponse, HttpRequest } from "./interfaces";
+import { Operator } from "@reactive-js/core/lib/functions";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
-import { Operator } from "@reactive-js/core/lib/functions";
+import { HttpResponse, HttpRequest } from "./interfaces";
 
 export type HttpServer<
   THttpRequest extends HttpRequest<unknown>,

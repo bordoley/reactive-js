@@ -1,12 +1,12 @@
+import { Exception } from "../../disposable";
+import { isSome, Option } from "../../option";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
-import { AbstractDelegatingSubscriber } from "./subscriber";
 import { lift } from "./lift";
-import { Exception } from "../../disposable";
-import { isSome, Option } from "../../option";
+import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

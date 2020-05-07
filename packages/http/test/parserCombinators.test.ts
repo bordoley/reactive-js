@@ -1,3 +1,5 @@
+import { pipe, returns } from "../../core/src/functions";
+import { none } from "../../core/src/option";
 import {
   test,
   describe,
@@ -5,8 +7,6 @@ import {
   expectArrayEquals,
   expectEquals,
 } from "../../core/src/testing";
-import { none } from "../../core/src/option";
-import { pipe, returns } from "../../core/src/functions";
 import {
   string,
   map,
@@ -25,7 +25,7 @@ import {
   pEof,
   parseWithOrThrow,
   throwParseError,
-} from "../src/parserCombinators";
+} from "../src/internal/parserCombinators";
 
 export const tests = describe(
   "parser combinators",

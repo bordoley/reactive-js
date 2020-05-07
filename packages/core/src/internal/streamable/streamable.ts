@@ -1,6 +1,4 @@
-import { StreamableLike } from "../../streamable";
-import { SchedulerLike } from "../../scheduler";
-import { createStream } from "./createStream";
+import { pipe } from "../../functions";
 import {
   ObservableOperator,
   ObservableLike,
@@ -12,8 +10,9 @@ import {
   merge,
   using,
 } from "../../observable";
-import { pipe } from "../../functions";
-import { StreamableOperator } from "./createStream";
+import { SchedulerLike } from "../../scheduler";
+import { StreamableLike } from "../../streamable";
+import { createStream, StreamableOperator } from "./createStream";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

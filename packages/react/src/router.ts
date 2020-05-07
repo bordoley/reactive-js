@@ -1,9 +1,9 @@
-import { scan, mapReq } from "@reactive-js/core/lib/streamable";
-import { none, Option, isSome } from "@reactive-js/core/lib/option";
-import { useStreamable } from "./hooks";
-import { createElement, useMemo, ReactElement } from "react";
-import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import { returns, pipe } from "@reactive-js/core/lib/functions";
+import { none, Option, isSome } from "@reactive-js/core/lib/option";
+import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
+import { scan, mapReq } from "@reactive-js/core/lib/streamable";
+import { createElement, useMemo, ReactElement } from "react";
+import { useStreamable } from "./hooks";
 
 export type RelativeURI = {
   readonly hash: string;

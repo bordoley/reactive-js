@@ -1,5 +1,6 @@
-import { createStreamable, StreamableLike } from "./streamable.ts";
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable.ts";
+import { pipe, alwaysFalse } from "./functions.ts";
+import { SubscriberLike } from "./internal/observable/interfaces.ts";
 import {
   ObservableLike,
   StreamLike,
@@ -12,8 +13,7 @@ import {
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler.ts";
-import { SubscriberLike } from "./internal/observable/interfaces.ts";
-import { pipe, alwaysFalse } from "./functions.ts";
+import { createStreamable, StreamableLike } from "./streamable.ts";
 
 class ReactiveCacheSchedulerContinuation<
   T

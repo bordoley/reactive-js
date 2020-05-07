@@ -1,7 +1,7 @@
-import { AbstractSchedulerContinuation } from "../../scheduler.js";
+import { AbstractDisposable } from "../../disposable.js";
 import { alwaysFalse } from "../../functions.js";
 import { isSome } from "../../option.js";
-import { AbstractDisposable } from "../../disposable.js";
+import { AbstractSchedulerContinuation } from "../../scheduler.js";
 class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(dispatcher) {
         super();

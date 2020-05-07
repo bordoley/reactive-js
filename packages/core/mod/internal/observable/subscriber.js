@@ -1,6 +1,6 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { __DEV__ } from "../env.js";
 import { alwaysVoid } from "../../functions.js";
+import { __DEV__ } from "../env.js";
 const assertSubscriberNotifyInContinuationProduction = alwaysVoid;
 const assertSubscriberNotifyInContinuationDev = (subscriber) => {
     if (!subscriber.inContinuation) {

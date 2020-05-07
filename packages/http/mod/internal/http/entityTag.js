@@ -1,6 +1,6 @@
+import { pipe } from "../../../../core/lib/functions.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { satisfy, string, manySatisfy, pDquote, optional, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
-import { pipe } from "../../../../core/lib/functions.js";
 export const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
 const pETagc = satisfy(c => c >= 33 && c <= 256 && c !== 34);
 const parseIsWeak = optional(string("W/"));

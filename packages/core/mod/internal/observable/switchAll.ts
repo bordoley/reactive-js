@@ -1,6 +1,6 @@
 import { disposed } from "../../disposable.ts";
-import { isSome } from "../../option.ts";
 import { compose, pipe } from "../../functions.ts";
+import { isSome } from "../../option.ts";
 import {
   ObservableLike,
   SubscriberLike,

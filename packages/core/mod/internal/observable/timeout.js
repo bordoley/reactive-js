@@ -1,11 +1,11 @@
 import { createSerialDisposable, } from "../../disposable.js";
-import { isSome } from "../../option.js";
-import { lift } from "./lift.js";
 import { pipe, returns } from "../../functions.js";
+import { isSome } from "../../option.js";
+import { concat } from "./concat.js";
+import { lift } from "./lift.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 import { throws } from "./throws.js";
-import { concat } from "./concat.js";
 export const timeoutError = Symbol("TimeoutError");
 const setupDurationSubscription = (subscriber) => {
     subscriber.durationSubscription.inner = pipe(subscriber.duration, subscribe(subscriber)).add(subscriber.onDispose);

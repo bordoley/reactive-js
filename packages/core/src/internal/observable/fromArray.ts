@@ -1,5 +1,5 @@
-import { isSome } from "../../option";
 import { alwaysFalse } from "../../functions";
+import { isSome } from "../../option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,

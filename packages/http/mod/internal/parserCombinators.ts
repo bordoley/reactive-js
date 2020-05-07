@@ -1,10 +1,5 @@
 import { EnumeratorLike } from "../../../core/lib/enumerable.ts";
 import {
-  Option,
-  none,
-  orCompute as orComputeOption,
-} from "../../../core/lib/option.ts";
-import {
   Operator,
   compose,
   pipe,
@@ -13,6 +8,11 @@ import {
 
 // FIXME: BAD!
 import { __DEV__ } from "../../../core/lib/internal/env.ts";
+import {
+  Option,
+  none,
+  orCompute as orComputeOption,
+} from "../../../core/lib/option.ts";
 
 export type CharCode = number;
 

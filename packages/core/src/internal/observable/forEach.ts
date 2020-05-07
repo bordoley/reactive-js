@@ -1,12 +1,12 @@
-import { none, Option } from "../../option";
+import { Exception } from "../../disposable";
 import { Operator, pipe } from "../../functions";
+import { none, Option } from "../../option";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
 } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
-import { Exception } from "../../disposable";
 import { subscribe } from "./subscribe";
 
 /**

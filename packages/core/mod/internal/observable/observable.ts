@@ -1,6 +1,6 @@
+import { pipe } from "../../functions.ts";
 import { SchedulerContinuationLike, schedule } from "../../scheduler.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(

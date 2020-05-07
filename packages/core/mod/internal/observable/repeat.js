@@ -1,6 +1,6 @@
 import { createSerialDisposable } from "../../disposable.js";
-import { isNone, isSome } from "../../option.js";
 import { pipe } from "../../functions.js";
+import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";

@@ -1,7 +1,7 @@
+import { TextDecoder } from "util";
 import { compose, returns } from "./functions.js";
 import { withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { lift } from "./streamable.js";
-import { TextDecoder } from "util";
 export const decode = (charset = "utf-8", options) => {
     const op = compose(withLatestFrom(compute(() => new TextDecoder(charset, options)), function* (ev, decoder) {
         switch (ev.type) {

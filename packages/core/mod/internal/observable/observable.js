@@ -1,5 +1,5 @@
-import { schedule } from "../../scheduler.js";
 import { pipe } from "../../functions.js";
+import { schedule } from "../../scheduler.js";
 class ScheduledObservable {
     constructor(factory, isSynchronous, delay) {
         this.factory = factory;

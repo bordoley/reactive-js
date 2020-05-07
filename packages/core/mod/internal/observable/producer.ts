@@ -1,5 +1,5 @@
-import { SubscriberLike } from "./interfaces.ts";
 import { AbstractSchedulerContinuation } from "../../scheduler.ts";
+import { SubscriberLike } from "./interfaces.ts";
 
 export abstract class AbstractProducer<
   T

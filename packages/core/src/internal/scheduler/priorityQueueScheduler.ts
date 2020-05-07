@@ -1,18 +1,18 @@
-import { createPriorityQueue, QueueLike } from "../queues";
 import {
   AbstractSerialDisposable,
   DisposableLike,
   disposed,
 } from "../../disposable";
+import { alwaysFalse } from "../../functions";
 import { none, Option, isSome, isNone } from "../../option";
+import { createPriorityQueue, QueueLike } from "../queues";
+import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
   PrioritySchedulerLike,
   PausableSchedulerLike,
 } from "./interfaces";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
-import { alwaysFalse } from "../../functions";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;

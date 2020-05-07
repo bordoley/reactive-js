@@ -3,21 +3,21 @@ import {
   SerialDisposableLike,
   Exception,
 } from "../../disposable";
-import { none, Option, isNone, isSome } from "../../option";
 import { pipe } from "../../functions";
+import { none, Option, isNone, isSome } from "../../option";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
+import { ofValue } from "./ofValue";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { ofValue } from "./ofValue";
 
 /**
  * The throttle mode used by the `throttle` operator.

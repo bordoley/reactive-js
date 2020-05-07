@@ -1,5 +1,5 @@
-import { ObservableLike } from "./interfaces";
 import { fromArray } from "./fromArray";
+import { ObservableLike } from "./interfaces";
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.

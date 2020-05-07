@@ -1,5 +1,5 @@
-import { toDispatcher } from "./toDispatcher.js";
 import { AbstractDisposable } from "../../disposable.js";
+import { toDispatcher } from "./toDispatcher.js";
 class SubjectImpl extends AbstractDisposable {
     constructor(replayCount) {
         super();

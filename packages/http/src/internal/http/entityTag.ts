@@ -1,3 +1,4 @@
+import { pipe } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import {
   satisfy,
@@ -9,7 +10,6 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../parserCombinators";
-import { pipe } from "@reactive-js/core/lib/functions";
 import { ASCII } from "./httpGrammar";
 import { EntityTag } from "./interfaces";
 

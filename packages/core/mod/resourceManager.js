@@ -1,11 +1,11 @@
-import { createUniqueQueue } from "./internal/queues.js";
-import { createKeyedQueue } from "./internal/keyedQueue.js";
-import { createSetMultimap } from "./internal/multimaps.js";
 import { AbstractDisposable, disposed } from "./disposable.js";
 import { first, forEach, fromIterable } from "./enumerable.js";
+import { pipe } from "./functions.js";
+import { createKeyedQueue } from "./internal/keyedQueue.js";
+import { createSetMultimap } from "./internal/multimaps.js";
+import { createUniqueQueue } from "./internal/queues.js";
 import { createObservable, subscribe, ofValue, onNotify, } from "./observable.js";
 import { isSome, isNone, none } from "./option.js";
-import { pipe } from "./functions.js";
 const tryDispatch = (resourceManager, key) => {
     var _a;
     const { availableResources, availableResourcesTimeouts, maxIdleTime, maxResourcesPerKey, maxTotalResources, inUseResources, scheduler, resourceRequests, globalResourceWaitQueue, } = resourceManager;

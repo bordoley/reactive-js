@@ -1,6 +1,6 @@
+import { AbstractDisposable } from "../../disposable";
 import { SubjectLike, SubscriberLike, DispatcherLike } from "./interfaces";
 import { toDispatcher } from "./toDispatcher";
-import { AbstractDisposable } from "../../disposable";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   private readonly subscribers: Set<DispatcherLike<T>> = new Set();

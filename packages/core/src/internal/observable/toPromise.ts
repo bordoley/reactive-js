@@ -1,5 +1,5 @@
-import { none, Option, isSome } from "../../option";
 import { pipe, Operator } from "../../functions";
+import { none, Option, isSome } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";

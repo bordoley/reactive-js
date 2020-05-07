@@ -1,11 +1,4 @@
-import {
-  httpRequestToUntypedHeaders,
-  parseHttpResponseFromHeaders,
-  HttpResponse,
-  HttpClientRequestStatusType,
-  HttpClient,
-  HttpClientRequestStatus,
-} from "../../http.ts";
+import { pipe } from "../../../../core/lib/functions.ts";
 import {
   fromPromise,
   publish,
@@ -17,11 +10,18 @@ import {
   ObservableLike,
   createObservable,
 } from "../../../../core/lib/observable.ts";
+import { isSome } from "../../../../core/lib/option.ts";
+import {
+  httpRequestToUntypedHeaders,
+  parseHttpResponseFromHeaders,
+  HttpResponse,
+  HttpClientRequestStatusType,
+  HttpClient,
+  HttpClientRequestStatus,
+} from "../../http.ts";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces.ts";
-import { isSome } from "../../../../core/lib/option.ts";
-import { pipe } from "../../../../core/lib/functions.ts";
 
 const loadBodyContent = async (
   response: HttpResponse<Response>,

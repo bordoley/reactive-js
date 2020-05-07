@@ -1,5 +1,4 @@
 import { Operator } from "../../functions";
-
 import { EnumerableLike } from "./interfaces";
 
 export const forEach = <T>(

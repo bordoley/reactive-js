@@ -1,5 +1,5 @@
-import { SchedulerLike } from "../../scheduler.ts";
 import { pipe } from "../../functions.ts";
+import { SchedulerLike } from "../../scheduler.ts";
 import { createObservable } from "./createObservable.ts";
 import { ObservableOperator } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";

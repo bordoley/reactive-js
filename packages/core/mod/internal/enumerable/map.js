@@ -1,5 +1,5 @@
-import { none } from "../../option.js";
 import { AbstractDisposable } from "../../disposable.js";
+import { none } from "../../option.js";
 import { lift } from "./lift.js";
 class MapEnumerator extends AbstractDisposable {
     constructor(delegate, mapper) {

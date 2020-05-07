@@ -3,21 +3,21 @@ import {
   SerialDisposableLike,
   Exception,
 } from "../../disposable.ts";
+import { pipe, returns } from "../../functions.ts";
 import { isSome } from "../../option.ts";
+import { concat } from "./concat.ts";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { pipe, returns } from "../../functions.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 import { throws } from "./throws.ts";
-import { concat } from "./concat.ts";
 
 /** Symbol thrown when the timeout operator times out */
 export const timeoutError = Symbol("TimeoutError");
