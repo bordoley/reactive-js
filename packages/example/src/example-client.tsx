@@ -21,10 +21,7 @@ import {
   Router,
   RelativeURI,
 } from "@reactive-js/react/lib/router";
-import {
-  idlePriority,
-  normalPriority,
-} from "@reactive-js/react/lib/scheduler";
+import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
 import {
   generate,
   onNotify,

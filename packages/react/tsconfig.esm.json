@@ -3,6 +3,6 @@
   "compilerOptions": {
     "module": "ES2015",
     "outDir": "./build/esm",
-    "target": "ES2019",
-  },
+    "target": "ES2019"
+  }
 }
