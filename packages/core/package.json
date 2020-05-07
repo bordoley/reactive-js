@@ -69,7 +69,7 @@
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-node" : "rm -rf ./mod/node.* ./mod/internal/node",
-    "docs": "node ./scripts/docs.mjs",
+    "docs": "node ../../scripts/docs.mjs",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest"

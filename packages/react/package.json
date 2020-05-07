@@ -65,7 +65,7 @@
     "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
     "lib-mjs-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
     "lib-types": "cp -r ./build/types/ ./lib",
-    "docs": "node ./scripts/docs.mjs",
+    "docs": "node ../../scripts/docs.mjs",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
