@@ -18,6 +18,7 @@
 
 ### Properties
 
+* [error](_observable_.dispatcherlike.md#error)
 * [isDisposed](_observable_.dispatcherlike.md#isdisposed)
 
 ### Methods
@@ -27,6 +28,16 @@
 * [dispose](_observable_.dispatcherlike.md#dispose)
 
 ## Properties
+
+###  error
+
+• **error**: *[Option](../modules/_option_.md#option)‹[Exception](../modules/_disposable_.md#exception)›*
+
+*Inherited from [DisposableLike](_disposable_.disposablelike.md).[error](_disposable_.disposablelike.md#error)*
+
+The error the disposable was disposed with if disposed.
+
+___
 
 ###  isDisposed
 
@@ -40,7 +51,7 @@
 
 ###  add
 
-▸ **add**(`disposable`: DisposableOrTeardown): *this*
+▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *this*
 
 *Inherited from [DisposableLike](_disposable_.disposablelike.md).[add](_disposable_.disposablelike.md#add)*
 
@@ -50,7 +61,7 @@ Adds the given disposable to this container or disposes it if the container has 
 
 Name | Type |
 ------ | ------ |
-`disposable` | DisposableOrTeardown |
+`disposable` | [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown) |
 
 **Returns:** *this*
 

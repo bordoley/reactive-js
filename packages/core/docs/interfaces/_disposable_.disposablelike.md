@@ -37,6 +37,7 @@ Represents an unmanaged resource that can be disposed.
 
 ### Properties
 
+* [error](_disposable_.disposablelike.md#error)
 * [isDisposed](_disposable_.disposablelike.md#isdisposed)
 
 ### Methods
@@ -45,6 +46,14 @@ Represents an unmanaged resource that can be disposed.
 * [dispose](_disposable_.disposablelike.md#dispose)
 
 ## Properties
+
+###  error
+
+• **error**: *[Option](../modules/_option_.md#option)‹[Exception](../modules/_disposable_.md#exception)›*
+
+The error the disposable was disposed with if disposed.
+
+___
 
 ###  isDisposed
 
@@ -56,7 +65,7 @@ Represents an unmanaged resource that can be disposed.
 
 ###  add
 
-▸ **add**(`disposable`: DisposableOrTeardown): *this*
+▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *this*
 
 Adds the given disposable to this container or disposes it if the container has been disposed.
 
@@ -64,7 +73,7 @@ Adds the given disposable to this container or disposes it if the container has 
 
 Name | Type |
 ------ | ------ |
-`disposable` | DisposableOrTeardown |
+`disposable` | [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown) |
 
 **Returns:** *this*
 

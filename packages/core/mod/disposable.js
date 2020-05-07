@@ -64,6 +64,7 @@ const _disposed = {
         doDispose(disposable);
         return _disposed;
     },
+    error: none,
     isDisposed: true,
     dispose(_) { },
 };
@@ -77,16 +78,11 @@ export class AbstractSerialDisposable extends AbstractDisposable {
         return this._inner;
     }
     set inner(newInner) {
-        if (this.isDisposed) {
-            newInner.dispose();
-        }
-        else {
-            const oldInner = this._inner;
-            this._inner = newInner;
-            if (oldInner !== newInner) {
-                this.add(newInner);
-                oldInner.dispose();
-            }
+        const oldInner = this._inner;
+        this._inner = newInner;
+        if (oldInner !== newInner) {
+            this.add(newInner);
+            oldInner.dispose();
         }
     }
 }

@@ -1,7 +1,7 @@
-import { isSome, none } from "./option.ts";
+import { isSome, none, Option } from "./option.ts";
 
 /**
- * A wrapper around a caught exception to handle corner cases such
+ * A wrapper around a caught error to handle corner cases such
  * as a function which throws undefined or string.
  */
 export type Exception = {
@@ -9,12 +9,17 @@ export type Exception = {
   readonly cause: unknown;
 };
 
-type DisposableOrTeardown = DisposableLike | ((error?: Exception) => void);
+export type DisposableOrTeardown = DisposableLike | ((error?: Exception) => void);
 
 /**
  * Represents an unmanaged resource that can be disposed.
  */
 export interface DisposableLike {
+  /**
+   * The error the disposable was disposed with if disposed.
+   */
+  readonly error: Option<Exception>;
+
   /**
    * `true` if this resource has been disposed, otherwise false
    */
@@ -54,7 +59,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
-  private _error?: Exception = none;
+  private _error: Option<Exception> = none;
 
   get error() {
     return this._error;
@@ -118,6 +123,7 @@ const _disposed: DisposableLike = {
     doDispose(disposable);
     return _disposed;
   },
+  error: none,
   isDisposed: true,
   dispose(_?: Exception) {},
 };
@@ -153,16 +159,12 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
   }
 
   set inner(newInner: DisposableLike) {
-    if (this.isDisposed) {
-      newInner.dispose();
-    } else {
-      const oldInner = this._inner;
-      this._inner = newInner;
+    const oldInner = this._inner;
+    this._inner = newInner;
 
-      if (oldInner !== newInner) {
-        this.add(newInner);
-        oldInner.dispose();
-      }
+    if (oldInner !== newInner) {
+      this.add(newInner);
+      oldInner.dispose();
     }
   }
 }
@@ -181,7 +183,7 @@ export const createSerialDisposable = (): SerialDisposableLike =>
  * @noInheritDoc
  */
 export interface DisposableValueLike<T> extends DisposableLike {
-  value: T;
+  readonly value: T;
 }
 
 class DisposableValueImpl<T> extends AbstractDisposable
