@@ -28,7 +28,7 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
  */
 export const throws = <T>(
   errorFactory: () => unknown,
-  delay = 0,
+  { delay }: { delay: number } = { delay: 0 },
 ): ObservableLike<T> => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new ThrowsProducer(subscriber, errorFactory, delay);
