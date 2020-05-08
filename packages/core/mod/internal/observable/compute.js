@@ -11,7 +11,7 @@ class ComputeProducer extends AbstractProducer {
         return -1;
     }
 }
-export const compute = (delay = 0) => valueFactory => {
+export const compute = ({ delay } = { delay: 0 }) => valueFactory => {
     const factory = (subscriber) => new ComputeProducer(subscriber, valueFactory, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)

@@ -28,7 +28,7 @@ class ComputeProducer<T> extends AbstractProducer<T> {
  * @param delay The delay before emitting the value.
  */
 export const compute = <T>(
-  delay = 0,
+  { delay } = { delay: 0 },
 ): Operator<() => T, ObservableLike<T>> => valueFactory => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new ComputeProducer(subscriber, valueFactory, delay);
