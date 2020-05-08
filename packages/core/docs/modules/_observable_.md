@@ -245,7 +245,7 @@ void is returned.
 a function that takes source error and either returns an `ObservableLike`
 to continue with or void if the error should be propagated.
 
-▸ (`error`: unknown): *[Option](_option_.md#option)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ (`error`: unknown): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void*
 
 **Parameters:**
 

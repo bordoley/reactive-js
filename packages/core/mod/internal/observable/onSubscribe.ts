@@ -4,6 +4,7 @@ import {
   ObservableOperator,
 } from "./interfaces.ts";
 import { DisposableOrTeardown } from "../../disposable.ts";
+import { isSome, none } from "../../option.ts";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -15,8 +16,8 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     try {
       this.src.subscribe(subscriber);
-      const disposable = this.f();
-      if (disposable) {
+      const disposable = this.f() || none;
+      if (isSome(disposable)) {
         subscriber.add(disposable);
       }
     } catch (cause) {

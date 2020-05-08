@@ -1,9 +1,10 @@
+import { DisposableOrTeardown } from "../../disposable";
+import { isSome, none } from "../../option";
 import {
   ObservableLike,
   SubscriberLike,
   ObservableOperator,
 } from "./interfaces";
-import { DisposableOrTeardown } from "../../disposable";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -15,8 +16,8 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
   subscribe(subscriber: SubscriberLike<T>) {
     try {
       this.src.subscribe(subscriber);
-      const disposable = this.f();
-      if (disposable) {
+      const disposable = this.f() || none;
+      if (isSome(disposable)) {
         subscriber.add(disposable);
       }
     } catch (cause) {

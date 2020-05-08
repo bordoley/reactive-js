@@ -2,9 +2,9 @@ import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
 } from "../../enumerable";
+import { Operator, compose } from "../../functions";
 import { fromEnumerable } from "./fromEnumerable";
 import { ObservableLike } from "./interfaces";
-import { Operator, compose } from "../../functions";
 
 /**
  * Creates an `ObservableLike` which iterates through the values
