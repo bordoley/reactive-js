@@ -128,7 +128,8 @@ export const tests = describe(
     )),
   describe(
     "noneSatisfy",
-    test("source is empty", () => pipe(empty(), noneSatisfy(alwaysFalse), expectTrue)),
+    test("source is empty", () =>
+      pipe(empty(), noneSatisfy(alwaysFalse), expectTrue)),
     test("source values pass predicate", () =>
       pipe([1, 2, 3], fromArray, noneSatisfy(alwaysTrue), expectFalse)),
     test("source values fail predicate", () =>

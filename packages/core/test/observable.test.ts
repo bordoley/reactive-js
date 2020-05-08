@@ -92,6 +92,7 @@ export const tests = describe(
       expectEquals(0),
     );
   }),
+
   test("buffer", () => {
     pipe(
       fromScheduledValues(
@@ -125,11 +126,11 @@ export const tests = describe(
       combineLatest(
         [
           pipe(
-            generate((i: number) => i + 2, returns(3), 2),
+            generate((i: number) => i + 2, returns(3), { delay: 2 }),
             takeFirst(3),
           ),
           pipe(
-            generate((i: number) => i + 2, returns(2), 3),
+            generate((i: number) => i + 2, returns(2), { delay: 3 }),
             takeFirst(2),
           ),
         ],
@@ -195,9 +196,21 @@ export const tests = describe(
     test("source is empty", () =>
       pipe(empty(), everySatisfy(alwaysFalse), toValue(), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), toValue(), expectTrue)),
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        everySatisfy(alwaysTrue),
+        toValue(),
+        expectTrue,
+      )),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), toValue(), expectFalse)),
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        everySatisfy(alwaysFalse),
+        toValue(),
+        expectFalse,
+      )),
   ),
 
   describe(
@@ -305,9 +318,21 @@ export const tests = describe(
     test("source is empty", () =>
       pipe(empty(), noneSatisfy(alwaysFalse), toValue(), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray(), noneSatisfy(alwaysTrue), toValue(), expectFalse)),
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        noneSatisfy(alwaysTrue),
+        toValue(),
+        expectFalse,
+      )),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray(), noneSatisfy(alwaysFalse), toValue(), expectTrue)),
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        noneSatisfy(alwaysFalse),
+        toValue(),
+        expectTrue,
+      )),
   ),
 
   test("reduce", () =>
@@ -365,13 +390,13 @@ export const tests = describe(
       buffer(),
       onNotify(expectArrayEquals([2, 4, 6])),
       subscribe(scheduler),
-    ).add(e => { 
-      err = e
+    ).add(e => {
+      err = e;
     });
 
     scheduler.run();
 
-    if(err !== undefined) {
+    if (err !== undefined) {
       const { cause } = err;
       throw cause;
     }
@@ -426,7 +451,7 @@ export const tests = describe(
     "throttle",
     test("first", () =>
       pipe(
-        generate(increment, returns<number>(0), 1),
+        generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(100),
         throttle(50, ThrottleMode.First),
         toArray(),
@@ -435,7 +460,7 @@ export const tests = describe(
 
     test("last", () =>
       pipe(
-        generate(increment, returns<number>(0), 1),
+        generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(200),
         throttle(50, ThrottleMode.Last),
         toArray(),
@@ -444,7 +469,7 @@ export const tests = describe(
 
     test("interval", () =>
       pipe(
-        generate(increment, returns<number>(0), 1),
+        generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(200),
         throttle(75, ThrottleMode.Interval),
         toArray(),

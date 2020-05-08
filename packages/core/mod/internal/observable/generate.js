@@ -40,7 +40,7 @@ class GenerateProducer extends AbstractProducer {
         return delay;
     }
 }
-export function generate(generator, initialValue, delay = 0) {
+export function generate(generator, initialValue, { delay } = { delay: 0 }) {
     const factory = (subscriber) => new GenerateProducer(subscriber, generator, initialValue(), delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)

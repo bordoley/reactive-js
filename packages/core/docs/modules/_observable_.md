@@ -1163,7 +1163,7 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Generates an `ObservableLike` sequence from a generator function
 that is applied to an accumulator value with a specified `delay`
@@ -1193,9 +1193,11 @@ Factory function used to generate the initial accumulator.
 
 ▸ (): *T*
 
-▪`Default value`  **delay**: *number*= 0
+▪`Default value`  **__namedParameters**: *object*= { delay: 0}
 
-The requested delay between emitted items by the observable.
+Name | Type | Description |
+------ | ------ | ------ |
+`delay` | number | The requested delay between emitted items by the observable.  |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 

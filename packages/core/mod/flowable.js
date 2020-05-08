@@ -12,9 +12,9 @@ export const fromValue = (data) => pipe(genMap(function* (mode) {
             yield { type: 2 };
     }
 }), createStreamable);
-export const generate = (generator, initialValue, delay = 0) => {
+export const generate = (generator, initialValue, { delay } = { delay: 0 }) => {
     const reducer = (acc, ev) => ev === 1
-        ? generateObs(generator, returns(acc), delay)
+        ? generateObs(generator, returns(acc), { delay })
         : emptyObs();
     const op = compose(scanAsync(reducer, initialValue, 1), mapObs(data => ({ type: 1, data })));
     return createStreamable(op);
