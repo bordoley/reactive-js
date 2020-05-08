@@ -11,7 +11,9 @@ export const tests = describe(
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
 
-    const transformed = pipe(str, fromValue, encode, decode()).stream(scheduler);
+    const transformed = pipe(str, fromValue, encode, decode()).stream(
+      scheduler,
+    );
 
     let result = "";
     pipe(

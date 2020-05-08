@@ -1,4 +1,7 @@
-import { fromIterable as fromIterableEnumerable, EnumeratorLike } from "./enumerable.ts";
+import {
+  fromIterable as fromIterableEnumerable,
+  EnumeratorLike,
+} from "./enumerable.ts";
 import { compose, pipe, Operator, returns } from "./functions.ts";
 import {
   compute,

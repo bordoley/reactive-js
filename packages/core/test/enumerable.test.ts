@@ -93,12 +93,7 @@ export const tests = describe(
   describe(
     "first",
     test("when enumerable is not empty", () =>
-      pipe(
-        () => 1,
-        compute,
-        first,
-        expectEquals(1),
-      )),
+      pipe(() => 1, compute, first, expectEquals(1))),
     test("when enumerable is empty", () => pipe(empty(), first, expectNone)),
   ),
   test("flatMap", () =>

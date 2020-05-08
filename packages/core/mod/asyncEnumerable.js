@@ -1,4 +1,4 @@
-import { fromIterable as fromIterableEnumerable } from "./enumerable.js";
+import { fromIterable as fromIterableEnumerable, } from "./enumerable.js";
 import { compose, pipe, returns } from "./functions.js";
 import { compute, map, merge, onNotify, switchAll, takeLast, using, onSubscribe, empty, withLatestFrom, takeFirst, scan, takeWhile, } from "./observable.js";
 import { onNotify as onNotifyStream, identity, createStreamable, } from "./streamable.js";

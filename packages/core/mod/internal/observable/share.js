@@ -22,7 +22,9 @@ class SharedObservable {
     subscribe(subscriber) {
         if (this.subscriberCount === 0) {
             this.subject = this.factory();
-            this.subject.add(pipe(this.source, onNotify(this.onNotify), subscribe(this.scheduler)));
+            const srcSubscription = pipe(this.source, onNotify(this.onNotify), subscribe(this.scheduler));
+            this.subject.add(srcSubscription);
+            srcSubscription.add(this.subject);
         }
         this.subscriberCount++;
         const subject = this.subject;
