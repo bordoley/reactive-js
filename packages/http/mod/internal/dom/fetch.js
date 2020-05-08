@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/lib/functions.js";
-import { fromPromise, publish, ofValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
+import { fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
@@ -57,11 +57,11 @@ export const sendHttpRequestUsingFetch = request => {
             subscriber.dispose({ cause });
         }
     });
-    const mapResponseBody = switchMap((response) => using(scheduler => pipe(fromPromise(() => loadBodyContent(response)), publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => ofValue({
+    const mapResponseBody = switchMap((response) => using(scheduler => pipe(fromPromise(() => loadBodyContent(response)), publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({
         ...response,
         body,
     })));
-    return concat(ofValue({
+    return concat(fromValue()({
         type: 1,
     }), pipe(fetchResponse, mapResponseBody, map(response => ({
         type: 4,

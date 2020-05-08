@@ -28,7 +28,7 @@ export { fromScheduledValues } from "./internal/observable/fromScheduledValues.t
 export { generate } from "./internal/observable/generate.ts";
 export { merge } from "./internal/observable/merge.ts";
 export { never } from "./internal/observable/never.ts";
-export { ofValue } from "./internal/observable/ofValue.ts";
+export { fromValue } from "./internal/observable/fromValue.ts";
 export { subscribe } from "./internal/observable/subscribe.ts";
 export { throws } from "./internal/observable/throws.ts";
 export { using } from "./internal/observable/using.ts";

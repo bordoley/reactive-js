@@ -9,7 +9,7 @@ import {
   ObservableLike,
   createObservable,
   subscribe,
-  ofValue,
+  fromValue,
   onNotify,
 } from "./observable";
 import { isSome, isNone, none } from "./option";
@@ -111,7 +111,7 @@ const tryDispatch = <TResource extends DisposableLike>(
 
     // Setup the timeout subscription
     const timeoutSubscription = pipe(
-      ofValue(none, maxIdleTime),
+      fromValue(maxIdleTime)(none),
       onNotify(_ => {
         const resource = availableResources.pop(key);
         if (isSome(resource)) {

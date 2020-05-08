@@ -189,7 +189,7 @@ class ZipObservable<T> implements ObservableLike<T> {
       using(
         _ => this.observables.map(subscribeInteractive),
         (...enumerators: EnumeratorSubscriber<any>[]) =>
-          fromEnumerator(zipEnumerators(enumerators, this.selector)),
+          fromEnumerator()(zipEnumerators(enumerators, this.selector)),
       ).subscribe(subscriber);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];

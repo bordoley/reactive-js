@@ -8,5 +8,5 @@ import { ObservableOperator } from "./interfaces.ts";
  */
 export function endWith<T>(value: T, ...values: T[]): ObservableOperator<T, T>;
 export function endWith<T>(...values: T[]): ObservableOperator<T, T> {
-  return obs => concat(obs, fromArray(values));
+  return obs => concat(obs, fromArray()(values));
 }

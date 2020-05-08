@@ -21,7 +21,7 @@ import {
 import {
   map,
   subscribe,
-  ofValue,
+  fromValue,
   ObservableLike,
   onNotify,
   catchError,
@@ -89,7 +89,7 @@ const routerHandlerPrintParams: HttpServer<
     }),
     encodeHttpResponseWithIConv("application/json"),
     toFlowableHttpResponse,
-    ofValue,
+    fromValue(),
   );
 
 const routerHandlerEventStream: HttpServer<
@@ -113,7 +113,7 @@ const routerHandlerEventStream: HttpServer<
     },
   });
 
-  return ofValue(response);
+  return fromValue()(response);
 };
 
 const routerHandlerFiles: HttpServer<
@@ -165,7 +165,7 @@ const notFound: Operator<
     }),
     encodeHttpResponseWithIConv("text/plain"),
     toFlowableHttpResponse,
-    ofValue,
+    fromValue(),
   );
 
 const router = createRoutingHttpServer(
@@ -182,7 +182,8 @@ const router = createRoutingHttpServer(
 const listener = createHttpRequestListener(
   req =>
     pipe(
-      ofValue(req),
+      req,
+      fromValue(),
       map(
         compose(
           disallowProtocolAndHostForwarding(),
@@ -216,7 +217,7 @@ const listener = createHttpRequestListener(
           }),
           encodeHttpResponseWithIConv("text/plain"),
           toFlowableHttpResponse,
-          ofValue,
+          fromValue(),
         );
       }),
     ),
@@ -304,9 +305,9 @@ pipe(
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
           scheduler => status.response.body.stream(scheduler),
-          pipe("done", ofValue, returns),
+          pipe("done", fromValue(), returns),
         )
-      : ofValue(JSON.stringify(status)),
+      : fromValue()(JSON.stringify(status)),
   ),
   onNotify(console.log),
   subscribe(scheduler),

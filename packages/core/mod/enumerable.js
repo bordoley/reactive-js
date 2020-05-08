@@ -12,7 +12,7 @@ export { generate } from "./internal/enumerable/generate.js";
 export { lift } from "./internal/enumerable/lift.js";
 export { keep, keepType } from "./internal/enumerable/keep.js";
 export { map } from "./internal/enumerable/map.js";
-export { ofValue } from "./internal/enumerable/ofValue.js";
+export { fromValue } from "./internal/enumerable/fromValue.js";
 export { reduce } from "./internal/enumerable/reduce.js";
 export { repeat } from "./internal/enumerable/repeat.js";
 export { scan } from "./internal/enumerable/scan.js";

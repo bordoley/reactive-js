@@ -1,4 +1,4 @@
-import { ofValue, FlowMode, FlowEventType } from "../src/flowable";
+import { fromValue, FlowMode, FlowEventType } from "../src/flowable";
 import { pipe } from "../src/functions";
 import { onNotify, scan, subscribe } from "../src/observable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -11,7 +11,7 @@ export const tests = describe(
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
 
-    const transformed = pipe(ofValue(str), encode, decode()).stream(scheduler);
+    const transformed = pipe(str, fromValue, encode, decode()).stream(scheduler);
 
     let result = "";
     pipe(

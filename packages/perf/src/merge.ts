@@ -34,7 +34,7 @@ export const run = (m: number, n: number) => {
       } = require("@reactive-js/core/lib/observable");
       const { run } = require("./reactive-js-runner");
 
-      const streams = src.map(x => fromArray(x));
+      const streams = src.map(x => fromArray()(x));
       const observable = pipe(
         merge(...streams),
         reduce(sum, () => 0),

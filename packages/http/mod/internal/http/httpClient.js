@@ -1,5 +1,5 @@
 import { pipe, identity } from "../../../../core/lib/functions.js";
-import { ofValue, map, switchMap, concatMap, } from "../../../../core/lib/observable.js";
+import { fromValue, map, switchMap, concatMap, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { createRedirectHttpRequest } from "./httpRequest.js";
 const redirectCodes = [
@@ -10,7 +10,7 @@ const redirectCodes = [
     308,
 ];
 export const withDefaultBehaviors = (encodeHttpRequest = identity) => (httpClient) => {
-    const sendRequest = (request) => pipe(ofValue(request), map(encodeHttpRequest), switchMap(httpClient), concatMap(status => {
+    const sendRequest = (request) => pipe(request, fromValue(), map(encodeHttpRequest), switchMap(httpClient), concatMap(status => {
         var _a, _b;
         if (status.type === 4) {
             const { response } = status;
@@ -32,7 +32,7 @@ export const withDefaultBehaviors = (encodeHttpRequest = identity) => (httpClien
                 return sendRequest(newRequest);
             }
         }
-        return ofValue(status);
+        return fromValue()(status);
     }));
     return sendRequest;
 };

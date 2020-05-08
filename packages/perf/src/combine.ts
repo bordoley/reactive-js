@@ -18,8 +18,8 @@ export const run = (n: number) => {
       } = require("@reactive-js/core/lib/observable");
       const { run } = require("./reactive-js-runner");
 
-      const arrayObs = fromArray(src);
-      const other = fromArray([0]);
+      const arrayObs = fromArray()(src);
+      const other = fromArray()([0]);
 
       const observable = pipe(
         combineLatest([other, other, arrayObs], add3),

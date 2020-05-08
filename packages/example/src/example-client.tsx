@@ -18,7 +18,7 @@ import {
   generate,
   onNotify,
   subscribe,
-  ofValue,
+  fromValue,
   concatMap,
   using,
   throttle,
@@ -181,7 +181,7 @@ pipe(
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(returns(status.response.body), body => body.text)
-      : ofValue(JSON.stringify(status)),
+      : fromValue()(JSON.stringify(status)),
   ),
   onNotify(console.log),
   subscribe(normalPriority),

@@ -20,7 +20,8 @@ export const run = (n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const observable = pipe(
-        fromArray(src),
+        src,
+        fromArray(),
         keep(even),
         map(add1),
         reduce(sum, () => 0),

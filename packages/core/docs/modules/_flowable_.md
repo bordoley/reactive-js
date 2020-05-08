@@ -23,9 +23,9 @@
 
 * [empty](_flowable_.md#const-empty)
 * [fromObservable](_flowable_.md#const-fromobservable)
+* [fromValue](_flowable_.md#const-fromvalue)
 * [generate](_flowable_.md#const-generate)
 * [map](_flowable_.md#const-map)
-* [ofValue](_flowable_.md#const-ofvalue)
 
 ## Type aliases
 
@@ -66,6 +66,24 @@ ___
 Name | Type |
 ------ | ------ |
 `observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
+
+**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+
+___
+
+### `Const` fromValue
+
+▸ **fromValue**<**T**>(`data`: T): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
@@ -124,21 +142,3 @@ Name | Type |
 `v` | TA |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
-
-___
-
-### `Const` ofValue
-
-▸ **ofValue**<**T**>(`data`: T): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | T |
-
-**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*

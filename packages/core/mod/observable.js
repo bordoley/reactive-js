@@ -13,7 +13,7 @@ export { fromScheduledValues } from "./internal/observable/fromScheduledValues.j
 export { generate } from "./internal/observable/generate.js";
 export { merge } from "./internal/observable/merge.js";
 export { never } from "./internal/observable/never.js";
-export { ofValue } from "./internal/observable/ofValue.js";
+export { fromValue } from "./internal/observable/fromValue.js";
 export { subscribe } from "./internal/observable/subscribe.js";
 export { throws } from "./internal/observable/throws.js";
 export { using } from "./internal/observable/using.js";

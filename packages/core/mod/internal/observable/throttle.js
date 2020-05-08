@@ -2,7 +2,7 @@ import { createSerialDisposable, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none, isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
-import { ofValue } from "./ofValue.js";
+import { fromValue } from "./fromValue.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
@@ -38,7 +38,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
         };
         this.add(this.durationSubscription).add(error => {
             if (isNone(error) && mode !== 1 && this.hasValue) {
-                ofValue(this.value).subscribe(delegate);
+                fromValue()(this.value).subscribe(delegate);
             }
             else {
                 delegate.dispose(error);
@@ -63,7 +63,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export function throttle(duration, mode = 3) {
-    const durationSelector = typeof duration === "number" ? (_) => ofValue(none, duration) : duration;
+    const durationSelector = typeof duration === "number" ? (_) => fromValue(duration)(none) : duration;
     const operator = (subscriber) => new ThrottleSubscriber(subscriber, durationSelector, mode);
     operator.isSynchronous = false;
     return lift(operator);

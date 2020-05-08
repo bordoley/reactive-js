@@ -18,7 +18,7 @@ class TakeLastSubscriber extends AbstractDelegatingSubscriber {
                 delegate.dispose(error);
             }
             else {
-                fromArray(last).subscribe(delegate);
+                fromArray()(last).subscribe(delegate);
             }
         });
     }

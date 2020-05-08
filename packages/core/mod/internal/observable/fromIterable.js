@@ -1,4 +1,11 @@
 import { fromIterable as enumerableFromIterable, fromIterator as enumerableFromIterator, } from "../../enumerable.js";
 import { fromEnumerable } from "./fromEnumerable.js";
-export const fromIterator = (f, delay = 0) => fromEnumerable(enumerableFromIterator(f), delay);
-export const fromIterable = (iterable, delay = 0) => fromEnumerable(enumerableFromIterable(iterable), delay);
+import { compose } from "../../functions.js";
+export const fromIterator = (delay = 0) => {
+    const call = fromEnumerable(delay);
+    return compose(enumerableFromIterator, call);
+};
+export const fromIterable = (delay = 0) => {
+    const call = fromEnumerable(delay);
+    return compose(enumerableFromIterable, call);
+};

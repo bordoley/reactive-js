@@ -1,4 +1,4 @@
-import { FlowableLike, ofValue } from "../../../../core/lib/flowable.ts";
+import { FlowableLike, fromValue } from "../../../../core/lib/flowable.ts";
 import { Operator } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
@@ -73,5 +73,5 @@ export const toFlowableHttpMessage = <TBody>({
   ...msg
 }: HttpMessage<TBody>): HttpMessage<FlowableLike<TBody>> => ({
   ...msg,
-  body: ofValue(body),
+  body: fromValue(body),
 });

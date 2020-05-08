@@ -8,7 +8,7 @@ import {
 } from "../src/asyncEnumerable";
 import { Exception } from "../src/disposable";
 import { pipe, increment, returns } from "../src/functions";
-import { subscribe, onNotify, ofValue, toValue } from "../src/observable";
+import { subscribe, onNotify, fromValue, toValue } from "../src/observable";
 import { none, Option } from "../src/option";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
@@ -65,7 +65,7 @@ export const tests = describe(
       enumerable,
       reduceAsync(
         (acc, next) =>
-          ofValue({
+          fromValue()({
             type: ReducerRequestType.Continue,
             acc: acc + next,
           }),
@@ -79,7 +79,7 @@ export const tests = describe(
       enumerable,
       reduceAsync(
         (acc, next) =>
-          ofValue(
+          fromValue()(
             acc > 0
               ? {
                   type: ReducerRequestType.Done,

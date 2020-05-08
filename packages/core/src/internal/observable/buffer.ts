@@ -8,7 +8,7 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { never } from "./never";
-import { ofValue } from "./ofValue";
+import { fromValue } from "./fromValue";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
@@ -52,7 +52,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
       const buffer = this.buffer;
       this.buffer = [];
       if (isNone(error) && buffer.length > 0) {
-        ofValue(buffer).subscribe(delegate);
+        fromValue()(buffer).subscribe(delegate);
       } else {
         delegate.dispose(error);
       }
@@ -101,7 +101,7 @@ export function buffer<T>(
     duration === Number.MAX_SAFE_INTEGER
       ? never
       : typeof duration === "number"
-      ? (_: T) => ofValue(none, duration)
+      ? (_: T) => fromValue(duration)(none)
       : duration;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;

@@ -1,4 +1,4 @@
-import { FlowableLike, ofValue } from "@reactive-js/core/lib/flowable";
+import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
 import { Operator } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
@@ -73,5 +73,5 @@ export const toFlowableHttpMessage = <TBody>({
   ...msg
 }: HttpMessage<TBody>): HttpMessage<FlowableLike<TBody>> => ({
   ...msg,
-  body: ofValue(body),
+  body: fromValue(body),
 });

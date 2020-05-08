@@ -18,7 +18,7 @@ export {
 export { lift } from "./internal/enumerable/lift.ts";
 export { keep, keepType } from "./internal/enumerable/keep.ts";
 export { map } from "./internal/enumerable/map.ts";
-export { ofValue } from "./internal/enumerable/ofValue.ts";
+export { fromValue } from "./internal/enumerable/fromValue.ts";
 export { reduce } from "./internal/enumerable/reduce.ts";
 export { repeat } from "./internal/enumerable/repeat.ts";
 export { scan } from "./internal/enumerable/scan.ts";

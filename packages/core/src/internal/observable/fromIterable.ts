@@ -4,6 +4,7 @@ import {
 } from "../../enumerable";
 import { fromEnumerable } from "./fromEnumerable";
 import { ObservableLike } from "./interfaces";
+import { Operator, compose } from "../../functions";
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -13,9 +14,11 @@ import { ObservableLike } from "./interfaces";
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
-  f: () => Iterator<T, TReturn, TNext>,
   delay = 0,
-): ObservableLike<T> => fromEnumerable(enumerableFromIterator(f), delay);
+): Operator<() => Iterator<T, TReturn, TNext>, ObservableLike<T>> => {
+  const call = fromEnumerable(delay);
+  return compose(enumerableFromIterator, call);
+};
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -25,6 +28,8 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromIterable = <T>(
-  iterable: Iterable<T>,
   delay = 0,
-): ObservableLike<T> => fromEnumerable(enumerableFromIterable(iterable), delay);
+): Operator<Iterable<T>, ObservableLike<T>> => {
+  const call = fromEnumerable(delay);
+  return compose(enumerableFromIterable, call);
+};

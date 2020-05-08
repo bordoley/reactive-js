@@ -11,7 +11,7 @@ import {
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { ofValue } from "./ofValue.ts";
+import { fromValue } from "./fromValue.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
@@ -86,7 +86,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
     this.add(this.durationSubscription).add(error => {
       if (isNone(error) && mode !== ThrottleMode.First && this.hasValue) {
-        ofValue(this.value).subscribe(delegate);
+        fromValue()(this.value).subscribe(delegate);
       } else {
         delegate.dispose(error);
       }
@@ -144,7 +144,7 @@ export function throttle<T>(
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableOperator<T, T> {
   const durationSelector =
-    typeof duration === "number" ? (_: T) => ofValue(none, duration) : duration;
+    typeof duration === "number" ? (_: T) => fromValue(duration)(none) : duration;
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrottleSubscriber(subscriber, durationSelector, mode);
   operator.isSynchronous = false;

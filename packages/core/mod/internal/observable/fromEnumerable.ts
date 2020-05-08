@@ -1,5 +1,5 @@
 import { EnumeratorLike, EnumerableLike } from "../../enumerable.ts";
-import { alwaysFalse } from "../../functions.ts";
+import { alwaysFalse, Operator } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
@@ -46,20 +46,18 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `EnumeratorLike` with a specified `delay` between emitted items.
  *
- * @param values The `Enumerator`.
  * @param delay The requested delay between emitted items by the observable.
  */
-export function fromEnumerator<T>(
-  enumerator: EnumeratorLike<T>,
+export const fromEnumerator = <T>(
   delay = 0,
-): ObservableLike<T> {
+): Operator<EnumeratorLike<T>, ObservableLike<T>> => enumerator => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromEnumeratorProducer(subscriber, enumerator, delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);
-}
+};
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -68,10 +66,9 @@ export function fromEnumerator<T>(
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-export function fromEnumerable<T>(
-  enumerable: EnumerableLike<T>,
+export const fromEnumerable = <T>(
   delay = 0,
-): ObservableLike<T> {
+): Operator<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
   const factory = (subscriber: SubscriberLike<T>) => {
     const enumerator = enumerable.enumerate();
     return new FromEnumeratorProducer(subscriber, enumerator, delay);
@@ -80,4 +77,4 @@ export function fromEnumerable<T>(
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);
-}
+};
