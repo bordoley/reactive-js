@@ -991,7 +991,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromEnumerable**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which enumerates through the values
 produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -1002,9 +1002,11 @@ produced by the provided `Enumerable` with a specified `delay` between emitted i
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`delay` | number | 0 | The requested delay between emitted items by the observable.  |
+▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -1012,7 +1014,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterable**<**T**>(`config`: object): *[Operator](_functions_.md#operator)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterable` with a specified `delay` between emitted items.
@@ -1023,9 +1025,11 @@ produced by the provided `Iterable` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`delay` | number | 0 | The requested delay between emitted items by the observable.  |
+▪`Default value`  **config**: *object*= { delay: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[Operator](_functions_.md#operator)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -1033,7 +1037,7 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`delay`: number): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -1048,9 +1052,11 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`delay` | number | 0 | The requested delay between emitted items by the observable.  |
+▪`Default value`  **config**: *object*= { delay: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -1103,7 +1109,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromValue**<**T**>(`config`: object): *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
 
@@ -1113,9 +1119,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`delay` | number | 0 | The delay before emitting the value.  |
+▪`Default value`  **config**: *object*= { delay: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 

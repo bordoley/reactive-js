@@ -36,7 +36,7 @@ export const fromEnumerator = (delay = 0) => enumerator => {
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);
 };
-export const fromEnumerable = (delay = 0) => enumerable => {
+export const fromEnumerable = ({ delay } = { delay: 0 }) => enumerable => {
     const factory = (subscriber) => {
         const enumerator = enumerable.enumerate();
         return new FromEnumeratorProducer(subscriber, enumerator, delay);

@@ -1,4 +1,5 @@
 import {
+  compose,
   pipe,
   returns,
   increment,
@@ -84,7 +85,7 @@ export const tests = describe(
     pipe(
       [0, 1, 2, 3, 4],
       fromArray(),
-      await_(x => concat(fromValue()(x), fromValue()(1))),
+      await_(compose(fromValue(), endWith(1))),
       toValue(),
       expectEquals(0),
     );
@@ -473,10 +474,10 @@ export const tests = describe(
   describe(
     "timeout",
     test("throws when a timeout occurs", () =>
-      pipe(() => pipe(1, fromValue(2), timeout(1), toArray()), expectToThrow)),
+      pipe(() => pipe(1, fromValue({delay: 2}), timeout(1), toArray()), expectToThrow)),
 
     test("when timeout is greater than observed time", () =>
-      pipe(1, fromValue(2), timeout(3), toValue(), expectEquals(1))),
+      pipe(1, fromValue({delay: 2}), timeout(3), toValue(), expectEquals(1))),
   ),
 
   describe(

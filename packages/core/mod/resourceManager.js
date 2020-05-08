@@ -51,7 +51,7 @@ const tryDispatch = (resourceManager, key) => {
     subscriber.add(() => {
         inUseResources.remove(key, subscriber);
         availableResources.push(key, resource);
-        const timeoutSubscription = pipe(fromValue(maxIdleTime)(none), onNotify(_ => {
+        const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
             const resource = availableResources.pop(key);
             if (isSome(resource)) {
                 resource.dispose();
