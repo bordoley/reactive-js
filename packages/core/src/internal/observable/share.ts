@@ -1,52 +1,47 @@
 import { pipe } from "../../functions";
 import { none, Option } from "../../option";
 import { SchedulerLike } from "../../scheduler";
-import { createSubject } from "./createSubject";
 import {
   ObservableLike,
   ObservableOperator,
   SubjectLike,
   SubscriberLike,
+  MulticastObservableLike,
 } from "./interfaces";
-import { onNotify } from "./onNotify";
-import { subscribe } from "./subscribe";
+import { publish } from "./publish";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private subscriberCount = 0;
-  private subject: Option<SubjectLike<T>>;
+  private multicast: Option<MulticastObservableLike<T>>;
   private readonly teardown = () => {
     this.subscriberCount--;
 
     if (this.subscriberCount === 0) {
-      (this.subject as SubjectLike<T>).dispose();
-      this.subject = none;
+      (this.multicast as MulticastObservableLike<T>).dispose();
+      this.multicast = none;
     }
   };
 
   readonly isSynchronous = false;
 
-  private readonly onNotify = (next: T) =>
-    (this.subject as SubjectLike<T>).dispatch(next);
-
   constructor(
-    private readonly factory: () => SubjectLike<T>,
     private readonly source: ObservableLike<T>,
     private readonly scheduler: SchedulerLike,
+    private readonly replay: number,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>): void {
     if (this.subscriberCount === 0) {
-      this.subject = this.factory();
-      const srcSubscription = 
-        pipe(this.source, onNotify(this.onNotify), subscribe(this.scheduler));
-      this.subject.add(srcSubscription);
-      srcSubscription.add(this.subject);
+      this.multicast = pipe(
+        this.source,
+        publish(this.scheduler, this.replay)
+      );
     }
     this.subscriberCount++;
 
-    const subject = this.subject as SubjectLike<T>;
+    const multicast = this.multicast as SubjectLike<T>;
 
-    subject.subscribe(subscriber);
+    multicast.subscribe(subscriber);
     subscriber.add(this.teardown);
   }
 }
@@ -62,8 +57,6 @@ class SharedObservable<T> implements ObservableLike<T> {
  */
 export const share = <T>(
   scheduler: SchedulerLike,
-  replayCount?: number,
-): ObservableOperator<T, T> => {
-  const factory = () => createSubject(replayCount);
-  return observable => new SharedObservable(factory, observable, scheduler);
-};
+  replayCount = 0,
+): ObservableOperator<T, T> => observable => 
+  new SharedObservable(observable, scheduler, replayCount);
