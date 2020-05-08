@@ -1,6 +1,5 @@
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable";
 import { pipe, alwaysFalse } from "./functions";
-import { SubscriberLike } from "./internal/observable/interfaces";
 import {
   ObservableLike,
   StreamLike,
@@ -139,9 +138,9 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
           ),
         );
 
-      const onSubscribeUnmark = (subscriber: SubscriberLike<T>) => {
+      const onSubscribeUnmark = () => {
         this.garbage.delete(key);
-        subscriber.add(onDisposeCleanup);
+        return onDisposeCleanup;
       };
 
       const observable = pipe(stream, onSubscribe(onSubscribeUnmark));

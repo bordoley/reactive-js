@@ -79,9 +79,9 @@ class ReactiveCacheImpl extends AbstractDisposable {
                     markAsGarbage(this, key, stream);
                 }
             })));
-            const onSubscribeUnmark = (subscriber) => {
+            const onSubscribeUnmark = () => {
                 this.garbage.delete(key);
-                subscriber.add(onDisposeCleanup);
+                return onDisposeCleanup;
             };
             const observable = pipe(stream, onSubscribe(onSubscribeUnmark));
             cachedValue = [stream, observable];

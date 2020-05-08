@@ -1514,13 +1514,7 @@ Executes a side-effect when the observable is subscribed.
 
 ▪ **f**: *function*
 
-▸ (`subscriber`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T›): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`subscriber` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹T› |
+▸ (): *[DisposableOrTeardown](_disposable_.md#disposableorteardown) | void*
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

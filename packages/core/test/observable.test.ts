@@ -55,6 +55,7 @@ import {
   reduce,
   skipFirst,
   switchMap,
+  onSubscribe,
   //onSubscribe,
 } from "../src/observable";
 import {
@@ -72,6 +73,9 @@ import {
   expectEquals,
   expectToThrow,
   expectPromiseToThrow,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+  expectSome,
 } from "../src/testing";
 import { Option } from "../src/option";
 import { Exception } from "../src/disposable";
@@ -327,6 +331,33 @@ export const tests = describe(
         toValue(),
         expectTrue,
       )),
+  ),
+
+  describe("onSubscribe", 
+    test("when subscribe function returns a teardown function", () => {
+      const scheduler = createVirtualTimeScheduler();
+      
+      const disp = mockFn();
+      const f = mockFn(disp);
+      
+      pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
+
+      pipe(disp, expectToHaveBeenCalledTimes(0));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      scheduler.run();
+
+      pipe(disp, expectToHaveBeenCalledTimes(1));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+
+    test("when callback function throws", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const f = () => { throw new Error() };
+      const subscription = pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
+      
+      pipe(subscription.error, expectSome);
+    }),
   ),
 
   test("reduce", () =>

@@ -3,18 +3,22 @@ import {
   SubscriberLike,
   ObservableOperator,
 } from "./interfaces";
+import { DisposableOrTeardown } from "../../disposable";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
   constructor(
     private readonly src: ObservableLike<T>,
-    private readonly f: (subscriber: SubscriberLike<T>) => void,
+    private readonly f: () => DisposableOrTeardown | void,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     try {
       this.src.subscribe(subscriber);
-      this.f(subscriber);
+      const disposable = this.f();
+      if (disposable) {
+        subscriber.add(disposable);
+      }
     } catch (cause) {
       subscriber.dispose({ cause });
     }
@@ -26,6 +30,6 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  * @param f
  */
 export const onSubscribe = <T>(
-  f: (subscriber: SubscriberLike<T>) => void,
+  f: () => DisposableOrTeardown | void,
 ): ObservableOperator<T, T> => observable =>
   new OnSubscribeObservable(observable, f);
