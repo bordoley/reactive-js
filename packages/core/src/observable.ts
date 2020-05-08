@@ -24,7 +24,6 @@ export { fromArray } from "./internal/observable/fromArray";
 export { fromEnumerable } from "./internal/observable/fromEnumerable";
 export { fromIterable, fromIterator } from "./internal/observable/fromIterable";
 export { fromPromise } from "./internal/observable/fromPromise";
-export { fromScheduledValues } from "./internal/observable/fromScheduledValues";
 export { generate } from "./internal/observable/generate";
 export { merge } from "./internal/observable/merge";
 export { never } from "./internal/observable/never";

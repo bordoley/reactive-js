@@ -57,7 +57,6 @@
 * [fromIterable](_observable_.md#const-fromiterable)
 * [fromIterator](_observable_.md#const-fromiterator)
 * [fromPromise](_observable_.md#const-frompromise)
-* [fromScheduledValues](_observable_.md#fromscheduledvalues)
 * [fromValue](_observable_.md#const-fromvalue)
 * [genMap](_observable_.md#const-genmap)
 * [generate](_observable_.md#generate)
@@ -1087,28 +1086,6 @@ Factory function to create a new `Promise` instance.
 
 ___
 
-###  fromScheduledValues
-
-▸ **fromScheduledValues**<**T**>(`value`: [number, T], ...`values`: Array‹[number, T]›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-Creates an `ObservableLike` from a series of [delay, value] tuples.
-The delay is relative to the current time.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | [number, T] |
-`...values` | Array‹[number, T]› |
-
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-___
-
 ### `Const` fromValue
 
 ▸ **fromValue**<**T**>(`config`: object): *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
@@ -1193,7 +1170,7 @@ Factory function used to generate the initial accumulator.
 
 ▸ (): *T*
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0}
+▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
 
 Name | Type | Description |
 ------ | ------ | ------ |

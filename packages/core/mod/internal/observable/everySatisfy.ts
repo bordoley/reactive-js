@@ -7,7 +7,10 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 
-class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
+class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
+  T,
+  boolean
+> {
   constructor(
     delegate: SubscriberLike<boolean>,
     private readonly predicate: (next: T) => boolean,
