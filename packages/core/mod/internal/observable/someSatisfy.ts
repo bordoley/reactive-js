@@ -1,8 +1,8 @@
 import { referenceEquals } from "../../functions.ts";
 import { isNone } from "../../option.ts";
+import { fromValue } from "./fromValue.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { fromValue } from "./fromValue.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,

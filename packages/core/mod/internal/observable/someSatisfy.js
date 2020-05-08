@@ -1,7 +1,7 @@
 import { referenceEquals } from "../../functions.js";
 import { isNone } from "../../option.js";
-import { lift } from "./lift.js";
 import { fromValue } from "./fromValue.js";
+import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {

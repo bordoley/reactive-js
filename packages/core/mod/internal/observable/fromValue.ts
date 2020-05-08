@@ -1,6 +1,6 @@
+import { Operator } from "../../functions.ts";
 import { fromArray } from "./fromArray.ts";
 import { ObservableLike } from "./interfaces.ts";
-import { Operator } from "../../functions.ts";
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.

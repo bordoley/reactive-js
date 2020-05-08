@@ -1,6 +1,7 @@
 import { createSerialDisposable } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { isNone, isSome, none } from "../../option.ts";
+import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
   ObservableOperator,
@@ -8,7 +9,6 @@ import {
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";
-import { fromValue } from "./fromValue.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {

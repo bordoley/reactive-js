@@ -5,13 +5,13 @@ import {
 } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { none, Option, isNone, isSome } from "../../option.ts";
+import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { fromValue } from "./fromValue.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
