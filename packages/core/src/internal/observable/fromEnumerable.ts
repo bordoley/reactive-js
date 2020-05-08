@@ -49,7 +49,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromEnumerator = <T>(
-  delay = 0,
+  { delay } = { delay: 0 },
 ): Operator<EnumeratorLike<T>, ObservableLike<T>> => enumerator => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromEnumeratorProducer(subscriber, enumerator, delay);
