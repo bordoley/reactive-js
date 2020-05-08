@@ -1,4 +1,7 @@
-import { fromIterable as fromIterableEnumerable, EnumeratorLike } from "./enumerable";
+import {
+  fromIterable as fromIterableEnumerable,
+  EnumeratorLike,
+} from "./enumerable";
 import { compose, pipe, Operator, returns } from "./functions";
 import {
   compute,

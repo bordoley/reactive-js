@@ -56,7 +56,7 @@ import {
   reduce,
   skipFirst,
   switchMap,
-  onSubscribe,
+  //onSubscribe,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -74,6 +74,8 @@ import {
   expectToThrow,
   expectPromiseToThrow,
 } from "../src/testing";
+import { Option } from "../src/option";
+import { Exception } from "../src/disposable";
 
 const scheduler = createHostScheduler();
 
@@ -357,20 +359,22 @@ export const tests = describe(
       share(scheduler, 1),
     );
 
-    let result = [0, 0];
+    let err: Option<Exception> = undefined;
     pipe(
-      shared,
-      withLatestFrom(shared, (a, b) => [a, b]),
-      onNotify(x => {
-        result = x;
-      }),
-      onSubscribe(_ => scheduler.run()),
+      zip([shared, shared], (a, b) => a + b),
+      buffer(),
+      onNotify(expectArrayEquals([2, 4, 6])),
       subscribe(scheduler),
-    );
+    ).add(e => { 
+      err = e
+    });
 
     scheduler.run();
 
-    pipe(result, expectArrayEquals([3, 3]));
+    if(err !== undefined) {
+      const { cause } = err;
+      throw cause;
+    }
   }),
 
   test("skipFirst", () =>
@@ -474,10 +478,13 @@ export const tests = describe(
   describe(
     "timeout",
     test("throws when a timeout occurs", () =>
-      pipe(() => pipe(1, fromValue({delay: 2}), timeout(1), toArray()), expectToThrow)),
+      pipe(
+        () => pipe(1, fromValue({ delay: 2 }), timeout(1), toArray()),
+        expectToThrow,
+      )),
 
     test("when timeout is greater than observed time", () =>
-      pipe(1, fromValue({delay: 2}), timeout(3), toValue(), expectEquals(1))),
+      pipe(1, fromValue({ delay: 2 }), timeout(3), toValue(), expectEquals(1))),
   ),
 
   describe(

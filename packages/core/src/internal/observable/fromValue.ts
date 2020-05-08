@@ -8,7 +8,9 @@ import { Operator } from "../../functions";
  * @param value The value to emit.
  * @param delay The delay before emitting the value.
  */
-export const fromValue = <T>(config = { delay: 0 }): Operator<T, ObservableLike<T>> => {
+export const fromValue = <T>(
+  config = { delay: 0 },
+): Operator<T, ObservableLike<T>> => {
   const call = fromArray(config);
   return v => call([v]);
-}
+};
