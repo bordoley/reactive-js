@@ -109,15 +109,48 @@ export const tests = describe(
     );
   }),
 
-  test("catchError", () => {
-    const error = new Error();
-    pipe(
-      throws(returns(error)),
-      catchError(_ => fromValue()(1)),
-      toValue(),
-      expectEquals(1),
-    );
-  }),
+  describe(
+    "catchError",
+    test("source completes successfully", () =>
+      pipe(
+        pipe(1, fromValue()),
+        catchError(_ => fromValue()(2)),
+        toArray(),
+        expectArrayEquals([1]),
+      )),
+    test("source throws, error caught and ignored", () => {
+      const error = new Error();
+      pipe(
+        concat(pipe(1, fromValue()), pipe(error, returns, throws)),
+        catchError(_ => {}),
+        toArray(),
+        expectArrayEquals([1]),
+      );
+    }),
+    test("source throws, continues with second observable", () => {
+      const error = new Error();
+      pipe(
+        concat(pipe(1, fromValue()), pipe(error, returns, throws)),
+        catchError(_ => fromValue()(2)),
+        toArray(),
+        expectArrayEquals([1, 2]),
+      );
+    }),
+    test("source throws, catch throws", () => {
+      const error = new Error();
+      pipe(
+        () =>
+          pipe(
+            concat(pipe(1, fromValue()), pipe(error, returns, throws)),
+            catchError(_ => {
+              throw error;
+            }),
+            toArray(),
+          ),
+        expectToThrow,
+      );
+    }),
+  ),
 
   test("combineLatest", () =>
     pipe(
@@ -333,13 +366,14 @@ export const tests = describe(
       )),
   ),
 
-  describe("onSubscribe", 
+  describe(
+    "onSubscribe",
     test("when subscribe function returns a teardown function", () => {
       const scheduler = createVirtualTimeScheduler();
-      
+
       const disp = mockFn();
       const f = mockFn(disp);
-      
+
       pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
 
       pipe(disp, expectToHaveBeenCalledTimes(0));
@@ -353,9 +387,16 @@ export const tests = describe(
 
     test("when callback function throws", () => {
       const scheduler = createVirtualTimeScheduler();
-      const f = () => { throw new Error() };
-      const subscription = pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
-      
+      const f = () => {
+        throw new Error();
+      };
+      const subscription = pipe(
+        1,
+        fromValue(),
+        onSubscribe(f),
+        subscribe(scheduler),
+      );
+
       pipe(subscription.error, expectSome);
     }),
   ),

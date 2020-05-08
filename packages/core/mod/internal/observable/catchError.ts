@@ -1,5 +1,5 @@
 import { Exception } from "../../disposable.ts";
-import { isSome, Option } from "../../option.ts";
+import { isSome, none } from "../../option.ts";
 import {
   ObservableLike,
   ObservableOperator,
@@ -11,7 +11,7 @@ import { AbstractDelegatingSubscriber } from "./subscriber.ts";
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    onError: (error: unknown) => Option<ObservableLike<T>>,
+    onError: (error: unknown) => ObservableLike<T> | void,
   ) {
     super(delegate);
 
@@ -19,7 +19,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (isSome(error)) {
         try {
           const { cause } = error;
-          const result = onError(cause);
+          const result = onError(cause) || none;
           if (isSome(result)) {
             result.subscribe(delegate);
           } else {
@@ -48,7 +48,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * to continue with or void if the error should be propagated.
  */
 export const catchError = <T>(
-  onError: (error: unknown) => Option<ObservableLike<T>>,
+  onError: (error: unknown) => ObservableLike<T> | void,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);

@@ -1,4 +1,4 @@
-import { isSome } from "../../option.js";
+import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
 class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
@@ -8,7 +8,7 @@ class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
             if (isSome(error)) {
                 try {
                     const { cause } = error;
-                    const result = onError(cause);
+                    const result = onError(cause) || none;
                     if (isSome(result)) {
                         result.subscribe(delegate);
                     }

@@ -1,8 +1,8 @@
 import { referenceEquals } from "../../functions";
 import { isNone } from "../../option";
+import { fromValue } from "./fromValue";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { fromValue } from "./fromValue";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,

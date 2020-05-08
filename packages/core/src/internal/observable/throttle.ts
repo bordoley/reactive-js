@@ -5,13 +5,13 @@ import {
 } from "../../disposable";
 import { pipe } from "../../functions";
 import { none, Option, isNone, isSome } from "../../option";
+import { fromValue } from "./fromValue";
 import {
   ObservableLike,
   ObservableOperator,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
-import { fromValue } from "./fromValue";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {

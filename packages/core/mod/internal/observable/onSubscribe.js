@@ -1,3 +1,4 @@
+import { isSome, none } from "../../option.js";
 class OnSubscribeObservable {
     constructor(src, f) {
         this.src = src;
@@ -7,8 +8,8 @@ class OnSubscribeObservable {
     subscribe(subscriber) {
         try {
             this.src.subscribe(subscriber);
-            const disposable = this.f();
-            if (disposable) {
+            const disposable = this.f() || none;
+            if (isSome(disposable)) {
                 subscriber.add(disposable);
             }
         }
