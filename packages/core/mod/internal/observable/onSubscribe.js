@@ -7,7 +7,10 @@ class OnSubscribeObservable {
     subscribe(subscriber) {
         try {
             this.src.subscribe(subscriber);
-            this.f(subscriber);
+            const disposable = this.f();
+            if (disposable) {
+                subscriber.add(disposable);
+            }
         }
         catch (cause) {
             subscriber.dispose({ cause });
