@@ -9,7 +9,6 @@ export { fromArray } from "./internal/observable/fromArray.js";
 export { fromEnumerable } from "./internal/observable/fromEnumerable.js";
 export { fromIterable, fromIterator } from "./internal/observable/fromIterable.js";
 export { fromPromise } from "./internal/observable/fromPromise.js";
-export { fromScheduledValues } from "./internal/observable/fromScheduledValues.js";
 export { generate } from "./internal/observable/generate.js";
 export { merge } from "./internal/observable/merge.js";
 export { never } from "./internal/observable/never.js";

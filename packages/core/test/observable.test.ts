@@ -22,7 +22,6 @@ import {
   fromArray,
   fromIterable,
   fromPromise,
-  fromScheduledValues,
   generate,
   ignoreElements,
   keep,
@@ -95,15 +94,10 @@ export const tests = describe(
 
   test("buffer", () => {
     pipe(
-      fromScheduledValues(
-        [0, 1],
-        [0, 2],
-        [0, 3],
-        [0, 4],
-        [1, 1],
-        [1, 2],
-        [1, 3],
-        [8, 4],
+      concat(
+        pipe([1, 2, 3, 4], fromArray()),
+        pipe([1, 2, 3], fromArray({ delay: 1 })),
+        pipe(4, fromValue({ delay: 8 })),
       ),
       buffer({ duration: 4, maxBufferSize: 3 }),
       toArray(),

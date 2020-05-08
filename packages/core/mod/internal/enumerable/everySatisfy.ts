@@ -27,4 +27,5 @@ export const everySatisfy = <T>(
  */
 export const noneSatisfy = <T>(
   predicate: (next: T) => boolean,
-): Operator<EnumerableLike<T>, boolean> => everySatisfy(next => !predicate(next));
+): Operator<EnumerableLike<T>, boolean> =>
+  everySatisfy(next => !predicate(next));
