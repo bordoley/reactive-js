@@ -46,7 +46,7 @@
 * [createObservable](_observable_.md#const-createobservable)
 * [createSubject](_observable_.md#const-createsubject)
 * [distinctUntilChanged](_observable_.md#const-distinctuntilchanged)
-* [empty](_observable_.md#empty)
+* [empty](_observable_.md#const-empty)
 * [endWith](_observable_.md#endwith)
 * [everySatisfy](_observable_.md#const-everysatisfy)
 * [exhaust](_observable_.md#const-exhaust)
@@ -803,9 +803,9 @@ Name | Type |
 
 ___
 
-###  empty
+### `Const` empty
 
-▸ **empty**<**T**>(`delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **empty**<**T**>(`__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
 
@@ -815,9 +815,11 @@ Return an `ObservableLike` that emits no items and disposes the subscription aft
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 

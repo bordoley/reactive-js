@@ -30,7 +30,7 @@ class FromEnumeratorProducer extends AbstractProducer {
         return -1;
     }
 }
-export const fromEnumerator = (delay = 0) => enumerator => {
+export const fromEnumerator = ({ delay } = { delay: 0 }) => enumerator => {
     const factory = (subscriber) => new FromEnumeratorProducer(subscriber, enumerator, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
