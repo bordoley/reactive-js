@@ -579,6 +579,16 @@ export const tests = describe(
   ),
 
   describe(
+    "toPromise",
+    testAsync("when observable completes without producing a value", async () => {
+      await pipe(
+        pipe(empty(), toPromise(scheduler)),
+        expectPromiseToThrow,
+      );
+    }),
+  ),
+
+  describe(
     "withLatestFrom",
     test("when source and latest are interlaced", () =>
       pipe(
