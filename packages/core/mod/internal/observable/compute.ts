@@ -1,10 +1,10 @@
+import { Operator } from "../../functions.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
-import { Operator } from "../../functions.ts";
 
 class ComputeProducer<T> extends AbstractProducer<T> {
   constructor(

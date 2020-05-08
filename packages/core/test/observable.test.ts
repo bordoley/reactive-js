@@ -608,6 +608,29 @@ export const tests = describe(
           arrayOfArraysEqual,
         ),
       )),
+    test("when latest produces no values", () =>
+      pipe(
+        [0],
+        fromArray({ delay: 1 }),
+        withLatestFrom(empty<number>(), (a, b) => a + b),
+        toArray(),
+        expectArrayEquals([]),
+      ),
+    ),
+    test("when latest throws", () => {
+      const error = new Error();
+
+      pipe(
+        () => pipe(
+          [0],
+          fromArray({ delay: 1 }),
+          withLatestFrom(throws<number>(returns(error)), (a, b) => a + b),
+          toArray(),
+          expectArrayEquals([]),
+        ),
+        expectToThrowError(error),
+      );
+    }),
   ),
 
   describe(

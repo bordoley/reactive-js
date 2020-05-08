@@ -38,7 +38,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
       onNotify(this.onNotify),
       subscribe(this),
     ).add(e => {
-      if (isSome(e)) {
+      if (isSome(e) || !this.hasLatest) {
         this.dispose(e);
       }
     });

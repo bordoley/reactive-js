@@ -1,8 +1,8 @@
 import { createSerialDisposable, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none, isNone, isSome } from "../../option.js";
-import { lift } from "./lift.js";
 import { fromValue } from "./fromValue.js";
+import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";

@@ -15,7 +15,7 @@ class WithLatestFromSubscriber extends AbstractDelegatingSubscriber {
         };
         this.selector = selector;
         const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this)).add(e => {
-            if (isSome(e)) {
+            if (isSome(e) || !this.hasLatest) {
                 this.dispose(e);
             }
         });
