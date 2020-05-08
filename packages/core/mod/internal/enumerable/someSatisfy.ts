@@ -6,7 +6,7 @@ import { EnumerableLike } from "./interfaces.ts";
  *
  * @param predicate The predicate function.
  */
-export const some = <T>(
+export const someSatisfy = <T>(
   predicate: (next: T) => boolean,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
   const enumerator = enumerable.enumerate();
@@ -27,4 +27,4 @@ export const some = <T>(
 export const contains = <T>(
   value: T,
   equals: (a: T, b: T) => boolean = referenceEquals,
-) => some((b: T) => equals(value, b));
+) => someSatisfy((b: T) => equals(value, b));

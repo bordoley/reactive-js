@@ -1,13 +1,13 @@
-import { isNone } from "../../option";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
-import { lift } from "./lift";
-import { fromValue } from "./fromValue";
+import { isNone } from "../../option.ts";
+import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
+import { lift } from "./lift.ts";
+import { fromValue } from "./fromValue.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+} from "./subscriber.ts";
 
-class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
+class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(
     delegate: SubscriberLike<boolean>,
     private readonly predicate: (next: T) => boolean,
@@ -41,11 +41,11 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
  *
  * @param predicate The predicate function.
  */
-export const every = <T>(
+export const everySatisfy = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
-    new EverySubscriber(subscriber, predicate);
+    new EverySatisfySubscriber(subscriber, predicate);
   operator.isSynchronous = true;
   return lift(operator);
 };
@@ -56,6 +56,6 @@ export const every = <T>(
  *
  * @param predicate The predicate function.
  */
-export const none = <T>(
+export const noneSatisfy = <T>(
   predicate: (next: T) => boolean,
-): ObservableOperator<T, boolean> => every(next => !predicate(next));
+): ObservableOperator<T, boolean> => everySatisfy(next => !predicate(next));

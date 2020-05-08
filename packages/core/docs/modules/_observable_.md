@@ -48,7 +48,7 @@
 * [distinctUntilChanged](_observable_.md#const-distinctuntilchanged)
 * [empty](_observable_.md#empty)
 * [endWith](_observable_.md#endwith)
-* [every](_observable_.md#const-every)
+* [everySatisfy](_observable_.md#const-everysatisfy)
 * [exhaust](_observable_.md#const-exhaust)
 * [exhaustMap](_observable_.md#const-exhaustmap)
 * [forEach](_observable_.md#const-foreach)
@@ -71,7 +71,7 @@
 * [mergeAll](_observable_.md#const-mergeall)
 * [mergeMap](_observable_.md#const-mergemap)
 * [never](_observable_.md#const-never)
-* [none](_observable_.md#const-none)
+* [noneSatisfy](_observable_.md#const-nonesatisfy)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
@@ -82,7 +82,7 @@
 * [scanAsync](_observable_.md#const-scanasync)
 * [share](_observable_.md#const-share)
 * [skipFirst](_observable_.md#const-skipfirst)
-* [some](_observable_.md#const-some)
+* [someSatisfy](_observable_.md#const-somesatisfy)
 * [startWith](_observable_.md#startwith)
 * [subscribe](_observable_.md#const-subscribe)
 * [subscribeOn](_observable_.md#const-subscribeon)
@@ -846,9 +846,9 @@ Name | Type |
 
 ___
 
-### `Const` every
+### `Const` everySatisfy
 
-▸ **every**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **everySatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -1464,9 +1464,9 @@ Returna an `ObservableLike` instance that emits no items and never disposes its 
 
 ___
 
-### `Const` none
+### `Const` noneSatisfy
 
-▸ **none**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **noneSatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -1821,9 +1821,9 @@ Name | Type | Default | Description |
 
 ___
 
-### `Const` some
+### `Const` someSatisfy
 
-▸ **some**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **someSatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any items which satisfy the predicate, otherwise `false`.
