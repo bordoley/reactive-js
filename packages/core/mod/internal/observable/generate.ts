@@ -66,7 +66,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 export function generate<T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-  delay = 0,
+  { delay }: { delay: number } = { delay: 0},
 ): ObservableLike<T> {
   const factory = (subscriber: SubscriberLike<T>) =>
     new GenerateProducer(subscriber, generator, initialValue(), delay);

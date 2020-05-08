@@ -91,7 +91,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `delay`: number): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `__namedParameters`: object): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -113,7 +113,11 @@ Name | Type |
 
 ▸ (): *T*
 
-▪`Default value`  **delay**: *number*= 0
+▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 

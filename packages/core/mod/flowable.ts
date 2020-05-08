@@ -75,11 +75,11 @@ export const fromValue = <T>(data: T): FlowableLike<T> =>
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-  delay = 0,
+  { delay }: { delay: number } = { delay: 0 },
 ): FlowableLike<T> => {
   const reducer = (acc: T, ev: FlowMode): ObservableLike<T> =>
     ev === FlowMode.Resume
-      ? generateObs(generator, returns(acc), delay)
+      ? generateObs(generator, returns(acc), { delay })
       : emptyObs();
 
   const op = compose(

@@ -8,7 +8,10 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 
-class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
+class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
+  T,
+  boolean
+> {
   constructor(
     delegate: SubscriberLike<boolean>,
     private readonly predicate: (next: T) => boolean,

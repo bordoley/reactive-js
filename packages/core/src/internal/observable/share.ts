@@ -32,10 +32,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>): void {
     if (this.subscriberCount === 0) {
-      this.multicast = pipe(
-        this.source,
-        publish(this.scheduler, this.replay)
-      );
+      this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
     }
     this.subscriberCount++;
 
@@ -58,5 +55,5 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): ObservableOperator<T, T> => observable => 
+): ObservableOperator<T, T> => observable =>
   new SharedObservable(observable, scheduler, replayCount);

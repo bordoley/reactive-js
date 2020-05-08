@@ -97,7 +97,7 @@ const routerHandlerEventStream: HttpServer<
   HttpResponse<FlowableLike<Uint8Array>>
 > = _ => {
   const body = pipe(
-    generate(increment, returns<number>(0), 1000),
+    generate(increment, returns<number>(0), { delay: 1000 }),
     mapFlowable(
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
