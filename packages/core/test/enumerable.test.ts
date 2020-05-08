@@ -11,7 +11,7 @@ import {
   forEach,
   keep,
   map,
-  none,
+  noneSatisfy,
   fromValue,
   repeat,
   scan,
@@ -25,7 +25,7 @@ import {
   endWith,
   takeWhile,
   zip,
-  every,
+  everySatisfy,
 } from "../src/enumerable";
 import {
   pipe,
@@ -82,13 +82,13 @@ export const tests = describe(
       expectArrayEquals([1, 2, 3, 4]),
     )),
   describe(
-    "every",
+    "everySatisfy",
     test("source is empty", () =>
-      pipe(empty(), every(alwaysFalse), expectTrue)),
+      pipe(empty(), everySatisfy(alwaysFalse), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray, every(alwaysTrue), expectTrue)),
+      pipe([1, 2, 3], fromArray, everySatisfy(alwaysTrue), expectTrue)),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray, every(alwaysFalse), expectFalse)),
+      pipe([1, 2, 3], fromArray, everySatisfy(alwaysFalse), expectFalse)),
   ),
   describe(
     "first",
@@ -127,12 +127,12 @@ export const tests = describe(
       expectArrayEquals([2, 3, 4]),
     )),
   describe(
-    "none",
-    test("source is empty", () => pipe(empty(), none(alwaysFalse), expectTrue)),
+    "noneSatisfy",
+    test("source is empty", () => pipe(empty(), noneSatisfy(alwaysFalse), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray, none(alwaysTrue), expectFalse)),
+      pipe([1, 2, 3], fromArray, noneSatisfy(alwaysTrue), expectFalse)),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray, none(alwaysFalse), expectTrue)),
+      pipe([1, 2, 3], fromArray, noneSatisfy(alwaysFalse), expectTrue)),
   ),
   test("repeat", () => {
     pipe(

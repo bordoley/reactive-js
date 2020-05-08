@@ -8,7 +8,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 
-class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
+class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
   constructor(
     delegate: SubscriberLike<boolean>,
     private readonly predicate: (next: T) => boolean,
@@ -41,11 +41,11 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
  *
  * @param predicate The predicate function.
  */
-export const some = <T>(
+export const someSatisfy = <T>(
   predicate: (next: T) => boolean,
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
-    new SomeSubscriber(subscriber, predicate);
+    new SomeSatisfySubscriber(subscriber, predicate);
   operator.isSynchronous = true;
   return lift(operator);
 };
@@ -60,4 +60,4 @@ export const some = <T>(
 export const contains = <T>(
   value: T,
   equals: (a: T, b: T) => boolean = referenceEquals,
-) => some((b: T) => equals(value, b));
+) => someSatisfy((b: T) => equals(value, b));

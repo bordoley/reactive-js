@@ -1,5 +1,5 @@
-import { Operator } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
+import { Operator } from "../../functions";
+import { EnumerableLike } from "./interfaces";
 
 /**
  * Returns `true` if the predicate is satisfied for
@@ -7,7 +7,7 @@ import { EnumerableLike } from "./interfaces.ts";
  *
  * @param predicate The predicate function.
  */
-export const every = <T>(
+export const everySatisfy = <T>(
   predicate: (next: T) => boolean,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
   const enumerator = enumerable.enumerate();
@@ -25,6 +25,6 @@ export const every = <T>(
  *
  * @param predicate The predicate function.
  */
-export const none = <T>(
+export const noneSatisfy = <T>(
   predicate: (next: T) => boolean,
-): Operator<EnumerableLike<T>, boolean> => every(next => !predicate(next));
+): Operator<EnumerableLike<T>, boolean> => everySatisfy(next => !predicate(next));

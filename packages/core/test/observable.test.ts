@@ -17,7 +17,7 @@ import {
   createObservable,
   distinctUntilChanged,
   empty,
-  every,
+  everySatisfy,
   forEach,
   fromArray,
   fromIterable,
@@ -29,7 +29,7 @@ import {
   map,
   merge,
   never,
-  none,
+  noneSatisfy,
   fromValue,
   onNotify,
   repeat,
@@ -191,13 +191,13 @@ export const tests = describe(
     )),
 
   describe(
-    "every",
+    "everySatisfy",
     test("source is empty", () =>
-      pipe(empty(), every(alwaysFalse), toValue(), expectTrue)),
+      pipe(empty(), everySatisfy(alwaysFalse), toValue(), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray(), every(alwaysTrue), toValue(), expectTrue)),
+      pipe([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), toValue(), expectTrue)),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray(), every(alwaysFalse), toValue(), expectFalse)),
+      pipe([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), toValue(), expectFalse)),
   ),
 
   describe(
@@ -301,13 +301,13 @@ export const tests = describe(
   test("never", () => pipe(() => pipe(never(), toValue()), expectToThrow)),
 
   describe(
-    "none",
+    "noneSatisfy",
     test("source is empty", () =>
-      pipe(empty(), none(alwaysFalse), toValue(), expectTrue)),
+      pipe(empty(), noneSatisfy(alwaysFalse), toValue(), expectTrue)),
     test("source values pass predicate", () =>
-      pipe([1, 2, 3], fromArray(), none(alwaysTrue), toValue(), expectFalse)),
+      pipe([1, 2, 3], fromArray(), noneSatisfy(alwaysTrue), toValue(), expectFalse)),
     test("source values fail predicate", () =>
-      pipe([1, 2, 3], fromArray(), none(alwaysFalse), toValue(), expectTrue)),
+      pipe([1, 2, 3], fromArray(), noneSatisfy(alwaysFalse), toValue(), expectTrue)),
   ),
 
   test("reduce", () =>

@@ -22,7 +22,7 @@
 * [distinctUntilChanged](_enumerable_.md#const-distinctuntilchanged)
 * [empty](_enumerable_.md#const-empty)
 * [endWith](_enumerable_.md#endwith)
-* [every](_enumerable_.md#const-every)
+* [everySatisfy](_enumerable_.md#const-everysatisfy)
 * [first](_enumerable_.md#const-first)
 * [flatMap](_enumerable_.md#const-flatmap)
 * [flatten](_enumerable_.md#const-flatten)
@@ -36,12 +36,12 @@
 * [keepType](_enumerable_.md#const-keeptype)
 * [lift](_enumerable_.md#const-lift)
 * [map](_enumerable_.md#const-map)
-* [none](_enumerable_.md#const-none)
+* [noneSatisfy](_enumerable_.md#const-nonesatisfy)
 * [reduce](_enumerable_.md#const-reduce)
 * [repeat](_enumerable_.md#repeat)
 * [scan](_enumerable_.md#const-scan)
 * [skipFirst](_enumerable_.md#const-skipfirst)
-* [some](_enumerable_.md#const-some)
+* [someSatisfy](_enumerable_.md#const-somesatisfy)
 * [startWith](_enumerable_.md#startwith)
 * [takeFirst](_enumerable_.md#const-takefirst)
 * [takeLast](_enumerable_.md#const-takelast)
@@ -214,9 +214,9 @@ Name | Type |
 
 ___
 
-### `Const` every
+### `Const` everySatisfy
 
-▸ **every**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **everySatisfy**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
 
 Returns `true` if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -565,9 +565,9 @@ Name | Type |
 
 ___
 
-### `Const` none
+### `Const` noneSatisfy
 
-▸ **none**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **noneSatisfy**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
 
 Returns `true` if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -740,9 +740,9 @@ Name | Type | Default | Description |
 
 ___
 
-### `Const` some
+### `Const` someSatisfy
 
-▸ **some**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **someSatisfy**<**T**>(`predicate`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
 
 Returns `true` value if the any item satisfies the predicate, otherwise `false`.
 
