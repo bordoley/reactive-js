@@ -52,12 +52,13 @@
 * [exhaust](_observable_.md#const-exhaust)
 * [exhaustMap](_observable_.md#const-exhaustmap)
 * [forEach](_observable_.md#const-foreach)
-* [fromArray](_observable_.md#fromarray)
-* [fromEnumerable](_observable_.md#fromenumerable)
+* [fromArray](_observable_.md#const-fromarray)
+* [fromEnumerable](_observable_.md#const-fromenumerable)
 * [fromIterable](_observable_.md#const-fromiterable)
 * [fromIterator](_observable_.md#const-fromiterator)
 * [fromPromise](_observable_.md#const-frompromise)
 * [fromScheduledValues](_observable_.md#fromscheduledvalues)
+* [fromValue](_observable_.md#const-fromvalue)
 * [genMap](_observable_.md#const-genmap)
 * [generate](_observable_.md#generate)
 * [ignoreElements](_observable_.md#const-ignoreelements)
@@ -71,7 +72,6 @@
 * [mergeMap](_observable_.md#const-mergemap)
 * [never](_observable_.md#const-never)
 * [none](_observable_.md#const-none)
-* [ofValue](_observable_.md#ofvalue)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
@@ -966,9 +966,9 @@ Name | Type |
 
 ___
 
-###  fromArray
+### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[], `options`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromArray**<**T**>(`options`: object): *[Operator](_functions_.md#operator)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
 An optional `startIndex` in the array maybe specified,
@@ -978,10 +978,6 @@ An optional `startIndex` in the array maybe specified,
 ▪ **T**
 
 **Parameters:**
-
-▪ **values**: *keyof T[]*
-
-The array.
 
 ▪`Default value`  **options**: *object*= {}
 
@@ -993,13 +989,13 @@ Name | Type |
 `delay?` | number |
 `startIndex?` | number |
 
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
-###  fromEnumerable
+### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromEnumerable**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which enumerates through the values
 produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -1012,16 +1008,15 @@ produced by the provided `Enumerable` with a specified `delay` between emitted i
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› | - | - |
 `delay` | number | 0 | The requested delay between emitted items by the observable.  |
 
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromIterable**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterable` with a specified `delay` between emitted items.
@@ -1034,16 +1029,15 @@ produced by the provided `Iterable` with a specified `delay` between emitted ite
 
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
-`iterable` | Iterable‹T› | - | - |
 `delay` | number | 0 | The requested delay between emitted items by the observable.  |
 
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: function, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`delay`: number): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -1058,15 +1052,11 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-▪ **f**: *function*
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`delay` | number | 0 | The requested delay between emitted items by the observable.  |
 
-▸ (): *Iterator‹T, TReturn, TNext›*
-
-▪`Default value`  **delay**: *number*= 0
-
-The requested delay between emitted items by the observable.
-
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -1112,6 +1102,26 @@ Name | Type |
 `...values` | Array‹[number, T]› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+___
+
+### `Const` fromValue
+
+▸ **fromValue**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+
+ Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`delay` | number | 0 | The delay before emitting the value.  |
+
+**Returns:** *[Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -1474,27 +1484,6 @@ Name | Type |
 `next` | T |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
-
-___
-
-###  ofValue
-
-▸ **ofValue**<**T**>(`value`: T, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
- Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`value` | T | - | The value to emit. |
-`delay` | number | 0 | The delay before emitting the value.  |
-
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 ___
 

@@ -11,5 +11,5 @@ export function startWith<T>(
   ...values: T[]
 ): ObservableOperator<T, T>;
 export function startWith<T>(...values: T[]): ObservableOperator<T, T> {
-  return obs => concat(fromArray(values), obs);
+  return obs => concat(fromArray()(values), obs);
 }

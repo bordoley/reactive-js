@@ -2,7 +2,7 @@ import { referenceEquals } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { ofValue } from "./ofValue.ts";
+import { fromValue } from "./fromValue.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
@@ -16,7 +16,7 @@ class SomeSubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
     super(delegate);
     this.add(error => {
       if (isNone(error)) {
-        ofValue(false).subscribe(delegate);
+        fromValue()(false).subscribe(delegate);
       } else {
         delegate.dispose(error);
       }

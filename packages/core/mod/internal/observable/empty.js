@@ -1,5 +1,5 @@
 import { fromArray } from "./fromArray.js";
-const defaultEmpty = fromArray([]);
+const defaultEmpty = fromArray()([]);
 export function empty(delay = 0) {
-    return delay > 0 ? fromArray([], { delay }) : defaultEmpty;
+    return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
 }

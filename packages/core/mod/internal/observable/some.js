@@ -1,7 +1,7 @@
 import { referenceEquals } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
-import { ofValue } from "./ofValue.js";
+import { fromValue } from "./fromValue.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class SomeSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
@@ -9,7 +9,7 @@ class SomeSubscriber extends AbstractDelegatingSubscriber {
         this.predicate = predicate;
         this.add(error => {
             if (isNone(error)) {
-                ofValue(false).subscribe(delegate);
+                fromValue()(false).subscribe(delegate);
             }
             else {
                 delegate.dispose(error);

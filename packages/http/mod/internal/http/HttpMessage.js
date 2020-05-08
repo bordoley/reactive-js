@@ -1,4 +1,4 @@
-import { ofValue } from "../../../../core/lib/flowable.js";
+import { fromValue } from "../../../../core/lib/flowable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { writeHttpCacheControlHeader } from "./cacheDirective.js";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.js";
@@ -46,5 +46,5 @@ export const decodeHttpMessageWithCharset = (decoder) => ({ contentInfo, ...msg 
 };
 export const toFlowableHttpMessage = ({ body, ...msg }) => ({
     ...msg,
-    body: ofValue(body),
+    body: fromValue(body),
 });

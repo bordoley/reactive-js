@@ -37,7 +37,7 @@ class FromArrayProducer extends AbstractProducer {
         return -1;
     }
 }
-export function fromArray(values, options = {}) {
+export const fromArray = (options = {}) => values => {
     var _a, _b;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, values.length);
@@ -45,4 +45,4 @@ export function fromArray(values, options = {}) {
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);
-}
+};

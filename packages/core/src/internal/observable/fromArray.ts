@@ -1,4 +1,4 @@
-import { alwaysFalse } from "../../functions";
+import { alwaysFalse, Operator } from "../../functions";
 import { isSome } from "../../option";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -53,17 +53,15 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
  *
- * @param values The array.
  * @param options Config object that specifies an optional `delay` between emitted items and
  * an optional `startIndex` into the array.
  */
-export function fromArray<T>(
-  values: readonly T[],
+export const fromArray = <T>(
   options: {
     delay?: number;
     startIndex?: number;
   } = {},
-): ObservableLike<T> {
+): Operator<readonly T[], ObservableLike<T>> => values => {
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
@@ -73,4 +71,4 @@ export function fromArray<T>(
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);
-}
+};

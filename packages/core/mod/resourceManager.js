@@ -4,7 +4,7 @@ import { pipe } from "./functions.js";
 import { createKeyedQueue } from "./internal/keyedQueue.js";
 import { createSetMultimap } from "./internal/multimaps.js";
 import { createUniqueQueue } from "./internal/queues.js";
-import { createObservable, subscribe, ofValue, onNotify, } from "./observable.js";
+import { createObservable, subscribe, fromValue, onNotify, } from "./observable.js";
 import { isSome, isNone, none } from "./option.js";
 const tryDispatch = (resourceManager, key) => {
     var _a;
@@ -51,7 +51,7 @@ const tryDispatch = (resourceManager, key) => {
     subscriber.add(() => {
         inUseResources.remove(key, subscriber);
         availableResources.push(key, resource);
-        const timeoutSubscription = pipe(ofValue(none, maxIdleTime), onNotify(_ => {
+        const timeoutSubscription = pipe(fromValue(maxIdleTime)(none), onNotify(_ => {
             const resource = availableResources.pop(key);
             if (isSome(resource)) {
                 resource.dispose();

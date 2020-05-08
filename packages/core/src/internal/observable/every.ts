@@ -1,7 +1,7 @@
 import { isNone } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
-import { ofValue } from "./ofValue";
+import { fromValue } from "./fromValue";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
@@ -15,7 +15,7 @@ class EverySubscriber<T> extends AbstractDelegatingSubscriber<T, boolean> {
     super(delegate);
     this.add(error => {
       if (isNone(error)) {
-        ofValue(true).subscribe(delegate);
+        fromValue()(true).subscribe(delegate);
       } else {
         delegate.dispose(error);
       }

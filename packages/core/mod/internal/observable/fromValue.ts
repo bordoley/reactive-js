@@ -1,5 +1,6 @@
 import { fromArray } from "./fromArray.ts";
 import { ObservableLike } from "./interfaces.ts";
+import { Operator } from "../../functions.ts";
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
@@ -7,6 +8,7 @@ import { ObservableLike } from "./interfaces.ts";
  * @param value The value to emit.
  * @param delay The delay before emitting the value.
  */
-export function ofValue<T>(value: T, delay = 0): ObservableLike<T> {
-  return fromArray([value], { delay });
+export const fromValue = <T>(delay = 0): Operator<T, ObservableLike<T>> => {
+  const call = fromArray({ delay });
+  return v => call([v]);
 }

@@ -2,7 +2,7 @@ import { DisposableLike } from "@reactive-js/core/lib/disposable";
 import { pipe, identity } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
-  ofValue,
+  fromValue,
   map,
   switchMap,
   concatMap,
@@ -78,7 +78,8 @@ export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
     request: HttpClientRequest<TReq>,
   ): ObservableLike<HttpClientRequestStatus<TResp>> =>
     pipe(
-      ofValue(request),
+      request,
+      fromValue(),
       map(encodeHttpRequest),
       switchMap(httpClient),
       concatMap(status => {
@@ -106,7 +107,7 @@ export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
           }
           // Fallthrough
         }
-        return ofValue(status);
+        return fromValue()(status);
       }),
     );
 

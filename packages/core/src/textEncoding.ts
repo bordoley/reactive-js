@@ -44,7 +44,7 @@ export const decode = (
         }
       },
     ),
-    concatMap(compose(returns, fromIterator)),
+    concatMap(compose(returns, fromIterator())),
   );
 
   return lift(op);

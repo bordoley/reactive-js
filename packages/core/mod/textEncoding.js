@@ -19,7 +19,7 @@ export const decode = (charset = "utf-8", options) => {
                 break;
             }
         }
-    }), concatMap(compose(returns, fromIterator)));
+    }), concatMap(compose(returns, fromIterator())));
     return lift(op);
 };
 const encodingOp = withLatestFrom(compute(() => new TextEncoder()), (ev, textEncoder) => {

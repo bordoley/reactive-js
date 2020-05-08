@@ -5,7 +5,7 @@ import {
 import { pipe } from "../../../../core/lib/functions.ts";
 import {
   ObservableLike,
-  ofValue,
+  fromValue,
   createObservable,
   await_,
   DispatcherLike,
@@ -54,21 +54,21 @@ const bodyToArrayBuffer = (body: unknown): ObservableLike<ArrayBuffer> => {
   return typeof body === "string" || body instanceof Blob
     ? blobToArrayBuffer(new Blob([body]))
     : body instanceof ArrayBuffer
-    ? ofValue(body)
+    ? fromValue()(body)
     : throwTypeError();
 };
 
 const bodyToBlob = (body: unknown): ObservableLike<Blob> => {
   return typeof body === "string" || body instanceof ArrayBuffer
-    ? ofValue(new Blob([body]))
+    ? fromValue()(new Blob([body]))
     : body instanceof Blob
-    ? ofValue(body)
+    ? fromValue()(body)
     : throwTypeError();
 };
 
 const bodyToText = (body: unknown): ObservableLike<string> => {
   return typeof body === "string"
-    ? ofValue(body)
+    ? fromValue()(body)
     : body instanceof Blob
     ? blobToString(body)
     : body instanceof ArrayBuffer

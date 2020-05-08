@@ -30,13 +30,13 @@
 * [fromArray](_enumerable_.md#const-fromarray)
 * [fromIterable](_enumerable_.md#const-fromiterable)
 * [fromIterator](_enumerable_.md#const-fromiterator)
+* [fromValue](_enumerable_.md#const-fromvalue)
 * [generate](_enumerable_.md#const-generate)
 * [keep](_enumerable_.md#const-keep)
 * [keepType](_enumerable_.md#const-keeptype)
 * [lift](_enumerable_.md#const-lift)
 * [map](_enumerable_.md#const-map)
 * [none](_enumerable_.md#const-none)
-* [ofValue](_enumerable_.md#const-ofvalue)
 * [reduce](_enumerable_.md#const-reduce)
 * [repeat](_enumerable_.md#repeat)
 * [scan](_enumerable_.md#const-scan)
@@ -396,6 +396,26 @@ returned by the function `f`.
 
 ___
 
+### `Const` fromValue
+
+▸ **fromValue**<**T**>(`value`: T): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+Creates an EnumerableLike that yields `value`.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`value` | T | The value to emit.  |
+
+**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
 ### `Const` generate
 
 ▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
@@ -571,26 +591,6 @@ Name | Type |
 `next` | T |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
-
-___
-
-### `Const` ofValue
-
-▸ **ofValue**<**T**>(`value`: T): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
-
-Creates an EnumerableLike that yields `value`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`value` | T | The value to emit.  |
-
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 ___
 

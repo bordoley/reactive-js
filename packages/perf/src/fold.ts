@@ -19,7 +19,8 @@ export const run = (n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const observable = pipe(
-        fromArray(src),
+        src,
+        fromArray(),
         scan(sum, () => 0),
         reduce(passthrough, () => 0),
       );

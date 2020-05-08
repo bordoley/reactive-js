@@ -1,6 +1,6 @@
 import { AbstractDisposable, } from "../../../../core/lib/disposable.js";
 import { pipe } from "../../../../core/lib/functions.js";
-import { ofValue, createObservable, await_, } from "../../../../core/lib/observable.js";
+import { fromValue, createObservable, await_, } from "../../../../core/lib/observable.js";
 const blobToString = (blob) => {
     const onSubscribe = (subscriber) => {
         const reader = new FileReader();
@@ -34,19 +34,19 @@ const bodyToArrayBuffer = (body) => {
     return typeof body === "string" || body instanceof Blob
         ? blobToArrayBuffer(new Blob([body]))
         : body instanceof ArrayBuffer
-            ? ofValue(body)
+            ? fromValue()(body)
             : throwTypeError();
 };
 const bodyToBlob = (body) => {
     return typeof body === "string" || body instanceof ArrayBuffer
-        ? ofValue(new Blob([body]))
+        ? fromValue()(new Blob([body]))
         : body instanceof Blob
-            ? ofValue(body)
+            ? fromValue()(body)
             : throwTypeError();
 };
 const bodyToText = (body) => {
     return typeof body === "string"
-        ? ofValue(body)
+        ? fromValue()(body)
         : body instanceof Blob
             ? blobToString(body)
             : body instanceof ArrayBuffer

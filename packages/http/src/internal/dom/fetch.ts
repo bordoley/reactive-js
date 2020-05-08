@@ -2,7 +2,7 @@ import { pipe } from "@reactive-js/core/lib/functions";
 import {
   fromPromise,
   publish,
-  ofValue,
+  fromValue,
   concat,
   map,
   using,
@@ -117,7 +117,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
             body => new HttpResponseBodyImpl(body),
           ),
         body =>
-          ofValue({
+          fromValue()({
             ...response,
             body,
           }),
@@ -125,7 +125,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
   );
 
   return concat(
-    ofValue<HttpClientRequestStatus<WebResponseBodyLike>>({
+    fromValue<HttpClientRequestStatus<WebResponseBodyLike>>()({
       type: HttpClientRequestStatusType.Start,
     }),
     pipe(

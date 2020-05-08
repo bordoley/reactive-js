@@ -60,7 +60,7 @@ const _empty = createStreamable(
 );
 export const empty = <T>(): FlowableLike<T> => _empty;
 
-export const ofValue = <T>(data: T): FlowableLike<T> =>
+export const fromValue = <T>(data: T): FlowableLike<T> =>
   pipe(
     genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
       switch (mode) {

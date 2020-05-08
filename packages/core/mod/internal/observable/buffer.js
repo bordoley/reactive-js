@@ -3,7 +3,7 @@ import { pipe } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { never } from "./never.js";
-import { ofValue } from "./ofValue.js";
+import { fromValue } from "./fromValue.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
@@ -33,7 +33,7 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
             const buffer = this.buffer;
             this.buffer = [];
             if (isNone(error) && buffer.length > 0) {
-                ofValue(buffer).subscribe(delegate);
+                fromValue()(buffer).subscribe(delegate);
             }
             else {
                 delegate.dispose(error);
@@ -63,7 +63,7 @@ export function buffer(options = {}) {
     const durationSelector = duration === Number.MAX_SAFE_INTEGER
         ? never
         : typeof duration === "number"
-            ? (_) => ofValue(none, duration)
+            ? (_) => fromValue(duration)(none)
             : duration;
     const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
     const operator = (subscriber) => new BufferSubscriber(subscriber, durationSelector, maxBufferSize);

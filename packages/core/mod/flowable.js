@@ -5,7 +5,7 @@ import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, map as mapStream, } from "./streamable.js";
 const _empty = createStreamable(compose(mapObs(mode => mode === 1 ? { type: 2 } : none), keepType(isSome), takeFirst()));
 export const empty = () => _empty;
-export const ofValue = (data) => pipe(genMap(function* (mode) {
+export const fromValue = (data) => pipe(genMap(function* (mode) {
     switch (mode) {
         case 1:
             yield { type: 1, data };

@@ -1,6 +1,6 @@
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
-import { ofValue } from "./ofValue.js";
+import { fromValue } from "./fromValue.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class EverySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
@@ -8,7 +8,7 @@ class EverySubscriber extends AbstractDelegatingSubscriber {
         this.predicate = predicate;
         this.add(error => {
             if (isNone(error)) {
-                ofValue(true).subscribe(delegate);
+                fromValue()(true).subscribe(delegate);
             }
             else {
                 delegate.dispose(error);

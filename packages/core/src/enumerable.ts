@@ -18,7 +18,7 @@ export {
 export { lift } from "./internal/enumerable/lift";
 export { keep, keepType } from "./internal/enumerable/keep";
 export { map } from "./internal/enumerable/map";
-export { ofValue } from "./internal/enumerable/ofValue";
+export { fromValue } from "./internal/enumerable/fromValue";
 export { reduce } from "./internal/enumerable/reduce";
 export { repeat } from "./internal/enumerable/repeat";
 export { scan } from "./internal/enumerable/scan";

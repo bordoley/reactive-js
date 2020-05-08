@@ -146,7 +146,7 @@ class ZipObservable {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator(zipEnumerators(enumerators, this.selector))).subscribe(subscriber);
+            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators, this.selector))).subscribe(subscriber);
         }
         else {
             const enumerators = [];

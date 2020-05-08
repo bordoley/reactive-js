@@ -6,4 +6,4 @@ import { EnumerableLike } from "./interfaces";
  *
  * @param value The value to emit.
  */
-export const ofValue = <T>(value: T): EnumerableLike<T> => fromArray([value]);
+export const fromValue = <T>(value: T): EnumerableLike<T> => fromArray([value]);

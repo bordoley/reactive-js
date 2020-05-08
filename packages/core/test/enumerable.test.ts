@@ -12,7 +12,7 @@ import {
   keep,
   map,
   none,
-  ofValue,
+  fromValue,
   repeat,
   scan,
   skipFirst,
@@ -102,7 +102,8 @@ export const tests = describe(
   ),
   test("flatMap", () =>
     pipe(
-      ofValue(0),
+      0,
+      fromValue,
       flatMap(_ => fromArray([1, 2, 3])),
       toArray,
       expectArrayEquals([1, 2, 3]),
@@ -188,7 +189,7 @@ export const tests = describe(
       toArray,
       expectArrayEquals([1, 2, 3]),
     );
-    pipe(ofValue(1), takeFirst(3), toArray, expectArrayEquals([1]));
+    pipe(1, fromValue, takeFirst(3), toArray, expectArrayEquals([1]));
   }),
   test("takeLast", () =>
     pipe(

@@ -1,6 +1,6 @@
 import { pipe } from "../src/functions";
-import { subscribe, onNotify } from "../src/observable";
-import { createVirtualTimeScheduler } from "../src/scheduler";
+import { reduce, subscribe, onNotify, throwIfEmpty } from "../src/observable";
+import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import { identity, mapReq, map } from "../src/streamable";
 import { test, describe, expectArrayEquals } from "../src/testing";
 
@@ -9,28 +9,37 @@ export const tests = describe(
   test("mapReq", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const lifted = pipe(
+    const stream = pipe(
       identity<string>(),
       mapReq((x: number) => (x + 100).toLocaleString()),
       mapReq(({ val }: { val: number }) => val),
-    );
-
-    const stream = lifted.stream(scheduler);
-
-    const result: string[] = [];
-    pipe(
-      stream,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
-    );
+    ).stream(scheduler);
 
     stream.dispatch({ val: 10 });
     stream.dispatch({ val: 20 });
     stream.dispatch({ val: 30 });
+    stream.dispose();
+
+    pipe(
+      scheduler,
+      schedule(_ => {
+        stream.dispose();
+      }, 1),
+    );
+
+    pipe(
+      stream,
+      reduce(
+        (acc, next) => [...acc, next],
+        (): string[] => [],
+      ),
+      throwIfEmpty(() => new Error("empty")),
+      onNotify(expectArrayEquals(["110", "120", "130"])),
+      onNotify(console.log),
+      subscribe(scheduler),
+    );
 
     scheduler.run();
-
-    pipe(result, expectArrayEquals(["110", "120", "130"]));
   }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();

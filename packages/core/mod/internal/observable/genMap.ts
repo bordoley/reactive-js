@@ -9,5 +9,5 @@ export const genMap = <TA, TB, TReturn = any, TNext = unknown>(
 ): ObservableOperator<TA, TB> =>
   compose(
     map<TA, Generator<TB, TReturn, TNext>>(mapper),
-    concatMap(compose(returns, fromIterator)),
+    concatMap(compose(returns, fromIterator())),
   );
