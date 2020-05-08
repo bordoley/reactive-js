@@ -63,7 +63,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export function throttle(duration, mode = 3) {
-    const durationSelector = typeof duration === "number" ? (_) => fromValue(duration)(none) : duration;
+    const durationSelector = typeof duration === "number" ? (_) => fromValue({ delay: duration })(none) : duration;
     const operator = (subscriber) => new ThrottleSubscriber(subscriber, durationSelector, mode);
     operator.isSynchronous = false;
     return lift(operator);

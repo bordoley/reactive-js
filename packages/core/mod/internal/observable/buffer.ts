@@ -96,18 +96,18 @@ export function buffer<T>(
     maxBufferSize?: number;
   } = {},
 ): ObservableOperator<T, readonly T[]> {
-  const duration = options.duration ?? Number.MAX_SAFE_INTEGER;
+  const delay = options.duration ?? Number.MAX_SAFE_INTEGER;
   const durationSelector =
-    duration === Number.MAX_SAFE_INTEGER
+    delay === Number.MAX_SAFE_INTEGER
       ? never
-      : typeof duration === "number"
-      ? (_: T) => fromValue(duration)(none)
-      : duration;
+      : typeof delay === "number"
+      ? (_: T) => fromValue({ delay })(none)
+      : delay;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (subscriber: SubscriberLike<readonly T[]>) =>
     new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
-  operator.isSynchronous = duration === Number.MAX_SAFE_INTEGER;
+  operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
 
   return lift(operator);
 }

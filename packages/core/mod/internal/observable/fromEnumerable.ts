@@ -67,7 +67,7 @@ export const fromEnumerator = <T>(
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromEnumerable = <T>(
-  delay = 0,
+  { delay } = { delay: 0 },
 ): Operator<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
   const factory = (subscriber: SubscriberLike<T>) => {
     const enumerator = enumerable.enumerate();
