@@ -588,7 +588,7 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`valueFactory`: function, `delay`: number): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **compute**<**T**>(`delay`: number): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
 
@@ -598,15 +598,11 @@ ___
 
 **Parameters:**
 
-▪ **valueFactory**: *function*
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`delay` | number | 0 | The delay before emitting the value.  |
 
-▸ (): *T*
-
-▪`Default value`  **delay**: *number*= 0
-
-The delay before emitting the value.
-
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 

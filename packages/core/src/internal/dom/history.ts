@@ -24,7 +24,7 @@ const pushHistoryState = (newLocation: string) => {
 const historyOperator = (obs: ObservableLike<string>) =>
   pipe(
     merge(
-      compute(getCurrentLocation),
+      compute()(getCurrentLocation),
       pipe(obs, throttle(15), onNotify(pushHistoryState)),
       fromEvent(window, "popstate", getCurrentLocation),
     ),

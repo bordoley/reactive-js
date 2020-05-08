@@ -94,7 +94,8 @@ export const tests = describe(
     "first",
     test("when enumerable is not empty", () =>
       pipe(
-        compute(() => 1),
+        () => 1,
+        compute,
         first,
         expectEquals(1),
       )),

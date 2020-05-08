@@ -31,7 +31,7 @@ const subscribeSwitchingMode = <T, TAcc>(
   subscriber.add(
     pipe(
       concat(
-        compute(initialValue),
+        compute<TAcc>()(initialValue),
         pipe(
           src,
           withLatestFrom<T, TAcc, ObservableLike<TAcc>>(
@@ -68,7 +68,7 @@ const subscribeQueingMode = <T, TAcc>(
 
   subscriber.add(
     pipe(
-      concat(compute(initialValue), pipe(acc, concatMap(takeLast()))),
+      concat(compute<TAcc>()(initialValue), pipe(acc, concatMap(takeLast()))),
       onNotify(next => accFeedbackStream.dispatch(next)),
       subscribe(subscriber),
     ),

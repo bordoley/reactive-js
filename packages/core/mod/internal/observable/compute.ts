@@ -4,6 +4,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
+import { Operator } from "../../functions.ts";
 
 class ComputeProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -27,9 +28,8 @@ class ComputeProducer<T> extends AbstractProducer<T> {
  * @param delay The delay before emitting the value.
  */
 export const compute = <T>(
-  valueFactory: () => T,
   delay = 0,
-): ObservableLike<T> => {
+): Operator<() => T, ObservableLike<T>> => valueFactory => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new ComputeProducer(subscriber, valueFactory, delay);
 

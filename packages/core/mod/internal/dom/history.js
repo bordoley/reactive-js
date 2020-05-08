@@ -11,7 +11,7 @@ const pushHistoryState = (newLocation) => {
         window.history.pushState(none, "", newLocation);
     }
 };
-const historyOperator = (obs) => pipe(merge(compute(getCurrentLocation), pipe(obs, throttle(15), onNotify(pushHistoryState)), fromEvent(window, "popstate", getCurrentLocation)), distinctUntilChanged());
+const historyOperator = (obs) => pipe(merge(compute()(getCurrentLocation), pipe(obs, throttle(15), onNotify(pushHistoryState)), fromEvent(window, "popstate", getCurrentLocation)), distinctUntilChanged());
 const _historyStateStore = pipe(createStreamable(historyOperator), toStateStore(() => ""));
 export const historyStateStore = _historyStateStore;
 const parseQueryState = (searchParams) => {
