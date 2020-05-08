@@ -23,5 +23,6 @@ export const publish = <T>(
     subscribe(scheduler),
   ).add(subject);
   subject.add(srcSubscription);
+  srcSubscription.add(subject);
   return subject;
 };

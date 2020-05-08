@@ -1,38 +1,29 @@
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
-import { createSubject } from "./createSubject.js";
-import { onNotify } from "./onNotify.js";
-import { subscribe } from "./subscribe.js";
+import { publish } from "./publish.js";
 class SharedObservable {
-    constructor(factory, source, scheduler) {
-        this.factory = factory;
+    constructor(source, scheduler, replay) {
         this.source = source;
         this.scheduler = scheduler;
+        this.replay = replay;
         this.subscriberCount = 0;
         this.teardown = () => {
             this.subscriberCount--;
             if (this.subscriberCount === 0) {
-                this.subject.dispose();
-                this.subject = none;
+                this.multicast.dispose();
+                this.multicast = none;
             }
         };
         this.isSynchronous = false;
-        this.onNotify = (next) => this.subject.dispatch(next);
     }
     subscribe(subscriber) {
         if (this.subscriberCount === 0) {
-            this.subject = this.factory();
-            const srcSubscription = pipe(this.source, onNotify(this.onNotify), subscribe(this.scheduler));
-            this.subject.add(srcSubscription);
-            srcSubscription.add(this.subject);
+            this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
         }
         this.subscriberCount++;
-        const subject = this.subject;
-        subject.subscribe(subscriber);
+        const multicast = this.multicast;
+        multicast.subscribe(subscriber);
         subscriber.add(this.teardown);
     }
 }
-export const share = (scheduler, replayCount) => {
-    const factory = () => createSubject(replayCount);
-    return observable => new SharedObservable(factory, observable, scheduler);
-};
+export const share = (scheduler, replayCount = 0) => observable => new SharedObservable(observable, scheduler, replayCount);

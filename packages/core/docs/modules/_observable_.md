@@ -1780,7 +1780,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount?`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
@@ -1792,10 +1792,10 @@ to the source is disposed.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | A `SchedulerLike` that is used to subscribe to the source. |
-`replayCount?` | number | The number of events that should be replayed when the `ObservableLike` is subscribed to.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source. |
+`replayCount` | number | 0 | The number of events that should be replayed when the `ObservableLike` is subscribed to.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
