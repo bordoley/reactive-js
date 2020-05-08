@@ -25,7 +25,7 @@ const createFactory = (withLatestFrom, initial, enumerator) => (request, src) =>
             src.dispatch(empty());
         }
     };
-    return pipe(merge(compute(() => ({
+    return pipe(merge(compute()(() => ({
         type: 1,
         acc: initial(),
     })), pipe(src, switchAll(), withLatestFrom(mapReducerRequestToAcc(request)))), onNotify(notifySrc), mapReducerRequestToAcc, takeLast(), onSubscribe(() => {
@@ -51,7 +51,7 @@ export const fromArray = (values) => {
 export const fromIterable = (iterable) => {
     const enumerable = fromIterableEnumerable(iterable);
     const operator = (obs) => {
-        return pipe(obs, withLatestFrom(compute(() => enumerable.enumerate()), (_, enumerator) => enumerator), onNotify(enumerator => enumerator.move()), takeWhile(enumerator => enumerator.hasCurrent), map(enumerator => enumerator.current));
+        return pipe(obs, withLatestFrom(compute()(() => enumerable.enumerate()), (_, enumerator) => enumerator), onNotify(enumerator => enumerator.move()), takeWhile(enumerator => enumerator.hasCurrent), map(enumerator => enumerator.current));
     };
     return createStreamable(operator);
 };

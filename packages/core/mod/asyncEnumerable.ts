@@ -1,4 +1,4 @@
-import { fromIterable as fromIterableEnumerable } from "./enumerable.ts";
+import { fromIterable as fromIterableEnumerable, EnumeratorLike } from "./enumerable.ts";
 import { compose, pipe, Operator, returns } from "./functions.ts";
 import {
   compute,
@@ -128,7 +128,7 @@ const createFactory = <T, TAcc>(
 
   return pipe(
     merge(
-      compute(() => ({
+      compute()(() => ({
         type: ReducerRequestType.Continue,
         acc: initial(),
       })),
@@ -233,7 +233,7 @@ export const fromIterable = <T>(
     return pipe(
       obs,
       withLatestFrom(
-        compute(() => enumerable.enumerate()),
+        compute<EnumeratorLike<T>>()(() => enumerable.enumerate()),
         (_, enumerator) => enumerator,
       ),
       onNotify(enumerator => enumerator.move()),

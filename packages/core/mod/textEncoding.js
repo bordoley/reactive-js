@@ -3,7 +3,7 @@ import { compose, returns } from "./functions.js";
 import { withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { lift } from "./streamable.js";
 export const decode = (charset = "utf-8", options) => {
-    const op = compose(withLatestFrom(compute(() => new TextDecoder(charset, options)), function* (ev, decoder) {
+    const op = compose(withLatestFrom(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
         switch (ev.type) {
             case 1: {
                 const data = decoder.decode(ev.data, { stream: true });
@@ -22,7 +22,7 @@ export const decode = (charset = "utf-8", options) => {
     }), concatMap(compose(returns, fromIterator())));
     return lift(op);
 };
-const encodingOp = withLatestFrom(compute(() => new TextEncoder()), (ev, textEncoder) => {
+const encodingOp = withLatestFrom(compute()(() => new TextEncoder()), (ev, textEncoder) => {
     switch (ev.type) {
         case 1: {
             const data = textEncoder.encode(ev.data);

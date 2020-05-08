@@ -24,7 +24,7 @@ export const decode = (
     FlowEvent<string>
   > = compose(
     withLatestFrom(
-      compute(() => new TextDecoder(charset, options)),
+      compute<TextDecoder>()(() => new TextDecoder(charset, options)),
       function*(ev: FlowEvent<ArrayBuffer>, decoder) {
         switch (ev.type) {
           case FlowEventType.Next: {
@@ -54,7 +54,7 @@ const encodingOp: ObservableOperator<
   FlowEvent<string>,
   FlowEvent<Uint8Array>
 > = withLatestFrom(
-  compute(() => new TextEncoder()),
+  compute<TextEncoder>()(() => new TextEncoder()),
   (ev: FlowEvent<string>, textEncoder) => {
     switch (ev.type) {
       case FlowEventType.Next: {

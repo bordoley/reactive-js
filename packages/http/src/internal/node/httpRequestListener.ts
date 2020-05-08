@@ -97,7 +97,7 @@ export const createHttpRequestListener = (
           isTransportSecure,
           body: requestBody,
         }),
-      compute,
+      compute(),
       await_(handler),
       onNotify(writeResponseMessage(response.value)),
       await_(writeResponseBody(responseBody)),
