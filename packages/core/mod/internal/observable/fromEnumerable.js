@@ -14,7 +14,7 @@ class FromEnumeratorProducer extends AbstractProducer {
             this.notify(enumerator.current);
             isDisposed = this.isDisposed;
             if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
-                scheduler.schedule(this, delay);
+                scheduler.schedule(this, this);
                 return;
             }
         }

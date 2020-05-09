@@ -8,17 +8,18 @@ class ScheduledObservable<T> implements ObservableLike<T> {
       subscriber: SubscriberLike<T>,
     ) => SchedulerContinuationLike | (() => void),
     readonly isSynchronous: boolean,
-    private readonly delay: number,
+    readonly delay: number,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     const schedulerContinuation = this.factory(subscriber);
+    
     if (schedulerContinuation instanceof Function) {
       // Note: no need to add the returned disposable, since
       // subscriber already adds any callbacks scheduled on it.
-      pipe(subscriber, schedule(schedulerContinuation, this.delay));
+      pipe(subscriber, schedule(schedulerContinuation, this));
     } else {
-      subscriber.schedule(schedulerContinuation, this.delay);
+      subscriber.schedule(schedulerContinuation, this);
     }
   }
 }

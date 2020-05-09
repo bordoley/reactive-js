@@ -24,10 +24,10 @@ export class AbstractSubscriber extends AbstractDisposable {
     onRunStatusChanged(status) {
         this.inContinuation = status;
     }
-    schedule(continuation, delay = 0) {
+    schedule(continuation, options = { delay: 0 }) {
         continuation.addListener("onRunStatusChanged", this);
         this.add(continuation);
-        this.scheduler.schedule(continuation, delay);
+        this.scheduler.schedule(continuation, options);
     }
     shouldYield() {
         return this.scheduler.shouldYield();

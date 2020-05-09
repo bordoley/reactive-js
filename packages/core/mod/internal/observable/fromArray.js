@@ -22,7 +22,7 @@ class FromArrayProducer extends AbstractProducer {
                 !isDisposed &&
                 (delay > 0 || scheduler.shouldYield())) {
                 this.index = index;
-                scheduler.schedule(this, delay);
+                scheduler.schedule(this, this);
                 return;
             }
         }

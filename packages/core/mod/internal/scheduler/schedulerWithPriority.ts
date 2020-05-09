@@ -15,12 +15,12 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     return this.priorityScheduler.inContinuation;
   }
 
-  get now(): number {
+  get now() {
     return this.priorityScheduler.now;
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
-    this.priorityScheduler.schedule(continuation, this.priority, delay);
+  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
+    this.priorityScheduler.schedule(continuation, { priority: this.priority, delay });
   }
 
   shouldYield() {

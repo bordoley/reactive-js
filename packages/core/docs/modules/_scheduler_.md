@@ -63,7 +63,7 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**(`callback`: function, `delay`: number): *(Anonymous function)*
+▸ **schedule**(`callback`: function, `options`: object): *(Anonymous function)*
 
 **Parameters:**
 
@@ -77,7 +77,11 @@ Name | Type |
 ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
-▪`Default value`  **delay**: *number*= 0
+▪`Default value`  **options**: *object*= { delay: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *(Anonymous function)*
 

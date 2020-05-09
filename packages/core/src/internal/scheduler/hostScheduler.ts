@@ -83,7 +83,7 @@ class HostScheduler implements SchedulerLike {
     return now();
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
+  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }): void {
     if (!continuation.isDisposed) {
       const callback = createCallback(this, continuation);
       const callbackSubscription =

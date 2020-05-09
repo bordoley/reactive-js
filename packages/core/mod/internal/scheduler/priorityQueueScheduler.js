@@ -1,4 +1,4 @@
-import { AbstractSerialDisposable, disposed, } from "../../disposable.js";
+import { AbstractSerialDisposable, disposed, AbstractDisposable, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
@@ -54,7 +54,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
             const delay = dueTime - now;
             if (delay > 0) {
                 priorityScheduler.dueTime = dueTime;
-                host.schedule(this, delay);
+                host.schedule(this, { delay });
                 return;
             }
             move(priorityScheduler);
@@ -89,9 +89,9 @@ const scheduleContinuation = (scheduler, task) => {
     const dueTime = task.dueTime;
     scheduler.dueTime = dueTime;
     const delay = dueTime - scheduler.now;
-    scheduler.host.schedule(continuation, delay);
+    scheduler.host.schedule(continuation, { delay });
 };
-class PrioritySchedulerImpl extends AbstractSerialDisposable {
+class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
         this.host = host;
@@ -109,8 +109,7 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable {
     get now() {
         return this.host.now;
     }
-    schedule(continuation, priority, delay = 0) {
-        delay = Math.max(0, delay);
+    schedule(continuation, { priority, delay = 0 }) {
         this.add(continuation);
         if (!continuation.isDisposed) {
             const now = this.now;
@@ -142,28 +141,42 @@ class PrioritySchedulerImpl extends AbstractSerialDisposable {
         return (this.isDisposed || nextTaskIsHigherPriority || this.host.shouldYield());
     }
 }
-export const toPriorityScheduler = (hostScheduler) => new PrioritySchedulerImpl(hostScheduler);
-class PausableSchedulerImpl extends PrioritySchedulerImpl {
-    constructor() {
-        super(...arguments);
+export const toPriorityScheduler = (hostScheduler) => new PriorityScheduler(hostScheduler);
+class PausableSchedulerImpl extends AbstractDisposable {
+    constructor(priorityScheduler) {
+        super();
+        this.priorityScheduler = priorityScheduler;
         this.isPaused = true;
+        this.add(priorityScheduler);
+        priorityScheduler.add(this);
+    }
+    get inContinuation() {
+        return this.priorityScheduler.inContinuation;
+    }
+    get now() {
+        return this.priorityScheduler.now;
     }
     pause() {
         this.isPaused = true;
-        this.inner = disposed;
+        this.priorityScheduler.inner = disposed;
     }
     resume() {
+        const priorityScheduler = this.priorityScheduler;
+        const head = peek(priorityScheduler);
         this.isPaused = false;
-        const head = peek(this);
-        if (this.inner.isDisposed && isSome(head)) {
-            scheduleContinuation(this, head);
+        if (priorityScheduler.inner.isDisposed && isSome(head)) {
+            scheduleContinuation(priorityScheduler, head);
         }
     }
-    schedule(continuation, delay = 0) {
-        super.schedule(continuation, 0, delay);
+    schedule(continuation, { delay } = { delay: 0 }) {
+        const priorityScheduler = this.priorityScheduler;
+        priorityScheduler.schedule(continuation, { priority: 0, delay });
         if (this.isPaused) {
-            this.inner = disposed;
+            priorityScheduler.inner = disposed;
         }
+    }
+    shouldYield() {
+        return this.priorityScheduler.shouldYield();
     }
 }
-export const toPausableScheduler = (hostScheduler) => new PausableSchedulerImpl(hostScheduler);
+export const toPausableScheduler = (hostScheduler) => new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));

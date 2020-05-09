@@ -43,7 +43,7 @@ export interface SchedulerLike {
    *
    * @param continuation The SchedulerContinuation to be executed.
    */
-  schedule(continuation: SchedulerContinuationLike, delay?: number): void;
+  schedule(continuation: SchedulerContinuationLike, options?: { delay: number }): void;
 
   shouldYield(): boolean;
 }
@@ -88,8 +88,7 @@ export interface PrioritySchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuationLike,
-    priority: number,
-    delay?: number,
+    options: { priority: number, delay?: number }
   ): void;
 
   shouldYield(): boolean;

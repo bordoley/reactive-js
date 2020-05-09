@@ -20,7 +20,7 @@ class GenerateProducer extends AbstractProducer {
             }
             if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
                 this.acc = acc;
-                scheduler.schedule(this, delay);
+                scheduler.schedule(this, this);
                 return;
             }
         }

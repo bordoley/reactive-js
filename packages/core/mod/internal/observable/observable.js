@@ -9,10 +9,10 @@ class ScheduledObservable {
     subscribe(subscriber) {
         const schedulerContinuation = this.factory(subscriber);
         if (schedulerContinuation instanceof Function) {
-            pipe(subscriber, schedule(schedulerContinuation, this.delay));
+            pipe(subscriber, schedule(schedulerContinuation, this));
         }
         else {
-            subscriber.schedule(schedulerContinuation, this.delay);
+            subscriber.schedule(schedulerContinuation, this);
         }
     }
 }

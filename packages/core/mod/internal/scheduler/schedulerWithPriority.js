@@ -9,8 +9,8 @@ class SchedulerWithPriorityImpl {
     get now() {
         return this.priorityScheduler.now;
     }
-    schedule(continuation, delay = 0) {
-        this.priorityScheduler.schedule(continuation, this.priority, delay);
+    schedule(continuation, { delay } = { delay: 0 }) {
+        this.priorityScheduler.schedule(continuation, { priority: this.priority, delay });
     }
     shouldYield() {
         return this.priorityScheduler.shouldYield();

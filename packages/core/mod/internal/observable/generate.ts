@@ -11,7 +11,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
     subscriber: SubscriberLike<T>,
     private readonly generator: (acc: T) => T,
     private acc: T,
-    private readonly delay: number,
+    readonly delay: number,
   ) {
     super(subscriber);
   }
@@ -33,7 +33,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 
       if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
         this.acc = acc;
-        scheduler.schedule(this, delay);
+        scheduler.schedule(this, this);
         return;
       }
     }

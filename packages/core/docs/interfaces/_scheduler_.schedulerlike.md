@@ -42,16 +42,21 @@ The scheduler's current time in ms.
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md), `delay?`: number): *void*
+▸ **schedule**(`continuation`: [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md), `options?`: object): *void*
 
 Schedules a continuation to be executed on the scheduler.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md) | The SchedulerContinuation to be executed.  |
-`delay?` | number | - |
+▪ **continuation**: *[SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)*
+
+The SchedulerContinuation to be executed.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *void*
 

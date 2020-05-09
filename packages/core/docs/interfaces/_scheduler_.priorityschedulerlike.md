@@ -38,17 +38,22 @@ The scheduler's current time in ms.
 
 ###  schedule
 
-▸ **schedule**(`continuation`: [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md), `priority`: number, `delay?`: number): *void*
+▸ **schedule**(`continuation`: [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md), `options`: object): *void*
 
 Schedules a continuation to be executed on the scheduler.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md) | The SchedulerContinuation to be executed. |
-`priority` | number | An optional priority that is used when prioritizing which work to execute next. The definition of the priority value along with it's default value is implementation specific.  |
-`delay?` | number | - |
+▪ **continuation**: *[SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)*
+
+The SchedulerContinuation to be executed.
+
+▪ **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay?` | number |
+`priority` | number |
 
 **Returns:** *void*
 
