@@ -32,8 +32,8 @@ class TimeoutSubscriber extends AbstractDelegatingSubscriber {
 const returnTimeoutError = returns(timeoutError);
 export function timeout(duration) {
     const durationObs = typeof duration === "number"
-        ? throws(returnTimeoutError, { delay: duration })
-        : concat(duration, throws(returnTimeoutError));
+        ? throws({ delay: duration })(returnTimeoutError)
+        : concat(duration, throws()(returnTimeoutError));
     const operator = (subscriber) => new TimeoutSubscriber(subscriber, durationObs);
     operator.isSynchronous = false;
     return lift(operator);

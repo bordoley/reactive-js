@@ -25,7 +25,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   private readonly onNotify = () => {
     this.durationSubscription.dispose();
     this.durationSubscription = disposed;
-    
+
     const buffer = this.buffer;
     this.buffer = [];
 

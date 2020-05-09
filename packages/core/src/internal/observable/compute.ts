@@ -1,6 +1,6 @@
 import { Operator, compose, call } from "../../functions";
-import { ObservableLike } from "./interfaces";
 import { fromValue } from "./fromValue";
+import { ObservableLike } from "./interfaces";
 import { map } from "./map";
 
 /**

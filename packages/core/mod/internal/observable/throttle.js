@@ -28,12 +28,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
                 this.value = none;
                 this.hasValue = false;
                 setupDurationSubscription(this, value);
-                try {
-                    this.delegate.notify(value);
-                }
-                catch (cause) {
-                    this.delegate.dispose({ cause });
-                }
+                this.delegate.notify(value);
             }
         };
         this.add(this.durationSubscription).add(error => {
