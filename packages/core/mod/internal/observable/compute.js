@@ -1,19 +1,4 @@
-import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
-import { AbstractProducer } from "./producer.js";
-class ComputeProducer extends AbstractProducer {
-    constructor(subscriber, f, delay) {
-        super(subscriber);
-        this.f = f;
-        this.delay = delay;
-    }
-    produce(_) {
-        this.notify(this.f());
-        this.dispose();
-    }
-}
-export const compute = ({ delay } = { delay: 0 }) => valueFactory => {
-    const factory = (subscriber) => new ComputeProducer(subscriber, valueFactory, delay);
-    return delay > 0
-        ? createDelayedScheduledObservable(factory, delay)
-        : createScheduledObservable(factory, true);
-};
+import { compose, call } from "../../functions.js";
+import { fromValue } from "./fromValue.js";
+import { map } from "./map.js";
+export const compute = (options) => compose(fromValue(options), map(call()));

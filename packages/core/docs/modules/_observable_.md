@@ -587,7 +587,7 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **compute**<**T**>(`options?`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
 
@@ -597,7 +597,7 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Optional`  **options**: *object*
 
 Name | Type |
 ------ | ------ |

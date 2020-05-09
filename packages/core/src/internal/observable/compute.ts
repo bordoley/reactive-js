@@ -1,26 +1,7 @@
-import { Operator } from "../../functions";
-import { SchedulerLike } from "../scheduler/interfaces";
-import { ObservableLike, SubscriberLike } from "./interfaces";
-import {
-  createScheduledObservable,
-  createDelayedScheduledObservable,
-} from "./observable";
-import { AbstractProducer } from "./producer";
-
-class ComputeProducer<T> extends AbstractProducer<T> {
-  constructor(
-    subscriber: SubscriberLike<T>,
-    private readonly f: () => T,
-    readonly delay: number,
-  ) {
-    super(subscriber);
-  }
-
-  produce(_: SchedulerLike) {
-    this.notify(this.f());
-    this.dispose();
-  }
-}
+import { Operator, compose, call } from "../../functions";
+import { ObservableLike } from "./interfaces";
+import { fromValue } from "./fromValue"
+import { map } from "./map";
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
@@ -29,12 +10,9 @@ class ComputeProducer<T> extends AbstractProducer<T> {
  * @param delay The delay before emitting the value.
  */
 export const compute = <T>(
-  { delay } = { delay: 0 },
-): Operator<() => T, ObservableLike<T>> => valueFactory => {
-  const factory = (subscriber: SubscriberLike<T>) =>
-    new ComputeProducer(subscriber, valueFactory, delay);
-
-  return delay > 0
-    ? createDelayedScheduledObservable(factory, delay)
-    : createScheduledObservable(factory, true);
-};
+  options?: { delay: number },
+): Operator<() => T, ObservableLike<T>> =>
+  compose(
+    fromValue(options),
+    map(call()),
+  );

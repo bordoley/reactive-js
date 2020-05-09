@@ -1,5 +1,22 @@
 import { none } from "./option";
 
+export function call<T>(): Operator<() => T, T>;
+export function call<TA, T>(a: TA): Operator<(a: TA) => T, T>;
+export function call<TA, TB, T>(a: TA, b: TB): Operator<(a: TA, b: TB) => T, T>;
+export function call<TA, TB, TC, T>(a: TA, b: TB, c: TC): Operator<(a: TA, b: TB, c: TC) => T, T>;
+export function call<TA, TB, TC, TD, T>(a: TA, b: TB, c: TC, d: TD): Operator<(a: TA, b: TB, c: TC, d: TD) => T, T>;
+export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
+  return f => f(...args);
+} 
+
+export function apply<T>(f: () => T): Operator<[], T>;
+export function apply<TA, T>(f: (a: TA) => T): Operator<[TA], T>;
+export function apply<TA, TB, T>(f: (a: TA, b: TB) => T): Operator<[TA, TB], T>;
+export function apply<TA, TB, TC, T>(f: (a: TA, b: TB, c: TC) => T): Operator<[TA, TB, TC], T>;
+export function apply<T>(f: (...args: any[]) => T): Operator<any[], T> {
+  return args => f(...args);
+} 
+
 export const identity = <T>(v: T): T => v;
 
 export const returns = <T>(v: T) => (..._args: unknown[]) => v;
