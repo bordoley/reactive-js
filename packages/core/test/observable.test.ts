@@ -129,7 +129,7 @@ export const tests = describe(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws()(() => new Error()) }),
-          toArray(() => createVirtualTimeScheduler(1)),
+          toArray(() => createVirtualTimeScheduler({ maxMicroTaskTicks: 1 })),
         ),
       )),
   ),
@@ -242,7 +242,7 @@ export const tests = describe(
           dispatcher.dispatch(3);
           dispatcher.dispose();
         }),
-        toArray(() => createVirtualTimeScheduler(1)),
+        toArray(() => createVirtualTimeScheduler({ maxMicroTaskTicks: 1 })),
         expectArrayEquals([1, 2, 3]),
       )),
   ),

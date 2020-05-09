@@ -47,15 +47,17 @@ ___
 
 ### `Const` createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`maxMicroTaskTicks`: number): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+▸ **createVirtualTimeScheduler**(`__namedParameters`: object): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
 
 Creates a new virtual time scheduler instance.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`maxMicroTaskTicks` | number | Number.MAX_SAFE_INTEGER | The max number of times shouldYield should return false before returning true. Useful for testing cooperative multitasking.  |
+▪`Default value`  **__namedParameters**: *object*= { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER }
+
+Name | Type |
+------ | ------ |
+`maxMicroTaskTicks` | number |
 
 **Returns:** *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
 

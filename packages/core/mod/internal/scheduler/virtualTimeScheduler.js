@@ -81,4 +81,4 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         return this.microTaskTicks >= this.maxMicroTaskTicks || host.shouldYield();
     }
 }
-export const createVirtualTimeScheduler = (maxMicroTaskTicks = Number.MAX_SAFE_INTEGER) => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+export const createVirtualTimeScheduler = ({ maxMicroTaskTicks } = { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER }) => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
