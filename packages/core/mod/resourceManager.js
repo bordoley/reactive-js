@@ -95,8 +95,8 @@ class ResourceManagerImpl extends AbstractDisposable {
         return this.availableResources.count + this.inUseResources.count;
     }
     get(key) {
-        return createObservable(subscriber => {
-            this.resourceRequests.push(key, subscriber);
+        return createObservable(dispatcher => {
+            this.resourceRequests.push(key, dispatcher);
             tryDispatch(this, key);
         });
     }

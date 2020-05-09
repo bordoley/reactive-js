@@ -16,17 +16,17 @@ export const createEventSource = (
   const events = eventsOption.filter(x => !reservedEvents.includes(x));
   const requestURL = url instanceof URL ? url.toString() : url;
 
-  return createObservable(subscriber => {
+  return createObservable(dispatcher => {
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
-      subscriber.dispatch({
+      dispatcher.dispatch({
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",
       });
     };
 
-    subscriber.add(_ => {
+    dispatcher.add(_ => {
       for (const ev of events) {
         eventSource.removeEventListener(ev, listener as EventListener);
       }

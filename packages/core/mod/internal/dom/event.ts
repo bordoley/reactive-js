@@ -5,18 +5,18 @@ export const fromEvent = <T>(
   eventName: string,
   selector: (ev: Event) => T,
 ): ObservableLike<T> =>
-  createObservable(subscriber => {
+  createObservable(dispatcher => {
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        subscriber.dispatch(result);
+        dispatcher.dispatch(result);
       } catch (cause) {
-        subscriber.dispose({ cause });
+        dispatcher.dispose({ cause });
       }
     };
 
     target.addEventListener(eventName, listener, { passive: true });
-    subscriber.add(() => {
+    dispatcher.add(() => {
       target.removeEventListener(eventName, listener);
     });
   });

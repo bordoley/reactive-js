@@ -2,26 +2,26 @@ import { AbstractDisposable, } from "../../../../core/lib/disposable.js";
 import { pipe } from "../../../../core/lib/functions.js";
 import { fromValue, createObservable, await_, } from "../../../../core/lib/observable.js";
 const blobToString = (blob) => {
-    const onSubscribe = (subscriber) => {
+    const onSubscribe = (dispatcher) => {
         const reader = new FileReader();
         reader.onload = () => {
-            subscriber.dispatch(reader.result);
+            dispatcher.dispatch(reader.result);
         };
         reader.onerror = () => {
-            subscriber.dispose({ cause: reader.error });
+            dispatcher.dispose({ cause: reader.error });
         };
         reader.readAsText(blob);
     };
     return createObservable(onSubscribe);
 };
 const blobToArrayBuffer = (body) => {
-    const onSubscribe = (subscriber) => {
+    const onSubscribe = (dispatcher) => {
         const reader = new FileReader();
         reader.onload = () => {
-            subscriber.dispatch(reader.result);
+            dispatcher.dispatch(reader.result);
         };
         reader.onerror = () => {
-            subscriber.dispose({ cause: reader.error });
+            dispatcher.dispose({ cause: reader.error });
         };
         reader.readAsArrayBuffer(body);
     };

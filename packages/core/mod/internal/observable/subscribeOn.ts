@@ -13,12 +13,12 @@ import { subscribe } from "./subscribe.ts";
 export const subscribeOn = <T>(
   scheduler: SchedulerLike,
 ): ObservableOperator<T, T> => observable =>
-  createObservable(subscriber => {
-    subscriber.add(
+  createObservable(dispatcher => {
+    dispatcher.add(
       pipe(
         observable,
-        onNotify(next => subscriber.dispatch(next)),
+        onNotify(next => dispatcher.dispatch(next)),
         subscribe(scheduler),
-      ).add(e => subscriber.dispose(e)),
+      ).add(dispatcher),
     );
   });

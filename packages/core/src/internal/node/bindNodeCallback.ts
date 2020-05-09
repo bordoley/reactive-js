@@ -254,20 +254,20 @@ export function bindNodeCallback<T>(
   selector?: (...args: unknown[]) => T,
 ): (...args: unknown[]) => ObservableLike<T | void> {
   return function(this: unknown, ...args: unknown[]) {
-    return createObservable(subscriber => {
+    return createObservable(dispatcher => {
       const handler = (cause: unknown, ...innerArgs: unknown[]) => {
         if (cause) {
-          subscriber.dispose({ cause });
+          dispatcher.dispose({ cause });
         } else {
           if (innerArgs.length > 0) {
             const result = (selector as (...args: unknown[]) => T)(
               ...innerArgs,
             );
-            subscriber.dispatch(result);
+            dispatcher.dispatch(result);
           } else {
-            subscriber.dispatch(none);
+            dispatcher.dispatch(none);
           }
-          subscriber.dispose();
+          dispatcher.dispose();
         }
       };
 
