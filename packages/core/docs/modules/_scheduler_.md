@@ -10,6 +10,7 @@
 
 ### Interfaces
 
+* [PausableSchedulerLike](../interfaces/_scheduler_.pausableschedulerlike.md)
 * [PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md)
 * [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)
 * [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)
@@ -91,7 +92,7 @@ ___
 
 ### `Const` toPausableScheduler
 
-▸ **toPausableScheduler**(`hostScheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[DisposableLike](../interfaces/_disposable_.disposablelike.md) & PausableSchedulerLike*
+▸ **toPausableScheduler**(`hostScheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[DisposableLike](../interfaces/_disposable_.disposablelike.md) & [PausableSchedulerLike](../interfaces/_scheduler_.pausableschedulerlike.md)*
 
 **Parameters:**
 
@@ -99,7 +100,7 @@ Name | Type |
 ------ | ------ |
 `hostScheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
-**Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md) & PausableSchedulerLike*
+**Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md) & [PausableSchedulerLike](../interfaces/_scheduler_.pausableschedulerlike.md)*
 
 ___
 

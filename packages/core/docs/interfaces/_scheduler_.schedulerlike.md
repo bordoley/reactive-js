@@ -10,6 +10,8 @@ An object that schedules units of work on a runloop.
 
   ↳ [SubscriberLike](_observable_.subscriberlike.md)
 
+  ↳ [PausableSchedulerLike](_scheduler_.pausableschedulerlike.md)
+
   ↳ [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
 
 ## Index
