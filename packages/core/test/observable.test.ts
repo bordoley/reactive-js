@@ -580,12 +580,12 @@ export const tests = describe(
 
   describe(
     "toPromise",
-    testAsync("when observable completes without producing a value", async () => {
-      await pipe(
-        pipe(empty(), toPromise(scheduler)),
-        expectPromiseToThrow,
-      );
-    }),
+    testAsync(
+      "when observable completes without producing a value",
+      async () => {
+        await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);
+      },
+    ),
   ),
 
   describe(
@@ -615,19 +615,19 @@ export const tests = describe(
         withLatestFrom(empty<number>(), (a, b) => a + b),
         toArray(),
         expectArrayEquals([]),
-      ),
-    ),
+      )),
     test("when latest throws", () => {
       const error = new Error();
 
       pipe(
-        () => pipe(
-          [0],
-          fromArray({ delay: 1 }),
-          withLatestFrom(throws<number>(returns(error)), (a, b) => a + b),
-          toArray(),
-          expectArrayEquals([]),
-        ),
+        () =>
+          pipe(
+            [0],
+            fromArray({ delay: 1 }),
+            withLatestFrom(throws<number>(returns(error)), (a, b) => a + b),
+            toArray(),
+            expectArrayEquals([]),
+          ),
         expectToThrowError(error),
       );
     }),

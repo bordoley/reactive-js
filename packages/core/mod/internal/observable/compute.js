@@ -8,7 +8,7 @@ class ComputeProducer extends AbstractProducer {
     }
     produce(_) {
         this.notify(this.f());
-        return -1;
+        this.dispose();
     }
 }
 export const compute = ({ delay } = { delay: 0 }) => valueFactory => {

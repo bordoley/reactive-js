@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  createDisposable,
-  DisposableLike,
-} from "@reactive-js/core/lib/disposable";
+import { createDisposable } from "@reactive-js/core/lib/disposable";
 import { pipe } from "@reactive-js/core/lib/functions";
 import { none } from "@reactive-js/core/lib/option";
 import {
@@ -22,50 +19,21 @@ import {
   unstable_UserBlockingPriority,
 } from "scheduler";
 
-const shouldYield = unstable_shouldYield;
-
-const scheduleCallback = (
-  callback: () => void,
-  priority: number,
-  delay: number,
-): DisposableLike => {
-  const disposable = createDisposable(() =>
-    unstable_cancelCallback(callbackNode),
-  );
-
-  const scheduledCallback = () => {
-    if (!disposable.isDisposed) {
-      callback();
-      disposable.dispose();
-    }
-  };
-
-  const callbackNode = unstable_scheduleCallback(
-    priority,
-    scheduledCallback,
-    delay > 0 ? { delay } : none,
-  );
-
-  return disposable;
-};
-
-const createCallback = (
-  continuation: SchedulerContinuationLike,
-  scheduler: { inContinuation: boolean },
-  priority: number,
-): (() => void) => {
-  const callback = () => {
-    scheduler.inContinuation = true;
-    const delay = continuation.run(shouldYield);
-    scheduler.inContinuation = false;
-
-    if (!continuation.isDisposed) {
-      const disposable = scheduleCallback(callback, priority, delay);
-      continuation.add(disposable);
-    }
-  };
-
-  return callback;
+const getScheduler = (priority: number) => {
+  switch (priority) {
+    case unstable_IdlePriority:
+      return idlePriority;
+    case unstable_ImmediatePriority:
+      return immediatePriority;
+    case unstable_NormalPriority:
+      return normalPriority;
+    case unstable_LowPriority:
+      return lowPriority;
+    case unstable_UserBlockingPriority:
+      return userBlockingPriority;
+    default:
+      throw new Error();
+  }
 };
 
 const priorityScheduler = {
@@ -80,10 +48,29 @@ const priorityScheduler = {
     priority: number,
     delay = 0,
   ): void {
-    const callback = createCallback(continuation, priorityScheduler, priority);
-    const disposable = scheduleCallback(callback, priority, delay);
-    continuation.add(disposable);
+    const scheduler = getScheduler(priority);
+
+    const callbackNodeDisposable = createDisposable(() =>
+      unstable_cancelCallback(callbackNode),
+    );
+
+    const callback = () => {
+      priorityScheduler.inContinuation = true;
+      continuation.run(scheduler);
+      priorityScheduler.inContinuation = false;
+      callbackNodeDisposable.dispose();
+    };
+
+    const callbackNode = unstable_scheduleCallback(
+      priority,
+      callback,
+      delay > 0 ? { delay } : none,
+    );
+
+    continuation.add(callbackNodeDisposable);
   },
+
+  shouldYield: unstable_shouldYield,
 };
 
 /** Scheduler that schedules work on React's internal priority scheduler with idle priority. */

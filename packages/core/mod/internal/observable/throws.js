@@ -7,8 +7,8 @@ class ThrowsProducer extends AbstractProducer {
         this.delay = delay;
     }
     produce(_) {
-        const error = this.f();
-        throw error;
+        const cause = this.f();
+        this.dispose({ cause });
     }
 }
 export const throws = (errorFactory, { delay } = { delay: 0 }) => {

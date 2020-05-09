@@ -50,6 +50,10 @@ export abstract class AbstractSubscriber<T> extends AbstractDisposable
     this.add(continuation);
     this.scheduler.schedule(continuation, delay);
   }
+
+  shouldYield() {
+    return this.scheduler.shouldYield();
+  }
 }
 
 /**

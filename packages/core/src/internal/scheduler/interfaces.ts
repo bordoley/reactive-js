@@ -26,7 +26,7 @@ export interface SchedulerContinuationLike extends DisposableLike {
    * when defined. If `shouldYield` returns true the continuation should return,
    * yielding control back to the scheduler.
    */
-  run(shouldYield?: () => boolean): number;
+  run(scheduler: SchedulerLike): void;
 }
 
 /**
@@ -44,6 +44,8 @@ export interface SchedulerLike {
    * @param continuation The SchedulerContinuation to be executed.
    */
   schedule(continuation: SchedulerContinuationLike, delay?: number): void;
+
+  shouldYield(): boolean;
 }
 
 /**
@@ -54,7 +56,9 @@ export interface SchedulerLike {
 export interface VirtualTimeSchedulerLike
   extends DisposableLike,
     SchedulerLike,
-    SchedulerContinuationLike {}
+    SchedulerContinuationLike {
+  run(scheduler?: SchedulerLike): void;
+}
 
 export interface PausableSchedulerLike extends SchedulerLike {
   pause(): void;
@@ -87,8 +91,6 @@ export interface PrioritySchedulerLike {
     priority: number,
     delay?: number,
   ): void;
-}
 
-export type CallbackContinuation = (
-  shouldYield?: () => boolean,
-) => CallbackContinuation | void;
+  shouldYield(): boolean;
+}

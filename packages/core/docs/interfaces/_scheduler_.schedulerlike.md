@@ -22,6 +22,7 @@ An object that schedules units of work on a runloop.
 ### Methods
 
 * [schedule](_scheduler_.schedulerlike.md#schedule)
+* [shouldYield](_scheduler_.schedulerlike.md#shouldyield)
 
 ## Properties
 
@@ -53,3 +54,11 @@ Name | Type | Description |
 `delay?` | number | - |
 
 **Returns:** *void*
+
+___
+
+###  shouldYield
+
+▸ **shouldYield**(): *boolean*
+
+**Returns:** *boolean*

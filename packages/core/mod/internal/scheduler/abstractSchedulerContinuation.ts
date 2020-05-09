@@ -1,6 +1,7 @@
 import { AbstractDisposable, Exception } from "../../disposable.ts";
 import { none, Option, isSome } from "../../option.ts";
 import {
+  SchedulerLike,
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
 } from "./interfaces.ts";
@@ -17,8 +18,7 @@ const notifyListeners = (
 /** @noInheritDoc */
 export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   implements SchedulerContinuationLike {
-  private isActive = false;
-  private readonly listeners: Set<
+  private listeners: Set<
     SchedulerContinuationRunStatusChangedListenerLike
   > = new Set();
 
@@ -26,9 +26,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     super();
 
     this.add(() => {
-      if (!this.isActive) {
-        this.listeners.clear();
-      }
+      this.listeners = new Set();
     });
   }
 
@@ -48,40 +46,25 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     this.listeners.delete(listener);
   }
 
-  /**
-   * Return < 0 to signal done.
-   * @param shouldYield
-   */
-  abstract produce(shouldYield?: () => boolean): number;
+  abstract produce(scheduler: SchedulerLike): void;
 
-  run(shouldYield?: () => boolean) {
+  run(scheduler: SchedulerLike) {
     const listeners = this.listeners;
-    let result = -1;
     let error: Option<Exception> = none;
 
     if (!this.isDisposed) {
-      this.isActive = true;
       notifyListeners(listeners, true);
       try {
-        result = this.produce(shouldYield);
+        this.produce(scheduler);
       } catch (cause) {
         error = { cause };
       }
-      this.isActive = false;
       notifyListeners(listeners, false);
     }
 
     const isDisposed = this.isDisposed;
     if (!isDisposed && isSome(error)) {
       this.dispose(error);
-    } else if (!isDisposed && result < 0) {
-      this.dispose();
-    } else if (isDisposed) {
-      // Disposing the continuation does not clear the listeners if it was active
-      // so check again here and if disposed, clean up.
-      listeners.clear();
     }
-
-    return result;
   }
 }

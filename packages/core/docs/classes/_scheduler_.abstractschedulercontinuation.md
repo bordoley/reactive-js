@@ -55,17 +55,15 @@ ___
 
 ### `Abstract` produce
 
-▸ **produce**(`shouldYield?`: function): *number*
-
-Return < 0 to signal done.
+▸ **produce**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
 
 **Parameters:**
 
-▪`Optional`  **shouldYield**: *function*
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
-▸ (): *boolean*
-
-**Returns:** *number*
+**Returns:** *void*
 
 ___
 
@@ -88,12 +86,14 @@ ___
 
 ###  run
 
-▸ **run**(`shouldYield?`: function): *number*
+▸ **run**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
+
+*Implementation of [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
 
 **Parameters:**
 
-▪`Optional`  **shouldYield**: *function*
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
-▸ (): *boolean*
-
-**Returns:** *number*
+**Returns:** *void*

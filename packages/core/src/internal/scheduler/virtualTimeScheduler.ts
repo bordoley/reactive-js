@@ -1,9 +1,11 @@
-import { none, Option, isSome } from "../../option";
+import { alwaysFalse } from "../../functions";
+import { none, isSome } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
+  SchedulerLike,
 } from "./interfaces";
 
 type VirtualTask = {
@@ -42,21 +44,21 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
   return scheduler.hasCurrent;
 };
 
+// A place holder to make the code generic
+const ignoreScheduler = {
+  inContinuation: true,
+  now: 0,
+  schedule(_schduler: SchedulerContinuationLike, _delay?: number) {},
+  shouldYield: alwaysFalse,
+};
+
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   current: SchedulerContinuationLike = none as any;
   hasCurrent = false;
   inContinuation = false;
   microTaskTicks = 0;
   now = 0;
-  private hostShouldYield?: () => boolean;
-  private shouldYield: Option<() => boolean> = () => {
-    const runShouldYield = this.hostShouldYield;
-    this.microTaskTicks++;
-    return (
-      this.microTaskTicks >= this.maxMicroTaskTicks ||
-      (isSome(runShouldYield) && runShouldYield())
-    );
-  };
+  private host: SchedulerLike = ignoreScheduler;
   private taskIDCount = 0;
   readonly taskQueue: QueueLike<VirtualTask> = createPriorityQueue(comparator);
 
@@ -64,42 +66,29 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super();
   }
 
-  produce(hostShouldYield?: () => boolean): number {
-    const hostShouldYieldIsDefined = isSome(hostShouldYield);
-
-    this.hostShouldYield = hostShouldYield;
-
-    if (
-      this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
-      !hostShouldYieldIsDefined
-    ) {
-      this.shouldYield = none;
-    }
+  produce(scheduler: SchedulerLike) {
+    this.host = scheduler;
 
     while (move(this)) {
       const continuation = this.current;
 
       this.inContinuation = true;
-      const delay = continuation.run(this.shouldYield);
+      continuation.run(this);
       this.inContinuation = false;
 
-      // Check here for perf. avoid an unnecessary function call
-      if (!continuation.isDisposed) {
-        this.schedule(continuation, delay);
-      }
-
-      // Perf hack
-      if (hostShouldYieldIsDefined) {
-        if ((hostShouldYield as any)()) {
-          this.hostShouldYield = none;
-          return 0;
-        }
+      if (scheduler.shouldYield()) {
+        this.host = ignoreScheduler;
+        scheduler.schedule(this);
+        return;
       }
     }
 
-    this.hostShouldYield = none;
+    this.host = ignoreScheduler;
+    this.dispose();
+  }
 
-    return -1;
+  run(scheduler = ignoreScheduler) {
+    super.run(scheduler);
   }
 
   schedule(continuation: SchedulerContinuationLike, delay = 0): void {
@@ -113,6 +102,13 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
       };
       this.taskQueue.push(work);
     }
+  }
+
+  shouldYield() {
+    const host = this.host;
+    this.microTaskTicks++;
+
+    return this.microTaskTicks >= this.maxMicroTaskTicks || host.shouldYield();
   }
 }
 

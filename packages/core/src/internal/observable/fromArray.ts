@@ -1,5 +1,5 @@
-import { alwaysFalse, Operator } from "../../functions";
-import { isSome } from "../../option";
+import { Operator } from "../../functions";
+import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -19,33 +19,31 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean): number {
+  produce(scheduler: SchedulerLike) {
     const delay = this.delay;
     const values = this.values;
     const length = values.length;
 
     let index = this.index;
-    if (delay > 0 || isSome(shouldYield)) {
-      let isDisposed = this.isDisposed;
-      shouldYield = shouldYield ?? alwaysFalse;
+    let isDisposed = this.isDisposed;
 
-      while (index < length && !isDisposed) {
-        this.notify(values[index]);
-        index++;
+    while (index < length && !isDisposed) {
+      this.notify(values[index]);
+      index++;
 
-        isDisposed = this.isDisposed;
-        if (index < length && !isDisposed && (delay > 0 || shouldYield())) {
-          this.index = index;
-          return delay;
-        }
-      }
-    } else {
-      while (index < length && !this.isDisposed) {
-        this.notify(values[index]);
-        index++;
+      isDisposed = this.isDisposed;
+      if (
+        index < length &&
+        !isDisposed &&
+        (delay > 0 || scheduler.shouldYield())
+      ) {
+        this.index = index;
+        scheduler.schedule(this, delay);
+        return;
       }
     }
-    return -1;
+
+    this.dispose();
   }
 }
 

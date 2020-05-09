@@ -1,5 +1,5 @@
 import { DisposableLike, Exception, AbstractDisposable } from "./disposable";
-import { pipe, alwaysFalse } from "./functions";
+import { pipe } from "./functions";
 import {
   ObservableLike,
   StreamLike,
@@ -21,10 +21,8 @@ class ReactiveCacheSchedulerContinuation<
     super();
   }
 
-  produce(shouldYield?: () => boolean): number {
+  produce(scheduler: SchedulerLike) {
     const { cache, maxCount, garbage } = this.cache;
-
-    shouldYield = shouldYield ?? alwaysFalse;
 
     for (const [, stream] of garbage) {
       stream.dispose();
@@ -32,14 +30,15 @@ class ReactiveCacheSchedulerContinuation<
       // only delete as many entries as we need to.
       const hasMoreToCleanup = cache.size > maxCount;
 
-      if (hasMoreToCleanup && shouldYield()) {
-        return 0;
+      if (hasMoreToCleanup && scheduler.shouldYield()) {
+        scheduler.schedule(this);
+        return;
       } else if (!hasMoreToCleanup) {
         break;
       }
     }
 
-    return -1;
+    this.dispose();
   }
 }
 

@@ -58,18 +58,14 @@ ___
 
 ###  run
 
-▸ **run**(`shouldYield?`: function): *number*
+▸ **run**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
 
 Work function to be invoked by the scheduler after the specified delay.
 
 **Parameters:**
 
-▪`Optional`  **shouldYield**: *function*
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
 
-An optional function that should be periodically checked
-when defined. If `shouldYield` returns true the continuation should return,
-yielding control back to the scheduler.
-
-▸ (): *boolean*
-
-**Returns:** *number*
+**Returns:** *void*

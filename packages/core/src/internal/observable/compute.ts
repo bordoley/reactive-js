@@ -1,4 +1,5 @@
 import { Operator } from "../../functions";
+import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -15,9 +16,9 @@ class ComputeProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(_?: () => boolean): number {
+  produce(_: SchedulerLike) {
     this.notify(this.f());
-    return -1;
+    this.dispose();
   }
 }
 

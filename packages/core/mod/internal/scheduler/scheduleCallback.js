@@ -1,16 +1,12 @@
-import { isSome } from "../../option.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(cb) {
         super();
         this.cb = cb;
     }
-    produce(shouldYield) {
-        const result = this.cb(shouldYield);
-        if (result) {
-            this.cb = result;
-        }
-        return isSome(result) ? 0 : -1;
+    produce(scheduler) {
+        this.cb(scheduler);
+        this.dispose();
     }
 }
 export const schedule = (callback, delay = 0) => (scheduler) => {

@@ -1,5 +1,4 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { alwaysTrue } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
@@ -23,14 +22,8 @@ class EnumeratorSubscriber extends AbstractDisposable {
                 break;
             }
             this.inContinuation = true;
-            const result = continuation.run(alwaysTrue);
+            continuation.run(this);
             this.inContinuation = false;
-            if (!continuation.isDisposed && result <= 0) {
-                continuations.push(continuation);
-            }
-            else {
-                continuation.dispose();
-            }
             const error = this.error;
             if (isSome(error)) {
                 const { cause } = error;
@@ -52,6 +45,9 @@ class EnumeratorSubscriber extends AbstractDisposable {
         else {
             continuation.dispose();
         }
+    }
+    shouldYield() {
+        return true;
     }
 }
 const subscribeInteractive = (obs) => {

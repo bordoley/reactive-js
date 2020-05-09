@@ -16,10 +16,6 @@
 * [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)
 * [VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)
 
-### Type aliases
-
-* [CallbackContinuation](_scheduler_.md#callbackcontinuation)
-
 ### Functions
 
 * [createHostScheduler](_scheduler_.md#const-createhostscheduler)
@@ -28,22 +24,6 @@
 * [toPausableScheduler](_scheduler_.md#const-topausablescheduler)
 * [toPriorityScheduler](_scheduler_.md#const-topriorityscheduler)
 * [toSchedulerWithPriority](_scheduler_.md#const-toschedulerwithpriority)
-
-## Type aliases
-
-###  CallbackContinuation
-
-Ƭ **CallbackContinuation**: *function*
-
-#### Type declaration:
-
-▸ (`shouldYield?`: function): *[CallbackContinuation](_scheduler_.md#callbackcontinuation) | void*
-
-**Parameters:**
-
-▪`Optional`  **shouldYield**: *function*
-
-▸ (): *boolean*
 
 ## Functions
 
@@ -83,14 +63,21 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**(`callback`: [CallbackContinuation](_scheduler_.md#callbackcontinuation), `delay`: number): *(Anonymous function)*
+▸ **schedule**(`callback`: function, `delay`: number): *(Anonymous function)*
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`callback` | [CallbackContinuation](_scheduler_.md#callbackcontinuation) | - |
-`delay` | number | 0 |
+▪ **callback**: *function*
+
+▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+
+▪`Default value`  **delay**: *number*= 0
 
 **Returns:** *(Anonymous function)*
 

@@ -1,5 +1,4 @@
-import { alwaysFalse } from "../../functions";
-import { isSome } from "../../option";
+import { SchedulerLike } from "../../scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -17,40 +16,29 @@ class GenerateProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean): number {
+  produce(scheduler: SchedulerLike) {
     const generator = this.generator;
     const delay = this.delay;
 
     let acc = this.acc;
     let isDisposed = this.isDisposed;
 
-    if (delay > 0 || isSome(shouldYield)) {
-      shouldYield = shouldYield ?? alwaysFalse;
+    while (!isDisposed) {
+      this.notify(acc);
 
-      while (!isDisposed) {
-        this.notify(acc);
-
-        isDisposed = this.isDisposed;
-        if (!isDisposed) {
-          acc = generator(acc);
-        }
-
-        if (!isDisposed && (delay > 0 || shouldYield())) {
-          this.acc = acc;
-          return delay;
-        }
+      isDisposed = this.isDisposed;
+      if (!isDisposed) {
+        acc = generator(acc);
       }
-    } else {
-      while (!isDisposed) {
-        this.notify(acc);
 
-        isDisposed = this.isDisposed;
-        if (!isDisposed) {
-          acc = generator(acc);
-        }
+      if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
+        this.acc = acc;
+        scheduler.schedule(this, delay);
+        return;
       }
     }
-    return delay;
+
+    this.dispose();
   }
 }
 

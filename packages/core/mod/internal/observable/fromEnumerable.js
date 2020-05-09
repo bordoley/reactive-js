@@ -1,5 +1,3 @@
-import { alwaysFalse } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class FromEnumeratorProducer extends AbstractProducer {
@@ -8,26 +6,19 @@ class FromEnumeratorProducer extends AbstractProducer {
         this.enumerator = enumerator;
         this.delay = delay;
     }
-    produce(shouldYield) {
+    produce(scheduler) {
         const delay = this.delay;
         const enumerator = this.enumerator;
-        if (delay > 0 || isSome(shouldYield)) {
-            let isDisposed = this.isDisposed;
-            shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
-            while (enumerator.move() && !isDisposed) {
-                this.notify(enumerator.current);
-                isDisposed = this.isDisposed;
-                if (!isDisposed && (delay > 0 || shouldYield())) {
-                    return delay;
-                }
+        let isDisposed = this.isDisposed;
+        while (enumerator.move() && !isDisposed) {
+            this.notify(enumerator.current);
+            isDisposed = this.isDisposed;
+            if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
+                scheduler.schedule(this, delay);
+                return;
             }
         }
-        else {
-            while (enumerator.move() && !this.isDisposed) {
-                this.notify(enumerator.current);
-            }
-        }
-        return -1;
+        this.dispose();
     }
 }
 export const fromEnumerator = ({ delay } = { delay: 0 }) => enumerator => {

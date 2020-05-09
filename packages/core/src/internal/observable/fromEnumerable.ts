@@ -1,6 +1,6 @@
 import { EnumeratorLike, EnumerableLike } from "../../enumerable";
-import { alwaysFalse, Operator } from "../../functions";
-import { isSome } from "../../option";
+import { Operator } from "../../functions";
+import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -17,28 +17,23 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(shouldYield?: () => boolean): number {
+  produce(scheduler: SchedulerLike) {
     const delay = this.delay;
     const enumerator = this.enumerator;
 
-    if (delay > 0 || isSome(shouldYield)) {
-      let isDisposed = this.isDisposed;
-      shouldYield = shouldYield ?? alwaysFalse;
+    let isDisposed = this.isDisposed;
 
-      while (enumerator.move() && !isDisposed) {
-        this.notify(enumerator.current);
+    while (enumerator.move() && !isDisposed) {
+      this.notify(enumerator.current);
 
-        isDisposed = this.isDisposed;
-        if (!isDisposed && (delay > 0 || shouldYield())) {
-          return delay;
-        }
-      }
-    } else {
-      while (enumerator.move() && !this.isDisposed) {
-        this.notify(enumerator.current);
+      isDisposed = this.isDisposed;
+      if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
+        scheduler.schedule(this, delay);
+        return;
       }
     }
-    return -1;
+
+    this.dispose();
   }
 }
 
