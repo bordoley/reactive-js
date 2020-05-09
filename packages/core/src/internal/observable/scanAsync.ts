@@ -43,7 +43,7 @@ const subscribeSwitchingMode = <T, TAcc>(
       ),
       onNotify(next => accFeedbackStream.dispatch(next)),
       subscribe(subscriber),
-    ),
+    ).add(accFeedbackStream),
   );
 
   pipe(accFeedbackStream, skipFirst()).subscribe(subscriber);
@@ -59,10 +59,13 @@ const subscribeQueingMode = <T, TAcc>(
   const accFeedbackStream = createSubject<TAcc>();
 
   const generatorStream = pipe(src, map(createGenerator));
+  const zipSelector = (
+    generateNext: (acc: TAcc) => ObservableLike<TAcc>,
+    acc: TAcc,
+  ) => pipe(acc, generateNext, share(subscriber));
+
   const acc = pipe(
-    zip([generatorStream, accFeedbackStream], (generateNext, acc) =>
-      pipe(generateNext(acc), share(subscriber)),
-    ),
+    zip([generatorStream, accFeedbackStream], zipSelector),
     publish(subscriber),
   );
 
