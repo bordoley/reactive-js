@@ -47,29 +47,25 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
   const src =
     enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
 
-  const createStreamObservable =(
-      requests: ObservableLike<TReqB>,
-  ) => (stream: StreamLike<TReqA, TA>) => {
-    const observable = pipe(stream, ...obsOps) as ObservableLike<TB>;
-  
-    const onRequest: ObservableLike<TB> = pipe(
-      requests,
-      map((compose as any)(...reqOps)),
-      onNotify((req: TReqA) => stream.dispatch(req)),
-      ignoreElements<unknown, TB>(),
-  
-      // needed to propogate dispose through the observable ops above
-      onSubscribe(() => stream),
-    );
-  
-    return merge(observable, onRequest);
-  };
-  
+  const createStreamObservable = (requests: ObservableLike<TReqB>) => (
+    stream: StreamLike<TReqA, TA>,
+  ) =>
+    pipe(
+      merge(
+        stream,
+        pipe(
+          requests,
+          map((compose as any)(...reqOps)),
+          onNotify((req: TReqA) => stream.dispatch(req)),
+          ignoreElements<unknown, TA>(),
+          onSubscribe(() => stream),
+        ),
+      ),
+      ...obsOps,
+    ) as ObservableLike<TB>;
+
   const op = (requests: ObservableLike<TReqB>): ObservableLike<TB> =>
-    using(
-      scheduler => src.stream(scheduler),
-      createStreamObservable(requests),
-    );
+    using(scheduler => src.stream(scheduler), createStreamObservable(requests));
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 
@@ -101,5 +97,7 @@ const _empty = createStreamable<any, any>(_ => emptyObs());
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-export const empty = <TReq, T>(options?: { delay: number }): StreamableLike<TReq, T> => 
+export const empty = <TReq, T>(options?: {
+  delay: number;
+}): StreamableLike<TReq, T> =>
   isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));

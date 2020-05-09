@@ -22,11 +22,7 @@ class LiftedStreamable extends StreamableImpl {
 }
 const liftImpl = (enumerable, obsOps, reqOps) => {
     const src = enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
-    const createStreamObservable = (requests) => (stream) => {
-        const observable = pipe(stream, ...obsOps);
-        const onRequest = pipe(requests, map(compose(...reqOps)), onNotify((req) => stream.dispatch(req)), ignoreElements(), onSubscribe(() => stream));
-        return merge(observable, onRequest);
-    };
+    const createStreamObservable = (requests) => (stream) => pipe(merge(stream, pipe(requests, map(compose(...reqOps)), onNotify((req) => stream.dispatch(req)), ignoreElements(), onSubscribe(() => stream))), ...obsOps);
     const op = (requests) => using(scheduler => src.stream(scheduler), createStreamObservable(requests));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
