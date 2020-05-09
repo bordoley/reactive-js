@@ -29,6 +29,9 @@ export class AbstractSubscriber extends AbstractDisposable {
         this.add(continuation);
         this.scheduler.schedule(continuation, delay);
     }
+    shouldYield() {
+        return this.scheduler.shouldYield();
+    }
 }
 export class AbstractDelegatingSubscriber extends AbstractSubscriber {
     constructor(delegate) {

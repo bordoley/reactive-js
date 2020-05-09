@@ -68,22 +68,14 @@ const createCallback = (
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
-    const delay = continuation.run(scheduler.shouldYield);
+    continuation.run(scheduler);
     scheduler.inContinuation = false;
-
-    if (delay >= 0) {
-      scheduler.schedule(continuation, delay);
-    }
   }
 };
 
 class HostScheduler implements SchedulerLike {
   inContinuation = false;
   startTime = this.now;
-
-  readonly shouldYield = () => {
-    return this.now > this.startTime + this.yieldInterval;
-  };
 
   constructor(private readonly yieldInterval: number) {}
 
@@ -100,6 +92,10 @@ class HostScheduler implements SchedulerLike {
           : scheduleImmediate(callback);
       continuation.add(callbackSubscription);
     }
+  }
+
+  shouldYield() {
+    return this.now > this.startTime + this.yieldInterval;
   }
 }
 

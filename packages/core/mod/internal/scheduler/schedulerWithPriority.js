@@ -12,5 +12,8 @@ class SchedulerWithPriorityImpl {
     schedule(continuation, delay = 0) {
         this.priorityScheduler.schedule(continuation, this.priority, delay);
     }
+    shouldYield() {
+        return this.priorityScheduler.shouldYield();
+    }
 }
 export const toSchedulerWithPriority = (priority) => priorityScheduler => new SchedulerWithPriorityImpl(priorityScheduler, priority);

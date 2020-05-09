@@ -4,9 +4,7 @@ export {
   SchedulerLike,
   VirtualTimeSchedulerLike,
   PrioritySchedulerLike,
-  CallbackContinuation,
 } from "./internal/scheduler/interfaces.ts";
-
 export { AbstractSchedulerContinuation } from "./internal/scheduler/abstractSchedulerContinuation.ts";
 export {
   toPriorityScheduler,

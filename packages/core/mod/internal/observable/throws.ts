@@ -1,3 +1,4 @@
+import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
@@ -14,9 +15,9 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
     super(subscriber);
   }
 
-  produce(_?: () => boolean): number {
-    const error = this.f();
-    throw error;
+  produce(_: SchedulerLike) {
+    const cause = this.f();
+    this.dispose({ cause });
   }
 }
 

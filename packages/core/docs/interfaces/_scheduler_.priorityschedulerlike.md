@@ -18,6 +18,7 @@ A scheduler which schedules work according to it's priority.
 ### Methods
 
 * [schedule](_scheduler_.priorityschedulerlike.md#schedule)
+* [shouldYield](_scheduler_.priorityschedulerlike.md#shouldyield)
 
 ## Properties
 
@@ -52,3 +53,11 @@ Name | Type | Description |
 **Returns:** *void*
 
 A `DisposableLike` that can be disposed to cancel the scheduled work.
+
+___
+
+###  shouldYield
+
+▸ **shouldYield**(): *boolean*
+
+**Returns:** *boolean*

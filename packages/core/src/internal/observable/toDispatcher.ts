@@ -1,7 +1,7 @@
 import { AbstractDisposable } from "../../disposable";
-import { alwaysFalse } from "../../functions";
 import { isSome } from "../../option";
 import { AbstractSchedulerContinuation } from "../../scheduler";
+import { SchedulerLike } from "../scheduler/interfaces";
 import { DispatcherLike, SubscriberLike } from "./interfaces";
 
 class SubscriberDelegatingDispatcherSchedulerContinuation<
@@ -11,22 +11,21 @@ class SubscriberDelegatingDispatcherSchedulerContinuation<
     super();
   }
 
-  produce(shouldYield?: () => boolean): number {
+  produce(scheduler: SchedulerLike) {
     const dispatcher = this.dispatcher;
     const nextQueue = dispatcher.nextQueue;
-
-    shouldYield = shouldYield ?? alwaysFalse;
 
     while (nextQueue.length > 0 && !this.isDisposed) {
       const next = nextQueue.shift() as T;
       dispatcher.subscriber.notify(next);
 
-      if (dispatcher.nextQueue.length > 0 && shouldYield()) {
-        return 0;
+      if (dispatcher.nextQueue.length > 0 && scheduler.shouldYield()) {
+        scheduler.schedule(this);
+        return;
       }
     }
 
-    return -1;
+    this.dispose();
   }
 }
 

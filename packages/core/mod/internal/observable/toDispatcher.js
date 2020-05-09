@@ -1,5 +1,4 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { alwaysFalse } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { AbstractSchedulerContinuation } from "../../scheduler.js";
 class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
@@ -7,18 +6,18 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
         super();
         this.dispatcher = dispatcher;
     }
-    produce(shouldYield) {
+    produce(scheduler) {
         const dispatcher = this.dispatcher;
         const nextQueue = dispatcher.nextQueue;
-        shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
         while (nextQueue.length > 0 && !this.isDisposed) {
             const next = nextQueue.shift();
             dispatcher.subscriber.notify(next);
-            if (dispatcher.nextQueue.length > 0 && shouldYield()) {
-                return 0;
+            if (dispatcher.nextQueue.length > 0 && scheduler.shouldYield()) {
+                scheduler.schedule(this);
+                return;
             }
         }
-        return -1;
+        this.dispose();
     }
 }
 const scheduleDrainQueue = (dispatcher) => {

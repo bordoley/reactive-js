@@ -1,5 +1,3 @@
-import { alwaysFalse } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class FromArrayProducer extends AbstractProducer {
@@ -10,31 +8,25 @@ class FromArrayProducer extends AbstractProducer {
         this.delay = delay;
         this.index = this.startIndex;
     }
-    produce(shouldYield) {
+    produce(scheduler) {
         const delay = this.delay;
         const values = this.values;
         const length = values.length;
         let index = this.index;
-        if (delay > 0 || isSome(shouldYield)) {
-            let isDisposed = this.isDisposed;
-            shouldYield = shouldYield !== null && shouldYield !== void 0 ? shouldYield : alwaysFalse;
-            while (index < length && !isDisposed) {
-                this.notify(values[index]);
-                index++;
-                isDisposed = this.isDisposed;
-                if (index < length && !isDisposed && (delay > 0 || shouldYield())) {
-                    this.index = index;
-                    return delay;
-                }
+        let isDisposed = this.isDisposed;
+        while (index < length && !isDisposed) {
+            this.notify(values[index]);
+            index++;
+            isDisposed = this.isDisposed;
+            if (index < length &&
+                !isDisposed &&
+                (delay > 0 || scheduler.shouldYield())) {
+                this.index = index;
+                scheduler.schedule(this, delay);
+                return;
             }
         }
-        else {
-            while (index < length && !this.isDisposed) {
-                this.notify(values[index]);
-                index++;
-            }
-        }
-        return -1;
+        this.dispose();
     }
 }
 export const fromArray = (options = {}) => values => {

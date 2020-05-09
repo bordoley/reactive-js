@@ -45,11 +45,8 @@ const createCallback = (scheduler, continuation) => () => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
-        const delay = continuation.run(scheduler.shouldYield);
+        continuation.run(scheduler);
         scheduler.inContinuation = false;
-        if (delay >= 0) {
-            scheduler.schedule(continuation, delay);
-        }
     }
 };
 class HostScheduler {
@@ -57,9 +54,6 @@ class HostScheduler {
         this.yieldInterval = yieldInterval;
         this.inContinuation = false;
         this.startTime = this.now;
-        this.shouldYield = () => {
-            return this.now > this.startTime + this.yieldInterval;
-        };
     }
     get now() {
         return now();
@@ -72,6 +66,9 @@ class HostScheduler {
                 : scheduleImmediate(callback);
             continuation.add(callbackSubscription);
         }
+    }
+    shouldYield() {
+        return this.now > this.startTime + this.yieldInterval;
     }
 }
 export const createHostScheduler = (config = {

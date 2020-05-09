@@ -1,4 +1,5 @@
 import { AbstractSchedulerContinuation } from "../../scheduler";
+import { SchedulerLike } from "../scheduler/interfaces";
 import { SubscriberLike } from "./interfaces";
 
 export abstract class AbstractProducer<
@@ -13,5 +14,5 @@ export abstract class AbstractProducer<
     this.subscriber.notify(next);
   }
 
-  abstract produce(shouldYield?: () => boolean): number;
+  abstract produce(scheduler: SchedulerLike): void;
 }

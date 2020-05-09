@@ -1,3 +1,4 @@
+import { alwaysFalse } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
@@ -25,6 +26,12 @@ const move = (scheduler) => {
     }
     return scheduler.hasCurrent;
 };
+const ignoreScheduler = {
+    inContinuation: true,
+    now: 0,
+    schedule(_schduler, _delay) { },
+    shouldYield: alwaysFalse,
+};
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     constructor(maxMicroTaskTicks) {
         super();
@@ -34,39 +41,28 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         this.inContinuation = false;
         this.microTaskTicks = 0;
         this.now = 0;
-        this.shouldYield = () => {
-            const runShouldYield = this.hostShouldYield;
-            this.microTaskTicks++;
-            return (this.microTaskTicks >= this.maxMicroTaskTicks ||
-                (isSome(runShouldYield) && runShouldYield()));
-        };
+        this.host = ignoreScheduler;
         this.taskIDCount = 0;
         this.taskQueue = createPriorityQueue(comparator);
     }
-    produce(hostShouldYield) {
-        const hostShouldYieldIsDefined = isSome(hostShouldYield);
-        this.hostShouldYield = hostShouldYield;
-        if (this.maxMicroTaskTicks === Number.MAX_SAFE_INTEGER &&
-            !hostShouldYieldIsDefined) {
-            this.shouldYield = none;
-        }
+    produce(scheduler) {
+        this.host = scheduler;
         while (move(this)) {
             const continuation = this.current;
             this.inContinuation = true;
-            const delay = continuation.run(this.shouldYield);
+            continuation.run(this);
             this.inContinuation = false;
-            if (!continuation.isDisposed) {
-                this.schedule(continuation, delay);
-            }
-            if (hostShouldYieldIsDefined) {
-                if (hostShouldYield()) {
-                    this.hostShouldYield = none;
-                    return 0;
-                }
+            if (scheduler.shouldYield()) {
+                this.host = ignoreScheduler;
+                scheduler.schedule(this);
+                return;
             }
         }
-        this.hostShouldYield = none;
-        return -1;
+        this.host = ignoreScheduler;
+        this.dispose();
+    }
+    run(scheduler = ignoreScheduler) {
+        super.run(scheduler);
     }
     schedule(continuation, delay = 0) {
         this.add(continuation);
@@ -78,6 +74,11 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
             };
             this.taskQueue.push(work);
         }
+    }
+    shouldYield() {
+        const host = this.host;
+        this.microTaskTicks++;
+        return this.microTaskTicks >= this.maxMicroTaskTicks || host.shouldYield();
     }
 }
 export const createVirtualTimeScheduler = (maxMicroTaskTicks = Number.MAX_SAFE_INTEGER) => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);

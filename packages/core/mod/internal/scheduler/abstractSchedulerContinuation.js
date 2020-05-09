@@ -8,12 +8,9 @@ const notifyListeners = (listeners, state) => {
 export class AbstractSchedulerContinuation extends AbstractDisposable {
     constructor() {
         super();
-        this.isActive = false;
         this.listeners = new Set();
         this.add(() => {
-            if (!this.isActive) {
-                this.listeners.clear();
-            }
+            this.listeners = new Set();
         });
     }
     addListener(_ev, listener) {
@@ -24,32 +21,22 @@ export class AbstractSchedulerContinuation extends AbstractDisposable {
     removeListener(_ev, listener) {
         this.listeners.delete(listener);
     }
-    run(shouldYield) {
+    run(scheduler) {
         const listeners = this.listeners;
-        let result = -1;
         let error = none;
         if (!this.isDisposed) {
-            this.isActive = true;
             notifyListeners(listeners, true);
             try {
-                result = this.produce(shouldYield);
+                this.produce(scheduler);
             }
             catch (cause) {
                 error = { cause };
             }
-            this.isActive = false;
             notifyListeners(listeners, false);
         }
         const isDisposed = this.isDisposed;
         if (!isDisposed && isSome(error)) {
             this.dispose(error);
         }
-        else if (!isDisposed && result < 0) {
-            this.dispose();
-        }
-        else if (isDisposed) {
-            listeners.clear();
-        }
-        return result;
     }
 }

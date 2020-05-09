@@ -1,6 +1,5 @@
 import { DisposableLike, AbstractDisposable } from "../../disposable";
 import { EnumeratorLike } from "../../enumerable";
-import { alwaysTrue } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
@@ -32,15 +31,8 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
       }
 
       this.inContinuation = true;
-      const result = continuation.run(alwaysTrue);
+      continuation.run(this);
       this.inContinuation = false;
-
-      // We don't support delayed continuations.
-      if (!continuation.isDisposed && result <= 0) {
-        continuations.push(continuation);
-      } else {
-        continuation.dispose();
-      }
 
       const error = this.error;
       if (isSome(error)) {
@@ -66,6 +58,10 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
     } else {
       continuation.dispose();
     }
+  }
+
+  shouldYield() {
+    return true;
   }
 }
 
