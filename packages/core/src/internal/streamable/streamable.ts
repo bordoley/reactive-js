@@ -14,6 +14,7 @@ import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "../../streamable";
 import { createStream, StreamableOperator } from "./createStream";
 import { onSubscribe } from "../observable/onSubscribe";
+import { isNone } from "../../option";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -100,4 +101,5 @@ const _empty = createStreamable<any, any>(_ => emptyObs());
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-export const empty = <TReq, T>(): StreamableLike<TReq, T> => _empty;
+export const empty = <TReq, T>(options?: { delay: number }): StreamableLike<TReq, T> => 
+  isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));

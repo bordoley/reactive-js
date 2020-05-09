@@ -1,11 +1,98 @@
-import { pipe } from "../src/functions";
-import { subscribe, onNotify, buffer } from "../src/observable";
+import { pipe, returns } from "../src/functions";
+import { subscribe, onNotify as onNotifyObs, buffer } from "../src/observable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { identity, map, mapReq } from "../src/streamable";
-import { test, describe, expectArrayEquals } from "../src/testing";
+import { empty, identity, map, mapReq, onNotify, scan, createActionReducer } from "../src/streamable";
+import { test, describe, expectArrayEquals, expectEquals, expectTrue } from "../src/testing";
 
 export const tests = describe(
   "streamable",
+  test("createActionReducer", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const stream = createActionReducer<number, number>(
+      (acc, next) => acc + next,
+      returns<number>(0),
+    ).stream(scheduler);
+         
+    stream.dispatch(1);
+    stream.dispatch(2);
+    stream.dispose();
+
+    let result: number[] = [];
+    pipe(
+      stream,
+      onNotifyObs(x => { result.push(x); }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run()
+
+    pipe(result, expectArrayEquals([0, 1, 3]));
+  }),
+  describe("empty", 
+    test("with no delay", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const stream = empty<void, number>().stream(scheduler);
+
+      stream.dispatch();
+      stream.dispatch();
+      stream.dispose();
+
+      let result: number[] = [];
+      const subscription = pipe(
+        stream, 
+        onNotifyObs(x => { result.push(x); }),
+        subscribe(scheduler),
+      );
+      scheduler.run();
+
+      pipe(result, expectArrayEquals([]));
+      expectTrue(subscription.isDisposed);
+    }),
+
+    test("with delay", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const stream = empty<void, number>({ delay: 4 }).stream(scheduler);
+
+      stream.dispatch();
+      stream.dispatch();
+      stream.dispose();
+
+      let result: number[] = [];
+      let disposedTime = 0;
+      const subscription = pipe(
+        stream, 
+        onNotifyObs(x => { result.push(x); }),
+        subscribe(scheduler),
+      ).add(
+        _ => {
+          disposedTime = scheduler.now;
+        }
+      );
+      scheduler.run();
+
+      pipe(result, expectArrayEquals([]));
+      expectTrue(subscription.isDisposed);
+      pipe(disposedTime, expectEquals(4));
+    }),
+  ),
+  test("with multiple subscribers", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    const stream = pipe(
+      identity<number>(),
+      map((x: number) => x + 100),
+    ).stream(scheduler);
+
+    pipe(stream.subscriberCount, expectEquals(0));
+    const sub1 = pipe(stream, subscribe(scheduler));
+    pipe(stream.subscriberCount, expectEquals(1));
+    const sub2 = pipe(stream, subscribe(scheduler));
+    pipe(stream.subscriberCount, expectEquals(2));
+    sub1.dispose();
+    pipe(stream.subscriberCount, expectEquals(1));
+    sub2.dispose();
+    pipe(stream.subscriberCount, expectEquals(0));
+  }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();
 
@@ -20,10 +107,10 @@ export const tests = describe(
     stream.dispose();
 
     let result: readonly number[] = [];
-    pipe(
+    const subscription = pipe(
       stream,
       buffer(),
-      onNotify(x => {
+      onNotifyObs(x => {
         result = x;
       }),
       subscribe(scheduler),
@@ -32,6 +119,7 @@ export const tests = describe(
     scheduler.run();
 
     pipe(result, expectArrayEquals([110, 120, 130]));
+    expectTrue(subscription.isDisposed)
   }),
 
   test("mapReq", () => {
@@ -49,10 +137,10 @@ export const tests = describe(
     stream.dispose();
 
     let result: readonly number[] = [];
-    pipe(
+    const subscription = pipe(
       stream,
       buffer(),
-      onNotify(x => {
+      onNotifyObs(x => {
         result = x;
       }),
       subscribe(scheduler),
@@ -61,5 +149,47 @@ export const tests = describe(
     scheduler.run();
 
     pipe(result, expectArrayEquals([110, 120, 130]));
+    expectTrue(subscription.isDisposed)
+  }),
+  test("onNotify", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    let result: number[] = [];
+    const stream = pipe(
+      identity<number>(),
+      onNotify(x => { result.push(x); }),
+    ).stream(scheduler);
+
+    stream.dispatch(1);
+    stream.dispatch(2);
+    stream.dispatch(3);
+    stream.dispose();
+
+    expectTrue(stream.isDisposed)
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([1, 2, 3]));
+  }),
+  test("scan", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    let result: number[] = [];
+    const stream = pipe(
+      identity<number>(),
+      scan(
+        (acc, next) => acc + next,
+        returns<number>(0),
+      ),
+      onNotify(x => { result.push(x); }),
+    ).stream(scheduler);
+
+    stream.dispatch(1);
+    stream.dispatch(2);
+    stream.dispatch(3);
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([1, 3, 6]));
   }),
 );

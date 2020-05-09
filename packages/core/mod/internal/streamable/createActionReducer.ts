@@ -1,12 +1,13 @@
 import { pipe, returns } from "../../functions.ts";
 import {
   ObservableLike,
+  fromValue,
   scan,
-  startWith,
   distinctUntilChanged,
 } from "../../observable.ts";
 import { StreamableLike } from "./interfaces.ts";
 import { createStreamable } from "./streamable.ts";
+import { merge } from "../observable/merge.ts";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -25,10 +26,17 @@ export const createActionReducer = <TAction, T>(
   const operator = (src: ObservableLike<TAction>) => {
     const acc = initialState();
 
+    // Note: We want to product the initial value first, 
+    // but need to subscribe to src when the operator is initially
+    // invoked to avoid missing any dispatch requests. 
+    // Hence we merge the two observables and take advantage
+    // of the fact that merge notifies in the order of 
+    // the observables merged.
     return pipe(
-      src,
-      scan(reducer, returns(acc)),
-      startWith(acc),
+      merge(
+        fromValue()(acc),
+        pipe(src, scan(reducer, returns(acc))),
+      ),
       distinctUntilChanged(equals),
     );
   };
