@@ -149,7 +149,8 @@ const scheduleContinuation = (
   scheduler.host.schedule(continuation, { delay });
 };
 
-class PriorityScheduler extends AbstractSerialDisposable implements PrioritySchedulerLike {
+class PriorityScheduler extends AbstractSerialDisposable
+  implements PrioritySchedulerLike {
   current: any = none;
   readonly delayed: QueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
@@ -173,9 +174,12 @@ class PriorityScheduler extends AbstractSerialDisposable implements PrioritySche
 
   schedule(
     continuation: SchedulerContinuationLike,
-    { priority, delay = 0 }: {
-      priority: number,
-      delay?: number,
+    {
+      priority,
+      delay = 0,
+    }: {
+      priority: number;
+      delay?: number;
     },
   ) {
     this.add(continuation);
@@ -235,12 +239,13 @@ export const toPriorityScheduler = (
 ): DisposableLike & PrioritySchedulerLike =>
   new PriorityScheduler(hostScheduler);
 
-class PausableSchedulerImpl extends AbstractDisposable implements PausableSchedulerLike {
+class PausableSchedulerImpl extends AbstractDisposable
+  implements PausableSchedulerLike {
   private isPaused = true;
 
   constructor(private readonly priorityScheduler: PriorityScheduler) {
     super();
-    
+
     this.add(priorityScheduler);
     priorityScheduler.add(this);
   }
@@ -263,7 +268,7 @@ class PausableSchedulerImpl extends AbstractDisposable implements PausableSchedu
     const head = peek(priorityScheduler);
 
     this.isPaused = false;
-    
+
     if (priorityScheduler.inner.isDisposed && isSome(head)) {
       scheduleContinuation(priorityScheduler, head);
     }

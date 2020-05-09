@@ -1,4 +1,4 @@
-import { createSerialDisposable } from "../../disposable.ts";
+import { disposed } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { isNone, isSome, none } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
@@ -20,25 +20,16 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
   readonly T[]
 > {
-  private readonly durationSubscription = createSerialDisposable();
+  private durationSubscription = disposed;
   private buffer: Array<T> = [];
-
-  readonly onNotify = () => {
-    this.durationSubscription.inner.dispose();
+  private readonly onNotify = () => {
+    this.durationSubscription.dispose();
+    this.durationSubscription = disposed;
+    
     const buffer = this.buffer;
     this.buffer = [];
 
-    const delegate = this.delegate;
-
-    try {
-      delegate.notify(buffer);
-    } catch (cause) {
-      delegate.dispose({ cause });
-    }
-
-    if (this.isDisposed) {
-      delegate.dispose();
-    }
+    this.delegate.notify(buffer);
   };
 
   constructor(
@@ -63,14 +54,13 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
     assertSubscriberNotifyInContinuation(this);
 
     const buffer = this.buffer;
-    const durationSubscription = this.durationSubscription;
 
     buffer.push(next);
 
     if (buffer.length === this.maxBufferSize) {
       this.onNotify();
-    } else if (durationSubscription.inner.isDisposed) {
-      durationSubscription.inner = pipe(
+    } else if (this.durationSubscription.isDisposed) {
+      this.durationSubscription = pipe(
         this.durationSelector(next),
         onNotify(this.onNotify),
         subscribe(this.delegate),

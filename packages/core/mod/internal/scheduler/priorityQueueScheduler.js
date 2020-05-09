@@ -109,7 +109,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
     get now() {
         return this.host.now;
     }
-    schedule(continuation, { priority, delay = 0 }) {
+    schedule(continuation, { priority, delay = 0, }) {
         this.add(continuation);
         if (!continuation.isDisposed) {
             const now = this.now;

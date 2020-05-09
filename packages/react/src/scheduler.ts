@@ -45,9 +45,12 @@ const priorityScheduler = {
 
   schedule(
     continuation: SchedulerContinuationLike,
-    { priority, delay = 0 }: {
-      priority: number,
-      delay?: number,
+    {
+      priority,
+      delay = 0,
+    }: {
+      priority: number;
+      delay?: number;
     },
   ): void {
     const scheduler = getScheduler(priority);

@@ -1,4 +1,4 @@
-import { createSerialDisposable } from "../../disposable.js";
+import { disposed } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
@@ -12,22 +12,14 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.durationSelector = durationSelector;
         this.maxBufferSize = maxBufferSize;
-        this.durationSubscription = createSerialDisposable();
+        this.durationSubscription = disposed;
         this.buffer = [];
         this.onNotify = () => {
-            this.durationSubscription.inner.dispose();
+            this.durationSubscription.dispose();
+            this.durationSubscription = disposed;
             const buffer = this.buffer;
             this.buffer = [];
-            const delegate = this.delegate;
-            try {
-                delegate.notify(buffer);
-            }
-            catch (cause) {
-                delegate.dispose({ cause });
-            }
-            if (this.isDisposed) {
-                delegate.dispose();
-            }
+            this.delegate.notify(buffer);
         };
         this.add(this.durationSubscription).add(error => {
             const buffer = this.buffer;
@@ -43,13 +35,12 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
     notify(next) {
         assertSubscriberNotifyInContinuation(this);
         const buffer = this.buffer;
-        const durationSubscription = this.durationSubscription;
         buffer.push(next);
         if (buffer.length === this.maxBufferSize) {
             this.onNotify();
         }
-        else if (durationSubscription.inner.isDisposed) {
-            durationSubscription.inner = pipe(this.durationSelector(next), onNotify(this.onNotify), subscribe(this.delegate)).add(e => {
+        else if (this.durationSubscription.isDisposed) {
+            this.durationSubscription = pipe(this.durationSelector(next), onNotify(this.onNotify), subscribe(this.delegate)).add(e => {
                 if (isSome(e)) {
                     this.dispose(e);
                 }
