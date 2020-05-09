@@ -122,5 +122,5 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
  * for testing cooperative multitasking.
  */
 export const createVirtualTimeScheduler = (
-  maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
+  { maxMicroTaskTicks } = { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER },
 ): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
