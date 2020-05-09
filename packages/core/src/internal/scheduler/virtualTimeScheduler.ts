@@ -48,7 +48,10 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 const ignoreScheduler = {
   inContinuation: true,
   now: 0,
-  schedule(_scheduler: SchedulerContinuationLike, _options?:{ delay: number }) {},
+  schedule(
+    _scheduler: SchedulerContinuationLike,
+    _options?: { delay: number },
+  ) {},
   shouldYield: alwaysFalse,
 };
 

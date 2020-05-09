@@ -1,6 +1,6 @@
 import { Operator, compose, call } from "../../functions.ts";
 import { ObservableLike } from "./interfaces.ts";
-import { fromValue } from "./fromValue"
+import { fromValue } from "./fromValue.ts";
 import { map } from "./map.ts";
 
 /**
@@ -9,10 +9,7 @@ import { map } from "./map.ts";
  * @param value The value to emit.
  * @param delay The delay before emitting the value.
  */
-export const compute = <T>(
-  options?: { delay: number },
-): Operator<() => T, ObservableLike<T>> =>
-  compose(
-    fromValue(options),
-    map(call()),
-  );
+export const compute = <T>(options?: {
+  delay: number;
+}): Operator<() => T, ObservableLike<T>> =>
+  compose(fromValue(options), map(call()));

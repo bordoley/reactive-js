@@ -9,6 +9,10 @@ import {
   referenceEquals,
 } from "../src/functions";
 import {
+  forEach as forEachEnumerable,
+  fromArray as fromArrayEnumerable,
+} from "../src/enumerable";
+import {
   await_,
   buffer,
   combineLatest,
@@ -58,6 +62,7 @@ import {
   switchMap,
   onSubscribe,
   startWith,
+  createSubject,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -97,18 +102,31 @@ export const tests = describe(
     );
   }),
 
-  test("buffer", () => {
-    pipe(
-      concat(
-        pipe([1, 2, 3, 4], fromArray()),
-        pipe([1, 2, 3], fromArray({ delay: 1 })),
-        pipe(4, fromValue({ delay: 8 })),
-      ),
-      buffer({ duration: 4, maxBufferSize: 3 }),
-      toArray(),
-      expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayOfArraysEqual),
-    );
-  }),
+  describe(
+    "buffer",
+    test("with duration and maxBufferSize", () =>
+      pipe(
+        concat(
+          pipe([1, 2, 3, 4], fromArray()),
+          pipe([1, 2, 3], fromArray({ delay: 1 })),
+          pipe(4, fromValue({ delay: 8 })),
+        ),
+        buffer({ duration: 4, maxBufferSize: 3 }),
+        toArray(),
+        expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayOfArraysEqual),
+      )),
+    test("when duration observable throws", () =>
+      pipe(
+        () =>
+          pipe(
+            [1, 2, 3, 4],
+            fromArray(),
+            buffer({ duration: _ => throws(() => new Error()) }),
+            toArray(() => createVirtualTimeScheduler(1)),
+          ),
+        expectToThrow,
+      )),
+  ),
 
   describe(
     "catchError",
@@ -211,6 +229,21 @@ export const tests = describe(
         throw cause;
       });
       pipe(() => pipe(observable, toValue()), expectToThrowError(cause));
+    }),
+  ),
+
+  describe(
+    "createSubject",
+    test("with replay", () => {
+      const subject = createSubject(2);
+      pipe(
+        [1, 2, 3, 4],
+        fromArrayEnumerable,
+        forEachEnumerable(n => subject.dispatch(n)),
+      );
+      subject.dispose();
+
+      pipe(subject, toArray(), expectArrayEquals([3, 4]));
     }),
   ),
 
@@ -479,8 +512,13 @@ export const tests = describe(
     )),
 
   test("startWith", () =>
-    pipe([1,2,3], fromArray(), startWith(0), toArray(), expectArrayEquals([0,1,2,3]))
-  ),
+    pipe(
+      [1, 2, 3],
+      fromArray(),
+      startWith(0),
+      toArray(),
+      expectArrayEquals([0, 1, 2, 3]),
+    )),
 
   test("switchMap", () =>
     pipe(
