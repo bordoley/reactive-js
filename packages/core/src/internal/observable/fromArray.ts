@@ -14,7 +14,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     subscriber: SubscriberLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
-    private readonly delay: number,
+    readonly delay: number,
   ) {
     super(subscriber);
   }
@@ -38,7 +38,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
         (delay > 0 || scheduler.shouldYield())
       ) {
         this.index = index;
-        scheduler.schedule(this, delay);
+        scheduler.schedule(this, this);
         return;
       }
     }

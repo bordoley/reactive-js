@@ -48,7 +48,7 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 const ignoreScheduler = {
   inContinuation: true,
   now: 0,
-  schedule(_schduler: SchedulerContinuationLike, _delay?: number) {},
+  schedule(_scheduler: SchedulerContinuationLike, _options?:{ delay: number }) {},
   shouldYield: alwaysFalse,
 };
 
@@ -91,7 +91,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super.run(scheduler);
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay = 0): void {
+  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     this.add(continuation);
 
     if (!continuation.isDisposed) {

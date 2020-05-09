@@ -45,10 +45,10 @@ export abstract class AbstractSubscriber<T> extends AbstractDisposable
     this.inContinuation = status;
   }
 
-  schedule(continuation: SchedulerContinuationLike, delay = 0) {
+  schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
     this.add(continuation);
-    this.scheduler.schedule(continuation, delay);
+    this.scheduler.schedule(continuation, options);
   }
 
   shouldYield() {

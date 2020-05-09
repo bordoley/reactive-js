@@ -15,9 +15,9 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
 
 export const schedule = (
   callback: (scheduler: SchedulerLike) => void,
-  delay = 0,
+  options = { delay: 0 },
 ) => (scheduler: SchedulerLike): DisposableLike => {
   const continuation = new CallbackSchedulerContinuation(callback);
-  scheduler.schedule(continuation, delay);
+  scheduler.schedule(continuation, options);
   return continuation;
 };

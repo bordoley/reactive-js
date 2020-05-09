@@ -58,7 +58,7 @@ class HostScheduler {
     get now() {
         return now();
     }
-    schedule(continuation, delay = 0) {
+    schedule(continuation, { delay } = { delay: 0 }) {
         if (!continuation.isDisposed) {
             const callback = createCallback(this, continuation);
             const callbackSubscription = delay > 0

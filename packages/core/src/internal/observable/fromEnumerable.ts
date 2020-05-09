@@ -12,7 +12,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
     private readonly enumerator: EnumeratorLike<T>,
-    private readonly delay: number,
+    readonly delay: number,
   ) {
     super(subscriber);
   }
@@ -28,7 +28,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
 
       isDisposed = this.isDisposed;
       if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
-        scheduler.schedule(this, delay);
+        scheduler.schedule(this, this);
         return;
       }
     }
