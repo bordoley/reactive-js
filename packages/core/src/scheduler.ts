@@ -1,9 +1,10 @@
 export {
+  PausableSchedulerLike,
+  PrioritySchedulerLike,
   SchedulerContinuationRunStatusChangedListenerLike,
   SchedulerContinuationLike,
   SchedulerLike,
   VirtualTimeSchedulerLike,
-  PrioritySchedulerLike,
 } from "./internal/scheduler/interfaces";
 export { AbstractSchedulerContinuation } from "./internal/scheduler/abstractSchedulerContinuation";
 export {
