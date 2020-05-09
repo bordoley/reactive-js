@@ -1,6 +1,6 @@
 import { Operator, compose, call } from "../../functions.ts";
-import { ObservableLike } from "./interfaces.ts";
 import { fromValue } from "./fromValue.ts";
+import { ObservableLike } from "./interfaces.ts";
 import { map } from "./map.ts";
 
 /**

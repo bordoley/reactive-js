@@ -11,7 +11,7 @@ class ThrowsProducer extends AbstractProducer {
         this.dispose({ cause });
     }
 }
-export const throws = (errorFactory, { delay } = { delay: 0 }) => {
+export const throws = ({ delay } = { delay: 0 }) => errorFactory => {
     const factory = (subscriber) => new ThrowsProducer(subscriber, errorFactory, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)

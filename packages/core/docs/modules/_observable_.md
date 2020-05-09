@@ -2090,7 +2090,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`errorFactory`: function, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **throws**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
@@ -2100,17 +2100,13 @@ Creates an `ObservableLike` that emits no items and immediately disposes its sub
 
 **Parameters:**
 
-▪ **errorFactory**: *function*
-
-▸ (): *unknown*
-
 ▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
 
 Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 

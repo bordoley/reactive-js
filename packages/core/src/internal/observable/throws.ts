@@ -1,3 +1,4 @@
+import { Operator } from "../../functions";
 import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -28,9 +29,8 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
  * @param delay The delay before disposing the subscription.
  */
 export const throws = <T>(
-  errorFactory: () => unknown,
   { delay }: { delay: number } = { delay: 0 },
-): ObservableLike<T> => {
+): Operator<() => unknown, ObservableLike<T>> => errorFactory => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new ThrowsProducer(subscriber, errorFactory, delay);
 

@@ -152,7 +152,7 @@ const routerHandlerFiles: HttpServer<
 const routerHandlerThrow: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
-> = returns(throws(() => new Error("internal error")));
+> = returns(throws()(() => new Error("internal error")));
 
 const notFound: Operator<
   HttpRequest<FlowableLike<Uint8Array>>,
