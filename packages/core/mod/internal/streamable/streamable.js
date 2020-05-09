@@ -1,6 +1,7 @@
-import { pipe } from "../../functions.js";
+import { pipe, compose } from "../../functions.js";
 import { onNotify, empty as emptyObs, ignoreElements, map, merge, using, } from "../../observable.js";
 import { createStream } from "./createStream.js";
+import { onSubscribe } from "../observable/onSubscribe.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;
@@ -18,15 +19,14 @@ class LiftedStreamable extends StreamableImpl {
         this.reqOps = reqOps;
     }
 }
-const createFactory = (obsOps, reqOps, requests) => (stream) => {
-    const observable = pipe(stream, ...obsOps);
-    const mapRequest = (req) => pipe(req, ...reqOps);
-    const onRequest = pipe(requests, map(mapRequest), onNotify((req) => stream.dispatch(req)), ignoreElements());
-    return merge(observable, onRequest);
-};
 const liftImpl = (enumerable, obsOps, reqOps) => {
     const src = enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
-    const op = (requests) => using(scheduler => src.stream(scheduler), createFactory(obsOps, reqOps, requests));
+    const createStreamObservable = (requests) => (stream) => {
+        const observable = pipe(stream, ...obsOps);
+        const onRequest = pipe(requests, map(compose(...reqOps)), onNotify((req) => stream.dispatch(req)), ignoreElements(), onSubscribe(() => stream));
+        return merge(observable, onRequest);
+    };
+    const op = (requests) => using(scheduler => src.stream(scheduler), createStreamObservable(requests));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 export const lift = (op) => enumerable => {

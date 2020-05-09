@@ -11,7 +11,7 @@ import { tests as enumerableTests } from "./enumerable.test";
 import { tests as observableTests } from "./observable.test";
 //import { tests as reactiveCacheTests } from "./reactiveCache.test";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
-//import { tests as streamableTests } from "./streamable.test";
+import { tests as streamableTests } from "./streamable.test";
 //import { tests as textEncodingTests } from "./textEncoding.test";
 
 export const tests = [
@@ -23,7 +23,7 @@ export const tests = [
   //queuesTests,
   //reactiveCacheTests,
   //resourceManagerTests,
-  //streamableTests,
+  streamableTests,
   //textEncodingTests,
 ];
 

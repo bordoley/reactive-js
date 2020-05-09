@@ -1,4 +1,4 @@
-import { pipe } from "../../functions.ts";
+import { pipe, compose } from "../../functions.ts";
 import {
   ObservableOperator,
   ObservableLike,
@@ -13,6 +13,7 @@ import {
 import { SchedulerLike } from "../../scheduler.ts";
 import { StreamableLike } from "../../streamable.ts";
 import { createStream, StreamableOperator } from "./createStream.ts";
+import { onSubscribe } from "../observable/onSubscribe.ts";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -37,25 +38,6 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
   }
 }
 
-const createFactory = <TReqA, TReqB, TA, TB>(
-  obsOps: ObservableOperator<any, any>[],
-  reqOps: ((req: unknown) => any)[],
-  requests: ObservableLike<TReqB>,
-) => (stream: StreamLike<TReqA, TA>) => {
-  const observable = pipe(stream, ...obsOps) as ObservableLike<TB>;
-
-  const mapRequest = (req: TReqB): TReqA => pipe(req, ...reqOps) as TReqA;
-
-  const onRequest: ObservableLike<TB> = pipe(
-    requests,
-    map(mapRequest),
-    onNotify((req: TReqA) => stream.dispatch(req)),
-    ignoreElements<unknown, TB>(),
-  );
-
-  return merge(observable, onRequest);
-};
-
 const liftImpl = <TReqA, TReqB, TA, TB>(
   enumerable: StreamableLike<TReqA, TA>,
   obsOps: ObservableOperator<any, any>[],
@@ -63,10 +45,29 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 ) => {
   const src =
     enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
+
+  const createStreamObservable =(
+      requests: ObservableLike<TReqB>,
+  ) => (stream: StreamLike<TReqA, TA>) => {
+    const observable = pipe(stream, ...obsOps) as ObservableLike<TB>;
+  
+    const onRequest: ObservableLike<TB> = pipe(
+      requests,
+      map((compose as any)(...reqOps)),
+      onNotify((req: TReqA) => stream.dispatch(req)),
+      ignoreElements<unknown, TB>(),
+  
+      // needed to propogate dispose through the observable ops above
+      onSubscribe(() => stream),
+    );
+  
+    return merge(observable, onRequest);
+  };
+  
   const op = (requests: ObservableLike<TReqB>): ObservableLike<TB> =>
     using(
       scheduler => src.stream(scheduler),
-      createFactory(obsOps, reqOps, requests),
+      createStreamObservable(requests),
     );
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
