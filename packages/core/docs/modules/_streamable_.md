@@ -117,7 +117,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**TReq**, **T**>(): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
+▸ **empty**<**TReq**, **T**>(`options?`: object): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
 
 Returns an empty `StreamableLike` that always returns
 a disposed `StreamLike` instance.
@@ -127,6 +127,14 @@ a disposed `StreamLike` instance.
 ▪ **TReq**
 
 ▪ **T**
+
+**Parameters:**
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
 

@@ -2,6 +2,7 @@ import { pipe, compose } from "../../functions.js";
 import { onNotify, empty as emptyObs, ignoreElements, map, merge, using, } from "../../observable.js";
 import { createStream } from "./createStream.js";
 import { onSubscribe } from "../observable/onSubscribe.js";
+import { isNone } from "../../option.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;
@@ -40,4 +41,4 @@ export const mapReq = (op) => enumerable => {
     return liftImpl(enumerable, obsOps, reqOps);
 };
 const _empty = createStreamable(_ => emptyObs());
-export const empty = () => _empty;
+export const empty = (options) => isNone(options) ? _empty : createStreamable(_ => emptyObs(options));
