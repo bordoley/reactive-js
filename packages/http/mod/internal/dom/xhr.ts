@@ -18,19 +18,19 @@ export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,
   WebResponseBodyLike
 > = request =>
-  createObservable(subscriber => {
+  createObservable(dispatcher => {
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;
 
     const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
-    body.add(subscriber);
+    body.add(dispatcher);
 
-    subscriber.add(() => xhr.abort()).add(body);
+    dispatcher.add(() => xhr.abort()).add(body);
 
     xhr.onerror = () => {
       const cause = new Error("Network request failed");
-      subscriber.dispose({ cause });
+      dispatcher.dispose({ cause });
     };
 
     xhr.onreadystatechange = () => {
@@ -48,7 +48,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
           body,
         );
 
-        subscriber.dispatch({
+        dispatcher.dispatch({
           type: HttpClientRequestStatusType.HeadersReceived,
           response,
         });
@@ -82,7 +82,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
     };
 
     xhr.onloadstart = () => {
-      subscriber.dispatch({
+      dispatcher.dispatch({
         type: HttpClientRequestStatusType.Start,
       });
     };
@@ -90,14 +90,14 @@ export const sendHttpRequestUsingXHR: HttpClient<
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
 
-      subscriber.dispatch({
+      dispatcher.dispatch({
         type: HttpClientRequestStatusType.Progress,
         count,
       });
     };
 
     xhr.upload.onload = _ => {
-      subscriber.dispatch({
+      dispatcher.dispatch({
         type: HttpClientRequestStatusType.Completed,
       });
     };
@@ -105,7 +105,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this
       const cause = new Error("Network request failed");
-      subscriber.dispose({ cause });
+      dispatcher.dispose({ cause });
     };
 
     if (request.credentials === "include") {

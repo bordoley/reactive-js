@@ -30,9 +30,9 @@ export const sendHttpRequestUsingFetch = request => {
     const { cache, credentials, integrity, method, mode, redirect, referrerPolicy, uri, } = request;
     const url = uri.toString();
     const headers = httpRequestToUntypedHeaders(request);
-    const fetchResponse = createObservable(async (subscriber) => {
+    const fetchResponse = createObservable(async (dispatcher) => {
         const abortController = new AbortController();
-        subscriber.add(() => abortController.abort());
+        dispatcher.add(() => abortController.abort());
         try {
             const fetchResponse = await fetch(url, {
                 cache,
@@ -50,11 +50,11 @@ export const sendHttpRequestUsingFetch = request => {
                 responseHeaders[k] = v;
             });
             const response = parseHttpResponseFromHeaders(fetchResponse.status, responseHeaders, fetchResponse);
-            subscriber.dispatch(response);
-            subscriber.dispose();
+            dispatcher.dispatch(response);
+            dispatcher.dispose();
         }
         catch (cause) {
-            subscriber.dispose({ cause });
+            dispatcher.dispose({ cause });
         }
     });
     const mapResponseBody = switchMap((response) => using(scheduler => pipe(fromPromise(() => loadBodyContent(response)), publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({

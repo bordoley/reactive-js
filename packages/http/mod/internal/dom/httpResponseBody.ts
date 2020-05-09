@@ -13,14 +13,14 @@ import {
 import { WebResponseBodyLike } from "./interfaces.ts";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
-  const onSubscribe = (subscriber: DispatcherLike<string>) => {
+  const onSubscribe = (dispatcher: DispatcherLike<string>) => {
     const reader = new FileReader();
     reader.onload = () => {
-      subscriber.dispatch(reader.result as string);
+      dispatcher.dispatch(reader.result as string);
     };
 
     reader.onerror = () => {
-      subscriber.dispose({ cause: reader.error });
+      dispatcher.dispose({ cause: reader.error });
     };
 
     reader.readAsText(blob);
@@ -30,14 +30,14 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
 };
 
 const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
-  const onSubscribe = (subscriber: DispatcherLike<ArrayBuffer>) => {
+  const onSubscribe = (dispatcher: DispatcherLike<ArrayBuffer>) => {
     const reader = new FileReader();
     reader.onload = () => {
-      subscriber.dispatch(reader.result as ArrayBuffer);
+      dispatcher.dispatch(reader.result as ArrayBuffer);
     };
 
     reader.onerror = () => {
-      subscriber.dispose({ cause: reader.error });
+      dispatcher.dispose({ cause: reader.error });
     };
 
     reader.readAsArrayBuffer(body);

@@ -1,16 +1,16 @@
 import { createObservable } from "../../observable.js";
-export const fromEvent = (target, eventName, selector) => createObservable(subscriber => {
+export const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
         try {
             const result = selector(event);
-            subscriber.dispatch(result);
+            dispatcher.dispatch(result);
         }
         catch (cause) {
-            subscriber.dispose({ cause });
+            dispatcher.dispose({ cause });
         }
     };
     target.addEventListener(eventName, listener, { passive: true });
-    subscriber.add(() => {
+    dispatcher.add(() => {
         target.removeEventListener(eventName, listener);
     });
 });

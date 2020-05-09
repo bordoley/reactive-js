@@ -70,9 +70,9 @@ export const sendHttpRequestUsingFetch: HttpClient<
   const url = uri.toString();
   const headers = httpRequestToUntypedHeaders(request);
 
-  const fetchResponse = createObservable(async subscriber => {
+  const fetchResponse = createObservable(async dispatcher => {
     const abortController = new AbortController();
-    subscriber.add(() => abortController.abort());
+    dispatcher.add(() => abortController.abort());
 
     try {
       const fetchResponse = await fetch(url, {
@@ -98,10 +98,10 @@ export const sendHttpRequestUsingFetch: HttpClient<
         fetchResponse,
       );
 
-      subscriber.dispatch(response);
-      subscriber.dispose();
+      dispatcher.dispatch(response);
+      dispatcher.dispose();
     } catch (cause) {
-      subscriber.dispose({ cause });
+      dispatcher.dispose({ cause });
     }
   });
 
