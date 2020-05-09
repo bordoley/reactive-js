@@ -40,12 +40,12 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
 }
 
 const liftImpl = <TReqA, TReqB, TA, TB>(
-  enumerable: StreamableLike<TReqA, TA>,
+  streamable: StreamableLike<TReqA, TA>,
   obsOps: ObservableOperator<any, any>[],
   reqOps: ((req: any) => any)[],
 ) => {
   const src =
-    enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
+    streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
   const createStreamObservable = (requests: ObservableLike<TReqB>) => (
     stream: StreamLike<TReqA, TA>,
@@ -71,24 +71,24 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
 export const lift = <TReq, TA, TB>(
   op: ObservableOperator<TA, TB>,
-): StreamableOperator<TReq, TA, TReq, TB> => enumerable => {
+): StreamableOperator<TReq, TA, TReq, TB> => streamable => {
   const obsOps =
-    enumerable instanceof LiftedStreamable ? [...enumerable.obsOps, op] : [op];
+    streamable instanceof LiftedStreamable ? [...streamable.obsOps, op] : [op];
   const reqOps =
-    enumerable instanceof LiftedStreamable ? enumerable.reqOps : [];
+    streamable instanceof LiftedStreamable ? streamable.reqOps : [];
 
-  return liftImpl(enumerable, obsOps, reqOps);
+  return liftImpl(streamable, obsOps, reqOps);
 };
 
 export const mapReq = <TReqA, TReqB, T>(
   op: (req: TReqB) => TReqA,
-): StreamableOperator<TReqA, T, TReqB, T> => enumerable => {
+): StreamableOperator<TReqA, T, TReqB, T> => streamable => {
   const obsOps =
-    enumerable instanceof LiftedStreamable ? enumerable.obsOps : [];
+    streamable instanceof LiftedStreamable ? streamable.obsOps : [];
   const reqOps =
-    enumerable instanceof LiftedStreamable ? [op, ...enumerable.reqOps] : [op];
+    streamable instanceof LiftedStreamable ? [op, ...streamable.reqOps] : [op];
 
-  return liftImpl(enumerable, obsOps, reqOps);
+  return liftImpl(streamable, obsOps, reqOps);
 };
 
 const _empty = createStreamable<any, any>(_ => emptyObs());

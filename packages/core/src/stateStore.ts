@@ -61,10 +61,10 @@ export const toStateStore = <T>(
       onNotify((next: T) => stream.dispatch(next)),
     );
 
-  return enumerable =>
+  return streamable =>
     createStreamable(observable =>
       using(
-        scheduler => enumerable.stream(scheduler),
+        scheduler => streamable.stream(scheduler),
         createFactory(observable),
       ),
     );

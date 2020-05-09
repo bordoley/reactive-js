@@ -20,21 +20,21 @@ class LiftedStreamable extends StreamableImpl {
         this.reqOps = reqOps;
     }
 }
-const liftImpl = (enumerable, obsOps, reqOps) => {
-    const src = enumerable instanceof LiftedStreamable ? enumerable.src : enumerable;
+const liftImpl = (streamable, obsOps, reqOps) => {
+    const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const createStreamObservable = (requests) => (stream) => pipe(merge(stream, pipe(requests, map(compose(...reqOps)), onNotify((req) => stream.dispatch(req)), ignoreElements(), onSubscribe(() => stream))), ...obsOps);
     const op = (requests) => using(scheduler => src.stream(scheduler), createStreamObservable(requests));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
-export const lift = (op) => enumerable => {
-    const obsOps = enumerable instanceof LiftedStreamable ? [...enumerable.obsOps, op] : [op];
-    const reqOps = enumerable instanceof LiftedStreamable ? enumerable.reqOps : [];
-    return liftImpl(enumerable, obsOps, reqOps);
+export const lift = (op) => streamable => {
+    const obsOps = streamable instanceof LiftedStreamable ? [...streamable.obsOps, op] : [op];
+    const reqOps = streamable instanceof LiftedStreamable ? streamable.reqOps : [];
+    return liftImpl(streamable, obsOps, reqOps);
 };
-export const mapReq = (op) => enumerable => {
-    const obsOps = enumerable instanceof LiftedStreamable ? enumerable.obsOps : [];
-    const reqOps = enumerable instanceof LiftedStreamable ? [op, ...enumerable.reqOps] : [op];
-    return liftImpl(enumerable, obsOps, reqOps);
+export const mapReq = (op) => streamable => {
+    const obsOps = streamable instanceof LiftedStreamable ? streamable.obsOps : [];
+    const reqOps = streamable instanceof LiftedStreamable ? [op, ...streamable.reqOps] : [op];
+    return liftImpl(streamable, obsOps, reqOps);
 };
 const _empty = createStreamable(_ => emptyObs());
 export const empty = (options) => isNone(options) ? _empty : createStreamable(_ => emptyObs(options));
