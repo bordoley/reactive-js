@@ -1,70 +1,65 @@
 import { pipe } from "../src/functions";
-import { reduce, subscribe, onNotify, throwIfEmpty } from "../src/observable";
-import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
-import { identity, mapReq, map } from "../src/streamable";
+import { subscribe, onNotify, buffer } from "../src/observable";
+import { createVirtualTimeScheduler } from "../src/scheduler";
+import { identity, map, mapReq } from "../src/streamable";
 import { test, describe, expectArrayEquals } from "../src/testing";
 
 export const tests = describe(
   "streamable",
+  test("map", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    const stream = pipe(
+      identity<number>(),
+      map((x: number) => x + 100),
+    ).stream(scheduler);
+
+    stream.dispatch(10);
+    stream.dispatch(20);
+    stream.dispatch(30);
+    stream.dispose();
+
+    let result: readonly number[] = [];
+    pipe(
+      stream,
+      buffer(),
+      onNotify(x => {
+        result = x;
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([110, 120, 130]));
+  }),
+
   test("mapReq", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const stream = pipe(
-      identity<string>(),
-      mapReq((x: number) => (x + 100).toLocaleString()),
-      mapReq(({ val }: { val: number }) => val),
+      identity<number>(),
+      mapReq<number, number, number>(x => x + 100),
+      mapReq<number, string, number>(x => Number.parseInt(x)),
     ).stream(scheduler);
 
-    stream.dispatch({ val: 10 });
-    stream.dispatch({ val: 20 });
-    stream.dispatch({ val: 30 });
+    stream.dispatch("10");
+    stream.dispatch("20");
+    stream.dispatch("30");
     stream.dispose();
 
-    pipe(
-      scheduler,
-      schedule(_ => {
-        stream.dispose();
-      }, 1),
-    );
-
+    let result: readonly number[] = [];
     pipe(
       stream,
-      reduce(
-        (acc, next) => [...acc, next],
-        (): string[] => [],
-      ),
-      throwIfEmpty(() => new Error("empty")),
-      onNotify(expectArrayEquals(["110", "120", "130"])),
-      onNotify(console.log),
+      buffer(),
+      onNotify(x => {
+        result = x;
+      }),
       subscribe(scheduler),
     );
 
     scheduler.run();
-  }),
-  test("map", () => {
-    const scheduler = createVirtualTimeScheduler();
 
-    const lifted = pipe(
-      identity<number>(),
-      map(x => x + 100),
-      map(x => ({ x })),
-    );
-
-    const stream = lifted.stream(scheduler);
-
-    const result: number[] = [];
-    pipe(
-      stream,
-      onNotify(({ x }) => result.push(x)),
-      subscribe(scheduler),
-    );
-
-    stream.dispatch(0);
-    stream.dispatch(1);
-    stream.dispatch(2);
-
-    scheduler.run();
-
-    pipe(result, expectArrayEquals([100, 101, 102]));
+    pipe(result, expectArrayEquals([110, 120, 130]));
   }),
 );

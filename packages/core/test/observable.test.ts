@@ -91,8 +91,6 @@ import {
   expectToHaveBeenCalledTimes,
   expectSome,
 } from "../src/testing";
-import { Option } from "../src/option";
-import { Exception } from "../src/disposable";
 
 const scheduler = createHostScheduler();
 
@@ -648,22 +646,16 @@ export const tests = describe(
       share(scheduler, 1),
     );
 
-    let err: Option<Exception> = undefined;
+    let result: readonly number[] = [];
     pipe(
       zip([shared, shared], (a, b) => a + b),
       buffer(),
-      onNotify(expectArrayEquals([2, 4, 6])),
+      onNotify(x => { result = x}),
       subscribe(scheduler),
-    ).add(e => {
-      err = e;
-    });
+    )
 
     scheduler.run();
-
-    if (err !== undefined) {
-      const { cause } = err;
-      throw cause;
-    }
+    pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 
   test("skipFirst", () =>
