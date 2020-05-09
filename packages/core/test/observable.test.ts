@@ -12,6 +12,7 @@ import {
   await_,
   buffer,
   combineLatest,
+  compute,
   concat,
   contains,
   createObservable,
@@ -56,7 +57,7 @@ import {
   skipFirst,
   switchMap,
   onSubscribe,
-  //onSubscribe,
+  startWith,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -477,6 +478,10 @@ export const tests = describe(
       expectArrayEquals([3, 4, 5]),
     )),
 
+  test("startWith", () =>
+    pipe([1,2,3], fromArray(), startWith(0), toArray(), expectArrayEquals([0,1,2,3]))
+  ),
+
   test("switchMap", () =>
     pipe(
       [1, 2, 3],
@@ -559,7 +564,8 @@ export const tests = describe(
     test("when source is not empty", () =>
       pipe(
         1,
-        fromValue(),
+        returns,
+        compute(),
         throwIfEmpty(() => undefined),
         toValue(),
         expectEquals(1),

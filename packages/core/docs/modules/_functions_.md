@@ -16,7 +16,9 @@
 
 ### Functions
 
+* [apply](_functions_.md#apply)
 * [arrayEquals](_functions_.md#const-arrayequals)
+* [call](_functions_.md#call)
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
 * [identity](_functions_.md#const-identity)
@@ -63,6 +65,99 @@ ___
 
 ## Functions
 
+###  apply
+
+▸ **apply**<**T**>(`f`: function): *[Operator](_functions_.md#operator)‹[], T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (): *T*
+
+**Returns:** *[Operator](_functions_.md#operator)‹[], T›*
+
+▸ **apply**<**TA**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA], T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[TA], T›*
+
+▸ **apply**<**TA**, **TB**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA, TB], T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[TA, TB], T›*
+
+▸ **apply**<**TA**, **TB**, **TC**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA, TB, TC], T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **f**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+**Returns:** *[Operator](_functions_.md#operator)‹[TA, TB, TC], T›*
+
+___
+
 ### `Const` arrayEquals
 
 ▸ **arrayEquals**<**T**>(`valuesAreEqual`: function): *(Anonymous function)*
@@ -85,6 +180,100 @@ Name | Type |
 `b` | T |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+###  call
+
+▸ **call**<**T**>(): *[Operator](_functions_.md#operator)‹function, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+
+▸ **call**<**TA**, **T**>(`a`: TA): *[Operator](_functions_.md#operator)‹function, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+
+▸ **call**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Operator](_functions_.md#operator)‹function, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+
+▸ **call**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Operator](_functions_.md#operator)‹function, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+
+▸ **call**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Operator](_functions_.md#operator)‹function, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+
+**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
 
 ___
 

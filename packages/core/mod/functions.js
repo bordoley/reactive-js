@@ -1,4 +1,10 @@
 import { none } from "./option.js";
+export function call(...args) {
+    return f => f(...args);
+}
+export function apply(f) {
+    return args => f(...args);
+}
 export const identity = (v) => v;
 export const returns = (v) => (..._args) => v;
 export const alwaysFalse = returns(false);
