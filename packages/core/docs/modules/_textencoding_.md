@@ -22,13 +22,13 @@
 
 #### Type declaration:
 
-▸ (`enumerable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
+▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`enumerable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
 
 ## Functions
 
