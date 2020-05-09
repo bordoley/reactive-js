@@ -650,9 +650,11 @@ export const tests = describe(
     pipe(
       zip([shared, shared], (a, b) => a + b),
       buffer(),
-      onNotify(x => { result = x}),
+      onNotify(x => {
+        result = x;
+      }),
       subscribe(scheduler),
-    )
+    );
 
     scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));

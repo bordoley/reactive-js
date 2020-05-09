@@ -1,7 +1,7 @@
 import { AbstractDisposable } from "../../disposable.js";
-import { alwaysVoid } from "../../functions.js";
+import { ignore } from "../../functions.js";
 import { __DEV__ } from "../env.js";
-const assertSubscriberNotifyInContinuationProduction = alwaysVoid;
+const assertSubscriberNotifyInContinuationProduction = ignore;
 const assertSubscriberNotifyInContinuationDev = (subscriber) => {
     if (!subscriber.inContinuation) {
         throw new Error("Subscriber.notify() may only be invoked within a scheduled SchedulerContinuation");

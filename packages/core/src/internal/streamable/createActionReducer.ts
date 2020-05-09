@@ -26,17 +26,14 @@ export const createActionReducer = <TAction, T>(
   const operator = (src: ObservableLike<TAction>) => {
     const acc = initialState();
 
-    // Note: We want to product the initial value first, 
+    // Note: We want to product the initial value first,
     // but need to subscribe to src when the operator is initially
-    // invoked to avoid missing any dispatch requests. 
+    // invoked to avoid missing any dispatch requests.
     // Hence we merge the two observables and take advantage
-    // of the fact that merge notifies in the order of 
+    // of the fact that merge notifies in the order of
     // the observables merged.
     return pipe(
-      merge(
-        fromValue()(acc),
-        pipe(src, scan(reducer, returns(acc))),
-      ),
+      merge(fromValue()(acc), pipe(src, scan(reducer, returns(acc)))),
       distinctUntilChanged(equals),
     );
   };

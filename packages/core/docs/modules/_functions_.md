@@ -12,7 +12,7 @@
 
 * [alwaysFalse](_functions_.md#const-alwaysfalse)
 * [alwaysTrue](_functions_.md#const-alwaystrue)
-* [alwaysVoid](_functions_.md#const-alwaysvoid)
+* [ignore](_functions_.md#const-ignore)
 
 ### Functions
 
@@ -59,9 +59,9 @@ ___
 
 ___
 
-### `Const` alwaysVoid
+### `Const` ignore
 
-• **alwaysVoid**: *(Anonymous function)* = returns<void>(none)
+• **ignore**: *(Anonymous function)* = returns<void>(none)
 
 ## Functions
 

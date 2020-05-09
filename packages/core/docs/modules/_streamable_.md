@@ -21,6 +21,7 @@
 * [lift](_streamable_.md#const-lift)
 * [map](_streamable_.md#const-map)
 * [mapReq](_streamable_.md#const-mapreq)
+* [mapTo](_streamable_.md#const-mapto)
 * [onNotify](_streamable_.md#const-onnotify)
 * [scan](_streamable_.md#const-scan)
 * [sink](_streamable_.md#const-sink)
@@ -235,6 +236,36 @@ Name | Type |
 `req` | TReqB |
 
 **Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
+
+___
+
+### `Const` mapTo
+
+▸ **mapTo**<**TReq**, **TA**, **TB**>(`v`: TB): *function*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TB |
+
+**Returns:** *function*
+
+▸ (`enumerable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
 
 ___
 
