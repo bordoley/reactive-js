@@ -95,6 +95,8 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
+    delay = Math.max(0, delay);
+
     this.add(continuation);
 
     if (!continuation.isDisposed) {

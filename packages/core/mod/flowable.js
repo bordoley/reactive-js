@@ -30,7 +30,7 @@ export const fromObservable = (observable) => {
                     break;
             }
         };
-        const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(scheduler));
+        const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(scheduler)).add(pausableScheduler);
         return pausableScheduler.add(modeSubscription);
     };
     const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), mapObs(data => ({ type: 1, data })), endWith({ type: 2 })));

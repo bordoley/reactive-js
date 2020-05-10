@@ -65,6 +65,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         super.run(scheduler);
     }
     schedule(continuation, { delay } = { delay: 0 }) {
+        delay = Math.max(0, delay);
         this.add(continuation);
         if (!continuation.isDisposed) {
             const work = {
