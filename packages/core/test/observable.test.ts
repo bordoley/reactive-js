@@ -71,6 +71,7 @@ import {
   exhaustMap,
   mergeMap,
   switchAll,
+  zipWithLatestFrom,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -958,5 +959,47 @@ export const tests = describe(
           toArray(),
         ),
       )),
+  ),
+
+  describe(
+    "zipWithLatestFrom",
+    test("when source throws", () =>
+      pipe(
+        () =>
+          pipe(
+            throws()(() => new Error()),
+            zipWithLatestFrom(fromValue()(1), (_, b) => b),
+            toValue(),
+          ),
+        expectToThrow,
+      )),
+
+    test("when other throws", () =>
+      pipe(
+        () =>
+          pipe(
+            [1, 2, 3],
+            fromArray({ delay: 1 }),
+            zipWithLatestFrom(
+              throws()(() => new Error()),
+              (_, b) => b,
+            ),
+            toValue(),
+          ),
+        expectToThrow,
+      )),
+
+    test("when other throws", () =>
+      pipe(
+        [1],
+        fromArray({ delay: 1 }),
+        zipWithLatestFrom(
+          fromArray()([2]),
+          (_, b) => b,
+        ),
+        toValue(),
+        expectEquals(2),
+      ),
+    ),
   ),
 );
