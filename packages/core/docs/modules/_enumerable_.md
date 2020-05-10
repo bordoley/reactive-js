@@ -831,7 +831,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function, `__namedParameters`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike which yields values emitted by the source as long
 as each value satisfies the given predicate.
@@ -853,6 +853,12 @@ The predicate function.
 Name | Type |
 ------ | ------ |
 `next` | T |
+
+▪`Default value`  **__namedParameters**: *object*= {inclusive: false }
+
+Name | Type |
+------ | ------ |
+`inclusive` | boolean |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 

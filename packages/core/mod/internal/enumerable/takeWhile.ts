@@ -2,11 +2,12 @@ import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 
 class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
-  private done = false;
+  private state = 0;
 
   constructor(
     private readonly delegate: EnumeratorLike<T>,
     private readonly predicate: (next: T) => boolean,
+    private readonly inclusive: boolean
   ) {}
 
   get current() {
@@ -14,13 +15,23 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
   }
 
   get hasCurrent() {
-    return !this.done && this.delegate.hasCurrent;
+    return (this.state < 2) && this.delegate.hasCurrent;
   }
 
   move(): boolean {
     const delegate = this.delegate;
-    if (!this.done && delegate.move()) {
-      this.done = !this.predicate(delegate.current);
+    const state = this.state;
+
+    if (state === 0 && delegate.move()) {
+      const satisfiesPredicate = this.predicate(delegate.current);
+
+      if (!satisfiesPredicate && this.inclusive) {
+        this.state++;
+      } else if (!satisfiesPredicate) {
+        this.state = 2;
+      }
+    } else if (state < 2 && this.inclusive) {
+      this.state++;
     }
 
     return this.hasCurrent;
@@ -35,8 +46,9 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
  */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
+  { inclusive } =  {inclusive: false },
 ): EnumerableOperator<T, T> => {
   const operator = (subscriber: EnumeratorLike<T>) =>
-    new TakeWhileEnumerator(subscriber, predicate);
+    new TakeWhileEnumerator(subscriber, predicate, inclusive);
   return lift(operator);
 };

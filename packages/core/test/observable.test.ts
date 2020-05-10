@@ -766,15 +766,25 @@ export const tests = describe(
       )),
   ),
 
-  test("takeWhile", () =>
-    pipe(
-      [1, 2, 3, 4, 5],
-      fromArray(),
-      takeWhile(x => x < 3),
-      toArray(),
-      expectArrayEquals([1, 2]),
-    )),
-
+  describe("takeWhile",
+    test("exclusive", () =>
+      pipe(
+        [1, 2, 3, 4, 5],
+        fromArray(),
+        takeWhile(x => x < 3),
+        toArray(),
+        expectArrayEquals([1, 2]),
+      )),
+    test("inclusive", () =>
+      pipe(
+        [1, 2, 3, 4, 5],
+        fromArray(),
+        takeWhile(x => x < 3, { inclusive: true }),
+        toArray(),
+        expectArrayEquals([1, 2, 3]),
+      )),
+  ),
+ 
   describe(
     "throttle",
     test("first", () =>
