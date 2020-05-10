@@ -29,7 +29,6 @@
 * [empty](_flowable_.md#const-empty)
 * [fromObservable](_flowable_.md#const-fromobservable)
 * [fromValue](_flowable_.md#const-fromvalue)
-* [generate](_flowable_.md#const-generate)
 * [map](_flowable_.md#const-map)
 
 ## Type aliases
@@ -125,40 +124,6 @@ ___
 Name | Type |
 ------ | ------ |
 `data` | T |
-
-**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
-
-___
-
-### `Const` generate
-
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `options`: object): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **generator**: *function*
-
-▸ (`acc`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | T |
-
-▪ **initialValue**: *function*
-
-▸ (): *T*
-
-▪`Default value`  **options**: *object*= { delay: 0 }
-
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 

@@ -1,18 +1,15 @@
 import { Operator, compose, pipe, returns } from "./functions.ts";
-import { SchedulerLike } from "./internal/scheduler/interfaces.ts";
+import { SchedulerLike } from "./scheduler.ts";
 import {
   ObservableLike,
   endWith,
-  generate as generateObs,
   map as mapObs,
   mapTo,
   genMap,
-  empty as emptyObs,
   onNotify,
   subscribe,
   subscribeOn,
-  ScanAsyncMode,
-  scanAsync,
+  takeFirst,
   takeWhile,
   using,
   keep,
@@ -54,9 +51,9 @@ export type FlowableOperator<TA, TB> = Operator<
   FlowableLike<TB>
 >;
 
-const _empty = createStreamable(
+const _empty: FlowableLike<any> = createStreamable(
   compose(
-    keep(mode => mode == FlowMode.Resume),
+    keep(mode => mode === FlowMode.Resume),
     takeWhile(mode => mode !== FlowMode.Resume, { inclusive: true }),
     mapTo({ type: FlowEventType.Complete }),
   ),
@@ -66,6 +63,8 @@ export const empty = <T>(): FlowableLike<T> => _empty;
 export const fromValue = <T>(data: T): FlowableLike<T> =>
   createStreamable(
     compose(
+      keep(mode => mode === FlowMode.Resume),
+      takeFirst(),
       genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
         switch (mode) {
           case FlowMode.Resume:
@@ -73,27 +72,8 @@ export const fromValue = <T>(data: T): FlowableLike<T> =>
             yield { type: FlowEventType.Complete };
         }
       }),
-      takeWhile(ev => ev.type !== FlowEventType.Complete, { inclusive: true }),
     ),
   );
-
-export const generate = <T>(
-  generator: (acc: T) => T,
-  initialValue: () => T,
-  options = { delay: 0 },
-): FlowableLike<T> => {
-  const reducer = (acc: T, ev: FlowMode): ObservableLike<T> =>
-    ev === FlowMode.Resume
-      ? generateObs(generator, returns(acc), options)
-      : emptyObs();
-
-  const op = compose(
-    scanAsync(reducer, initialValue, ScanAsyncMode.Switching),
-    mapObs(data => ({ type: FlowEventType.Next, data })),
-  );
-
-  return createStreamable(op);
-};
 
 export const map = <TA, TB>(
   mapper: (v: TA) => TB,

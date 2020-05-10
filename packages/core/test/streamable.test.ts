@@ -63,7 +63,6 @@ export const tests = describe(
 
       stream.dispatch();
       stream.dispatch();
-      stream.dispose();
 
       let result: number[] = [];
       const subscription = pipe(
@@ -76,6 +75,7 @@ export const tests = describe(
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
+      expectTrue(stream.isDisposed);
       expectTrue(subscription.isDisposed);
     }),
 
@@ -85,7 +85,6 @@ export const tests = describe(
 
       stream.dispatch();
       stream.dispatch();
-      stream.dispose();
 
       let result: number[] = [];
       let disposedTime = 0;
@@ -101,6 +100,7 @@ export const tests = describe(
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
+      expectTrue(stream.isDisposed);
       expectTrue(subscription.isDisposed);
       pipe(disposedTime, expectEquals(4));
     }),
