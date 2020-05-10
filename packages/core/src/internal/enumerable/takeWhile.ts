@@ -7,7 +7,7 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
   constructor(
     private readonly delegate: EnumeratorLike<T>,
     private readonly predicate: (next: T) => boolean,
-    private readonly inclusive: boolean
+    private readonly inclusive: boolean,
   ) {}
 
   get current() {
@@ -15,7 +15,7 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
   }
 
   get hasCurrent() {
-    return (this.state < 2) && this.delegate.hasCurrent;
+    return this.state < 2 && this.delegate.hasCurrent;
   }
 
   move(): boolean {
@@ -46,7 +46,7 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
  */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-  { inclusive } =  {inclusive: false },
+  { inclusive } = { inclusive: false },
 ): EnumerableOperator<T, T> => {
   const operator = (subscriber: EnumeratorLike<T>) =>
     new TakeWhileEnumerator(subscriber, predicate, inclusive);

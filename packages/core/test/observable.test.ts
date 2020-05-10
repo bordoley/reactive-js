@@ -757,16 +757,12 @@ export const tests = describe(
       )),
     test("when pipeline throws", () =>
       expectToThrow(() =>
-        pipe(
-          () => new Error(),
-          throws(),
-          takeLast(),
-          toValue(),
-        ),
+        pipe(() => new Error(), throws(), takeLast(), toValue()),
       )),
   ),
 
-  describe("takeWhile",
+  describe(
+    "takeWhile",
     test("exclusive", () =>
       pipe(
         [1, 2, 3, 4, 5],
@@ -784,7 +780,7 @@ export const tests = describe(
         expectArrayEquals([1, 2, 3]),
       )),
   ),
- 
+
   describe(
     "throttle",
     test("first", () =>
@@ -1020,13 +1016,9 @@ export const tests = describe(
       pipe(
         [1],
         fromArray({ delay: 1 }),
-        zipWithLatestFrom(
-          fromArray()([2]),
-          (_, b) => b,
-        ),
+        zipWithLatestFrom(fromArray()([2]), (_, b) => b),
         toValue(),
         expectEquals(2),
-      ),
-    ),
+      )),
   ),
 );

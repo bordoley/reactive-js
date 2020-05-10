@@ -10,7 +10,7 @@ class TakeWhileEnumerator {
         return this.delegate.current;
     }
     get hasCurrent() {
-        return (this.state < 2) && this.delegate.hasCurrent;
+        return this.state < 2 && this.delegate.hasCurrent;
     }
     move() {
         const delegate = this.delegate;

@@ -5,8 +5,7 @@ import {
   endWith,
   generate as generateObs,
   map as mapObs,
-  keepType,
-  takeFirst,
+  mapTo,
   genMap,
   empty as emptyObs,
   onNotify,
@@ -14,14 +13,20 @@ import {
   subscribeOn,
   ScanAsyncMode,
   scanAsync,
+  takeWhile,
   using,
+  keep,
+  withLatestFrom,
+  compute,
+  concatMap,
+  fromIterator,
 } from "./observable.ts";
-import { none, isSome } from "./option.ts";
 import { toPausableScheduler } from "./scheduler.ts";
 import {
   StreamableLike,
   createStreamable,
   map as mapStream,
+  lift,
 } from "./streamable.ts";
 
 export const enum FlowMode {
@@ -51,35 +56,35 @@ export type FlowableOperator<TA, TB> = Operator<
 
 const _empty = createStreamable(
   compose(
-    mapObs(mode =>
-      mode === FlowMode.Resume ? { type: FlowEventType.Complete } : none,
-    ),
-    keepType(isSome),
-    takeFirst(),
+    keep(mode => mode == FlowMode.Resume),
+    takeWhile(mode => mode !== FlowMode.Resume, { inclusive: true }),
+    mapTo({ type: FlowEventType.Complete }),
   ),
 );
 export const empty = <T>(): FlowableLike<T> => _empty;
 
 export const fromValue = <T>(data: T): FlowableLike<T> =>
-  pipe(
-    genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
-      switch (mode) {
-        case FlowMode.Resume:
-          yield { type: FlowEventType.Next, data };
-          yield { type: FlowEventType.Complete };
-      }
-    }),
-    createStreamable,
+  createStreamable(
+    compose(
+      genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
+        switch (mode) {
+          case FlowMode.Resume:
+            yield { type: FlowEventType.Next, data };
+            yield { type: FlowEventType.Complete };
+        }
+      }),
+      takeWhile(ev => ev.type !== FlowEventType.Complete, { inclusive: true }),
+    ),
   );
 
 export const generate = <T>(
   generator: (acc: T) => T,
   initialValue: () => T,
-  { delay }: { delay: number } = { delay: 0 },
+  options = { delay: 0 },
 ): FlowableLike<T> => {
   const reducer = (acc: T, ev: FlowMode): ObservableLike<T> =>
     ev === FlowMode.Resume
-      ? generateObs(generator, returns(acc), { delay })
+      ? generateObs(generator, returns(acc), options)
       : emptyObs();
 
   const op = compose(
@@ -99,7 +104,7 @@ export const map = <TA, TB>(
           type: FlowEventType.Next,
           data: mapper(ev.data),
         }
-      : { type: FlowEventType.Complete },
+      : ev,
   );
 
 export const fromObservable = <T>(
@@ -145,3 +150,51 @@ export const fromObservable = <T>(
 
   return createStreamable(op);
 };
+
+export const decodeWithCharset = (
+  charset = "utf-8",
+  options?: TextDecoderOptions,
+): FlowableOperator<ArrayBuffer, string> =>
+  lift(
+    compose(
+      withLatestFrom(
+        compute<TextDecoder>()(() => new TextDecoder(charset, options)),
+        function*(ev, decoder) {
+          switch (ev.type) {
+            case FlowEventType.Next: {
+              const data = decoder.decode(ev.data, { stream: true });
+              yield { type: FlowEventType.Next, data };
+              break;
+            }
+            case FlowEventType.Complete: {
+              const data = decoder.decode();
+              if (data.length > 0) {
+                yield { type: FlowEventType.Next, data };
+              }
+
+              yield { type: FlowEventType.Complete };
+              break;
+            }
+          }
+        },
+      ),
+      concatMap(compose(returns, fromIterator())),
+    ),
+  );
+
+export const encodeUtf8: FlowableOperator<string, Uint8Array> = lift(
+  withLatestFrom(
+    compute<TextEncoder>()(() => new TextEncoder()),
+    (ev, textEncoder) => {
+      switch (ev.type) {
+        case FlowEventType.Next: {
+          const data = textEncoder.encode(ev.data);
+          return { type: FlowEventType.Next, data };
+        }
+        case FlowEventType.Complete: {
+          return ev;
+        }
+      }
+    },
+  ),
+);

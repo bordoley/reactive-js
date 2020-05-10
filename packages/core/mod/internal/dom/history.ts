@@ -28,7 +28,6 @@ const historyOperator = (obs: ObservableLike<string>) =>
       fromEvent(window, "popstate", getCurrentLocation),
     ),
     x => concat(compute()(getCurrentLocation), x),
-    onNotify(console.log),
   );
 
 const _historyStateStore: StateStoreLike<string> = pipe(

@@ -2,6 +2,7 @@ import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import {
+  encodeUtf8,
   generate,
   map as mapFlowable,
   FlowableLike,
@@ -37,7 +38,6 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/lib/scheduler";
-import { encode } from "@reactive-js/core/lib/textEncoding";
 import {
   HttpMethod,
   createHttpRequest,
@@ -102,7 +102,7 @@ const routerHandlerEventStream: HttpServer<
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
     ),
-    encode,
+    encodeUtf8,
   );
   const response = createHttpResponse({
     statusCode: HttpStatusCode.OK,

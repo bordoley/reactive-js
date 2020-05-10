@@ -21,4 +21,3 @@
 * ["stateStore"](modules/_statestore_.md)
 * ["streamable"](modules/_streamable_.md)
 * ["testing"](modules/_testing_.md)
-* ["textEncoding"](modules/_textencoding_.md)

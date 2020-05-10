@@ -196,7 +196,8 @@ export const tests = describe(
       toArray,
       expectArrayEquals([3, 4, 5]),
     )),
-  describe("takeWhile",
+  describe(
+    "takeWhile",
     test("exclusive", () => {
       pipe(
         generate<number>(acc => acc + 1, returns(0)),
