@@ -592,7 +592,8 @@ export const tests = describe(
     "scanAsync",
     test("acc function produces multiple results in queueing mode, fast src, slow acc", () =>
       pipe(
-        fromArray()([1, 2, 3]),
+        [1, 2, 3],
+        fromArray(),
         scanAsync<number, number>(
           (_acc, x) => fromArray({ delay: 4 })([1 * x, 2 * x, 3 * x]),
           () => 0,
@@ -604,7 +605,8 @@ export const tests = describe(
 
     test("acc function produces multiple results in queueing mode, slow src, fast acc", () =>
       pipe(
-        fromArray({ delay: 4 })([1, 2, 3]),
+        [1, 2, 3],
+        fromArray({ delay: 4 }),
         scanAsync<number, number>(
           (_acc, x) => fromArray()([1 * x, 2 * x, 3 * x]),
           () => 0,
@@ -616,9 +618,23 @@ export const tests = describe(
 
     test("acc function produces multiple results in switching mode, fast src, slow acc", () =>
       pipe(
-        fromArray()([1, 2, 3]),
+        [1, 2, 3],
+        fromArray(),
         scanAsync<number, number>(
           (_acc, x) => fromArray({ delay: 4 })([1 * x, 2 * x, 3 * x]),
+          () => 0,
+          ScanAsyncMode.Switching,
+        ),
+        toArray(),
+        expectArrayEquals([3, 6, 9]),
+      )),
+
+    test("acc function produces multiple results in switching mode, fast src, fast acc", () =>
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        scanAsync<number, number>(
+          (_acc, x) => fromArray()([1 * x, 2 * x, 3 * x]),
           () => 0,
           ScanAsyncMode.Switching,
         ),
@@ -742,7 +758,8 @@ export const tests = describe(
     test("when pipeline throws", () =>
       expectToThrow(() =>
         pipe(
-          throws()(() => new Error()),
+          () => new Error(),
+          throws(),
           takeLast(),
           toValue(),
         ),
