@@ -110,22 +110,19 @@ export const fromObservable = <T>(
       modeObs,
       onNotify(onModeChange),
       subscribe(scheduler),
-    );
+    ).add(pausableScheduler);
 
     return pausableScheduler.add(modeSubscription);
   };
 
   const op = (modeObs: ObservableLike<FlowMode>) =>
-    using(
-      createScheduler(modeObs),
-
-      pausableScheduler =>
-        pipe(
-          observable,
-          subscribeOn(pausableScheduler),
-          mapObs(data => ({ type: FlowEventType.Next, data })),
-          endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
-        ),
+    using(createScheduler(modeObs), pausableScheduler =>
+      pipe(
+        observable,
+        subscribeOn(pausableScheduler),
+        mapObs(data => ({ type: FlowEventType.Next, data })),
+        endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
+      ),
     );
 
   return createStreamable(op);

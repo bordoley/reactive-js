@@ -99,6 +99,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.delayed = createPriorityQueue(delayedComparator);
         this.dueTime = 0;
         this.inContinuation = false;
+        this.isPaused = true;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
         this.add(() => {
@@ -109,8 +110,20 @@ class PriorityScheduler extends AbstractSerialDisposable {
     get now() {
         return this.host.now;
     }
+    pause() {
+        this.isPaused = true;
+        this.inner = disposed;
+    }
+    resume() {
+        const head = peek(this);
+        this.isPaused = false;
+        if (this.inner.isDisposed && isSome(head)) {
+            scheduleContinuation(this, head);
+        }
+    }
     schedule(continuation, { priority, delay = 0, }) {
         this.add(continuation);
+        delay = Math.max(0, delay);
         if (!continuation.isDisposed) {
             const now = this.now;
             const dueTime = now + delay;
@@ -125,7 +138,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
             targetQueue.push(task);
             const head = peek(this);
             const continuationActive = !this.inner.isDisposed && this.dueTime <= dueTime;
-            if (head === task && !continuationActive) {
+            if (head === task && !continuationActive && !this.isPaused) {
                 scheduleContinuation(this, head);
             }
         }
@@ -138,7 +151,10 @@ class PriorityScheduler extends AbstractSerialDisposable {
             current !== next &&
             next.dueTime <= this.now &&
             next.priority < current.priority;
-        return (this.isDisposed || nextTaskIsHigherPriority || this.host.shouldYield());
+        return (this.isDisposed ||
+            this.isPaused ||
+            nextTaskIsHigherPriority ||
+            this.host.shouldYield());
     }
 }
 export const toPriorityScheduler = (hostScheduler) => new PriorityScheduler(hostScheduler);
@@ -146,7 +162,6 @@ class PausableSchedulerImpl extends AbstractDisposable {
     constructor(priorityScheduler) {
         super();
         this.priorityScheduler = priorityScheduler;
-        this.isPaused = true;
         this.add(priorityScheduler);
         priorityScheduler.add(this);
     }
@@ -157,23 +172,13 @@ class PausableSchedulerImpl extends AbstractDisposable {
         return this.priorityScheduler.now;
     }
     pause() {
-        this.isPaused = true;
-        this.priorityScheduler.inner = disposed;
+        this.priorityScheduler.pause();
     }
     resume() {
-        const priorityScheduler = this.priorityScheduler;
-        const head = peek(priorityScheduler);
-        this.isPaused = false;
-        if (priorityScheduler.inner.isDisposed && isSome(head)) {
-            scheduleContinuation(priorityScheduler, head);
-        }
+        this.priorityScheduler.resume();
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        const priorityScheduler = this.priorityScheduler;
-        priorityScheduler.schedule(continuation, { priority: 0, delay });
-        if (this.isPaused) {
-            priorityScheduler.inner = disposed;
-        }
+        this.priorityScheduler.schedule(continuation, { priority: 0, delay });
     }
     shouldYield() {
         return this.priorityScheduler.shouldYield();

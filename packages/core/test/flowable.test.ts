@@ -5,10 +5,16 @@ import {
   fromValue,
   FlowMode,
   FlowEventType,
+  fromObservable,
 } from "../src/flowable";
-import { pipe, } from "../src/functions";
-import { onNotify, scan, subscribe } from "../src/observable";
-import { createVirtualTimeScheduler } from "../src/scheduler";
+import { increment, pipe, returns } from "../src/functions";
+import {
+  onNotify,
+  scan,
+  subscribe,
+  generate,
+} from "../src/observable";
+import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
   test,
   describe,
@@ -67,6 +73,68 @@ export const tests = describe(
     pipe(result, expectEquals(str));
     expectTrue(subscription.isDisposed);
   }),
+  test("fromObservable", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const stream = pipe(
+      generate(increment, returns(0), { delay: 1 }),
+      fromObservable,
+    ).stream(scheduler);
+
+    stream.dispatch(FlowMode.Resume);
+
+    pipe(
+      scheduler,
+      schedule(
+        _ => {
+          stream.dispatch(FlowMode.Pause);
+        },
+        { delay: 2 },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        _ => {
+          debugger;
+          stream.dispatch(FlowMode.Resume);
+        },
+        { delay: 4 },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        _ => {
+          stream.dispose();
+        },
+        { delay: 5 },
+      ),
+    );
+
+    const f = mockFn();
+    const subscription = pipe(
+      stream,
+      onNotify(x => {
+        f(scheduler.now, x);
+      }),
+      subscribe(scheduler),
+    );
+
+    scheduler.run();
+
+    pipe(f, expectToHaveBeenCalledTimes(4));
+    pipe(f.calls[0][1].type, expectEquals(FlowEventType.Next));
+    pipe(f.calls[0][1].data, expectEquals(0));
+    pipe(f.calls[1][1].type, expectEquals(FlowEventType.Next));
+    pipe(f.calls[1][1].data, expectEquals(1));
+    pipe(f.calls[2][1].type, expectEquals(FlowEventType.Next));
+    pipe(f.calls[2][1].data, expectEquals(2));
+    pipe(f.calls[3][1].type, expectEquals(FlowEventType.Complete));
+
+    expectTrue(subscription.isDisposed);
+  }),
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const stream = fromValue(1).stream(scheduler);
@@ -84,7 +152,7 @@ export const tests = describe(
 
     pipe(f, expectToHaveBeenCalledTimes(2));
     pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
-    pipe(f.calls[0][0].type, expectEquals(1));
+    pipe(f.calls[0][0].data, expectEquals(1));
     pipe(f.calls[1][0].type, expectEquals(FlowEventType.Complete));
     expectTrue(subscription.isDisposed);
     expectTrue(stream.isDisposed);
