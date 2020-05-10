@@ -100,6 +100,7 @@
 * [using](_observable_.md#using)
 * [withLatestFrom](_observable_.md#const-withlatestfrom)
 * [zip](_observable_.md#zip)
+* [zipWithLatestFrom](_observable_.md#const-zipwithlatestfrom)
 
 ## Type aliases
 
@@ -2814,3 +2815,37 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+___
+
+### `Const` zipWithLatestFrom
+
+▸ **zipWithLatestFrom**<**TA**, **TB**, **TC**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*
+
+Returns an `ObservableLike` which combines the source with
+the latest value from another `ObservableLike`.
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+**Parameters:**
+
+▪ **other**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *TC*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*

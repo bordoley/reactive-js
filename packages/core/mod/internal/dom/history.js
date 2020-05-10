@@ -1,5 +1,5 @@
 import { pipe } from "../../functions.js";
-import { compute, distinctUntilChanged, merge, onNotify, throttle, } from "../../observable.js";
+import { compute, merge, onNotify, throttle, concat, } from "../../observable.js";
 import { none } from "../../option.js";
 import { toStateStore } from "../../stateStore.js";
 import { createStreamable, map, mapReq } from "../../streamable.js";
@@ -11,8 +11,8 @@ const pushHistoryState = (newLocation) => {
         window.history.pushState(none, "", newLocation);
     }
 };
-const historyOperator = (obs) => pipe(merge(compute()(getCurrentLocation), pipe(obs, throttle(15), onNotify(pushHistoryState)), fromEvent(window, "popstate", getCurrentLocation)), distinctUntilChanged());
-const _historyStateStore = pipe(createStreamable(historyOperator), toStateStore(() => ""));
+const historyOperator = (obs) => pipe(merge(pipe(obs, throttle(15), onNotify(pushHistoryState)), fromEvent(window, "popstate", getCurrentLocation)), x => concat(compute()(getCurrentLocation), x), onNotify(console.log));
+const _historyStateStore = pipe(createStreamable(historyOperator), toStateStore());
 export const historyStateStore = _historyStateStore;
 const parseQueryState = (searchParams) => {
     const retval = {};

@@ -73,6 +73,7 @@ export { throwIfEmpty } from "./internal/observable/throwIfEmpty.ts";
 export { timeout, timeoutError } from "./internal/observable/timeout.ts";
 export { withLatestFrom } from "./internal/observable/withLatestFrom.ts";
 export { zip } from "./internal/observable/zip.ts";
+export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.ts";
 
 export { toArray } from "./internal/observable/toArray.ts";
 export { toPromise } from "./internal/observable/toPromise.ts";

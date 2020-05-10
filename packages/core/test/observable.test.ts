@@ -677,7 +677,6 @@ export const tests = describe(
           1,
           fromValue(),
           someSatisfy(_ => {
-            debugger;
             throw new Error();
           }),
           toValue(),

@@ -1,11 +1,11 @@
 import { pipe } from "../../functions";
 import {
   compute,
-  distinctUntilChanged,
   merge,
   ObservableLike,
   onNotify,
   throttle,
+  concat,
 } from "../../observable";
 import { none } from "../../option";
 import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore";
@@ -24,16 +24,16 @@ const pushHistoryState = (newLocation: string) => {
 const historyOperator = (obs: ObservableLike<string>) =>
   pipe(
     merge(
-      compute()(getCurrentLocation),
       pipe(obs, throttle(15), onNotify(pushHistoryState)),
       fromEvent(window, "popstate", getCurrentLocation),
     ),
-    distinctUntilChanged(),
+    x => concat(compute()(getCurrentLocation), x),
+    onNotify(console.log),
   );
 
 const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyOperator),
-  toStateStore(() => ""),
+  toStateStore(),
 );
 
 export const historyStateStore: StateStoreLike<string> = _historyStateStore;

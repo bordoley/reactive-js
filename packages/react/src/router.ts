@@ -1,7 +1,7 @@
 import { returns, pipe } from "@reactive-js/core/lib/functions";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
-import { scan, mapReq } from "@reactive-js/core/lib/streamable";
+import { scan, mapReq, onNotify } from "@reactive-js/core/lib/streamable";
 import { createElement, useMemo, ReactElement } from "react";
 import { useStreamable } from "./hooks";
 
@@ -86,6 +86,7 @@ export const Router = function Router(props: RouterProps): ReactElement | null {
     () =>
       pipe(
         stateStore,
+        onNotify(console.log),
         mapReq(mapRequest),
         scan(
           pairify,
