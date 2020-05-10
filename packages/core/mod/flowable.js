@@ -1,20 +1,19 @@
 import { compose, pipe, returns } from "./functions.js";
-import { endWith, generate as generateObs, map as mapObs, keepType, takeFirst, genMap, empty as emptyObs, onNotify, subscribe, subscribeOn, scanAsync, using, } from "./observable.js";
-import { none, isSome } from "./option.js";
+import { endWith, generate as generateObs, map as mapObs, mapTo, genMap, empty as emptyObs, onNotify, subscribe, subscribeOn, scanAsync, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
-import { createStreamable, map as mapStream, } from "./streamable.js";
-const _empty = createStreamable(compose(mapObs(mode => mode === 1 ? { type: 2 } : none), keepType(isSome), takeFirst()));
+import { createStreamable, map as mapStream, lift, } from "./streamable.js";
+const _empty = createStreamable(compose(keep(mode => mode == 1), takeWhile(mode => mode !== 1, { inclusive: true }), mapTo({ type: 2 })));
 export const empty = () => _empty;
-export const fromValue = (data) => pipe(genMap(function* (mode) {
+export const fromValue = (data) => createStreamable(compose(genMap(function* (mode) {
     switch (mode) {
         case 1:
             yield { type: 1, data };
             yield { type: 2 };
     }
-}), createStreamable);
-export const generate = (generator, initialValue, { delay } = { delay: 0 }) => {
+}), takeWhile(ev => ev.type !== 2, { inclusive: true })));
+export const generate = (generator, initialValue, options = { delay: 0 }) => {
     const reducer = (acc, ev) => ev === 1
-        ? generateObs(generator, returns(acc), { delay })
+        ? generateObs(generator, returns(acc), options)
         : emptyObs();
     const op = compose(scanAsync(reducer, initialValue, 1), mapObs(data => ({ type: 1, data })));
     return createStreamable(op);
@@ -24,7 +23,7 @@ export const map = (mapper) => mapStream((ev) => ev.type === 1
         type: 1,
         data: mapper(ev.data),
     }
-    : { type: 2 });
+    : ev);
 export const fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler);
@@ -44,3 +43,31 @@ export const fromObservable = (observable) => {
     const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), mapObs(data => ({ type: 1, data })), endWith({ type: 2 })));
     return createStreamable(op);
 };
+export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(withLatestFrom(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
+    switch (ev.type) {
+        case 1: {
+            const data = decoder.decode(ev.data, { stream: true });
+            yield { type: 1, data };
+            break;
+        }
+        case 2: {
+            const data = decoder.decode();
+            if (data.length > 0) {
+                yield { type: 1, data };
+            }
+            yield { type: 2 };
+            break;
+        }
+    }
+}), concatMap(compose(returns, fromIterator()))));
+export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder()), (ev, textEncoder) => {
+    switch (ev.type) {
+        case 1: {
+            const data = textEncoder.encode(ev.data);
+            return { type: 1, data };
+        }
+        case 2: {
+            return ev;
+        }
+    }
+}));

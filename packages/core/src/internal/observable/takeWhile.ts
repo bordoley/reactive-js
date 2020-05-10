@@ -26,7 +26,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       }
 
       if (!satisfiesPredicate) {
-        this.dispose()
+        this.dispose();
       }
     }
   }
@@ -41,7 +41,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
-  { inclusive } =  { inclusive: false },
+  { inclusive } = { inclusive: false },
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeWhileSubscriber(subscriber, predicate, inclusive);

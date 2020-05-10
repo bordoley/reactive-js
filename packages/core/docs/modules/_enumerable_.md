@@ -854,7 +854,7 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-▪`Default value`  **__namedParameters**: *object*= {inclusive: false }
+▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
 
 Name | Type |
 ------ | ------ |

@@ -19,8 +19,13 @@
 * [FlowEvent](_flowable_.md#flowevent)
 * [FlowableOperator](_flowable_.md#flowableoperator)
 
+### Variables
+
+* [encodeUtf8](_flowable_.md#const-encodeutf8)
+
 ### Functions
 
+* [decodeWithCharset](_flowable_.md#const-decodewithcharset)
 * [empty](_flowable_.md#const-empty)
 * [fromObservable](_flowable_.md#const-fromobservable)
 * [fromValue](_flowable_.md#const-fromvalue)
@@ -39,7 +44,43 @@ ___
 
 Ƭ **FlowableOperator**: *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
+## Variables
+
+### `Const` encodeUtf8
+
+• **encodeUtf8**: *[FlowableOperator](_flowable_.md#flowableoperator)‹string, Uint8Array›* = lift(
+  withLatestFrom(
+    compute<TextEncoder>()(() => new TextEncoder()),
+    (ev, textEncoder) => {
+      switch (ev.type) {
+        case FlowEventType.Next: {
+          const data = textEncoder.encode(ev.data);
+          return { type: FlowEventType.Next, data };
+        }
+        case FlowEventType.Complete: {
+          return ev;
+        }
+      }
+    },
+  ),
+)
+
 ## Functions
+
+### `Const` decodeWithCharset
+
+▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹ArrayBuffer, string›*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`charset` | string | "utf-8" |
+`options?` | TextDecoderOptions | - |
+
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹ArrayBuffer, string›*
+
+___
 
 ### `Const` empty
 
@@ -91,7 +132,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `__namedParameters`: object): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `options`: object): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -113,11 +154,11 @@ Name | Type |
 
 ▸ (): *T*
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= { delay: 0 }
 
-Name | Type |
------- | ------ |
-`delay` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
