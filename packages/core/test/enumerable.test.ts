@@ -196,22 +196,32 @@ export const tests = describe(
       toArray,
       expectArrayEquals([3, 4, 5]),
     )),
-  test("takeWhile", () => {
-    pipe(
-      generate<number>(acc => acc + 1, returns(0)),
-      takeWhile(x => x < 4),
-      toArray,
-      expectArrayEquals([1, 2, 3]),
-    );
-    pipe(
-      [1, 2, 3],
-      fromArray,
-      takeWhile(alwaysTrue),
-      toArray,
-      expectArrayEquals([1, 2, 3]),
-    );
-    pipe(empty(), takeWhile(alwaysTrue), toArray, expectArrayEquals([]));
-  }),
+  describe("takeWhile",
+    test("exclusive", () => {
+      pipe(
+        generate<number>(acc => acc + 1, returns(0)),
+        takeWhile(x => x < 4),
+        toArray,
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(
+        [1, 2, 3],
+        fromArray,
+        takeWhile(alwaysTrue),
+        toArray,
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(empty(), takeWhile(alwaysTrue), toArray, expectArrayEquals([]));
+    }),
+    test("inclusive", () => {
+      pipe(
+        generate<number>(acc => acc + 1, returns(0)),
+        takeWhile(x => x < 4, { inclusive: true }),
+        toArray,
+        expectArrayEquals([1, 2, 3, 4]),
+      );
+    }),
+  ),
   test("toIterable", () =>
     pipe(
       [1, 2, 3],

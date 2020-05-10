@@ -1989,7 +1989,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: function, `__namedParameters`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -2012,6 +2012,12 @@ The predicate function.
 Name | Type |
 ------ | ------ |
 `next` | T |
+
+▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
+
+Name | Type |
+------ | ------ |
+`inclusive` | boolean |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

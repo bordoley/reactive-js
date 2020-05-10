@@ -9,6 +9,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
     private readonly predicate: (next: T) => boolean,
+    private readonly inclusive: boolean,
   ) {
     super(delegate);
     this.add(delegate);
@@ -18,10 +19,14 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     assertSubscriberNotifyInContinuation(this);
 
     if (!this.isDisposed) {
-      if (this.predicate(next)) {
+      const satisfiesPredicate = this.predicate(next);
+
+      if (satisfiesPredicate || this.inclusive) {
         this.delegate.notify(next);
-      } else {
-        this.dispose();
+      }
+
+      if (!satisfiesPredicate) {
+        this.dispose()
       }
     }
   }
@@ -36,9 +41,10 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export const takeWhile = <T>(
   predicate: (next: T) => boolean,
+  { inclusive } =  { inclusive: false },
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
-    new TakeWhileSubscriber(subscriber, predicate);
+    new TakeWhileSubscriber(subscriber, predicate, inclusive);
   operator.isSynchronous = true;
   return lift(operator);
 };
