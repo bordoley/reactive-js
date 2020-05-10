@@ -41,7 +41,6 @@ import {
   retry,
   scan,
   scanAsync,
-  ScanAsyncMode,
   share,
   someSatisfy,
   subscribe,
@@ -590,68 +589,52 @@ export const tests = describe(
 
   describe(
     "scanAsync",
-    test("acc function produces multiple results in queueing mode, fast src, slow acc", () =>
+    test("fast src, slow acc", () =>
       pipe(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>(
-          (_acc, x) => fromArray({ delay: 4 })([1 * x, 2 * x, 3 * x]),
+          (acc, x) => fromValue({ delay: 4 })(x + acc),
           () => 0,
-          ScanAsyncMode.Queuing,
         ),
         toArray(),
-        expectArrayEquals([1, 2, 3, 2, 4, 6, 3, 6, 9]),
+        expectArrayEquals([1, 3, 6]),
       )),
 
-    test("acc function produces multiple results in queueing mode, slow src, fast acc", () =>
+    test("slow src, fast acc", () =>
       pipe(
         [1, 2, 3],
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
-          (_acc, x) => fromArray()([1 * x, 2 * x, 3 * x]),
+          (acc, x) => fromValue()(x + acc),
           () => 0,
-          ScanAsyncMode.Queuing,
         ),
         toArray(),
-        expectArrayEquals([1, 2, 3, 2, 4, 6, 3, 6, 9]),
+        expectArrayEquals([1, 3, 6]),
       )),
 
-    test("acc function produces multiple results in switching mode, fast src, slow acc", () =>
+    test("slow src, slow acc", () =>
+      pipe(
+        [1, 2, 3],
+        fromArray({ delay: 4 }),
+        scanAsync<number, number>(
+          (acc, x) => fromValue({ delay: 4 })(x + acc),
+          () => 0,
+        ),
+        toArray(),
+        expectArrayEquals([1, 3, 6]),
+      )),
+
+    test("fast src, fast acc", () =>
       pipe(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>(
-          (_acc, x) => fromArray({ delay: 4 })([1 * x, 2 * x, 3 * x]),
+          (acc, x) => fromValue()(x + acc),
           () => 0,
-          ScanAsyncMode.Switching,
         ),
         toArray(),
-        expectArrayEquals([3, 6, 9]),
-      )),
-
-    test("acc function produces multiple results in switching mode, fast src, fast acc", () =>
-      pipe(
-        [1, 2, 3],
-        fromArray(),
-        scanAsync<number, number>(
-          (_acc, x) => fromArray()([1 * x, 2 * x, 3 * x]),
-          () => 0,
-          ScanAsyncMode.Switching,
-        ),
-        toArray(),
-        expectArrayEquals([3, 6, 9]),
-      )),
-
-    test("acc function produces multiple results in switching mode, slow src, fast acc", () =>
-      pipe(
-        fromArray({ delay: 4 })([1, 2, 3]),
-        scanAsync<number, number>(
-          (_acc, x) => fromArray()([1 * x, 2 * x, 3 * x]),
-          () => 0,
-          ScanAsyncMode.Switching,
-        ),
-        toArray(),
-        expectArrayEquals([1, 2, 3, 2, 4, 6, 3, 6, 9]),
+        expectArrayEquals([1, 3, 6]),
       )),
   ),
 

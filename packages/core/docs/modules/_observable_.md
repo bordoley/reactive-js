@@ -6,7 +6,6 @@
 
 ### Enumerations
 
-* [ScanAsyncMode](../enums/_observable_.scanasyncmode.md)
 * [ThrottleMode](../enums/_observable_.throttlemode.md)
 
 ### Classes
@@ -1716,7 +1715,7 @@ ___
 
 ### `Const` scanAsync
 
-▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function, `mode`: [ScanAsyncMode](../enums/_observable_.scanasyncmode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
+▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns the `ObservableLike` that applies an asynchronous accumulator function
 over the source, and emits each intermediate result.
@@ -1747,8 +1746,6 @@ Name | Type |
 The initial accumulation value.
 
 ▸ (): *TAcc*
-
-▪`Default value`  **mode**: *[ScanAsyncMode](../enums/_observable_.scanasyncmode.md)*= ScanAsyncMode.Queuing
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 

@@ -2,6 +2,9 @@ import { pipe } from "./functions.ts";
 import {
   ObservableLike,
   onNotify,
+  ignoreElements,
+  merge,
+  onSubscribe,
   using,
   StreamLike,
   zipWithLatestFrom,
@@ -12,9 +15,6 @@ import {
   StreamableOperator,
   createStreamable,
 } from "./streamable.ts";
-import { ignoreElements } from "./internal/observable/ignoreElements.ts";
-import { merge } from "./internal/observable/merge.ts";
-import { onSubscribe } from "./internal/observable/onSubscribe.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
