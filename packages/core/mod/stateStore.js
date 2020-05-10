@@ -1,9 +1,12 @@
-import { pipe, returns } from "./functions.js";
-import { merge, map, scan, distinctUntilChanged, onNotify, using, } from "./observable.js";
+import { pipe } from "./functions.js";
+import { onNotify, using, zipWithLatestFrom, } from "./observable.js";
 import { createActionReducer, createStreamable, } from "./streamable.js";
+import { ignoreElements } from "./internal/observable/ignoreElements.js";
+import { merge } from "./internal/observable/merge.js";
+import { onSubscribe } from "./internal/observable/onSubscribe.js";
 const stateStoreReducer = (state, action) => action(state);
 export const createStateStore = (initialState, equals) => createActionReducer(stateStoreReducer, initialState, equals);
-export const toStateStore = (initialState, equals) => {
-    const createFactory = (observable) => (stream) => pipe(merge(observable, map(returns)(stream)), scan(stateStoreReducer, initialState), distinctUntilChanged(equals), onNotify((next) => stream.dispatch(next)));
-    return streamable => createStreamable(observable => using(scheduler => streamable.stream(scheduler), createFactory(observable)));
+export const toStateStore = () => {
+    const createObservable = (updates) => (stream) => merge(pipe(updates, zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)), onNotify(next => stream.dispatch(next)), ignoreElements(), onSubscribe(() => stream)), stream);
+    return streamable => createStreamable(updates => using(scheduler => streamable.stream(scheduler), createObservable(updates)));
 };

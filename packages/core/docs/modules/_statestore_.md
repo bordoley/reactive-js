@@ -75,34 +75,12 @@ ___
 
 ### `Const` toStateStore
 
-▸ **toStateStore**<**T**>(`initialState`: function, `equals?`: function): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
+▸ **toStateStore**<**T**>(): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
 
 Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 
 **Type parameters:**
 
 ▪ **T**
-
-**Parameters:**
-
-▪ **initialState**: *function*
-
-Factory function to generate the initial state.
-
-▸ (): *T*
-
-▪`Optional`  **equals**: *function*
-
-Optional equality function that is used to compare
-if a state value is distinct from the previous one.
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
 
 **Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*

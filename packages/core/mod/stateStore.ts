@@ -1,13 +1,10 @@
-import { pipe, returns } from "./functions.ts";
+import { pipe } from "./functions.ts";
 import {
   ObservableLike,
-  merge,
-  map,
-  scan,
-  distinctUntilChanged,
   onNotify,
   using,
   StreamLike,
+  zipWithLatestFrom,
 } from "./observable.ts";
 import {
   StreamableLike,
@@ -15,6 +12,9 @@ import {
   StreamableOperator,
   createStreamable,
 } from "./streamable.ts";
+import { ignoreElements } from "./internal/observable/ignoreElements.ts";
+import { merge } from "./internal/observable/merge.ts";
+import { onSubscribe } from "./internal/observable/onSubscribe.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
@@ -47,25 +47,31 @@ export const createStateStore = <T>(
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const toStateStore = <T>(
-  initialState: () => T,
-  equals?: (a: T, b: T) => boolean,
-): StreamableOperator<T, T, StateUpdater<T>, T> => {
-  const createFactory = (observable: ObservableLike<StateUpdater<T>>) => (
+export const toStateStore = <T>(): StreamableOperator<
+  T,
+  T,
+  StateUpdater<T>,
+  T
+> => {
+  const createObservable = (updates: ObservableLike<StateUpdater<T>>) => (
     stream: StreamLike<T, T>,
   ) =>
-    pipe(
-      merge(observable, map<T, StateUpdater<T>>(returns)(stream)),
-      scan(stateStoreReducer, initialState),
-      distinctUntilChanged(equals),
-      onNotify((next: T) => stream.dispatch(next)),
+    merge(
+      pipe(
+        updates,
+        zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
+        onNotify(next => stream.dispatch(next)),
+        ignoreElements(),
+        onSubscribe(() => stream),
+      ),
+      stream,
     );
 
   return streamable =>
-    createStreamable(observable =>
+    createStreamable(updates =>
       using(
         scheduler => streamable.stream(scheduler),
-        createFactory(observable),
+        createObservable(updates),
       ),
     );
 };
