@@ -4,7 +4,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { Predicate } from "../../functions";
+import { Predicate, TypePredicate } from "../../functions";
 
 class KeepTypeSubscriber<
   TA,
@@ -12,7 +12,7 @@ class KeepTypeSubscriber<
 > extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
     delegate: SubscriberLike<TB>,
-    private readonly predicate: (data: TA) => data is TB,
+    private readonly predicate: TypePredicate<TA, TB>,
   ) {
     super(delegate);
     this.add(delegate);
@@ -34,7 +34,7 @@ class KeepTypeSubscriber<
  * @param predicate The predicate function.
  */
 export const keepType = <TA, TB extends TA>(
-  predicate: (data: TA) => data is TB,
+  predicate: TypePredicate<TA, TB>
 ): ObservableOperator<unknown, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new KeepTypeSubscriber(subscriber, predicate);
@@ -50,4 +50,4 @@ export const keepType = <TA, TB extends TA>(
  */
 export const keep = <T>(
   predicate: Predicate<T>,
-): ObservableOperator<T, T> => keepType(predicate as (data: T) => data is T);
+): ObservableOperator<T, T> => keepType(predicate as TypePredicate<T, T>);
