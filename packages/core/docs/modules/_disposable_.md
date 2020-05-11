@@ -30,6 +30,7 @@
 * [createDisposableValue](_disposable_.md#const-createdisposablevalue)
 * [createSerialDisposable](_disposable_.md#const-createserialdisposable)
 * [disposeOnError](_disposable_.md#const-disposeonerror)
+* [toErrorHandler](_disposable_.md#const-toerrorhandler)
 
 ## Type aliases
 
@@ -125,6 +126,20 @@ ___
 ### `Const` disposeOnError
 
 ▸ **disposeOnError**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
+
+**Returns:** *(Anonymous function)*
+
+___
+
+### `Const` toErrorHandler
+
+▸ **toErrorHandler**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *(Anonymous function)*
 
 **Parameters:**
 

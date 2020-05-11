@@ -4,6 +4,9 @@ export const disposeOnError = (disposable) => (error) => {
         disposable.dispose(error);
     }
 };
+export const toErrorHandler = (disposable) => (cause) => {
+    disposable.dispose({ cause });
+};
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {

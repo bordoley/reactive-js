@@ -4,6 +4,7 @@ import { URL } from "url";
 import {
   DisposableLike,
   AbstractDisposable,
+  toErrorHandler,
 } from "@reactive-js/core/lib/disposable";
 import {
   FlowEvent,
@@ -63,9 +64,7 @@ class ResponseBody extends AbstractDisposable
       resp.destroy();
     });
 
-    const onError = (cause: any) => {
-      this.dispose({ cause });
-    };
+    const onError = toErrorHandler(this);
     resp.on("error", onError);
   }
 

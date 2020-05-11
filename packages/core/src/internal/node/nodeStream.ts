@@ -1,5 +1,5 @@
 import { Readable, Writable, Transform } from "stream";
-import { DisposableValueLike, createDisposableValue } from "../../disposable";
+import { DisposableValueLike, createDisposableValue, toErrorHandler } from "../../disposable";
 import { ignore } from "../../functions";
 
 const dispose = (writable: Readable | Writable | Transform) => {
@@ -21,11 +21,7 @@ export const createDisposableNodeStream = <
   stream: T,
 ): DisposableValueLike<T> => {
   const retval = createDisposableValue<T>(stream, dispose);
-
-  const onError = (cause: any) => {
-    retval.dispose({ cause });
-  };
-  stream.on("error", onError);
+  stream.on("error", toErrorHandler(retval));
 
   return retval;
 };
