@@ -40,6 +40,10 @@ export type FlowEvent<T> =
   | { readonly type: FlowEventType.Next; readonly data: T }
   | { readonly type: FlowEventType.Complete };
 
+export const next = <T>(data: T): FlowEvent<T> => ({ type: FlowEventType.Next, data });
+const _complete: FlowEvent<any> = { type: FlowEventType.Complete };
+export const complete = <T>(): FlowEvent<T> => _complete;
+
 export interface FlowableLike<T>
   extends StreamableLike<FlowMode, FlowEvent<T>> {}
 
@@ -55,7 +59,7 @@ const _empty: FlowableLike<any> = createStreamable(
   compose(
     keep(mode => mode === FlowMode.Resume),
     takeWhile(mode => mode !== FlowMode.Resume, { inclusive: true }),
-    mapTo({ type: FlowEventType.Complete }),
+    mapTo(complete()),
   ),
 );
 export const empty = <T>(): FlowableLike<T> => _empty;
@@ -68,8 +72,8 @@ export const fromValue = <T>(data: T): FlowableLike<T> =>
       genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
         switch (mode) {
           case FlowMode.Resume:
-            yield { type: FlowEventType.Next, data };
-            yield { type: FlowEventType.Complete };
+            yield next(data);
+            yield complete();
         }
       }),
     ),
@@ -80,10 +84,7 @@ export const map = <TA, TB>(
 ): Operator<FlowableLike<TA>, FlowableLike<TB>> =>
   mapStream((ev: FlowEvent<TA>) =>
     ev.type === FlowEventType.Next
-      ? {
-          type: FlowEventType.Next,
-          data: mapper(ev.data),
-        }
+      ? pipe(ev.data, mapper, next)
       : ev,
   );
 
@@ -120,8 +121,8 @@ export const fromObservable = <T>(
       pipe(
         observable,
         subscribeOn(pausableScheduler),
-        mapObs(data => ({ type: FlowEventType.Next, data })),
-        endWith<FlowEvent<T>>({ type: FlowEventType.Complete }),
+        mapObs(next),
+        endWith<FlowEvent<T>>(complete()),
       ),
     );
 
@@ -141,17 +142,16 @@ export const decodeWithCharset = (
             case FlowEventType.Next: {
               const data = decoder.decode(ev.data, { stream: true });
               if (data.length > 0) {
-                yield { type: FlowEventType.Next, data };
+                yield next(data);
               }
               break;
             }
             case FlowEventType.Complete: {
               const data = decoder.decode();
               if (data.length > 0) {
-                yield { type: FlowEventType.Next, data };
+                yield next(data);
               }
-
-              yield { type: FlowEventType.Complete };
+              yield complete<string>();
               break;
             }
           }
@@ -168,7 +168,7 @@ export const encodeUtf8: FlowableOperator<string, Uint8Array> = lift(
       switch (ev.type) {
         case FlowEventType.Next: {
           const data = textEncoder.encode(ev.data);
-          return { type: FlowEventType.Next, data };
+          return next(data);
         }
         case FlowEventType.Complete: {
           return ev;
