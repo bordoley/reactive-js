@@ -16,17 +16,19 @@
 
 ### Functions
 
-* [apply](_functions_.md#apply)
 * [arrayEquals](_functions_.md#const-arrayequals)
 * [call](_functions_.md#call)
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
+* [decrementBy](_functions_.md#const-decrementby)
 * [identity](_functions_.md#const-identity)
 * [increment](_functions_.md#const-increment)
+* [incrementBy](_functions_.md#const-incrementby)
 * [isReferenceEqualTo](_functions_.md#const-isreferenceequalto)
 * [pipe](_functions_.md#pipe)
 * [referenceEquals](_functions_.md#const-referenceequals)
 * [returns](_functions_.md#const-returns)
+* [sum](_functions_.md#const-sum)
 
 ## Type aliases
 
@@ -65,99 +67,6 @@ ___
 • **ignore**: *(Anonymous function)* = returns<void>(none)
 
 ## Functions
-
-###  apply
-
-▸ **apply**<**T**>(`f`: function): *[Operator](_functions_.md#operator)‹[], T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **f**: *function*
-
-▸ (): *T*
-
-**Returns:** *[Operator](_functions_.md#operator)‹[], T›*
-
-▸ **apply**<**TA**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA], T›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **f**: *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-
-**Returns:** *[Operator](_functions_.md#operator)‹[TA], T›*
-
-▸ **apply**<**TA**, **TB**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA, TB], T›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **f**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-
-**Returns:** *[Operator](_functions_.md#operator)‹[TA, TB], T›*
-
-▸ **apply**<**TA**, **TB**, **TC**, **T**>(`f`: function): *[Operator](_functions_.md#operator)‹[TA, TB, TC], T›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-▪ **TC**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **f**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-
-**Returns:** *[Operator](_functions_.md#operator)‹[TA, TB, TC], T›*
-
-___
 
 ### `Const` arrayEquals
 
@@ -692,6 +601,20 @@ Name | Type |
 
 ___
 
+### `Const` decrementBy
+
+▸ **decrementBy**(`decr`: number): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`decr` | number |
+
+**Returns:** *(Anonymous function)*
+
+___
+
 ### `Const` identity
 
 ▸ **identity**<**T**>(`v`: T): *T*
@@ -721,6 +644,20 @@ Name | Type |
 `x` | number |
 
 **Returns:** *number*
+
+___
+
+### `Const` incrementBy
+
+▸ **incrementBy**(`incr`: number): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`incr` | number |
+
+**Returns:** *(Anonymous function)*
 
 ___
 
@@ -1219,3 +1156,17 @@ Name | Type |
 `v` | T |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+### `Const` sum
+
+▸ **sum**(...`args`: number[]): *number*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`...args` | number[] |
+
+**Returns:** *number*
