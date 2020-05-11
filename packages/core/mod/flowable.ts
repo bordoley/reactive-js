@@ -140,7 +140,9 @@ export const decodeWithCharset = (
           switch (ev.type) {
             case FlowEventType.Next: {
               const data = decoder.decode(ev.data, { stream: true });
-              yield { type: FlowEventType.Next, data };
+              if (data.length > 0) {
+                yield { type: FlowEventType.Next, data };
+              }
               break;
             }
             case FlowEventType.Complete: {

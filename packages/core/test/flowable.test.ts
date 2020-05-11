@@ -14,6 +14,7 @@ import {
   scan,
   subscribe,
   generate,
+  fromArray,
 } from "../src/observable";
 import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
@@ -27,6 +28,33 @@ import {
 
 export const tests = describe(
   "flowables",
+  test("decodeWithCharset", () => {
+    const scheduler = createVirtualTimeScheduler();
+
+    const stream = pipe(
+      [
+        Uint8Array.from([226]),
+        Uint8Array.from([130]),
+        Uint8Array.from([172]),
+      ],
+      fromArray(),
+      fromObservable,
+      decodeWithCharset(),
+    ).stream(scheduler);
+
+    stream.dispatch(FlowMode.Resume);
+
+    const f = mockFn();
+    const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
+
+    scheduler.run();
+
+    pipe(f, expectToHaveBeenCalledTimes(2));
+    pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
+    pipe(f.calls[0][0].data, expectEquals(String.fromCodePoint(8364)));    
+    expectTrue(subscription.isDisposed);
+    expectTrue(stream.isDisposed);
+  }),
   test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const stream = empty().stream(scheduler);
@@ -48,7 +76,7 @@ export const tests = describe(
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
 
-    const transformed = pipe(
+    const stream = pipe(
       str,
       fromValue,
       encodeUtf8,
@@ -57,7 +85,7 @@ export const tests = describe(
 
     let result = "";
     const subscription = pipe(
-      transformed,
+      stream,
       scan(
         (acc, ev) => (ev.type === FlowEventType.Next ? acc + ev.data : acc),
         () => "",
@@ -68,7 +96,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    transformed.dispatch(FlowMode.Resume);
+    stream.dispatch(FlowMode.Resume);
     scheduler.run();
 
     pipe(result, expectEquals(str));
@@ -166,7 +194,7 @@ export const tests = describe(
     ).stream(scheduler);
 
     stream.dispatch(FlowMode.Resume);
-    
+
     const f = mockFn();
     const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
 
