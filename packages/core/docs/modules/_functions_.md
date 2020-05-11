@@ -23,6 +23,7 @@
 * [decrement](_functions_.md#const-decrement)
 * [identity](_functions_.md#const-identity)
 * [increment](_functions_.md#const-increment)
+* [isReferenceEqualTo](_functions_.md#const-isreferenceequalto)
 * [pipe](_functions_.md#pipe)
 * [referenceEquals](_functions_.md#const-referenceequals)
 * [returns](_functions_.md#const-returns)
@@ -720,6 +721,24 @@ Name | Type |
 `x` | number |
 
 **Returns:** *number*
+
+___
+
+### `Const` isReferenceEqualTo
+
+▸ **isReferenceEqualTo**<**T**>(`b`: T): *[Operator](_functions_.md#operator)‹T, boolean›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`b` | T |
+
+**Returns:** *[Operator](_functions_.md#operator)‹T, boolean›*
 
 ___
 

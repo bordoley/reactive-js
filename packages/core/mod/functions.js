@@ -13,6 +13,7 @@ export const ignore = returns(none);
 export const increment = (x) => x + 1;
 export const decrement = (x) => x - 1;
 export const referenceEquals = (a, b) => a === b;
+export const isReferenceEqualTo = (b) => a => a === b;
 export const arrayEquals = (valuesAreEqual) => (a, b) => a.length === b.length && a.every((v, i) => valuesAreEqual(b[i], v));
 export function pipe(source, ...operators) {
     return operators.reduce((acc, next) => next(acc), source);

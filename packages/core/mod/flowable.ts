@@ -1,4 +1,4 @@
-import { Operator, compose, pipe, returns } from "./functions.ts";
+import { Operator, compose, pipe, returns, isReferenceEqualTo } from "./functions.ts";
 import { SchedulerLike } from "./scheduler.ts";
 import {
   ObservableLike,
@@ -64,8 +64,8 @@ export type FlowableOperator<TA, TB> = Operator<
 
 const _empty: FlowableLike<any> = createStreamable(
   compose(
-    keep(mode => mode === FlowMode.Resume),
-    takeWhile(mode => mode !== FlowMode.Resume, { inclusive: true }),
+    keep(isReferenceEqualTo(FlowMode.Resume)),
+    takeWhile(isReferenceEqualTo(FlowMode.Pause), { inclusive: true }),
     mapTo(complete()),
   ),
 );
@@ -74,7 +74,7 @@ export const empty = <T>(): FlowableLike<T> => _empty;
 export const fromValue = <T>(data: T): FlowableLike<T> =>
   createStreamable(
     compose(
-      keep(mode => mode === FlowMode.Resume),
+      keep(isReferenceEqualTo(FlowMode.Resume)),
       takeFirst(),
       genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
         switch (mode) {

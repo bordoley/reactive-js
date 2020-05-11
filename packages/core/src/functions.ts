@@ -44,6 +44,8 @@ export const decrement = (x: number) => x - 1;
 
 export const referenceEquals = <T>(a: T, b: T) => a === b;
 
+export const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a => a === b;
+
 // FIXME: Would prefer not to have this here.
 export const arrayEquals = <T>(valuesAreEqual: (a: T, b: T) => boolean) => (
   a: readonly T[],
