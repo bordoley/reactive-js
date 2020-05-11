@@ -15,7 +15,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectNone,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 export const tests = describe(
   "Disposable",

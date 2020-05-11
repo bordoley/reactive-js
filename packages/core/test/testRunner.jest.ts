@@ -27,7 +27,6 @@ export const tests = [
   //resourceManagerTests,
   stateStoreTests,
   streamableTests,
-  //textEncodingTests,
 ];
 
 runTests(tests);

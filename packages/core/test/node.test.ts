@@ -16,7 +16,7 @@ import {
   testAsync,
   expectEquals,
   expectPromiseToThrow,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 const scheduler = createHostScheduler();
 

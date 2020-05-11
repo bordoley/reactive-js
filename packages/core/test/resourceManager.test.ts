@@ -3,7 +3,7 @@ import { pipe } from "../src/functions";
 import { onNotify, subscribe, fromArray } from "../src/observable";
 import { createResourceManager } from "../src/resourceManager";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { test, describe } from "../src/testing";
+import { test, describe } from "../src/internal/testing";
 
 export const tests = describe(
   "resource manager",

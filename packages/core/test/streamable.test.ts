@@ -26,7 +26,7 @@ import {
   expectEquals,
   expectTrue,
   expectFalse,
-} from "../src/testing";
+} from "../src/internal/testing";
 import { none } from "../src/option";
 
 export const tests = describe(

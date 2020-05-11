@@ -6,7 +6,7 @@ import {
   expectToThrow,
   expectArrayEquals,
   expectEquals,
-} from "../../core/src/testing";
+} from "../../core/src/internal/testing";
 import {
   string,
   map,

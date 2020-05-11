@@ -24,7 +24,7 @@ import {
   expectTrue,
   mockFn,
   expectToHaveBeenCalledTimes,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 export const tests = describe(
   "flowables",

@@ -90,7 +90,7 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
   expectSome,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 const scheduler = createHostScheduler();
 

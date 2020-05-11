@@ -1,5 +1,5 @@
-import { referenceEquals, arrayEquals } from "./functions.ts";
-import { Option, isSome, isNone, none } from "./option.ts";
+import { referenceEquals, arrayEquals } from "../functions";
+import { Option, isSome, isNone, none } from "../option";
 
 export const enum TestGroupType {
   Describe = 1,
