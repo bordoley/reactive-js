@@ -188,6 +188,7 @@ const isNext = <T>(
 ): ev is { readonly type: FlowEventType.Next; readonly data: T } =>
   ev.type === FlowEventType.Next;
 
+/** @experimental */
 export interface FlowableSinkAccumulatorLike<T, TAcc>
   extends FlowableSinkLike<T> {
   readonly acc: TAcc;
@@ -233,6 +234,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   }
 }
 
+/** @experimental */
 export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,

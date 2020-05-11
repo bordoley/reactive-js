@@ -99,7 +99,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.delayed = createPriorityQueue(delayedComparator);
         this.dueTime = 0;
         this.inContinuation = false;
-        this.isPaused = true;
+        this.isPaused = false;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
         this.add(() => {
@@ -109,17 +109,6 @@ class PriorityScheduler extends AbstractSerialDisposable {
     }
     get now() {
         return this.host.now;
-    }
-    pause() {
-        this.isPaused = true;
-        this.inner = disposed;
-    }
-    resume() {
-        const head = peek(this);
-        this.isPaused = false;
-        if (this.inner.isDisposed && isSome(head)) {
-            scheduleContinuation(this, head);
-        }
     }
     schedule(continuation, { priority, delay = 0, }) {
         this.add(continuation);
@@ -172,10 +161,17 @@ class PausableSchedulerImpl extends AbstractDisposable {
         return this.priorityScheduler.now;
     }
     pause() {
-        this.priorityScheduler.pause();
+        const priorityScheduler = this.priorityScheduler;
+        priorityScheduler.isPaused = true;
+        priorityScheduler.inner = disposed;
     }
     resume() {
-        this.priorityScheduler.resume();
+        const priorityScheduler = this.priorityScheduler;
+        const head = peek(priorityScheduler);
+        priorityScheduler.isPaused = false;
+        if (priorityScheduler.inner.isDisposed && isSome(head)) {
+            scheduleContinuation(priorityScheduler, head);
+        }
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         this.priorityScheduler.schedule(continuation, { priority: 0, delay });
@@ -184,4 +180,8 @@ class PausableSchedulerImpl extends AbstractDisposable {
         return this.priorityScheduler.shouldYield();
     }
 }
-export const toPausableScheduler = (hostScheduler) => new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));
+export const toPausableScheduler = (hostScheduler) => {
+    const scheduler = new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));
+    scheduler.pause();
+    return scheduler;
+};

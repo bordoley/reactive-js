@@ -2,6 +2,8 @@
 
 # Interface: FlowableSinkAccumulatorLike <**T, TAcc**>
 
+**`experimental`** 
+
 ## Type parameters
 
 ▪ **T**
