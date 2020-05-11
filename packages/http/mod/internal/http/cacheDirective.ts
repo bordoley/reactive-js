@@ -1,4 +1,4 @@
-import { pipe } from "../../../../core/lib/functions.ts";
+import { pipe, SideEffect2 } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import {
   CharStreamLike,
@@ -54,7 +54,7 @@ export const parseCacheControlFromHeaders = (
 
 export const writeHttpCacheControlHeader = (
   cacheControl: readonly CacheDirective[],
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   if (cacheControl.length > 0) {
     writeHeader(

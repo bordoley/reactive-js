@@ -232,7 +232,7 @@ ___
 
 ### `Const` onNotify
 
-▸ **onNotify**<**TReq**, **T**>(`onNotify`: function): *function*
+▸ **onNotify**<**TReq**, **T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *function*
 
 **Type parameters:**
 
@@ -242,15 +242,9 @@ ___
 
 **Parameters:**
 
-▪ **onNotify**: *function*
-
-▸ (`next`: T): *void*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`next` | T |
+`onNotify` | [SideEffect1](_functions_.md#sideeffect1)‹T› |
 
 **Returns:** *function*
 

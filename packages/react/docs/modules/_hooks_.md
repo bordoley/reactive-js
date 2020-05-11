@@ -35,7 +35,7 @@ ___
 
 ### `Const` useSerializedState
 
-▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: Operator‹TSerialized, TState›, `serialize`: Operator‹TState, TSerialized›): *[Option‹TState›, function]*
+▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: Operator‹TSerialized, TState›, `serialize`: Operator‹TState, TSerialized›): *[Option‹TState›, SideEffect1‹StateUpdater‹TState››]*
 
 **Type parameters:**
 
@@ -51,13 +51,13 @@ Name | Type |
 `parse` | Operator‹TSerialized, TState› |
 `serialize` | Operator‹TState, TSerialized› |
 
-**Returns:** *[Option‹TState›, function]*
+**Returns:** *[Option‹TState›, SideEffect1‹StateUpdater‹TState››]*
 
 ___
 
 ### `Const` useStreamable
 
-▸ **useStreamable**<**TReq**, **T**>(`streamable`: StreamableLike‹TReq, T›, `config`: object): *[Option‹T›, function]*
+▸ **useStreamable**<**TReq**, **T**>(`streamable`: StreamableLike‹TReq, T›, `config`: object): *[Option‹T›, SideEffect1‹TReq›]*
 
 **Type parameters:**
 
@@ -77,4 +77,4 @@ Name | Type |
 `scheduler?` | SchedulerLike |
 `stateScheduler?` | SchedulerLike |
 
-**Returns:** *[Option‹T›, function]*
+**Returns:** *[Option‹T›, SideEffect1‹TReq›]*

@@ -1,5 +1,5 @@
 import { FlowableLike, FlowableOperator } from "../../../../core/lib/flowable.ts";
-import { Operator, Selector2 } from "../../../../core/lib/functions.ts";
+import { Operator, Selector2, SideEffect2 } from "../../../../core/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../core/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -223,7 +223,7 @@ export const parseHttpRequestFromHeaders = <T>({
 
 export const writeHttpRequestHeaders = <T>(
   request: HttpRequest<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ): void => {
   const { expectContinue, preconditions } = request;
 

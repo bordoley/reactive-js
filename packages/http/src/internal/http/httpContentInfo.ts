@@ -1,4 +1,4 @@
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, none, Option } from "@reactive-js/core/lib/option";
 import { parseWith } from "../parserCombinators";
 import { pToken, httpList } from "./httpGrammar";
@@ -46,7 +46,7 @@ export const parseHttpContentInfoFromHeaders = (
 
 export const writeHttpContentInfoHeaders = (
   content: HttpContentInfo,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {

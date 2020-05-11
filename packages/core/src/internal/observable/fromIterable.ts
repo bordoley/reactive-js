@@ -2,7 +2,7 @@ import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
 } from "../../enumerable";
-import { Operator, compose } from "../../functions";
+import { Operator, compose, Factory } from "../../functions";
 import { fromEnumerable } from "./fromEnumerable";
 import { ObservableLike } from "./interfaces";
 
@@ -14,7 +14,7 @@ import { ObservableLike } from "./interfaces";
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
   config = { delay: 0 },
-): Operator<() => Iterator<T, TReturn, TNext>, ObservableLike<T>> => {
+): Operator<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>> => {
   const call = fromEnumerable(config);
   return compose(enumerableFromIterator, call);
 };

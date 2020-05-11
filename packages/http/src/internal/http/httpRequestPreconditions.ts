@@ -1,4 +1,4 @@
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators";
 import {
@@ -20,7 +20,7 @@ import {
 const writeEtagPreferenceHeader = (
   header: HttpStandardHeader,
   value: Option<readonly EntityTag[] | "*">,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   if (isSome(value)) {
     writeHeader(
@@ -33,7 +33,7 @@ const writeEtagPreferenceHeader = (
 const writeDateHeader = (
   header: HttpStandardHeader,
   value: Option<HttpDateTime>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   if (isSome(value)) {
     writeHeader(header, httpDateTimeToString(value));
@@ -48,7 +48,7 @@ export const writeHttpRequestPreconditionsHeaders = (
     ifUnmodifiedSince,
     ifRange,
   }: HttpRequestPreconditions,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   writeEtagPreferenceHeader(HttpStandardHeader.IfMatch, ifMatch, writeHeader);
   writeEtagPreferenceHeader(

@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable, dispose } from "../../disposable";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
-import { Factory } from "../../functions";
+import { Factory, SideEffect, Operator, bind } from "../../functions";
 
 const supportsPerformanceNow =
   typeof performance === "object" && typeof performance.now === "function";
@@ -21,14 +21,13 @@ const now: Factory<number> = supportsPerformanceNow
     }
   : () => Date.now();
 
-const scheduleImmediateWithSetImmediate = (cb: () => void) => {
-  const disposable = createDisposable(() => clearImmediate(immediate));
+const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
   const immediate = setImmediate(cb);
-  return disposable;
+  return createDisposable(bind(clearImmediate,immediate));
 };
 
 const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
-  cb: () => void,
+  cb: SideEffect,
 ) => {
   const disposable = createDisposable();
 
@@ -42,7 +41,7 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
   return disposable;
 };
 
-const scheduleDelayed = (cb: () => void, delay: number) => {
+const scheduleDelayed = (cb: SideEffect, delay: number) => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(() => {
     cb();
@@ -51,12 +50,10 @@ const scheduleDelayed = (cb: () => void, delay: number) => {
   return disposable;
 };
 
-const scheduleImmediateWithSetTimeout = (cb: () => void) =>
+const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
   scheduleDelayed(cb, 0);
 
-const scheduleImmediate: (
-  callback: () => void,
-) => DisposableLike = supportsSetImmediate
+const scheduleImmediate: Operator<SideEffect, DisposableLike> = supportsSetImmediate
   ? scheduleImmediateWithSetImmediate
   : supportsMessageChannel
   ? scheduleImmediateWithMessageChannel(new MessageChannel())
@@ -65,7 +62,7 @@ const scheduleImmediate: (
 const createCallback = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
-): (() => void) => () => {
+): SideEffect => () => {
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;

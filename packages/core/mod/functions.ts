@@ -1,5 +1,3 @@
-/** A Unary function that transforms a value of type A into a value of type B */
-
 export type Comparator<T> = (a: T, b: T) => number;
 export type Equality<T> = (a: T, b: T) => boolean;
 export type Factory<T> = () => T;
@@ -15,6 +13,10 @@ export type Selector6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, 
 export type Selector7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
 export type Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
 export type Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
+
+export type SideEffect = () => void;
+export type SideEffect1<TA> = (a: TA) => void;
+export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
 
 export function call<T>(): Operator<Factory<T>, T>;
 export function call<TA, T>(a: TA): Operator<Operator<TA, T>, T>;

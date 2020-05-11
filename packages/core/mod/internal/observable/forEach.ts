@@ -1,5 +1,5 @@
 import { Exception, dispose } from "../../disposable.ts";
-import { Operator, pipe, Factory } from "../../functions.ts";
+import { Operator, pipe, Factory, SideEffect1 } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import {
   VirtualTimeSchedulerLike,
@@ -18,7 +18,7 @@ import { subscribe } from "./subscribe.ts";
  * @throws an error if the source is disposed with an error.
  */
 export const forEach = <T>(
-  callback: (next: T) => void,
+  callback: SideEffect1<T>,
   schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
 ): Operator<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();

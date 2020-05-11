@@ -1,5 +1,5 @@
 import { AbstractDisposable } from "../../disposable.ts";
-import { ignore } from "../../functions.ts";
+import { ignore, SideEffect1 } from "../../functions.ts";
 import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
 import { __DEV__ } from "../env.ts";
 import { SubscriberLike } from "./interfaces.ts";
@@ -19,9 +19,8 @@ const _assertSubscriberNotifyInContinuation = __DEV__
   ? assertSubscriberNotifyInContinuationDev
   : assertSubscriberNotifyInContinuationProduction;
 
-export const assertSubscriberNotifyInContinuation: (
-  subscriber: SubscriberLike<unknown>,
-) => void = _assertSubscriberNotifyInContinuation;
+export const assertSubscriberNotifyInContinuation: SideEffect1<SubscriberLike<unknown>> = 
+  _assertSubscriberNotifyInContinuation;
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.

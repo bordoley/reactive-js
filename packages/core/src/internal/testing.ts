@@ -1,4 +1,4 @@
-import { referenceEquals, arrayEquals, Factory, Equality } from "../functions";
+import { referenceEquals, arrayEquals, Factory, Equality, SideEffect } from "../functions";
 import { Option, isSome, isNone, none } from "../option";
 
 export const enum TestGroupType {
@@ -16,7 +16,7 @@ export type Describe = {
 export type Test = {
   readonly type: TestGroupType.Test;
   readonly name: string;
-  readonly f: () => void;
+  readonly f: SideEffect;
 };
 
 export type TestAsync = {
@@ -33,7 +33,7 @@ export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
   tests,
 });
 
-export const test = (name: string, f: () => void): Test => ({
+export const test = (name: string, f: SideEffect): Test => ({
   type: TestGroupType.Test,
   name,
   f,
@@ -45,7 +45,7 @@ export const testAsync = (name: string, f: Factory<Promise<void>>): TestAsync =>
   f,
 });
 
-export const expectToThrow = (f: () => void) => {
+export const expectToThrow = (f: SideEffect) => {
   let didThrow = false;
   try {
     f();
@@ -58,7 +58,7 @@ export const expectToThrow = (f: () => void) => {
   }
 };
 
-export const expectToThrowError = (error: unknown) => (f: () => void) => {
+export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   let didThrow = false;
   let errorThrown = none;
   try {

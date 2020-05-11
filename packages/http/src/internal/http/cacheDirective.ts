@@ -1,4 +1,4 @@
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import {
   CharStreamLike,
@@ -54,7 +54,7 @@ export const parseCacheControlFromHeaders = (
 
 export const writeHttpCacheControlHeader = (
   cacheControl: readonly CacheDirective[],
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   if (cacheControl.length > 0) {
     writeHeader(

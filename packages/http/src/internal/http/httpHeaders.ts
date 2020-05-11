@@ -1,5 +1,6 @@
 import { Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./interfaces";
+import { SideEffect2 } from "@reactive-js/core/lib/functions";
 
 export const enum HttpStandardHeader {
   Accept = "Accept",
@@ -102,7 +103,7 @@ export function getHeaderValue(
 
 export const writeHttpHeaders = (
   headers: HttpHeaders,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   for (const header in headers) {
     if (

@@ -1,4 +1,4 @@
-import { pipe } from "../../../../core/lib/functions.ts";
+import { pipe, SideEffect2 } from "../../../../core/lib/functions.ts";
 import { isSome, Option, none } from "../../../../core/lib/option.ts";
 import { concatWith, map, parseWith } from "../parserCombinators.ts";
 import { pToken, pParams, httpList } from "./httpGrammar.ts";
@@ -156,7 +156,7 @@ export const createHttpPreferences = ({
 const writeWeightedTokenHeader = (
   header: HttpStandardHeader,
   values: readonly string[],
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const length = values.length;
   if (length > 0) {
@@ -181,7 +181,7 @@ const writeWeightedTokenHeader = (
 
 export const writeHttpPreferenceHeaders = (
   preferences: HttpPreferences,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const {
     acceptedCharsets,

@@ -66,19 +66,11 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**(`callback`: function, `options`: object): *(Anonymous function)*
+▸ **schedule**(`callback`: [SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›, `options`: object): *(Anonymous function)*
 
 **Parameters:**
 
-▪ **callback**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+▪ **callback**: *[SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*
 
 ▪`Default value`  **options**: *object*= { delay: 0 }
 

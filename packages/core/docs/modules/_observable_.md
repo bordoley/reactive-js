@@ -148,17 +148,7 @@ Name | Type |
 
 ### `Const` assertSubscriberNotifyInContinuation
 
-• **assertSubscriberNotifyInContinuation**: *function* = _assertSubscriberNotifyInContinuation
-
-#### Type declaration:
-
-▸ (`subscriber`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown›): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`subscriber` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown› |
+• **assertSubscriberNotifyInContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown››* = _assertSubscriberNotifyInContinuation
 
 ___
 
@@ -650,7 +640,7 @@ ___
 
 ### `Const` createObservable
 
-▸ **createObservable**<**T**>(`onSubscribe`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **createObservable**<**T**>(`onSubscribe`: [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Factory for safely creating new `ObservableLike` instances. The onSubscribe function
 is called with a `SafeSubscriberLike` that may be notified from any context.
@@ -664,15 +654,9 @@ the onSubscribe function.
 
 **Parameters:**
 
-▪ **onSubscribe**: *function*
-
-▸ (`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
+Name | Type | Description |
+------ | ------ | ------ |
+`onSubscribe` | [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›› |   |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -854,7 +838,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`callback`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
@@ -865,17 +849,10 @@ invoking the onNotify callback for each item emitted by the source.
 
 **Parameters:**
 
-▪ **callback**: *function*
-
-▸ (`next`: T): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-▪`Default value`  **schedulerFactory**: *[Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›*= createVirtualTimeScheduler
+Name | Type | Default |
+------ | ------ | ------ |
+`callback` | [SideEffect1](_functions_.md#sideeffect1)‹T› | - |
+`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
@@ -956,7 +933,7 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -977,7 +954,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -1360,7 +1337,7 @@ ___
 
 ###  onNotify
 
-▸ **onNotify**<**T**>(`onNotify`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **onNotify**<**T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
 
@@ -1370,17 +1347,9 @@ Returns an `ObservableLike` that forwards notifications to the provided `onNotif
 
 **Parameters:**
 
-▪ **onNotify**: *function*
-
-The function that is invoked when the observable source produces values.
-
-▸ (`next`: T): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`onNotify` | [SideEffect1](_functions_.md#sideeffect1)‹T› | The function that is invoked when the observable source produces values.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

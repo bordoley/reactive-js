@@ -1,5 +1,5 @@
 import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
-import { Operator, Selector2 } from "@reactive-js/core/lib/functions";
+import { Operator, Selector2, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
@@ -223,7 +223,7 @@ export const parseHttpRequestFromHeaders = <T>({
 
 export const writeHttpRequestHeaders = <T>(
   request: HttpRequest<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ): void => {
   const { expectContinue, preconditions } = request;
 

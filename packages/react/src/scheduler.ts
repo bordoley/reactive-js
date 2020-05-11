@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { createDisposable, dispose } from "@reactive-js/core/lib/disposable";
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, bind } from "@reactive-js/core/lib/functions";
 import { none } from "@reactive-js/core/lib/option";
 import {
   SchedulerLike,
@@ -55,10 +55,6 @@ const priorityScheduler = {
   ): void {
     const scheduler = getScheduler(priority);
 
-    const callbackNodeDisposable = createDisposable(() =>
-      unstable_cancelCallback(callbackNode),
-    );
-
     const callback = () => {
       priorityScheduler.inContinuation = true;
       continuation.run(scheduler);
@@ -70,6 +66,10 @@ const priorityScheduler = {
       priority,
       callback,
       delay > 0 ? { delay } : none,
+    );
+
+    const callbackNodeDisposable = createDisposable(
+      bind(unstable_cancelCallback, callbackNode),
     );
 
     continuation.add(callbackNodeDisposable);

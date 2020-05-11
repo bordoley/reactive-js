@@ -2,7 +2,7 @@ import {
   AbstractDisposable,
   DisposableLike,
 } from "@reactive-js/core/lib/disposable";
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, bind } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   fromValue,
@@ -20,10 +20,7 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
       dispatcher.dispatch(reader.result as string);
     };
 
-    reader.onerror = () => {
-      dispose(dispatcher, { cause: reader.error });
-    };
-
+    reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
     reader.readAsText(blob);
   };
 
@@ -37,10 +34,7 @@ const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
       dispatcher.dispatch(reader.result as ArrayBuffer);
     };
 
-    reader.onerror = () => {
-      dispose(dispatcher, { cause: reader.error });
-    };
-
+    reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
     reader.readAsArrayBuffer(body);
   };
 

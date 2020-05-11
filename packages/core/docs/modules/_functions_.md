@@ -21,6 +21,9 @@
 * [Selector7](_functions_.md#selector7)
 * [Selector8](_functions_.md#selector8)
 * [Selector9](_functions_.md#selector9)
+* [SideEffect](_functions_.md#sideeffect)
+* [SideEffect1](_functions_.md#sideeffect1)
+* [SideEffect2](_functions_.md#sideeffect2)
 
 ### Variables
 
@@ -50,8 +53,6 @@
 ###  Comparator
 
 Ƭ **Comparator**: *function*
-
-A Unary function that transforms a value of type A into a value of type B
 
 #### Type declaration:
 
@@ -319,6 +320,49 @@ Name | Type |
 `g` | TG |
 `h` | TH |
 `i` | TI |
+
+___
+
+###  SideEffect
+
+Ƭ **SideEffect**: *function*
+
+#### Type declaration:
+
+▸ (): *void*
+
+___
+
+###  SideEffect1
+
+Ƭ **SideEffect1**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+###  SideEffect2
+
+Ƭ **SideEffect2**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
 
 ## Variables
 
