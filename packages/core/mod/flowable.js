@@ -40,7 +40,9 @@ export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(wi
     switch (ev.type) {
         case 1: {
             const data = decoder.decode(ev.data, { stream: true });
-            yield { type: 1, data };
+            if (data.length > 0) {
+                yield { type: 1, data };
+            }
             break;
         }
         case 2: {
