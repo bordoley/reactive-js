@@ -4,6 +4,7 @@ export type Factory<T> = () => T;
 export type Generator<T> = (prev: T) => T;
 export type Operator<TA, T> = (a: TA) => T;
 export type Predicate<T> = (a: T) => boolean;
+export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
 export type Selector2<TA, TB, T> = (a: TA, b: TB) => T;
 export type Selector3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;

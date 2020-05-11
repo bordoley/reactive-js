@@ -24,6 +24,7 @@
 * [SideEffect](_functions_.md#sideeffect)
 * [SideEffect1](_functions_.md#sideeffect1)
 * [SideEffect2](_functions_.md#sideeffect2)
+* [TypePredicate](_functions_.md#typepredicate)
 
 ### Variables
 
@@ -363,6 +364,22 @@ Name | Type |
 ------ | ------ |
 `a` | TA |
 `b` | TB |
+
+___
+
+###  TypePredicate
+
+Ƭ **TypePredicate**: *function*
+
+#### Type declaration:
+
+▸ (`v`: TA): *v is TB*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TA |
 
 ## Variables
 

@@ -462,7 +462,7 @@ ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: function): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 Returns an `EnumerableLike` that only emits items from the
 source that satisfy the specified type predicate.
@@ -475,17 +475,9 @@ source that satisfy the specified type predicate.
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function.
-
-▸ (`data`: TA): *data is TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | TA |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [TypePredicate](_functions_.md#typepredicate)‹TA, TB› | The predicate function.  |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
