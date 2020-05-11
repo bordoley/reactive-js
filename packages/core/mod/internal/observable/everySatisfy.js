@@ -2,6 +2,7 @@ import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class EverySatisfySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
         super(delegate);
@@ -11,7 +12,7 @@ class EverySatisfySubscriber extends AbstractDelegatingSubscriber {
                 fromValue()(true).subscribe(delegate);
             }
             else {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }
@@ -21,7 +22,7 @@ class EverySatisfySubscriber extends AbstractDelegatingSubscriber {
         if (failedPredicate) {
             const delegate = this.delegate;
             delegate.notify(false);
-            delegate.dispose();
+            dispose(delegate);
         }
     }
 }

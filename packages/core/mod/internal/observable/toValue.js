@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
@@ -15,8 +16,8 @@ export const toValue = (schedulerFactory = createVirtualTimeScheduler) => (sourc
         error = e;
     });
     scheduler.run();
-    subscription.dispose();
-    scheduler.dispose();
+    dispose(subscription);
+    dispose(scheduler);
     const reifiedError = error;
     if (reifiedError !== none) {
         const { cause } = reifiedError;

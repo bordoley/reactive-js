@@ -3,6 +3,7 @@ import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
         super(delegate);
@@ -12,7 +13,7 @@ class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
                 fromValue()(false).subscribe(delegate);
             }
             else {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }
@@ -22,7 +23,7 @@ class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
         if (passesPredicate) {
             const delegate = this.delegate;
             delegate.notify(true);
-            delegate.dispose();
+            dispose(delegate);
         }
     }
 }

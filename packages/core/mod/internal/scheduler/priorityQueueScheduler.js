@@ -1,4 +1,4 @@
-import { AbstractSerialDisposable, disposed, AbstractDisposable, } from "../../disposable.js";
+import { AbstractSerialDisposable, disposed, AbstractDisposable, dispose, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
@@ -68,7 +68,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
                 return;
             }
         }
-        this.dispose();
+        dispose(this);
     }
 }
 const comparator = (a, b) => {

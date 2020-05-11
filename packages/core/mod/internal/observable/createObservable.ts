@@ -1,5 +1,6 @@
 import { ObservableLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
 import { toDispatcher } from "./toDispatcher.ts";
+import { dispose } from "../../disposable.ts";
 
 class CreateObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -16,7 +17,7 @@ class CreateObservable<T> implements ObservableLike<T> {
     try {
       this.onSubscribe(dispatcher);
     } catch (cause) {
-      subscriber.dispose({ cause });
+      dispose(subscriber, { cause });
     }
   }
 }

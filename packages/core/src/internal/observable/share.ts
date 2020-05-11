@@ -9,6 +9,7 @@ import {
   MulticastObservableLike,
 } from "./interfaces";
 import { publish } from "./publish";
+import { dispose } from "../../disposable";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private subscriberCount = 0;
@@ -17,7 +18,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     this.subscriberCount--;
 
     if (this.subscriberCount === 0) {
-      (this.multicast as MulticastObservableLike<T>).dispose();
+      dispose(this.multicast as MulticastObservableLike<T>);
       this.multicast = none;
     }
   };

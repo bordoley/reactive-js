@@ -1,5 +1,6 @@
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
@@ -15,7 +16,7 @@ class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
                 this.delegate.notify(next);
             }
             if (!satisfiesPredicate) {
-                this.dispose();
+                dispose(this);
             }
         }
     }

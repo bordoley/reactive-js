@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "../../disposable.js";
+import { AbstractDisposable, dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { AbstractSchedulerContinuation } from "../../scheduler.js";
 class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
@@ -17,7 +17,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
                 return;
             }
         }
-        this.dispose();
+        dispose(this);
     }
 }
 const scheduleDrainQueue = (dispatcher) => {
@@ -26,7 +26,7 @@ const scheduleDrainQueue = (dispatcher) => {
         producer.add(e => {
             const error = e !== null && e !== void 0 ? e : dispatcher.error;
             if (isSome(error) || dispatcher.isDisposed) {
-                dispatcher.subscriber.dispose(error);
+                dispose(dispatcher.subscriber, error);
             }
         });
         dispatcher.subscriber.schedule(producer);
@@ -39,7 +39,7 @@ class SubscriberDelegatingDispatcher extends AbstractDisposable {
         this.nextQueue = [];
         this.add(e => {
             if (this.nextQueue.length === 0) {
-                subscriber.dispose(e);
+                dispose(subscriber, e);
             }
         });
         subscriber.add(this);

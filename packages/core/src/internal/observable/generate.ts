@@ -5,6 +5,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
+import { dispose } from "../../disposable";
 
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -38,7 +39,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 

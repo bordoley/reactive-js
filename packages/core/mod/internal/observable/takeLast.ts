@@ -8,6 +8,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { dispose } from "../../disposable.ts";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];
@@ -22,7 +23,7 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
     this.add(error => {
       if (isSome(error)) {
-        delegate.dispose(error);
+        dispose(delegate, error);
       } else {
         fromArray()(last).subscribe(delegate);
       }

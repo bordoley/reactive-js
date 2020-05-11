@@ -6,6 +6,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
+import { dispose } from "../../disposable";
 
 class FromArrayProducer<T> extends AbstractProducer<T> {
   private index = this.startIndex;
@@ -43,7 +44,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 

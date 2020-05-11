@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "../../disposable.js";
+import { AbstractDisposable, dispose } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
@@ -43,7 +43,7 @@ class EnumeratorSubscriber extends AbstractDisposable {
             this.continuations.push(continuation);
         }
         else {
-            continuation.dispose();
+            dispose(continuation);
         }
     }
     shouldYield() {
@@ -89,7 +89,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
         });
         this.add(error => {
             if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }
@@ -126,7 +126,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
                     this.hasCurrent = false;
                     this.current = none;
                     this.buffer.length = 0;
-                    this.dispose();
+                    dispose(this);
                 }
             }
         }

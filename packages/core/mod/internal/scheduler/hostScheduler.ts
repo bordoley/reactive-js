@@ -1,4 +1,4 @@
-import { DisposableLike, createDisposable } from "../../disposable.ts";
+import { DisposableLike, createDisposable, dispose } from "../../disposable.ts";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
 
 const supportsPerformanceNow =
@@ -34,7 +34,7 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
   channel.port1.onmessage = () => {
     if (!disposable.isDisposed) {
       cb();
-      disposable.dispose();
+      dispose(disposable);
     }
   };
   channel.port2.postMessage(null);
@@ -45,7 +45,7 @@ const scheduleDelayed = (cb: () => void, delay: number) => {
   const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(() => {
     cb();
-    disposable.dispose();
+    dispose(disposable);
   }, delay);
   return disposable;
 };

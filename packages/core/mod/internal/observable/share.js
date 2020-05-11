@@ -1,6 +1,7 @@
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { publish } from "./publish.js";
+import { dispose } from "../../disposable.js";
 class SharedObservable {
     constructor(source, scheduler, replay) {
         this.source = source;
@@ -10,7 +11,7 @@ class SharedObservable {
         this.teardown = () => {
             this.subscriberCount--;
             if (this.subscriberCount === 0) {
-                this.multicast.dispose();
+                dispose(this.multicast);
                 this.multicast = none;
             }
         };

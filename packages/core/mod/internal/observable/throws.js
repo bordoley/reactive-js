@@ -1,5 +1,6 @@
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
+import { dispose } from "../../disposable.js";
 class ThrowsProducer extends AbstractProducer {
     constructor(subscriber, f, delay) {
         super(subscriber);
@@ -8,7 +9,7 @@ class ThrowsProducer extends AbstractProducer {
     }
     produce(_) {
         const cause = this.f();
-        this.dispose({ cause });
+        dispose(this, { cause });
     }
 }
 export const throws = ({ delay } = { delay: 0 }) => errorFactory => {

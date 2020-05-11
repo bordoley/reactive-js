@@ -1,5 +1,6 @@
 import { isSome } from "../../option.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class ConcatSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, observables, next) {
         super(delegate);
@@ -9,14 +10,14 @@ class ConcatSubscriber extends AbstractDelegatingSubscriber {
             const observables = this.observables;
             const next = this.next;
             if (isSome(error)) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
             else if (next < observables.length) {
                 const concatSubscriber = new ConcatSubscriber(delegate, observables, next + 1);
                 observables[next].subscribe(concatSubscriber);
             }
             else {
-                delegate.dispose();
+                dispose(delegate);
             }
         });
     }
@@ -36,7 +37,7 @@ class ConcatObservable {
             observables[0].subscribe(concatSubscriber);
         }
         else {
-            subscriber.dispose();
+            dispose(subscriber);
         }
     }
 }

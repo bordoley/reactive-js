@@ -1,4 +1,4 @@
-import { createSerialDisposable, Exception } from "../../disposable.ts";
+import { createSerialDisposable, Exception, dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import {
@@ -29,7 +29,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
     const delegate = this.delegate;
     if (shouldComplete) {
-      delegate.dispose(error);
+      dispose(delegate, error);
     } else {
       this.count++;
       this.innerSubscription.inner = pipe(

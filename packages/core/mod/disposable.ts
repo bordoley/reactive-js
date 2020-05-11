@@ -44,17 +44,20 @@ export interface DisposableLike {
   dispose(error?: Exception): void;
 }
 
+export const dispose = (disposable: DisposableLike, e?: Exception) => {
+  disposable.dispose(e);
+}
+
 export const disposeOnError = (disposable: DisposableLike) => (
   error?: Exception,
 ) => {
   if (isSome(error)) {
-    disposable.dispose(error);
+    dispose(disposable, error);
   }
 };
 
-export const toErrorHandler = (disposable: DisposableLike) => (cause: unknown) => {
-  disposable.dispose({ cause });
-};
+export const toErrorHandler = (disposable: DisposableLike) => (cause: unknown) =>
+  dispose(disposable, ({ cause }));
 
 const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {
@@ -66,7 +69,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
        */
     }
   } else {
-    disposable.dispose(error);
+    dispose(disposable, error);
   }
 };
 
@@ -187,7 +190,7 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
 
     if (oldInner !== newInner) {
       this.add(newInner);
-      oldInner.dispose();
+      dispose(oldInner);
     }
   }
 }

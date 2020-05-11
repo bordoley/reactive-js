@@ -1,4 +1,4 @@
-import { DisposableLike, AbstractDisposable } from "../../disposable";
+import { DisposableLike, AbstractDisposable, dispose } from "../../disposable";
 import { EnumeratorLike } from "../../enumerable";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
@@ -63,7 +63,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {
-      continuation.dispose();
+      dispose(continuation);
     }
   }
 
@@ -125,7 +125,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     });
     this.add(error => {
       if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }
@@ -167,7 +167,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
           this.hasCurrent = false;
           this.current = none;
           this.buffer.length = 0;
-          this.dispose();
+          dispose(this);
         }
       }
     }

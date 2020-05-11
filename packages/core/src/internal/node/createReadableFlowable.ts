@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { DisposableValueLike } from "../../disposable";
+import { DisposableValueLike, dispose } from "../../disposable";
 import { FlowMode, FlowableLike, next, complete } from "../../flowable";
 import { pipe, compose } from "../../functions";
 import {
@@ -25,7 +25,7 @@ const createReadableEventsObservable = (
 
     const onEnd = () => {
       dispatcher.dispatch(complete());
-      dispatcher.dispose();
+      dispose(dispatcher);
     };
     readableValue.on("end", onEnd);
 

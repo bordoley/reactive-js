@@ -1,5 +1,5 @@
-import { Exception } from "@reactive-js/core/lib/disposable";
-import { pipe, compose, returns } from "@reactive-js/core/lib/functions";
+import { dispose, Exception } from "@reactive-js/core/lib/disposable";
+import { pipe, compose, returns, bind } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   onNotify,
@@ -51,9 +51,7 @@ export const useObservable = <T>(
       updateError,
       scheduler,
     );
-    return () => {
-      subscription.dispose();
-    };
+    return bind(dispose, subscription);
   }, [observable, updateState, updateError, scheduler]);
 
   if (isSome(error)) {
@@ -87,7 +85,7 @@ export const useStreamable = <TReq, T>(
 
     return () => {
       streamRef.current = none;
-      stream.dispose();
+      dispose(stream);
     };
   }, [streamable, scheduler, replay, updateStream]);
 

@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 class OnSubscribeObservable {
     constructor(src, f) {
@@ -14,7 +15,7 @@ class OnSubscribeObservable {
             }
         }
         catch (cause) {
-            subscriber.dispose({ cause });
+            dispose(subscriber, { cause });
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Exception } from "../../disposable";
+import { Exception, dispose } from "../../disposable";
 import { isSome, none } from "../../option";
 import {
   ObservableLike,
@@ -23,13 +23,13 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
           if (isSome(result)) {
             result.subscribe(delegate);
           } else {
-            delegate.dispose();
+            dispose(delegate);
           }
         } catch (cause) {
-          delegate.dispose({ cause, parent: error } as Exception);
+          dispose(delegate, { cause, parent: error } as Exception);
         }
       } else {
-        delegate.dispose();
+        dispose(delegate);
       }
     });
   }

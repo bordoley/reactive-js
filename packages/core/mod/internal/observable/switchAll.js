@@ -1,4 +1,4 @@
-import { disposed } from "../../disposable.js";
+import { disposed, dispose } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -15,16 +15,16 @@ class SwitchSubscriber extends AbstractDelegatingSubscriber {
         };
         this.add(error => {
             if (this.inner.isDisposed || isSome(error)) {
-                this.delegate.dispose(error);
+                dispose(this.delegate, error);
             }
         });
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);
-        this.inner.dispose();
+        dispose(this.inner);
         const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate)).add(e => {
             if (isSome(e) || this.isDisposed) {
-                this.delegate.dispose(e);
+                dispose(this.delegate, e);
             }
         });
         this.delegate.add(inner);

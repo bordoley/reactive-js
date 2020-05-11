@@ -9,6 +9,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 type CombineLatestCtx<T> = {
   completedCount: number;
@@ -35,7 +36,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
       ctx.completedCount++;
 
       if (isSome(error) || ctx.completedCount === ctx.totalCount) {
-        this.delegate.dispose(error);
+        dispose(this.delegate, error);
       }
     });
   }

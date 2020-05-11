@@ -1,4 +1,4 @@
-import { AbstractDisposable, DisposableLike, disposed } from "./disposable.ts";
+import { AbstractDisposable, DisposableLike, disposed, dispose } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import { pipe } from "./functions.ts";
 import { createKeyedQueue } from "./internal/keyedQueue.ts";
@@ -79,7 +79,7 @@ const tryDispatch = <TResource extends DisposableLike>(
       first,
     ) as [TResource, DisposableLike];
     availableResourcesTimeouts.delete(resource);
-    disposable.dispose();
+    dispose(disposable);
   }
 
   const resource =
@@ -97,7 +97,7 @@ const tryDispatch = <TResource extends DisposableLike>(
   const timeoutSubscription =
     availableResourcesTimeouts.get(resource) ?? disposed;
   availableResourcesTimeouts.delete(resource);
-  timeoutSubscription.dispose();
+  dispose(timeoutSubscription);
 
   // We have resource to allocate so pop
   // the subscriber off the request queue
@@ -115,7 +115,7 @@ const tryDispatch = <TResource extends DisposableLike>(
       onNotify(_ => {
         const resource = availableResources.pop(key);
         if (isSome(resource)) {
-          resource.dispose();
+          dispose(resource);
 
           // Check the global queue for the next key
           // awaiting a resource and dispatch it.
@@ -172,7 +172,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
     super();
 
     this.add(e => {
-      const forEachDispose = forEach((s: DisposableLike) => s.dispose(e));
+      const forEachDispose = forEach((s: DisposableLike) => dispose(s, e));
 
       pipe(this.resourceRequests.values, forEachDispose);
       this.resourceRequests.clear();

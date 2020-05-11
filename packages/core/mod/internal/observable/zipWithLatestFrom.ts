@@ -12,6 +12,7 @@ import {
   AbstractSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { dispose } from "../../disposable.ts";
 
 const notifyDelegate = <TA, TB, TC>(
   subscriber: ZipWithLatestFromSubscriber<TA, TB, TC>,
@@ -34,7 +35,7 @@ class ZipWithLatestFromSubscriber<TA, TB, TC> extends AbstractSubscriber<TA> {
     notifyDelegate(this);
 
     if (this.isDisposed && this.queue.length === 0) {
-      this.delegate.dispose();
+      dispose(this.delegate);
     }
   };
 
@@ -54,17 +55,17 @@ class ZipWithLatestFromSubscriber<TA, TB, TC> extends AbstractSubscriber<TA> {
       subscribe(delegate),
     ).add(e => {
       if (isSome(e)) {
-        delegate.dispose(e);
+        dispose(delegate, e);
       } else if (this.isDisposed) {
-        delegate.dispose();
+        dispose(delegate);
       }
     });
 
     this.add(e => {
       if (isSome(e)) {
-        delegate.dispose(e);
+        dispose(delegate, e);
       } else if (otherSubscription.isDisposed) {
-        delegate.dispose();
+        dispose(delegate);
       }
     });
 

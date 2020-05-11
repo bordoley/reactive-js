@@ -1,4 +1,4 @@
-import { disposed } from "../src/disposable";
+import { disposed, dispose } from "../src/disposable";
 import { pipe, returns } from "../src/functions";
 import {
   fromArray,
@@ -69,8 +69,8 @@ export const tests = describe(
           pipe(cache.get("c"), expectSome);
           pipe(cache.get("d"), expectSome);
 
-          cSubscription.dispose();
-          dSubscription.dispose();
+          dispose(cSubscription);
+          dispose(dSubscription);
 
           const entryE = cache.set("e", fromValue()("e"));
           eSubscription = pipe(entryE, subscribe(scheduler));
@@ -83,7 +83,7 @@ export const tests = describe(
           pipe(cache.get("e"), expectSome);
         },
         () => {
-          cache.dispose();
+          dispose(cache);
         },
         () => {
           // Ensure that disposing the cache disposes all outstanding subscriptions.

@@ -1,5 +1,6 @@
 import { isSome } from "../../option.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class MergeSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, ctx) {
         super(delegate);
@@ -8,7 +9,7 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
             const ctx = this.ctx;
             ctx.completedCount++;
             if (isSome(error) || ctx.completedCount >= ctx.count) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }

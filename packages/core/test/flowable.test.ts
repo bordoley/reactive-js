@@ -21,6 +21,7 @@ import {
   expectToHaveBeenCalledTimes,
 } from "../src/internal/testing";
 import { sink } from "../src/streamable";
+import { dispose } from "../src/disposable";
 
 export const tests = describe(
   "flowables",
@@ -108,7 +109,7 @@ export const tests = describe(
       scheduler,
       schedule(
         _ => {
-          stream.dispose();
+          dispose(stream);
         },
         { delay: 5 },
       ),

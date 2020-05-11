@@ -1,13 +1,14 @@
 import { isSome, none } from "./option.js";
 import { bind } from "./functions.js";
+export const dispose = (disposable, e) => {
+    disposable.dispose(e);
+};
 export const disposeOnError = (disposable) => (error) => {
     if (isSome(error)) {
-        disposable.dispose(error);
+        dispose(disposable, error);
     }
 };
-export const toErrorHandler = (disposable) => (cause) => {
-    disposable.dispose({ cause });
-};
+export const toErrorHandler = (disposable) => (cause) => dispose(disposable, ({ cause }));
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {
@@ -17,7 +18,7 @@ const doDispose = (disposable, error) => {
         }
     }
     else {
-        disposable.dispose(error);
+        dispose(disposable, error);
     }
 };
 export class AbstractDisposable {
@@ -91,7 +92,7 @@ export class AbstractSerialDisposable extends AbstractDisposable {
         this._inner = newInner;
         if (oldInner !== newInner) {
             this.add(newInner);
-            oldInner.dispose();
+            dispose(oldInner);
         }
     }
 }

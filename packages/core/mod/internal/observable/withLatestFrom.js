@@ -4,6 +4,7 @@ import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class WithLatestFromSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, other, selector) {
         super(delegate);
@@ -16,7 +17,7 @@ class WithLatestFromSubscriber extends AbstractDelegatingSubscriber {
         this.selector = selector;
         const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this)).add(e => {
             if (isSome(e) || !this.hasLatest) {
-                this.dispose(e);
+                dispose(this, e);
             }
         });
         this.add(otherSubscription).add(delegate);

@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -14,7 +15,7 @@ const subscribeNext = (subscriber) => {
             subscriber.delegate.add(nextObsSubscription);
         }
         else if (subscriber.isDisposed) {
-            subscriber.delegate.dispose();
+            dispose(subscriber.delegate);
         }
     }
 };
@@ -27,7 +28,7 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
         this.onDispose = (error) => {
             this.activeCount--;
             if (isSome(error)) {
-                this.delegate.dispose(error);
+                dispose(this.delegate, error);
             }
             else {
                 subscribeNext(this);
@@ -40,7 +41,7 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
         const queue = this.queue;
         this.add(error => {
             if (isSome(error) || queue.length + this.activeCount === 0) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
         delegate.add(() => {

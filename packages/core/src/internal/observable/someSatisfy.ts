@@ -7,6 +7,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -21,7 +22,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
       if (isNone(error)) {
         fromValue()(false).subscribe(delegate);
       } else {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }
@@ -33,7 +34,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
     if (passesPredicate) {
       const delegate = this.delegate;
       delegate.notify(true);
-      delegate.dispose();
+      dispose(delegate);
     }
   }
 }

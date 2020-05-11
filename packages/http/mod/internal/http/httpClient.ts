@@ -1,4 +1,4 @@
-import { DisposableLike } from "../../../../core/lib/disposable.ts";
+import { dispose, DisposableLike } from "../../../../core/lib/disposable.ts";
 import { pipe, identity } from "../../../../core/lib/functions.ts";
 import {
   ObservableLike,
@@ -102,7 +102,7 @@ export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
             : request;
 
           if (request !== newRequest) {
-            response.body.dispose();
+            dispose(response.body);
             return sendRequest(newRequest);
           }
           // Fallthrough

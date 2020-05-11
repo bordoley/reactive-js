@@ -2,6 +2,7 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
   disposeOnError,
+  dispose,
 } from "../../disposable";
 import { pipe } from "../../functions";
 import { none, Option, isNone } from "../../option";
@@ -77,7 +78,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (isNone(error) && mode !== ThrottleMode.First && this.hasValue) {
         fromValue()(this.value).subscribe(delegate);
       } else {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }

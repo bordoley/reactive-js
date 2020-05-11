@@ -1,4 +1,4 @@
-import { createDisposable } from "../../disposable.js";
+import { createDisposable, dispose } from "../../disposable.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
@@ -21,7 +21,7 @@ const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     channel.port1.onmessage = () => {
         if (!disposable.isDisposed) {
             cb();
-            disposable.dispose();
+            dispose(disposable);
         }
     };
     channel.port2.postMessage(null);
@@ -31,7 +31,7 @@ const scheduleDelayed = (cb, delay) => {
     const disposable = createDisposable(() => clearTimeout(timeout));
     const timeout = setTimeout(() => {
         cb();
-        disposable.dispose();
+        dispose(disposable);
     }, delay);
     return disposable;
 };

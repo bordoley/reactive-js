@@ -11,6 +11,7 @@ import {
   DispatcherLike,
 } from "../../../../core/lib/observable.ts";
 import { WebResponseBodyLike } from "./interfaces.ts";
+import { dispose } from "../../../../core/lib/disposable.ts";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (dispatcher: DispatcherLike<string>) => {
@@ -20,7 +21,7 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
     };
 
     reader.onerror = () => {
-      dispatcher.dispose({ cause: reader.error });
+      dispose(dispatcher, { cause: reader.error });
     };
 
     reader.readAsText(blob);
@@ -37,7 +38,7 @@ const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
     };
 
     reader.onerror = () => {
-      dispatcher.dispose({ cause: reader.error });
+      dispose(dispatcher, { cause: reader.error });
     };
 
     reader.readAsArrayBuffer(body);

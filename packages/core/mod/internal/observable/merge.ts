@@ -5,6 +5,7 @@ import {
   ObservableOperator,
 } from "./interfaces.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { dispose } from "../../disposable.ts";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -20,7 +21,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       ctx.completedCount++;
 
       if (isSome(error) || ctx.completedCount >= ctx.count) {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }

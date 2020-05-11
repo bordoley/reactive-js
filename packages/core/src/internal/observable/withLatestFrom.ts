@@ -12,6 +12,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
   TA,
@@ -39,7 +40,7 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
       subscribe(this),
     ).add(e => {
       if (isSome(e) || !this.hasLatest) {
-        this.dispose(e);
+        dispose(this, e);
       }
     });
 

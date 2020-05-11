@@ -7,6 +7,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
+import { dispose } from "../../disposable.ts";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -33,7 +34,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 

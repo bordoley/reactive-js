@@ -4,6 +4,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -26,7 +27,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       }
 
       if (!satisfiesPredicate) {
-        this.dispose();
+        dispose(this);
       }
     }
   }

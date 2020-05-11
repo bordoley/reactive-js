@@ -4,6 +4,7 @@ import { isSome } from "../../../../core/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
+import { dispose } from "../../../../core/lib/disposable.js";
 const loadBodyContent = async (response) => {
     const { body, contentInfo } = response;
     if (isSome(contentInfo)) {
@@ -51,10 +52,10 @@ export const sendHttpRequestUsingFetch = request => {
             });
             const response = parseHttpResponseFromHeaders(fetchResponse.status, responseHeaders, fetchResponse);
             dispatcher.dispatch(response);
-            dispatcher.dispose();
+            dispose(dispatcher);
         }
         catch (cause) {
-            dispatcher.dispose({ cause });
+            dispose(dispatcher, { cause });
         }
     });
     const mapResponseBody = switchMap((response) => using(scheduler => pipe(bind(loadBodyContent, response), fromPromise, publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({

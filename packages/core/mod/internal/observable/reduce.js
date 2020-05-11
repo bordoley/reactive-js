@@ -2,6 +2,7 @@ import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class ReduceSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, reducer, acc) {
         super(delegate);
@@ -12,7 +13,7 @@ class ReduceSubscriber extends AbstractDelegatingSubscriber {
                 fromValue()(this.acc).subscribe(delegate);
             }
             else {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }

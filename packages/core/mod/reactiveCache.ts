@@ -1,4 +1,4 @@
-import { DisposableLike, Exception, AbstractDisposable } from "./disposable.ts";
+import { DisposableLike, Exception, AbstractDisposable, dispose } from "./disposable.ts";
 import { pipe } from "./functions.ts";
 import {
   ObservableLike,
@@ -25,7 +25,7 @@ class ReactiveCacheSchedulerContinuation<
     const { cache, maxCount, garbage } = this.cache;
 
     for (const [, stream] of garbage) {
-      stream.dispose();
+      dispose(stream);
 
       // only delete as many entries as we need to.
       const hasMoreToCleanup = cache.size > maxCount;
@@ -38,7 +38,7 @@ class ReactiveCacheSchedulerContinuation<
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 
@@ -98,7 +98,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     this.add(() => {
       for (const value of this.cache.values()) {
         const [stream] = value;
-        stream.dispose();
+        dispose(stream);
       }
       this.cache.clear();
       this.garbage.clear();

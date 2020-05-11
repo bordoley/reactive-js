@@ -5,6 +5,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { dispose } from "../../disposable.ts";
 
 class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private isEmpty = true;
@@ -19,7 +20,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
         const cause = this.factory();
         error = { cause };
       }
-      this.delegate.dispose(error);
+      dispose(this.delegate, error);
     });
   }
 

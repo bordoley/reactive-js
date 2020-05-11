@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "../../disposable.js";
+import { AbstractDisposable, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 const notifyListeners = (listeners, state) => {
     for (const listener of listeners) {
@@ -36,7 +36,7 @@ export class AbstractSchedulerContinuation extends AbstractDisposable {
         }
         const isDisposed = this.isDisposed;
         if (!isDisposed && isSome(error)) {
-            this.dispose(error);
+            dispose(this, error);
         }
     }
 }

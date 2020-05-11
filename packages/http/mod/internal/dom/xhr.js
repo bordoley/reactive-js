@@ -3,6 +3,7 @@ import { isSome } from "../../../../core/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
+import { dispose } from "../../../../core/lib/disposable.js";
 export const sendHttpRequestUsingXHR = request => createObservable(dispatcher => {
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;
@@ -12,7 +13,7 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
     dispatcher.add(() => xhr.abort()).add(body);
     xhr.onerror = () => {
         const cause = new Error("Network request failed");
-        dispatcher.dispose({ cause });
+        dispose(dispatcher, { cause });
     };
     xhr.onreadystatechange = () => {
         var _a;
@@ -65,7 +66,7 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
     };
     xhr.ontimeout = () => {
         const cause = new Error("Network request failed");
-        dispatcher.dispose({ cause });
+        dispose(dispatcher, { cause });
     };
     if (request.credentials === "include") {
         xhr.withCredentials = true;

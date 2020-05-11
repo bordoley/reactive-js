@@ -7,6 +7,7 @@ import {
   VirtualTimeSchedulerLike,
   SchedulerLike,
 } from "./interfaces.ts";
+import { dispose } from "../../disposable.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -37,7 +38,7 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
       scheduler.microTaskTicks = 0;
       scheduler.now = dueTime;
     } else {
-      scheduler.dispose();
+      dispose(scheduler);
     }
   }
 
@@ -87,7 +88,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     }
 
     this.host = ignoreScheduler;
-    this.dispose();
+    dispose(this);
   }
 
   run(scheduler = ignoreScheduler) {
