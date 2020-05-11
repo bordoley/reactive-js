@@ -1,5 +1,5 @@
 export { compute } from "./internal/enumerable/compute.ts";
-export { concat } from "./internal/enumerable/concat.ts";
+export { concat, concatWith } from "./internal/enumerable/concat.ts";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged.ts";
 export { endWith } from "./internal/enumerable/endWith.ts";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy.ts";
@@ -30,4 +30,4 @@ export { takeLast } from "./internal/enumerable/takeLast.ts";
 export { takeWhile } from "./internal/enumerable/takeWhile.ts";
 export { toArray } from "./internal/enumerable/toArray.ts";
 export { toIterable } from "./internal/enumerable/toIterable.ts";
-export { zip } from "./internal/enumerable/zip.ts";
+export { zip, zipWith } from "./internal/enumerable/zip.ts";

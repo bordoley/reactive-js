@@ -1,6 +1,6 @@
 import { pipe } from "../../../../core/lib/functions.ts";
 import { isSome, Option, none } from "../../../../core/lib/option.ts";
-import { concat, map, parseWith } from "../parserCombinators.ts";
+import { concatWith, map, parseWith } from "../parserCombinators.ts";
 import { pToken, pParams, httpList } from "./httpGrammar.ts";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders.ts";
 import {
@@ -63,7 +63,8 @@ const weightedTokenComparator = (
 const weightedTokenToToken = ([token]: [string, unknown]) => token;
 
 const parseWeightedToken = pipe(
-  concat(pToken, pParams),
+  pToken,
+  concatWith(pParams),
   httpList,
   map(values => {
     // Mutate to avoid allocations. Kinda evil.

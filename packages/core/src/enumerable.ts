@@ -1,5 +1,5 @@
 export { compute } from "./internal/enumerable/compute";
-export { concat } from "./internal/enumerable/concat";
+export { concat, concatWith } from "./internal/enumerable/concat";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged";
 export { endWith } from "./internal/enumerable/endWith";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy";
@@ -30,4 +30,4 @@ export { takeLast } from "./internal/enumerable/takeLast";
 export { takeWhile } from "./internal/enumerable/takeWhile";
 export { toArray } from "./internal/enumerable/toArray";
 export { toIterable } from "./internal/enumerable/toIterable";
-export { zip } from "./internal/enumerable/zip";
+export { zip, zipWith } from "./internal/enumerable/zip";

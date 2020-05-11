@@ -165,3 +165,4 @@ class ZipObservable {
 export function zip(observables, selector) {
     return new ZipObservable(observables, selector);
 }
+export const zipWith = (snd, selector) => fst => zip([fst, snd], selector);

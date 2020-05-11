@@ -55,6 +55,7 @@ export function concat(...parsers) {
         return result;
     };
 }
+export const concatWith = (other) => parser => concat(parser, other);
 export const followedBy = (other) => parser => charStream => {
     const result = parser(charStream);
     other(charStream);

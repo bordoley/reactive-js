@@ -1,4 +1,4 @@
-import { concat } from "./concat";
+import { concatWith } from "./concat";
 import { fromArray } from "./fromArray";
 import { ObservableOperator } from "./interfaces";
 
@@ -8,5 +8,5 @@ import { ObservableOperator } from "./interfaces";
  */
 export function endWith<T>(value: T, ...values: T[]): ObservableOperator<T, T>;
 export function endWith<T>(...values: T[]): ObservableOperator<T, T> {
-  return obs => concat(obs, fromArray()(values));
+  return concatWith(fromArray()(values));
 }

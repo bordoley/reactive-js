@@ -1,5 +1,5 @@
 export { compute } from "./internal/enumerable/compute.js";
-export { concat } from "./internal/enumerable/concat.js";
+export { concat, concatWith } from "./internal/enumerable/concat.js";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged.js";
 export { endWith } from "./internal/enumerable/endWith.js";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy.js";
@@ -24,4 +24,4 @@ export { takeLast } from "./internal/enumerable/takeLast.js";
 export { takeWhile } from "./internal/enumerable/takeWhile.js";
 export { toArray } from "./internal/enumerable/toArray.js";
 export { toIterable } from "./internal/enumerable/toIterable.js";
-export { zip } from "./internal/enumerable/zip.js";
+export { zip, zipWith } from "./internal/enumerable/zip.js";

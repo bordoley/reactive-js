@@ -5,7 +5,6 @@ import {
   ObservableLike,
   onNotify,
   throttle,
-  concat,
 } from "../../observable.ts";
 import { none } from "../../option.ts";
 import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore.ts";
@@ -22,12 +21,10 @@ const pushHistoryState = (newLocation: string) => {
 };
 
 const historyOperator = (obs: ObservableLike<string>) =>
-  pipe(
-    merge(
-      pipe(obs, throttle(15), onNotify(pushHistoryState)),
-      fromEvent(window, "popstate", getCurrentLocation),
-    ),
-    x => concat(compute()(getCurrentLocation), x),
+  merge(
+    compute()(getCurrentLocation),
+    pipe(obs, throttle(15), onNotify(pushHistoryState)),
+    fromEvent(window, "popstate", getCurrentLocation),
   );
 
 const _historyStateStore: StateStoreLike<string> = pipe(

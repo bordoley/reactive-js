@@ -4,3 +4,4 @@ import { fromArray } from "./fromArray.js";
 export function concat(...observables) {
     return pipe(observables, fromArray, flatten());
 }
+export const concatWith = (snd) => first => concat(first, snd);

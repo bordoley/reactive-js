@@ -33,3 +33,4 @@ class MergeObservable {
 export function merge(...observables) {
     return new MergeObservable(observables);
 }
+export const mergeWith = (snd) => fst => merge(fst, snd);

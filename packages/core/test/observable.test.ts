@@ -16,9 +16,10 @@ import {
 import {
   await_,
   buffer,
-  combineLatest,
+  combineLatestWith,
   compute,
   concat,
+  concatWith,
   contains,
   createObservable,
   distinctUntilChanged,
@@ -33,6 +34,7 @@ import {
   keep,
   map,
   merge,
+  mergeWith,
   never,
   noneSatisfy,
   fromValue,
@@ -70,6 +72,7 @@ import {
   exhaustMap,
   mergeMap,
   switchAll,
+  zipWith,
   zipWithLatestFrom,
 } from "../src/observable";
 import {
@@ -144,7 +147,9 @@ export const tests = describe(
     test("source throws, error caught and ignored", () => {
       const error = new Error();
       pipe(
-        concat(pipe(1, fromValue()), pipe(error, returns, throws())),
+        1, 
+        fromValue(),
+        concatWith(pipe(error, returns, throws())),
         catchError(_ => {}),
         toArray(),
         expectArrayEquals([1]),
@@ -153,7 +158,9 @@ export const tests = describe(
     test("source throws, continues with second observable", () => {
       const error = new Error();
       pipe(
-        concat(pipe(1, fromValue()), pipe(error, returns, throws())),
+        1, 
+        fromValue(),
+        concatWith(pipe(error, returns, throws())),
         catchError(_ => fromValue()(2)),
         toArray(),
         expectArrayEquals([1, 2]),
@@ -163,7 +170,9 @@ export const tests = describe(
       const error = new Error();
       expectToThrow(() =>
         pipe(
-          concat(pipe(1, fromValue()), pipe(error, returns, throws())),
+          1, 
+          fromValue(),
+          concatWith(pipe(error, returns, throws())),
           catchError(_ => {
             throw error;
           }),
@@ -175,17 +184,13 @@ export const tests = describe(
 
   test("combineLatest", () =>
     pipe(
-      combineLatest(
-        [
-          pipe(
-            generate((i: number) => i + 2, returns(3), { delay: 2 }),
-            takeFirst(3),
-          ),
-          pipe(
-            generate((i: number) => i + 2, returns(2), { delay: 3 }),
-            takeFirst(2),
-          ),
-        ],
+      generate((i: number) => i + 2, returns(3), { delay: 2 }),
+      takeFirst(3),
+      combineLatestWith(
+        pipe(
+          generate((i: number) => i + 2, returns(2), { delay: 3 }),
+          takeFirst(2),
+        ),
         (a, b) => [a, b],
       ),
       toArray(),
@@ -428,9 +433,10 @@ export const tests = describe(
     test("when one source throws", () =>
       expectToThrow(() =>
         pipe(
-          merge(
+          [1, 4, 7], 
+          fromArray({ delay: 2 }),
+          mergeWith(
             throws({ delay: 5 })(() => new Error()),
-            pipe([1, 4, 7], fromArray({ delay: 2 })),
           ),
           toValue(),
         ),
@@ -933,11 +939,10 @@ export const tests = describe(
       )),
     test("fast with slow", () =>
       pipe(
-        zip(
-          [
-            pipe([1, 2, 3], fromArray({ delay: 1 })),
-            pipe([1, 2, 3], fromArray({ delay: 5 })),
-          ],
+        [1, 2, 3],
+        fromArray({ delay: 1 }),
+        zipWith(
+          pipe([1, 2, 3], fromArray({ delay: 5 })),
           (x, y) => [x, y],
         ),
         toArray(),
@@ -953,13 +958,12 @@ export const tests = describe(
     test("when source throws", () =>
       expectToThrow(() =>
         pipe(
-          zip(
-            [
-              throws()(() => {
-                throw new Error();
-              }),
-              fromArray()([1, 2, 3]),
-            ],
+          () => {
+            throw new Error();
+          },
+          throws(),
+          zipWith(
+            fromArray()([1, 2, 3]),
             (_, b) => b,
           ),
           toArray(),

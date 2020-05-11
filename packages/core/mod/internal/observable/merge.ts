@@ -1,5 +1,5 @@
 import { isSome } from "../../option.ts";
-import { ObservableLike, SubscriberLike } from "./interfaces.ts";
+import { ObservableLike, SubscriberLike, ObservableOperator } from "./interfaces.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -57,3 +57,7 @@ export function merge<T>(
 ): ObservableLike<T> {
   return new MergeObservable(observables);
 }
+
+export const mergeWith = <T>(
+  snd: ObservableLike<T>,
+): ObservableOperator<T, T> => fst => merge(fst, snd);
