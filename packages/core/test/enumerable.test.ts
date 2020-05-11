@@ -24,7 +24,7 @@ import {
   generate,
   endWith,
   takeWhile,
-  zip,
+  zipWith,
   everySatisfy,
 } from "../src/enumerable";
 import {
@@ -234,7 +234,9 @@ export const tests = describe(
     )),
   test("zip", () =>
     pipe(
-      zip([fromArray([1, 2, 3]), fromArray([1, 2, 3, 4, 5])], (a, b) => a + b),
+      [1, 2, 3],
+      fromArray,
+      zipWith(fromArray([1, 2, 3, 4, 5]), (a, b) => a + b),
       toArray,
       expectArrayEquals([2, 4, 6]),
     )),

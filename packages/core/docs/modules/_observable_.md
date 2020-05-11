@@ -37,10 +37,12 @@
 * [buffer](_observable_.md#buffer)
 * [catchError](_observable_.md#const-catcherror)
 * [combineLatest](_observable_.md#combinelatest)
+* [combineLatestWith](_observable_.md#const-combinelatestwith)
 * [compute](_observable_.md#const-compute)
 * [concat](_observable_.md#concat)
 * [concatAll](_observable_.md#const-concatall)
 * [concatMap](_observable_.md#const-concatmap)
+* [concatWith](_observable_.md#const-concatwith)
 * [contains](_observable_.md#const-contains)
 * [createObservable](_observable_.md#const-createobservable)
 * [createSubject](_observable_.md#const-createsubject)
@@ -68,6 +70,7 @@
 * [merge](_observable_.md#merge)
 * [mergeAll](_observable_.md#const-mergeall)
 * [mergeMap](_observable_.md#const-mergemap)
+* [mergeWith](_observable_.md#const-mergewith)
 * [never](_observable_.md#const-never)
 * [noneSatisfy](_observable_.md#const-nonesatisfy)
 * [onNotify](_observable_.md#onnotify)
@@ -99,6 +102,7 @@
 * [using](_observable_.md#using)
 * [withLatestFrom](_observable_.md#const-withlatestfrom)
 * [zip](_observable_.md#zip)
+* [zipWith](_observable_.md#const-zipwith)
 * [zipWithLatestFrom](_observable_.md#const-zipwithlatestfrom)
 
 ## Type aliases
@@ -585,6 +589,37 @@ Name | Type |
 
 ___
 
+### `Const` combineLatestWith
+
+▸ **combineLatestWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **snd**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
+
+___
+
 ### `Const` compute
 
 ▸ **compute**<**T**>(`options?`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
@@ -683,6 +718,24 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | A |
+
+___
+
+### `Const` concatWith
+
+▸ **concatWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1428,6 +1481,24 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `src` | A |
+
+___
+
+### `Const` mergeWith
+
+▸ **mergeWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -2818,6 +2889,37 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+___
+
+### `Const` zipWith
+
+▸ **zipWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **snd**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 ___
 

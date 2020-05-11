@@ -1,6 +1,6 @@
 import { pipe } from "@reactive-js/core/lib/functions";
 import { isSome, Option, none } from "@reactive-js/core/lib/option";
-import { concat, map, parseWith } from "../parserCombinators";
+import { concatWith, map, parseWith } from "../parserCombinators";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {
@@ -63,7 +63,8 @@ const weightedTokenComparator = (
 const weightedTokenToToken = ([token]: [string, unknown]) => token;
 
 const parseWeightedToken = pipe(
-  concat(pToken, pParams),
+  pToken,
+  concatWith(pParams),
   httpList,
   map(values => {
     // Mutate to avoid allocations. Kinda evil.

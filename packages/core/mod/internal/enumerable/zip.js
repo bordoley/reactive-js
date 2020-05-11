@@ -43,3 +43,4 @@ class ZipEnumerable {
 export function zip(enumerables, selector) {
     return new ZipEnumerable(enumerables, selector);
 }
+export const zipWith = (snd, selector) => fst => zip([fst, snd], selector);

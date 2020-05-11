@@ -14,9 +14,9 @@ export {
   assertSubscriberNotifyInContinuation,
 } from "./internal/observable/subscriber";
 
-export { combineLatest } from "./internal/observable/combineLatest";
+export { combineLatest, combineLatestWith } from "./internal/observable/combineLatest";
 export { compute } from "./internal/observable/compute";
-export { concat } from "./internal/observable/concat";
+export { concat, concatWith } from "./internal/observable/concat";
 export { createObservable } from "./internal/observable/createObservable";
 export { createSubject } from "./internal/observable/createSubject";
 export { empty } from "./internal/observable/empty";
@@ -25,7 +25,7 @@ export { fromEnumerable } from "./internal/observable/fromEnumerable";
 export { fromIterable, fromIterator } from "./internal/observable/fromIterable";
 export { fromPromise } from "./internal/observable/fromPromise";
 export { generate } from "./internal/observable/generate";
-export { merge } from "./internal/observable/merge";
+export { merge, mergeWith } from "./internal/observable/merge";
 export { never } from "./internal/observable/never";
 export { fromValue } from "./internal/observable/fromValue";
 export { subscribe } from "./internal/observable/subscribe";
@@ -72,7 +72,7 @@ export { ThrottleMode, throttle } from "./internal/observable/throttle";
 export { throwIfEmpty } from "./internal/observable/throwIfEmpty";
 export { timeout, timeoutError } from "./internal/observable/timeout";
 export { withLatestFrom } from "./internal/observable/withLatestFrom";
-export { zip } from "./internal/observable/zip";
+export { zip, zipWith } from "./internal/observable/zip";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom";
 
 export { toArray } from "./internal/observable/toArray";

@@ -18,6 +18,7 @@
 
 * [compute](_enumerable_.md#const-compute)
 * [concat](_enumerable_.md#concat)
+* [concatWith](_enumerable_.md#const-concatwith)
 * [contains](_enumerable_.md#const-contains)
 * [distinctUntilChanged](_enumerable_.md#const-distinctuntilchanged)
 * [empty](_enumerable_.md#const-empty)
@@ -49,6 +50,7 @@
 * [toArray](_enumerable_.md#const-toarray)
 * [toIterable](_enumerable_.md#const-toiterable)
 * [zip](_enumerable_.md#zip)
+* [zipWith](_enumerable_.md#const-zipwith)
 
 ## Type aliases
 
@@ -107,6 +109,24 @@ Name | Type |
 `...tail` | Array‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›› |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
+### `Const` concatWith
+
+▸ **concatWith**<**T**>(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`snd` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
+
+**Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 ___
 
@@ -1229,3 +1249,34 @@ Name | Type |
 `i` | TI |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
+### `Const` zipWith
+
+▸ **zipWith**<**TA**, **TB**, **T**>(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `selector`: function): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **snd**: *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›*
+
+▪ **selector**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+**Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, T›*

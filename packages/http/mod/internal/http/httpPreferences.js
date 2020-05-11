@@ -1,6 +1,6 @@
 import { pipe } from "../../../../core/lib/functions.js";
 import { isSome, none } from "../../../../core/lib/option.js";
-import { concat, map, parseWith } from "../parserCombinators.js";
+import { concatWith, map, parseWith } from "../parserCombinators.js";
 import { pToken, pParams, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType.js";
@@ -21,7 +21,7 @@ const parseAccept = pipe(pMediaType, httpList, map(mediaTypes => {
 }), parseWith);
 const weightedTokenComparator = ([, a], [, b]) => weightedParamComparator(a, b);
 const weightedTokenToToken = ([token]) => token;
-const parseWeightedToken = pipe(concat(pToken, pParams), httpList, map(values => {
+const parseWeightedToken = pipe(pToken, concatWith(pParams), httpList, map(values => {
     values.sort(weightedTokenComparator);
     return values.map(weightedTokenToToken);
 }), parseWith);

@@ -6,6 +6,7 @@ import { using, subscribe, onNotify } from "../../observable";
 import { createStreamable, sink } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";
 import { createWritableFlowableSink } from "./createWritableFlowableSink";
+import { isSome } from "../../option";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
@@ -17,7 +18,11 @@ export const transform = (
 
         const transformSink = createWritableFlowableSink(
           // don't dispose the transform when the writable is disposed.
-          () => createDisposableValue<Transform>(transform.value, ignore),
+          () => createDisposableValue<Transform>(transform.value, ignore).add(e => {
+            if(isSome(e)) {
+              transform.dispose(e);
+            }
+          }),
         );
 
         const sinkSubscription = pipe(

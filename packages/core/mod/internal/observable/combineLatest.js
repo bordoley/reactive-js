@@ -50,3 +50,4 @@ export function combineLatest(observables, selector) {
     };
     return createScheduledObservable(factory, observables.every(obs => obs.isSynchronous));
 }
+export const combineLatestWith = (snd, selector) => fst => combineLatest([fst, snd], selector);

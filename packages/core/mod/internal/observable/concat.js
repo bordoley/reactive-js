@@ -43,3 +43,4 @@ class ConcatObservable {
 export function concat(...observables) {
     return new ConcatObservable(observables);
 }
+export const concatWith = (snd) => first => concat(first, snd);

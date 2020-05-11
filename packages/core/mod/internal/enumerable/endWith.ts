@@ -1,4 +1,4 @@
-import { concat } from "./concat.ts";
+import { concatWith } from "./concat.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableOperator } from "./interfaces.ts";
 
@@ -8,5 +8,5 @@ import { EnumerableOperator } from "./interfaces.ts";
  */
 export function endWith<T>(value: T, ...values: T[]): EnumerableOperator<T, T>;
 export function endWith<T>(...values: T[]): EnumerableOperator<T, T> {
-  return obs => concat(obs, fromArray(values));
+  return concatWith(fromArray(values));
 }

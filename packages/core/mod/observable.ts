@@ -14,9 +14,9 @@ export {
   assertSubscriberNotifyInContinuation,
 } from "./internal/observable/subscriber.ts";
 
-export { combineLatest } from "./internal/observable/combineLatest.ts";
+export { combineLatest, combineLatestWith } from "./internal/observable/combineLatest.ts";
 export { compute } from "./internal/observable/compute.ts";
-export { concat } from "./internal/observable/concat.ts";
+export { concat, concatWith } from "./internal/observable/concat.ts";
 export { createObservable } from "./internal/observable/createObservable.ts";
 export { createSubject } from "./internal/observable/createSubject.ts";
 export { empty } from "./internal/observable/empty.ts";
@@ -25,7 +25,7 @@ export { fromEnumerable } from "./internal/observable/fromEnumerable.ts";
 export { fromIterable, fromIterator } from "./internal/observable/fromIterable.ts";
 export { fromPromise } from "./internal/observable/fromPromise.ts";
 export { generate } from "./internal/observable/generate.ts";
-export { merge } from "./internal/observable/merge.ts";
+export { merge, mergeWith } from "./internal/observable/merge.ts";
 export { never } from "./internal/observable/never.ts";
 export { fromValue } from "./internal/observable/fromValue.ts";
 export { subscribe } from "./internal/observable/subscribe.ts";
@@ -72,7 +72,7 @@ export { ThrottleMode, throttle } from "./internal/observable/throttle.ts";
 export { throwIfEmpty } from "./internal/observable/throwIfEmpty.ts";
 export { timeout, timeoutError } from "./internal/observable/timeout.ts";
 export { withLatestFrom } from "./internal/observable/withLatestFrom.ts";
-export { zip } from "./internal/observable/zip.ts";
+export { zip, zipWith } from "./internal/observable/zip.ts";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.ts";
 
 export { toArray } from "./internal/observable/toArray.ts";
