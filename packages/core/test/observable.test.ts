@@ -10,6 +10,7 @@ import {
   identity,
   incrementBy,
   sum,
+  bind,
 } from "../src/functions";
 import {
   forEach as forEachEnumerable,
@@ -133,7 +134,7 @@ export const tests = describe(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws()(() => new Error()) }),
-          toArray(() => createVirtualTimeScheduler({ maxMicroTaskTicks: 1 })),
+          toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
         ),
       )),
   ),
@@ -248,7 +249,7 @@ export const tests = describe(
           dispatcher.dispatch(3);
           dispatcher.dispose();
         }),
-        toArray(() => createVirtualTimeScheduler({ maxMicroTaskTicks: 1 })),
+        toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
         expectArrayEquals([1, 2, 3]),
       )),
   ),
@@ -602,7 +603,7 @@ export const tests = describe(
         fromArray(),
         scanAsync<number, number>(
           (acc, x) => fromValue({ delay: 4 })(x + acc),
-          () => 0,
+          returns(0),
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),
@@ -614,7 +615,7 @@ export const tests = describe(
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
           (acc, x) => fromValue()(x + acc),
-          () => 0,
+          returns(0),
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),
@@ -626,7 +627,7 @@ export const tests = describe(
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
           (acc, x) => fromValue({ delay: 4 })(x + acc),
-          () => 0,
+          returns(0),
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),
@@ -638,7 +639,7 @@ export const tests = describe(
         fromArray(),
         scanAsync<number, number>(
           (acc, x) => fromValue()(x + acc),
-          () => 0,
+          returns(0),
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),

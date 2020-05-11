@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { createGzip, createGunzip } from "zlib";
-import { pipe } from "../src/functions";
+import { pipe, bind, returns } from "../src/functions";
 import {
   createReadableFlowable,
   createWritableFlowableSink,
@@ -42,8 +42,8 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableFlowableSink(() =>
-        createDisposableNodeStream(writable),
+      const dest = createWritableFlowableSink(bind(
+        createDisposableNodeStream, writable),
       );
 
       const src = pipe(
@@ -70,8 +70,8 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableFlowableSink(() =>
-        createDisposableNodeStream(writable),
+      const dest = createWritableFlowableSink(bind(
+        createDisposableNodeStream, writable),
       );
 
       const src = pipe(
@@ -99,7 +99,7 @@ export const tests = describe(
       const textDecoder = new TextDecoder();
       const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-        () => "",
+        returns(""),
       );
 
       await pipe(sink(src, dest), toPromise(scheduler));
@@ -119,7 +119,7 @@ export const tests = describe(
       const textDecoder = new TextDecoder();
       const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-        () => "",
+        returns(""),
       );
 
       await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
@@ -138,7 +138,7 @@ export const tests = describe(
     const textDecoder = new TextDecoder();
     const dest = createFlowableSinkAccumulator(
       (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-      () => "",
+      returns(""),
     );
 
     await pipe(sink(src, dest), toPromise(scheduler));

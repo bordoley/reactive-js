@@ -12,7 +12,7 @@ import {
   FlowEventType,
   FlowableLike,
 } from "@reactive-js/core/lib/flowable";
-import { pipe, returns } from "@reactive-js/core/lib/functions";
+import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
 import {
   createWritableFlowableSink,
   createDisposableNodeStream,
@@ -76,8 +76,8 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createReadableFlowable(() =>
-      createDisposableNodeStream(this.resp),
+    const stream = createReadableFlowable(bind(
+      createDisposableNodeStream, this.resp),
     )
       .stream(scheduler, replayCount)
       .add(this);
@@ -119,8 +119,8 @@ export const createHttpClient = (
               throw new Error();
             })();
 
-      const requestSink = createWritableFlowableSink(() =>
-        createDisposableNodeStream(req),
+      const requestSink = createWritableFlowableSink(bind(
+        createDisposableNodeStream, req),
       ).stream(scheduler);
 
       const requestBody = request.body.stream(scheduler).add(requestSink);

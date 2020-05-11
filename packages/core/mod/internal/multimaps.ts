@@ -1,5 +1,6 @@
 import { EnumerableLike, fromIterator, EnumeratorLike } from "../enumerable.ts";
 import { KeyedCollection } from "./collections.ts";
+import { bind } from "../functions.ts";
 
 function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
   for (const values of multimap.map.values()) {
@@ -33,9 +34,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   count = 0;
   readonly keys: EnumerableLike<K> = fromIterator(() => this.map.keys());
   readonly map: Map<K, Set<V>> = new Map();
-  readonly values: EnumerableLike<V> = fromIterator(() =>
-    iterateSetMultimapValues(this),
-  );
+  readonly values: EnumerableLike<V> = fromIterator(bind(iterateSetMultimapValues, this));
 
   add(key: K, value: V) {
     const map = this.map;
@@ -55,7 +54,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   }
 
   enumerate(): EnumeratorLike<[K, V]> {
-    return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
+    return fromIterator(bind(iterateKeyedQueueKeyValuePairs, this)).enumerate();
   }
 
   get(key: K): ReadonlySet<V> {

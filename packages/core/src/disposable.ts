@@ -1,4 +1,5 @@
 import { isSome, none, Option } from "./option";
+import { bind } from "./functions";
 
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -222,4 +223,4 @@ export const createDisposableValue = <T>(
   value: T,
   cleanup: (v: T) => void,
 ): DisposableValueLike<T> =>
-  new DisposableValueImpl(value).add(() => cleanup(value));
+  new DisposableValueImpl(value).add(bind(cleanup, value));

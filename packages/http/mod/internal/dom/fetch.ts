@@ -1,4 +1,4 @@
-import { pipe } from "../../../../core/lib/functions.ts";
+import { bind, pipe } from "../../../../core/lib/functions.ts";
 import {
   fromPromise,
   publish,
@@ -112,7 +112,8 @@ export const sendHttpRequestUsingFetch: HttpClient<
       using(
         scheduler =>
           pipe(
-            fromPromise(() => loadBodyContent(response)),
+            bind(loadBodyContent, response),
+            fromPromise,
             publish(scheduler, 1),
             body => new HttpResponseBodyImpl(body),
           ),

@@ -1,4 +1,4 @@
-import { pipe } from "../../core/src/functions";
+import { bind, pipe } from "../../core/src/functions";
 import { none } from "../../core/src/option";
 import {
   test,
@@ -37,10 +37,10 @@ export const tests = describe(
     }),
 
     test("parseMediaType with invalid params", () =>
-      expectToThrow(() => parseMediaTypeOrThrow("application/json; ="))),
+      expectToThrow(bind(parseMediaTypeOrThrow, "application/json; ="))),
 
     test("parseMediaType with empty params", () =>
-      expectToThrow(() => parseMediaTypeOrThrow("application/json; charset="))),
+      expectToThrow(bind(parseMediaTypeOrThrow, "application/json; charset="))),
 
     test("parseMediaRange", () => {
       const { type, subtype, params } = parseMediaTypeOrThrow(

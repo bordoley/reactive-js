@@ -2,7 +2,7 @@ import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
 import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
-import { pipe, returns } from "@reactive-js/core/lib/functions";
+import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
 import {
   createReadableFlowable,
   createWritableFlowableSink,
@@ -84,8 +84,9 @@ export const createHttpRequestListener = (
     const responseBody = createWritableFlowableSink(returns(response));
 
     return pipe(
-      () =>
-        parseHttpRequestFromHeaders({
+      bind(
+        parseHttpRequestFromHeaders,
+        {
           method: method as HttpMethod,
           path,
           headers: headers as HttpHeaders,
@@ -93,7 +94,8 @@ export const createHttpRequestListener = (
           httpVersionMinor,
           isTransportSecure,
           body: requestBody,
-        }),
+        },
+      ),
       compute(),
       await_(handler),
       onNotify(writeResponseMessage(response.value)),
