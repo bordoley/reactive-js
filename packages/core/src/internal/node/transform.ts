@@ -2,7 +2,7 @@ import { Transform } from "stream";
 import { DisposableValueLike, createDisposableValue } from "../../disposable";
 import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns } from "../../functions";
-import { using, subscribe, onNotify } from "../../observable";
+import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";
 import { createWritableFlowableSink } from "./createWritableFlowableSink";
@@ -36,7 +36,7 @@ export const transform = (
 
         const modeSubscription = pipe(
           modeObs,
-          onNotify(mode => transformReadableStream.dispatch(mode)),
+          onNotify(dispatchTo(transformReadableStream)),
           subscribe(scheduler),
         );
 

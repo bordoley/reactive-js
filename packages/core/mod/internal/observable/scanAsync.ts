@@ -1,5 +1,6 @@
 import { pipe } from "../../functions.ts";
 import { createSubject } from "./createSubject.ts";
+import { dispatchTo } from "./dispatcher.ts";
 import { ObservableLike, ObservableOperator } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
 import { switchAll } from "./switchAll.ts";
@@ -29,7 +30,7 @@ export const scanAsync = <T, TAcc>(
           (next, acc) => pipe(scanner(acc, next), takeFirst()),
         ),
         switchAll<TAcc>(),
-        onNotify(next => accFeedbackStream.dispatch(next)),
+        onNotify(dispatchTo(accFeedbackStream)),
         onSubscribe(() => {
           accFeedbackStream.dispatch(initialValue());
         }),

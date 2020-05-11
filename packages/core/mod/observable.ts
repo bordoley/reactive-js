@@ -78,3 +78,5 @@ export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.ts";
 export { toArray } from "./internal/observable/toArray.ts";
 export { toPromise } from "./internal/observable/toPromise.ts";
 export { toValue } from "./internal/observable/toValue.ts";
+
+export { dispatchTo } from "./internal/observable/dispatcher.ts";

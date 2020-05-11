@@ -28,6 +28,7 @@ import {
   createSubject,
   merge,
   SubjectLike,
+  dispatchTo,
 } from "@reactive-js/core/lib/observable";
 import { none, isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
@@ -128,12 +129,12 @@ export const createHttpClient = (
       const onContinue = () => {
         const reqSubscription = pipe(
           requestSink,
-          onNotify(next => requestBody.dispatch(next)),
+          onNotify(dispatchTo(requestBody)),
           subscribe(scheduler),
         );
         const dataSubscription = pipe(
           requestBody,
-          onNotify(next => requestSink.dispatch(next)),
+          onNotify(dispatchTo(requestSink)),
           subscribe(scheduler),
         ).add(reqSubscription);
         requestBody.add(dataSubscription);

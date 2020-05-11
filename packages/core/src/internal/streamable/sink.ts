@@ -1,5 +1,5 @@
 import { compose, pipe, Operator } from "../../functions";
-import { ObservableLike, onNotify, using, endWith } from "../../observable";
+import { ObservableLike, onNotify, using, endWith, dispatchTo } from "../../observable";
 import { none } from "../../option";
 import { ignoreElements } from "../observable/ignoreElements";
 import { StreamLike } from "../observable/interfaces";
@@ -21,13 +21,13 @@ export const sink = <TReq, T>(
 
     pipe(
       srcStream,
-      onNotify(next => destStream.dispatch(next)),
+      onNotify(dispatchTo(destStream)),
       subscribe(scheduler),
     ).add(destStream);
 
     pipe(
       destStream,
-      onNotify(next => srcStream.dispatch(next)),
+      onNotify(dispatchTo(srcStream)),
       subscribe(scheduler),
     ).add(srcStream);
 

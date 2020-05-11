@@ -1,6 +1,7 @@
 import { pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createObservable } from "./createObservable";
+import { dispatchTo } from "./dispatcher";
 import { ObservableOperator } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -17,7 +18,7 @@ export const subscribeOn = <T>(
     dispatcher.add(
       pipe(
         observable,
-        onNotify(next => dispatcher.dispatch(next)),
+        onNotify(dispatchTo(dispatcher)),
         subscribe(scheduler),
       ).add(dispatcher),
     );
