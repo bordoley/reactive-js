@@ -5,6 +5,7 @@ import {
   StreamLike,
   switchAll,
   onSubscribe,
+  dispatch,
 } from "./observable.ts";
 import { Option, isNone, isSome } from "./option.ts";
 import {
@@ -152,7 +153,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     }
 
     const [stream, observable] = cachedValue;
-    stream.dispatch(value);
+    dispatch(stream, value);
 
     return observable;
   }

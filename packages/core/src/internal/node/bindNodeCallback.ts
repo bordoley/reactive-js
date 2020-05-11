@@ -1,4 +1,4 @@
-import { createObservable, ObservableLike } from "../../observable";
+import { createObservable, ObservableLike, dispatch } from "../../observable";
 import { none } from "../../option";
 import { dispose } from "../../disposable";
 import { Factory, Selector4, Selector3, Selector2, Operator } from "../../functions";
@@ -265,9 +265,9 @@ export function bindNodeCallback<T>(
             const result = (selector as (...args: unknown[]) => T)(
               ...innerArgs,
             );
-            dispatcher.dispatch(result);
+            dispatch(dispatcher, result);
           } else {
-            dispatcher.dispatch(none);
+            dispatch(dispatcher, none);
           }
           dispose(dispatcher);
         }

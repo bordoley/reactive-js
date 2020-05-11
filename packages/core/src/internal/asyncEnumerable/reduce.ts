@@ -11,9 +11,11 @@ import {
   using,
   zipWithLatestFrom,
   takeFirst,
+  dispatch,
 } from "../../observable";
 import { ObservableOperator } from "../observable/interfaces";
 import { AsyncEnumerableLike } from "./interfaces";
+import { none } from "../../option";
 
 export const enum ReducerRequestType {
   Continue = 1,
@@ -60,15 +62,15 @@ const reduceImpl = <TSrc, TAcc>(
         onNotify(ev => {
           switch (ev.type) {
             case ReducerRequestType.Continue:
-              accFeedback.dispatch(ev.acc);
-              enumerator.dispatch();
+              dispatch(accFeedback, ev.acc);
+              dispatch(enumerator, none);
               break;
           }
         }),
         map(ev => ev.acc),
         onSubscribe(() => {
-          accFeedback.dispatch(initial());
-          enumerator.dispatch();
+          dispatch(accFeedback, initial());
+          dispatch(enumerator, none);
         }),
       ),
   );

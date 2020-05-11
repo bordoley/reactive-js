@@ -78,6 +78,7 @@ import {
   zipWith,
   zipWithLatestFrom,
   dispatchTo,
+  dispatch,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -245,9 +246,9 @@ export const tests = describe(
     test("when queuing multiple events", () =>
       pipe(
         createObservable(dispatcher => {
-          dispatcher.dispatch(1);
-          dispatcher.dispatch(2);
-          dispatcher.dispatch(3);
+          dispatch(dispatcher,1);
+          dispatch(dispatcher,2);
+          dispatch(dispatcher,3);
           dispose(dispatcher);
         }),
         toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
@@ -574,9 +575,9 @@ export const tests = describe(
     test("repeats the observable n times", () => {
       let retried = false;
       const src = createObservable(d => {
-        d.dispatch(1);
+        dispatch(d, 1);
         if (retried) {
-          d.dispatch(2);
+          dispatch(d, 2);
           dispose(d);
         } else {
           retried = true;

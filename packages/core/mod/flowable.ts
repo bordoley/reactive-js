@@ -28,6 +28,7 @@ import {
   concatMap,
   fromIterator,
   StreamLike,
+  dispatch,
 } from "./observable.ts";
 import { SchedulerLike, toPausableScheduler } from "./scheduler.ts";
 
@@ -234,8 +235,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 
         eventsSubscription =>
           createObservable(dispatcher => {
-            dispatcher.dispatch(FlowMode.Pause);
-            dispatcher.dispatch(FlowMode.Resume);
+            dispatch(dispatcher, FlowMode.Pause);
+            dispatch(dispatcher, FlowMode.Resume);
             eventsSubscription.add(dispatcher);
           }),
       );

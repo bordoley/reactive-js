@@ -9,7 +9,7 @@ import {
 } from "../src/asyncEnumerable";
 import { Exception } from "../src/disposable";
 import { pipe, increment, returns } from "../src/functions";
-import { fromValue, subscribe, onNotify, toValue } from "../src/observable";
+import { fromValue, subscribe, onNotify, toValue, dispatch } from "../src/observable";
 import { none, Option } from "../src/option";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
@@ -81,9 +81,9 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
 
     scheduler.run();
 
@@ -104,12 +104,12 @@ export const tests = describe(
       error = e;
     });
 
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
 
     scheduler.run();
 
@@ -130,9 +130,9 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    enumerator.dispatch();
-    enumerator.dispatch();
-    enumerator.dispatch();
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
+    dispatch(enumerator, none);
 
     scheduler.run();
 

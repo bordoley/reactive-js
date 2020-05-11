@@ -9,6 +9,7 @@ import {
   using,
   ObservableLike,
   dispatchTo,
+  dispatch,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
@@ -24,7 +25,7 @@ const createReadableEventsObservable = (
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatcher.dispatch(complete());
+      dispatch(dispatcher, complete());
       dispose(dispatcher);
     };
     readableValue.on("end", onEnd);

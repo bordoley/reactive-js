@@ -8,6 +8,7 @@ import {
   createSubject,
   publish,
   SubscriberLike,
+  dispatch,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "../../streamable";
@@ -46,7 +47,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   }
 
   dispatch(req: TReq) {
-    this.dispatcher.dispatch(req);
+    dispatch(this.dispatcher, req);
   }
 
   subscribe(subscriber: SubscriberLike<T>) {

@@ -1,6 +1,6 @@
 import { compose, pipe, returns, isReferenceEqualTo, } from "./functions.js";
 import { createObservable } from "./internal/observable/createObservable.js";
-import { endWith, map as mapObs, mapTo, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
+import { endWith, map as mapObs, mapTo, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, dispatch, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, map as mapStream, lift, } from "./streamable.js";
 export const next = (data) => ({
@@ -81,8 +81,8 @@ class FlowableSinkAccumulatorImpl {
         const op = (events) => using(scheduler => pipe(events, takeWhile(ev => ev.type == 1), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, returns(this.acc)), onNotify(acc => {
             this._acc = acc;
         }), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
-            dispatcher.dispatch(2);
-            dispatcher.dispatch(1);
+            dispatch(dispatcher, 2);
+            dispatch(dispatcher, 1);
             eventsSubscription.add(dispatcher);
         }));
         return createStreamable(op).stream(scheduler, replayCount);

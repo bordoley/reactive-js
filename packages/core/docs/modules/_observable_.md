@@ -46,6 +46,7 @@
 * [contains](_observable_.md#const-contains)
 * [createObservable](_observable_.md#const-createobservable)
 * [createSubject](_observable_.md#const-createsubject)
+* [dispatch](_observable_.md#const-dispatch)
 * [dispatchTo](_observable_.md#const-dispatchto)
 * [distinctUntilChanged](_observable_.md#const-distinctuntilchanged)
 * [empty](_observable_.md#const-empty)
@@ -677,6 +678,25 @@ Name | Type | Default |
 `replayCount` | number | 0 |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
+
+___
+
+### `Const` dispatch
+
+▸ **dispatch**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›, `v`: T): *void*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
+`v` | T |
+
+**Returns:** *void*
 
 ___
 

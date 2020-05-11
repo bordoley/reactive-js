@@ -13,6 +13,7 @@ import {
   subscribe,
   ObservableLike,
   using,
+  dispatch,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
@@ -26,17 +27,13 @@ const createWritableEventsObservable = (
     writable.add(dispatcher);
     const writableValue = writable.value;
 
-    const onDrain = () => {
-      dispatcher.dispatch(FlowMode.Resume);
-    };
+    const onDrain = bind(dispatch, dispatcher, FlowMode.Resume);
     writableValue.on("drain", onDrain);
 
     const onFinish = bind(dispose, dispatcher);
     writableValue.on("finish", onFinish);
 
-    const onPause = () => {
-      dispatcher.dispatch(FlowMode.Pause);
-    };
+    const onPause = bind(dispatch, dispatcher, FlowMode.Pause);
     writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
     dispatcher.add(_ => {
@@ -45,7 +42,7 @@ const createWritableEventsObservable = (
       writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
     });
 
-    dispatcher.dispatch(FlowMode.Resume);
+    dispatch(dispatcher, FlowMode.Resume);
   });
 
 const createWritableAndSetupEventSubscription = (

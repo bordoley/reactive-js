@@ -1,5 +1,5 @@
 import { bind, pipe } from "../../../../core/lib/functions.js";
-import { fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
+import { dispatch, fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
@@ -51,7 +51,7 @@ export const sendHttpRequestUsingFetch = request => {
                 responseHeaders[k] = v;
             });
             const response = parseHttpResponseFromHeaders(fetchResponse.status, responseHeaders, fetchResponse);
-            dispatcher.dispatch(response);
+            dispatch(dispatcher, response);
             dispose(dispatcher);
         }
         catch (cause) {

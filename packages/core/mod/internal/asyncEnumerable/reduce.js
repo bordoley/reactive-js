@@ -1,5 +1,6 @@
 import { compose, pipe } from "../../functions.js";
-import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, } from "../../observable.js";
+import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, dispatch, } from "../../observable.js";
+import { none } from "../../option.js";
 export const continue_ = (acc) => ({
     type: 1,
     acc,
@@ -15,13 +16,13 @@ const reduceImpl = (reducer, initial) => enumerable => using(scheduler => {
 }, (accFeedback, enumerator) => pipe(enumerator, reducer(accFeedback), onNotify(ev => {
     switch (ev.type) {
         case 1:
-            accFeedback.dispatch(ev.acc);
-            enumerator.dispatch();
+            dispatch(accFeedback, ev.acc);
+            dispatch(enumerator, none);
             break;
     }
 }), map(ev => ev.acc), onSubscribe(() => {
-    accFeedback.dispatch(initial());
-    enumerator.dispatch();
+    dispatch(accFeedback, initial());
+    dispatch(enumerator, none);
 })));
 export const reduce = (reducer, initial) => reduceImpl(accObs => zipWithLatestFrom(accObs, (next, acc) => reducer(acc, next)), initial);
 export const reduceAsync = (reducer, initial) => reduceImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(reducer(acc, next), takeFirst())), switchAll()), initial);
