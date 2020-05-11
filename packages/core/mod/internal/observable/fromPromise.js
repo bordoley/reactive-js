@@ -1,4 +1,5 @@
 import { createObservable } from "./createObservable.js";
+import { toErrorHandler } from "../../disposable.js";
 export const fromPromise = (factory) => {
     const onSubscribe = (dispatcher) => {
         factory().then(next => {
@@ -6,9 +7,7 @@ export const fromPromise = (factory) => {
                 dispatcher.dispatch(next);
                 dispatcher.dispose();
             }
-        }, cause => {
-            dispatcher.dispose({ cause });
-        });
+        }, toErrorHandler(dispatcher));
     };
     return createObservable(onSubscribe);
 };

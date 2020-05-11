@@ -51,6 +51,10 @@ export const disposeOnError = (disposable: DisposableLike) => (
   }
 };
 
+export const toErrorHandler = (disposable: DisposableLike) => (cause: unknown) => {
+  disposable.dispose({ cause });
+};
+
 const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {
     try {
