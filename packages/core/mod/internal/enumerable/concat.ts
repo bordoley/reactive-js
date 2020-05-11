@@ -20,5 +20,4 @@ export function concat<T>(
 
 export const concatWith = <T>(
   snd: EnumerableLike<T>,
-): EnumerableOperator<T, T> =>
-  first => concat(first, snd);
+): EnumerableOperator<T, T> => first => concat(first, snd);

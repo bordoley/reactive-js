@@ -143,5 +143,5 @@ export const tests = describe(
 
     await pipe(sink(src, dest), toPromise(scheduler));
     pipe(dest.acc, expectEquals("abcdefg"));
-  })
+  }),
 );

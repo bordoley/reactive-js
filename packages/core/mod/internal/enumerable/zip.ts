@@ -1,5 +1,9 @@
 import { none } from "../../option.ts";
-import { EnumerableLike, EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  EnumerableOperator,
+} from "./interfaces.ts";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
@@ -161,5 +165,5 @@ export function zip<T>(
 
 export const zipWith = <TA, TB, T>(
   snd: EnumerableLike<TB>,
-  selector: (a: TA, b: TB) => T
+  selector: (a: TA, b: TB) => T,
 ): EnumerableOperator<TA, T> => fst => zip([fst, snd], selector);

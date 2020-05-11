@@ -4,7 +4,11 @@ import { none, isSome, isNone } from "../../option.ts";
 import { SchedulerContinuationLike } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
-import { ObservableLike, SubscriberLike, ObservableOperator } from "./interfaces.ts";
+import {
+  ObservableLike,
+  SubscriberLike,
+  ObservableOperator,
+} from "./interfaces.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
@@ -316,5 +320,5 @@ export function zip<T>(
 
 export const zipWith = <TA, TB, T>(
   snd: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => T
+  selector: (a: TA, b: TB) => T,
 ): ObservableOperator<TA, T> => fst => zip([fst, snd], selector);

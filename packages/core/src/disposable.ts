@@ -43,11 +43,13 @@ export interface DisposableLike {
   dispose(error?: Exception): void;
 }
 
-export const disposeOnError = (disposable: DisposableLike) => (error?: Exception) =>{
+export const disposeOnError = (disposable: DisposableLike) => (
+  error?: Exception,
+) => {
   if (isSome(error)) {
     disposable.dispose(error);
   }
-}
+};
 
 const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {

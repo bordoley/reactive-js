@@ -154,10 +154,9 @@ export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   };
 }
 
-export const concatWith = <TA, TB>( 
-  other: Parser<TB>
-): Operator<Parser<TA>, Parser<[TA, TB]>> => parser => 
-  concat(parser, other);
+export const concatWith = <TA, TB>(
+  other: Parser<TB>,
+): Operator<Parser<TA>, Parser<[TA, TB]>> => parser => concat(parser, other);
 
 export const followedBy = <T>(
   other: Parser<unknown>,

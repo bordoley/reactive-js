@@ -14,7 +14,10 @@ export {
   assertSubscriberNotifyInContinuation,
 } from "./internal/observable/subscriber";
 
-export { combineLatest, combineLatestWith } from "./internal/observable/combineLatest";
+export {
+  combineLatest,
+  combineLatestWith,
+} from "./internal/observable/combineLatest";
 export { compute } from "./internal/observable/compute";
 export { concat, concatWith } from "./internal/observable/concat";
 export { createObservable } from "./internal/observable/createObservable";

@@ -1,10 +1,10 @@
 import { Operator, pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createSubject } from "./createSubject";
+import { dispatchTo } from "./dispatcher";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { dispatchTo } from "./dispatcher";
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.

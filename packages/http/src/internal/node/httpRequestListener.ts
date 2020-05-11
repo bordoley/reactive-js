@@ -81,9 +81,7 @@ export const createHttpRequestListener = (
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
 
     const requestBody = createReadableFlowable(returns(request));
-    const responseBody = createWritableFlowableSink(
-      returns(response),
-    );
+    const responseBody = createWritableFlowableSink(returns(response));
 
     return pipe(
       () =>

@@ -261,7 +261,6 @@ class PausableSchedulerImpl extends AbstractDisposable
     return this.priorityScheduler.now;
   }
 
-  
   pause() {
     const priorityScheduler = this.priorityScheduler;
     priorityScheduler.isPaused = true;
@@ -291,7 +290,9 @@ class PausableSchedulerImpl extends AbstractDisposable
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
 ): DisposableLike & PausableSchedulerLike => {
-  const scheduler = new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));
+  const scheduler = new PausableSchedulerImpl(
+    new PriorityScheduler(hostScheduler),
+  );
   scheduler.pause();
   return scheduler;
-}
+};
