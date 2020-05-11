@@ -18,16 +18,6 @@ export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
-export function apply<T>(f: () => T): Operator<[], T>;
-export function apply<TA, T>(f: (a: TA) => T): Operator<[TA], T>;
-export function apply<TA, TB, T>(f: (a: TA, b: TB) => T): Operator<[TA, TB], T>;
-export function apply<TA, TB, TC, T>(
-  f: (a: TA, b: TB, c: TC) => T,
-): Operator<[TA, TB, TC], T>;
-export function apply<T>(f: (...args: any[]) => T): Operator<any[], T> {
-  return args => f(...args);
-}
-
 export const identity = <T>(v: T): T => v;
 
 export const returns = <T>(v: T) => (..._args: unknown[]) => v;
@@ -40,12 +30,24 @@ export const ignore = returns<void>(none);
 
 export const increment = (x: number) => x + 1;
 
+export const incrementBy = (incr: number) => (x: number) => x + incr;
+
 export const decrement = (x: number) => x - 1;
+
+export const decrementBy = (decr: number) => (x: number) => x - decr;
 
 export const referenceEquals = <T>(a: T, b: T) => a === b;
 
 export const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a =>
   a === b;
+
+export const sum = (...args: number[]) => {
+  let acc = 0;
+  for (let i = 0; i < args.length; i++) {
+    acc += args[i];
+  }
+  return acc;
+}
 
 // FIXME: Would prefer not to have this here.
 export const arrayEquals = <T>(valuesAreEqual: (a: T, b: T) => boolean) => (

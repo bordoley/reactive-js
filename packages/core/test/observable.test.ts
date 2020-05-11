@@ -8,6 +8,8 @@ import {
   arrayEquals,
   referenceEquals,
   identity,
+  incrementBy,
+  sum,
 } from "../src/functions";
 import {
   forEach as forEachEnumerable,
@@ -185,11 +187,11 @@ export const tests = describe(
 
   test("combineLatest", () =>
     pipe(
-      generate((i: number) => i + 2, returns(3), { delay: 2 }),
+      generate(incrementBy(2), returns(3), { delay: 2 }),
       takeFirst(3),
       combineLatestWith(
         pipe(
-          generate((i: number) => i + 2, returns(2), { delay: 3 }),
+          generate(incrementBy(2), returns(2), { delay: 3 }),
           takeFirst(2),
         ),
         (a, b) => [a, b],
@@ -537,7 +539,7 @@ export const tests = describe(
     pipe(
       [1, 1, 1],
       fromArray(),
-      reduce((acc: number, next) => next + acc, returns(0)),
+      reduce(sum, returns(0)),
       toValue(),
       expectEquals(3),
     )),
@@ -587,7 +589,7 @@ export const tests = describe(
     pipe(
       [1, 1, 1],
       fromArray(),
-      scan((acc: number, next) => next + acc, returns(0)),
+      scan(sum, returns(0)),
       toArray(),
       expectArrayEquals([1, 2, 3]),
     )),
@@ -653,7 +655,7 @@ export const tests = describe(
 
     let result: readonly number[] = [];
     pipe(
-      zip([shared, shared], (a, b) => a + b),
+      zip([shared, shared], sum),
       buffer(),
       onNotify(x => {
         result = x;
@@ -875,7 +877,7 @@ export const tests = describe(
       pipe(
         [0],
         fromArray({ delay: 1 }),
-        withLatestFrom(empty<number>(), (a, b) => a + b),
+        withLatestFrom(empty<number>(), sum),
         toArray(),
         expectArrayEquals([]),
       )),
@@ -887,7 +889,7 @@ export const tests = describe(
           pipe(
             [0],
             fromArray({ delay: 1 }),
-            withLatestFrom(throws<number>()(returns(error)), (a, b) => a + b),
+            withLatestFrom(throws<number>()(returns(error)), sum),
             toArray(),
             expectArrayEquals([]),
           ),

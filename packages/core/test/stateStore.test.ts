@@ -4,7 +4,7 @@ import {
   expectArrayEquals,
   expectTrue,
 } from "../src/internal/testing";
-import { pipe } from "../src/functions";
+import { pipe, incrementBy } from "../src/functions";
 import { identity, lift } from "../src/streamable";
 import { toStateStore } from "../src/stateStore";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -20,16 +20,16 @@ export const tests = describe(
       toStateStore<number>(),
     ).stream(scheduler);
 
-    stream.dispatch(x => x + 1);
-    stream.dispatch(x => x + 2);
-    stream.dispatch(x => x + 3);
-    stream.dispatch(x => x + 4);
-    stream.dispatch(x => x + 5);
-    stream.dispatch(x => x + 6);
-    stream.dispatch(x => x + 7);
-    stream.dispatch(x => x + 8);
-    stream.dispatch(x => x + 9);
-    stream.dispatch(x => x + 10);
+    stream.dispatch(incrementBy(1));
+    stream.dispatch(incrementBy(2));
+    stream.dispatch(incrementBy(3));
+    stream.dispatch(incrementBy(4));
+    stream.dispatch(incrementBy(5));
+    stream.dispatch(incrementBy(6));
+    stream.dispatch(incrementBy(7));
+    stream.dispatch(incrementBy(8));
+    stream.dispatch(incrementBy(9));
+    stream.dispatch(incrementBy(10));
     stream.dispose();
 
     let result: number[] = [];

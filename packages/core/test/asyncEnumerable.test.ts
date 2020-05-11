@@ -62,7 +62,7 @@ export const tests = describe(
         [1, 2, 3, 4, 5, 6],
         fromIterable,
         reduceAsync(
-          (acc, next) => fromValue()(continue_(acc + next)),
+          (acc, next) => pipe(acc + next, continue_, fromValue()),
           returns<number>(0),
         ),
         toValue(),

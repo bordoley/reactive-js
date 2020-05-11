@@ -9,7 +9,7 @@ import {
   map,
   createFlowableSinkAccumulator,
 } from "../src/flowable";
-import { increment, pipe, returns } from "../src/functions";
+import { increment, pipe, returns, sum } from "../src/functions";
 import { onNotify, subscribe, generate, fromArray } from "../src/observable";
 import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
@@ -65,7 +65,7 @@ export const tests = describe(
     const src = pipe(str, fromValue, encodeUtf8, decodeWithCharset());
     const dest = createFlowableSinkAccumulator(
       (acc: string, next: string) => acc + next,
-      () => "",
+      returns(""),
     );
 
     const scheduler = createVirtualTimeScheduler();
@@ -164,8 +164,8 @@ export const tests = describe(
       map(_ => 2),
     );
     const dest = createFlowableSinkAccumulator(
-      (acc: number, next: number) => acc + next,
-      () => 0,
+      sum,
+      returns(0),
     );
 
     const scheduler = createVirtualTimeScheduler();

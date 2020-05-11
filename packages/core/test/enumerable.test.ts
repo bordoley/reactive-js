@@ -33,6 +33,7 @@ import {
   alwaysFalse,
   alwaysTrue,
   increment,
+  sum,
 } from "../src/functions";
 import {
   test,
@@ -122,7 +123,7 @@ export const tests = describe(
     pipe(
       [1, 2, 3],
       fromArray,
-      map(x => x + 1),
+      map(increment),
       toArray,
       expectArrayEquals([2, 3, 4]),
     )),
@@ -163,7 +164,7 @@ export const tests = describe(
     pipe(
       [1, 1, 1],
       fromArray,
-      scan((acc: number, next) => next + acc, returns(0)),
+      scan(sum, returns(0)),
       toArray,
       expectArrayEquals([1, 2, 3]),
     )),
@@ -181,7 +182,7 @@ export const tests = describe(
     )),
   test("takeFirst", () => {
     pipe(
-      generate<number>(acc => acc + 1, returns(0)),
+      generate<number>(increment, returns(0)),
       takeFirst(3),
       toArray,
       expectArrayEquals([1, 2, 3]),
@@ -200,7 +201,7 @@ export const tests = describe(
     "takeWhile",
     test("exclusive", () => {
       pipe(
-        generate<number>(acc => acc + 1, returns(0)),
+        generate<number>(increment, returns(0)),
         takeWhile(x => x < 4),
         toArray,
         expectArrayEquals([1, 2, 3]),
@@ -216,7 +217,7 @@ export const tests = describe(
     }),
     test("inclusive", () => {
       pipe(
-        generate<number>(acc => acc + 1, returns(0)),
+        generate<number>(increment, returns(0)),
         takeWhile(x => x < 4, { inclusive: true }),
         toArray,
         expectArrayEquals([1, 2, 3, 4]),
@@ -236,7 +237,7 @@ export const tests = describe(
     pipe(
       [1, 2, 3],
       fromArray,
-      zipWith(fromArray([1, 2, 3, 4, 5]), (a, b) => a + b),
+      zipWith(fromArray([1, 2, 3, 4, 5]), sum),
       toArray,
       expectArrayEquals([2, 4, 6]),
     )),

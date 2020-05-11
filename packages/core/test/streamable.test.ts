@@ -1,4 +1,4 @@
-import { pipe, returns } from "../src/functions";
+import { pipe, returns, incrementBy, sum } from "../src/functions";
 import {
   subscribe,
   onNotify as onNotifyObs,
@@ -34,7 +34,7 @@ export const tests = describe(
   test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const stream = createActionReducer<number, number>(
-      (acc, next) => acc + next,
+      sum,
       returns<number>(0),
     ).stream(scheduler);
 
@@ -110,7 +110,7 @@ export const tests = describe(
 
     const stream = pipe(
       identity<number>(),
-      map((x: number) => x + 100),
+      map(incrementBy(100)),
     ).stream(scheduler);
 
     pipe(stream.subscriberCount, expectEquals(0));
@@ -128,7 +128,7 @@ export const tests = describe(
 
     const stream = pipe(
       identity<number>(),
-      map((x: number) => x + 100),
+      map(incrementBy(100)),
     ).stream(scheduler);
 
     stream.dispatch(10);
@@ -157,7 +157,7 @@ export const tests = describe(
 
     const stream = pipe(
       identity<number>(),
-      mapReq<number, number, number>(x => x + 100),
+      mapReq<number, number, number>(incrementBy(100)),
       mapReq<number, string, number>(x => Number.parseInt(x)),
     ).stream(scheduler);
 
@@ -209,7 +209,7 @@ export const tests = describe(
     let result: number[] = [];
     const stream = pipe(
       identity<number>(),
-      scan((acc, next) => acc + next, returns<number>(0)),
+      scan(sum, returns<number>(0)),
       onNotify(x => {
         result.push(x);
       }),
