@@ -2,6 +2,7 @@ import { EnumeratorLike } from "../../../core/lib/enumerable.ts";
 import {
   Operator,
   compose,
+  isReferenceEqualTo,
   pipe,
   returns,
 } from "../../../core/lib/functions.ts";
@@ -358,7 +359,7 @@ export const manySatisfy = (
 
 export const char = (c: string): Parser<CharCode> => {
   const charCode = c.charCodeAt(0);
-  return satisfy(x => x === charCode);
+  return satisfy(isReferenceEqualTo(charCode));
 };
 
 export const pEof = (charStream: CharStreamLike): void =>
