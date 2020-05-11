@@ -4,8 +4,8 @@ import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
 import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
 import { pipe, returns } from "@reactive-js/core/lib/functions";
 import {
-  createFlowableFromReadable,
-  createFlowableSinkFromWritable,
+  createReadableFlowable,
+  createWritableFlowableSink,
   createDisposableNodeStream,
 } from "@reactive-js/core/lib/node";
 import {
@@ -80,10 +80,9 @@ export const createHttpRequestListener = (
     } = request.value;
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
 
-    const requestBody = createFlowableFromReadable(returns(request));
-    const responseBody = createFlowableSinkFromWritable(
+    const requestBody = createReadableFlowable(returns(request));
+    const responseBody = createWritableFlowableSink(
       returns(response),
-      true,
     );
 
     return pipe(

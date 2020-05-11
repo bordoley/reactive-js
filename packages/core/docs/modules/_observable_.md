@@ -1237,7 +1237,7 @@ ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+▸ **keepType**<**TA**, **TB**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹unknown, TB›*
 
 Returns an `ObservableLike` that only emits items from the
 source that satisfy the specified type predicate.
@@ -1246,7 +1246,7 @@ source that satisfy the specified type predicate.
 
 ▪ **TA**
 
-▪ **TB**
+▪ **TB**: *TA*
 
 **Parameters:**
 
@@ -1254,15 +1254,15 @@ source that satisfy the specified type predicate.
 
 The predicate function.
 
-▸ (`data`: unknown): *data is TB*
+▸ (`data`: TA): *data is TB*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`data` | unknown |
+`data` | TA |
 
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹unknown, TB›*
 
 ___
 

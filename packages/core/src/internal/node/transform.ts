@@ -4,8 +4,8 @@ import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns } from "../../functions";
 import { using, subscribe, onNotify } from "../../observable";
 import { createStreamable, sink } from "../../streamable";
-import { createFlowableFromReadable } from "./flowable";
-import { createFlowableSinkFromWritable } from "./flowableSink";
+import { createReadableFlowable } from "./createReadableFlowable";
+import { createWritableFlowableSink } from "./createWritableFlowableSink";
 
 export const transform = (
   factory: () => DisposableValueLike<Transform>,
@@ -15,10 +15,9 @@ export const transform = (
       scheduler => {
         const transform = factory();
 
-        const transformSink = createFlowableSinkFromWritable(
+        const transformSink = createWritableFlowableSink(
           // don't dispose the transform when the writable is disposed.
           () => createDisposableValue<Transform>(transform.value, ignore),
-          false,
         );
 
         const sinkSubscription = pipe(
@@ -26,7 +25,7 @@ export const transform = (
           subscribe(scheduler),
         );
 
-        const transformReadableStream = createFlowableFromReadable(
+        const transformReadableStream = createReadableFlowable(
           returns(transform),
         ).stream(scheduler);
 

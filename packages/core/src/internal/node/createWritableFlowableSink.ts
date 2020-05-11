@@ -20,28 +20,32 @@ import { createStreamable } from "../../streamable";
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
 const createWritableEventsObservable = (
-  writable: Writable,
-  autoDispose: boolean,
+  writable: DisposableValueLike<Writable>,
 ) =>
   createObservable(dispatcher => {
+    writable.add(dispatcher);
+    const writableValue = writable.value;
+
     const onDrain = () => {
       dispatcher.dispatch(FlowMode.Resume);
     };
-    writable.on("drain", onDrain);
+    writableValue.on("drain", onDrain);
 
     const onFinish = () => {
-      // By default we don't dispose the writable
-      // because it could be a tranform.
-      if (autoDispose) {
-        dispatcher.dispose();
-      }
+      dispatcher.dispose();
     };
-    writable.on("finish", onFinish);
+    writableValue.on("finish", onFinish);
 
     const onPause = () => {
       dispatcher.dispatch(FlowMode.Pause);
     };
-    writable.on(NODE_JS_PAUSE_EVENT, onPause);
+    writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
+
+    dispatcher.add(_ => {
+      writableValue.removeListener("drain", onDrain);
+      writableValue.removeListener("finish", onFinish);
+      writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
+    });
 
     dispatcher.dispatch(FlowMode.Resume);
   });
@@ -51,18 +55,19 @@ const createWritableAndSetupEventSubscription = (
   events: ObservableLike<FlowEvent<Uint8Array>>,
 ) => (scheduler: SchedulerLike) => {
   const writable = factory();
+  const writableValue = writable.value;
   const streamEventsSubscription = pipe(
     events,
     onNotify(ev => {
       switch (ev.type) {
         case FlowEventType.Next:
-          if (!writable.value.write(ev.data)) {
+          if (!writableValue.write(ev.data)) {
             // Hack in a custom event here for pause request
-            writable.value.emit(NODE_JS_PAUSE_EVENT);
+            writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
           break;
         case FlowEventType.Complete:
-          writable.value.end();
+          writableValue.end();
           break;
       }
     }),
@@ -72,12 +77,12 @@ const createWritableAndSetupEventSubscription = (
   return writable.add(streamEventsSubscription);
 };
 
-export const createFlowableSinkFromWritable = (
+export const createWritableFlowableSink = (
   factory: () => DisposableValueLike<Writable>,
-  autoDispose = true,
 ): FlowableSinkLike<Uint8Array> =>
   createStreamable(events =>
-    using(createWritableAndSetupEventSubscription(factory, events), disp =>
-      createWritableEventsObservable(disp.value, autoDispose),
+    using(
+      createWritableAndSetupEventSubscription(factory, events),
+      createWritableEventsObservable,
     ),
   );
