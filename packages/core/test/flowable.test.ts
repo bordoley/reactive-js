@@ -6,6 +6,7 @@ import {
   FlowMode,
   FlowEventType,
   fromObservable,
+  map,
 } from "../src/flowable";
 import { increment, pipe, returns } from "../src/functions";
 import {
@@ -153,6 +154,27 @@ export const tests = describe(
     pipe(f, expectToHaveBeenCalledTimes(2));
     pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
     pipe(f.calls[0][0].data, expectEquals(1));
+    pipe(f.calls[1][0].type, expectEquals(FlowEventType.Complete));
+    expectTrue(subscription.isDisposed);
+    expectTrue(stream.isDisposed);
+  }),
+  test("map", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const stream = pipe(
+      fromValue(1),
+      map(_ => 2),
+    ).stream(scheduler);
+
+    stream.dispatch(FlowMode.Resume);
+    
+    const f = mockFn();
+    const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
+
+    scheduler.run();
+
+    pipe(f, expectToHaveBeenCalledTimes(2));
+    pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
+    pipe(f.calls[0][0].data, expectEquals(2));
     pipe(f.calls[1][0].type, expectEquals(FlowEventType.Complete));
     expectTrue(subscription.isDisposed);
     expectTrue(stream.isDisposed);

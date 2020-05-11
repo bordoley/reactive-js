@@ -1,20 +1,17 @@
 import { pipe, compose } from "../../functions.ts";
 import {
   ObservableOperator,
-  ObservableLike,
   StreamLike,
   onNotify,
   empty as emptyObs,
-  ignoreElements,
   map,
-  merge,
   using,
 } from "../../observable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { StreamableLike } from "../../streamable.ts";
 import { createStream, StreamableOperator } from "./createStream.ts";
-import { onSubscribe } from "../observable/onSubscribe.ts";
 import { isNone } from "../../option.ts";
+import { subscribe } from "../observable/subscribe.ts";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -47,25 +44,21 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
   const src =
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
-  const createStreamObservable = (requests: ObservableLike<TReqB>) => (
-    stream: StreamLike<TReqA, TA>,
-  ) =>
-    pipe(
-      merge(
-        stream,
-        pipe(
+  const op: ObservableOperator<TReqB, TB> = requests =>
+    using(
+      scheduler => {
+        const stream = src.stream(scheduler);
+        const requestSubscription =  pipe(
           requests,
           map((compose as any)(...reqOps)),
           onNotify((req: TReqA) => stream.dispatch(req)),
-          ignoreElements<unknown, TA>(),
-          onSubscribe(() => stream),
-        ),
-      ),
-      ...obsOps,
-    ) as ObservableLike<TB>;
+          subscribe(scheduler),
+        ).add(stream);
 
-  const op = (requests: ObservableLike<TReqB>): ObservableLike<TB> =>
-    using(scheduler => src.stream(scheduler), createStreamObservable(requests));
+        return stream.add(requestSubscription);
+      },
+      (compose as any)(...obsOps),
+    );
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 

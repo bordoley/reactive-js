@@ -1,12 +1,7 @@
-import { pipe } from "./functions.ts";
+import { pipe, identity } from "./functions.ts";
 import {
-  ObservableLike,
   onNotify,
-  ignoreElements,
-  merge,
-  onSubscribe,
   using,
-  StreamLike,
   zipWithLatestFrom,
 } from "./observable.ts";
 import {
@@ -15,6 +10,7 @@ import {
   StreamableOperator,
   createStreamable,
 } from "./streamable.ts";
+import { subscribe } from "./internal/observable/subscribe.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
@@ -52,26 +48,20 @@ export const toStateStore = <T>(): StreamableOperator<
   T,
   StateUpdater<T>,
   T
-> => {
-  const createObservable = (updates: ObservableLike<StateUpdater<T>>) => (
-    stream: StreamLike<T, T>,
-  ) =>
-    merge(
-      pipe(
-        updates,
-        zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-        onNotify(next => stream.dispatch(next)),
-        ignoreElements(),
-        onSubscribe(() => stream),
-      ),
-      stream,
-    );
+> => streamable =>
+  createStreamable(updates =>
+    using(
+      scheduler => {
+        const stream = streamable.stream(scheduler);
+        const updatesSubscription = pipe(
+          updates,
+          zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
+          onNotify(next => stream.dispatch(next)),
+          subscribe(scheduler)
+        ).add(stream);
 
-  return streamable =>
-    createStreamable(updates =>
-      using(
-        scheduler => streamable.stream(scheduler),
-        createObservable(updates),
-      ),
-    );
-};
+        return stream.add(updatesSubscription);
+      },
+      identity,
+    ),
+  );
