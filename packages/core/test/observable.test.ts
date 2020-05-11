@@ -148,7 +148,7 @@ export const tests = describe(
     test("source throws, error caught and ignored", () => {
       const error = new Error();
       pipe(
-        1, 
+        1,
         fromValue(),
         concatWith(pipe(error, returns, throws())),
         catchError(_ => {}),
@@ -159,7 +159,7 @@ export const tests = describe(
     test("source throws, continues with second observable", () => {
       const error = new Error();
       pipe(
-        1, 
+        1,
         fromValue(),
         concatWith(pipe(error, returns, throws())),
         catchError(_ => fromValue()(2)),
@@ -171,7 +171,7 @@ export const tests = describe(
       const error = new Error();
       expectToThrow(() =>
         pipe(
-          1, 
+          1,
           fromValue(),
           concatWith(pipe(error, returns, throws())),
           catchError(_ => {
@@ -434,11 +434,9 @@ export const tests = describe(
     test("when one source throws", () =>
       expectToThrow(() =>
         pipe(
-          [1, 4, 7], 
+          [1, 4, 7],
           fromArray({ delay: 2 }),
-          mergeWith(
-            throws({ delay: 5 })(() => new Error()),
-          ),
+          mergeWith(throws({ delay: 5 })(() => new Error())),
           toValue(),
         ),
       )),
@@ -942,10 +940,7 @@ export const tests = describe(
       pipe(
         [1, 2, 3],
         fromArray({ delay: 1 }),
-        zipWith(
-          pipe([1, 2, 3], fromArray({ delay: 5 })),
-          (x, y) => [x, y],
-        ),
+        zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]),
         toArray(),
         expectArrayEquals(
           [
@@ -963,10 +958,7 @@ export const tests = describe(
             throw new Error();
           },
           throws(),
-          zipWith(
-            fromArray()([1, 2, 3]),
-            (_, b) => b,
-          ),
+          zipWith(fromArray()([1, 2, 3]), (_, b) => b),
           toArray(),
         ),
       )),

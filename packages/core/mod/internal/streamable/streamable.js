@@ -1,8 +1,8 @@
 import { pipe, compose } from "../../functions.js";
 import { onNotify, empty as emptyObs, map, using, dispatchTo, } from "../../observable.js";
-import { createStream } from "./createStream.js";
 import { isNone } from "../../option.js";
 import { subscribe } from "../observable/subscribe.js";
+import { createStream } from "./createStream.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;

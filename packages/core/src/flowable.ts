@@ -1,5 +1,11 @@
-import { Operator, compose, pipe, returns, isReferenceEqualTo } from "./functions";
-import { SchedulerLike } from "./scheduler";
+import {
+  Operator,
+  compose,
+  pipe,
+  returns,
+  isReferenceEqualTo,
+} from "./functions";
+import { createObservable } from "./internal/observable/createObservable";
 import {
   ObservableLike,
   endWith,
@@ -21,14 +27,14 @@ import {
   fromIterator,
   StreamLike,
 } from "./observable";
-import { toPausableScheduler } from "./scheduler";
+import { SchedulerLike, toPausableScheduler } from "./scheduler";
+
 import {
   StreamableLike,
   createStreamable,
   map as mapStream,
   lift,
 } from "./streamable";
-import { createObservable } from "./internal/observable/createObservable";
 
 export const enum FlowMode {
   Resume = 1,
@@ -209,26 +215,27 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     scheduler: SchedulerLike,
     replayCount?: number,
   ): StreamLike<FlowEvent<T>, FlowMode> {
-    const op = (events: ObservableLike<FlowEvent<T>>) => 
-      using(scheduler => pipe(
-          events,
-          takeWhile(ev => ev.type == FlowEventType.Next),
-          keepType(isNext),
-          mapObs(ev => ev.data),
-          reduce(this.reducer, () => this.acc),
-          onNotify(acc => {
-            this._acc = acc;
-          }),
-          subscribe(scheduler),
-        ),
+    const op = (events: ObservableLike<FlowEvent<T>>) =>
+      using(
+        scheduler =>
+          pipe(
+            events,
+            takeWhile(ev => ev.type == FlowEventType.Next),
+            keepType(isNext),
+            mapObs(ev => ev.data),
+            reduce(this.reducer, () => this.acc),
+            onNotify(acc => {
+              this._acc = acc;
+            }),
+            subscribe(scheduler),
+          ),
 
-        eventsSubscription => createObservable(
-          dispatcher => {
+        eventsSubscription =>
+          createObservable(dispatcher => {
             dispatcher.dispatch(FlowMode.Pause);
             dispatcher.dispatch(FlowMode.Resume);
             eventsSubscription.add(dispatcher);
-          }
-        )
+          }),
       );
     return createStreamable(op).stream(scheduler, replayCount);
   }

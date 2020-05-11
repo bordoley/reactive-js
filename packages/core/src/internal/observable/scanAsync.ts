@@ -3,11 +3,11 @@ import { createSubject } from "./createSubject";
 import { dispatchTo } from "./dispatcher";
 import { ObservableLike, ObservableOperator } from "./interfaces";
 import { onNotify } from "./onNotify";
+import { onSubscribe } from "./onSubscribe";
 import { switchAll } from "./switchAll";
 import { takeFirst } from "./takeFirst";
-import { onSubscribe } from "./onSubscribe";
-import { zipWithLatestFrom } from "./zipWithLatestFrom";
 import { using } from "./using";
+import { zipWithLatestFrom } from "./zipWithLatestFrom";
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function

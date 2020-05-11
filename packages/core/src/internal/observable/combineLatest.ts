@@ -1,5 +1,9 @@
 import { isSome } from "../../option";
-import { ObservableLike, SubscriberLike, ObservableOperator } from "./interfaces";
+import {
+  ObservableLike,
+  SubscriberLike,
+  ObservableOperator,
+} from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import {
   AbstractDelegatingSubscriber,
@@ -178,5 +182,5 @@ export function combineLatest<T>(
 
 export const combineLatestWith = <TA, TB, T>(
   snd: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => T
+  selector: (a: TA, b: TB) => T,
 ): ObservableOperator<TA, T> => fst => combineLatest([fst, snd], selector);

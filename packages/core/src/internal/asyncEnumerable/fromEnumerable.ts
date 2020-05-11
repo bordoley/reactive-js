@@ -1,4 +1,5 @@
-import { AsyncEnumerableLike } from "./interfaces";
+import { EnumeratorLike, EnumerableLike } from "../../enumerable";
+import { compose } from "../../functions";
 import {
   withLatestFrom,
   onNotify,
@@ -6,10 +7,9 @@ import {
   map,
   compute,
 } from "../../observable";
-import { compose } from "../../functions";
-import { EnumeratorLike } from "../../enumerable";
 import { createStreamable } from "../../streamable";
-import { EnumerableLike } from "../../enumerable";
+
+import { AsyncEnumerableLike } from "./interfaces";
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

@@ -1,4 +1,5 @@
 import { pipe, identity } from "./functions";
+import { subscribe } from "./internal/observable/subscribe";
 import { onNotify, using, zipWithLatestFrom, dispatchTo } from "./observable";
 import {
   StreamableLike,
@@ -6,7 +7,6 @@ import {
   StreamableOperator,
   createStreamable,
 } from "./streamable";
-import { subscribe } from "./internal/observable/subscribe";
 
 export type StateUpdater<T> = {
   (oldState: T): T;

@@ -1,4 +1,4 @@
-import { AsyncEnumerableLike } from "./interfaces.ts";
+import { compose, Operator, pipe } from "../../functions.ts";
 import {
   createSubject,
   map,
@@ -12,8 +12,8 @@ import {
   zipWithLatestFrom,
   takeFirst,
 } from "../../observable.ts";
-import { compose, Operator, pipe } from "../../functions.ts";
 import { ObservableOperator } from "../observable/interfaces.ts";
+import { AsyncEnumerableLike } from "./interfaces.ts";
 
 export const enum ReducerRequestType {
   Continue = 1,

@@ -1,17 +1,17 @@
-import {
-  AbstractSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+import { pipe } from "../../functions.ts";
+import { isSome, Option } from "../../option.ts";
 import {
   SubscriberLike,
   ObservableLike,
   ObservableOperator,
 } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
+import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { isSome, Option } from "../../option.ts";
-import { lift } from "./lift.ts";
+import {
+  AbstractSubscriber,
+  assertSubscriberNotifyInContinuation,
+} from "./subscriber.ts";
 
 const notifyDelegate = <TA, TB, TC>(
   subscriber: ZipWithLatestFromSubscriber<TA, TB, TC>,

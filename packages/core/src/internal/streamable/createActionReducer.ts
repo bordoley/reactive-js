@@ -4,10 +4,10 @@ import {
   fromValue,
   scan,
   distinctUntilChanged,
+  mergeWith,
 } from "../../observable";
 import { StreamableLike } from "./interfaces";
 import { createStreamable } from "./streamable";
-import { mergeWith } from "../../observable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -33,7 +33,7 @@ export const createActionReducer = <TAction, T>(
     // of the fact that merge notifies in the order of
     // the observables merged.
     return pipe(
-      src, 
+      src,
       scan(reducer, returns(acc)),
       mergeWith(fromValue()(acc)),
       distinctUntilChanged(equals),

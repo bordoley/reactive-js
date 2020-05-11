@@ -1,5 +1,9 @@
 import { isSome } from "../../option";
-import { ObservableLike, SubscriberLike, ObservableOperator } from "./interfaces";
+import {
+  ObservableLike,
+  SubscriberLike,
+  ObservableOperator,
+} from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {

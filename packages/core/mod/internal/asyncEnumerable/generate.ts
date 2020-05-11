@@ -1,6 +1,6 @@
-import { AsyncEnumerableLike } from "./interfaces.ts";
 import { scan } from "../../observable.ts";
 import { createStreamable } from "../../streamable.ts";
+import { AsyncEnumerableLike } from "./interfaces.ts";
 
 const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
   generator(acc);

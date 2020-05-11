@@ -8,11 +8,11 @@ import {
   using,
   dispatchTo,
 } from "../../observable";
+import { isNone } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "../../streamable";
-import { createStream, StreamableOperator } from "./createStream";
-import { isNone } from "../../option";
 import { subscribe } from "../observable/subscribe";
+import { createStream, StreamableOperator } from "./createStream";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

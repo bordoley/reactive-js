@@ -1,5 +1,5 @@
-import { scan, map, takeFirst } from "../../observable.js";
 import { compose, returns } from "../../functions.js";
+import { scan, map, takeFirst } from "../../observable.js";
 import { createStreamable } from "../../streamable.js";
 const fromArrayScanner = (acc, _) => acc + 1;
 export const fromArray = (values) => {
