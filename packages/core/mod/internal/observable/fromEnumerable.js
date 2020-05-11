@@ -1,3 +1,4 @@
+import { enumerate } from "../../enumerable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 import { dispose } from "../../disposable.js";
@@ -30,7 +31,7 @@ export const fromEnumerator = ({ delay } = { delay: 0 }) => enumerator => {
 };
 export const fromEnumerable = ({ delay } = { delay: 0 }) => enumerable => {
     const factory = (subscriber) => {
-        const enumerator = enumerable.enumerate();
+        const enumerator = enumerate(enumerable);
         return new FromEnumeratorProducer(subscriber, enumerator, delay);
     };
     return delay > 0

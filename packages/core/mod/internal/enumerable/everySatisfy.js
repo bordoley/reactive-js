@@ -1,5 +1,6 @@
+import { enumerate } from "./enumerate.js";
 export const everySatisfy = (predicate) => enumerable => {
-    const enumerator = enumerable.enumerate();
+    const enumerator = enumerate(enumerable);
     while (enumerator.move()) {
         if (!predicate(enumerator.current)) {
             return false;

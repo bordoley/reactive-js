@@ -1,10 +1,10 @@
 import { none } from "../../option.js";
+import { enumerate } from "./enumerate.js";
 const moveAll = (enumerators) => {
     for (const enumerator of enumerators) {
         enumerator.move();
     }
 };
-const enumerate = (enumerable) => enumerable.enumerate();
 const current = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const allHaveCurrent = (enumerators) => enumerators.every(hasCurrent);

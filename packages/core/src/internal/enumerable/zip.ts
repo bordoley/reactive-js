@@ -5,14 +5,13 @@ import {
   EnumerableOperator,
 } from "./interfaces";
 import { Selector2, Selector3, Selector4, Selector5, Selector6, Selector7, Selector8, Selector9 } from "../../functions";
+import { enumerate } from "./enumerate";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
     enumerator.move();
   }
 };
-
-const enumerate = <T>(enumerable: EnumerableLike<T>) => enumerable.enumerate();
 
 const current = <T>(enumerator: EnumeratorLike<T>) => enumerator.current;
 

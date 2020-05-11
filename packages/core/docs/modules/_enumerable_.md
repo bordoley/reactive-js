@@ -23,6 +23,7 @@
 * [distinctUntilChanged](_enumerable_.md#const-distinctuntilchanged)
 * [empty](_enumerable_.md#const-empty)
 * [endWith](_enumerable_.md#endwith)
+* [enumerate](_enumerable_.md#const-enumerate)
 * [everySatisfy](_enumerable_.md#const-everysatisfy)
 * [first](_enumerable_.md#const-first)
 * [flatMap](_enumerable_.md#const-flatmap)
@@ -213,6 +214,24 @@ Name | Type |
 `...values` | T[] |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+
+___
+
+### `Const` enumerate
+
+▸ **enumerate**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
+
+**Returns:** *[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›*
 
 ___
 

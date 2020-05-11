@@ -1,7 +1,7 @@
-import { EnumerableLike, fromIterator, EnumeratorLike } from "../enumerable";
+import { EnumerableLike, fromIterator, EnumeratorLike, enumerate } from "../enumerable";
 import { Option } from "../option";
 import { KeyedCollection } from "./collections";
-import { bind } from "../functions";
+import { bind, pipe } from "../functions";
 
 export interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {
   clear(): void;
@@ -44,7 +44,11 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   }
 
   enumerate(): EnumeratorLike<[K, V]> {
-    return fromIterator(bind(iterateKeyedQueueKeyValuePairs, this)).enumerate();
+    return pipe(
+      bind(iterateKeyedQueueKeyValuePairs, this),
+      fromIterator,
+      enumerate,
+    );
   }
 
   peek(key: K): Option<V> {

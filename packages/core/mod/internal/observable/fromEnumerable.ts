@@ -1,4 +1,4 @@
-import { EnumeratorLike, EnumerableLike } from "../../enumerable.ts";
+import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable.ts";
 import { Operator } from "../../functions.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
@@ -66,7 +66,7 @@ export const fromEnumerable = <T>(
   { delay } = { delay: 0 },
 ): Operator<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
   const factory = (subscriber: SubscriberLike<T>) => {
-    const enumerator = enumerable.enumerate();
+    const enumerator = enumerate(enumerable);
     return new FromEnumeratorProducer(subscriber, enumerator, delay);
   };
 

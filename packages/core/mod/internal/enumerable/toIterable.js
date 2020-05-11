@@ -1,9 +1,10 @@
+import { enumerate } from "./enumerate.js";
 class EnumerableIterable {
     constructor(enumerable) {
         this.enumerable = enumerable;
     }
     *[Symbol.iterator]() {
-        const enumerator = this.enumerable.enumerate();
+        const enumerator = enumerate(this.enumerable);
         while (enumerator.move()) {
             yield enumerator.current;
         }

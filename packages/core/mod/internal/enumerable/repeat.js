@@ -1,11 +1,12 @@
 import { alwaysTrue } from "../../functions.js";
 import { isNone } from "../../option.js";
+import { enumerate } from "./enumerate.js";
 class RepeatEnumerator {
     constructor(src, shouldRepeat) {
         this.src = src;
         this.shouldRepeat = shouldRepeat;
         this.count = 0;
-        this.enumerator = src.enumerate();
+        this.enumerator = enumerate(src);
     }
     get current() {
         return this.enumerator.current;
@@ -17,7 +18,7 @@ class RepeatEnumerator {
         if (!this.enumerator.move()) {
             this.count++;
             if (this.shouldRepeat(this.count)) {
-                this.enumerator = this.src.enumerate();
+                this.enumerator = enumerate(this.src);
                 this.enumerator.move();
             }
         }

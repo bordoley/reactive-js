@@ -1,5 +1,6 @@
 import { referenceEquals, Operator, Equality, Predicate } from "../../functions.ts";
 import { EnumerableLike } from "./interfaces.ts";
+import { enumerate } from "./enumerate.ts";
 
 /**
  * Returns `true` value if the any item satisfies the predicate, otherwise `false`.
@@ -9,7 +10,7 @@ import { EnumerableLike } from "./interfaces.ts";
 export const someSatisfy = <T>(
   predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
-  const enumerator = enumerable.enumerate();
+  const enumerator = enumerate(enumerable);
   while (enumerator.move()) {
     if (predicate(enumerator.current)) {
       return true;
