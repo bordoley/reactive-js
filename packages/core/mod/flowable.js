@@ -78,7 +78,7 @@ class FlowableSinkAccumulatorImpl {
         return this._acc;
     }
     stream(scheduler, replayCount) {
-        const op = (events) => using(scheduler => pipe(events, takeWhile(ev => ev.type == 1), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, () => this.acc), onNotify(acc => {
+        const op = (events) => using(scheduler => pipe(events, takeWhile(ev => ev.type == 1), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, returns(this.acc)), onNotify(acc => {
             this._acc = acc;
         }), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
             dispatcher.dispatch(2);

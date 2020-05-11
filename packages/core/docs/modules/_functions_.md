@@ -17,6 +17,7 @@
 ### Functions
 
 * [arrayEquals](_functions_.md#const-arrayequals)
+* [bind](_functions_.md#bind)
 * [call](_functions_.md#call)
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
@@ -90,6 +91,313 @@ Name | Type |
 `b` | T |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+###  bind
+
+▸ **bind**<**T**>(`call`: function): *function*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (): *T*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **T**>(`call`: function, `a`: TA): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+▪ **a**: *TA*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **T**>(`call`: function, `a`: TA, `b`: TB): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **TC**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+▪ **c**: *TC*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+▪ **c**: *TC*
+
+▪ **d**: *TD*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+▪ **c**: *TC*
+
+▪ **d**: *TD*
+
+▪ **e**: *TE*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+▪ **c**: *TC*
+
+▪ **d**: *TD*
+
+▪ **e**: *TE*
+
+▪ **f**: *TF*
+
+**Returns:** *function*
+
+▸ (): *T*
+
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *function*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **TD**
+
+▪ **TE**
+
+▪ **TF**
+
+▪ **TG**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **call**: *function*
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+
+▪ **a**: *TA*
+
+▪ **b**: *TB*
+
+▪ **c**: *TC*
+
+▪ **d**: *TD*
+
+▪ **e**: *TE*
+
+▪ **f**: *TF*
+
+▪ **g**: *TG*
+
+**Returns:** *function*
+
+▸ (): *T*
 
 ___
 

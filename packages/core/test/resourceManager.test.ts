@@ -1,5 +1,5 @@
 import { createDisposableValue, disposed } from "../src/disposable";
-import { pipe } from "../src/functions";
+import { pipe, ignore } from "../src/functions";
 import { onNotify, subscribe, fromArray } from "../src/observable";
 import { createResourceManager } from "../src/resourceManager";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -11,7 +11,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const rm = createResourceManager(
-      (k: string) => createDisposableValue(k, () => {}),
+      (k: string) => createDisposableValue(k, ignore),
       scheduler,
       { maxIdleTime: 10, maxResourcesPerKey: 1, maxTotalResources: 2 },
     );
@@ -95,8 +95,8 @@ export const tests = describe(
           db2.dispose();
           db3.dispose();
         },
-        () => {},
-        () => {},
+        ignore,
+        ignore,
         () => {
           console.log(rm);
           pipe(
@@ -110,16 +110,16 @@ export const tests = describe(
           dc.dispose();
           dd.dispose();
         },
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
-        () => {},
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
+        ignore,
         () => {
           rm.dispose();
         },

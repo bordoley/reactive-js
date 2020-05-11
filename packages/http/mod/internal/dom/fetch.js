@@ -1,4 +1,4 @@
-import { pipe } from "../../../../core/lib/functions.js";
+import { bind, pipe } from "../../../../core/lib/functions.js";
 import { fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
@@ -57,7 +57,7 @@ export const sendHttpRequestUsingFetch = request => {
             dispatcher.dispose({ cause });
         }
     });
-    const mapResponseBody = switchMap((response) => using(scheduler => pipe(fromPromise(() => loadBodyContent(response)), publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({
+    const mapResponseBody = switchMap((response) => using(scheduler => pipe(bind(loadBodyContent, response), fromPromise, publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({
         ...response,
         body,
     })));

@@ -1,4 +1,5 @@
 import { fromIterator } from "../enumerable.js";
+import { bind } from "../functions.js";
 function* iterateKeyedQueueValues(queue) {
     for (const values of queue.map.values()) {
         for (const value of values) {
@@ -21,13 +22,13 @@ class KeyedQueue {
         this.count = 0;
         this.keys = fromIterator(() => this.map.keys());
         this.map = new Map();
-        this.values = fromIterator(() => iterateKeyedQueueValues(this));
+        this.values = fromIterator(bind(iterateKeyedQueueValues, this));
     }
     clear() {
         this.map.clear();
     }
     enumerate() {
-        return fromIterator(() => iterateKeyedQueueKeyValuePairs(this)).enumerate();
+        return fromIterator(bind(iterateKeyedQueueKeyValuePairs, this)).enumerate();
     }
     peek(key) {
         var _a;

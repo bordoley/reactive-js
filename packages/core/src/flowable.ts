@@ -223,7 +223,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
             takeWhile(ev => ev.type == FlowEventType.Next),
             keepType(isNext),
             mapObs(ev => ev.data),
-            reduce(this.reducer, () => this.acc),
+            reduce(this.reducer, returns(this.acc)),
             onNotify(acc => {
               this._acc = acc;
             }),

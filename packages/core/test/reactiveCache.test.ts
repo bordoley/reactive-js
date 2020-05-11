@@ -1,5 +1,5 @@
 import { disposed } from "../src/disposable";
-import { pipe } from "../src/functions";
+import { pipe, returns } from "../src/functions";
 import {
   fromArray,
   subscribe,
@@ -101,7 +101,7 @@ export const tests = describe(
       fromArray({ delay: 1 }),
       forEach(
         x => x(),
-        () => scheduler,
+        returns(scheduler),
       ),
     );
   }),
@@ -135,7 +135,7 @@ export const tests = describe(
       fromArray(),
       forEach(
         x => x(),
-        () => scheduler,
+        returns(scheduler),
       ),
     );
   }),
@@ -148,7 +148,7 @@ export const tests = describe(
     pipe(
       [
         () => {
-          let obs = getOrSet(cache, "a", fromValue()("a"));
+          let obs = getOrSet<string>(cache, "a", fromValue()("a"));
           obs = getOrSet(cache, "a", fromValue()("b"));
 
           pipe(
@@ -166,7 +166,7 @@ export const tests = describe(
       fromArray({ delay: 1 }),
       forEach(
         x => x(),
-        () => scheduler,
+        returns(scheduler),
       ),
     );
   }),

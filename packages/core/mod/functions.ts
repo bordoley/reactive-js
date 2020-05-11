@@ -18,6 +18,18 @@ export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
+export function bind<T>(call: () => T): () => T; 
+export function bind<TA, T>(call: (a: TA) => T, a: TA): () => T; 
+export function bind<TA, TB, T>(call: (a: TA, b: TB) => T, a: TA, b: TB): () => T; 
+export function bind<TA, TB, TC, T>(call: (a: TA, b: TB, c: TC) => T, a: TA, b: TB, c: TC): () => T; 
+export function bind<TA, TB, TC, TD, T>(call: (a: TA, b: TB, c: TC, d: TD) => T, a: TA, b: TB, c: TC, d: TD): () => T; 
+export function bind<TA, TB, TC, TD, TE, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE) => T, a: TA, b: TB, c: TC, d: TD, e: TE): () => T; 
+export function bind<TA, TB, TC, TD, TE, TF, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): () => T; 
+export function bind<TA, TB, TC, TD, TE, TF, TG, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG): () => T; 
+export function bind<T>(call: (...args: any[]) => T, ...args: any[]): () => T {
+  return () => call(...args);
+}
+
 export const identity = <T>(v: T): T => v;
 
 export const returns = <T>(v: T) => (..._args: unknown[]) => v;

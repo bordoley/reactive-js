@@ -1,4 +1,5 @@
 import { isSome, none } from "./option.js";
+import { bind } from "./functions.js";
 export const disposeOnError = (disposable) => (error) => {
     if (isSome(error)) {
         disposable.dispose(error);
@@ -103,4 +104,4 @@ class DisposableValueImpl extends AbstractDisposable {
         this.value = value;
     }
 }
-export const createDisposableValue = (value, cleanup) => new DisposableValueImpl(value).add(() => cleanup(value));
+export const createDisposableValue = (value, cleanup) => new DisposableValueImpl(value).add(bind(cleanup, value));
