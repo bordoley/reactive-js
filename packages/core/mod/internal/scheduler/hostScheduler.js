@@ -13,8 +13,12 @@ const now = supportsPerformanceNow
         }
         : () => Date.now();
 const scheduleImmediateWithSetImmediate = (cb) => {
-    const immediate = setImmediate(cb);
-    return createDisposable(bind(clearImmediate, immediate));
+    const timeout = setImmediate(() => {
+        cb();
+        dispose(disposable);
+    });
+    const disposable = createDisposable(bind(clearImmediate, timeout));
+    return disposable;
 };
 const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     const disposable = createDisposable();
@@ -28,11 +32,11 @@ const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     return disposable;
 };
 const scheduleDelayed = (cb, delay) => {
-    const disposable = createDisposable(() => clearTimeout(timeout));
     const timeout = setTimeout(() => {
         cb();
         dispose(disposable);
     }, delay);
+    const disposable = createDisposable(bind(clearTimeout, timeout));
     return disposable;
 };
 const scheduleImmediateWithSetTimeout = (cb) => scheduleDelayed(cb, 0);
