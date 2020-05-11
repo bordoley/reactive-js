@@ -2,7 +2,10 @@ import { compose, pipe, returns } from "./functions.js";
 import { endWith, map as mapObs, mapTo, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, map as mapStream, lift, } from "./streamable.js";
-export const next = (data) => ({ type: 1, data });
+export const next = (data) => ({
+    type: 1,
+    data,
+});
 const _complete = { type: 2 };
 export const complete = () => _complete;
 const _empty = createStreamable(compose(keep(mode => mode === 1), takeWhile(mode => mode !== 1, { inclusive: true }), mapTo(complete())));
@@ -14,9 +17,7 @@ export const fromValue = (data) => createStreamable(compose(keep(mode => mode ==
             yield complete();
     }
 })));
-export const map = (mapper) => mapStream((ev) => ev.type === 1
-    ? pipe(ev.data, mapper, next)
-    : ev);
+export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
 export const fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler);

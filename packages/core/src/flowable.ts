@@ -40,7 +40,10 @@ export type FlowEvent<T> =
   | { readonly type: FlowEventType.Next; readonly data: T }
   | { readonly type: FlowEventType.Complete };
 
-export const next = <T>(data: T): FlowEvent<T> => ({ type: FlowEventType.Next, data });
+export const next = <T>(data: T): FlowEvent<T> => ({
+  type: FlowEventType.Next,
+  data,
+});
 const _complete: FlowEvent<any> = { type: FlowEventType.Complete };
 export const complete = <T>(): FlowEvent<T> => _complete;
 
@@ -83,9 +86,7 @@ export const map = <TA, TB>(
   mapper: (v: TA) => TB,
 ): Operator<FlowableLike<TA>, FlowableLike<TB>> =>
   mapStream((ev: FlowEvent<TA>) =>
-    ev.type === FlowEventType.Next
-      ? pipe(ev.data, mapper, next)
-      : ev,
+    ev.type === FlowEventType.Next ? pipe(ev.data, mapper, next) : ev,
   );
 
 export const fromObservable = <T>(

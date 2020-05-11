@@ -14,13 +14,14 @@
 
 ### Type aliases
 
-* [ContinueRequest](_asyncenumerable_.md#continuerequest)
-* [DoneRequest](_asyncenumerable_.md#donerequest)
 * [ReducerRequest](_asyncenumerable_.md#reducerrequest)
 
 ### Functions
 
+* [continue_](_asyncenumerable_.md#const-continue_)
+* [done](_asyncenumerable_.md#const-done)
 * [fromArray](_asyncenumerable_.md#const-fromarray)
+* [fromEnumerable](_asyncenumerable_.md#const-fromenumerable)
 * [fromIterable](_asyncenumerable_.md#const-fromiterable)
 * [generate](_asyncenumerable_.md#const-generate)
 * [reduce](_asyncenumerable_.md#const-reduce)
@@ -28,35 +29,47 @@
 
 ## Type aliases
 
-###  ContinueRequest
-
-Ƭ **ContinueRequest**: *object*
-
-#### Type declaration:
-
-* **acc**: *TAcc*
-
-* **type**: *[Continue](../enums/_asyncenumerable_.reducerrequesttype.md#continue)*
-
-___
-
-###  DoneRequest
-
-Ƭ **DoneRequest**: *object*
-
-#### Type declaration:
-
-* **acc**: *TAcc*
-
-* **type**: *[Done](../enums/_asyncenumerable_.reducerrequesttype.md#done)*
-
-___
-
 ###  ReducerRequest
 
-Ƭ **ReducerRequest**: *[ContinueRequest](_asyncenumerable_.md#continuerequest)‹TAcc› | [DoneRequest](_asyncenumerable_.md#donerequest)‹TAcc›*
+Ƭ **ReducerRequest**: *object | object*
 
 ## Functions
+
+### `Const` continue_
+
+▸ **continue_**<**TAcc**>(`acc`: TAcc): *[ReducerRequest](_asyncenumerable_.md#reducerrequest)‹TAcc›*
+
+**Type parameters:**
+
+▪ **TAcc**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+
+**Returns:** *[ReducerRequest](_asyncenumerable_.md#reducerrequest)‹TAcc›*
+
+___
+
+### `Const` done
+
+▸ **done**<**TAcc**>(`acc`: TAcc): *[ReducerRequest](_asyncenumerable_.md#reducerrequest)‹TAcc›*
+
+**Type parameters:**
+
+▪ **TAcc**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+
+**Returns:** *[ReducerRequest](_asyncenumerable_.md#reducerrequest)‹TAcc›*
+
+___
 
 ### `Const` fromArray
 
@@ -73,6 +86,26 @@ Returns an `AsyncEnumerableLike` from the provided array.
 Name | Type | Description |
 ------ | ------ | ------ |
 `values` | keyof T[] | The array.  |
+
+**Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+
+___
+
+### `Const` fromEnumerable
+
+▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
 
 **Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 

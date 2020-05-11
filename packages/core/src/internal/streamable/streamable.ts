@@ -45,20 +45,17 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
   const op: ObservableOperator<TReqB, TB> = requests =>
-    using(
-      scheduler => {
-        const stream = src.stream(scheduler);
-        const requestSubscription =  pipe(
-          requests,
-          map((compose as any)(...reqOps)),
-          onNotify((req: TReqA) => stream.dispatch(req)),
-          subscribe(scheduler),
-        ).add(stream);
+    using(scheduler => {
+      const stream = src.stream(scheduler);
+      const requestSubscription = pipe(
+        requests,
+        map((compose as any)(...reqOps)),
+        onNotify((req: TReqA) => stream.dispatch(req)),
+        subscribe(scheduler),
+      ).add(stream);
 
-        return stream.add(requestSubscription);
-      },
-      (compose as any)(...obsOps),
-    );
+      return stream.add(requestSubscription);
+    }, (compose as any)(...obsOps));
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 

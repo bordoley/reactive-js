@@ -1,5 +1,5 @@
 import { pipe, identity } from "./functions.js";
-import { onNotify, using, zipWithLatestFrom, } from "./observable.js";
+import { onNotify, using, zipWithLatestFrom } from "./observable.js";
 import { createActionReducer, createStreamable, } from "./streamable.js";
 import { subscribe } from "./internal/observable/subscribe.js";
 const stateStoreReducer = (state, action) => action(state);

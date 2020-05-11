@@ -1,9 +1,5 @@
 import { pipe, identity } from "./functions.ts";
-import {
-  onNotify,
-  using,
-  zipWithLatestFrom,
-} from "./observable.ts";
+import { onNotify, using, zipWithLatestFrom } from "./observable.ts";
 import {
   StreamableLike,
   createActionReducer,
@@ -50,18 +46,15 @@ export const toStateStore = <T>(): StreamableOperator<
   T
 > => streamable =>
   createStreamable(updates =>
-    using(
-      scheduler => {
-        const stream = streamable.stream(scheduler);
-        const updatesSubscription = pipe(
-          updates,
-          zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          onNotify(next => stream.dispatch(next)),
-          subscribe(scheduler)
-        ).add(stream);
+    using(scheduler => {
+      const stream = streamable.stream(scheduler);
+      const updatesSubscription = pipe(
+        updates,
+        zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
+        onNotify(next => stream.dispatch(next)),
+        subscribe(scheduler),
+      ).add(stream);
 
-        return stream.add(updatesSubscription);
-      },
-      identity,
-    ),
+      return stream.add(updatesSubscription);
+    }, identity),
   );
