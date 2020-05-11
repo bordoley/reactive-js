@@ -157,7 +157,7 @@ class PriorityScheduler extends AbstractSerialDisposable
   );
   dueTime = 0;
   inContinuation = false;
-  isPaused = true;
+  isPaused = false;
   readonly queue: QueueLike<ScheduledTask> = createPriorityQueue(comparator);
   taskIDCounter = 0;
 
@@ -171,21 +171,6 @@ class PriorityScheduler extends AbstractSerialDisposable
 
   get now(): number {
     return this.host.now;
-  }
-
-  pause() {
-    this.isPaused = true;
-    this.inner = disposed;
-  }
-
-  resume() {
-    const head = peek(this);
-
-    this.isPaused = false;
-
-    if (this.inner.isDisposed && isSome(head)) {
-      scheduleContinuation(this, head);
-    }
   }
 
   schedule(
@@ -276,12 +261,22 @@ class PausableSchedulerImpl extends AbstractDisposable
     return this.priorityScheduler.now;
   }
 
+  
   pause() {
-    this.priorityScheduler.pause();
+    const priorityScheduler = this.priorityScheduler;
+    priorityScheduler.isPaused = true;
+    priorityScheduler.inner = disposed;
   }
 
   resume() {
-    this.priorityScheduler.resume();
+    const priorityScheduler = this.priorityScheduler;
+    const head = peek(priorityScheduler);
+
+    priorityScheduler.isPaused = false;
+
+    if (priorityScheduler.inner.isDisposed && isSome(head)) {
+      scheduleContinuation(priorityScheduler, head);
+    }
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
@@ -295,5 +290,8 @@ class PausableSchedulerImpl extends AbstractDisposable
 
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
-): DisposableLike & PausableSchedulerLike =>
-  new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));
+): DisposableLike & PausableSchedulerLike => {
+  const scheduler = new PausableSchedulerImpl(new PriorityScheduler(hostScheduler));
+  scheduler.pause();
+  return scheduler;
+}
