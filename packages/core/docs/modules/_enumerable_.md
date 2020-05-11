@@ -491,7 +491,7 @@ source that satisfy the specified type predicate.
 
 ▪ **TA**
 
-▪ **TB**
+▪ **TB**: *TA*
 
 **Parameters:**
 
@@ -499,13 +499,13 @@ source that satisfy the specified type predicate.
 
 The predicate function.
 
-▸ (`data`: unknown): *data is TB*
+▸ (`data`: TA): *data is TB*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`data` | unknown |
+`data` | TA |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 

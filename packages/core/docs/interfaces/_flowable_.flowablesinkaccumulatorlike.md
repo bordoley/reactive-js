@@ -1,24 +1,34 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableSinkLike](_flowable_.flowablesinklike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableSinkAccumulatorLike](_flowable_.flowablesinkaccumulatorlike.md)
 
-# Interface: FlowableSinkLike <**T**>
+# Interface: FlowableSinkAccumulatorLike <**T, TAcc**>
 
 ## Type parameters
 
 ▪ **T**
 
+▪ **TAcc**
+
 ## Hierarchy
 
-* [StreamableLike](_streamable_.streamablelike.md)‹[FlowEvent](../modules/_flowable_.md#flowevent)‹T›, [FlowMode](../enums/_flowable_.flowmode.md)›
+  ↳ [FlowableSinkLike](_flowable_.flowablesinklike.md)‹T›
 
-  ↳ **FlowableSinkLike**
-
-  ↳ [FlowableSinkAccumulatorLike](_flowable_.flowablesinkaccumulatorlike.md)
+  ↳ **FlowableSinkAccumulatorLike**
 
 ## Index
 
+### Properties
+
+* [acc](_flowable_.flowablesinkaccumulatorlike.md#acc)
+
 ### Methods
 
-* [stream](_flowable_.flowablesinklike.md#stream)
+* [stream](_flowable_.flowablesinkaccumulatorlike.md#stream)
+
+## Properties
+
+###  acc
+
+• **acc**: *TAcc*
 
 ## Methods
 

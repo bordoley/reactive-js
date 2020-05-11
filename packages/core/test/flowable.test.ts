@@ -7,15 +7,10 @@ import {
   FlowEventType,
   fromObservable,
   map,
+  createFlowableSinkAccumulator,
 } from "../src/flowable";
 import { increment, pipe, returns } from "../src/functions";
-import {
-  onNotify,
-  scan,
-  subscribe,
-  generate,
-  fromArray,
-} from "../src/observable";
+import { onNotify, subscribe, generate, fromArray } from "../src/observable";
 import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
   test,
@@ -25,31 +20,28 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../src/internal/testing";
+import { sink } from "../src/streamable";
 
 export const tests = describe(
   "flowables",
   test("decodeWithCharset", () => {
-    const scheduler = createVirtualTimeScheduler();
-
-    const stream = pipe(
+    const src = pipe(
       [Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])],
       fromArray(),
       fromObservable,
       decodeWithCharset(),
-    ).stream(scheduler);
+    );
+    const dest = createFlowableSinkAccumulator(
+      (acc: string, next: string) => acc + next,
+      () => "",
+    );
 
-    stream.dispatch(FlowMode.Resume);
-
-    const f = mockFn();
-    const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
-
+    const scheduler = createVirtualTimeScheduler();
+    const subscription = pipe(sink(src, dest), subscribe(scheduler));
     scheduler.run();
 
-    pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
-    pipe(f.calls[0][0].data, expectEquals(String.fromCodePoint(8364)));
+    pipe(dest.acc, expectEquals(String.fromCodePoint(8364)));
     expectTrue(subscription.isDisposed);
-    expectTrue(stream.isDisposed);
   }),
   test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -60,7 +52,6 @@ export const tests = describe(
 
     const f = mockFn();
     const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
-
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
@@ -70,29 +61,18 @@ export const tests = describe(
   }),
   test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
+
+    const src = pipe(str, fromValue, encodeUtf8, decodeWithCharset());
+    const dest = createFlowableSinkAccumulator(
+      (acc: string, next: string) => acc + next,
+      () => "",
+    );
+
     const scheduler = createVirtualTimeScheduler();
-
-    const stream = pipe(str, fromValue, encodeUtf8, decodeWithCharset()).stream(
-      scheduler,
-    );
-
-    let result = "";
-    const subscription = pipe(
-      stream,
-      scan(
-        (acc, ev) => (ev.type === FlowEventType.Next ? acc + ev.data : acc),
-        () => "",
-      ),
-      onNotify(x => {
-        result = x;
-      }),
-      subscribe(scheduler),
-    );
-
-    stream.dispatch(FlowMode.Resume);
+    const subscription = pipe(sink(src, dest), subscribe(scheduler));
     scheduler.run();
 
-    pipe(result, expectEquals(str));
+    pipe(dest.acc, expectEquals(str));
     expectTrue(subscription.isDisposed);
   }),
   test("fromObservable", () => {
@@ -118,7 +98,6 @@ export const tests = describe(
       scheduler,
       schedule(
         _ => {
-          debugger;
           stream.dispatch(FlowMode.Resume);
         },
         { delay: 4 },
@@ -180,24 +159,20 @@ export const tests = describe(
     expectTrue(stream.isDisposed);
   }),
   test("map", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const stream = pipe(
+    const src = pipe(
       fromValue(1),
       map(_ => 2),
-    ).stream(scheduler);
+    );
+    const dest = createFlowableSinkAccumulator(
+      (acc: number, next: number) => acc + next,
+      () => 0,
+    );
 
-    stream.dispatch(FlowMode.Resume);
-
-    const f = mockFn();
-    const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
-
+    const scheduler = createVirtualTimeScheduler();
+    const subscription = pipe(sink(src, dest), subscribe(scheduler));
     scheduler.run();
 
-    pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
-    pipe(f.calls[0][0].data, expectEquals(2));
-    pipe(f.calls[1][0].type, expectEquals(FlowEventType.Complete));
+    pipe(dest.acc, expectEquals(2));
     expectTrue(subscription.isDisposed);
-    expectTrue(stream.isDisposed);
   }),
 );

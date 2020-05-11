@@ -13,9 +13,9 @@ import {
 } from "@reactive-js/core/lib/flowable";
 import { pipe, returns } from "@reactive-js/core/lib/functions";
 import {
-  createFlowableSinkFromWritable,
+  createWritableFlowableSink,
   createDisposableNodeStream,
-  createFlowableFromReadable,
+  createReadableFlowable,
 } from "@reactive-js/core/lib/node";
 import {
   subscribe,
@@ -76,7 +76,7 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createFlowableFromReadable(() =>
+    const stream = createReadableFlowable(() =>
       createDisposableNodeStream(this.resp),
     )
       .stream(scheduler, replayCount)
@@ -119,7 +119,7 @@ export const createHttpClient = (
               throw new Error();
             })();
 
-      const requestSink = createFlowableSinkFromWritable(() =>
+      const requestSink = createWritableFlowableSink(() =>
         createDisposableNodeStream(req),
       ).stream(scheduler);
 

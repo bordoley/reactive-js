@@ -12,6 +12,7 @@
 ### Interfaces
 
 * [FlowableLike](../interfaces/_flowable_.flowablelike.md)
+* [FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)
 * [FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)
 
 ### Type aliases
@@ -26,6 +27,7 @@
 ### Functions
 
 * [complete](_flowable_.md#const-complete)
+* [createFlowableSinkAccumulator](_flowable_.md#const-createflowablesinkaccumulator)
 * [decodeWithCharset](_flowable_.md#const-decodewithcharset)
 * [empty](_flowable_.md#const-empty)
 * [fromObservable](_flowable_.md#const-fromobservable)
@@ -77,6 +79,37 @@ ___
 ▪ **T**
 
 **Returns:** *[FlowEvent](_flowable_.md#flowevent)‹T›*
+
+___
+
+### `Const` createFlowableSinkAccumulator
+
+▸ **createFlowableSinkAccumulator**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)‹T, TAcc›*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+▪ **reducer**: *function*
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+▪ **initialValue**: *function*
+
+▸ (): *TAcc*
+
+**Returns:** *[FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)‹T, TAcc›*
 
 ___
 

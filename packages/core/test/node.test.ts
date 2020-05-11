@@ -1,14 +1,13 @@
 import { Readable, Writable } from "stream";
-import { StringDecoder } from "string_decoder";
 import { createGzip, createGunzip } from "zlib";
 import { pipe } from "../src/functions";
 import {
-  createFlowableFromReadable,
-  createFlowableSinkFromWritable,
+  createReadableFlowable,
+  createWritableFlowableSink,
   transform,
   createDisposableNodeStream,
 } from "../src/node";
-import { toPromise } from "../src/observable";
+import { fromArray, toPromise } from "../src/observable";
 import { createHostScheduler } from "../src/scheduler";
 import { sink } from "../src/streamable";
 import {
@@ -17,131 +16,132 @@ import {
   expectEquals,
   expectPromiseToThrow,
 } from "../src/internal/testing";
+import { fromObservable, createFlowableSinkAccumulator } from "../src/flowable";
 
 const scheduler = createHostScheduler();
 
 export const tests = describe(
   "node",
-  testAsync("sinking to the buffer", async () => {
-    let data = "";
-    const decoder = new StringDecoder();
+  describe(
+    "createWritableFlowableSink",
+    testAsync("sinking to writable", async () => {
+      const encoder = new TextEncoder();
+      const decoder = new TextDecoder();
 
-    const writable = new Writable({
-      autoDestroy: true,
-      highWaterMark: 4,
+      let data = "";
+      const writable = new Writable({
+        autoDestroy: true,
+        highWaterMark: 4,
 
-      write(chunk, encoding, callback) {
-        if (encoding === "buffer") {
-          chunk = decoder.write(chunk);
-        }
-        data += chunk;
-        callback();
-      },
-    });
+        write(chunk, encoding, callback) {
+          if (encoding === "buffer") {
+            chunk = decoder.decode(chunk);
+          }
+          data += chunk;
+          callback();
+        },
+      });
 
-    const dest = createFlowableSinkFromWritable(() =>
-      createDisposableNodeStream(writable),
+      const dest = createWritableFlowableSink(() =>
+        createDisposableNodeStream(writable),
+      );
+
+      const src = pipe(
+        [encoder.encode("abc"), encoder.encode("defg")],
+        fromArray(),
+        fromObservable,
+      );
+
+      await pipe(sink(src, dest), toPromise(scheduler));
+      pipe(data, expectEquals("abcdefg"));
+    }),
+
+    testAsync("sinking to writable that throws", async () => {
+      const encoder = new TextEncoder();
+
+      const cause = new Error();
+      const writable = new Writable({
+        autoDestroy: true,
+        highWaterMark: 4,
+
+        write(_chunk, _encoding, callback) {
+          debugger;
+          callback(cause);
+        },
+      });
+
+      const dest = createWritableFlowableSink(() =>
+        createDisposableNodeStream(writable),
+      );
+
+      const src = pipe(
+        [encoder.encode("abc"), encoder.encode("defg")],
+        fromArray(),
+        fromObservable,
+      );
+
+      const promise = pipe(sink(src, dest), toPromise(scheduler));
+      await expectPromiseToThrow(promise);
+    }),
+  ),
+
+  describe(
+    "createReadablFlowable",
+    testAsync("reading from readable", async () => {
+      function* generate() {
+        yield Buffer.from("abc", "utf8");
+        yield Buffer.from("defg", "utf8");
+      }
+      const src = createReadableFlowable(() =>
+        pipe(generate(), Readable.from, createDisposableNodeStream),
+      );
+
+      const textDecoder = new TextDecoder();
+      const dest = createFlowableSinkAccumulator(
+        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+        () => "",
+      );
+
+      await pipe(sink(src, dest), toPromise(scheduler));
+      pipe(dest.acc, expectEquals("abcdefg"));
+    }),
+    testAsync("reading from readable that throws", async () => {
+      const cause = new Error();
+
+      function* generate() {
+        yield Buffer.from("abc", "utf8");
+        throw cause;
+      }
+      const src = createReadableFlowable(() =>
+        pipe(generate(), Readable.from, createDisposableNodeStream),
+      );
+
+      const textDecoder = new TextDecoder();
+      const dest = createFlowableSinkAccumulator(
+        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+        () => "",
+      );
+
+      await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
+    }),
+  ),
+  testAsync("transform", async () => {
+    const encoder = new TextEncoder();
+    const src = pipe(
+      [encoder.encode("abc"), encoder.encode("defg")],
+      fromArray(),
+      fromObservable,
+      transform(() => createDisposableNodeStream(createGzip())),
+      transform(() => createDisposableNodeStream(createGunzip())),
     );
 
-    function* generate() {
-      yield Buffer.from("abc", "utf8");
-      yield Buffer.from("defg", "utf8");
-    }
-
-    const src = createFlowableFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableNodeStream),
+    const textDecoder = new TextDecoder();
+    const dest = createFlowableSinkAccumulator(
+      (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+      () => "",
     );
 
     await pipe(sink(src, dest), toPromise(scheduler));
-    pipe(data, expectEquals("abcdefg"));
-  }),
-
-  testAsync("when the writable throws an exception", async () => {
-    const cause = new Error();
-
-    const writable = new Writable({
-      write(_chunk, _encoding, callback) {
-        callback(cause);
-      },
-    });
-
-    const dest = createFlowableSinkFromWritable(() =>
-      createDisposableNodeStream(writable),
-    );
-
-    function* generate() {
-      yield Buffer.from("abc", "utf8");
-      yield Buffer.from("defg", "utf8");
-    }
-
-    const src = createFlowableFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableNodeStream),
-    );
-
-    const promise = pipe(sink(src, dest), toPromise(scheduler));
-    await pipe(promise, expectPromiseToThrow);
-  }),
-
-  testAsync("when the readable throws an exception", async () => {
-    const writable = new Writable({
-      write(_chunk, _encoding, callback) {
-        callback();
-      },
-    });
-
-    const dest = createFlowableSinkFromWritable(() =>
-      createDisposableNodeStream(writable),
-    );
-
-    const cause = new Error();
-
-    function* generate() {
-      yield Buffer.from("abc", "utf8");
-      throw cause;
-      yield Buffer.from("defg", "utf8");
-    }
-
-    const src = createFlowableFromReadable(() =>
-      pipe(generate(), Readable.from, createDisposableNodeStream),
-    );
-
-    await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
-  }),
-
-  testAsync("transform", async () => {
-    let data = "";
-    const decoder = new StringDecoder();
-
-    const writable = new Writable({
-      highWaterMark: 4,
-
-      write(chunk, encoding, callback) {
-        if (encoding === "buffer") {
-          chunk = decoder.write(chunk);
-        }
-        data += chunk;
-        callback();
-      },
-    });
-
-    const dest = createFlowableSinkFromWritable(() =>
-      createDisposableNodeStream(writable),
-    );
-
-    function* generate() {
-      yield Buffer.from("abc", "utf8");
-      yield Buffer.from("defg", "utf8");
-    }
-
-    await pipe(
-      createFlowableFromReadable(() =>
-        pipe(generate(), Readable.from, createDisposableNodeStream),
-      ),
-      transform(() => createDisposableNodeStream(createGzip())),
-      transform(() => createDisposableNodeStream(createGunzip())),
-      src => sink(src, dest),
-      toPromise(scheduler),
-    );
-    pipe(data, expectEquals("abcdefg"));
-  }),
+    pipe(dest.acc, expectEquals("abcdefg"));
+  })
 );

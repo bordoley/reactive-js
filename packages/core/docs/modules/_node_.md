@@ -8,8 +8,8 @@
 
 * [bindNodeCallback](_node_.md#bindnodecallback)
 * [createDisposableNodeStream](_node_.md#const-createdisposablenodestream)
-* [createFlowableFromReadable](_node_.md#const-createflowablefromreadable)
-* [createFlowableSinkFromWritable](_node_.md#const-createflowablesinkfromwritable)
+* [createReadableFlowable](_node_.md#const-createreadableflowable)
+* [createWritableFlowableSink](_node_.md#const-createwritableflowablesink)
 * [transform](_node_.md#const-transform)
 
 ## Functions
@@ -1818,9 +1818,9 @@ Name | Type |
 
 ___
 
-### `Const` createFlowableFromReadable
+### `Const` createReadableFlowable
 
-▸ **createFlowableFromReadable**(`factory`: function): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+▸ **createReadableFlowable**(`factory`: function): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
 
 **Parameters:**
 
@@ -1832,17 +1832,15 @@ ___
 
 ___
 
-### `Const` createFlowableSinkFromWritable
+### `Const` createWritableFlowableSink
 
-▸ **createFlowableSinkFromWritable**(`factory`: function, `autoDispose`: boolean): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+▸ **createWritableFlowableSink**(`factory`: function): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
 
 **Parameters:**
 
 ▪ **factory**: *function*
 
 ▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›*
-
-▪`Default value`  **autoDispose**: *boolean*= true
 
 **Returns:** *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
 

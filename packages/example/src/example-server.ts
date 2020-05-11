@@ -15,7 +15,7 @@ import {
   compose,
 } from "@reactive-js/core/lib/functions";
 import {
-  createFlowableFromReadable,
+  createReadableFlowable,
   createDisposableNodeStream,
   bindNodeCallback,
 } from "@reactive-js/core/lib/node";
@@ -130,7 +130,7 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createFlowableFromReadable(() =>
+            body: createReadableFlowable(() =>
               createDisposableNodeStream(fs.createReadStream(path)),
             ),
             contentInfo: {
@@ -285,7 +285,7 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createFlowableFromReadable(() =>
+      body: createReadableFlowable(() =>
         createDisposableNodeStream(fs.createReadStream(file)),
       ),
       contentInfo: {

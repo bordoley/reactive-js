@@ -3,6 +3,7 @@ import { DisposableValueLike, createDisposableValue } from "../../disposable";
 import { ignore } from "../../functions";
 
 const dispose = (writable: Readable | Writable | Transform) => {
+  debugger;
   writable.removeAllListeners();
   // Calling destory can result in onError being called
   // if we don't catch the error, it crashes the process.
@@ -22,6 +23,7 @@ export const createDisposableNodeStream = <
   const retval = createDisposableValue<T>(stream, dispose);
 
   const onError = (cause: any) => {
+    debugger;
     retval.dispose({ cause });
   };
   stream.on("error", onError);

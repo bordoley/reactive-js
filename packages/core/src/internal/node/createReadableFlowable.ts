@@ -12,18 +12,28 @@ import {
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
 
-const createReadableEventsObservable = (readable: Readable) =>
+const createReadableEventsObservable = (
+  readable: DisposableValueLike<Readable>,
+) =>
   createObservable(dispatcher => {
+    readable.add(dispatcher);
+    const readableValue = readable.value;
+
     const onData = (data: Uint8Array) => {
       dispatcher.dispatch({ type: FlowEventType.Next, data });
     };
-    readable.on("data", onData);
+    readableValue.on("data", onData);
 
     const onEnd = () => {
       dispatcher.dispatch({ type: FlowEventType.Complete });
       dispatcher.dispose();
     };
-    readable.on("end", onEnd);
+    readableValue.on("end", onEnd);
+
+    dispatcher.add(_ => {
+      readableValue.removeListener("data", onData);
+      readableValue.removeListener("end", onEnd);
+    });
   });
 
 const createReadableAndSetupModeSubscription = (
@@ -31,17 +41,18 @@ const createReadableAndSetupModeSubscription = (
   mode: ObservableLike<FlowMode>,
 ) => (scheduler: SchedulerLike) => {
   const readable = factory();
-  readable.value.pause();
+  const readableValue = readable.value;
+  readableValue.pause();
 
   const modeSubscription = pipe(
     mode,
     onNotify(ev => {
       switch (ev) {
         case FlowMode.Pause:
-          readable.value.pause();
+          readableValue.pause();
           break;
         case FlowMode.Resume:
-          readable.value.resume();
+          readableValue.resume();
           break;
       }
     }),
@@ -51,11 +62,12 @@ const createReadableAndSetupModeSubscription = (
   return readable.add(modeSubscription);
 };
 
-export const createFlowableFromReadable = (
+export const createReadableFlowable = (
   factory: () => DisposableValueLike<Readable>,
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
-    using(createReadableAndSetupModeSubscription(factory, mode), disp =>
-      createReadableEventsObservable(disp.value),
+    using(
+      createReadableAndSetupModeSubscription(factory, mode),
+      createReadableEventsObservable,
     ),
   );
