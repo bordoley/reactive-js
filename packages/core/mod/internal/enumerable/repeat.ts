@@ -5,6 +5,7 @@ import {
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
+import { enumerate } from "./enumerate.ts";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: EnumeratorLike<T>;
@@ -14,7 +15,7 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
     private readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Operator<number, boolean>,
   ) {
-    this.enumerator = src.enumerate();
+    this.enumerator = enumerate(src);
   }
 
   get current() {
@@ -29,7 +30,7 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
     if (!this.enumerator.move()) {
       this.count++;
       if (this.shouldRepeat(this.count)) {
-        this.enumerator = this.src.enumerate();
+        this.enumerator = enumerate(this.src);
         this.enumerator.move();
       }
     }

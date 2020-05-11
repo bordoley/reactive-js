@@ -1,6 +1,7 @@
 import { referenceEquals } from "../../functions.js";
+import { enumerate } from "./enumerate.js";
 export const someSatisfy = (predicate) => enumerable => {
-    const enumerator = enumerable.enumerate();
+    const enumerator = enumerate(enumerable);
     while (enumerator.move()) {
         if (predicate(enumerator.current)) {
             return true;

@@ -1,4 +1,4 @@
-import { fromIterable, first, EnumeratorLike } from "../../enumerable";
+import { fromIterable, first, EnumeratorLike, enumerate } from "../../enumerable";
 import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { QueueLike } from "./interfaces";
@@ -15,7 +15,7 @@ class UniqueQueueImpl<T> implements QueueLike<T> {
   }
 
   enumerate(): EnumeratorLike<T> {
-    return fromIterable(this.values).enumerate();
+    return pipe(this.values, fromIterable, enumerate);
   }
 
   peek() {

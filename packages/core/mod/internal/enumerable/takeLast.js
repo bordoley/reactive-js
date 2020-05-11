@@ -2,6 +2,7 @@ import { pipe } from "../../functions.js";
 import { isNone, none } from "../../option.js";
 import { fromArray, empty } from "./fromArray.js";
 import { lift } from "./lift.js";
+import { enumerate } from "./enumerate.js";
 class TakeLastEnumerator {
     constructor(delegate, maxCount) {
         this.delegate = delegate;
@@ -26,7 +27,7 @@ class TakeLastEnumerator {
                     last.shift();
                 }
             }
-            this.enumerator = fromArray(last).enumerate();
+            this.enumerator = pipe(last, fromArray, enumerate);
         }
         this.enumerator.move();
         return this.hasCurrent;

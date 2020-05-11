@@ -3,6 +3,7 @@ import { isNone, Option, none } from "../../option.ts";
 import { fromArray, empty } from "./fromArray.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { enumerate } from "./enumerate.ts";
 
 class TakeLastEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: Option<EnumeratorLike<T>> = none;
@@ -32,7 +33,7 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
           last.shift();
         }
       }
-      this.enumerator = fromArray(last).enumerate();
+      this.enumerator = pipe(last, fromArray, enumerate);
     }
 
     this.enumerator.move();

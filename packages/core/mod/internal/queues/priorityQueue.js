@@ -1,5 +1,6 @@
-import { fromArray } from "../../enumerable.js";
+import { fromArray, enumerate } from "../../enumerable.js";
 import { isSome, none } from "../../option.js";
+import { pipe } from "../../functions.js";
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;
@@ -52,7 +53,7 @@ class PriorityQueueImpl {
         this.values.length = 0;
     }
     enumerate() {
-        return fromArray(this.values).enumerate();
+        return pipe(this.values, fromArray, enumerate);
     }
     peek() {
         return this.values[0];

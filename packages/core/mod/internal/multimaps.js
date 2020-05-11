@@ -1,5 +1,5 @@
-import { fromIterator } from "../enumerable.js";
-import { bind } from "../functions.js";
+import { fromIterator, enumerate } from "../enumerable.js";
+import { bind, pipe } from "../functions.js";
 function* iterateSetMultimapValues(multimap) {
     for (const values of multimap.map.values()) {
         for (const value of values) {
@@ -40,7 +40,7 @@ class SetMultimap {
         this.map.clear();
     }
     enumerate() {
-        return fromIterator(bind(iterateKeyedQueueKeyValuePairs, this)).enumerate();
+        return pipe(bind(iterateKeyedQueueKeyValuePairs, this), fromIterator, enumerate);
     }
     get(key) {
         var _a;

@@ -1,5 +1,6 @@
 import { Operator, Factory, Reducer } from "../../functions";
 import { EnumerableLike } from "./interfaces";
+import { enumerate } from "./enumerate";
 
 /**
  * Applies an accumulator function over the source, returning the accumulated result.
@@ -11,7 +12,7 @@ export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): Operator<EnumerableLike<T>, TAcc> => enumerable => {
-  const enumerator = enumerable.enumerate();
+  const enumerator = enumerate(enumerable);
   let acc = initialValue();
   while (enumerator.move()) {
     acc = reducer(acc, enumerator.current);

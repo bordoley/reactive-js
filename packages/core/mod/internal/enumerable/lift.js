@@ -1,11 +1,12 @@
 import { pipe } from "../../functions.js";
+import { enumerate } from "./enumerate.js";
 class LiftedEnumerableLike {
     constructor(src, operators) {
         this.src = src;
         this.operators = operators;
     }
     enumerate() {
-        const src = this.src.enumerate();
+        const src = enumerate(this.src);
         return pipe(src, ...this.operators);
     }
 }

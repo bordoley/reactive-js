@@ -1,5 +1,5 @@
-import { EnumeratorLike, EnumerableLike } from "../../enumerable.ts";
-import { compose } from "../../functions.ts";
+import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable.ts";
+import { compose, bind } from "../../functions.ts";
 import {
   withLatestFrom,
   onNotify,
@@ -22,7 +22,9 @@ export const fromEnumerable = <T>(
   createStreamable(
     compose(
       withLatestFrom(
-        compute<EnumeratorLike<T>>()(() => enumerable.enumerate()),
+        compute<EnumeratorLike<T>>()(
+          bind(enumerate, enumerable)
+        ),
         (_, enumerator) => enumerator,
       ),
       onNotify(enumerator => enumerator.move()),

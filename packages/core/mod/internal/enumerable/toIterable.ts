@@ -1,10 +1,11 @@
 import { EnumerableLike } from "./interfaces.ts";
+import { enumerate } from "./enumerate.ts";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}
 
   *[Symbol.iterator]() {
-    const enumerator = this.enumerable.enumerate();
+    const enumerator = enumerate(this.enumerable);
     while (enumerator.move()) {
       yield enumerator.current;
     }

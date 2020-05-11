@@ -5,6 +5,7 @@ import {
   EnumerableOperator,
   EnumeratorOperator,
 } from "./interfaces.ts";
+import { enumerate } from "./enumerate.ts";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(
@@ -13,7 +14,7 @@ class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   ) {}
 
   enumerate(): EnumeratorLike<T> {
-    const src = this.src.enumerate();
+    const src = enumerate(this.src);
     return pipe(src, ...this.operators) as EnumeratorLike<T>;
   }
 }

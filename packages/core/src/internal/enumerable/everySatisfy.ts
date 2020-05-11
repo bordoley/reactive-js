@@ -1,5 +1,6 @@
 import { Operator, Predicate } from "../../functions";
 import { EnumerableLike } from "./interfaces";
+import { enumerate } from "./enumerate";
 
 /**
  * Returns `true` if the predicate is satisfied for
@@ -10,7 +11,7 @@ import { EnumerableLike } from "./interfaces";
 export const everySatisfy = <T>(
   predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
-  const enumerator = enumerable.enumerate();
+  const enumerator = enumerate(enumerable);
   while (enumerator.move()) {
     if (!predicate(enumerator.current)) {
       return false;

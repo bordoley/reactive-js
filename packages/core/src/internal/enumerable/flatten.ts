@@ -7,6 +7,7 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
+import { enumerate } from "./enumerate";
 
 class FlattenEnumerator<T> implements EnumeratorLike<T> {
   current = (none as unknown) as T;
@@ -22,7 +23,7 @@ class FlattenEnumerator<T> implements EnumeratorLike<T> {
 
     const delegate = this.delegate;
     if (isNone(this.enumerator) && delegate.move()) {
-      this.enumerator = delegate.current.enumerate();
+      this.enumerator = enumerate(delegate.current);
     }
 
     while (isSome(this.enumerator)) {
@@ -33,7 +34,7 @@ class FlattenEnumerator<T> implements EnumeratorLike<T> {
         this.hasCurrent = true;
         break;
       } else if (delegate.move()) {
-        this.enumerator = delegate.current.enumerate();
+        this.enumerator = enumerate(delegate.current);
       } else {
         this.enumerator = none;
       }

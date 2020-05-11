@@ -1,7 +1,7 @@
-import { EnumeratorLike, fromArray } from "../../enumerable.ts";
+import { EnumeratorLike, fromArray, enumerate } from "../../enumerable.ts";
 import { isSome, none } from "../../option.ts";
 import { QueueLike } from "./interfaces.ts";
-import { Comparator } from "../../functions.ts";
+import { Comparator, pipe } from "../../functions.ts";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
@@ -67,7 +67,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   }
 
   enumerate(): EnumeratorLike<T> {
-    return fromArray(this.values).enumerate();
+    return pipe(this.values, fromArray, enumerate);
   }
 
   peek() {

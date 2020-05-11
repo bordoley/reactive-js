@@ -1,4 +1,4 @@
-import { fromIterable, first } from "../../enumerable.js";
+import { fromIterable, first, enumerate } from "../../enumerable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 class UniqueQueueImpl {
@@ -12,7 +12,7 @@ class UniqueQueueImpl {
         this.values.clear();
     }
     enumerate() {
-        return fromIterable(this.values).enumerate();
+        return pipe(this.values, fromIterable, enumerate);
     }
     peek() {
         return pipe(this.values, fromIterable, first);

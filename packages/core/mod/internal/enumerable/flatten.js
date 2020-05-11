@@ -2,6 +2,7 @@ import { compose } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
+import { enumerate } from "./enumerate.js";
 class FlattenEnumerator {
     constructor(delegate) {
         this.delegate = delegate;
@@ -14,7 +15,7 @@ class FlattenEnumerator {
         this.hasCurrent = false;
         const delegate = this.delegate;
         if (isNone(this.enumerator) && delegate.move()) {
-            this.enumerator = delegate.current.enumerate();
+            this.enumerator = enumerate(delegate.current);
         }
         while (isSome(this.enumerator)) {
             const enumerator = this.enumerator;
@@ -24,7 +25,7 @@ class FlattenEnumerator {
                 break;
             }
             else if (delegate.move()) {
-                this.enumerator = delegate.current.enumerate();
+                this.enumerator = enumerate(delegate.current);
             }
             else {
                 this.enumerator = none;
