@@ -1,13 +1,13 @@
-import { createSerialDisposable, } from "../../disposable.js";
+import { createSerialDisposable, disposeOnError, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { none, isNone, isSome } from "../../option.js";
+import { none, isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 const setupDurationSubscription = (subscriber, next) => {
-    subscriber.durationSubscription.inner = pipe(subscriber.durationSelector(next), onNotify(subscriber.onNotify), subscribe(subscriber)).add(subscriber.onDurationDispose);
+    subscriber.durationSubscription.inner = pipe(subscriber.durationSelector(next), onNotify(subscriber.onNotify), subscribe(subscriber)).add(disposeOnError(subscriber));
 };
 class ThrottleSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, durationSelector, mode) {
@@ -17,11 +17,6 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
         this.durationSubscription = createSerialDisposable();
         this.value = none;
         this.hasValue = false;
-        this.onDurationDispose = (error) => {
-            if (isSome(error)) {
-                this.dispose(error);
-            }
-        };
         this.onNotify = (_) => {
             if (this.hasValue) {
                 const value = this.value;

@@ -1,6 +1,5 @@
-import { createSerialDisposable, } from "../../disposable.js";
+import { createSerialDisposable, disposeOnError, } from "../../disposable.js";
 import { pipe, returns } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
 import { subscribe } from "./subscribe.js";
@@ -8,18 +7,13 @@ import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } f
 import { throws } from "./throws.js";
 export const timeoutError = Symbol("TimeoutError");
 const setupDurationSubscription = (subscriber) => {
-    subscriber.durationSubscription.inner = pipe(subscriber.duration, subscribe(subscriber)).add(subscriber.onDispose);
+    subscriber.durationSubscription.inner = pipe(subscriber.duration, subscribe(subscriber)).add(disposeOnError(subscriber));
 };
 class TimeoutSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, duration) {
         super(delegate);
         this.duration = duration;
         this.durationSubscription = createSerialDisposable();
-        this.onDispose = (error) => {
-            if (isSome(error)) {
-                this.dispose(error);
-            }
-        };
         this.add(this.durationSubscription).add(delegate);
         setupDurationSubscription(this);
     }

@@ -29,6 +29,7 @@
 * [createDisposable](_disposable_.md#const-createdisposable)
 * [createDisposableValue](_disposable_.md#const-createdisposablevalue)
 * [createSerialDisposable](_disposable_.md#const-createserialdisposable)
+* [disposeOnError](_disposable_.md#const-disposeonerror)
 
 ## Type aliases
 
@@ -118,3 +119,17 @@ ___
 Creates a new SerialDisposableLike instance containing a disposed instance.
 
 **Returns:** *[SerialDisposableLike](../interfaces/_disposable_.serialdisposablelike.md)*
+
+___
+
+### `Const` disposeOnError
+
+▸ **disposeOnError**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *(Anonymous function)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
+
+**Returns:** *(Anonymous function)*
