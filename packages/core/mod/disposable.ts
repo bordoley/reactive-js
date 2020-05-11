@@ -1,5 +1,5 @@
 import { isSome, none, Option } from "./option.ts";
-import { bind } from "./functions.ts";
+import { bind, SideEffect1 } from "./functions.ts";
 
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -224,6 +224,6 @@ class DisposableValueImpl<T> extends AbstractDisposable
  */
 export const createDisposableValue = <T>(
   value: T,
-  cleanup: (v: T) => void,
+  cleanup: SideEffect1<T>,
 ): DisposableValueLike<T> =>
   new DisposableValueImpl(value).add(bind(cleanup, value));

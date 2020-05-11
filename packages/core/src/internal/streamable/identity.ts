@@ -3,7 +3,7 @@ import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "./interfaces";
 
 const _identity = {
-  stream: (_: SchedulerLike, replayCount = 0) => {
+  stream(_: SchedulerLike, replayCount = 0) {
     return createSubject(replayCount);
   },
 };

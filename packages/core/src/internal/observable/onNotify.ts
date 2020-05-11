@@ -4,11 +4,12 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { SideEffect1 } from "../../functions";
 
 class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly onNotify: (next: T) => void,
+    private readonly onNotify: SideEffect1<T>,
   ) {
     super(delegate);
     this.add(delegate);
@@ -30,7 +31,7 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 export function onNotify<T>(
-  onNotify: (next: T) => void,
+  onNotify: SideEffect1<T>,
 ): ObservableOperator<T, T> {
   const operator = (subscriber: SubscriberLike<T>) =>
     new OnNotifySubscriber(subscriber, onNotify);

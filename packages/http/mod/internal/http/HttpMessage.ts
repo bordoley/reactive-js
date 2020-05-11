@@ -1,5 +1,5 @@
 import { FlowableLike, fromValue } from "../../../../core/lib/flowable.ts";
-import { Operator, Selector2 } from "../../../../core/lib/functions.ts";
+import { Operator, Selector2, SideEffect2 } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.ts";
@@ -10,7 +10,7 @@ import { parseMediaTypeOrThrow } from "./mediaType.ts";
 
 export const writeHttpMessageHeaders = <T>(
   { cacheControl, contentInfo, headers, preferences }: HttpMessage<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ): void => {
   writeHttpCacheControlHeader(cacheControl, writeHeader);
 

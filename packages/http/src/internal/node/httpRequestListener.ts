@@ -29,6 +29,7 @@ import {
   HttpServerRequest,
   HttpServer,
 } from "../../http";
+import { SideEffect2 } from "@reactive-js/core/lib/functions";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<FlowableLike<Uint8Array>>,
@@ -52,10 +53,10 @@ export type HttpRequestListenerOptions = {
   readonly onError?: Operator<unknown, ObservableLike<unknown>>;
 };
 
-export type HttpRequestListener = (
-  req: IncomingMessage | Http2ServerRequest,
-  resp: ServerResponse | Http2ServerResponse,
-) => void;
+export type HttpRequestListener = SideEffect2<
+  IncomingMessage | Http2ServerRequest,
+  ServerResponse | Http2ServerResponse
+>;
 
 export const createHttpRequestListener = (
   handler: HttpServer<

@@ -295,7 +295,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`f`: function): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
 
 Applies the side-effect function `f` to each item in the EnumerableLike collection.
 
@@ -305,15 +305,9 @@ Applies the side-effect function `f` to each item in the EnumerableLike collecti
 
 **Parameters:**
 
-▪ **f**: *function*
-
-▸ (`v`: T): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`v` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`f` | [SideEffect1](_functions_.md#sideeffect1)‹T› |   |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
 

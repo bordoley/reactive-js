@@ -1,4 +1,4 @@
-import { pipe } from "../../../../core/lib/functions.ts";
+import { pipe, SideEffect2 } from "../../../../core/lib/functions.ts";
 import { isNone, none, Option } from "../../../../core/lib/option.ts";
 import { parseWith } from "../parserCombinators.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
@@ -46,7 +46,7 @@ export const parseHttpContentInfoFromHeaders = (
 
 export const writeHttpContentInfoHeaders = (
   content: HttpContentInfo,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {

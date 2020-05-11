@@ -3,7 +3,7 @@ import {
   FlowableOperator,
   empty,
 } from "@reactive-js/core/lib/flowable";
-import { Operator, Selector2 } from "@reactive-js/core/lib/functions";
+import { Operator, Selector2, SideEffect2} from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
@@ -162,7 +162,7 @@ export const parseHttpResponseFromHeaders = <T>(
 
 export const writeHttpResponseHeaders = <T>(
   response: HttpResponse<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const { etag, expires, lastModified, location, vary } = response;
 

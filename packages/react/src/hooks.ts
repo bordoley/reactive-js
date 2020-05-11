@@ -1,5 +1,5 @@
 import { dispose, Exception } from "@reactive-js/core/lib/disposable";
-import { pipe, compose, returns, bind, Operator } from "@reactive-js/core/lib/functions";
+import { SideEffect1, pipe, compose, returns, bind, Operator } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   onNotify,
@@ -69,7 +69,7 @@ export const useStreamable = <TReq, T>(
     replay?: number;
     stateScheduler?: SchedulerLike;
   } = {},
-): [Option<T>, (req: TReq) => void] => {
+): [Option<T>, SideEffect1<TReq>] => {
   const scheduler = config.scheduler ?? normalPriority;
   const stateScheduler = config.stateScheduler ?? scheduler;
   const replay = config.replay ?? 0;
@@ -119,7 +119,7 @@ export const useSerializedState = <TSerialized, TState>(
   store: StateStoreLike<TSerialized>,
   parse: Operator<TSerialized, TState>,
   serialize: Operator<TState, TSerialized>,
-): [Option<TState>, (updater: StateUpdater<TState>) => void] => {
+): [Option<TState>, SideEffect1<StateUpdater<TState>>] => {
   const mappedStore = useMemo(
     () => pipe(store, mapReq(requestMapper(parse, serialize)), map(parse)),
     [store, parse, serialize],

@@ -16,7 +16,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -52,22 +52,11 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -100,21 +89,11 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -144,20 +123,11 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -184,15 +154,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -218,7 +180,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -258,18 +220,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -281,7 +232,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -318,17 +269,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -340,7 +281,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -374,16 +315,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -395,7 +327,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -426,15 +358,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *function*
 
@@ -482,7 +406,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -526,18 +450,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -550,7 +463,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -591,17 +504,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -614,7 +517,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -652,16 +555,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -674,7 +568,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -709,15 +603,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *function*
 
@@ -771,7 +657,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -819,18 +705,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -844,7 +719,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -889,17 +764,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -913,7 +778,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -955,16 +820,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -978,7 +834,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1017,15 +873,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1085,7 +933,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -1137,18 +985,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -1163,7 +1000,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -1212,17 +1049,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -1237,7 +1064,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -1283,16 +1110,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -1307,7 +1125,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1350,15 +1168,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1424,7 +1234,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -1480,18 +1290,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3, `r4`: R4): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
-`r4` | R4 |
+▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -1507,7 +1306,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -1560,17 +1359,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2, `r3`: R3): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
-`r3` | R3 |
+▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -1586,7 +1375,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -1636,16 +1425,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1, `r2`: R2): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
-`r2` | R2 |
+▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -1661,7 +1441,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1708,15 +1488,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *function*
-
-▸ (`r1`: R1): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | R1 |
+▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
 
 **Returns:** *function*
 

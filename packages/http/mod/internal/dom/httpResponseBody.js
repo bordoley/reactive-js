@@ -1,5 +1,5 @@
 import { AbstractDisposable, } from "../../../../core/lib/disposable.js";
-import { pipe } from "../../../../core/lib/functions.js";
+import { pipe, bind } from "../../../../core/lib/functions.js";
 import { fromValue, createObservable, await_, } from "../../../../core/lib/observable.js";
 import { dispose } from "../../../../core/lib/disposable.js";
 const blobToString = (blob) => {
@@ -8,9 +8,7 @@ const blobToString = (blob) => {
         reader.onload = () => {
             dispatcher.dispatch(reader.result);
         };
-        reader.onerror = () => {
-            dispose(dispatcher, { cause: reader.error });
-        };
+        reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
         reader.readAsText(blob);
     };
     return createObservable(onSubscribe);
@@ -21,9 +19,7 @@ const blobToArrayBuffer = (body) => {
         reader.onload = () => {
             dispatcher.dispatch(reader.result);
         };
-        reader.onerror = () => {
-            dispose(dispatcher, { cause: reader.error });
-        };
+        reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
         reader.readAsArrayBuffer(body);
     };
     return createObservable(onSubscribe);

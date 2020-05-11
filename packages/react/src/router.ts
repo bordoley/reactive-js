@@ -1,4 +1,4 @@
-import { returns, pipe } from "@reactive-js/core/lib/functions";
+import { SideEffect1, returns, pipe } from "@reactive-js/core/lib/functions";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import { scan, mapReq } from "@reactive-js/core/lib/streamable";
@@ -46,7 +46,7 @@ const serializeRelativeURI = (
 export type RoutableComponentProps = {
   readonly referer: Option<RelativeURI>;
   readonly uri: RelativeURI;
-  readonly uriUpdater: (updater: StateUpdater<RelativeURI>) => void;
+  readonly uriUpdater: SideEffect1<StateUpdater<RelativeURI>>;
 };
 
 export type RouteMap = {

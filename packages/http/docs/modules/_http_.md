@@ -668,7 +668,7 @@ ___
 
 ### `Const` writeHttpRequestHeaders
 
-▸ **writeHttpRequestHeaders**<**T**>(`request`: [HttpRequest](_http_.md#httprequest)‹T›, `writeHeader`: function): *void*
+▸ **writeHttpRequestHeaders**<**T**>(`request`: [HttpRequest](_http_.md#httprequest)‹T›, `writeHeader`: SideEffect2‹string, string›): *void*
 
 **Type parameters:**
 
@@ -676,18 +676,10 @@ ___
 
 **Parameters:**
 
-▪ **request**: *[HttpRequest](_http_.md#httprequest)‹T›*
-
-▪ **writeHeader**: *function*
-
-▸ (`header`: string, `value`: string): *void*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`header` | string |
-`value` | string |
+`request` | [HttpRequest](_http_.md#httprequest)‹T› |
+`writeHeader` | SideEffect2‹string, string› |
 
 **Returns:** *void*
 
@@ -695,7 +687,7 @@ ___
 
 ### `Const` writeHttpResponseHeaders
 
-▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpResponse](_http_.md#httpresponse)‹T›, `writeHeader`: function): *void*
+▸ **writeHttpResponseHeaders**<**T**>(`response`: [HttpResponse](_http_.md#httpresponse)‹T›, `writeHeader`: SideEffect2‹string, string›): *void*
 
 **Type parameters:**
 
@@ -703,17 +695,9 @@ ___
 
 **Parameters:**
 
-▪ **response**: *[HttpResponse](_http_.md#httpresponse)‹T›*
-
-▪ **writeHeader**: *function*
-
-▸ (`header`: string, `value`: string): *void*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`header` | string |
-`value` | string |
+`response` | [HttpResponse](_http_.md#httpresponse)‹T› |
+`writeHeader` | SideEffect2‹string, string› |
 
 **Returns:** *void*

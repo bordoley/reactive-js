@@ -1,6 +1,6 @@
 import { createSubject } from "../../observable.js";
 const _identity = {
-    stream: (_, replayCount = 0) => {
+    stream(_, replayCount = 0) {
         return createSubject(replayCount);
     },
 };

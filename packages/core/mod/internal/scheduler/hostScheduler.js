@@ -1,4 +1,5 @@
 import { createDisposable, dispose } from "../../disposable.js";
+import { bind } from "../../functions.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
@@ -12,9 +13,8 @@ const now = supportsPerformanceNow
         }
         : () => Date.now();
 const scheduleImmediateWithSetImmediate = (cb) => {
-    const disposable = createDisposable(() => clearImmediate(immediate));
     const immediate = setImmediate(cb);
-    return disposable;
+    return createDisposable(bind(clearImmediate, immediate));
 };
 const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     const disposable = createDisposable();

@@ -1,5 +1,5 @@
 import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
-import { Operator, Selector2 } from "@reactive-js/core/lib/functions";
+import { Operator, Selector2, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";
@@ -10,7 +10,7 @@ import { parseMediaTypeOrThrow } from "./mediaType";
 
 export const writeHttpMessageHeaders = <T>(
   { cacheControl, contentInfo, headers, preferences }: HttpMessage<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ): void => {
   writeHttpCacheControlHeader(cacheControl, writeHeader);
 

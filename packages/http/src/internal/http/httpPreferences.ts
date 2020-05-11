@@ -1,4 +1,4 @@
-import { pipe } from "@reactive-js/core/lib/functions";
+import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome, Option, none } from "@reactive-js/core/lib/option";
 import { concatWith, map, parseWith } from "../parserCombinators";
 import { pToken, pParams, httpList } from "./httpGrammar";
@@ -156,7 +156,7 @@ export const createHttpPreferences = ({
 const writeWeightedTokenHeader = (
   header: HttpStandardHeader,
   values: readonly string[],
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const length = values.length;
   if (length > 0) {
@@ -181,7 +181,7 @@ const writeWeightedTokenHeader = (
 
 export const writeHttpPreferenceHeaders = (
   preferences: HttpPreferences,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const {
     acceptedCharsets,

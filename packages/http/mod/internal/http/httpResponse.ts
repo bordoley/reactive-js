@@ -3,7 +3,7 @@ import {
   FlowableOperator,
   empty,
 } from "../../../../core/lib/flowable.ts";
-import { Operator, Selector2 } from "../../../../core/lib/functions.ts";
+import { Operator, Selector2, SideEffect2} from "../../../../core/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../core/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -162,7 +162,7 @@ export const parseHttpResponseFromHeaders = <T>(
 
 export const writeHttpResponseHeaders = <T>(
   response: HttpResponse<T>,
-  writeHeader: (header: string, value: string) => void,
+  writeHeader: SideEffect2<string, string>,
 ) => {
   const { etag, expires, lastModified, location, vary } = response;
 

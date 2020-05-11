@@ -88,7 +88,7 @@ ___
 
 ### `Const` createDisposableValue
 
-▸ **createDisposableValue**<**T**>(`value`: T, `cleanup`: function): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
+▸ **createDisposableValue**<**T**>(`value`: T, `cleanup`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
 
 Creates a new DisposableValueLike instance.
 
@@ -98,17 +98,10 @@ Creates a new DisposableValueLike instance.
 
 **Parameters:**
 
-▪ **value**: *T*
-
-▪ **cleanup**: *function*
-
-▸ (`v`: T): *void*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`v` | T |
+`value` | T |
+`cleanup` | [SideEffect1](_functions_.md#sideeffect1)‹T› |
 
 **Returns:** *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
 

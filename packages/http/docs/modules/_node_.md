@@ -33,18 +33,7 @@ ___
 
 ###  HttpRequestListener
 
-Ƭ **HttpRequestListener**: *function*
-
-#### Type declaration:
-
-▸ (`req`: IncomingMessage | Http2ServerRequest, `resp`: ServerResponse | Http2ServerResponse): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | IncomingMessage &#124; Http2ServerRequest |
-`resp` | ServerResponse &#124; Http2ServerResponse |
+Ƭ **HttpRequestListener**: *SideEffect2‹IncomingMessage | Http2ServerRequest, ServerResponse | Http2ServerResponse›*
 
 ___
 

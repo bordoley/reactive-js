@@ -1,9 +1,10 @@
 import { DisposableLike, dispose } from "../../disposable";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 import { SchedulerLike } from "./interfaces";
+import { SideEffect1 } from "../../functions";
 
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
-  constructor(private cb: (scheduler: SchedulerLike) => void) {
+  constructor(private cb: SideEffect1<SchedulerLike>) {
     super();
   }
 
@@ -14,7 +15,7 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
 }
 
 export const schedule = (
-  callback: (scheduler: SchedulerLike) => void,
+  callback: SideEffect1<SchedulerLike>,
   options = { delay: 0 },
 ) => (scheduler: SchedulerLike): DisposableLike => {
   const continuation = new CallbackSchedulerContinuation(callback);
