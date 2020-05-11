@@ -6,6 +6,7 @@ import {
   empty as emptyObs,
   map,
   using,
+  dispatchTo,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { StreamableLike } from "../../streamable";
@@ -50,7 +51,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        onNotify((req: TReqA) => stream.dispatch(req)),
+        onNotify(dispatchTo(stream)),
         subscribe(scheduler),
       ).add(stream);
 

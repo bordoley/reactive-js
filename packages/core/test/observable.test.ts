@@ -74,6 +74,7 @@ import {
   switchAll,
   zipWith,
   zipWithLatestFrom,
+  dispatchTo,
 } from "../src/observable";
 import {
   createHostScheduler,
@@ -257,7 +258,7 @@ export const tests = describe(
       pipe(
         [1, 2, 3, 4],
         fromArrayEnumerable,
-        forEachEnumerable(n => subject.dispatch(n)),
+        forEachEnumerable(dispatchTo(subject)),
       );
       subject.dispose();
 

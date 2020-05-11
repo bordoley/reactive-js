@@ -4,6 +4,7 @@ import { createSubject } from "./createSubject";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
+import { dispatchTo } from "./dispatcher";
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -19,7 +20,7 @@ export const publish = <T>(
   const subject = createSubject<T>(replayCount);
   const srcSubscription = pipe(
     observable,
-    onNotify(next => subject.dispatch(next)),
+    onNotify(dispatchTo(subject)),
     subscribe(scheduler),
   ).add(subject);
   subject.add(srcSubscription);

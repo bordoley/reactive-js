@@ -1,13 +1,14 @@
 import { Readable } from "stream";
 import { DisposableValueLike } from "../../disposable";
-import { FlowEventType, FlowMode, FlowableLike } from "../../flowable";
-import { pipe } from "../../functions";
+import { FlowMode, FlowableLike, next, complete } from "../../flowable";
+import { pipe, compose } from "../../functions";
 import {
   createObservable,
   onNotify,
   subscribe,
   using,
   ObservableLike,
+  dispatchTo,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
@@ -19,13 +20,11 @@ const createReadableEventsObservable = (
     readable.add(dispatcher);
     const readableValue = readable.value;
 
-    const onData = (data: Uint8Array) => {
-      dispatcher.dispatch({ type: FlowEventType.Next, data });
-    };
+    const onData = compose(next, dispatchTo(dispatcher));
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatcher.dispatch({ type: FlowEventType.Complete });
+      dispatcher.dispatch(complete());
       dispatcher.dispose();
     };
     readableValue.on("end", onEnd);
