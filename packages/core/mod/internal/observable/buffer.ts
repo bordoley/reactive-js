@@ -1,6 +1,6 @@
-import { disposed } from "../../disposable.ts";
+import { disposed, disposeOnError } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
-import { isNone, isSome, none } from "../../option.ts";
+import { isNone, none } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
@@ -64,11 +64,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
         this.durationSelector(next),
         onNotify(this.onNotify),
         subscribe(this.delegate),
-      ).add(e => {
-        if (isSome(e)) {
-          this.dispose(e);
-        }
-      });
+      ).add(disposeOnError(this));
     }
   }
 }

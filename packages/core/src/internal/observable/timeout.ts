@@ -1,10 +1,9 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
-  Exception,
+  disposeOnError,
 } from "../../disposable";
 import { pipe, returns } from "../../functions";
-import { isSome } from "../../option";
 import { concat } from "./concat";
 import {
   ObservableLike,
@@ -26,17 +25,11 @@ const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
   subscriber.durationSubscription.inner = pipe(
     subscriber.duration,
     subscribe(subscriber),
-  ).add(subscriber.onDispose);
+  ).add(disposeOnError(subscriber));
 };
 
 class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-
-  readonly onDispose = (error?: Exception) => {
-    if (isSome(error)) {
-      this.dispose(error);
-    }
-  };
 
   constructor(
     delegate: SubscriberLike<T>,

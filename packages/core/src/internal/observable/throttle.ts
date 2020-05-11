@@ -1,10 +1,10 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
-  Exception,
+  disposeOnError,
 } from "../../disposable";
 import { pipe } from "../../functions";
-import { none, Option, isNone, isSome } from "../../option";
+import { none, Option, isNone } from "../../option";
 import { fromValue } from "./fromValue";
 import {
   ObservableLike,
@@ -47,19 +47,13 @@ const setupDurationSubscription = <T>(
     subscriber.durationSelector(next),
     onNotify(subscriber.onNotify),
     subscribe(subscriber),
-  ).add(subscriber.onDurationDispose);
+  ).add(disposeOnError(subscriber));
 };
 
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: Option<T> = none;
   private hasValue = false;
-
-  readonly onDurationDispose = (error?: Exception) => {
-    if (isSome(error)) {
-      this.dispose(error);
-    }
-  };
 
   readonly onNotify = (_?: unknown) => {
     if (this.hasValue) {

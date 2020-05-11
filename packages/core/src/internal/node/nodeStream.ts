@@ -23,7 +23,6 @@ export const createDisposableNodeStream = <
   const retval = createDisposableValue<T>(stream, dispose);
 
   const onError = (cause: any) => {
-    debugger;
     retval.dispose({ cause });
   };
   stream.on("error", onError);

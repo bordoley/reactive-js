@@ -1,4 +1,9 @@
 import { isSome, none } from "./option.js";
+export const disposeOnError = (disposable) => (error) => {
+    if (isSome(error)) {
+        disposable.dispose(error);
+    }
+};
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {
