@@ -22,8 +22,12 @@ const now: Factory<number> = supportsPerformanceNow
   : () => Date.now();
 
 const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
-  const immediate = setImmediate(cb);
-  return createDisposable(bind(clearImmediate,immediate));
+  const timeout = setImmediate(() => {
+    cb();
+    dispose(disposable);
+  });
+  const disposable = createDisposable(bind(clearImmediate, timeout));
+  return disposable;
 };
 
 const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
@@ -42,11 +46,11 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
 };
 
 const scheduleDelayed = (cb: SideEffect, delay: number) => {
-  const disposable = createDisposable(() => clearTimeout(timeout));
   const timeout = setTimeout(() => {
     cb();
     dispose(disposable);
   }, delay);
+  const disposable = createDisposable(bind(clearTimeout, timeout));
   return disposable;
 };
 
