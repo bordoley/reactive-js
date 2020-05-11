@@ -1,11 +1,10 @@
-import { Operator, compose, pipe, returns, identity } from "./functions.ts";
+import { Operator, compose, pipe, returns } from "./functions.ts";
 import { SchedulerLike } from "./scheduler.ts";
 import {
   ObservableLike,
   endWith,
   map as mapObs,
   mapTo,
-  fromArray,
   genMap,
   keepType,
   onNotify,
@@ -20,9 +19,6 @@ import {
   compute,
   concatMap,
   fromIterator,
-  concat,
-  never,
-  publish,
   StreamLike,
 } from "./observable.ts";
 import { toPausableScheduler } from "./scheduler.ts";
@@ -32,6 +28,7 @@ import {
   map as mapStream,
   lift,
 } from "./streamable.ts";
+import { createObservable } from "./internal/observable/createObservable.ts";
 
 export const enum FlowMode {
   Resume = 1,
@@ -211,9 +208,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     scheduler: SchedulerLike,
     replayCount?: number,
   ): StreamLike<FlowEvent<T>, FlowMode> {
-    const op = (events: ObservableLike<FlowEvent<T>>) =>
-      using(scheduler => {
-        const eventsSubscription = pipe(
+    const op = (events: ObservableLike<FlowEvent<T>>) => 
+      using(scheduler => pipe(
           events,
           takeWhile(ev => ev.type == FlowEventType.Next),
           keepType(isNext),
@@ -223,17 +219,16 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
             this._acc = acc;
           }),
           subscribe(scheduler),
-        );
+        ),
 
-        const flowModeObs = pipe(
-          fromArray<FlowMode>()([FlowMode.Pause, FlowMode.Resume]),
-          x => concat(x, never()),
-          publish(scheduler),
-        ).add(eventsSubscription);
-        eventsSubscription.add(flowModeObs);
-
-        return flowModeObs;
-      }, identity);
+        eventsSubscription => createObservable(
+          dispatcher => {
+            dispatcher.dispatch(FlowMode.Pause);
+            dispatcher.dispatch(FlowMode.Resume);
+            eventsSubscription.add(dispatcher);
+          }
+        )
+      );
     return createStreamable(op).stream(scheduler, replayCount);
   }
 }
