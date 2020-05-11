@@ -25,11 +25,13 @@
 
 ### Functions
 
+* [complete](_flowable_.md#const-complete)
 * [decodeWithCharset](_flowable_.md#const-decodewithcharset)
 * [empty](_flowable_.md#const-empty)
 * [fromObservable](_flowable_.md#const-fromobservable)
 * [fromValue](_flowable_.md#const-fromvalue)
 * [map](_flowable_.md#const-map)
+* [next](_flowable_.md#const-next)
 
 ## Type aliases
 
@@ -54,7 +56,7 @@ ___
       switch (ev.type) {
         case FlowEventType.Next: {
           const data = textEncoder.encode(ev.data);
-          return { type: FlowEventType.Next, data };
+          return next(data);
         }
         case FlowEventType.Complete: {
           return ev;
@@ -65,6 +67,18 @@ ___
 )
 
 ## Functions
+
+### `Const` complete
+
+▸ **complete**<**T**>(): *[FlowEvent](_flowable_.md#flowevent)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[FlowEvent](_flowable_.md#flowevent)‹T›*
+
+___
 
 ### `Const` decodeWithCharset
 
@@ -152,3 +166,21 @@ Name | Type |
 `v` | TA |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+
+___
+
+### `Const` next
+
+▸ **next**<**T**>(`data`: T): *[FlowEvent](_flowable_.md#flowevent)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`data` | T |
+
+**Returns:** *[FlowEvent](_flowable_.md#flowevent)‹T›*
