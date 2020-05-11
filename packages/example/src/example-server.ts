@@ -3,7 +3,7 @@ import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import {
   encodeUtf8,
-  generate,
+  fromObservable,
   map as mapFlowable,
   FlowableLike,
 } from "@reactive-js/core/lib/flowable";
@@ -23,6 +23,7 @@ import {
   map,
   subscribe,
   fromValue,
+  generate,
   ObservableLike,
   onNotify,
   catchError,
@@ -97,7 +98,7 @@ const routerHandlerEventStream: HttpServer<
   HttpResponse<FlowableLike<Uint8Array>>
 > = _ => {
   const body = pipe(
-    generate(increment, returns<number>(0), { delay: 1000 }),
+    fromObservable(generate(increment, returns<number>(0), { delay: 1000 })),
     mapFlowable(
       data =>
         `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
