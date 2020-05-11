@@ -1,4 +1,9 @@
-import { test, describe, expectArrayEquals, expectTrue } from "../src/internal/testing";
+import {
+  test,
+  describe,
+  expectArrayEquals,
+  expectTrue,
+} from "../src/internal/testing";
 import { pipe } from "../src/functions";
 import { identity, lift } from "../src/streamable";
 import { toStateStore } from "../src/stateStore";

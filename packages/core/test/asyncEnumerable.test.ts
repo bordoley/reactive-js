@@ -1,14 +1,15 @@
 import {
+  done,
+  continue_,
   reduce,
   reduceAsync,
-  ReducerRequestType,
   fromArray,
   fromIterable,
   generate,
 } from "../src/asyncEnumerable";
 import { Exception } from "../src/disposable";
 import { pipe, increment, returns } from "../src/functions";
-import { subscribe, onNotify, fromValue, toValue } from "../src/observable";
+import { fromValue, subscribe, onNotify, toValue } from "../src/observable";
 import { none, Option } from "../src/option";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
@@ -26,13 +27,7 @@ export const tests = describe(
 
     pipe(
       enumerable,
-      reduce(
-        (acc, next) => ({
-          type: ReducerRequestType.Continue,
-          acc: acc + next,
-        }),
-        returns<number>(0),
-      ),
+      reduce((acc, next) => continue_(acc + next), returns<number>(0)),
       toValue(),
       expectEquals(21),
     );
@@ -40,17 +35,7 @@ export const tests = describe(
     pipe(
       enumerable,
       reduce(
-        (acc, next) =>
-          acc > 0
-            ? {
-                type: ReducerRequestType.Done,
-                acc: acc + next,
-              }
-            : {
-                type: ReducerRequestType.Continue,
-                acc: acc + next,
-              },
-
+        (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
         returns<number>(0),
       ),
       toValue(),
@@ -58,44 +43,32 @@ export const tests = describe(
     );
   }),
 
-  test("reduceAsync", () => {
-    const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
-
-    pipe(
-      enumerable,
-      reduceAsync(
-        (acc, next) =>
-          fromValue()({
-            type: ReducerRequestType.Continue,
-            acc: acc + next,
-          }),
-        returns<number>(0),
-      ),
-      toValue(),
-      expectEquals(21),
-    );
-
-    pipe(
-      enumerable,
-      reduceAsync(
-        (acc, next) =>
-          fromValue()(
-            acc > 0
-              ? {
-                  type: ReducerRequestType.Done,
-                  acc: acc + next,
-                }
-              : {
-                  type: ReducerRequestType.Continue,
-                  acc: acc + next,
-                },
-          ),
-        returns<number>(0),
-      ),
-      toValue(),
-      expectEquals(3),
-    );
-  }),
+  describe(
+    "reduceAsync",
+    test("when the reducer early terminates", () =>
+      pipe(
+        [1, 2, 3, 4, 5, 6],
+        fromIterable,
+        reduceAsync(
+          (acc, next) =>
+            fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)),
+          returns<number>(0),
+        ),
+        toValue(),
+        expectEquals(3),
+      )),
+    test("when the reducer never terminates", () =>
+      pipe(
+        [1, 2, 3, 4, 5, 6],
+        fromIterable,
+        reduceAsync(
+          (acc, next) => fromValue()(continue_(acc + next)),
+          returns<number>(0),
+        ),
+        toValue(),
+        expectEquals(21),
+      )),
+  ),
 
   test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();

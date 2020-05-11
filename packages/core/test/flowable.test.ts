@@ -32,11 +32,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const stream = pipe(
-      [
-        Uint8Array.from([226]),
-        Uint8Array.from([130]),
-        Uint8Array.from([172]),
-      ],
+      [Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])],
       fromArray(),
       fromObservable,
       decodeWithCharset(),
@@ -51,7 +47,7 @@ export const tests = describe(
 
     pipe(f, expectToHaveBeenCalledTimes(2));
     pipe(f.calls[0][0].type, expectEquals(FlowEventType.Next));
-    pipe(f.calls[0][0].data, expectEquals(String.fromCodePoint(8364)));    
+    pipe(f.calls[0][0].data, expectEquals(String.fromCodePoint(8364)));
     expectTrue(subscription.isDisposed);
     expectTrue(stream.isDisposed);
   }),
@@ -76,12 +72,9 @@ export const tests = describe(
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
 
-    const stream = pipe(
-      str,
-      fromValue,
-      encodeUtf8,
-      decodeWithCharset(),
-    ).stream(scheduler);
+    const stream = pipe(str, fromValue, encodeUtf8, decodeWithCharset()).stream(
+      scheduler,
+    );
 
     let result = "";
     const subscription = pipe(

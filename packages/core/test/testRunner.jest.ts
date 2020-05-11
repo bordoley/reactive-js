@@ -4,7 +4,7 @@
 
 import { runTests } from "../../../scripts/jestTestRunner";
 
-//import { tests as asyncEnumerableTests } from "./asyncEnumerable.test";
+import { tests as asyncEnumerableTests } from "./asyncEnumerable.test";
 import { tests as disposableTests } from "./disposable.test";
 import { tests as enumerableTests } from "./enumerable.test";
 import { tests as flowableTests } from "./flowable.test";
@@ -17,7 +17,7 @@ import { tests as stateStoreTests } from "./stateStore.test";
 import { tests as streamableTests } from "./streamable.test";
 
 export const tests = [
-  //asyncEnumerableTests,
+  asyncEnumerableTests,
   disposableTests,
   enumerableTests,
   flowableTests,
