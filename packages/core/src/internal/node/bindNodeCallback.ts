@@ -1,32 +1,33 @@
 import { createObservable, ObservableLike } from "../../observable";
 import { none } from "../../option";
 import { dispose } from "../../disposable";
+import { Factory } from "../../functions";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(
   callbackFunc: (
     callback: (err: unknown, res1: R1, res2: R2, res3: R3, res4: R4) => unknown,
   ) => unknown,
   selector: (r1: R1, r2: R2, r3: R3, r4: R4) => T,
-): () => ObservableLike<T>;
+): Factory<ObservableLike<T>>;
 export function bindNodeCallback<R1, R2, R3, T>(
   callbackFunc: (
     callback: (err: unknown, res1: R1, res2: R2, res3: R3) => unknown,
   ) => unknown,
   selector: (r1: R1, r2: R2, r3: R3) => T,
-): () => ObservableLike<T>;
+): Factory<ObservableLike<T>>;
 export function bindNodeCallback<R1, R2, T>(
   callbackFunc: (
     callback: (err: unknown, res1: R1, res2: R2) => unknown,
   ) => unknown,
   selector: (r1: R1, r2: R2) => T,
-): () => ObservableLike<T>;
+): Factory<ObservableLike<T>>;
 export function bindNodeCallback<R1, T>(
   callbackFunc: (callback: (err: unknown, res1: R1) => unknown) => unknown,
   selector: (r1: R1) => T,
-): () => ObservableLike<T>;
+): Factory<ObservableLike<T>>;
 export function bindNodeCallback(
   callbackFunc: (callback: (err: unknown) => unknown) => unknown,
-): () => ObservableLike<void>;
+): Factory<ObservableLike<void>>;
 
 export function bindNodeCallback<A1, R1, R2, R3, R4, T>(
   callbackFunc: (

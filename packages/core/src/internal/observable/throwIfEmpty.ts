@@ -6,13 +6,14 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 import { dispose } from "../../disposable";
+import { Factory } from "../../functions";
 
 class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private isEmpty = true;
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly factory: () => unknown,
+    private readonly factory: Factory<unknown>,
   ) {
     super(delegate);
     this.add(error => {
@@ -38,7 +39,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param factory A factory function invoked to produce the error to be thrown.
  */
 export const throwIfEmpty = <T>(
-  factory: () => unknown,
+  factory: Factory<unknown>,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ThrowIfEmptySubscriber(subscriber, factory);

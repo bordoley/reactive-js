@@ -1,4 +1,4 @@
-import { referenceEquals, Operator } from "../../functions.ts";
+import { referenceEquals, Operator, Equality, Predicate } from "../../functions.ts";
 import { EnumerableLike } from "./interfaces.ts";
 
 /**
@@ -7,7 +7,7 @@ import { EnumerableLike } from "./interfaces.ts";
  * @param predicate The predicate function.
  */
 export const someSatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
   const enumerator = enumerable.enumerate();
   while (enumerator.move()) {
@@ -26,5 +26,5 @@ export const someSatisfy = <T>(
  */
 export const contains = <T>(
   value: T,
-  equals: (a: T, b: T) => boolean = referenceEquals,
+  equals: Equality<T> = referenceEquals,
 ) => someSatisfy((b: T) => equals(value, b));

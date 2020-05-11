@@ -1,4 +1,4 @@
-import { pipe } from "../../functions.ts";
+import { pipe, Selector2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
 import {
   SubscriberLike,
@@ -25,7 +25,7 @@ const notifyDelegate = <TA, TB, TC>(
   }
 };
 
-class ZipWithLatestFromSubscriber<TA, TB, TC> extends AbstractSubscriber<TA> {
+class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
@@ -42,9 +42,9 @@ class ZipWithLatestFromSubscriber<TA, TB, TC> extends AbstractSubscriber<TA> {
   readonly queue: TA[] = [];
 
   constructor(
-    readonly delegate: SubscriberLike<TC>,
+    readonly delegate: SubscriberLike<T>,
     other: ObservableLike<TB>,
-    readonly selector: (a: TA, b: TB) => TC,
+    readonly selector: Selector2<TA, TB, T> 
   ) {
     super(delegate);
     this.selector = selector;
@@ -87,11 +87,11 @@ class ZipWithLatestFromSubscriber<TA, TB, TC> extends AbstractSubscriber<TA> {
  * @param other
  * @param selector
  */
-export const zipWithLatestFrom = <TA, TB, TC>(
+export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC,
-): ObservableOperator<TA, TC> => {
-  const operator = (subscriber: SubscriberLike<TC>) =>
+  selector: Selector2<TA, TB, T> 
+): ObservableOperator<TA, T> => {
+  const operator = (subscriber: SubscriberLike<T>) =>
     new ZipWithLatestFromSubscriber(subscriber, other, selector);
   operator.isSynchronous = false;
   return lift(operator);

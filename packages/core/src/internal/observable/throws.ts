@@ -1,4 +1,4 @@
-import { Operator } from "../../functions";
+import { Operator, Factory } from "../../functions";
 import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 import {
@@ -11,7 +11,7 @@ import { dispose } from "../../disposable";
 class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(
     subscriber: SubscriberLike<T>,
-    private readonly f: () => unknown,
+    private readonly f: Factory<unknown>,
     readonly delay: number,
   ) {
     super(subscriber);
@@ -31,7 +31,7 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
  */
 export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
-): Operator<() => unknown, ObservableLike<T>> => errorFactory => {
+): Operator<Factory<unknown>, ObservableLike<T>> => errorFactory => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new ThrowsProducer(subscriber, errorFactory, delay);
 

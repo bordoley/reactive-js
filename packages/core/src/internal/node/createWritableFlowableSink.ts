@@ -6,7 +6,7 @@ import {
   FlowEvent,
   FlowableSinkLike,
 } from "../../flowable";
-import { pipe, bind } from "../../functions";
+import { pipe, bind, Factory } from "../../functions";
 import {
   createObservable,
   onNotify,
@@ -49,7 +49,7 @@ const createWritableEventsObservable = (
   });
 
 const createWritableAndSetupEventSubscription = (
-  factory: () => DisposableValueLike<Writable>,
+  factory: Factory<DisposableValueLike<Writable>>,
   events: ObservableLike<FlowEvent<Uint8Array>>,
 ) => (scheduler: SchedulerLike) => {
   const writable = factory();
@@ -76,7 +76,7 @@ const createWritableAndSetupEventSubscription = (
 };
 
 export const createWritableFlowableSink = (
-  factory: () => DisposableValueLike<Writable>,
+  factory: Factory<DisposableValueLike<Writable>>,
 ): FlowableSinkLike<Uint8Array> =>
   createStreamable(events =>
     using(

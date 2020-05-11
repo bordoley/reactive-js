@@ -1,5 +1,5 @@
 import { disposed, disposeOnError, dispose } from "../../disposable";
-import { pipe } from "../../functions";
+import { pipe, Operator } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
 import {
@@ -34,7 +34,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
 
   constructor(
     delegate: SubscriberLike<readonly T[]>,
-    private readonly durationSelector: (next: T) => ObservableLike<unknown>,
+    private readonly durationSelector: Operator<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
   ) {
     super(delegate);
@@ -78,7 +78,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
  */
 export function buffer<T>(
   options: {
-    duration?: ((next: T) => ObservableLike<unknown>) | number;
+    duration?: Operator<T, ObservableLike<unknown>> | number;
     maxBufferSize?: number;
   } = {},
 ): ObservableOperator<T, readonly T[]> {

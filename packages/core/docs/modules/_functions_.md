@@ -6,7 +6,21 @@
 
 ### Type aliases
 
+* [Comparator](_functions_.md#comparator)
+* [Equality](_functions_.md#equality)
+* [Factory](_functions_.md#factory)
+* [Generator](_functions_.md#generator)
 * [Operator](_functions_.md#operator)
+* [Predicate](_functions_.md#predicate)
+* [Reducer](_functions_.md#reducer)
+* [Selector2](_functions_.md#selector2)
+* [Selector3](_functions_.md#selector3)
+* [Selector4](_functions_.md#selector4)
+* [Selector5](_functions_.md#selector5)
+* [Selector6](_functions_.md#selector6)
+* [Selector7](_functions_.md#selector7)
+* [Selector8](_functions_.md#selector8)
+* [Selector9](_functions_.md#selector9)
 
 ### Variables
 
@@ -33,21 +47,278 @@
 
 ## Type aliases
 
-###  Operator
+###  Comparator
 
-Ƭ **Operator**: *function*
+Ƭ **Comparator**: *function*
 
 A Unary function that transforms a value of type A into a value of type B
 
 #### Type declaration:
 
-▸ (`src`: A): *B*
+▸ (`a`: T, `b`: T): *number*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`src` | A |
+`a` | T |
+`b` | T |
+
+___
+
+###  Equality
+
+Ƭ **Equality**: *function*
+
+#### Type declaration:
+
+▸ (`a`: T, `b`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+___
+
+###  Factory
+
+Ƭ **Factory**: *function*
+
+#### Type declaration:
+
+▸ (): *T*
+
+___
+
+###  Generator
+
+Ƭ **Generator**: *function*
+
+#### Type declaration:
+
+▸ (`prev`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`prev` | T |
+
+___
+
+###  Operator
+
+Ƭ **Operator**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+###  Predicate
+
+Ƭ **Predicate**: *function*
+
+#### Type declaration:
+
+▸ (`a`: T): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+
+___
+
+###  Reducer
+
+Ƭ **Reducer**: *function*
+
+#### Type declaration:
+
+▸ (`acc`: TAcc, `next`: T): *TAcc*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+___
+
+###  Selector2
+
+Ƭ **Selector2**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+
+___
+
+###  Selector3
+
+Ƭ **Selector3**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+___
+
+###  Selector4
+
+Ƭ **Selector4**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+
+___
+
+###  Selector5
+
+Ƭ **Selector5**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+
+___
+
+###  Selector6
+
+Ƭ **Selector6**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+
+___
+
+###  Selector7
+
+Ƭ **Selector7**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+
+___
+
+###  Selector8
+
+Ƭ **Selector8**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
+
+___
+
+###  Selector9
+
+Ƭ **Selector9**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
+`h` | TH |
+`i` | TI |
 
 ## Variables
 
@@ -65,13 +336,13 @@ ___
 
 ### `Const` ignore
 
-• **ignore**: *(Anonymous function)* = returns<void>(none)
+• **ignore**: *(Anonymous function)* = returns<void>(undefined)
 
 ## Functions
 
 ### `Const` arrayEquals
 
-▸ **arrayEquals**<**T**>(`valuesAreEqual`: function): *(Anonymous function)*
+▸ **arrayEquals**<**T**>(`valuesAreEqual`: [Equality](_functions_.md#equality)‹T›): *(Anonymous function)*
 
 **Type parameters:**
 
@@ -79,16 +350,9 @@ ___
 
 **Parameters:**
 
-▪ **valuesAreEqual**: *function*
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | T |
-`b` | T |
+`valuesAreEqual` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *(Anonymous function)*
 
@@ -96,7 +360,7 @@ ___
 
 ###  bind
 
-▸ **bind**<**T**>(`call`: function): *function*
+▸ **bind**<**T**>(`factory`: [Factory](_functions_.md#factory)‹T›): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -104,15 +368,13 @@ ___
 
 **Parameters:**
 
-▪ **call**: *function*
+Name | Type |
+------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹T› |
 
-▸ (): *T*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **T**>(`call`: function, `a`: TA): *function*
+▸ **bind**<**TA**, **T**>(`op`: [Operator](_functions_.md#operator)‹TA, T›, `a`: TA): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -122,23 +384,14 @@ ___
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`op` | [Operator](_functions_.md#operator)‹TA, T› |
 `a` | TA |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **T**>(`call`: function, `a`: TA, `b`: TB): *function*
+▸ **bind**<**TA**, **TB**, **T**>(`selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›, `a`: TA, `b`: TB): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -150,26 +403,15 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
 `a` | TA |
 `b` | TB |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▪ **b**: *TB*
-
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **TC**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC): *function*
+▸ **bind**<**TA**, **TB**, **TC**, **T**>(`selector`: [Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, `a`: TA, `b`: TB, `c`: TC): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -183,29 +425,16 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector3](_functions_.md#selector3)‹TA, TB, TC, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▪ **b**: *TB*
-
-▪ **c**: *TC*
-
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD): *function*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **T**>(`selector`: [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -221,32 +450,17 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
 `d` | TD |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▪ **b**: *TB*
-
-▪ **c**: *TC*
-
-▪ **d**: *TD*
-
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *function*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`selector`: [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -264,35 +478,18 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
 `d` | TD |
 `e` | TE |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▪ **b**: *TB*
-
-▪ **c**: *TC*
-
-▪ **d**: *TD*
-
-▪ **e**: *TE*
-
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *function*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`selector`: [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -312,14 +509,9 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
@@ -327,23 +519,9 @@ Name | Type |
 `e` | TE |
 `f` | TF |
 
-▪ **a**: *TA*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▪ **b**: *TB*
-
-▪ **c**: *TC*
-
-▪ **d**: *TD*
-
-▪ **e**: *TE*
-
-▪ **f**: *TF*
-
-**Returns:** *function*
-
-▸ (): *T*
-
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`call`: function, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *function*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`selector`: [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -365,14 +543,9 @@ Name | Type |
 
 **Parameters:**
 
-▪ **call**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
+`selector` | [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
@@ -381,37 +554,21 @@ Name | Type |
 `f` | TF |
 `g` | TG |
 
-▪ **a**: *TA*
-
-▪ **b**: *TB*
-
-▪ **c**: *TC*
-
-▪ **d**: *TD*
-
-▪ **e**: *TE*
-
-▪ **f**: *TF*
-
-▪ **g**: *TG*
-
-**Returns:** *function*
-
-▸ (): *T*
+**Returns:** *[Factory](_functions_.md#factory)‹T›*
 
 ___
 
 ###  call
 
-▸ **call**<**T**>(): *[Operator](_functions_.md#operator)‹function, T›*
+▸ **call**<**T**>(): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, T›*
 
-▸ **call**<**TA**, **T**>(`a`: TA): *[Operator](_functions_.md#operator)‹function, T›*
+▸ **call**<**TA**, **T**>(`a`: TA): *[Operator](_functions_.md#operator)‹[Operator](_functions_.md#operator)‹TA, T›, T›*
 
 **Type parameters:**
 
@@ -425,9 +582,9 @@ Name | Type |
 ------ | ------ |
 `a` | TA |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[Operator](_functions_.md#operator)‹TA, T›, T›*
 
-▸ **call**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Operator](_functions_.md#operator)‹function, T›*
+▸ **call**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Operator](_functions_.md#operator)‹[Selector2](_functions_.md#selector2)‹TA, TB, T›, T›*
 
 **Type parameters:**
 
@@ -444,9 +601,9 @@ Name | Type |
 `a` | TA |
 `b` | TB |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[Selector2](_functions_.md#selector2)‹TA, TB, T›, T›*
 
-▸ **call**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Operator](_functions_.md#operator)‹function, T›*
+▸ **call**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Operator](_functions_.md#operator)‹[Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, T›*
 
 **Type parameters:**
 
@@ -466,9 +623,9 @@ Name | Type |
 `b` | TB |
 `c` | TC |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, T›*
 
-▸ **call**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Operator](_functions_.md#operator)‹function, T›*
+▸ **call**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Operator](_functions_.md#operator)‹[Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›, T›*
 
 **Type parameters:**
 
@@ -491,7 +648,7 @@ Name | Type |
 `c` | TC |
 `d` | TD |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, T›*
+**Returns:** *[Operator](_functions_.md#operator)‹[Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›, T›*
 
 ___
 

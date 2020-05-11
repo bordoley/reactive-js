@@ -1,4 +1,4 @@
-import { referenceEquals } from "../../functions";
+import { referenceEquals, Equality } from "../../functions";
 import { Option } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
@@ -16,7 +16,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
 
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly equals: (a: T, b: T) => boolean,
+    private readonly equals: Equality<T>,
   ) {
     super(delegate);
     this.add(delegate);
@@ -45,7 +45,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equals: (a: T, b: T) => boolean = referenceEquals,
+  equals: Equality<T> = referenceEquals,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equals);

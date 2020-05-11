@@ -1,5 +1,5 @@
 import { FlowableLike, fromValue } from "../../../../core/lib/flowable.ts";
-import { Operator } from "../../../../core/lib/functions.ts";
+import { Operator, Selector2 } from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.ts";
@@ -26,7 +26,7 @@ export const writeHttpMessageHeaders = <T>(
 };
 
 export const encodeHttpMessageWithCharset = (
-  encode: (v: string, charset: string) => Uint8Array,
+  encode: Selector2<string, string, Uint8Array>,
   contentType: string | MediaType,
 ): Operator<HttpMessage<string>, HttpMessage<Uint8Array>> => {
   const parsedContentType =
@@ -52,7 +52,7 @@ export const encodeHttpMessageWithCharset = (
 };
 
 export const decodeHttpMessageWithCharset = (
-  decoder: (v: Uint8Array, charset: string) => string,
+  decode: Selector2<Uint8Array, string, string>,
 ): Operator<HttpMessage<Uint8Array>, HttpMessage<string>> => ({
   contentInfo,
   ...msg
@@ -60,7 +60,7 @@ export const decodeHttpMessageWithCharset = (
   const params = contentInfo?.contentType?.params ?? {};
   const charset = params["charset"] ?? "utf-8";
 
-  const body = decoder(msg.body, charset);
+  const body = decode(msg.body, charset);
 
   return {
     ...msg,

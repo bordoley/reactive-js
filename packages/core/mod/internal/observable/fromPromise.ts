@@ -1,6 +1,7 @@
 import { createObservable } from "./createObservable.ts";
 import { ObservableLike, DispatcherLike } from "./interfaces.ts";
 import { toErrorHandler, dispose } from "../../disposable.ts";
+import { Factory } from "../../functions.ts";
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
@@ -9,7 +10,7 @@ import { toErrorHandler, dispose } from "../../disposable.ts";
  * @param factory Factory function to create a new `Promise` instance.
  */
 export const fromPromise = <T>(
-  factory: () => Promise<T>,
+  factory: Factory<Promise<T>>,
 ): ObservableLike<T> => {
   const onSubscribe = (dispatcher: DispatcherLike<T>) => {
     factory().then(

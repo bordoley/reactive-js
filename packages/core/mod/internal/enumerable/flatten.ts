@@ -1,4 +1,4 @@
-import { compose } from "../../functions.ts";
+import { compose, Operator } from "../../functions.ts";
 import { isNone, isSome, none, Option } from "../../option.ts";
 import {
   EnumerableLike,
@@ -60,5 +60,5 @@ export const flatten = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
  * @param mapper
  */
 export const flatMap = <TA, TB>(
-  mapper: (v: TA) => EnumerableLike<TB>,
+  mapper: Operator<TA, EnumerableLike<TB>>,
 ): EnumerableOperator<TA, TB> => compose(map(mapper), flatten());

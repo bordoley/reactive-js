@@ -60,7 +60,7 @@ ___
 
 ### `Const` fromEvent
 
-▸ **fromEvent**<**T**>(`target`: EventTarget, `eventName`: string, `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromEvent**<**T**>(`target`: EventTarget, `eventName`: string, `selector`: [Operator](_functions_.md#operator)‹Event, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -68,18 +68,10 @@ ___
 
 **Parameters:**
 
-▪ **target**: *EventTarget*
-
-▪ **eventName**: *string*
-
-▪ **selector**: *function*
-
-▸ (`ev`: Event): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`ev` | Event |
+`target` | EventTarget |
+`eventName` | string |
+`selector` | [Operator](_functions_.md#operator)‹Event, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*

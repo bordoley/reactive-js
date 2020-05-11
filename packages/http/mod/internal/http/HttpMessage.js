@@ -34,11 +34,11 @@ export const encodeHttpMessageWithCharset = (encode, contentType) => {
         };
     };
 };
-export const decodeHttpMessageWithCharset = (decoder) => ({ contentInfo, ...msg }) => {
+export const decodeHttpMessageWithCharset = (decode) => ({ contentInfo, ...msg }) => {
     var _a, _b, _c;
     const params = (_b = (_a = contentInfo === null || contentInfo === void 0 ? void 0 : contentInfo.contentType) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : {};
     const charset = (_c = params["charset"]) !== null && _c !== void 0 ? _c : "utf-8";
-    const body = decoder(msg.body, charset);
+    const body = decode(msg.body, charset);
     return {
         ...msg,
         body,

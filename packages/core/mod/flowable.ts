@@ -4,6 +4,8 @@ import {
   pipe,
   returns,
   isReferenceEqualTo,
+  Factory,
+  Reducer,
 } from "./functions.ts";
 import { createObservable } from "./internal/observable/createObservable.ts";
 import {
@@ -93,7 +95,7 @@ export const fromValue = <T>(data: T): FlowableLike<T> =>
   );
 
 export const map = <TA, TB>(
-  mapper: (v: TA) => TB,
+  mapper: Operator<TA, TB>,
 ): Operator<FlowableLike<TA>, FlowableLike<TB>> =>
   mapStream((ev: FlowEvent<TA>) =>
     ev.type === FlowEventType.Next ? pipe(ev.data, mapper, next) : ev,
@@ -203,7 +205,7 @@ export interface FlowableSinkAccumulatorLike<T, TAcc>
 class FlowableSinkAccumulatorImpl<T, TAcc>
   implements FlowableSinkAccumulatorLike<T, TAcc> {
   constructor(
-    private readonly reducer: (acc: TAcc, next: T) => TAcc,
+    private readonly reducer: Reducer<T, TAcc>,
     private _acc: TAcc,
   ) {}
 
@@ -243,7 +245,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 
 /** @experimental */
 export const createFlowableSinkAccumulator = <T, TAcc>(
-  reducer: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
 ): FlowableSinkAccumulatorLike<T, TAcc> =>
   new FlowableSinkAccumulatorImpl(reducer, initialValue());

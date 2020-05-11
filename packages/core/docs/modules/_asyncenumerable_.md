@@ -133,7 +133,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -144,23 +144,10 @@ that is applied to an accumulator value.
 
 **Parameters:**
 
-▪ **generator**: *function*
-
-The generator function.
-
-▸ (`acc`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | T |
-
-▪ **initialValue**: *function*
-
-Factory function to generate the initial accumulator.
-
-▸ (): *T*
+Name | Type | Description |
+------ | ------ | ------ |
+`generator` | [Generator](_functions_.md#generator)‹T› | The generator function. |
+`initialValue` | [Factory](_functions_.md#factory)‹T› | Factory function to generate the initial accumulator.  |
 
 **Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 
@@ -168,7 +155,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **reduce**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -189,9 +176,7 @@ Name | Type |
 `acc` | TAcc |
 `next` | TSrc |
 
-▪ **initial**: *function*
-
-▸ (): *TAcc*
+▪ **initial**: *[Factory](_functions_.md#factory)‹TAcc›*
 
 **Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
@@ -199,7 +184,7 @@ ___
 
 ### `Const` reduceAsync
 
-▸ **reduceAsync**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: function): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **reduceAsync**<**TSrc**, **TAcc**>(`reducer`: function, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -220,8 +205,6 @@ Name | Type |
 `acc` | TAcc |
 `next` | TSrc |
 
-▪ **initial**: *function*
-
-▸ (): *TAcc*
+▪ **initial**: *[Factory](_functions_.md#factory)‹TAcc›*
 
 **Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹TSrc›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*

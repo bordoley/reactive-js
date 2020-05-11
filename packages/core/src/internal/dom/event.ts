@@ -1,10 +1,11 @@
 import { createObservable, ObservableLike } from "../../observable";
 import { dispose } from "../../disposable";
+import { Operator } from "../../functions";
 
 export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
-  selector: (ev: Event) => T,
+  selector: Operator<Event, T>,
 ): ObservableLike<T> =>
   createObservable(dispatcher => {
     const listener = (event: Event) => {

@@ -7,11 +7,12 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 import { dispose } from "../../disposable.ts";
+import { Factory, Reducer } from "../../functions.ts";
 
 class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
-    private readonly reducer: (acc: TAcc, next: T) => TAcc,
+    private readonly reducer: Reducer<T, TAcc>,
     private acc: TAcc,
   ) {
     super(delegate);
@@ -39,8 +40,8 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
  * @param initialValue The initial accumulation value.
  */
 export const reduce = <T, TAcc>(
-  reducer: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ReduceSubscriber(subscriber, reducer, initialValue());

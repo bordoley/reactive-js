@@ -4,7 +4,7 @@ import {
   disposeOnError,
   dispose,
 } from "../../disposable";
-import { pipe } from "../../functions";
+import { pipe, Operator } from "../../functions";
 import { none, Option, isNone } from "../../option";
 import { fromValue } from "./fromValue";
 import {
@@ -69,7 +69,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   constructor(
     delegate: SubscriberLike<T>,
-    readonly durationSelector: (next: T) => ObservableLike<unknown>,
+    readonly durationSelector: Operator<T, ObservableLike<unknown>>,
     private readonly mode: ThrottleMode,
   ) {
     super(delegate);
@@ -112,7 +112,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param mode The throttle mode.
  */
 export function throttle<T>(
-  duration: (next: T) => ObservableLike<unknown>,
+  duration: Operator<T, ObservableLike<unknown>>,
   mode?: ThrottleMode,
 ): ObservableOperator<T, T>;
 
@@ -130,7 +130,7 @@ export function throttle<T>(
 ): ObservableOperator<T, T>;
 
 export function throttle<T>(
-  duration: ((next: T) => ObservableLike<unknown>) | number,
+  duration: Operator<T, ObservableLike<unknown>> | number,
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableOperator<T, T> {
   const durationSelector =

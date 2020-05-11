@@ -1,33 +1,49 @@
-import { none } from "./option";
+/** A Unary function that transforms a value of type A into a value of type B */
 
-export function call<T>(): Operator<() => T, T>;
-export function call<TA, T>(a: TA): Operator<(a: TA) => T, T>;
-export function call<TA, TB, T>(a: TA, b: TB): Operator<(a: TA, b: TB) => T, T>;
+export type Comparator<T> = (a: T, b: T) => number;
+export type Equality<T> = (a: T, b: T) => boolean;
+export type Factory<T> = () => T;
+export type Generator<T> = (prev: T) => T;
+export type Operator<TA, T> = (a: TA) => T;
+export type Predicate<T> = (a: T) => boolean;
+export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
+export type Selector2<TA, TB, T> = (a: TA, b: TB) => T;
+export type Selector3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
+export type Selector4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
+export type Selector5<TA, TB, TC, TD, TE, T> = (a: TA, b: TB, c: TC, d: TD, e: TE) => T;
+export type Selector6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T;
+export type Selector7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
+export type Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
+export type Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
+
+export function call<T>(): Operator<Factory<T>, T>;
+export function call<TA, T>(a: TA): Operator<Operator<TA, T>, T>;
+export function call<TA, TB, T>(a: TA, b: TB): Operator<Selector2<TA, TB, T>, T>;
 export function call<TA, TB, TC, T>(
   a: TA,
   b: TB,
   c: TC,
-): Operator<(a: TA, b: TB, c: TC) => T, T>;
+): Operator<Selector3<TA, TB, TC, T>, T>;
 export function call<TA, TB, TC, TD, T>(
   a: TA,
   b: TB,
   c: TC,
   d: TD,
-): Operator<(a: TA, b: TB, c: TC, d: TD) => T, T>;
+): Operator<Selector4<TA, TB, TC, TD, T>, T>;
 export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
-export function bind<T>(call: () => T): () => T; 
-export function bind<TA, T>(call: (a: TA) => T, a: TA): () => T; 
-export function bind<TA, TB, T>(call: (a: TA, b: TB) => T, a: TA, b: TB): () => T; 
-export function bind<TA, TB, TC, T>(call: (a: TA, b: TB, c: TC) => T, a: TA, b: TB, c: TC): () => T; 
-export function bind<TA, TB, TC, TD, T>(call: (a: TA, b: TB, c: TC, d: TD) => T, a: TA, b: TB, c: TC, d: TD): () => T; 
-export function bind<TA, TB, TC, TD, TE, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE) => T, a: TA, b: TB, c: TC, d: TD, e: TE): () => T; 
-export function bind<TA, TB, TC, TD, TE, TF, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): () => T; 
-export function bind<TA, TB, TC, TD, TE, TF, TG, T>(call: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG): () => T; 
-export function bind<T>(call: (...args: any[]) => T, ...args: any[]): () => T {
-  return () => call(...args);
+export function bind<T>(factory: Factory<T>): Factory<T>; 
+export function bind<TA, T>(op: Operator<TA, T>, a: TA): Factory<T>; 
+export function bind<TA, TB, T>(selector: Selector2<TA, TB, T>, a: TA, b: TB): Factory<T>; 
+export function bind<TA, TB, TC, T>(selector: Selector3<TA, TB, TC, T>, a: TA, b: TB, c: TC): Factory<T>; 
+export function bind<TA, TB, TC, TD, T>(selector: Selector4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): Factory<T>; 
+export function bind<TA, TB, TC, TD, TE, T>(selector: Selector5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): Factory<T>; 
+export function bind<TA, TB, TC, TD, TE, TF, T>(selector: Selector6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): Factory<T>; 
+export function bind<TA, TB, TC, TD, TE, TF, TG, T>(selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG): Factory<T>; 
+export function bind<T>(selector: (...args: any[]) => T, ...args: any[]): Factory<T> {
+  return () => selector(...args);
 }
 
 export const identity = <T>(v: T): T => v;
@@ -38,7 +54,7 @@ export const alwaysFalse = returns(false);
 
 export const alwaysTrue = returns(true);
 
-export const ignore = returns<void>(none);
+export const ignore = returns<void>(undefined);
 
 export const increment = (x: number) => x + 1;
 
@@ -62,15 +78,10 @@ export const sum = (...args: number[]) => {
 }
 
 // FIXME: Would prefer not to have this here.
-export const arrayEquals = <T>(valuesAreEqual: (a: T, b: T) => boolean) => (
+export const arrayEquals = <T>(valuesAreEqual: Equality<T>) => (
   a: readonly T[],
   b: readonly T[],
 ) => a.length === b.length && a.every((v, i) => valuesAreEqual(b[i], v));
-
-/** A Unary function that transforms a value of type A into a value of type B */
-export type Operator<A, B> = {
-  (src: A): B;
-};
 
 export function pipe<T, A>(src: T, op1: Operator<T, A>): A;
 export function pipe<T, A, B>(

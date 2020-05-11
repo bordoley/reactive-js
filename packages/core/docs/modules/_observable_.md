@@ -172,7 +172,7 @@ Symbol thrown when the timeout operator times out
 
 ### `Const` await_
 
-▸ **await_**<**TA**, **TB**>(`mapper`: function): *function*
+▸ **await_**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -182,25 +182,19 @@ Symbol thrown when the timeout operator times out
 
 **Parameters:**
 
-▪ **mapper**: *function*
+Name | Type |
+------ | ------ |
+`mapper` | [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-▸ (`a`: TA): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `a` | TA |
-
-**Returns:** *function*
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
 
 ___
 
@@ -224,7 +218,7 @@ and an optional `maxBufferSize`.
 
 Name | Type |
 ------ | ------ |
-`duration?` | function &#124; number |
+`duration?` | [Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› &#124; number |
 `maxBufferSize?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, keyof T[]›*
@@ -233,7 +227,7 @@ ___
 
 ### `Const` catchError
 
-▸ **catchError**<**T**>(`onError`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **catchError**<**T**>(`onError`: [Operator](_functions_.md#operator)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which catches errors produced by the source and either continues with
 the `ObservableLike` returned from the `onError` callback or swallows the error if
@@ -245,18 +239,9 @@ void is returned.
 
 **Parameters:**
 
-▪ **onError**: *function*
-
-a function that takes source error and either returns an `ObservableLike`
-to continue with or void if the error should be propagated.
-
-▸ (`error`: unknown): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`error` | unknown |
+Name | Type | Description |
+------ | ------ | ------ |
+`onError` | [Operator](_functions_.md#operator)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› &#124; void› | a function that takes source error and either returns an `ObservableLike` to continue with or void if the error should be propagated.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -264,7 +249,7 @@ ___
 
 ###  combineLatest
 
-▸ **combineLatest**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›], `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -279,22 +264,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›] |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›], `selector`: [Selector3](_functions_.md#selector3)‹TA, TB, TC, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -311,23 +288,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›] |
+`selector` | [Selector3](_functions_.md#selector3)‹TA, TB, TC, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›], `selector`: [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -346,24 +314,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›] |
+`selector` | [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›], `selector`: [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -384,25 +342,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›] |
+`selector` | [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›], `selector`: [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -425,26 +372,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›] |
+`selector` | [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›], `selector`: [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -469,27 +404,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›] |
+`selector` | [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›], `selector`: [Selector8](_functions_.md#selector8)‹TA, TB, TC, TD, TE, TF, TG, TH, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -516,28 +438,14 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›] |
+`selector` | [Selector8](_functions_.md#selector8)‹TA, TB, TC, TD, TE, TF, TG, TH, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **combineLatest**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›], `selector`: [Selector9](_functions_.md#selector9)‹TA, TB, TC, TD, TE, TF, TG, TH, TI, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Returns an `ObservableLike` that combines the latest values from
 multiple sources using the specified `selector` function.
@@ -566,25 +474,10 @@ multiple sources using the specified `selector` function.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
-`i` | TI |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›] |
+`selector` | [Selector9](_functions_.md#selector9)‹TA, TB, TC, TD, TE, TF, TG, TH, TI, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -592,7 +485,7 @@ ___
 
 ### `Const` combineLatestWith
 
-▸ **combineLatestWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
+▸ **combineLatestWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 **Type parameters:**
 
@@ -604,18 +497,10 @@ ___
 
 **Parameters:**
 
-▪ **snd**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
+`snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
@@ -623,7 +508,7 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`options?`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **compute**<**T**>(`options?`: object): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
 
@@ -639,7 +524,7 @@ Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -688,7 +573,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: function, `maxBufferSize?`: number): *function*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *function*
 
 **Type parameters:**
 
@@ -698,27 +583,20 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
+Name | Type |
+------ | ------ |
+`mapper` | [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
+`maxBufferSize?` | number |
 
-▸ (`a`: TA): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `a` | TA |
-
-▪`Optional`  **maxBufferSize**: *number*
-
-**Returns:** *function*
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
 
 ___
 
@@ -742,7 +620,7 @@ ___
 
 ### `Const` contains
 
-▸ **contains**<**T**>(`value`: T, `equals`: function): *function*
+▸ **contains**<**T**>(`value`: T, `equals`: [Equality](_functions_.md#equality)‹T›): *function*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any item equal to `value`, otherwise `false`.
@@ -753,18 +631,10 @@ emits any item equal to `value`, otherwise `false`.
 
 **Parameters:**
 
-▪ **value**: *T*
-
-▪`Default value`  **equals**: *function*= referenceEquals
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`value` | T | - | - |
+`equals` | [Equality](_functions_.md#equality)‹T› | referenceEquals |   |
 
 **Returns:** *function*
 
@@ -846,7 +716,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equals`: [Equality](_functions_.md#equality)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -857,19 +727,9 @@ are distinct by comparison from the previous item.
 
 **Parameters:**
 
-▪`Default value`  **equals**: *function*= referenceEquals
-
-Optional equality function that is used to compare
-if an item is distinct from the previous item.
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`equals` | [Equality](_functions_.md#equality)‹T› | referenceEquals | Optional equality function that is used to compare if an item is distinct from the previous item.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -921,7 +781,7 @@ ___
 
 ### `Const` everySatisfy
 
-▸ **everySatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -932,17 +792,9 @@ every value produced by the source, or if the source is empty, otherwise `false`
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function.
-
-▸ (`next`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
@@ -974,7 +826,7 @@ ___
 
 ### `Const` exhaustMap
 
-▸ **exhaustMap**<**TA**, **TB**>(`mapper`: function): *function*
+▸ **exhaustMap**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -984,9 +836,13 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
+Name | Type |
+------ | ------ |
+`mapper` | [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-▸ (`a`: TA): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
@@ -994,21 +850,11 @@ Name | Type |
 ------ | ------ |
 `a` | TA |
 
-**Returns:** *function*
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
-
 ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: function): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`callback`: function, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
 invoking the onNotify callback for each item emitted by the source.
@@ -1029,9 +875,7 @@ Name | Type |
 ------ | ------ |
 `next` | T |
 
-▪`Default value`  **schedulerFactory**: *function*= createVirtualTimeScheduler
-
-▸ (): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+▪`Default value`  **schedulerFactory**: *[Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›*= createVirtualTimeScheduler
 
 **Returns:** *[Operator](_functions_.md#operator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
@@ -1139,7 +983,7 @@ ___
 
 ### `Const` fromPromise
 
-▸ **fromPromise**<**T**>(`factory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromPromise**<**T**>(`factory`: [Factory](_functions_.md#factory)‹Promise‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Converts a `Promise` to an `ObservableLike`. The provided promise factory
 is invoked for each subscriber to the observable.
@@ -1150,11 +994,9 @@ is invoked for each subscriber to the observable.
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-Factory function to create a new `Promise` instance.
-
-▸ (): *Promise‹T›*
+Name | Type | Description |
+------ | ------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹Promise‹T›› | Factory function to create a new `Promise` instance.  |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -1184,7 +1026,7 @@ ___
 
 ### `Const` genMap
 
-▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: [Operator](_functions_.md#operator)‹TA, Generator‹TB, TReturn, TNext››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -1198,15 +1040,9 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
-
-▸ (`v`: TA): *Generator‹TB, TReturn, TNext›*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`v` | TA |
+`mapper` | [Operator](_functions_.md#operator)‹TA, Generator‹TB, TReturn, TNext›› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
@@ -1214,7 +1050,7 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: function, `initialValue`: function, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Generates an `ObservableLike` sequence from a generator function
 that is applied to an accumulator value with a specified `delay`
@@ -1226,23 +1062,13 @@ between emitted items.
 
 **Parameters:**
 
-▪ **generator**: *function*
+▪ **generator**: *[Generator](_functions_.md#generator)‹T›*
 
 the generator function.
 
-▸ (`acc`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | T |
-
-▪ **initialValue**: *function*
+▪ **initialValue**: *[Factory](_functions_.md#factory)‹T›*
 
 Factory function used to generate the initial accumulator.
-
-▸ (): *T*
 
 ▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
 
@@ -1280,7 +1106,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits items produced by the
 source that satisfy the specified predicate.
@@ -1291,17 +1117,9 @@ source that satisfy the specified predicate.
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function.
-
-▸ (`data`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1363,7 +1181,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 Returns an `ObservableLike` that applies the `mapper` function to each
 value emitted by the source.
@@ -1376,17 +1194,9 @@ value emitted by the source.
 
 **Parameters:**
 
-▪ **mapper**: *function*
-
-The map function to apply each value. Must be a pure function.
-
-▸ (`data`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | TA |
+Name | Type | Description |
+------ | ------ | ------ |
+`mapper` | [Operator](_functions_.md#operator)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
@@ -1464,7 +1274,7 @@ ___
 
 ### `Const` mergeMap
 
-▸ **mergeMap**<**TA**, **TB**>(`mapper`: function, `options`: object): *function*
+▸ **mergeMap**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options`: object): *function*
 
 **Type parameters:**
 
@@ -1474,15 +1284,7 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
-
-▸ (`a`: TA): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+▪ **mapper**: *[Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››*
 
 ▪`Default value`  **options**: *object*= {}
 
@@ -1493,13 +1295,13 @@ Name | Type |
 
 **Returns:** *function*
 
-▸ (`src`: A): *B*
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`src` | A |
+`a` | TA |
 
 ___
 
@@ -1537,7 +1339,7 @@ ___
 
 ### `Const` noneSatisfy
 
-▸ **noneSatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -1548,17 +1350,9 @@ every value produced by the source, or if the source is empty, otherwise `false`
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function.
-
-▸ (`next`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
@@ -1594,7 +1388,7 @@ ___
 
 ### `Const` onSubscribe
 
-▸ **onSubscribe**<**T**>(`f`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **onSubscribe**<**T**>(`f`: [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) | void›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Executes a side-effect when the observable is subscribed.
 
@@ -1604,9 +1398,9 @@ Executes a side-effect when the observable is subscribed.
 
 **Parameters:**
 
-▪ **f**: *function*
-
-▸ (): *[DisposableOrTeardown](_disposable_.md#disposableorteardown) | void*
+Name | Type | Description |
+------ | ------ | ------ |
+`f` | [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) &#124; void› |   |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1635,7 +1429,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
+▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns an `ObservableLike` that applies an accumulator function
 over the source, returning the accumulated result when the subscription is disposed.
@@ -1648,24 +1442,10 @@ over the source, returning the accumulated result when the subscription is dispo
 
 **Parameters:**
 
-▪ **reducer**: *function*
-
-The accumulator function called on each source value.
-
-▸ (`acc`: TAcc, `next`: T): *TAcc*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initialValue**: *function*
-
-The initial accumulation value.
-
-▸ (): *TAcc*
+Name | Type | Description |
+------ | ------ | ------ |
+`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› | The accumulator function called on each source value. |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
@@ -1673,7 +1453,7 @@ ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that applies the predicate function each time the source
 completes to determine if the subscription should be renewed.
@@ -1684,17 +1464,9 @@ completes to determine if the subscription should be renewed.
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function to apply.
-
-▸ (`count`: number): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`count` | number |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹number› | The predicate function to apply.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1767,7 +1539,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns an `ObservableLike` that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -1780,24 +1552,10 @@ and emits each intermediate result.
 
 **Parameters:**
 
-▪ **scanner**: *function*
-
-The accumulator function called on each source value.
-
-▸ (`acc`: TAcc, `next`: T): *TAcc*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initialValue**: *function*
-
-The initial accumulation value.
-
-▸ (): *TAcc*
+Name | Type | Description |
+------ | ------ | ------ |
+`scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› | The accumulator function called on each source value. |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
@@ -1805,7 +1563,7 @@ ___
 
 ### `Const` scanAsync
 
-▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
+▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns the `ObservableLike` that applies an asynchronous accumulator function
 over the source, and emits each intermediate result.
@@ -1831,11 +1589,9 @@ Name | Type |
 `acc` | TAcc |
 `next` | T |
 
-▪ **initialValue**: *function*
+▪ **initialValue**: *[Factory](_functions_.md#factory)‹TAcc›*
 
 The initial accumulation value.
-
-▸ (): *TAcc*
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
@@ -1886,7 +1642,7 @@ ___
 
 ### `Const` someSatisfy
 
-▸ **someSatisfy**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any items which satisfy the predicate, otherwise `false`.
@@ -1897,17 +1653,9 @@ emits any items which satisfy the predicate, otherwise `false`.
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-The predicate function.
-
-▸ (`next`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
 
@@ -2002,7 +1750,7 @@ ___
 
 ### `Const` switchMap
 
-▸ **switchMap**<**TA**, **TB**>(`mapper`: function): *function*
+▸ **switchMap**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -2012,25 +1760,19 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
+Name | Type |
+------ | ------ |
+`mapper` | [Operator](_functions_.md#operator)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-▸ (`a`: TA): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `a` | TA |
-
-**Returns:** *function*
-
-▸ (`src`: A): *B*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`src` | A |
 
 ___
 
@@ -2076,7 +1818,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: function, `__namedParameters`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -2088,17 +1830,9 @@ this predicate is not satisfied.
 
 **Parameters:**
 
-▪ **predicate**: *function*
+▪ **predicate**: *[Predicate](_functions_.md#predicate)‹T›*
 
 The predicate function.
-
-▸ (`next`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
 
 ▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
 
@@ -2112,7 +1846,7 @@ ___
 
 ###  throttle
 
-▸ **throttle**<**T**>(`duration`: function, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **throttle**<**T**>(`duration`: [Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -2122,21 +1856,10 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 **Parameters:**
 
-▪ **duration**: *function*
-
-Selector function that is used to determine the silence duration in between emitted values.
-
-▸ (`next`: T): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`next` | T |
-
-▪`Optional`  **mode**: *[ThrottleMode](../enums/_observable_.throttlemode.md)*
-
-The throttle mode.
+Name | Type | Description |
+------ | ------ | ------ |
+`duration` | [Operator](_functions_.md#operator)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› | Selector function that is used to determine the silence duration in between emitted values. |
+`mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -2162,7 +1885,7 @@ ___
 
 ### `Const` throwIfEmpty
 
-▸ **throwIfEmpty**<**T**>(`factory`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **throwIfEmpty**<**T**>(`factory`: [Factory](_functions_.md#factory)‹unknown›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
 
@@ -2172,11 +1895,9 @@ Returns an `ObservableLike` that emits an error if the source completes without 
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-A factory function invoked to produce the error to be thrown.
-
-▸ (): *unknown*
+Name | Type | Description |
+------ | ------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹unknown› | A factory function invoked to produce the error to be thrown.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -2184,7 +1905,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **throws**<**T**>(`__namedParameters`: object): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
@@ -2200,7 +1921,7 @@ Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[Operator](_functions_.md#operator)‹function, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -2241,7 +1962,7 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(`schedulerFactory`: function): *function*
+▸ **toArray**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *function*
 
 Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
 values emitted by `source` into an array.
@@ -2252,19 +1973,19 @@ values emitted by `source` into an array.
 
 **Parameters:**
 
-▪`Default value`  **schedulerFactory**: *function*= createVirtualTimeScheduler
-
-▸ (): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+Name | Type | Default |
+------ | ------ | ------ |
+`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
 
 **Returns:** *function*
 
-▸ (`src`: A): *B*
+▸ (`a`: TA): *T*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`src` | A |
+`a` | TA |
 
 ___
 
@@ -2291,16 +2012,16 @@ ___
 
 ### `Const` toValue
 
-▸ **toValue**(`schedulerFactory`: function): *(Anonymous function)*
+▸ **toValue**(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *(Anonymous function)*
 
 Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
 the last value produced.
 
 **Parameters:**
 
-▪`Default value`  **schedulerFactory**: *function*= createVirtualTimeScheduler
-
-▸ (): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+Name | Type | Default |
+------ | ------ | ------ |
+`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
 
 **Returns:** *(Anonymous function)*
 
@@ -2308,7 +2029,7 @@ ___
 
 ###  using
 
-▸ **using**<**TResource**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource›, `observableFactory`: [Operator](_functions_.md#operator)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2321,29 +2042,14 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *TResource*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-▪ **observableFactory**: *function*
-
-▸ (`resource`: TResource): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`resource` | TResource |
+`resourceFactory` | [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource› |
+`observableFactory` | [Operator](_functions_.md#operator)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]›, `observableFactory`: [Selector2](_functions_.md#selector2)‹TResource1, TResource2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2358,30 +2064,14 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[TResource1, TResource2]*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-▪ **observableFactory**: *function*
-
-▸ (`r1`: TResource1, `r2`: TResource2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | TResource1 |
-`r2` | TResource2 |
+`resourceFactory` | [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]› |
+`observableFactory` | [Selector2](_functions_.md#selector2)‹TResource1, TResource2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]›, `observableFactory`: [Selector3](_functions_.md#selector3)‹TResource1, TResource2, TResource3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2398,31 +2088,14 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[TResource1, TResource2, TResource3]*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-▪ **observableFactory**: *function*
-
-▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | TResource1 |
-`r2` | TResource2 |
-`r3` | TResource3 |
+`resourceFactory` | [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]› |
+`observableFactory` | [Selector3](_functions_.md#selector3)‹TResource1, TResource2, TResource3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]›, `observableFactory`: [Selector4](_functions_.md#selector4)‹TResource1, TResource2, TResource3, TResource4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2441,32 +2114,14 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[TResource1, TResource2, TResource3, TResource4]*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-▪ **observableFactory**: *function*
-
-▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3, `r4`: TResource4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | TResource1 |
-`r2` | TResource2 |
-`r3` | TResource3 |
-`r4` | TResource4 |
+`resourceFactory` | [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]› |
+`observableFactory` | [Selector4](_functions_.md#selector4)‹TResource1, TResource2, TResource3, TResource4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]›, `observableFactory`: [Selector5](_functions_.md#selector5)‹TResource1, TResource2, TResource3, TResource4, TResource5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2487,32 +2142,14 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[TResource1, TResource2, TResource3, TResource4, TResource5]*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-▪ **observableFactory**: *function*
-
-▸ (`r1`: TResource1, `r2`: TResource2, `r3`: TResource3, `r4`: TResource5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`r1` | TResource1 |
-`r2` | TResource2 |
-`r3` | TResource3 |
-`r4` | TResource5 |
+`resourceFactory` | [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]› |
+`observableFactory` | [Selector5](_functions_.md#selector5)‹TResource1, TResource2, TResource3, TResource4, TResource5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource**, **T**>(`resourceFactory`: function, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource**, **T**>(`resourceFactory`: [Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2525,15 +2162,7 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *function*
-
-▸ (`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *TResource | TResource[]*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+▪ **resourceFactory**: *[Operator](_functions_.md#operator)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›*
 
 ▪ **observableFactory**: *function*
 
@@ -2551,7 +2180,7 @@ ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **TC**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*
+▸ **withLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 Returns an `ObservableLike` which combines the source with
 the latest value from another `ObservableLike`.
@@ -2562,30 +2191,22 @@ the latest value from another `ObservableLike`.
 
 ▪ **TB**
 
-▪ **TC**
+▪ **T**
 
 **Parameters:**
 
-▪ **other**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+Name | Type | Description |
+------ | ------ | ------ |
+`other` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› | - |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |   |
 
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *TC*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 ___
 
 ###  zip
 
-▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›], `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2600,22 +2221,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›] |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›], `selector`: [Selector3](_functions_.md#selector3)‹TA, TB, TC, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2632,23 +2245,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›] |
+`selector` | [Selector3](_functions_.md#selector3)‹TA, TB, TC, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›], `selector`: [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2667,24 +2271,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›] |
+`selector` | [Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›], `selector`: [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2705,25 +2299,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›] |
+`selector` | [Selector5](_functions_.md#selector5)‹TA, TB, TC, TD, TE, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›], `selector`: [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2746,26 +2329,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›] |
+`selector` | [Selector6](_functions_.md#selector6)‹TA, TB, TC, TD, TE, TF, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›], `selector`: [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2790,27 +2361,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›] |
+`selector` | [Selector7](_functions_.md#selector7)‹TA, TB, TC, TD, TE, TF, TG, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›], `selector`: [Selector8](_functions_.md#selector8)‹TA, TB, TC, TD, TE, TF, TG, TH, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2837,28 +2395,14 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›] |
+`selector` | [Selector8](_functions_.md#selector8)‹TA, TB, TC, TD, TE, TF, TG, TH, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›], `selector`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**, **T**>(`observables`: [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›], `selector`: [Selector9](_functions_.md#selector9)‹TA, TB, TC, TD, TE, TF, TG, TH, TI, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
 in order, of each of its input sources.
@@ -2887,25 +2431,10 @@ in order, of each of its input sources.
 
 **Parameters:**
 
-▪ **observables**: *[[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›]*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG, `h`: TH, `i`: TI): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
-`c` | TC |
-`d` | TD |
-`e` | TE |
-`f` | TF |
-`g` | TG |
-`h` | TH |
-`i` | TI |
+`observables` | [[ObservableLike](../interfaces/_observable_.observablelike.md)‹TA›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TC›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TD›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TE›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TF›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TG›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TH›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TI›] |
+`selector` | [Selector9](_functions_.md#selector9)‹TA, TB, TC, TD, TE, TF, TG, TH, TI, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -2913,7 +2442,7 @@ ___
 
 ### `Const` zipWith
 
-▸ **zipWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
+▸ **zipWith**<**TA**, **TB**, **T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 **Type parameters:**
 
@@ -2925,18 +2454,10 @@ ___
 
 **Parameters:**
 
-▪ **snd**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
-
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *T*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`a` | TA |
-`b` | TB |
+`snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
@@ -2944,7 +2465,7 @@ ___
 
 ### `Const` zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<**TA**, **TB**, **TC**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: function): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*
+▸ **zipWithLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 Returns an `ObservableLike` which combines the source with
 the latest value from another `ObservableLike`.
@@ -2955,21 +2476,13 @@ the latest value from another `ObservableLike`.
 
 ▪ **TB**
 
-▪ **TC**
+▪ **T**
 
 **Parameters:**
 
-▪ **other**: *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›*
+Name | Type | Description |
+------ | ------ | ------ |
+`other` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› | - |
+`selector` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |   |
 
-▪ **selector**: *function*
-
-▸ (`a`: TA, `b`: TB): *TC*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-`b` | TB |
-
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TC›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*

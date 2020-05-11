@@ -84,7 +84,7 @@ ___
 
 ### `Const` createFlowableSinkAccumulator
 
-▸ **createFlowableSinkAccumulator**<**T**, **TAcc**>(`reducer`: function, `initialValue`: function): *[FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)‹T, TAcc›*
+▸ **createFlowableSinkAccumulator**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -94,20 +94,10 @@ ___
 
 **Parameters:**
 
-▪ **reducer**: *function*
-
-▸ (`acc`: TAcc, `next`: T): *TAcc*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initialValue**: *function*
-
-▸ (): *TAcc*
+`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
 **Returns:** *[FlowableSinkAccumulatorLike](../interfaces/_flowable_.flowablesinkaccumulatorlike.md)‹T, TAcc›*
 
@@ -178,7 +168,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: function): *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -188,15 +178,9 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
-
-▸ (`v`: TA): *TB*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`v` | TA |
+`mapper` | [Operator](_functions_.md#operator)‹TA, TB› |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 

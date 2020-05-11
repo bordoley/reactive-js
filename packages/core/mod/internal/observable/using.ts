@@ -1,15 +1,14 @@
 import { DisposableLike } from "../../disposable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
+import { Selector2, Operator, Selector3, Selector4, Selector5 } from "../../functions.ts";
 
 class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
   implements ObservableLike<T> {
   readonly isSynchronous = false;
 
   constructor(
-    private readonly resourceFactory: (
-      scheduler: SchedulerLike,
-    ) => TResource | TResource[],
+    private readonly resourceFactory: Operator<SchedulerLike, TResource | TResource[]>,
     private readonly observableFactory: (
       ...resources: TResource[]
     ) => ObservableLike<T>,
@@ -29,8 +28,8 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
 }
 
 export function using<TResource extends DisposableLike, T>(
-  resourceFactory: (scheduler: SchedulerLike) => TResource,
-  observableFactory: (resource: TResource) => ObservableLike<T>,
+  resourceFactory: Operator<SchedulerLike, TResource>,
+  observableFactory: Operator<TResource, ObservableLike<T>>,
 ): ObservableLike<T>;
 
 export function using<
@@ -38,8 +37,8 @@ export function using<
   TResource2 extends DisposableLike,
   T
 >(
-  resourceFactory: (scheduler: SchedulerLike) => [TResource1, TResource2],
-  observableFactory: (r1: TResource1, r2: TResource2) => ObservableLike<T>,
+  resourceFactory: Operator<SchedulerLike, [TResource1, TResource2]>,
+  observableFactory: Selector2<TResource1, TResource2, ObservableLike<T>>,
 ): ObservableLike<T>;
 
 export function using<
@@ -48,14 +47,8 @@ export function using<
   TResource3 extends DisposableLike,
   T
 >(
-  resourceFactory: (
-    scheduler: SchedulerLike,
-  ) => [TResource1, TResource2, TResource3],
-  observableFactory: (
-    r1: TResource1,
-    r2: TResource2,
-    r3: TResource3,
-  ) => ObservableLike<T>,
+  resourceFactory: Operator<SchedulerLike, [TResource1, TResource2, TResource3]>,
+  observableFactory: Selector3<TResource1, TResource2, TResource3, ObservableLike<T>>,
 ): ObservableLike<T>;
 
 export function using<
@@ -65,15 +58,8 @@ export function using<
   TResource4 extends DisposableLike,
   T
 >(
-  resourceFactory: (
-    scheduler: SchedulerLike,
-  ) => [TResource1, TResource2, TResource3, TResource4],
-  observableFactory: (
-    r1: TResource1,
-    r2: TResource2,
-    r3: TResource3,
-    r4: TResource4,
-  ) => ObservableLike<T>,
+  resourceFactory: Operator<SchedulerLike, [TResource1, TResource2, TResource3, TResource4]>,
+  observableFactory: Selector4<TResource1, TResource2, TResource3, TResource4, ObservableLike<T>>,
 ): ObservableLike<T>;
 
 export function using<
@@ -84,19 +70,12 @@ export function using<
   TResource5 extends DisposableLike,
   T
 >(
-  resourceFactory: (
-    scheduler: SchedulerLike,
-  ) => [TResource1, TResource2, TResource3, TResource4, TResource5],
-  observableFactory: (
-    r1: TResource1,
-    r2: TResource2,
-    r3: TResource3,
-    r4: TResource5,
-  ) => ObservableLike<T>,
+  resourceFactory: Operator<SchedulerLike, [TResource1, TResource2, TResource3, TResource4, TResource5]>,
+  observableFactory: Selector5<TResource1, TResource2, TResource3, TResource4, TResource5, ObservableLike<T>>,
 ): ObservableLike<T>;
 
 export function using<TResource extends DisposableLike[] | DisposableLike, T>(
-  resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
+  resourceFactory: Operator<SchedulerLike, TResource | TResource[]>,
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,
 ): ObservableLike<T>;
 
@@ -105,7 +84,7 @@ export function using<TResource extends DisposableLike[] | DisposableLike, T>(
  * will be disposed when the ObservableLike disposes it's only subscription.
  */
 export function using<TResource extends DisposableLike, T>(
-  resourceFactory: (scheduler: SchedulerLike) => TResource | TResource[],
+  resourceFactory: Operator<SchedulerLike, TResource | TResource[]>,
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,
 ): ObservableLike<T> {
   return new UsingObservable(resourceFactory, observableFactory);

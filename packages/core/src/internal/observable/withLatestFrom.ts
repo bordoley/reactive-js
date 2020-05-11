@@ -1,4 +1,4 @@
-import { pipe } from "../../functions";
+import { pipe, Selector2 } from "../../functions";
 import { Option, isSome } from "../../option";
 import {
   ObservableLike,
@@ -14,9 +14,9 @@ import {
 } from "./subscriber";
 import { dispose } from "../../disposable";
 
-class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
+class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   TA,
-  TC
+  T
 > {
   private otherLatest: Option<TB>;
   private hasLatest = false;
@@ -24,12 +24,12 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
   private readonly onNotify = (next: TB) => {
     this.hasLatest = true;
     this.otherLatest = next;
-  };
+  }
 
   constructor(
-    delegate: SubscriberLike<TC>,
+    delegate: SubscriberLike<T>,
     other: ObservableLike<TB>,
-    private readonly selector: (a: TA, b: TB) => TC,
+    private readonly selector: Selector2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
@@ -64,11 +64,11 @@ class WithLatestFromSubscriber<TA, TB, TC> extends AbstractDelegatingSubscriber<
  * @param other
  * @param selector
  */
-export const withLatestFrom = <TA, TB, TC>(
+export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => TC,
-): ObservableOperator<TA, TC> => {
-  const operator = (subscriber: SubscriberLike<TC>) =>
+  selector: Selector2<TA, TB, T> 
+): ObservableOperator<TA, T> => {
+  const operator = (subscriber: SubscriberLike<T>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);
   operator.isSynchronous = false;
   return lift(operator);

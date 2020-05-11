@@ -1,5 +1,5 @@
 import { createSerialDisposable, Exception, dispose } from "../../disposable.ts";
-import { pipe } from "../../functions.ts";
+import { pipe, Predicate } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -83,7 +83,7 @@ const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
  * @param predicate The predicate function to apply.
  */
 export function repeat<T>(
-  predicate: (count: number) => boolean,
+  predicate: Predicate<number>,
 ): ObservableOperator<T, T>;
 
 /**
@@ -98,7 +98,7 @@ export function repeat<T>(count: number): ObservableOperator<T, T>;
 export function repeat<T>(): ObservableOperator<T, T>;
 
 export function repeat<T>(
-  predicate?: ((count: number) => boolean) | number,
+  predicate?: Predicate<number> | number,
 ): ObservableOperator<T, T> {
   const repeatPredicate = isNone(predicate)
     ? defaultRepeatPredicate

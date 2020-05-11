@@ -7,6 +7,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 import { dispose } from "../../disposable";
+import { Predicate } from "../../functions";
 
 class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -14,7 +15,7 @@ class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
 > {
   constructor(
     delegate: SubscriberLike<boolean>,
-    private readonly predicate: (next: T) => boolean,
+    private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
     this.add(error => {
@@ -46,7 +47,7 @@ class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
  * @param predicate The predicate function.
  */
 export const everySatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new EverySatisfySubscriber(subscriber, predicate);
@@ -61,5 +62,5 @@ export const everySatisfy = <T>(
  * @param predicate The predicate function.
  */
 export const noneSatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): ObservableOperator<T, boolean> => everySatisfy(next => !predicate(next));

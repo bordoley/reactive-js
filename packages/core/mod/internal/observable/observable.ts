@@ -1,12 +1,10 @@
-import { pipe } from "../../functions.ts";
+import { pipe, Operator } from "../../functions.ts";
 import { SchedulerContinuationLike, schedule } from "../../scheduler.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly factory: (
-      subscriber: SubscriberLike<T>,
-    ) => SchedulerContinuationLike | (() => void),
+    private readonly factory: Operator<SubscriberLike<T>, SchedulerContinuationLike | (() => void)>,
     readonly isSynchronous: boolean,
     readonly delay: number,
   ) {}
@@ -25,15 +23,11 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 }
 
 export const createScheduledObservable = <T>(
-  factory: (
-    subscriber: SubscriberLike<T>,
-  ) => SchedulerContinuationLike | (() => void),
+  factory: Operator<SubscriberLike<T>, SchedulerContinuationLike | (() => void)>,
   isSynchronous: boolean,
 ): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous, 0);
 
 export const createDelayedScheduledObservable = <T>(
-  factory: (
-    subscriber: SubscriberLike<T>,
-  ) => SchedulerContinuationLike | (() => void),
+  factory: Operator<SubscriberLike<T>, SchedulerContinuationLike | (() => void)>,
   delay: number,
 ): ObservableLike<T> => new ScheduledObservable(factory, false, delay);

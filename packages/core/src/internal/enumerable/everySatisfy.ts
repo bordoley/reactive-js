@@ -1,4 +1,4 @@
-import { Operator } from "../../functions";
+import { Operator, Predicate } from "../../functions";
 import { EnumerableLike } from "./interfaces";
 
 /**
@@ -8,7 +8,7 @@ import { EnumerableLike } from "./interfaces";
  * @param predicate The predicate function.
  */
 export const everySatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> => enumerable => {
   const enumerator = enumerable.enumerate();
   while (enumerator.move()) {
@@ -26,6 +26,6 @@ export const everySatisfy = <T>(
  * @param predicate The predicate function.
  */
 export const noneSatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> =>
   everySatisfy(next => !predicate(next));

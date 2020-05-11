@@ -2,7 +2,7 @@ import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
 import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
-import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
+import { bind, pipe, returns, Operator } from "@reactive-js/core/lib/functions";
 import {
   createReadableFlowable,
   createWritableFlowableSink,
@@ -49,7 +49,7 @@ const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
 const defaultOnError = (_: unknown): ObservableLike<void> => empty();
 
 export type HttpRequestListenerOptions = {
-  readonly onError?: (e: unknown) => ObservableLike<unknown>;
+  readonly onError?: Operator<unknown, ObservableLike<unknown>>;
 };
 
 export type HttpRequestListener = (

@@ -16,7 +16,7 @@
 
 ### `Const` createResourceManager
 
-▸ **createResourceManager**<**TResource**>(`createResource`: function, `scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options`: object): *[ResourceManagerLike](../interfaces/_resourcemanager_.resourcemanagerlike.md)‹TResource›*
+▸ **createResourceManager**<**TResource**>(`createResource`: [Operator](_functions_.md#operator)‹string, TResource›, `scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options`: object): *[ResourceManagerLike](../interfaces/_resourcemanager_.resourcemanagerlike.md)‹TResource›*
 
 **Type parameters:**
 
@@ -24,15 +24,7 @@
 
 **Parameters:**
 
-▪ **createResource**: *function*
-
-▸ (`key`: string): *TResource*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`key` | string |
+▪ **createResource**: *[Operator](_functions_.md#operator)‹string, TResource›*
 
 ▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 

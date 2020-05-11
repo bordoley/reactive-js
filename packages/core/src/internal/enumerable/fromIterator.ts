@@ -1,5 +1,6 @@
 import { none } from "../../option";
 import { EnumerableLike, EnumeratorLike } from "./interfaces";
+import { Factory } from "../../functions";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
   implements EnumeratorLike<T> {
@@ -25,7 +26,7 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
 
 class IteratorEnumerable<T, TReturn = any, TNext = unknown>
   implements EnumerableLike<T> {
-  constructor(private readonly f: () => Iterator<T, TReturn, TNext>) {}
+  constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {}
 
   enumerate() {
     const iterator = this.f();
@@ -41,7 +42,7 @@ class IteratorEnumerable<T, TReturn = any, TNext = unknown>
  * @param f
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
-  f: () => Iterator<T, TReturn, TNext>,
+  f: Factory<Iterator<T, TReturn, TNext>>,
 ): EnumerableLike<T> => new IteratorEnumerable(f);
 
 /**

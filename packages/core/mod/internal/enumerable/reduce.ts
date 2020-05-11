@@ -1,4 +1,4 @@
-import { Operator } from "../../functions.ts";
+import { Operator, Factory, Reducer } from "../../functions.ts";
 import { EnumerableLike } from "./interfaces.ts";
 
 /**
@@ -8,8 +8,8 @@ import { EnumerableLike } from "./interfaces.ts";
  * @param initialValue The initial accumulation value.
  */
 export const reduce = <T, TAcc>(
-  reducer: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
 ): Operator<EnumerableLike<T>, TAcc> => enumerable => {
   const enumerator = enumerable.enumerate();
   let acc = initialValue();

@@ -46,7 +46,7 @@ Name | Type |
 
 ### `Const` createActionReducer
 
-▸ **createActionReducer**<**TAction**, **T**>(`reducer`: function, `initialState`: function, `equals?`: function): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
+▸ **createActionReducer**<**TAction**, **T**>(`reducer`: [Reducer](_functions_.md#reducer)‹TAction, T›, `initialState`: [Factory](_functions_.md#factory)‹T›, `equals?`: [Equality](_functions_.md#equality)‹T›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
 
 Returns a new `StreamableLike` instance that applies an accumulator function
 over the notified actions, emitting each intermediate result.
@@ -59,38 +59,11 @@ over the notified actions, emitting each intermediate result.
 
 **Parameters:**
 
-▪ **reducer**: *function*
-
-The accumulator function called on each notified action.
-
-▸ (`state`: T, `action`: TAction): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`state` | T |
-`action` | TAction |
-
-▪ **initialState**: *function*
-
-The initial accumulation value.
-
-▸ (): *T*
-
-▪`Optional`  **equals**: *function*
-
-Optional equality function that is used to compare
-if a state value is distinct from the previous one.
-
-▸ (`a`: T, `b`: T): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
+Name | Type | Description |
+------ | ------ | ------ |
+`reducer` | [Reducer](_functions_.md#reducer)‹TAction, T› | The accumulator function called on each notified action. |
+`initialState` | [Factory](_functions_.md#factory)‹T› | The initial accumulation value. |
+`equals?` | [Equality](_functions_.md#equality)‹T› | Optional equality function that is used to compare if a state value is distinct from the previous one.  |
 
 **Returns:** *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
 
@@ -177,7 +150,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: function): *function*
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *function*
 
 **Type parameters:**
 
@@ -189,15 +162,9 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *function*
-
-▸ (`v`: TA): *TB*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`v` | TA |
+`mapper` | [Operator](_functions_.md#operator)‹TA, TB› |
 
 **Returns:** *function*
 
@@ -213,7 +180,7 @@ ___
 
 ### `Const` mapReq
 
-▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: function): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
+▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: [Operator](_functions_.md#operator)‹TReqB, TReqA›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
 
 **Type parameters:**
 
@@ -225,15 +192,9 @@ ___
 
 **Parameters:**
 
-▪ **op**: *function*
-
-▸ (`req`: TReqB): *TReqA*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`req` | TReqB |
+`op` | [Operator](_functions_.md#operator)‹TReqB, TReqA› |
 
 **Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
 
@@ -305,7 +266,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: function, `initalValue`: function): *function*
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initalValue`: [Factory](_functions_.md#factory)‹TAcc›): *function*
 
 **Type parameters:**
 
@@ -317,20 +278,10 @@ ___
 
 **Parameters:**
 
-▪ **scanner**: *function*
-
-▸ (`acc`: TAcc, `next`: T): *TAcc*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initalValue**: *function*
-
-▸ (): *TAcc*
+`scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
+`initalValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
 **Returns:** *function*
 
