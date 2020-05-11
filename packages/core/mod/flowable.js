@@ -1,7 +1,8 @@
-import { compose, pipe, returns, identity } from "./functions.js";
-import { endWith, map as mapObs, mapTo, fromArray, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, concat, never, publish, } from "./observable.js";
+import { compose, pipe, returns } from "./functions.js";
+import { endWith, map as mapObs, mapTo, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, map as mapStream, lift, } from "./streamable.js";
+import { createObservable } from "./internal/observable/createObservable.js";
 export const next = (data) => ({
     type: 1,
     data,
@@ -77,14 +78,13 @@ class FlowableSinkAccumulatorImpl {
         return this._acc;
     }
     stream(scheduler, replayCount) {
-        const op = (events) => using(scheduler => {
-            const eventsSubscription = pipe(events, takeWhile(ev => ev.type == 1), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, () => this.acc), onNotify(acc => {
-                this._acc = acc;
-            }), subscribe(scheduler));
-            const flowModeObs = pipe(fromArray()([2, 1]), x => concat(x, never()), publish(scheduler)).add(eventsSubscription);
-            eventsSubscription.add(flowModeObs);
-            return flowModeObs;
-        }, identity);
+        const op = (events) => using(scheduler => pipe(events, takeWhile(ev => ev.type == 1), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, () => this.acc), onNotify(acc => {
+            this._acc = acc;
+        }), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
+            dispatcher.dispatch(2);
+            dispatcher.dispatch(1);
+            eventsSubscription.add(dispatcher);
+        }));
         return createStreamable(op).stream(scheduler, replayCount);
     }
 }

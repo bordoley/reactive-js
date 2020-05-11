@@ -1,11 +1,10 @@
-import { Operator, compose, pipe, returns, identity } from "./functions";
+import { Operator, compose, pipe, returns } from "./functions";
 import { SchedulerLike } from "./scheduler";
 import {
   ObservableLike,
   endWith,
   map as mapObs,
   mapTo,
-  fromArray,
   genMap,
   keepType,
   onNotify,
@@ -20,9 +19,6 @@ import {
   compute,
   concatMap,
   fromIterator,
-  concat,
-  never,
-  publish,
   StreamLike,
 } from "./observable";
 import { toPausableScheduler } from "./scheduler";
@@ -32,6 +28,7 @@ import {
   map as mapStream,
   lift,
 } from "./streamable";
+import { createObservable } from "./internal/observable/createObservable";
 
 export const enum FlowMode {
   Resume = 1,
@@ -191,6 +188,7 @@ const isNext = <T>(
 ): ev is { readonly type: FlowEventType.Next; readonly data: T } =>
   ev.type === FlowEventType.Next;
 
+/** @experimental */
 export interface FlowableSinkAccumulatorLike<T, TAcc>
   extends FlowableSinkLike<T> {
   readonly acc: TAcc;
@@ -211,9 +209,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     scheduler: SchedulerLike,
     replayCount?: number,
   ): StreamLike<FlowEvent<T>, FlowMode> {
-    const op = (events: ObservableLike<FlowEvent<T>>) =>
-      using(scheduler => {
-        const eventsSubscription = pipe(
+    const op = (events: ObservableLike<FlowEvent<T>>) => 
+      using(scheduler => pipe(
           events,
           takeWhile(ev => ev.type == FlowEventType.Next),
           keepType(isNext),
@@ -223,21 +220,21 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
             this._acc = acc;
           }),
           subscribe(scheduler),
-        );
+        ),
 
-        const flowModeObs = pipe(
-          fromArray<FlowMode>()([FlowMode.Pause, FlowMode.Resume]),
-          x => concat(x, never()),
-          publish(scheduler),
-        ).add(eventsSubscription);
-        eventsSubscription.add(flowModeObs);
-
-        return flowModeObs;
-      }, identity);
+        eventsSubscription => createObservable(
+          dispatcher => {
+            dispatcher.dispatch(FlowMode.Pause);
+            dispatcher.dispatch(FlowMode.Resume);
+            eventsSubscription.add(dispatcher);
+          }
+        )
+      );
     return createStreamable(op).stream(scheduler, replayCount);
   }
 }
 
+/** @experimental */
 export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: (acc: TAcc, next: T) => TAcc,
   initialValue: () => TAcc,
