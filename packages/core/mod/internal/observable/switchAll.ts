@@ -1,5 +1,5 @@
 import { disposed, dispose } from "../../disposable.ts";
-import { compose, pipe } from "../../functions.ts";
+import { compose, pipe, Operator } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -65,5 +65,5 @@ const switchAllInstance = lift(operator);
 export const switchAll = <T>() =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const switchMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
+export const switchMap = <TA, TB>(mapper: Operator<TA, ObservableLike<TB>>) =>
   compose(map(mapper), switchAll());

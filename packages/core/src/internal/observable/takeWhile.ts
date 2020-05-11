@@ -5,11 +5,12 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 import { dispose } from "../../disposable";
+import { Predicate } from "../../functions";
 
 class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    private readonly predicate: (next: T) => boolean,
+    private readonly predicate: Predicate<T>,
     private readonly inclusive: boolean,
   ) {
     super(delegate);
@@ -41,7 +42,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param predicate The predicate function.
  */
 export const takeWhile = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>

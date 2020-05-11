@@ -1,5 +1,6 @@
 import { DisposableLike, createDisposable, dispose } from "../../disposable";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
+import { Factory } from "../../functions";
 
 const supportsPerformanceNow =
   typeof performance === "object" && typeof performance.now === "function";
@@ -11,7 +12,7 @@ const supportsMessageChannel = typeof MessageChannel === "function";
 
 const supportsSetImmediate = typeof setImmediate === "function";
 
-const now: () => number = supportsPerformanceNow
+const now: Factory<number> = supportsPerformanceNow
   ? () => performance.now()
   : supportsProcessHRTime
   ? () => {

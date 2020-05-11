@@ -1,4 +1,4 @@
-import { pipe } from "../../functions";
+import { pipe, Factory } from "../../functions";
 import { createSubject } from "./createSubject";
 import { dispatchTo } from "./dispatcher";
 import { ObservableLike, ObservableOperator } from "./interfaces";
@@ -18,7 +18,7 @@ import { zipWithLatestFrom } from "./zipWithLatestFrom";
  */
 export const scanAsync = <T, TAcc>(
   scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
-  initialValue: () => TAcc,
+  initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => observable =>
   using(
     _ => createSubject<TAcc>(),

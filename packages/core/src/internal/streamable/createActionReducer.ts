@@ -1,4 +1,4 @@
-import { pipe, returns } from "../../functions";
+import { pipe, returns, Factory, Reducer, Equality } from "../../functions";
 import {
   ObservableLike,
   fromValue,
@@ -19,9 +19,9 @@ import { createStreamable } from "./streamable";
  * if a state value is distinct from the previous one.
  */
 export const createActionReducer = <TAction, T>(
-  reducer: (state: T, action: TAction) => T,
-  initialState: () => T,
-  equals?: (a: T, b: T) => boolean,
+  reducer: Reducer<TAction, T>,
+  initialState: Factory<T>,
+  equals?: Equality<T>,
 ): StreamableLike<TAction, T> => {
   const operator = (src: ObservableLike<TAction>) => {
     const acc = initialState();

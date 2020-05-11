@@ -1,7 +1,7 @@
 import { Readable } from "stream";
 import { DisposableValueLike, dispose } from "../../disposable";
 import { FlowMode, FlowableLike, next, complete } from "../../flowable";
-import { pipe, compose } from "../../functions";
+import { pipe, compose, Factory } from "../../functions";
 import {
   createObservable,
   onNotify,
@@ -36,7 +36,7 @@ const createReadableEventsObservable = (
   });
 
 const createReadableAndSetupModeSubscription = (
-  factory: () => DisposableValueLike<Readable>,
+  factory: Factory<DisposableValueLike<Readable>>,
   mode: ObservableLike<FlowMode>,
 ) => (scheduler: SchedulerLike) => {
   const readable = factory();
@@ -62,7 +62,7 @@ const createReadableAndSetupModeSubscription = (
 };
 
 export const createReadableFlowable = (
-  factory: () => DisposableValueLike<Readable>,
+  factory: Factory<DisposableValueLike<Readable>>,
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
     using(

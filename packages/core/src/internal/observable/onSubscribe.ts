@@ -5,12 +5,13 @@ import {
   SubscriberLike,
   ObservableOperator,
 } from "./interfaces";
+import { Factory } from "../../functions";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
   constructor(
     private readonly src: ObservableLike<T>,
-    private readonly f: () => DisposableOrTeardown | void,
+    private readonly f: Factory<DisposableOrTeardown | void>,
   ) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
@@ -31,6 +32,6 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  * @param f
  */
 export const onSubscribe = <T>(
-  f: () => DisposableOrTeardown | void,
+  f: Factory<DisposableOrTeardown | void>,
 ): ObservableOperator<T, T> => observable =>
   new OnSubscribeObservable(observable, f);

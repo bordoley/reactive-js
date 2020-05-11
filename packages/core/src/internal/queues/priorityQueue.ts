@@ -1,6 +1,7 @@
 import { EnumeratorLike, fromArray } from "../../enumerable";
 import { isSome, none } from "../../option";
 import { QueueLike } from "./interfaces";
+import { Comparator } from "../../functions";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
@@ -55,7 +56,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
 class PriorityQueueImpl<T> implements QueueLike<T> {
   readonly values: Array<T> = [];
 
-  constructor(readonly compare: (a: T, b: T) => number) {}
+  constructor(readonly compare: Comparator<T>) {}
 
   get count(): number {
     return this.values.length;
@@ -99,5 +100,5 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 }
 
 export const createPriorityQueue = <T>(
-  comparator: (a: T, b: T) => number,
+  comparator: Comparator<T>,
 ): QueueLike<T> => new PriorityQueueImpl(comparator);

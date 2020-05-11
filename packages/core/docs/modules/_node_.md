@@ -16,7 +16,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -65,11 +65,9 @@ Name | Type |
 `r3` | R3 |
 `r4` | R4 |
 
-**Returns:** *function*
+**Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -114,11 +112,9 @@ Name | Type |
 `r2` | R2 |
 `r3` | R3 |
 
-**Returns:** *function*
+**Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -159,11 +155,9 @@ Name | Type |
 `r1` | R1 |
 `r2` | R2 |
 
-**Returns:** *function*
+**Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: function): *function*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -200,11 +194,9 @@ Name | Type |
 ------ | ------ |
 `r1` | R1 |
 
-**Returns:** *function*
+**Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-▸ **bindNodeCallback**(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**(`callbackFunc`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Parameters:**
 
@@ -224,9 +216,7 @@ Name | Type |
 ------ | ------ |
 `err` | unknown |
 
-**Returns:** *function*
-
-▸ (): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+**Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 ▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: function): *function*
 
@@ -1820,13 +1810,13 @@ ___
 
 ### `Const` createReadableFlowable
 
-▸ **createReadableFlowable**(`factory`: function): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+▸ **createReadableFlowable**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›*
+Name | Type |
+------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›› |
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
 
@@ -1834,13 +1824,13 @@ ___
 
 ### `Const` createWritableFlowableSink
 
-▸ **createWritableFlowableSink**(`factory`: function): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+▸ **createWritableFlowableSink**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable››): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›*
+Name | Type |
+------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›› |
 
 **Returns:** *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
 
@@ -1848,12 +1838,12 @@ ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: function): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
-▪ **factory**: *function*
-
-▸ (): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›*
+Name | Type |
+------ | ------ |
+`factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›› |
 
 **Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*

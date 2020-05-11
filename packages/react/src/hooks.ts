@@ -1,5 +1,5 @@
 import { dispose, Exception } from "@reactive-js/core/lib/disposable";
-import { pipe, compose, returns, bind } from "@reactive-js/core/lib/functions";
+import { pipe, compose, returns, bind, Operator } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   onNotify,
@@ -104,8 +104,8 @@ export const useStreamable = <TReq, T>(
 };
 
 const requestMapper = <TSerialized, TState>(
-  parse: (serialized: TSerialized) => TState,
-  serialize: (state: TState) => TSerialized,
+  parse: Operator<TSerialized, TState>,
+  serialize: Operator<TState, TSerialized>,
 ) => (
   stateUpdater: StateUpdater<TState>,
 ): StateUpdater<TSerialized> => oldStateString => {
@@ -117,8 +117,8 @@ const requestMapper = <TSerialized, TState>(
 
 export const useSerializedState = <TSerialized, TState>(
   store: StateStoreLike<TSerialized>,
-  parse: (serialized: TSerialized) => TState,
-  serialize: (state: TState) => TSerialized,
+  parse: Operator<TSerialized, TState>,
+  serialize: Operator<TState, TSerialized>,
 ): [Option<TState>, (updater: StateUpdater<TState>) => void] => {
   const mappedStore = useMemo(
     () => pipe(store, mapReq(requestMapper(parse, serialize)), map(parse)),

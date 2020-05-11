@@ -3,7 +3,7 @@ import {
   FlowableOperator,
   empty,
 } from "@reactive-js/core/lib/flowable";
-import { Operator } from "@reactive-js/core/lib/functions";
+import { Operator, Selector2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
@@ -245,7 +245,7 @@ export const checkIfNotModified = <T>({
 };
 
 export const encodeHttpResponseWithCharset = (
-  encode: (v: string, charset: string) => Uint8Array,
+  encode: Selector2<string, string, Uint8Array>,
 ) => (
   contentType: string | MediaType,
 ): Operator<HttpResponse<string>, HttpResponse<Uint8Array>> => {
@@ -254,7 +254,7 @@ export const encodeHttpResponseWithCharset = (
 };
 
 export const decodeHttpResponseWithCharset = (
-  decode: (v: Uint8Array, charset: string) => string,
+  decode: Selector2<Uint8Array, string, string>,
 ): Operator<HttpResponse<Uint8Array>, HttpResponse<string>> => {
   const messageEncoder = decodeHttpMessageWithCharset(decode);
   return resp => messageEncoder(resp) as HttpResponse<string>;

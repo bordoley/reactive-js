@@ -1,8 +1,9 @@
 import { fromArray } from "./fromArray";
 import { EnumerableLike } from "./interfaces";
+import { Factory } from "../../functions";
 
 class ComputeEnumerable<T> implements EnumerableLike<T> {
-  constructor(private readonly f: () => T) {}
+  constructor(private readonly f: Factory<T>) {}
 
   enumerate() {
     return fromArray([this.f()]).enumerate();
@@ -14,5 +15,5 @@ class ComputeEnumerable<T> implements EnumerableLike<T> {
  *
  * @param valueFactory
  */
-export const compute = <T>(f: () => T): EnumerableLike<T> =>
+export const compute = <T>(f: Factory<T>): EnumerableLike<T> =>
   new ComputeEnumerable(f);

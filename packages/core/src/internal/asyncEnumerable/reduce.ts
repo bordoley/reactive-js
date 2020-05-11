@@ -1,4 +1,4 @@
-import { compose, Operator, pipe } from "../../functions";
+import { compose, Operator, pipe, Factory } from "../../functions";
 import {
   createSubject,
   map,
@@ -44,7 +44,7 @@ const reduceImpl = <TSrc, TAcc>(
   reducer: (
     acc: ObservableLike<TAcc>,
   ) => ObservableOperator<TSrc, ReducerRequest<TAcc>>,
-  initial: () => TAcc,
+  initial: Factory<TAcc>,
 ): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
     scheduler => {
@@ -75,7 +75,7 @@ const reduceImpl = <TSrc, TAcc>(
 
 export const reduce = <TSrc, TAcc>(
   reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TAcc>,
-  initial: () => TAcc,
+  initial: Factory<TAcc>,
 ): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
   reduceImpl(
     accObs => zipWithLatestFrom(accObs, (next, acc) => reducer(acc, next)),
@@ -84,7 +84,7 @@ export const reduce = <TSrc, TAcc>(
 
 export const reduceAsync = <TSrc, TAcc>(
   reducer: (acc: TAcc, next: TSrc) => ObservableLike<ReducerRequest<TAcc>>,
-  initial: () => TAcc,
+  initial: Factory<TAcc>,
 ): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
   reduceImpl(
     accObs =>

@@ -1,12 +1,13 @@
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
+import { Predicate } from "../../functions";
 
 class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
   private state = 0;
 
   constructor(
     private readonly delegate: EnumeratorLike<T>,
-    private readonly predicate: (next: T) => boolean,
+    private readonly predicate: Predicate<T>,
     private readonly inclusive: boolean,
   ) {}
 
@@ -45,7 +46,7 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
  * @param predicate The predicate function.
  */
 export const takeWhile = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
 ): EnumerableOperator<T, T> => {
   const operator = (subscriber: EnumeratorLike<T>) =>

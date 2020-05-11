@@ -4,11 +4,12 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { Factory, Reducer } from "../../functions";
 
 class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
     delegate: SubscriberLike<TAcc>,
-    private readonly scanner: (acc: TAcc, next: T) => TAcc,
+    private readonly scanner: Reducer<T, TAcc>,
     private acc: TAcc,
   ) {
     super(delegate);
@@ -33,8 +34,8 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
  * @param initialValue The initial accumulation value.
  */
 export const scan = <T, TAcc>(
-  scanner: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
+  scanner: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ScanSubscriber(subscriber, scanner, initialValue());

@@ -10,6 +10,7 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
 import { dispose } from "../../disposable.ts";
+import { Selector2, Selector3, Selector4, Selector5, Selector6, Selector7, Selector8, Selector9 } from "../../functions.ts";
 
 type CombineLatestCtx<T> = {
   completedCount: number;
@@ -62,11 +63,11 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
 
 export function combineLatest<TA, TB, T>(
   observables: [ObservableLike<TA>, ObservableLike<TB>],
-  selector: (a: TA, b: TB) => T,
+  selector:  Selector2<TA, TB, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, T>(
   observables: [ObservableLike<TA>, ObservableLike<TB>, ObservableLike<TC>],
-  selector: (a: TA, b: TB, c: TC) => T,
+  selector: Selector3<TA, TB, TC, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, T>(
   observables: [
@@ -75,7 +76,7 @@ export function combineLatest<TA, TB, TC, TD, T>(
     ObservableLike<TC>,
     ObservableLike<TD>,
   ],
-  selector: (a: TA, b: TB, c: TC, d: TD) => T,
+  selector: Selector4<TA, TB, TC, TD, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, TE, T>(
   observables: [
@@ -85,7 +86,7 @@ export function combineLatest<TA, TB, TC, TD, TE, T>(
     ObservableLike<TD>,
     ObservableLike<TE>,
   ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE) => T,
+  selector: Selector5<TA, TB, TC, TD, TE, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, TE, TF, T>(
   observables: [
@@ -96,7 +97,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, T>(
     ObservableLike<TE>,
     ObservableLike<TF>,
   ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T,
+  selector: Selector6<TA, TB, TC, TD, TE, TF, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, TE, TF, TG, T>(
   observables: [
@@ -108,7 +109,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, T>(
     ObservableLike<TF>,
     ObservableLike<TG>,
   ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T,
+  selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   observables: [
@@ -121,7 +122,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, T>(
     ObservableLike<TG>,
     ObservableLike<TH>,
   ],
-  selector: (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T,
+  selector: Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T> 
 ): ObservableLike<T>;
 export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   observables: [
@@ -135,17 +136,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     ObservableLike<TH>,
     ObservableLike<TI>,
   ],
-  selector: (
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-    g: TG,
-    h: TH,
-    i: TI,
-  ) => T,
+  selector: Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> 
 ): ObservableLike<T>;
 
 /**
@@ -183,5 +174,5 @@ export function combineLatest<T>(
 
 export const combineLatestWith = <TA, TB, T>(
   snd: ObservableLike<TB>,
-  selector: (a: TA, b: TB) => T,
+  selector: Selector2<TA, TB, T>
 ): ObservableOperator<TA, T> => fst => combineLatest([fst, snd], selector);

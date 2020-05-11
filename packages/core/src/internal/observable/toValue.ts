@@ -1,5 +1,5 @@
 import { Exception, dispose } from "../../disposable";
-import { pipe } from "../../functions";
+import { pipe, Factory } from "../../functions";
 import { none, Option } from "../../option";
 import {
   VirtualTimeSchedulerLike,
@@ -14,7 +14,7 @@ import { subscribe } from "./subscribe";
  * the last value produced.
  */
 export const toValue = (
-  schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
+  schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
 ) => <T>(source: ObservableLike<T>): T => {
   const scheduler = schedulerFactory();
 

@@ -1,4 +1,4 @@
-import { referenceEquals } from "../../functions.ts";
+import { referenceEquals, Equality, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -15,7 +15,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
 > {
   constructor(
     delegate: SubscriberLike<boolean>,
-    private readonly predicate: (next: T) => boolean,
+    private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
     this.add(error => {
@@ -46,7 +46,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
  * @param predicate The predicate function.
  */
 export const someSatisfy = <T>(
-  predicate: (next: T) => boolean,
+  predicate: Predicate<T>,
 ): ObservableOperator<T, boolean> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new SomeSatisfySubscriber(subscriber, predicate);
@@ -63,5 +63,5 @@ export const someSatisfy = <T>(
  */
 export const contains = <T>(
   value: T,
-  equals: (a: T, b: T) => boolean = referenceEquals,
+  equals: Equality<T> = referenceEquals,
 ) => someSatisfy((b: T) => equals(value, b));

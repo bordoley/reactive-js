@@ -1,5 +1,5 @@
 import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
-import { Operator } from "@reactive-js/core/lib/functions";
+import { Operator, Selector2 } from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";
@@ -26,7 +26,7 @@ export const writeHttpMessageHeaders = <T>(
 };
 
 export const encodeHttpMessageWithCharset = (
-  encode: (v: string, charset: string) => Uint8Array,
+  encode: Selector2<string, string, Uint8Array>,
   contentType: string | MediaType,
 ): Operator<HttpMessage<string>, HttpMessage<Uint8Array>> => {
   const parsedContentType =
@@ -52,7 +52,7 @@ export const encodeHttpMessageWithCharset = (
 };
 
 export const decodeHttpMessageWithCharset = (
-  decoder: (v: Uint8Array, charset: string) => string,
+  decode: Selector2<Uint8Array, string, string>,
 ): Operator<HttpMessage<Uint8Array>, HttpMessage<string>> => ({
   contentInfo,
   ...msg
@@ -60,7 +60,7 @@ export const decodeHttpMessageWithCharset = (
   const params = contentInfo?.contentType?.params ?? {};
   const charset = params["charset"] ?? "utf-8";
 
-  const body = decoder(msg.body, charset);
+  const body = decode(msg.body, charset);
 
   return {
     ...msg,

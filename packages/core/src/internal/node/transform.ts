@@ -1,14 +1,14 @@
 import { Transform } from "stream";
 import { DisposableValueLike, createDisposableValue, disposeOnError } from "../../disposable";
 import { FlowableOperator } from "../../flowable";
-import { ignore, pipe, returns } from "../../functions";
+import { ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";
 import { createWritableFlowableSink } from "./createWritableFlowableSink";
 
 export const transform = (
-  factory: () => DisposableValueLike<Transform>,
+  factory: Factory<DisposableValueLike<Transform>>,
 ): FlowableOperator<Uint8Array, Uint8Array> => src =>
   createStreamable(modeObs =>
     using(

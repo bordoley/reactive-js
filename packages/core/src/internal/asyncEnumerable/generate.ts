@@ -1,8 +1,9 @@
 import { scan } from "../../observable";
 import { createStreamable } from "../../streamable";
 import { AsyncEnumerableLike } from "./interfaces";
+import { Factory, Generator } from "../../functions";
 
-const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
+const generateScanner = <T>(generator: Generator<T>) => (acc: T, _: unknown) =>
   generator(acc);
 
 /**
@@ -13,7 +14,7 @@ const generateScanner = <T>(generator: (acc: T) => T) => (acc: T, _: unknown) =>
  * @param initialValue Factory function to generate the initial accumulator.
  */
 export const generate = <T>(
-  generator: (acc: T) => T,
-  initialValue: () => T,
+  generator: Generator<T>,
+  initialValue: Factory<T>,
 ): AsyncEnumerableLike<T> =>
   createStreamable(scan(generateScanner(generator), initialValue));

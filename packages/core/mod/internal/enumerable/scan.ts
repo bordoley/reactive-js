@@ -1,10 +1,11 @@
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { Factory, Reducer } from "../../functions.ts";
 
 class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
   constructor(
     private readonly delegate: EnumeratorLike<T>,
-    private readonly reducer: (acc: TAcc, next: T) => TAcc,
+    private readonly reducer: Reducer<T, TAcc>,
     public current: TAcc,
   ) {}
 
@@ -29,8 +30,8 @@ class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
  * @param predicate The predicate function.
  */
 export const scan = <T, TAcc>(
-  reducer: (acc: TAcc, next: T) => TAcc,
-  initialValue: () => TAcc,
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
 ): EnumerableOperator<T, TAcc> => {
   const operator = (subscriber: EnumeratorLike<T>) =>
     new ScanEnumerator(subscriber, reducer, initialValue());

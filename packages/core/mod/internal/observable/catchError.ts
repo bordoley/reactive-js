@@ -7,11 +7,12 @@ import {
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { Operator } from "../../functions.ts";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    onError: (error: unknown) => ObservableLike<T> | void,
+    onError: Operator<unknown, ObservableLike<T> | void>,
   ) {
     super(delegate);
 
@@ -48,7 +49,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * to continue with or void if the error should be propagated.
  */
 export const catchError = <T>(
-  onError: (error: unknown) => ObservableLike<T> | void,
+  onError: Operator<unknown, ObservableLike<T> | void>,
 ): ObservableOperator<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);

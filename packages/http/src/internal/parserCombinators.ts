@@ -1,10 +1,12 @@
 import { EnumeratorLike } from "@reactive-js/core/lib/enumerable";
 import {
+  Factory,
   Operator,
   compose,
   isReferenceEqualTo,
   pipe,
   returns,
+  Predicate,
 } from "@reactive-js/core/lib/functions";
 
 // FIXME: BAD!
@@ -80,7 +82,7 @@ export const throwParseError: <T>(
 const isParseErrorDev = (e: unknown): boolean => e instanceof ParserError;
 const isParseErrorProd = (e: unknown): boolean => e === parseErrorSymbol;
 const _isParseError = __DEV__ ? isParseErrorDev : isParseErrorProd;
-export const isParseError: (e: unknown) => boolean = _isParseError;
+export const isParseError: Predicate<unknown> = _isParseError;
 
 export const createCharStream = (input: string): CharStreamLike =>
   new CharStreamImpl(input);
@@ -167,7 +169,7 @@ export const followedBy = <T>(
 };
 
 export const map = <TA, TB>(
-  mapper: (result: TA) => TB,
+  mapper: Operator<TA, TB>,
 ): Operator<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
 
 export const mapTo = <TA, TB>(v: TB): Operator<Parser<TA>, Parser<TB>> =>
@@ -286,7 +288,7 @@ export const optional = <T>(
 };
 
 export const orCompute = <T>(
-  compute: () => T,
+  compute: Factory<T>,
 ): Operator<Parser<Option<T>>, Parser<T>> =>
   compose(optional, map(orComputeOption(compute)));
 
@@ -328,7 +330,7 @@ export const string = (str: string): Parser<string> => charStream => {
 };
 
 export const satisfy = (
-  f: (char: CharCode) => boolean,
+  f: Predicate<CharCode>,
 ): Parser<CharCode> => charStream => {
   if (charStream.move()) {
     const current = charStream.current;

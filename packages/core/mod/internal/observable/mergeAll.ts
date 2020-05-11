@@ -1,5 +1,5 @@
 import { Exception, dispose } from "../../disposable.ts";
-import { compose, pipe } from "../../functions.ts";
+import { compose, pipe, Operator } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -118,7 +118,7 @@ export const mergeAll = <T>(
 };
 
 export const mergeMap = <TA, TB>(
-  mapper: (a: TA) => ObservableLike<TB>,
+  mapper: Operator<TA, ObservableLike<TB>>,
   options: {
     maxBufferSize?: number;
     maxConcurrency?: number;
@@ -137,7 +137,7 @@ export const concatAll = <T>(
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
 export const concatMap = <TA, TB>(
-  mapper: (a: TA) => ObservableLike<TB>,
+  mapper: Operator<TA, ObservableLike<TB>>,
   maxBufferSize?: number,
 ) => compose(map(mapper), concatAll(maxBufferSize));
 
@@ -151,5 +151,5 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 export const exhaust = <T>() =>
   exhaustInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const exhaustMap = <TA, TB>(mapper: (a: TA) => ObservableLike<TB>) =>
+export const exhaustMap = <TA, TB>(mapper: Operator<TA, ObservableLike<TB>>) =>
   compose(map(mapper), exhaust());

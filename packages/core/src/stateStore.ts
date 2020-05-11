@@ -1,4 +1,4 @@
-import { pipe, identity } from "./functions";
+import { pipe, identity, Factory, Equality } from "./functions";
 import { subscribe } from "./internal/observable/subscribe";
 import { onNotify, using, zipWithLatestFrom, dispatchTo } from "./observable";
 import {
@@ -27,8 +27,8 @@ const stateStoreReducer = <T>(state: T, action: StateUpdater<T>) =>
  * if a state value is distinct from the previous one.
  */
 export const createStateStore = <T>(
-  initialState: () => T,
-  equals?: (a: T, b: T) => boolean,
+  initialState: Factory<T>,
+  equals?: Equality<T>,
 ): StateStoreLike<T> =>
   createActionReducer(stateStoreReducer, initialState, equals);
 

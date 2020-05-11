@@ -1,4 +1,4 @@
-import { referenceEquals, arrayEquals } from "../functions.ts";
+import { referenceEquals, arrayEquals, Factory, Equality } from "../functions.ts";
 import { Option, isSome, isNone, none } from "../option.ts";
 
 export const enum TestGroupType {
@@ -22,7 +22,7 @@ export type Test = {
 export type TestAsync = {
   readonly type: TestGroupType.TestAsync;
   readonly name: string;
-  readonly f: () => Promise<void>;
+  readonly f: Factory<Promise<void>>;
 };
 
 export type TestGroup = Describe | Test | TestAsync;
@@ -39,7 +39,7 @@ export const test = (name: string, f: () => void): Test => ({
   f,
 });
 
-export const testAsync = (name: string, f: () => Promise<void>): TestAsync => ({
+export const testAsync = (name: string, f: Factory<Promise<void>>): TestAsync => ({
   type: TestGroupType.TestAsync,
   name,
   f,
@@ -92,7 +92,7 @@ export const expectEquals = <T>(b: T, valuesAreEqual = referenceEquals) => (
 const arrayReferenceEquals = arrayEquals(referenceEquals);
 export const expectArrayEquals = <T>(
   b: readonly T[],
-  valuesAreEqual?: (a: T, b: T) => boolean,
+  valuesAreEqual?: Equality<T>,
 ) => (a: readonly T[]) => {
   const equals = isNone(valuesAreEqual)
     ? arrayReferenceEquals

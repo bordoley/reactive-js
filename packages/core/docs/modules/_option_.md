@@ -70,7 +70,7 @@ ___
 
 ### `Const` orCompute
 
-▸ **orCompute**<**T**>(`compute`: function): *(Anonymous function)*
+▸ **orCompute**<**T**>(`compute`: [Factory](_functions_.md#factory)‹T›): *(Anonymous function)*
 
 **Type parameters:**
 
@@ -78,8 +78,8 @@ ___
 
 **Parameters:**
 
-▪ **compute**: *function*
-
-▸ (): *T*
+Name | Type |
+------ | ------ |
+`compute` | [Factory](_functions_.md#factory)‹T› |
 
 **Returns:** *(Anonymous function)*

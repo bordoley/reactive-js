@@ -4,6 +4,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { Predicate } from "../../functions.ts";
 
 class KeepTypeSubscriber<
   TA,
@@ -48,5 +49,5 @@ export const keepType = <TA, TB extends TA>(
  * @param predicate The predicate function.
  */
 export const keep = <T>(
-  predicate: (data: T) => boolean,
+  predicate: Predicate<T>,
 ): ObservableOperator<T, T> => keepType(predicate as (data: T) => data is T);

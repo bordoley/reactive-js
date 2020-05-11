@@ -1,4 +1,4 @@
-import { compose } from "../../functions";
+import { compose, Factory } from "../../functions";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
@@ -16,7 +16,7 @@ const toArrayReducer = <T>(acc: T[], next: T): T[] => {
  * values emitted by `source` into an array.
  */
 export const toArray = <T>(
-  schedulerFactory: () => VirtualTimeSchedulerLike = createVirtualTimeScheduler,
+  schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
 ) =>
   compose(
     reduce<T, T[]>(toArrayReducer, (): T[] => []),

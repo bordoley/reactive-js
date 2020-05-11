@@ -1,4 +1,4 @@
-import { returns } from "../../functions.ts";
+import { returns, Operator } from "../../functions.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
@@ -6,7 +6,7 @@ import { AbstractDelegatingSubscriber } from "./subscriber.ts";
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
     delegate: SubscriberLike<TB>,
-    private readonly mapper: (data: TA) => TB,
+    private readonly mapper: Operator<TA, TB>,
   ) {
     super(delegate);
     this.add(delegate);
@@ -25,7 +25,7 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 export const map = <TA, TB>(
-  mapper: (data: TA) => TB,
+  mapper: Operator<TA, TB>,
 ): ObservableOperator<TA, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new MapSubscriber(subscriber, mapper);

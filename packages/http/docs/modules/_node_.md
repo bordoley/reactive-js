@@ -54,9 +54,7 @@ ___
 
 #### Type declaration:
 
-* **onError**(): *function*
-
-  * (`e`: unknown): *ObservableLike‹unknown›*
+* **onError**? : *Operator‹unknown, ObservableLike‹unknown››*
 
 ## Functions
 

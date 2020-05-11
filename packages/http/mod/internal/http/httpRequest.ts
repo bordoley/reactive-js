@@ -1,5 +1,5 @@
 import { FlowableLike, FlowableOperator } from "../../../../core/lib/flowable.ts";
-import { Operator } from "../../../../core/lib/functions.ts";
+import { Operator, Selector2 } from "../../../../core/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../core/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -282,7 +282,7 @@ export const httpRequestToUntypedHeaders = (
 };
 
 export const encodeHttpRequestWithCharset = (
-  encode: (v: string, charset: string) => Uint8Array,
+  encode: Selector2<string, string, Uint8Array>,
 ) => (
   contentType: string | MediaType,
 ): Operator<HttpRequest<string>, HttpRequest<Uint8Array>> => {
@@ -291,7 +291,7 @@ export const encodeHttpRequestWithCharset = (
 };
 
 export const decodeHttpRequestWithCharset = (
-  decode: (v: Uint8Array, charset: string) => string,
+  decode: Selector2<Uint8Array, string, string>,
 ): Operator<HttpRequest<Uint8Array>, HttpRequest<string>> => {
   const messageEncoder = decodeHttpMessageWithCharset(decode);
   return req => messageEncoder(req) as HttpRequest<string>;

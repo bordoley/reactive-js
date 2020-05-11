@@ -1,4 +1,4 @@
-import { pipe, compose } from "../../functions";
+import { pipe, compose, Operator } from "../../functions";
 import {
   ObservableOperator,
   StreamLike,
@@ -31,7 +31,7 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
     op: ObservableOperator<TReqB, TB>,
     readonly src: StreamableLike<TReqA, TA>,
     readonly obsOps: ObservableOperator<any, any>[],
-    readonly reqOps: ((req: any) => any)[],
+    readonly reqOps: Operator<any, any>[],
   ) {
     super(op);
   }
@@ -40,7 +40,7 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
 const liftImpl = <TReqA, TReqB, TA, TB>(
   streamable: StreamableLike<TReqA, TA>,
   obsOps: ObservableOperator<any, any>[],
-  reqOps: ((req: any) => any)[],
+  reqOps: Operator<any, any>[],
 ) => {
   const src =
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
@@ -72,7 +72,7 @@ export const lift = <TReq, TA, TB>(
 };
 
 export const mapReq = <TReqA, TReqB, T>(
-  op: (req: TReqB) => TReqA,
+  op: Operator<TReqB, TReqA>,
 ): StreamableOperator<TReqA, T, TReqB, T> => streamable => {
   const obsOps =
     streamable instanceof LiftedStreamable ? streamable.obsOps : [];
