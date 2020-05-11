@@ -17,7 +17,7 @@ import {
   expectEquals,
   expectNone,
   expectArrayEquals,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 export const tests = describe(
   "async-enumerable",

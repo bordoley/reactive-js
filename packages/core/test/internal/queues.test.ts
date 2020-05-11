@@ -1,6 +1,6 @@
 import { pipe } from "../../src/functions";
 import { createPriorityQueue } from "../../src/internal/queues";
-import { test, describe, expectArrayEquals } from "../../src/testing";
+import { test, describe, expectArrayEquals } from "../../src/internal/testing";
 
 const compare = (a: number, b: number): number => a - b;
 

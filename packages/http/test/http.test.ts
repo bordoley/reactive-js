@@ -5,7 +5,7 @@ import {
   describe,
   expectToThrow,
   expectEquals,
-} from "../../core/src/testing";
+} from "../../core/src/internal/testing";
 import {
   HttpRequest,
   HttpResponse,

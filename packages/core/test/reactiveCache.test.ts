@@ -18,7 +18,7 @@ import {
   expectSome,
   expectTrue,
   expectEquals,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 export const tests = describe(
   "reactive-cache",

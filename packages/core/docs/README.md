@@ -20,4 +20,3 @@
 * ["scheduler"](modules/_scheduler_.md)
 * ["stateStore"](modules/_statestore_.md)
 * ["streamable"](modules/_streamable_.md)
-* ["testing"](modules/_testing_.md)

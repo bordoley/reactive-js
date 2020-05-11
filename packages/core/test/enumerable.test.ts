@@ -44,7 +44,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectTrue,
   expectFalse,
-} from "../src/testing";
+} from "../src/internal/testing";
 
 export const tests = describe(
   "enumerable",
