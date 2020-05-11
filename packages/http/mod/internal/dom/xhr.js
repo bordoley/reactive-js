@@ -1,4 +1,4 @@
-import { createObservable, createSubject, } from "../../../../core/lib/observable.js";
+import { createObservable, createSubject, dispatch, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
@@ -21,7 +21,7 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             const headersRaw = (_a = xhr.getAllResponseHeaders()) !== null && _a !== void 0 ? _a : "";
             const headers = parseHeaders(headersRaw);
             const response = parseHttpResponseFromHeaders(xhr.status, headers, body);
-            dispatcher.dispatch({
+            dispatch(dispatcher, {
                 type: 4,
                 response,
             });
@@ -44,23 +44,23 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             }
         }
         else if (xhr.readyState === 4) {
-            bodyStream.dispatch(xhr.response);
+            dispatch(bodyStream, xhr.response);
         }
     };
     xhr.onloadstart = () => {
-        dispatcher.dispatch({
+        dispatch(dispatcher, {
             type: 1,
         });
     };
     xhr.upload.onprogress = ev => {
         const { loaded: count } = ev;
-        dispatcher.dispatch({
+        dispatch(dispatcher, {
             type: 2,
             count,
         });
     };
     xhr.upload.onload = _ => {
-        dispatcher.dispatch({
+        dispatch(dispatcher, {
             type: 3,
         });
     };

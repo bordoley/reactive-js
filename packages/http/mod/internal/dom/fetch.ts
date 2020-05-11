@@ -1,5 +1,6 @@
 import { bind, pipe } from "../../../../core/lib/functions.ts";
 import {
+  dispatch,
   fromPromise,
   publish,
   fromValue,
@@ -99,7 +100,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
         fetchResponse,
       );
 
-      dispatcher.dispatch(response);
+      dispatch(dispatcher, response);
       dispose(dispatcher);
     } catch (cause) {
       dispose(dispatcher, { cause });

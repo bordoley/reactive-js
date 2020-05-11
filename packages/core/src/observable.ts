@@ -82,4 +82,4 @@ export { toArray } from "./internal/observable/toArray";
 export { toPromise } from "./internal/observable/toPromise";
 export { toValue } from "./internal/observable/toValue";
 
-export { dispatchTo } from "./internal/observable/dispatcher";
+export { dispatch, dispatchTo } from "./internal/observable/dispatcher";

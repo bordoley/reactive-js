@@ -1,5 +1,6 @@
 import { bind, pipe } from "@reactive-js/core/lib/functions";
 import {
+  dispatch,
   fromPromise,
   publish,
   fromValue,
@@ -99,7 +100,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
         fetchResponse,
       );
 
-      dispatcher.dispatch(response);
+      dispatch(dispatcher, response);
       dispose(dispatcher);
     } catch (cause) {
       dispose(dispatcher, { cause });

@@ -1,6 +1,7 @@
 import {
   createObservable,
   createSubject,
+  dispatch,
 } from "@reactive-js/core/lib/observable";
 import { isSome } from "@reactive-js/core/lib/option";
 import {
@@ -49,7 +50,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
           body,
         );
 
-        dispatcher.dispatch({
+        dispatch(dispatcher, {
           type: HttpClientRequestStatusType.HeadersReceived,
           response,
         });
@@ -78,12 +79,12 @@ export const sendHttpRequestUsingXHR: HttpClient<
             : "";
         }
       } else if (xhr.readyState === 4) {
-        bodyStream.dispatch(xhr.response);
+        dispatch(bodyStream, xhr.response);
       }
     };
 
     xhr.onloadstart = () => {
-      dispatcher.dispatch({
+      dispatch(dispatcher, {
         type: HttpClientRequestStatusType.Start,
       });
     };
@@ -91,14 +92,14 @@ export const sendHttpRequestUsingXHR: HttpClient<
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
 
-      dispatcher.dispatch({
+      dispatch(dispatcher, {
         type: HttpClientRequestStatusType.Progress,
         count,
       });
     };
 
     xhr.upload.onload = _ => {
-      dispatcher.dispatch({
+      dispatch(dispatcher, {
         type: HttpClientRequestStatusType.Completed,
       });
     };

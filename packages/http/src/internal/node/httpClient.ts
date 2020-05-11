@@ -20,6 +20,7 @@ import {
   createReadableFlowable,
 } from "@reactive-js/core/lib/node";
 import {
+  dispatch,
   subscribe,
   scan,
   onNotify,
@@ -160,7 +161,7 @@ export const createHttpClient = (
           body,
         );
 
-        responseSubject.dispatch(response);
+        dispatch(responseSubject, response);
       };
       req.on("response", onResponse);
 

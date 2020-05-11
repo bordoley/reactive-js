@@ -1,6 +1,7 @@
 import { dispose, Exception } from "@reactive-js/core/lib/disposable";
 import { SideEffect1, pipe, compose, returns, bind, Operator } from "@reactive-js/core/lib/functions";
 import {
+  dispatch as dispatchToStream,
   ObservableLike,
   onNotify,
   StreamLike,
@@ -93,7 +94,7 @@ export const useStreamable = <TReq, T>(
     req => {
       const stream = streamRef.current;
       if (isSome(stream)) {
-        stream.dispatch(req);
+        dispatchToStream(stream, req);
       }
     },
     [streamRef],

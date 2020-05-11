@@ -1,4 +1,4 @@
-import { createObservable, ObservableLike } from "../../observable";
+import { createObservable, ObservableLike, dispatch } from "../../observable";
 import { dispose } from "../../disposable";
 import { Operator } from "../../functions";
 
@@ -11,7 +11,7 @@ export const fromEvent = <T>(
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        dispatcher.dispatch(result);
+        dispatch(dispatcher, result);
       } catch (cause) {
         dispose(dispatcher, { cause });
       }

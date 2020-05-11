@@ -1,6 +1,7 @@
 import { AbstractDisposable } from "../../disposable.ts";
 import { SubjectLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
 import { toDispatcher } from "./toDispatcher.ts";
+import { dispatch } from "./dispatcher.ts";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   private readonly subscribers: Set<DispatcherLike<T>> = new Set();
@@ -29,7 +30,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
       }
 
       for (const subscriber of this.subscribers) {
-        subscriber.dispatch(next);
+        dispatch(subscriber, next);
       }
     }
   }
@@ -50,7 +51,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     }
 
     for (const next of this.replayed) {
-      dispatcher.dispatch(next);
+      dispatch(dispatcher, next);
     }
 
     this.add(dispatcher);

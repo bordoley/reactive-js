@@ -1,6 +1,6 @@
 import { AbstractDisposable, dispose } from "./disposable.js";
 import { pipe } from "./functions.js";
-import { switchAll, onSubscribe, } from "./observable.js";
+import { switchAll, onSubscribe, dispatch, } from "./observable.js";
 import { isNone, isSome } from "./option.js";
 import { AbstractSchedulerContinuation, schedule, } from "./scheduler.js";
 import { createStreamable } from "./streamable.js";
@@ -89,7 +89,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
             markAsGarbage(this, key, stream);
         }
         const [stream, observable] = cachedValue;
-        stream.dispatch(value);
+        dispatch(stream, value);
         return observable;
     }
 }

@@ -8,7 +8,7 @@ import { pipe, incrementBy } from "../src/functions";
 import { identity, lift } from "../src/streamable";
 import { toStateStore } from "../src/stateStore";
 import { createVirtualTimeScheduler } from "../src/scheduler";
-import { onNotify, subscribe, startWith } from "../src/observable";
+import { onNotify, subscribe, startWith, dispatch } from "../src/observable";
 import { dispose } from "../src/disposable";
 
 export const tests = describe(
@@ -21,16 +21,16 @@ export const tests = describe(
       toStateStore<number>(),
     ).stream(scheduler);
 
-    stream.dispatch(incrementBy(1));
-    stream.dispatch(incrementBy(2));
-    stream.dispatch(incrementBy(3));
-    stream.dispatch(incrementBy(4));
-    stream.dispatch(incrementBy(5));
-    stream.dispatch(incrementBy(6));
-    stream.dispatch(incrementBy(7));
-    stream.dispatch(incrementBy(8));
-    stream.dispatch(incrementBy(9));
-    stream.dispatch(incrementBy(10));
+    dispatch(stream,incrementBy(1));
+    dispatch(stream,incrementBy(2));
+    dispatch(stream,incrementBy(3));
+    dispatch(stream,incrementBy(4));
+    dispatch(stream,incrementBy(5));
+    dispatch(stream,incrementBy(6));
+    dispatch(stream,incrementBy(7));
+    dispatch(stream,incrementBy(8));
+    dispatch(stream,incrementBy(9));
+    dispatch(stream,incrementBy(10));
     dispose(stream);
 
     let result: number[] = [];

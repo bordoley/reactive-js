@@ -5,6 +5,7 @@ import {
   buffer,
   takeFirst,
   startWith,
+  dispatch,
 } from "../src/observable";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
@@ -39,8 +40,8 @@ export const tests = describe(
       returns<number>(0),
     ).stream(scheduler);
 
-    stream.dispatch(1);
-    stream.dispatch(2);
+    dispatch(stream, 1);
+    dispatch(stream, 2);
     dispose(stream);
 
     let result: number[] = [];
@@ -62,8 +63,8 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const stream = empty<void, number>().stream(scheduler);
 
-      stream.dispatch();
-      stream.dispatch();
+      dispatch(stream, none);
+      dispatch(stream, none);
 
       let result: number[] = [];
       const subscription = pipe(
@@ -84,8 +85,8 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const stream = empty<void, number>({ delay: 4 }).stream(scheduler);
 
-      stream.dispatch();
-      stream.dispatch();
+      dispatch(stream, none);
+      dispatch(stream, none);
 
       let result: number[] = [];
       let disposedTime = 0;
@@ -132,9 +133,9 @@ export const tests = describe(
       map(incrementBy(100)),
     ).stream(scheduler);
 
-    stream.dispatch(10);
-    stream.dispatch(20);
-    stream.dispatch(30);
+    dispatch(stream, 10);
+    dispatch(stream, 20);
+    dispatch(stream, 30);
     dispose(stream);
 
     let result: readonly number[] = [];
@@ -162,9 +163,9 @@ export const tests = describe(
       mapReq<number, string, number>(x => Number.parseInt(x)),
     ).stream(scheduler);
 
-    stream.dispatch("10");
-    stream.dispatch("20");
-    stream.dispatch("30");
+    dispatch(stream, "10");
+    dispatch(stream, "20");
+    dispatch(stream, "30");
     dispose(stream);
 
     let result: readonly number[] = [];
@@ -193,9 +194,9 @@ export const tests = describe(
       }),
     ).stream(scheduler);
 
-    stream.dispatch(1);
-    stream.dispatch(2);
-    stream.dispatch(3);
+    dispatch(stream, 1);
+    dispatch(stream, 2);
+    dispatch(stream, 3);
     dispose(stream);
 
     expectTrue(stream.isDisposed);
@@ -216,9 +217,9 @@ export const tests = describe(
       }),
     ).stream(scheduler);
 
-    stream.dispatch(1);
-    stream.dispatch(2);
-    stream.dispatch(3);
+    dispatch(stream, 1);
+    dispatch(stream, 2);
+    dispatch(stream, 3);
 
     scheduler.run();
 

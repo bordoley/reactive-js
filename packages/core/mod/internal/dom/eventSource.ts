@@ -1,4 +1,4 @@
-import { createObservable, ObservableLike } from "../../observable.ts";
+import { createObservable, ObservableLike, dispatch } from "../../observable.ts";
 
 const reservedEvents = ["error", "open"];
 
@@ -19,7 +19,7 @@ export const createEventSource = (
   return createObservable(dispatcher => {
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
-      dispatcher.dispatch({
+      dispatch(dispatcher, {
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",

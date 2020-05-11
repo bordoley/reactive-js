@@ -11,6 +11,7 @@ import {
   subscribe,
   fromValue,
   onNotify,
+  dispatch,
 } from "./observable.ts";
 import { isSome, isNone, none } from "./option.ts";
 import { SchedulerLike } from "./scheduler.ts";
@@ -136,7 +137,7 @@ const tryDispatch = <TResource extends DisposableLike>(
 
     tryDispatch(resourceManager, key);
   });
-  subscriber.dispatch(resource);
+  dispatch(subscriber, resource);
 };
 
 export interface ResourceManagerLike<TResource> extends DisposableLike {

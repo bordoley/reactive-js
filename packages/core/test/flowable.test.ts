@@ -9,8 +9,8 @@ import {
   map,
   createFlowableSinkAccumulator,
 } from "../src/flowable";
-import { increment, pipe, returns, sum } from "../src/functions";
-import { onNotify, subscribe, generate, fromArray } from "../src/observable";
+import { increment, pipe, returns, sum, bind } from "../src/functions";
+import { onNotify, subscribe, generate, fromArray, dispatch } from "../src/observable";
 import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
   test,
@@ -48,8 +48,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const stream = empty().stream(scheduler);
 
-    stream.dispatch(FlowMode.Pause);
-    stream.dispatch(FlowMode.Resume);
+    dispatch(stream, FlowMode.Pause);
+    dispatch(stream, FlowMode.Resume);
 
     const f = mockFn();
     const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
@@ -83,14 +83,12 @@ export const tests = describe(
       fromObservable,
     ).stream(scheduler);
 
-    stream.dispatch(FlowMode.Resume);
+    dispatch(stream, FlowMode.Resume);
 
     pipe(
       scheduler,
       schedule(
-        _ => {
-          stream.dispatch(FlowMode.Pause);
-        },
+        bind(dispatch,stream, FlowMode.Pause),
         { delay: 2 },
       ),
     );
@@ -98,9 +96,7 @@ export const tests = describe(
     pipe(
       scheduler,
       schedule(
-        _ => {
-          stream.dispatch(FlowMode.Resume);
-        },
+        bind(dispatch,stream, FlowMode.Resume),
         { delay: 4 },
       ),
     );
@@ -108,9 +104,7 @@ export const tests = describe(
     pipe(
       scheduler,
       schedule(
-        _ => {
-          dispose(stream);
-        },
+        bind(dispose,stream),
         { delay: 5 },
       ),
     );
@@ -141,11 +135,11 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const stream = fromValue(1).stream(scheduler);
 
-    stream.dispatch(FlowMode.Pause);
-    stream.dispatch(FlowMode.Pause);
-    stream.dispatch(FlowMode.Resume);
-    stream.dispatch(FlowMode.Resume);
-    stream.dispatch(FlowMode.Pause);
+    dispatch(stream, FlowMode.Pause);
+    dispatch(stream, FlowMode.Pause);
+    dispatch(stream, FlowMode.Resume);
+    dispatch(stream, FlowMode.Resume);
+    dispatch(stream, FlowMode.Pause);
 
     const f = mockFn();
     const subscription = pipe(stream, onNotify(f), subscribe(scheduler));
