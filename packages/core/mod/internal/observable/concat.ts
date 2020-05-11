@@ -5,6 +5,7 @@ import {
   ObservableOperator,
 } from "./interfaces.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { dispose } from "../../disposable.ts";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -18,7 +19,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       const next = this.next;
 
       if (isSome(error)) {
-        delegate.dispose(error);
+        dispose(delegate, error);
       } else if (next < observables.length) {
         const concatSubscriber = new ConcatSubscriber(
           delegate,
@@ -27,7 +28,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
         );
         observables[next].subscribe(concatSubscriber);
       } else {
-        delegate.dispose();
+        dispose(delegate);
       }
     });
   }
@@ -51,7 +52,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
       const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
       observables[0].subscribe(concatSubscriber);
     } else {
-      subscriber.dispose();
+      dispose(subscriber);
     }
   }
 }

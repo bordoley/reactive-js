@@ -69,6 +69,7 @@ import {
 import iconv from "iconv-lite";
 import db from "mime-db";
 import mime from "mime-types";
+import { dispose } from "@reactive-js/core/lib/disposable";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -268,7 +269,7 @@ pipe(
     console.log("status: " + status.type);
     if (status.type === HttpClientRequestStatusType.HeadersReceived) {
       const { response } = status;
-      response.body.dispose();
+      dispose(response.body);
     }
   }),
   subscribe(scheduler),

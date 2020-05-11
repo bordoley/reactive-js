@@ -1,4 +1,4 @@
-import { DisposableOrTeardown } from "../../disposable";
+import { DisposableOrTeardown, dispose } from "../../disposable";
 import { isSome, none } from "../../option";
 import {
   ObservableLike,
@@ -21,7 +21,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
         subscriber.add(disposable);
       }
     } catch (cause) {
-      subscriber.dispose({ cause });
+      dispose(subscriber, { cause });
     }
   }
 }

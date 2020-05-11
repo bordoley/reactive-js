@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
@@ -13,15 +14,15 @@ class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
                         result.subscribe(delegate);
                     }
                     else {
-                        delegate.dispose();
+                        dispose(delegate);
                     }
                 }
                 catch (cause) {
-                    delegate.dispose({ cause, parent: error });
+                    dispose(delegate, { cause, parent: error });
                 }
             }
             else {
-                delegate.dispose();
+                dispose(delegate);
             }
         });
     }

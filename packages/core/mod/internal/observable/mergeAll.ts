@@ -1,4 +1,4 @@
-import { Exception } from "../../disposable.ts";
+import { Exception, dispose } from "../../disposable.ts";
 import { compose, pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
@@ -30,7 +30,7 @@ const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
 
       subscriber.delegate.add(nextObsSubscription);
     } else if (subscriber.isDisposed) {
-      subscriber.delegate.dispose();
+      dispose(subscriber.delegate);
     }
   }
 };
@@ -45,7 +45,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
     this.activeCount--;
 
     if (isSome(error)) {
-      this.delegate.dispose(error);
+      dispose(this.delegate, error);
     } else {
       subscribeNext(this);
     }
@@ -68,7 +68,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
 
     this.add(error => {
       if (isSome(error) || queue.length + this.activeCount === 0) {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
 

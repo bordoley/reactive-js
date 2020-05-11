@@ -3,6 +3,7 @@ import {
   createDisposableValue,
   createSerialDisposable,
   disposed,
+  dispose,
 } from "../src/disposable";
 import { pipe } from "../src/functions";
 import {
@@ -27,7 +28,7 @@ export const tests = describe(
       const child = createDisposable();
 
       disposable.add(child);
-      disposable.dispose();
+      dispose(disposable)
 
       expectTrue(child.isDisposed);
     }),
@@ -36,7 +37,7 @@ export const tests = describe(
       const disposable = createDisposable();
       const child = createDisposable();
 
-      disposable.dispose();
+      dispose(disposable)
       disposable.add(child);
 
       expectTrue(child.isDisposed);
@@ -47,7 +48,7 @@ export const tests = describe(
       const disposable = createDisposable(teardown);
       disposable.add(teardown);
 
-      disposable.dispose();
+      dispose(disposable)
 
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
@@ -58,7 +59,7 @@ export const tests = describe(
       };
       const disposable = createDisposable(teardown);
 
-      disposable.dispose();
+      dispose(disposable)
       pipe(disposable.error, expectNone);
     }),
 
@@ -68,7 +69,7 @@ export const tests = describe(
       const childTeardown = mockFn();
       const disposable = createDisposable(childTeardown);
 
-      disposable.dispose(error);
+      dispose(disposable, error);
 
       pipe(disposable.error, expectEquals(error));
       pipe(childTeardown, expectToHaveBeenCalledTimes(1));
@@ -107,9 +108,9 @@ export const tests = describe(
 
     test("disposes the value when disposed", () => {
       const value = createDisposable();
-      const disposable = createDisposableValue(value, v => v.dispose());
+      const disposable = createDisposableValue(value, dispose);
 
-      disposable.dispose();
+      dispose(disposable)
 
       pipe(disposable.value, expectEquals(value));
       pipe(value.isDisposed, expectTrue);

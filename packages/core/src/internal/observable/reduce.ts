@@ -6,6 +6,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(
@@ -18,7 +19,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
       if (isNone(error)) {
         fromValue()(this.acc).subscribe(delegate);
       } else {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }

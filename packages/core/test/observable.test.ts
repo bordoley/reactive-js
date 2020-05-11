@@ -98,6 +98,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectSome,
 } from "../src/internal/testing";
+import { dispose } from "../src/disposable";
 
 const scheduler = createHostScheduler();
 
@@ -247,7 +248,7 @@ export const tests = describe(
           dispatcher.dispatch(1);
           dispatcher.dispatch(2);
           dispatcher.dispatch(3);
-          dispatcher.dispose();
+          dispose(dispatcher);
         }),
         toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
         expectArrayEquals([1, 2, 3]),
@@ -263,7 +264,7 @@ export const tests = describe(
         fromArrayEnumerable,
         forEachEnumerable(dispatchTo(subject)),
       );
-      subject.dispose();
+      dispose(subject);
 
       pipe(subject, toArray(), expectArrayEquals([3, 4]));
     }),
@@ -276,9 +277,9 @@ export const tests = describe(
       pipe(subject.subscriberCount, expectEquals(1));
       const sub2 = pipe(subject, subscribe(scheduler));
       pipe(subject.subscriberCount, expectEquals(2));
-      sub1.dispose();
+      dispose(sub1);
       pipe(subject.subscriberCount, expectEquals(1));
-      sub2.dispose();
+      dispose(sub2);
       pipe(subject.subscriberCount, expectEquals(0));
     }),
   ),
@@ -576,10 +577,10 @@ export const tests = describe(
         d.dispatch(1);
         if (retried) {
           d.dispatch(2);
-          d.dispose();
+          dispose(d);
         } else {
           retried = true;
-          d.dispose({ cause: new Error() });
+          dispose(d, { cause: new Error() });
         }
       });
       pipe(src, retry(), toArray(), expectArrayEquals([1, 1, 2]));

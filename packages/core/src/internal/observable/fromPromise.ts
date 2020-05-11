@@ -1,6 +1,6 @@
 import { createObservable } from "./createObservable";
 import { ObservableLike, DispatcherLike } from "./interfaces";
-import { toErrorHandler } from "../../disposable";
+import { toErrorHandler, dispose } from "../../disposable";
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
@@ -16,7 +16,7 @@ export const fromPromise = <T>(
       next => {
         if (!dispatcher.isDisposed) {
           dispatcher.dispatch(next);
-          dispatcher.dispose();
+          dispose(dispatcher);
         }
       },
       toErrorHandler(dispatcher),

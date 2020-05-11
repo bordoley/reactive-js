@@ -1,4 +1,4 @@
-import { createSerialDisposable, disposeOnError, } from "../../disposable.js";
+import { createSerialDisposable, disposeOnError, dispose, } from "../../disposable.js";
 import { pipe, returns } from "../../functions.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
@@ -19,7 +19,7 @@ class TimeoutSubscriber extends AbstractDelegatingSubscriber {
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);
-        this.durationSubscription.dispose();
+        dispose(this.durationSubscription);
         this.delegate.notify(next);
     }
 }

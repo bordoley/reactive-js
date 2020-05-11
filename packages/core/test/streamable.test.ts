@@ -28,6 +28,7 @@ import {
   expectFalse,
 } from "../src/internal/testing";
 import { none } from "../src/option";
+import { dispose } from "../src/disposable";
 
 export const tests = describe(
   "streamable",
@@ -40,7 +41,7 @@ export const tests = describe(
 
     stream.dispatch(1);
     stream.dispatch(2);
-    stream.dispose();
+    dispose(stream);
 
     let result: number[] = [];
     pipe(
@@ -118,9 +119,9 @@ export const tests = describe(
     pipe(stream.subscriberCount, expectEquals(1));
     const sub2 = pipe(stream, subscribe(scheduler));
     pipe(stream.subscriberCount, expectEquals(2));
-    sub1.dispose();
+    dispose(sub1);
     pipe(stream.subscriberCount, expectEquals(1));
-    sub2.dispose();
+    dispose(sub2);
     pipe(stream.subscriberCount, expectEquals(0));
   }),
   test("map", () => {
@@ -134,7 +135,7 @@ export const tests = describe(
     stream.dispatch(10);
     stream.dispatch(20);
     stream.dispatch(30);
-    stream.dispose();
+    dispose(stream);
 
     let result: readonly number[] = [];
     const subscription = pipe(
@@ -164,7 +165,7 @@ export const tests = describe(
     stream.dispatch("10");
     stream.dispatch("20");
     stream.dispatch("30");
-    stream.dispose();
+    dispose(stream);
 
     let result: readonly number[] = [];
     const subscription = pipe(
@@ -195,7 +196,7 @@ export const tests = describe(
     stream.dispatch(1);
     stream.dispatch(2);
     stream.dispatch(3);
-    stream.dispose();
+    dispose(stream);
 
     expectTrue(stream.isDisposed);
 

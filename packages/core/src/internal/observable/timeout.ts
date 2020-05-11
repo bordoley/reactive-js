@@ -2,6 +2,7 @@ import {
   createSerialDisposable,
   SerialDisposableLike,
   disposeOnError,
+  dispose,
 } from "../../disposable";
 import { pipe, returns } from "../../functions";
 import { concat } from "./concat";
@@ -43,7 +44,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   notify(next: T) {
     assertSubscriberNotifyInContinuation(this);
 
-    this.durationSubscription.dispose();
+    dispose(this.durationSubscription);
     this.delegate.notify(next);
   }
 }

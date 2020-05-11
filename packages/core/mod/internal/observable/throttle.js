@@ -1,4 +1,4 @@
-import { createSerialDisposable, disposeOnError, } from "../../disposable.js";
+import { createSerialDisposable, disposeOnError, dispose, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none, isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
@@ -31,7 +31,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
                 fromValue()(this.value).subscribe(delegate);
             }
             else {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
         });
     }

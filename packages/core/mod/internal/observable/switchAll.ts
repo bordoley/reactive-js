@@ -1,4 +1,4 @@
-import { disposed } from "../../disposable.ts";
+import { disposed, dispose } from "../../disposable.ts";
 import { compose, pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
@@ -29,7 +29,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
     super(delegate);
     this.add(error => {
       if (this.inner.isDisposed || isSome(error)) {
-        this.delegate.dispose(error);
+        dispose(this.delegate, error);
       }
     });
   }
@@ -37,7 +37,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
   notify(next: ObservableLike<T>) {
     assertSubscriberNotifyInContinuation(this);
 
-    this.inner.dispose();
+    dispose(this.inner);
 
     const inner = pipe(
       next,
@@ -45,7 +45,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
       subscribe(this.delegate),
     ).add(e => {
       if (isSome(e) || this.isDisposed) {
-        this.delegate.dispose(e);
+        dispose(this.delegate, e);
       }
     });
     this.delegate.add(inner);

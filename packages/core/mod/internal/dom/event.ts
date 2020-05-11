@@ -1,4 +1,5 @@
 import { createObservable, ObservableLike } from "../../observable.ts";
+import { dispose } from "../../disposable.ts";
 
 export const fromEvent = <T>(
   target: EventTarget,
@@ -11,7 +12,7 @@ export const fromEvent = <T>(
         const result = selector(event);
         dispatcher.dispatch(result);
       } catch (cause) {
-        dispatcher.dispose({ cause });
+        dispose(dispatcher, { cause });
       }
     };
 

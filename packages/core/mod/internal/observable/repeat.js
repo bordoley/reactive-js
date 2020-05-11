@@ -1,4 +1,4 @@
-import { createSerialDisposable } from "../../disposable.js";
+import { createSerialDisposable, dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -23,7 +23,7 @@ class RepeatSubscriber extends AbstractDelegatingSubscriber {
             }
             const delegate = this.delegate;
             if (shouldComplete) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
             else {
                 this.count++;

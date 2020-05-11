@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "./disposable.js";
+import { AbstractDisposable, dispose } from "./disposable.js";
 import { pipe } from "./functions.js";
 import { switchAll, onSubscribe, } from "./observable.js";
 import { isNone, isSome } from "./option.js";
@@ -12,7 +12,7 @@ class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
     produce(scheduler) {
         const { cache, maxCount, garbage } = this.cache;
         for (const [, stream] of garbage) {
-            stream.dispose();
+            dispose(stream);
             const hasMoreToCleanup = cache.size > maxCount;
             if (hasMoreToCleanup && scheduler.shouldYield()) {
                 scheduler.schedule(this);
@@ -22,7 +22,7 @@ class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
                 break;
             }
         }
-        this.dispose();
+        dispose(this);
     }
 }
 const markAsGarbage = (reactiveCache, key, stream) => {
@@ -51,7 +51,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
         this.add(() => {
             for (const value of this.cache.values()) {
                 const [stream] = value;
-                stream.dispose();
+                dispose(stream);
             }
             this.cache.clear();
             this.garbage.clear();

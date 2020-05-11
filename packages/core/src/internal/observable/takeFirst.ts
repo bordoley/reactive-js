@@ -6,6 +6,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { dispose } from "../../disposable";
 
 class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;
@@ -22,7 +23,7 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       this.count++;
       this.delegate.notify(next);
       if (this.count >= this.maxCount) {
-        this.dispose();
+        dispose(this);
       }
     }
   }

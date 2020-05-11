@@ -1,12 +1,12 @@
 import { Writable } from "stream";
-import { DisposableValueLike } from "../../disposable";
+import { DisposableValueLike, dispose } from "../../disposable";
 import {
   FlowEventType,
   FlowMode,
   FlowEvent,
   FlowableSinkLike,
 } from "../../flowable";
-import { pipe } from "../../functions";
+import { pipe, bind } from "../../functions";
 import {
   createObservable,
   onNotify,
@@ -31,9 +31,7 @@ const createWritableEventsObservable = (
     };
     writableValue.on("drain", onDrain);
 
-    const onFinish = () => {
-      dispatcher.dispose();
-    };
+    const onFinish = bind(dispose, dispatcher);
     writableValue.on("finish", onFinish);
 
     const onPause = () => {

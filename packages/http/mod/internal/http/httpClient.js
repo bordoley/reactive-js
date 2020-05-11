@@ -1,3 +1,4 @@
+import { dispose } from "../../../../core/lib/disposable.js";
 import { pipe, identity } from "../../../../core/lib/functions.js";
 import { fromValue, map, switchMap, concatMap, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
@@ -28,7 +29,7 @@ export const withDefaultBehaviors = (encodeHttpRequest = identity) => (httpClien
                         ? { ...request, acceptedEncodings }
                         : request;
             if (request !== newRequest) {
-                response.body.dispose();
+                dispose(response.body);
                 return sendRequest(newRequest);
             }
         }

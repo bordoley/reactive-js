@@ -9,6 +9,7 @@ import { identity, lift } from "../src/streamable";
 import { toStateStore } from "../src/stateStore";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import { onNotify, subscribe, startWith } from "../src/observable";
+import { dispose } from "../src/disposable";
 
 export const tests = describe(
   "stateStore",
@@ -30,7 +31,7 @@ export const tests = describe(
     stream.dispatch(incrementBy(8));
     stream.dispatch(incrementBy(9));
     stream.dispatch(incrementBy(10));
-    stream.dispose();
+    dispose(stream);
 
     let result: number[] = [];
 

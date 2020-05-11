@@ -13,6 +13,7 @@ import {
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces.ts";
+import { dispose } from "../../../../core/lib/disposable.ts";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,
@@ -30,7 +31,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
 
     xhr.onerror = () => {
       const cause = new Error("Network request failed");
-      dispatcher.dispose({ cause });
+      dispose(dispatcher, { cause });
     };
 
     xhr.onreadystatechange = () => {
@@ -105,7 +106,7 @@ export const sendHttpRequestUsingXHR: HttpClient<
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this
       const cause = new Error("Network request failed");
-      dispatcher.dispose({ cause });
+      dispose(dispatcher, { cause });
     };
 
     if (request.credentials === "include") {

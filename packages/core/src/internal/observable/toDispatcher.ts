@@ -1,4 +1,4 @@
-import { AbstractDisposable } from "../../disposable";
+import { AbstractDisposable, dispose } from "../../disposable";
 import { isSome } from "../../option";
 import { AbstractSchedulerContinuation } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
@@ -25,7 +25,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation<
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 
@@ -39,7 +39,7 @@ const scheduleDrainQueue = <T>(
     producer.add(e => {
       const error = e ?? dispatcher.error;
       if (isSome(error) || dispatcher.isDisposed) {
-        (dispatcher.subscriber as SubscriberLike<T>).dispose(error);
+        dispose(dispatcher.subscriber as SubscriberLike<T>, error);
       }
     });
     dispatcher.subscriber.schedule(producer);
@@ -54,7 +54,7 @@ class SubscriberDelegatingDispatcher<T> extends AbstractDisposable
     super();
     this.add(e => {
       if (this.nextQueue.length === 0) {
-        subscriber.dispose(e);
+        dispose(subscriber, e);
       }
     });
     subscriber.add(this);

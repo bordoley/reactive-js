@@ -1,4 +1,4 @@
-import { AbstractDisposable, disposed } from "./disposable.js";
+import { AbstractDisposable, disposed, dispose } from "./disposable.js";
 import { first, forEach, fromIterable } from "./enumerable.js";
 import { pipe } from "./functions.js";
 import { createKeyedQueue } from "./internal/keyedQueue.js";
@@ -35,7 +35,7 @@ const tryDispatch = (resourceManager, key) => {
         resourceManager.count >= maxTotalResources) {
         const [resource, disposable] = pipe(availableResourcesTimeouts, fromIterable, first);
         availableResourcesTimeouts.delete(resource);
-        disposable.dispose();
+        dispose(disposable);
     }
     const resource = isNone(peekedResource) && inUseCount < maxResourcesPerKey
         ? resourceManager.createResource(key)
@@ -45,7 +45,7 @@ const tryDispatch = (resourceManager, key) => {
     }
     const timeoutSubscription = (_a = availableResourcesTimeouts.get(resource)) !== null && _a !== void 0 ? _a : disposed;
     availableResourcesTimeouts.delete(resource);
-    timeoutSubscription.dispose();
+    dispose(timeoutSubscription);
     const subscriber = resourceRequests.pop(key);
     inUseResources.add(key, subscriber);
     subscriber.add(() => {
@@ -54,7 +54,7 @@ const tryDispatch = (resourceManager, key) => {
         const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
             const resource = availableResources.pop(key);
             if (isSome(resource)) {
-                resource.dispose();
+                dispose(resource);
                 const resourceKey = globalResourceWaitQueue.pop();
                 if (isSome(resourceKey)) {
                     tryDispatch(resourceManager, resourceKey);
@@ -82,7 +82,7 @@ class ResourceManagerImpl extends AbstractDisposable {
         this.resourceRequests = createKeyedQueue();
         this.globalResourceWaitQueue = createUniqueQueue();
         this.add(e => {
-            const forEachDispose = forEach((s) => s.dispose(e));
+            const forEachDispose = forEach((s) => dispose(s, e));
             pipe(this.resourceRequests.values, forEachDispose);
             this.resourceRequests.clear();
             pipe(this.inUseResources.values, forEachDispose);

@@ -1,5 +1,6 @@
 import { createObservable, ObservableLike } from "../../observable";
 import { none } from "../../option";
+import { dispose } from "../../disposable";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(
   callbackFunc: (
@@ -257,7 +258,7 @@ export function bindNodeCallback<T>(
     return createObservable(dispatcher => {
       const handler = (cause: unknown, ...innerArgs: unknown[]) => {
         if (cause) {
-          dispatcher.dispose({ cause });
+          dispose(dispatcher, { cause });
         } else {
           if (innerArgs.length > 0) {
             const result = (selector as (...args: unknown[]) => T)(
@@ -267,7 +268,7 @@ export function bindNodeCallback<T>(
           } else {
             dispatcher.dispatch(none);
           }
-          dispatcher.dispose();
+          dispose(dispatcher);
         }
       };
 

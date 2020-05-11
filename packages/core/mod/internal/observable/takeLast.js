@@ -4,6 +4,7 @@ import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class TakeLastSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, maxCount) {
         super(delegate);
@@ -15,7 +16,7 @@ class TakeLastSubscriber extends AbstractDelegatingSubscriber {
         });
         this.add(error => {
             if (isSome(error)) {
-                delegate.dispose(error);
+                dispose(delegate, error);
             }
             else {
                 fromArray()(last).subscribe(delegate);

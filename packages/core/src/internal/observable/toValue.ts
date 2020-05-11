@@ -1,4 +1,4 @@
-import { Exception } from "../../disposable";
+import { Exception, dispose } from "../../disposable";
 import { pipe } from "../../functions";
 import { none, Option } from "../../option";
 import {
@@ -35,8 +35,8 @@ export const toValue = (
 
   scheduler.run();
 
-  subscription.dispose();
-  scheduler.dispose();
+  dispose(subscription);
+  dispose(scheduler);
 
   const reifiedError: Option<Exception> = error;
   // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason

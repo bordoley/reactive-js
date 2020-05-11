@@ -1,5 +1,5 @@
-import { createDisposableValue, disposed } from "../src/disposable";
-import { pipe, ignore } from "../src/functions";
+import { createDisposableValue, disposed, dispose } from "../src/disposable";
+import { pipe, ignore, bind } from "../src/functions";
 import { onNotify, subscribe, fromArray } from "../src/observable";
 import { createResourceManager } from "../src/resourceManager";
 import { createVirtualTimeScheduler } from "../src/scheduler";
@@ -51,7 +51,7 @@ export const tests = describe(
           );
         },
         () => {
-          da1.dispose();
+          dispose(da1);
 
           db1 = pipe(
             rm.get("b"),
@@ -84,16 +84,16 @@ export const tests = describe(
           );
         },
         () => {
-          da2.dispose();
-          db1.dispose();
+          dispose(da2);
+          dispose(db1);
         },
         () => {
-          db2.dispose();
+          dispose(db2);
         },
         () => {
-          da3.dispose();
-          db2.dispose();
-          db3.dispose();
+          dispose(da3);
+          dispose(db2);
+          dispose(db3);
         },
         ignore,
         ignore,
@@ -107,8 +107,8 @@ export const tests = describe(
             subscribe(scheduler),
           );
 
-          dc.dispose();
-          dd.dispose();
+          dispose(dc);
+          dispose(dd);
         },
         ignore,
         ignore,
@@ -120,9 +120,7 @@ export const tests = describe(
         ignore,
         ignore,
         ignore,
-        () => {
-          rm.dispose();
-        },
+        bind(dispose, rm),
       ],
       fromArray({ delay: 1 }),
       onNotify(src => src()),

@@ -4,6 +4,7 @@ import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 const notifyDelegate = (subscriber) => {
     if (subscriber.queue.length > 0 && subscriber.hasLatest) {
         subscriber.hasLatest = false;
@@ -23,25 +24,25 @@ class ZipWithLatestFromSubscriber extends AbstractSubscriber {
             this.otherLatest = otherLatest;
             notifyDelegate(this);
             if (this.isDisposed && this.queue.length === 0) {
-                this.delegate.dispose();
+                dispose(this.delegate);
             }
         };
         this.queue = [];
         this.selector = selector;
         const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate)).add(e => {
             if (isSome(e)) {
-                delegate.dispose(e);
+                dispose(delegate, e);
             }
             else if (this.isDisposed) {
-                delegate.dispose();
+                dispose(delegate);
             }
         });
         this.add(e => {
             if (isSome(e)) {
-                delegate.dispose(e);
+                dispose(delegate, e);
             }
             else if (otherSubscription.isDisposed) {
-                delegate.dispose();
+                dispose(delegate);
             }
         });
         delegate.add(otherSubscription).add(this);

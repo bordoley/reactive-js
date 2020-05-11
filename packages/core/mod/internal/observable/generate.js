@@ -1,5 +1,6 @@
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
+import { dispose } from "../../disposable.js";
 class GenerateProducer extends AbstractProducer {
     constructor(subscriber, generator, acc, delay) {
         super(subscriber);
@@ -24,7 +25,7 @@ class GenerateProducer extends AbstractProducer {
                 return;
             }
         }
-        this.dispose();
+        dispose(this);
     }
 }
 export function generate(generator, initialValue, { delay } = { delay: 0 }) {

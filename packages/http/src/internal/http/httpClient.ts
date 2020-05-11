@@ -1,4 +1,4 @@
-import { DisposableLike } from "@reactive-js/core/lib/disposable";
+import { dispose, DisposableLike } from "@reactive-js/core/lib/disposable";
 import { pipe, identity } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
@@ -102,7 +102,7 @@ export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
             : request;
 
           if (request !== newRequest) {
-            response.body.dispose();
+            dispose(response.body);
             return sendRequest(newRequest);
           }
           // Fallthrough

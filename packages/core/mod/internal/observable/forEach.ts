@@ -1,4 +1,4 @@
-import { Exception } from "../../disposable.ts";
+import { Exception, dispose } from "../../disposable.ts";
 import { Operator, pipe } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import {
@@ -34,8 +34,8 @@ export const forEach = <T>(
 
   scheduler.run();
 
-  subscription.dispose();
-  scheduler.dispose();
+  dispose(subscription);
+  dispose(scheduler);
 
   const reifiedError = error;
   // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason

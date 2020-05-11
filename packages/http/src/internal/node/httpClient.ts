@@ -2,6 +2,7 @@ import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
+  dispose,
   DisposableLike,
   AbstractDisposable,
   toErrorHandler,
@@ -147,7 +148,7 @@ export const createHttpClient = (
 
       const responseSubject = createSubject<HttpResponse<ResponseBody>>();
       const onResponse = (resp: IncomingMessage) => {
-        requestBody.dispose();
+        dispose(requestBody);
 
         const body = new ResponseBody(resp);
         responseSubject.add(body);

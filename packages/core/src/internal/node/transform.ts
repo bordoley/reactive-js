@@ -1,9 +1,8 @@
 import { Transform } from "stream";
-import { DisposableValueLike, createDisposableValue } from "../../disposable";
+import { DisposableValueLike, createDisposableValue, disposeOnError } from "../../disposable";
 import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
-import { isSome } from "../../option";
 import { createStreamable, sink } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";
 import { createWritableFlowableSink } from "./createWritableFlowableSink";
@@ -19,11 +18,9 @@ export const transform = (
         const transformSink = createWritableFlowableSink(
           // don't dispose the transform when the writable is disposed.
           () =>
-            createDisposableValue<Transform>(transform.value, ignore).add(e => {
-              if (isSome(e)) {
-                transform.dispose(e);
-              }
-            }),
+            createDisposableValue<Transform>(transform.value, ignore).add(
+              disposeOnError(transform)
+            ),
         );
 
         const sinkSubscription = pipe(

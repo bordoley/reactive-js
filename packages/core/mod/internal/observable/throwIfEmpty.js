@@ -1,6 +1,7 @@
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { dispose } from "../../disposable.js";
 class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, factory) {
         super(delegate);
@@ -11,7 +12,7 @@ class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
                 const cause = this.factory();
                 error = { cause };
             }
-            this.delegate.dispose(error);
+            dispose(this.delegate, error);
         });
     }
     notify(next) {

@@ -1,4 +1,4 @@
-import { AbstractDisposable, Exception } from "../../disposable.ts";
+import { AbstractDisposable, Exception, dispose } from "../../disposable.ts";
 import { none, Option, isSome } from "../../option.ts";
 import {
   SchedulerLike,
@@ -64,7 +64,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
 
     const isDisposed = this.isDisposed;
     if (!isDisposed && isSome(error)) {
-      this.dispose(error);
+      dispose(this, error);
     }
   }
 }

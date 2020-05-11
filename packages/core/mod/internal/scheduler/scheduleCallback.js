@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(cb) {
@@ -6,7 +7,7 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     }
     produce(scheduler) {
         this.cb(scheduler);
-        this.dispose();
+        dispose(this);
     }
 }
 export const schedule = (callback, options = { delay: 0 }) => (scheduler) => {

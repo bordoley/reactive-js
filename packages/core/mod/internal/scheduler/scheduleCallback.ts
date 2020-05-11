@@ -1,4 +1,4 @@
-import { DisposableLike } from "../../disposable.ts";
+import { DisposableLike, dispose } from "../../disposable.ts";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import { SchedulerLike } from "./interfaces.ts";
 
@@ -9,7 +9,7 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
 
   produce(scheduler: SchedulerLike) {
     this.cb(scheduler);
-    this.dispose();
+    dispose(this);
   }
 }
 

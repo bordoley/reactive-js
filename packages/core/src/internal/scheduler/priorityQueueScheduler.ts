@@ -3,6 +3,7 @@ import {
   DisposableLike,
   disposed,
   AbstractDisposable,
+  dispose,
 } from "../../disposable";
 import { none, Option, isSome, isNone } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
@@ -116,7 +117,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
       }
     }
 
-    this.dispose();
+    dispose(this);
   }
 }
 

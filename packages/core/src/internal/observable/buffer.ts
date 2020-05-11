@@ -1,4 +1,4 @@
-import { disposed, disposeOnError } from "../../disposable";
+import { disposed, disposeOnError, dispose } from "../../disposable";
 import { pipe } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
@@ -23,7 +23,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   private durationSubscription = disposed;
   private buffer: Array<T> = [];
   private readonly onNotify = () => {
-    this.durationSubscription.dispose();
+    dispose(this.durationSubscription);
     this.durationSubscription = disposed;
 
     const buffer = this.buffer;
@@ -45,7 +45,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
       if (isNone(error) && buffer.length > 0) {
         fromValue()(buffer).subscribe(delegate);
       } else {
-        delegate.dispose(error);
+        dispose(delegate, error);
       }
     });
   }
