@@ -15,7 +15,7 @@ export const run = (n: number) => {
         combineLatest,
         fromArray,
         keep,
-      } = require("@reactive-js/core/lib/observable");
+      } = require("../lib/observable");
       const { run } = require("./reactive-js-runner");
 
       const arrayObs = fromArray()(src);
