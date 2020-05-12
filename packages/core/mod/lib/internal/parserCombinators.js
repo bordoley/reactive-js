@@ -1,6 +1,6 @@
-import { compose, isReferenceEqualTo, pipe, returns, } from "@reactive-js/core/lib/functions";
-import { __DEV__ } from "@reactive-js/core/lib/internal/env";
-import { none, orCompute as orComputeOption, } from "@reactive-js/core/lib/option";
+import { compose, isReferenceEqualTo, pipe, returns, } from "../functions.js";
+import { __DEV__ } from "./env.js";
+import { none, orCompute as orComputeOption, } from "../option.js";
 class CharStreamImpl {
     constructor(src) {
         this.src = src;
