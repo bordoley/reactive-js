@@ -12,6 +12,7 @@ import {
   sum,
   bind,
   defer,
+  ignore,
 } from "../src/functions";
 import {
   forEach as forEachEnumerable,
@@ -165,7 +166,7 @@ export const tests = describe(
         1,
         fromValue(),
         concatWith(pipe(error, returns, throws())),
-        catchError(_ => {}),
+        catchError(ignore),
         toArray(),
         expectArrayEquals([1]),
       );
@@ -382,12 +383,11 @@ export const tests = describe(
     test("throws if source throws", () => {
       const error = new Error();
       pipe(
-        () =>
-          pipe(
+        defer(
             error,
             returns,
             throws(),
-            forEach(_ => {}),
+            forEach(ignore),
           ),
         expectToThrowError(error),
       );
