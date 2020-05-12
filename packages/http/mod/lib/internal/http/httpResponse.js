@@ -7,11 +7,13 @@ import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpConte
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
-export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
+export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers = {}, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
     ...rest,
     body,
     cacheControl: (cacheControl !== null && cacheControl !== void 0 ? cacheControl : []).map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc),
-    contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
+    contentInfo: isSome(contentInfo)
+        ? createHttpContentInfo(contentInfo)
+        : parseHttpContentInfoFromHeaders(headers),
     etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
     expires,
     headers: filterHeaders(headers !== null && headers !== void 0 ? headers : {}),
@@ -21,7 +23,9 @@ export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expi
             ? lastModified.getTime()
             : lastModified,
     location: typeof location === "string" ? new URL(location) : location,
-    preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
+    preferences: isSome(preferences)
+        ? createHttpPreferences(preferences)
+        : parseHttpPreferencesFromHeaders(headers),
     statusCode,
     vary: vary !== null && vary !== void 0 ? vary : [],
 });

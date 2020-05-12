@@ -343,20 +343,20 @@ ___
 
 ▪ **__namedParameters**: *object*
 
-Name | Type |
------- | ------ |
-`body` | T |
-`cacheControl` | ReadonlyArray‹string &#124; object› |
-`contentInfo` | object |
-`expectContinue` | boolean |
-`headers` | object |
-`httpVersionMajor` | number |
-`httpVersionMinor` | number |
-`method` | [HttpMethod](../enums/_http_.httpmethod.md) |
-`preconditions` | object |
-`preferences` | object |
-`rest` | rest |
-`uri` | string &#124; [URILike](../interfaces/_http_.urilike.md) |
+Name | Type | Default |
+------ | ------ | ------ |
+`body` | T | - |
+`cacheControl` | ReadonlyArray‹string &#124; object› | - |
+`contentInfo` | object | - |
+`expectContinue` | boolean | false |
+`headers` | object | - |
+`httpVersionMajor` | number | 1 |
+`httpVersionMinor` | number | 1 |
+`method` | [HttpMethod](../enums/_http_.httpmethod.md) | - |
+`preconditions` | object | - |
+`preferences` | object | - |
+`rest` | rest | - |
+`uri` | string &#124; [URILike](../interfaces/_http_.urilike.md) | - |
 
 **Returns:** *[HttpRequest](_http_.md#httprequest)‹T›*
 

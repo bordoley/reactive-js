@@ -69,7 +69,7 @@ export const createHttpResponse = <T>({
   contentInfo,
   etag,
   expires,
-  headers,
+  headers = {},
   lastModified,
   location,
   preferences,
@@ -103,7 +103,9 @@ export const createHttpResponse = <T>({
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
+  contentInfo: isSome(contentInfo) 
+    ? createHttpContentInfo(contentInfo)
+    : parseHttpContentInfoFromHeaders(headers),
   etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
   expires,
   headers: filterHeaders(headers ?? {}),
@@ -114,7 +116,9 @@ export const createHttpResponse = <T>({
       ? lastModified.getTime()
       : lastModified,
   location: typeof location === "string" ? new URL(location) : location,
-  preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
+  preferences: isSome(preferences) 
+    ? createHttpPreferences(preferences)
+    : parseHttpPreferencesFromHeaders(headers),
   statusCode,
   vary: vary ?? [],
 });

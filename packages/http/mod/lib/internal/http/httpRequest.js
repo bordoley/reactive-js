@@ -6,20 +6,24 @@ import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
 import { createHttpResponse } from "./httpResponse.js";
-export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue, headers, httpVersionMajor, httpVersionMinor, method, preconditions, preferences, uri, ...rest }) => ({
+export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue = false, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, method, preconditions, preferences, uri, ...rest }) => ({
     ...rest,
     body,
     cacheControl: (cacheControl !== null && cacheControl !== void 0 ? cacheControl : []).map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc),
-    contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
-    expectContinue: expectContinue !== null && expectContinue !== void 0 ? expectContinue : false,
-    headers: filterHeaders(headers !== null && headers !== void 0 ? headers : {}),
-    httpVersionMajor: httpVersionMajor !== null && httpVersionMajor !== void 0 ? httpVersionMajor : 1,
-    httpVersionMinor: httpVersionMinor !== null && httpVersionMinor !== void 0 ? httpVersionMinor : 1,
+    contentInfo: isSome(contentInfo)
+        ? createHttpContentInfo(contentInfo)
+        : parseHttpContentInfoFromHeaders(headers),
+    expectContinue: expectContinue,
+    headers: filterHeaders(headers),
+    httpVersionMajor: httpVersionMajor,
+    httpVersionMinor: httpVersionMinor,
     method,
     preconditions: isSome(preconditions)
         ? createHttpRequestPreconditions(preconditions)
-        : none,
-    preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
+        : parseHttpRequestPreconditionsFromHeaders(headers),
+    preferences: isSome(preferences)
+        ? createHttpPreferences(preferences)
+        : parseHttpPreferencesFromHeaders(headers),
     uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 export const createRedirectHttpRequest = (request, response) => {

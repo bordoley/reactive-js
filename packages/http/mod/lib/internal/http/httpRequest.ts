@@ -71,10 +71,10 @@ export const createHttpRequest = <T>({
   body,
   cacheControl,
   contentInfo,
-  expectContinue,
-  headers,
-  httpVersionMajor,
-  httpVersionMinor,
+  expectContinue = false,
+  headers = {},
+  httpVersionMajor = 1,
+  httpVersionMinor = 1,
   method,
   preconditions,
   preferences,
@@ -113,16 +113,20 @@ export const createHttpRequest = <T>({
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  contentInfo: isSome(contentInfo) ? createHttpContentInfo(contentInfo) : none,
-  expectContinue: expectContinue ?? false,
-  headers: filterHeaders(headers ?? {}),
-  httpVersionMajor: httpVersionMajor ?? 1,
-  httpVersionMinor: httpVersionMinor ?? 1,
+  contentInfo: isSome(contentInfo) 
+    ? createHttpContentInfo(contentInfo) 
+    : parseHttpContentInfoFromHeaders(headers),
+  expectContinue: expectContinue,
+  headers: filterHeaders(headers),
+  httpVersionMajor: httpVersionMajor,
+  httpVersionMinor: httpVersionMinor,
   method,
   preconditions: isSome(preconditions)
     ? createHttpRequestPreconditions(preconditions)
-    : none,
-  preferences: isSome(preferences) ? createHttpPreferences(preferences) : none,
+    : parseHttpRequestPreconditionsFromHeaders(headers),
+  preferences: isSome(preferences) 
+    ? createHttpPreferences(preferences) 
+    : parseHttpPreferencesFromHeaders(headers),
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
 

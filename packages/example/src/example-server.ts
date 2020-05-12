@@ -18,6 +18,7 @@ import {
   increment,
   compose,
   defer,
+  bind,
 } from "@reactive-js/core/lib/functions";
 import {
   createReadableFlowable,
@@ -65,6 +66,7 @@ import {
   toFlowableHttpRequest,
   encodeHttpClientRequestContent,
   encodeHttpResponseContent,
+  HttpStandardHeader,
 } from "@reactive-js/http/lib/http";
 import {
   createHttpRequestListener,
@@ -74,6 +76,7 @@ import {
 } from "@reactive-js/http/lib/node";
 import db from "mime-db";
 import mime from "mime-types";
+import { HttpExtensionHeader } from "@reactive-js/http/src/lib/http";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -101,26 +104,25 @@ const routerHandlerPrintParams: HttpServer<
 const routerHandlerEventStream: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
-> = _ => {
-  const body = pipe(
-    fromObservable(generate(increment, returns<number>(0), { delay: 1000 })),
-    mapFlowable(
-      data =>
-        `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
-    ),
-    encodeUtf8,
-  );
-  const response = createHttpResponse({
+> = bind(
+  fromValue(),
+  createHttpResponse({
     statusCode: HttpStatusCode.OK,
-    body,
+    body: pipe(
+      fromObservable(generate(increment, returns<number>(0), { delay: 1000 })),
+      mapFlowable(
+        data =>
+          `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
+      ),
+      encodeUtf8,
+    ),
     cacheControl: ["no-cache"],
     contentInfo: {
       contentType: 'text/event-stream; charset="utf-8"',
     },
-  });
+  }),
+);
 
-  return fromValue()(response);
-};
 
 const routerHandlerFiles: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
@@ -268,14 +270,10 @@ pipe(
     uri: "http://localhost:8080/index.html",
     body: "some text",
     headers: {
-      "x-forwarded-host": "www.google.com",
-      "x-forwarded-proto": "https",
-    },
-    contentInfo: {
-      contentType: "text/plain",
-    },
-    preferences: {
-      acceptedMediaRanges: ["application/json", "text/html"],
+      [HttpStandardHeader.ContentType.toLowerCase()]: "text/plain",
+      [HttpExtensionHeader.XForwardedHost.toLowerCase()]: "www.google.com",
+      [HttpExtensionHeader.XForwardedProto.toLowerCase()]: "https",
+      [HttpStandardHeader.Accept.toLowerCase()]: "application/json, text/html"
     },
   }),
   encodeHttpRequestWithUtf8,
