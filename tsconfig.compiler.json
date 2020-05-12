@@ -16,6 +16,5 @@
     "removeComments": true,
     "strict": true,
     "strictNullChecks": true
-  },
-  "exclude": ["**/build", "**/lib", "**/mod", "**/test"]
+  }
 }

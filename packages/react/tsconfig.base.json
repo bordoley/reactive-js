@@ -2,5 +2,6 @@
   "extends": "../../tsconfig.compiler.json",
   "compilerOptions": {
     "rootDir": "./src"
-  }
+  },
+  "exclude": ["./build", "./lib", "./mod", "./test", "./testRunner.jest.ts"]
 }

@@ -58,12 +58,12 @@
     "compile-esm": "tsc -p tsconfig.esm.json",
     "compile-types": "tsc -p tsconfig.types.json",
     "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
-    "lib-js": "cp -r ./build/cjs/ ./lib",
+    "lib-js": "cp -r ./build/cjs/lib/ ./lib",
     "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
-    "lib-mjs-copy": "cp -r ./build/esm ./lib",
+    "lib-mjs-copy": "cp -r ./build/esm/lib/ ./lib",
     "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
     "lib-mjs-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
-    "lib-types": "cp -r ./build/types/ ./lib",
+    "lib-types": "cp -r ./build/types/lib/ ./lib",
     "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-node && yarn mod-alias-reactive-js-core",
     "mod-esm": "yarn mod-esm-copy && yarn mod-esm-replace",
     "mod-esm-copy": "cp -r ./build/esm/ ./mod",
@@ -71,8 +71,8 @@
     "mod-ts": "yarn mod-ts-copy && yarn mod-ts-replace",
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
-    "mod-rm-node": "rm -rf ./mod/node.* ./mod/internal/node",
-    "mod-alias-reactive-js-core": "replace '@reactive-js/core/' '../../core/' ./mod/* && replace '@reactive-js/core/' '../../../core/' ./mod/internal/* && replace '@reactive-js/core/' '../../../../core/' ./mod/internal/**/*",
+    "mod-rm-node": "rm -rf ./mod/lib/node.* ./mod/lib/internal/node",
+    "mod-alias-reactive-js-core": "replace '@reactive-js/core/' '../../../core/mod/' ./mod/lib/* && replace '@reactive-js/core/' '../../../../core/mod/' ./mod/lib/internal/* && replace '@reactive-js/core/' '../../../../../core/mod/' ./mod/lib/internal/**/*",
     "docs": "node ../../scripts/docs.mjs",
     "test": "jest",
     "test-coverage": "jest --coverage",
@@ -80,7 +80,7 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testRegex": "(/__tests__/.*|(\\.|/)(jest|spec))\\.[jt]sx?$",
+    "testRegex": "testRunner.jest.ts",
     "globals": {
       "ts-jest": {
         "tsConfig": "./tsconfig.esm.json"
