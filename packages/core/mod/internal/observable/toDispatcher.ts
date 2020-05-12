@@ -1,6 +1,6 @@
 import { AbstractDisposable, dispose } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
-import { AbstractSchedulerContinuation } from "../../scheduler.ts";
+import { AbstractSchedulerContinuation, schedule } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { DispatcherLike, SubscriberLike } from "./interfaces.ts";
 
@@ -20,7 +20,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation<
       dispatcher.subscriber.notify(next);
 
       if (dispatcher.nextQueue.length > 0 && scheduler.shouldYield()) {
-        scheduler.schedule(this);
+        schedule(scheduler, this);
         return;
       }
     }
@@ -42,7 +42,7 @@ const scheduleDrainQueue = <T>(
         dispose(dispatcher.subscriber as SubscriberLike<T>, error);
       }
     });
-    dispatcher.subscriber.schedule(producer);
+    schedule(dispatcher.subscriber, producer);
   }
 };
 

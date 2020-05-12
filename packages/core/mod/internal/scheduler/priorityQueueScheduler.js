@@ -3,6 +3,7 @@ import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 import { toSchedulerWithPriority } from "./schedulerWithPriority.js";
+import { schedule, scheduleWithPriority } from "./schedule.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -54,7 +55,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
             const delay = dueTime - now;
             if (delay > 0) {
                 priorityScheduler.dueTime = dueTime;
-                host.schedule(this, { delay });
+                schedule(host, this, { delay });
                 return;
             }
             move(priorityScheduler);
@@ -64,7 +65,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
             priorityScheduler.inContinuation = false;
             isDisposed = this.isDisposed;
             if (!isDisposed && host.shouldYield()) {
-                host.schedule(this);
+                schedule(host, this);
                 return;
             }
         }
@@ -89,7 +90,7 @@ const scheduleContinuation = (scheduler, task) => {
     const dueTime = task.dueTime;
     scheduler.dueTime = dueTime;
     const delay = dueTime - scheduler.now;
-    scheduler.host.schedule(continuation, { delay });
+    schedule(scheduler.host, continuation, { delay });
 };
 class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
@@ -174,7 +175,7 @@ class PausableSchedulerImpl extends AbstractDisposable {
         }
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        this.priorityScheduler.schedule(continuation, { priority: 0, delay });
+        scheduleWithPriority(this.priorityScheduler, continuation, { priority: 0, delay });
     }
     shouldYield() {
         return this.priorityScheduler.shouldYield();

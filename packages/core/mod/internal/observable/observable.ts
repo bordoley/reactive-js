@@ -1,4 +1,4 @@
-import { pipe, Operator, SideEffect } from "../../functions.ts";
+import { Operator, SideEffect } from "../../functions.ts";
 import { SchedulerContinuationLike, schedule } from "../../scheduler.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 
@@ -14,14 +14,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 
   subscribe(subscriber: SubscriberLike<T>) {
     const schedulerContinuation = this.factory(subscriber);
-
-    if (schedulerContinuation instanceof Function) {
-      // Note: no need to add the returned disposable, since
-      // subscriber already adds any callbacks scheduled on it.
-      pipe(subscriber, schedule(schedulerContinuation, this));
-    } else {
-      subscriber.schedule(schedulerContinuation, this);
-    }
+    schedule(subscriber, schedulerContinuation, this);
   }
 }
 

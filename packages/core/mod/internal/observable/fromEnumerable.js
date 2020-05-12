@@ -2,6 +2,7 @@ import { dispose } from "../../disposable.js";
 import { enumerate } from "../../enumerable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
+import { schedule } from "../../scheduler.js";
 class FromEnumeratorProducer extends AbstractProducer {
     constructor(subscriber, enumerator, delay) {
         super(subscriber);
@@ -16,7 +17,7 @@ class FromEnumeratorProducer extends AbstractProducer {
             this.notify(enumerator.current);
             isDisposed = this.isDisposed;
             if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
-                scheduler.schedule(this, this);
+                schedule(scheduler, this, this);
                 return;
             }
         }

@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable.ts";
 import { Factory, Generator } from "../../functions.ts";
-import { SchedulerLike } from "../../scheduler.ts";
+import { SchedulerLike, schedule } from "../../scheduler.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
@@ -35,7 +35,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 
       if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
         this.acc = acc;
-        scheduler.schedule(this, this);
+        schedule(scheduler, this, this);
         return;
       }
     }

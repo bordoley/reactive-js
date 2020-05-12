@@ -1,6 +1,6 @@
 import { AbstractDisposable, dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
-import { AbstractSchedulerContinuation } from "../../scheduler.js";
+import { AbstractSchedulerContinuation, schedule } from "../../scheduler.js";
 class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(dispatcher) {
         super();
@@ -13,7 +13,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
             const next = nextQueue.shift();
             dispatcher.subscriber.notify(next);
             if (dispatcher.nextQueue.length > 0 && scheduler.shouldYield()) {
-                scheduler.schedule(this);
+                schedule(scheduler, this);
                 return;
             }
         }
@@ -29,7 +29,7 @@ const scheduleDrainQueue = (dispatcher) => {
                 dispose(dispatcher.subscriber, error);
             }
         });
-        dispatcher.subscriber.schedule(producer);
+        schedule(dispatcher.subscriber, producer);
     }
 };
 class SubscriberDelegatingDispatcher extends AbstractDisposable {

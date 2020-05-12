@@ -3,6 +3,7 @@ import { alwaysFalse } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
+import { schedule } from "./schedule.js";
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
@@ -55,7 +56,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
             this.inContinuation = false;
             if (scheduler.shouldYield()) {
                 this.host = ignoreScheduler;
-                scheduler.schedule(this);
+                schedule(scheduler, this);
                 return;
             }
         }

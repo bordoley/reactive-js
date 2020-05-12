@@ -11,7 +11,7 @@ export {
   toPriorityScheduler,
   toPausableScheduler,
 } from "./internal/scheduler/priorityQueueScheduler";
-export { schedule } from "./internal/scheduler/scheduleCallback";
+export { schedule } from "./internal/scheduler/schedule";
 export { toSchedulerWithPriority } from "./internal/scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./internal/scheduler/hostScheduler";
 export { createVirtualTimeScheduler } from "./internal/scheduler/virtualTimeScheduler";
