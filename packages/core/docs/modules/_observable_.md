@@ -629,7 +629,7 @@ ___
 
 ### `Const` contains
 
-▸ **contains**<**T**>(`value`: T, `equals`: [Equality](_functions_.md#equality)‹T›): *function*
+▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *function*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any item equal to `value`, otherwise `false`.
@@ -640,10 +640,10 @@ emits any item equal to `value`, otherwise `false`.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`value` | T | - | - |
-`equals` | [Equality](_functions_.md#equality)‹T› | referenceEquals |   |
+Name | Type | Default |
+------ | ------ | ------ |
+`value` | T | - |
+`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
 **Returns:** *function*
 
@@ -738,7 +738,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equals`: [Equality](_functions_.md#equality)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -749,9 +749,9 @@ are distinct by comparison from the previous item.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`equals` | [Equality](_functions_.md#equality)‹T› | referenceEquals | Optional equality function that is used to compare if an item is distinct from the previous item.  |
+Name | Type | Default |
+------ | ------ | ------ |
+`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

@@ -1,5 +1,5 @@
 import {
-  referenceEquals,
+  referenceEquality,
   Operator,
   Equality,
   Predicate,
@@ -31,5 +31,5 @@ export const someSatisfy = <T>(
  * @param value
  * @param equals
  */
-export const contains = <T>(value: T, equals: Equality<T> = referenceEquals) =>
-  someSatisfy(isEqualTo(value, equals));
+export const contains = <T>(value: T, equality: Equality<T> = referenceEquality) =>
+  someSatisfy(isEqualTo(value, equality));

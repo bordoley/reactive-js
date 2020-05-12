@@ -1,5 +1,5 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
-import { compose, pipe, returns, isReferenceEqualTo, } from "./functions.js";
+import { compose, pipe, returns, isEqualTo, } from "./functions.js";
 import { createObservable } from "./internal/observable/createObservable.js";
 import { endWith, map as mapObs, mapTo, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, dispatch, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
@@ -10,9 +10,9 @@ export const next = (data) => ({
 });
 const _complete = { type: 2 };
 export const complete = () => _complete;
-const _empty = createStreamable(compose(keep(isReferenceEqualTo(1)), takeWhile(isReferenceEqualTo(2), { inclusive: true }), mapTo(complete())));
+const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2), { inclusive: true }), mapTo(complete())));
 export const empty = () => _empty;
-export const fromValue = (data) => createStreamable(compose(keep(isReferenceEqualTo(1)), takeFirst(), genMap(function* (mode) {
+export const fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
     switch (mode) {
         case 1:
             yield next(data);

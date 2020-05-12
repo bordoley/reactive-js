@@ -4,7 +4,7 @@ import {
   compose,
   pipe,
   returns,
-  isReferenceEqualTo,
+  isEqualTo,
   Factory,
   Reducer,
 } from "./functions";
@@ -75,8 +75,8 @@ export type FlowableOperator<TA, TB> = Operator<
 
 const _empty: FlowableLike<any> = createStreamable(
   compose(
-    keep(isReferenceEqualTo(FlowMode.Resume)),
-    takeWhile(isReferenceEqualTo(FlowMode.Pause), { inclusive: true }),
+    keep(isEqualTo(FlowMode.Resume)),
+    takeWhile(isEqualTo(FlowMode.Pause), { inclusive: true }),
     mapTo(complete()),
   ),
 );
@@ -85,7 +85,7 @@ export const empty = <T>(): FlowableLike<T> => _empty;
 export const fromValue = <T>(data: T): FlowableLike<T> =>
   createStreamable(
     compose(
-      keep(isReferenceEqualTo(FlowMode.Resume)),
+      keep(isEqualTo(FlowMode.Resume)),
       takeFirst(),
       genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
         switch (mode) {

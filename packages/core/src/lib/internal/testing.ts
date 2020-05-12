@@ -1,6 +1,6 @@
 import {
-  referenceEquals,
-  arrayEquals,
+  referenceEquality,
+  arrayEquality,
   Factory,
   Equality,
   SideEffect,
@@ -88,24 +88,21 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   }
 };
 
-export const expectEquals = <T>(b: T, valuesAreEqual = referenceEquals) => (
+export const expectEquals = <T>(b: T, valueEquality = referenceEquality) => (
   a: T,
 ) => {
-  if (!valuesAreEqual(a, b)) {
+  if (!valueEquality(a, b)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
 };
 
-const arrayReferenceEquals = arrayEquals(referenceEquals);
 export const expectArrayEquals = <T>(
   b: readonly T[],
-  valuesAreEqual?: Equality<T>,
+  valueEquality: Equality<T> = referenceEquality,
 ) => (a: readonly T[]) => {
-  const equals = isNone(valuesAreEqual)
-    ? arrayReferenceEquals
-    : arrayEquals(valuesAreEqual);
+  const equals = arrayEquality(valueEquality);
   if (!equals(a, b)) {
     throw new Error(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
