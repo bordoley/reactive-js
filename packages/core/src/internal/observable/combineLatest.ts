@@ -156,23 +156,21 @@ export function combineLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  const factory = (subscriber: SubscriberLike<T>) => {
-    return () => {
-      const totalCount = observables.length;
-      const ctx = {
-        completedCount: 0,
-        latest: new Array(totalCount),
-        readyCount: 0,
-        selector,
-        subscriber,
-        totalCount,
-      };
-
-      for (let index = 0; index < totalCount; index++) {
-        const innerSubscriber = new CombineLatestSubscriber(ctx, index);
-        observables[index].subscribe(innerSubscriber);
-      }
+  const factory = (subscriber: SubscriberLike<T>) => () => {
+    const totalCount = observables.length;
+    const ctx = {
+      completedCount: 0,
+      latest: new Array(totalCount),
+      readyCount: 0,
+      selector,
+      subscriber,
+      totalCount,
     };
+
+    for (let index = 0; index < totalCount; index++) {
+      const innerSubscriber = new CombineLatestSubscriber(ctx, index);
+      observables[index].subscribe(innerSubscriber);
+    }
   };
 
   return createScheduledObservable(

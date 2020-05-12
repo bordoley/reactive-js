@@ -26,13 +26,17 @@ const now: Factory<number> = supportsPerformanceNow
     }
   : () => Date.now();
 
-const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
-  const timeout = setImmediate(() => {
+const createScheduledCallback = (disposable: DisposableLike, cb: SideEffect): SideEffect => () => {
+  if (!disposable.isDisposed) {
     cb();
     dispose(disposable);
-  });
-  const disposable = createDisposable(bind(clearImmediate, timeout));
-  return disposable;
+  }
+};
+
+const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
+  const disposable = createDisposable();
+  const timeout = setImmediate(createScheduledCallback(disposable, cb));
+  return add(disposable, bind(clearImmediate, timeout));
 };
 
 const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
@@ -40,23 +44,16 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
 ) => {
   const disposable = createDisposable();
 
-  channel.port1.onmessage = () => {
-    if (!disposable.isDisposed) {
-      cb();
-      dispose(disposable);
-    }
-  };
+  channel.port1.onmessage = createScheduledCallback(disposable, cb);
   channel.port2.postMessage(null);
+
   return disposable;
 };
 
 const scheduleDelayed = (cb: SideEffect, delay: number) => {
-  const timeout = setTimeout(() => {
-    cb();
-    dispose(disposable);
-  }, delay);
-  const disposable = createDisposable(bind(clearTimeout, timeout));
-  return disposable;
+  const disposable = createDisposable();
+  const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
+  return add(disposable, bind(clearTimeout, timeout));
 };
 
 const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
