@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { add3, add3Arr, createArray } from "./utils";
 import { isEven } from "../lib/functions";
+import { add3, add3Arr, createArray } from "./utils";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {

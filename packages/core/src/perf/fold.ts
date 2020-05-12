@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { createArray, passthrough, sum } from "./utils";
 import { returns } from "../lib/functions";
+import { createArray, passthrough, sum } from "./utils";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
