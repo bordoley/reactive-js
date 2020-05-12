@@ -9,7 +9,7 @@ import {
   onNotify,
   never,
 } from "../lib/observable.ts";
-import { createReactiveCache, getOrSet } from "../lib/reactiveCache.ts";
+import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 import {
   test,

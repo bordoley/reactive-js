@@ -5,12 +5,12 @@ import {
   dispose,
   add,
   addDisposableOrTeardown,
-} from "./disposable.ts";
-import { first, forEach, fromIterable } from "./enumerable.ts";
-import { pipe, Operator } from "./functions.ts";
-import { createKeyedQueue } from "./internal/keyedQueue.ts";
-import { createSetMultimap } from "./internal/multimaps.ts";
-import { createUniqueQueue } from "./internal/queues.ts";
+} from "../disposable";
+import { first, forEach, fromIterable } from "../enumerable";
+import { pipe, Operator } from "../functions";
+import { createKeyedQueue } from "./keyedQueue";
+import { createSetMultimap } from "./multimaps";
+import { createUniqueQueue } from "./queues";
 import {
   DispatcherLike,
   ObservableLike,
@@ -19,9 +19,9 @@ import {
   fromValue,
   onNotify,
   dispatch,
-} from "./observable.ts";
-import { isSome, isNone, none } from "./option.ts";
-import { SchedulerLike } from "./scheduler.ts";
+} from "../observable";
+import { isSome, isNone, none } from "../option";
+import { SchedulerLike } from "../scheduler";
 
 const tryDispatch = <TResource extends DisposableLike>(
   resourceManager: ResourceManagerImpl<TResource>,
