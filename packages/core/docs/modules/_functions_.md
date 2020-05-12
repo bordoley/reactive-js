@@ -46,6 +46,8 @@
 * [increment](_functions_.md#const-increment)
 * [incrementBy](_functions_.md#const-incrementby)
 * [isEqualTo](_functions_.md#const-isequalto)
+* [isEven](_functions_.md#const-iseven)
+* [isOdd](_functions_.md#const-isodd)
 * [isReferenceEqualTo](_functions_.md#const-isreferenceequalto)
 * [negate](_functions_.md#const-negate)
 * [pipe](_functions_.md#pipe)
@@ -1700,6 +1702,34 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `a` | TA |
+
+___
+
+### `Const` isEven
+
+▸ **isEven**(`x`: number): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`x` | number |
+
+**Returns:** *boolean*
+
+___
+
+### `Const` isOdd
+
+▸ **isOdd**(`x`: number): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`x` | number |
+
+**Returns:** *boolean*
 
 ___
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { add1, createArray, even, odd, sum } from "./utils";
+import { add1, createArray, odd, sum } from "./utils";
+import { isEven, returns } from "../lib/functions";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
@@ -19,18 +20,17 @@ export const run = (n: number) => {
       } = require("@reactive-js/core/lib/observable");
       const { run } = require("./reactive-js-runner");
 
-      const observable = pipe(
+      pipe(
         src,
         fromArray(),
         map(add1),
         keep(odd),
         map(add1),
         map(add1),
-        keep(even),
-        reduce(sum, () => 0),
+        keep(isEven),
+        reduce(sum, returns(0)),
+        run,
       );
-
-      run(observable);
     })
     .add("rx-js", () => {
       const { from } = require("rxjs");
@@ -42,7 +42,7 @@ export const run = (n: number) => {
         filter(odd),
         map(add1),
         map(add1),
-        filter(even),
+        filter(isEven),
         reduce(sum, 0),
       );
       run(observable);
@@ -67,7 +67,7 @@ export const run = (n: number) => {
         filter(odd),
         map(add1),
         map(add1),
-        filter(even),
+        filter(isEven),
         scan(sum, 0),
       );
 

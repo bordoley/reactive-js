@@ -164,6 +164,9 @@ export const isEqualTo = <T>(b: T, equality: Equality<T>) =>
     ? isReferenceEqualTo(b)
     : (a: T) => equality(a, b);
 
+export const isEven = (x: number): boolean => x % 2 === 0;
+export const isOdd = (x: number): boolean => x % 2 !== 0;
+
 export const negate = (v: boolean): boolean => !v;
 
 export const sum = (...args: number[]) => {

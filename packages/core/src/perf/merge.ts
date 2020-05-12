@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { sum } from "./utils";
+import { returns } from "../lib/functions";
 const Benchmark = require("benchmark");
 
 const createSrcData = (m: number, n: number) => {
@@ -35,12 +36,11 @@ export const run = (m: number, n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray()(x));
-      const observable = pipe(
+      pipe(
         merge(...streams),
-        reduce(sum, () => 0),
+        reduce(sum, returns(0)),
+        run,
       );
-
-      run(observable);
     })
     .add("rx-js", () => {
       const { merge, from } = require("rxjs");
