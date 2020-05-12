@@ -56,7 +56,10 @@ const createWritableAndSetupEventSubscription = (
     onNotify(ev => {
       switch (ev.type) {
         case FlowEventType.Next:
-          if (!writableValue.write(ev.data)) {
+          // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
+          // node throws a type exception regarding expecting a Buffer, though the docs
+          // say a UInt8Array should be accepted. Need to file a bug.
+          if (!writableValue.write(Buffer.from(ev.data))) {
             // Hack in a custom event here for pause request
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }

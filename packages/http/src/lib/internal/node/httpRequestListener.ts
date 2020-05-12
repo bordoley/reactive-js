@@ -48,6 +48,8 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
   writeHttpResponseHeaders(response, (header, value) =>
     serverResponse.setHeader(header, value),
   );
+
+  serverResponse.flushHeaders();
 };
 
 const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
@@ -56,10 +58,12 @@ const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
 }: HttpResponse<FlowableLike<Uint8Array>>) =>
   isSome(contentInfo) ? sink(body, responseBody) : empty();
 
-const defaultOnError = (_: unknown): ObservableLike<void> => empty();
+const defaultOnError = (e: unknown)  => {
+  console.log(e);
+};
 
 export type HttpRequestListenerOptions = {
-  readonly onError?: Operator<unknown, ObservableLike<unknown>>;
+  readonly onError?: Operator<unknown, void | ObservableLike<unknown>>;
 };
 
 export type HttpRequestListener = SideEffect2<

@@ -1,4 +1,4 @@
-import { DisposableLike, add } from "../../disposable";
+import { DisposableLike, add, disposeOnError } from "../../disposable";
 import {
   Selector2,
   Operator,
@@ -9,7 +9,7 @@ import {
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike, SubscriberLike } from "./interfaces";
 
-class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
+class UsingObservable<TResource extends DisposableLike, T>
   implements ObservableLike<T> {
   readonly isSynchronous = false;
 
@@ -30,6 +30,11 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
     (add as any)(subscriber, ...resourcesArray);
     observableFactory(...resourcesArray).subscribe(subscriber);
+
+    const teardownSubscriberOnError = disposeOnError(subscriber);
+    for (const r of resourcesArray) {
+      add(r, teardownSubscriberOnError);
+    }
   }
 }
 
@@ -107,7 +112,7 @@ export function using<
   >,
 ): ObservableLike<T>;
 
-export function using<TResource extends DisposableLike[] | DisposableLike, T>(
+export function using<TResource extends DisposableLike, T>(
   resourceFactory: Operator<SchedulerLike, TResource | TResource[]>,
   observableFactory: (...resources: TResource[]) => ObservableLike<T>,
 ): ObservableLike<T>;

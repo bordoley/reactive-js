@@ -43,7 +43,7 @@ ___
 
 #### Type declaration:
 
-* **onError**? : *Operator‹unknown, ObservableLike‹unknown››*
+* **onError**? : *Operator‹unknown, void | ObservableLike‹unknown››*
 
 ## Functions
 
