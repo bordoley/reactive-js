@@ -7,7 +7,6 @@ import {
 import { ignore } from "../../functions";
 
 const dispose = (writable: Readable | Writable | Transform) => {
-  debugger;
   writable.removeAllListeners();
   // Calling destory can result in onError being called
   // if we don't catch the error, it crashes the process.

@@ -1,13 +1,12 @@
 import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
 import {
   Operator,
-  Selector2,
   SideEffect2,
 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
-  encodeHttpMessageWithCharset,
+  encodeHttpMessageWithUtf8,
   toFlowableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage";
@@ -285,21 +284,11 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const encodeHttpRequestWithCharset = (
-  encode: Selector2<string, string, Uint8Array>,
-) => (
-  contentType: string | MediaType,
-): Operator<HttpRequest<string>, HttpRequest<Uint8Array>> => {
-  const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
-  return req => messageEncoder(req) as HttpRequest<Uint8Array>;
-};
+export const encodeHttpRequestWithUtf8: Operator<HttpRequest<string>, HttpRequest<Uint8Array>> =
+  encodeHttpMessageWithUtf8 as unknown as Operator<HttpRequest<string>, HttpRequest<Uint8Array>>;
 
-export const decodeHttpRequestWithCharset = (
-  decode: Selector2<Uint8Array, string, string>,
-): Operator<HttpRequest<Uint8Array>, HttpRequest<string>> => {
-  const messageEncoder = decodeHttpMessageWithCharset(decode);
-  return req => messageEncoder(req) as HttpRequest<string>;
-};
+export const decodeHttpRequestWithCharset: Operator<HttpRequest<Uint8Array>, HttpRequest<string>> = 
+  decodeHttpMessageWithCharset as unknown as Operator<HttpRequest<Uint8Array>, HttpRequest<string>>
 
 export const toFlowableHttpRequest = <TBody>(
   req: HttpRequest<TBody>,

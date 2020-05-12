@@ -1,5 +1,5 @@
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { writeHttpMessageHeaders, encodeHttpMessageWithCharset, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
+import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
@@ -110,14 +110,8 @@ export const httpRequestToUntypedHeaders = (request) => {
     writeHttpRequestHeaders(request, (header, value) => (headers[header] = value));
     return headers;
 };
-export const encodeHttpRequestWithCharset = (encode) => (contentType) => {
-    const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
-    return req => messageEncoder(req);
-};
-export const decodeHttpRequestWithCharset = (decode) => {
-    const messageEncoder = decodeHttpMessageWithCharset(decode);
-    return req => messageEncoder(req);
-};
+export const encodeHttpRequestWithUtf8 = encodeHttpMessageWithUtf8;
+export const decodeHttpRequestWithCharset = decodeHttpMessageWithCharset;
 export const toFlowableHttpRequest = (req) => toFlowableHttpMessage(req);
 export const decodeHttpRequestContent = (decoderProvider) => req => {
     const { body, contentInfo, ...rest } = req;

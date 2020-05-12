@@ -40,6 +40,13 @@
 * [HttpServerRequest](_http_.md#httpserverrequest)
 * [MediaType](_http_.md#mediatype)
 
+### Variables
+
+* [decodeHttpRequestWithCharset](_http_.md#const-decodehttprequestwithcharset)
+* [decodeHttpResponseWithCharset](_http_.md#const-decodehttpresponsewithcharset)
+* [encodeHttpRequestWithUtf8](_http_.md#const-encodehttprequestwithutf8)
+* [encodeHttpResponseWithUtf8](_http_.md#const-encodehttpresponsewithutf8)
+
 ### Functions
 
 * [checkIfNotModified](_http_.md#const-checkifnotmodified)
@@ -48,14 +55,10 @@
 * [createRedirectHttpRequest](_http_.md#const-createredirecthttprequest)
 * [createRoutingHttpServer](_http_.md#const-createroutinghttpserver)
 * [decodeHttpRequestContent](_http_.md#const-decodehttprequestcontent)
-* [decodeHttpRequestWithCharset](_http_.md#const-decodehttprequestwithcharset)
 * [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
-* [decodeHttpResponseWithCharset](_http_.md#const-decodehttpresponsewithcharset)
 * [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
 * [encodeHttpClientRequestContent](_http_.md#const-encodehttpclientrequestcontent)
-* [encodeHttpRequestWithCharset](_http_.md#const-encodehttprequestwithcharset)
 * [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
-* [encodeHttpResponseWithCharset](_http_.md#const-encodehttpresponsewithcharset)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
 * [parseHeaders](_http_.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](_http_.md#const-parsehttprequestfromheaders)
@@ -280,6 +283,30 @@ ___
 
 * **type**: *string*
 
+## Variables
+
+### `Const` decodeHttpRequestWithCharset
+
+• **decodeHttpRequestWithCharset**: *Operator‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = decodeHttpMessageWithCharset as unknown as Operator<HttpRequest<Uint8Array>, HttpRequest<string>>
+
+___
+
+### `Const` decodeHttpResponseWithCharset
+
+• **decodeHttpResponseWithCharset**: *Operator‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = decodeHttpMessageWithCharset as unknown as Operator<HttpResponse<Uint8Array>, HttpResponse<string>>
+
+___
+
+### `Const` encodeHttpRequestWithUtf8
+
+• **encodeHttpRequestWithUtf8**: *Operator‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = encodeHttpMessageWithUtf8 as unknown as Operator<HttpRequest<string>, HttpRequest<Uint8Array>>
+
+___
+
+### `Const` encodeHttpResponseWithUtf8
+
+• **encodeHttpResponseWithUtf8**: *Operator‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = encodeHttpMessageWithUtf8 as unknown as Operator<HttpResponse<string>, HttpResponse<Uint8Array>>
+
 ## Functions
 
 ### `Const` checkIfNotModified
@@ -422,20 +449,6 @@ Name | Type |
 
 ___
 
-### `Const` decodeHttpRequestWithCharset
-
-▸ **decodeHttpRequestWithCharset**(`decode`: Selector2‹Uint8Array, string, string›): *Operator‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`decode` | Selector2‹Uint8Array, string, string› |
-
-**Returns:** *Operator‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››*
-
-___
-
 ### `Const` decodeHttpResponseContent
 
 ▸ **decodeHttpResponseContent**(`decoderProvider`: object): *Operator‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
@@ -447,20 +460,6 @@ Name | Type |
 `decoderProvider` | object |
 
 **Returns:** *Operator‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
-
-___
-
-### `Const` decodeHttpResponseWithCharset
-
-▸ **decodeHttpResponseWithCharset**(`decode`: Selector2‹Uint8Array, string, string›): *Operator‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`decode` | Selector2‹Uint8Array, string, string› |
-
-**Returns:** *Operator‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››*
 
 ___
 
@@ -491,20 +490,6 @@ Name | Type | Default |
 
 ___
 
-### `Const` encodeHttpRequestWithCharset
-
-▸ **encodeHttpRequestWithCharset**(`encode`: Selector2‹string, string, Uint8Array›): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`encode` | Selector2‹string, string, Uint8Array› |
-
-**Returns:** *(Anonymous function)*
-
-___
-
 ### `Const` encodeHttpResponseContent
 
 ▸ **encodeHttpResponseContent**(`encoderProvider`: object, `db`: object): *(Anonymous function)*
@@ -515,20 +500,6 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `encoderProvider` | object | - |
 `db` | object | {} |
-
-**Returns:** *(Anonymous function)*
-
-___
-
-### `Const` encodeHttpResponseWithCharset
-
-▸ **encodeHttpResponseWithCharset**(`encode`: Selector2‹string, string, Uint8Array›): *(Anonymous function)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`encode` | Selector2‹string, string, Uint8Array› |
 
 **Returns:** *(Anonymous function)*
 
