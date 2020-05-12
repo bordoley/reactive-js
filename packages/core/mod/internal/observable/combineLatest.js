@@ -32,22 +32,20 @@ class CombineLatestSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export function combineLatest(observables, selector) {
-    const factory = (subscriber) => {
-        return () => {
-            const totalCount = observables.length;
-            const ctx = {
-                completedCount: 0,
-                latest: new Array(totalCount),
-                readyCount: 0,
-                selector,
-                subscriber,
-                totalCount,
-            };
-            for (let index = 0; index < totalCount; index++) {
-                const innerSubscriber = new CombineLatestSubscriber(ctx, index);
-                observables[index].subscribe(innerSubscriber);
-            }
+    const factory = (subscriber) => () => {
+        const totalCount = observables.length;
+        const ctx = {
+            completedCount: 0,
+            latest: new Array(totalCount),
+            readyCount: 0,
+            selector,
+            subscriber,
+            totalCount,
         };
+        for (let index = 0; index < totalCount; index++) {
+            const innerSubscriber = new CombineLatestSubscriber(ctx, index);
+            observables[index].subscribe(innerSubscriber);
+        }
     };
     return createScheduledObservable(factory, observables.every(obs => obs.isSynchronous));
 }

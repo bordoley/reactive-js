@@ -12,32 +12,27 @@ const now = supportsPerformanceNow
             return hr[0] * 1000 + hr[1] / 1e6;
         }
         : () => Date.now();
-const scheduleImmediateWithSetImmediate = (cb) => {
-    const timeout = setImmediate(() => {
+const createScheduledCallback = (disposable, cb) => () => {
+    if (!disposable.isDisposed) {
         cb();
         dispose(disposable);
-    });
-    const disposable = createDisposable(bind(clearImmediate, timeout));
-    return disposable;
+    }
+};
+const scheduleImmediateWithSetImmediate = (cb) => {
+    const disposable = createDisposable();
+    const timeout = setImmediate(createScheduledCallback(disposable, cb));
+    return add(disposable, bind(clearImmediate, timeout));
 };
 const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     const disposable = createDisposable();
-    channel.port1.onmessage = () => {
-        if (!disposable.isDisposed) {
-            cb();
-            dispose(disposable);
-        }
-    };
+    channel.port1.onmessage = createScheduledCallback(disposable, cb);
     channel.port2.postMessage(null);
     return disposable;
 };
 const scheduleDelayed = (cb, delay) => {
-    const timeout = setTimeout(() => {
-        cb();
-        dispose(disposable);
-    }, delay);
-    const disposable = createDisposable(bind(clearTimeout, timeout));
-    return disposable;
+    const disposable = createDisposable();
+    const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
+    return add(disposable, bind(clearTimeout, timeout));
 };
 const scheduleImmediateWithSetTimeout = (cb) => scheduleDelayed(cb, 0);
 const scheduleImmediate = supportsSetImmediate
