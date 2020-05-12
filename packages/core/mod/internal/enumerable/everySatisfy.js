@@ -1,3 +1,4 @@
+import { negate, compose } from "../../functions.js";
 import { enumerate } from "./enumerator.js";
 export const everySatisfy = (predicate) => enumerable => {
     const enumerator = enumerate(enumerable);
@@ -8,4 +9,4 @@ export const everySatisfy = (predicate) => enumerable => {
     }
     return true;
 };
-export const noneSatisfy = (predicate) => everySatisfy(next => !predicate(next));
+export const noneSatisfy = (predicate) => everySatisfy(compose(predicate, negate));

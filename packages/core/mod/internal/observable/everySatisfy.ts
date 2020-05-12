@@ -1,5 +1,5 @@
 import { dispose, add } from "../../disposable.ts";
-import { Predicate } from "../../functions.ts";
+import { Predicate, compose, negate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -63,4 +63,4 @@ export const everySatisfy = <T>(
  */
 export const noneSatisfy = <T>(
   predicate: Predicate<T>,
-): ObservableOperator<T, boolean> => everySatisfy(next => !predicate(next));
+): ObservableOperator<T, boolean> => everySatisfy(compose(predicate, negate));

@@ -1,4 +1,4 @@
-import { compose, pipe } from "../../functions.js";
+import { compose, pipe, flip } from "../../functions.js";
 import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, dispatch, } from "../../observable.js";
 import { none } from "../../option.js";
 import { stream } from "../../streamable.js";
@@ -25,5 +25,5 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
     dispatch(accFeedback, initial());
     dispatch(enumerator, none);
 })));
-export const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, (next, acc) => consumer(acc, next)), initial);
+export const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 export const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);

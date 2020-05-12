@@ -6,6 +6,7 @@ export const enumerate = <T>(
 
 export const current = <T>(enumerator: EnumeratorLike<T>) => enumerator.current;
 
-export const hasCurrent = <T>(enumerator: EnumeratorLike<T>) => enumerator.hasCurrent;
+export const hasCurrent = <T>(enumerator: EnumeratorLike<T>) =>
+  enumerator.hasCurrent;
 
 export const move = <T>(enumerator: EnumeratorLike<T>) => enumerator.move();

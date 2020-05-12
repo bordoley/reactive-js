@@ -3,6 +3,7 @@ import {
   Operator,
   Equality,
   Predicate,
+  isEqualTo,
 } from "../../functions";
 import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
@@ -31,4 +32,4 @@ export const someSatisfy = <T>(
  * @param equals
  */
 export const contains = <T>(value: T, equals: Equality<T> = referenceEquals) =>
-  someSatisfy((b: T) => equals(value, b));
+  someSatisfy(isEqualTo(value, equals));

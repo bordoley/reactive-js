@@ -1,4 +1,5 @@
 import { dispose, add } from "../../disposable.js";
+import { compose, negate } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
@@ -31,4 +32,4 @@ export const everySatisfy = (predicate) => {
     operator.isSynchronous = true;
     return lift(operator);
 };
-export const noneSatisfy = (predicate) => everySatisfy(next => !predicate(next));
+export const noneSatisfy = (predicate) => everySatisfy(compose(predicate, negate));

@@ -41,10 +41,13 @@
 * [decrement](_functions_.md#const-decrement)
 * [decrementBy](_functions_.md#const-decrementby)
 * [defer](_functions_.md#defer)
+* [flip](_functions_.md#flip)
 * [identity](_functions_.md#const-identity)
 * [increment](_functions_.md#const-increment)
 * [incrementBy](_functions_.md#const-incrementby)
+* [isEqualTo](_functions_.md#const-isequalto)
 * [isReferenceEqualTo](_functions_.md#const-isreferenceequalto)
+* [negate](_functions_.md#const-negate)
 * [pipe](_functions_.md#pipe)
 * [referenceEquals](_functions_.md#const-referenceequals)
 * [returns](_functions_.md#const-returns)
@@ -1585,6 +1588,48 @@ Name | Type |
 
 ___
 
+###  flip
+
+▸ **flip**<**TA**, **TB**, **T**>(`f`: [Selector2](_functions_.md#selector2)‹TA, TB, T›): *[Selector2](_functions_.md#selector2)‹TB, TA, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`f` | [Selector2](_functions_.md#selector2)‹TA, TB, T› |
+
+**Returns:** *[Selector2](_functions_.md#selector2)‹TB, TA, T›*
+
+▸ **flip**<**TA**, **TB**, **TC**, **T**>(`f`: [Selector3](_functions_.md#selector3)‹TA, TB, TC, T›): *[Selector3](_functions_.md#selector3)‹TC, TB, TA, T›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **TC**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`f` | [Selector3](_functions_.md#selector3)‹TA, TB, TC, T› |
+
+**Returns:** *[Selector3](_functions_.md#selector3)‹TC, TB, TA, T›*
+
+___
+
 ### `Const` identity
 
 ▸ **identity**<**T**>(`v`: T): *T*
@@ -1631,6 +1676,33 @@ Name | Type |
 
 ___
 
+### `Const` isEqualTo
+
+▸ **isEqualTo**<**T**>(`b`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *function*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`b` | T |
+`equality` | [Equality](_functions_.md#equality)‹T› |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
 ### `Const` isReferenceEqualTo
 
 ▸ **isReferenceEqualTo**<**T**>(`b`: T): *[Operator](_functions_.md#operator)‹T, boolean›*
@@ -1646,6 +1718,20 @@ Name | Type |
 `b` | T |
 
 **Returns:** *[Operator](_functions_.md#operator)‹T, boolean›*
+
+___
+
+### `Const` negate
+
+▸ **negate**(`v`: boolean): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | boolean |
+
+**Returns:** *boolean*
 
 ___
 

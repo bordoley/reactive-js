@@ -1,5 +1,10 @@
 import { add, dispose } from "../../disposable.ts";
-import { referenceEquals, Equality, Predicate } from "../../functions.ts";
+import {
+  referenceEquals,
+  Equality,
+  Predicate,
+  isEqualTo,
+} from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -62,4 +67,4 @@ export const someSatisfy = <T>(
  * @param equals
  */
 export const contains = <T>(value: T, equals: Equality<T> = referenceEquals) =>
-  someSatisfy((b: T) => equals(value, b));
+  someSatisfy(isEqualTo(value, equals));

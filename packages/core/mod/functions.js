@@ -15,6 +15,10 @@ export const decrement = (x) => x - 1;
 export const decrementBy = (decr) => (x) => x - decr;
 export const referenceEquals = (a, b) => a === b;
 export const isReferenceEqualTo = (b) => a => a === b;
+export const isEqualTo = (b, equality) => equality === referenceEquals
+    ? isReferenceEqualTo(b)
+    : (a) => equality(a, b);
+export const negate = (v) => !v;
 export const sum = (...args) => {
     let acc = 0;
     for (let i = 0; i < args.length; i++) {
@@ -31,4 +35,10 @@ export function compose(...operators) {
 }
 export function defer(source, ...operators) {
     return () => operators.reduce((acc, next) => next(acc), source);
+}
+export function flip(f) {
+    return (...args) => {
+        args.reverse();
+        return f(...args);
+    };
 }

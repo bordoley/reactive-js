@@ -1,4 +1,11 @@
-import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
+import {
+  EnumeratorLike,
+  EnumerableLike,
+  enumerate,
+  current,
+  hasCurrent,
+  move,
+} from "../../enumerable";
 import { compose, bind } from "../../functions";
 import {
   withLatestFrom,
@@ -8,7 +15,7 @@ import {
   compute,
 } from "../../observable";
 import { createStreamable } from "../../streamable";
-import { current, hasCurrent, move } from "../../enumerable";
+
 import { AsyncEnumerableLike } from "./interfaces";
 
 /**
