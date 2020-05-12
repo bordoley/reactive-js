@@ -1,4 +1,5 @@
 import { AbstractDisposable, dispose, add, } from "../../disposable.js";
+import { current } from "../../enumerable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
@@ -72,9 +73,6 @@ const shouldComplete = (enumerators) => {
     }
     return false;
 };
-const getCurrent = (enumerator) => {
-    return enumerator.current;
-};
 class ZipSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, enumerators, selector) {
         super(delegate);
@@ -119,7 +117,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
                 this.current = next;
             }
             if (shouldEmit(enumerators)) {
-                const next = this.selector(...enumerators.map(getCurrent));
+                const next = this.selector(...enumerators.map(current));
                 const shouldCompleteResult = shouldComplete(enumerators);
                 this.delegate.notify(next);
                 if (shouldCompleteResult) {

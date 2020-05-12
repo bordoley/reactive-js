@@ -1,5 +1,5 @@
 import { Operator, Predicate } from "../../functions";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
 /**

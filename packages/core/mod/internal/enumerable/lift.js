@@ -1,5 +1,5 @@
 import { pipe } from "../../functions.js";
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 class LiftedEnumerableLike {
     constructor(src, operators) {
         this.src = src;

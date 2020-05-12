@@ -1,6 +1,6 @@
 import { alwaysTrue } from "../../functions.js";
 import { isNone } from "../../option.js";
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 class RepeatEnumerator {
     constructor(src, shouldRepeat) {
         this.src = src;

@@ -1,5 +1,5 @@
 import { Factory } from "../../functions";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import { fromArray } from "./fromArray";
 import { EnumerableLike } from "./interfaces";
 

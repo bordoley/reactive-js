@@ -1,6 +1,6 @@
 import { alwaysTrue, Operator } from "../../functions";
 import { isNone } from "../../option";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,

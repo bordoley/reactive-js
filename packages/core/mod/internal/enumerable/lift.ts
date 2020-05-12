@@ -1,5 +1,5 @@
 import { pipe } from "../../functions.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import {
   EnumerableLike,
   EnumeratorLike,

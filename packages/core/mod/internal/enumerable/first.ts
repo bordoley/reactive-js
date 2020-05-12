@@ -1,5 +1,5 @@
 import { none, Option } from "../../option.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import { EnumerableLike } from "./interfaces.ts";
 /**
  * Returns the first item in the EnumerableLike collection or none.

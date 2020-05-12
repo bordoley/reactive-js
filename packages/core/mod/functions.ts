@@ -59,24 +59,24 @@ export type SideEffect = () => void;
 export type SideEffect1<TA> = (a: TA) => void;
 export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
 
-export function call<T>(): Operator<Factory<T>, T>;
-export function call<TA, T>(a: TA): Operator<Operator<TA, T>, T>;
-export function call<TA, TB, T>(
+export function callWith<T>(): Operator<Factory<T>, T>;
+export function callWith<TA, T>(a: TA): Operator<Operator<TA, T>, T>;
+export function callWith<TA, TB, T>(
   a: TA,
   b: TB,
 ): Operator<Selector2<TA, TB, T>, T>;
-export function call<TA, TB, TC, T>(
+export function callWith<TA, TB, TC, T>(
   a: TA,
   b: TB,
   c: TC,
 ): Operator<Selector3<TA, TB, TC, T>, T>;
-export function call<TA, TB, TC, TD, T>(
+export function callWith<TA, TB, TC, TD, T>(
   a: TA,
   b: TB,
   c: TC,
   d: TD,
 ): Operator<Selector4<TA, TB, TC, TD, T>, T>;
-export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
+export function callWith<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 

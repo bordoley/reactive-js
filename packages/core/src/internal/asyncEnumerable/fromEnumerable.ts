@@ -8,7 +8,7 @@ import {
   compute,
 } from "../../observable";
 import { createStreamable } from "../../streamable";
-
+import { current, hasCurrent, move } from "../../enumerable";
 import { AsyncEnumerableLike } from "./interfaces";
 
 /**
@@ -25,8 +25,8 @@ export const fromEnumerable = <T>(
         compute<EnumeratorLike<T>>()(bind(enumerate, enumerable)),
         (_, enumerator) => enumerator,
       ),
-      onNotify(enumerator => enumerator.move()),
-      takeWhile(enumerator => enumerator.hasCurrent),
-      map(enumerator => enumerator.current),
+      onNotify(move),
+      takeWhile(hasCurrent),
+      map(current),
     ),
   );

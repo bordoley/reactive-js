@@ -1,5 +1,5 @@
 import { Factory } from "../../functions.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableLike } from "./interfaces.ts";
 

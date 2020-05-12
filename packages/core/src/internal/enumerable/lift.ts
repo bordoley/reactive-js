@@ -1,5 +1,5 @@
 import { pipe } from "../../functions";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,

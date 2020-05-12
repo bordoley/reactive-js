@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 class EnumerableIterable {
     constructor(enumerable) {
         this.enumerable = enumerable;

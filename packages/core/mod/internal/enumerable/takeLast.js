@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.js";
 import { isNone, none } from "../../option.js";
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 import { fromArray, empty } from "./fromArray.js";
 import { lift } from "./lift.js";
 class TakeLastEnumerator {

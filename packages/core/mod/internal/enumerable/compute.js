@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 import { fromArray } from "./fromArray.js";
 class ComputeEnumerable {
     constructor(f) {

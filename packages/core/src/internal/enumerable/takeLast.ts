@@ -1,6 +1,6 @@
 import { pipe } from "../../functions";
 import { isNone, Option, none } from "../../option";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import { fromArray, empty } from "./fromArray";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";

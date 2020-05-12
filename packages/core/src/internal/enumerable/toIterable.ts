@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
 class EnumerableIterable<T> implements Iterable<T> {
