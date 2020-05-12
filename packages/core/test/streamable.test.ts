@@ -19,6 +19,7 @@ import {
   createActionReducer,
   mapTo,
   sink,
+  stream,
 } from "../src/streamable";
 import {
   test,
@@ -35,18 +36,19 @@ export const tests = describe(
   "streamable",
   test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
-    const stream = createActionReducer<number, number>(
-      sum,
-      returns<number>(0),
-    ).stream(scheduler);
+    const actionReducerStream = stream(
+      createActionReducer<number, number>(
+        sum,
+        returns<number>(0),
+      ), scheduler);
 
-    dispatch(stream, 1);
-    dispatch(stream, 2);
-    dispose(stream);
+    dispatch(actionReducerStream, 1);
+    dispatch(actionReducerStream, 2);
+    dispose(actionReducerStream);
 
     let result: number[] = [];
     pipe(
-      stream,
+      actionReducerStream,
       onNotifyObs(x => {
         result.push(x);
       }),
@@ -61,14 +63,14 @@ export const tests = describe(
     "empty",
     test("with no delay", () => {
       const scheduler = createVirtualTimeScheduler();
-      const stream = empty<void, number>().stream(scheduler);
+      const emptyStream = stream(empty<void, number>(), scheduler);
 
-      dispatch(stream, none);
-      dispatch(stream, none);
+      dispatch(emptyStream, none);
+      dispatch(emptyStream, none);
 
       let result: number[] = [];
       const subscription = pipe(
-        stream,
+        emptyStream,
         onNotifyObs(x => {
           result.push(x);
         }),
@@ -77,21 +79,21 @@ export const tests = describe(
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
-      expectTrue(stream.isDisposed);
+      expectTrue(emptyStream.isDisposed);
       expectTrue(subscription.isDisposed);
     }),
 
     test("with delay", () => {
       const scheduler = createVirtualTimeScheduler();
-      const stream = empty<void, number>({ delay: 4 }).stream(scheduler);
+      const emptyStream = stream(empty<void, number>({ delay: 4 }), scheduler);
 
-      dispatch(stream, none);
-      dispatch(stream, none);
+      dispatch(emptyStream, none);
+      dispatch(emptyStream, none);
 
       let result: number[] = [];
       let disposedTime = 0;
       const subscription = pipe(
-        stream,
+        emptyStream,
         onNotifyObs(x => {
           result.push(x);
         }),
@@ -102,7 +104,7 @@ export const tests = describe(
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
-      expectTrue(stream.isDisposed);
+      expectTrue(emptyStream.isDisposed);
       expectTrue(subscription.isDisposed);
       pipe(disposedTime, expectEquals(4));
     }),
@@ -110,37 +112,39 @@ export const tests = describe(
   test("with multiple subscribers", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const stream = pipe(
+    const incrStream = stream(
+      pipe(
       identity<number>(),
       map(incrementBy(100)),
-    ).stream(scheduler);
+    ), scheduler);
 
-    pipe(stream.subscriberCount, expectEquals(0));
-    const sub1 = pipe(stream, subscribe(scheduler));
-    pipe(stream.subscriberCount, expectEquals(1));
-    const sub2 = pipe(stream, subscribe(scheduler));
-    pipe(stream.subscriberCount, expectEquals(2));
+    pipe(incrStream.subscriberCount, expectEquals(0));
+    const sub1 = pipe(incrStream, subscribe(scheduler));
+    pipe(incrStream.subscriberCount, expectEquals(1));
+    const sub2 = pipe(incrStream, subscribe(scheduler));
+    pipe(incrStream.subscriberCount, expectEquals(2));
     dispose(sub1);
-    pipe(stream.subscriberCount, expectEquals(1));
+    pipe(incrStream.subscriberCount, expectEquals(1));
     dispose(sub2);
-    pipe(stream.subscriberCount, expectEquals(0));
+    pipe(incrStream.subscriberCount, expectEquals(0));
   }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const stream = pipe(
-      identity<number>(),
-      map(incrementBy(100)),
-    ).stream(scheduler);
+    const incrStream = stream(
+      pipe(
+        identity<number>(),
+        map(incrementBy(100)),
+      ), scheduler);
 
-    dispatch(stream, 10);
-    dispatch(stream, 20);
-    dispatch(stream, 30);
-    dispose(stream);
+    dispatch(incrStream, 10);
+    dispatch(incrStream, 20);
+    dispatch(incrStream, 30);
+    dispose(incrStream);
 
     let result: readonly number[] = [];
     const subscription = pipe(
-      stream,
+      incrStream,
       buffer(),
       onNotifyObs(x => {
         result = x;
@@ -157,20 +161,21 @@ export const tests = describe(
   test("mapReq", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const stream = pipe(
-      identity<number>(),
-      mapReq<number, number, number>(incrementBy(100)),
-      mapReq<number, string, number>(x => Number.parseInt(x)),
-    ).stream(scheduler);
+    const incrStream = stream(
+      pipe(
+        identity<number>(),
+        mapReq<number, number, number>(incrementBy(100)),
+        mapReq<number, string, number>(x => Number.parseInt(x)),
+      ), scheduler);
 
-    dispatch(stream, "10");
-    dispatch(stream, "20");
-    dispatch(stream, "30");
-    dispose(stream);
+    dispatch(incrStream, "10");
+    dispatch(incrStream, "20");
+    dispatch(incrStream, "30");
+    dispose(incrStream);
 
     let result: readonly number[] = [];
     const subscription = pipe(
-      stream,
+      incrStream,
       buffer(),
       onNotifyObs(x => {
         result = x;
@@ -187,19 +192,20 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     let result: number[] = [];
-    const stream = pipe(
+    const notifyStream = stream(
+      pipe(
       identity<number>(),
       onNotify(x => {
         result.push(x);
       }),
-    ).stream(scheduler);
+    ), scheduler);
 
-    dispatch(stream, 1);
-    dispatch(stream, 2);
-    dispatch(stream, 3);
-    dispose(stream);
+    dispatch(notifyStream, 1);
+    dispatch(notifyStream, 2);
+    dispatch(notifyStream, 3);
+    dispose(notifyStream);
 
-    expectTrue(stream.isDisposed);
+    expectTrue(notifyStream.isDisposed);
 
     scheduler.run();
 
@@ -209,17 +215,18 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     let result: number[] = [];
-    const stream = pipe(
+    const scanStream = stream(
+      pipe(
       identity<number>(),
       scan(sum, returns<number>(0)),
       onNotify(x => {
         result.push(x);
       }),
-    ).stream(scheduler);
+    ), scheduler);
 
-    dispatch(stream, 1);
-    dispatch(stream, 2);
-    dispatch(stream, 3);
+    dispatch(scanStream, 1);
+    dispatch(scanStream, 2);
+    dispatch(scanStream, 3);
 
     scheduler.run();
 

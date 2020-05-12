@@ -70,6 +70,7 @@ import iconv from "iconv-lite";
 import db from "mime-db";
 import mime from "mime-types";
 import { dispose } from "@reactive-js/core/lib/disposable";
+import { stream } from "@reactive-js/core/lib/streamable";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -306,7 +307,7 @@ pipe(
   concatMap(status =>
     status.type === HttpClientRequestStatusType.HeadersReceived
       ? using(
-          scheduler => status.response.body.stream(scheduler),
+          scheduler => stream(status.response.body, scheduler),
           pipe("done", fromValue(), returns),
         )
       : fromValue()(JSON.stringify(status)),

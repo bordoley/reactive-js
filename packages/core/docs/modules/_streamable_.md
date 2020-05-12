@@ -25,6 +25,7 @@
 * [onNotify](_streamable_.md#const-onnotify)
 * [scan](_streamable_.md#const-scan)
 * [sink](_streamable_.md#const-sink)
+* [stream](_streamable_.md#const-stream)
 
 ## Type aliases
 
@@ -307,3 +308,25 @@ Name | Type |
 `dest` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹T, TReq› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
+
+___
+
+### `Const` stream
+
+▸ **stream**<**TReq**, **T**>(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T› |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+`replayCount?` | number |
+
+**Returns:** *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*

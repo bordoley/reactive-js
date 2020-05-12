@@ -6,6 +6,7 @@ import {
   createActionReducer,
   StreamableOperator,
   createStreamable,
+  stream as streamStreamable
 } from "./streamable";
 
 export type StateUpdater<T> = {
@@ -47,7 +48,7 @@ export const toStateStore = <T>(): StreamableOperator<
 > => streamable =>
   createStreamable(updates =>
     using(scheduler => {
-      const stream = streamable.stream(scheduler);
+      const stream = streamStreamable(streamable, scheduler);
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),

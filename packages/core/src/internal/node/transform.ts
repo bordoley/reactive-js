@@ -3,7 +3,7 @@ import { DisposableValueLike, createDisposableValue, disposeOnError } from "../.
 import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
-import { createStreamable, sink } from "../../streamable";
+import { createStreamable, sink, stream } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";
 import { createWritableFlowableSink } from "./createWritableFlowableSink";
 
@@ -28,9 +28,10 @@ export const transform = (
           subscribe(scheduler),
         );
 
-        const transformReadableStream = createReadableFlowable(
-          returns(transform),
-        ).stream(scheduler);
+        const transformReadableStream = stream(
+          createReadableFlowable(returns(transform)),
+          scheduler,
+        );
 
         const modeSubscription = pipe(
           modeObs,

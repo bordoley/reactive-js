@@ -16,6 +16,7 @@ import {
 import { ObservableOperator } from "../observable/interfaces";
 import { AsyncEnumerableLike } from "./interfaces";
 import { none } from "../../option";
+import { stream } from "../../streamable";
 
 export const enum ReducerRequestType {
   Continue = 1,
@@ -50,7 +51,7 @@ const reduceImpl = <TSrc, TAcc>(
 ): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
     scheduler => {
-      const enumerator = enumerable.stream(scheduler);
+      const enumerator = stream(enumerable, scheduler);
       const accFeedback = createSubject<TAcc>();
 
       return [accFeedback, enumerator];
