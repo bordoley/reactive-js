@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { createArray, passthrough, sum } from "./utils";
+import { returns } from "../lib/functions";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
@@ -18,14 +19,13 @@ export const run = (n: number) => {
       } = require("@reactive-js/core/lib/observable");
       const { run } = require("./reactive-js-runner");
 
-      const observable = pipe(
+      pipe(
         src,
         fromArray(),
         scan(sum, () => 0),
-        reduce(passthrough, () => 0),
+        reduce(passthrough, returns(0)),
+        run
       );
-
-      run(observable);
     })
     .add("rx-js", () => {
       const { from } = require("rxjs");

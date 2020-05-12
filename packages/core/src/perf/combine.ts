@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { add3, add3Arr, createArray, even } from "./utils";
+import { add3, add3Arr, createArray } from "./utils";
+import { isEven } from "../lib/functions";
 const Benchmark = require("benchmark");
 
 export const run = (n: number) => {
@@ -23,7 +24,7 @@ export const run = (n: number) => {
 
       const observable = pipe(
         combineLatest([other, other, arrayObs], add3),
-        keep(even),
+        keep(isEven),
       );
 
       run(observable);
@@ -38,7 +39,7 @@ export const run = (n: number) => {
 
       const observable = combineLatest(other, other, arrayObs).pipe(
         map(add3Arr),
-        filter(even),
+        filter(isEven),
       );
       run(observable);
     })
@@ -62,7 +63,7 @@ export const run = (n: number) => {
       const observable = pipe(
         combine(other, other, cbArray),
         map(add3Arr),
-        filter(even),
+        filter(isEven),
       );
 
       run(observable);

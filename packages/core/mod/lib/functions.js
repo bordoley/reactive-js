@@ -18,6 +18,8 @@ export const isReferenceEqualTo = (b) => a => a === b;
 export const isEqualTo = (b, equality) => equality === referenceEquals
     ? isReferenceEqualTo(b)
     : (a) => equality(a, b);
+export const isEven = (x) => x % 2 === 0;
+export const isOdd = (x) => x % 2 !== 0;
 export const negate = (v) => !v;
 export const sum = (...args) => {
     let acc = 0;
