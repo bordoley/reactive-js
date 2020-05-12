@@ -1,4 +1,4 @@
-import { EnumeratorLike } from "@reactive-js/core/lib/enumerable";
+import { EnumeratorLike } from "../enumerable.ts";
 import {
   Factory,
   Operator,
@@ -7,15 +7,14 @@ import {
   pipe,
   returns,
   Predicate,
-} from "@reactive-js/core/lib/functions";
+} from "../functions.ts";
 
-// FIXME: BAD!
-import { __DEV__ } from "@reactive-js/core/lib/internal/env";
+import { __DEV__ } from "./env.ts";
 import {
   Option,
   none,
   orCompute as orComputeOption,
-} from "@reactive-js/core/lib/option";
+} from "../option.ts";
 
 export type CharCode = number;
 
