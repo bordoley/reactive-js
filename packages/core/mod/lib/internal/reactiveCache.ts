@@ -4,26 +4,26 @@ import {
   AbstractDisposable,
   dispose,
   add,
-} from "./disposable.ts";
-import { pipe } from "./functions.ts";
+} from "../disposable.ts";
+import { pipe } from "../functions.ts";
 import {
   ObservableLike,
   StreamLike,
   switchAll,
   onSubscribe,
   dispatch,
-} from "./observable.ts";
-import { Option, isNone, isSome } from "./option.ts";
+} from "../observable.ts";
+import { Option, isNone, isSome } from "../option.ts";
 import {
   SchedulerLike,
   AbstractSchedulerContinuation,
   schedule,
-} from "./scheduler.ts";
+} from "../scheduler.ts";
 import {
   createStreamable,
   StreamableLike,
   stream as streamStreamable,
-} from "./streamable.ts";
+} from "../streamable.ts";
 
 class ReactiveCacheSchedulerContinuation<
   T

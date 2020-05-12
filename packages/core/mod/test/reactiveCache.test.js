@@ -1,7 +1,7 @@
 import { disposed, dispose } from "../lib/disposable.js";
 import { pipe, returns, bind } from "../lib/functions.js";
 import { fromArray, subscribe, fromValue, forEach, onNotify, never, } from "../lib/observable.js";
-import { createReactiveCache, getOrSet } from "../lib/reactiveCache.js";
+import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "../lib/internal/testing.js";
 export const tests = describe("reactive-cache", test("lifecycle integration", () => {

@@ -18,10 +18,6 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [SubscriberLike](_observable_.subscriberlike.md)
 
-  ↳ [ReactiveCacheLike](_reactivecache_.reactivecachelike.md)
-
-  ↳ [ResourceManagerLike](_resourcemanager_.resourcemanagerlike.md)
-
   ↳ [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)
 
   ↳ [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
