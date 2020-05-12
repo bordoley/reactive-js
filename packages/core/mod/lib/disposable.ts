@@ -102,14 +102,17 @@ export abstract class AbstractDisposable implements DisposableLike {
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
   private _error: Option<Exception> = none;
 
+  /** @ignore */
   get error() {
     return this._error;
   }
 
+  /** @ignore */
   get isDisposed() {
     return this._isDisposed;
   }
 
+  /** @ignore */
   add(disposable: DisposableOrTeardown) {
     const disposables = this.disposables;
 
@@ -128,6 +131,7 @@ export abstract class AbstractDisposable implements DisposableLike {
     return this;
   }
 
+  /** @ignore */
   dispose(error?: Exception) {
     if (!this.isDisposed) {
       this._isDisposed = true;
@@ -196,10 +200,12 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
   implements SerialDisposableLike {
   private _inner: DisposableLike = disposed;
 
+  /** @ignore */
   get inner() {
     return this._inner;
   }
 
+  /** @ignore */
   set inner(newInner: DisposableLike) {
     const oldInner = this._inner;
     this._inner = newInner;

@@ -21,10 +21,7 @@
 
 ### Methods
 
-* [addListener](_scheduler_.abstractschedulercontinuation.md#addlistener)
 * [produce](_scheduler_.abstractschedulercontinuation.md#abstract-produce)
-* [removeListener](_scheduler_.abstractschedulercontinuation.md#removelistener)
-* [run](_scheduler_.abstractschedulercontinuation.md#run)
 
 ## Constructors
 
@@ -36,59 +33,9 @@
 
 ## Methods
 
-###  addListener
-
-▸ **addListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
-
-*Implementation of [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`_ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md) |
-
-**Returns:** *void*
-
-___
-
 ### `Abstract` produce
 
 ▸ **produce**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-
-**Returns:** *void*
-
-___
-
-###  removeListener
-
-▸ **removeListener**(`_ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
-
-*Implementation of [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`_ev` | "onRunStatusChanged" |
-`listener` | [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md) |
-
-**Returns:** *void*
-
-___
-
-###  run
-
-▸ **run**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
-
-*Implementation of [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
 
 **Parameters:**
 

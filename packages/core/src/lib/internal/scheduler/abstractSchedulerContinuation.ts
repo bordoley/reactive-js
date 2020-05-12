@@ -30,6 +30,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     });
   }
 
+  /** @ignore */
   addListener(
     _ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
@@ -39,6 +40,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     }
   }
 
+  /** @ignore */
   removeListener(
     _ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
@@ -48,6 +50,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
 
   abstract produce(scheduler: SchedulerLike): void;
 
+  /** @ignore */
   run(scheduler: SchedulerLike) {
     const listeners = this.listeners;
     let error: Option<Exception> = none;
