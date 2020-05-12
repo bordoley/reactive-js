@@ -9,7 +9,10 @@ import { takeFirst } from "./takeFirst";
 import { using } from "./using";
 import { zipWithLatestFrom } from "./zipWithLatestFrom";
 
-export type AsyncReducer<TAcc, T> = (acc: TAcc, next: T) => ObservableLike<TAcc>;
+export type AsyncReducer<TAcc, T> = (
+  acc: TAcc,
+  next: T,
+) => ObservableLike<TAcc>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.

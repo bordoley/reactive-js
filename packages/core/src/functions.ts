@@ -76,7 +76,9 @@ export function callWith<TA, TB, TC, TD, T>(
   c: TC,
   d: TD,
 ): Operator<Selector4<TA, TB, TC, TD, T>, T>;
-export function callWith<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
+export function callWith<T>(
+  ...args: any[]
+): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
@@ -156,6 +158,13 @@ export const referenceEquals = <T>(a: T, b: T) => a === b;
 
 export const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a =>
   a === b;
+
+export const isEqualTo = <T>(b: T, equality: Equality<T>) =>
+  equality === referenceEquals
+    ? isReferenceEqualTo(b)
+    : (a: T) => equality(a, b);
+
+export const negate = (v: boolean): boolean => !v;
 
 export const sum = (...args: number[]) => {
   let acc = 0;
@@ -532,4 +541,15 @@ export function defer(
   ...operators: Operator<unknown, unknown>[]
 ): Factory<unknown> {
   return () => operators.reduce((acc, next) => next(acc), source);
+}
+
+export function flip<TA, TB, T>(f: Selector2<TA, TB, T>): Selector2<TB, TA, T>;
+export function flip<TA, TB, TC, T>(
+  f: Selector3<TA, TB, TC, T>,
+): Selector3<TC, TB, TA, T>;
+export function flip<T>(f: (...args: any[]) => T): (...args: any[]) => T {
+  return (...args) => {
+    args.reverse();
+    return f(...args);
+  };
 }

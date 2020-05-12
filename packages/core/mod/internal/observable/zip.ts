@@ -116,7 +116,6 @@ const shouldComplete = (
   return false;
 };
 
-
 class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
   current: unknown;

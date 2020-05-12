@@ -1,4 +1,4 @@
-import { compose, Operator, pipe, Factory } from "../../functions.ts";
+import { compose, Operator, pipe, Factory, flip } from "../../functions.ts";
 import {
   createSubject,
   map,
@@ -34,7 +34,10 @@ export type ConsumeRequest<TAcc> =
     };
 
 export type Consumer<T, TAcc> = (acc: TAcc, next: T) => ConsumeRequest<TAcc>;
-export type AsyncConsumer<T, TAcc> = (acc: TAcc, next: T) => ObservableLike<ConsumeRequest<TAcc>>;
+export type AsyncConsumer<T, TAcc> = (
+  acc: TAcc,
+  next: T,
+) => ObservableLike<ConsumeRequest<TAcc>>;
 
 export const continue_ = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
   type: ConsumeRequestType.Continue,
@@ -83,10 +86,7 @@ export const consume = <T, TAcc>(
   consumer: Consumer<T, TAcc>,
   initial: Factory<TAcc>,
 ): Operator<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
-  consumeImpl(
-    accObs => zipWithLatestFrom(accObs, (next, acc) => consumer(acc, next)),
-    initial,
-  );
+  consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
   consumer: AsyncConsumer<T, TAcc>,

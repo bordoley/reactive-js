@@ -1,4 +1,4 @@
-import { Operator, Predicate } from "../../functions";
+import { Operator, Predicate, negate, compose } from "../../functions";
 import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
@@ -29,4 +29,4 @@ export const everySatisfy = <T>(
 export const noneSatisfy = <T>(
   predicate: Predicate<T>,
 ): Operator<EnumerableLike<T>, boolean> =>
-  everySatisfy(next => !predicate(next));
+  everySatisfy(compose(predicate, negate));

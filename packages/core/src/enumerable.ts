@@ -1,7 +1,12 @@
 export { compute } from "./internal/enumerable/compute";
 export { concat, concatWith } from "./internal/enumerable/concat";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged";
-export { enumerate, hasCurrent, current, move } from "./internal/enumerable/enumerator";
+export {
+  enumerate,
+  hasCurrent,
+  current,
+  move,
+} from "./internal/enumerable/enumerator";
 export { endWith } from "./internal/enumerable/endWith";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy";
 export { first } from "./internal/enumerable/first";

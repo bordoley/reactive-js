@@ -383,12 +383,7 @@ export const tests = describe(
     test("throws if source throws", () => {
       const error = new Error();
       pipe(
-        defer(
-            error,
-            returns,
-            throws(),
-            forEach(ignore),
-          ),
+        defer(error, returns, throws(), forEach(ignore)),
         expectToThrowError(error),
       );
     }),
