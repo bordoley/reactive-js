@@ -1,7 +1,19 @@
 import { addDisposableOrTeardown, add } from "./disposable.ts";
-import { pipe, identity, Factory, Equality } from "./functions.ts";
-import { subscribe } from "./internal/observable/subscribe.ts";
-import { onNotify, using, zipWithLatestFrom, dispatchTo } from "./observable.ts";
+import {
+  pipe,
+  identity,
+  Factory,
+  Equality,
+  referenceEquality,
+} from "./functions.ts";
+import {
+  onNotify,
+  using,
+  zipWithLatestFrom,
+  distinctUntilChanged,
+  dispatchTo,
+  subscribe,
+} from "./observable.ts";
 import {
   StreamableLike,
   createActionReducer,
@@ -41,18 +53,16 @@ export const createStateStore = <T>(
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const toStateStore = <T>(): StreamableOperator<
-  T,
-  T,
-  StateUpdater<T>,
-  T
-> => streamable =>
+export const toStateStore = <T>(
+  equality = referenceEquality,
+): StreamableOperator<T, T, StateUpdater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {
       const stream = streamStreamable(streamable, scheduler);
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
+        distinctUntilChanged(equality),
         onNotify(dispatchTo(stream)),
         subscribe(scheduler),
         addDisposableOrTeardown(stream),

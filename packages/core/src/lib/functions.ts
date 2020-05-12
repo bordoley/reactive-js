@@ -148,15 +148,13 @@ export const ignore = returns<void>(undefined);
 
 export const increment = (x: number) => x + 1;
 
-export const incrementBy = (incr: number): Generator<number> => (
-  x: number,
-) => x + incr;
+export const incrementBy = (incr: number): Generator<number> => (x: number) =>
+  x + incr;
 
 export const decrement = (x: number) => x - 1;
 
-export const decrementBy = (decr: number): Generator<number> => (
-  x: number,
-) => x - decr;
+export const decrementBy = (decr: number): Generator<number> => (x: number) =>
+  x - decr;
 
 export const referenceEquality = <T>(a: T, b: T) => a === b;
 
