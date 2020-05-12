@@ -16,13 +16,7 @@ import {
   add,
 } from "../../disposable";
 import { FlowableOperator } from "../../flowable";
-import {
-  defer,
-  ignore,
-  pipe,
-  returns,
-  Factory,
-} from "../../functions";
+import { defer, ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
 import { createReadableFlowable } from "./createReadableFlowable";

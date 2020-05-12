@@ -31,5 +31,7 @@ export const someSatisfy = <T>(
  * @param value
  * @param equals
  */
-export const contains = <T>(value: T, equality: Equality<T> = referenceEquality) =>
-  someSatisfy(isEqualTo(value, equality));
+export const contains = <T>(
+  value: T,
+  equality: Equality<T> = referenceEquality,
+) => someSatisfy(isEqualTo(value, equality));

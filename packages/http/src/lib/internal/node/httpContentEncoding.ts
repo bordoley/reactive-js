@@ -1,7 +1,4 @@
-import {
-  ZlibOptions,
-  BrotliOptions,
-} from "zlib";
+import { ZlibOptions, BrotliOptions } from "zlib";
 import {
   brotliDecompress,
   gunzip,

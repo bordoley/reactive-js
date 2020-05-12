@@ -408,7 +408,7 @@ ___
 
 ### `Const` arrayEquality
 
-▸ **arrayEquality**<**T**>(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *(Anonymous function)*
+▸ **arrayEquality**<**T**>(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *[Equality](_functions_.md#equality)‹keyof T[]›*
 
 **Type parameters:**
 
@@ -420,7 +420,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `valuesEquality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Equality](_functions_.md#equality)‹keyof T[]›*
 
 ___
 
@@ -1134,7 +1134,7 @@ ___
 
 ### `Const` decrementBy
 
-▸ **decrementBy**(`decr`: number): *(Anonymous function)*
+▸ **decrementBy**(`decr`: number): *[Generator](_functions_.md#generator)‹number›*
 
 **Parameters:**
 
@@ -1142,7 +1142,7 @@ Name | Type |
 ------ | ------ |
 `decr` | number |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Generator](_functions_.md#generator)‹number›*
 
 ___
 
@@ -1665,7 +1665,7 @@ ___
 
 ### `Const` incrementBy
 
-▸ **incrementBy**(`incr`: number): *(Anonymous function)*
+▸ **incrementBy**(`incr`: number): *[Generator](_functions_.md#generator)‹number›*
 
 **Parameters:**
 
@@ -1673,13 +1673,13 @@ Name | Type |
 ------ | ------ |
 `incr` | number |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Generator](_functions_.md#generator)‹number›*
 
 ___
 
 ### `Const` isEqualTo
 
-▸ **isEqualTo**<**T**>(`b`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *function*
+▸ **isEqualTo**<**T**>(`b`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹T›*
 
 **Type parameters:**
 
@@ -1692,15 +1692,7 @@ Name | Type | Default |
 `b` | T | - |
 `equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[Predicate](_functions_.md#predicate)‹T›*
 
 ___
 
