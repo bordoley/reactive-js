@@ -1,6 +1,5 @@
 import {
   referenceEquality,
-  Operator,
   Equality,
   Predicate,
   isEqualTo,
@@ -15,7 +14,7 @@ import { EnumerableLike } from "./interfaces";
  */
 export const someSatisfy = <T>(
   predicate: Predicate<T>,
-): Operator<EnumerableLike<T>, boolean> => enumerable => {
+): Predicate<EnumerableLike<T>> => enumerable => {
   const enumerator = enumerate(enumerable);
   while (enumerator.move()) {
     if (predicate(enumerator.current)) {
@@ -34,4 +33,4 @@ export const someSatisfy = <T>(
 export const contains = <T>(
   value: T,
   equality: Equality<T> = referenceEquality,
-) => someSatisfy(isEqualTo(value, equality));
+): Predicate<EnumerableLike<T>> => someSatisfy(isEqualTo(value, equality));

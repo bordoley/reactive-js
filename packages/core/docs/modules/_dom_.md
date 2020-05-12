@@ -19,21 +19,13 @@
 
 ### `Const` historyHashStateStore
 
-• **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = pipe(
-  historyStateStore,
-  mapReq(hashStateRequestMapper),
-  map(getHashState),
-)
+• **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyHashStateStore
 
 ___
 
 ### `Const` historySearchStateStore
 
-• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹object›* = pipe(
-  historyStateStore,
-  mapReq(searchStateRequestMapper),
-  map(getSearchState),
-)
+• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹object›* = _historySearchStateStore
 
 ___
 

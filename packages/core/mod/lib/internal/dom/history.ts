@@ -70,13 +70,15 @@ const searchStateRequestMapper = (
   }
 };
 
-export const historySearchStateStore: StateStoreLike<{
-  readonly [key: string]: string;
-}> = pipe(
+const _historySearchStateStore = pipe(
   historyStateStore,
   mapReq(searchStateRequestMapper),
   map(getSearchState),
 );
+
+export const historySearchStateStore: StateStoreLike<{
+  readonly [key: string]: string;
+}> = _historySearchStateStore;
 
 const parseHashState = (str: string) =>
   str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
@@ -102,8 +104,9 @@ const hashStateRequestMapper = (
   }
 };
 
-export const historyHashStateStore: StateStoreLike<string> = pipe(
+const _historyHashStateStore = pipe(
   historyStateStore,
   mapReq(hashStateRequestMapper),
   map(getHashState),
 );
+export const historyHashStateStore: StateStoreLike<string> = _historyHashStateStore;

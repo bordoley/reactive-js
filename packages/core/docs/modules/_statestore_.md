@@ -60,7 +60,7 @@ ___
 
 ### `Const` toStateStore
 
-▸ **toStateStore**<**T**>(`equality`: referenceEquality): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
+▸ **toStateStore**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
 
 Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 
@@ -72,6 +72,6 @@ Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`equality` | referenceEquality | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
 **Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*

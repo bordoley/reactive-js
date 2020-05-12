@@ -1,4 +1,4 @@
-import { alwaysTrue, Operator } from "../../functions.ts";
+import { alwaysTrue, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { enumerate } from "./enumerator.ts";
 import {
@@ -13,7 +13,7 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
 
   constructor(
     private readonly src: EnumerableLike<T>,
-    private readonly shouldRepeat: Operator<number, boolean>,
+    private readonly shouldRepeat: Predicate<number>,
   ) {
     this.enumerator = enumerate(src);
   }
@@ -42,7 +42,7 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
 class RepeatEnumerable<T> implements EnumerableLike<T> {
   constructor(
     private readonly src: EnumerableLike<T>,
-    private readonly shouldRepeat: Operator<number, boolean>,
+    private readonly shouldRepeat: Predicate<number>,
   ) {}
 
   enumerate() {
@@ -57,7 +57,7 @@ class RepeatEnumerable<T> implements EnumerableLike<T> {
  * @param predicate The predicate function to apply.
  */
 export function repeat<T>(
-  predicate: Operator<number, boolean>,
+  predicate: Predicate<number>,
 ): EnumerableOperator<T, T>;
 
 /**
@@ -72,7 +72,7 @@ export function repeat<T>(count: number): EnumerableOperator<T, T>;
 export function repeat<T>(): EnumerableOperator<T, T>;
 
 export function repeat<T>(
-  predicate?: Operator<number, boolean> | number,
+  predicate?: Predicate<number> | number,
 ): EnumerableOperator<T, T> {
   const repeatPredicate = isNone(predicate)
     ? alwaysTrue

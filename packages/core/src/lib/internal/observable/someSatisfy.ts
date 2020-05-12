@@ -7,7 +7,7 @@ import {
 } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { SubscriberLike, ObservablePredicate } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -52,7 +52,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
  */
 export const someSatisfy = <T>(
   predicate: Predicate<T>,
-): ObservableOperator<T, boolean> => {
+): ObservablePredicate<T> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new SomeSatisfySubscriber(subscriber, predicate);
   operator.isSynchronous = true;
@@ -69,4 +69,4 @@ export const someSatisfy = <T>(
 export const contains = <T>(
   value: T,
   equality: Equality<T> = referenceEquality,
-) => someSatisfy(isEqualTo(value, equality));
+): ObservablePredicate<T> => someSatisfy(isEqualTo(value, equality));

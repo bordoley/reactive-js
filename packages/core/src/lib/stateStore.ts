@@ -54,7 +54,7 @@ export const createStateStore = <T>(
  * if a state value is distinct from the previous one.
  */
 export const toStateStore = <T>(
-  equality = referenceEquality,
+  equality: Equality<T> = referenceEquality,
 ): StreamableOperator<T, T, StateUpdater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {

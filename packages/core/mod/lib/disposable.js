@@ -15,7 +15,7 @@ export function add(disposable, ...disposables) {
     return disposable;
 }
 export const addDisposableOrTeardown = (d) => disposable => add(disposable, d);
-export const toErrorHandler = disposable => cause => dispose(disposable, { cause });
+export const toErrorHandler = (disposable) => cause => dispose(disposable, { cause });
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {

@@ -136,7 +136,7 @@ ___
 
 ### `Const` contains
 
-▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *function*
+▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns `true` value if source yields any item equal to `value`, otherwise `false`.
 
@@ -151,15 +151,7 @@ Name | Type | Default |
 `value` | T | - |
 `equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -258,7 +250,7 @@ ___
 
 ### `Const` everySatisfy
 
-▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns `true` if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -273,7 +265,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -588,7 +580,7 @@ ___
 
 ### `Const` noneSatisfy
 
-▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns `true` if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -603,7 +595,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -632,7 +624,7 @@ ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: [Operator](_functions_.md#operator)‹number, boolean›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that applies the predicate function each time the source
 completes to determine if the enumerable should be repeated.
@@ -645,7 +637,7 @@ completes to determine if the enumerable should be repeated.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`predicate` | [Operator](_functions_.md#operator)‹number, boolean› | The predicate function to apply.  |
+`predicate` | [Predicate](_functions_.md#predicate)‹number› | The predicate function to apply.  |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -723,7 +715,7 @@ ___
 
 ### `Const` someSatisfy
 
-▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns `true` value if the any item satisfies the predicate, otherwise `false`.
 
@@ -737,7 +729,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, boolean›*
+**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 

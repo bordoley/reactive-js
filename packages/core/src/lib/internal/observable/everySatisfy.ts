@@ -2,7 +2,7 @@ import { dispose, add } from "../../disposable";
 import { Predicate, compose, negate } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { SubscriberLike, ObservablePredicate } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -48,7 +48,7 @@ class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
  */
 export const everySatisfy = <T>(
   predicate: Predicate<T>,
-): ObservableOperator<T, boolean> => {
+): ObservablePredicate<T> => {
   const operator = (subscriber: SubscriberLike<boolean>) =>
     new EverySatisfySubscriber(subscriber, predicate);
   operator.isSynchronous = true;
@@ -63,4 +63,4 @@ export const everySatisfy = <T>(
  */
 export const noneSatisfy = <T>(
   predicate: Predicate<T>,
-): ObservableOperator<T, boolean> => everySatisfy(compose(predicate, negate));
+): ObservablePredicate<T> => everySatisfy(compose(predicate, negate));
