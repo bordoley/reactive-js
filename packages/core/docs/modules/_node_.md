@@ -7,9 +7,15 @@
 ### Functions
 
 * [bindNodeCallback](_node_.md#bindnodecallback)
+* [brotliCompress](_node_.md#const-brotlicompress)
+* [brotliDecompress](_node_.md#const-brotlidecompress)
 * [createDisposableNodeStream](_node_.md#const-createdisposablenodestream)
 * [createReadableFlowable](_node_.md#const-createreadableflowable)
 * [createWritableFlowableSink](_node_.md#const-createwritableflowablesink)
+* [deflate](_node_.md#const-deflate)
+* [gunzip](_node_.md#const-gunzip)
+* [gzip](_node_.md#const-gzip)
+* [inflate](_node_.md#const-inflate)
 * [transform](_node_.md#const-transform)
 
 ## Functions
@@ -1562,6 +1568,50 @@ Name | Type |
 
 ___
 
+### `Const` brotliCompress
+
+▸ **brotliCompress**(`options`: BrotliOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+### `Const` brotliDecompress
+
+▸ **brotliDecompress**(`options`: BrotliOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | BrotliOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
 ### `Const` createDisposableNodeStream
 
 ▸ **createDisposableNodeStream**<**T**>(`stream`: T): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
@@ -1605,6 +1655,94 @@ Name | Type |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›› |
 
 **Returns:** *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+
+___
+
+### `Const` deflate
+
+▸ **deflate**(`options`: ZlibOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | ZlibOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+### `Const` gunzip
+
+▸ **gunzip**(`options`: ZlibOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | ZlibOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+### `Const` gzip
+
+▸ **gzip**(`options`: ZlibOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | ZlibOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+
+___
+
+### `Const` inflate
+
+▸ **inflate**(`options`: ZlibOptions): *function*
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`options` | ZlibOptions | {} |
+
+**Returns:** *function*
+
+▸ (`a`: TA): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
 
 ___
 

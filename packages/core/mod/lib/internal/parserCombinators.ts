@@ -10,11 +10,7 @@ import {
 } from "../functions.ts";
 
 import { __DEV__ } from "./env.ts";
-import {
-  Option,
-  none,
-  orCompute as orComputeOption,
-} from "../option.ts";
+import { Option, none, orCompute as orComputeOption } from "../option.ts";
 
 export type CharCode = number;
 
