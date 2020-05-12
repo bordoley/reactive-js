@@ -34,7 +34,6 @@ export const tests = describe("node", describe("createWritableFlowableSink", tes
         autoDestroy: true,
         highWaterMark: 4,
         write(_chunk, _encoding, callback) {
-            debugger;
             callback(cause);
         },
     });

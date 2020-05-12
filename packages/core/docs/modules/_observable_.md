@@ -2154,7 +2154,7 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Type parameters:**
 
-▪ **TResource**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)[] | [DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+▪ **TResource**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
 ▪ **T**
 
