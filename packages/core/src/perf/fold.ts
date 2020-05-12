@@ -24,7 +24,7 @@ export const run = (n: number) => {
         fromArray(),
         scan(sum, () => 0),
         reduce(passthrough, returns(0)),
-        run
+        run,
       );
     })
     .add("rx-js", () => {

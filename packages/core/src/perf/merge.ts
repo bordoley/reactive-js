@@ -36,11 +36,7 @@ export const run = (m: number, n: number) => {
       const { run } = require("./reactive-js-runner");
 
       const streams = src.map(x => fromArray()(x));
-      pipe(
-        merge(...streams),
-        reduce(sum, returns(0)),
-        run,
-      );
+      pipe(merge(...streams), reduce(sum, returns(0)), run);
     })
     .add("rx-js", () => {
       const { merge, from } = require("rxjs");

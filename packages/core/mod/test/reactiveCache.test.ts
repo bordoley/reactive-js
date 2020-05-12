@@ -24,7 +24,7 @@ export const tests = describe(
   "reactive-cache",
   test("lifecycle integration", () => {
     // Use microticks to test yielding
-    const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1});
+    const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
     const cache = createReactiveCache<string>(scheduler, scheduler, 2);
 
     let bSubscription = disposed;
@@ -58,7 +58,7 @@ export const tests = describe(
             subscribe(scheduler),
           );
 
-          const entryD = cache.set("d", fromValue({delay: 3})("d"));
+          const entryD = cache.set("d", fromValue({ delay: 3 })("d"));
           dSubscription = pipe(entryD, subscribe(scheduler));
         },
         () => {
