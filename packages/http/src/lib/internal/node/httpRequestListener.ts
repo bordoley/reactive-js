@@ -24,10 +24,8 @@ import {
   catchError,
   onNotify,
   subscribe,
-  empty,
   compute,
 } from "@reactive-js/core/lib/observable";
-import { isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { sink } from "@reactive-js/core/lib/streamable";
 import {
@@ -54,9 +52,8 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
 
 const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
   body,
-  contentInfo,
 }: HttpResponse<FlowableLike<Uint8Array>>) =>
-  isSome(contentInfo) ? sink(body, responseBody) : empty();
+  sink(body, responseBody);
 
 const defaultOnError = (e: unknown)  => {
   console.log(e);
