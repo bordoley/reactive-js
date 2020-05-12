@@ -4,6 +4,7 @@ export {
   ObservableLike,
   ObservableOperator,
   StreamLike,
+  ObservablePredicate,
   SubjectLike,
   SubscriberLike,
   SubscriberOperator,

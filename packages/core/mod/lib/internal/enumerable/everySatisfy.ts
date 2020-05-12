@@ -1,4 +1,4 @@
-import { Operator, Predicate, negate, compose } from "../../functions.ts";
+import { Predicate, negate, compose } from "../../functions.ts";
 import { enumerate } from "./enumerator.ts";
 import { EnumerableLike } from "./interfaces.ts";
 
@@ -10,7 +10,7 @@ import { EnumerableLike } from "./interfaces.ts";
  */
 export const everySatisfy = <T>(
   predicate: Predicate<T>,
-): Operator<EnumerableLike<T>, boolean> => enumerable => {
+): Predicate<EnumerableLike<T>> => enumerable => {
   const enumerator = enumerate(enumerable);
   while (enumerator.move()) {
     if (!predicate(enumerator.current)) {
@@ -28,5 +28,4 @@ export const everySatisfy = <T>(
  */
 export const noneSatisfy = <T>(
   predicate: Predicate<T>,
-): Operator<EnumerableLike<T>, boolean> =>
-  everySatisfy(compose(predicate, negate));
+): Predicate<EnumerableLike<T>> => everySatisfy(compose(predicate, negate));

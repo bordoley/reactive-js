@@ -188,12 +188,12 @@ ___
 
 ### `Const` toErrorHandler
 
-▸ **toErrorHandler**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)‹›): *(Anonymous function)*
+▸ **toErrorHandler**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹unknown›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md)‹› |
+`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹unknown›*

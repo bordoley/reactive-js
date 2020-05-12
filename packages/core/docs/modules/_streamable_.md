@@ -151,7 +151,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *function*
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -167,15 +167,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Operator](_functions_.md#operator)‹TA, TB› |
 
-**Returns:** *function*
-
-▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
@@ -203,7 +195,7 @@ ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TReq**, **TA**, **TB**>(`v`: TB): *function*
+▸ **mapTo**<**TReq**, **TA**, **TB**>(`v`: TB): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -219,21 +211,13 @@ Name | Type |
 ------ | ------ |
 `v` | TB |
 
-**Returns:** *function*
-
-▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
 ### `Const` onNotify
 
-▸ **onNotify**<**TReq**, **T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *function*
+▸ **onNotify**<**TReq**, **T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, T›*
 
 **Type parameters:**
 
@@ -247,21 +231,13 @@ Name | Type |
 ------ | ------ |
 `onNotify` | [SideEffect1](_functions_.md#sideeffect1)‹T› |
 
-**Returns:** *function*
-
-▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initalValue`: [Factory](_functions_.md#factory)‹TAcc›): *function*
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initalValue`: [Factory](_functions_.md#factory)‹TAcc›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, TAcc›*
 
 **Type parameters:**
 
@@ -278,15 +254,7 @@ Name | Type |
 `scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
 `initalValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *function*
-
-▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, TAcc›*
 
 ___
 

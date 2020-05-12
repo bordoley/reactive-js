@@ -25,6 +25,7 @@
 
 * [AsyncReducer](_observable_.md#asyncreducer)
 * [ObservableOperator](_observable_.md#observableoperator)
+* [ObservablePredicate](_observable_.md#observablepredicate)
 * [SubscriberOperator](_observable_.md#subscriberoperator)
 
 ### Variables
@@ -142,6 +143,24 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>.
 Name | Type |
 ------ | ------ |
 `observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
+
+___
+
+###  ObservablePredicate
+
+Ƭ **ObservablePredicate**: *function*
+
+A function which converts an ObservableLike<A> to an ObservableLike<B>.
+
+#### Type declaration:
+
+▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹boolean›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 
 ___
 
@@ -629,7 +648,7 @@ ___
 
 ### `Const` contains
 
-▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *function*
+▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any item equal to `value`, otherwise `false`.
@@ -645,15 +664,7 @@ Name | Type | Default |
 `value` | T | - |
 `equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
-**Returns:** *function*
-
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹A›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹B›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
+**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 ___
 
@@ -803,7 +814,7 @@ ___
 
 ### `Const` everySatisfy
 
-▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -818,7 +829,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 ___
 
@@ -1346,7 +1357,7 @@ ___
 
 ### `Const` noneSatisfy
 
-▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
 every value produced by the source, or if the source is empty, otherwise `false`.
@@ -1361,7 +1372,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 ___
 
@@ -1629,7 +1640,7 @@ ___
 
 ### `Const` someSatisfy
 
-▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 Returns an `ObservableLike` that emits a single `true` value if the source
 emits any items which satisfy the predicate, otherwise `false`.
@@ -1644,7 +1655,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, boolean›*
+**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 ___
 

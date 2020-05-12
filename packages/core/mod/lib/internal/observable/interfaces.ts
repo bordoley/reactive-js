@@ -50,6 +50,11 @@ export type ObservableOperator<A, B> = {
   (observable: ObservableLike<A>): ObservableLike<B>;
 };
 
+/** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
+export type ObservablePredicate<T> = {
+  (observable: ObservableLike<T>): ObservableLike<boolean>;
+};
+
 /**
  * An `ObservableLike` that shares a common subscription to an underlying observable source.
  *

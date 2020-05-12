@@ -40,7 +40,8 @@ const searchStateRequestMapper = (stateUpdater) => (prevStateString) => {
         return newURL.href;
     }
 };
-export const historySearchStateStore = pipe(historyStateStore, mapReq(searchStateRequestMapper), map(getSearchState));
+const _historySearchStateStore = pipe(historyStateStore, mapReq(searchStateRequestMapper), map(getSearchState));
+export const historySearchStateStore = _historySearchStateStore;
 const parseHashState = (str) => str.length > 1 ? decodeURIComponent(str.substring(1)) : "";
 const getHashState = (state) => {
     const url = new URL(state);
@@ -59,4 +60,5 @@ const hashStateRequestMapper = (stateUpdater) => (prevStateString) => {
         return newURL.href;
     }
 };
-export const historyHashStateStore = pipe(historyStateStore, mapReq(hashStateRequestMapper), map(getHashState));
+const _historyHashStateStore = pipe(historyStateStore, mapReq(hashStateRequestMapper), map(getHashState));
+export const historyHashStateStore = _historyHashStateStore;
