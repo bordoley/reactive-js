@@ -148,18 +148,24 @@ export const ignore = returns<void>(undefined);
 
 export const increment = (x: number) => x + 1;
 
-export const incrementBy = (incr: number) => (x: number) => x + incr;
+export const incrementBy = (incr: number): Generator<number> => (
+  x: number,
+) => x + incr;
 
 export const decrement = (x: number) => x - 1;
 
-export const decrementBy = (decr: number) => (x: number) => x - decr;
+export const decrementBy = (decr: number): Generator<number> => (
+  x: number,
+) => x - decr;
 
 export const referenceEquality = <T>(a: T, b: T) => a === b;
 
-const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a =>
-  a === b;
+const isReferenceEqualTo = <T>(b: T): Predicate<T> => a => a === b;
 
-export const isEqualTo = <T>(b: T, equality: Equality<T> = referenceEquality) =>
+export const isEqualTo = <T>(
+  b: T,
+  equality: Equality<T> = referenceEquality,
+): Predicate<T> =>
   equality === referenceEquality
     ? isReferenceEqualTo(b)
     : (a: T) => equality(a, b);
@@ -177,10 +183,10 @@ export const sum = (...args: number[]) => {
   return acc;
 };
 
-export const arrayEquality = <T>(valuesEquality: Equality<T> = referenceEquality) => (
-  a: readonly T[],
-  b: readonly T[],
-) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
+export const arrayEquality = <T>(
+  valuesEquality: Equality<T> = referenceEquality,
+): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
+  a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
 export function pipe<T, A>(src: T, op1: Operator<T, A>): A;
 export function pipe<T, A, B>(
