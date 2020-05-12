@@ -3,6 +3,8 @@ import {
   DisposableLike,
   disposed,
   dispose,
+  add,
+  addDisposableOrTeardown,
 } from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import { pipe, Operator } from "./functions.ts";
@@ -108,40 +110,43 @@ const tryDispatch = <TResource extends DisposableLike>(
   // We have resource to allocate so pop
   // the subscriber off the request queue
   // and mark the resource as in use
-  const subscriber = resourceRequests.pop(key) as DispatcherLike<TResource>;
-  inUseResources.add(key, subscriber);
+  const subscriber = add(
+    resourceRequests.pop(key) as DispatcherLike<TResource>,
+    () => {
+      inUseResources.remove(key, subscriber);
+      availableResources.push(key, resource);
 
-  subscriber.add(() => {
-    inUseResources.remove(key, subscriber);
-    availableResources.push(key, resource);
+      // Setup the timeout subscription
+      const timeoutSubscription = pipe(
+        fromValue({ delay: maxIdleTime })(none),
+        onNotify(_ => {
+          const resource = availableResources.pop(key);
+          if (isSome(resource)) {
+            dispose(resource);
 
-    // Setup the timeout subscription
-    const timeoutSubscription = pipe(
-      fromValue({ delay: maxIdleTime })(none),
-      onNotify(_ => {
-        const resource = availableResources.pop(key);
-        if (isSome(resource)) {
-          dispose(resource);
-
-          // Check the global queue for the next key
-          // awaiting a resource and dispatch it.
-          const resourceKey = globalResourceWaitQueue.pop();
-          if (isSome(resourceKey)) {
-            // FIXME: What happens if all requests for this
-            // resource are disposed. We should move on to the next but
-            // don't afaict.
-            tryDispatch(resourceManager, resourceKey);
+            // Check the global queue for the next key
+            // awaiting a resource and dispatch it.
+            const resourceKey = globalResourceWaitQueue.pop();
+            if (isSome(resourceKey)) {
+              // FIXME: What happens if all requests for this
+              // resource are disposed. We should move on to the next but
+              // don't afaict.
+              tryDispatch(resourceManager, resourceKey);
+            }
           }
-        }
-      }),
-      subscribe(scheduler),
-    ).add(() => {
-      availableResourcesTimeouts.delete(resource);
-    });
-    availableResourcesTimeouts.set(resource, timeoutSubscription);
+        }),
+        subscribe(scheduler),
+        addDisposableOrTeardown(() => {
+          availableResourcesTimeouts.delete(resource);
+        }),
+      );
+      availableResourcesTimeouts.set(resource, timeoutSubscription);
 
-    tryDispatch(resourceManager, key);
-  });
+      tryDispatch(resourceManager, key);
+    },
+  );
+
+  inUseResources.add(key, subscriber);
   dispatch(subscriber, resource);
 };
 
@@ -177,7 +182,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
   ) {
     super();
 
-    this.add(e => {
+    add(this, e => {
       const forEachDispose = forEach((s: DisposableLike) => dispose(s, e));
 
       pipe(this.resourceRequests.values, forEachDispose);

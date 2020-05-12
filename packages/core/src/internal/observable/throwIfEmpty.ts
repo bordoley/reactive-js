@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { add, dispose } from "../../disposable";
 import { Factory } from "../../functions";
 import { isNone } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
@@ -16,7 +16,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     private readonly factory: Factory<unknown>,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       if (isNone(error) && this.isEmpty) {
         const cause = this.factory();
         error = { cause };

@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { dispose, add, addDisposableOrTeardown } from "../../disposable";
 import { pipe, Selector2 } from "../../functions";
 import { Option, isSome } from "../../option";
 import {
@@ -38,13 +38,14 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
       other,
       onNotify(this.onNotify),
       subscribe(this),
-    ).add(e => {
-      if (isSome(e) || !this.hasLatest) {
-        dispose(this, e);
-      }
-    });
+      addDisposableOrTeardown(e => {
+        if (isSome(e) || !this.hasLatest) {
+          dispose(this, e);
+        }
+      }),
+    );
 
-    this.add(otherSubscription).add(delegate);
+    add(this, otherSubscription, delegate);
   }
 
   notify(next: TA) {

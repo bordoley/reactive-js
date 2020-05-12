@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
 class ConcatSubscriber extends AbstractDelegatingSubscriber {
@@ -6,7 +6,7 @@ class ConcatSubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.observables = observables;
         this.next = next;
-        this.add(error => {
+        add(this, error => {
             const observables = this.observables;
             const next = this.next;
             if (isSome(error)) {

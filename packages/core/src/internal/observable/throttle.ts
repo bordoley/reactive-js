@@ -3,6 +3,8 @@ import {
   SerialDisposableLike,
   disposeOnError,
   dispose,
+  add,
+  addDisposableOrTeardown,
 } from "../../disposable";
 import { pipe, Operator } from "../../functions";
 import { none, Option, isNone } from "../../option";
@@ -48,7 +50,8 @@ const setupDurationSubscription = <T>(
     subscriber.durationSelector(next),
     onNotify(subscriber.onNotify),
     subscribe(subscriber),
-  ).add(disposeOnError(subscriber));
+    addDisposableOrTeardown(disposeOnError(subscriber)),
+  );
 };
 
 class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -74,7 +77,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription).add(error => {
+    add(this, this.durationSubscription, error => {
       if (isNone(error) && mode !== ThrottleMode.First && this.hasValue) {
         fromValue()(this.value).subscribe(delegate);
       } else {

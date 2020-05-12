@@ -1,4 +1,4 @@
-import { Exception, dispose } from "../../disposable.ts";
+import { Exception, dispose, add } from "../../disposable.ts";
 import { Operator } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import {
@@ -16,7 +16,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   ) {
     super(delegate);
 
-    this.add(error => {
+    add(this, error => {
       if (isSome(error)) {
         try {
           const { cause } = error;

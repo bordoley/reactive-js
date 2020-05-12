@@ -1,4 +1,4 @@
-import { dispose } from "../../../../core/lib/disposable.ts";
+import { dispose, add } from "../../../../core/lib/disposable.ts";
 import { bind, pipe } from "../../../../core/lib/functions.ts";
 import {
   dispatch,
@@ -74,7 +74,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
 
   const fetchResponse = createObservable(async dispatcher => {
     const abortController = new AbortController();
-    dispatcher.add(() => abortController.abort());
+    add(dispatcher, () => abortController.abort());
 
     try {
       const fetchResponse = await fetch(url, {

@@ -1,4 +1,4 @@
-import { AbstractDisposable, dispose } from "../../disposable.js";
+import { AbstractDisposable, dispose, add, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
@@ -38,7 +38,7 @@ class EnumeratorSubscriber extends AbstractDisposable {
         this.hasCurrent = true;
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        this.add(continuation);
+        add(this, continuation);
         if (!continuation.isDisposed && delay === 0) {
             this.continuations.push(continuation);
         }
@@ -82,12 +82,12 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
         this.selector = selector;
         this.buffer = [];
         this.hasCurrent = false;
-        delegate.add(() => {
+        add(delegate, () => {
             this.hasCurrent = false;
             this.current = none;
             this.buffer.length = 0;
         });
-        this.add(error => {
+        add(this, error => {
             if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
                 dispose(delegate, error);
             }

@@ -1,4 +1,4 @@
-import { bind, SideEffect1 } from "./functions";
+import { bind, SideEffect1, Operator } from "./functions";
 import { isSome, none, Option } from "./option";
 
 /**
@@ -55,6 +55,24 @@ export const disposeOnError = (disposable: DisposableLike) => (
     dispose(disposable, error);
   }
 };
+export function add<T extends DisposableLike>(
+  disposable: T,
+  firstChild: DisposableOrTeardown,
+  ...others: DisposableOrTeardown[]
+): T;
+export function add<T extends DisposableLike>(
+  disposable: T,
+  ...disposables: DisposableOrTeardown[]
+): T {
+  for (const d of disposables) {
+    disposable.add(d);
+  }
+  return disposable;
+}
+
+export const addDisposableOrTeardown = <T extends DisposableLike>(
+  d: DisposableOrTeardown,
+): Operator<T, T> => disposable => add(disposable, d);
 
 export const toErrorHandler = (disposable: DisposableLike) => (
   cause: unknown,
@@ -101,7 +119,7 @@ export abstract class AbstractDisposable implements DisposableLike {
       disposables.add(disposable);
 
       if (!(disposable instanceof Function)) {
-        disposable.add(() => {
+        add(disposable, () => {
           disposables.delete(disposable);
         });
       }
@@ -135,10 +153,7 @@ export const createDisposable = (
   onDispose?: (error?: Exception) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
-  if (isSome(onDispose)) {
-    disposable.add(onDispose);
-  }
-  return disposable;
+  return isSome(onDispose) ? add(disposable, onDispose) : disposable;
 };
 
 const _disposed: DisposableLike = {
@@ -190,7 +205,7 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
     this._inner = newInner;
 
     if (oldInner !== newInner) {
-      this.add(newInner);
+      add(this, newInner);
       dispose(oldInner);
     }
   }
@@ -227,4 +242,4 @@ export const createDisposableValue = <T>(
   value: T,
   cleanup: SideEffect1<T>,
 ): DisposableValueLike<T> =>
-  new DisposableValueImpl(value).add(bind(cleanup, value));
+  add(new DisposableValueImpl(value), bind(cleanup, value));

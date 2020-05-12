@@ -1,4 +1,9 @@
-import { DisposableLike, createDisposable, dispose } from "../../disposable.ts";
+import {
+  DisposableLike,
+  createDisposable,
+  dispose,
+  add,
+} from "../../disposable.ts";
 import { Factory, SideEffect, Operator, bind } from "../../functions.ts";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
 
@@ -98,7 +103,7 @@ class HostScheduler implements SchedulerLike {
         delay > 0
           ? scheduleDelayed(callback, delay)
           : scheduleImmediate(callback);
-      continuation.add(callbackSubscription);
+      add(continuation, callbackSubscription);
     }
   }
 

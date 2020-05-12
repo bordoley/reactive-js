@@ -1,4 +1,5 @@
 import {
+  add,
   AbstractDisposable,
   DisposableLike,
   dispose,
@@ -71,8 +72,8 @@ export class HttpResponseBodyImpl extends AbstractDisposable
   implements WebResponseBodyLike {
   constructor(readonly body: ObservableLike<unknown> & DisposableLike) {
     super();
-    this.add(body);
-    body.add(this);
+    add(this, body);
+    add(body, this);
   }
 
   get arrayBuffer(): ObservableLike<ArrayBuffer> {

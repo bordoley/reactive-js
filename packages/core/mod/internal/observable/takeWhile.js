@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
@@ -6,7 +6,7 @@ class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.predicate = predicate;
         this.inclusive = inclusive;
-        this.add(delegate);
+        add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

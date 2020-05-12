@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { dispose, add, addDisposableOrTeardown } from "../../disposable.ts";
 import { pipe, Selector2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
 import {
@@ -53,15 +53,16 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
       other,
       onNotify(this.onNotify),
       subscribe(delegate),
-    ).add(e => {
-      if (isSome(e)) {
-        dispose(delegate, e);
-      } else if (this.isDisposed) {
-        dispose(delegate);
-      }
-    });
+      addDisposableOrTeardown(e => {
+        if (isSome(e)) {
+          dispose(delegate, e);
+        } else if (this.isDisposed) {
+          dispose(delegate);
+        }
+      }),
+    );
 
-    this.add(e => {
+    add(this, e => {
       if (isSome(e)) {
         dispose(delegate, e);
       } else if (otherSubscription.isDisposed) {
@@ -69,7 +70,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
       }
     });
 
-    delegate.add(otherSubscription).add(this);
+    add(delegate, otherSubscription, this);
   }
 
   notify(next: TA) {

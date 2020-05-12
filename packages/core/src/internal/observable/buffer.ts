@@ -1,4 +1,10 @@
-import { disposed, disposeOnError, dispose } from "../../disposable";
+import {
+  disposed,
+  disposeOnError,
+  dispose,
+  add,
+  addDisposableOrTeardown,
+} from "../../disposable";
 import { pipe, Operator } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
@@ -39,7 +45,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   ) {
     super(delegate);
 
-    this.add(this.durationSubscription).add(error => {
+    add(this, this.durationSubscription, error => {
       const buffer = this.buffer;
       this.buffer = [];
       if (isNone(error) && buffer.length > 0) {
@@ -64,7 +70,8 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
         this.durationSelector(next),
         onNotify(this.onNotify),
         subscribe(this.delegate),
-      ).add(disposeOnError(this));
+        addDisposableOrTeardown(disposeOnError(this)),
+      );
     }
   }
 }

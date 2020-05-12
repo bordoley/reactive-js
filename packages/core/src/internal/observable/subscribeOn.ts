@@ -5,6 +5,7 @@ import { dispatchTo } from "./dispatcher";
 import { ObservableOperator } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
+import { addDisposableOrTeardown, add } from "../../disposable";
 
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
@@ -15,11 +16,13 @@ export const subscribeOn = <T>(
   scheduler: SchedulerLike,
 ): ObservableOperator<T, T> => observable =>
   createObservable(dispatcher => {
-    dispatcher.add(
+    add(
+      dispatcher,
       pipe(
         observable,
         onNotify(dispatchTo(dispatcher)),
         subscribe(scheduler),
-      ).add(dispatcher),
+        addDisposableOrTeardown(dispatcher),
+      ),
     );
   });

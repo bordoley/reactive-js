@@ -1,4 +1,4 @@
-import { createDisposable, dispose } from "../../disposable.js";
+import { createDisposable, dispose, add, } from "../../disposable.js";
 import { bind } from "../../functions.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
@@ -68,7 +68,7 @@ class HostScheduler {
             const callbackSubscription = delay > 0
                 ? scheduleDelayed(callback, delay)
                 : scheduleImmediate(callback);
-            continuation.add(callbackSubscription);
+            add(continuation, callbackSubscription);
         }
     }
     shouldYield() {

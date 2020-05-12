@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { add, dispose } from "../../disposable.ts";
 import { referenceEquals, Equality, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
@@ -18,7 +18,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
     private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       if (isNone(error)) {
         fromValue()(false).subscribe(delegate);
       } else {

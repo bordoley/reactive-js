@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { createDisposable, dispose } from "@reactive-js/core/lib/disposable";
+import {
+  createDisposable,
+  dispose,
+  add,
+} from "@reactive-js/core/lib/disposable";
 import { pipe, bind } from "@reactive-js/core/lib/functions";
 import { none } from "@reactive-js/core/lib/option";
 import {
@@ -72,7 +76,7 @@ const priorityScheduler = {
       bind(unstable_cancelCallback, callbackNode),
     );
 
-    continuation.add(callbackNodeDisposable);
+    add(continuation, callbackNodeDisposable);
   },
 
   shouldYield: unstable_shouldYield,

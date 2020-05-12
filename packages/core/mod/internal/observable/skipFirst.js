@@ -1,12 +1,13 @@
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { add } from "../../disposable.js";
 class SkipFirstSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
         this.count = 0;
-        this.add(delegate);
+        add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

@@ -7,7 +7,7 @@ import {
   fromIterable,
   generate,
 } from "../src/asyncEnumerable";
-import { Exception } from "../src/disposable";
+import { Exception, addDisposableOrTeardown } from "../src/disposable";
 import { pipe, increment, returns } from "../src/functions";
 import {
   fromValue,
@@ -107,9 +107,10 @@ export const tests = describe(
       enumerator,
       onNotify(x => result.push(x)),
       subscribe(scheduler),
-    ).add(e => {
-      error = e;
-    });
+      addDisposableOrTeardown(e => {
+        error = e;
+      }),
+    );
 
     dispatch(enumerator, none);
     dispatch(enumerator, none);

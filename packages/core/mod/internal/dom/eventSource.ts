@@ -1,4 +1,5 @@
 import { createObservable, ObservableLike, dispatch } from "../../observable.ts";
+import { add } from "../../disposable.ts";
 
 const reservedEvents = ["error", "open"];
 
@@ -26,7 +27,7 @@ export const createEventSource = (
       });
     };
 
-    dispatcher.add(_ => {
+    add(dispatcher, _ => {
       for (const ev of events) {
         eventSource.removeEventListener(ev, listener as EventListener);
       }

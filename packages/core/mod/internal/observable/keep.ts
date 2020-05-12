@@ -5,6 +5,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
+import { add } from "../../disposable.ts";
 
 class KeepTypeSubscriber<
   TA,
@@ -15,7 +16,7 @@ class KeepTypeSubscriber<
     private readonly predicate: TypePredicate<TA, TB>,
   ) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: TA) {

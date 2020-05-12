@@ -4,6 +4,7 @@ import {
   createSerialDisposable,
   disposed,
   dispose,
+  add,
 } from "../src/disposable";
 import { pipe } from "../src/functions";
 import {
@@ -27,7 +28,7 @@ export const tests = describe(
       const disposable = createDisposable();
       const child = createDisposable();
 
-      disposable.add(child);
+      add(disposable, child);
       dispose(disposable);
 
       expectTrue(child.isDisposed);
@@ -38,16 +39,14 @@ export const tests = describe(
       const child = createDisposable();
 
       dispose(disposable);
-      disposable.add(child);
+      add(disposable, child);
 
       expectTrue(child.isDisposed);
     }),
 
     test("disposes teardown function exactly once when disposed", () => {
       const teardown = mockFn();
-      const disposable = createDisposable(teardown);
-      disposable.add(teardown);
-
+      const disposable = add(createDisposable(teardown), teardown);
       dispose(disposable);
 
       pipe(teardown, expectToHaveBeenCalledTimes(1));

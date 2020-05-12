@@ -1,4 +1,4 @@
-import { dispose } from "../../../../core/lib/disposable.js";
+import { dispose, add } from "../../../../core/lib/disposable.js";
 import { createObservable, createSubject, dispatch, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
@@ -9,8 +9,8 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
     const xhrSupportsResponseType = "responseType" in xhr;
     const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
-    body.add(dispatcher);
-    dispatcher.add(() => xhr.abort()).add(body);
+    add(body, dispatcher);
+    add(dispatcher, () => xhr.abort(), body);
     xhr.onerror = () => {
         const cause = new Error("Network request failed");
         dispose(dispatcher, { cause });

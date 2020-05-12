@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { add, dispose } from "../../disposable";
 import { referenceEquals, Equality, Predicate } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
@@ -18,7 +18,7 @@ class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
     private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       if (isNone(error)) {
         fromValue()(false).subscribe(delegate);
       } else {

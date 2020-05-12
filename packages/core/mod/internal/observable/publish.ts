@@ -5,6 +5,7 @@ import { dispatchTo } from "./dispatcher.ts";
 import { MulticastObservableLike, ObservableLike } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
+import { addDisposableOrTeardown, add } from "../../disposable.ts";
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -22,8 +23,9 @@ export const publish = <T>(
     observable,
     onNotify(dispatchTo(subject)),
     subscribe(scheduler),
-  ).add(subject);
-  subject.add(srcSubscription);
-  srcSubscription.add(subject);
+    addDisposableOrTeardown(subject),
+  );
+  add(subject, srcSubscription);
+  add(srcSubscription, subject);
   return subject;
 };

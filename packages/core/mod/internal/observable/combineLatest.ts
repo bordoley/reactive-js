@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { dispose, add } from "../../disposable.ts";
 import {
   Selector2,
   Selector3,
@@ -41,7 +41,7 @@ class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
     private readonly index: number,
   ) {
     super(ctx.subscriber);
-    this.add(error => {
+    add(this, error => {
       const ctx = this.ctx;
       ctx.completedCount++;
 

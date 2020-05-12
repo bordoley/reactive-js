@@ -5,6 +5,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { add } from "../../disposable";
 
 class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
@@ -12,7 +13,7 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     private readonly onNotify: SideEffect1<T>,
   ) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: T) {

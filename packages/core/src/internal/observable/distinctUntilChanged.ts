@@ -6,6 +6,7 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { add } from "../../disposable";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -19,7 +20,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
     private readonly equals: Equality<T>,
   ) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: T) {

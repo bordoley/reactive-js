@@ -1,4 +1,4 @@
-import { dispose } from "../../../../core/lib/disposable.ts";
+import { dispose, add } from "../../../../core/lib/disposable.ts";
 import {
   createObservable,
   createSubject,
@@ -26,9 +26,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
 
     const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
-    body.add(dispatcher);
+    add(body, dispatcher);
 
-    dispatcher.add(() => xhr.abort()).add(body);
+    add(dispatcher, () => xhr.abort(), body);
 
     xhr.onerror = () => {
       const cause = new Error("Network request failed");

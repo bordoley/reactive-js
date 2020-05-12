@@ -1,4 +1,4 @@
-import { Exception, dispose } from "../../disposable.ts";
+import { Exception, dispose, addDisposableOrTeardown } from "../../disposable.ts";
 import { pipe, Factory } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import {
@@ -31,9 +31,10 @@ export const toValue = (
       hasResult = true;
     }),
     subscribe(scheduler),
-  ).add(e => {
-    error = e;
-  });
+    addDisposableOrTeardown(e => {
+      error = e;
+    }),
+  );
 
   scheduler.run();
 

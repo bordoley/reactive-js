@@ -3,6 +3,8 @@ import {
   SerialDisposableLike,
   disposeOnError,
   dispose,
+  add,
+  addDisposableOrTeardown,
 } from "../../disposable.ts";
 import { pipe, returns } from "../../functions.ts";
 import { concat } from "./concat.ts";
@@ -26,7 +28,8 @@ const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
   subscriber.durationSubscription.inner = pipe(
     subscriber.duration,
     subscribe(subscriber),
-  ).add(disposeOnError(subscriber));
+    addDisposableOrTeardown(disposeOnError(subscriber)),
+  );
 };
 
 class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
@@ -37,7 +40,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
-    this.add(this.durationSubscription).add(delegate);
+    add(this, this.durationSubscription, delegate);
     setupDurationSubscription(this);
   }
 

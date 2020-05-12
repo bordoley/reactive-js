@@ -4,6 +4,7 @@ import {
   disposed,
   AbstractDisposable,
   dispose,
+  add,
 } from "../../disposable";
 import { none, Option, isSome, isNone } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
@@ -165,7 +166,7 @@ class PriorityScheduler extends AbstractSerialDisposable
 
   constructor(readonly host: SchedulerLike) {
     super();
-    this.add(() => {
+    add(this, () => {
       this.queue.clear();
       this.delayed.clear();
     });
@@ -185,7 +186,7 @@ class PriorityScheduler extends AbstractSerialDisposable
       delay?: number;
     },
   ) {
-    this.add(continuation);
+    add(this, continuation);
     delay = Math.max(0, delay);
 
     if (!continuation.isDisposed) {
@@ -251,8 +252,8 @@ class PausableSchedulerImpl extends AbstractDisposable
   constructor(private readonly priorityScheduler: PriorityScheduler) {
     super();
 
-    this.add(priorityScheduler);
-    priorityScheduler.add(this);
+    add(this, priorityScheduler);
+    add(priorityScheduler, this);
   }
 
   get inContinuation() {
@@ -281,7 +282,10 @@ class PausableSchedulerImpl extends AbstractDisposable
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    scheduleWithPriority(this.priorityScheduler, continuation, { priority: 0, delay });
+    scheduleWithPriority(this.priorityScheduler, continuation, {
+      priority: 0,
+      delay,
+    });
   }
 
   shouldYield(): boolean {

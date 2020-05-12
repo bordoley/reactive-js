@@ -1,4 +1,8 @@
-import { AbstractDisposable } from "../../disposable";
+import {
+  add,
+  AbstractDisposable,
+  addDisposableOrTeardown,
+} from "../../disposable";
 import { pipe } from "../../functions";
 import {
   StreamLike,
@@ -32,11 +36,14 @@ class StreamImpl<TReq, T> extends AbstractDisposable
     super();
 
     const subject = createSubject<TReq>();
-    const observable = pipe(subject, op, publish(scheduler, replayCount)).add(
-      this,
+    const observable = pipe(
+      subject,
+      op,
+      publish(scheduler, replayCount),
+      addDisposableOrTeardown(this),
     );
 
-    this.add(subject);
+    add(this, subject);
 
     this.dispatcher = subject;
     this.observable = observable;

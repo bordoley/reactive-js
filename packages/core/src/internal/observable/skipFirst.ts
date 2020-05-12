@@ -5,13 +5,14 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { add } from "../../disposable";
 
 class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;
 
   constructor(delegate: SubscriberLike<T>, private readonly skipCount: number) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: T) {

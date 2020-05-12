@@ -1,6 +1,10 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
+import {
+  DisposableValueLike,
+  addDisposableOrTeardown,
+  add,
+} from "@reactive-js/core/lib/disposable";
 import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
 import {
   bind,
@@ -111,8 +115,13 @@ export const createHttpRequestListener = (
     const request = createDisposableNodeStream(req as IncomingMessage);
     const response = createDisposableNodeStream(resp as ServerResponse);
 
-    response.add(
-      pipe(handleRequest(request, response), subscribe(scheduler)).add(request),
+    add(
+      response,
+      pipe(
+        handleRequest(request, response),
+        subscribe(scheduler),
+        addDisposableOrTeardown(request),
+      ),
     );
   };
 };

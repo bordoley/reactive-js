@@ -8,6 +8,13 @@ export const disposeOnError = (disposable) => (error) => {
         dispose(disposable, error);
     }
 };
+export function add(disposable, ...disposables) {
+    for (const d of disposables) {
+        disposable.add(d);
+    }
+    return disposable;
+}
+export const addDisposableOrTeardown = (d) => disposable => add(disposable, d);
 export const toErrorHandler = (disposable) => (cause) => dispose(disposable, { cause });
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
@@ -41,7 +48,7 @@ export class AbstractDisposable {
         else if (!disposables.has(disposable)) {
             disposables.add(disposable);
             if (!(disposable instanceof Function)) {
-                disposable.add(() => {
+                add(disposable, () => {
                     disposables.delete(disposable);
                 });
             }
@@ -64,10 +71,7 @@ class DisposableImpl extends AbstractDisposable {
 }
 export const createDisposable = (onDispose) => {
     const disposable = new DisposableImpl();
-    if (isSome(onDispose)) {
-        disposable.add(onDispose);
-    }
-    return disposable;
+    return isSome(onDispose) ? add(disposable, onDispose) : disposable;
 };
 const _disposed = {
     add(disposable) {
@@ -91,7 +95,7 @@ export class AbstractSerialDisposable extends AbstractDisposable {
         const oldInner = this._inner;
         this._inner = newInner;
         if (oldInner !== newInner) {
-            this.add(newInner);
+            add(this, newInner);
             dispose(oldInner);
         }
     }
@@ -105,4 +109,4 @@ class DisposableValueImpl extends AbstractDisposable {
         this.value = value;
     }
 }
-export const createDisposableValue = (value, cleanup) => new DisposableValueImpl(value).add(bind(cleanup, value));
+export const createDisposableValue = (value, cleanup) => add(new DisposableValueImpl(value), bind(cleanup, value));

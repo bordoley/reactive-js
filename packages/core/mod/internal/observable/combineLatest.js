@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { createScheduledObservable } from "./observable.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
@@ -8,7 +8,7 @@ class CombineLatestSubscriber extends AbstractDelegatingSubscriber {
         this.ctx = ctx;
         this.index = index;
         this.ready = false;
-        this.add(error => {
+        add(this, error => {
             const ctx = this.ctx;
             ctx.completedCount++;
             if (isSome(error) || ctx.completedCount === ctx.totalCount) {

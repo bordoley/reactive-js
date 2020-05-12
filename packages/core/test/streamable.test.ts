@@ -30,7 +30,7 @@ import {
   expectFalse,
 } from "../src/internal/testing";
 import { none } from "../src/option";
-import { dispose } from "../src/disposable";
+import { dispose, addDisposableOrTeardown } from "../src/disposable";
 
 export const tests = describe(
   "streamable",
@@ -100,9 +100,10 @@ export const tests = describe(
           result.push(x);
         }),
         subscribe(scheduler),
-      ).add(_ => {
-        disposedTime = scheduler.now;
-      });
+        addDisposableOrTeardown(_ => {
+          disposedTime = scheduler.now;
+        }),
+      );
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));

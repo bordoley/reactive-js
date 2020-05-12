@@ -11,14 +11,14 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     }
 }
 export const schedule = (scheduler, schedulerContinuation, options = { delay: 0 }) => {
-    const continuation = (schedulerContinuation instanceof Function)
+    const continuation = schedulerContinuation instanceof Function
         ? new CallbackSchedulerContinuation(schedulerContinuation)
         : schedulerContinuation;
     scheduler.schedule(continuation, options);
     return continuation;
 };
 export const scheduleWithPriority = (scheduler, schedulerContinuation, options) => {
-    const continuation = (schedulerContinuation instanceof Function)
+    const continuation = schedulerContinuation instanceof Function
         ? new CallbackSchedulerContinuation(schedulerContinuation)
         : schedulerContinuation;
     scheduler.schedule(continuation, options);

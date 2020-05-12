@@ -3,6 +3,7 @@ import { onNotify, empty as emptyObs, map, using, dispatchTo, } from "../../obse
 import { isNone } from "../../option.js";
 import { subscribe } from "../observable/subscribe.js";
 import { createStream } from "./createStream.js";
+import { addDisposableOrTeardown, add } from "../../disposable.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;
@@ -24,8 +25,8 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const op = requests => using(scheduler => {
         const srcStream = stream(src, scheduler);
-        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler)).add(srcStream);
-        return srcStream.add(requestSubscription);
+        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), addDisposableOrTeardown(srcStream));
+        return add(srcStream, requestSubscription);
     }, compose(...obsOps));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };

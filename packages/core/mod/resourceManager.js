@@ -1,4 +1,4 @@
-import { AbstractDisposable, disposed, dispose, } from "./disposable.js";
+import { AbstractDisposable, disposed, dispose, add, addDisposableOrTeardown, } from "./disposable.js";
 import { first, forEach, fromIterable } from "./enumerable.js";
 import { pipe } from "./functions.js";
 import { createKeyedQueue } from "./internal/keyedQueue.js";
@@ -46,9 +46,7 @@ const tryDispatch = (resourceManager, key) => {
     const timeoutSubscription = (_a = availableResourcesTimeouts.get(resource)) !== null && _a !== void 0 ? _a : disposed;
     availableResourcesTimeouts.delete(resource);
     dispose(timeoutSubscription);
-    const subscriber = resourceRequests.pop(key);
-    inUseResources.add(key, subscriber);
-    subscriber.add(() => {
+    const subscriber = add(resourceRequests.pop(key), () => {
         inUseResources.remove(key, subscriber);
         availableResources.push(key, resource);
         const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
@@ -60,12 +58,13 @@ const tryDispatch = (resourceManager, key) => {
                     tryDispatch(resourceManager, resourceKey);
                 }
             }
-        }), subscribe(scheduler)).add(() => {
+        }), subscribe(scheduler), addDisposableOrTeardown(() => {
             availableResourcesTimeouts.delete(resource);
-        });
+        }));
         availableResourcesTimeouts.set(resource, timeoutSubscription);
         tryDispatch(resourceManager, key);
     });
+    inUseResources.add(key, subscriber);
     dispatch(subscriber, resource);
 };
 class ResourceManagerImpl extends AbstractDisposable {
@@ -81,7 +80,7 @@ class ResourceManagerImpl extends AbstractDisposable {
         this.inUseResources = createSetMultimap();
         this.resourceRequests = createKeyedQueue();
         this.globalResourceWaitQueue = createUniqueQueue();
-        this.add(e => {
+        add(this, e => {
             const forEachDispose = forEach((s) => dispose(s, e));
             pipe(this.resourceRequests.values, forEachDispose);
             this.resourceRequests.clear();

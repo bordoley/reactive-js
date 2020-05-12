@@ -8,6 +8,7 @@ import {
   createStreamable,
   stream as streamStreamable,
 } from "./streamable.ts";
+import { addDisposableOrTeardown, add } from "./disposable.ts";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
@@ -54,8 +55,9 @@ export const toStateStore = <T>(): StreamableOperator<
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
         onNotify(dispatchTo(stream)),
         subscribe(scheduler),
-      ).add(stream);
+        addDisposableOrTeardown(stream),
+      );
 
-      return stream.add(updatesSubscription);
+      return add(stream, updatesSubscription);
     }, identity),
   );

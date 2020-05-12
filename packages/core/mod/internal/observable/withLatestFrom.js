@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -15,12 +15,12 @@ class WithLatestFromSubscriber extends AbstractDelegatingSubscriber {
             this.otherLatest = next;
         };
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this)).add(e => {
+        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this), addDisposableOrTeardown(e => {
             if (isSome(e) || !this.hasLatest) {
                 dispose(this, e);
             }
-        });
-        this.add(otherSubscription).add(delegate);
+        }));
+        add(this, otherSubscription, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);
