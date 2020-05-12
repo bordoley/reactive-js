@@ -5,13 +5,12 @@ import {
 } from "../../../../../core/mod/lib/flowable.ts";
 import {
   Operator,
-  Selector2,
   SideEffect2,
 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
-  encodeHttpMessageWithCharset,
+  encodeHttpMessageWithUtf8,
   toFlowableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage.ts";
@@ -248,21 +247,11 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const encodeHttpResponseWithCharset = (
-  encode: Selector2<string, string, Uint8Array>,
-) => (
-  contentType: string | MediaType,
-): Operator<HttpResponse<string>, HttpResponse<Uint8Array>> => {
-  const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
-  return resp => messageEncoder(resp) as HttpResponse<Uint8Array>;
-};
+export const encodeHttpResponseWithUtf8: Operator<HttpResponse<string>, HttpResponse<Uint8Array>> =
+  encodeHttpMessageWithUtf8 as unknown as Operator<HttpResponse<string>, HttpResponse<Uint8Array>>;
 
-export const decodeHttpResponseWithCharset = (
-  decode: Selector2<Uint8Array, string, string>,
-): Operator<HttpResponse<Uint8Array>, HttpResponse<string>> => {
-  const messageEncoder = decodeHttpMessageWithCharset(decode);
-  return resp => messageEncoder(resp) as HttpResponse<string>;
-};
+export const decodeHttpResponseWithCharset: Operator<HttpResponse<Uint8Array>, HttpResponse<string>> = 
+  decodeHttpMessageWithCharset as unknown as Operator<HttpResponse<Uint8Array>, HttpResponse<string>>
 
 export const toFlowableHttpResponse = <TBody>(
   resp: HttpResponse<TBody>,

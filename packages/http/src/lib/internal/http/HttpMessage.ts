@@ -1,16 +1,11 @@
 import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
-import {
-  Operator,
-  Selector2,
-  SideEffect2,
-} from "@reactive-js/core/lib/functions";
-import { isSome } from "@reactive-js/core/lib/option";
+import { SideEffect2 } from "@reactive-js/core/lib/functions";
+import { isSome, isNone } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";
 import { writeHttpHeaders } from "./httpHeaders";
 import { writeHttpPreferenceHeaders } from "./httpPreferences";
-import { HttpMessage, MediaType } from "./interfaces";
-import { parseMediaTypeOrThrow } from "./mediaType";
+import { HttpMessage } from "./interfaces";
 
 export const writeHttpMessageHeaders = <T>(
   { cacheControl, contentInfo, headers, preferences }: HttpMessage<T>,
@@ -29,48 +24,52 @@ export const writeHttpMessageHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
-export const encodeHttpMessageWithCharset = (
-  encode: Selector2<string, string, Uint8Array>,
-  contentType: string | MediaType,
-): Operator<HttpMessage<string>, HttpMessage<Uint8Array>> => {
-  const parsedContentType =
-    typeof contentType === "string"
-      ? parseMediaTypeOrThrow(contentType)
-      : contentType;
+export const encodeHttpMessageWithUtf8 = (
+  { contentInfo, ...msg }: HttpMessage<string>,
+): HttpMessage<Uint8Array> => {
+  if (isNone(contentInfo)) {
+    throw new Error("HttpMessage has not contentInfo");
+  }
 
-  const charset = parsedContentType.params["charset"] ?? "utf-8";
+  const { contentType } = contentInfo;
+  const textEncoder = new TextEncoder();
 
-  return msg => {
-    const body = encode(msg.body, charset);
+  return {
+    ...msg,
+    body: textEncoder.encode(msg.body),
+    contentInfo: {
+      ...contentInfo,
+      contentType: {
+        ...contentType,
+        params: {
+          ...contentType.params,
+          charset: "utf-8",
+        },
+      },
+    },
+  };
+};
+
+export const decodeHttpMessageWithCharset = ({
+  contentInfo,
+  ...msg
+}: HttpMessage<Uint8Array>): HttpMessage<string>  => {
+  if (isNone(contentInfo)) {
+    return {
+      ...msg,
+      body: "",
+    }
+  } else {
+    const { charset = "utf-8" } =contentInfo.contentType.params;
+    const textDecoder = new TextDecoder(charset);
+    const body = textDecoder.decode(msg.body);   
 
     return {
       ...msg,
       body,
-      contentInfo: {
-        contentType: parsedContentType,
-        contentLength: body.length,
-        contentEncodings: [],
-      },
     };
-  };
-};
-
-export const decodeHttpMessageWithCharset = (
-  decode: Selector2<Uint8Array, string, string>,
-): Operator<HttpMessage<Uint8Array>, HttpMessage<string>> => ({
-  contentInfo,
-  ...msg
-}) => {
-  const params = contentInfo?.contentType?.params ?? {};
-  const charset = params["charset"] ?? "utf-8";
-
-  const body = decode(msg.body, charset);
-
-  return {
-    ...msg,
-    body,
-  };
-};
+  }
+}
 
 export const toFlowableHttpMessage = <TBody>({
   body,

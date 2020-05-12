@@ -56,8 +56,8 @@ import {
   HttpRequest,
   HttpServer,
   createRoutingHttpServer,
-  encodeHttpResponseWithCharset,
-  encodeHttpRequestWithCharset,
+  encodeHttpResponseWithUtf8,
+  encodeHttpRequestWithUtf8,
   HttpRoutedRequest,
   HttpClientRequestStatusType,
   withDefaultBehaviors,
@@ -72,7 +72,6 @@ import {
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
-import iconv from "iconv-lite";
 import db from "mime-db";
 import mime from "mime-types";
 
@@ -82,9 +81,6 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
-const encodeHttpRequestWithIConv = encodeHttpRequestWithCharset(iconv.encode);
-const encodeHttpResponseWithIConv = encodeHttpResponseWithCharset(iconv.encode);
-
 const routerHandlerPrintParams: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
@@ -92,9 +88,12 @@ const routerHandlerPrintParams: HttpServer<
   pipe(
     createHttpResponse({
       statusCode: HttpStatusCode.OK,
+      contentInfo: {
+        contentType: "application/json"
+      },
       body: JSON.stringify(req.params),
     }),
-    encodeHttpResponseWithIConv("application/json"),
+    encodeHttpResponseWithUtf8,
     toFlowableHttpResponse,
     fromValue(),
   );
@@ -147,9 +146,12 @@ const routerHandlerFiles: HttpServer<
         : pipe(
             createHttpResponse({
               statusCode: HttpStatusCode.NotFound,
+              contentInfo: {
+                contentType: "text/plain",
+              },
               body: JSON.stringify(req.params),
             }),
-            encodeHttpResponseWithIConv("text/plain"),
+            encodeHttpResponseWithUtf8,
             toFlowableHttpResponse,
           ),
     ),
@@ -168,9 +170,12 @@ const notFound: Operator<
   pipe(
     createHttpResponse({
       statusCode: HttpStatusCode.NotFound,
+      contentInfo: {
+        contentType: "text/plain",
+      },
       body: req.uri.toString(),
     }),
-    encodeHttpResponseWithIConv("text/plain"),
+    encodeHttpResponseWithUtf8,
     toFlowableHttpResponse,
     fromValue(),
   );
@@ -220,9 +225,12 @@ const listener = createHttpRequestListener(
         return pipe(
           createHttpResponse({
             statusCode,
+            contentInfo: {
+              contentType: "text/plain",
+            },
             body,
           }),
-          encodeHttpResponseWithIConv("text/plain"),
+          encodeHttpResponseWithUtf8,
           toFlowableHttpResponse,
           fromValue(),
         );
@@ -263,11 +271,14 @@ pipe(
       "x-forwarded-host": "www.google.com",
       "x-forwarded-proto": "https",
     },
+    contentInfo: {
+      contentType: "text/plain",
+    },
     preferences: {
       acceptedMediaRanges: ["application/json", "text/html"],
     },
   }),
-  encodeHttpRequestWithIConv("text/plain"),
+  encodeHttpRequestWithUtf8,
   toFlowableHttpRequest,
   httpClient,
   onNotify(status => {

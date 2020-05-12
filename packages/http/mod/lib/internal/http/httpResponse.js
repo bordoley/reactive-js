@@ -1,6 +1,6 @@
 import { empty, } from "../../../../../core/mod/lib/flowable.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { writeHttpMessageHeaders, encodeHttpMessageWithCharset, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
+import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
@@ -99,14 +99,8 @@ export const checkIfNotModified = ({ cacheControl, method, preconditions, }) => 
         }
         : response;
 };
-export const encodeHttpResponseWithCharset = (encode) => (contentType) => {
-    const messageEncoder = encodeHttpMessageWithCharset(encode, contentType);
-    return resp => messageEncoder(resp);
-};
-export const decodeHttpResponseWithCharset = (decode) => {
-    const messageEncoder = decodeHttpMessageWithCharset(decode);
-    return resp => messageEncoder(resp);
-};
+export const encodeHttpResponseWithUtf8 = encodeHttpMessageWithUtf8;
+export const decodeHttpResponseWithCharset = decodeHttpMessageWithCharset;
 export const toFlowableHttpResponse = (resp) => toFlowableHttpMessage(resp);
 export const decodeHttpResponseContent = (decoderProvider) => resp => {
     const { body, contentInfo, ...rest } = resp;

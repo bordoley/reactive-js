@@ -6,7 +6,6 @@
     "@reactive-js/core": "^0.0.37",
     "@reactive-js/http": "^0.0.37",
     "@reactive-js/web": "^0.0.37",
-    "iconv-lite": "^0.5.1",
     "mime-db": "^1.43.0",
     "mime-types": "^2.1.26",
     "react": "^16.11.0",
