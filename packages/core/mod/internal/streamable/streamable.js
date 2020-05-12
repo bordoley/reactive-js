@@ -23,9 +23,9 @@ class LiftedStreamable extends StreamableImpl {
 const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const op = requests => using(scheduler => {
-        const stream = src.stream(scheduler);
-        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(stream)), subscribe(scheduler)).add(stream);
-        return stream.add(requestSubscription);
+        const srcStream = stream(src, scheduler);
+        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler)).add(srcStream);
+        return srcStream.add(requestSubscription);
     }, compose(...obsOps));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
@@ -41,3 +41,4 @@ export const mapReq = (op) => streamable => {
 };
 const _empty = createStreamable(_ => emptyObs());
 export const empty = (options) => isNone(options) ? _empty : createStreamable(_ => emptyObs(options));
+export const stream = (streamable, scheduler, replayCount) => streamable.stream(scheduler, replayCount);

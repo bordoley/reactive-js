@@ -44,6 +44,7 @@ import {
   HttpClient,
   HttpClientRequestStatusType,
 } from "../../http";
+import { stream } from "@reactive-js/core/lib/streamable";
 
 export type HttpClientOptions = {
   // Node options
@@ -78,13 +79,14 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const stream = createReadableFlowable(bind(
-      createDisposableNodeStream, this.resp),
-    )
-      .stream(scheduler, replayCount)
+    const responseStream = 
+     stream(
+      createReadableFlowable(bind(
+        createDisposableNodeStream, this.resp),
+      ), scheduler, replayCount)
       .add(this);
-    this.add(stream);
-    return stream;
+    this.add(responseStream);
+    return responseStream;
   }
 }
 
@@ -121,11 +123,14 @@ export const createHttpClient = (
               throw new Error();
             })();
 
-      const requestSink = createWritableFlowableSink(bind(
-        createDisposableNodeStream, req),
-      ).stream(scheduler);
+      const requestSink = stream(
+        createWritableFlowableSink(bind(
+          createDisposableNodeStream, req),
+        ),
+        scheduler
+        );
 
-      const requestBody = request.body.stream(scheduler).add(requestSink);
+      const requestBody = stream(request.body, scheduler).add(requestSink);
 
       const onContinue = () => {
         const reqSubscription = pipe(

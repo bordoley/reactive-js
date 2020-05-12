@@ -11,6 +11,7 @@ import { ignoreElements } from "../observable/ignoreElements";
 import { StreamLike } from "../observable/interfaces";
 import { subscribe } from "../observable/subscribe";
 import { StreamableLike } from "./interfaces";
+import { stream } from "./streamable";
 
 const ignoreAndNotifyVoid: Operator<
   StreamLike<any, any>,
@@ -22,8 +23,8 @@ export const sink = <TReq, T>(
   dest: StreamableLike<T, TReq>,
 ): ObservableLike<void> =>
   using(scheduler => {
-    const srcStream = src.stream(scheduler);
-    const destStream = dest.stream(scheduler);
+    const srcStream = stream(src, scheduler);
+    const destStream = stream(dest, scheduler);
 
     pipe(srcStream, onNotify(dispatchTo(destStream)), subscribe(scheduler)).add(
       destStream,

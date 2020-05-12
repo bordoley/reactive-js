@@ -13,7 +13,7 @@ import {
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { StateStoreLike, StateUpdater } from "@reactive-js/core/lib/stateStore";
-import { StreamableLike, mapReq, map } from "@reactive-js/core/lib/streamable";
+import { StreamableLike, mapReq, map, stream as streamableStream } from "@reactive-js/core/lib/streamable";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { normalPriority } from "./scheduler";
 
@@ -79,7 +79,7 @@ export const useStreamable = <TReq, T>(
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
-    const stream = streamable.stream(scheduler, replay);
+    const stream = streamableStream(streamable, scheduler, replay);
     streamRef.current = stream;
 
     pipe(stream, returns, updateStream);

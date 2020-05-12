@@ -8,6 +8,7 @@ export {
   empty,
   lift,
   mapReq,
+  stream,
 } from "./internal/streamable/streamable";
 export { identity } from "./internal/streamable/identity";
 export { map, mapTo, onNotify, scan } from "./internal/streamable/operators";

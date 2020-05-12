@@ -10,7 +10,7 @@ import {
 } from "../../observable";
 import { isNone } from "../../option";
 import { SchedulerLike } from "../../scheduler";
-import { StreamableLike } from "../../streamable";
+import { StreamableLike } from "./interfaces";
 import { subscribe } from "../observable/subscribe";
 import { createStream, StreamableOperator } from "./createStream";
 
@@ -47,15 +47,15 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
   const op: ObservableOperator<TReqB, TB> = requests =>
     using(scheduler => {
-      const stream = src.stream(scheduler);
+      const srcStream = stream(src, scheduler);
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        onNotify(dispatchTo(stream)),
+        onNotify(dispatchTo(srcStream)),
         subscribe(scheduler),
-      ).add(stream);
+      ).add(srcStream);
 
-      return stream.add(requestSubscription);
+      return srcStream.add(requestSubscription);
     }, (compose as any)(...obsOps));
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
@@ -92,3 +92,11 @@ export const empty = <TReq, T>(options?: {
   delay: number;
 }): StreamableLike<TReq, T> =>
   isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));
+
+export const stream = <TReq, T>(
+  streamable: StreamableLike<TReq, T>,
+  scheduler: SchedulerLike,
+  replayCount?: number,
+): StreamLike<TReq, T> =>
+  streamable.stream(scheduler, replayCount);
+  

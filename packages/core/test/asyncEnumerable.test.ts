@@ -19,6 +19,7 @@ import {
   expectNone,
   expectArrayEquals,
 } from "../src/internal/testing";
+import { stream } from "../src/streamable";
 
 export const tests = describe(
   "async-enumerable",
@@ -72,7 +73,10 @@ export const tests = describe(
 
   test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = fromArray([1, 2, 3, 4, 5, 6]).stream(scheduler);
+    const enumerator = stream(
+      fromArray([1, 2, 3, 4, 5, 6]),
+      scheduler
+    );
 
     const result: number[] = [];
     pipe(
@@ -92,7 +96,10 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = fromIterable([1, 2, 3, 4, 5, 6]).stream(scheduler);
+    const enumerator = stream(
+      fromIterable([1, 2, 3, 4, 5, 6]),
+      scheduler
+    );
 
     const result: number[] = [];
     let error: Option<Exception> = none;
@@ -119,7 +126,8 @@ export const tests = describe(
 
   test("generate", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = generate(increment, returns<number>(0)).stream(
+    const enumerator = stream(
+      generate(increment, returns<number>(0)),
       scheduler,
     );
 

@@ -13,7 +13,7 @@ import {
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler";
-import { createStreamable, StreamableLike } from "./streamable";
+import { createStreamable, StreamableLike, stream as streamStreamable } from "./streamable";
 
 class ReactiveCacheSchedulerContinuation<
   T
@@ -119,9 +119,10 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const stream = switchAllAsyncEnumerable()
-        .stream(this.dispatchScheduler)
-        .add(() => {
+      const stream = streamStreamable(
+          switchAllAsyncEnumerable(),
+          this.dispatchScheduler,
+        ).add(() => {
           this.cache.delete(key);
           this.garbage.delete(key);
         });

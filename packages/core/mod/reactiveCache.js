@@ -3,7 +3,7 @@ import { pipe } from "./functions.js";
 import { switchAll, onSubscribe, dispatch, } from "./observable.js";
 import { isNone, isSome } from "./option.js";
 import { AbstractSchedulerContinuation, schedule, } from "./scheduler.js";
-import { createStreamable } from "./streamable.js";
+import { createStreamable, stream as streamStreamable } from "./streamable.js";
 class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(cache) {
         super();
@@ -68,9 +68,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
     set(key, value) {
         let cachedValue = this.cache.get(key);
         if (isNone(cachedValue)) {
-            const stream = switchAllAsyncEnumerable()
-                .stream(this.dispatchScheduler)
-                .add(() => {
+            const stream = streamStreamable(switchAllAsyncEnumerable(), this.dispatchScheduler).add(() => {
                 this.cache.delete(key);
                 this.garbage.delete(key);
             });

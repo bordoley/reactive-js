@@ -37,6 +37,7 @@ import {
   createStreamable,
   map as mapStream,
   lift,
+  stream,
 } from "./streamable.ts";
 
 export const enum FlowMode {
@@ -240,7 +241,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
             eventsSubscription.add(dispatcher);
           }),
       );
-    return createStreamable(op).stream(scheduler, replayCount);
+    return stream(createStreamable(op), scheduler, replayCount);
   }
 }
 

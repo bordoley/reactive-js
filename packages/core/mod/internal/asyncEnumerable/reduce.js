@@ -1,6 +1,7 @@
 import { compose, pipe } from "../../functions.js";
 import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, dispatch, } from "../../observable.js";
 import { none } from "../../option.js";
+import { stream } from "../../streamable.js";
 export const continue_ = (acc) => ({
     type: 1,
     acc,
@@ -10,7 +11,7 @@ export const done = (acc) => ({
     acc,
 });
 const reduceImpl = (reducer, initial) => enumerable => using(scheduler => {
-    const enumerator = enumerable.stream(scheduler);
+    const enumerator = stream(enumerable, scheduler);
     const accFeedback = createSubject();
     return [accFeedback, enumerator];
 }, (accFeedback, enumerator) => pipe(enumerator, reducer(accFeedback), onNotify(ev => {
