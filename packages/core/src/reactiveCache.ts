@@ -3,6 +3,7 @@ import {
   Exception,
   AbstractDisposable,
   dispose,
+  add,
 } from "./disposable";
 import { pipe } from "./functions";
 import {
@@ -69,10 +70,12 @@ const markAsGarbage = <T>(
     reactiveCache.cache.size > reactiveCache.maxCount &&
     !reactiveCache.cleaning
   ) {
-    const continuation = new ReactiveCacheSchedulerContinuation(reactiveCache);
-    continuation.add(() => {
-      reactiveCache.cleaning = false;
-    });
+    const continuation = add(
+      new ReactiveCacheSchedulerContinuation(reactiveCache),
+      () => {
+        reactiveCache.cleaning = false;
+      },
+    );
     reactiveCache.cleaning = true;
     schedule(reactiveCache.cleanupScheduler, continuation);
   }
@@ -105,7 +108,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
   ) {
     super();
 
-    this.add(() => {
+    add(this, () => {
       for (const value of this.cache.values()) {
         const [stream] = value;
         dispose(stream);
@@ -128,24 +131,22 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const stream = streamStreamable(
-        switchAllAsyncEnumerable(),
-        this.dispatchScheduler,
-      ).add(() => {
-        this.cache.delete(key);
-        this.garbage.delete(key);
-      });
+      const stream = add(
+        streamStreamable(switchAllAsyncEnumerable(), this.dispatchScheduler),
+        () => {
+          this.cache.delete(key);
+          this.garbage.delete(key);
+        },
+      );
 
       const onDisposeCleanup = (_?: Exception) =>
-        this.add(
-          schedule(
-            this.cleanupScheduler,
-            (() => {
-              if (stream.subscriberCount === 0) {
-                markAsGarbage(this, key, stream);
-              }
-            }),
-          ),
+        add(
+          this,
+          schedule(this.cleanupScheduler, () => {
+            if (stream.subscriberCount === 0) {
+              markAsGarbage(this, key, stream);
+            }
+          }),
         );
 
       const onSubscribeUnmark = () => {

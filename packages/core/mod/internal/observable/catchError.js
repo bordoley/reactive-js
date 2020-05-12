@@ -1,11 +1,11 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
 class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, onError) {
         super(delegate);
-        this.add(error => {
+        add(this, error => {
             if (isSome(error)) {
                 try {
                     const { cause } = error;

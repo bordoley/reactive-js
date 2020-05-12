@@ -1,4 +1,4 @@
-import { disposed, disposeOnError, dispose } from "../../disposable.js";
+import { disposed, disposeOnError, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
@@ -21,7 +21,7 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
             this.buffer = [];
             this.delegate.notify(buffer);
         };
-        this.add(this.durationSubscription).add(error => {
+        add(this, this.durationSubscription, error => {
             const buffer = this.buffer;
             this.buffer = [];
             if (isNone(error) && buffer.length > 0) {
@@ -40,7 +40,7 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
             this.onNotify();
         }
         else if (this.durationSubscription.isDisposed) {
-            this.durationSubscription = pipe(this.durationSelector(next), onNotify(this.onNotify), subscribe(this.delegate)).add(disposeOnError(this));
+            this.durationSubscription = pipe(this.durationSelector(next), onNotify(this.onNotify), subscribe(this.delegate), addDisposableOrTeardown(disposeOnError(this)));
         }
     }
 }

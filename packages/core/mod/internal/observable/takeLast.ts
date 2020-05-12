@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { add, dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { empty } from "./empty.ts";
@@ -17,11 +17,11 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     super(delegate);
     const last = this.last;
 
-    delegate.add(() => {
+    add(delegate, () => {
       last.length = 0;
     });
 
-    this.add(error => {
+    add(this, error => {
       if (isSome(error)) {
         dispose(delegate, error);
       } else {

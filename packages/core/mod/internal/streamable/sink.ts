@@ -12,6 +12,7 @@ import { StreamLike } from "../observable/interfaces.ts";
 import { subscribe } from "../observable/subscribe.ts";
 import { StreamableLike } from "./interfaces.ts";
 import { stream } from "./streamable.ts";
+import { addDisposableOrTeardown } from "../../disposable.ts";
 
 const ignoreAndNotifyVoid: Operator<
   StreamLike<any, any>,
@@ -26,12 +27,18 @@ export const sink = <TReq, T>(
     const srcStream = stream(src, scheduler);
     const destStream = stream(dest, scheduler);
 
-    pipe(srcStream, onNotify(dispatchTo(destStream)), subscribe(scheduler)).add(
-      destStream,
+    pipe(
+      srcStream,
+      onNotify(dispatchTo(destStream)),
+      subscribe(scheduler),
+      addDisposableOrTeardown(destStream),
     );
 
-    pipe(destStream, onNotify(dispatchTo(srcStream)), subscribe(scheduler)).add(
-      srcStream,
+    pipe(
+      destStream,
+      onNotify(dispatchTo(srcStream)),
+      subscribe(scheduler),
+      addDisposableOrTeardown(srcStream),
     );
 
     return destStream;

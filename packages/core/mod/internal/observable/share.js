@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { publish } from "./publish.js";
@@ -24,7 +24,7 @@ class SharedObservable {
         this.subscriberCount++;
         const multicast = this.multicast;
         multicast.subscribe(subscriber);
-        subscriber.add(this.teardown);
+        add(subscriber, this.teardown);
     }
 }
 export const share = (scheduler, replayCount = 0) => observable => new SharedObservable(observable, scheduler, replayCount);

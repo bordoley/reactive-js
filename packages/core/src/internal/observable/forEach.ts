@@ -1,4 +1,4 @@
-import { Exception, dispose } from "../../disposable";
+import { Exception, dispose, addDisposableOrTeardown } from "../../disposable";
 import { Operator, pipe, Factory, SideEffect1 } from "../../functions";
 import { none, Option } from "../../option";
 import {
@@ -30,9 +30,10 @@ export const forEach = <T>(
     observable,
     onNotify(callback),
     subscribe(scheduler),
-  ).add(e => {
-    error = e;
-  });
+    addDisposableOrTeardown(e => {
+      error = e;
+    }),
+  );
 
   scheduler.run();
 

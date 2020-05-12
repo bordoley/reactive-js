@@ -1,4 +1,10 @@
-import { createSerialDisposable, Exception, dispose } from "../../disposable.ts";
+import {
+  createSerialDisposable,
+  Exception,
+  dispose,
+  add,
+  addDisposableOrTeardown,
+} from "../../disposable.ts";
 import { pipe, Predicate } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import {
@@ -36,7 +42,8 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
         this.observable,
         onNotify(this.onNotify),
         subscribe(delegate),
-      ).add(this.onDispose);
+        addDisposableOrTeardown(this.onDispose),
+      );
     }
   };
 
@@ -51,8 +58,8 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     ) => boolean,
   ) {
     super(delegate);
-    delegate.add(this.innerSubscription);
-    this.add(this.onDispose);
+    add(delegate, this.innerSubscription);
+    add(this, this.onDispose);
   }
 
   notify(next: T) {

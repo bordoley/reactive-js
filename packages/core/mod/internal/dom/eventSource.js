@@ -1,4 +1,5 @@
 import { createObservable, dispatch } from "../../observable.js";
+import { add } from "../../disposable.js";
 const reservedEvents = ["error", "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
@@ -14,7 +15,7 @@ export const createEventSource = (url, options = {}) => {
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
             });
         };
-        dispatcher.add(_ => {
+        add(dispatcher, _ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
             }

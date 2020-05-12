@@ -26,6 +26,8 @@
 
 ### Functions
 
+* [add](_disposable_.md#add)
+* [addDisposableOrTeardown](_disposable_.md#const-adddisposableorteardown)
 * [createDisposable](_disposable_.md#const-createdisposable)
 * [createDisposableValue](_disposable_.md#const-createdisposablevalue)
 * [createSerialDisposable](_disposable_.md#const-createserialdisposable)
@@ -61,6 +63,44 @@ as a function which throws undefined or string.
 A disposed DisposableLike instance.
 
 ## Functions
+
+###  add
+
+▸ **add**<**T**>(`disposable`: T, `firstChild`: [DisposableOrTeardown](_disposable_.md#disposableorteardown), ...`others`: [DisposableOrTeardown](_disposable_.md#disposableorteardown)[]): *T*
+
+**Type parameters:**
+
+▪ **T**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | T |
+`firstChild` | [DisposableOrTeardown](_disposable_.md#disposableorteardown) |
+`...others` | [DisposableOrTeardown](_disposable_.md#disposableorteardown)[] |
+
+**Returns:** *T*
+
+___
+
+### `Const` addDisposableOrTeardown
+
+▸ **addDisposableOrTeardown**<**T**>(`d`: [DisposableOrTeardown](_disposable_.md#disposableorteardown)): *[Operator](_functions_.md#operator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`d` | [DisposableOrTeardown](_disposable_.md#disposableorteardown) |
+
+**Returns:** *[Operator](_functions_.md#operator)‹T, T›*
+
+___
 
 ### `Const` createDisposable
 

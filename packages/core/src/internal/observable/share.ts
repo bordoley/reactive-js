@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { dispose, add } from "../../disposable";
 import { pipe } from "../../functions";
 import { none, Option } from "../../option";
 import { SchedulerLike } from "../../scheduler";
@@ -40,7 +40,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     const multicast = this.multicast as SubjectLike<T>;
 
     multicast.subscribe(subscriber);
-    subscriber.add(this.teardown);
+    add(subscriber, this.teardown);
   }
 }
 

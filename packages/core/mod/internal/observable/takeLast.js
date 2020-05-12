@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { empty } from "./empty.js";
@@ -11,10 +11,10 @@ class TakeLastSubscriber extends AbstractDelegatingSubscriber {
         this.maxCount = maxCount;
         this.last = [];
         const last = this.last;
-        delegate.add(() => {
+        add(delegate, () => {
             last.length = 0;
         });
-        this.add(error => {
+        add(this, error => {
             if (isSome(error)) {
                 dispose(delegate, error);
             }

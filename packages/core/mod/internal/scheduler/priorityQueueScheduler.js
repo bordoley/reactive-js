@@ -1,4 +1,4 @@
-import { AbstractSerialDisposable, disposed, AbstractDisposable, dispose, } from "../../disposable.js";
+import { AbstractSerialDisposable, disposed, AbstractDisposable, dispose, add, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
@@ -103,7 +103,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.isPaused = false;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
-        this.add(() => {
+        add(this, () => {
             this.queue.clear();
             this.delayed.clear();
         });
@@ -112,7 +112,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         return this.host.now;
     }
     schedule(continuation, { priority, delay = 0, }) {
-        this.add(continuation);
+        add(this, continuation);
         delay = Math.max(0, delay);
         if (!continuation.isDisposed) {
             const now = this.now;
@@ -152,8 +152,8 @@ class PausableSchedulerImpl extends AbstractDisposable {
     constructor(priorityScheduler) {
         super();
         this.priorityScheduler = priorityScheduler;
-        this.add(priorityScheduler);
-        priorityScheduler.add(this);
+        add(this, priorityScheduler);
+        add(priorityScheduler, this);
     }
     get inContinuation() {
         return this.priorityScheduler.inContinuation;
@@ -175,7 +175,10 @@ class PausableSchedulerImpl extends AbstractDisposable {
         }
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        scheduleWithPriority(this.priorityScheduler, continuation, { priority: 0, delay });
+        scheduleWithPriority(this.priorityScheduler, continuation, {
+            priority: 0,
+            delay,
+        });
     }
     shouldYield() {
         return this.priorityScheduler.shouldYield();

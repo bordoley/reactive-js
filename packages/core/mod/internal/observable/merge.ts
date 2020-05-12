@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { add, dispose } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -16,7 +16,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     },
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       const ctx = this.ctx;
       ctx.completedCount++;
 

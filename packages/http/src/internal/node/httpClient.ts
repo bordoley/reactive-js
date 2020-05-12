@@ -2,10 +2,12 @@ import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
+  add,
   dispose,
   DisposableLike,
   AbstractDisposable,
   toErrorHandler,
+  addDisposableOrTeardown,
 } from "@reactive-js/core/lib/disposable";
 import {
   FlowEvent,
@@ -62,7 +64,7 @@ class ResponseBody extends AbstractDisposable
   constructor(private readonly resp: IncomingMessage) {
     super();
 
-    this.add(_ => {
+    add(this, _ => {
       resp.removeAllListeners();
       resp.destroy();
     });
@@ -79,12 +81,15 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const responseStream = stream(
-      createReadableFlowable(bind(createDisposableNodeStream, this.resp)),
-      scheduler,
-      replayCount,
-    ).add(this);
-    this.add(responseStream);
+    const responseStream = add(
+      stream(
+        createReadableFlowable(bind(createDisposableNodeStream, this.resp)),
+        scheduler,
+        replayCount,
+      ),
+      this,
+    );
+    add(this, responseStream);
     return responseStream;
   }
 }
@@ -127,7 +132,7 @@ export const createHttpClient = (
         scheduler,
       );
 
-      const requestBody = stream(request.body, scheduler).add(requestSink);
+      const requestBody = add(stream(request.body, scheduler), requestSink);
 
       const onContinue = () => {
         const reqSubscription = pipe(
@@ -139,8 +144,9 @@ export const createHttpClient = (
           requestBody,
           onNotify(dispatchTo(requestSink)),
           subscribe(scheduler),
-        ).add(reqSubscription);
-        requestBody.add(dataSubscription);
+          addDisposableOrTeardown(reqSubscription),
+        );
+        add(requestBody, dataSubscription);
       };
 
       if (request.expectContinue) {
@@ -154,8 +160,8 @@ export const createHttpClient = (
         dispose(requestBody);
 
         const body = new ResponseBody(resp);
-        responseSubject.add(body);
-        body.add(responseSubject);
+        add(responseSubject, body);
+        add(body, responseSubject);
 
         const response = parseHttpResponseFromHeaders(
           resp.statusCode ?? -1,

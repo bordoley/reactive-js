@@ -1,6 +1,6 @@
-import { AbstractDisposable } from "../../disposable.js";
+import { add, AbstractDisposable } from "../../disposable.js";
 import { ignore } from "../../functions.js";
-import { schedule } from "../../scheduler.js";
+import { schedule, } from "../../scheduler.js";
 import { __DEV__ } from "../env.js";
 const assertSubscriberNotifyInContinuationProduction = ignore;
 const assertSubscriberNotifyInContinuationDev = (subscriber) => {
@@ -27,7 +27,7 @@ export class AbstractSubscriber extends AbstractDisposable {
     }
     schedule(continuation, options = { delay: 0 }) {
         continuation.addListener("onRunStatusChanged", this);
-        this.add(continuation);
+        add(this, continuation);
         schedule(this.scheduler, continuation, options);
     }
     shouldYield() {
@@ -38,6 +38,6 @@ export class AbstractDelegatingSubscriber extends AbstractSubscriber {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;
-        delegate.add(this);
+        add(delegate, this);
     }
 }

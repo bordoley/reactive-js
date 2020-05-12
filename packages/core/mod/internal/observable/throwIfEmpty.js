@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
@@ -7,7 +7,7 @@ class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.factory = factory;
         this.isEmpty = true;
-        this.add(error => {
+        add(this, error => {
             if (isNone(error) && this.isEmpty) {
                 const cause = this.factory();
                 error = { cause };

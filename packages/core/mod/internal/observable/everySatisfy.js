@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
@@ -7,7 +7,7 @@ class EverySatisfySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
-        this.add(error => {
+        add(this, error => {
             if (isNone(error)) {
                 fromValue()(true).subscribe(delegate);
             }

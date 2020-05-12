@@ -4,11 +4,12 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
+import { add } from "../../disposable";
 
 class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(_: TA) {

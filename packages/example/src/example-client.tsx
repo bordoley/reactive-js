@@ -13,6 +13,7 @@ import {
   returns,
   increment,
   identity,
+  bind,
 } from "@reactive-js/core/lib/functions";
 import {
   generate,
@@ -45,6 +46,7 @@ import {
 import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
+import { addDisposableOrTeardown } from "@reactive-js/core/lib/disposable";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
@@ -185,7 +187,8 @@ pipe(
   ),
   onNotify(console.log),
   subscribe(normalPriority),
-).add(_ => console.log("dispose"));
+  addDisposableOrTeardown(bind(console.log, "dispose"))
+);
 
 pipe(
   createEventSource("http://localhost:8080/events", {
@@ -193,4 +196,5 @@ pipe(
   }),
   onNotify(console.log),
   subscribe(normalPriority),
-).add(console.log);
+  addDisposableOrTeardown(x => console.log(x)),
+);

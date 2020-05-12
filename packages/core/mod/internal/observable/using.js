@@ -1,3 +1,4 @@
+import { add } from "../../disposable.js";
 class UsingObservable {
     constructor(resourceFactory, observableFactory) {
         this.resourceFactory = resourceFactory;
@@ -8,9 +9,7 @@ class UsingObservable {
         const resources = this.resourceFactory(subscriber);
         const observableFactory = this.observableFactory;
         const resourcesArray = Array.isArray(resources) ? resources : [resources];
-        for (const resource of resourcesArray) {
-            subscriber.add(resource);
-        }
+        add(subscriber, ...resourcesArray);
         observableFactory(...resourcesArray).subscribe(subscriber);
     }
 }

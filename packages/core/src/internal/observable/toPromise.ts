@@ -4,6 +4,7 @@ import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
+import { addDisposableOrTeardown } from "../../disposable";
 
 /**
  * Returns a Promise that completes with the last value produced by
@@ -25,14 +26,15 @@ export const toPromise = <T>(
         result = next;
       }),
       subscribe(scheduler),
-    ).add(err => {
-      if (isSome(err)) {
-        const { cause } = err;
-        reject(cause);
-      } else if (!hasResult) {
-        reject(new Error("Observable completed without producing a value"));
-      } else {
-        resolve(result as T);
-      }
-    });
+      addDisposableOrTeardown(err => {
+        if (isSome(err)) {
+          const { cause } = err;
+          reject(cause);
+        } else if (!hasResult) {
+          reject(new Error("Observable completed without producing a value"));
+        } else {
+          resolve(result as T);
+        }
+      }),
+    );
   });

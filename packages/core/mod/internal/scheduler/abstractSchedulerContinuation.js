@@ -1,4 +1,4 @@
-import { AbstractDisposable, dispose } from "../../disposable.js";
+import { AbstractDisposable, add, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 const notifyListeners = (listeners, state) => {
     for (const listener of listeners) {
@@ -9,7 +9,7 @@ export class AbstractSchedulerContinuation extends AbstractDisposable {
     constructor() {
         super();
         this.listeners = new Set();
-        this.add(() => {
+        add(this, () => {
             this.listeners = new Set();
         });
     }

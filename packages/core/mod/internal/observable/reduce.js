@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
@@ -8,7 +8,7 @@ class ReduceSubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        this.add(error => {
+        add(this, error => {
             if (isNone(error)) {
                 fromValue()(this.acc).subscribe(delegate);
             }

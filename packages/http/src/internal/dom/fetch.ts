@@ -1,4 +1,4 @@
-import { dispose } from "@reactive-js/core/lib/disposable";
+import { dispose, add } from "@reactive-js/core/lib/disposable";
 import { bind, pipe } from "@reactive-js/core/lib/functions";
 import {
   dispatch,
@@ -74,7 +74,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
 
   const fetchResponse = createObservable(async dispatcher => {
     const abortController = new AbortController();
-    dispatcher.add(() => abortController.abort());
+    add(dispatcher, () => abortController.abort());
 
     try {
       const fetchResponse = await fetch(url, {

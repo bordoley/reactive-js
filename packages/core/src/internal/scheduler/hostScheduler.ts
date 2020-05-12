@@ -1,4 +1,9 @@
-import { DisposableLike, createDisposable, dispose } from "../../disposable";
+import {
+  DisposableLike,
+  createDisposable,
+  dispose,
+  add,
+} from "../../disposable";
 import { Factory, SideEffect, Operator, bind } from "../../functions";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
 
@@ -98,7 +103,7 @@ class HostScheduler implements SchedulerLike {
         delay > 0
           ? scheduleDelayed(callback, delay)
           : scheduleImmediate(callback);
-      continuation.add(callbackSubscription);
+      add(continuation, callbackSubscription);
     }
   }
 

@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { DisposableValueLike, dispose } from "../../disposable";
+import { DisposableValueLike, dispose, add } from "../../disposable";
 import {
   FlowEventType,
   FlowMode,
@@ -24,7 +24,7 @@ const createWritableEventsObservable = (
   writable: DisposableValueLike<Writable>,
 ) =>
   createObservable(dispatcher => {
-    writable.add(dispatcher);
+    add(writable, dispatcher);
     const writableValue = writable.value;
 
     const onDrain = bind(dispatch, dispatcher, FlowMode.Resume);
@@ -36,7 +36,7 @@ const createWritableEventsObservable = (
     const onPause = bind(dispatch, dispatcher, FlowMode.Pause);
     writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
-    dispatcher.add(_ => {
+    add(dispatcher, _ => {
       writableValue.removeListener("drain", onDrain);
       writableValue.removeListener("finish", onFinish);
       writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
@@ -69,7 +69,7 @@ const createWritableAndSetupEventSubscription = (
     subscribe(scheduler),
   );
 
-  return writable.add(streamEventsSubscription);
+  return add(writable, streamEventsSubscription);
 };
 
 export const createWritableFlowableSink = (

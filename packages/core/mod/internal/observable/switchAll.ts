@@ -1,4 +1,9 @@
-import { disposed, dispose } from "../../disposable.ts";
+import {
+  add,
+  disposed,
+  dispose,
+  addDisposableOrTeardown,
+} from "../../disposable.ts";
 import { compose, pipe, Operator } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
@@ -27,7 +32,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
 
   constructor(delegate: SubscriberLike<T>) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       if (this.inner.isDisposed || isSome(error)) {
         dispose(this.delegate, error);
       }
@@ -43,12 +48,13 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
       next,
       onNotify(this.onNotify),
       subscribe(this.delegate),
-    ).add(e => {
-      if (isSome(e) || this.isDisposed) {
-        dispose(this.delegate, e);
-      }
-    });
-    this.delegate.add(inner);
+      addDisposableOrTeardown(e => {
+        if (isSome(e) || this.isDisposed) {
+          dispose(this.delegate, e);
+        }
+      }),
+    );
+    add(this.delegate, inner);
     this.inner = inner;
   }
 }

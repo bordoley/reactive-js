@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { dispose, add } from "../../disposable.ts";
 import { Operator } from "../../functions.ts";
 import { createObservable, ObservableLike, dispatch } from "../../observable.ts";
 
@@ -18,7 +18,7 @@ export const fromEvent = <T>(
     };
 
     target.addEventListener(eventName, listener, { passive: true });
-    dispatcher.add(() => {
+    add(dispatcher, () => {
       target.removeEventListener(eventName, listener);
     });
   });

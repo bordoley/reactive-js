@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { dispose, add } from "../../disposable";
 import { Factory, Reducer } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
@@ -16,7 +16,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
     private acc: TAcc,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       if (isNone(error)) {
         fromValue()(this.acc).subscribe(delegate);
       } else {

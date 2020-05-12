@@ -1,12 +1,13 @@
 import { referenceEquals } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { add } from "../../disposable.js";
 class DistinctUntilChangedSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, equals) {
         super(delegate);
         this.equals = equals;
         this.hasValue = false;
-        this.add(delegate);
+        add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

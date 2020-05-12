@@ -1,4 +1,8 @@
-import { dispose, Exception } from "@reactive-js/core/lib/disposable";
+import {
+  dispose,
+  Exception,
+  addDisposableOrTeardown,
+} from "@reactive-js/core/lib/disposable";
 import {
   SideEffect1,
   pipe,
@@ -41,7 +45,8 @@ const subscribeObservable = <T>(
     subscribeOn(scheduler),
     onNotify(compose(returns, updateState)),
     subscribe(normalPriority),
-  ).add(compose(returns, updateError));
+    addDisposableOrTeardown(compose(returns, updateError)),
+  );
 
 /**
  * Returns the current value, if defined, of `observable`.

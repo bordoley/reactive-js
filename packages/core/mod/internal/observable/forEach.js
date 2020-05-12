@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
@@ -7,9 +7,9 @@ import { subscribe } from "./subscribe.js";
 export const forEach = (callback, schedulerFactory = createVirtualTimeScheduler) => observable => {
     const scheduler = schedulerFactory();
     let error = none;
-    const subscription = pipe(observable, onNotify(callback), subscribe(scheduler)).add(e => {
+    const subscription = pipe(observable, onNotify(callback), subscribe(scheduler), addDisposableOrTeardown(e => {
         error = e;
-    });
+    }));
     scheduler.run();
     dispose(subscription);
     dispose(scheduler);

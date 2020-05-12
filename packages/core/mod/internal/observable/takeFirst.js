@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { lift } from "./lift.js";
@@ -8,7 +8,7 @@ class TakeFirstSubscriber extends AbstractDelegatingSubscriber {
         super(delegate);
         this.maxCount = maxCount;
         this.count = 0;
-        this.add(delegate);
+        add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose, addDisposableOrTeardown, } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -11,8 +11,8 @@ const subscribeNext = (subscriber) => {
         const nextObs = subscriber.queue.shift();
         if (isSome(nextObs)) {
             subscriber.activeCount++;
-            const nextObsSubscription = pipe(nextObs, onNotify(subscriber.onNotify), subscribe(subscriber.delegate)).add(subscriber.onDispose);
-            subscriber.delegate.add(nextObsSubscription);
+            const nextObsSubscription = pipe(nextObs, onNotify(subscriber.onNotify), subscribe(subscriber.delegate), addDisposableOrTeardown(subscriber.onDispose));
+            add(subscriber.delegate, nextObsSubscription);
         }
         else if (subscriber.isDisposed) {
             dispose(subscriber.delegate);
@@ -39,12 +39,12 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
         };
         this.queue = [];
         const queue = this.queue;
-        this.add(error => {
+        add(this, error => {
             if (isSome(error) || queue.length + this.activeCount === 0) {
                 dispose(delegate, error);
             }
         });
-        delegate.add(() => {
+        add(delegate, () => {
             queue.length = 0;
         });
     }

@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable";
+import { dispose, add } from "../../disposable";
 import { isSome } from "../../option";
 import {
   ObservableLike,
@@ -14,7 +14,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     private readonly next: number,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       const observables = this.observables;
       const next = this.next;
 

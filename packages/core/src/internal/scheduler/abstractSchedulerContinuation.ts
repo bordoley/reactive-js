@@ -1,4 +1,4 @@
-import { AbstractDisposable, Exception, dispose } from "../../disposable";
+import { AbstractDisposable, Exception, add, dispose } from "../../disposable";
 import { none, Option, isSome } from "../../option";
 import {
   SchedulerLike,
@@ -25,7 +25,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   constructor() {
     super();
 
-    this.add(() => {
+    add(this, () => {
       this.listeners = new Set();
     });
   }

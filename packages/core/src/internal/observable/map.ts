@@ -2,6 +2,7 @@ import { returns, Operator } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
+import { add } from "../../disposable";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
@@ -9,7 +10,7 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
     private readonly mapper: Operator<TA, TB>,
   ) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: TA) {

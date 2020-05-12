@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -29,15 +29,15 @@ class ZipWithLatestFromSubscriber extends AbstractSubscriber {
         };
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate)).add(e => {
+        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate), addDisposableOrTeardown(e => {
             if (isSome(e)) {
                 dispose(delegate, e);
             }
             else if (this.isDisposed) {
                 dispose(delegate);
             }
-        });
-        this.add(e => {
+        }));
+        add(this, e => {
             if (isSome(e)) {
                 dispose(delegate, e);
             }
@@ -45,7 +45,7 @@ class ZipWithLatestFromSubscriber extends AbstractSubscriber {
                 dispose(delegate);
             }
         });
-        delegate.add(otherSubscription).add(this);
+        add(delegate, otherSubscription, this);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

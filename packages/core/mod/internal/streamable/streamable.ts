@@ -13,6 +13,7 @@ import { SchedulerLike } from "../../scheduler.ts";
 import { subscribe } from "../observable/subscribe.ts";
 import { createStream, StreamableOperator } from "./createStream.ts";
 import { StreamableLike } from "./interfaces.ts";
+import { addDisposableOrTeardown, add } from "../../disposable.ts";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -53,9 +54,10 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
         map((compose as any)(...reqOps)),
         onNotify(dispatchTo(srcStream)),
         subscribe(scheduler),
-      ).add(srcStream);
+        addDisposableOrTeardown(srcStream),
+      );
 
-      return srcStream.add(requestSubscription);
+      return add(srcStream, requestSubscription);
     }, (compose as any)(...obsOps));
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };

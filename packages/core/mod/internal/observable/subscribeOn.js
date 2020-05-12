@@ -3,6 +3,7 @@ import { createObservable } from "./createObservable.js";
 import { dispatchTo } from "./dispatcher.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
+import { addDisposableOrTeardown, add } from "../../disposable.js";
 export const subscribeOn = (scheduler) => observable => createObservable(dispatcher => {
-    dispatcher.add(pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler)).add(dispatcher));
+    add(dispatcher, pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), addDisposableOrTeardown(dispatcher)));
 });

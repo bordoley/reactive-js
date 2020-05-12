@@ -1,11 +1,11 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
 class MergeSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, ctx) {
         super(delegate);
         this.ctx = ctx;
-        this.add(error => {
+        add(this, error => {
             const ctx = this.ctx;
             ctx.completedCount++;
             if (isSome(error) || ctx.completedCount >= ctx.count) {

@@ -1,4 +1,4 @@
-import { createSerialDisposable, dispose } from "../../disposable.js";
+import { createSerialDisposable, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -27,12 +27,12 @@ class RepeatSubscriber extends AbstractDelegatingSubscriber {
             }
             else {
                 this.count++;
-                this.innerSubscription.inner = pipe(this.observable, onNotify(this.onNotify), subscribe(delegate)).add(this.onDispose);
+                this.innerSubscription.inner = pipe(this.observable, onNotify(this.onNotify), subscribe(delegate), addDisposableOrTeardown(this.onDispose));
             }
         };
         this.onNotify = (next) => this.delegate.notify(next);
-        delegate.add(this.innerSubscription);
-        this.add(this.onDispose);
+        add(delegate, this.innerSubscription);
+        add(this, this.onDispose);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

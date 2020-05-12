@@ -1,4 +1,4 @@
-import { DisposableOrTeardown, dispose } from "../../disposable";
+import { DisposableOrTeardown, dispose, add } from "../../disposable";
 import { Factory } from "../../functions";
 import { isSome, none } from "../../option";
 import {
@@ -19,7 +19,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
       this.src.subscribe(subscriber);
       const disposable = this.f() || none;
       if (isSome(disposable)) {
-        subscriber.add(disposable);
+        add(subscriber, disposable);
       }
     } catch (cause) {
       dispose(subscriber, { cause });

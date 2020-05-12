@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.js";
+import { add, dispose } from "../../disposable.js";
 import { alwaysFalse } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
@@ -68,7 +68,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         delay = Math.max(0, delay);
-        this.add(continuation);
+        add(this, continuation);
         if (!continuation.isDisposed) {
             const work = {
                 id: this.taskIDCount++,

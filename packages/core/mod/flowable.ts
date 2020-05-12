@@ -39,6 +39,7 @@ import {
   lift,
   stream,
 } from "./streamable.ts";
+import { add, addDisposableOrTeardown } from "./disposable.ts";
 
 export const enum FlowMode {
   Resume = 1,
@@ -126,9 +127,10 @@ export const fromObservable = <T>(
       modeObs,
       onNotify(onModeChange),
       subscribe(scheduler),
-    ).add(pausableScheduler);
+      addDisposableOrTeardown(pausableScheduler),
+    );
 
-    return pausableScheduler.add(modeSubscription);
+    return add(pausableScheduler, modeSubscription);
   };
 
   const op = (modeObs: ObservableLike<FlowMode>) =>
@@ -235,7 +237,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
           createObservable(dispatcher => {
             dispatch(dispatcher, FlowMode.Pause);
             dispatch(dispatcher, FlowMode.Resume);
-            eventsSubscription.add(dispatcher);
+            add(eventsSubscription, dispatcher);
           }),
       );
     return stream(createStreamable(op), scheduler, replayCount);

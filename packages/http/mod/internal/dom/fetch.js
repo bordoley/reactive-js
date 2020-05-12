@@ -1,4 +1,4 @@
-import { dispose } from "../../../../core/lib/disposable.js";
+import { dispose, add } from "../../../../core/lib/disposable.js";
 import { bind, pipe } from "../../../../core/lib/functions.js";
 import { dispatch, fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
@@ -33,7 +33,7 @@ export const sendHttpRequestUsingFetch = request => {
     const headers = httpRequestToUntypedHeaders(request);
     const fetchResponse = createObservable(async (dispatcher) => {
         const abortController = new AbortController();
-        dispatcher.add(() => abortController.abort());
+        add(dispatcher, () => abortController.abort());
         try {
             const fetchResponse = await fetch(url, {
                 cache,

@@ -1,4 +1,4 @@
-import { DisposableLike } from "../../disposable.ts";
+import { DisposableLike, add } from "../../disposable.ts";
 import {
   Selector2,
   Operator,
@@ -28,10 +28,7 @@ class UsingObservable<TResource extends DisposableLike[] | DisposableLike, T>
     const observableFactory = this.observableFactory;
 
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
-
-    for (const resource of resourcesArray) {
-      subscriber.add(resource as DisposableLike);
-    }
+    (add as any)(subscriber, ...resourcesArray);
     observableFactory(...resourcesArray).subscribe(subscriber);
   }
 }

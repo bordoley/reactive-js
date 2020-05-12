@@ -1,11 +1,12 @@
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { add } from "../../disposable.js";
 class ScanSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, scanner, acc) {
         super(delegate);
         this.scanner = scanner;
         this.acc = acc;
-        this.add(delegate);
+        add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);

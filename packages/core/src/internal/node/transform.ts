@@ -3,6 +3,7 @@ import {
   DisposableValueLike,
   createDisposableValue,
   disposeOnError,
+  add,
 } from "../../disposable";
 import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns, Factory } from "../../functions";
@@ -22,7 +23,8 @@ export const transform = (
         const transformSink = createWritableFlowableSink(
           // don't dispose the transform when the writable is disposed.
           () =>
-            createDisposableValue<Transform>(transform.value, ignore).add(
+            add(
+              createDisposableValue<Transform>(transform.value, ignore),
               disposeOnError(transform),
             ),
         );
@@ -43,10 +45,12 @@ export const transform = (
           subscribe(scheduler),
         );
 
-        return transformReadableStream
-          .add(sinkSubscription)
-          .add(transform)
-          .add(modeSubscription);
+        return add(
+          transformReadableStream,
+          sinkSubscription,
+          transform,
+          modeSubscription,
+        );
       },
       t => t,
     ),

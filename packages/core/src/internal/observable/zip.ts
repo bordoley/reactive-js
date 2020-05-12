@@ -1,4 +1,9 @@
-import { DisposableLike, AbstractDisposable, dispose } from "../../disposable";
+import {
+  DisposableLike,
+  AbstractDisposable,
+  dispose,
+  add,
+} from "../../disposable";
 import { EnumeratorLike } from "../../enumerable";
 import {
   Selector2,
@@ -69,7 +74,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
     continuation: SchedulerContinuationLike,
     { delay } = { delay: 0 },
   ): void {
-    this.add(continuation);
+    add(this, continuation);
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {
@@ -128,12 +133,12 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
     private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
-    delegate.add(() => {
+    add(delegate, () => {
       this.hasCurrent = false;
       this.current = none;
       this.buffer.length = 0;
     });
-    this.add(error => {
+    add(this, error => {
       if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
         dispose(delegate, error);
       }

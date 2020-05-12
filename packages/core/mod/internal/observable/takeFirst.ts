@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { add, dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -13,7 +13,7 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
     super(delegate);
-    this.add(delegate);
+    add(this, delegate);
   }
 
   notify(next: T) {

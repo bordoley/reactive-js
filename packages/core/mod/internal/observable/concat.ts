@@ -1,4 +1,4 @@
-import { dispose } from "../../disposable.ts";
+import { dispose, add } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -14,7 +14,7 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
     private readonly next: number,
   ) {
     super(delegate);
-    this.add(error => {
+    add(this, error => {
       const observables = this.observables;
       const next = this.next;
 
