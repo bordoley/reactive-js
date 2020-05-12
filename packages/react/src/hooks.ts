@@ -1,5 +1,12 @@
 import { dispose, Exception } from "@reactive-js/core/lib/disposable";
-import { SideEffect1, pipe, compose, returns, bind, Operator } from "@reactive-js/core/lib/functions";
+import {
+  SideEffect1,
+  pipe,
+  compose,
+  returns,
+  bind,
+  Operator,
+} from "@reactive-js/core/lib/functions";
 import {
   dispatch as dispatchToStream,
   ObservableLike,
@@ -13,7 +20,12 @@ import {
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { StateStoreLike, StateUpdater } from "@reactive-js/core/lib/stateStore";
-import { StreamableLike, mapReq, map, stream as streamableStream } from "@reactive-js/core/lib/streamable";
+import {
+  StreamableLike,
+  mapReq,
+  map,
+  stream as streamableStream,
+} from "@reactive-js/core/lib/streamable";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { normalPriority } from "./scheduler";
 

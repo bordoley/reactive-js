@@ -1,11 +1,11 @@
 import { DisposableOrTeardown, dispose } from "../../disposable";
+import { Factory } from "../../functions";
 import { isSome, none } from "../../option";
 import {
   ObservableLike,
   SubscriberLike,
   ObservableOperator,
 } from "./interfaces";
-import { Factory } from "../../functions";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;

@@ -1,7 +1,7 @@
+import { dispose } from "../../disposable.js";
 import { enumerate } from "../../enumerable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
-import { dispose } from "../../disposable.js";
 class FromEnumeratorProducer extends AbstractProducer {
     constructor(subscriber, enumerator, delay) {
         super(subscriber);

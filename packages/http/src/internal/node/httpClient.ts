@@ -35,6 +35,7 @@ import {
 } from "@reactive-js/core/lib/observable";
 import { none, isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
+import { stream } from "@reactive-js/core/lib/streamable";
 import {
   httpRequestToUntypedHeaders,
   parseHttpResponseFromHeaders,
@@ -44,7 +45,6 @@ import {
   HttpClient,
   HttpClientRequestStatusType,
 } from "../../http";
-import { stream } from "@reactive-js/core/lib/streamable";
 
 export type HttpClientOptions = {
   // Node options
@@ -79,12 +79,11 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const responseStream = 
-     stream(
-      createReadableFlowable(bind(
-        createDisposableNodeStream, this.resp),
-      ), scheduler, replayCount)
-      .add(this);
+    const responseStream = stream(
+      createReadableFlowable(bind(createDisposableNodeStream, this.resp)),
+      scheduler,
+      replayCount,
+    ).add(this);
     this.add(responseStream);
     return responseStream;
   }
@@ -124,11 +123,9 @@ export const createHttpClient = (
             })();
 
       const requestSink = stream(
-        createWritableFlowableSink(bind(
-          createDisposableNodeStream, req),
-        ),
-        scheduler
-        );
+        createWritableFlowableSink(bind(createDisposableNodeStream, req)),
+        scheduler,
+      );
 
       const requestBody = stream(request.body, scheduler).add(requestSink);
 

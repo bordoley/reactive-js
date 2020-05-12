@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { empty } from "./empty";
@@ -8,7 +9,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { dispose } from "../../disposable";
 
 class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly last: T[] = [];

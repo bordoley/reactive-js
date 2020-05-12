@@ -16,22 +16,20 @@ export const tests = describe(
   test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = stream(
-      pipe(
-        identity<number>(),
-        lift(startWith(0)),
-        toStateStore<number>(),
-      ), scheduler);
+      pipe(identity<number>(), lift(startWith(0)), toStateStore<number>()),
+      scheduler,
+    );
 
-    dispatch(stateStream,incrementBy(1));
-    dispatch(stateStream,incrementBy(2));
-    dispatch(stateStream,incrementBy(3));
-    dispatch(stateStream,incrementBy(4));
-    dispatch(stateStream,incrementBy(5));
-    dispatch(stateStream,incrementBy(6));
-    dispatch(stateStream,incrementBy(7));
-    dispatch(stateStream,incrementBy(8));
-    dispatch(stateStream,incrementBy(9));
-    dispatch(stateStream,incrementBy(10));
+    dispatch(stateStream, incrementBy(1));
+    dispatch(stateStream, incrementBy(2));
+    dispatch(stateStream, incrementBy(3));
+    dispatch(stateStream, incrementBy(4));
+    dispatch(stateStream, incrementBy(5));
+    dispatch(stateStream, incrementBy(6));
+    dispatch(stateStream, incrementBy(7));
+    dispatch(stateStream, incrementBy(8));
+    dispatch(stateStream, incrementBy(9));
+    dispatch(stateStream, incrementBy(10));
     dispose(stateStream);
 
     let result: number[] = [];

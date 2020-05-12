@@ -1,5 +1,5 @@
-import { createObservable } from "./createObservable.js";
 import { toErrorHandler, dispose } from "../../disposable.js";
+import { createObservable } from "./createObservable.js";
 import { dispatch } from "./dispatcher.js";
 export const fromPromise = (factory) => {
     const onSubscribe = (dispatcher) => {

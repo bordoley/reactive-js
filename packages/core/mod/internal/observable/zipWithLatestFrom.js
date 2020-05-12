@@ -1,10 +1,10 @@
+import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 const notifyDelegate = (subscriber) => {
     if (subscriber.queue.length > 0 && subscriber.hasLatest) {
         subscriber.hasLatest = false;

@@ -13,10 +13,10 @@ import {
   takeFirst,
   dispatch,
 } from "../../observable.ts";
-import { ObservableOperator } from "../observable/interfaces.ts";
-import { AsyncEnumerableLike } from "./interfaces.ts";
 import { none } from "../../option.ts";
 import { stream } from "../../streamable.ts";
+import { ObservableOperator } from "../observable/interfaces.ts";
+import { AsyncEnumerableLike } from "./interfaces.ts";
 
 export const enum ReducerRequestType {
   Continue = 1,

@@ -1,7 +1,7 @@
+import { Factory, Generator } from "../../functions";
 import { scan } from "../../observable";
 import { createStreamable } from "../../streamable";
 import { AsyncEnumerableLike } from "./interfaces";
-import { Factory, Generator } from "../../functions";
 
 const generateScanner = <T>(generator: Generator<T>) => (acc: T, _: unknown) =>
   generator(acc);

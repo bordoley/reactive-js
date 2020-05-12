@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { alwaysFalse } from "../../functions";
 import { none, isSome } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
@@ -7,7 +8,6 @@ import {
   VirtualTimeSchedulerLike,
   SchedulerLike,
 } from "./interfaces";
-import { dispose } from "../../disposable";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;

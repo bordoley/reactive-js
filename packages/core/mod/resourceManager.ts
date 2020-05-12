@@ -1,4 +1,9 @@
-import { AbstractDisposable, DisposableLike, disposed, dispose } from "./disposable.ts";
+import {
+  AbstractDisposable,
+  DisposableLike,
+  disposed,
+  dispose,
+} from "./disposable.ts";
 import { first, forEach, fromIterable } from "./enumerable.ts";
 import { pipe, Operator } from "./functions.ts";
 import { createKeyedQueue } from "./internal/keyedQueue.ts";

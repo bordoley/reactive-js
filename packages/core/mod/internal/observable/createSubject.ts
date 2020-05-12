@@ -1,7 +1,7 @@
 import { AbstractDisposable } from "../../disposable.ts";
+import { dispatch } from "./dispatcher.ts";
 import { SubjectLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
 import { toDispatcher } from "./toDispatcher.ts";
-import { dispatch } from "./dispatcher.ts";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   private readonly subscribers: Set<DispatcherLike<T>> = new Set();

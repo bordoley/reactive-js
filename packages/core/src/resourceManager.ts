@@ -1,4 +1,9 @@
-import { AbstractDisposable, DisposableLike, disposed, dispose } from "./disposable";
+import {
+  AbstractDisposable,
+  DisposableLike,
+  disposed,
+  dispose,
+} from "./disposable";
 import { first, forEach, fromIterable } from "./enumerable";
 import { pipe, Operator } from "./functions";
 import { createKeyedQueue } from "./internal/keyedQueue";

@@ -1,5 +1,6 @@
 import { compose, Operator } from "../../functions";
 import { isNone, isSome, none, Option } from "../../option";
+import { enumerate } from "./enumerate";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -7,7 +8,6 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
-import { enumerate } from "./enumerate";
 
 class FlattenEnumerator<T> implements EnumeratorLike<T> {
   current = (none as unknown) as T;

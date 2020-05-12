@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
@@ -5,7 +6,6 @@ import {
   ObservableOperator,
 } from "./interfaces.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
-import { dispose } from "../../disposable.ts";
 
 class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

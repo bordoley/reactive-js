@@ -1,10 +1,10 @@
+import { Predicate, TypePredicate } from "../../functions.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { Predicate, TypePredicate } from "../../functions.ts";
 
 class KeepTypeSubscriber<
   TA,
@@ -34,7 +34,7 @@ class KeepTypeSubscriber<
  * @param predicate The predicate function.
  */
 export const keepType = <TA, TB extends TA>(
-  predicate: TypePredicate<TA, TB>
+  predicate: TypePredicate<TA, TB>,
 ): ObservableOperator<unknown, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new KeepTypeSubscriber(subscriber, predicate);
@@ -48,6 +48,5 @@ export const keepType = <TA, TB extends TA>(
  *
  * @param predicate The predicate function.
  */
-export const keep = <T>(
-  predicate: Predicate<T>,
-): ObservableOperator<T, T> => keepType(predicate as TypePredicate<T, T>);
+export const keep = <T>(predicate: Predicate<T>): ObservableOperator<T, T> =>
+  keepType(predicate as TypePredicate<T, T>);

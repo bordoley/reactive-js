@@ -1,5 +1,5 @@
-import { fromArray } from "./fromArray.js";
 import { enumerate } from "./enumerate.js";
+import { fromArray } from "./fromArray.js";
 class ComputeEnumerable {
     constructor(f) {
         this.f = f;

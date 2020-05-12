@@ -1,6 +1,6 @@
 import { Operator, SideEffect1 } from "../../functions";
-import { EnumerableLike } from "./interfaces";
 import { enumerate } from "./enumerate";
+import { EnumerableLike } from "./interfaces";
 
 /**
  * Applies the side-effect function `f` to each item in the EnumerableLike collection.

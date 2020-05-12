@@ -1,5 +1,9 @@
 import { Readable, Writable, Transform } from "stream";
-import { DisposableValueLike, createDisposableValue, toErrorHandler } from "../../disposable";
+import {
+  DisposableValueLike,
+  createDisposableValue,
+  toErrorHandler,
+} from "../../disposable";
 import { ignore } from "../../functions";
 
 const dispose = (writable: Readable | Writable | Transform) => {

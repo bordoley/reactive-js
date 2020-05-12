@@ -1,8 +1,8 @@
+import { dispose } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class EverySatisfySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate) {
         super(delegate);

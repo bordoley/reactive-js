@@ -1,7 +1,7 @@
+import { Operator } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { Operator } from "../../functions.ts";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
   current = (none as unknown) as TB;

@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { pipe, Selector2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
 import {
@@ -12,7 +13,6 @@ import {
   AbstractSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { dispose } from "../../disposable.ts";
 
 const notifyDelegate = <TA, TB, TC>(
   subscriber: ZipWithLatestFromSubscriber<TA, TB, TC>,
@@ -44,7 +44,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
   constructor(
     readonly delegate: SubscriberLike<T>,
     other: ObservableLike<TB>,
-    readonly selector: Selector2<TA, TB, T> 
+    readonly selector: Selector2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
@@ -89,7 +89,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
  */
 export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: Selector2<TA, TB, T> 
+  selector: Selector2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ZipWithLatestFromSubscriber(subscriber, other, selector);

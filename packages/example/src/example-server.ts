@@ -1,6 +1,7 @@
 import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
+import { dispose } from "@reactive-js/core/lib/disposable";
 import {
   encodeUtf8,
   fromObservable,
@@ -39,6 +40,7 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/lib/scheduler";
+import { stream } from "@reactive-js/core/lib/streamable";
 import {
   HttpMethod,
   createHttpRequest,
@@ -69,8 +71,6 @@ import {
 import iconv from "iconv-lite";
 import db from "mime-db";
 import mime from "mime-types";
-import { dispose } from "@reactive-js/core/lib/disposable";
-import { stream } from "@reactive-js/core/lib/streamable";
 
 const scheduler = pipe(
   createHostScheduler(),

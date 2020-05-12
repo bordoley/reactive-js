@@ -37,10 +37,9 @@ export const tests = describe(
   test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = stream(
-      createActionReducer<number, number>(
-        sum,
-        returns<number>(0),
-      ), scheduler);
+      createActionReducer<number, number>(sum, returns<number>(0)),
+      scheduler,
+    );
 
     dispatch(actionReducerStream, 1);
     dispatch(actionReducerStream, 2);
@@ -85,7 +84,10 @@ export const tests = describe(
 
     test("with delay", () => {
       const scheduler = createVirtualTimeScheduler();
-      const emptyStream = stream(empty<void, number>({ delay: 4 }), scheduler);
+      const emptyStream = stream(
+        empty<void, number>({ delay: 4 }),
+        scheduler,
+      );
 
       dispatch(emptyStream, none);
       dispatch(emptyStream, none);
@@ -113,10 +115,9 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const incrStream = stream(
-      pipe(
-      identity<number>(),
-      map(incrementBy(100)),
-    ), scheduler);
+      pipe(identity<number>(), map(incrementBy(100))),
+      scheduler,
+    );
 
     pipe(incrStream.subscriberCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
@@ -132,10 +133,9 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const incrStream = stream(
-      pipe(
-        identity<number>(),
-        map(incrementBy(100)),
-      ), scheduler);
+      pipe(identity<number>(), map(incrementBy(100))),
+      scheduler,
+    );
 
     dispatch(incrStream, 10);
     dispatch(incrStream, 20);
@@ -166,7 +166,9 @@ export const tests = describe(
         identity<number>(),
         mapReq<number, number, number>(incrementBy(100)),
         mapReq<number, string, number>(x => Number.parseInt(x)),
-      ), scheduler);
+      ),
+      scheduler,
+    );
 
     dispatch(incrStream, "10");
     dispatch(incrStream, "20");
@@ -194,11 +196,13 @@ export const tests = describe(
     let result: number[] = [];
     const notifyStream = stream(
       pipe(
-      identity<number>(),
-      onNotify(x => {
-        result.push(x);
-      }),
-    ), scheduler);
+        identity<number>(),
+        onNotify(x => {
+          result.push(x);
+        }),
+      ),
+      scheduler,
+    );
 
     dispatch(notifyStream, 1);
     dispatch(notifyStream, 2);
@@ -217,12 +221,14 @@ export const tests = describe(
     let result: number[] = [];
     const scanStream = stream(
       pipe(
-      identity<number>(),
-      scan(sum, returns<number>(0)),
-      onNotify(x => {
-        result.push(x);
-      }),
-    ), scheduler);
+        identity<number>(),
+        scan(sum, returns<number>(0)),
+        onNotify(x => {
+          result.push(x);
+        }),
+      ),
+      scheduler,
+    );
 
     dispatch(scanStream, 1);
     dispatch(scanStream, 2);

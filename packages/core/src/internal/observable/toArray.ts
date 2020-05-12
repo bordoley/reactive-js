@@ -16,7 +16,9 @@ const toArrayReducer = <T>(acc: T[], next: T): T[] => {
  * values emitted by `source` into an array.
  */
 export const toArray = <T>(
-  schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
+  schedulerFactory: Factory<
+    VirtualTimeSchedulerLike
+  > = createVirtualTimeScheduler,
 ) =>
   compose(
     reduce<T, T[]>(toArrayReducer, (): T[] => []),

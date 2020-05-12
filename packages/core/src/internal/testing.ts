@@ -1,4 +1,10 @@
-import { referenceEquals, arrayEquals, Factory, Equality, SideEffect } from "../functions";
+import {
+  referenceEquals,
+  arrayEquals,
+  Factory,
+  Equality,
+  SideEffect,
+} from "../functions";
 import { Option, isSome, isNone, none } from "../option";
 
 export const enum TestGroupType {
@@ -39,7 +45,10 @@ export const test = (name: string, f: SideEffect): Test => ({
   f,
 });
 
-export const testAsync = (name: string, f: Factory<Promise<void>>): TestAsync => ({
+export const testAsync = (
+  name: string,
+  f: Factory<Promise<void>>,
+): TestAsync => ({
   type: TestGroupType.TestAsync,
   name,
   f,

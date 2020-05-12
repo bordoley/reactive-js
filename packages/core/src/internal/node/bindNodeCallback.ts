@@ -1,7 +1,13 @@
+import { dispose } from "../../disposable";
+import {
+  Factory,
+  Selector4,
+  Selector3,
+  Selector2,
+  Operator,
+} from "../../functions";
 import { createObservable, ObservableLike, dispatch } from "../../observable";
 import { none } from "../../option";
-import { dispose } from "../../disposable";
-import { Factory, Selector4, Selector3, Selector2, Operator } from "../../functions";
 
 export function bindNodeCallback<R1, R2, R3, R4, T>(
   callbackFunc: (

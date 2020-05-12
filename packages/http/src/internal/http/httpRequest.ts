@@ -1,5 +1,9 @@
 import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
-import { Operator, Selector2, SideEffect2 } from "@reactive-js/core/lib/functions";
+import {
+  Operator,
+  Selector2,
+  SideEffect2,
+} from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,

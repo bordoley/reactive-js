@@ -1,3 +1,4 @@
+import { dispose } from "../../../../core/lib/disposable.ts";
 import {
   createObservable,
   createSubject,
@@ -14,7 +15,6 @@ import {
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces.ts";
-import { dispose } from "../../../../core/lib/disposable.ts";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,

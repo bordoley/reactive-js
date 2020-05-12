@@ -6,7 +6,7 @@ import {
   createActionReducer,
   StreamableOperator,
   createStreamable,
-  stream as streamStreamable
+  stream as streamStreamable,
 } from "./streamable.ts";
 
 export type StateUpdater<T> = {

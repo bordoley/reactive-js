@@ -19,7 +19,9 @@ import { subscribe } from "./subscribe.ts";
  */
 export const forEach = <T>(
   callback: SideEffect1<T>,
-  schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
+  schedulerFactory: Factory<
+    VirtualTimeSchedulerLike
+  > = createVirtualTimeScheduler,
 ): Operator<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
 

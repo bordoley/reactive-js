@@ -1,6 +1,6 @@
+import { Factory } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
-import { Factory } from "../../functions.ts";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
   implements EnumeratorLike<T> {

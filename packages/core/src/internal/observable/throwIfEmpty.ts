@@ -1,3 +1,5 @@
+import { dispose } from "../../disposable";
+import { Factory } from "../../functions";
 import { isNone } from "../../option";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
@@ -5,8 +7,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { dispose } from "../../disposable";
-import { Factory } from "../../functions";
 
 class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private isEmpty = true;

@@ -1,5 +1,5 @@
-import { EnumerableLike } from "./interfaces";
 import { enumerate } from "./enumerate";
+import { EnumerableLike } from "./interfaces";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}

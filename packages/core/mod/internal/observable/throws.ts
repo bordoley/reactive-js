@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { Operator, Factory } from "../../functions.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
@@ -6,7 +7,6 @@ import {
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
-import { dispose } from "../../disposable.ts";
 
 class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(

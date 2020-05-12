@@ -1,6 +1,6 @@
 import { Operator, SideEffect1 } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
 import { enumerate } from "./enumerate.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 /**
  * Applies the side-effect function `f` to each item in the EnumerableLike collection.

@@ -1,10 +1,10 @@
+import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class WithLatestFromSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, other, selector) {
         super(delegate);

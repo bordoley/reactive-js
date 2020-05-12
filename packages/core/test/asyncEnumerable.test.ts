@@ -9,7 +9,13 @@ import {
 } from "../src/asyncEnumerable";
 import { Exception } from "../src/disposable";
 import { pipe, increment, returns } from "../src/functions";
-import { fromValue, subscribe, onNotify, toValue, dispatch } from "../src/observable";
+import {
+  fromValue,
+  subscribe,
+  onNotify,
+  toValue,
+  dispatch,
+} from "../src/observable";
 import { none, Option } from "../src/option";
 import { createVirtualTimeScheduler } from "../src/scheduler";
 import {
@@ -73,10 +79,7 @@ export const tests = describe(
 
   test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(
-      fromArray([1, 2, 3, 4, 5, 6]),
-      scheduler
-    );
+    const enumerator = stream(fromArray([1, 2, 3, 4, 5, 6]), scheduler);
 
     const result: number[] = [];
     pipe(
@@ -96,10 +99,7 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(
-      fromIterable([1, 2, 3, 4, 5, 6]),
-      scheduler
-    );
+    const enumerator = stream(fromIterable([1, 2, 3, 4, 5, 6]), scheduler);
 
     const result: number[] = [];
     let error: Option<Exception> = none;

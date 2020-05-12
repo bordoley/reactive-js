@@ -28,7 +28,7 @@ export const tests = describe(
       const child = createDisposable();
 
       disposable.add(child);
-      dispose(disposable)
+      dispose(disposable);
 
       expectTrue(child.isDisposed);
     }),
@@ -37,7 +37,7 @@ export const tests = describe(
       const disposable = createDisposable();
       const child = createDisposable();
 
-      dispose(disposable)
+      dispose(disposable);
       disposable.add(child);
 
       expectTrue(child.isDisposed);
@@ -48,7 +48,7 @@ export const tests = describe(
       const disposable = createDisposable(teardown);
       disposable.add(teardown);
 
-      dispose(disposable)
+      dispose(disposable);
 
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
@@ -59,7 +59,7 @@ export const tests = describe(
       };
       const disposable = createDisposable(teardown);
 
-      dispose(disposable)
+      dispose(disposable);
       pipe(disposable.error, expectNone);
     }),
 
@@ -110,7 +110,7 @@ export const tests = describe(
       const value = createDisposable();
       const disposable = createDisposableValue(value, dispose);
 
-      dispose(disposable)
+      dispose(disposable);
 
       pipe(disposable.value, expectEquals(value));
       pipe(value.isDisposed, expectTrue);

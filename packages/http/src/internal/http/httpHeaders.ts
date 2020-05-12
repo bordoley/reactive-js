@@ -1,6 +1,6 @@
+import { SideEffect2 } from "@reactive-js/core/lib/functions";
 import { Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./interfaces";
-import { SideEffect2 } from "@reactive-js/core/lib/functions";
 
 export const enum HttpStandardHeader {
   Accept = "Accept",

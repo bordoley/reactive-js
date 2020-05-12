@@ -1,6 +1,6 @@
 import { Operator, Factory, Reducer } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
 import { enumerate } from "./enumerate.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 /**
  * Applies an accumulator function over the source, returning the accumulated result.

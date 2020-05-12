@@ -1,5 +1,9 @@
 import { Transform } from "stream";
-import { DisposableValueLike, createDisposableValue, disposeOnError } from "../../disposable";
+import {
+  DisposableValueLike,
+  createDisposableValue,
+  disposeOnError,
+} from "../../disposable";
 import { FlowableOperator } from "../../flowable";
 import { ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
@@ -19,7 +23,7 @@ export const transform = (
           // don't dispose the transform when the writable is disposed.
           () =>
             createDisposableValue<Transform>(transform.value, ignore).add(
-              disposeOnError(transform)
+              disposeOnError(transform),
             ),
         );
 

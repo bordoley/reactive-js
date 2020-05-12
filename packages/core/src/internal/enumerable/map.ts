@@ -1,7 +1,7 @@
+import { Operator } from "../../functions";
 import { none } from "../../option";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
-import { Operator } from "../../functions";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
   current = (none as unknown) as TB;

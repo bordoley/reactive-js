@@ -1,4 +1,9 @@
-import { DisposableLike, Exception, AbstractDisposable, dispose } from "./disposable.ts";
+import {
+  DisposableLike,
+  Exception,
+  AbstractDisposable,
+  dispose,
+} from "./disposable.ts";
 import { pipe } from "./functions.ts";
 import {
   ObservableLike,
@@ -13,7 +18,11 @@ import {
   AbstractSchedulerContinuation,
   schedule,
 } from "./scheduler.ts";
-import { createStreamable, StreamableLike, stream as streamStreamable } from "./streamable.ts";
+import {
+  createStreamable,
+  StreamableLike,
+  stream as streamStreamable,
+} from "./streamable.ts";
 
 class ReactiveCacheSchedulerContinuation<
   T
@@ -120,12 +129,12 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
 
     if (isNone(cachedValue)) {
       const stream = streamStreamable(
-          switchAllAsyncEnumerable(),
-          this.dispatchScheduler,
-        ).add(() => {
-          this.cache.delete(key);
-          this.garbage.delete(key);
-        });
+        switchAllAsyncEnumerable(),
+        this.dispatchScheduler,
+      ).add(() => {
+        this.cache.delete(key);
+        this.garbage.delete(key);
+      });
 
       const onDisposeCleanup = (_?: Exception) =>
         this.add(

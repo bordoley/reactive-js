@@ -14,7 +14,9 @@ import { subscribe } from "./subscribe";
  * the last value produced.
  */
 export const toValue = (
-  schedulerFactory: Factory<VirtualTimeSchedulerLike> = createVirtualTimeScheduler,
+  schedulerFactory: Factory<
+    VirtualTimeSchedulerLike
+  > = createVirtualTimeScheduler,
 ) => <T>(source: ObservableLike<T>): T => {
   const scheduler = schedulerFactory();
 

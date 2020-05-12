@@ -1,3 +1,4 @@
+import { dispose } from "@reactive-js/core/lib/disposable";
 import {
   createObservable,
   createSubject,
@@ -14,7 +15,6 @@ import {
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { dispose } from "@reactive-js/core/lib/disposable";
 
 export const sendHttpRequestUsingXHR: HttpClient<
   HttpWebRequest,

@@ -1,10 +1,10 @@
+import { SideEffect1 } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { SideEffect1 } from "../../functions";
 
 class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

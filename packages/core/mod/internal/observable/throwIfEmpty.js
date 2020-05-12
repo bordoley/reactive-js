@@ -1,7 +1,7 @@
+import { dispose } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, factory) {
         super(delegate);

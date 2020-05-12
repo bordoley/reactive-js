@@ -1,4 +1,4 @@
-import { referenceEquals } from "../../functions.js";
+import { referenceEquals, } from "../../functions.js";
 import { enumerate } from "./enumerate.js";
 export const someSatisfy = (predicate) => enumerable => {
     const enumerator = enumerate(enumerable);

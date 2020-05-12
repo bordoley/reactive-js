@@ -1,8 +1,8 @@
+import { dispose } from "../../disposable.js";
 import { alwaysFalse } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
-import { dispose } from "../../disposable.js";
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;

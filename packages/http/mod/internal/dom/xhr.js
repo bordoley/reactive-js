@@ -1,9 +1,9 @@
+import { dispose } from "../../../../core/lib/disposable.js";
 import { createObservable, createSubject, dispatch, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
-import { dispose } from "../../../../core/lib/disposable.js";
 export const sendHttpRequestUsingXHR = request => createObservable(dispatcher => {
     const xhr = new XMLHttpRequest();
     const xhrSupportsResponseType = "responseType" in xhr;

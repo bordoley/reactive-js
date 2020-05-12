@@ -1,3 +1,5 @@
+import { dispose } from "../../disposable";
+import { Factory, Reducer } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
@@ -6,8 +8,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { dispose } from "../../disposable";
-import { Factory, Reducer } from "../../functions";
 
 class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(

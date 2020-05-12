@@ -1,7 +1,6 @@
-import { AbstractDisposable, } from "../../../../core/lib/disposable.js";
+import { AbstractDisposable, dispose, } from "../../../../core/lib/disposable.js";
 import { pipe, bind } from "../../../../core/lib/functions.js";
 import { dispatch, fromValue, createObservable, await_, } from "../../../../core/lib/observable.js";
-import { dispose } from "../../../../core/lib/disposable.js";
 const blobToString = (blob) => {
     const onSubscribe = (dispatcher) => {
         const reader = new FileReader();

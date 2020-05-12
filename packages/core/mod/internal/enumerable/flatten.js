@@ -1,8 +1,8 @@
 import { compose } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
+import { enumerate } from "./enumerate.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
-import { enumerate } from "./enumerate.js";
 class FlattenEnumerator {
     constructor(delegate) {
         this.delegate = delegate;

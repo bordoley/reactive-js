@@ -1,7 +1,12 @@
-import { EnumerableLike, fromIterator, EnumeratorLike, enumerate } from "../enumerable.ts";
+import {
+  EnumerableLike,
+  fromIterator,
+  EnumeratorLike,
+  enumerate,
+} from "../enumerable.ts";
+import { bind, pipe } from "../functions.ts";
 import { Option } from "../option.ts";
 import { KeyedCollection } from "./collections.ts";
-import { bind, pipe } from "../functions.ts";
 
 export interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {
   clear(): void;
@@ -37,7 +42,9 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
   readonly map: Map<K, V[]> = new Map();
 
-  readonly values: EnumerableLike<V> = fromIterator(bind(iterateKeyedQueueValues, this));
+  readonly values: EnumerableLike<V> = fromIterator(
+    bind(iterateKeyedQueueValues, this),
+  );
 
   clear() {
     this.map.clear();

@@ -1,6 +1,6 @@
+import { Predicate } from "../../functions.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { Predicate } from "../../functions.ts";
 
 class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
   private state = 0;

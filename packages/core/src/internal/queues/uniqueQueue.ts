@@ -1,4 +1,9 @@
-import { fromIterable, first, EnumeratorLike, enumerate } from "../../enumerable";
+import {
+  fromIterable,
+  first,
+  EnumeratorLike,
+  enumerate,
+} from "../../enumerable";
 import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { QueueLike } from "./interfaces";

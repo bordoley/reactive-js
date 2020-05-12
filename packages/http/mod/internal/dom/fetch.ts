@@ -1,3 +1,4 @@
+import { dispose } from "../../../../core/lib/disposable.ts";
 import { bind, pipe } from "../../../../core/lib/functions.ts";
 import {
   dispatch,
@@ -23,7 +24,6 @@ import {
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.ts";
 import { HttpResponseBodyImpl } from "./httpResponseBody.ts";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces.ts";
-import { dispose } from "../../../../core/lib/disposable.ts";
 
 const loadBodyContent = async (
   response: HttpResponse<Response>,

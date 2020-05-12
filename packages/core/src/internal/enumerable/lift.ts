@@ -1,11 +1,11 @@
 import { pipe } from "../../functions";
+import { enumerate } from "./enumerate";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
   EnumeratorOperator,
 } from "./interfaces";
-import { enumerate } from "./enumerate";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(

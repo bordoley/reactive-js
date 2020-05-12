@@ -1,5 +1,5 @@
-import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 import { Factory, Generator } from "../../functions.ts";
+import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
   current: T;

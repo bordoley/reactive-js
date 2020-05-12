@@ -1,4 +1,5 @@
 import { Exception, dispose } from "../../disposable";
+import { Operator } from "../../functions";
 import { isSome, none } from "../../option";
 import {
   ObservableLike,
@@ -7,7 +8,6 @@ import {
 } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
-import { Operator } from "../../functions";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

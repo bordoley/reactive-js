@@ -1,6 +1,6 @@
 import { none, Option } from "../../option";
-import { EnumerableLike } from "./interfaces";
 import { enumerate } from "./enumerate";
+import { EnumerableLike } from "./interfaces";
 /**
  * Returns the first item in the EnumerableLike collection or none.
  *

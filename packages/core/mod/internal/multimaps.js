@@ -1,4 +1,4 @@
-import { fromIterator, enumerate } from "../enumerable.js";
+import { fromIterator, enumerate, } from "../enumerable.js";
 import { bind, pipe } from "../functions.js";
 function* iterateSetMultimapValues(multimap) {
     for (const values of multimap.map.values()) {

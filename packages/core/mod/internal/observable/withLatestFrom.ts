@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { pipe, Selector2 } from "../../functions.ts";
 import { Option, isSome } from "../../option.ts";
 import {
@@ -12,7 +13,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { dispose } from "../../disposable.ts";
 
 class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   TA,
@@ -24,7 +24,7 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   private readonly onNotify = (next: TB) => {
     this.hasLatest = true;
     this.otherLatest = next;
-  }
+  };
 
   constructor(
     delegate: SubscriberLike<T>,
@@ -66,7 +66,7 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
  */
 export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: Selector2<TA, TB, T> 
+  selector: Selector2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);

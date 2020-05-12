@@ -1,5 +1,9 @@
 import { FlowableLike, FlowableOperator } from "../../../../core/lib/flowable.ts";
-import { Operator, Selector2, SideEffect2 } from "../../../../core/lib/functions.ts";
+import {
+  Operator,
+  Selector2,
+  SideEffect2,
+} from "../../../../core/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../core/lib/option.ts";
 import {
   writeHttpMessageHeaders,

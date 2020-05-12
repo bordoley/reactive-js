@@ -1,13 +1,11 @@
-import { ObservableLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
-import { toDispatcher } from "./toDispatcher.ts";
 import { dispose } from "../../disposable.ts";
 import { SideEffect1 } from "../../functions.ts";
+import { ObservableLike, SubscriberLike, DispatcherLike } from "./interfaces.ts";
+import { toDispatcher } from "./toDispatcher.ts";
 
 class CreateObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
-  constructor(
-    private readonly onSubscribe: SideEffect1<DispatcherLike<T>>,
-  ) {}
+  constructor(private readonly onSubscribe: SideEffect1<DispatcherLike<T>>) {}
 
   subscribe(subscriber: SubscriberLike<T>) {
     // The idea here is that an onSubscribe function may

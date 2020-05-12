@@ -1,6 +1,6 @@
+import { dispose } from "../../disposable.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, predicate, inclusive) {
         super(delegate);

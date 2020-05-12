@@ -1,4 +1,4 @@
-import { AbstractDisposable, disposed, dispose } from "./disposable.js";
+import { AbstractDisposable, disposed, dispose, } from "./disposable.js";
 import { first, forEach, fromIterable } from "./enumerable.js";
 import { pipe } from "./functions.js";
 import { createKeyedQueue } from "./internal/keyedQueue.js";

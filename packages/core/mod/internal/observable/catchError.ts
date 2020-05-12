@@ -1,4 +1,5 @@
 import { Exception, dispose } from "../../disposable.ts";
+import { Operator } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import {
   ObservableLike,
@@ -7,7 +8,6 @@ import {
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
-import { Operator } from "../../functions.ts";
 
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

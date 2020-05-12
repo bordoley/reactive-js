@@ -1,4 +1,9 @@
-import { fromIterable, first, EnumeratorLike, enumerate } from "../../enumerable.ts";
+import {
+  fromIterable,
+  first,
+  EnumeratorLike,
+  enumerate,
+} from "../../enumerable.ts";
 import { pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { QueueLike } from "./interfaces.ts";

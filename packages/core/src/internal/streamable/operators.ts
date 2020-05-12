@@ -1,3 +1,4 @@
+import { Factory, Operator, Reducer, SideEffect1 } from "../../functions";
 import {
   map as mapObs,
   mapTo as mapToObs,
@@ -5,7 +6,6 @@ import {
   scan as scanObs,
 } from "../../observable";
 import { lift } from "./streamable";
-import { Factory, Operator, Reducer, SideEffect1 } from "../../functions";
 
 export const map = <TReq, TA, TB>(mapper: Operator<TA, TB>) =>
   lift<TReq, TA, TB>(mapObs(mapper));
