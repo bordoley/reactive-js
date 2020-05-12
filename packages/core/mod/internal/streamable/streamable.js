@@ -1,9 +1,9 @@
+import { addDisposableOrTeardown, add } from "../../disposable.js";
 import { pipe, compose } from "../../functions.js";
 import { onNotify, empty as emptyObs, map, using, dispatchTo, } from "../../observable.js";
 import { isNone } from "../../option.js";
 import { subscribe } from "../observable/subscribe.js";
 import { createStream } from "./createStream.js";
-import { addDisposableOrTeardown, add } from "../../disposable.js";
 class StreamableImpl {
     constructor(op) {
         this.op = op;

@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown, add } from "../../disposable.ts";
 import { pipe, compose, Operator } from "../../functions.ts";
 import {
   ObservableOperator,
@@ -13,7 +14,6 @@ import { SchedulerLike } from "../../scheduler.ts";
 import { subscribe } from "../observable/subscribe.ts";
 import { createStream, StreamableOperator } from "./createStream.ts";
 import { StreamableLike } from "./interfaces.ts";
-import { addDisposableOrTeardown, add } from "../../disposable.ts";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

@@ -1,7 +1,7 @@
+import { add } from "../../disposable.ts";
 import { AbstractSchedulerContinuation } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { SubscriberLike } from "./interfaces.ts";
-import { add } from "../../disposable.ts";
 
 export abstract class AbstractProducer<
   T

@@ -40,6 +40,7 @@
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
 * [decrementBy](_functions_.md#const-decrementby)
+* [defer](_functions_.md#defer)
 * [identity](_functions_.md#const-identity)
 * [increment](_functions_.md#const-increment)
 * [incrementBy](_functions_.md#const-incrementby)
@@ -1138,6 +1139,449 @@ Name | Type |
 `decr` | number |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+###  defer
+
+▸ **defer**<**T**, **A**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›): *[Factory](_functions_.md#factory)‹A›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹A›*
+
+▸ **defer**<**T**, **A**, **B**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›): *[Factory](_functions_.md#factory)‹B›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹B›*
+
+▸ **defer**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›): *[Factory](_functions_.md#factory)‹C›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹C›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›): *[Factory](_functions_.md#factory)‹D›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹D›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›): *[Factory](_functions_.md#factory)‹E›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹E›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›): *[Factory](_functions_.md#factory)‹F›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹F›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›): *[Factory](_functions_.md#factory)‹G›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹G›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›, `op8`: [Operator](_functions_.md#operator)‹G, H›): *[Factory](_functions_.md#factory)‹H›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+▪ **H**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+`op8` | [Operator](_functions_.md#operator)‹G, H› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹H›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›, `op8`: [Operator](_functions_.md#operator)‹G, H›, `op9`: [Operator](_functions_.md#operator)‹H, I›): *[Factory](_functions_.md#factory)‹I›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+▪ **H**
+
+▪ **I**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+`op8` | [Operator](_functions_.md#operator)‹G, H› |
+`op9` | [Operator](_functions_.md#operator)‹H, I› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹I›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›, `op8`: [Operator](_functions_.md#operator)‹G, H›, `op9`: [Operator](_functions_.md#operator)‹H, I›, `op10`: [Operator](_functions_.md#operator)‹I, J›): *[Factory](_functions_.md#factory)‹J›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+▪ **H**
+
+▪ **I**
+
+▪ **J**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+`op8` | [Operator](_functions_.md#operator)‹G, H› |
+`op9` | [Operator](_functions_.md#operator)‹H, I› |
+`op10` | [Operator](_functions_.md#operator)‹I, J› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹J›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›, `op8`: [Operator](_functions_.md#operator)‹G, H›, `op9`: [Operator](_functions_.md#operator)‹H, I›, `op10`: [Operator](_functions_.md#operator)‹I, J›, `op11`: [Operator](_functions_.md#operator)‹J, K›): *[Factory](_functions_.md#factory)‹K›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+▪ **H**
+
+▪ **I**
+
+▪ **J**
+
+▪ **K**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+`op8` | [Operator](_functions_.md#operator)‹G, H› |
+`op9` | [Operator](_functions_.md#operator)‹H, I› |
+`op10` | [Operator](_functions_.md#operator)‹I, J› |
+`op11` | [Operator](_functions_.md#operator)‹J, K› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹K›*
+
+▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`src`: T, `op1`: [Operator](_functions_.md#operator)‹T, A›, `op2`: [Operator](_functions_.md#operator)‹A, B›, `op3`: [Operator](_functions_.md#operator)‹B, C›, `op4`: [Operator](_functions_.md#operator)‹C, D›, `op5`: [Operator](_functions_.md#operator)‹D, E›, `op6`: [Operator](_functions_.md#operator)‹E, F›, `op7`: [Operator](_functions_.md#operator)‹F, G›, `op8`: [Operator](_functions_.md#operator)‹G, H›, `op9`: [Operator](_functions_.md#operator)‹H, I›, `op10`: [Operator](_functions_.md#operator)‹I, J›, `op11`: [Operator](_functions_.md#operator)‹J, K›, `op12`: [Operator](_functions_.md#operator)‹K, L›): *[Factory](_functions_.md#factory)‹L›*
+
+Pipes the source value through a series of unary functions.
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+▪ **C**
+
+▪ **D**
+
+▪ **E**
+
+▪ **F**
+
+▪ **G**
+
+▪ **H**
+
+▪ **I**
+
+▪ **J**
+
+▪ **K**
+
+▪ **L**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`src` | T |
+`op1` | [Operator](_functions_.md#operator)‹T, A› |
+`op2` | [Operator](_functions_.md#operator)‹A, B› |
+`op3` | [Operator](_functions_.md#operator)‹B, C› |
+`op4` | [Operator](_functions_.md#operator)‹C, D› |
+`op5` | [Operator](_functions_.md#operator)‹D, E› |
+`op6` | [Operator](_functions_.md#operator)‹E, F› |
+`op7` | [Operator](_functions_.md#operator)‹F, G› |
+`op8` | [Operator](_functions_.md#operator)‹G, H› |
+`op9` | [Operator](_functions_.md#operator)‹H, I› |
+`op10` | [Operator](_functions_.md#operator)‹I, J› |
+`op11` | [Operator](_functions_.md#operator)‹J, K› |
+`op12` | [Operator](_functions_.md#operator)‹K, L› |
+
+**Returns:** *[Factory](_functions_.md#factory)‹L›*
+
+▸ **defer**(`source`: unknown, ...`operators`: [Operator](_functions_.md#operator)‹any, unknown›[]): *[Factory](_functions_.md#factory)‹unknown›*
+
+Pipes the source value through a series of unary functions.
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`source` | unknown |
+`...operators` | [Operator](_functions_.md#operator)‹any, unknown›[] |
+
+**Returns:** *[Factory](_functions_.md#factory)‹unknown›*
 
 ___
 

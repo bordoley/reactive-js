@@ -1,5 +1,5 @@
-import { createObservable, dispatch } from "../../observable.js";
 import { add } from "../../disposable.js";
+import { createObservable, dispatch } from "../../observable.js";
 const reservedEvents = ["error", "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;

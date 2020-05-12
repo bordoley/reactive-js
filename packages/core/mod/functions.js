@@ -29,3 +29,6 @@ export function pipe(source, ...operators) {
 export function compose(...operators) {
     return source => operators.reduce((acc, next) => next(acc), source);
 }
+export function defer(source, ...operators) {
+    return () => operators.reduce((acc, next) => next(acc), source);
+}

@@ -1,3 +1,4 @@
+import { add } from "../../disposable.ts";
 import { Factory, Reducer } from "../../functions.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -5,7 +6,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { add } from "../../disposable.ts";
 
 class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   constructor(

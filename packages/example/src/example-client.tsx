@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown } from "@reactive-js/core/lib/disposable";
 import {
   historyStateStore,
   createEventSource,
@@ -46,7 +47,6 @@ import {
 import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
-import { addDisposableOrTeardown } from "@reactive-js/core/lib/disposable";
 
 const makeCallbacks = (
   uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
@@ -187,7 +187,7 @@ pipe(
   ),
   onNotify(console.log),
   subscribe(normalPriority),
-  addDisposableOrTeardown(bind(console.log, "dispose"))
+  addDisposableOrTeardown(bind(console.log, "dispose")),
 );
 
 pipe(

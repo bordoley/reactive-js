@@ -1,3 +1,4 @@
+import { add } from "../../disposable";
 import { pipe } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
@@ -5,7 +6,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { add } from "../../disposable";
 
 class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private count = 0;

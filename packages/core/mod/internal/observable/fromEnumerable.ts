@@ -1,6 +1,7 @@
 import { dispose } from "../../disposable.ts";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable.ts";
 import { Operator } from "../../functions.ts";
+import { schedule } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
@@ -8,7 +9,6 @@ import {
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
-import { schedule } from "../../scheduler.ts";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(

@@ -26,7 +26,10 @@ const now: Factory<number> = supportsPerformanceNow
     }
   : () => Date.now();
 
-const createScheduledCallback = (disposable: DisposableLike, cb: SideEffect): SideEffect => () => {
+const createScheduledCallback = (
+  disposable: DisposableLike,
+  cb: SideEffect,
+): SideEffect => () => {
   if (!disposable.isDisposed) {
     cb();
     dispose(disposable);

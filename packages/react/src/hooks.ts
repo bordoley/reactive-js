@@ -7,6 +7,7 @@ import {
   SideEffect1,
   pipe,
   compose,
+  defer,
   returns,
   bind,
   Operator,
@@ -139,7 +140,7 @@ export const useSerializedState = <TSerialized, TState>(
   serialize: Operator<TState, TSerialized>,
 ): [Option<TState>, SideEffect1<StateUpdater<TState>>] => {
   const mappedStore = useMemo(
-    () => pipe(store, mapReq(requestMapper(parse, serialize)), map(parse)),
+    defer(store, mapReq(requestMapper(parse, serialize)), map(parse)),
     [store, parse, serialize],
   );
 

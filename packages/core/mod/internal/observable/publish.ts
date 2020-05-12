@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown, add } from "../../disposable.ts";
 import { Operator, pipe } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { createSubject } from "./createSubject.ts";
@@ -5,7 +6,6 @@ import { dispatchTo } from "./dispatcher.ts";
 import { MulticastObservableLike, ObservableLike } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { addDisposableOrTeardown, add } from "../../disposable.ts";
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.

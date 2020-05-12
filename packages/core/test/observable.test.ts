@@ -11,6 +11,7 @@ import {
   incrementBy,
   sum,
   bind,
+  defer,
 } from "../src/functions";
 import {
   forEach as forEachEnumerable,
@@ -107,20 +108,22 @@ const arrayOfArraysEqual = arrayEquals<number>(referenceEquals);
 
 export const tests = describe(
   "observable",
-  test("await_", () => {
-    pipe(
+  test(
+    "await_",
+    defer(
       [0, 1, 2, 3, 4],
       fromArray(),
       await_(compose(fromValue(), endWith(1))),
       toValue(),
       expectEquals(0),
-    );
-  }),
+    ),
+  ),
 
   describe(
     "buffer",
-    test("with duration and maxBufferSize", () =>
-      pipe(
+    test(
+      "with duration and maxBufferSize",
+      defer(
         concat(
           pipe([1, 2, 3, 4], fromArray()),
           pipe([1, 2, 3], fromArray({ delay: 1 })),
@@ -129,27 +132,33 @@ export const tests = describe(
         buffer({ duration: 4, maxBufferSize: 3 }),
         toArray(),
         expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayOfArraysEqual),
-      )),
-    test("when duration observable throws", () =>
-      expectToThrow(() =>
-        pipe(
+      ),
+    ),
+    test(
+      "when duration observable throws",
+      bind(
+        expectToThrow,
+        defer(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws()(() => new Error()) }),
           toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
         ),
-      )),
+      ),
+    ),
   ),
 
   describe(
     "catchError",
-    test("source completes successfully", () =>
-      pipe(
+    test(
+      "source completes successfully",
+      defer(
         pipe(1, fromValue()),
         catchError(_ => fromValue()(2)),
         toArray(),
         expectArrayEquals([1]),
-      )),
+      ),
+    ),
     test("source throws, error caught and ignored", () => {
       const error = new Error();
       pipe(
@@ -188,8 +197,9 @@ export const tests = describe(
     }),
   ),
 
-  test("combineLatest", () =>
-    pipe(
+  test(
+    "combineLatest",
+    defer(
       generate(incrementBy(2), returns(3), { delay: 2 }),
       takeFirst(3),
       combineLatestWith(
@@ -206,29 +216,37 @@ export const tests = describe(
         ],
         arrayOfArraysEqual,
       ),
-    )),
+    ),
+  ),
 
-  test("concat", () => {
-    pipe(
+  test(
+    "concat",
+    defer(
       concat(fromValue()(1), fromValue()(2), fromValue()(3)),
       toArray(),
       expectArrayEquals([1, 2, 3]),
-    );
-  }),
+    ),
+  ),
 
   describe(
     "contains",
-    test("source is empty", () =>
-      pipe(empty<number>(), contains(1), toValue(), expectFalse)),
-    test("source contains value", () =>
-      pipe(
+    test(
+      "source is empty",
+      defer(empty<number>(), contains(1), toValue(), expectFalse),
+    ),
+    test(
+      "source contains value",
+      defer(
         generate(increment, returns<number>(0)),
         contains(1),
         toValue(),
         expectTrue,
-      )),
-    test("source does not contain value", () =>
-      pipe([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse)),
+      ),
+    ),
+    test(
+      "source does not contain value",
+      defer([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse),
+    ),
   ),
 
   describe(
@@ -240,8 +258,9 @@ export const tests = describe(
       });
       pipe(() => pipe(observable, toValue()), expectToThrowError(cause));
     }),
-    test("when queuing multiple events", () =>
-      pipe(
+    test(
+      "when queuing multiple events",
+      defer(
         createObservable(dispatcher => {
           dispatch(dispatcher, 1);
           dispatch(dispatcher, 2);
@@ -250,7 +269,8 @@ export const tests = describe(
         }),
         toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
         expectArrayEquals([1, 2, 3]),
-      )),
+      ),
+    ),
   ),
 
   describe(
@@ -282,38 +302,48 @@ export const tests = describe(
     }),
   ),
 
-  test("distinctUntilChanges", () =>
-    pipe(
+  test(
+    "distinctUntilChanges",
+    defer(
       [1, 1, 1, 2, 2, 3, 3, 3],
       fromArray(),
       distinctUntilChanged(),
       toArray(),
       expectArrayEquals([1, 2, 3]),
-    )),
+    ),
+  ),
 
   describe(
     "everySatisfy",
-    test("source is empty", () =>
-      pipe(empty(), everySatisfy(alwaysFalse), toValue(), expectTrue)),
-    test("source values pass predicate", () =>
-      pipe(
+    test(
+      "source is empty",
+      defer(empty(), everySatisfy(alwaysFalse), toValue(), expectTrue),
+    ),
+    test(
+      "source values pass predicate",
+      defer(
         [1, 2, 3],
         fromArray(),
         everySatisfy(alwaysTrue),
         toValue(),
         expectTrue,
-      )),
-    test("source values fail predicate", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "source values fail predicate",
+      defer(
         [1, 2, 3],
         fromArray(),
         everySatisfy(alwaysFalse),
         toValue(),
         expectFalse,
-      )),
-    test("when the predicate throws", () =>
-      expectToThrow(() =>
-        pipe(
+      ),
+    ),
+    test(
+      "when the predicate throws",
+      bind(
+        expectToThrow,
+        defer(
           [1, 2, 3],
           fromArray(),
           everySatisfy(_ => {
@@ -321,17 +351,20 @@ export const tests = describe(
           }),
           toValue(),
         ),
-      )),
+      ),
+    ),
   ),
 
-  test("exhaustMap", () =>
-    pipe(
+  test(
+    "exhaustMap",
+    defer(
       [fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])],
       fromArray(),
       exhaustMap(identity),
       toArray(),
       expectArrayEquals([1, 2, 3]),
-    )),
+    ),
+  ),
 
   describe(
     "forEach",
@@ -381,8 +414,9 @@ export const tests = describe(
     }),
   ),
 
-  test("genMap", () =>
-    pipe(
+  test(
+    "genMap",
+    defer(
       undefined,
       fromValue(),
       genMap(function*(_) {
@@ -392,63 +426,77 @@ export const tests = describe(
       }),
       toArray(),
       expectArrayEquals([1, 2, 3]),
-    )),
+    ),
+  ),
 
-  test("ignoreElements", () =>
-    pipe(
+  test(
+    "ignoreElements",
+    defer(
       [1, 2, 3],
       fromArray(),
       ignoreElements(),
       endWith(4),
       toArray(),
       expectArrayEquals([4]),
-    )),
+    ),
+  ),
 
-  test("keep", () =>
-    pipe(
+  test(
+    "keep",
+    defer(
       [1, 2, 3],
       fromArray(),
       keep(x => x > 1),
       toArray(),
       expectArrayEquals([2, 3]),
-    )),
+    ),
+  ),
 
-  test("mapTo", () =>
-    pipe(
+  test(
+    "mapTo",
+    defer(
       [1, 2, 3],
       fromArray(),
       mapTo(2),
       toArray(),
       expectArrayEquals([2, 2, 2]),
-    )),
+    ),
+  ),
 
   describe(
     "merge",
-    test("two arrays", () =>
-      pipe(
+    test(
+      "two arrays",
+      defer(
         merge(
           pipe([0, 2, 3, 5, 6], fromArray({ delay: 1 })),
           pipe([1, 4, 7], fromArray({ delay: 2 })),
         ),
         toArray(),
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
-      )),
-    test("when one source throws", () =>
-      expectToThrow(() =>
-        pipe(
+      ),
+    ),
+    test(
+      "when one source throws",
+      bind(
+        expectToThrow,
+        defer(
           [1, 4, 7],
           fromArray({ delay: 2 }),
           mergeWith(throws({ delay: 5 })(() => new Error())),
           toValue(),
         ),
-      )),
+      ),
+    ),
   ),
 
   describe(
     "mergeMap",
-    test("when a mapped observable throws", () =>
-      expectToThrow(() =>
-        pipe(
+    test(
+      "when a mapped observable throws",
+      bind(
+        expectToThrow,
+        defer(
           [
             fromArray({ delay: 1 })([1, 2, 3]),
             throws({ delay: 2 })(() => {
@@ -459,10 +507,13 @@ export const tests = describe(
           mergeMap(identity),
           toValue(),
         ),
-      )),
-    test("when the map function throws", () =>
-      expectToThrow(() =>
-        pipe(
+      ),
+    ),
+    test(
+      "when the map function throws",
+      bind(
+        expectToThrow,
+        defer(
           [1, 2, 3, 4],
           fromArray(),
           mergeMap(x => {
@@ -473,31 +524,38 @@ export const tests = describe(
           }),
           toValue(),
         ),
-      )),
+      ),
+    ),
   ),
 
-  test("never", () => expectToThrow(() => pipe(never(), toValue()))),
+  test("never", bind(expectToThrow, defer(never(), toValue()))),
 
   describe(
     "noneSatisfy",
-    test("source is empty", () =>
-      pipe(empty(), noneSatisfy(alwaysFalse), toValue(), expectTrue)),
-    test("source values pass predicate", () =>
-      pipe(
+    test(
+      "source is empty",
+      defer(empty(), noneSatisfy(alwaysFalse), toValue(), expectTrue),
+    ),
+    test(
+      "source values pass predicate",
+      defer(
         [1, 2, 3],
         fromArray(),
         noneSatisfy(alwaysTrue),
         toValue(),
         expectFalse,
-      )),
-    test("source values fail predicate", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "source values fail predicate",
+      defer(
         [1, 2, 3],
         fromArray(),
         noneSatisfy(alwaysFalse),
         toValue(),
         expectTrue,
-      )),
+      ),
+    ),
   ),
 
   describe(
@@ -535,33 +593,36 @@ export const tests = describe(
     }),
   ),
 
-  test("reduce", () =>
-    pipe(
+  test(
+    "reduce",
+    defer(
       [1, 1, 1],
       fromArray(),
       reduce(sum, returns(0)),
       toValue(),
       expectEquals(3),
-    )),
+    ),
+  ),
 
   describe(
     "repeat",
-    test("repeats the observable n times", () =>
-      pipe(1, fromValue(), repeat(3), toArray(), expectArrayEquals([1, 1, 1]))),
+    test(
+      "repeats the observable n times",
+      defer(1, fromValue(), repeat(3), toArray(), expectArrayEquals([1, 1, 1])),
+    ),
 
     test("when the repeat function throws", () => {
       const error = new Error();
 
       pipe(
-        () =>
-          pipe(
-            1,
-            fromValue(),
-            repeat(_ => {
-              throw error;
-            }),
-            toArray(),
-          ),
+        defer(
+          1,
+          fromValue(),
+          repeat(_ => {
+            throw error;
+          }),
+          toArray(),
+        ),
         expectToThrowError(error),
       );
     }),
@@ -585,19 +646,22 @@ export const tests = describe(
     }),
   ),
 
-  test("scan", () =>
-    pipe(
+  test(
+    "scan",
+    defer(
       [1, 1, 1],
       fromArray(),
       scan(sum, returns(0)),
       toArray(),
       expectArrayEquals([1, 2, 3]),
-    )),
+    ),
+  ),
 
   describe(
     "scanAsync",
-    test("fast src, slow acc", () =>
-      pipe(
+    test(
+      "fast src, slow acc",
+      defer(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>(
@@ -606,19 +670,23 @@ export const tests = describe(
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),
-      )),
+      ),
+    ),
 
-    test("slow src, fast acc", () =>
-      pipe(
+    test(
+      "slow src, fast acc",
+      defer(
         [1, 2, 3],
         fromArray({ delay: 4 }),
         scanAsync<number, number>((acc, x) => fromValue()(x + acc), returns(0)),
         toArray(),
         expectArrayEquals([1, 3, 6]),
-      )),
+      ),
+    ),
 
-    test("slow src, slow acc", () =>
-      pipe(
+    test(
+      "slow src, slow acc",
+      defer(
         [1, 2, 3],
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
@@ -627,16 +695,19 @@ export const tests = describe(
         ),
         toArray(),
         expectArrayEquals([1, 3, 6]),
-      )),
+      ),
+    ),
 
-    test("fast src, fast acc", () =>
-      pipe(
+    test(
+      "fast src, fast acc",
+      defer(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>((acc, x) => fromValue()(x + acc), returns(0)),
         toArray(),
         expectArrayEquals([1, 3, 6]),
-      )),
+      ),
+    ),
   ),
 
   test("share", () => {
@@ -661,20 +732,24 @@ export const tests = describe(
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 
-  test("skipFirst", () =>
-    pipe(
+  test(
+    "skipFirst",
+    defer(
       [1, 2, 3, 4, 5],
       fromArray(),
       skipFirst(2),
       toArray(),
       expectArrayEquals([3, 4, 5]),
-    )),
+    ),
+  ),
 
   describe(
     "someSatisfy",
-    test("when predicate throws", () =>
-      expectToThrow(() =>
-        pipe(
+    test(
+      "when predicate throws",
+      bind(
+        expectToThrow,
+        defer(
           1,
           fromValue(),
           someSatisfy(_ => {
@@ -682,159 +757,199 @@ export const tests = describe(
           }),
           toValue(),
         ),
-      )),
+      ),
+    ),
   ),
 
-  test("startWith", () =>
-    pipe(
+  test(
+    "startWith",
+    defer(
       [1, 2, 3],
       fromArray(),
       startWith(0),
       toArray(),
       expectArrayEquals([0, 1, 2, 3]),
-    )),
+    ),
+  ),
 
   describe(
     "switchAll",
-    test("with empty source", () =>
-      pipe(empty(), switchAll(), toArray(), expectArrayEquals([]))),
+    test(
+      "with empty source",
+      defer(empty(), switchAll(), toArray(), expectArrayEquals([])),
+    ),
 
-    test("when source throw", () =>
-      expectToThrow(() =>
-        pipe(
+    test(
+      "when source throw",
+      bind(
+        expectToThrow,
+        defer(
           () => new Error(),
           throws(),
           switchAll(),
           toArray(),
           expectArrayEquals([]),
         ),
-      )),
+      ),
+    ),
   ),
 
-  test("switchMap", () =>
-    pipe(
+  test(
+    "switchMap",
+    defer(
       [1, 2, 3],
       fromArray({ delay: 1 }),
       switchMap(_ => pipe([1, 2, 3], fromArray())),
       toArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-    )),
+    ),
+  ),
 
-  test("takeFirst", () =>
-    pipe(
+  test(
+    "takeFirst",
+    defer(
       [1, 2, 3, 4, 5],
       fromArray(),
       takeFirst(2),
       toArray(),
       expectArrayEquals([1, 2]),
-    )),
+    ),
+  ),
 
   describe(
     "takeLast",
-    test("takes the last n items", () =>
-      pipe(
+    test(
+      "takes the last n items",
+      defer(
         [1, 2, 3, 4, 5],
         fromArray(),
         takeLast(3),
         toArray(),
         expectArrayEquals([3, 4, 5]),
-      )),
-    test("when pipeline throws", () =>
-      expectToThrow(() =>
-        pipe(() => new Error(), throws(), takeLast(), toValue()),
-      )),
+      ),
+    ),
+    test(
+      "when pipeline throws",
+      bind(
+        expectToThrow,
+        defer(() => new Error(), throws(), takeLast(), toValue()),
+      ),
+    ),
   ),
 
   describe(
     "takeWhile",
-    test("exclusive", () =>
-      pipe(
+    test(
+      "exclusive",
+      defer(
         [1, 2, 3, 4, 5],
         fromArray(),
         takeWhile(x => x < 3),
         toArray(),
         expectArrayEquals([1, 2]),
-      )),
-    test("inclusive", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "inclusive",
+      defer(
         [1, 2, 3, 4, 5],
         fromArray(),
         takeWhile(x => x < 3, { inclusive: true }),
         toArray(),
         expectArrayEquals([1, 2, 3]),
-      )),
+      ),
+    ),
   ),
 
   describe(
     "throttle",
-    test("first", () =>
-      pipe(
+    test(
+      "first",
+      defer(
         generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(100),
         throttle(50, ThrottleMode.First),
         toArray(),
         expectArrayEquals([0, 49]),
-      )),
+      ),
+    ),
 
-    test("last", () =>
-      pipe(
+    test(
+      "last",
+      defer(
         generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(200),
         throttle(50, ThrottleMode.Last),
         toArray(),
         expectArrayEquals([49, 99, 149, 199]),
-      )),
+      ),
+    ),
 
-    test("interval", () =>
-      pipe(
+    test(
+      "interval",
+      defer(
         generate(increment, returns<number>(0), { delay: 1 }),
         takeFirst(200),
         throttle(75, ThrottleMode.Interval),
         toArray(),
         expectArrayEquals([0, 74, 149, 199]),
-      )),
+      ),
+    ),
 
-    test("when duration observable throws", () =>
-      expectToThrow(() =>
-        pipe(
+    test(
+      "when duration observable throws",
+      bind(
+        expectToThrow,
+        defer(
           [1, 2, 3, 4, 5],
           fromArray({ delay: 1 }),
           throttle(_ => throws()(() => new Error())),
           toValue(),
         ),
-      )),
+      ),
+    ),
   ),
   describe(
     "throwIfEmpty",
-    test("when source is empty", () =>
-      expectToThrow(() =>
-        pipe(
+    test(
+      "when source is empty",
+      bind(
+        expectToThrow,
+        defer(
           empty(),
           throwIfEmpty(() => undefined),
           toValue(),
         ),
-      )),
+      ),
+    ),
 
-    test("when source is not empty", () =>
-      pipe(
+    test(
+      "when source is not empty",
+      defer(
         1,
         returns,
         compute(),
         throwIfEmpty(() => undefined),
         toValue(),
         expectEquals(1),
-      )),
+      ),
+    ),
   ),
 
   describe(
     "timeout",
-    test("throws when a timeout occurs", () =>
-      expectToThrow(() =>
-        pipe(1, fromValue({ delay: 2 }), timeout(1), toArray()),
-      )),
+    test(
+      "throws when a timeout occurs",
+      bind(
+        expectToThrow,
+        defer(1, fromValue({ delay: 2 }), timeout(1), toArray()),
+      ),
+    ),
 
-    test("when timeout is greater than observed time", () =>
-      pipe(1, fromValue({ delay: 2 }), timeout(3), toValue(), expectEquals(1))),
+    test(
+      "when timeout is greater than observed time",
+      defer(1, fromValue({ delay: 2 }), timeout(3), toValue(), expectEquals(1)),
+    ),
   ),
 
   describe(
@@ -849,8 +964,9 @@ export const tests = describe(
 
   describe(
     "withLatestFrom",
-    test("when source and latest are interlaced", () =>
-      pipe(
+    test(
+      "when source and latest are interlaced",
+      defer(
         [0, 1, 2, 3],
         fromArray({ delay: 1 }),
         withLatestFrom(pipe([0, 1, 2, 3], fromArray({ delay: 2 })), (a, b) => [
@@ -866,27 +982,29 @@ export const tests = describe(
           ],
           arrayOfArraysEqual,
         ),
-      )),
-    test("when latest produces no values", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "when latest produces no values",
+      defer(
         [0],
         fromArray({ delay: 1 }),
         withLatestFrom(empty<number>(), sum),
         toArray(),
         expectArrayEquals([]),
-      )),
+      ),
+    ),
     test("when latest throws", () => {
       const error = new Error();
 
       pipe(
-        () =>
-          pipe(
-            [0],
-            fromArray({ delay: 1 }),
-            withLatestFrom(throws<number>()(returns(error)), sum),
-            toArray(),
-            expectArrayEquals([]),
-          ),
+        defer(
+          [0],
+          fromArray({ delay: 1 }),
+          withLatestFrom(throws<number>()(returns(error)), sum),
+          toArray(),
+          expectArrayEquals([]),
+        ),
         expectToThrowError(error),
       );
     }),
@@ -894,8 +1012,9 @@ export const tests = describe(
 
   describe(
     "zip",
-    test("with non-delayed sources", () =>
-      pipe(
+    test(
+      "with non-delayed sources",
+      defer(
         zip(
           [
             pipe([1, 2], fromArray()),
@@ -912,9 +1031,11 @@ export const tests = describe(
           ],
           arrayOfArraysEqual,
         ),
-      )),
-    test("with synchronous and non-synchronous sources", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "with synchronous and non-synchronous sources",
+      defer(
         zip(
           [
             pipe([1, 2], fromArray({ delay: 1 })),
@@ -931,9 +1052,11 @@ export const tests = describe(
           ],
           arrayOfArraysEqual,
         ),
-      )),
-    test("fast with slow", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "fast with slow",
+      defer(
         [1, 2, 3],
         fromArray({ delay: 1 }),
         zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]),
@@ -946,10 +1069,13 @@ export const tests = describe(
           ],
           arrayOfArraysEqual,
         ),
-      )),
-    test("when source throws", () =>
-      expectToThrow(() =>
-        pipe(
+      ),
+    ),
+    test(
+      "when source throws",
+      bind(
+        expectToThrow,
+        defer(
           () => {
             throw new Error();
           },
@@ -957,44 +1083,49 @@ export const tests = describe(
           zipWith(fromArray()([1, 2, 3]), (_, b) => b),
           toArray(),
         ),
-      )),
+      ),
+    ),
   ),
 
   describe(
     "zipWithLatestFrom",
-    test("when source throws", () =>
-      pipe(
-        () =>
-          pipe(
+    test(
+      "when source throws",
+      bind(
+        expectToThrow,
+        defer(
+          throws()(() => new Error()),
+          zipWithLatestFrom(fromValue()(1), (_, b) => b),
+          toValue(),
+        ),
+      ),
+    ),
+
+    test(
+      "when other throws",
+      bind(
+        expectToThrow,
+        defer(
+          [1, 2, 3],
+          fromArray({ delay: 1 }),
+          zipWithLatestFrom(
             throws()(() => new Error()),
-            zipWithLatestFrom(fromValue()(1), (_, b) => b),
-            toValue(),
+            (_, b) => b,
           ),
-        expectToThrow,
-      )),
+          toValue(),
+        ),
+      ),
+    ),
 
-    test("when other throws", () =>
-      pipe(
-        () =>
-          pipe(
-            [1, 2, 3],
-            fromArray({ delay: 1 }),
-            zipWithLatestFrom(
-              throws()(() => new Error()),
-              (_, b) => b,
-            ),
-            toValue(),
-          ),
-        expectToThrow,
-      )),
-
-    test("when other throws", () =>
-      pipe(
+    test(
+      "when other completes first",
+      defer(
         [1],
         fromArray({ delay: 1 }),
         zipWithLatestFrom(fromArray()([2]), (_, b) => b),
         toValue(),
         expectEquals(2),
-      )),
+      ),
+    ),
   ),
 );

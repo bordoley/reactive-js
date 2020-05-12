@@ -8,7 +8,7 @@ import {
   generate,
 } from "../src/asyncEnumerable";
 import { Exception, addDisposableOrTeardown } from "../src/disposable";
-import { pipe, increment, returns } from "../src/functions";
+import { pipe, increment, returns, defer } from "../src/functions";
 import {
   fromValue,
   subscribe,
@@ -52,8 +52,9 @@ export const tests = describe(
 
   describe(
     "reduceAsync",
-    test("when the reducer early terminates", () =>
-      pipe(
+    test(
+      "when the reducer early terminates",
+      defer(
         [1, 2, 3, 4, 5, 6],
         fromIterable,
         reduceAsync(
@@ -63,9 +64,11 @@ export const tests = describe(
         ),
         toValue(),
         expectEquals(3),
-      )),
-    test("when the reducer never terminates", () =>
-      pipe(
+      ),
+    ),
+    test(
+      "when the reducer never terminates",
+      defer(
         [1, 2, 3, 4, 5, 6],
         fromIterable,
         reduceAsync(
@@ -74,7 +77,8 @@ export const tests = describe(
         ),
         toValue(),
         expectEquals(21),
-      )),
+      ),
+    ),
   ),
 
   test("fromArray", () => {

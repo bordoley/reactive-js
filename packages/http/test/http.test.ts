@@ -1,4 +1,4 @@
-import { bind, pipe } from "../../core/src/functions";
+import { bind, pipe, defer } from "../../core/src/functions";
 import { none } from "../../core/src/option";
 import {
   test,
@@ -36,11 +36,18 @@ export const tests = describe(
       pipe(subtype, expectEquals("json"));
     }),
 
-    test("parseMediaType with invalid params", () =>
-      expectToThrow(bind(parseMediaTypeOrThrow, "application/json; ="))),
+    test(
+      "parseMediaType with invalid params",
+      bind(expectToThrow, bind(parseMediaTypeOrThrow, "application/json; =")),
+    ),
 
-    test("parseMediaType with empty params", () =>
-      expectToThrow(bind(parseMediaTypeOrThrow, "application/json; charset="))),
+    test(
+      "parseMediaType with empty params",
+      bind(
+        expectToThrow,
+        bind(parseMediaTypeOrThrow, "application/json; charset="),
+      ),
+    ),
 
     test("parseMediaRange", () => {
       const { type, subtype, params } = parseMediaTypeOrThrow(
@@ -364,15 +371,17 @@ export const tests = describe(
         }),
         HttpStatusCode.OK,
       ],
-    ] as [
-      string,
-      HttpRequest<any>,
-      HttpResponse<any>,
-      number,
-    ][]).map(([name, req, resp, status]) =>
-      test(name, () =>
-        pipe(checkIfNotModified(req)(resp).statusCode, expectEquals(status)),
-      ),
+    ] as [string, HttpRequest<any>, HttpResponse<any>, number][]).map(
+      ([name, req, resp, status]) =>
+        test(
+          name,
+          defer(
+            resp,
+            checkIfNotModified(req),
+            x => x.statusCode,
+            expectEquals(status),
+          ),
+        ),
     ),
   ),
 );

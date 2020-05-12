@@ -406,3 +406,130 @@ export function compose(
 ): Operator<unknown, unknown> {
   return source => operators.reduce((acc, next) => next(acc), source);
 }
+
+export function defer<T, A>(src: T, op1: Operator<T, A>): Factory<A>;
+export function defer<T, A, B>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+): Factory<B>;
+export function defer<T, A, B, C>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+): Factory<C>;
+export function defer<T, A, B, C, D>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+): Factory<D>;
+export function defer<T, A, B, C, D, E>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+): Factory<E>;
+export function defer<T, A, B, C, D, E, F>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+): Factory<F>;
+export function defer<T, A, B, C, D, E, F, G>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+): Factory<G>;
+export function defer<T, A, B, C, D, E, F, G, H>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+): Factory<H>;
+export function defer<T, A, B, C, D, E, F, G, H, I>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>,
+): Factory<I>;
+export function defer<T, A, B, C, D, E, F, G, H, I, J>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>,
+  op10: Operator<I, J>,
+): Factory<J>;
+export function defer<T, A, B, C, D, E, F, G, H, I, J, K>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>,
+  op10: Operator<I, J>,
+  op11: Operator<J, K>,
+): Factory<K>;
+export function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  src: T,
+  op1: Operator<T, A>,
+  op2: Operator<A, B>,
+  op3: Operator<B, C>,
+  op4: Operator<C, D>,
+  op5: Operator<D, E>,
+  op6: Operator<E, F>,
+  op7: Operator<F, G>,
+  op8: Operator<G, H>,
+  op9: Operator<H, I>,
+  op10: Operator<I, J>,
+  op11: Operator<J, K>,
+  op12: Operator<K, L>,
+): Factory<L>;
+
+export function defer(
+  source: unknown,
+  ...operators: Operator<any, unknown>[]
+): Factory<unknown>;
+
+/**
+ * Pipes the source value through a series of unary functions.
+ */
+export function defer(
+  source: unknown,
+  ...operators: Operator<unknown, unknown>[]
+): Factory<unknown> {
+  return () => operators.reduce((acc, next) => next(acc), source);
+}

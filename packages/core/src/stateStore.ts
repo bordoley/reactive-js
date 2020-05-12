@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown, add } from "./disposable";
 import { pipe, identity, Factory, Equality } from "./functions";
 import { subscribe } from "./internal/observable/subscribe";
 import { onNotify, using, zipWithLatestFrom, dispatchTo } from "./observable";
@@ -8,7 +9,6 @@ import {
   createStreamable,
   stream as streamStreamable,
 } from "./streamable";
-import { addDisposableOrTeardown, add } from "./disposable";
 
 export type StateUpdater<T> = {
   (oldState: T): T;
