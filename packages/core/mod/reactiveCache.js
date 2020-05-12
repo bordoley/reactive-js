@@ -15,7 +15,7 @@ class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
             dispose(stream);
             const hasMoreToCleanup = cache.size > maxCount;
             if (hasMoreToCleanup && scheduler.shouldYield()) {
-                scheduler.schedule(this);
+                schedule(scheduler, this);
                 return;
             }
             else if (!hasMoreToCleanup) {
@@ -34,7 +34,7 @@ const markAsGarbage = (reactiveCache, key, stream) => {
             reactiveCache.cleaning = false;
         });
         reactiveCache.cleaning = true;
-        reactiveCache.cleanupScheduler.schedule(continuation);
+        schedule(reactiveCache.cleanupScheduler, continuation);
     }
 };
 const switchAllAsyncEnumerableInstance = createStreamable(switchAll());
@@ -72,7 +72,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
                 this.cache.delete(key);
                 this.garbage.delete(key);
             });
-            const onDisposeCleanup = (_) => this.add(pipe(this.cleanupScheduler, schedule(() => {
+            const onDisposeCleanup = (_) => this.add(schedule(this.cleanupScheduler, (() => {
                 if (stream.subscriberCount === 0) {
                     markAsGarbage(this, key, stream);
                 }

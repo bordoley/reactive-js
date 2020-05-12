@@ -66,11 +66,13 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**(`callback`: [SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›, `options`: object): *(Anonymous function)*
+▸ **schedule**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `schedulerContinuation`: [SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)› | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md), `options`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
 **Parameters:**
 
-▪ **callback**: *[SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*
+▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
+
+▪ **schedulerContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)› | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
 
 ▪`Default value`  **options**: *object*= { delay: 0 }
 
@@ -78,7 +80,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
 ___
 

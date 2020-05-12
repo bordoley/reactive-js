@@ -7,6 +7,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
+import { schedule } from "../../scheduler";
 
 class FromArrayProducer<T> extends AbstractProducer<T> {
   private index = this.startIndex;
@@ -39,7 +40,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
         (delay > 0 || scheduler.shouldYield())
       ) {
         this.index = index;
-        scheduler.schedule(this, this);
+        schedule(scheduler, this, this);
         return;
       }
     }

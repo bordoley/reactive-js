@@ -1,6 +1,7 @@
 import { dispose } from "../../disposable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
+import { schedule } from "../../scheduler.js";
 class FromArrayProducer extends AbstractProducer {
     constructor(subscriber, values, startIndex, delay) {
         super(subscriber);
@@ -23,7 +24,7 @@ class FromArrayProducer extends AbstractProducer {
                 !isDisposed &&
                 (delay > 0 || scheduler.shouldYield())) {
                 this.index = index;
-                scheduler.schedule(this, this);
+                schedule(scheduler, this, this);
                 return;
             }
         }

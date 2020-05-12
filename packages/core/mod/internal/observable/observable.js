@@ -1,4 +1,3 @@
-import { pipe } from "../../functions.js";
 import { schedule } from "../../scheduler.js";
 class ScheduledObservable {
     constructor(factory, isSynchronous, delay) {
@@ -8,12 +7,7 @@ class ScheduledObservable {
     }
     subscribe(subscriber) {
         const schedulerContinuation = this.factory(subscriber);
-        if (schedulerContinuation instanceof Function) {
-            pipe(subscriber, schedule(schedulerContinuation, this));
-        }
-        else {
-            subscriber.schedule(schedulerContinuation, this);
-        }
+        schedule(subscriber, schedulerContinuation, this);
     }
 }
 export const createScheduledObservable = (factory, isSynchronous) => new ScheduledObservable(factory, isSynchronous, 0);

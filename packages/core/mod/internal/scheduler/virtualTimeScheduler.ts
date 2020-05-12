@@ -8,6 +8,7 @@ import {
   VirtualTimeSchedulerLike,
   SchedulerLike,
 } from "./interfaces.ts";
+import { schedule } from "./schedule.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -82,7 +83,7 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
 
       if (scheduler.shouldYield()) {
         this.host = ignoreScheduler;
-        scheduler.schedule(this);
+        schedule(scheduler, this);
         return;
       }
     }

@@ -1,6 +1,6 @@
 import { AbstractDisposable } from "../../disposable.ts";
 import { ignore, SideEffect1 } from "../../functions.ts";
-import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
+import { SchedulerContinuationLike, SchedulerLike, schedule } from "../../scheduler.ts";
 import { __DEV__ } from "../env.ts";
 import { SubscriberLike } from "./interfaces.ts";
 
@@ -48,7 +48,7 @@ export abstract class AbstractSubscriber<T> extends AbstractDisposable
   schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
     this.add(continuation);
-    this.scheduler.schedule(continuation, options);
+    schedule(this.scheduler, continuation, options);
   }
 
   shouldYield() {

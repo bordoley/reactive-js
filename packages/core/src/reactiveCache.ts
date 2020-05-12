@@ -41,7 +41,7 @@ class ReactiveCacheSchedulerContinuation<
       const hasMoreToCleanup = cache.size > maxCount;
 
       if (hasMoreToCleanup && scheduler.shouldYield()) {
-        scheduler.schedule(this);
+        schedule(scheduler, this);
         return;
       } else if (!hasMoreToCleanup) {
         break;
@@ -74,7 +74,7 @@ const markAsGarbage = <T>(
       reactiveCache.cleaning = false;
     });
     reactiveCache.cleaning = true;
-    reactiveCache.cleanupScheduler.schedule(continuation);
+    schedule(reactiveCache.cleanupScheduler, continuation);
   }
 };
 
@@ -138,9 +138,9 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
 
       const onDisposeCleanup = (_?: Exception) =>
         this.add(
-          pipe(
+          schedule(
             this.cleanupScheduler,
-            schedule(() => {
+            (() => {
               if (stream.subscriberCount === 0) {
                 markAsGarbage(this, key, stream);
               }

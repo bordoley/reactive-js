@@ -15,6 +15,7 @@ import {
   PausableSchedulerLike,
 } from "./interfaces";
 import { toSchedulerWithPriority } from "./schedulerWithPriority";
+import { schedule, scheduleWithPriority } from "./schedule";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -96,7 +97,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
 
       if (delay > 0) {
         priorityScheduler.dueTime = dueTime;
-        host.schedule(this, { delay });
+        schedule(host, this, { delay });
         return;
       }
 
@@ -112,7 +113,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
       // Yield if were not disposed. The next iteration of the loop
       // will yield if the next task is delayed.
       if (!isDisposed && host.shouldYield()) {
-        host.schedule(this);
+        schedule(host, this);
         return;
       }
     }
@@ -147,7 +148,7 @@ const scheduleContinuation = (
 
   const delay = dueTime - scheduler.now;
 
-  scheduler.host.schedule(continuation, { delay });
+  schedule(scheduler.host, continuation, { delay });
 };
 
 class PriorityScheduler extends AbstractSerialDisposable
@@ -280,7 +281,7 @@ class PausableSchedulerImpl extends AbstractDisposable
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    this.priorityScheduler.schedule(continuation, { priority: 0, delay });
+    scheduleWithPriority(this.priorityScheduler, continuation, { priority: 0, delay });
   }
 
   shouldYield(): boolean {

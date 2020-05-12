@@ -91,17 +91,10 @@ export const tests = describe(
 
     dispatch(generateStream, FlowMode.Resume);
 
-    pipe(
-      scheduler,
-      schedule(bind(dispatch, generateStream, FlowMode.Pause), { delay: 2 }),
-    );
 
-    pipe(
-      scheduler,
-      schedule(bind(dispatch, generateStream, FlowMode.Resume), { delay: 4 }),
-    );
-
-    pipe(scheduler, schedule(bind(dispose, generateStream), { delay: 5 }));
+    schedule(scheduler, bind(dispatch, generateStream, FlowMode.Pause), { delay: 2 });
+    schedule(scheduler, bind(dispatch, generateStream, FlowMode.Resume), { delay: 4 });
+    schedule(scheduler, bind(dispose, generateStream), { delay: 5 });
 
     const f = mockFn();
     const subscription = pipe(

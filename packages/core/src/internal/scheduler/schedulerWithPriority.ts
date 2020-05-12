@@ -4,6 +4,7 @@ import {
   SchedulerLike,
   PrioritySchedulerLike,
 } from "./interfaces";
+import { scheduleWithPriority } from "./schedule";
 
 class SchedulerWithPriorityImpl implements SchedulerLike {
   constructor(
@@ -20,7 +21,7 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    this.priorityScheduler.schedule(continuation, {
+    scheduleWithPriority(this.priorityScheduler, continuation, {
       priority: this.priority,
       delay,
     });

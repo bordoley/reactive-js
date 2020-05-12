@@ -8,6 +8,7 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
+import { schedule } from "../../scheduler";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
@@ -29,7 +30,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
 
       isDisposed = this.isDisposed;
       if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
-        scheduler.schedule(this, this);
+        schedule(scheduler, this, this);
         return;
       }
     }
