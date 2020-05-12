@@ -65,7 +65,6 @@ export const tests = describe(
         highWaterMark: 4,
 
         write(_chunk, _encoding, callback) {
-          debugger;
           callback(cause);
         },
       });
