@@ -1,6 +1,6 @@
 import { compose, Operator } from "../../functions";
 import { isNone, isSome, none, Option } from "../../option";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,

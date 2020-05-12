@@ -36,7 +36,7 @@
 
 * [arrayEquals](_functions_.md#const-arrayequals)
 * [bind](_functions_.md#bind)
-* [call](_functions_.md#call)
+* [callWith](_functions_.md#callwith)
 * [compose](_functions_.md#compose)
 * [decrement](_functions_.md#const-decrement)
 * [decrementBy](_functions_.md#const-decrementby)
@@ -620,9 +620,9 @@ Name | Type |
 
 ___
 
-###  call
+###  callWith
 
-▸ **call**<**T**>(): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, T›*
+▸ **callWith**<**T**>(): *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, T›*
 
 **Type parameters:**
 
@@ -630,7 +630,7 @@ ___
 
 **Returns:** *[Operator](_functions_.md#operator)‹[Factory](_functions_.md#factory)‹T›, T›*
 
-▸ **call**<**TA**, **T**>(`a`: TA): *[Operator](_functions_.md#operator)‹[Operator](_functions_.md#operator)‹TA, T›, T›*
+▸ **callWith**<**TA**, **T**>(`a`: TA): *[Operator](_functions_.md#operator)‹[Operator](_functions_.md#operator)‹TA, T›, T›*
 
 **Type parameters:**
 
@@ -646,7 +646,7 @@ Name | Type |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[Operator](_functions_.md#operator)‹TA, T›, T›*
 
-▸ **call**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Operator](_functions_.md#operator)‹[Selector2](_functions_.md#selector2)‹TA, TB, T›, T›*
+▸ **callWith**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Operator](_functions_.md#operator)‹[Selector2](_functions_.md#selector2)‹TA, TB, T›, T›*
 
 **Type parameters:**
 
@@ -665,7 +665,7 @@ Name | Type |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[Selector2](_functions_.md#selector2)‹TA, TB, T›, T›*
 
-▸ **call**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Operator](_functions_.md#operator)‹[Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, T›*
+▸ **callWith**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Operator](_functions_.md#operator)‹[Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, T›*
 
 **Type parameters:**
 
@@ -687,7 +687,7 @@ Name | Type |
 
 **Returns:** *[Operator](_functions_.md#operator)‹[Selector3](_functions_.md#selector3)‹TA, TB, TC, T›, T›*
 
-▸ **call**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Operator](_functions_.md#operator)‹[Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›, T›*
+▸ **callWith**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Operator](_functions_.md#operator)‹[Selector4](_functions_.md#selector4)‹TA, TB, TC, TD, T›, T›*
 
 **Type parameters:**
 

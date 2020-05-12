@@ -1,12 +1,10 @@
 import { none } from "../../option.js";
-import { enumerate } from "./enumerate.js";
+import { current, enumerate, hasCurrent } from "./enumerator.js";
 const moveAll = (enumerators) => {
     for (const enumerator of enumerators) {
         enumerator.move();
     }
 };
-const current = (enumerator) => enumerator.current;
-const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const allHaveCurrent = (enumerators) => enumerators.every(hasCurrent);
 class ZipEnumerator {
     constructor(enumerators, selector) {

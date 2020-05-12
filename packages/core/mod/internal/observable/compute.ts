@@ -1,4 +1,4 @@
-import { Operator, compose, call, Factory } from "../../functions.ts";
+import { Operator, compose, callWith, Factory } from "../../functions.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { map } from "./map.ts";
@@ -12,4 +12,4 @@ import { map } from "./map.ts";
 export const compute = <T>(options?: {
   delay: number;
 }): Operator<Factory<T>, ObservableLike<T>> =>
-  compose(fromValue(options), map(call()));
+  compose(fromValue(options), map(callWith()));

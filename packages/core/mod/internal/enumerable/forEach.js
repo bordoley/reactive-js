@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 export const forEach = (f) => enumerable => {
     const enumerator = enumerate(enumerable);
     while (enumerator.move()) {

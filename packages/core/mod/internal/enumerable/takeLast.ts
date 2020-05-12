@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.ts";
 import { isNone, Option, none } from "../../option.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import { fromArray, empty } from "./fromArray.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";

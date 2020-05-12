@@ -9,7 +9,7 @@ import {
   Selector9,
 } from "../../functions.ts";
 import { none } from "../../option.ts";
-import { enumerate } from "./enumerate.ts";
+import { current, enumerate, hasCurrent } from "./enumerator.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -21,10 +21,6 @@ const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
     enumerator.move();
   }
 };
-
-const current = <T>(enumerator: EnumeratorLike<T>) => enumerator.current;
-
-const hasCurrent = <T>(enumerator: EnumeratorLike<T>) => enumerator.hasCurrent;
 
 const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
   enumerators.every(hasCurrent);

@@ -1,5 +1,5 @@
 import { Operator, Factory, Reducer } from "../../functions";
-import { enumerate } from "./enumerate";
+import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
 /**

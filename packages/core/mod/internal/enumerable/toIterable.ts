@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import { EnumerableLike } from "./interfaces.ts";
 
 class EnumerableIterable<T> implements Iterable<T> {

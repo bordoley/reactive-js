@@ -1,6 +1,6 @@
 import { compose, Operator } from "../../functions.ts";
 import { isNone, isSome, none, Option } from "../../option.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import {
   EnumerableLike,
   EnumeratorLike,

@@ -1,6 +1,6 @@
 import { compose } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
 class FlattenEnumerator {

@@ -1,7 +1,7 @@
 export { compute } from "./internal/enumerable/compute.ts";
 export { concat, concatWith } from "./internal/enumerable/concat.ts";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged.ts";
-export { enumerate } from "./internal/enumerable/enumerate.ts";
+export { enumerate, hasCurrent, current, move } from "./internal/enumerable/enumerator.ts";
 export { endWith } from "./internal/enumerable/endWith.ts";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy.ts";
 export { first } from "./internal/enumerable/first.ts";

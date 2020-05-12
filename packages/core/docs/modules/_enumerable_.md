@@ -20,6 +20,7 @@
 * [concat](_enumerable_.md#concat)
 * [concatWith](_enumerable_.md#const-concatwith)
 * [contains](_enumerable_.md#const-contains)
+* [current](_enumerable_.md#const-current)
 * [distinctUntilChanged](_enumerable_.md#const-distinctuntilchanged)
 * [empty](_enumerable_.md#const-empty)
 * [endWith](_enumerable_.md#endwith)
@@ -34,10 +35,12 @@
 * [fromIterator](_enumerable_.md#const-fromiterator)
 * [fromValue](_enumerable_.md#const-fromvalue)
 * [generate](_enumerable_.md#const-generate)
+* [hasCurrent](_enumerable_.md#const-hascurrent)
 * [keep](_enumerable_.md#const-keep)
 * [keepType](_enumerable_.md#const-keeptype)
 * [lift](_enumerable_.md#const-lift)
 * [map](_enumerable_.md#const-map)
+* [move](_enumerable_.md#const-move)
 * [noneSatisfy](_enumerable_.md#const-nonesatisfy)
 * [reduce](_enumerable_.md#const-reduce)
 * [repeat](_enumerable_.md#repeat)
@@ -157,6 +160,24 @@ Name | Type | Default | Description |
 Name | Type |
 ------ | ------ |
 `a` | TA |
+
+___
+
+### `Const` current
+
+▸ **current**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *T*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerator` | [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T› |
+
+**Returns:** *T*
 
 ___
 
@@ -439,6 +460,24 @@ Name | Type | Description |
 
 ___
 
+### `Const` hasCurrent
+
+▸ **hasCurrent**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerator` | [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T› |
+
+**Returns:** *boolean*
+
+___
+
 ### `Const` keep
 
 ▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
@@ -526,6 +565,24 @@ Name | Type | Description |
 `mapper` | [Operator](_functions_.md#operator)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+
+___
+
+### `Const` move
+
+▸ **move**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`enumerator` | [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T› |
+
+**Returns:** *boolean*
 
 ___
 

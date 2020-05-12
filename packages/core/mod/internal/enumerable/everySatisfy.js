@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 export const everySatisfy = (predicate) => enumerable => {
     const enumerator = enumerate(enumerable);
     while (enumerator.move()) {

@@ -4,7 +4,7 @@ import {
   dispose,
   add,
 } from "../../disposable.ts";
-import { EnumeratorLike } from "../../enumerable.ts";
+import { current, EnumeratorLike } from "../../enumerable.ts";
 import {
   Selector2,
   Selector3,
@@ -116,9 +116,6 @@ const shouldComplete = (
   return false;
 };
 
-const getCurrent = <T>(enumerator: EnumeratorLike<T>): T => {
-  return enumerator.current;
-};
 
 class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   implements EnumeratorLike<unknown> {
@@ -173,7 +170,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
       }
 
       if (shouldEmit(enumerators)) {
-        const next = this.selector(...enumerators.map(getCurrent));
+        const next = this.selector(...enumerators.map(current));
         const shouldCompleteResult = shouldComplete(enumerators);
 
         this.delegate.notify(next);

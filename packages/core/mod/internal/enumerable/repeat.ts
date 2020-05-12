@@ -1,6 +1,6 @@
 import { alwaysTrue, Operator } from "../../functions.ts";
 import { isNone } from "../../option.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import {
   EnumerableLike,
   EnumeratorLike,

@@ -1,7 +1,7 @@
 export { compute } from "./internal/enumerable/compute.js";
 export { concat, concatWith } from "./internal/enumerable/concat.js";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged.js";
-export { enumerate } from "./internal/enumerable/enumerate.js";
+export { enumerate, hasCurrent, current, move } from "./internal/enumerable/enumerator.js";
 export { endWith } from "./internal/enumerable/endWith.js";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy.js";
 export { first } from "./internal/enumerable/first.js";

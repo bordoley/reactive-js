@@ -1,5 +1,5 @@
 import { Operator, SideEffect1 } from "../../functions.ts";
-import { enumerate } from "./enumerate.ts";
+import { enumerate } from "./enumerator.ts";
 import { EnumerableLike } from "./interfaces.ts";
 
 /**

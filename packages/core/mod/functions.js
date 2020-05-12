@@ -1,4 +1,4 @@
-export function call(...args) {
+export function callWith(...args) {
     return f => f(...args);
 }
 export function bind(selector, ...args) {

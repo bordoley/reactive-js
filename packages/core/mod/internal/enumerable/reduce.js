@@ -1,4 +1,4 @@
-import { enumerate } from "./enumerate.js";
+import { enumerate } from "./enumerator.js";
 export const reduce = (reducer, initialValue) => enumerable => {
     const enumerator = enumerate(enumerable);
     let acc = initialValue();
