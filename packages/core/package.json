@@ -40,7 +40,11 @@
     "jest": "^24.9.0",
     "renamer": "^2.0.0",
     "replace": "^1.2.0",
-    "ts-jest": "^24.1.0"
+    "ts-jest": "^24.1.0",
+
+    "benchmark": "^2.1.4",
+    "callbag-basics": "^3.2.0",
+    "rxjs": "^6.5.3"
   },
   "scripts": {
     "build": "yarn compile && yarn lib && yarn mod && yarn docs",
@@ -54,6 +58,7 @@
     "compile-cjs": "tsc -p tsconfig.cjs.json",
     "compile-esm": "tsc -p tsconfig.esm.json",
     "compile-types": "tsc -p tsconfig.types.json",
+    "docs": "node ../../scripts/docs.mjs",
     "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
     "lib-js": "cp -r ./build/cjs/lib/ ./lib",
     "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
@@ -61,7 +66,7 @@
     "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
     "lib-mjs-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
     "lib-types": "cp -r ./build/types/lib/ ./lib",
-    "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-node",
+    "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-node && yarn mod-rm-perf",
     "mod-esm": "yarn mod-esm-copy && yarn mod-esm-replace",
     "mod-esm-copy": "cp -r ./build/esm/ ./mod",
     "mod-esm-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.js\";' ./mod -r --include=\"*.js\"",
@@ -69,7 +74,8 @@
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-node": "rm -rf ./mod/lib/node.* ./mod/lib/internal/node",
-    "docs": "node ../../scripts/docs.mjs",
+    "mod-rm-perf": "rm -rf ./mod/perf",
+    "perf": "NODE_ENV=production node ./build/cjs/perf/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
