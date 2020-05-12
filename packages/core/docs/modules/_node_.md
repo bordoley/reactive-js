@@ -1570,7 +1570,7 @@ ___
 
 ### `Const` brotliCompress
 
-▸ **brotliCompress**(`options`: BrotliOptions): *function*
+▸ **brotliCompress**(`options`: BrotliOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1578,21 +1578,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` brotliDecompress
 
-▸ **brotliDecompress**(`options`: BrotliOptions): *function*
+▸ **brotliDecompress**(`options`: BrotliOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1600,15 +1592,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
@@ -1660,7 +1644,7 @@ ___
 
 ### `Const` deflate
 
-▸ **deflate**(`options`: ZlibOptions): *function*
+▸ **deflate**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1668,21 +1652,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gunzip
 
-▸ **gunzip**(`options`: ZlibOptions): *function*
+▸ **gunzip**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1690,21 +1666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gzip
 
-▸ **gzip**(`options`: ZlibOptions): *function*
+▸ **gzip**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1712,21 +1680,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` inflate
 
-▸ **inflate**(`options`: ZlibOptions): *function*
+▸ **inflate**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1734,15 +1694,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
 
 ___
 

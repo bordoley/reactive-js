@@ -67,20 +67,32 @@ export const transform = (
     ),
   );
 
-export const brotliDecompress = (options: BrotliOptions = {}) =>
+export const brotliDecompress = (
+  options: BrotliOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
-export const gunzip = (options: ZlibOptions = {}) =>
+export const gunzip = (
+  options: ZlibOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createGunzip, createDisposableNodeStream));
 
-export const inflate = (options: ZlibOptions = {}) =>
+export const inflate = (
+  options: ZlibOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createInflate, createDisposableNodeStream));
 
-export const brotliCompress = (options: BrotliOptions = {}) =>
+export const brotliCompress = (
+  options: BrotliOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
-export const gzip = (options: ZlibOptions = {}) =>
+export const gzip = (
+  options: ZlibOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createGzip, createDisposableNodeStream));
 
-export const deflate = (options: ZlibOptions = {}) =>
+export const deflate = (
+  options: ZlibOptions = {},
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createDeflate, createDisposableNodeStream));
