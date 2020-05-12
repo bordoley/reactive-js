@@ -1,5 +1,5 @@
 import { add, dispose } from "../../disposable";
-import { alwaysFalse } from "../../functions";
+import { alwaysFalse, ignore } from "../../functions";
 import { none, isSome } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
@@ -47,13 +47,10 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 };
 
 // A place holder to make the code generic
-const ignoreScheduler = {
+const ignoreScheduler: SchedulerLike = {
   inContinuation: true,
   now: 0,
-  schedule(
-    _scheduler: SchedulerContinuationLike,
-    _options?: { delay: number },
-  ) {},
+  schedule: ignore,
   shouldYield: alwaysFalse,
 };
 

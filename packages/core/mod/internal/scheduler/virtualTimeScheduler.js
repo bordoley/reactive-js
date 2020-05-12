@@ -1,5 +1,5 @@
 import { add, dispose } from "../../disposable.js";
-import { alwaysFalse } from "../../functions.js";
+import { alwaysFalse, ignore } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
@@ -31,7 +31,7 @@ const move = (scheduler) => {
 const ignoreScheduler = {
     inContinuation: true,
     now: 0,
-    schedule(_scheduler, _options) { },
+    schedule: ignore,
     shouldYield: alwaysFalse,
 };
 class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
