@@ -61,7 +61,7 @@ export { publish } from "./internal/observable/publish";
 export { reduce } from "./internal/observable/reduce";
 export { repeat, retry } from "./internal/observable/repeat";
 export { scan } from "./internal/observable/scan";
-export { scanAsync } from "./internal/observable/scanAsync";
+export { AsyncReducer, scanAsync } from "./internal/observable/scanAsync";
 export { share } from "./internal/observable/share";
 export { contains, someSatisfy } from "./internal/observable/someSatisfy";
 export { skipFirst } from "./internal/observable/skipFirst";

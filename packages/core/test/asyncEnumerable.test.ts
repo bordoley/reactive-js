@@ -1,8 +1,8 @@
 import {
   done,
   continue_,
-  reduce,
-  reduceAsync,
+  consume,
+  consumeAsync,
   fromArray,
   fromIterable,
   generate,
@@ -29,19 +29,19 @@ import { stream } from "../src/streamable";
 
 export const tests = describe(
   "async-enumerable",
-  test("reduce", () => {
+  test("consume", () => {
     const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
 
     pipe(
       enumerable,
-      reduce((acc, next) => continue_(acc + next), returns<number>(0)),
+      consume((acc, next) => continue_(acc + next), returns<number>(0)),
       toValue(),
       expectEquals(21),
     );
 
     pipe(
       enumerable,
-      reduce(
+      consume(
         (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
         returns<number>(0),
       ),
@@ -51,13 +51,13 @@ export const tests = describe(
   }),
 
   describe(
-    "reduceAsync",
+    "consumeAsync",
     test(
-      "when the reducer early terminates",
+      "when the consumer early terminates",
       defer(
         [1, 2, 3, 4, 5, 6],
         fromIterable,
-        reduceAsync(
+        consumeAsync(
           (acc, next) =>
             fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)),
           returns<number>(0),
@@ -67,11 +67,11 @@ export const tests = describe(
       ),
     ),
     test(
-      "when the reducer never terminates",
+      "when the consumer never terminates",
       defer(
         [1, 2, 3, 4, 5, 6],
         fromIterable,
-        reduceAsync(
+        consumeAsync(
           (acc, next) => pipe(acc + next, continue_, fromValue()),
           returns<number>(0),
         ),

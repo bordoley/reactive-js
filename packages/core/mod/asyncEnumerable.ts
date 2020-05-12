@@ -1,12 +1,14 @@
 export { AsyncEnumerableLike } from "./internal/asyncEnumerable/interfaces.ts";
 export {
-  ReducerRequestType,
-  ReducerRequest,
+  ConsumeRequestType,
+  ConsumeRequest,
+  Consumer,
+  AsyncConsumer,
   continue_,
   done,
-  reduce,
-  reduceAsync,
-} from "./internal/asyncEnumerable/reduce.ts";
+  consume,
+  consumeAsync,
+} from "./internal/asyncEnumerable/consume.ts";
 export { fromArray } from "./internal/asyncEnumerable/fromArray.ts";
 export { fromEnumerable } from "./internal/asyncEnumerable/fromEnumerable.ts";
 export { fromIterable } from "./internal/asyncEnumerable/fromIterable.ts";

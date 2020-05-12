@@ -9,6 +9,7 @@ import { takeFirst } from "./takeFirst.ts";
 import { using } from "./using.ts";
 import { zipWithLatestFrom } from "./zipWithLatestFrom.ts";
 
+export type AsyncReducer<TAcc, T> = (acc: TAcc, next: T) => ObservableLike<TAcc>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
@@ -17,7 +18,7 @@ import { zipWithLatestFrom } from "./zipWithLatestFrom.ts";
  * @param initialValue The initial accumulation value.
  */
 export const scanAsync = <T, TAcc>(
-  scanner: (acc: TAcc, next: T) => ObservableLike<TAcc>,
+  scanner: AsyncReducer<TAcc, T>,
   initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => observable =>
   using(
