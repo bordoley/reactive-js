@@ -62,9 +62,11 @@ export const next = <T>(data: T): FlowEvent<T> => ({
 const _complete: FlowEvent<any> = { type: FlowEventType.Complete };
 export const complete = <T>(): FlowEvent<T> => _complete;
 
+/** @noInheritDoc */
 export interface FlowableLike<T>
   extends StreamableLike<FlowMode, FlowEvent<T>> {}
 
+/** @noInheritDoc */
 export interface FlowableSinkLike<T>
   extends StreamableLike<FlowEvent<T>, FlowMode> {}
 
@@ -200,7 +202,10 @@ const isNext = <T>(
 ): ev is { readonly type: FlowEventType.Next; readonly data: T } =>
   ev.type === FlowEventType.Next;
 
-/** @experimental */
+/** 
+ * @experimental 
+ * @noInheritDoc 
+ * */
 export interface FlowableSinkAccumulatorLike<T, TAcc>
   extends FlowableSinkLike<T> {
   readonly acc: TAcc;

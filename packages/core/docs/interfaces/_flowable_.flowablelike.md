@@ -11,26 +11,3 @@
 * [StreamableLike](_streamable_.streamablelike.md)‹[FlowMode](../enums/_flowable_.flowmode.md), [FlowEvent](../modules/_flowable_.md#flowevent)‹T››
 
   ↳ **FlowableLike**
-
-## Index
-
-### Methods
-
-* [stream](_flowable_.flowablelike.md#stream)
-
-## Methods
-
-###  stream
-
-▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹[FlowMode](../enums/_flowable_.flowmode.md), [FlowEvent](../modules/_flowable_.md#flowevent)‹T››*
-
-*Inherited from [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md).[stream](_asyncenumerable_.asyncenumerablelike.md#stream)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
-`replayCount?` | number |
-
-**Returns:** *[StreamLike](_observable_.streamlike.md)‹[FlowMode](../enums/_flowable_.flowmode.md), [FlowEvent](../modules/_flowable_.md#flowevent)‹T››*

@@ -39,22 +39,26 @@ export abstract class AbstractSubscriber<T> extends AbstractDisposable
     this.scheduler = scheduler;
   }
 
+  /** @ignore */
   get now() {
     return this.scheduler.now;
   }
 
   abstract notify(_: T): void;
 
+  /** @ignore */
   onRunStatusChanged(status: boolean) {
     this.inContinuation = status;
   }
 
+  /** @ignore */
   schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
     add(this, continuation);
     schedule(this.scheduler, continuation, options);
   }
 
+  /** @ignore */
   shouldYield() {
     return this.scheduler.shouldYield();
   }

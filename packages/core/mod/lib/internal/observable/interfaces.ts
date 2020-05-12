@@ -69,6 +69,7 @@ export interface MulticastObservableLike<T>
   readonly subscriberCount: number;
 }
 
+/** @noInheritDoc */
 export interface DispatcherLike<T> extends DisposableLike {
   /**
    * Dispatches the next request
@@ -86,4 +87,5 @@ export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
 
+/** @noInheritDoc */
 export interface SubjectLike<T> extends StreamLike<T, T> {}

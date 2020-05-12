@@ -26,6 +26,7 @@ export type StateUpdater<T> = {
   (oldState: T): T;
 };
 
+/** @noInheritDoc */
 export interface StateStoreLike<T> extends StreamableLike<StateUpdater<T>, T> {}
 
 const stateStoreReducer = <T>(state: T, action: StateUpdater<T>) =>

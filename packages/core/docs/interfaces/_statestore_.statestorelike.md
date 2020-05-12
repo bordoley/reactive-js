@@ -11,26 +11,3 @@
 * [StreamableLike](_streamable_.streamablelike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›
 
   ↳ **StateStoreLike**
-
-## Index
-
-### Methods
-
-* [stream](_statestore_.statestorelike.md#stream)
-
-## Methods
-
-###  stream
-
-▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*
-
-*Inherited from [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md).[stream](_asyncenumerable_.asyncenumerablelike.md#stream)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
-`replayCount?` | number |
-
-**Returns:** *[StreamLike](_observable_.streamlike.md)‹[StateUpdater](../modules/_statestore_.md#stateupdater)‹T›, T›*
