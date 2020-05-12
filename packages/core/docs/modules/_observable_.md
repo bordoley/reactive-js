@@ -23,6 +23,7 @@
 
 ### Type aliases
 
+* [AsyncReducer](_observable_.md#asyncreducer)
 * [ObservableOperator](_observable_.md#observableoperator)
 * [SubscriberOperator](_observable_.md#subscriberoperator)
 
@@ -108,6 +109,23 @@
 * [zipWithLatestFrom](_observable_.md#const-zipwithlatestfrom)
 
 ## Type aliases
+
+###  AsyncReducer
+
+Ƭ **AsyncReducer**: *function*
+
+#### Type declaration:
+
+▸ (`acc`: TAcc, `next`: T): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+`next` | T |
+
+___
 
 ###  ObservableOperator
 
@@ -1544,7 +1562,7 @@ ___
 
 ### `Const` scanAsync
 
-▸ **scanAsync**<**T**, **TAcc**>(`scanner`: function, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
+▸ **scanAsync**<**T**, **TAcc**>(`scanner`: [AsyncReducer](_observable_.md#asyncreducer)‹TAcc, T›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns the `ObservableLike` that applies an asynchronous accumulator function
 over the source, and emits each intermediate result.
@@ -1557,22 +1575,10 @@ over the source, and emits each intermediate result.
 
 **Parameters:**
 
-▪ **scanner**: *function*
-
-The accumulator function called on each source value.
-
-▸ (`acc`: TAcc, `next`: T): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
-
-▪ **initialValue**: *[Factory](_functions_.md#factory)‹TAcc›*
-
-The initial accumulation value.
+Name | Type | Description |
+------ | ------ | ------ |
+`scanner` | [AsyncReducer](_observable_.md#asyncreducer)‹TAcc, T› | The accumulator function called on each source value. |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 

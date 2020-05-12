@@ -1,4 +1,4 @@
-export { continue_, done, reduce, reduceAsync, } from "./internal/asyncEnumerable/reduce.js";
+export { continue_, done, consume, consumeAsync, } from "./internal/asyncEnumerable/consume.js";
 export { fromArray } from "./internal/asyncEnumerable/fromArray.js";
 export { fromEnumerable } from "./internal/asyncEnumerable/fromEnumerable.js";
 export { fromIterable } from "./internal/asyncEnumerable/fromIterable.js";

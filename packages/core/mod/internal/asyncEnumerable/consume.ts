@@ -18,35 +18,38 @@ import { stream } from "../../streamable.ts";
 import { ObservableOperator } from "../observable/interfaces.ts";
 import { AsyncEnumerableLike } from "./interfaces.ts";
 
-export const enum ReducerRequestType {
+export const enum ConsumeRequestType {
   Continue = 1,
   Done = 2,
 }
 
-export type ReducerRequest<TAcc> =
+export type ConsumeRequest<TAcc> =
   | {
-      readonly type: ReducerRequestType.Continue;
+      readonly type: ConsumeRequestType.Continue;
       readonly acc: TAcc;
     }
   | {
-      readonly type: ReducerRequestType.Done;
+      readonly type: ConsumeRequestType.Done;
       readonly acc: TAcc;
     };
 
-export const continue_ = <TAcc>(acc: TAcc): ReducerRequest<TAcc> => ({
-  type: ReducerRequestType.Continue,
+export type Consumer<T, TAcc> = (acc: TAcc, next: T) => ConsumeRequest<TAcc>;
+export type AsyncConsumer<T, TAcc> = (acc: TAcc, next: T) => ObservableLike<ConsumeRequest<TAcc>>;
+
+export const continue_ = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
+  type: ConsumeRequestType.Continue,
   acc,
 });
 
-export const done = <TAcc>(acc: TAcc): ReducerRequest<TAcc> => ({
-  type: ReducerRequestType.Done,
+export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
+  type: ConsumeRequestType.Done,
   acc,
 });
 
-const reduceImpl = <TSrc, TAcc>(
-  reducer: (
+const consumeImpl = <TSrc, TAcc>(
+  consumer: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<TSrc, ReducerRequest<TAcc>>,
+  ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
   initial: Factory<TAcc>,
 ): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
@@ -59,10 +62,10 @@ const reduceImpl = <TSrc, TAcc>(
     (accFeedback: SubjectLike<TAcc>, enumerator: StreamLike<void, TSrc>) =>
       pipe(
         enumerator,
-        reducer(accFeedback),
+        consumer(accFeedback),
         onNotify(ev => {
           switch (ev.type) {
-            case ReducerRequestType.Continue:
+            case ConsumeRequestType.Continue:
               dispatch(accFeedback, ev.acc);
               dispatch(enumerator, none);
               break;
@@ -76,24 +79,24 @@ const reduceImpl = <TSrc, TAcc>(
       ),
   );
 
-export const reduce = <TSrc, TAcc>(
-  reducer: (acc: TAcc, next: TSrc) => ReducerRequest<TAcc>,
+export const consume = <T, TAcc>(
+  consumer: Consumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
-  reduceImpl(
-    accObs => zipWithLatestFrom(accObs, (next, acc) => reducer(acc, next)),
+): Operator<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+  consumeImpl(
+    accObs => zipWithLatestFrom(accObs, (next, acc) => consumer(acc, next)),
     initial,
   );
 
-export const reduceAsync = <TSrc, TAcc>(
-  reducer: (acc: TAcc, next: TSrc) => ObservableLike<ReducerRequest<TAcc>>,
+export const consumeAsync = <T, TAcc>(
+  consumer: AsyncConsumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
-  reduceImpl(
+): Operator<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+  consumeImpl(
     accObs =>
       compose(
         zipWithLatestFrom(accObs, (next, acc) =>
-          pipe(reducer(acc, next), takeFirst()),
+          pipe(consumer(acc, next), takeFirst()),
         ),
         switchAll(),
       ),
