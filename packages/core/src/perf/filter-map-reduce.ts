@@ -26,7 +26,7 @@ export const run = (n: number) => {
         keep(isEven),
         map(add1),
         reduce(sum, returns(0)),
-        run
+        run,
       );
     })
     .add("rx-js", () => {
