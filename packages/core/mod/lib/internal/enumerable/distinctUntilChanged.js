@@ -1,9 +1,9 @@
-import { referenceEquals } from "../../functions.js";
+import { referenceEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 class DistinctUntilChangedEnumerator {
-    constructor(delegate, equals) {
+    constructor(delegate, equality) {
         this.delegate = delegate;
-        this.equals = equals;
+        this.equality = equality;
     }
     get current() {
         return this.delegate.current;
@@ -15,14 +15,14 @@ class DistinctUntilChangedEnumerator {
         const prevCurrent = this.current;
         const hadCurrent = this.hasCurrent;
         while (this.delegate.move()) {
-            if (!hadCurrent || !this.equals(prevCurrent, this.delegate.current)) {
+            if (!hadCurrent || !this.equality(prevCurrent, this.delegate.current)) {
                 break;
             }
         }
         return this.hasCurrent;
     }
 }
-export const distinctUntilChanged = (equals = referenceEquals) => {
-    const operator = (enumerator) => new DistinctUntilChangedEnumerator(enumerator, equals);
+export const distinctUntilChanged = (equality = referenceEquality) => {
+    const operator = (enumerator) => new DistinctUntilChangedEnumerator(enumerator, equality);
     return lift(operator);
 };

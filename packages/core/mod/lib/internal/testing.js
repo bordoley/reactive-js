@@ -1,4 +1,4 @@
-import { referenceEquals, arrayEquals, } from "../functions.js";
+import { referenceEquality, arrayEquality, } from "../functions.js";
 import { isSome, isNone, none } from "../option.js";
 export const describe = (name, ...tests) => ({
     type: 1,
@@ -44,16 +44,13 @@ export const expectToThrowError = (error) => (f) => {
         throw new Error(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
     }
 };
-export const expectEquals = (b, valuesAreEqual = referenceEquals) => (a) => {
-    if (!valuesAreEqual(a, b)) {
+export const expectEquals = (b, valueEquality = referenceEquality) => (a) => {
+    if (!valueEquality(a, b)) {
         throw new Error(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
-const arrayReferenceEquals = arrayEquals(referenceEquals);
-export const expectArrayEquals = (b, valuesAreEqual) => (a) => {
-    const equals = isNone(valuesAreEqual)
-        ? arrayReferenceEquals
-        : arrayEquals(valuesAreEqual);
+export const expectArrayEquals = (b, valueEquality = referenceEquality) => (a) => {
+    const equals = arrayEquality(valueEquality);
     if (!equals(a, b)) {
         throw new Error(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }

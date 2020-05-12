@@ -3,7 +3,7 @@ import {
   Factory,
   Operator,
   compose,
-  isReferenceEqualTo,
+  isEqualTo,
   pipe,
   returns,
   Predicate,
@@ -353,10 +353,8 @@ export const manySatisfy = (
   };
 };
 
-export const char = (c: string): Parser<CharCode> => {
-  const charCode = c.charCodeAt(0);
-  return satisfy(isReferenceEqualTo(charCode));
-};
+export const char = (c: string): Parser<CharCode> =>
+  pipe(c.charCodeAt(0), isEqualTo, satisfy);
 
 export const pEof = (charStream: CharStreamLike): void =>
   charStream.move() ? throwParseError(charStream) : none;

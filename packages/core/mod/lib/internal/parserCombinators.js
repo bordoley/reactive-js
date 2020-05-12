@@ -1,4 +1,4 @@
-import { compose, isReferenceEqualTo, pipe, returns, } from "../functions.js";
+import { compose, isEqualTo, pipe, returns, } from "../functions.js";
 import { __DEV__ } from "./env.js";
 import { none, orCompute as orComputeOption } from "../option.js";
 class CharStreamImpl {
@@ -201,10 +201,7 @@ export const manySatisfy = (options = {}) => parser => {
         return charStream.src.substring(start, charStream.index + 1);
     };
 };
-export const char = (c) => {
-    const charCode = c.charCodeAt(0);
-    return satisfy(isReferenceEqualTo(charCode));
-};
+export const char = (c) => pipe(c.charCodeAt(0), isEqualTo, satisfy);
 export const pEof = (charStream) => charStream.move() ? throwParseError(charStream) : none;
 export const pSemicolon = char(";");
 export const pComma = char(",");

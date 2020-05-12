@@ -154,13 +154,13 @@ export const decrement = (x: number) => x - 1;
 
 export const decrementBy = (decr: number) => (x: number) => x - decr;
 
-export const referenceEquals = <T>(a: T, b: T) => a === b;
+export const referenceEquality = <T>(a: T, b: T) => a === b;
 
-export const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a =>
+const isReferenceEqualTo = <T>(b: T): Operator<T, boolean> => a =>
   a === b;
 
-export const isEqualTo = <T>(b: T, equality: Equality<T>) =>
-  equality === referenceEquals
+export const isEqualTo = <T>(b: T, equality: Equality<T> = referenceEquality) =>
+  equality === referenceEquality
     ? isReferenceEqualTo(b)
     : (a: T) => equality(a, b);
 
@@ -177,11 +177,10 @@ export const sum = (...args: number[]) => {
   return acc;
 };
 
-// FIXME: Would prefer not to have this here.
-export const arrayEquals = <T>(valuesAreEqual: Equality<T>) => (
+export const arrayEquality = <T>(valuesEquality: Equality<T> = referenceEquality) => (
   a: readonly T[],
   b: readonly T[],
-) => a.length === b.length && a.every((v, i) => valuesAreEqual(b[i], v));
+) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
 export function pipe<T, A>(src: T, op1: Operator<T, A>): A;
 export function pipe<T, A, B>(

@@ -1,18 +1,18 @@
 import { add } from "../../disposable.js";
-import { referenceEquals } from "../../functions.js";
+import { referenceEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class DistinctUntilChangedSubscriber extends AbstractDelegatingSubscriber {
-    constructor(delegate, equals) {
+    constructor(delegate, equality) {
         super(delegate);
-        this.equals = equals;
+        this.equality = equality;
         this.hasValue = false;
         add(this, delegate);
     }
     notify(next) {
         assertSubscriberNotifyInContinuation(this);
         const shouldEmit = !this.isDisposed &&
-            (!this.hasValue || !this.equals(this.prev, next));
+            (!this.hasValue || !this.equality(this.prev, next));
         if (shouldEmit) {
             this.prev = next;
             this.hasValue = true;
@@ -20,8 +20,8 @@ class DistinctUntilChangedSubscriber extends AbstractDelegatingSubscriber {
         }
     }
 }
-export const distinctUntilChanged = (equals = referenceEquals) => {
-    const operator = (subscriber) => new DistinctUntilChangedSubscriber(subscriber, equals);
+export const distinctUntilChanged = (equality = referenceEquality) => {
+    const operator = (subscriber) => new DistinctUntilChangedSubscriber(subscriber, equality);
     operator.isSynchronous = true;
     return lift(operator);
 };

@@ -34,7 +34,7 @@
 
 ### Functions
 
-* [arrayEquals](_functions_.md#const-arrayequals)
+* [arrayEquality](_functions_.md#const-arrayequality)
 * [bind](_functions_.md#bind)
 * [callWith](_functions_.md#callwith)
 * [compose](_functions_.md#compose)
@@ -48,10 +48,9 @@
 * [isEqualTo](_functions_.md#const-isequalto)
 * [isEven](_functions_.md#const-iseven)
 * [isOdd](_functions_.md#const-isodd)
-* [isReferenceEqualTo](_functions_.md#const-isreferenceequalto)
 * [negate](_functions_.md#const-negate)
 * [pipe](_functions_.md#pipe)
-* [referenceEquals](_functions_.md#const-referenceequals)
+* [referenceEquality](_functions_.md#const-referenceequality)
 * [returns](_functions_.md#const-returns)
 * [sum](_functions_.md#const-sum)
 
@@ -407,9 +406,9 @@ ___
 
 ## Functions
 
-### `Const` arrayEquals
+### `Const` arrayEquality
 
-▸ **arrayEquals**<**T**>(`valuesAreEqual`: [Equality](_functions_.md#equality)‹T›): *(Anonymous function)*
+▸ **arrayEquality**<**T**>(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *(Anonymous function)*
 
 **Type parameters:**
 
@@ -417,9 +416,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`valuesAreEqual` | [Equality](_functions_.md#equality)‹T› |
+Name | Type | Default |
+------ | ------ | ------ |
+`valuesEquality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
 **Returns:** *(Anonymous function)*
 
@@ -1688,10 +1687,10 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`b` | T |
-`equality` | [Equality](_functions_.md#equality)‹T› |
+Name | Type | Default |
+------ | ------ | ------ |
+`b` | T | - |
+`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
 
 **Returns:** *function*
 
@@ -1730,24 +1729,6 @@ Name | Type |
 `x` | number |
 
 **Returns:** *boolean*
-
-___
-
-### `Const` isReferenceEqualTo
-
-▸ **isReferenceEqualTo**<**T**>(`b`: T): *[Operator](_functions_.md#operator)‹T, boolean›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`b` | T |
-
-**Returns:** *[Operator](_functions_.md#operator)‹T, boolean›*
 
 ___
 
@@ -2208,9 +2189,9 @@ Name | Type |
 
 ___
 
-### `Const` referenceEquals
+### `Const` referenceEquality
 
-▸ **referenceEquals**<**T**>(`a`: T, `b`: T): *boolean*
+▸ **referenceEquality**<**T**>(`a`: T, `b`: T): *boolean*
 
 **Type parameters:**
 

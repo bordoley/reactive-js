@@ -5,8 +5,7 @@ import {
   increment,
   alwaysFalse,
   alwaysTrue,
-  arrayEquals,
-  referenceEquals,
+  arrayEquality,
   identity,
   incrementBy,
   sum,
@@ -105,8 +104,6 @@ import { dispose } from "../lib/disposable.ts";
 
 const scheduler = createHostScheduler();
 
-const arrayOfArraysEqual = arrayEquals<number>(referenceEquals);
-
 export const tests = describe(
   "observable",
   test(
@@ -132,7 +129,7 @@ export const tests = describe(
         ),
         buffer({ duration: 4, maxBufferSize: 3 }),
         toArray(),
-        expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayOfArraysEqual),
+        expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()),
       ),
     ),
     test(
@@ -215,7 +212,7 @@ export const tests = describe(
           [5, 4],
           [7, 4],
         ],
-        arrayOfArraysEqual,
+        arrayEquality(),
       ),
     ),
   ),
@@ -975,7 +972,7 @@ export const tests = describe(
             [2, 0],
             [3, 1],
           ],
-          arrayOfArraysEqual,
+          arrayEquality(),
         ),
       ),
     ),
@@ -1024,7 +1021,7 @@ export const tests = describe(
             [1, 2, 3],
             [2, 3, 4],
           ],
-          arrayOfArraysEqual,
+          arrayEquality(),
         ),
       ),
     ),
@@ -1045,7 +1042,7 @@ export const tests = describe(
             [1, 2, 3],
             [2, 3, 4],
           ],
-          arrayOfArraysEqual,
+          arrayEquality(),
         ),
       ),
     ),
@@ -1062,7 +1059,7 @@ export const tests = describe(
             [2, 2],
             [3, 3],
           ],
-          arrayOfArraysEqual,
+          arrayEquality(),
         ),
       ),
     ),

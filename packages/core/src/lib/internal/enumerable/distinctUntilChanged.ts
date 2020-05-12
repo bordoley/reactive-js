@@ -1,11 +1,11 @@
-import { referenceEquals, Equality } from "../../functions";
+import { referenceEquality, Equality } from "../../functions";
 import { EnumerableOperator, EnumeratorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
   constructor(
     private readonly delegate: EnumeratorLike<T>,
-    private readonly equals: Equality<T>,
+    private readonly equality: Equality<T>,
   ) {}
 
   get current() {
@@ -21,7 +21,7 @@ class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
     const hadCurrent = this.hasCurrent;
 
     while (this.delegate.move()) {
-      if (!hadCurrent || !this.equals(prevCurrent, this.delegate.current)) {
+      if (!hadCurrent || !this.equality(prevCurrent, this.delegate.current)) {
         break;
       }
     }
@@ -38,9 +38,9 @@ class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equals: Equality<T> = referenceEquals,
+  equality: Equality<T> = referenceEquality,
 ): EnumerableOperator<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
-    new DistinctUntilChangedEnumerator(enumerator, equals);
+    new DistinctUntilChangedEnumerator(enumerator, equality);
   return lift(operator);
 };

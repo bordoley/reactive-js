@@ -1,12 +1,11 @@
-import { compose, pipe, returns, increment, alwaysFalse, alwaysTrue, arrayEquals, referenceEquals, identity, incrementBy, sum, bind, defer, ignore, } from "../lib/functions.js";
+import { compose, pipe, returns, increment, alwaysFalse, alwaysTrue, arrayEquality, identity, incrementBy, sum, bind, defer, ignore, } from "../lib/functions.js";
 import { forEach as forEachEnumerable, fromArray as fromArrayEnumerable, } from "../lib/enumerable.js";
 import { await_, buffer, combineLatestWith, compute, concat, concatWith, contains, createObservable, distinctUntilChanged, empty, everySatisfy, forEach, fromArray, fromIterable, fromPromise, generate, ignoreElements, keep, map, merge, mergeWith, never, noneSatisfy, fromValue, onNotify, repeat, retry, scan, scanAsync, share, someSatisfy, subscribe, takeFirst, takeLast, takeWhile, throttle, throwIfEmpty, throws, timeout, toArray, toPromise, toValue, withLatestFrom, zip, catchError, genMap, endWith, mapTo, reduce, skipFirst, switchMap, onSubscribe, startWith, createSubject, exhaustMap, mergeMap, switchAll, zipWith, zipWithLatestFrom, dispatchTo, dispatch, } from "../lib/observable.js";
 import { createHostScheduler, createVirtualTimeScheduler, } from "../lib/scheduler.js";
 import { test, describe, testAsync, expectArrayEquals, expectToThrowError, expectTrue, expectFalse, expectEquals, expectToThrow, expectPromiseToThrow, mockFn, expectToHaveBeenCalledTimes, expectSome, } from "../lib/internal/testing.js";
 import { dispose } from "../lib/disposable.js";
 const scheduler = createHostScheduler();
-const arrayOfArraysEqual = arrayEquals(referenceEquals);
-export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4], fromArray(), await_(compose(fromValue(), endWith(1))), toValue(), expectEquals(0))), describe("buffer", test("with duration and maxBufferSize", defer(concat(pipe([1, 2, 3, 4], fromArray()), pipe([1, 2, 3], fromArray({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayOfArraysEqual))), test("when duration observable throws", bind(expectToThrow, defer([1, 2, 3, 4], fromArray(), buffer({ duration: _ => throws()(() => new Error()) }), toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })))))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
+export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4], fromArray(), await_(compose(fromValue(), endWith(1))), toValue(), expectEquals(0))), describe("buffer", test("with duration and maxBufferSize", defer(concat(pipe([1, 2, 3, 4], fromArray()), pipe([1, 2, 3], fromArray({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", bind(expectToThrow, defer([1, 2, 3, 4], fromArray(), buffer({ duration: _ => throws()(() => new Error()) }), toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })))))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();
     pipe(1, fromValue(), concatWith(pipe(error, returns, throws())), catchError(ignore), toArray(), expectArrayEquals([1]));
 }), test("source throws, continues with second observable", () => {
@@ -22,7 +21,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     [5, 2],
     [5, 4],
     [7, 4],
-], arrayOfArraysEqual))), test("concat", defer(concat(fromValue()(1), fromValue()(2), fromValue()(3)), toArray(), expectArrayEquals([1, 2, 3]))), describe("contains", test("source is empty", defer(empty(), contains(1), toValue(), expectFalse)), test("source contains value", defer(generate(increment, returns(0)), contains(1), toValue(), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse))), describe("createObservable", test("disposes the subscriber if onSubscribe throws", () => {
+], arrayEquality()))), test("concat", defer(concat(fromValue()(1), fromValue()(2), fromValue()(3)), toArray(), expectArrayEquals([1, 2, 3]))), describe("contains", test("source is empty", defer(empty(), contains(1), toValue(), expectFalse)), test("source contains value", defer(generate(increment, returns(0)), contains(1), toValue(), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse))), describe("createObservable", test("disposes the subscriber if onSubscribe throws", () => {
     const cause = new Error();
     const observable = createObservable(_ => {
         throw cause;
@@ -139,7 +138,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     [1, 0],
     [2, 0],
     [3, 1],
-], arrayOfArraysEqual))), test("when latest produces no values", defer([0], fromArray({ delay: 1 }), withLatestFrom(empty(), sum), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
+], arrayEquality()))), test("when latest produces no values", defer([0], fromArray({ delay: 1 }), withLatestFrom(empty(), sum), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = new Error();
     pipe(defer([0], fromArray({ delay: 1 }), withLatestFrom(throws()(returns(error)), sum), toArray(), expectArrayEquals([])), expectToThrowError(error));
 })), describe("zip", test("with non-delayed sources", defer(zip([
@@ -149,17 +148,17 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
 ], (x, y, z) => [x, y, z]), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
-], arrayOfArraysEqual))), test("with synchronous and non-synchronous sources", defer(zip([
+], arrayEquality()))), test("with synchronous and non-synchronous sources", defer(zip([
     pipe([1, 2], fromArray({ delay: 1 })),
     pipe([2, 3], fromIterable()),
     pipe([3, 4, 5], fromArray({ delay: 1 })),
 ], (x, y, z) => [x, y, z]), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
-], arrayOfArraysEqual))), test("fast with slow", defer([1, 2, 3], fromArray({ delay: 1 }), zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]), toArray(), expectArrayEquals([
+], arrayEquality()))), test("fast with slow", defer([1, 2, 3], fromArray({ delay: 1 }), zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]), toArray(), expectArrayEquals([
     [1, 1],
     [2, 2],
     [3, 3],
-], arrayOfArraysEqual))), test("when source throws", bind(expectToThrow, defer(() => {
+], arrayEquality()))), test("when source throws", bind(expectToThrow, defer(() => {
     throw new Error();
 }, throws(), zipWith(fromArray()([1, 2, 3]), (_, b) => b), toArray())))), describe("zipWithLatestFrom", test("when source throws", bind(expectToThrow, defer(throws()(() => new Error()), zipWithLatestFrom(fromValue()(1), (_, b) => b), toValue()))), test("when other throws", bind(expectToThrow, defer([1, 2, 3], fromArray({ delay: 1 }), zipWithLatestFrom(throws()(() => new Error()), (_, b) => b), toValue()))), test("when other completes first", defer([1], fromArray({ delay: 1 }), zipWithLatestFrom(fromArray()([2]), (_, b) => b), toValue(), expectEquals(2)))));
