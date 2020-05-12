@@ -1,12 +1,12 @@
-import { bind, defer, pipe, returns } from "@reactive-js/core/lib/functions.ts";
-import { none } from "@reactive-js/core/lib/option.ts";
+import { bind, defer, pipe, returns } from "../../lib/functions.ts";
+import { none } from "../../lib/option.ts";
 import {
   test,
   describe,
   expectToThrow,
   expectArrayEquals,
   expectEquals,
-} from "@reactive-js/core/lib/internal/testing.ts";
+} from "../../lib/internal/testing.ts";
 import {
   string,
   map,
@@ -25,7 +25,7 @@ import {
   pEof,
   parseWithOrThrow,
   throwParseError,
-} from "../lib/internal/parserCombinators.ts";
+} from "../../lib/internal/parserCombinators.ts";
 
 export const tests = describe(
   "parser combinators",

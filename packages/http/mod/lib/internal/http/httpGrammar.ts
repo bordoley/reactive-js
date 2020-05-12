@@ -18,7 +18,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "../parserCombinators.ts";
+} from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { HttpHeaders } from "./interfaces.ts";
 
 export const enum ASCII {

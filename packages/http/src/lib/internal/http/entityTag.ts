@@ -9,7 +9,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "../parserCombinators";
+} from "@reactive-js/core/lib/internal/parserCombinators";
 import { ASCII } from "./httpGrammar";
 import { EntityTag } from "./interfaces";
 

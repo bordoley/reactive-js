@@ -1,6 +1,6 @@
 import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome, Option, none } from "@reactive-js/core/lib/option";
-import { concatWith, map, parseWith } from "../parserCombinators";
+import { concatWith, map, parseWith } from "@reactive-js/core/lib/internal/parserCombinators";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders";
 import {

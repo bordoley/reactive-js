@@ -1,6 +1,6 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { isNone, none } from "../../../../../core/mod/lib/option.js";
-import { parseWith } from "../parserCombinators.js";
+import { parseWith } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { pToken, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { parseMediaType, mediaTypeToString, parseMediaTypeOrThrow, mediaTypeIsCompressible, } from "./mediaType.js";

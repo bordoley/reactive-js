@@ -6,7 +6,7 @@ import {
   pEquals,
   parseWith,
   parseWithOrThrow,
-} from "../parserCombinators.ts";
+} from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import {
   pToken,
   pTokenOrQuotedString,

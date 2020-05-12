@@ -11,6 +11,7 @@ import { tests as flowableTests } from "./src/test/flowable.test";
 import { tests as queuesTests } from "./src/test/internal/queues.test";
 import { tests as nodeTests } from "./src/test/node.test";
 import { tests as observableTests } from "./src/test/observable.test";
+import { tests as parserCombinatorTests } from "./src/test/internal/parserCombinators.test";
 //import { tests as reactiveCacheTests } from "./reactiveCache.test";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
 import { tests as stateStoreTests } from "./src/test/stateStore.test";
@@ -23,6 +24,7 @@ const tests = [
   flowableTests,
   nodeTests,
   observableTests,
+  parserCombinatorTests,
   queuesTests,
   //reactiveCacheTests,
   //resourceManagerTests,
