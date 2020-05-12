@@ -1,5 +1,5 @@
-import { AbstractSchedulerContinuation } from "../../scheduler.js";
 import { add } from "../../disposable.js";
+import { AbstractSchedulerContinuation } from "../../scheduler.js";
 export class AbstractProducer extends AbstractSchedulerContinuation {
     constructor(subscriber) {
         super();

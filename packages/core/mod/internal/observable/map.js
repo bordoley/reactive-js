@@ -1,7 +1,7 @@
+import { add } from "../../disposable.js";
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
-import { add } from "../../disposable.js";
 class MapSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, mapper) {
         super(delegate);

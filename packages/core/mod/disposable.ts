@@ -74,9 +74,10 @@ export const addDisposableOrTeardown = <T extends DisposableLike>(
   d: DisposableOrTeardown,
 ): Operator<T, T> => disposable => add(disposable, d);
 
-export const toErrorHandler = (disposable: DisposableLike) => (
-  cause: unknown,
-) => dispose(disposable, { cause });
+export const toErrorHandler: Operator<
+  DisposableLike,
+  SideEffect1<unknown>
+> = disposable => cause => dispose(disposable, { cause });
 
 const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {

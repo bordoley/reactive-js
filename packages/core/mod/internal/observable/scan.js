@@ -1,6 +1,6 @@
+import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { add } from "../../disposable.js";
 class ScanSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, scanner, acc) {
         super(delegate);

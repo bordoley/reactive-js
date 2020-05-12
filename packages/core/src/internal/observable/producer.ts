@@ -1,7 +1,7 @@
+import { add } from "../../disposable";
 import { AbstractSchedulerContinuation } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
 import { SubscriberLike } from "./interfaces";
-import { add } from "../../disposable";
 
 export abstract class AbstractProducer<
   T

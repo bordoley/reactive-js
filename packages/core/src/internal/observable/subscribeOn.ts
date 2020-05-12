@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown, add } from "../../disposable";
 import { pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createObservable } from "./createObservable";
@@ -5,7 +6,6 @@ import { dispatchTo } from "./dispatcher";
 import { ObservableOperator } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { addDisposableOrTeardown, add } from "../../disposable";
 
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.

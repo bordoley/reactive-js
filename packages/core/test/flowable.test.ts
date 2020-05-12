@@ -40,7 +40,7 @@ export const tests = describe(
     );
     const dest = createFlowableSinkAccumulator(
       (acc: string, next: string) => acc + next,
-      () => "",
+      returns(""),
     );
 
     const scheduler = createVirtualTimeScheduler();

@@ -1,10 +1,10 @@
+import { addDisposableOrTeardown } from "../../disposable";
 import { pipe, Operator } from "../../functions";
 import { none, Option, isSome } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { addDisposableOrTeardown } from "../../disposable";
 
 /**
  * Returns a Promise that completes with the last value produced by

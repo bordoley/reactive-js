@@ -1,10 +1,10 @@
+import { add } from "../../disposable";
 import { SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { add } from "../../disposable";
 
 class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(delegate: SubscriberLike<TB>) {

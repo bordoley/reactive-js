@@ -1,3 +1,4 @@
+import { add } from "../../disposable.ts";
 import { referenceEquals, Equality } from "../../functions.ts";
 import { Option } from "../../option.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -6,7 +7,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { add } from "../../disposable.ts";
 
 class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   T,

@@ -15,8 +15,8 @@ import {
   PrioritySchedulerLike,
   PausableSchedulerLike,
 } from "./interfaces.ts";
-import { toSchedulerWithPriority } from "./schedulerWithPriority.ts";
 import { schedule, scheduleWithPriority } from "./schedule.ts";
+import { toSchedulerWithPriority } from "./schedulerWithPriority.ts";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;

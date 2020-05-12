@@ -1,5 +1,6 @@
 import { dispose } from "../../disposable.ts";
 import { Operator } from "../../functions.ts";
+import { schedule } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
 import {
@@ -7,7 +8,6 @@ import {
   createDelayedScheduledObservable,
 } from "./observable.ts";
 import { AbstractProducer } from "./producer.ts";
-import { schedule } from "../../scheduler.ts";
 
 class FromArrayProducer<T> extends AbstractProducer<T> {
   private index = this.startIndex;

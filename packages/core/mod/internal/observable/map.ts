@@ -1,8 +1,8 @@
+import { add } from "../../disposable.ts";
 import { returns, Operator } from "../../functions.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
-import { add } from "../../disposable.ts";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(

@@ -1,5 +1,5 @@
-import { createObservable, ObservableLike, dispatch } from "../../observable";
 import { add } from "../../disposable";
+import { createObservable, ObservableLike, dispatch } from "../../observable";
 
 const reservedEvents = ["error", "open"];
 

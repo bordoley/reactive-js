@@ -1,3 +1,4 @@
+import { add } from "../../disposable.ts";
 import { Predicate, TypePredicate } from "../../functions.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -5,7 +6,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { add } from "../../disposable.ts";
 
 class KeepTypeSubscriber<
   TA,

@@ -1,3 +1,4 @@
+import { addDisposableOrTeardown } from "../../disposable.ts";
 import { compose, pipe, Operator } from "../../functions.ts";
 import {
   ObservableLike,
@@ -12,7 +13,6 @@ import { StreamLike } from "../observable/interfaces.ts";
 import { subscribe } from "../observable/subscribe.ts";
 import { StreamableLike } from "./interfaces.ts";
 import { stream } from "./streamable.ts";
-import { addDisposableOrTeardown } from "../../disposable.ts";
 
 const ignoreAndNotifyVoid: Operator<
   StreamLike<any, any>,

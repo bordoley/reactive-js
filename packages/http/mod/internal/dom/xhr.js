@@ -1,4 +1,5 @@
 import { dispose, add } from "../../../../core/lib/disposable.js";
+import { bind } from "../../../../core/lib/functions.js";
 import { createObservable, createSubject, dispatch, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
@@ -47,11 +48,9 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             dispatch(bodyStream, xhr.response);
         }
     };
-    xhr.onloadstart = () => {
-        dispatch(dispatcher, {
-            type: 1,
-        });
-    };
+    xhr.onloadstart = bind(dispatch, dispatcher, {
+        type: 1,
+    });
     xhr.upload.onprogress = ev => {
         const { loaded: count } = ev;
         dispatch(dispatcher, {
@@ -59,11 +58,9 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             count,
         });
     };
-    xhr.upload.onload = _ => {
-        dispatch(dispatcher, {
-            type: 3,
-        });
-    };
+    xhr.upload.onload = bind(dispatch, dispatcher, {
+        type: 3,
+    });
     xhr.ontimeout = () => {
         const cause = new Error("Network request failed");
         dispose(dispatcher, { cause });

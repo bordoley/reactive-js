@@ -2,8 +2,8 @@ import { AbstractSerialDisposable, disposed, AbstractDisposable, dispose, add, }
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
-import { toSchedulerWithPriority } from "./schedulerWithPriority.js";
 import { schedule, scheduleWithPriority } from "./schedule.js";
+import { toSchedulerWithPriority } from "./schedulerWithPriority.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();

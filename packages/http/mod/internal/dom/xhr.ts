@@ -1,4 +1,5 @@
 import { dispose, add } from "../../../../core/lib/disposable.ts";
+import { bind } from "../../../../core/lib/functions.ts";
 import {
   createObservable,
   createSubject,
@@ -83,11 +84,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       }
     };
 
-    xhr.onloadstart = () => {
-      dispatch(dispatcher, {
-        type: HttpClientRequestStatusType.Start,
-      });
-    };
+    xhr.onloadstart = bind(dispatch, dispatcher, {
+      type: HttpClientRequestStatusType.Start,
+    });
 
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
@@ -98,11 +97,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       });
     };
 
-    xhr.upload.onload = _ => {
-      dispatch(dispatcher, {
-        type: HttpClientRequestStatusType.Completed,
-      });
-    };
+    xhr.upload.onload = bind(dispatch, dispatcher, {
+      type: HttpClientRequestStatusType.Completed,
+    });
 
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this

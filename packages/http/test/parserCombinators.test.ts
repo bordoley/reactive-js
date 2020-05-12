@@ -26,6 +26,7 @@ import {
   parseWithOrThrow,
   throwParseError,
 } from "../src/internal/parserCombinators";
+import { bind, defer } from "@reactive-js/core/lib/functions";
 
 export const tests = describe(
   "parser combinators",
@@ -110,7 +111,8 @@ export const tests = describe(
     pipe("abcd", parseWithOrThrow(parser), expectArrayEquals(["ab", "cd"]));
   }),
 
-  test("throwParseError", () => {
-    expectToThrow(() => pipe("abc", createCharStream, throwParseError));
-  }),
+  test(
+    "throwParseError",
+    bind(expectToThrow, defer("abc", createCharStream, throwParseError)),
+  ),
 );

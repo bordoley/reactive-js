@@ -1,3 +1,4 @@
+import { add, addDisposableOrTeardown } from "./disposable";
 import {
   Operator,
   compose,
@@ -39,7 +40,6 @@ import {
   lift,
   stream,
 } from "./streamable";
-import { add, addDisposableOrTeardown } from "./disposable";
 
 export const enum FlowMode {
   Resume = 1,
@@ -223,7 +223,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
         scheduler =>
           pipe(
             events,
-            takeWhile(ev => ev.type == FlowEventType.Next),
+            takeWhile(ev => ev.type === FlowEventType.Next),
             keepType(isNext),
             mapObs(ev => ev.data),
             reduce(this.reducer, returns(this.acc)),

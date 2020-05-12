@@ -17,6 +17,7 @@ import {
   returns,
   increment,
   compose,
+  defer,
 } from "@reactive-js/core/lib/functions";
 import {
   createReadableFlowable,
@@ -135,8 +136,8 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createReadableFlowable(() =>
-              createDisposableNodeStream(fs.createReadStream(path)),
+            body: createReadableFlowable(
+              defer(path, fs.createReadStream, createDisposableNodeStream),
             ),
             contentInfo: {
               contentLength: next.size,
@@ -291,8 +292,8 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createReadableFlowable(() =>
-        createDisposableNodeStream(fs.createReadStream(file)),
+      body: createReadableFlowable(
+        defer(file, fs.createReadStream, createDisposableNodeStream),
       ),
       contentInfo: {
         contentLength: stats.size,
