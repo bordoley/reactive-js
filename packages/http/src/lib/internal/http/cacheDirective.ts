@@ -6,7 +6,7 @@ import {
   pEquals,
   parseWith,
   parseWithOrThrow,
-} from "../parserCombinators";
+} from "@reactive-js/core/lib/internal/parserCombinators";
 import {
   pToken,
   pTokenOrQuotedString,

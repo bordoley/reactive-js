@@ -1,6 +1,6 @@
 import { pipe, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none, Option } from "../../../../../core/mod/lib/option.ts";
-import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators.ts";
+import { parseWith, pAsterisk, or, mapTo } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import {
   entityTagToString,
   pETag,

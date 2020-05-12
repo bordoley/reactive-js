@@ -18,7 +18,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "../parserCombinators";
+} from "@reactive-js/core/lib/internal/parserCombinators";
 import { HttpHeaders } from "./interfaces";
 
 export const enum ASCII {

@@ -3,7 +3,7 @@ import {
   Parser,
   parseWith,
   parseWithOrThrow,
-} from "../parserCombinators";
+} from "@reactive-js/core/lib/internal/parserCombinators";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import { MediaType } from "./interfaces";
 

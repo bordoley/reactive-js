@@ -1,4 +1,4 @@
-import { pForwardSlash, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
+import { pForwardSlash, parseWith, parseWithOrThrow, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.js";
 export const pMediaType = charStream => {
     const type = pToken(charStream);

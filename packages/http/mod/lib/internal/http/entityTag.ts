@@ -9,7 +9,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "../parserCombinators.ts";
+} from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { ASCII } from "./httpGrammar.ts";
 import { EntityTag } from "./interfaces.ts";
 
