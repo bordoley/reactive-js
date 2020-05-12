@@ -1,8 +1,8 @@
+import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class TakeFirstSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, maxCount) {
         super(delegate);

@@ -1,5 +1,5 @@
-import { isSome, none } from "./option.js";
 import { bind } from "./functions.js";
+import { isSome, none } from "./option.js";
 export const dispose = (disposable, e) => {
     disposable.dispose(e);
 };
@@ -8,7 +8,7 @@ export const disposeOnError = (disposable) => (error) => {
         dispose(disposable, error);
     }
 };
-export const toErrorHandler = (disposable) => (cause) => dispose(disposable, ({ cause }));
+export const toErrorHandler = (disposable) => (cause) => dispose(disposable, { cause });
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {

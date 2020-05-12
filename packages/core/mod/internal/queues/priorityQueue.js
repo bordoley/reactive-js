@@ -1,6 +1,6 @@
 import { fromArray, enumerate } from "../../enumerable.js";
-import { isSome, none } from "../../option.js";
 import { pipe } from "../../functions.js";
+import { isSome, none } from "../../option.js";
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;

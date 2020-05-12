@@ -68,7 +68,10 @@ const redirectCodes = [
 ];
 
 export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
-  encodeHttpRequest: Operator<HttpClientRequest<TReq>, HttpClientRequest<TReq>> = identity,
+  encodeHttpRequest: Operator<
+    HttpClientRequest<TReq>,
+    HttpClientRequest<TReq>
+  > = identity,
 ) => (
   httpClient: HttpClient<HttpClientRequest<TReq>, TResp>,
 ): HttpClient<HttpClientRequest<TReq>, TResp> => {

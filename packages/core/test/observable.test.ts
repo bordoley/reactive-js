@@ -193,10 +193,7 @@ export const tests = describe(
       generate(incrementBy(2), returns(3), { delay: 2 }),
       takeFirst(3),
       combineLatestWith(
-        pipe(
-          generate(incrementBy(2), returns(2), { delay: 3 }),
-          takeFirst(2),
-        ),
+        pipe(generate(incrementBy(2), returns(2), { delay: 3 }), takeFirst(2)),
         (a, b) => [a, b],
       ),
       toArray(),
@@ -246,9 +243,9 @@ export const tests = describe(
     test("when queuing multiple events", () =>
       pipe(
         createObservable(dispatcher => {
-          dispatch(dispatcher,1);
-          dispatch(dispatcher,2);
-          dispatch(dispatcher,3);
+          dispatch(dispatcher, 1);
+          dispatch(dispatcher, 2);
+          dispatch(dispatcher, 3);
           dispose(dispatcher);
         }),
         toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
@@ -615,10 +612,7 @@ export const tests = describe(
       pipe(
         [1, 2, 3],
         fromArray({ delay: 4 }),
-        scanAsync<number, number>(
-          (acc, x) => fromValue()(x + acc),
-          returns(0),
-        ),
+        scanAsync<number, number>((acc, x) => fromValue()(x + acc), returns(0)),
         toArray(),
         expectArrayEquals([1, 3, 6]),
       )),
@@ -639,10 +633,7 @@ export const tests = describe(
       pipe(
         [1, 2, 3],
         fromArray(),
-        scanAsync<number, number>(
-          (acc, x) => fromValue()(x + acc),
-          returns(0),
-        ),
+        scanAsync<number, number>((acc, x) => fromValue()(x + acc), returns(0)),
         toArray(),
         expectArrayEquals([1, 3, 6]),
       )),

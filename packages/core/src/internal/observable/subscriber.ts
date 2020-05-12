@@ -19,8 +19,9 @@ const _assertSubscriberNotifyInContinuation = __DEV__
   ? assertSubscriberNotifyInContinuationDev
   : assertSubscriberNotifyInContinuationProduction;
 
-export const assertSubscriberNotifyInContinuation: SideEffect1<SubscriberLike<unknown>> = 
-  _assertSubscriberNotifyInContinuation;
+export const assertSubscriberNotifyInContinuation: SideEffect1<SubscriberLike<
+  unknown
+>> = _assertSubscriberNotifyInContinuation;
 
 /**
  * Abstract base class for implementing the `SubscriberLike` interface.

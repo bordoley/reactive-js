@@ -1,6 +1,11 @@
-import { referenceEquals, Operator, Equality, Predicate } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
+import {
+  referenceEquals,
+  Operator,
+  Equality,
+  Predicate,
+} from "../../functions.ts";
 import { enumerate } from "./enumerate.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 /**
  * Returns `true` value if the any item satisfies the predicate, otherwise `false`.
@@ -25,7 +30,5 @@ export const someSatisfy = <T>(
  * @param value
  * @param equals
  */
-export const contains = <T>(
-  value: T,
-  equals: Equality<T> = referenceEquals,
-) => someSatisfy((b: T) => equals(value, b));
+export const contains = <T>(value: T, equals: Equality<T> = referenceEquals) =>
+  someSatisfy((b: T) => equals(value, b));

@@ -4,7 +4,10 @@ import { ObservableLike, SubscriberLike } from "./interfaces";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly factory: Operator<SubscriberLike<T>, SchedulerContinuationLike | SideEffect>,
+    private readonly factory: Operator<
+      SubscriberLike<T>,
+      SchedulerContinuationLike | SideEffect
+    >,
     readonly isSynchronous: boolean,
     readonly delay: number,
   ) {}

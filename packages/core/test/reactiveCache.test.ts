@@ -97,10 +97,7 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      forEach(
-        x => x(),
-        returns(scheduler),
-      ),
+      forEach(x => x(), returns(scheduler)),
     );
   }),
 
@@ -131,10 +128,7 @@ export const tests = describe(
         },
       ],
       fromArray(),
-      forEach(
-        x => x(),
-        returns(scheduler),
-      ),
+      forEach(x => x(), returns(scheduler)),
     );
   }),
 
@@ -162,10 +156,7 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      forEach(
-        x => x(),
-        returns(scheduler),
-      ),
+      forEach(x => x(), returns(scheduler)),
     );
   }),
 );

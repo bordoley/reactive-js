@@ -1,6 +1,7 @@
 import {
   AbstractDisposable,
   DisposableLike,
+  dispose,
 } from "@reactive-js/core/lib/disposable";
 import { pipe, bind } from "@reactive-js/core/lib/functions";
 import {
@@ -12,7 +13,6 @@ import {
   DispatcherLike,
 } from "@reactive-js/core/lib/observable";
 import { WebResponseBodyLike } from "./interfaces";
-import { dispose } from "@reactive-js/core/lib/disposable";
 
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (dispatcher: DispatcherLike<string>) => {

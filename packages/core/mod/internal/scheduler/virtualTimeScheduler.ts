@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { alwaysFalse } from "../../functions.ts";
 import { none, isSome } from "../../option.ts";
 import { createPriorityQueue, QueueLike } from "../queues.ts";
@@ -7,7 +8,6 @@ import {
   VirtualTimeSchedulerLike,
   SchedulerLike,
 } from "./interfaces.ts";
-import { dispose } from "../../disposable.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;

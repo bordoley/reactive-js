@@ -1,11 +1,20 @@
+import {
+  Selector2,
+  Selector3,
+  Selector4,
+  Selector5,
+  Selector6,
+  Selector7,
+  Selector8,
+  Selector9,
+} from "../../functions.ts";
 import { none } from "../../option.ts";
+import { enumerate } from "./enumerate.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
-import { Selector2, Selector3, Selector4, Selector5, Selector6, Selector7, Selector8, Selector9 } from "../../functions.ts";
-import { enumerate } from "./enumerate.ts";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
@@ -66,11 +75,11 @@ class ZipEnumerable<T> implements EnumerableLike<T> {
 
 export function zip<TA, TB, T>(
   observables: [EnumerableLike<TA>, EnumerableLike<TB>],
-  selector: Selector2<TA, TB, T>
+  selector: Selector2<TA, TB, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, T>(
   observables: [EnumerableLike<TA>, EnumerableLike<TB>, EnumerableLike<TC>],
-  selector: Selector3<TA, TB, TC, T>
+  selector: Selector3<TA, TB, TC, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, T>(
   observables: [
@@ -79,7 +88,7 @@ export function zip<TA, TB, TC, TD, T>(
     EnumerableLike<TC>,
     EnumerableLike<TD>,
   ],
-  selector: Selector4<TA, TB, TC, TD, T>
+  selector: Selector4<TA, TB, TC, TD, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, T>(
   observables: [
@@ -89,7 +98,7 @@ export function zip<TA, TB, TC, TD, TE, T>(
     EnumerableLike<TD>,
     EnumerableLike<TE>,
   ],
-  selector: Selector5<TA, TB, TC, TD, TE, T>
+  selector: Selector5<TA, TB, TC, TD, TE, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, T>(
   observables: [
@@ -100,7 +109,7 @@ export function zip<TA, TB, TC, TD, TE, TF, T>(
     EnumerableLike<TE>,
     EnumerableLike<TF>,
   ],
-  selector: Selector6<TA, TB, TC, TD, TE, TF, T>
+  selector: Selector6<TA, TB, TC, TD, TE, TF, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
   observables: [
@@ -112,7 +121,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
     EnumerableLike<TF>,
     EnumerableLike<TG>,
   ],
-  selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>
+  selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   observables: [
@@ -125,7 +134,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
     EnumerableLike<TG>,
     EnumerableLike<TH>,
   ],
-  selector: Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T>
+  selector: Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   observables: [
@@ -139,7 +148,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     EnumerableLike<TH>,
     EnumerableLike<TI>,
   ],
-  selector: Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> 
+  selector: Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>,
 ): EnumerableLike<T>;
 
 /**

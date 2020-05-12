@@ -1,11 +1,11 @@
+import { dispose } from "../../disposable";
+import { Predicate } from "../../functions";
 import { ObservableOperator, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { dispose } from "../../disposable";
-import { Predicate } from "../../functions";
 
 class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(

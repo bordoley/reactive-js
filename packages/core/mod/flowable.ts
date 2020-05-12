@@ -206,10 +206,7 @@ export interface FlowableSinkAccumulatorLike<T, TAcc>
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
   implements FlowableSinkAccumulatorLike<T, TAcc> {
-  constructor(
-    private readonly reducer: Reducer<T, TAcc>,
-    private _acc: TAcc,
-  ) {}
+  constructor(private readonly reducer: Reducer<T, TAcc>, private _acc: TAcc) {}
 
   get acc() {
     return this._acc;

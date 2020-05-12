@@ -1,10 +1,10 @@
+import { dispose } from "../../../../core/lib/disposable.js";
 import { bind, pipe } from "../../../../core/lib/functions.js";
 import { dispatch, fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../core/lib/observable.js";
 import { isSome } from "../../../../core/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
 import { HttpResponseBodyImpl } from "./httpResponseBody.js";
-import { dispose } from "../../../../core/lib/disposable.js";
 const loadBodyContent = async (response) => {
     const { body, contentInfo } = response;
     if (isSome(contentInfo)) {

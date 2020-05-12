@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { referenceEquals, Equality, Predicate } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
@@ -7,7 +8,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
-import { dispose } from "../../disposable";
 
 class SomeSatisfySubscriber<T> extends AbstractDelegatingSubscriber<
   T,
@@ -61,7 +61,5 @@ export const someSatisfy = <T>(
  * @param value
  * @param equals
  */
-export const contains = <T>(
-  value: T,
-  equals: Equality<T> = referenceEquals,
-) => someSatisfy((b: T) => equals(value, b));
+export const contains = <T>(value: T, equals: Equality<T> = referenceEquals) =>
+  someSatisfy((b: T) => equals(value, b));

@@ -1,6 +1,6 @@
 import { Operator, Factory, Reducer } from "../../functions";
-import { EnumerableLike } from "./interfaces";
 import { enumerate } from "./enumerate";
+import { EnumerableLike } from "./interfaces";
 
 /**
  * Applies an accumulator function over the source, returning the accumulated result.

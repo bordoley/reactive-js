@@ -1,7 +1,7 @@
 import { EnumeratorLike, fromArray, enumerate } from "../../enumerable";
+import { Comparator, pipe } from "../../functions";
 import { isSome, none } from "../../option";
 import { QueueLike } from "./interfaces";
-import { Comparator, pipe } from "../../functions";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 

@@ -1,5 +1,9 @@
 import { FlowableLike, fromValue } from "../../../../core/lib/flowable.ts";
-import { Operator, Selector2, SideEffect2 } from "../../../../core/lib/functions.ts";
+import {
+  Operator,
+  Selector2,
+  SideEffect2,
+} from "../../../../core/lib/functions.ts";
 import { isSome } from "../../../../core/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.ts";

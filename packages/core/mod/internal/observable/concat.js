@@ -1,6 +1,6 @@
+import { dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { AbstractDelegatingSubscriber } from "./subscriber.js";
-import { dispose } from "../../disposable.js";
 class ConcatSubscriber extends AbstractDelegatingSubscriber {
     constructor(delegate, observables, next) {
         super(delegate);

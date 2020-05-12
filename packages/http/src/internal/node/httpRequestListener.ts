@@ -2,7 +2,13 @@ import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { DisposableValueLike } from "@reactive-js/core/lib/disposable";
 import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
-import { bind, pipe, returns, Operator } from "@reactive-js/core/lib/functions";
+import {
+  bind,
+  pipe,
+  returns,
+  Operator,
+  SideEffect2,
+} from "@reactive-js/core/lib/functions";
 import {
   createReadableFlowable,
   createWritableFlowableSink,
@@ -29,7 +35,6 @@ import {
   HttpServerRequest,
   HttpServer,
 } from "../../http";
-import { SideEffect2 } from "@reactive-js/core/lib/functions";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<FlowableLike<Uint8Array>>,
@@ -85,18 +90,15 @@ export const createHttpRequestListener = (
     const responseBody = createWritableFlowableSink(returns(response));
 
     return pipe(
-      bind(
-        parseHttpRequestFromHeaders,
-        {
-          method: method as HttpMethod,
-          path,
-          headers: headers as HttpHeaders,
-          httpVersionMajor,
-          httpVersionMinor,
-          isTransportSecure,
-          body: requestBody,
-        },
-      ),
+      bind(parseHttpRequestFromHeaders, {
+        method: method as HttpMethod,
+        path,
+        headers: headers as HttpHeaders,
+        httpVersionMajor,
+        httpVersionMinor,
+        isTransportSecure,
+        body: requestBody,
+      }),
       compute(),
       await_(handler),
       onNotify(writeResponseMessage(response.value)),

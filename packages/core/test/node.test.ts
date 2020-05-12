@@ -42,8 +42,8 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableFlowableSink(bind(
-        createDisposableNodeStream, writable),
+      const dest = createWritableFlowableSink(
+        bind(createDisposableNodeStream, writable),
       );
 
       const src = pipe(
@@ -70,8 +70,8 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableFlowableSink(bind(
-        createDisposableNodeStream, writable),
+      const dest = createWritableFlowableSink(
+        bind(createDisposableNodeStream, writable),
       );
 
       const src = pipe(

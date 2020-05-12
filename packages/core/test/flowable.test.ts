@@ -10,7 +10,13 @@ import {
   createFlowableSinkAccumulator,
 } from "../src/flowable";
 import { increment, pipe, returns, sum, bind } from "../src/functions";
-import { onNotify, subscribe, generate, fromArray, dispatch } from "../src/observable";
+import {
+  onNotify,
+  subscribe,
+  generate,
+  fromArray,
+  dispatch,
+} from "../src/observable";
 import { createVirtualTimeScheduler, schedule } from "../src/scheduler";
 import {
   test,
@@ -79,38 +85,23 @@ export const tests = describe(
   test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = stream(
-      pipe(
-        generate(increment, returns(0), { delay: 1 }),
-        fromObservable,
-      ),
-      scheduler
+      pipe(generate(increment, returns(0), { delay: 1 }), fromObservable),
+      scheduler,
     );
 
     dispatch(generateStream, FlowMode.Resume);
 
     pipe(
       scheduler,
-      schedule(
-        bind(dispatch, generateStream, FlowMode.Pause),
-        { delay: 2 },
-      ),
+      schedule(bind(dispatch, generateStream, FlowMode.Pause), { delay: 2 }),
     );
 
     pipe(
       scheduler,
-      schedule(
-        bind(dispatch, generateStream, FlowMode.Resume),
-        { delay: 4 },
-      ),
+      schedule(bind(dispatch, generateStream, FlowMode.Resume), { delay: 4 }),
     );
 
-    pipe(
-      scheduler,
-      schedule(
-        bind(dispose, generateStream),
-        { delay: 5 },
-      ),
-    );
+    pipe(scheduler, schedule(bind(dispose, generateStream), { delay: 5 }));
 
     const f = mockFn();
     const subscription = pipe(
@@ -136,10 +127,7 @@ export const tests = describe(
   }),
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(
-      fromValue(1),
-      scheduler
-    );
+    const fromValueStream = stream(fromValue(1), scheduler);
 
     dispatch(fromValueStream, FlowMode.Pause);
     dispatch(fromValueStream, FlowMode.Pause);
@@ -148,7 +136,11 @@ export const tests = describe(
     dispatch(fromValueStream, FlowMode.Pause);
 
     const f = mockFn();
-    const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
+    const subscription = pipe(
+      fromValueStream,
+      onNotify(f),
+      subscribe(scheduler),
+    );
 
     scheduler.run();
 
@@ -164,10 +156,7 @@ export const tests = describe(
       fromValue(1),
       map(_ => 2),
     );
-    const dest = createFlowableSinkAccumulator(
-      sum,
-      returns(0),
-    );
+    const dest = createFlowableSinkAccumulator(sum, returns(0));
 
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));

@@ -1,5 +1,5 @@
-import { isSome, none, Option } from "./option.ts";
 import { bind, SideEffect1 } from "./functions.ts";
+import { isSome, none, Option } from "./option.ts";
 
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -46,7 +46,7 @@ export interface DisposableLike {
 
 export const dispose = (disposable: DisposableLike, e?: Exception) => {
   disposable.dispose(e);
-}
+};
 
 export const disposeOnError = (disposable: DisposableLike) => (
   error?: Exception,
@@ -56,8 +56,9 @@ export const disposeOnError = (disposable: DisposableLike) => (
   }
 };
 
-export const toErrorHandler = (disposable: DisposableLike) => (cause: unknown) =>
-  dispose(disposable, ({ cause }));
+export const toErrorHandler = (disposable: DisposableLike) => (
+  cause: unknown,
+) => dispose(disposable, { cause });
 
 const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
   if (disposable instanceof Function) {

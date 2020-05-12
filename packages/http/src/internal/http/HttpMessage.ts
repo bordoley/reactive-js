@@ -1,5 +1,9 @@
 import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
-import { Operator, Selector2, SideEffect2 } from "@reactive-js/core/lib/functions";
+import {
+  Operator,
+  Selector2,
+  SideEffect2,
+} from "@reactive-js/core/lib/functions";
 import { isSome } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";

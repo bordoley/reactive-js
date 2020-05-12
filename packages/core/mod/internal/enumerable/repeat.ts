@@ -1,11 +1,11 @@
 import { alwaysTrue, Operator } from "../../functions.ts";
 import { isNone } from "../../option.ts";
+import { enumerate } from "./enumerate.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
-import { enumerate } from "./enumerate.ts";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: EnumeratorLike<T>;

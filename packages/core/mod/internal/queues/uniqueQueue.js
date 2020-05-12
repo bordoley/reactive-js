@@ -1,4 +1,4 @@
-import { fromIterable, first, enumerate } from "../../enumerable.js";
+import { fromIterable, first, enumerate, } from "../../enumerable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 class UniqueQueueImpl {

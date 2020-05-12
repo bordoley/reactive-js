@@ -1,5 +1,5 @@
-import { createObservable, dispatch } from "../../observable.js";
 import { dispose } from "../../disposable.js";
+import { createObservable, dispatch } from "../../observable.js";
 export const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
         try {

@@ -9,11 +9,51 @@ export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
 export type Selector2<TA, TB, T> = (a: TA, b: TB) => T;
 export type Selector3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
 export type Selector4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
-export type Selector5<TA, TB, TC, TD, TE, T> = (a: TA, b: TB, c: TC, d: TD, e: TE) => T;
-export type Selector6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => T;
-export type Selector7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
-export type Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
-export type Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
+export type Selector5<TA, TB, TC, TD, TE, T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+) => T;
+export type Selector6<TA, TB, TC, TD, TE, TF, T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+) => T;
+export type Selector7<TA, TB, TC, TD, TE, TF, TG, T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+) => T;
+export type Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+) => T;
+export type Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+  i: TI,
+) => T;
 
 export type SideEffect = () => void;
 export type SideEffect1<TA> = (a: TA) => void;
@@ -21,7 +61,10 @@ export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
 
 export function call<T>(): Operator<Factory<T>, T>;
 export function call<TA, T>(a: TA): Operator<Operator<TA, T>, T>;
-export function call<TA, TB, T>(a: TA, b: TB): Operator<Selector2<TA, TB, T>, T>;
+export function call<TA, TB, T>(
+  a: TA,
+  b: TB,
+): Operator<Selector2<TA, TB, T>, T>;
 export function call<TA, TB, TC, T>(
   a: TA,
   b: TB,
@@ -37,15 +80,57 @@ export function call<T>(...args: any[]): Operator<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
-export function bind<T>(factory: Factory<T>): Factory<T>; 
-export function bind<TA, T>(op: Operator<TA, T>, a: TA): Factory<T>; 
-export function bind<TA, TB, T>(selector: Selector2<TA, TB, T>, a: TA, b: TB): Factory<T>; 
-export function bind<TA, TB, TC, T>(selector: Selector3<TA, TB, TC, T>, a: TA, b: TB, c: TC): Factory<T>; 
-export function bind<TA, TB, TC, TD, T>(selector: Selector4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): Factory<T>; 
-export function bind<TA, TB, TC, TD, TE, T>(selector: Selector5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): Factory<T>; 
-export function bind<TA, TB, TC, TD, TE, TF, T>(selector: Selector6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): Factory<T>; 
-export function bind<TA, TB, TC, TD, TE, TF, TG, T>(selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG): Factory<T>; 
-export function bind<T>(selector: (...args: any[]) => T, ...args: any[]): Factory<T> {
+export function bind<T>(factory: Factory<T>): Factory<T>;
+export function bind<TA, T>(op: Operator<TA, T>, a: TA): Factory<T>;
+export function bind<TA, TB, T>(
+  selector: Selector2<TA, TB, T>,
+  a: TA,
+  b: TB,
+): Factory<T>;
+export function bind<TA, TB, TC, T>(
+  selector: Selector3<TA, TB, TC, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+): Factory<T>;
+export function bind<TA, TB, TC, TD, T>(
+  selector: Selector4<TA, TB, TC, TD, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): Factory<T>;
+export function bind<TA, TB, TC, TD, TE, T>(
+  selector: Selector5<TA, TB, TC, TD, TE, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+): Factory<T>;
+export function bind<TA, TB, TC, TD, TE, TF, T>(
+  selector: Selector6<TA, TB, TC, TD, TE, TF, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+): Factory<T>;
+export function bind<TA, TB, TC, TD, TE, TF, TG, T>(
+  selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+): Factory<T>;
+export function bind<T>(
+  selector: (...args: any[]) => T,
+  ...args: any[]
+): Factory<T> {
   return () => selector(...args);
 }
 
@@ -78,7 +163,7 @@ export const sum = (...args: number[]) => {
     acc += args[i];
   }
   return acc;
-}
+};
 
 // FIXME: Would prefer not to have this here.
 export const arrayEquals = <T>(valuesAreEqual: Equality<T>) => (

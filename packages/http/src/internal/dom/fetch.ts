@@ -1,3 +1,4 @@
+import { dispose } from "@reactive-js/core/lib/disposable";
 import { bind, pipe } from "@reactive-js/core/lib/functions";
 import {
   dispatch,
@@ -23,7 +24,6 @@ import {
 import { supportsArrayBuffer, supportsBlob } from "./capabilities";
 import { HttpResponseBodyImpl } from "./httpResponseBody";
 import { HttpWebRequest, WebResponseBodyLike } from "./interfaces";
-import { dispose } from "@reactive-js/core/lib/disposable";
 
 const loadBodyContent = async (
   response: HttpResponse<Response>,

@@ -1,5 +1,6 @@
 import { compose, Operator } from "../../functions.ts";
 import { isNone, isSome, none, Option } from "../../option.ts";
+import { enumerate } from "./enumerate.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -7,7 +8,6 @@ import {
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { map } from "./map.ts";
-import { enumerate } from "./enumerate.ts";
 
 class FlattenEnumerator<T> implements EnumeratorLike<T> {
   current = (none as unknown) as T;

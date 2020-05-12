@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
 import { Operator } from "../../functions";
 import { SchedulerLike } from "../scheduler/interfaces";
@@ -7,7 +8,6 @@ import {
   createDelayedScheduledObservable,
 } from "./observable";
 import { AbstractProducer } from "./producer";
-import { dispose } from "../../disposable";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(

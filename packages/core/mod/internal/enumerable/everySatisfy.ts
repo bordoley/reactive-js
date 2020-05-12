@@ -1,6 +1,6 @@
 import { Operator, Predicate } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
 import { enumerate } from "./enumerate.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 /**
  * Returns `true` if the predicate is satisfied for

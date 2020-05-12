@@ -1,5 +1,5 @@
-import { toDispatcher } from "./toDispatcher.js";
 import { dispose } from "../../disposable.js";
+import { toDispatcher } from "./toDispatcher.js";
 class CreateObservable {
     constructor(onSubscribe) {
         this.onSubscribe = onSubscribe;

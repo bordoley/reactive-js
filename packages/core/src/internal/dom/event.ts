@@ -1,6 +1,6 @@
-import { createObservable, ObservableLike, dispatch } from "../../observable";
 import { dispose } from "../../disposable";
 import { Operator } from "../../functions";
+import { createObservable, ObservableLike, dispatch } from "../../observable";
 
 export const fromEvent = <T>(
   target: EventTarget,

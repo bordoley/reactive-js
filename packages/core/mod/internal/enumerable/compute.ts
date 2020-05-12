@@ -1,7 +1,7 @@
-import { fromArray } from "./fromArray.ts";
-import { EnumerableLike } from "./interfaces.ts";
 import { Factory } from "../../functions.ts";
 import { enumerate } from "./enumerate.ts";
+import { fromArray } from "./fromArray.ts";
+import { EnumerableLike } from "./interfaces.ts";
 
 class ComputeEnumerable<T> implements EnumerableLike<T> {
   constructor(private readonly f: Factory<T>) {}

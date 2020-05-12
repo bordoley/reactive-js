@@ -1,6 +1,6 @@
+import { dispose } from "../../disposable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
-import { dispose } from "../../disposable.js";
 class FromArrayProducer extends AbstractProducer {
     constructor(subscriber, values, startIndex, delay) {
         super(subscriber);

@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import { SchedulerLike } from "../../scheduler.ts";
@@ -9,7 +10,6 @@ import {
   MulticastObservableLike,
 } from "./interfaces.ts";
 import { publish } from "./publish.ts";
-import { dispose } from "../../disposable.ts";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private subscriberCount = 0;

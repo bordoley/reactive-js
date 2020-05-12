@@ -22,9 +22,7 @@ export const fromEnumerable = <T>(
   createStreamable(
     compose(
       withLatestFrom(
-        compute<EnumeratorLike<T>>()(
-          bind(enumerate, enumerable)
-        ),
+        compute<EnumeratorLike<T>>()(bind(enumerate, enumerable)),
         (_, enumerator) => enumerator,
       ),
       onNotify(enumerator => enumerator.move()),

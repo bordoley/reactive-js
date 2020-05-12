@@ -1,6 +1,6 @@
+import { SideEffect2 } from "../../../../core/lib/functions.ts";
 import { Option } from "../../../../core/lib/option.ts";
 import { HttpHeaders } from "./interfaces.ts";
-import { SideEffect2 } from "../../../../core/lib/functions.ts";
 
 export const enum HttpStandardHeader {
   Accept = "Accept",

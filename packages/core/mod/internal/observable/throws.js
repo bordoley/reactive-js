@@ -1,6 +1,6 @@
+import { dispose } from "../../disposable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
-import { dispose } from "../../disposable.js";
 class ThrowsProducer extends AbstractProducer {
     constructor(subscriber, f, delay) {
         super(subscriber);

@@ -1,7 +1,7 @@
 import { DisposableLike, dispose } from "../../disposable.ts";
+import { SideEffect1 } from "../../functions.ts";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import { SchedulerLike } from "./interfaces.ts";
-import { SideEffect1 } from "../../functions.ts";
 
 class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
   constructor(private cb: SideEffect1<SchedulerLike>) {

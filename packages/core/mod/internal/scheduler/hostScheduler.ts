@@ -1,6 +1,6 @@
 import { DisposableLike, createDisposable, dispose } from "../../disposable.ts";
-import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
 import { Factory, SideEffect, Operator, bind } from "../../functions.ts";
+import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
 
 const supportsPerformanceNow =
   typeof performance === "object" && typeof performance.now === "function";
@@ -57,7 +57,10 @@ const scheduleDelayed = (cb: SideEffect, delay: number) => {
 const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
   scheduleDelayed(cb, 0);
 
-const scheduleImmediate: Operator<SideEffect, DisposableLike> = supportsSetImmediate
+const scheduleImmediate: Operator<
+  SideEffect,
+  DisposableLike
+> = supportsSetImmediate
   ? scheduleImmediateWithSetImmediate
   : supportsMessageChannel
   ? scheduleImmediateWithMessageChannel(new MessageChannel())

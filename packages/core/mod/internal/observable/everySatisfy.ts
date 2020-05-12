@@ -1,3 +1,5 @@
+import { dispose } from "../../disposable.ts";
+import { Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
@@ -6,8 +8,6 @@ import {
   AbstractDelegatingSubscriber,
   assertSubscriberNotifyInContinuation,
 } from "./subscriber.ts";
-import { dispose } from "../../disposable.ts";
-import { Predicate } from "../../functions.ts";
 
 class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
   T,
