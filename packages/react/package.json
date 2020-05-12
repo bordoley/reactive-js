@@ -41,11 +41,8 @@
     "scheduler": "^0.17.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
     "@types/react": "^16.9.11",
-    "@types/scheduler": "^0.16.1",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.1.0"
+    "@types/scheduler": "^0.16.1"
   },
   "scripts": {
     "build": "yarn compile && yarn lib && yarn docs",
@@ -59,24 +56,13 @@
     "compile-esm": "tsc -p tsconfig.esm.json",
     "compile-types": "tsc -p tsconfig.types.json",
     "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
-    "lib-js": "cp -r ./build/cjs/ ./lib",
+    "lib-js": "cp -r ./build/cjs/lib/ ./lib",
     "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
-    "lib-mjs-copy": "cp -r ./build/esm ./lib",
+    "lib-mjs-copy": "cp -r ./build/esm/lib/ ./lib",
     "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
     "lib-mjs-replace": "replace 'from \"((\\.|@reactive\\-js)[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
-    "lib-types": "cp -r ./build/types/ ./lib",
-    "docs": "node ../../scripts/docs.mjs",
-    "test": "jest",
-    "test-coverage": "jest --coverage",
-    "test-debug": "node --inspect-brk ./node_modules/.bin/jest"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "./tsconfig.esm.json"
-      }
-    }
+    "lib-types": "cp -r ./build/types/lib/ ./lib",
+    "docs": "node ../../scripts/docs.mjs"
   },
   "publishConfig": {
     "access": "public"
