@@ -223,7 +223,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
         scheduler =>
           pipe(
             events,
-            takeWhile(ev => ev.type === FlowEventType.Next),
+            takeWhile(isNext),
             keepType(isNext),
             mapObs(ev => ev.data),
             reduce(this.reducer, returns(this.acc)),
