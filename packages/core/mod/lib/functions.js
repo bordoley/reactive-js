@@ -13,10 +13,10 @@ export const increment = (x) => x + 1;
 export const incrementBy = (incr) => (x) => x + incr;
 export const decrement = (x) => x - 1;
 export const decrementBy = (decr) => (x) => x - decr;
-export const referenceEquality = (a, b) => a === b;
-const isReferenceEqualTo = (b) => a => a === b;
-export const isEqualTo = (b, equality = referenceEquality) => equality === referenceEquality
-    ? isReferenceEqualTo(b)
+export const strictEquality = (a, b) => a === b;
+const isStrictlyEqualTo = (b) => a => a === b;
+export const isEqualTo = (b, equality = strictEquality) => equality === strictEquality
+    ? isStrictlyEqualTo(b)
     : (a) => equality(a, b);
 export const isEven = (x) => x % 2 === 0;
 export const isOdd = (x) => x % 2 !== 0;
@@ -28,7 +28,7 @@ export const sum = (...args) => {
     }
     return acc;
 };
-export const arrayEquality = (valuesEquality = referenceEquality) => (a, b) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
+export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 export function pipe(source, ...operators) {
     return operators.reduce((acc, next) => next(acc), source);
 }

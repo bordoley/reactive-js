@@ -1,4 +1,4 @@
-import { referenceEquality, Equality } from "../../functions.ts";
+import { strictEquality, Equality } from "../../functions.ts";
 import { EnumerableOperator, EnumeratorLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 
@@ -38,7 +38,7 @@ class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equality: Equality<T> = referenceEquality,
+  equality: Equality<T> = strictEquality,
 ): EnumerableOperator<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
     new DistinctUntilChangedEnumerator(enumerator, equality);

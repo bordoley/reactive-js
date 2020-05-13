@@ -1,5 +1,5 @@
 import { add, dispose } from "../../disposable.js";
-import { referenceEquality, isEqualTo, } from "../../functions.js";
+import { strictEquality, isEqualTo, } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
@@ -32,4 +32,4 @@ export const someSatisfy = (predicate) => {
     operator.isSynchronous = true;
     return lift(operator);
 };
-export const contains = (value, equality = referenceEquality) => someSatisfy(isEqualTo(value, equality));
+export const contains = (value, equality = strictEquality) => someSatisfy(isEqualTo(value, equality));

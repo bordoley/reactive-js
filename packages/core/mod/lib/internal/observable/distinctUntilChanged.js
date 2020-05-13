@@ -1,5 +1,5 @@
 import { add } from "../../disposable.js";
-import { referenceEquality } from "../../functions.js";
+import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 class DistinctUntilChangedSubscriber extends AbstractDelegatingSubscriber {
@@ -20,7 +20,7 @@ class DistinctUntilChangedSubscriber extends AbstractDelegatingSubscriber {
         }
     }
 }
-export const distinctUntilChanged = (equality = referenceEquality) => {
+export const distinctUntilChanged = (equality = strictEquality) => {
     const operator = (subscriber) => new DistinctUntilChangedSubscriber(subscriber, equality);
     operator.isSynchronous = true;
     return lift(operator);

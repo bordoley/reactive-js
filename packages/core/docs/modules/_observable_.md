@@ -662,7 +662,7 @@ emits any item equal to `value`, otherwise `false`.
 Name | Type | Default |
 ------ | ------ | ------ |
 `value` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
@@ -762,7 +762,7 @@ are distinct by comparison from the previous item.
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

@@ -1,5 +1,5 @@
 import {
-  referenceEquality,
+  strictEquality,
   Equality,
   Predicate,
   isEqualTo,
@@ -32,5 +32,5 @@ export const someSatisfy = <T>(
  */
 export const contains = <T>(
   value: T,
-  equality: Equality<T> = referenceEquality,
+  equality: Equality<T> = strictEquality,
 ): Predicate<EnumerableLike<T>> => someSatisfy(isEqualTo(value, equality));

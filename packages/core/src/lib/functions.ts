@@ -156,16 +156,16 @@ export const decrement = (x: number) => x - 1;
 export const decrementBy = (decr: number): Generator<number> => (x: number) =>
   x - decr;
 
-export const referenceEquality = <T>(a: T, b: T) => a === b;
+export const strictEquality = <T>(a: T, b: T) => a === b;
 
-const isReferenceEqualTo = <T>(b: T): Predicate<T> => a => a === b;
+const isStrictlyEqualTo = <T>(b: T): Predicate<T> => a => a === b;
 
 export const isEqualTo = <T>(
   b: T,
-  equality: Equality<T> = referenceEquality,
+  equality: Equality<T> = strictEquality,
 ): Predicate<T> =>
-  equality === referenceEquality
-    ? isReferenceEqualTo(b)
+  equality === strictEquality
+    ? isStrictlyEqualTo(b)
     : (a: T) => equality(a, b);
 
 export const isEven = (x: number): boolean => x % 2 === 0;
@@ -182,7 +182,7 @@ export const sum = (...args: number[]) => {
 };
 
 export const arrayEquality = <T>(
-  valuesEquality: Equality<T> = referenceEquality,
+  valuesEquality: Equality<T> = strictEquality,
 ): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
   a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 

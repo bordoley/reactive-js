@@ -72,6 +72,6 @@ Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
