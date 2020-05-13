@@ -6,7 +6,8 @@ import { fromArray, toPromise } from "../lib/observable.js";
 import { createHostScheduler } from "../lib/scheduler.js";
 import { sink } from "../lib/streamable.js";
 import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
-import { fromObservable, createFlowableSinkAccumulator } from "../lib/flowable.js";
+import { fromObservable } from "../lib/flowable.js";
+import { createFlowableSinkAccumulator, } from "../lib/internal/flowableSinkAccumulatorForTests.js";
 const scheduler = createHostScheduler();
 export const tests = describe("node", describe("createWritableFlowableSink", testAsync("sinking to writable", async () => {
     const encoder = new TextEncoder();

@@ -7,8 +7,10 @@ import {
   FlowEventType,
   fromObservable,
   map,
-  createFlowableSinkAccumulator,
 } from "../lib/flowable";
+import {
+  createFlowableSinkAccumulator,
+} from "../lib/internal/flowableSinkAccumulatorForTests";
 import { increment, pipe, returns, sum, bind } from "../lib/functions";
 import {
   onNotify,
