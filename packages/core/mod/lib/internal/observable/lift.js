@@ -12,9 +12,9 @@ class LiftedObservable {
 }
 export const lift = (operator) => source => {
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allOperators = source instanceof LiftedObservable
+    const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
     const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allOperators, isSynchronous);
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };

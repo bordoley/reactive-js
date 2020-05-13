@@ -4,11 +4,11 @@ import {
   dispose,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { compose, pipe, Operator } from "../../functions.ts";
+import { compose, pipe, Function } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -112,7 +112,7 @@ export const mergeAll = <T>(
     maxBufferSize?: number;
     maxConcurrency?: number;
   } = {},
-): ObservableOperator<ObservableLike<T>, T> => {
+): ObservableFunction<ObservableLike<T>, T> => {
   const {
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
@@ -124,7 +124,7 @@ export const mergeAll = <T>(
 };
 
 export const mergeMap = <TA, TB>(
-  mapper: Operator<TA, ObservableLike<TB>>,
+  mapper: Function<TA, ObservableLike<TB>>,
   options: {
     maxBufferSize?: number;
     maxConcurrency?: number;
@@ -139,11 +139,11 @@ export const mergeMap = <TA, TB>(
  */
 export const concatAll = <T>(
   maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableOperator<ObservableLike<T>, T> =>
+): ObservableFunction<ObservableLike<T>, T> =>
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
 export const concatMap = <TA, TB>(
-  mapper: Operator<TA, ObservableLike<TB>>,
+  mapper: Function<TA, ObservableLike<TB>>,
   maxBufferSize?: number,
 ) => compose(map(mapper), concatAll(maxBufferSize));
 
@@ -155,7 +155,7 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
  * has not yet been disposed.
  */
 export const exhaust = <T>() =>
-  exhaustInstance as ObservableOperator<ObservableLike<T>, T>;
+  exhaustInstance as ObservableFunction<ObservableLike<T>, T>;
 
-export const exhaustMap = <TA, TB>(mapper: Operator<TA, ObservableLike<TB>>) =>
+export const exhaustMap = <TA, TB>(mapper: Function<TA, ObservableLike<TB>>) =>
   compose(map(mapper), exhaust());

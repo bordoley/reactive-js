@@ -22,7 +22,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -58,11 +58,11 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -95,11 +95,11 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -129,11 +129,11 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -160,7 +160,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -186,7 +186,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -226,7 +226,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -238,7 +238,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -275,7 +275,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -287,7 +287,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -321,7 +321,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -333,7 +333,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -364,7 +364,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *function*
 
@@ -412,7 +412,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -456,7 +456,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -469,7 +469,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -510,7 +510,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -523,7 +523,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -561,7 +561,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -574,7 +574,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -609,7 +609,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *function*
 
@@ -663,7 +663,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -711,7 +711,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -725,7 +725,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -770,7 +770,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -784,7 +784,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -826,7 +826,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -840,7 +840,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -879,7 +879,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *function*
 
@@ -939,7 +939,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -991,7 +991,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -1006,7 +1006,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -1055,7 +1055,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -1070,7 +1070,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -1116,7 +1116,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -1131,7 +1131,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1174,7 +1174,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1240,7 +1240,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
 
 **Type parameters:**
 
@@ -1296,7 +1296,7 @@ Name | Type |
 `res3` | R3 |
 `res4` | R4 |
 
-▪ **selector**: *[Selector4](_functions_.md#selector4)‹R1, R2, R3, R4, T›*
+▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
 
 **Returns:** *function*
 
@@ -1312,7 +1312,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Selector3](_functions_.md#selector3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
 
 **Type parameters:**
 
@@ -1365,7 +1365,7 @@ Name | Type |
 `res2` | R2 |
 `res3` | R3 |
 
-▪ **selector**: *[Selector3](_functions_.md#selector3)‹R1, R2, R3, T›*
+▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
 
 **Returns:** *function*
 
@@ -1381,7 +1381,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Selector2](_functions_.md#selector2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
 
 **Type parameters:**
 
@@ -1431,7 +1431,7 @@ Name | Type |
 `res1` | R1 |
 `res2` | R2 |
 
-▪ **selector**: *[Selector2](_functions_.md#selector2)‹R1, R2, T›*
+▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
 
 **Returns:** *function*
 
@@ -1447,7 +1447,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Operator](_functions_.md#operator)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1494,7 +1494,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Operator](_functions_.md#operator)‹R1, T›*
+▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1570,7 +1570,7 @@ ___
 
 ### `Const` brotliCompress
 
-▸ **brotliCompress**(`options`: BrotliOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **brotliCompress**(`options`: BrotliOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1578,13 +1578,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` brotliDecompress
 
-▸ **brotliDecompress**(`options`: BrotliOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **brotliDecompress**(`options`: BrotliOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1592,7 +1592,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
@@ -1644,7 +1644,7 @@ ___
 
 ### `Const` deflate
 
-▸ **deflate**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **deflate**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1652,13 +1652,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gunzip
 
-▸ **gunzip**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **gunzip**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1666,13 +1666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gzip
 
-▸ **gzip**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **gzip**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1680,13 +1680,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` inflate
 
-▸ **inflate**(`options`: ZlibOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **inflate**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1694,13 +1694,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1708,4 +1708,4 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›› |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*

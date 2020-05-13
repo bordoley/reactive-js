@@ -4,7 +4,7 @@ import { isSome, none } from "../../option.ts";
 import {
   ObservableLike,
   SubscriberLike,
-  ObservableOperator,
+  ObservableFunction,
 } from "./interfaces.ts";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
@@ -33,5 +33,5 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  */
 export const onSubscribe = <T>(
   f: Factory<DisposableOrTeardown | void>,
-): ObservableOperator<T, T> => observable =>
+): ObservableFunction<T, T> => observable =>
   new OnSubscribeObservable(observable, f);

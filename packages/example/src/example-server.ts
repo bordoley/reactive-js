@@ -13,7 +13,7 @@ import {
 } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
-  Operator,
+  Function,
   returns,
   increment,
   compose,
@@ -165,7 +165,7 @@ const routerHandlerThrow: HttpServer<
   HttpResponse<FlowableLike<Uint8Array>>
 > = returns(throws()(() => new Error("internal error")));
 
-const notFound: Operator<
+const notFound: Function<
   HttpRequest<FlowableLike<Uint8Array>>,
   ObservableLike<HttpResponse<FlowableLike<Uint8Array>>>
 > = req =>

@@ -17,7 +17,7 @@
 ### Type aliases
 
 * [FlowEvent](_flowable_.md#flowevent)
-* [FlowableOperator](_flowable_.md#flowableoperator)
+* [FlowableFunction](_flowable_.md#flowablefunction)
 
 ### Variables
 
@@ -41,15 +41,15 @@
 
 ___
 
-###  FlowableOperator
+###  FlowableFunction
 
-Ƭ **FlowableOperator**: *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+Ƭ **FlowableFunction**: *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ## Variables
 
 ### `Const` encodeUtf8
 
-• **encodeUtf8**: *[FlowableOperator](_flowable_.md#flowableoperator)‹string, Uint8Array›* = lift(
+• **encodeUtf8**: *[FlowableFunction](_flowable_.md#flowablefunction)‹string, Uint8Array›* = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {
@@ -82,7 +82,7 @@ ___
 
 ### `Const` decodeWithCharset
 
-▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[FlowableOperator](_flowable_.md#flowableoperator)‹ArrayBuffer, string›*
+▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹ArrayBuffer, string›*
 
 **Parameters:**
 
@@ -91,7 +91,7 @@ Name | Type | Default |
 `charset` | string | "utf-8" |
 `options?` | TextDecoderOptions | - |
 
-**Returns:** *[FlowableOperator](_flowable_.md#flowableoperator)‹ArrayBuffer, string›*
+**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹ArrayBuffer, string›*
 
 ___
 
@@ -145,7 +145,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Operator](_functions_.md#operator)‹TA, TB›): *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -157,9 +157,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Operator](_functions_.md#operator)‹TA, TB› |
+`mapper` | [Function](_functions_.md#function)‹TA, TB› |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+**Returns:** *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ___
 

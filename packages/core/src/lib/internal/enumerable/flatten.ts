@@ -1,10 +1,10 @@
-import { compose, Operator } from "../../functions";
+import { compose, Function } from "../../functions";
 import { isNone, isSome, none, Option } from "../../option";
 import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableOperator,
+  EnumerableFunction,
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
@@ -52,7 +52,7 @@ const _flatten = lift(operator);
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
-export const flatten = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
+export const flatten = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
   _flatten;
 
 /**
@@ -61,5 +61,5 @@ export const flatten = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
  * @param mapper
  */
 export const flatMap = <TA, TB>(
-  mapper: Operator<TA, EnumerableLike<TB>>,
-): EnumerableOperator<TA, TB> => compose(map(mapper), flatten());
+  mapper: Function<TA, EnumerableLike<TB>>,
+): EnumerableFunction<TA, TB> => compose(map(mapper), flatten());

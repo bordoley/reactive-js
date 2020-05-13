@@ -1,4 +1,4 @@
-import { bind, SideEffect1, Operator } from "./functions";
+import { bind, SideEffect1, Function } from "./functions";
 import { isSome, none, Option } from "./option";
 
 /**
@@ -72,7 +72,7 @@ export function add<T extends DisposableLike>(
 
 export const addDisposableOrTeardown = <T extends DisposableLike>(
   d: DisposableOrTeardown,
-): Operator<T, T> => disposable => add(disposable, d);
+): Function<T, T> => disposable => add(disposable, d);
 
 export const toErrorHandler = (
   disposable: DisposableLike,

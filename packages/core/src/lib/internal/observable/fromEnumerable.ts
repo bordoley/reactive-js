@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { schedule } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, SubscriberLike } from "./interfaces";
@@ -47,7 +47,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
  */
 export const fromEnumerator = <T>(
   { delay } = { delay: 0 },
-): Operator<EnumeratorLike<T>, ObservableLike<T>> => enumerator => {
+): Function<EnumeratorLike<T>, ObservableLike<T>> => enumerator => {
   const factory = (subscriber: SubscriberLike<T>) =>
     new FromEnumeratorProducer(subscriber, enumerator, delay);
 
@@ -65,7 +65,7 @@ export const fromEnumerator = <T>(
  */
 export const fromEnumerable = <T>(
   { delay } = { delay: 0 },
-): Operator<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
+): Function<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
   const factory = (subscriber: SubscriberLike<T>) => {
     const enumerator = enumerate(enumerable);
     return new FromEnumeratorProducer(subscriber, enumerator, delay);

@@ -12,8 +12,8 @@ class LiftedEnumerableLike {
 }
 export const lift = (operator) => enumerable => {
     const src = enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;
-    const allOperators = enumerable instanceof LiftedEnumerableLike
+    const allFunctions = enumerable instanceof LiftedEnumerableLike
         ? [...enumerable.operators, operator]
         : [operator];
-    return new LiftedEnumerableLike(src, allOperators);
+    return new LiftedEnumerableLike(src, allFunctions);
 };

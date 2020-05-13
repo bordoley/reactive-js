@@ -1,6 +1,6 @@
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { none } from "../../option";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
@@ -8,7 +8,7 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
 
   constructor(
     private readonly delegate: EnumeratorLike<TA>,
-    private readonly mapper: Operator<TA, TB>,
+    private readonly mapper: Function<TA, TB>,
   ) {}
 
   get hasCurrent() {
@@ -33,8 +33,8 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 export const map = <TA, TB>(
-  mapper: Operator<TA, TB>,
-): EnumerableOperator<TA, TB> => {
+  mapper: Function<TA, TB>,
+): EnumerableFunction<TA, TB> => {
   const operator = (enumerator: EnumeratorLike<TA>) =>
     new MapEnumerator(enumerator, mapper);
   return lift(operator);

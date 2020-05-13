@@ -1,4 +1,4 @@
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
 
 class SkipFirstEnumerator<T> implements EnumeratorLike<T> {
@@ -36,7 +36,7 @@ class SkipFirstEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const skipFirst = <T>(count = 1): EnumerableOperator<T, T> => {
+export const skipFirst = <T>(count = 1): EnumerableFunction<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
     new SkipFirstEnumerator(enumerator, count);
   return lift(operator);

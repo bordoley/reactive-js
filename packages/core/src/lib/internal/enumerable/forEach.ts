@@ -1,4 +1,4 @@
-import { Operator, SideEffect1 } from "../../functions";
+import { Function, SideEffect1 } from "../../functions";
 import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
@@ -9,7 +9,7 @@ import { EnumerableLike } from "./interfaces";
  */
 export const forEach = <T>(
   f: SideEffect1<T>,
-): Operator<EnumerableLike<T>, void> => enumerable => {
+): Function<EnumerableLike<T>, void> => enumerable => {
   const enumerator = enumerate(enumerable);
   while (enumerator.move()) {
     f(enumerator.current);

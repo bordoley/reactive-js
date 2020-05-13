@@ -1,6 +1,6 @@
 import { add, addDisposableOrTeardown } from "./disposable.ts";
 import {
-  Operator,
+  Function,
   compose,
   pipe,
   returns,
@@ -62,7 +62,7 @@ export interface FlowableLike<T>
 export interface FlowableSinkLike<T>
   extends StreamableLike<FlowEvent<T>, FlowMode> {}
 
-export type FlowableOperator<TA, TB> = Operator<
+export type FlowableFunction<TA, TB> = Function<
   FlowableLike<TA>,
   FlowableLike<TB>
 >;
@@ -92,8 +92,8 @@ export const fromValue = <T>(data: T): FlowableLike<T> =>
   );
 
 export const map = <TA, TB>(
-  mapper: Operator<TA, TB>,
-): Operator<FlowableLike<TA>, FlowableLike<TB>> =>
+  mapper: Function<TA, TB>,
+): Function<FlowableLike<TA>, FlowableLike<TB>> =>
   mapStream((ev: FlowEvent<TA>) =>
     ev.type === FlowEventType.Next ? pipe(ev.data, mapper, next) : ev,
   );
@@ -143,7 +143,7 @@ export const fromObservable = <T>(
 export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
-): FlowableOperator<ArrayBuffer, string> =>
+): FlowableFunction<ArrayBuffer, string> =>
   lift(
     compose(
       withLatestFrom(
@@ -172,7 +172,7 @@ export const decodeWithCharset = (
     ),
   );
 
-export const encodeUtf8: FlowableOperator<string, Uint8Array> = lift(
+export const encodeUtf8: FlowableFunction<string, Uint8Array> = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {

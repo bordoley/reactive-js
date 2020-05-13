@@ -1,6 +1,6 @@
 import { concat } from "./concat";
 import { fromArray } from "./fromArray";
-import { ObservableOperator } from "./interfaces";
+import { ObservableFunction } from "./interfaces";
 
 /**
  * Returns an `ObservableLike` that emits the values specified as arguments,
@@ -9,7 +9,7 @@ import { ObservableOperator } from "./interfaces";
 export function startWith<T>(
   value: T,
   ...values: T[]
-): ObservableOperator<T, T>;
-export function startWith<T>(...values: T[]): ObservableOperator<T, T> {
+): ObservableFunction<T, T>;
+export function startWith<T>(...values: T[]): ObservableFunction<T, T> {
   return obs => concat(fromArray()(values), obs);
 }

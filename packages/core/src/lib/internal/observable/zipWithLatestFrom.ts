@@ -1,10 +1,10 @@
 import { dispose, add, addDisposableOrTeardown } from "../../disposable";
-import { pipe, Selector2 } from "../../functions";
+import { pipe, Function2 } from "../../functions";
 import { isSome, Option } from "../../option";
 import {
   SubscriberLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
 } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
@@ -44,7 +44,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
   constructor(
     readonly delegate: SubscriberLike<T>,
     other: ObservableLike<TB>,
-    readonly selector: Selector2<TA, TB, T>,
+    readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
@@ -90,8 +90,8 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
  */
 export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: Selector2<TA, TB, T>,
-): ObservableOperator<TA, T> => {
+  selector: Function2<TA, TB, T>,
+): ObservableFunction<TA, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new ZipWithLatestFromSubscriber(subscriber, other, selector);
   operator.isSynchronous = false;

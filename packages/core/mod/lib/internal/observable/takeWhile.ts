@@ -1,6 +1,6 @@
 import { add, dispose } from "../../disposable.ts";
 import { Predicate } from "../../functions.ts";
-import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
@@ -44,7 +44,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
-): ObservableOperator<T, T> => {
+): ObservableFunction<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeWhileSubscriber(subscriber, predicate, inclusive);
   operator.isSynchronous = true;

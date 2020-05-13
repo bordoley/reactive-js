@@ -24,7 +24,7 @@ export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
 /**
  * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
  */
-export type SubscriberOperator<A, B> = {
+export type SubscriberFunction<A, B> = {
   readonly isSynchronous: boolean;
 
   (observable: SubscriberLike<B>): SubscriberLike<A>;
@@ -46,7 +46,7 @@ export interface ObservableLike<T> {
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
-export type ObservableOperator<A, B> = {
+export type ObservableFunction<A, B> = {
   (observable: ObservableLike<A>): ObservableLike<B>;
 };
 

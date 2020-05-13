@@ -1,10 +1,10 @@
 import {
   FlowableLike,
-  FlowableOperator,
+  FlowableFunction,
   empty,
 } from "../../../../../core/mod/lib/flowable.ts";
 import {
-  Operator,
+  Function,
   SideEffect2,
 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
@@ -203,7 +203,7 @@ export const checkIfNotModified = <T>({
   cacheControl,
   method,
   preconditions,
-}: HttpRequest<unknown>): Operator<
+}: HttpRequest<unknown>): Function<
   HttpResponse<T>,
   HttpResponse<T>
 > => response => {
@@ -251,11 +251,11 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const encodeHttpResponseWithUtf8: Operator<HttpResponse<string>, HttpResponse<Uint8Array>> =
-  encodeHttpMessageWithUtf8 as unknown as Operator<HttpResponse<string>, HttpResponse<Uint8Array>>;
+export const encodeHttpResponseWithUtf8: Function<HttpResponse<string>, HttpResponse<Uint8Array>> =
+  encodeHttpMessageWithUtf8 as unknown as Function<HttpResponse<string>, HttpResponse<Uint8Array>>;
 
-export const decodeHttpResponseWithCharset: Operator<HttpResponse<Uint8Array>, HttpResponse<string>> = 
-  decodeHttpMessageWithCharset as unknown as Operator<HttpResponse<Uint8Array>, HttpResponse<string>>
+export const decodeHttpResponseWithCharset: Function<HttpResponse<Uint8Array>, HttpResponse<string>> = 
+  decodeHttpMessageWithCharset as unknown as Function<HttpResponse<Uint8Array>, HttpResponse<string>>
 
 export const toFlowableHttpResponse = <TBody>(
   resp: HttpResponse<TBody>,
@@ -263,8 +263,8 @@ export const toFlowableHttpResponse = <TBody>(
   toFlowableHttpMessage(resp) as HttpResponse<FlowableLike<TBody>>;
 
 export const decodeHttpResponseContent = (decoderProvider: {
-  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
-}): Operator<
+  [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+}): Function<
   HttpResponse<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
 > => resp => {
@@ -302,7 +302,7 @@ export const decodeHttpResponseContent = (decoderProvider: {
 
 export const encodeHttpResponseContent = (
   encoderProvider: {
-    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+    [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {
@@ -332,7 +332,7 @@ export const encodeHttpResponseContent = (
 
   return (
     request: HttpRequest<unknown>,
-  ): Operator<
+  ): Function<
     HttpResponse<FlowableLike<Uint8Array>>,
     HttpResponse<FlowableLike<Uint8Array>>
   > => response => {

@@ -3,7 +3,7 @@ import { isSome } from "../../option";
 import {
   ObservableLike,
   SubscriberLike,
-  ObservableOperator,
+  ObservableFunction,
 } from "./interfaces";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
@@ -65,4 +65,4 @@ export function merge<T>(
 
 export const mergeWith = <T>(
   snd: ObservableLike<T>,
-): ObservableOperator<T, T> => fst => merge(fst, snd);
+): ObservableFunction<T, T> => fst => merge(fst, snd);

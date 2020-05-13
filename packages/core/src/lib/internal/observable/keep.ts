@@ -1,6 +1,6 @@
 import { add } from "../../disposable";
 import { Predicate, TypePredicate } from "../../functions";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { ObservableFunction, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -36,7 +36,7 @@ class KeepTypeSubscriber<
  */
 export const keepType = <TA, TB extends TA>(
   predicate: TypePredicate<TA, TB>,
-): ObservableOperator<unknown, TB> => {
+): ObservableFunction<unknown, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new KeepTypeSubscriber(subscriber, predicate);
   operator.isSynchronous = true;
@@ -49,5 +49,5 @@ export const keepType = <TA, TB extends TA>(
  *
  * @param predicate The predicate function.
  */
-export const keep = <T>(predicate: Predicate<T>): ObservableOperator<T, T> =>
+export const keep = <T>(predicate: Predicate<T>): ObservableFunction<T, T> =>
   keepType(predicate as TypePredicate<T, T>);

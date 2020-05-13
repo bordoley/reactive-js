@@ -20,7 +20,7 @@ const pushHistoryState = (newLocation: string) => {
   }
 };
 
-const historyOperator = (obs: ObservableLike<string>) =>
+const historyFunction = (obs: ObservableLike<string>) =>
   merge(
     compute()(getCurrentLocation),
     pipe(obs, throttle(15), onNotify(pushHistoryState)),
@@ -28,7 +28,7 @@ const historyOperator = (obs: ObservableLike<string>) =>
   );
 
 const _historyStateStore: StateStoreLike<string> = pipe(
-  createStreamable(historyOperator),
+  createStreamable(historyFunction),
   toStateStore(),
 );
 

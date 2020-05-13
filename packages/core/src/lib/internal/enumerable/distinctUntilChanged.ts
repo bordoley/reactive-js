@@ -1,5 +1,5 @@
 import { strictEquality, Equality } from "../../functions";
-import { EnumerableOperator, EnumeratorLike } from "./interfaces";
+import { EnumerableFunction, EnumeratorLike } from "./interfaces";
 import { lift } from "./lift";
 
 class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
@@ -39,7 +39,7 @@ class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
  */
 export const distinctUntilChanged = <T>(
   equality: Equality<T> = strictEquality,
-): EnumerableOperator<T, T> => {
+): EnumerableFunction<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
     new DistinctUntilChangedEnumerator(enumerator, equality);
   return lift(operator);

@@ -1,7 +1,7 @@
 import { pipe } from "../../functions";
 import { flatten } from "./flatten";
 import { fromArray } from "./fromArray";
-import { EnumerableLike, EnumerableOperator } from "./interfaces";
+import { EnumerableLike, EnumerableFunction } from "./interfaces";
 
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.
@@ -20,4 +20,4 @@ export function concat<T>(
 
 export const concatWith = <T>(
   snd: EnumerableLike<T>,
-): EnumerableOperator<T, T> => first => concat(first, snd);
+): EnumerableFunction<T, T> => first => concat(first, snd);

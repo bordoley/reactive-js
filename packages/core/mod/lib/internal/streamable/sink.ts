@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown } from "../../disposable.ts";
-import { compose, pipe, Operator } from "../../functions.ts";
+import { compose, pipe, Function } from "../../functions.ts";
 import {
   ObservableLike,
   onNotify,
@@ -14,7 +14,7 @@ import { subscribe } from "../observable/subscribe.ts";
 import { StreamableLike } from "./interfaces.ts";
 import { stream } from "./streamable.ts";
 
-const ignoreAndNotifyVoid: Operator<
+const ignoreAndNotifyVoid: Function<
   StreamLike<any, any>,
   ObservableLike<void>
 > = compose(ignoreElements(), endWith(none as void));

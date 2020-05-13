@@ -18,8 +18,8 @@ export { generate } from "./internal/enumerable/generate.ts";
 export {
   EnumeratorLike,
   EnumerableLike,
-  EnumeratorOperator,
-  EnumerableOperator,
+  EnumeratorFunction,
+  EnumerableFunction,
 } from "./internal/enumerable/interfaces.ts";
 export { lift } from "./internal/enumerable/lift.ts";
 export { keep, keepType } from "./internal/enumerable/keep.ts";

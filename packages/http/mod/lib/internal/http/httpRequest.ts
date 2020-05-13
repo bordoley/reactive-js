@@ -1,6 +1,6 @@
-import { FlowableLike, FlowableOperator } from "../../../../../core/mod/lib/flowable.ts";
+import { FlowableLike, FlowableFunction } from "../../../../../core/mod/lib/flowable.ts";
 import {
-  Operator,
+  Function,
   SideEffect2,
 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
@@ -245,7 +245,7 @@ export const writeHttpRequestHeaders = <T>(
   writeHttpMessageHeaders(request, writeHeader);
 };
 
-export const disallowProtocolAndHostForwarding = <T>(): Operator<
+export const disallowProtocolAndHostForwarding = <T>(): Function<
   HttpServerRequest<T>,
   HttpServerRequest<T>
 > => request => {
@@ -288,11 +288,11 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const encodeHttpRequestWithUtf8: Operator<HttpRequest<string>, HttpRequest<Uint8Array>> =
-  encodeHttpMessageWithUtf8 as unknown as Operator<HttpRequest<string>, HttpRequest<Uint8Array>>;
+export const encodeHttpRequestWithUtf8: Function<HttpRequest<string>, HttpRequest<Uint8Array>> =
+  encodeHttpMessageWithUtf8 as unknown as Function<HttpRequest<string>, HttpRequest<Uint8Array>>;
 
-export const decodeHttpRequestWithCharset: Operator<HttpRequest<Uint8Array>, HttpRequest<string>> = 
-  decodeHttpMessageWithCharset as unknown as Operator<HttpRequest<Uint8Array>, HttpRequest<string>>
+export const decodeHttpRequestWithCharset: Function<HttpRequest<Uint8Array>, HttpRequest<string>> = 
+  decodeHttpMessageWithCharset as unknown as Function<HttpRequest<Uint8Array>, HttpRequest<string>>
 
 export const toFlowableHttpRequest = <TBody>(
   req: HttpRequest<TBody>,
@@ -300,8 +300,8 @@ export const toFlowableHttpRequest = <TBody>(
   toFlowableHttpMessage(req) as HttpRequest<FlowableLike<TBody>>;
 
 export const decodeHttpRequestContent = (decoderProvider: {
-  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
-}): Operator<
+  [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+}): Function<
   HttpRequest<FlowableLike<Uint8Array>>,
   HttpRequest<FlowableLike<Uint8Array>>
 > => req => {
@@ -337,14 +337,14 @@ export const decodeHttpRequestContent = (decoderProvider: {
 
 export const encodeHttpClientRequestContent = (
   encoderProvider: {
-    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+    [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {
       compressible?: boolean;
     };
   } = {},
-): Operator<
+): Function<
   HttpClientRequest<FlowableLike<Uint8Array>>,
   HttpClientRequest<FlowableLike<Uint8Array>>
 > => {

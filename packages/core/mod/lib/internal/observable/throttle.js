@@ -7,12 +7,12 @@ import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
 const setupDurationSubscription = (subscriber, next) => {
-    subscriber.durationSubscription.inner = pipe(subscriber.durationSelector(next), onNotify(subscriber.onNotify), subscribe(subscriber), addDisposableOrTeardown(disposeOnError(subscriber)));
+    subscriber.durationSubscription.inner = pipe(subscriber.durationFunction(next), onNotify(subscriber.onNotify), subscribe(subscriber), addDisposableOrTeardown(disposeOnError(subscriber)));
 };
 class ThrottleSubscriber extends AbstractDelegatingSubscriber {
-    constructor(delegate, durationSelector, mode) {
+    constructor(delegate, durationFunction, mode) {
         super(delegate);
-        this.durationSelector = durationSelector;
+        this.durationFunction = durationFunction;
         this.mode = mode;
         this.durationSubscription = createSerialDisposable();
         this.value = none;
@@ -53,10 +53,10 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export function throttle(duration, mode = 3) {
-    const durationSelector = typeof duration === "number"
+    const durationFunction = typeof duration === "number"
         ? (_) => fromValue({ delay: duration })(none)
         : duration;
-    const operator = (subscriber) => new ThrottleSubscriber(subscriber, durationSelector, mode);
+    const operator = (subscriber) => new ThrottleSubscriber(subscriber, durationFunction, mode);
     operator.isSynchronous = false;
     return lift(operator);
 }

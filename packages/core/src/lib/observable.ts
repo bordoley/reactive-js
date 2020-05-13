@@ -2,12 +2,12 @@ export {
   DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   StreamLike,
   ObservablePredicate,
   SubjectLike,
   SubscriberLike,
-  SubscriberOperator,
+  SubscriberFunction,
 } from "./internal/observable/interfaces";
 
 export {

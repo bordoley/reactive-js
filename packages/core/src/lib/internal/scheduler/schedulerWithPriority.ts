@@ -1,4 +1,4 @@
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -40,5 +40,5 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
  */
 export const toSchedulerWithPriority = (
   priority: number,
-): Operator<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
+): Function<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
   new SchedulerWithPriorityImpl(priorityScheduler, priority);

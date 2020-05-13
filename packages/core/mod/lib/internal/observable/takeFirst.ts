@@ -1,7 +1,7 @@
 import { add, dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
-import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
@@ -34,7 +34,7 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(count = 1): ObservableOperator<T, T> => {
+export const takeFirst = <T>(count = 1): ObservableFunction<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new TakeFirstSubscriber(subscriber, count);
   operator.isSynchronous = true;
