@@ -1,4 +1,4 @@
-import { referenceEquality, isEqualTo, } from "../../functions.js";
+import { strictEquality, isEqualTo, } from "../../functions.js";
 import { enumerate } from "./enumerator.js";
 export const someSatisfy = (predicate) => enumerable => {
     const enumerator = enumerate(enumerable);
@@ -9,4 +9,4 @@ export const someSatisfy = (predicate) => enumerable => {
     }
     return false;
 };
-export const contains = (value, equality = referenceEquality) => someSatisfy(isEqualTo(value, equality));
+export const contains = (value, equality = strictEquality) => someSatisfy(isEqualTo(value, equality));

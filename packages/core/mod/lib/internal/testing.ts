@@ -1,5 +1,5 @@
 import {
-  referenceEquality,
+  strictEquality,
   arrayEquality,
   Factory,
   Equality,
@@ -88,7 +88,7 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   }
 };
 
-export const expectEquals = <T>(b: T, valueEquality = referenceEquality) => (
+export const expectEquals = <T>(b: T, valueEquality = strictEquality) => (
   a: T,
 ) => {
   if (!valueEquality(a, b)) {
@@ -100,7 +100,7 @@ export const expectEquals = <T>(b: T, valueEquality = referenceEquality) => (
 
 export const expectArrayEquals = <T>(
   b: readonly T[],
-  valueEquality: Equality<T> = referenceEquality,
+  valueEquality: Equality<T> = strictEquality,
 ) => (a: readonly T[]) => {
   const equals = arrayEquality(valueEquality);
   if (!equals(a, b)) {

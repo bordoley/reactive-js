@@ -149,7 +149,7 @@ Returns `true` value if source yields any item equal to `value`, otherwise `fals
 Name | Type | Default |
 ------ | ------ | ------ |
 `value` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
@@ -188,7 +188,7 @@ are distinct by comparison from the previous item.
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 

@@ -4,7 +4,7 @@ import {
   identity,
   Factory,
   Equality,
-  referenceEquality,
+  strictEquality,
 } from "./functions";
 import {
   onNotify,
@@ -55,7 +55,7 @@ export const createStateStore = <T>(
  * if a state value is distinct from the previous one.
  */
 export const toStateStore = <T>(
-  equality: Equality<T> = referenceEquality,
+  equality: Equality<T> = strictEquality,
 ): StreamableOperator<T, T, StateUpdater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {

@@ -1,4 +1,4 @@
-import { referenceEquality } from "../../functions.js";
+import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 class DistinctUntilChangedEnumerator {
     constructor(delegate, equality) {
@@ -22,7 +22,7 @@ class DistinctUntilChangedEnumerator {
         return this.hasCurrent;
     }
 }
-export const distinctUntilChanged = (equality = referenceEquality) => {
+export const distinctUntilChanged = (equality = strictEquality) => {
     const operator = (enumerator) => new DistinctUntilChangedEnumerator(enumerator, equality);
     return lift(operator);
 };

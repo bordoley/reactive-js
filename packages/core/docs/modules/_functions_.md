@@ -50,8 +50,8 @@
 * [isOdd](_functions_.md#const-isodd)
 * [negate](_functions_.md#const-negate)
 * [pipe](_functions_.md#pipe)
-* [referenceEquality](_functions_.md#const-referenceequality)
 * [returns](_functions_.md#const-returns)
+* [strictEquality](_functions_.md#const-strictequality)
 * [sum](_functions_.md#const-sum)
 
 ## Type aliases
@@ -418,7 +418,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`valuesEquality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`valuesEquality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[Equality](_functions_.md#equality)‹keyof T[]›*
 
@@ -1690,7 +1690,7 @@ ___
 Name | Type | Default |
 ------ | ------ | ------ |
 `b` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | referenceEquality |
+`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
 **Returns:** *[Predicate](_functions_.md#predicate)‹T›*
 
@@ -2181,25 +2181,6 @@ Name | Type |
 
 ___
 
-### `Const` referenceEquality
-
-▸ **referenceEquality**<**T**>(`a`: T, `b`: T): *boolean*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | T |
-`b` | T |
-
-**Returns:** *boolean*
-
-___
-
 ### `Const` returns
 
 ▸ **returns**<**T**>(`v`: T): *(Anonymous function)*
@@ -2215,6 +2196,25 @@ Name | Type |
 `v` | T |
 
 **Returns:** *(Anonymous function)*
+
+___
+
+### `Const` strictEquality
+
+▸ **strictEquality**<**T**>(`a`: T, `b`: T): *boolean*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | T |
+`b` | T |
+
+**Returns:** *boolean*
 
 ___
 
