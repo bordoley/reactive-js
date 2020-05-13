@@ -1,9 +1,8 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
 import { compose, pipe, returns, isEqualTo, } from "./functions.js";
-import { createObservable } from "./internal/observable/createObservable.js";
-import { endWith, map as mapObs, mapTo, genMap, keepType, onNotify, reduce, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, dispatch, } from "./observable.js";
+import { endWith, map as mapObs, mapTo, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
-import { createStreamable, map as mapStream, lift, stream, } from "./streamable.js";
+import { createStreamable, map as mapStream, lift, } from "./streamable.js";
 export const next = (data) => ({
     type: 1,
     data,
@@ -69,24 +68,3 @@ export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder())
         }
     }
 }));
-const isNext = (ev) => ev.type === 1;
-class FlowableSinkAccumulatorImpl {
-    constructor(reducer, _acc) {
-        this.reducer = reducer;
-        this._acc = _acc;
-    }
-    get acc() {
-        return this._acc;
-    }
-    stream(scheduler, replayCount) {
-        const op = (events) => using(scheduler => pipe(events, takeWhile(isNext), keepType(isNext), mapObs(ev => ev.data), reduce(this.reducer, returns(this.acc)), onNotify(acc => {
-            this._acc = acc;
-        }), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
-            dispatch(dispatcher, 2);
-            dispatch(dispatcher, 1);
-            add(eventsSubscription, dispatcher);
-        }));
-        return stream(createStreamable(op), scheduler, replayCount);
-    }
-}
-export const createFlowableSinkAccumulator = (reducer, initialValue) => new FlowableSinkAccumulatorImpl(reducer, initialValue());

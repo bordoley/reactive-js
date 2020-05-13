@@ -1,4 +1,5 @@
-import { decodeWithCharset, empty, encodeUtf8, fromValue, fromObservable, map, createFlowableSinkAccumulator, } from "../lib/flowable.js";
+import { decodeWithCharset, empty, encodeUtf8, fromValue, fromObservable, map, } from "../lib/flowable.js";
+import { createFlowableSinkAccumulator, } from "../lib/internal/flowableSinkAccumulatorForTests.js";
 import { increment, pipe, returns, sum, bind } from "../lib/functions.js";
 import { onNotify, subscribe, generate, fromArray, dispatch, } from "../lib/observable.js";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler.js";

@@ -11,5 +11,3 @@
 * [StreamableLike](_streamable_.streamablelike.md)‹[FlowEvent](../modules/_flowable_.md#flowevent)‹T›, [FlowMode](../enums/_flowable_.flowmode.md)›
 
   ↳ **FlowableSinkLike**
-
-  ↳ [FlowableSinkAccumulatorLike](_flowable_.flowablesinkaccumulatorlike.md)
