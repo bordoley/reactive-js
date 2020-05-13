@@ -3,7 +3,6 @@ import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
 import { schedule, scheduleWithPriority } from "./schedule.js";
-import { toSchedulerWithPriority } from "./schedulerWithPriority.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -47,10 +46,25 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
         super();
         this.priorityScheduler = priorityScheduler;
     }
+    get inContinuation() {
+        return this.priorityScheduler.inContinuation;
+    }
+    ;
+    get now() {
+        return this.priorityScheduler.now;
+    }
+    ;
+    schedule(continuation, { delay }) {
+        const priority = this.priorityScheduler.current.priority;
+        this.priorityScheduler.schedule(continuation, { delay, priority });
+    }
+    shouldYield() {
+        return this.priorityScheduler.shouldYield();
+    }
     produce(host) {
         const priorityScheduler = this.priorityScheduler;
         for (let task = peek(priorityScheduler), isDisposed = this.isDisposed; isSome(task) && !isDisposed; task = peek(priorityScheduler)) {
-            const { continuation, dueTime, priority } = task;
+            const { continuation, dueTime } = task;
             const now = host.now;
             const delay = dueTime - now;
             if (delay > 0) {
@@ -59,9 +73,8 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
                 return;
             }
             move(priorityScheduler);
-            const scheduler = toSchedulerWithPriority(priority)(priorityScheduler);
             priorityScheduler.inContinuation = true;
-            continuation.run(scheduler);
+            continuation.run(this);
             priorityScheduler.inContinuation = false;
             isDisposed = this.isDisposed;
             if (!isDisposed && host.shouldYield()) {
