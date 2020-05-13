@@ -93,7 +93,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation implem
 
   schedule(continuation: SchedulerContinuationLike, { delay }: { delay: number; }): void {
     const priority = this.priorityScheduler.current.priority;
-    this.priorityScheduler.schedule(continuation, { delay, priority });
+    scheduleWithPriority(this.priorityScheduler, continuation, { delay, priority });
   }
 
   shouldYield(): boolean {
