@@ -1,4 +1,4 @@
-import { compose, Operator, pipe, Factory, flip } from "../../functions";
+import { compose, Function, pipe, Factory, flip } from "../../functions";
 import {
   createSubject,
   map,
@@ -15,7 +15,7 @@ import {
 } from "../../observable";
 import { none } from "../../option";
 import { stream } from "../../streamable";
-import { ObservableOperator } from "../observable/interfaces";
+import { ObservableFunction } from "../observable/interfaces";
 import { AsyncEnumerableLike } from "./interfaces";
 
 export const enum ConsumeRequestType {
@@ -52,9 +52,9 @@ export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
 const consumeImpl = <TSrc, TAcc>(
   consumer: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
+  ) => ObservableFunction<TSrc, ConsumeRequest<TAcc>>,
   initial: Factory<TAcc>,
-): Operator<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
+): Function<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
     scheduler => {
       const enumerator = stream(enumerable, scheduler);
@@ -85,13 +85,13 @@ const consumeImpl = <TSrc, TAcc>(
 export const consume = <T, TAcc>(
   consumer: Consumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Operator<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
   consumer: AsyncConsumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Operator<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(
     accObs =>
       compose(

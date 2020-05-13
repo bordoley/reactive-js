@@ -1,4 +1,4 @@
-import { Operator, Factory, Reducer } from "../../functions";
+import { Function, Factory, Reducer } from "../../functions";
 import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
 
@@ -11,7 +11,7 @@ import { EnumerableLike } from "./interfaces";
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): Operator<EnumerableLike<T>, TAcc> => enumerable => {
+): Function<EnumerableLike<T>, TAcc> => enumerable => {
   const enumerator = enumerate(enumerable);
   let acc = initialValue();
   while (enumerator.move()) {

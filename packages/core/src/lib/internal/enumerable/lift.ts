@@ -3,14 +3,14 @@ import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableOperator,
-  EnumeratorOperator,
+  EnumerableFunction,
+  EnumeratorFunction,
 } from "./interfaces";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(
     readonly src: EnumerableLike<any>,
-    readonly operators: EnumeratorOperator<any, any>[],
+    readonly operators: EnumeratorFunction<any, any>[],
   ) {}
 
   enumerate(): EnumeratorLike<T> {
@@ -20,21 +20,21 @@ class LiftedEnumerableLike<T> implements EnumerableLike<T> {
 }
 
 /**
- * Returns an EnumerableOperator that applies `operator` to
+ * Returns an EnumerableFunction that applies `operator` to
  * the EnumeratorLike returned by the source when enumerated.
  *
  * @param operator
  */
 export const lift = <TA, TB>(
-  operator: EnumeratorOperator<TA, TB>,
-): EnumerableOperator<TA, TB> => enumerable => {
+  operator: EnumeratorFunction<TA, TB>,
+): EnumerableFunction<TA, TB> => enumerable => {
   const src =
     enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;
 
-  const allOperators =
+  const allFunctions =
     enumerable instanceof LiftedEnumerableLike
       ? [...enumerable.operators, operator]
       : [operator];
 
-  return new LiftedEnumerableLike(src, allOperators);
+  return new LiftedEnumerableLike(src, allFunctions);
 };

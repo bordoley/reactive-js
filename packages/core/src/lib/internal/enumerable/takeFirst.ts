@@ -1,4 +1,4 @@
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
 
 class TakeFirstEnumerator<T> implements EnumeratorLike<T> {
@@ -31,7 +31,7 @@ class TakeFirstEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(count = 1): EnumerableOperator<T, T> => {
+export const takeFirst = <T>(count = 1): EnumerableFunction<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
     new TakeFirstEnumerator(enumerator, count);
   return lift(operator);

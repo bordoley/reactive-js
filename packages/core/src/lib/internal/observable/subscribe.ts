@@ -1,5 +1,5 @@
 import { DisposableLike } from "../../disposable";
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import {
@@ -22,7 +22,7 @@ class DefaultSubscriber<T> extends AbstractSubscriber<T> {
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,
-): Operator<ObservableLike<T>, DisposableLike> => (
+): Function<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
 ): DisposableLike => {
   const subscriber = new DefaultSubscriber(scheduler);

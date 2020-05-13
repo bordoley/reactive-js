@@ -15,7 +15,7 @@ import {
   disposeOnError,
   add,
 } from "../../disposable";
-import { FlowableOperator } from "../../flowable";
+import { FlowableFunction } from "../../flowable";
 import { defer, ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
@@ -25,7 +25,7 @@ import { createDisposableNodeStream } from "./nodeStream";
 
 export const transform = (
   factory: Factory<DisposableValueLike<Transform>>,
-): FlowableOperator<Uint8Array, Uint8Array> => src =>
+): FlowableFunction<Uint8Array, Uint8Array> => src =>
   createStreamable(modeObs =>
     using(
       scheduler => {
@@ -69,30 +69,30 @@ export const transform = (
 
 export const brotliDecompress = (
   options: BrotliOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
 export const gunzip = (
   options: ZlibOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
 export const gzip = (
   options: ZlibOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
-): FlowableOperator<Uint8Array, Uint8Array> =>
+): FlowableFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createDeflate, createDisposableNodeStream));

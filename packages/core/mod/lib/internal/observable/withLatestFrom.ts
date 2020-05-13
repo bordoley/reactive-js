@@ -1,9 +1,9 @@
 import { dispose, add, addDisposableOrTeardown } from "../../disposable.ts";
-import { pipe, Selector2 } from "../../functions.ts";
+import { pipe, Function2 } from "../../functions.ts";
 import { Option, isSome } from "../../option.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -29,7 +29,7 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   constructor(
     delegate: SubscriberLike<T>,
     other: ObservableLike<TB>,
-    private readonly selector: Selector2<TA, TB, T>,
+    private readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
@@ -67,8 +67,8 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
  */
 export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
-  selector: Selector2<TA, TB, T>,
-): ObservableOperator<TA, T> => {
+  selector: Function2<TA, TB, T>,
+): ObservableFunction<TA, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new WithLatestFromSubscriber(subscriber, other, selector);
   operator.isSynchronous = false;

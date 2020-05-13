@@ -5,12 +5,12 @@ import {
   add,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { pipe, Operator } from "../../functions.ts";
+import { pipe, Function } from "../../functions.ts";
 import { isNone, none } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -40,7 +40,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
 
   constructor(
     delegate: SubscriberLike<readonly T[]>,
-    private readonly durationSelector: Operator<T, ObservableLike<unknown>>,
+    private readonly durationFunction: Function<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
   ) {
     super(delegate);
@@ -67,7 +67,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
       this.onNotify();
     } else if (this.durationSubscription.isDisposed) {
       this.durationSubscription = pipe(
-        this.durationSelector(next),
+        this.durationFunction(next),
         onNotify(this.onNotify),
         subscribe(this.delegate),
         addDisposableOrTeardown(disposeOnError(this)),
@@ -85,12 +85,12 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
  */
 export function buffer<T>(
   options: {
-    duration?: Operator<T, ObservableLike<unknown>> | number;
+    duration?: Function<T, ObservableLike<unknown>> | number;
     maxBufferSize?: number;
   } = {},
-): ObservableOperator<T, readonly T[]> {
+): ObservableFunction<T, readonly T[]> {
   const delay = options.duration ?? Number.MAX_SAFE_INTEGER;
-  const durationSelector =
+  const durationFunction =
     delay === Number.MAX_SAFE_INTEGER
       ? never
       : typeof delay === "number"
@@ -99,7 +99,7 @@ export function buffer<T>(
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (subscriber: SubscriberLike<readonly T[]>) =>
-    new BufferSubscriber(subscriber, durationSelector, maxBufferSize);
+    new BufferSubscriber(subscriber, durationFunction, maxBufferSize);
   operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
 
   return lift(operator);

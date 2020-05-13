@@ -1,7 +1,7 @@
 import { add } from "../../disposable";
 import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { ObservableFunction, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -47,7 +47,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
  */
 export const distinctUntilChanged = <T>(
   equality: Equality<T> = strictEquality,
-): ObservableOperator<T, T> => {
+): ObservableFunction<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new DistinctUntilChangedSubscriber(subscriber, equality);
   operator.isSynchronous = true;

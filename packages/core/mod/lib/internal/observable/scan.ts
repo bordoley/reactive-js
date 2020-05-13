@@ -1,6 +1,6 @@
 import { add } from "../../disposable.ts";
 import { Factory, Reducer } from "../../functions.ts";
-import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
@@ -37,7 +37,7 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 export const scan = <T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): ObservableOperator<T, TAcc> => {
+): ObservableFunction<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ScanSubscriber(subscriber, scanner, initialValue());
   operator.isSynchronous = true;

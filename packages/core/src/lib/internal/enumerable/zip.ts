@@ -1,19 +1,19 @@
 import {
-  Selector2,
-  Selector3,
-  Selector4,
-  Selector5,
-  Selector6,
-  Selector7,
-  Selector8,
-  Selector9,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
+  Function6,
+  Function7,
+  Function8,
+  Function9,
 } from "../../functions";
 import { none } from "../../option";
 import { current, enumerate, hasCurrent } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableOperator,
+  EnumerableFunction,
 } from "./interfaces";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
@@ -71,11 +71,11 @@ class ZipEnumerable<T> implements EnumerableLike<T> {
 
 export function zip<TA, TB, T>(
   observables: [EnumerableLike<TA>, EnumerableLike<TB>],
-  selector: Selector2<TA, TB, T>,
+  selector: Function2<TA, TB, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, T>(
   observables: [EnumerableLike<TA>, EnumerableLike<TB>, EnumerableLike<TC>],
-  selector: Selector3<TA, TB, TC, T>,
+  selector: Function3<TA, TB, TC, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, T>(
   observables: [
@@ -84,7 +84,7 @@ export function zip<TA, TB, TC, TD, T>(
     EnumerableLike<TC>,
     EnumerableLike<TD>,
   ],
-  selector: Selector4<TA, TB, TC, TD, T>,
+  selector: Function4<TA, TB, TC, TD, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, T>(
   observables: [
@@ -94,7 +94,7 @@ export function zip<TA, TB, TC, TD, TE, T>(
     EnumerableLike<TD>,
     EnumerableLike<TE>,
   ],
-  selector: Selector5<TA, TB, TC, TD, TE, T>,
+  selector: Function5<TA, TB, TC, TD, TE, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, T>(
   observables: [
@@ -105,7 +105,7 @@ export function zip<TA, TB, TC, TD, TE, TF, T>(
     EnumerableLike<TE>,
     EnumerableLike<TF>,
   ],
-  selector: Selector6<TA, TB, TC, TD, TE, TF, T>,
+  selector: Function6<TA, TB, TC, TD, TE, TF, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
   observables: [
@@ -117,7 +117,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
     EnumerableLike<TF>,
     EnumerableLike<TG>,
   ],
-  selector: Selector7<TA, TB, TC, TD, TE, TF, TG, T>,
+  selector: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   observables: [
@@ -130,7 +130,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
     EnumerableLike<TG>,
     EnumerableLike<TH>,
   ],
-  selector: Selector8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
+  selector: Function8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
 ): EnumerableLike<T>;
 export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   observables: [
@@ -144,7 +144,7 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
     EnumerableLike<TH>,
     EnumerableLike<TI>,
   ],
-  selector: Selector9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>,
+  selector: Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>,
 ): EnumerableLike<T>;
 
 /**
@@ -160,5 +160,5 @@ export function zip<T>(
 
 export const zipWith = <TA, TB, T>(
   snd: EnumerableLike<TB>,
-  selector: Selector2<TA, TB, T>,
-): EnumerableOperator<TA, T> => fst => zip([fst, snd], selector);
+  selector: Function2<TA, TB, T>,
+): EnumerableFunction<TA, T> => fst => zip([fst, snd], selector);

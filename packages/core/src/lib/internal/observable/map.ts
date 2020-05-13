@@ -1,13 +1,13 @@
 import { add } from "../../disposable";
-import { returns, Operator } from "../../functions";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { returns, Function } from "../../functions";
+import { ObservableFunction, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSubscriber } from "./subscriber";
 
 class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
   constructor(
     delegate: SubscriberLike<TB>,
-    private readonly mapper: Operator<TA, TB>,
+    private readonly mapper: Function<TA, TB>,
   ) {
     super(delegate);
     add(this, delegate);
@@ -26,13 +26,13 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 export const map = <TA, TB>(
-  mapper: Operator<TA, TB>,
-): ObservableOperator<TA, TB> => {
+  mapper: Function<TA, TB>,
+): ObservableFunction<TA, TB> => {
   const operator = (subscriber: SubscriberLike<TB>) =>
     new MapSubscriber(subscriber, mapper);
   operator.isSynchronous = true;
   return lift(operator);
 };
 
-export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
+export const mapTo = <TA, TB>(value: TB): ObservableFunction<TA, TB> =>
   map(returns(value));

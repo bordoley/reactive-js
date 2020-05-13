@@ -43,7 +43,7 @@ ___
 
 #### Type declaration:
 
-* **onError**? : *Operator‹unknown, void | ObservableLike‹unknown››*
+* **onError**? : *Function‹unknown, void | ObservableLike‹unknown››*
 
 ## Functions
 
@@ -59,7 +59,7 @@ Name | Type | Default |
 
 **Returns:** *object*
 
-* \[ **key**: *string*\]: FlowableOperator‹Uint8Array, Uint8Array›
+* \[ **key**: *string*\]: FlowableFunction‹Uint8Array, Uint8Array›
 
 ___
 
@@ -75,7 +75,7 @@ Name | Type | Default |
 
 **Returns:** *object*
 
-* \[ **key**: *string*\]: FlowableOperator‹Uint8Array, Uint8Array›
+* \[ **key**: *string*\]: FlowableFunction‹Uint8Array, Uint8Array›
 
 ___
 

@@ -1,6 +1,6 @@
 import { add } from "../../disposable";
 import { pipe } from "../../functions";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { ObservableFunction, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -33,7 +33,7 @@ class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-export const skipFirst = <T>(count = 1): ObservableOperator<T, T> => {
+export const skipFirst = <T>(count = 1): ObservableFunction<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new SkipFirstSubscriber(subscriber, count);
   operator.isSynchronous = false;

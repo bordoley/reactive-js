@@ -1,4 +1,4 @@
-import { Factory, Operator, Reducer, SideEffect1 } from "../../functions.ts";
+import { Factory, Function, Reducer, SideEffect1 } from "../../functions.ts";
 import {
   map as mapObs,
   mapTo as mapToObs,
@@ -6,23 +6,23 @@ import {
   scan as scanObs,
 } from "../../observable.ts";
 import { lift } from "./streamable.ts";
-import { StreamableOperator } from "./interfaces.ts";
+import { StreamableFunction } from "./interfaces.ts";
 
 export const map = <TReq, TA, TB>(
-  mapper: Operator<TA, TB>,
-): StreamableOperator<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapObs(mapper));
+  mapper: Function<TA, TB>,
+): StreamableFunction<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapObs(mapper));
 
 export const mapTo = <TReq, TA, TB>(
   v: TB,
-): StreamableOperator<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapToObs(v));
+): StreamableFunction<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapToObs(v));
 
 export const onNotify = <TReq, T>(
   onNotify: SideEffect1<T>,
-): StreamableOperator<TReq, T, TReq, T> =>
+): StreamableFunction<TReq, T, TReq, T> =>
   lift<TReq, T, T>(onNotifyObs(onNotify));
 
 export const scan = <TReq, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initalValue: Factory<TAcc>,
-): StreamableOperator<TReq, T, TReq, TAcc> =>
+): StreamableFunction<TReq, T, TReq, TAcc> =>
   lift<TReq, T, TAcc>(scanObs(scanner, initalValue));

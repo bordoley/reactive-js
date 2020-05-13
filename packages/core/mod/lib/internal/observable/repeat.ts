@@ -9,7 +9,7 @@ import { pipe, Predicate } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -73,7 +73,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
 const repeatObs = <T>(
   shouldRepeat: (count: number, error?: Exception) => boolean,
-): ObservableOperator<T, T> => observable => {
+): ObservableFunction<T, T> => observable => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new RepeatSubscriber(subscriber, observable, shouldRepeat);
   operator.isSynchronous = true;
@@ -91,22 +91,22 @@ const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
  */
 export function repeat<T>(
   predicate: Predicate<number>,
-): ObservableOperator<T, T>;
+): ObservableFunction<T, T>;
 
 /**
  * Returns an `ObservableLike` that repeats the source count times.
  * @param count
  */
-export function repeat<T>(count: number): ObservableOperator<T, T>;
+export function repeat<T>(count: number): ObservableFunction<T, T>;
 
 /**
  * Returns an `ObservableLike` that continually repeats the source.
  */
-export function repeat<T>(): ObservableOperator<T, T>;
+export function repeat<T>(): ObservableFunction<T, T>;
 
 export function repeat<T>(
   predicate?: Predicate<number> | number,
-): ObservableOperator<T, T> {
+): ObservableFunction<T, T> {
   const repeatPredicate = isNone(predicate)
     ? defaultRepeatPredicate
     : typeof predicate === "number"
@@ -123,7 +123,7 @@ const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
  * Returns an `ObservableLike` that mirrors the source, re-subscribing
  * if the source completes with an error.
  */
-export function retry<T>(): ObservableOperator<T, T>;
+export function retry<T>(): ObservableFunction<T, T>;
 
 /**
  * Returns an `ObservableLike` that mirrors the source, resubscrbing
@@ -133,11 +133,11 @@ export function retry<T>(): ObservableOperator<T, T>;
  */
 export function retry<T>(
   predicate: (count: number, error: unknown) => boolean,
-): ObservableOperator<T, T>;
+): ObservableFunction<T, T>;
 
 export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableOperator<T, T> {
+): ObservableFunction<T, T> {
   const retryPredicate = isNone(predicate)
     ? defaultRetryPredicate
     : (count: number, error?: Exception) =>

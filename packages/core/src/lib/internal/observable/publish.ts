@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown, add } from "../../disposable";
-import { Operator, pipe } from "../../functions";
+import { Function, pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createSubject } from "./createSubject";
 import { dispatchTo } from "./dispatcher";
@@ -17,7 +17,7 @@ import { subscribe } from "./subscribe";
 export const publish = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): Operator<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
+): Function<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
   const subject = createSubject<T>(replayCount);
   const srcSubscription = pipe(
     observable,

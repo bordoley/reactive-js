@@ -2,7 +2,7 @@ import { dispose, add } from "../../disposable";
 import { Factory, Reducer } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableOperator, SubscriberLike } from "./interfaces";
+import { ObservableFunction, SubscriberLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingSubscriber,
@@ -42,7 +42,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): ObservableOperator<T, TAcc> => {
+): ObservableFunction<T, TAcc> => {
   const operator = (subscriber: SubscriberLike<TAcc>) =>
     new ReduceSubscriber(subscriber, reducer, initialValue());
   operator.isSynchronous = true;

@@ -6,12 +6,12 @@ import {
   add,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { pipe, Operator } from "../../functions.ts";
+import { pipe, Function } from "../../functions.ts";
 import { none, Option, isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -47,7 +47,7 @@ const setupDurationSubscription = <T>(
   next: T,
 ) => {
   subscriber.durationSubscription.inner = pipe(
-    subscriber.durationSelector(next),
+    subscriber.durationFunction(next),
     onNotify(subscriber.onNotify),
     subscribe(subscriber),
     addDisposableOrTeardown(disposeOnError(subscriber)),
@@ -72,7 +72,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
   constructor(
     delegate: SubscriberLike<T>,
-    readonly durationSelector: Operator<T, ObservableLike<unknown>>,
+    readonly durationFunction: Function<T, ObservableLike<unknown>>,
     private readonly mode: ThrottleMode,
   ) {
     super(delegate);
@@ -111,13 +111,13 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *
- * @param duration Selector function that is used to determine the silence duration in between emitted values.
+ * @param duration Function function that is used to determine the silence duration in between emitted values.
  * @param mode The throttle mode.
  */
 export function throttle<T>(
-  duration: Operator<T, ObservableLike<unknown>>,
+  duration: Function<T, ObservableLike<unknown>>,
   mode?: ThrottleMode,
-): ObservableOperator<T, T>;
+): ObservableFunction<T, T>;
 
 /**
  * Returns an `ObservableLike` which emits a value from the source,
@@ -130,18 +130,18 @@ export function throttle<T>(
 export function throttle<T>(
   duration: number,
   mode?: ThrottleMode,
-): ObservableOperator<T, T>;
+): ObservableFunction<T, T>;
 
 export function throttle<T>(
-  duration: Operator<T, ObservableLike<unknown>> | number,
+  duration: Function<T, ObservableLike<unknown>> | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableOperator<T, T> {
-  const durationSelector =
+): ObservableFunction<T, T> {
+  const durationFunction =
     typeof duration === "number"
       ? (_: T) => fromValue({ delay: duration })(none)
       : duration;
   const operator = (subscriber: SubscriberLike<T>) =>
-    new ThrottleSubscriber(subscriber, durationSelector, mode);
+    new ThrottleSubscriber(subscriber, durationFunction, mode);
   operator.isSynchronous = false;
   return lift(operator);
 }

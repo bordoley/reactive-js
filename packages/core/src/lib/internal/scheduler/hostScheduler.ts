@@ -4,7 +4,7 @@ import {
   dispose,
   add,
 } from "../../disposable";
-import { Factory, SideEffect, Operator, bind } from "../../functions";
+import { Factory, SideEffect, Function, bind } from "../../functions";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
 
 const supportsPerformanceNow =
@@ -62,7 +62,7 @@ const scheduleDelayed = (cb: SideEffect, delay: number) => {
 const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
   scheduleDelayed(cb, 0);
 
-const scheduleImmediate: Operator<
+const scheduleImmediate: Function<
   SideEffect,
   DisposableLike
 > = supportsSetImmediate

@@ -3,7 +3,7 @@ import { isSome } from "../../option.ts";
 import {
   ObservableLike,
   SubscriberLike,
-  ObservableOperator,
+  ObservableFunction,
 } from "./interfaces.ts";
 import { AbstractDelegatingSubscriber } from "./subscriber.ts";
 
@@ -74,4 +74,4 @@ export function concat<T>(
 
 export const concatWith = <T>(
   snd: ObservableLike<T>,
-): ObservableOperator<T, T> => first => concat(first, snd);
+): ObservableFunction<T, T> => first => concat(first, snd);

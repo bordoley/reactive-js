@@ -10,7 +10,7 @@ import { pipe, returns } from "../../functions.ts";
 import { concat } from "./concat.ts";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -60,7 +60,7 @@ const returnTimeoutError = returns(timeoutError);
  *
  * @param duration Time in ms within which the source must emit values.
  */
-export function timeout<T>(duration: number): ObservableOperator<T, T>;
+export function timeout<T>(duration: number): ObservableFunction<T, T>;
 
 /**
  *
@@ -68,11 +68,11 @@ export function timeout<T>(duration: number): ObservableOperator<T, T>;
  */
 export function timeout<T>(
   duration: ObservableLike<unknown>,
-): ObservableOperator<T, T>;
+): ObservableFunction<T, T>;
 
 export function timeout<T>(
   duration: number | ObservableLike<unknown>,
-): ObservableOperator<T, T> {
+): ObservableFunction<T, T> {
   const durationObs =
     typeof duration === "number"
       ? throws({ delay: duration })(returnTimeoutError)

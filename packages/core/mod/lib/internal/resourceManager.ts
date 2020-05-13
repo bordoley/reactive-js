@@ -7,7 +7,7 @@ import {
   addDisposableOrTeardown,
 } from "../disposable.ts";
 import { first, forEach, fromIterable } from "../enumerable.ts";
-import { pipe, Operator } from "../functions.ts";
+import { pipe, Function } from "../functions.ts";
 import { createKeyedQueue } from "./keyedQueue.ts";
 import { createSetMultimap } from "./multimaps.ts";
 import { createUniqueQueue } from "./queues.ts";
@@ -174,7 +174,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
   readonly globalResourceWaitQueue = createUniqueQueue<string>();
 
   constructor(
-    readonly createResource: Operator<string, TResource>,
+    readonly createResource: Function<string, TResource>,
     readonly scheduler: SchedulerLike,
     readonly maxIdleTime: number,
     readonly maxResourcesPerKey: number,
@@ -209,7 +209,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
 }
 
 export const createResourceManager = <TResource extends DisposableLike>(
-  createResource: Operator<string, TResource>,
+  createResource: Function<string, TResource>,
   scheduler: SchedulerLike,
   options: {
     maxIdleTime?: number;

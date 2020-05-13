@@ -8,7 +8,7 @@ import {
   StreamLike,
   DispatcherLike,
   MulticastObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   createSubject,
   publish,
   SubscriberLike,
@@ -17,7 +17,7 @@ import {
 import { SchedulerLike } from "../../scheduler.ts";
 import { StreamableLike } from "../../streamable.ts";
 
-export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
+export type StreamableFunction<TSrcReq, TSrc, TReq, T> = {
   (streamable: StreamableLike<TSrcReq, TSrc>): StreamableLike<TReq, T>;
 };
 
@@ -29,7 +29,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   private readonly observable: MulticastObservableLike<T>;
 
   constructor(
-    op: ObservableOperator<TReq, T>,
+    op: ObservableFunction<TReq, T>,
     scheduler: SchedulerLike,
     replayCount: number,
   ) {
@@ -63,7 +63,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
 }
 
 export const createStream = <TReq, T>(
-  op: ObservableOperator<TReq, T>,
+  op: ObservableFunction<TReq, T>,
   scheduler: SchedulerLike,
   replayCount: number,
 ): StreamLike<TReq, T> => new StreamImpl(op, scheduler, replayCount);

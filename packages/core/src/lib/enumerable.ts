@@ -18,8 +18,8 @@ export { generate } from "./internal/enumerable/generate";
 export {
   EnumeratorLike,
   EnumerableLike,
-  EnumeratorOperator,
-  EnumerableOperator,
+  EnumeratorFunction,
+  EnumerableFunction,
 } from "./internal/enumerable/interfaces";
 export { lift } from "./internal/enumerable/lift";
 export { keep, keepType } from "./internal/enumerable/keep";

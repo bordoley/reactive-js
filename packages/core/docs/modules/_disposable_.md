@@ -86,7 +86,7 @@ ___
 
 ### `Const` addDisposableOrTeardown
 
-▸ **addDisposableOrTeardown**<**T**>(`d`: [DisposableOrTeardown](_disposable_.md#disposableorteardown)): *[Operator](_functions_.md#operator)‹T, T›*
+▸ **addDisposableOrTeardown**<**T**>(`d`: [DisposableOrTeardown](_disposable_.md#disposableorteardown)): *[Function](_functions_.md#function)‹T, T›*
 
 **Type parameters:**
 
@@ -98,7 +98,7 @@ Name | Type |
 ------ | ------ |
 `d` | [DisposableOrTeardown](_disposable_.md#disposableorteardown) |
 
-**Returns:** *[Operator](_functions_.md#operator)‹T, T›*
+**Returns:** *[Function](_functions_.md#function)‹T, T›*
 
 ___
 

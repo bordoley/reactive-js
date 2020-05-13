@@ -1,5 +1,5 @@
 import { Exception, dispose, addDisposableOrTeardown } from "../../disposable.ts";
-import { Operator, pipe, Factory, SideEffect1 } from "../../functions.ts";
+import { Function, pipe, Factory, SideEffect1 } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import {
   VirtualTimeSchedulerLike,
@@ -22,7 +22,7 @@ export const forEach = <T>(
   schedulerFactory: Factory<
     VirtualTimeSchedulerLike
   > = createVirtualTimeScheduler,
-): Operator<ObservableLike<T>, void> => observable => {
+): Function<ObservableLike<T>, void> => observable => {
   const scheduler = schedulerFactory();
 
   let error: Option<Exception> = none;

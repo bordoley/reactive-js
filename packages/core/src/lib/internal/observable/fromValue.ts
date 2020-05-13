@@ -1,4 +1,4 @@
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { fromArray } from "./fromArray";
 import { ObservableLike } from "./interfaces";
 
@@ -10,7 +10,7 @@ import { ObservableLike } from "./interfaces";
  */
 export const fromValue = <T>(
   config = { delay: 0 },
-): Operator<T, ObservableLike<T>> => {
+): Function<T, ObservableLike<T>> => {
   const call = fromArray(config);
   return v => call([v]);
 };

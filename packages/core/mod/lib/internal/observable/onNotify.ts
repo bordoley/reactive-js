@@ -1,6 +1,6 @@
 import { add } from "../../disposable.ts";
 import { SideEffect1 } from "../../functions.ts";
-import { ObservableOperator, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingSubscriber,
@@ -33,7 +33,7 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  */
 export function onNotify<T>(
   onNotify: SideEffect1<T>,
-): ObservableOperator<T, T> {
+): ObservableFunction<T, T> {
   const operator = (subscriber: SubscriberLike<T>) =>
     new OnNotifySubscriber(subscriber, onNotify);
   operator.isSynchronous = true;

@@ -1,4 +1,4 @@
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { DispatcherLike } from "./interfaces";
 
 export const dispatch = <T>(dispatcher: DispatcherLike<T>, v: T) => {
@@ -7,4 +7,4 @@ export const dispatch = <T>(dispatcher: DispatcherLike<T>, v: T) => {
 
 export const dispatchTo = <T>(
   dispatcher: DispatcherLike<T>,
-): Operator<T, void> => v => dispatch(dispatcher, v);
+): Function<T, void> => v => dispatch(dispatcher, v);

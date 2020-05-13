@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.ts";
-import { Operator } from "../../functions.ts";
+import { Function } from "../../functions.ts";
 import { schedule } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, SubscriberLike } from "./interfaces.ts";
@@ -61,7 +61,7 @@ export const fromArray = <T>(
     delay?: number;
     startIndex?: number;
   } = {},
-): Operator<readonly T[], ObservableLike<T>> => values => {
+): Function<readonly T[], ObservableLike<T>> => values => {
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 

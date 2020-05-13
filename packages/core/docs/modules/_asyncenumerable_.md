@@ -73,7 +73,7 @@ Name | Type |
 
 ### `Const` consume
 
-▸ **consume**<**T**, **TAcc**>(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consume**<**T**, **TAcc**>(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -88,13 +88,13 @@ Name | Type |
 `consumer` | [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc› |
 `initial` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 
 ### `Const` consumeAsync
 
-▸ **consumeAsync**<**T**, **TAcc**>(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consumeAsync**<**T**, **TAcc**>(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -109,7 +109,7 @@ Name | Type |
 `consumer` | [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc› |
 `initial` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[Operator](_functions_.md#operator)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 

@@ -1,9 +1,9 @@
 import { Exception, dispose, add } from "../../disposable";
-import { Operator } from "../../functions";
+import { Function } from "../../functions";
 import { isSome, none } from "../../option";
 import {
   ObservableLike,
-  ObservableOperator,
+  ObservableFunction,
   SubscriberLike,
 } from "./interfaces";
 import { lift } from "./lift";
@@ -12,7 +12,7 @@ import { AbstractDelegatingSubscriber } from "./subscriber";
 class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   constructor(
     delegate: SubscriberLike<T>,
-    onError: Operator<unknown, ObservableLike<T> | void>,
+    onError: Function<unknown, ObservableLike<T> | void>,
   ) {
     super(delegate);
 
@@ -49,8 +49,8 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * to continue with or void if the error should be propagated.
  */
 export const catchError = <T>(
-  onError: Operator<unknown, ObservableLike<T> | void>,
-): ObservableOperator<T, T> => {
+  onError: Function<unknown, ObservableLike<T> | void>,
+): ObservableFunction<T, T> => {
   const operator = (subscriber: SubscriberLike<T>) =>
     new CatchErrorSubscriber(subscriber, onError);
   operator.isSynchronous = false;

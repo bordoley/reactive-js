@@ -1,5 +1,5 @@
 import { Predicate, TypePredicate } from "../../functions";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
 
 class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
@@ -32,7 +32,7 @@ class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
  */
 export const keepType = <TA, TB extends TA>(
   predicate: TypePredicate<TA, TB>,
-): EnumerableOperator<TA, TB> => {
+): EnumerableFunction<TA, TB> => {
   const operator = (enumerator: EnumeratorLike<TA>) =>
     new KeepTypeEnumerator(enumerator, predicate);
   return lift(operator);
@@ -44,5 +44,5 @@ export const keepType = <TA, TB extends TA>(
  *
  * @param predicate The predicate function.
  */
-export const keep = <T>(predicate: Predicate<T>): EnumerableOperator<T, T> =>
+export const keep = <T>(predicate: Predicate<T>): EnumerableFunction<T, T> =>
   keepType(predicate as TypePredicate<T, T>);
