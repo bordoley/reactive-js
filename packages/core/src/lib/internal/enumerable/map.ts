@@ -5,20 +5,19 @@ import { lift } from "./lift";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
   current = (none as unknown) as TB;
+  hasCurrent = false;
 
   constructor(
-    private readonly delegate: EnumeratorLike<TA>,
-    private readonly mapper: Function<TA, TB>,
+    readonly delegate: EnumeratorLike<TA>,
+    readonly mapper: Function<TA, TB>,
   ) {}
-
-  get hasCurrent() {
-    return this.delegate.hasCurrent;
-  }
 
   move(): boolean {
     this.current = (none as unknown) as TB;
-    this.delegate.move();
-    const hasCurrent = this.hasCurrent;
+    
+    const hasCurrent = this.delegate.move();
+    this.hasCurrent = hasCurrent;
+
     if (hasCurrent) {
       this.current = this.mapper(this.delegate.current);
     }

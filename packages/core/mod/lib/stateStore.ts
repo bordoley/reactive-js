@@ -1,11 +1,5 @@
 import { addDisposableOrTeardown, add } from "./disposable.ts";
-import {
-  pipe,
-  identity,
-  Factory,
-  Equality,
-  strictEquality,
-} from "./functions.ts";
+import { pipe, identity, Factory, Equality, strictEquality } from "./functions.ts";
 import {
   onNotify,
   using,

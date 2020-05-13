@@ -17,9 +17,7 @@ import {
   expectPromiseToThrow,
 } from "../lib/internal/testing";
 import { fromObservable } from "../lib/flowable";
-import {
-  createFlowableSinkAccumulator,
-} from "../lib/internal/flowableSinkAccumulatorForTests";
+import { createFlowableSinkAccumulator } from "../lib/internal/flowableSinkAccumulatorForTests";
 
 const scheduler = createHostScheduler();
 

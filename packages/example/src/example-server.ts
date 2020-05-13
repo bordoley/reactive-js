@@ -92,7 +92,7 @@ const routerHandlerPrintParams: HttpServer<
     createHttpResponse({
       statusCode: HttpStatusCode.OK,
       contentInfo: {
-        contentType: "application/json"
+        contentType: "application/json",
       },
       body: JSON.stringify(req.params),
     }),
@@ -122,7 +122,6 @@ const routerHandlerEventStream: HttpServer<
     },
   }),
 );
-
 
 const routerHandlerFiles: HttpServer<
   HttpRoutedRequest<FlowableLike<Uint8Array>>,
@@ -273,7 +272,7 @@ pipe(
       [HttpStandardHeader.ContentType.toLowerCase()]: "text/plain",
       [HttpExtensionHeader.XForwardedHost.toLowerCase()]: "www.google.com",
       [HttpExtensionHeader.XForwardedProto.toLowerCase()]: "https",
-      [HttpStandardHeader.Accept.toLowerCase()]: "application/json, text/html"
+      [HttpStandardHeader.Accept.toLowerCase()]: "application/json, text/html",
     },
   }),
   encodeHttpRequestWithUtf8,

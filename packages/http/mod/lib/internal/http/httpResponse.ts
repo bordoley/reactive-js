@@ -3,10 +3,7 @@ import {
   FlowableFunction,
   empty,
 } from "../../../../../core/mod/lib/flowable.ts";
-import {
-  Function,
-  SideEffect2,
-} from "../../../../../core/mod/lib/functions.ts";
+import { Function, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -103,7 +100,7 @@ export const createHttpResponse = <T>({
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  contentInfo: isSome(contentInfo) 
+  contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
   etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
@@ -116,7 +113,7 @@ export const createHttpResponse = <T>({
       ? lastModified.getTime()
       : lastModified,
   location: typeof location === "string" ? new URL(location) : location,
-  preferences: isSome(preferences) 
+  preferences: isSome(preferences)
     ? createHttpPreferences(preferences)
     : parseHttpPreferencesFromHeaders(headers),
   statusCode,
@@ -251,11 +248,21 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const encodeHttpResponseWithUtf8: Function<HttpResponse<string>, HttpResponse<Uint8Array>> =
-  encodeHttpMessageWithUtf8 as unknown as Function<HttpResponse<string>, HttpResponse<Uint8Array>>;
+export const encodeHttpResponseWithUtf8: Function<
+  HttpResponse<string>,
+  HttpResponse<Uint8Array>
+> = (encodeHttpMessageWithUtf8 as unknown) as Function<
+  HttpResponse<string>,
+  HttpResponse<Uint8Array>
+>;
 
-export const decodeHttpResponseWithCharset: Function<HttpResponse<Uint8Array>, HttpResponse<string>> = 
-  decodeHttpMessageWithCharset as unknown as Function<HttpResponse<Uint8Array>, HttpResponse<string>>
+export const decodeHttpResponseWithCharset: Function<
+  HttpResponse<Uint8Array>,
+  HttpResponse<string>
+> = (decodeHttpMessageWithCharset as unknown) as Function<
+  HttpResponse<Uint8Array>,
+  HttpResponse<string>
+>;
 
 export const toFlowableHttpResponse = <TBody>(
   resp: HttpResponse<TBody>,

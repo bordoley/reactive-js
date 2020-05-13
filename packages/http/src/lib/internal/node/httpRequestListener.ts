@@ -52,10 +52,9 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
 
 const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
   body,
-}: HttpResponse<FlowableLike<Uint8Array>>) =>
-  sink(body, responseBody);
+}: HttpResponse<FlowableLike<Uint8Array>>) => sink(body, responseBody);
 
-const defaultOnError = (e: unknown)  => {
+const defaultOnError = (e: unknown) => {
   console.log(e);
 };
 

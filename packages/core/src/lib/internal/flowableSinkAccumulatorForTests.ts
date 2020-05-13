@@ -1,7 +1,24 @@
-import { FlowEvent, FlowEventType, FlowableSinkLike, FlowMode } from "../flowable";
+import {
+  FlowEvent,
+  FlowEventType,
+  FlowableSinkLike,
+  FlowMode,
+} from "../flowable";
 import { Reducer, pipe, returns, Factory } from "../functions";
 import { SchedulerLike } from "../scheduler";
-import { StreamLike, ObservableLike, using, takeWhile, keepType, map as mapObs, reduce, onNotify, subscribe, createObservable, dispatch } from "../observable";
+import {
+  StreamLike,
+  ObservableLike,
+  using,
+  takeWhile,
+  keepType,
+  map as mapObs,
+  reduce,
+  onNotify,
+  subscribe,
+  createObservable,
+  dispatch,
+} from "../observable";
 import { add } from "../disposable";
 import { stream, createStreamable } from "../streamable";
 

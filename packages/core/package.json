@@ -74,7 +74,7 @@
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-node": "rm -rf ./mod/lib/node.* ./mod/lib/internal/node",
     "mod-rm-perf": "rm -rf ./mod/perf",
-    "perf": "NODE_ENV=production node ./build/cjs/perf/index.js",
+    "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest"

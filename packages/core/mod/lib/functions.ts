@@ -164,9 +164,7 @@ export const isEqualTo = <T>(
   b: T,
   equality: Equality<T> = strictEquality,
 ): Predicate<T> =>
-  equality === strictEquality
-    ? isStrictlyEqualTo(b)
-    : (a: T) => equality(a, b);
+  equality === strictEquality ? isStrictlyEqualTo(b) : (a: T) => equality(a, b);
 
 export const isEven = (x: number): boolean => x % 2 === 0;
 export const isOdd = (x: number): boolean => x % 2 !== 0;

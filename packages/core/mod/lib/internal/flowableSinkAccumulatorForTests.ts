@@ -1,7 +1,24 @@
-import { FlowEvent, FlowEventType, FlowableSinkLike, FlowMode } from "../flowable.ts";
+import {
+  FlowEvent,
+  FlowEventType,
+  FlowableSinkLike,
+  FlowMode,
+} from "../flowable.ts";
 import { Reducer, pipe, returns, Factory } from "../functions.ts";
 import { SchedulerLike } from "../scheduler.ts";
-import { StreamLike, ObservableLike, using, takeWhile, keepType, map as mapObs, reduce, onNotify, subscribe, createObservable, dispatch } from "../observable.ts";
+import {
+  StreamLike,
+  ObservableLike,
+  using,
+  takeWhile,
+  keepType,
+  map as mapObs,
+  reduce,
+  onNotify,
+  subscribe,
+  createObservable,
+  dispatch,
+} from "../observable.ts";
 import { add } from "../disposable.ts";
 import { stream, createStreamable } from "../streamable.ts";
 
