@@ -2,7 +2,6 @@ import {
   AbstractSerialDisposable,
   DisposableLike,
   disposed,
-  AbstractDisposable,
   dispose,
   add,
 } from "../../disposable.ts";
@@ -15,7 +14,7 @@ import {
   PrioritySchedulerLike,
   PausableSchedulerLike,
 } from "./interfaces.ts";
-import { schedule, scheduleWithPriority } from "./schedule.ts";
+import { schedule } from "./schedule.ts";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -78,26 +77,9 @@ const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
   return task ?? delayed.peek();
 };
 
-class PrioritySchedulerContinuation extends AbstractSchedulerContinuation implements SchedulerLike {
+class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
   constructor(private readonly priorityScheduler: PriorityScheduler) {
     super();
-  }
-
-  get inContinuation() {
-    return this.priorityScheduler.inContinuation;
-  };
-
-  get now() {
-    return this.priorityScheduler.now;
-  };
-
-  schedule(continuation: SchedulerContinuationLike, { delay }: { delay: number; }): void {
-    const priority = this.priorityScheduler.current.priority;
-    scheduleWithPriority(this.priorityScheduler, continuation, { delay, priority });
-  }
-
-  shouldYield(): boolean {
-    return this.priorityScheduler.shouldYield();
   }
 
   produce(host: SchedulerLike) {
@@ -121,7 +103,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation implem
       move(priorityScheduler);
 
       priorityScheduler.inContinuation = true;
-      continuation.run(this);
+      continuation.run(this.priorityScheduler);
       priorityScheduler.inContinuation = false;
 
       isDisposed = this.isDisposed;
@@ -167,7 +149,7 @@ const scheduleContinuation = (
 };
 
 class PriorityScheduler extends AbstractSerialDisposable
-  implements PrioritySchedulerLike {
+  implements PrioritySchedulerLike, PausableSchedulerLike {
   current: ScheduledTask = none as any;
   readonly delayed: QueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
@@ -190,18 +172,50 @@ class PriorityScheduler extends AbstractSerialDisposable
     return this.host.now;
   }
 
+  pause() {
+    this.isPaused = true;
+    this.inner = disposed;
+  }
+
+  resume() {
+    const head = peek(this);
+
+    this.isPaused = false;
+
+    if (this.inner.isDisposed && isSome(head)) {
+      scheduleContinuation(this, head);
+    }
+  }
+
   schedule(
     continuation: SchedulerContinuationLike,
-    {
-      priority,
-      delay = 0,
-    }: {
+    options?: {
+      delay: number;
+    },
+  ): void;
+  schedule(
+    continuation: SchedulerContinuationLike,
+    options: {
       priority: number;
       delay?: number;
     },
+  ): void;
+  schedule(
+    continuation: SchedulerContinuationLike,
+    options: {
+      priority?: number;
+      delay?: number;
+    } = {},
   ) {
+    let { delay, priority } = options;
+    delay = Math.max(0, delay ?? 0);
+    priority = isSome(priority)
+      ? priority
+      : this.inContinuation
+      ? this.current.priority
+      : Number.MAX_SAFE_INTEGER;
+
     add(this, continuation);
-    delay = Math.max(0, delay);
 
     if (!continuation.isDisposed) {
       const now = this.now;
@@ -261,58 +275,10 @@ export const toPriorityScheduler = (
 ): DisposableLike & PrioritySchedulerLike =>
   new PriorityScheduler(hostScheduler);
 
-class PausableSchedulerImpl extends AbstractDisposable
-  implements PausableSchedulerLike {
-  constructor(private readonly priorityScheduler: PriorityScheduler) {
-    super();
-
-    add(this, priorityScheduler);
-    add(priorityScheduler, this);
-  }
-
-  get inContinuation() {
-    return this.priorityScheduler.inContinuation;
-  }
-
-  get now() {
-    return this.priorityScheduler.now;
-  }
-
-  pause() {
-    const priorityScheduler = this.priorityScheduler;
-    priorityScheduler.isPaused = true;
-    priorityScheduler.inner = disposed;
-  }
-
-  resume() {
-    const priorityScheduler = this.priorityScheduler;
-    const head = peek(priorityScheduler);
-
-    priorityScheduler.isPaused = false;
-
-    if (priorityScheduler.inner.isDisposed && isSome(head)) {
-      scheduleContinuation(priorityScheduler, head);
-    }
-  }
-
-  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    scheduleWithPriority(this.priorityScheduler, continuation, {
-      priority: 0,
-      delay,
-    });
-  }
-
-  shouldYield(): boolean {
-    return this.priorityScheduler.shouldYield();
-  }
-}
-
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
 ): DisposableLike & PausableSchedulerLike => {
-  const scheduler = new PausableSchedulerImpl(
-    new PriorityScheduler(hostScheduler),
-  );
+  const scheduler = new PriorityScheduler(hostScheduler);
   scheduler.pause();
   return scheduler;
 };
