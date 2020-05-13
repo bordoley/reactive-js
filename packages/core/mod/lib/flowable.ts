@@ -1,11 +1,5 @@
 import { add, addDisposableOrTeardown } from "./disposable.ts";
-import {
-  Function,
-  compose,
-  pipe,
-  returns,
-  isEqualTo,
-} from "./functions.ts";
+import { Function, compose, pipe, returns, isEqualTo } from "./functions.ts";
 import {
   ObservableLike,
   endWith,

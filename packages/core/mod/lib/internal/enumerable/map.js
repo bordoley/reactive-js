@@ -5,14 +5,12 @@ class MapEnumerator {
         this.delegate = delegate;
         this.mapper = mapper;
         this.current = none;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
+        this.hasCurrent = false;
     }
     move() {
         this.current = none;
-        this.delegate.move();
-        const hasCurrent = this.hasCurrent;
+        const hasCurrent = this.delegate.move();
+        this.hasCurrent = hasCurrent;
         if (hasCurrent) {
             this.current = this.mapper(this.delegate.current);
         }

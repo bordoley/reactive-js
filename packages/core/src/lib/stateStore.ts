@@ -1,11 +1,5 @@
 import { addDisposableOrTeardown, add } from "./disposable";
-import {
-  pipe,
-  identity,
-  Factory,
-  Equality,
-  strictEquality,
-} from "./functions";
+import { pipe, identity, Factory, Equality, strictEquality } from "./functions";
 import {
   onNotify,
   using,

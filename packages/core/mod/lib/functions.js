@@ -15,9 +15,7 @@ export const decrement = (x) => x - 1;
 export const decrementBy = (decr) => (x) => x - decr;
 export const strictEquality = (a, b) => a === b;
 const isStrictlyEqualTo = (b) => a => a === b;
-export const isEqualTo = (b, equality = strictEquality) => equality === strictEquality
-    ? isStrictlyEqualTo(b)
-    : (a) => equality(a, b);
+export const isEqualTo = (b, equality = strictEquality) => equality === strictEquality ? isStrictlyEqualTo(b) : (a) => equality(a, b);
 export const isEven = (x) => x % 2 === 0;
 export const isOdd = (x) => x % 2 !== 0;
 export const negate = (v) => !v;

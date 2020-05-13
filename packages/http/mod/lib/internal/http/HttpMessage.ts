@@ -24,9 +24,10 @@ export const writeHttpMessageHeaders = <T>(
   writeHttpHeaders(headers, writeHeader);
 };
 
-export const encodeHttpMessageWithUtf8 = (
-  { contentInfo, ...msg }: HttpMessage<string>,
-): HttpMessage<Uint8Array> => {
+export const encodeHttpMessageWithUtf8 = ({
+  contentInfo,
+  ...msg
+}: HttpMessage<string>): HttpMessage<Uint8Array> => {
   if (isNone(contentInfo)) {
     throw new Error("HttpMessage has not contentInfo");
   }
@@ -53,23 +54,23 @@ export const encodeHttpMessageWithUtf8 = (
 export const decodeHttpMessageWithCharset = ({
   contentInfo,
   ...msg
-}: HttpMessage<Uint8Array>): HttpMessage<string>  => {
+}: HttpMessage<Uint8Array>): HttpMessage<string> => {
   if (isNone(contentInfo)) {
     return {
       ...msg,
       body: "",
-    }
+    };
   } else {
-    const { charset = "utf-8" } =contentInfo.contentType.params;
+    const { charset = "utf-8" } = contentInfo.contentType.params;
     const textDecoder = new TextDecoder(charset);
-    const body = textDecoder.decode(msg.body);   
+    const body = textDecoder.decode(msg.body);
 
     return {
       ...msg,
       body,
     };
   }
-}
+};
 
 export const toFlowableHttpMessage = <TBody>({
   body,

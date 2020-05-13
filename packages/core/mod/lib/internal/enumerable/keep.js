@@ -1,19 +1,20 @@
 import { lift } from "./lift.js";
+import { none } from "../../option.js";
 class KeepTypeEnumerator {
     constructor(delegate, predicate) {
         this.delegate = delegate;
         this.predicate = predicate;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
+        this.hasCurrent = false;
+        this.current = none;
     }
     move() {
         const delegate = this.delegate;
-        while (delegate.move() && !this.predicate(delegate.current)) { }
-        return delegate.hasCurrent;
+        const predicate = this.predicate;
+        let hasCurrent = false;
+        while ((hasCurrent = delegate.move()) && !predicate(delegate.current)) { }
+        this.hasCurrent = hasCurrent;
+        this.current = delegate.current;
+        return hasCurrent;
     }
 }
 export const keepType = (predicate) => {

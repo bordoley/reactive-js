@@ -9,18 +9,22 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
   constructor(private readonly array: readonly T[]) {}
 
   move(): boolean {
-    this.hasCurrent = false;
-    this.current = none;
+    const array = this.array;
+    
+    let hasCurrent = false;
 
     this.index++;
-
     const index = this.index;
-    if (index < this.array.length) {
-      this.hasCurrent = true;
-      this.current = this.array[index];
-    }
 
-    return this.hasCurrent;
+    if (index < array.length) {
+      hasCurrent = true;
+      this.hasCurrent = true;
+      this.current = array[index];
+    } else {
+      this.hasCurrent = false;
+    }
+    
+    return hasCurrent;
   }
 }
 

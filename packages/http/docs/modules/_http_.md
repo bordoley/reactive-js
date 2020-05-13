@@ -287,25 +287,37 @@ ___
 
 ### `Const` decodeHttpRequestWithCharset
 
-• **decodeHttpRequestWithCharset**: *Function‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = decodeHttpMessageWithCharset as unknown as Function<HttpRequest<Uint8Array>, HttpRequest<string>>
+• **decodeHttpRequestWithCharset**: *Function‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function<
+  HttpRequest<Uint8Array>,
+  HttpRequest<string>
+>
 
 ___
 
 ### `Const` decodeHttpResponseWithCharset
 
-• **decodeHttpResponseWithCharset**: *Function‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = decodeHttpMessageWithCharset as unknown as Function<HttpResponse<Uint8Array>, HttpResponse<string>>
+• **decodeHttpResponseWithCharset**: *Function‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function<
+  HttpResponse<Uint8Array>,
+  HttpResponse<string>
+>
 
 ___
 
 ### `Const` encodeHttpRequestWithUtf8
 
-• **encodeHttpRequestWithUtf8**: *Function‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = encodeHttpMessageWithUtf8 as unknown as Function<HttpRequest<string>, HttpRequest<Uint8Array>>
+• **encodeHttpRequestWithUtf8**: *Function‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function<
+  HttpRequest<string>,
+  HttpRequest<Uint8Array>
+>
 
 ___
 
 ### `Const` encodeHttpResponseWithUtf8
 
-• **encodeHttpResponseWithUtf8**: *Function‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = encodeHttpMessageWithUtf8 as unknown as Function<HttpResponse<string>, HttpResponse<Uint8Array>>
+• **encodeHttpResponseWithUtf8**: *Function‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function<
+  HttpResponse<string>,
+  HttpResponse<Uint8Array>
+>
 
 ## Functions
 

@@ -7,15 +7,19 @@ class ArrayEnumerator {
         this.index = -1;
     }
     move() {
-        this.hasCurrent = false;
-        this.current = none;
+        const array = this.array;
+        let hasCurrent = false;
         this.index++;
         const index = this.index;
-        if (index < this.array.length) {
+        if (index < array.length) {
+            hasCurrent = true;
             this.hasCurrent = true;
-            this.current = this.array[index];
+            this.current = array[index];
         }
-        return this.hasCurrent;
+        else {
+            this.hasCurrent = false;
+        }
+        return hasCurrent;
     }
 }
 class ArrayEnumerable {

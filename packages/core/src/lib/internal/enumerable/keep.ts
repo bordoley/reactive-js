@@ -1,26 +1,26 @@
 import { Predicate, TypePredicate } from "../../functions";
 import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
+import { none } from "../../option";
 
 class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
+  hasCurrent = false;
+  current: any = none;
+
   constructor(
     private readonly delegate: EnumeratorLike<TA>,
     private readonly predicate: TypePredicate<TA, TB>,
   ) {}
 
-  get current() {
-    return (this.delegate.current as unknown) as TB;
-  }
-
-  get hasCurrent() {
-    return this.delegate.hasCurrent;
-  }
-
   move(): boolean {
     const delegate = this.delegate;
+    const predicate = this.predicate;
 
-    while (delegate.move() && !this.predicate(delegate.current)) {}
-    return delegate.hasCurrent;
+    let hasCurrent = false;
+    while ((hasCurrent = delegate.move()) && !predicate(delegate.current)) {}
+    this.hasCurrent = hasCurrent;
+    this.current = delegate.current;
+    return hasCurrent;
   }
 }
 

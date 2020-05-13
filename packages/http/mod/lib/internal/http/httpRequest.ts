@@ -1,8 +1,5 @@
 import { FlowableLike, FlowableFunction } from "../../../../../core/mod/lib/flowable.ts";
-import {
-  Function,
-  SideEffect2,
-} from "../../../../../core/mod/lib/functions.ts";
+import { Function, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -113,8 +110,8 @@ export const createHttpRequest = <T>({
   cacheControl: (cacheControl ?? []).map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
   ),
-  contentInfo: isSome(contentInfo) 
-    ? createHttpContentInfo(contentInfo) 
+  contentInfo: isSome(contentInfo)
+    ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
   expectContinue: expectContinue,
   headers: filterHeaders(headers),
@@ -124,8 +121,8 @@ export const createHttpRequest = <T>({
   preconditions: isSome(preconditions)
     ? createHttpRequestPreconditions(preconditions)
     : parseHttpRequestPreconditionsFromHeaders(headers),
-  preferences: isSome(preferences) 
-    ? createHttpPreferences(preferences) 
+  preferences: isSome(preferences)
+    ? createHttpPreferences(preferences)
     : parseHttpPreferencesFromHeaders(headers),
   uri: typeof uri === "string" ? new URL(uri) : uri,
 });
@@ -288,11 +285,21 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const encodeHttpRequestWithUtf8: Function<HttpRequest<string>, HttpRequest<Uint8Array>> =
-  encodeHttpMessageWithUtf8 as unknown as Function<HttpRequest<string>, HttpRequest<Uint8Array>>;
+export const encodeHttpRequestWithUtf8: Function<
+  HttpRequest<string>,
+  HttpRequest<Uint8Array>
+> = (encodeHttpMessageWithUtf8 as unknown) as Function<
+  HttpRequest<string>,
+  HttpRequest<Uint8Array>
+>;
 
-export const decodeHttpRequestWithCharset: Function<HttpRequest<Uint8Array>, HttpRequest<string>> = 
-  decodeHttpMessageWithCharset as unknown as Function<HttpRequest<Uint8Array>, HttpRequest<string>>
+export const decodeHttpRequestWithCharset: Function<
+  HttpRequest<Uint8Array>,
+  HttpRequest<string>
+> = (decodeHttpMessageWithCharset as unknown) as Function<
+  HttpRequest<Uint8Array>,
+  HttpRequest<string>
+>;
 
 export const toFlowableHttpRequest = <TBody>(
   req: HttpRequest<TBody>,

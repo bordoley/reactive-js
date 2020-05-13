@@ -8,9 +8,7 @@ import {
   fromObservable,
   map,
 } from "../lib/flowable.ts";
-import {
-  createFlowableSinkAccumulator,
-} from "../lib/internal/flowableSinkAccumulatorForTests.ts";
+import { createFlowableSinkAccumulator } from "../lib/internal/flowableSinkAccumulatorForTests.ts";
 import { increment, pipe, returns, sum, bind } from "../lib/functions.ts";
 import {
   onNotify,

@@ -1,5 +1,5 @@
 import { pipe, returns } from "../functions.js";
-import { using, takeWhile, keepType, map as mapObs, reduce, onNotify, subscribe, createObservable, dispatch } from "../observable.js";
+import { using, takeWhile, keepType, map as mapObs, reduce, onNotify, subscribe, createObservable, dispatch, } from "../observable.js";
 import { add } from "../disposable.js";
 import { stream, createStreamable } from "../streamable.js";
 const isNext = (ev) => ev.type === 1;

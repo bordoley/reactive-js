@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown, add } from "./disposable.js";
-import { pipe, identity, strictEquality, } from "./functions.js";
+import { pipe, identity, strictEquality } from "./functions.js";
 import { onNotify, using, zipWithLatestFrom, distinctUntilChanged, dispatchTo, subscribe, } from "./observable.js";
 import { createActionReducer, createStreamable, stream as streamStreamable, } from "./streamable.js";
 const stateStoreReducer = (state, action) => action(state);

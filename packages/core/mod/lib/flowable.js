@@ -1,5 +1,5 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
-import { compose, pipe, returns, isEqualTo, } from "./functions.js";
+import { compose, pipe, returns, isEqualTo } from "./functions.js";
 import { endWith, map as mapObs, mapTo, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, map as mapStream, lift, } from "./streamable.js";
