@@ -56,7 +56,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     ;
     schedule(continuation, { delay }) {
         const priority = this.priorityScheduler.current.priority;
-        this.priorityScheduler.schedule(continuation, { delay, priority });
+        scheduleWithPriority(this.priorityScheduler, continuation, { delay, priority });
     }
     shouldYield() {
         return this.priorityScheduler.shouldYield();
