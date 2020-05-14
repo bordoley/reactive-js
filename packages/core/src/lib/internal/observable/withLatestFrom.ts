@@ -4,17 +4,17 @@ import { Option, isSome } from "../../option";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
+class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   TA,
   T
 > {
@@ -27,7 +27,7 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   };
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     other: ObservableLike<TB>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
@@ -49,7 +49,7 @@ class WithLatestFromSubscriber<TA, TB, T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: TA) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
@@ -69,8 +69,8 @@ export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableFunction<TA, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new WithLatestFromSubscriber(subscriber, other, selector);
+  const operator = (observer: ObserverLike<T>) =>
+    new WithLatestFromObserver(observer, other, selector);
   operator.isSynchronous = false;
   return lift(operator);
 };

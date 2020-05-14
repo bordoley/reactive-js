@@ -2,7 +2,7 @@ class NeverObservable {
     constructor() {
         this.isSynchronous = false;
     }
-    subscribe(_) { }
+    observe(_) { }
 }
 const neverInstance = new NeverObservable();
 export const never = () => neverInstance;

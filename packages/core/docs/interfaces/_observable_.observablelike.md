@@ -2,7 +2,7 @@
 
 # Interface: ObservableLike <**T**>
 
-The source of notifications which notifies a `SubscriberLike` instance.
+The source of notifications which notifies a `ObserverLike` instance.
 
 ## Type parameters
 
@@ -22,7 +22,7 @@ The source of notifications which notifies a `SubscriberLike` instance.
 
 ### Methods
 
-* [subscribe](_observable_.observablelike.md#subscribe)
+* [observe](_observable_.observablelike.md#observe)
 
 ## Properties
 
@@ -32,16 +32,16 @@ The source of notifications which notifies a `SubscriberLike` instance.
 
 ## Methods
 
-###  subscribe
+###  observe
 
-▸ **subscribe**(`subscriber`: [SubscriberLike](_observable_.subscriberlike.md)‹T›): *void*
+▸ **observe**(`observer`: [ObserverLike](_observable_.observerlike.md)‹T›): *void*
 
-Subscribes the `SubscriberLike` instance to the observable.
+Subscribes the `ObserverLike` instance to the observable.
 
 **Parameters:**
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`subscriber` | [SubscriberLike](_observable_.subscriberlike.md)‹T› | The subscriber which should be notified by the observable source.  |
+`observer` | [ObserverLike](_observable_.observerlike.md)‹T› | The observer which should be notified by the observable source.  |
 
 **Returns:** *void*

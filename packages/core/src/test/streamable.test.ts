@@ -112,7 +112,7 @@ export const tests = describe(
       pipe(disposedTime, expectEquals(4));
     }),
   ),
-  test("with multiple subscribers", () => {
+  test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const incrStream = stream(
@@ -120,15 +120,15 @@ export const tests = describe(
       scheduler,
     );
 
-    pipe(incrStream.subscriberCount, expectEquals(0));
+    pipe(incrStream.observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.subscriberCount, expectEquals(1));
+    pipe(incrStream.observerCount, expectEquals(1));
     const sub2 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.subscriberCount, expectEquals(2));
+    pipe(incrStream.observerCount, expectEquals(2));
     dispose(sub1);
-    pipe(incrStream.subscriberCount, expectEquals(1));
+    pipe(incrStream.observerCount, expectEquals(1));
     dispose(sub2);
-    pipe(incrStream.subscriberCount, expectEquals(0));
+    pipe(incrStream.observerCount, expectEquals(0));
   }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();

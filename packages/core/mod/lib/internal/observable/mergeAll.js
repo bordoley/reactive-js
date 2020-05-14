@@ -5,21 +5,21 @@ import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-const subscribeNext = (subscriber) => {
-    if (subscriber.activeCount < subscriber.maxConcurrency) {
-        const nextObs = subscriber.queue.shift();
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+const subscribeNext = (observer) => {
+    if (observer.activeCount < observer.maxConcurrency) {
+        const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
-            subscriber.activeCount++;
-            const nextObsSubscription = pipe(nextObs, onNotify(subscriber.onNotify), subscribe(subscriber.delegate), addDisposableOrTeardown(subscriber.onDispose));
-            add(subscriber.delegate, nextObsSubscription);
+            observer.activeCount++;
+            const nextObsSubscription = pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.delegate), addDisposableOrTeardown(observer.onDispose));
+            add(observer.delegate, nextObsSubscription);
         }
-        else if (subscriber.isDisposed) {
-            dispose(subscriber.delegate);
+        else if (observer.isDisposed) {
+            dispose(observer.delegate);
         }
     }
 };
-class MergeSubscriber extends AbstractDelegatingSubscriber {
+class MergeObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxBufferSize, maxConcurrency) {
         super(delegate);
         this.maxBufferSize = maxBufferSize;
@@ -49,7 +49,7 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const queue = this.queue;
         if (!this.isDisposed) {
             queue.push(next);
@@ -62,7 +62,7 @@ class MergeSubscriber extends AbstractDelegatingSubscriber {
 }
 export const mergeAll = (options = {}) => {
     const { maxBufferSize = Number.MAX_SAFE_INTEGER, maxConcurrency = Number.MAX_SAFE_INTEGER, } = options;
-    const operator = (subscriber) => new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
+    const operator = (observer) => new MergeObserver(observer, maxBufferSize, maxConcurrency);
     operator.isSynchronous = false;
     return lift(operator);
 };

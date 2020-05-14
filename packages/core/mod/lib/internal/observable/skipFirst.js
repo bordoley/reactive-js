@@ -1,8 +1,8 @@
 import { add } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class SkipFirstSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class SkipFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
@@ -10,7 +10,7 @@ class SkipFirstSubscriber extends AbstractDelegatingSubscriber {
         add(this, delegate);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             this.count++;
             if (this.count > this.skipCount) {
@@ -20,7 +20,7 @@ class SkipFirstSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const skipFirst = (count = 1) => {
-    const operator = (subscriber) => new SkipFirstSubscriber(subscriber, count);
+    const operator = (observer) => new SkipFirstObserver(observer, count);
     operator.isSynchronous = false;
     return observable => count > 0 ? pipe(observable, lift(operator)) : observable;
 };

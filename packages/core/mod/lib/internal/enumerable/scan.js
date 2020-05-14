@@ -17,6 +17,6 @@ class ScanEnumerator {
     }
 }
 export const scan = (reducer, initialValue) => {
-    const operator = (subscriber) => new ScanEnumerator(subscriber, reducer, initialValue());
+    const operator = (observer) => new ScanEnumerator(observer, reducer, initialValue());
     return lift(operator);
 };

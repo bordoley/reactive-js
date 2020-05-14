@@ -1,7 +1,7 @@
 import { dispose } from "../../disposable";
 import { Function, Factory } from "../../functions";
 import { SchedulerLike } from "../scheduler/interfaces";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
@@ -10,11 +10,11 @@ import { AbstractProducer } from "./producer";
 
 class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(
-    subscriber: SubscriberLike<T>,
+    observer: ObserverLike<T>,
     private readonly f: Factory<unknown>,
     readonly delay: number,
   ) {
-    super(subscriber);
+    super(observer);
   }
 
   produce(_: SchedulerLike) {
@@ -32,8 +32,8 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
 export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
 ): Function<Factory<unknown>, ObservableLike<T>> => errorFactory => {
-  const factory = (subscriber: SubscriberLike<T>) =>
-    new ThrowsProducer(subscriber, errorFactory, delay);
+  const factory = (observer: ObserverLike<T>) =>
+    new ThrowsProducer(observer, errorFactory, delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

@@ -4,8 +4,8 @@ import { isSome } from "../../option.js";
 import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class TakeLastSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -19,12 +19,12 @@ class TakeLastSubscriber extends AbstractDelegatingSubscriber {
                 dispose(delegate, error);
             }
             else {
-                fromArray()(last).subscribe(delegate);
+                fromArray()(last).observe(delegate);
             }
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             const last = this.last;
             last.push(next);
@@ -35,7 +35,7 @@ class TakeLastSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const takeLast = (count = 1) => {
-    const operator = (subscriber) => new TakeLastSubscriber(subscriber, count);
+    const operator = (observer) => new TakeLastObserver(observer, count);
     operator.isSynchronous = false;
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

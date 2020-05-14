@@ -5,11 +5,11 @@ import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-const setupDurationSubscription = (subscriber, next) => {
-    subscriber.durationSubscription.inner = pipe(subscriber.durationFunction(next), onNotify(subscriber.onNotify), subscribe(subscriber), addDisposableOrTeardown(disposeOnError(subscriber)));
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+const setupDurationSubscription = (observer, next) => {
+    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
 };
-class ThrottleSubscriber extends AbstractDelegatingSubscriber {
+class ThrottleObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, mode) {
         super(delegate);
         this.durationFunction = durationFunction;
@@ -28,7 +28,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
         };
         add(this, this.durationSubscription, error => {
             if (isNone(error) && mode !== 1 && this.hasValue) {
-                fromValue()(this.value).subscribe(delegate);
+                fromValue()(this.value).observe(delegate);
             }
             else {
                 dispose(delegate, error);
@@ -36,7 +36,7 @@ class ThrottleSubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             this.value = next;
             this.hasValue = true;
@@ -56,7 +56,7 @@ export function throttle(duration, mode = 3) {
     const durationFunction = typeof duration === "number"
         ? (_) => fromValue({ delay: duration })(none)
         : duration;
-    const operator = (subscriber) => new ThrottleSubscriber(subscriber, durationFunction, mode);
+    const operator = (observer) => new ThrottleObserver(observer, durationFunction, mode);
     operator.isSynchronous = false;
     return lift(operator);
 }

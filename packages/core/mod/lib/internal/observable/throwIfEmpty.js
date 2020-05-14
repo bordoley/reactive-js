@@ -1,8 +1,8 @@
 import { add, dispose } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
     constructor(delegate, factory) {
         super(delegate);
         this.factory = factory;
@@ -16,13 +16,13 @@ class ThrowIfEmptySubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         this.isEmpty = false;
         this.delegate.notify(next);
     }
 }
 export const throwIfEmpty = (factory) => {
-    const operator = (subscriber) => new ThrowIfEmptySubscriber(subscriber, factory);
+    const operator = (observer) => new ThrowIfEmptyObserver(observer, factory);
     operator.isSynchronous = true;
     return lift(operator);
 };

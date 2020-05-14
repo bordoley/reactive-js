@@ -1,7 +1,7 @@
 import { dispose, add } from "../../disposable.js";
 import { isSome } from "../../option.js";
-import { AbstractDelegatingSubscriber } from "./subscriber.js";
-class ConcatSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver } from "./observer.js";
+class ConcatObserver extends AbstractDelegatingObserver {
     constructor(delegate, observables, next) {
         super(delegate);
         this.observables = observables;
@@ -13,8 +13,8 @@ class ConcatSubscriber extends AbstractDelegatingSubscriber {
                 dispose(delegate, error);
             }
             else if (next < observables.length) {
-                const concatSubscriber = new ConcatSubscriber(delegate, observables, next + 1);
-                observables[next].subscribe(concatSubscriber);
+                const concatObserver = new ConcatObserver(delegate, observables, next + 1);
+                observables[next].observe(concatObserver);
             }
             else {
                 dispose(delegate);
@@ -30,14 +30,14 @@ class ConcatObservable {
         this.observables = observables;
         this.isSynchronous = observables.every(obs => obs.isSynchronous);
     }
-    subscribe(subscriber) {
+    observe(observer) {
         const observables = this.observables;
         if (observables.length > 0) {
-            const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
-            observables[0].subscribe(concatSubscriber);
+            const concatObserver = new ConcatObserver(observer, observables, 1);
+            observables[0].observe(concatObserver);
         }
         else {
-            dispose(subscriber);
+            dispose(observer);
         }
     }
 }

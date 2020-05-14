@@ -249,7 +249,7 @@ export const tests = describe(
 
   describe(
     "createObservable",
-    test("disposes the subscriber if onSubscribe throws", () => {
+    test("disposes the observer if onSubscribe throws", () => {
       const cause = new Error();
       const observable = createObservable(_ => {
         throw cause;
@@ -284,19 +284,19 @@ export const tests = describe(
 
       pipe(subject, toArray(), expectArrayEquals([3, 4]));
     }),
-    test("with multiple subscribers", () => {
+    test("with multiple observers", () => {
       const scheduler = createVirtualTimeScheduler();
 
       const subject = createSubject();
-      pipe(subject.subscriberCount, expectEquals(0));
+      pipe(subject.observerCount, expectEquals(0));
       const sub1 = pipe(subject, subscribe(scheduler));
-      pipe(subject.subscriberCount, expectEquals(1));
+      pipe(subject.observerCount, expectEquals(1));
       const sub2 = pipe(subject, subscribe(scheduler));
-      pipe(subject.subscriberCount, expectEquals(2));
+      pipe(subject.observerCount, expectEquals(2));
       dispose(sub1);
-      pipe(subject.subscriberCount, expectEquals(1));
+      pipe(subject.observerCount, expectEquals(1));
       dispose(sub2);
-      pipe(subject.subscriberCount, expectEquals(0));
+      pipe(subject.observerCount, expectEquals(0));
     }),
   ),
 

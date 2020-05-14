@@ -7,24 +7,24 @@ class SharedObservable {
         this.source = source;
         this.scheduler = scheduler;
         this.replay = replay;
-        this.subscriberCount = 0;
+        this.observerCount = 0;
         this.teardown = () => {
-            this.subscriberCount--;
-            if (this.subscriberCount === 0) {
+            this.observerCount--;
+            if (this.observerCount === 0) {
                 dispose(this.multicast);
                 this.multicast = none;
             }
         };
         this.isSynchronous = false;
     }
-    subscribe(subscriber) {
-        if (this.subscriberCount === 0) {
+    observe(observer) {
+        if (this.observerCount === 0) {
             this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
         }
-        this.subscriberCount++;
+        this.observerCount++;
         const multicast = this.multicast;
-        multicast.subscribe(subscriber);
-        add(subscriber, this.teardown);
+        multicast.observe(observer);
+        add(observer, this.teardown);
     }
 }
 export const share = (scheduler, replayCount = 0) => observable => new SharedObservable(observable, scheduler, replayCount);

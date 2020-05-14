@@ -8,7 +8,7 @@ import { compose, pipe, Function } from "../../functions";
 import { isSome } from "../../option";
 import {
   ObservableLike,
-  SubscriberLike,
+  ObserverLike,
   ObservableFunction,
 } from "./interfaces";
 import { lift } from "./lift";
@@ -16,11 +16,11 @@ import { map } from "./map";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
+class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
@@ -30,7 +30,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
     this.delegate.notify(next);
   };
 
-  constructor(delegate: SubscriberLike<T>) {
+  constructor(delegate: ObserverLike<T>) {
     super(delegate);
     add(this, error => {
       if (this.inner.isDisposed || isSome(error)) {
@@ -40,7 +40,7 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: ObservableLike<T>) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     dispose(this.inner);
 
@@ -59,8 +59,8 @@ class SwitchSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 }
 
-const operator = <T>(subscriber: SubscriberLike<T>) =>
-  new SwitchSubscriber(subscriber);
+const operator = <T>(observer: ObserverLike<T>) =>
+  new SwitchObserver(observer);
 operator.isSynchronous = false;
 
 const switchAllInstance = lift(operator);

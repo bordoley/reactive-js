@@ -8,7 +8,7 @@ An object that schedules units of work on a runloop.
 
 * **SchedulerLike**
 
-  ↳ [SubscriberLike](_observable_.subscriberlike.md)
+  ↳ [ObserverLike](_observable_.observerlike.md)
 
   ↳ [PausableSchedulerLike](_scheduler_.pausableschedulerlike.md)
 

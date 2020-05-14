@@ -33,7 +33,7 @@ export const scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): EnumerableFunction<T, TAcc> => {
-  const operator = (subscriber: EnumeratorLike<T>) =>
-    new ScanEnumerator(subscriber, reducer, initialValue());
+  const operator = (observer: EnumeratorLike<T>) =>
+    new ScanEnumerator(observer, reducer, initialValue());
   return lift(operator);
 };

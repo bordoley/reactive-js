@@ -3,7 +3,7 @@ import { Factory } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import {
   ObservableLike,
-  SubscriberLike,
+  ObserverLike,
   ObservableFunction,
 } from "./interfaces.ts";
 
@@ -14,15 +14,15 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
     private readonly f: Factory<DisposableOrTeardown | void>,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  observe(observer: ObserverLike<T>) {
     try {
-      this.src.subscribe(subscriber);
+      this.src.observe(observer);
       const disposable = this.f() || none;
       if (isSome(disposable)) {
-        add(subscriber, disposable);
+        add(observer, disposable);
       }
     } catch (cause) {
-      dispose(subscriber, { cause });
+      dispose(observer, { cause });
     }
   }
 }

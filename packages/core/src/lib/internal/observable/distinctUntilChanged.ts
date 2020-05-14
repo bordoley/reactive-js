@@ -1,14 +1,14 @@
 import { add } from "../../disposable";
 import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
-import { ObservableFunction, SubscriberLike } from "./interfaces";
+import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
+class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
   T,
   T
 > {
@@ -16,7 +16,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   private hasValue = false;
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly equality: Equality<T>,
   ) {
     super(delegate);
@@ -24,7 +24,7 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const shouldEmit =
       !this.isDisposed &&
@@ -48,8 +48,8 @@ class DistinctUntilChangedSubscriber<T> extends AbstractDelegatingSubscriber<
 export const distinctUntilChanged = <T>(
   equality: Equality<T> = strictEquality,
 ): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new DistinctUntilChangedSubscriber(subscriber, equality);
+  const operator = (observer: ObserverLike<T>) =>
+    new DistinctUntilChangedObserver(observer, equality);
   operator.isSynchronous = true;
   return lift(operator);
 };

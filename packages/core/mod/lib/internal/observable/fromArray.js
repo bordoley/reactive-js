@@ -3,8 +3,8 @@ import { schedule } from "../../scheduler.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class FromArrayProducer extends AbstractProducer {
-    constructor(subscriber, values, startIndex, delay) {
-        super(subscriber);
+    constructor(observer, values, startIndex, delay) {
+        super(observer);
         this.values = values;
         this.startIndex = startIndex;
         this.delay = delay;
@@ -35,7 +35,7 @@ export const fromArray = (options = {}) => values => {
     var _a, _b;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, values.length);
-    const factory = (subscriber) => new FromArrayProducer(subscriber, values, startIndex, delay);
+    const factory = (observer) => new FromArrayProducer(observer, values, startIndex, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);

@@ -5,8 +5,8 @@ import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class SwitchSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class SwitchObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
         this.inner = disposed;
@@ -20,7 +20,7 @@ class SwitchSubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         dispose(this.inner);
         const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate), addDisposableOrTeardown(e => {
             if (isSome(e) || this.isDisposed) {
@@ -31,7 +31,7 @@ class SwitchSubscriber extends AbstractDelegatingSubscriber {
         this.inner = inner;
     }
 }
-const operator = (subscriber) => new SwitchSubscriber(subscriber);
+const operator = (observer) => new SwitchObserver(observer);
 operator.isSynchronous = false;
 const switchAllInstance = lift(operator);
 export const switchAll = () => switchAllInstance;

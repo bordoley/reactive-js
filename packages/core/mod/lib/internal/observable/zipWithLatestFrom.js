@@ -4,16 +4,16 @@ import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-const notifyDelegate = (subscriber) => {
-    if (subscriber.queue.length > 0 && subscriber.hasLatest) {
-        subscriber.hasLatest = false;
-        const next = subscriber.queue.shift();
-        const result = subscriber.selector(next, subscriber.otherLatest);
-        subscriber.delegate.notify(result);
+import { AbstractObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+const notifyDelegate = (observer) => {
+    if (observer.queue.length > 0 && observer.hasLatest) {
+        observer.hasLatest = false;
+        const next = observer.queue.shift();
+        const result = observer.selector(next, observer.otherLatest);
+        observer.delegate.notify(result);
     }
 };
-class ZipWithLatestFromSubscriber extends AbstractSubscriber {
+class ZipWithLatestFromObserver extends AbstractObserver {
     constructor(delegate, other, selector) {
         super(delegate);
         this.delegate = delegate;
@@ -48,13 +48,13 @@ class ZipWithLatestFromSubscriber extends AbstractSubscriber {
         add(delegate, otherSubscription, this);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         this.queue.push(next);
         notifyDelegate(this);
     }
 }
 export const zipWithLatestFrom = (other, selector) => {
-    const operator = (subscriber) => new ZipWithLatestFromSubscriber(subscriber, other, selector);
+    const operator = (observer) => new ZipWithLatestFromObserver(observer, other, selector);
     operator.isSynchronous = false;
     return lift(operator);
 };

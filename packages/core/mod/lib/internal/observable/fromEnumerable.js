@@ -4,8 +4,8 @@ import { schedule } from "../../scheduler.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class FromEnumeratorProducer extends AbstractProducer {
-    constructor(subscriber, enumerator, delay) {
-        super(subscriber);
+    constructor(observer, enumerator, delay) {
+        super(observer);
         this.enumerator = enumerator;
         this.delay = delay;
     }
@@ -25,15 +25,15 @@ class FromEnumeratorProducer extends AbstractProducer {
     }
 }
 export const fromEnumerator = ({ delay } = { delay: 0 }) => enumerator => {
-    const factory = (subscriber) => new FromEnumeratorProducer(subscriber, enumerator, delay);
+    const factory = (observer) => new FromEnumeratorProducer(observer, enumerator, delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);
 };
 export const fromEnumerable = ({ delay } = { delay: 0 }) => enumerable => {
-    const factory = (subscriber) => {
+    const factory = (observer) => {
         const enumerator = enumerate(enumerable);
-        return new FromEnumeratorProducer(subscriber, enumerator, delay);
+        return new FromEnumeratorProducer(observer, enumerator, delay);
     };
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)

@@ -11,18 +11,18 @@ import { fromValue } from "./fromValue.ts";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
+class BufferObserver<T> extends AbstractDelegatingObserver<
   T,
   readonly T[]
 > {
@@ -39,7 +39,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   };
 
   constructor(
-    delegate: SubscriberLike<readonly T[]>,
+    delegate: ObserverLike<readonly T[]>,
     private readonly durationFunction: Function<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
   ) {
@@ -49,7 +49,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
       const buffer = this.buffer;
       this.buffer = [];
       if (isNone(error) && buffer.length > 0) {
-        fromValue()(buffer).subscribe(delegate);
+        fromValue()(buffer).observe(delegate);
       } else {
         dispose(delegate, error);
       }
@@ -57,7 +57,7 @@ class BufferSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const buffer = this.buffer;
 
@@ -98,8 +98,8 @@ export function buffer<T>(
       : delay;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
-  const operator = (subscriber: SubscriberLike<readonly T[]>) =>
-    new BufferSubscriber(subscriber, durationFunction, maxBufferSize);
+  const operator = (observer: ObserverLike<readonly T[]>) =>
+    new BufferObserver(observer, durationFunction, maxBufferSize);
   operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
 
   return lift(operator);

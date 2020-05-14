@@ -21,7 +21,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     [5, 2],
     [5, 4],
     [7, 4],
-], arrayEquality()))), test("concat", defer(concat(fromValue()(1), fromValue()(2), fromValue()(3)), toArray(), expectArrayEquals([1, 2, 3]))), describe("contains", test("source is empty", defer(empty(), contains(1), toValue(), expectFalse)), test("source contains value", defer(generate(increment, returns(0)), contains(1), toValue(), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse))), describe("createObservable", test("disposes the subscriber if onSubscribe throws", () => {
+], arrayEquality()))), test("concat", defer(concat(fromValue()(1), fromValue()(2), fromValue()(3)), toArray(), expectArrayEquals([1, 2, 3]))), describe("contains", test("source is empty", defer(empty(), contains(1), toValue(), expectFalse)), test("source contains value", defer(generate(increment, returns(0)), contains(1), toValue(), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray(), contains(1), toValue(), expectFalse))), describe("createObservable", test("disposes the observer if onSubscribe throws", () => {
     const cause = new Error();
     const observable = createObservable(_ => {
         throw cause;
@@ -37,18 +37,18 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe([1, 2, 3, 4], fromArrayEnumerable, forEachEnumerable(dispatchTo(subject)));
     dispose(subject);
     pipe(subject, toArray(), expectArrayEquals([3, 4]));
-}), test("with multiple subscribers", () => {
+}), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject();
-    pipe(subject.subscriberCount, expectEquals(0));
+    pipe(subject.observerCount, expectEquals(0));
     const sub1 = pipe(subject, subscribe(scheduler));
-    pipe(subject.subscriberCount, expectEquals(1));
+    pipe(subject.observerCount, expectEquals(1));
     const sub2 = pipe(subject, subscribe(scheduler));
-    pipe(subject.subscriberCount, expectEquals(2));
+    pipe(subject.observerCount, expectEquals(2));
     dispose(sub1);
-    pipe(subject.subscriberCount, expectEquals(1));
+    pipe(subject.observerCount, expectEquals(1));
     dispose(sub2);
-    pipe(subject.subscriberCount, expectEquals(0));
+    pipe(subject.observerCount, expectEquals(0));
 })), test("distinctUntilChanges", defer([1, 1, 1, 2, 2, 3, 3, 3], fromArray(), distinctUntilChanged(), toArray(), expectArrayEquals([1, 2, 3]))), describe("everySatisfy", test("source is empty", defer(empty(), everySatisfy(alwaysFalse), toValue(), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), toValue(), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), toValue(), expectFalse)), test("when the predicate throws", bind(expectToThrow, defer([1, 2, 3], fromArray(), everySatisfy(_ => {
     throw new Error();
 }), toValue())))), test("exhaustMap", defer([fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])], fromArray(), exhaustMap(identity), toArray(), expectArrayEquals([1, 2, 3]))), describe("forEach", test("iterates through all values", () => {

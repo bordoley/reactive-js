@@ -12,15 +12,15 @@ import { fromValue } from "./fromValue";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
 /**
  * The throttle mode used by the `throttle` operator.
@@ -43,18 +43,18 @@ export const enum ThrottleMode {
 }
 
 const setupDurationSubscription = <T>(
-  subscriber: ThrottleSubscriber<T>,
+  observer: ThrottleObserver<T>,
   next: T,
 ) => {
-  subscriber.durationSubscription.inner = pipe(
-    subscriber.durationFunction(next),
-    onNotify(subscriber.onNotify),
-    subscribe(subscriber),
-    addDisposableOrTeardown(disposeOnError(subscriber)),
+  observer.durationSubscription.inner = pipe(
+    observer.durationFunction(next),
+    onNotify(observer.onNotify),
+    subscribe(observer),
+    addDisposableOrTeardown(disposeOnError(observer)),
   );
 };
 
-class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
   private value: Option<T> = none;
   private hasValue = false;
@@ -71,7 +71,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   };
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     readonly durationFunction: Function<T, ObservableLike<unknown>>,
     private readonly mode: ThrottleMode,
   ) {
@@ -79,7 +79,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 
     add(this, this.durationSubscription, error => {
       if (isNone(error) && mode !== ThrottleMode.First && this.hasValue) {
-        fromValue()(this.value).subscribe(delegate);
+        fromValue()(this.value).observe(delegate);
       } else {
         dispose(delegate, error);
       }
@@ -87,7 +87,7 @@ class ThrottleSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       this.value = next;
@@ -140,8 +140,8 @@ export function throttle<T>(
     typeof duration === "number"
       ? (_: T) => fromValue({ delay: duration })(none)
       : duration;
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new ThrottleSubscriber(subscriber, durationFunction, mode);
+  const operator = (observer: ObserverLike<T>) =>
+    new ThrottleObserver(observer, durationFunction, mode);
   operator.isSynchronous = false;
   return lift(operator);
 }

@@ -6,16 +6,16 @@ class OnSubscribeObservable {
         this.f = f;
         this.isSynchronous = false;
     }
-    subscribe(subscriber) {
+    observe(observer) {
         try {
-            this.src.subscribe(subscriber);
+            this.src.observe(observer);
             const disposable = this.f() || none;
             if (isSome(disposable)) {
-                add(subscriber, disposable);
+                add(observer, disposable);
             }
         }
         catch (cause) {
-            dispose(subscriber, { cause });
+            dispose(observer, { cause });
         }
     }
 }

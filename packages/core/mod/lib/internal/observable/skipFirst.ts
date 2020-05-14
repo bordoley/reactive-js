@@ -1,22 +1,22 @@
 import { add } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   private count = 0;
 
-  constructor(delegate: SubscriberLike<T>, private readonly skipCount: number) {
+  constructor(delegate: ObserverLike<T>, private readonly skipCount: number) {
     super(delegate);
     add(this, delegate);
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       this.count++;
@@ -34,8 +34,8 @@ class SkipFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param count The number of items emitted by source that should be skipped.
  */
 export const skipFirst = <T>(count = 1): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new SkipFirstSubscriber(subscriber, count);
+  const operator = (observer: ObserverLike<T>) =>
+    new SkipFirstObserver(observer, count);
   operator.isSynchronous = false;
   return observable =>
     count > 0 ? pipe(observable, lift(operator)) : observable;

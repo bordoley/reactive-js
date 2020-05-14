@@ -6,18 +6,18 @@ import {
   ObservableLike,
   ObservableFunction,
   SubjectLike,
-  SubscriberLike,
+  ObserverLike,
   MulticastObservableLike,
 } from "./interfaces";
 import { publish } from "./publish";
 
 class SharedObservable<T> implements ObservableLike<T> {
-  private subscriberCount = 0;
+  private observerCount = 0;
   private multicast: Option<MulticastObservableLike<T>>;
   private readonly teardown = () => {
-    this.subscriberCount--;
+    this.observerCount--;
 
-    if (this.subscriberCount === 0) {
+    if (this.observerCount === 0) {
       dispose(this.multicast as MulticastObservableLike<T>);
       this.multicast = none;
     }
@@ -31,16 +31,16 @@ class SharedObservable<T> implements ObservableLike<T> {
     private readonly replay: number,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<T>): void {
-    if (this.subscriberCount === 0) {
+  observe(observer: ObserverLike<T>): void {
+    if (this.observerCount === 0) {
       this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
     }
-    this.subscriberCount++;
+    this.observerCount++;
 
     const multicast = this.multicast as SubjectLike<T>;
 
-    multicast.subscribe(subscriber);
-    add(subscriber, this.teardown);
+    multicast.observe(observer);
+    add(observer, this.teardown);
   }
 }
 

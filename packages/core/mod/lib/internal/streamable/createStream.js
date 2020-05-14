@@ -11,14 +11,14 @@ class StreamImpl extends AbstractDisposable {
         this.dispatcher = subject;
         this.observable = observable;
     }
-    get subscriberCount() {
-        return this.observable.subscriberCount;
+    get observerCount() {
+        return this.observable.observerCount;
     }
     dispatch(req) {
         dispatch(this.dispatcher, req);
     }
-    subscribe(subscriber) {
-        this.observable.subscribe(subscriber);
+    observe(observer) {
+        this.observable.observe(observer);
     }
 }
 export const createStream = (op, scheduler, replayCount) => new StreamImpl(op, scheduler, replayCount);

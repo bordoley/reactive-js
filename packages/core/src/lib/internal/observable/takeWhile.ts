@@ -1,15 +1,15 @@
 import { add, dispose } from "../../disposable";
 import { Predicate } from "../../functions";
-import { ObservableFunction, SubscriberLike } from "./interfaces";
+import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly predicate: Predicate<T>,
     private readonly inclusive: boolean,
   ) {
@@ -18,7 +18,7 @@ class TakeWhileSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       const satisfiesPredicate = this.predicate(next);
@@ -45,8 +45,8 @@ export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
 ): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new TakeWhileSubscriber(subscriber, predicate, inclusive);
+  const operator = (observer: ObserverLike<T>) =>
+    new TakeWhileObserver(observer, predicate, inclusive);
   operator.isSynchronous = true;
   return lift(operator);
 };

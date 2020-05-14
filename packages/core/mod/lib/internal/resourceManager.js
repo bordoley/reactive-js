@@ -9,12 +9,12 @@ import { isSome, isNone, none } from "../option.js";
 const tryDispatch = (resourceManager, key) => {
     var _a;
     const { availableResources, availableResourcesTimeouts, maxIdleTime, maxResourcesPerKey, maxTotalResources, inUseResources, scheduler, resourceRequests, globalResourceWaitQueue, } = resourceManager;
-    let peekedSubscriber = resourceRequests.peek(key);
-    while (isSome(peekedSubscriber) && peekedSubscriber.isDisposed) {
+    let peekedObserver = resourceRequests.peek(key);
+    while (isSome(peekedObserver) && peekedObserver.isDisposed) {
         resourceRequests.pop(key);
-        peekedSubscriber = resourceRequests.peek(key);
+        peekedObserver = resourceRequests.peek(key);
     }
-    if (isNone(peekedSubscriber)) {
+    if (isNone(peekedObserver)) {
         return;
     }
     let peekedResource = availableResources.peek(key);
@@ -46,8 +46,8 @@ const tryDispatch = (resourceManager, key) => {
     const timeoutSubscription = (_a = availableResourcesTimeouts.get(resource)) !== null && _a !== void 0 ? _a : disposed;
     availableResourcesTimeouts.delete(resource);
     dispose(timeoutSubscription);
-    const subscriber = add(resourceRequests.pop(key), () => {
-        inUseResources.remove(key, subscriber);
+    const observer = add(resourceRequests.pop(key), () => {
+        inUseResources.remove(key, observer);
         availableResources.push(key, resource);
         const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
             const resource = availableResources.pop(key);
@@ -64,8 +64,8 @@ const tryDispatch = (resourceManager, key) => {
         availableResourcesTimeouts.set(resource, timeoutSubscription);
         tryDispatch(resourceManager, key);
     });
-    inUseResources.add(key, subscriber);
-    dispatch(subscriber, resource);
+    inUseResources.add(key, observer);
+    dispatch(observer, resource);
 };
 class ResourceManagerImpl extends AbstractDisposable {
     constructor(createResource, scheduler, maxIdleTime, maxResourcesPerKey, maxTotalResources) {

@@ -2,23 +2,23 @@ import { dispose, add } from "../../disposable";
 import { Factory, Reducer } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableFunction, SubscriberLike } from "./interfaces";
+import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
+class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
-    delegate: SubscriberLike<TAcc>,
+    delegate: ObserverLike<TAcc>,
     private readonly reducer: Reducer<T, TAcc>,
     private acc: TAcc,
   ) {
     super(delegate);
     add(this, error => {
       if (isNone(error)) {
-        fromValue()(this.acc).subscribe(delegate);
+        fromValue()(this.acc).observe(delegate);
       } else {
         dispose(delegate, error);
       }
@@ -26,7 +26,7 @@ class ReduceSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     this.acc = this.reducer(this.acc, next);
   }
@@ -43,8 +43,8 @@ export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): ObservableFunction<T, TAcc> => {
-  const operator = (subscriber: SubscriberLike<TAcc>) =>
-    new ReduceSubscriber(subscriber, reducer, initialValue());
+  const operator = (observer: ObserverLike<TAcc>) =>
+    new ReduceObserver(observer, reducer, initialValue());
   operator.isSynchronous = true;
   return lift(operator);
 };

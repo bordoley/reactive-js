@@ -49,7 +49,7 @@ export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
 ): EnumerableFunction<T, T> => {
-  const operator = (subscriber: EnumeratorLike<T>) =>
-    new TakeWhileEnumerator(subscriber, predicate, inclusive);
+  const operator = (observer: EnumeratorLike<T>) =>
+    new TakeWhileEnumerator(observer, predicate, inclusive);
   return lift(operator);
 };

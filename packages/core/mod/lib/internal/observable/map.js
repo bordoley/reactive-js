@@ -1,8 +1,8 @@
 import { add } from "../../disposable.js";
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber } from "./subscriber.js";
-class MapSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver } from "./observer.js";
+class MapObserver extends AbstractDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
@@ -14,7 +14,7 @@ class MapSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const map = (mapper) => {
-    const operator = (subscriber) => new MapSubscriber(subscriber, mapper);
+    const operator = (observer) => new MapObserver(observer, mapper);
     operator.isSynchronous = true;
     return lift(operator);
 };

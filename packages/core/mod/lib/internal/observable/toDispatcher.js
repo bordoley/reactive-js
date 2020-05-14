@@ -1,7 +1,7 @@
 import { AbstractDisposable, add, dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
 import { AbstractSchedulerContinuation, schedule } from "../../scheduler.js";
-class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
+class ObserverDelegatingDispatcherSchedulerContinuation extends AbstractSchedulerContinuation {
     constructor(dispatcher) {
         super();
         this.dispatcher = dispatcher;
@@ -11,7 +11,7 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
         const nextQueue = dispatcher.nextQueue;
         while (nextQueue.length > 0 && !this.isDisposed) {
             const next = nextQueue.shift();
-            dispatcher.subscriber.notify(next);
+            dispatcher.observer.notify(next);
             if (dispatcher.nextQueue.length > 0 && scheduler.shouldYield()) {
                 schedule(scheduler, this);
                 return;
@@ -22,27 +22,27 @@ class SubscriberDelegatingDispatcherSchedulerContinuation extends AbstractSchedu
 }
 const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
-        const producer = new SubscriberDelegatingDispatcherSchedulerContinuation(dispatcher);
+        const producer = new ObserverDelegatingDispatcherSchedulerContinuation(dispatcher);
         add(producer, e => {
             const error = e !== null && e !== void 0 ? e : dispatcher.error;
             if (isSome(error) || dispatcher.isDisposed) {
-                dispose(dispatcher.subscriber, error);
+                dispose(dispatcher.observer, error);
             }
         });
-        schedule(dispatcher.subscriber, producer);
+        schedule(dispatcher.observer, producer);
     }
 };
-class SubscriberDelegatingDispatcher extends AbstractDisposable {
-    constructor(subscriber) {
+class ObserverDelegatingDispatcher extends AbstractDisposable {
+    constructor(observer) {
         super();
-        this.subscriber = subscriber;
+        this.observer = observer;
         this.nextQueue = [];
         add(this, e => {
             if (this.nextQueue.length === 0) {
-                dispose(subscriber, e);
+                dispose(observer, e);
             }
         });
-        add(subscriber, this);
+        add(observer, this);
     }
     dispatch(next) {
         if (!this.isDisposed) {
@@ -51,4 +51,4 @@ class SubscriberDelegatingDispatcher extends AbstractDisposable {
         }
     }
 }
-export const toDispatcher = (subscriber) => new SubscriberDelegatingDispatcher(subscriber);
+export const toDispatcher = (observer) => new ObserverDelegatingDispatcher(observer);

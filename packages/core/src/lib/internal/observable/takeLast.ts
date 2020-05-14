@@ -3,17 +3,17 @@ import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
-import { ObservableFunction, SubscriberLike } from "./interfaces";
+import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   private readonly last: T[] = [];
 
-  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
+  constructor(delegate: ObserverLike<T>, private readonly maxCount: number) {
     super(delegate);
     const last = this.last;
 
@@ -25,13 +25,13 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (isSome(error)) {
         dispose(delegate, error);
       } else {
-        fromArray()(last).subscribe(delegate);
+        fromArray()(last).observe(delegate);
       }
     });
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       const last = this.last;
@@ -51,8 +51,8 @@ class TakeLastSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param count The maximum number of values to emit.
  */
 export const takeLast = <T>(count = 1): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new TakeLastSubscriber(subscriber, count);
+  const operator = (observer: ObserverLike<T>) =>
+    new TakeLastObserver(observer, count);
   operator.isSynchronous = false;
   return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

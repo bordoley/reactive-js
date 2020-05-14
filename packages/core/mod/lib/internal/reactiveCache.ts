@@ -143,7 +143,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
         add(
           this,
           schedule(this.cleanupScheduler, () => {
-            if (stream.subscriberCount === 0) {
+            if (stream.observerCount === 0) {
               markAsGarbage(this, key, stream);
             }
           }),

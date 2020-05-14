@@ -5,9 +5,9 @@ class LiftedObservable {
         this.operators = operators;
         this.isSynchronous = isSynchronous;
     }
-    subscribe(subscriber) {
-        const liftedSubscrber = pipe(subscriber, ...this.operators);
-        this.source.subscribe(liftedSubscrber);
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        this.source.observe(liftedSubscrber);
     }
 }
 export const lift = (operator) => source => {

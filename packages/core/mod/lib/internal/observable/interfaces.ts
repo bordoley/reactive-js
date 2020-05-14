@@ -3,18 +3,18 @@ import { SchedulerLike } from "../../scheduler.ts";
 
 /**
  * The underlying mechanism for receiving and transforming notifications from an
- * observable source. The `SubscriberLike` interface composes the `SchedulerLike` and
+ * observable source. The `ObserverLike` interface composes the `SchedulerLike` and
  * `DisposableLike` interfaces into a single unified type, while adding the capability
  * to receive notifications.
  *
  * @noInheritDoc
  */
-export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
+export interface ObserverLike<T> extends DisposableLike, SchedulerLike {
   /**
-   * Notifies the the subscriber of the next notification produced by the observable source.
+   * Notifies the the observer of the next notification produced by the observable source.
    *
    * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-   * scheduled using the subscriber's `schedule` method.
+   * scheduled using the observer's `schedule` method.
    *
    * @param next The next notification value.
    */
@@ -22,16 +22,16 @@ export interface SubscriberLike<T> extends DisposableLike, SchedulerLike {
 }
 
 /**
- * A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
+ * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-export type SubscriberFunction<A, B> = {
+export type ObserverFunction<A, B> = {
   readonly isSynchronous: boolean;
 
-  (observable: SubscriberLike<B>): SubscriberLike<A>;
+  (observer: ObserverLike<B>): ObserverLike<A>;
 };
 
 /**
- * The source of notifications which notifies a `SubscriberLike` instance.
+ * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
  */
@@ -39,10 +39,10 @@ export interface ObservableLike<T> {
   readonly isSynchronous: boolean;
 
   /**
-   * Subscribes the `SubscriberLike` instance to the observable.
-   * @param subscriber The subscriber which should be notified by the observable source.
+   * Subscribes the `ObserverLike` instance to the observable.
+   * @param observer The observer which should be notified by the observable source.
    */
-  subscribe(subscriber: SubscriberLike<T>): void;
+  observe(observer: ObserverLike<T>): void;
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
@@ -64,9 +64,9 @@ export interface MulticastObservableLike<T>
   extends ObservableLike<T>,
     DisposableLike {
   /**
-   * The number of subscribers currently subscribed.
+   * The number of observers currently observing.
    */
-  readonly subscriberCount: number;
+  readonly observerCount: number;
 }
 
 /** @noInheritDoc */

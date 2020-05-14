@@ -1,9 +1,9 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["observable"](../modules/_observable_.md) › [SubscriberLike](_observable_.subscriberlike.md)
+[@reactive-js/core - v0.0.37](../README.md) › ["observable"](../modules/_observable_.md) › [ObserverLike](_observable_.observerlike.md)
 
-# Interface: SubscriberLike <**T**>
+# Interface: ObserverLike <**T**>
 
 The underlying mechanism for receiving and transforming notifications from an
-observable source. The `SubscriberLike` interface composes the `SchedulerLike` and
+observable source. The `ObserverLike` interface composes the `SchedulerLike` and
 `DisposableLike` interfaces into a single unified type, while adding the capability
 to receive notifications.
 
@@ -17,17 +17,17 @@ to receive notifications.
 
 * [SchedulerLike](_scheduler_.schedulerlike.md)
 
-  ↳ **SubscriberLike**
+  ↳ **ObserverLike**
 
 ## Implemented by
 
-* [AbstractDelegatingSubscriber](../classes/_observable_.abstractdelegatingsubscriber.md)
+* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
 
 ## Index
 
 ### Methods
 
-* [notify](_observable_.subscriberlike.md#notify)
+* [notify](_observable_.observerlike.md#notify)
 
 ## Methods
 
@@ -35,10 +35,10 @@ to receive notifications.
 
 ▸ **notify**(`next`: T): *void*
 
-Notifies the the subscriber of the next notification produced by the observable source.
+Notifies the the observer of the next notification produced by the observable source.
 
 Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-scheduled using the subscriber's `schedule` method.
+scheduled using the observer's `schedule` method.
 
 **Parameters:**
 

@@ -1,7 +1,7 @@
 import { add, dispose } from "../../disposable.js";
 import { isSome } from "../../option.js";
-import { AbstractDelegatingSubscriber } from "./subscriber.js";
-class MergeSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver } from "./observer.js";
+class MergeObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx) {
         super(delegate);
         this.ctx = ctx;
@@ -22,12 +22,12 @@ class MergeObservable {
         this.observables = observables;
         this.isSynchronous = false;
     }
-    subscribe(subscriber) {
+    observe(observer) {
         const observables = this.observables;
         const ctx = { count: observables.length, completedCount: 0 };
         for (const observable of observables) {
-            const mergeSubscriber = new MergeSubscriber(subscriber, ctx);
-            observable.subscribe(mergeSubscriber);
+            const mergeObserver = new MergeObserver(observer, ctx);
+            observable.observe(mergeObserver);
         }
     }
 }

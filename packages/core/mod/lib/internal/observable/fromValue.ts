@@ -3,7 +3,7 @@ import { fromArray } from "./fromArray.ts";
 import { ObservableLike } from "./interfaces.ts";
 
 /**
- *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+ *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
  *
  * @param value The value to emit.
  * @param delay The delay before emitting the value.

@@ -11,7 +11,7 @@ import {
   ObservableFunction,
   createSubject,
   publish,
-  SubscriberLike,
+  ObserverLike,
   dispatch,
 } from "../../observable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
@@ -49,16 +49,16 @@ class StreamImpl<TReq, T> extends AbstractDisposable
     this.observable = observable;
   }
 
-  get subscriberCount(): number {
-    return this.observable.subscriberCount;
+  get observerCount(): number {
+    return this.observable.observerCount;
   }
 
   dispatch(req: TReq) {
     dispatch(this.dispatcher, req);
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
-    this.observable.subscribe(subscriber);
+  observe(observer: ObserverLike<T>) {
+    this.observable.observe(observer);
   }
 }
 

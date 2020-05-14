@@ -72,7 +72,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
                 this.garbage.delete(key);
             });
             const onDisposeCleanup = (_) => add(this, schedule(this.cleanupScheduler, () => {
-                if (stream.subscriberCount === 0) {
+                if (stream.observerCount === 0) {
                     markAsGarbage(this, key, stream);
                 }
             }));

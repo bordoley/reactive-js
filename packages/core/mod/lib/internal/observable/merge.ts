@@ -2,14 +2,14 @@ import { add, dispose } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import {
   ObservableLike,
-  SubscriberLike,
+  ObserverLike,
   ObservableFunction,
 } from "./interfaces.ts";
-import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { AbstractDelegatingObserver } from "./observer.ts";
 
-class MergeSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class MergeObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly ctx: {
       readonly count: number;
       completedCount: number;
@@ -36,15 +36,15 @@ class MergeObservable<T> implements ObservableLike<T> {
 
   constructor(readonly observables: readonly ObservableLike<T>[]) {}
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  observe(observer: ObserverLike<T>) {
     const observables = this.observables;
 
     const ctx = { count: observables.length, completedCount: 0 };
 
     for (const observable of observables) {
-      const mergeSubscriber = new MergeSubscriber(subscriber, ctx);
+      const mergeObserver = new MergeObserver(observer, ctx);
 
-      observable.subscribe(mergeSubscriber);
+      observable.observe(mergeObserver);
     }
   }
 }
