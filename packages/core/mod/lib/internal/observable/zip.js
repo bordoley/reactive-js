@@ -74,10 +74,9 @@ const shouldComplete = (enumerators) => {
     return false;
 };
 class ZipSubscriber extends AbstractDelegatingSubscriber {
-    constructor(delegate, enumerators, selector) {
+    constructor(delegate, enumerators) {
         super(delegate);
         this.enumerators = enumerators;
-        this.selector = selector;
         this.buffer = [];
         this.hasCurrent = false;
         add(delegate, () => {
@@ -117,7 +116,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
                 this.current = next;
             }
             if (shouldEmit(enumerators)) {
-                const next = this.selector(...enumerators.map(current));
+                const next = enumerators.map(current);
                 const shouldCompleteResult = shouldComplete(enumerators);
                 this.delegate.notify(next);
                 if (shouldCompleteResult) {
@@ -131,16 +130,15 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 class ZipObservable {
-    constructor(observables, selector) {
+    constructor(observables) {
         this.observables = observables;
-        this.selector = selector;
         this.isSynchronous = observables.every(obs => obs.isSynchronous);
     }
     subscribe(subscriber) {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators, this.selector))).subscribe(subscriber);
+            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators))).subscribe(subscriber);
         }
         else {
             const enumerators = [];
@@ -152,7 +150,7 @@ class ZipObservable {
                     enumerators.push(enumerator);
                 }
                 else {
-                    const innerSubscriber = new ZipSubscriber(subscriber, enumerators, this.selector);
+                    const innerSubscriber = new ZipSubscriber(subscriber, enumerators);
                     observable.subscribe(innerSubscriber);
                     enumerators.push(innerSubscriber);
                 }
@@ -160,7 +158,7 @@ class ZipObservable {
         }
     }
 }
-export function zip(observables, selector) {
-    return new ZipObservable(observables, selector);
+export function zip(...observables) {
+    return new ZipObservable(observables);
 }
-export const zipWith = (snd, selector) => fst => zip([fst, snd], selector);
+export const zipWith = (snd) => fst => zip(fst, snd);

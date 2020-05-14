@@ -1,8 +1,8 @@
 export function callWith(...args) {
     return f => f(...args);
 }
-export function bind(selector, ...args) {
-    return () => selector(...args);
+export function bind(func, ...args) {
+    return () => func(...args);
 }
 export const identity = (v) => v;
 export const returns = (v) => (..._args) => v;

@@ -1,5 +1,5 @@
 import { latest } from "./latest.js";
-export function zipLatest(observables, selector) {
-    return latest(observables, 2, selector);
+export function zipLatest(...observables) {
+    return latest(observables, 2);
 }
-export const zipLatestWith = (snd, selector) => fst => zipLatest([fst, snd], selector);
+export const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
