@@ -6,10 +6,10 @@ class ScanSink extends AbstractDelegatingSink {
         this.scanner = scanner;
         this.acc = acc;
     }
-    push(next) {
+    notify(next) {
         const nextAcc = this.scanner(this.acc, next);
         this.acc = nextAcc;
-        this.delegate.push(nextAcc);
+        this.delegate.notify(nextAcc);
     }
 }
 export const scan = (scanner, initialValue) => {

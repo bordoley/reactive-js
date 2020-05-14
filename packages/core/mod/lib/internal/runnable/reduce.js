@@ -4,7 +4,7 @@ class ReducerSink {
         this.reducer = reducer;
         this.isDone = false;
     }
-    push(next) {
+    notify(next) {
         this.acc = this.reducer(this.acc, next);
     }
     done() {
