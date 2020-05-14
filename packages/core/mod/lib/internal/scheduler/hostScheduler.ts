@@ -7,6 +7,20 @@ import {
 import { Factory, SideEffect, Function, bind } from "../../functions.ts";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
 
+// FIXME: Only declare these to make Deno happy.
+export declare class MessageChannel {
+  port1: {
+    onmessage: any;
+  };
+
+  port2: {
+    postMessage: any;
+  };
+}
+export declare const process: any;
+export declare const setImmediate: any;
+export declare const clearImmediate: any;
+
 const supportsPerformanceNow =
   typeof performance === "object" && typeof performance.now === "function";
 

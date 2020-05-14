@@ -41,29 +41,34 @@ const logResults = (e: any) => {
   }
 };
 
-export const run = (group: BenchmarkGroup<any>) => new Promise((resolve) => {
-  const suite = Benchmark.Suite(group.name);
-  const data = group.setup();
+export const run = (group: BenchmarkGroup<any>) =>
+  new Promise(resolve => {
+    const suite = Benchmark.Suite(group.name);
+    const data = group.setup();
 
-  const options = {
-    defer: true,
-    onError: (e: any) =>  {
-      e.currentTarget.failure = e.error;
+    const options = {
+      defer: true,
+      onError: (e: any) => {
+        e.currentTarget.failure = e.error;
+      },
+    };
+
+    for (const test of group.tests) {
+      suite.add(
+        test.name,
+        async (deferred: any) => {
+          const run = await test.factory(data);
+          run();
+          deferred.resolve();
+        },
+        options,
+      );
     }
-  };
 
-  for (const test of group.tests) {
-    suite.add(test.name, async (deferred: any) => {
-      const run = await test.factory(data);
-      run();
-      deferred.resolve();
-    }, options)
-  }
-
-  return suite
-    .on("start", logStart(suite))
-    .on("cycle", logResults)
-    .on("complete", logComplete)
-    .on('complete', () => resolve())
-    .run();
-});
+    return suite
+      .on("start", logStart(suite))
+      .on("cycle", logResults)
+      .on("complete", logComplete)
+      .on("complete", () => resolve())
+      .run();
+  });

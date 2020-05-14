@@ -84,19 +84,16 @@ export const filterMapFusion = (n: number) =>
     ),
   );
 
-export const filterMapReduce = (n: number) => 
+export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     () => createArray(n),
     benchmarkTest(
       "enumerable",
       async src => {
-        const {
-          fromArray,
-          keep,
-          map,
-          reduce,
-        } = await import("../lib/enumerable");
+        const { fromArray, keep, map, reduce } = await import(
+          "../lib/enumerable"
+        );
 
         return defer(
           src,
@@ -111,13 +108,9 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const {
-          fromArray,
-          keep,
-          map,
-          reduce,
-          toValue,
-        } = await import("../lib/observable");
+        const { fromArray, keep, map, reduce, toValue } = await import(
+          "../lib/observable"
+        );
 
         return defer(
           src,
@@ -136,28 +129,20 @@ export const filterMapReduce = (n: number) =>
         const { from } = await import("rxjs");
         const { filter, map, reduce } = await import("rxjs/operators");
 
-        return from(src).pipe(
-          filter(isEven),
-          map(increment),
-          reduce(sum, 0),
-        );
+        return from(src).pipe(filter(isEven), map(increment), reduce(sum, 0));
       },
       x => x.subscribe(),
     ),
   );
 
-  export const scanReduce = (n: number) => 
+export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     () => createArray(n),
     benchmarkTest(
       "enumerable",
       async src => {
-        const {
-          fromArray,
-          reduce,
-          scan,
-        } = await import("../lib/enumerable");
+        const { fromArray, reduce, scan } = await import("../lib/enumerable");
 
         return defer(
           src,
@@ -171,12 +156,9 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const {
-          fromArray,
-          reduce,
-          scan,
-          toValue,
-        } = await import("../lib/observable");
+        const { fromArray, reduce, scan, toValue } = await import(
+          "../lib/observable"
+        );
 
         return defer(
           src,
@@ -194,10 +176,7 @@ export const filterMapReduce = (n: number) =>
         const { from } = await import("rxjs");
         const { scan, reduce } = await import("rxjs/operators");
 
-        return from(src).pipe(
-          scan(sum, 0),
-          reduce(passthrough, 0),
-        );
+        return from(src).pipe(scan(sum, 0), reduce(passthrough, 0));
       },
       x => x.subscribe(),
     ),

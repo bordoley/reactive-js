@@ -14,7 +14,7 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
 
   move(): boolean {
     this.current = (none as unknown) as TB;
-    
+
     const hasCurrent = this.delegate.move();
     this.hasCurrent = hasCurrent;
 
