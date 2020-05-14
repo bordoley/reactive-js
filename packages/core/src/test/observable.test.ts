@@ -80,6 +80,7 @@ import {
   zipWithLatestFrom,
   dispatchTo,
   dispatch,
+  zipLatestWith,
 } from "../lib/observable";
 import {
   createHostScheduler,
@@ -1076,6 +1077,20 @@ export const tests = describe(
           toArray(),
         ),
       ),
+    ),
+  ),
+
+  test(
+    "zipLatestWith",
+    defer(
+      [1, 2, 3, 4, 5, 6, 7, 8],
+      fromArray({ delay: 1 }),
+      zipLatestWith(
+        pipe([1, 2, 3, 4], fromArray({ delay: 2 })),
+        (a, b) => a + b,
+      ),
+      toArray(),
+      expectArrayEquals([2, 5, 8, 11]),
     ),
   ),
 

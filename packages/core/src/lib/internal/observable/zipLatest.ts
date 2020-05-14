@@ -7,19 +7,19 @@ import {
   Function7,
   Function8,
   Function9,
-} from "../../functions.ts";
-import { ObservableLike, ObservableFunction } from "./interfaces.ts";
-import { LatestMode, latest } from "./latest.ts";
+} from "../../functions";
+import { ObservableLike, ObservableFunction } from "./interfaces";
+import { latest, LatestMode } from "./latest";
 
-export function combineLatest<TA, TB, T>(
+export function zipLatest<TA, TB, T>(
   observables: [ObservableLike<TA>, ObservableLike<TB>],
   selector: Function2<TA, TB, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, T>(
+export function zipLatest<TA, TB, TC, T>(
   observables: [ObservableLike<TA>, ObservableLike<TB>, ObservableLike<TC>],
   selector: Function3<TA, TB, TC, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, T>(
+export function zipLatest<TA, TB, TC, TD, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -28,7 +28,7 @@ export function combineLatest<TA, TB, TC, TD, T>(
   ],
   selector: Function4<TA, TB, TC, TD, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, TE, T>(
+export function zipLatest<TA, TB, TC, TD, TE, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -38,7 +38,7 @@ export function combineLatest<TA, TB, TC, TD, TE, T>(
   ],
   selector: Function5<TA, TB, TC, TD, TE, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, TE, TF, T>(
+export function zipLatest<TA, TB, TC, TD, TE, TF, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -49,7 +49,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, T>(
   ],
   selector: Function6<TA, TB, TC, TD, TE, TF, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, TE, TF, TG, T>(
+export function zipLatest<TA, TB, TC, TD, TE, TF, TG, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -61,7 +61,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, T>(
   ],
   selector: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, T>(
+export function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -74,7 +74,7 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, T>(
   ],
   selector: Function8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
 ): ObservableLike<T>;
-export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
+export function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
   observables: [
     ObservableLike<TA>,
     ObservableLike<TB>,
@@ -90,17 +90,17 @@ export function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
 ): ObservableLike<T>;
 
 /**
- * Returns an `ObservableLike` that combines the latest values from
+ * Returns an `ObservableLike` that zips the latest values from
  * multiple sources using the specified `selector` function.
  */
-export function combineLatest<T>(
+export function zipLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  return latest(observables, LatestMode.Combine, selector);
+  return latest(observables, LatestMode.Zip, selector);
 }
 
-export const combineLatestWith = <TA, TB, T>(
+export const zipLatestWith = <TA, TB, T>(
   snd: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-): ObservableFunction<TA, T> => fst => combineLatest([fst, snd], selector);
+): ObservableFunction<TA, T> => fst => zipLatest([fst, snd], selector);

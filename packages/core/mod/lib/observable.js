@@ -50,6 +50,7 @@ export { throwIfEmpty } from "./internal/observable/throwIfEmpty.js";
 export { timeout, timeoutError } from "./internal/observable/timeout.js";
 export { withLatestFrom } from "./internal/observable/withLatestFrom.js";
 export { zip, zipWith } from "./internal/observable/zip.js";
+export { zipLatest, zipLatestWith } from "./internal/observable/zipLatest.js";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.js";
 export { toArray } from "./internal/observable/toArray.js";
 export { toPromise } from "./internal/observable/toPromise.js";

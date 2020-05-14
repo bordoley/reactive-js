@@ -1,4 +1,3 @@
-import { dispose, add } from "../../disposable";
 import {
   Function2,
   Function3,
@@ -9,66 +8,8 @@ import {
   Function8,
   Function9,
 } from "../../functions";
-import { isSome } from "../../option";
-import {
-  ObservableLike,
-  SubscriberLike,
-  ObservableFunction,
-} from "./interfaces";
-import { createScheduledObservable } from "./observable";
-import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
-
-type CombineLatestCtx<T> = {
-  completedCount: number;
-  readonly latest: Array<unknown>;
-  readyCount: number;
-  readonly selector: (...values: unknown[]) => T;
-  readonly subscriber: SubscriberLike<T>;
-  readonly totalCount: number;
-};
-
-class CombineLatestSubscriber<T> extends AbstractDelegatingSubscriber<
-  unknown,
-  T
-> {
-  private ready = false;
-
-  constructor(
-    private readonly ctx: CombineLatestCtx<T>,
-    private readonly index: number,
-  ) {
-    super(ctx.subscriber);
-    add(this, error => {
-      const ctx = this.ctx;
-      ctx.completedCount++;
-
-      if (isSome(error) || ctx.completedCount === ctx.totalCount) {
-        dispose(this.delegate, error);
-      }
-    });
-  }
-
-  notify(next: unknown) {
-    assertSubscriberNotifyInContinuation(this);
-
-    const ctx = this.ctx;
-    const latest = ctx.latest;
-    latest[this.index] = next;
-
-    if (!this.ready) {
-      ctx.readyCount++;
-      this.ready = true;
-    }
-
-    if (ctx.readyCount === ctx.totalCount) {
-      const result = ctx.selector(...latest);
-      this.delegate.notify(result);
-    }
-  }
-}
+import { ObservableLike, ObservableFunction } from "./interfaces";
+import { LatestMode, latest } from "./latest";
 
 export function combineLatest<TA, TB, T>(
   observables: [ObservableLike<TA>, ObservableLike<TB>],
@@ -156,27 +97,7 @@ export function combineLatest<T>(
   observables: ObservableLike<any>[],
   selector: (...values: unknown[]) => T,
 ): ObservableLike<T> {
-  const factory = (subscriber: SubscriberLike<T>) => () => {
-    const totalCount = observables.length;
-    const ctx = {
-      completedCount: 0,
-      latest: new Array(totalCount),
-      readyCount: 0,
-      selector,
-      subscriber,
-      totalCount,
-    };
-
-    for (let index = 0; index < totalCount; index++) {
-      const innerSubscriber = new CombineLatestSubscriber(ctx, index);
-      observables[index].subscribe(innerSubscriber);
-    }
-  };
-
-  return createScheduledObservable(
-    factory,
-    observables.every(obs => obs.isSynchronous),
-  );
+  return latest(observables, LatestMode.Combine, selector);
 }
 
 export const combineLatestWith = <TA, TB, T>(

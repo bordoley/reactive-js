@@ -6,7 +6,7 @@ import {
 const toDenoTest = (testGroup: TestGroup, label = "") => {
   if (testGroup.type === TestGroupType.Describe) {
     const name =
-        label.length > 0 ? `${label}:${testGroup.name}` : testGroup.name;
+      label.length > 0 ? `${label}:${testGroup.name}` : testGroup.name;
     const { tests } = testGroup;
     for (const test of tests) {
       toDenoTest(test, name);
