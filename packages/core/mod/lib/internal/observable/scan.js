@@ -1,7 +1,7 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class ScanSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class ScanObserver extends AbstractDelegatingObserver {
     constructor(delegate, scanner, acc) {
         super(delegate);
         this.scanner = scanner;
@@ -9,14 +9,14 @@ class ScanSubscriber extends AbstractDelegatingSubscriber {
         add(this, delegate);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const nextAcc = this.scanner(this.acc, next);
         this.acc = nextAcc;
         this.delegate.notify(nextAcc);
     }
 }
 export const scan = (scanner, initialValue) => {
-    const operator = (subscriber) => new ScanSubscriber(subscriber, scanner, initialValue());
+    const operator = (observer) => new ScanObserver(observer, scanner, initialValue());
     operator.isSynchronous = true;
     return lift(operator);
 };

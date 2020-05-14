@@ -39,14 +39,14 @@ const tryDispatch = <TResource extends DisposableLike>(
     globalResourceWaitQueue,
   } = resourceManager;
 
-  // Find the first not disposed subscriber but don't remove it from the queue.
-  let peekedSubscriber = resourceRequests.peek(key);
-  while (isSome(peekedSubscriber) && peekedSubscriber.isDisposed) {
+  // Find the first not disposed observer but don't remove it from the queue.
+  let peekedObserver = resourceRequests.peek(key);
+  while (isSome(peekedObserver) && peekedObserver.isDisposed) {
     resourceRequests.pop(key);
-    peekedSubscriber = resourceRequests.peek(key);
+    peekedObserver = resourceRequests.peek(key);
   }
 
-  if (isNone(peekedSubscriber)) {
+  if (isNone(peekedObserver)) {
     // No work to do for the current key
     return;
   }
@@ -108,12 +108,12 @@ const tryDispatch = <TResource extends DisposableLike>(
   dispose(timeoutSubscription);
 
   // We have resource to allocate so pop
-  // the subscriber off the request queue
+  // the observer off the request queue
   // and mark the resource as in use
-  const subscriber = add(
+  const observer = add(
     resourceRequests.pop(key) as DispatcherLike<TResource>,
     () => {
-      inUseResources.remove(key, subscriber);
+      inUseResources.remove(key, observer);
       availableResources.push(key, resource);
 
       // Setup the timeout subscription
@@ -146,8 +146,8 @@ const tryDispatch = <TResource extends DisposableLike>(
     },
   );
 
-  inUseResources.add(key, subscriber);
-  dispatch(subscriber, resource);
+  inUseResources.add(key, observer);
+  dispatch(observer, resource);
 };
 
 export interface ResourceManagerLike<TResource> extends DisposableLike {

@@ -1,18 +1,18 @@
 import { add } from "../../disposable.ts";
 import { AbstractSchedulerContinuation } from "../../scheduler.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
-import { SubscriberLike } from "./interfaces.ts";
+import { ObserverLike } from "./interfaces.ts";
 
 export abstract class AbstractProducer<
   T
 > extends AbstractSchedulerContinuation {
-  constructor(private readonly subscriber: SubscriberLike<T>) {
+  constructor(private readonly observer: ObserverLike<T>) {
     super();
-    add(this, subscriber);
+    add(this, observer);
   }
 
   notify(next: T) {
-    this.subscriber.notify(next);
+    this.observer.notify(next);
   }
 
   abstract produce(scheduler: SchedulerLike): void;

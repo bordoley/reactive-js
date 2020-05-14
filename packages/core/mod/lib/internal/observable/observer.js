@@ -2,17 +2,17 @@ import { add, AbstractDisposable } from "../../disposable.js";
 import { ignore } from "../../functions.js";
 import { schedule, } from "../../scheduler.js";
 import { __DEV__ } from "../env.js";
-const assertSubscriberNotifyInContinuationProduction = ignore;
-const assertSubscriberNotifyInContinuationDev = (subscriber) => {
-    if (!subscriber.inContinuation) {
-        throw new Error("Subscriber.notify() may only be invoked within a scheduled SchedulerContinuation");
+const assertObserverNotifyInContinuationProduction = ignore;
+const assertObserverNotifyInContinuationDev = (observer) => {
+    if (!observer.inContinuation) {
+        throw new Error("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
     }
 };
-const _assertSubscriberNotifyInContinuation = __DEV__
-    ? assertSubscriberNotifyInContinuationDev
-    : assertSubscriberNotifyInContinuationProduction;
-export const assertSubscriberNotifyInContinuation = _assertSubscriberNotifyInContinuation;
-export class AbstractSubscriber extends AbstractDisposable {
+const _assertObserverNotifyInContinuation = __DEV__
+    ? assertObserverNotifyInContinuationDev
+    : assertObserverNotifyInContinuationProduction;
+export const assertObserverNotifyInContinuation = _assertObserverNotifyInContinuation;
+export class AbstractObserver extends AbstractDisposable {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;
@@ -34,7 +34,7 @@ export class AbstractSubscriber extends AbstractDisposable {
         return this.scheduler.shouldYield();
     }
 }
-export class AbstractDelegatingSubscriber extends AbstractSubscriber {
+export class AbstractDelegatingObserver extends AbstractObserver {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;

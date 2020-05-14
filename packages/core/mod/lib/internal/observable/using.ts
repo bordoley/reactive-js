@@ -7,7 +7,7 @@ import {
   Function5,
 } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
-import { ObservableLike, SubscriberLike } from "./interfaces.ts";
+import { ObservableLike, ObserverLike } from "./interfaces.ts";
 
 class UsingObservable<TResource extends DisposableLike, T>
   implements ObservableLike<T> {
@@ -23,17 +23,17 @@ class UsingObservable<TResource extends DisposableLike, T>
     ) => ObservableLike<T>,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<T>) {
-    const resources = this.resourceFactory(subscriber);
+  observe(observer: ObserverLike<T>) {
+    const resources = this.resourceFactory(observer);
     const observableFactory = this.observableFactory;
 
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    (add as any)(subscriber, ...resourcesArray);
-    observableFactory(...resourcesArray).subscribe(subscriber);
+    (add as any)(observer, ...resourcesArray);
+    observableFactory(...resourcesArray).observe(observer);
 
-    const teardownSubscriberOnError = disposeOnError(subscriber);
+    const teardownObserverOnError = disposeOnError(observer);
     for (const r of resourcesArray) {
-      add(r, teardownSubscriberOnError);
+      add(r, teardownObserverOnError);
     }
   }
 }

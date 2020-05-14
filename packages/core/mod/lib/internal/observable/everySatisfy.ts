@@ -2,25 +2,25 @@ import { dispose, add } from "../../disposable.ts";
 import { Predicate, compose, negate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
-import { SubscriberLike, ObservablePredicate } from "./interfaces.ts";
+import { ObserverLike, ObservablePredicate } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
+class EverySatisfyObserver<T> extends AbstractDelegatingObserver<
   T,
   boolean
 > {
   constructor(
-    delegate: SubscriberLike<boolean>,
+    delegate: ObserverLike<boolean>,
     private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
     add(this, error => {
       if (isNone(error)) {
-        fromValue()(true).subscribe(delegate);
+        fromValue()(true).observe(delegate);
       } else {
         dispose(delegate, error);
       }
@@ -28,7 +28,7 @@ class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const failedPredicate = !this.predicate(next);
     if (failedPredicate) {
@@ -49,8 +49,8 @@ class EverySatisfySubscriber<T> extends AbstractDelegatingSubscriber<
 export const everySatisfy = <T>(
   predicate: Predicate<T>,
 ): ObservablePredicate<T> => {
-  const operator = (subscriber: SubscriberLike<boolean>) =>
-    new EverySatisfySubscriber(subscriber, predicate);
+  const operator = (observer: ObserverLike<boolean>) =>
+    new EverySatisfyObserver(observer, predicate);
   operator.isSynchronous = true;
   return lift(operator);
 };

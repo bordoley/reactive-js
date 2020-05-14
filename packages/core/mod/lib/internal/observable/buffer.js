@@ -6,8 +6,8 @@ import { lift } from "./lift.js";
 import { never } from "./never.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class BufferSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
         this.durationFunction = durationFunction;
@@ -25,7 +25,7 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
             const buffer = this.buffer;
             this.buffer = [];
             if (isNone(error) && buffer.length > 0) {
-                fromValue()(buffer).subscribe(delegate);
+                fromValue()(buffer).observe(delegate);
             }
             else {
                 dispose(delegate, error);
@@ -33,7 +33,7 @@ class BufferSubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const buffer = this.buffer;
         buffer.push(next);
         if (buffer.length === this.maxBufferSize) {
@@ -53,7 +53,7 @@ export function buffer(options = {}) {
             ? (_) => fromValue({ delay })(none)
             : delay;
     const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
-    const operator = (subscriber) => new BufferSubscriber(subscriber, durationFunction, maxBufferSize);
+    const operator = (observer) => new BufferObserver(observer, durationFunction, maxBufferSize);
     operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
     return lift(operator);
 }

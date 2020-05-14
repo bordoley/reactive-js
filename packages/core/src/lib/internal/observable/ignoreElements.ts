@@ -1,24 +1,24 @@
 import { add } from "../../disposable";
-import { SubscriberLike } from "./interfaces";
+import { ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class IgnoreSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
-  constructor(delegate: SubscriberLike<TB>) {
+class IgnoreObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
+  constructor(delegate: ObserverLike<TB>) {
     super(delegate);
     add(this, delegate);
   }
 
   notify(_: TA) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
   }
 }
 
-const operator = <TA, TB>(subscriber: SubscriberLike<TB>) =>
-  new IgnoreSubscriber<TA, TB>(subscriber);
+const operator = <TA, TB>(observer: ObserverLike<TB>) =>
+  new IgnoreObserver<TA, TB>(observer);
 operator.isSynchronous = true;
 
 /**

@@ -5,9 +5,9 @@ class ScheduledObservable {
         this.isSynchronous = isSynchronous;
         this.delay = delay;
     }
-    subscribe(subscriber) {
-        const schedulerContinuation = this.factory(subscriber);
-        schedule(subscriber, schedulerContinuation, this);
+    observe(observer) {
+        const schedulerContinuation = this.factory(observer);
+        schedule(observer, schedulerContinuation, this);
     }
 }
 export const createScheduledObservable = (factory, isSynchronous) => new ScheduledObservable(factory, isSynchronous, 0);

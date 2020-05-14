@@ -3,8 +3,8 @@ import { schedule } from "../../scheduler.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { AbstractProducer } from "./producer.js";
 class GenerateProducer extends AbstractProducer {
-    constructor(subscriber, generator, acc, delay) {
-        super(subscriber);
+    constructor(observer, generator, acc, delay) {
+        super(observer);
         this.generator = generator;
         this.acc = acc;
         this.delay = delay;
@@ -30,7 +30,7 @@ class GenerateProducer extends AbstractProducer {
     }
 }
 export function generate(generator, initialValue, { delay } = { delay: 0 }) {
-    const factory = (subscriber) => new GenerateProducer(subscriber, generator, initialValue(), delay);
+    const factory = (observer) => new GenerateProducer(observer, generator, initialValue(), delay);
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);

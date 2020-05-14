@@ -5,13 +5,13 @@ class CreateObservable {
         this.onSubscribe = onSubscribe;
         this.isSynchronous = false;
     }
-    subscribe(subscriber) {
-        const dispatcher = toDispatcher(subscriber);
+    observe(observer) {
+        const dispatcher = toDispatcher(observer);
         try {
             this.onSubscribe(dispatcher);
         }
         catch (cause) {
-            dispose(subscriber, { cause });
+            dispose(observer, { cause });
         }
     }
 }

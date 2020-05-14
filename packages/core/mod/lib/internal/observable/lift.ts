@@ -2,35 +2,35 @@ import { pipe } from "../../functions.ts";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
-  SubscriberFunction,
+  ObserverLike,
+  ObserverFunction,
 } from "./interfaces.ts";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
-    readonly operators: ReadonlyArray<SubscriberFunction<any, any>>,
+    readonly operators: ReadonlyArray<ObserverFunction<any, any>>,
     readonly isSynchronous: boolean,
   ) {}
 
-  subscribe(subscriber: SubscriberLike<TOut>) {
+  observe(observer: ObserverLike<TOut>) {
     const liftedSubscrber = pipe(
-      subscriber,
+      observer,
       ...this.operators,
-    ) as SubscriberLike<any>;
+    ) as ObserverLike<any>;
 
-    this.source.subscribe(liftedSubscrber);
+    this.source.observe(liftedSubscrber);
   }
 }
 
 /**
  * Creates a new `ObservableLike` which applies the provided the operator function to
- * subscriber when the source is subscribed to.
+ * observer when the source is subscribed to.
  *
  * @param operator The operator function to apply.
  */
 export const lift = <TA, TB>(
-  operator: SubscriberFunction<TA, TB>,
+  operator: ObserverFunction<TA, TB>,
 ): ObservableFunction<TA, TB> => source => {
   const sourceSource =
     source instanceof LiftedObservable ? source.source : source;

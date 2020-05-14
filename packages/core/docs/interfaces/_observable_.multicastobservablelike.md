@@ -22,12 +22,12 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
 ### Properties
 
-* [subscriberCount](_observable_.multicastobservablelike.md#subscribercount)
+* [observerCount](_observable_.multicastobservablelike.md#observercount)
 
 ## Properties
 
-###  subscriberCount
+###  observerCount
 
-• **subscriberCount**: *number*
+• **observerCount**: *number*
 
-The number of subscribers currently subscribed.
+The number of observers currently observing.

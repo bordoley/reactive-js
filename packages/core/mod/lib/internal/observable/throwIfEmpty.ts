@@ -1,18 +1,18 @@
 import { add, dispose } from "../../disposable.ts";
 import { Factory } from "../../functions.ts";
 import { isNone } from "../../option.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
   private isEmpty = true;
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly factory: Factory<unknown>,
   ) {
     super(delegate);
@@ -26,7 +26,7 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     this.isEmpty = false;
     this.delegate.notify(next);
@@ -41,8 +41,8 @@ class ThrowIfEmptySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const throwIfEmpty = <T>(
   factory: Factory<unknown>,
 ): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new ThrowIfEmptySubscriber(subscriber, factory);
+  const operator = (observer: ObserverLike<T>) =>
+    new ThrowIfEmptyObserver(observer, factory);
   operator.isSynchronous = true;
   return lift(operator);
 };

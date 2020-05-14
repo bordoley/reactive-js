@@ -2,8 +2,8 @@ import { add, dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class TakeFirstSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class TakeFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -11,7 +11,7 @@ class TakeFirstSubscriber extends AbstractDelegatingSubscriber {
         add(this, delegate);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             this.count++;
             this.delegate.notify(next);
@@ -22,7 +22,7 @@ class TakeFirstSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const takeFirst = (count = 1) => {
-    const operator = (subscriber) => new TakeFirstSubscriber(subscriber, count);
+    const operator = (observer) => new TakeFirstObserver(observer, count);
     operator.isSynchronous = true;
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

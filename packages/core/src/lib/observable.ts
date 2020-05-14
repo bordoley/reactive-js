@@ -6,14 +6,14 @@ export {
   StreamLike,
   ObservablePredicate,
   SubjectLike,
-  SubscriberLike,
-  SubscriberFunction,
+  ObserverLike,
+  ObserverFunction,
 } from "./internal/observable/interfaces";
 
 export {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./internal/observable/subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./internal/observable/observer";
 
 export {
   combineLatest,

@@ -3,9 +3,9 @@ import { current } from "../../enumerable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
 import { using } from "./using.js";
-class EnumeratorSubscriber extends AbstractDisposable {
+class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);
         this.continuations = [];
@@ -34,7 +34,7 @@ class EnumeratorSubscriber extends AbstractDisposable {
         return this.hasCurrent;
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         this.current = next;
         this.hasCurrent = true;
     }
@@ -52,9 +52,9 @@ class EnumeratorSubscriber extends AbstractDisposable {
     }
 }
 const subscribeInteractive = (obs) => {
-    const subscriber = new EnumeratorSubscriber();
-    obs.subscribe(subscriber);
-    return subscriber;
+    const observer = new EnumeratorObserver();
+    obs.observe(observer);
+    return observer;
 };
 const shouldEmit = (enumerators) => {
     for (const enumerator of enumerators) {
@@ -73,7 +73,7 @@ const shouldComplete = (enumerators) => {
     }
     return false;
 };
-class ZipSubscriber extends AbstractDelegatingSubscriber {
+class ZipObserver extends AbstractDelegatingObserver {
     constructor(delegate, enumerators) {
         super(delegate);
         this.enumerators = enumerators;
@@ -105,7 +105,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber {
         }
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const enumerators = this.enumerators;
         if (!this.isDisposed) {
             if (this.hasCurrent) {
@@ -134,11 +134,11 @@ class ZipObservable {
         this.observables = observables;
         this.isSynchronous = observables.every(obs => obs.isSynchronous);
     }
-    subscribe(subscriber) {
+    observe(observer) {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators))).subscribe(subscriber);
+            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators))).observe(observer);
         }
         else {
             const enumerators = [];
@@ -150,9 +150,9 @@ class ZipObservable {
                     enumerators.push(enumerator);
                 }
                 else {
-                    const innerSubscriber = new ZipSubscriber(subscriber, enumerators);
-                    observable.subscribe(innerSubscriber);
-                    enumerators.push(innerSubscriber);
+                    const innerObserver = new ZipObserver(observer, enumerators);
+                    observable.observe(innerObserver);
+                    enumerators.push(innerObserver);
                 }
             }
         }

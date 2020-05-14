@@ -4,7 +4,7 @@ import { ObservableLike } from "./interfaces";
 import { map } from "./map";
 
 /**
- *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+ *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
  *
  * @param value The value to emit.
  * @param delay The delay before emitting the value.

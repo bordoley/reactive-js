@@ -31,6 +31,6 @@ class TakeWhileEnumerator {
     }
 }
 export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => {
-    const operator = (subscriber) => new TakeWhileEnumerator(subscriber, predicate, inclusive);
+    const operator = (observer) => new TakeWhileEnumerator(observer, predicate, inclusive);
     return lift(operator);
 };

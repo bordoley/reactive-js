@@ -1,12 +1,12 @@
 import { add } from "../../disposable.js";
 import { AbstractSchedulerContinuation } from "../../scheduler.js";
 export class AbstractProducer extends AbstractSchedulerContinuation {
-    constructor(subscriber) {
+    constructor(observer) {
         super();
-        this.subscriber = subscriber;
-        add(this, subscriber);
+        this.observer = observer;
+        add(this, observer);
     }
     notify(next) {
-        this.subscriber.notify(next);
+        this.observer.notify(next);
     }
 }

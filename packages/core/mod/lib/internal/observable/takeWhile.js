@@ -1,7 +1,7 @@
 import { add, dispose } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class TakeWhileObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
@@ -9,7 +9,7 @@ class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
         add(this, delegate);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             const satisfiesPredicate = this.predicate(next);
             if (satisfiesPredicate || this.inclusive) {
@@ -22,7 +22,7 @@ class TakeWhileSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => {
-    const operator = (subscriber) => new TakeWhileSubscriber(subscriber, predicate, inclusive);
+    const operator = (observer) => new TakeWhileObserver(observer, predicate, inclusive);
     operator.isSynchronous = true;
     return lift(operator);
 };

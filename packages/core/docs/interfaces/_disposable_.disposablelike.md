@@ -16,7 +16,7 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)
 
-  ↳ [SubscriberLike](_observable_.subscriberlike.md)
+  ↳ [ObserverLike](_observable_.observerlike.md)
 
   ↳ [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)
 
@@ -24,7 +24,7 @@ Represents an unmanaged resource that can be disposed.
 
 ## Implemented by
 
-* [AbstractDelegatingSubscriber](../classes/_observable_.abstractdelegatingsubscriber.md)
+* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
 * [AbstractDisposable](../classes/_disposable_.abstractdisposable.md)
 * [AbstractSchedulerContinuation](../classes/_scheduler_.abstractschedulercontinuation.md)
 * [AbstractSerialDisposable](../classes/_disposable_.abstractserialdisposable.md)

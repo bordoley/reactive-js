@@ -2,7 +2,7 @@ import { dispose, add, addDisposableOrTeardown } from "../../disposable.ts";
 import { pipe, Function2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
 import {
-  SubscriberLike,
+  ObserverLike,
   ObservableLike,
   ObservableFunction,
 } from "./interfaces.ts";
@@ -10,22 +10,22 @@ import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
-  AbstractSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
 const notifyDelegate = <TA, TB, TC>(
-  subscriber: ZipWithLatestFromSubscriber<TA, TB, TC>,
+  observer: ZipWithLatestFromObserver<TA, TB, TC>,
 ) => {
-  if (subscriber.queue.length > 0 && subscriber.hasLatest) {
-    subscriber.hasLatest = false;
-    const next = subscriber.queue.shift() as TA;
-    const result = subscriber.selector(next, subscriber.otherLatest as TB);
-    subscriber.delegate.notify(result);
+  if (observer.queue.length > 0 && observer.hasLatest) {
+    observer.hasLatest = false;
+    const next = observer.queue.shift() as TA;
+    const result = observer.selector(next, observer.otherLatest as TB);
+    observer.delegate.notify(result);
   }
 };
 
-class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
+class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
@@ -42,7 +42,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
   readonly queue: TA[] = [];
 
   constructor(
-    readonly delegate: SubscriberLike<T>,
+    readonly delegate: ObserverLike<T>,
     other: ObservableLike<TB>,
     readonly selector: Function2<TA, TB, T>,
   ) {
@@ -74,7 +74,7 @@ class ZipWithLatestFromSubscriber<TA, TB, T> extends AbstractSubscriber<TA> {
   }
 
   notify(next: TA) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
     this.queue.push(next);
 
     notifyDelegate(this);
@@ -92,8 +92,8 @@ export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableFunction<TA, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new ZipWithLatestFromSubscriber(subscriber, other, selector);
+  const operator = (observer: ObserverLike<T>) =>
+    new ZipWithLatestFromObserver(observer, other, selector);
   operator.isSynchronous = false;
   return lift(operator);
 };

@@ -3,7 +3,7 @@ import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
 import { Function } from "../../functions";
 import { schedule } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
@@ -12,11 +12,11 @@ import { AbstractProducer } from "./producer";
 
 class FromEnumeratorProducer<T> extends AbstractProducer<T> {
   constructor(
-    subscriber: SubscriberLike<T>,
+    observer: ObserverLike<T>,
     private readonly enumerator: EnumeratorLike<T>,
     readonly delay: number,
   ) {
-    super(subscriber);
+    super(observer);
   }
 
   produce(scheduler: SchedulerLike) {
@@ -48,8 +48,8 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
 export const fromEnumerator = <T>(
   { delay } = { delay: 0 },
 ): Function<EnumeratorLike<T>, ObservableLike<T>> => enumerator => {
-  const factory = (subscriber: SubscriberLike<T>) =>
-    new FromEnumeratorProducer(subscriber, enumerator, delay);
+  const factory = (observer: ObserverLike<T>) =>
+    new FromEnumeratorProducer(observer, enumerator, delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
@@ -66,9 +66,9 @@ export const fromEnumerator = <T>(
 export const fromEnumerable = <T>(
   { delay } = { delay: 0 },
 ): Function<EnumerableLike<T>, ObservableLike<T>> => enumerable => {
-  const factory = (subscriber: SubscriberLike<T>) => {
+  const factory = (observer: ObserverLike<T>) => {
     const enumerator = enumerate(enumerable);
-    return new FromEnumeratorProducer(subscriber, enumerator, delay);
+    return new FromEnumeratorProducer(observer, enumerator, delay);
   };
 
   return delay > 0

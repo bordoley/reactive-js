@@ -5,15 +5,15 @@ class UsingObservable {
         this.observableFactory = observableFactory;
         this.isSynchronous = false;
     }
-    subscribe(subscriber) {
-        const resources = this.resourceFactory(subscriber);
+    observe(observer) {
+        const resources = this.resourceFactory(observer);
         const observableFactory = this.observableFactory;
         const resourcesArray = Array.isArray(resources) ? resources : [resources];
-        add(subscriber, ...resourcesArray);
-        observableFactory(...resourcesArray).subscribe(subscriber);
-        const teardownSubscriberOnError = disposeOnError(subscriber);
+        add(observer, ...resourcesArray);
+        observableFactory(...resourcesArray).observe(observer);
+        const teardownObserverOnError = disposeOnError(observer);
         for (const r of resourcesArray) {
-            add(r, teardownSubscriberOnError);
+            add(r, teardownObserverOnError);
         }
     }
 }

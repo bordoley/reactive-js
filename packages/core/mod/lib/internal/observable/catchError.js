@@ -1,8 +1,8 @@
 import { dispose, add } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber } from "./subscriber.js";
-class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver } from "./observer.js";
+class CatchErrorObserver extends AbstractDelegatingObserver {
     constructor(delegate, onError) {
         super(delegate);
         add(this, error => {
@@ -11,7 +11,7 @@ class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
                     const { cause } = error;
                     const result = onError(cause) || none;
                     if (isSome(result)) {
-                        result.subscribe(delegate);
+                        result.observe(delegate);
                     }
                     else {
                         dispose(delegate);
@@ -31,7 +31,7 @@ class CatchErrorSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const catchError = (onError) => {
-    const operator = (subscriber) => new CatchErrorSubscriber(subscriber, onError);
+    const operator = (observer) => new CatchErrorObserver(observer, onError);
     operator.isSynchronous = false;
     return lift(operator);
 };

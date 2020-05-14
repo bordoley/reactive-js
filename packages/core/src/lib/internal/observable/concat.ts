@@ -2,14 +2,14 @@ import { dispose, add } from "../../disposable";
 import { isSome } from "../../option";
 import {
   ObservableLike,
-  SubscriberLike,
+  ObserverLike,
   ObservableFunction,
 } from "./interfaces";
-import { AbstractDelegatingSubscriber } from "./subscriber";
+import { AbstractDelegatingObserver } from "./observer";
 
-class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class ConcatObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly observables: Array<ObservableLike<T>>,
     private readonly next: number,
   ) {
@@ -21,12 +21,12 @@ class ConcatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
       if (isSome(error)) {
         dispose(delegate, error);
       } else if (next < observables.length) {
-        const concatSubscriber = new ConcatSubscriber(
+        const concatObserver = new ConcatObserver(
           delegate,
           observables,
           next + 1,
         );
-        observables[next].subscribe(concatSubscriber);
+        observables[next].observe(concatObserver);
       } else {
         dispose(delegate);
       }
@@ -45,14 +45,14 @@ class ConcatObservable<T> implements ObservableLike<T> {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  observe(observer: ObserverLike<T>) {
     const observables = this.observables;
 
     if (observables.length > 0) {
-      const concatSubscriber = new ConcatSubscriber(subscriber, observables, 1);
-      observables[0].subscribe(concatSubscriber);
+      const concatObserver = new ConcatObserver(observer, observables, 1);
+      observables[0].observe(concatObserver);
     } else {
-      dispose(subscriber);
+      dispose(observer);
     }
   }
 }

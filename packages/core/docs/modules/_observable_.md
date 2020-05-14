@@ -10,27 +10,27 @@
 
 ### Classes
 
-* [AbstractDelegatingSubscriber](../classes/_observable_.abstractdelegatingsubscriber.md)
+* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
 
 ### Interfaces
 
 * [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)
 * [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)
 * [ObservableLike](../interfaces/_observable_.observablelike.md)
+* [ObserverLike](../interfaces/_observable_.observerlike.md)
 * [StreamLike](../interfaces/_observable_.streamlike.md)
 * [SubjectLike](../interfaces/_observable_.subjectlike.md)
-* [SubscriberLike](../interfaces/_observable_.subscriberlike.md)
 
 ### Type aliases
 
 * [AsyncReducer](_observable_.md#asyncreducer)
 * [ObservableFunction](_observable_.md#observablefunction)
 * [ObservablePredicate](_observable_.md#observablepredicate)
-* [SubscriberFunction](_observable_.md#subscriberfunction)
+* [ObserverFunction](_observable_.md#observerfunction)
 
 ### Variables
 
-* [assertSubscriberNotifyInContinuation](_observable_.md#const-assertsubscribernotifyincontinuation)
+* [assertObserverNotifyInContinuation](_observable_.md#const-assertobservernotifyincontinuation)
 * [timeoutError](_observable_.md#const-timeouterror)
 
 ### Functions
@@ -166,29 +166,29 @@ Name | Type |
 
 ___
 
-###  SubscriberFunction
+###  ObserverFunction
 
-Ƭ **SubscriberFunction**: *object*
+Ƭ **ObserverFunction**: *object*
 
-A function which transforms a `SubscriberLike<B>` to a `SubscriberLike<A>`.
+A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
 
 #### Type declaration:
 
-▸ (`observable`: [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹B›): *[SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹A›*
+▸ (`observer`: [ObserverLike](../interfaces/_observable_.observerlike.md)‹B›): *[ObserverLike](../interfaces/_observable_.observerlike.md)‹A›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`observable` | [SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹B› |
+`observer` | [ObserverLike](../interfaces/_observable_.observerlike.md)‹B› |
 
 * **isSynchronous**: *boolean*
 
 ## Variables
 
-### `Const` assertSubscriberNotifyInContinuation
+### `Const` assertObserverNotifyInContinuation
 
-• **assertSubscriberNotifyInContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[SubscriberLike](../interfaces/_observable_.subscriberlike.md)‹unknown››* = _assertSubscriberNotifyInContinuation
+• **assertObserverNotifyInContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[ObserverLike](../interfaces/_observable_.observerlike.md)‹unknown››* = _assertObserverNotifyInContinuation
 
 ___
 
@@ -551,7 +551,7 @@ ___
 
 ▸ **compute**<**T**>(`options?`: object): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
- Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+ Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
 
 **Type parameters:**
 
@@ -686,7 +686,7 @@ ___
 ▸ **createObservable**<**T**>(`onSubscribe`: [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Factory for safely creating new `ObservableLike` instances. The onSubscribe function
-is called with a `SafeSubscriberLike` that may be notified from any context.
+is called with a `SafeObserverLike` that may be notified from any context.
 
 Note, implementations should not do significant blocking work in
 the onSubscribe function.
@@ -1025,7 +1025,7 @@ ___
 ▸ **fromPromise**<**T**>(`factory`: [Factory](_functions_.md#factory)‹Promise‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Converts a `Promise` to an `ObservableLike`. The provided promise factory
-is invoked for each subscriber to the observable.
+is invoked for each observer to the observable.
 
 **Type parameters:**
 
@@ -1045,7 +1045,7 @@ ___
 
 ▸ **fromValue**<**T**>(`config`: object): *[Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
- Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the subscriber.
+ Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
 
 **Type parameters:**
 
@@ -1189,10 +1189,10 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SubscriberFunction](_observable_.md#subscriberfunction)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [ObserverFunction](_observable_.md#observerfunction)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
 Creates a new `ObservableLike` which applies the provided the operator function to
-subscriber when the source is subscribed to.
+observer when the source is subscribed to.
 
 **Type parameters:**
 
@@ -1204,7 +1204,7 @@ subscriber when the source is subscribed to.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`operator` | [SubscriberFunction](_observable_.md#subscriberfunction)‹TA, TB› | The operator function to apply.  |
+`operator` | [ObserverFunction](_observable_.md#observerfunction)‹TA, TB› | The operator function to apply.  |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
@@ -1358,7 +1358,7 @@ ___
 
 ▸ **never**<**T**>(): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-Returna an `ObservableLike` instance that emits no items and never disposes its subscriber.
+Returna an `ObservableLike` instance that emits no items and never disposes its observer.
 
 **Type parameters:**
 
@@ -1698,7 +1698,7 @@ ___
 
 ▸ **subscribe**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
-Safely subscribes to an `ObservableLike` with a `SubscriberLike` instance
+Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
 using the provided scheduler. The returned `DisposableLike`
 may used to cancel the subscription.
 
@@ -1710,7 +1710,7 @@ may used to cancel the subscription.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The SchedulerLike instance that should be used by the source to notify it's subscriber.  |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The SchedulerLike instance that should be used by the source to notify it's observer.  |
 
 **Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 

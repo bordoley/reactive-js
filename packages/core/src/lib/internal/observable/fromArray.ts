@@ -2,7 +2,7 @@ import { dispose } from "../../disposable";
 import { Function } from "../../functions";
 import { schedule } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
@@ -13,12 +13,12 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
   private index = this.startIndex;
 
   constructor(
-    subscriber: SubscriberLike<T>,
+    observer: ObserverLike<T>,
     private readonly values: readonly T[],
     private readonly startIndex: number,
     readonly delay: number,
   ) {
-    super(subscriber);
+    super(observer);
   }
 
   produce(scheduler: SchedulerLike) {
@@ -65,8 +65,8 @@ export const fromArray = <T>(
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 
-  const factory = (subscriber: SubscriberLike<T>) =>
-    new FromArrayProducer(subscriber, values, startIndex, delay);
+  const factory = (observer: ObserverLike<T>) =>
+    new FromArrayProducer(observer, values, startIndex, delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

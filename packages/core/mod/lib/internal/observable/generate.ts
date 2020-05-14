@@ -1,7 +1,7 @@
 import { dispose } from "../../disposable.ts";
 import { Factory, Generator } from "../../functions.ts";
 import { SchedulerLike, schedule } from "../../scheduler.ts";
-import { ObservableLike, SubscriberLike } from "./interfaces.ts";
+import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
@@ -10,12 +10,12 @@ import { AbstractProducer } from "./producer.ts";
 
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
-    subscriber: SubscriberLike<T>,
+    observer: ObserverLike<T>,
     private readonly generator: Generator<T>,
     private acc: T,
     readonly delay: number,
   ) {
-    super(subscriber);
+    super(observer);
   }
 
   produce(scheduler: SchedulerLike) {
@@ -58,8 +58,8 @@ export function generate<T>(
   initialValue: Factory<T>,
   { delay }: { delay: number } = { delay: 0 },
 ): ObservableLike<T> {
-  const factory = (subscriber: SubscriberLike<T>) =>
-    new GenerateProducer(subscriber, generator, initialValue(), delay);
+  const factory = (observer: ObserverLike<T>) =>
+    new GenerateProducer(observer, generator, initialValue(), delay);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

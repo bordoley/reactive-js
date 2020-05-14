@@ -3,14 +3,14 @@ import { strictEquality, isEqualTo, } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class SomeSatisfyObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
         add(this, error => {
             if (isNone(error)) {
-                fromValue()(false).subscribe(delegate);
+                fromValue()(false).observe(delegate);
             }
             else {
                 dispose(delegate, error);
@@ -18,7 +18,7 @@ class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const passesPredicate = this.predicate(next);
         if (passesPredicate) {
             const delegate = this.delegate;
@@ -28,7 +28,7 @@ class SomeSatisfySubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const someSatisfy = (predicate) => {
-    const operator = (subscriber) => new SomeSatisfySubscriber(subscriber, predicate);
+    const operator = (observer) => new SomeSatisfyObserver(observer, predicate);
     operator.isSynchronous = true;
     return lift(operator);
 };

@@ -1,18 +1,18 @@
 import { add } from "../../disposable.ts";
 import { Predicate, TypePredicate } from "../../functions.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class KeepTypeSubscriber<
+class KeepTypeObserver<
   TA,
   TB extends TA
-> extends AbstractDelegatingSubscriber<TA, TB> {
+> extends AbstractDelegatingObserver<TA, TB> {
   constructor(
-    delegate: SubscriberLike<TB>,
+    delegate: ObserverLike<TB>,
     private readonly predicate: TypePredicate<TA, TB>,
   ) {
     super(delegate);
@@ -20,7 +20,7 @@ class KeepTypeSubscriber<
   }
 
   notify(next: TA) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed && this.predicate(next)) {
       this.delegate.notify(next);
@@ -37,8 +37,8 @@ class KeepTypeSubscriber<
 export const keepType = <TA, TB extends TA>(
   predicate: TypePredicate<TA, TB>,
 ): ObservableFunction<unknown, TB> => {
-  const operator = (subscriber: SubscriberLike<TB>) =>
-    new KeepTypeSubscriber(subscriber, predicate);
+  const operator = (observer: ObserverLike<TB>) =>
+    new KeepTypeObserver(observer, predicate);
   operator.isSynchronous = true;
   return lift(operator);
 };

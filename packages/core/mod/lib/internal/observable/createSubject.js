@@ -5,12 +5,12 @@ class SubjectImpl extends AbstractDisposable {
     constructor(replayCount) {
         super();
         this.replayCount = replayCount;
-        this.subscribers = new Set();
+        this.observers = new Set();
         this.replayed = [];
         this.isSynchronous = false;
     }
-    get subscriberCount() {
-        return this.subscribers.size;
+    get observerCount() {
+        return this.observers.size;
     }
     dispatch(next) {
         if (!this.isDisposed) {
@@ -22,18 +22,18 @@ class SubjectImpl extends AbstractDisposable {
                     replayed.shift();
                 }
             }
-            for (const subscriber of this.subscribers) {
-                dispatch(subscriber, next);
+            for (const observer of this.observers) {
+                dispatch(observer, next);
             }
         }
     }
-    subscribe(subscriber) {
-        const dispatcher = toDispatcher(subscriber);
+    observe(observer) {
+        const dispatcher = toDispatcher(observer);
         if (!this.isDisposed) {
-            const subscribers = this.subscribers;
-            subscribers.add(dispatcher);
-            add(subscriber, () => {
-                subscribers.delete(dispatcher);
+            const observers = this.observers;
+            observers.add(dispatcher);
+            add(observer, () => {
+                observers.delete(dispatcher);
             });
         }
         for (const next of this.replayed) {

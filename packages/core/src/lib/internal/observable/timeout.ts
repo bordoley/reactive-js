@@ -11,32 +11,32 @@ import { concat } from "./concat";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces";
 import { lift } from "./lift";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 import { throws } from "./throws";
 
 /** Symbol thrown when the timeout operator times out */
 export const timeoutError = Symbol("TimeoutError");
 
-const setupDurationSubscription = <T>(subscriber: TimeoutSubscriber<T>) => {
-  subscriber.durationSubscription.inner = pipe(
-    subscriber.duration,
-    subscribe(subscriber),
-    addDisposableOrTeardown(disposeOnError(subscriber)),
+const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
+  observer.durationSubscription.inner = pipe(
+    observer.duration,
+    subscribe(observer),
+    addDisposableOrTeardown(disposeOnError(observer)),
   );
 };
 
-class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
@@ -45,7 +45,7 @@ class TimeoutSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     dispose(this.durationSubscription);
     this.delegate.notify(next);
@@ -77,8 +77,8 @@ export function timeout<T>(
     typeof duration === "number"
       ? throws({ delay: duration })(returnTimeoutError)
       : concat(duration, throws()(returnTimeoutError));
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new TimeoutSubscriber(subscriber, durationObs);
+  const operator = (observer: ObserverLike<T>) =>
+    new TimeoutObserver(observer, durationObs);
   operator.isSynchronous = false;
   return lift(operator);
 }

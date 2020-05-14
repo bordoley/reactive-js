@@ -1,15 +1,15 @@
 import { add } from "../../disposable.ts";
 import { Factory, Reducer } from "../../functions.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
+class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
-    delegate: SubscriberLike<TAcc>,
+    delegate: ObserverLike<TAcc>,
     private readonly scanner: Reducer<T, TAcc>,
     private acc: TAcc,
   ) {
@@ -18,7 +18,7 @@ class ScanSubscriber<T, TAcc> extends AbstractDelegatingSubscriber<T, TAcc> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const nextAcc = this.scanner(this.acc, next);
     this.acc = nextAcc;
@@ -38,8 +38,8 @@ export const scan = <T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): ObservableFunction<T, TAcc> => {
-  const operator = (subscriber: SubscriberLike<TAcc>) =>
-    new ScanSubscriber(subscriber, scanner, initialValue());
+  const operator = (observer: ObserverLike<TAcc>) =>
+    new ScanObserver(observer, scanner, initialValue());
   operator.isSynchronous = true;
   return lift(operator);
 };

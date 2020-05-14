@@ -4,8 +4,8 @@ import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class RepeatSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class RepeatObserver extends AbstractDelegatingObserver {
     constructor(delegate, observable, shouldRepeat) {
         super(delegate);
         this.observable = observable;
@@ -35,14 +35,14 @@ class RepeatSubscriber extends AbstractDelegatingSubscriber {
         add(this, this.onDispose);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         if (!this.isDisposed) {
             this.delegate.notify(next);
         }
     }
 }
 const repeatObs = (shouldRepeat) => observable => {
-    const operator = (subscriber) => new RepeatSubscriber(subscriber, observable, shouldRepeat);
+    const operator = (observer) => new RepeatObserver(observer, observable, shouldRepeat);
     operator.isSynchronous = true;
     return lift(operator)(observable);
 };

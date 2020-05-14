@@ -1,12 +1,12 @@
 import { add } from "../../disposable.ts";
 import { returns, Function } from "../../functions.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { AbstractDelegatingObserver } from "./observer.ts";
 
-class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
+class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   constructor(
-    delegate: SubscriberLike<TB>,
+    delegate: ObserverLike<TB>,
     private readonly mapper: Function<TA, TB>,
   ) {
     super(delegate);
@@ -28,8 +28,8 @@ class MapSubscriber<TA, TB> extends AbstractDelegatingSubscriber<TA, TB> {
 export const map = <TA, TB>(
   mapper: Function<TA, TB>,
 ): ObservableFunction<TA, TB> => {
-  const operator = (subscriber: SubscriberLike<TB>) =>
-    new MapSubscriber(subscriber, mapper);
+  const operator = (observer: ObserverLike<TB>) =>
+    new MapObserver(observer, mapper);
   operator.isSynchronous = true;
   return lift(operator);
 };

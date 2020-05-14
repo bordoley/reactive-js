@@ -1,16 +1,16 @@
 import { dispose, add } from "../../disposable";
 
 import { isSome, none } from "../../option";
-import { ObservableLike, SubscriberLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
 type LatestCtx = {
   completedCount: number;
-  readonly subscribers: readonly LatestSubscriber[];
+  readonly observers: readonly LatestObserver[];
   readyCount: number;
 };
 
@@ -19,7 +19,7 @@ export const enum LatestMode {
   Zip = 2,
 }
 
-class LatestSubscriber extends AbstractDelegatingSubscriber<
+class LatestObserver extends AbstractDelegatingObserver<
   unknown,
   unknown[]
 > {
@@ -27,7 +27,7 @@ class LatestSubscriber extends AbstractDelegatingSubscriber<
   latest: unknown = none;
 
   constructor(
-    delegate: SubscriberLike<unknown[]>,
+    delegate: ObserverLike<unknown[]>,
     private readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
@@ -36,14 +36,14 @@ class LatestSubscriber extends AbstractDelegatingSubscriber<
       const ctx = this.ctx;
       ctx.completedCount++;
 
-      if (isSome(error) || ctx.completedCount === ctx.subscribers.length) {
+      if (isSome(error) || ctx.completedCount === ctx.observers.length) {
         dispose(this.delegate, error);
       }
     });
   }
 
   notify(next: unknown) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const ctx = this.ctx;
     this.latest = next;
@@ -53,13 +53,13 @@ class LatestSubscriber extends AbstractDelegatingSubscriber<
       this.ready = true;
     }
 
-    const subscribers = ctx.subscribers;
-    if (ctx.readyCount === subscribers.length) {
-      const result = subscribers.map(sub => sub.latest);
+    const observers = ctx.observers;
+    if (ctx.readyCount === observers.length) {
+      const result = observers.map(sub => sub.latest);
       this.delegate.notify(result);
 
       if (this.mode === LatestMode.Zip) {
-        for (const sub of subscribers) {
+        for (const sub of observers) {
           sub.ready = false;
           sub.latest = none as any;
         }
@@ -73,18 +73,18 @@ export const latest = (
   observables: ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<unknown[]> => {
-  const factory = (subscriber: SubscriberLike<unknown[]>) => () => {
-    const subscribers: LatestSubscriber[] = [];
+  const factory = (observer: ObserverLike<unknown[]>) => () => {
+    const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,
-      subscribers,
+      observers,
       readyCount: 0,
     };
 
     for (const observable of observables) {
-      const innerSubscriber = new LatestSubscriber(subscriber, ctx, mode);
-      subscribers.push(innerSubscriber);
-      observable.subscribe(innerSubscriber);
+      const innerObserver = new LatestObserver(observer, ctx, mode);
+      observers.push(innerObserver);
+      observable.observe(innerObserver);
     }
   };
 

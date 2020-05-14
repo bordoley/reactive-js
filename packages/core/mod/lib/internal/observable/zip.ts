@@ -11,17 +11,17 @@ import { zipEnumerators } from "../enumerable/zip.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
 import {
   ObservableLike,
-  SubscriberLike,
+  ObserverLike,
   ObservableFunction,
 } from "./interfaces.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 import { using } from "./using.ts";
 
-class EnumeratorSubscriber<T> extends AbstractDisposable
-  implements EnumeratorLike<T>, SubscriberLike<T> {
+class EnumeratorObserver<T> extends AbstractDisposable
+  implements EnumeratorLike<T>, ObserverLike<T> {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
   hasCurrent = false;
@@ -54,7 +54,7 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
   }
 
   notify(next: T): void {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     this.current = next;
     this.hasCurrent = true;
@@ -79,10 +79,10 @@ class EnumeratorSubscriber<T> extends AbstractDisposable
 
 const subscribeInteractive = <T>(
   obs: ObservableLike<T>,
-): EnumeratorSubscriber<T> => {
-  const subscriber = new EnumeratorSubscriber<T>();
-  obs.subscribe(subscriber);
-  return subscriber;
+): EnumeratorObserver<T> => {
+  const observer = new EnumeratorObserver<T>();
+  obs.observe(observer);
+  return observer;
 };
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
@@ -106,14 +106,14 @@ const shouldComplete = (
   return false;
 };
 
-class ZipSubscriber extends AbstractDelegatingSubscriber<unknown, unknown[]>
+class ZipObserver extends AbstractDelegatingObserver<unknown, unknown[]>
   implements EnumeratorLike<unknown> {
   current: unknown;
   private readonly buffer: unknown[] = [];
   hasCurrent = false;
 
   constructor(
-    delegate: SubscriberLike<unknown[]>,
+    delegate: ObserverLike<unknown[]>,
     private readonly enumerators: readonly (DisposableLike &
       EnumeratorLike<any>)[],
   ) {
@@ -145,7 +145,7 @@ class ZipSubscriber extends AbstractDelegatingSubscriber<unknown, unknown[]>
   }
 
   notify(next: unknown) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const enumerators = this.enumerators;
 
@@ -181,16 +181,16 @@ class ZipObservable implements ObservableLike<unknown[]> {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
-  subscribe(subscriber: SubscriberLike<unknown[]>) {
+  observe(observer: ObserverLike<unknown[]>) {
     const observables = this.observables;
     const count = observables.length;
 
     if (this.isSynchronous) {
       using(
         _ => this.observables.map(subscribeInteractive),
-        (...enumerators: EnumeratorSubscriber<any>[]) =>
+        (...enumerators: EnumeratorObserver<any>[]) =>
           fromEnumerator()(zipEnumerators(enumerators)),
-      ).subscribe(subscriber);
+      ).observe(observer);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
@@ -202,10 +202,10 @@ class ZipObservable implements ObservableLike<unknown[]> {
           enumerator.move();
           enumerators.push(enumerator);
         } else {
-          const innerSubscriber = new ZipSubscriber(subscriber, enumerators);
+          const innerObserver = new ZipObserver(observer, enumerators);
 
-          observable.subscribe(innerSubscriber);
-          enumerators.push(innerSubscriber);
+          observable.observe(innerObserver);
+          enumerators.push(innerObserver);
         }
       }
     }

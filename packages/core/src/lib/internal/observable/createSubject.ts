@@ -1,10 +1,10 @@
 import { AbstractDisposable, add } from "../../disposable";
 import { dispatch } from "./dispatcher";
-import { SubjectLike, SubscriberLike, DispatcherLike } from "./interfaces";
+import { SubjectLike, ObserverLike, DispatcherLike } from "./interfaces";
 import { toDispatcher } from "./toDispatcher";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
-  private readonly subscribers: Set<DispatcherLike<T>> = new Set();
+  private readonly observers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
   readonly isSynchronous = false;
@@ -13,8 +13,8 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     super();
   }
 
-  get subscriberCount() {
-    return this.subscribers.size;
+  get observerCount() {
+    return this.observers.size;
   }
 
   dispatch(next: T): void {
@@ -29,24 +29,24 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
         }
       }
 
-      for (const subscriber of this.subscribers) {
-        dispatch(subscriber, next);
+      for (const observer of this.observers) {
+        dispatch(observer, next);
       }
     }
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  observe(observer: ObserverLike<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const dispatcher = toDispatcher(subscriber);
+    const dispatcher = toDispatcher(observer);
 
     if (!this.isDisposed) {
-      const subscribers = this.subscribers;
-      subscribers.add(dispatcher);
+      const observers = this.observers;
+      observers.add(dispatcher);
 
-      add(subscriber, () => {
-        subscribers.delete(dispatcher);
+      add(observer, () => {
+        observers.delete(dispatcher);
       });
     }
 

@@ -1,15 +1,15 @@
 import { add } from "../../disposable";
 import { SideEffect1 } from "../../functions";
-import { ObservableFunction, SubscriberLike } from "./interfaces";
+import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly onNotify: SideEffect1<T>,
   ) {
     super(delegate);
@@ -17,7 +17,7 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       this.onNotify(next);
@@ -34,8 +34,8 @@ class OnNotifySubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export function onNotify<T>(
   onNotify: SideEffect1<T>,
 ): ObservableFunction<T, T> {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new OnNotifySubscriber(subscriber, onNotify);
+  const operator = (observer: ObserverLike<T>) =>
+    new OnNotifyObserver(observer, onNotify);
   operator.isSynchronous = true;
   return lift(operator);
 }

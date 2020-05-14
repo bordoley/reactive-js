@@ -1,8 +1,8 @@
 import { dispose, add } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { createScheduledObservable } from "./observable.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
-class LatestSubscriber extends AbstractDelegatingSubscriber {
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);
         this.ctx = ctx;
@@ -12,25 +12,25 @@ class LatestSubscriber extends AbstractDelegatingSubscriber {
         add(this, error => {
             const ctx = this.ctx;
             ctx.completedCount++;
-            if (isSome(error) || ctx.completedCount === ctx.subscribers.length) {
+            if (isSome(error) || ctx.completedCount === ctx.observers.length) {
                 dispose(this.delegate, error);
             }
         });
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         const ctx = this.ctx;
         this.latest = next;
         if (!this.ready) {
             ctx.readyCount++;
             this.ready = true;
         }
-        const subscribers = ctx.subscribers;
-        if (ctx.readyCount === subscribers.length) {
-            const result = subscribers.map(sub => sub.latest);
+        const observers = ctx.observers;
+        if (ctx.readyCount === observers.length) {
+            const result = observers.map(sub => sub.latest);
             this.delegate.notify(result);
             if (this.mode === 2) {
-                for (const sub of subscribers) {
+                for (const sub of observers) {
                     sub.ready = false;
                     sub.latest = none;
                 }
@@ -40,17 +40,17 @@ class LatestSubscriber extends AbstractDelegatingSubscriber {
     }
 }
 export const latest = (observables, mode) => {
-    const factory = (subscriber) => () => {
-        const subscribers = [];
+    const factory = (observer) => () => {
+        const observers = [];
         const ctx = {
             completedCount: 0,
-            subscribers,
+            observers,
             readyCount: 0,
         };
         for (const observable of observables) {
-            const innerSubscriber = new LatestSubscriber(subscriber, ctx, mode);
-            subscribers.push(innerSubscriber);
-            observable.subscribe(innerSubscriber);
+            const innerObserver = new LatestObserver(observer, ctx, mode);
+            observers.push(innerObserver);
+            observable.observe(innerObserver);
         }
     };
     return createScheduledObservable(factory, observables.every(obs => obs.isSynchronous));

@@ -4,14 +4,14 @@ import { isSome, none } from "../../option.ts";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingSubscriber } from "./subscriber.ts";
+import { AbstractDelegatingObserver } from "./observer.ts";
 
-class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     onError: Function<unknown, ObservableLike<T> | void>,
   ) {
     super(delegate);
@@ -22,7 +22,7 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
           const { cause } = error;
           const result = onError(cause) || none;
           if (isSome(result)) {
-            result.subscribe(delegate);
+            result.observe(delegate);
           } else {
             dispose(delegate);
           }
@@ -51,8 +51,8 @@ class CatchErrorSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 export const catchError = <T>(
   onError: Function<unknown, ObservableLike<T> | void>,
 ): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new CatchErrorSubscriber(subscriber, onError);
+  const operator = (observer: ObserverLike<T>) =>
+    new CatchErrorObserver(observer, onError);
   operator.isSynchronous = false;
   return lift(operator);
 };

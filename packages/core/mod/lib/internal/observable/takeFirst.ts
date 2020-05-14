@@ -1,23 +1,23 @@
 import { add, dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
-import { ObservableFunction, SubscriberLike } from "./interfaces.ts";
+import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber.ts";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer.ts";
 
-class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   private count = 0;
 
-  constructor(delegate: SubscriberLike<T>, private readonly maxCount: number) {
+  constructor(delegate: ObserverLike<T>, private readonly maxCount: number) {
     super(delegate);
     add(this, delegate);
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       this.count++;
@@ -35,8 +35,8 @@ class TakeFirstSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
  * @param count The maximum number of values to emit.
  */
 export const takeFirst = <T>(count = 1): ObservableFunction<T, T> => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new TakeFirstSubscriber(subscriber, count);
+  const operator = (observer: ObserverLike<T>) =>
+    new TakeFirstObserver(observer, count);
   operator.isSynchronous = true;
   return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

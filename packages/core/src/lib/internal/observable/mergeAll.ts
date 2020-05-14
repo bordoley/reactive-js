@@ -9,39 +9,39 @@ import { isSome } from "../../option";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-const subscribeNext = <T>(subscriber: MergeSubscriber<T>) => {
-  if (subscriber.activeCount < subscriber.maxConcurrency) {
-    const nextObs = subscriber.queue.shift();
+const subscribeNext = <T>(observer: MergeObserver<T>) => {
+  if (observer.activeCount < observer.maxConcurrency) {
+    const nextObs = observer.queue.shift();
 
     if (isSome(nextObs)) {
-      subscriber.activeCount++;
+      observer.activeCount++;
 
       const nextObsSubscription = pipe(
         nextObs,
-        onNotify(subscriber.onNotify),
-        subscribe(subscriber.delegate),
-        addDisposableOrTeardown(subscriber.onDispose),
+        onNotify(observer.onNotify),
+        subscribe(observer.delegate),
+        addDisposableOrTeardown(observer.onDispose),
       );
 
-      add(subscriber.delegate, nextObsSubscription);
-    } else if (subscriber.isDisposed) {
-      dispose(subscriber.delegate);
+      add(observer.delegate, nextObsSubscription);
+    } else if (observer.isDisposed) {
+      dispose(observer.delegate);
     }
   }
 };
 
-class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
+class MergeObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
@@ -64,7 +64,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   readonly queue: Array<ObservableLike<T>> = [];
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     readonly maxBufferSize: number,
     readonly maxConcurrency: number,
   ) {
@@ -84,7 +84,7 @@ class MergeSubscriber<T> extends AbstractDelegatingSubscriber<
   }
 
   notify(next: ObservableLike<T>) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     const queue = this.queue;
     if (!this.isDisposed) {
@@ -117,8 +117,8 @@ export const mergeAll = <T>(
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new MergeSubscriber(subscriber, maxBufferSize, maxConcurrency);
+  const operator = (observer: ObserverLike<T>) =>
+    new MergeObserver(observer, maxBufferSize, maxConcurrency);
   operator.isSynchronous = false;
   return lift(operator);
 };

@@ -10,17 +10,17 @@ import { isNone, isSome } from "../../option";
 import {
   ObservableLike,
   ObservableFunction,
-  SubscriberLike,
+  ObserverLike,
 } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
-  AbstractDelegatingSubscriber,
-  assertSubscriberNotifyInContinuation,
-} from "./subscriber";
+  AbstractDelegatingObserver,
+  assertObserverNotifyInContinuation,
+} from "./observer";
 
-class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
+class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
   private readonly innerSubscription = createSerialDisposable();
   private count = 1;
 
@@ -50,7 +50,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   private readonly onNotify = (next: T) => this.delegate.notify(next);
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: ObserverLike<T>,
     private readonly observable: ObservableLike<T>,
     private readonly shouldRepeat: (
       count: number,
@@ -63,7 +63,7 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
   }
 
   notify(next: T) {
-    assertSubscriberNotifyInContinuation(this);
+    assertObserverNotifyInContinuation(this);
 
     if (!this.isDisposed) {
       this.delegate.notify(next);
@@ -74,8 +74,8 @@ class RepeatSubscriber<T> extends AbstractDelegatingSubscriber<T, T> {
 const repeatObs = <T>(
   shouldRepeat: (count: number, error?: Exception) => boolean,
 ): ObservableFunction<T, T> => observable => {
-  const operator = (subscriber: SubscriberLike<T>) =>
-    new RepeatSubscriber(subscriber, observable, shouldRepeat);
+  const operator = (observer: ObserverLike<T>) =>
+    new RepeatObserver(observer, observable, shouldRepeat);
   operator.isSynchronous = true;
   return lift(operator)(observable);
 };

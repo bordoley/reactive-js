@@ -3,13 +3,13 @@ import { pipe, returns } from "../../functions.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingSubscriber, assertSubscriberNotifyInContinuation, } from "./subscriber.js";
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
 import { throws } from "./throws.js";
 export const timeoutError = Symbol("TimeoutError");
-const setupDurationSubscription = (subscriber) => {
-    subscriber.durationSubscription.inner = pipe(subscriber.duration, subscribe(subscriber), addDisposableOrTeardown(disposeOnError(subscriber)));
+const setupDurationSubscription = (observer) => {
+    observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
 };
-class TimeoutSubscriber extends AbstractDelegatingSubscriber {
+class TimeoutObserver extends AbstractDelegatingObserver {
     constructor(delegate, duration) {
         super(delegate);
         this.duration = duration;
@@ -18,7 +18,7 @@ class TimeoutSubscriber extends AbstractDelegatingSubscriber {
         setupDurationSubscription(this);
     }
     notify(next) {
-        assertSubscriberNotifyInContinuation(this);
+        assertObserverNotifyInContinuation(this);
         dispose(this.durationSubscription);
         this.delegate.notify(next);
     }
@@ -28,7 +28,7 @@ export function timeout(duration) {
     const durationObs = typeof duration === "number"
         ? throws({ delay: duration })(returnTimeoutError)
         : concat(duration, throws()(returnTimeoutError));
-    const operator = (subscriber) => new TimeoutSubscriber(subscriber, durationObs);
+    const operator = (observer) => new TimeoutObserver(observer, durationObs);
     operator.isSynchronous = false;
     return lift(operator);
 }
