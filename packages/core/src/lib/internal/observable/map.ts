@@ -2,20 +2,21 @@ import { add } from "../../disposable";
 import { returns, Function } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver, assertObserverNotifyInContinuation } from "./observer";
+import { notifyMap } from "../notifyMixins";
 
 class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   constructor(
     delegate: ObserverLike<TB>,
-    private readonly mapper: Function<TA, TB>,
+    readonly mapper: Function<TA, TB>,
   ) {
     super(delegate);
     add(this, delegate);
   }
 
   notify(next: TA) {
-    const mapped = this.mapper(next);
-    this.delegate.notify(mapped);
+    assertObserverNotifyInContinuation(this);
+    notifyMap(this, next);
   }
 }
 

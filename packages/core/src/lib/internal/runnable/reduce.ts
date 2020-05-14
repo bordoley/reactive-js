@@ -2,8 +2,9 @@ import { Function, Reducer, Factory } from "../../functions";
 import { RunnableLike, SinkLike } from "./interfaces";
 
 class ReducerSink<T, TAcc> implements SinkLike<T> {
-  constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {}
   isDone = false;
+
+  constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {}
 
   notify(next: T): void {
     this.acc = this.reducer(this.acc, next);

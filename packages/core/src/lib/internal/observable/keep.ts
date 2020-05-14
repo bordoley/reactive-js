@@ -7,13 +7,15 @@ import {
   assertObserverNotifyInContinuation,
 } from "./observer";
 
+import { notifyKeepType } from "../notifyMixins";
+
 class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
   TA,
   TB
 > {
   constructor(
     delegate: ObserverLike<TB>,
-    private readonly predicate: TypePredicate<TA, TB>,
+    readonly predicate: TypePredicate<TA, TB>,
   ) {
     super(delegate);
     add(this, delegate);
@@ -21,10 +23,7 @@ class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
 
   notify(next: TA) {
     assertObserverNotifyInContinuation(this);
-
-    if (!this.isDisposed && this.predicate(next)) {
-      this.delegate.notify(next);
-    }
+    notifyKeepType(this, next);
   }
 }
 

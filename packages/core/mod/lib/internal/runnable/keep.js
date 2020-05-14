@@ -1,14 +1,13 @@
 import { AbstractDelegatingSink } from "./sink.js";
 import { lift } from "./lift.js";
+import { notifyKeepType } from "../notifyMixins.js";
 class KeepTypeSink extends AbstractDelegatingSink {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
     }
     notify(next) {
-        if (!this.isDone && this.predicate(next)) {
-            this.delegate.notify(next);
-        }
+        notifyKeepType(this, next);
     }
 }
 export const keepType = (predicate) => {

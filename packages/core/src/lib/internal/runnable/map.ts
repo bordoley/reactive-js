@@ -2,18 +2,18 @@ import { returns, Function } from "../../functions";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
+import { notifyMap } from "../notifyMixins";
 
 class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
   constructor(
     delegate: SinkLike<TB>,
-    private readonly mapper: Function<TA, TB>,
+    readonly mapper: Function<TA, TB>,
   ) {
     super(delegate);
   }
 
   notify(next: TA) {
-    const mapped = this.mapper(next);
-    this.delegate.notify(mapped);
+    notifyMap(this, next);
   }
 }
 

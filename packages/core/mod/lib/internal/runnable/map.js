@@ -1,14 +1,14 @@
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingSink } from "./sink.js";
+import { notifyMap } from "../notifyMixins.js";
 class MapSink extends AbstractDelegatingSink {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
     }
     notify(next) {
-        const mapped = this.mapper(next);
-        this.delegate.notify(mapped);
+        notifyMap(this, next);
     }
 }
 export const map = (mapper) => {
