@@ -4,6 +4,8 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna run clean",
+    "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
+    "deno-test": "lerna run deno-test",
     "example": "node ./packages/example/build/cjs/example-server",
     "example-debug": "node --inspect-brk ./packages/example/build/cjs/example-server",
     "format": "prettier '**' --write",
