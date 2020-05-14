@@ -5,7 +5,7 @@ class ReducerSink<T, TAcc> implements SinkLike<T> {
   constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {}
   isDone = false;
 
-  push(next: T): void {
+  notify(next: T): void {
     this.acc = this.reducer(this.acc, next);
   }
   done(): void {

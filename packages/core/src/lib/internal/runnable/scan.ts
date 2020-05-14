@@ -12,11 +12,11 @@ class ScanSink<T, TAcc> extends AbstractDelegatingSink<T, TAcc> {
     super(delegate);
   }
 
-  push(next: T) {
+  notify(next: T) {
     const nextAcc = this.scanner(this.acc, next);
     this.acc = nextAcc;
 
-    this.delegate.push(nextAcc);
+    this.delegate.notify(nextAcc);
   }
 }
 

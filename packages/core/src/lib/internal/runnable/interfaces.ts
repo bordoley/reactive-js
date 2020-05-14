@@ -3,7 +3,7 @@ import { Function } from "../../functions";
 export interface SinkLike<T> {
   readonly isDone: boolean;
 
-  push(next: T): void;
+  notify(next: T): void;
   done(): void;
 }
 

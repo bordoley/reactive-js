@@ -18,7 +18,7 @@ export const fromArray = <T>(
       index < valuesLength && !sink.isDone;
       index++
     ) {
-      sink.push(values[index]);
+      sink.notify(values[index]);
     }
     sink.done();
   };

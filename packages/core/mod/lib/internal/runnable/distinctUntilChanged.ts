@@ -12,14 +12,14 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
     super(delegate);
   }
 
-  push(next: T) {
+  notify(next: T) {
     const shouldEmit =
       !this.isDone && (!this.hasValue || !this.equality(this.prev as T, next));
 
     if (shouldEmit) {
       this.prev = next;
       this.hasValue = true;
-      this.delegate.push(next);
+      this.delegate.notify(next);
     }
   }
 }

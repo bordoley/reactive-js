@@ -5,9 +5,9 @@ class KeepTypeSink extends AbstractDelegatingSink {
         super(delegate);
         this.predicate = predicate;
     }
-    push(next) {
+    notify(next) {
         if (!this.isDone && this.predicate(next)) {
-            this.delegate.push(next);
+            this.delegate.notify(next);
         }
     }
 }

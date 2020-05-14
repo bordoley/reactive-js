@@ -30,7 +30,7 @@
 ### Methods
 
 * [done](_runnable_.abstractdelegatingsink.md#done)
-* [push](_runnable_.abstractdelegatingsink.md#abstract-push)
+* [notify](_runnable_.abstractdelegatingsink.md#abstract-notify)
 
 ## Constructors
 
@@ -72,9 +72,9 @@ ___
 
 ___
 
-### `Abstract` push
+### `Abstract` notify
 
-▸ **push**(`next`: TA): *void*
+▸ **notify**(`next`: TA): *void*
 
 *Implementation of [SinkLike](../interfaces/_runnable_.sinklike.md)*
 

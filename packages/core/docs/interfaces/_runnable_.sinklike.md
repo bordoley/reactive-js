@@ -23,7 +23,7 @@
 ### Methods
 
 * [done](_runnable_.sinklike.md#done)
-* [push](_runnable_.sinklike.md#push)
+* [notify](_runnable_.sinklike.md#notify)
 
 ## Properties
 
@@ -41,9 +41,9 @@
 
 ___
 
-###  push
+###  notify
 
-▸ **push**(`next`: T): *void*
+▸ **notify**(`next`: T): *void*
 
 **Parameters:**
 

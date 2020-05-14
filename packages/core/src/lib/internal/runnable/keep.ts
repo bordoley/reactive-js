@@ -11,9 +11,9 @@ class KeepTypeSink<TA, TB extends TA> extends AbstractDelegatingSink<TA, TB> {
     super(delegate);
   }
 
-  push(next: TA) {
+  notify(next: TA) {
     if (!this.isDone && this.predicate(next)) {
-      this.delegate.push(next);
+      this.delegate.notify(next);
     }
   }
 }
