@@ -7,11 +7,7 @@ import {
 } from "../../disposable.ts";
 import { pipe, Predicate } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces.ts";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";

@@ -1,10 +1,6 @@
 import { add, dispose } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
-import {
-  ObservableLike,
-  ObserverLike,
-  ObservableFunction,
-} from "./interfaces.ts";
+import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
 import { AbstractDelegatingObserver } from "./observer.ts";
 
 class MergeObserver<T> extends AbstractDelegatingObserver<T, T> {

@@ -9,11 +9,7 @@ import {
 import { pipe, Function } from "../../functions";
 import { none, Option, isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

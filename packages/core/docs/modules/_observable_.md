@@ -1166,7 +1166,7 @@ ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹unknown, TB›*
+▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
 Returns an `ObservableLike` that only emits items from the
 source that satisfy the specified type predicate.
@@ -1183,7 +1183,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [TypePredicate](_functions_.md#typepredicate)‹TA, TB› | The predicate function.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹unknown, TB›*
+**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
 ___
 

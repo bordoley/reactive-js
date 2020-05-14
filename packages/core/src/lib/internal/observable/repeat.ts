@@ -7,11 +7,7 @@ import {
 } from "../../disposable";
 import { pipe, Predicate } from "../../functions";
 import { isNone, isSome } from "../../option";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

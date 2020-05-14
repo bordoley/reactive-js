@@ -9,11 +9,7 @@ import { none, isSome, isNone } from "../../option.ts";
 import { SchedulerContinuationLike } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
-import {
-  ObservableLike,
-  ObserverLike,
-  ObservableFunction,
-} from "./interfaces.ts";
+import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
 import {
   AbstractDelegatingObserver,
   assertObserverNotifyInContinuation,

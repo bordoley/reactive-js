@@ -14,10 +14,9 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   ) {}
 
   observe(observer: ObserverLike<TOut>) {
-    const liftedSubscrber = pipe(
-      observer,
-      ...this.operators,
-    ) as ObserverLike<any>;
+    const liftedSubscrber = pipe(observer, ...this.operators) as ObserverLike<
+      any
+    >;
 
     this.source.observe(liftedSubscrber);
   }

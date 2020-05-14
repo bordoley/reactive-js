@@ -1,11 +1,7 @@
 import { Exception, dispose, add } from "../../disposable.ts";
 import { Function } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces.ts";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver } from "./observer.ts";
 

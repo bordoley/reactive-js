@@ -6,11 +6,7 @@ import {
 } from "../../disposable";
 import { compose, pipe, Function } from "../../functions";
 import { isSome } from "../../option";
-import {
-  ObservableLike,
-  ObserverLike,
-  ObservableFunction,
-} from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
 import { onNotify } from "./onNotify";
@@ -59,8 +55,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 }
 
-const operator = <T>(observer: ObserverLike<T>) =>
-  new SwitchObserver(observer);
+const operator = <T>(observer: ObserverLike<T>) => new SwitchObserver(observer);
 operator.isSynchronous = false;
 
 const switchAllInstance = lift(operator);

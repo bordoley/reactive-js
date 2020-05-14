@@ -19,10 +19,7 @@ export const enum LatestMode {
   Zip = 2,
 }
 
-class LatestObserver extends AbstractDelegatingObserver<
-  unknown,
-  unknown[]
-> {
+class LatestObserver extends AbstractDelegatingObserver<unknown, unknown[]> {
   ready = false;
   latest: unknown = none;
 

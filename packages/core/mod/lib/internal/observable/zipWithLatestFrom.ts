@@ -1,11 +1,7 @@
 import { dispose, add, addDisposableOrTeardown } from "../../disposable.ts";
 import { pipe, Function2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
-import {
-  ObserverLike,
-  ObservableLike,
-  ObservableFunction,
-} from "./interfaces.ts";
+import { ObserverLike, ObservableLike, ObservableFunction } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";

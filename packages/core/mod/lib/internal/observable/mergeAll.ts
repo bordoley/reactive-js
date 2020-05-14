@@ -6,11 +6,7 @@ import {
 } from "../../disposable.ts";
 import { compose, pipe, Function } from "../../functions.ts";
 import { isSome } from "../../option.ts";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces.ts";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { map } from "./map.ts";
 import { onNotify } from "./onNotify.ts";

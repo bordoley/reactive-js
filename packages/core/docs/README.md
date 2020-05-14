@@ -15,6 +15,7 @@
 * ["node"](modules/_node_.md)
 * ["observable"](modules/_observable_.md)
 * ["option"](modules/_option_.md)
+* ["runnable"](modules/_runnable_.md)
 * ["scheduler"](modules/_scheduler_.md)
 * ["stateStore"](modules/_statestore_.md)
 * ["streamable"](modules/_streamable_.md)

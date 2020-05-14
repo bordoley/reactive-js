@@ -7,10 +7,10 @@ import {
   assertObserverNotifyInContinuation,
 } from "./observer";
 
-class KeepTypeObserver<
+class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
   TA,
-  TB extends TA
-> extends AbstractDelegatingObserver<TA, TB> {
+  TB
+> {
   constructor(
     delegate: ObserverLike<TB>,
     private readonly predicate: TypePredicate<TA, TB>,
@@ -36,7 +36,7 @@ class KeepTypeObserver<
  */
 export const keepType = <TA, TB extends TA>(
   predicate: TypePredicate<TA, TB>,
-): ObservableFunction<unknown, TB> => {
+): ObservableFunction<TA, TB> => {
   const operator = (observer: ObserverLike<TB>) =>
     new KeepTypeObserver(observer, predicate);
   operator.isSynchronous = true;

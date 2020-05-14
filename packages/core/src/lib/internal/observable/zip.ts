@@ -9,11 +9,7 @@ import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
 import { fromEnumerator } from "./fromEnumerable";
-import {
-  ObservableLike,
-  ObserverLike,
-  ObservableFunction,
-} from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces";
 import {
   AbstractDelegatingObserver,
   assertObserverNotifyInContinuation,

@@ -29,9 +29,7 @@ class ObserverDelegatingDispatcherSchedulerContinuation<
   }
 }
 
-const scheduleDrainQueue = <T>(
-  dispatcher: ObserverDelegatingDispatcher<T>,
-) => {
+const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
     const producer = new ObserverDelegatingDispatcherSchedulerContinuation(
       dispatcher,
@@ -73,6 +71,5 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
  *
  * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
  */
-export const toDispatcher = <T>(
-  observer: ObserverLike<T>,
-): DispatcherLike<T> => new ObserverDelegatingDispatcher(observer);
+export const toDispatcher = <T>(observer: ObserverLike<T>): DispatcherLike<T> =>
+  new ObserverDelegatingDispatcher(observer);

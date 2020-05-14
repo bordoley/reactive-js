@@ -1,11 +1,7 @@
 import { Exception, dispose, add } from "../../disposable";
 import { Function } from "../../functions";
 import { isSome, none } from "../../option";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
 

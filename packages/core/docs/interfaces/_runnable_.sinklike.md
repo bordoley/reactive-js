@@ -1,0 +1,54 @@
+[@reactive-js/core - v0.0.37](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
+
+# Interface: SinkLike <**T**>
+
+## Type parameters
+
+▪ **T**
+
+## Hierarchy
+
+* **SinkLike**
+
+## Implemented by
+
+* [AbstractDelegatingSink](../classes/_runnable_.abstractdelegatingsink.md)
+
+## Index
+
+### Properties
+
+* [isDone](_runnable_.sinklike.md#isdone)
+
+### Methods
+
+* [done](_runnable_.sinklike.md#done)
+* [push](_runnable_.sinklike.md#push)
+
+## Properties
+
+###  isDone
+
+• **isDone**: *boolean*
+
+## Methods
+
+###  done
+
+▸ **done**(): *void*
+
+**Returns:** *void*
+
+___
+
+###  push
+
+▸ **push**(`next`: T): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`next` | T |
+
+**Returns:** *void*
