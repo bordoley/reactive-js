@@ -10,7 +10,7 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
 
   move(): boolean {
     const array = this.array;
-    
+
     let hasCurrent = false;
 
     this.index++;
@@ -23,7 +23,7 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
     } else {
       this.hasCurrent = false;
     }
-    
+
     return hasCurrent;
   }
 }
