@@ -27,8 +27,7 @@ class LatestSubscriber extends AbstractDelegatingSubscriber {
         }
         const subscribers = ctx.subscribers;
         if (ctx.readyCount === subscribers.length) {
-            const latest = subscribers.map(sub => sub.latest);
-            const result = ctx.selector(...latest);
+            const result = subscribers.map(sub => sub.latest);
             this.delegate.notify(result);
             if (this.mode === 2) {
                 for (const sub of subscribers) {
@@ -40,14 +39,13 @@ class LatestSubscriber extends AbstractDelegatingSubscriber {
         }
     }
 }
-export const latest = (observables, mode, selector) => {
+export const latest = (observables, mode) => {
     const factory = (subscriber) => () => {
         const subscribers = [];
         const ctx = {
             completedCount: 0,
             subscribers,
             readyCount: 0,
-            selector,
         };
         for (const observable of observables) {
             const innerSubscriber = new LatestSubscriber(subscriber, ctx, mode);

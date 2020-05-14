@@ -457,7 +457,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **T**>(`selector`: [Function2](_functions_.md#function2)‹TA, TB, T›, `a`: TA, `b`: TB): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **T**>(`func`: [Function2](_functions_.md#function2)‹TA, TB, T›, `a`: TA, `b`: TB): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -471,13 +471,13 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function2](_functions_.md#function2)‹TA, TB, T› |
+`func` | [Function2](_functions_.md#function2)‹TA, TB, T› |
 `a` | TA |
 `b` | TB |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **TC**, **T**>(`selector`: [Function3](_functions_.md#function3)‹TA, TB, TC, T›, `a`: TA, `b`: TB, `c`: TC): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **TC**, **T**>(`func`: [Function3](_functions_.md#function3)‹TA, TB, TC, T›, `a`: TA, `b`: TB, `c`: TC): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -493,14 +493,14 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function3](_functions_.md#function3)‹TA, TB, TC, T› |
+`func` | [Function3](_functions_.md#function3)‹TA, TB, TC, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **T**>(`selector`: [Function4](_functions_.md#function4)‹TA, TB, TC, TD, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **T**>(`func`: [Function4](_functions_.md#function4)‹TA, TB, TC, TD, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -518,7 +518,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function4](_functions_.md#function4)‹TA, TB, TC, TD, T› |
+`func` | [Function4](_functions_.md#function4)‹TA, TB, TC, TD, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
@@ -526,7 +526,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`selector`: [Function5](_functions_.md#function5)‹TA, TB, TC, TD, TE, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **T**>(`func`: [Function5](_functions_.md#function5)‹TA, TB, TC, TD, TE, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -546,7 +546,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function5](_functions_.md#function5)‹TA, TB, TC, TD, TE, T› |
+`func` | [Function5](_functions_.md#function5)‹TA, TB, TC, TD, TE, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
@@ -555,7 +555,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`selector`: [Function6](_functions_.md#function6)‹TA, TB, TC, TD, TE, TF, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **T**>(`func`: [Function6](_functions_.md#function6)‹TA, TB, TC, TD, TE, TF, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -577,7 +577,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function6](_functions_.md#function6)‹TA, TB, TC, TD, TE, TF, T› |
+`func` | [Function6](_functions_.md#function6)‹TA, TB, TC, TD, TE, TF, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |
@@ -587,7 +587,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹T›*
 
-▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`selector`: [Function7](_functions_.md#function7)‹TA, TB, TC, TD, TE, TF, TG, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *[Factory](_functions_.md#factory)‹T›*
+▸ **bind**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **T**>(`func`: [Function7](_functions_.md#function7)‹TA, TB, TC, TD, TE, TF, TG, T›, `a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *[Factory](_functions_.md#factory)‹T›*
 
 **Type parameters:**
 
@@ -611,7 +611,7 @@ Name | Type |
 
 Name | Type |
 ------ | ------ |
-`selector` | [Function7](_functions_.md#function7)‹TA, TB, TC, TD, TE, TF, TG, T› |
+`func` | [Function7](_functions_.md#function7)‹TA, TB, TC, TD, TE, TF, TG, T› |
 `a` | TA |
 `b` | TB |
 `c` | TC |

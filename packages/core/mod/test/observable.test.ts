@@ -203,7 +203,6 @@ export const tests = describe(
       takeFirst(3),
       combineLatestWith(
         pipe(generate(incrementBy(2), returns(2), { delay: 3 }), takeFirst(2)),
-        (a, b) => [a, b],
       ),
       toArray(),
       expectArrayEquals(
@@ -713,7 +712,8 @@ export const tests = describe(
 
     let result: readonly number[] = [];
     pipe(
-      zip([shared, shared], sum),
+      zip(shared, shared),
+      map(([a, b]) => a + b),
       buffer(),
       onNotify(x => {
         result = x;
@@ -1009,12 +1009,9 @@ export const tests = describe(
       "with non-delayed sources",
       defer(
         zip(
-          [
-            pipe([1, 2], fromArray()),
-            pipe([1, 2], fromArray(), map(increment)),
-            generate(increment, returns<number>(3)),
-          ],
-          (x, y, z) => [x, y, z],
+          pipe([1, 2], fromArray()),
+          pipe([1, 2], fromArray(), map(increment)),
+          generate(increment, returns<number>(3)),
         ),
         toArray(),
         expectArrayEquals(
@@ -1030,12 +1027,9 @@ export const tests = describe(
       "with synchronous and non-synchronous sources",
       defer(
         zip(
-          [
-            pipe([1, 2], fromArray({ delay: 1 })),
-            pipe([2, 3], fromIterable()),
-            pipe([3, 4, 5], fromArray({ delay: 1 })),
-          ],
-          (x, y, z) => [x, y, z],
+          pipe([1, 2], fromArray({ delay: 1 })),
+          pipe([2, 3], fromIterable()),
+          pipe([3, 4, 5], fromArray({ delay: 1 })),
         ),
         toArray(),
         expectArrayEquals(
@@ -1052,7 +1046,7 @@ export const tests = describe(
       defer(
         [1, 2, 3],
         fromArray({ delay: 1 }),
-        zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]),
+        zipWith(pipe([1, 2, 3], fromArray({ delay: 5 }))),
         toArray(),
         expectArrayEquals(
           [
@@ -1073,7 +1067,8 @@ export const tests = describe(
             throw new Error();
           },
           throws(),
-          zipWith(fromArray()([1, 2, 3]), (_, b) => b),
+          zipWith(fromArray()([1, 2, 3])),
+          map(([, b]) => b),
           toArray(),
         ),
       ),
@@ -1085,10 +1080,8 @@ export const tests = describe(
     defer(
       [1, 2, 3, 4, 5, 6, 7, 8],
       fromArray({ delay: 1 }),
-      zipLatestWith(
-        pipe([1, 2, 3, 4], fromArray({ delay: 2 })),
-        (a, b) => a + b,
-      ),
+      zipLatestWith(pipe([1, 2, 3, 4], fromArray({ delay: 2 }))),
+      map(([a, b]) => a + b),
       toArray(),
       expectArrayEquals([2, 5, 8, 11]),
     ),

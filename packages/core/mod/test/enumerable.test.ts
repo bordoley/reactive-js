@@ -320,7 +320,8 @@ export const tests = describe(
     defer(
       [1, 2, 3],
       fromArray,
-      zipWith(fromArray([1, 2, 3, 4, 5]), sum),
+      zipWith(fromArray([1, 2, 3, 4, 5])),
+      map(([a, b]) => a + b),
       toArray,
       expectArrayEquals([2, 4, 6]),
     ),

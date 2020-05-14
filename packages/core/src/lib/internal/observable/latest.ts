@@ -8,11 +8,10 @@ import {
   assertSubscriberNotifyInContinuation,
 } from "./subscriber";
 
-type LatestCtx<T> = {
+type LatestCtx = {
   completedCount: number;
-  readonly subscribers: readonly LatestSubscriber<T>[];
+  readonly subscribers: readonly LatestSubscriber[];
   readyCount: number;
-  readonly selector: (...values: unknown[]) => T;
 };
 
 export const enum LatestMode {
@@ -20,13 +19,16 @@ export const enum LatestMode {
   Zip = 2,
 }
 
-class LatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T> {
+class LatestSubscriber extends AbstractDelegatingSubscriber<
+  unknown,
+  unknown[]
+> {
   ready = false;
   latest: unknown = none;
 
   constructor(
-    delegate: SubscriberLike<T>,
-    private readonly ctx: LatestCtx<T>,
+    delegate: SubscriberLike<unknown[]>,
+    private readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
     super(delegate);
@@ -53,8 +55,7 @@ class LatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T> {
 
     const subscribers = ctx.subscribers;
     if (ctx.readyCount === subscribers.length) {
-      const latest = subscribers.map(sub => sub.latest);
-      const result = ctx.selector(...latest);
+      const result = subscribers.map(sub => sub.latest);
       this.delegate.notify(result);
 
       if (this.mode === LatestMode.Zip) {
@@ -68,18 +69,16 @@ class LatestSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T> {
   }
 }
 
-export const latest = <T>(
+export const latest = (
   observables: ObservableLike<any>[],
   mode: LatestMode,
-  selector: (...values: unknown[]) => T,
-): ObservableLike<T> => {
-  const factory = (subscriber: SubscriberLike<T>) => () => {
-    const subscribers: LatestSubscriber<T>[] = [];
+): ObservableLike<unknown[]> => {
+  const factory = (subscriber: SubscriberLike<unknown[]>) => () => {
+    const subscribers: LatestSubscriber[] = [];
     const ctx = {
       completedCount: 0,
       subscribers,
       readyCount: 0,
-      selector,
     };
 
     for (const observable of observables) {

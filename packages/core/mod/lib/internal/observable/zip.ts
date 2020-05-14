@@ -5,16 +5,6 @@ import {
   add,
 } from "../../disposable.ts";
 import { current, EnumeratorLike } from "../../enumerable.ts";
-import {
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-  Function6,
-  Function7,
-  Function8,
-  Function9,
-} from "../../functions.ts";
 import { none, isSome, isNone } from "../../option.ts";
 import { SchedulerContinuationLike } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
@@ -116,17 +106,16 @@ const shouldComplete = (
   return false;
 };
 
-class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
+class ZipSubscriber extends AbstractDelegatingSubscriber<unknown, unknown[]>
   implements EnumeratorLike<unknown> {
   current: unknown;
-  private readonly buffer: Array<unknown> = [];
+  private readonly buffer: unknown[] = [];
   hasCurrent = false;
 
   constructor(
-    delegate: SubscriberLike<T>,
+    delegate: SubscriberLike<unknown[]>,
     private readonly enumerators: readonly (DisposableLike &
       EnumeratorLike<any>)[],
-    private readonly selector: (...values: unknown[]) => T,
   ) {
     super(delegate);
     add(delegate, () => {
@@ -169,7 +158,7 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
       }
 
       if (shouldEmit(enumerators)) {
-        const next = this.selector(...enumerators.map(current));
+        const next = enumerators.map(current);
         const shouldCompleteResult = shouldComplete(enumerators);
 
         this.delegate.notify(next);
@@ -185,17 +174,14 @@ class ZipSubscriber<T> extends AbstractDelegatingSubscriber<unknown, T>
   }
 }
 
-class ZipObservable<T> implements ObservableLike<T> {
+class ZipObservable implements ObservableLike<unknown[]> {
   readonly isSynchronous: boolean;
 
-  constructor(
-    private readonly observables: readonly ObservableLike<any>[],
-    private readonly selector: (...values: unknown[]) => T,
-  ) {
+  constructor(private readonly observables: readonly ObservableLike<any>[]) {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
-  subscribe(subscriber: SubscriberLike<T>) {
+  subscribe(subscriber: SubscriberLike<unknown[]>) {
     const observables = this.observables;
     const count = observables.length;
 
@@ -203,7 +189,7 @@ class ZipObservable<T> implements ObservableLike<T> {
       using(
         _ => this.observables.map(subscribeInteractive),
         (...enumerators: EnumeratorSubscriber<any>[]) =>
-          fromEnumerator()(zipEnumerators(enumerators, this.selector)),
+          fromEnumerator()(zipEnumerators(enumerators)),
       ).subscribe(subscriber);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
@@ -216,11 +202,7 @@ class ZipObservable<T> implements ObservableLike<T> {
           enumerator.move();
           enumerators.push(enumerator);
         } else {
-          const innerSubscriber = new ZipSubscriber(
-            subscriber,
-            enumerators,
-            this.selector,
-          );
+          const innerSubscriber = new ZipSubscriber(subscriber, enumerators);
 
           observable.subscribe(innerSubscriber);
           enumerators.push(innerSubscriber);
@@ -230,96 +212,77 @@ class ZipObservable<T> implements ObservableLike<T> {
   }
 }
 
-export function zip<TA, TB, T>(
-  observables: [ObservableLike<TA>, ObservableLike<TB>],
-  selector: Function2<TA, TB, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, T>(
-  observables: [ObservableLike<TA>, ObservableLike<TB>, ObservableLike<TC>],
-  selector: Function3<TA, TB, TC, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-  ],
-  selector: Function4<TA, TB, TC, TD, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-    ObservableLike<TE>,
-  ],
-  selector: Function5<TA, TB, TC, TD, TE, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-    ObservableLike<TE>,
-    ObservableLike<TF>,
-  ],
-  selector: Function6<TA, TB, TC, TD, TE, TF, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-    ObservableLike<TE>,
-    ObservableLike<TF>,
-    ObservableLike<TG>,
-  ],
-  selector: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-    ObservableLike<TE>,
-    ObservableLike<TF>,
-    ObservableLike<TG>,
-    ObservableLike<TH>,
-  ],
-  selector: Function8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
-): ObservableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
-  observables: [
-    ObservableLike<TA>,
-    ObservableLike<TB>,
-    ObservableLike<TC>,
-    ObservableLike<TD>,
-    ObservableLike<TE>,
-    ObservableLike<TF>,
-    ObservableLike<TG>,
-    ObservableLike<TH>,
-    ObservableLike<TI>,
-  ],
-  selector: Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>,
-): ObservableLike<T>;
+export function zip<TA, TB>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+): ObservableLike<[TA, TB]>;
+export function zip<TA, TB, TC>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+): ObservableLike<[TA, TB, TC]>;
+export function zip<TA, TB, TC, TD>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+): ObservableLike<[TA, TB, TC, TD]>;
+export function zip<TA, TB, TC, TD, TE>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+): ObservableLike<[TA, TB, TC, TD, TE]>;
+export function zip<TA, TB, TC, TD, TE, TF>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+  h: ObservableLike<TH>,
+): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+  h: ObservableLike<TH>,
+  i: ObservableLike<TI>,
+): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
  * in order, of each of its input sources.
  */
-export function zip<T>(
-  observables: ObservableLike<unknown>[],
-  selector: (...values: unknown[]) => T,
-): ObservableLike<T> {
-  return new ZipObservable(observables, selector);
+export function zip(
+  ...observables: ObservableLike<unknown>[]
+): ObservableLike<unknown[]> {
+  return new ZipObservable(observables);
 }
 
-export const zipWith = <TA, TB, T>(
+export const zipWith = <TA, TB>(
   snd: ObservableLike<TB>,
-  selector: Function2<TA, TB, T>,
-): ObservableFunction<TA, T> => fst => zip([fst, snd], selector);
+): ObservableFunction<TA, [TA, TB]> => fst => zip(fst, snd);

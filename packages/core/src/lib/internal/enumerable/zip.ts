@@ -1,14 +1,3 @@
-import {
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-  Function6,
-  Function7,
-  Function8,
-  Function9,
-} from "../../functions";
-import { none } from "../../option";
 import { current, enumerate, hasCurrent } from "./enumerator";
 import {
   EnumerableLike,
@@ -25,17 +14,13 @@ const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
 const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
   enumerators.every(hasCurrent);
 
-class ZipEnumerator<T> implements EnumeratorLike<T> {
-  current = (none as unknown) as T;
+class ZipEnumerator implements EnumeratorLike<unknown[]> {
+  current: unknown[] = [];
   hasCurrent = false;
 
-  constructor(
-    private readonly enumerators: readonly EnumeratorLike<any>[],
-    private readonly selector: (...values: unknown[]) => T,
-  ) {}
+  constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {}
 
   move(): boolean {
-    this.current = (none as unknown) as T;
     this.hasCurrent = false;
 
     const enumerators = this.enumerators;
@@ -43,122 +28,97 @@ class ZipEnumerator<T> implements EnumeratorLike<T> {
     const hasCurrent = allHaveCurrent(enumerators);
     this.hasCurrent = hasCurrent;
 
-    if (hasCurrent) {
-      this.current = this.selector(...enumerators.map(current));
-    }
+    this.current = hasCurrent ? enumerators.map(current) : [];
 
     return hasCurrent;
   }
 }
 
-export function zipEnumerators<T>(
+export function zipEnumerators(
   enumerators: EnumeratorLike<unknown>[],
-  selector: (...values: unknown[]) => T,
-): EnumeratorLike<T> {
-  return new ZipEnumerator(enumerators, selector);
+): EnumeratorLike<unknown[]> {
+  return new ZipEnumerator(enumerators);
 }
 
-class ZipEnumerable<T> implements EnumerableLike<T> {
-  constructor(
-    private readonly enumerables: EnumerableLike<unknown>[],
-    private readonly selector: (...values: unknown[]) => T,
-  ) {}
+class ZipEnumerable implements EnumerableLike<unknown[]> {
+  constructor(private readonly enumerables: EnumerableLike<unknown>[]) {}
 
   enumerate() {
-    return zipEnumerators(this.enumerables.map(enumerate), this.selector);
+    return zipEnumerators(this.enumerables.map(enumerate));
   }
 }
 
-export function zip<TA, TB, T>(
-  observables: [EnumerableLike<TA>, EnumerableLike<TB>],
-  selector: Function2<TA, TB, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, T>(
-  observables: [EnumerableLike<TA>, EnumerableLike<TB>, EnumerableLike<TC>],
-  selector: Function3<TA, TB, TC, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-  ],
-  selector: Function4<TA, TB, TC, TD, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, TE, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-  ],
-  selector: Function5<TA, TB, TC, TD, TE, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-  ],
-  selector: Function6<TA, TB, TC, TD, TE, TF, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
-  ],
-  selector: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
-    EnumerableLike<TH>,
-  ],
-  selector: Function8<TA, TB, TC, TD, TE, TF, TG, TH, T>,
-): EnumerableLike<T>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>(
-  observables: [
-    EnumerableLike<TA>,
-    EnumerableLike<TB>,
-    EnumerableLike<TC>,
-    EnumerableLike<TD>,
-    EnumerableLike<TE>,
-    EnumerableLike<TF>,
-    EnumerableLike<TG>,
-    EnumerableLike<TH>,
-    EnumerableLike<TI>,
-  ],
-  selector: Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T>,
-): EnumerableLike<T>;
+export function zip<TA, TB>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+): EnumerableLike<[TA, TB]>;
+export function zip<TA, TB, TC>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+): EnumerableLike<[TA, TB, TC]>;
+export function zip<TA, TB, TC, TD>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+): EnumerableLike<[TA, TB, TC, TD]>;
+export function zip<TA, TB, TC, TD, TE>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+  e: EnumerableLike<TE>,
+): EnumerableLike<[TA, TB, TC, TD, TE]>;
+export function zip<TA, TB, TC, TD, TE, TF>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+  e: EnumerableLike<TE>,
+  f: EnumerableLike<TF>,
+): EnumerableLike<[TA, TB, TC, TD, TE, TF]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+  e: EnumerableLike<TE>,
+  f: EnumerableLike<TF>,
+  g: EnumerableLike<TG>,
+): EnumerableLike<[TA, TB, TC, TD, TE, TF, TG]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+  e: EnumerableLike<TE>,
+  f: EnumerableLike<TF>,
+  g: EnumerableLike<TG>,
+  h: EnumerableLike<TH>,
+): EnumerableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: EnumerableLike<TA>,
+  b: EnumerableLike<TB>,
+  c: EnumerableLike<TC>,
+  d: EnumerableLike<TD>,
+  e: EnumerableLike<TE>,
+  f: EnumerableLike<TF>,
+  g: EnumerableLike<TG>,
+  h: EnumerableLike<TH>,
+  i: EnumerableLike<TI>,
+): EnumerableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
 /**
  * Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
  * in order, of each of its inputs.
  */
-export function zip<T>(
-  enumerables: EnumerableLike<unknown>[],
-  selector: (...values: unknown[]) => T,
-): EnumerableLike<T> {
-  return new ZipEnumerable(enumerables, selector);
+export function zip(
+  ...enumerables: EnumerableLike<unknown>[]
+): EnumerableLike<unknown[]> {
+  return new ZipEnumerable(enumerables);
 }
 
-export const zipWith = <TA, TB, T>(
+export const zipWith = <TA, TB>(
   snd: EnumerableLike<TB>,
-  selector: Function2<TA, TB, T>,
-): EnumerableFunction<TA, T> => fst => zip([fst, snd], selector);
+): EnumerableFunction<TA, [TA, TB]> => fst => zip(fst, snd);

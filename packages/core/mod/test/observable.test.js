@@ -16,7 +16,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     expectToThrow(() => pipe(1, fromValue(), concatWith(pipe(error, returns, throws())), catchError(_ => {
         throw error;
     }), toArray()));
-})), test("combineLatest", defer(generate(incrementBy(2), returns(3), { delay: 2 }), takeFirst(3), combineLatestWith(pipe(generate(incrementBy(2), returns(2), { delay: 3 }), takeFirst(2)), (a, b) => [a, b]), toArray(), expectArrayEquals([
+})), test("combineLatest", defer(generate(incrementBy(2), returns(3), { delay: 2 }), takeFirst(3), combineLatestWith(pipe(generate(incrementBy(2), returns(2), { delay: 3 }), takeFirst(2))), toArray(), expectArrayEquals([
     [3, 2],
     [5, 2],
     [5, 4],
@@ -122,7 +122,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], fromArray({ delay: 1 }), share(scheduler, 1));
     let result = [];
-    pipe(zip([shared, shared], sum), buffer(), onNotify(x => {
+    pipe(zip(shared, shared), map(([a, b]) => a + b), buffer(), onNotify(x => {
         result = x;
     }), subscribe(scheduler));
     scheduler.run();
@@ -141,24 +141,16 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
 ], arrayEquality()))), test("when latest produces no values", defer([0], fromArray({ delay: 1 }), withLatestFrom(empty(), sum), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = new Error();
     pipe(defer([0], fromArray({ delay: 1 }), withLatestFrom(throws()(returns(error)), sum), toArray(), expectArrayEquals([])), expectToThrowError(error));
-})), describe("zip", test("with non-delayed sources", defer(zip([
-    pipe([1, 2], fromArray()),
-    pipe([1, 2], fromArray(), map(increment)),
-    generate(increment, returns(3)),
-], (x, y, z) => [x, y, z]), toArray(), expectArrayEquals([
+})), describe("zip", test("with non-delayed sources", defer(zip(pipe([1, 2], fromArray()), pipe([1, 2], fromArray(), map(increment)), generate(increment, returns(3))), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
-], arrayEquality()))), test("with synchronous and non-synchronous sources", defer(zip([
-    pipe([1, 2], fromArray({ delay: 1 })),
-    pipe([2, 3], fromIterable()),
-    pipe([3, 4, 5], fromArray({ delay: 1 })),
-], (x, y, z) => [x, y, z]), toArray(), expectArrayEquals([
+], arrayEquality()))), test("with synchronous and non-synchronous sources", defer(zip(pipe([1, 2], fromArray({ delay: 1 })), pipe([2, 3], fromIterable()), pipe([3, 4, 5], fromArray({ delay: 1 }))), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
-], arrayEquality()))), test("fast with slow", defer([1, 2, 3], fromArray({ delay: 1 }), zipWith(pipe([1, 2, 3], fromArray({ delay: 5 })), (x, y) => [x, y]), toArray(), expectArrayEquals([
+], arrayEquality()))), test("fast with slow", defer([1, 2, 3], fromArray({ delay: 1 }), zipWith(pipe([1, 2, 3], fromArray({ delay: 5 }))), toArray(), expectArrayEquals([
     [1, 1],
     [2, 2],
     [3, 3],
 ], arrayEquality()))), test("when source throws", bind(expectToThrow, defer(() => {
     throw new Error();
-}, throws(), zipWith(fromArray()([1, 2, 3]), (_, b) => b), toArray())))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray({ delay: 2 })), (a, b) => a + b), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", bind(expectToThrow, defer(throws()(() => new Error()), zipWithLatestFrom(fromValue()(1), (_, b) => b), toValue()))), test("when other throws", bind(expectToThrow, defer([1, 2, 3], fromArray({ delay: 1 }), zipWithLatestFrom(throws()(() => new Error()), (_, b) => b), toValue()))), test("when other completes first", defer([1], fromArray({ delay: 1 }), zipWithLatestFrom(fromArray()([2]), (_, b) => b), toValue(), expectEquals(2)))));
+}, throws(), zipWith(fromArray()([1, 2, 3])), map(([, b]) => b), toArray())))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray({ delay: 2 }))), map(([a, b]) => a + b), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", bind(expectToThrow, defer(throws()(() => new Error()), zipWithLatestFrom(fromValue()(1), (_, b) => b), toValue()))), test("when other throws", bind(expectToThrow, defer([1, 2, 3], fromArray({ delay: 1 }), zipWithLatestFrom(throws()(() => new Error()), (_, b) => b), toValue()))), test("when other completes first", defer([1], fromArray({ delay: 1 }), zipWithLatestFrom(fromArray()([2]), (_, b) => b), toValue(), expectEquals(2)))));

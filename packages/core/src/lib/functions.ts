@@ -85,25 +85,25 @@ export function callWith<T>(
 export function bind<T>(factory: Factory<T>): Factory<T>;
 export function bind<TA, T>(op: Function<TA, T>, a: TA): Factory<T>;
 export function bind<TA, TB, T>(
-  selector: Function2<TA, TB, T>,
+  func: Function2<TA, TB, T>,
   a: TA,
   b: TB,
 ): Factory<T>;
 export function bind<TA, TB, TC, T>(
-  selector: Function3<TA, TB, TC, T>,
+  func: Function3<TA, TB, TC, T>,
   a: TA,
   b: TB,
   c: TC,
 ): Factory<T>;
 export function bind<TA, TB, TC, TD, T>(
-  selector: Function4<TA, TB, TC, TD, T>,
+  func: Function4<TA, TB, TC, TD, T>,
   a: TA,
   b: TB,
   c: TC,
   d: TD,
 ): Factory<T>;
 export function bind<TA, TB, TC, TD, TE, T>(
-  selector: Function5<TA, TB, TC, TD, TE, T>,
+  func: Function5<TA, TB, TC, TD, TE, T>,
   a: TA,
   b: TB,
   c: TC,
@@ -111,7 +111,7 @@ export function bind<TA, TB, TC, TD, TE, T>(
   e: TE,
 ): Factory<T>;
 export function bind<TA, TB, TC, TD, TE, TF, T>(
-  selector: Function6<TA, TB, TC, TD, TE, TF, T>,
+  func: Function6<TA, TB, TC, TD, TE, TF, T>,
   a: TA,
   b: TB,
   c: TC,
@@ -120,7 +120,7 @@ export function bind<TA, TB, TC, TD, TE, TF, T>(
   f: TF,
 ): Factory<T>;
 export function bind<TA, TB, TC, TD, TE, TF, TG, T>(
-  selector: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
+  func: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
   a: TA,
   b: TB,
   c: TC,
@@ -130,10 +130,10 @@ export function bind<TA, TB, TC, TD, TE, TF, TG, T>(
   g: TG,
 ): Factory<T>;
 export function bind<T>(
-  selector: (...args: any[]) => T,
+  func: (...args: any[]) => T,
   ...args: any[]
 ): Factory<T> {
-  return () => selector(...args);
+  return () => func(...args);
 }
 
 export const identity = <T>(v: T): T => v;

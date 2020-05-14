@@ -9,4 +9,4 @@ export const tests = describe("enumerable", test("concat", defer(concat(empty(),
     pipe(generate(increment, returns(0)), takeWhile(x => x < 4), toArray, expectArrayEquals([1, 2, 3]));
     pipe([1, 2, 3], fromArray, takeWhile(alwaysTrue), toArray, expectArrayEquals([1, 2, 3]));
     pipe(empty(), takeWhile(alwaysTrue), toArray, expectArrayEquals([]));
-}), test("inclusive", defer(generate(increment, returns(0)), takeWhile(x => x < 4, { inclusive: true }), toArray, expectArrayEquals([1, 2, 3, 4]))))), test("toIterable", defer([1, 2, 3], fromArray, toIterable, fromIterable, toArray, expectArrayEquals([1, 2, 3]))), test("zip", defer([1, 2, 3], fromArray, zipWith(fromArray([1, 2, 3, 4, 5]), sum), toArray, expectArrayEquals([2, 4, 6]))));
+}), test("inclusive", defer(generate(increment, returns(0)), takeWhile(x => x < 4, { inclusive: true }), toArray, expectArrayEquals([1, 2, 3, 4]))))), test("toIterable", defer([1, 2, 3], fromArray, toIterable, fromIterable, toArray, expectArrayEquals([1, 2, 3]))), test("zip", defer([1, 2, 3], fromArray, zipWith(fromArray([1, 2, 3, 4, 5])), map(([a, b]) => a + b), toArray, expectArrayEquals([2, 4, 6]))));
