@@ -1,11 +1,7 @@
 import { dispose, add, addDisposableOrTeardown } from "../../disposable";
 import { pipe, Function2 } from "../../functions";
 import { isSome, Option } from "../../option";
-import {
-  ObserverLike,
-  ObservableLike,
-  ObservableFunction,
-} from "./interfaces";
+import { ObserverLike, ObservableLike, ObservableFunction } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

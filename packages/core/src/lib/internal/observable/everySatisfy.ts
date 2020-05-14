@@ -9,10 +9,7 @@ import {
   assertObserverNotifyInContinuation,
 } from "./observer";
 
-class EverySatisfyObserver<T> extends AbstractDelegatingObserver<
-  T,
-  boolean
-> {
+class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
   constructor(
     delegate: ObserverLike<boolean>,
     private readonly predicate: Predicate<T>,

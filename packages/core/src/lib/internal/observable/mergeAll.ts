@@ -6,11 +6,7 @@ import {
 } from "../../disposable";
 import { compose, pipe, Function } from "../../functions";
 import { isSome } from "../../option";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
 import { onNotify } from "./onNotify";

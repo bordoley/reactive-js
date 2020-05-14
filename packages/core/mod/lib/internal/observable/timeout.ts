@@ -8,11 +8,7 @@ import {
 } from "../../disposable.ts";
 import { pipe, returns } from "../../functions.ts";
 import { concat } from "./concat.ts";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces.ts";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { subscribe } from "./subscribe.ts";
 import {

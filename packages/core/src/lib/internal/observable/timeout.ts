@@ -8,11 +8,7 @@ import {
 } from "../../disposable";
 import { pipe, returns } from "../../functions";
 import { concat } from "./concat";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { subscribe } from "./subscribe";
 import {

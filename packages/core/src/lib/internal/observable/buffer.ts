@@ -8,11 +8,7 @@ import {
 import { pipe, Function } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
-import {
-  ObservableLike,
-  ObservableFunction,
-  ObserverLike,
-} from "./interfaces";
+import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { never } from "./never";
 import { onNotify } from "./onNotify";
@@ -22,10 +18,7 @@ import {
   assertObserverNotifyInContinuation,
 } from "./observer";
 
-class BufferObserver<T> extends AbstractDelegatingObserver<
-  T,
-  readonly T[]
-> {
+class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private durationSubscription = disposed;
   private buffer: Array<T> = [];
   private readonly onNotify = () => {

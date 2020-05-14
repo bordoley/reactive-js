@@ -8,10 +8,7 @@ import {
   assertObserverNotifyInContinuation,
 } from "./observer";
 
-class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
-  T,
-  T
-> {
+class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
   private prev: Option<T>;
   private hasValue = false;
 

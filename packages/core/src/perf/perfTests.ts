@@ -64,7 +64,26 @@ export const filterMapFusion = (n: number) =>
       },
       callWith(),
     ),
+    benchmarkTest(
+      "runnable",
+      async src => {
+        const { fromArray, keep, map, reduce } = await import(
+          "../lib/runnable"
+        );
 
+        return defer(
+          src,
+          fromArray(),
+          map(increment),
+          keep(isOdd),
+          map(increment),
+          map(increment),
+          keep(isEven),
+          reduce(sum, returns(0)),
+        );
+      },
+      callWith(),
+    ),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -124,6 +143,23 @@ export const filterMapReduce = (n: number) =>
       callWith(),
     ),
     benchmarkTest(
+      "runnable",
+      async src => {
+        const { fromArray, keep, map, reduce } = await import(
+          "../lib/runnable"
+        );
+
+        return defer(
+          src,
+          fromArray(),
+          keep(isEven),
+          map(increment),
+          reduce(sum, returns(0)),
+        );
+      },
+      callWith(),
+    ),
+    benchmarkTest(
       "rx-js",
       async src => {
         const { from } = await import("rxjs");
@@ -166,6 +202,20 @@ export const scanReduce = (n: number) =>
           scan(sum, returns(0)),
           reduce(passthrough, returns(0)),
           toValue(),
+        );
+      },
+      callWith(),
+    ),
+    benchmarkTest(
+      "runnable",
+      async src => {
+        const { fromArray, reduce, scan } = await import("../lib/runnable");
+
+        return defer(
+          src,
+          fromArray(),
+          scan(sum, returns(0)),
+          reduce<number, number>(passthrough, returns(0)),
         );
       },
       callWith(),
