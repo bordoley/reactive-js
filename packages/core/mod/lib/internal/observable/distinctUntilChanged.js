@@ -2,6 +2,7 @@ import { add } from "../../disposable.js";
 import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { notifyDistinctUntilChanged } from "../notifyMixins.js";
 class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
     constructor(delegate, equality) {
         super(delegate);
@@ -11,13 +12,7 @@ class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverNotifyInContinuation(this);
-        const shouldEmit = !this.isDisposed &&
-            (!this.hasValue || !this.equality(this.prev, next));
-        if (shouldEmit) {
-            this.prev = next;
-            this.hasValue = true;
-            this.delegate.notify(next);
-        }
+        notifyDistinctUntilChanged(this, next);
     }
 }
 export const distinctUntilChanged = (equality = strictEquality) => {

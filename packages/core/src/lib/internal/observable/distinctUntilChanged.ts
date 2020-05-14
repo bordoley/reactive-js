@@ -7,14 +7,15 @@ import {
   AbstractDelegatingObserver,
   assertObserverNotifyInContinuation,
 } from "./observer";
+import { notifyDistinctUntilChanged } from "../notifyMixins";
 
 class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
-  private prev: Option<T>;
-  private hasValue = false;
+  prev: Option<T>;
+  hasValue = false;
 
   constructor(
     delegate: ObserverLike<T>,
-    private readonly equality: Equality<T>,
+    readonly equality: Equality<T>,
   ) {
     super(delegate);
     add(this, delegate);
@@ -22,16 +23,7 @@ class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverNotifyInContinuation(this);
-
-    const shouldEmit =
-      !this.isDisposed &&
-      (!this.hasValue || !this.equality(this.prev as T, next));
-
-    if (shouldEmit) {
-      this.prev = next;
-      this.hasValue = true;
-      this.delegate.notify(next);
-    }
+    notifyDistinctUntilChanged(this, next);
   }
 }
 
