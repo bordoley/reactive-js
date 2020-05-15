@@ -1,10 +1,12 @@
 import { dispose, add } from "../../disposable";
-import { Factory, Reducer } from "../../functions";
+import { Factory, Function, Reducer, compose } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableFunction, ObserverLike, ObservableLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { VirtualTimeSchedulerLike, createVirtualTimeScheduler } from "../../scheduler";
+import { toValue } from "./toValue";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
@@ -29,6 +31,16 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   }
 }
 
+export const reduceOp = <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+): ObservableFunction<T, TAcc> => {
+  const operator = (observer: ObserverLike<TAcc>) =>
+    new ReduceObserver(observer, reducer, initialValue());
+  operator.isSynchronous = true;
+  return lift(operator);
+};
+
 /**
  * Returns an `ObservableLike` that applies an accumulator function
  * over the source, returning the accumulated result when the subscription is disposed.
@@ -39,9 +51,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): ObservableFunction<T, TAcc> => {
-  const operator = (observer: ObserverLike<TAcc>) =>
-    new ReduceObserver(observer, reducer, initialValue());
-  operator.isSynchronous = true;
-  return lift(operator);
-};
+  schedulerFactory: Factory<
+    VirtualTimeSchedulerLike
+  > = createVirtualTimeScheduler,
+): Function<ObservableLike<T>, TAcc> => compose(reduceOp(reducer, initialValue), toValue(schedulerFactory));

@@ -46,7 +46,7 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, keep, map, reduce, toValue } = await import(
+        const { fromArray, keep, map, reduce } = await import(
           "../lib/observable"
         );
 
@@ -59,7 +59,6 @@ export const filterMapFusion = (n: number) =>
           map(increment),
           keep(isEven),
           reduce(sum, returns(0)),
-          toValue(),
         );
       },
       callWith(),
@@ -127,7 +126,7 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, keep, map, reduce, toValue } = await import(
+        const { fromArray, keep, map, reduce } = await import(
           "../lib/observable"
         );
 
@@ -137,7 +136,6 @@ export const filterMapReduce = (n: number) =>
           keep(isEven),
           map(increment),
           reduce(sum, returns(0)),
-          toValue(),
         );
       },
       callWith(),
@@ -192,7 +190,7 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, reduce, scan, toValue } = await import(
+        const { fromArray, reduce, scan } = await import(
           "../lib/observable"
         );
 
@@ -201,7 +199,6 @@ export const scanReduce = (n: number) =>
           fromArray(),
           scan(sum, returns(0)),
           reduce(passthrough, returns(0)),
-          toValue(),
         );
       },
       callWith(),

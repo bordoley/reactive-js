@@ -594,7 +594,6 @@ export const tests = describe(
       [1, 1, 1],
       fromArray(),
       reduce(sum, returns(0)),
-      toValue(),
       expectEquals(3),
     ),
   ),

@@ -1,8 +1,11 @@
 import { dispose, add } from "../../disposable.js";
+import { compose } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { createVirtualTimeScheduler } from "../../scheduler.js";
+import { toValue } from "./toValue.js";
 class ReduceObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);
@@ -22,8 +25,9 @@ class ReduceObserver extends AbstractDelegatingObserver {
         this.acc = this.reducer(this.acc, next);
     }
 }
-export const reduce = (reducer, initialValue) => {
+export const reduceOp = (reducer, initialValue) => {
     const operator = (observer) => new ReduceObserver(observer, reducer, initialValue());
     operator.isSynchronous = true;
     return lift(operator);
 };
+export const reduce = (reducer, initialValue, schedulerFactory = createVirtualTimeScheduler) => compose(reduceOp(reducer, initialValue), toValue(schedulerFactory));
