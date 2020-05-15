@@ -4,7 +4,6 @@ export {
   ObservableLike,
   ObservableFunction,
   StreamLike,
-  ObservablePredicate,
   SubjectLike,
   ObserverLike,
   ObserverFunction,
@@ -41,8 +40,6 @@ export { buffer } from "./internal/observable/buffer.ts";
 export { catchError } from "./internal/observable/catchError.ts";
 export { distinctUntilChanged } from "./internal/observable/distinctUntilChanged.ts";
 export { endWith } from "./internal/observable/endWith.ts";
-export { everySatisfy, noneSatisfy } from "./internal/observable/everySatisfy.ts";
-export { forEach } from "./internal/observable/forEach.ts";
 export { genMap } from "./internal/observable/genMap.ts";
 export { ignoreElements } from "./internal/observable/ignoreElements.ts";
 export { keep, keepType } from "./internal/observable/keep.ts";
@@ -59,12 +56,10 @@ export {
 export { onNotify } from "./internal/observable/onNotify.ts";
 export { onSubscribe } from "./internal/observable/onSubscribe.ts";
 export { publish } from "./internal/observable/publish.ts";
-export { reduce } from "./internal/observable/reduce.ts";
 export { repeat, retry } from "./internal/observable/repeat.ts";
 export { scan } from "./internal/observable/scan.ts";
 export { AsyncReducer, scanAsync } from "./internal/observable/scanAsync.ts";
 export { share } from "./internal/observable/share.ts";
-export { contains, someSatisfy } from "./internal/observable/someSatisfy.ts";
 export { skipFirst } from "./internal/observable/skipFirst.ts";
 export { startWith } from "./internal/observable/startWith.ts";
 export { subscribeOn } from "./internal/observable/subscribeOn.ts";
@@ -80,8 +75,7 @@ export { zip, zipWith } from "./internal/observable/zip.ts";
 export { zipLatest, zipLatestWith } from "./internal/observable/zipLatest.ts";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.ts";
 
-export { toArray } from "./internal/observable/toArray.ts";
+export { toRunnable } from "./internal/observable/toRunnable.ts";
 export { toPromise } from "./internal/observable/toPromise.ts";
-export { toValue } from "./internal/observable/toValue.ts";
 
 export { dispatch, dispatchTo } from "./internal/observable/dispatcher.ts";

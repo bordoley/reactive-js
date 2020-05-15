@@ -20,16 +20,12 @@
 * [concat](_enumerable_.md#concat)
 * [concatMap](_enumerable_.md#const-concatmap)
 * [concatWith](_enumerable_.md#const-concatwith)
-* [contains](_enumerable_.md#const-contains)
 * [current](_enumerable_.md#const-current)
 * [distinctUntilChanged](_enumerable_.md#const-distinctuntilchanged)
 * [empty](_enumerable_.md#const-empty)
 * [endWith](_enumerable_.md#endwith)
 * [enumerate](_enumerable_.md#const-enumerate)
-* [everySatisfy](_enumerable_.md#const-everysatisfy)
-* [first](_enumerable_.md#const-first)
 * [flatten](_enumerable_.md#const-flatten)
-* [forEach](_enumerable_.md#const-foreach)
 * [fromArray](_enumerable_.md#const-fromarray)
 * [fromIterable](_enumerable_.md#const-fromiterable)
 * [fromIterator](_enumerable_.md#const-fromiterator)
@@ -40,19 +36,17 @@
 * [keepType](_enumerable_.md#const-keeptype)
 * [lift](_enumerable_.md#const-lift)
 * [map](_enumerable_.md#const-map)
+* [mapTo](_enumerable_.md#const-mapto)
 * [move](_enumerable_.md#const-move)
-* [noneSatisfy](_enumerable_.md#const-nonesatisfy)
-* [reduce](_enumerable_.md#const-reduce)
 * [repeat](_enumerable_.md#repeat)
 * [scan](_enumerable_.md#const-scan)
 * [skipFirst](_enumerable_.md#const-skipfirst)
-* [someSatisfy](_enumerable_.md#const-somesatisfy)
 * [startWith](_enumerable_.md#startwith)
 * [takeFirst](_enumerable_.md#const-takefirst)
 * [takeLast](_enumerable_.md#const-takelast)
 * [takeWhile](_enumerable_.md#const-takewhile)
-* [toArray](_enumerable_.md#const-toarray)
 * [toIterable](_enumerable_.md#const-toiterable)
+* [toRunnable](_enumerable_.md#const-torunnable)
 * [zip](_enumerable_.md#zip)
 * [zipWith](_enumerable_.md#const-zipwith)
 
@@ -150,27 +144,6 @@ Name | Type |
 
 ___
 
-### `Const` contains
-
-▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-Returns `true` value if source yields any item equal to `value`, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`value` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
-
-**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-___
-
 ### `Const` current
 
 ▸ **current**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *T*
@@ -264,47 +237,6 @@ Name | Type |
 
 ___
 
-### `Const` everySatisfy
-
-▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-Returns `true` if the predicate is satisfied for
-every value produced by the source, or if the source is empty, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-___
-
-### `Const` first
-
-▸ **first**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[Option](_option_.md#option)‹T›*
-
-Returns the first item in the EnumerableLike collection or none.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |   |
-
-**Returns:** *[Option](_option_.md#option)‹T›*
-
-___
-
 ### `Const` flatten
 
 ▸ **flatten**<**T**>(): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
@@ -316,26 +248,6 @@ Converts a higher-order EnumerableLike into a first-order EnumerableLike.
 ▪ **T**
 
 **Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
-
-___
-
-### `Const` forEach
-
-▸ **forEach**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
-
-Applies the side-effect function `f` to each item in the EnumerableLike collection.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`f` | [SideEffect1](_functions_.md#sideeffect1)‹T› |   |
-
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, void›*
 
 ___
 
@@ -550,6 +462,26 @@ Name | Type | Description |
 
 ___
 
+### `Const` mapTo
+
+▸ **mapTo**<**TA**, **TB**>(`v`: TB): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`v` | TB |
+
+**Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
+
+___
+
 ### `Const` move
 
 ▸ **move**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
@@ -565,50 +497,6 @@ Name | Type |
 `enumerator` | [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T› |
 
 **Returns:** *boolean*
-
-___
-
-### `Const` noneSatisfy
-
-▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-Returns `true` if the predicate does not satisfy
-every value produced by the source, or if the source is empty, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-___
-
-### `Const` reduce
-
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
-
-Applies an accumulator function over the source, returning the accumulated result.
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **TAcc**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› | The accumulator function called on each source value. |
-`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
-
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, TAcc›*
 
 ___
 
@@ -703,26 +591,6 @@ Name | Type | Default | Description |
 
 ___
 
-### `Const` someSatisfy
-
-▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-Returns `true` value if the any item satisfies the predicate, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[Predicate](_functions_.md#predicate)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
-
-___
-
 ###  startWith
 
 ▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹T, T›*
@@ -811,28 +679,6 @@ Name | Type |
 
 ___
 
-### `Const` toArray
-
-▸ **toArray**<**T**>(): *function*
-
-Accumulates all values emitted by `enumerable` into an array.
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-
-___
-
 ### `Const` toIterable
 
 ▸ **toIterable**<**T**>(`source`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *Iterable‹T›*
@@ -850,6 +696,18 @@ Name | Type |
 `source` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
 
 **Returns:** *Iterable‹T›*
+
+___
+
+### `Const` toRunnable
+
+▸ **toRunnable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 

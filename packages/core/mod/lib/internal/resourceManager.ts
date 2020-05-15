@@ -6,7 +6,8 @@ import {
   add,
   addDisposableOrTeardown,
 } from "../disposable.ts";
-import { first, forEach, fromIterable } from "../enumerable.ts";
+import { fromIterable, toRunnable } from "../enumerable.ts";
+import { first, forEach } from "../runnable.ts";
 import { pipe, Function } from "../functions.ts";
 import { createKeyedQueue } from "./keyedQueue.ts";
 import { createSetMultimap } from "./multimaps.ts";
@@ -84,6 +85,7 @@ const tryDispatch = <TResource extends DisposableLike>(
     const [resource, disposable] = pipe(
       availableResourcesTimeouts,
       fromIterable,
+      toRunnable(),
       first,
     ) as [TResource, DisposableLike];
     availableResourcesTimeouts.delete(resource);

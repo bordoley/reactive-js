@@ -14,11 +14,7 @@ export const fromArray = <T>(
 
   const run = (sink: SinkLike<T>) => {
     const valuesLength = values.length;
-    for (
-      let index = startIndex;
-      index < valuesLength;
-      index++
-    ) {
+    for (let index = startIndex; index < valuesLength; index++) {
       sink.notify(values[index]);
     }
     sink.done();

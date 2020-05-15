@@ -4,7 +4,6 @@ export {
   ObservableLike,
   ObservableFunction,
   StreamLike,
-  ObservablePredicate,
   SubjectLike,
   ObserverLike,
   ObserverFunction,
@@ -41,8 +40,6 @@ export { buffer } from "./internal/observable/buffer";
 export { catchError } from "./internal/observable/catchError";
 export { distinctUntilChanged } from "./internal/observable/distinctUntilChanged";
 export { endWith } from "./internal/observable/endWith";
-export { everySatisfy, noneSatisfy } from "./internal/observable/everySatisfy";
-export { forEach } from "./internal/observable/forEach";
 export { genMap } from "./internal/observable/genMap";
 export { ignoreElements } from "./internal/observable/ignoreElements";
 export { keep, keepType } from "./internal/observable/keep";
@@ -59,12 +56,10 @@ export {
 export { onNotify } from "./internal/observable/onNotify";
 export { onSubscribe } from "./internal/observable/onSubscribe";
 export { publish } from "./internal/observable/publish";
-export { reduce } from "./internal/observable/reduce";
 export { repeat, retry } from "./internal/observable/repeat";
 export { scan } from "./internal/observable/scan";
 export { AsyncReducer, scanAsync } from "./internal/observable/scanAsync";
 export { share } from "./internal/observable/share";
-export { contains, someSatisfy } from "./internal/observable/someSatisfy";
 export { skipFirst } from "./internal/observable/skipFirst";
 export { startWith } from "./internal/observable/startWith";
 export { subscribeOn } from "./internal/observable/subscribeOn";
@@ -80,8 +75,7 @@ export { zip, zipWith } from "./internal/observable/zip";
 export { zipLatest, zipLatestWith } from "./internal/observable/zipLatest";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom";
 
-export { toArray } from "./internal/observable/toArray";
+export { toRunnable } from "./internal/observable/toRunnable";
 export { toPromise } from "./internal/observable/toPromise";
-export { toValue } from "./internal/observable/toValue";
 
 export { dispatch, dispatchTo } from "./internal/observable/dispatcher";

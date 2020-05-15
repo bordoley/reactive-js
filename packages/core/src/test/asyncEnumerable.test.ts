@@ -13,9 +13,10 @@ import {
   fromValue,
   subscribe,
   onNotify,
-  toValue,
+  toRunnable,
   dispatch,
 } from "../lib/observable";
+import { last } from "../lib/runnable";
 import { none, Option } from "../lib/option";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 import {
@@ -35,7 +36,8 @@ export const tests = describe(
     pipe(
       enumerable,
       consume((acc, next) => continue_(acc + next), returns<number>(0)),
-      toValue(),
+      toRunnable(),
+      last,
       expectEquals(21),
     );
 
@@ -45,7 +47,8 @@ export const tests = describe(
         (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
         returns<number>(0),
       ),
-      toValue(),
+      toRunnable(),
+      last,
       expectEquals(3),
     );
   }),
@@ -62,7 +65,8 @@ export const tests = describe(
             fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)),
           returns<number>(0),
         ),
-        toValue(),
+        toRunnable(),
+        last,
         expectEquals(3),
       ),
     ),
@@ -75,7 +79,8 @@ export const tests = describe(
           (acc, next) => pipe(acc + next, continue_, fromValue()),
           returns<number>(0),
         ),
-        toValue(),
+        toRunnable(),
+        last,
         expectEquals(21),
       ),
     ),

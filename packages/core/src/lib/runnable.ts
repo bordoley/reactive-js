@@ -14,11 +14,6 @@ export { everySatisfy, noneSatisfy } from "./internal/runnable/everySatisfy";
 export { first } from "./internal/runnable/first";
 export { forEach } from "./internal/runnable/forEach";
 export { fromArray } from "./internal/runnable/fromArray";
-export {
-  fromEnumerable,
-  fromEnumerator,
-} from "./internal/runnable/fromEnumerable";
-export { fromIterable, fromIterator } from "./internal/runnable/fromIterable";
 export { fromValue } from "./internal/runnable/fromValue";
 export { generate } from "./internal/runnable/generate";
 export {
@@ -30,7 +25,8 @@ export {
 } from "./internal/runnable/interfaces";
 export { lift } from "./internal/runnable/lift";
 export { keep, keepType } from "./internal/runnable/keep";
-export { map } from "./internal/runnable/map";
+export { last } from "./internal/runnable/last";
+export { map, mapTo } from "./internal/runnable/map";
 export { reduce } from "./internal/runnable/reduce";
 export { repeat } from "./internal/runnable/repeat";
 export { scan } from "./internal/runnable/scan";
@@ -41,3 +37,9 @@ export { takeFirst } from "./internal/runnable/takeFirst";
 export { takeLast } from "./internal/runnable/takeLast";
 export { takeWhile } from "./internal/runnable/takeWhile";
 export { toArray } from "./internal/runnable/toArray";
+
+import { RunnableLike } from "./internal/runnable/interfaces";
+import { Function, identity } from "./functions";
+
+export const toRunnable = <T>(): Function<RunnableLike<T>, RunnableLike<T>> =>
+  identity;

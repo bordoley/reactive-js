@@ -1,12 +1,13 @@
 import {
   fromIterable,
-  first,
+  toRunnable,
   EnumeratorLike,
   enumerate,
 } from "../../enumerable.ts";
 import { pipe } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { QueueLike } from "./interfaces.ts";
+import { first } from "../../runnable.ts";
 
 class UniqueQueueImpl<T> implements QueueLike<T> {
   readonly values: Set<T> = new Set();
@@ -24,7 +25,7 @@ class UniqueQueueImpl<T> implements QueueLike<T> {
   }
 
   peek() {
-    return pipe(this.values, fromIterable, first);
+    return pipe(this.values, fromIterable, toRunnable(), first);
   }
 
   pop() {

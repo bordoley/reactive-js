@@ -25,7 +25,6 @@
 
 * [AsyncReducer](_observable_.md#asyncreducer)
 * [ObservableFunction](_observable_.md#observablefunction)
-* [ObservablePredicate](_observable_.md#observablepredicate)
 * [ObserverFunction](_observable_.md#observerfunction)
 
 ### Variables
@@ -45,7 +44,6 @@
 * [concatAll](_observable_.md#const-concatall)
 * [concatMap](_observable_.md#const-concatmap)
 * [concatWith](_observable_.md#const-concatwith)
-* [contains](_observable_.md#const-contains)
 * [createObservable](_observable_.md#const-createobservable)
 * [createSubject](_observable_.md#const-createsubject)
 * [dispatch](_observable_.md#const-dispatch)
@@ -53,10 +51,8 @@
 * [distinctUntilChanged](_observable_.md#const-distinctuntilchanged)
 * [empty](_observable_.md#const-empty)
 * [endWith](_observable_.md#endwith)
-* [everySatisfy](_observable_.md#const-everysatisfy)
 * [exhaust](_observable_.md#const-exhaust)
 * [exhaustMap](_observable_.md#const-exhaustmap)
-* [forEach](_observable_.md#const-foreach)
 * [fromArray](_observable_.md#const-fromarray)
 * [fromEnumerable](_observable_.md#const-fromenumerable)
 * [fromIterable](_observable_.md#const-fromiterable)
@@ -76,18 +72,15 @@
 * [mergeMap](_observable_.md#const-mergemap)
 * [mergeWith](_observable_.md#const-mergewith)
 * [never](_observable_.md#const-never)
-* [noneSatisfy](_observable_.md#const-nonesatisfy)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
-* [reduce](_observable_.md#const-reduce)
 * [repeat](_observable_.md#repeat)
 * [retry](_observable_.md#retry)
 * [scan](_observable_.md#const-scan)
 * [scanAsync](_observable_.md#const-scanasync)
 * [share](_observable_.md#const-share)
 * [skipFirst](_observable_.md#const-skipfirst)
-* [someSatisfy](_observable_.md#const-somesatisfy)
 * [startWith](_observable_.md#startwith)
 * [subscribe](_observable_.md#const-subscribe)
 * [subscribeOn](_observable_.md#const-subscribeon)
@@ -100,9 +93,8 @@
 * [throwIfEmpty](_observable_.md#const-throwifempty)
 * [throws](_observable_.md#const-throws)
 * [timeout](_observable_.md#timeout)
-* [toArray](_observable_.md#const-toarray)
 * [toPromise](_observable_.md#const-topromise)
-* [toValue](_observable_.md#const-tovalue)
+* [toRunnable](_observable_.md#const-torunnable)
 * [using](_observable_.md#using)
 * [withLatestFrom](_observable_.md#const-withlatestfrom)
 * [zip](_observable_.md#zip)
@@ -145,24 +137,6 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>.
 Name | Type |
 ------ | ------ |
 `observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
-
-___
-
-###  ObservablePredicate
-
-Ƭ **ObservablePredicate**: *function*
-
-A function which converts an ObservableLike<A> to an ObservableLike<B>.
-
-#### Type declaration:
-
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹boolean›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 
 ___
 
@@ -661,28 +635,6 @@ Name | Type |
 
 ___
 
-### `Const` contains
-
-▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-Returns an `ObservableLike` that emits a single `true` value if the source
-emits any item equal to `value`, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`value` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
-
-**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-___
-
 ### `Const` createObservable
 
 ▸ **createObservable**<**T**>(`onSubscribe`: [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
@@ -827,27 +779,6 @@ Name | Type |
 
 ___
 
-### `Const` everySatisfy
-
-▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-Returns an `ObservableLike` that emits a single `true` value if the predicate is satisfied for
-every value produced by the source, or if the source is empty, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-___
-
 ### `Const` exhaust
 
 ▸ **exhaust**<**T**>(): *function*
@@ -897,28 +828,6 @@ Name | Type |
 Name | Type |
 ------ | ------ |
 `a` | TA |
-
-___
-
-### `Const` forEach
-
-▸ **forEach**<**T**>(`callback`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
-
-Synchronously subscribes to the source using a `VirtualTimeSchedulerLike` scheduler,
-invoking the onNotify callback for each item emitted by the source.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`callback` | [SideEffect1](_functions_.md#sideeffect1)‹T› | - |
-`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
-
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, void›*
 
 ___
 
@@ -1370,27 +1279,6 @@ Returna an `ObservableLike` instance that emits no items and never disposes its 
 
 ___
 
-### `Const` noneSatisfy
-
-▸ **noneSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-Returns an `ObservableLike` that emits a single `true` value if the predicate does not satisfy
-every value produced by the source, or if the source is empty, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-___
-
 ###  onNotify
 
 ▸ **onNotify**<**T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
@@ -1449,31 +1337,6 @@ Name | Type | Default | Description |
 `replayCount` | number | 0 | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to.  |
 
 **Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
-
-___
-
-### `Const` reduce
-
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, TAcc›*
-
-Returns an `ObservableLike` that applies an accumulator function
-over the source, returning the accumulated result when the subscription is disposed.
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **TAcc**
-
-**Parameters:**
-
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› | - | The accumulator function called on each source value. |
-`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | - | The initial accumulation value.  |
-`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler | - |
-
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, TAcc›*
 
 ___
 
@@ -1651,27 +1514,6 @@ Name | Type | Default | Description |
 `count` | number | 1 | The number of items emitted by source that should be skipped.  |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
-
-___
-
-### `Const` someSatisfy
-
-▸ **someSatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
-
-Returns an `ObservableLike` that emits a single `true` value if the source
-emits any items which satisfy the predicate, otherwise `false`.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
-
-**Returns:** *[ObservablePredicate](_observable_.md#observablepredicate)‹T›*
 
 ___
 
@@ -1974,35 +1816,6 @@ Name | Type | Description |
 
 ___
 
-### `Const` toArray
-
-▸ **toArray**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *function*
-
-Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, accumulating all
-values emitted by `source` into an array.
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
-
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
-
-___
-
 ### `Const` toPromise
 
 ▸ **toPromise**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
@@ -2024,12 +1837,13 @@ Name | Type | Description |
 
 ___
 
-### `Const` toValue
+### `Const` toRunnable
 
-▸ **toValue**(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *(Anonymous function)*
+▸ **toRunnable**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
-Synchronously subscribes to `source` using a `VirtualTimeSchedulerLike`, returning
-the last value produced.
+**Type parameters:**
+
+▪ **T**
 
 **Parameters:**
 
@@ -2037,7 +1851,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 

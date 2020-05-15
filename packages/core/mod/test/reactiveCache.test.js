@@ -1,6 +1,7 @@
 import { disposed, dispose } from "../lib/disposable.js";
 import { pipe, returns, bind } from "../lib/functions.js";
-import { fromArray, subscribe, fromValue, forEach, onNotify, never, } from "../lib/observable.js";
+import { fromArray, subscribe, fromValue, toRunnable, onNotify, never, } from "../lib/observable.js";
+import { forEach } from "../lib/runnable.js";
 import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "../lib/internal/testing.js";
@@ -52,7 +53,7 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
             pipe(cache.get("d"), expectNone);
             pipe(cache.get("e"), expectNone);
         },
-    ], fromArray({ delay: 1 }), forEach(x => x(), returns(scheduler)));
+    ], fromArray({ delay: 1 }), toRunnable(returns(scheduler)), forEach(x => x()));
 }), test("subscribing to disposed value", () => {
     const scheduler = createVirtualTimeScheduler();
     const cache = createReactiveCache(scheduler, scheduler, 1);
@@ -71,7 +72,7 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
         () => {
             pipe(value, expectEquals(""));
         },
-    ], fromArray(), forEach(x => x(), returns(scheduler)));
+    ], fromArray(), toRunnable(returns(scheduler)), forEach(x => x()));
 }), test("getOrSet", () => {
     const scheduler = createVirtualTimeScheduler();
     const cache = createReactiveCache(scheduler, scheduler, 2);
@@ -87,5 +88,5 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
         () => {
             pipe(value, expectEquals("a"));
         },
-    ], fromArray({ delay: 1 }), forEach(x => x(), returns(scheduler)));
+    ], fromArray({ delay: 1 }), toRunnable(returns(scheduler)), forEach(x => x()));
 }));

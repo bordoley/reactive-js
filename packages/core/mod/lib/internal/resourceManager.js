@@ -1,5 +1,6 @@
 import { AbstractDisposable, disposed, dispose, add, addDisposableOrTeardown, } from "../disposable.js";
-import { first, forEach, fromIterable } from "../enumerable.js";
+import { fromIterable, toRunnable } from "../enumerable.js";
+import { first, forEach } from "../runnable.js";
 import { pipe } from "../functions.js";
 import { createKeyedQueue } from "./keyedQueue.js";
 import { createSetMultimap } from "./multimaps.js";
@@ -33,7 +34,7 @@ const tryDispatch = (resourceManager, key) => {
     if (isNone(peekedResource) &&
         inUseCount < maxResourcesPerKey &&
         resourceManager.count >= maxTotalResources) {
-        const [resource, disposable] = pipe(availableResourcesTimeouts, fromIterable, first);
+        const [resource, disposable] = pipe(availableResourcesTimeouts, fromIterable, toRunnable(), first);
         availableResourcesTimeouts.delete(resource);
         dispose(disposable);
     }

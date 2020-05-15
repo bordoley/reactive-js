@@ -1,3 +1,4 @@
+import { returns } from "../../functions.js";
 import { none } from "../../option.js";
 import { lift } from "./lift.js";
 class MapEnumerator {
@@ -21,3 +22,4 @@ export const map = (mapper) => {
     const operator = (enumerator) => new MapEnumerator(enumerator, mapper);
     return lift(operator);
 };
+export const mapTo = (v) => map(returns(v));
