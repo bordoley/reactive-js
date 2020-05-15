@@ -1,3 +1,4 @@
+import { assertSinkState } from "./sink.js";
 class ReducerSink {
     constructor(acc, reducer) {
         this.acc = acc;
@@ -5,6 +6,7 @@ class ReducerSink {
         this.isDone = false;
     }
     notify(next) {
+        assertSinkState(this);
         this.acc = this.reducer(this.acc, next);
     }
     done() {

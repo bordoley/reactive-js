@@ -1,4 +1,4 @@
-import { AbstractDelegatingSink } from "./sink.js";
+import { AbstractDelegatingSink, assertSinkState } from "./sink.js";
 import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 import { notifyDistinctUntilChanged } from "../notifyMixins.js";
@@ -9,6 +9,7 @@ class DistinctUntilChangedSink extends AbstractDelegatingSink {
         this.hasValue = false;
     }
     notify(next) {
+        assertSinkState(this);
         notifyDistinctUntilChanged(this, next);
     }
 }

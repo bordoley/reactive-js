@@ -1,5 +1,6 @@
 import { Function, Reducer, Factory } from "../../functions";
 import { RunnableLike, SinkLike } from "./interfaces";
+import { assertSinkState } from "./sink";
 
 class ReducerSink<T, TAcc> implements SinkLike<T> {
   isDone = false;
@@ -7,8 +8,10 @@ class ReducerSink<T, TAcc> implements SinkLike<T> {
   constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {}
 
   notify(next: T): void {
+    assertSinkState(this);
     this.acc = this.reducer(this.acc, next);
   }
+  
   done(): void {
     this.isDone = true;
   }

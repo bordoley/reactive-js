@@ -1,4 +1,4 @@
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractDelegatingSink, assertSinkState } from "./sink";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { Equality, strictEquality } from "../../functions";
 import { lift } from "./lift";
@@ -14,6 +14,7 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
+    assertSinkState(this);
     notifyDistinctUntilChanged(this, next);
   }
 }

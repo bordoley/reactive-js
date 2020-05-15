@@ -1,4 +1,4 @@
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractDelegatingSink, assertSinkState } from "./sink";
 import { SinkLike, RunnableFunction } from "./interfaces";
 import { TypePredicate, Predicate } from "../../functions";
 import { lift } from "./lift";
@@ -13,6 +13,7 @@ class KeepTypeSink<TA, TB extends TA> extends AbstractDelegatingSink<TA, TB> {
   }
 
   notify(next: TA) {
+    assertSinkState(this);
     notifyKeepType(this, next);
   }
 }

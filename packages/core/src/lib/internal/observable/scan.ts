@@ -6,12 +6,13 @@ import {
   AbstractDelegatingObserver,
   assertObserverNotifyInContinuation,
 } from "./observer";
+import { notifyScan } from "../notifyMixins";
 
 class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
     delegate: ObserverLike<TAcc>,
-    private readonly scanner: Reducer<T, TAcc>,
-    private acc: TAcc,
+    readonly scanner: Reducer<T, TAcc>,
+    public acc: TAcc,
   ) {
     super(delegate);
     add(this, delegate);
@@ -19,11 +20,7 @@ class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
 
   notify(next: T) {
     assertObserverNotifyInContinuation(this);
-
-    const nextAcc = this.scanner(this.acc, next);
-    this.acc = nextAcc;
-
-    this.delegate.notify(nextAcc);
+    notifyScan(this, next);
   }
 }
 

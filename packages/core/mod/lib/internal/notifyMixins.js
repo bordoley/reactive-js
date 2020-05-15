@@ -15,3 +15,8 @@ export const notifyMap = (self, next) => {
     const mapped = self.mapper(next);
     self.delegate.notify(mapped);
 };
+export const notifyScan = (self, next) => {
+    const nextAcc = self.scanner(self.acc, next);
+    self.acc = nextAcc;
+    self.delegate.notify(nextAcc);
+};

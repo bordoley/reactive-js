@@ -1,4 +1,4 @@
-import { Equality, Function, TypePredicate } from "../functions";
+import { Equality, Function, TypePredicate, Reducer } from "../functions";
 import { Option } from "../option";
 
 export interface NotifiableLike<T> {
@@ -45,3 +45,17 @@ export const notifyMap = <TA, TB>(
   const mapped = self.mapper(next);
   self.delegate.notify(mapped);
 };
+
+export const notifyScan = <T, TAcc>(
+  self: {
+    readonly delegate: NotifiableLike<TAcc>;
+    acc: TAcc,
+    readonly scanner: Reducer<T, TAcc>,
+  },
+  next: T
+) =>  {
+  const nextAcc = self.scanner(self.acc, next);
+  self.acc = nextAcc;
+
+  self.delegate.notify(nextAcc);
+}

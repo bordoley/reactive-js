@@ -1,5 +1,6 @@
 import { lift } from "./lift.js";
-import { AbstractDelegatingSink } from "./sink.js";
+import { AbstractDelegatingSink, assertSinkState } from "./sink.js";
+import { notifyScan } from "../notifyMixins.js";
 class ScanSink extends AbstractDelegatingSink {
     constructor(delegate, scanner, acc) {
         super(delegate);
@@ -7,9 +8,8 @@ class ScanSink extends AbstractDelegatingSink {
         this.acc = acc;
     }
     notify(next) {
-        const nextAcc = this.scanner(this.acc, next);
-        this.acc = nextAcc;
-        this.delegate.notify(nextAcc);
+        assertSinkState(this);
+        notifyScan(this, next);
     }
 }
 export const scan = (scanner, initialValue) => {

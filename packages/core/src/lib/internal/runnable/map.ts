@@ -1,7 +1,7 @@
 import { returns, Function } from "../../functions";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractDelegatingSink, assertSinkState } from "./sink";
 import { notifyMap } from "../notifyMixins";
 
 class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
@@ -13,6 +13,7 @@ class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
   }
 
   notify(next: TA) {
+    assertSinkState(this);
     notifyMap(this, next);
   }
 }
