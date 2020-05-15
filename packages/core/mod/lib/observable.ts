@@ -56,6 +56,7 @@ export {
 export { onNotify } from "./internal/observable/onNotify.ts";
 export { onSubscribe } from "./internal/observable/onSubscribe.ts";
 export { publish } from "./internal/observable/publish.ts";
+export { reduce } from "./internal/observable/reduce.ts";
 export { repeat, retry } from "./internal/observable/repeat.ts";
 export { scan } from "./internal/observable/scan.ts";
 export { AsyncReducer, scanAsync } from "./internal/observable/scanAsync.ts";
