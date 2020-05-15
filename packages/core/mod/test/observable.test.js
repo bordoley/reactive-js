@@ -89,7 +89,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
     pipe(disp, expectToHaveBeenCalledTimes(0));
     pipe(f, expectToHaveBeenCalledTimes(1));
-    scheduler.run();
+    scheduler.continue();
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
 }), test("when callback function throws", () => {
@@ -125,7 +125,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(zip(shared, shared), map(([a, b]) => a + b), buffer(), onNotify(x => {
         result = x;
     }), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(result, expectArrayEquals([2, 4, 6]));
 }), test("skipFirst", defer([1, 2, 3, 4, 5], fromArray(), skipFirst(2), toArray(), expectArrayEquals([3, 4, 5]))), describe("someSatisfy", test("when predicate throws", bind(expectToThrow, defer(1, fromValue(), someSatisfy(_ => {
     throw new Error();

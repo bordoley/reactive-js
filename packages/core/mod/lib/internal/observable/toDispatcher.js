@@ -6,7 +6,7 @@ class ObserverDelegatingDispatcherSchedulerContinuation extends AbstractSchedule
         super();
         this.dispatcher = dispatcher;
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         const dispatcher = this.dispatcher;
         const nextQueue = dispatcher.nextQueue;
         while (nextQueue.length > 0 && !this.isDisposed) {

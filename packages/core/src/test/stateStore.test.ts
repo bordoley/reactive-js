@@ -42,7 +42,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55]));
     expectTrue(subscription.isDisposed);

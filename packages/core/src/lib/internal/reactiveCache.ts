@@ -32,7 +32,7 @@ class ReactiveCacheSchedulerContinuation<
     super();
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     const { cache, maxCount, garbage } = this.cache;
 
     for (const [, stream] of garbage) {

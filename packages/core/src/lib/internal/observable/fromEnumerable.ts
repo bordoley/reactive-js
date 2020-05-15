@@ -19,7 +19,7 @@ class FromEnumeratorProducer<T> extends AbstractProducer<T> {
     super(observer);
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     const delay = this.delay;
     const enumerator = this.enumerator;
 

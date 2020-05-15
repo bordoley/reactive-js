@@ -21,8 +21,8 @@ A unit of work to be executed by a scheduler.
 ### Methods
 
 * [addListener](_scheduler_.schedulercontinuationlike.md#addlistener)
+* [continue](_scheduler_.schedulercontinuationlike.md#continue)
 * [removeListener](_scheduler_.schedulercontinuationlike.md#removelistener)
-* [run](_scheduler_.schedulercontinuationlike.md#run)
 
 ## Methods
 
@@ -41,6 +41,22 @@ Name | Type |
 
 ___
 
+###  continue
+
+▸ **continue**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
+
+Work function to be invoked by the scheduler after the specified delay.
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
+
+**Returns:** *void*
+
+___
+
 ###  removeListener
 
 ▸ **removeListener**(`ev`: "onRunStatusChanged", `listener`: [SchedulerContinuationRunStatusChangedListenerLike](_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)): *void*
@@ -51,21 +67,5 @@ Name | Type |
 ------ | ------ |
 `ev` | "onRunStatusChanged" |
 `listener` | [SchedulerContinuationRunStatusChangedListenerLike](_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md) |
-
-**Returns:** *void*
-
-___
-
-###  run
-
-▸ **run**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
-
-Work function to be invoked by the scheduler after the specified delay.
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
 
 **Returns:** *void*

@@ -15,7 +15,7 @@ export const toValue = (schedulerFactory = createVirtualTimeScheduler) => (sourc
     }), subscribe(scheduler), addDisposableOrTeardown(e => {
         error = e;
     }));
-    scheduler.run();
+    scheduler.continue();
     dispose(subscription);
     dispose(scheduler);
     const reifiedError = error;

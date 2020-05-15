@@ -7,7 +7,7 @@ class ThrowsProducer extends AbstractProducer {
         this.f = f;
         this.delay = delay;
     }
-    produce(_) {
+    continueUnsafe(_) {
         const cause = this.f();
         dispose(this, { cause });
     }

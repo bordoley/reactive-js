@@ -18,7 +18,7 @@ export const tests = describe("async-enumerable", test("consume", () => {
     dispatch(enumerator, none);
     dispatch(enumerator, none);
     dispatch(enumerator, none);
-    scheduler.run();
+    scheduler.continue();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -34,7 +34,7 @@ export const tests = describe("async-enumerable", test("consume", () => {
     dispatch(enumerator, none);
     dispatch(enumerator, none);
     dispatch(enumerator, none);
-    scheduler.run();
+    scheduler.continue();
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
 }), test("generate", () => {
@@ -45,6 +45,6 @@ export const tests = describe("async-enumerable", test("consume", () => {
     dispatch(enumerator, none);
     dispatch(enumerator, none);
     dispatch(enumerator, none);
-    scheduler.run();
+    scheduler.continue();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }));

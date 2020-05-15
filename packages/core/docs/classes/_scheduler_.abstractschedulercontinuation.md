@@ -21,7 +21,7 @@
 
 ### Methods
 
-* [produce](_scheduler_.abstractschedulercontinuation.md#abstract-produce)
+* [continueUnsafe](_scheduler_.abstractschedulercontinuation.md#abstract-continueunsafe)
 
 ## Constructors
 
@@ -33,9 +33,9 @@
 
 ## Methods
 
-### `Abstract` produce
+### `Abstract` continueUnsafe
 
-▸ **produce**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
+▸ **continueUnsafe**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *void*
 
 **Parameters:**
 

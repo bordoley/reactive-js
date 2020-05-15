@@ -82,7 +82,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
     super();
   }
 
-  produce(host: SchedulerLike) {
+  continueUnsafe(host: SchedulerLike) {
     const priorityScheduler = this.priorityScheduler;
 
     for (
@@ -103,7 +103,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
       move(priorityScheduler);
 
       priorityScheduler.inContinuation = true;
-      continuation.run(this.priorityScheduler);
+      continuation.continue(this.priorityScheduler);
       priorityScheduler.inContinuation = false;
 
       isDisposed = this.isDisposed;

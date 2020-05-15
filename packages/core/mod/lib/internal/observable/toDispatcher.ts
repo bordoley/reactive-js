@@ -11,7 +11,7 @@ class ObserverDelegatingDispatcherSchedulerContinuation<
     super();
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     const dispatcher = this.dispatcher;
     const nextQueue = dispatcher.nextQueue;
 

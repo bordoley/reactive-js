@@ -35,7 +35,7 @@ export const forEach = <T>(
     }),
   );
 
-  scheduler.run();
+  scheduler.continue();
 
   dispose(subscription);
   dispose(scheduler);

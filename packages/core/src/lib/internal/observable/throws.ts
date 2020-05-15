@@ -17,7 +17,7 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
     super(observer);
   }
 
-  produce(_: SchedulerLike) {
+  continueUnsafe(_: SchedulerLike) {
     const cause = this.f();
     dispose(this, { cause });
   }

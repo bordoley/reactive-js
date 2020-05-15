@@ -18,7 +18,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
     super(observer);
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     const generator = this.generator;
     const delay = this.delay;
 

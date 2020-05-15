@@ -9,7 +9,7 @@ class FromEnumeratorProducer extends AbstractProducer {
         this.enumerator = enumerator;
         this.delay = delay;
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         const delay = this.delay;
         const enumerator = this.enumerator;
         let isDisposed = this.isDisposed;

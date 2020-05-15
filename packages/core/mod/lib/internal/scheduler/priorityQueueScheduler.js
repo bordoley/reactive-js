@@ -46,7 +46,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
         super();
         this.priorityScheduler = priorityScheduler;
     }
-    produce(host) {
+    continueUnsafe(host) {
         const priorityScheduler = this.priorityScheduler;
         for (let task = peek(priorityScheduler), isDisposed = this.isDisposed; isSome(task) && !isDisposed; task = peek(priorityScheduler)) {
             const { continuation, dueTime } = task;
@@ -59,7 +59,7 @@ class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
             }
             move(priorityScheduler);
             priorityScheduler.inContinuation = true;
-            continuation.run(this.priorityScheduler);
+            continuation.continue(this.priorityScheduler);
             priorityScheduler.inContinuation = false;
             isDisposed = this.isDisposed;
             if (!isDisposed && host.shouldYield()) {
