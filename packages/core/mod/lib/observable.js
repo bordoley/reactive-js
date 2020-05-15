@@ -30,6 +30,7 @@ export { concatAll, concatMap, exhaust, exhaustMap, mergeAll, mergeMap, } from "
 export { onNotify } from "./internal/observable/onNotify.js";
 export { onSubscribe } from "./internal/observable/onSubscribe.js";
 export { publish } from "./internal/observable/publish.js";
+export { reduce } from "./internal/observable/reduce.js";
 export { repeat, retry } from "./internal/observable/repeat.js";
 export { scan } from "./internal/observable/scan.js";
 export { scanAsync } from "./internal/observable/scanAsync.js";

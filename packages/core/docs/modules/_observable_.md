@@ -75,6 +75,7 @@
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
+* [reduce](_observable_.md#const-reduce)
 * [repeat](_observable_.md#repeat)
 * [retry](_observable_.md#retry)
 * [scan](_observable_.md#const-scan)
@@ -1337,6 +1338,27 @@ Name | Type | Default | Description |
 `replayCount` | number | 0 | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to.  |
 
 **Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+
+___
+
+### `Const` reduce
+
+▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **TAcc**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› |
+
+**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
 
 ___
 
