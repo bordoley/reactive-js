@@ -1,22 +1,21 @@
 import { Factory, Reducer } from "../../functions";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractDelegatingSink, assertSinkState } from "./sink";
+import { notifyScan } from "../notifyMixins";
 
 class ScanSink<T, TAcc> extends AbstractDelegatingSink<T, TAcc> {
   constructor(
     delegate: SinkLike<TAcc>,
-    private readonly scanner: Reducer<T, TAcc>,
-    private acc: TAcc,
+    readonly scanner: Reducer<T, TAcc>,
+    public acc: TAcc,
   ) {
     super(delegate);
   }
 
   notify(next: T) {
-    const nextAcc = this.scanner(this.acc, next);
-    this.acc = nextAcc;
-
-    this.delegate.notify(nextAcc);
+    assertSinkState(this);
+    notifyScan(this, next);
   }
 }
 

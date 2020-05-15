@@ -1,6 +1,6 @@
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingSink } from "./sink.js";
+import { AbstractDelegatingSink, assertSinkState } from "./sink.js";
 import { notifyMap } from "../notifyMixins.js";
 class MapSink extends AbstractDelegatingSink {
     constructor(delegate, mapper) {
@@ -8,6 +8,7 @@ class MapSink extends AbstractDelegatingSink {
         this.mapper = mapper;
     }
     notify(next) {
+        assertSinkState(this);
         notifyMap(this, next);
     }
 }
