@@ -13,6 +13,7 @@ export const fromArray = <T>(
   const startIndex = Math.max(Math.min(options.startIndex, valuesLength), 0);
 
   const run = (sink: SinkLike<T>) => {
+    const valuesLength = values.length;
     for (
       let index = startIndex;
       index < valuesLength && !sink.isDone;

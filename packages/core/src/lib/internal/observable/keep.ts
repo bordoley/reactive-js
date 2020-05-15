@@ -4,8 +4,6 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
-import { notifyKeepType } from "../notifyMixins";
-
 class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
   TA,
   TB
@@ -20,7 +18,9 @@ class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
 
   notify(next: TA) {
     assertObserverState(this);
-    notifyKeepType(this, next);
+    if (this.predicate(next)) {
+      this.delegate.notify(next);
+    }
   }
 }
 

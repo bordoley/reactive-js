@@ -5,7 +5,6 @@ import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-import { notifyTakeLast } from "../notifyMixins.js";
 class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
@@ -26,7 +25,11 @@ class TakeLastObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        notifyTakeLast(this, next);
+        const last = this.last;
+        last.push(next);
+        if (last.length > this.maxCount) {
+            last.shift();
+        }
     }
 }
 export const takeLast = (count = 1) => {

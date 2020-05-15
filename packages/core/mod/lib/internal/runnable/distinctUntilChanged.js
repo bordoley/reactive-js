@@ -2,7 +2,6 @@ import { AbstractDelegatingSink } from "./sink.js";
 import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
 import { none } from "../../option.js";
-import { notifyDistinctUntilChanged } from "../notifyMixins.js";
 class DistinctUntilChangedSink extends AbstractDelegatingSink {
     constructor(delegate, equality) {
         super(delegate);
@@ -11,7 +10,12 @@ class DistinctUntilChangedSink extends AbstractDelegatingSink {
         this.hasValue = false;
     }
     notify(next) {
-        notifyDistinctUntilChanged(this, next);
+        const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
+        if (shouldEmit) {
+            this.prev = next;
+            this.hasValue = true;
+            this.delegate.notify(next);
+        }
     }
 }
 export const distinctUntilChanged = (equality = strictEquality) => {

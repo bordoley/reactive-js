@@ -3,7 +3,6 @@ import { RunnableFunction, SinkLike } from "./interfaces";
 import { Equality, strictEquality } from "../../functions";
 import { lift } from "./lift";
 import { Option, none } from "../../option";
-import { notifyDistinctUntilChanged } from "../notifyMixins";
 
 class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
   prev: Option<T> = none;
@@ -14,7 +13,13 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
-    notifyDistinctUntilChanged(this, next);
+    const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
+
+    if (shouldEmit) {
+      this.prev = next;
+      this.hasValue = true;
+      this.delegate.notify(next);
+    }
   }
 }
 

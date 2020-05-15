@@ -1,7 +1,6 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-import { notifyKeepType } from "../notifyMixins.js";
 class KeepTypeObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
@@ -10,7 +9,9 @@ class KeepTypeObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        notifyKeepType(this, next);
+        if (this.predicate(next)) {
+            this.delegate.notify(next);
+        }
     }
 }
 export const keepType = (predicate) => {

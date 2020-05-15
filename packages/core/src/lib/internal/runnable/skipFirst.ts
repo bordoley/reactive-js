@@ -2,7 +2,6 @@ import { pipe } from "../../functions";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
-import { notifySkipFirst } from "../notifyMixins";
 
 class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
   count = 0;
@@ -12,7 +11,9 @@ class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
-    notifySkipFirst(this, next);
+    if (this.count > this.skipCount) {
+      this.delegate.notify(next);
+    }
   }
 }
 

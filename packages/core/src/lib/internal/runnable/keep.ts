@@ -2,7 +2,6 @@ import { AbstractDelegatingSink } from "./sink";
 import { SinkLike, RunnableFunction } from "./interfaces";
 import { TypePredicate, Predicate } from "../../functions";
 import { lift } from "./lift";
-import { notifyKeepType } from "../notifyMixins";
 
 class KeepTypeSink<TA, TB extends TA> extends AbstractDelegatingSink<TA, TB> {
   constructor(
@@ -13,7 +12,9 @@ class KeepTypeSink<TA, TB extends TA> extends AbstractDelegatingSink<TA, TB> {
   }
 
   notify(next: TA) {
-    notifyKeepType(this, next);
+    if (this.predicate(next)) {
+      this.delegate.notify(next);
+    }
   }
 }
 
