@@ -277,7 +277,7 @@ export const tests = describe(
       const subject = createSubject(2);
       pipe(
         [1, 2, 3, 4],
-        fromArrayEnumerable,
+        fromArrayEnumerable(),
         forEachEnumerable(dispatchTo(subject)),
       );
       dispose(subject);

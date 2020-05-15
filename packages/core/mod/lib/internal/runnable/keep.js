@@ -1,4 +1,4 @@
-import { AbstractDelegatingSink, assertSinkState } from "./sink.js";
+import { AbstractDelegatingSink } from "./sink.js";
 import { lift } from "./lift.js";
 import { notifyKeepType } from "../notifyMixins.js";
 class KeepTypeSink extends AbstractDelegatingSink {
@@ -7,7 +7,6 @@ class KeepTypeSink extends AbstractDelegatingSink {
         this.predicate = predicate;
     }
     notify(next) {
-        assertSinkState(this);
         notifyKeepType(this, next);
     }
 }

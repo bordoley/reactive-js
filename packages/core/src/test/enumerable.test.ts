@@ -236,7 +236,13 @@ export const tests = describe(
     ),
     test(
       "when all elements are skipped",
-      defer([1, 2, 3], fromArray(), skipFirst(4), toArray, expectArrayEquals([])),
+      defer(
+        [1, 2, 3],
+        fromArray(),
+        skipFirst(4),
+        toArray,
+        expectArrayEquals([]),
+      ),
     ),
   ),
   test(
@@ -262,45 +268,45 @@ export const tests = describe(
     ),
     test(
       "when taking more than all the items produced by the source",
-      defer(pipe(1, fromValue, takeFirst(3), toArray, expectArrayEquals([1]))),
+      defer(1, fromValue, takeFirst(3), toArray, expectArrayEquals([1])),
     ),
-    test(
-      "takeLast",
-      defer(
-        [1, 2, 3, 4, 5],
-        fromArray(),
-        takeLast(3),
+  ),
+  test(
+    "takeLast",
+    defer(
+      [1, 2, 3, 4, 5],
+      fromArray(),
+      takeLast(3),
+      toArray,
+      expectArrayEquals([3, 4, 5]),
+    ),
+  ),
+  describe(
+    "takeWhile",
+    test("exclusive", () => {
+      pipe(
+        generate<number>(increment, returns(0)),
+        takeWhile(x => x < 4),
         toArray,
-        expectArrayEquals([3, 4, 5]),
-      ),
-    ),
-    describe(
-      "takeWhile",
-      test("exclusive", () => {
-        pipe(
-          generate<number>(increment, returns(0)),
-          takeWhile(x => x < 4),
-          toArray,
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(
-          [1, 2, 3],
-          fromArray(),
-          takeWhile(alwaysTrue),
-          toArray,
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(empty(), takeWhile(alwaysTrue), toArray, expectArrayEquals([]));
-      }),
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        takeWhile(alwaysTrue),
+        toArray,
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(empty(), takeWhile(alwaysTrue), toArray, expectArrayEquals([]));
+    }),
 
-      test(
-        "inclusive",
-        defer(
-          generate<number>(increment, returns(0)),
-          takeWhile(x => x < 4, { inclusive: true }),
-          toArray,
-          expectArrayEquals([1, 2, 3, 4]),
-        ),
+    test(
+      "inclusive",
+      defer(
+        generate<number>(increment, returns(0)),
+        takeWhile(x => x < 4, { inclusive: true }),
+        toArray,
+        expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
   ),

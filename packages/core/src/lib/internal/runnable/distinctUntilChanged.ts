@@ -1,12 +1,12 @@
-import { AbstractDelegatingSink, assertSinkState } from "./sink";
+import { AbstractDelegatingSink } from "./sink";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { Equality, strictEquality } from "../../functions";
 import { lift } from "./lift";
-import { Option } from "../../option";
+import { Option, none } from "../../option";
 import { notifyDistinctUntilChanged } from "../notifyMixins";
 
 class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
-  prev: Option<T>;
+  prev: Option<T> = none;
   hasValue = false;
 
   constructor(delegate: SinkLike<T>, readonly equality: Equality<T>) {
@@ -14,7 +14,6 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
-    assertSinkState(this);
     notifyDistinctUntilChanged(this, next);
   }
 }
@@ -22,7 +21,7 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
 export const distinctUntilChanged = <T>(
   equality: Equality<T> = strictEquality,
 ): RunnableFunction<T, T> => {
-  const operator = (observer: SinkLike<T>) =>
-    new DistinctUntilChangedSink(observer, equality);
+  const operator = (sink: SinkLike<T>) =>
+    new DistinctUntilChangedSink(sink, equality);
   return lift(operator);
 };

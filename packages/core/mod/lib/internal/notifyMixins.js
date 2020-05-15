@@ -20,3 +20,16 @@ export const notifyScan = (self, next) => {
     self.acc = nextAcc;
     self.delegate.notify(nextAcc);
 };
+export const notifySkipFirst = (self, next) => {
+    self.count++;
+    if (self.count > self.skipCount) {
+        self.delegate.notify(next);
+    }
+};
+export const notifyTakeLast = (self, next) => {
+    const last = self.last;
+    last.push(next);
+    if (last.length > self.maxCount) {
+        last.shift();
+    }
+};

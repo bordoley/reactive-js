@@ -13,8 +13,8 @@ class LiftedRunnable<T> implements RunnableLike<T> {
   ) {}
 
   run(sink: SinkLike<T>) {
-    pipe(sink, ...this.operators) as RunnableLike<T>;
-    this.src.run(sink);
+    const liftedSink = pipe(sink, ...this.operators) as SinkLike<T>;
+    this.src.run(liftedSink);
   }
 }
 
@@ -25,7 +25,7 @@ export const lift = <TA, TB>(
 
   const allFunctions =
     runnable instanceof LiftedRunnable
-      ? [...runnable.operators, operator]
+      ? [operator, ...runnable.operators]
       : [operator];
 
   return new LiftedRunnable(src, allFunctions);

@@ -28,7 +28,10 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
 }
 
 class ArrayEnumerable<T> implements EnumerableLike<T> {
-  constructor(private readonly values: readonly T[], private startIndex: number) {}
+  constructor(
+    private readonly values: readonly T[],
+    private startIndex: number,
+  ) {}
 
   enumerate() {
     return new ArrayEnumerator(this.values, this.startIndex);
@@ -40,8 +43,9 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
  *
  * @param values
  */
-export const fromArray = <T>({ startIndex } = { startIndex: 0 }) => (values: readonly T[]): EnumerableLike<T> =>
-  new ArrayEnumerable(values, startIndex - 1);
+export const fromArray = <T>({ startIndex } = { startIndex: 0 }) => (
+  values: readonly T[],
+): EnumerableLike<T> => new ArrayEnumerable(values, startIndex - 1);
 
 const _empty = fromArray()([]);
 

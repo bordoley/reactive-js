@@ -16,12 +16,10 @@ class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
     assertObserverState(this);
 
-    if (!this.isDisposed) {
-      this.count++;
-      this.delegate.notify(next);
-      if (this.count >= this.maxCount) {
-        dispose(this);
-      }
+    this.count++;
+    this.delegate.notify(next);
+    if (this.count >= this.maxCount) {
+      dispose(this);
     }
   }
 }

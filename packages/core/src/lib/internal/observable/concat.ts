@@ -6,7 +6,7 @@ import { AbstractDelegatingObserver } from "./observer";
 class ConcatObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
     delegate: ObserverLike<T>,
-    private readonly observables: Array<ObservableLike<T>>,
+    private readonly observables: ObservableLike<T>[],
     private readonly next: number,
   ) {
     super(delegate);
@@ -37,7 +37,7 @@ class ConcatObserver<T> extends AbstractDelegatingObserver<T, T> {
 class ConcatObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;
 
-  constructor(private readonly observables: Array<ObservableLike<T>>) {
+  constructor(private readonly observables: ObservableLike<T>[]) {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
@@ -63,7 +63,7 @@ export function concat<T>(
 ): ObservableLike<T>;
 
 export function concat<T>(
-  ...observables: Array<ObservableLike<T>>
+  ...observables: ObservableLike<T>[]
 ): ObservableLike<T> {
   return new ConcatObservable(observables);
 }

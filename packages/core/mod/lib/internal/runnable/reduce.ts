@@ -1,19 +1,14 @@
 import { Function, Reducer, Factory } from "../../functions.ts";
-import { RunnableLike, SinkLike } from "./interfaces.ts";
-import { assertSinkState } from "./sink.ts";
+import { RunnableLike } from "./interfaces.ts";
+import { AbstractSink } from "./sink.ts";
 
-class ReducerSink<T, TAcc> implements SinkLike<T> {
-  isDone = false;
-
-  constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {}
-
-  notify(next: T): void {
-    assertSinkState(this);
-    this.acc = this.reducer(this.acc, next);
+class ReducerSink<T, TAcc> extends AbstractSink<T> {
+  constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {
+    super();
   }
 
-  done(): void {
-    this.isDone = true;
+  notify(next: T): void {
+    this.acc = this.reducer(this.acc, next);
   }
 }
 

@@ -1,7 +1,6 @@
+import { pipe } from "../../functions.js";
 import { reduce } from "./reduce.js";
-const toArrayReducer = (acc, next) => {
+export const toArray = (enumerable) => pipe(enumerable, reduce((acc, next) => {
     acc.push(next);
     return acc;
-};
-const _toArray = reduce(toArrayReducer, () => []);
-export const toArray = () => _toArray;
+}, () => []));

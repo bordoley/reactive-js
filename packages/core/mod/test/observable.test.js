@@ -34,7 +34,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     dispose(dispatcher);
 }), toArray(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })), expectArrayEquals([1, 2, 3])))), describe("createSubject", test("with replay", () => {
     const subject = createSubject(2);
-    pipe([1, 2, 3, 4], fromArrayEnumerable, forEachEnumerable(dispatchTo(subject)));
+    pipe([1, 2, 3, 4], fromArrayEnumerable(), forEachEnumerable(dispatchTo(subject)));
     dispose(subject);
     pipe(subject, toArray(), expectArrayEquals([3, 4]));
 }), test("with multiple observers", () => {
