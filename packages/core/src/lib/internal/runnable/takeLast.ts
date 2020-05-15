@@ -5,9 +5,13 @@ import { empty } from "./empty";
 import { fromArray } from "./fromArray";
 
 class TakeLastSink<T> implements SinkLike<T> {
-  readonly last: T[] = [];
+  private readonly last: T[] = [];
 
-  constructor(private delegate: SinkLike<T>, readonly maxCount: number) {}
+  constructor(private delegate: SinkLike<T>, private readonly maxCount: number) {}
+
+  get isDone() {
+    return this.delegate.isDone;
+  }
 
   notify(next: T) {
     const last = this.last;

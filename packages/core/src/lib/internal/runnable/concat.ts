@@ -9,9 +9,11 @@ import { AbstractDelegatingSink } from "./sink";
 const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
 
 class ConcatSink<T> implements SinkLike<T> {
+  isDone = false;
   constructor(private readonly delegate: SinkLike<T>) {}
 
   done() {
+    this.isDone = true;
     throw concatSinkDone;
   }
 
@@ -22,7 +24,7 @@ class ConcatSink<T> implements SinkLike<T> {
 
 const runConcatUnsafe = <T>(runnable: RunnableLike<T>, sink: SinkLike<T>) => {
   try {
-    runnable.runUnsafe(new ConcatSink(sink));
+    runnable.run(new ConcatSink(sink));
   } catch (e) {
     if (e !== concatSinkDone) {
       throw e;

@@ -2,6 +2,8 @@ import { Function } from "../../functions.ts";
 
 export const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
 export interface SinkLike<T> {
+  readonly isDone: boolean;
+  
   notify(next: T): void;
   done(): void;
 }
@@ -9,7 +11,6 @@ export interface SinkLike<T> {
 export type SinkFunction<TA, TB> = Function<SinkLike<TB>, SinkLike<TA>>;
 
 export interface RunnableLike<T> {
-  runUnsafe(sink: SinkLike<T>): void;
   run(sink: SinkLike<T>): void;
 }
 
