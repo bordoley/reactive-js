@@ -5,14 +5,14 @@ class LiftedRunnable {
         this.operators = operators;
     }
     run(sink) {
-        pipe(sink, ...this.operators);
-        this.src.run(sink);
+        const liftedSink = pipe(sink, ...this.operators);
+        this.src.run(liftedSink);
     }
 }
 export const lift = (operator) => runnable => {
     const src = runnable instanceof LiftedRunnable ? runnable.src : runnable;
     const allFunctions = runnable instanceof LiftedRunnable
-        ? [...runnable.operators, operator]
+        ? [operator, ...runnable.operators]
         : [operator];
     return new LiftedRunnable(src, allFunctions);
 };

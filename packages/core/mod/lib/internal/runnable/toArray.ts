@@ -1,14 +1,20 @@
-import { Function } from "../../functions.ts";
+import { pipe } from "../../functions.ts";
 import { reduce } from "./reduce.ts";
 import { RunnableLike } from "./interfaces.ts";
 
-// FIXME: Avoid duplicating this function all over the place.
-const toArrayReducer = <T>(acc: T[], next: T): T[] => {
-  acc.push(next);
-  return acc;
-};
-
-const _toArray = reduce(toArrayReducer, (): unknown[] => []);
-
-export const toArray = <T>(): Function<RunnableLike<T>, readonly T[]> =>
-  _toArray as Function<RunnableLike<T>, readonly T[]>;
+/**
+ * Accumulates all values emitted by `enumerable` into an array.
+ *
+ * @param enumerable
+ */
+export const toArray = <T>(enumerable: RunnableLike<T>): readonly T[] =>
+  pipe(
+    enumerable,
+    reduce(
+      (acc, next) => {
+        acc.push(next);
+        return acc;
+      },
+      (): T[] => [],
+    ),
+  );

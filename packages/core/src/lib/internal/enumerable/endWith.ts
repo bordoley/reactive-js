@@ -9,5 +9,5 @@ import { pipe } from "../../functions";
  */
 export function endWith<T>(value: T, ...values: T[]): EnumerableFunction<T, T>;
 export function endWith<T>(...values: T[]): EnumerableFunction<T, T> {
-  return pipe(values, fromArray(),concatWith);
+  return pipe(values, fromArray(), concatWith);
 }

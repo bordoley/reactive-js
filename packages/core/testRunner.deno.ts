@@ -9,6 +9,7 @@ import { tests as queuesTests } from "./mod/test/internal/queues.test.ts";
 import { tests as observableTests } from "./mod/test/observable.test.ts";
 //import { tests as reactiveCacheTests } from "./reactiveCache.test";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
+import { tests as runnableTests } from "./src/test/runnable.test";
 import { tests as stateStoreTests } from "./mod/test/stateStore.test.ts";
 import { tests as streamableTests } from "./mod/test/streamable.test.ts";
 
@@ -22,6 +23,7 @@ const tests = [
   queuesTests,
   //reactiveCacheTests,
   //resourceManagerTests,
+  runnableTests,
   stateStoreTests,
   streamableTests,
 ];

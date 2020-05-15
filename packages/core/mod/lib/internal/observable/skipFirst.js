@@ -2,6 +2,7 @@ import { add } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { notifySkipFirst } from "../notifyMixins.js";
 class SkipFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, skipCount) {
         super(delegate);
@@ -11,12 +12,7 @@ class SkipFirstObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        if (!this.isDisposed) {
-            this.count++;
-            if (this.count > this.skipCount) {
-                this.delegate.notify(next);
-            }
-        }
+        notifySkipFirst(this, next);
     }
 }
 export const skipFirst = (count = 1) => {

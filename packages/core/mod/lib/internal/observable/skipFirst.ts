@@ -3,25 +3,19 @@ import { pipe } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { notifySkipFirst } from "../notifyMixins.ts";
 
 class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
-  private count = 0;
+  count = 0;
 
-  constructor(delegate: ObserverLike<T>, private readonly skipCount: number) {
+  constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
     super(delegate);
     add(this, delegate);
   }
 
   notify(next: T) {
     assertObserverState(this);
-
-    if (!this.isDisposed) {
-      this.count++;
-
-      if (this.count > this.skipCount) {
-        this.delegate.notify(next);
-      }
-    }
+    notifySkipFirst(this, next);
   }
 }
 

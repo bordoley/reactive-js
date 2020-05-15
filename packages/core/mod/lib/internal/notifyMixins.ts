@@ -59,3 +59,34 @@ export const notifyScan = <T, TAcc>(
 
   self.delegate.notify(nextAcc);
 };
+
+export const notifySkipFirst = <T>(
+  self: {
+    readonly delegate: NotifiableLike<T>;
+    count: number;
+    readonly skipCount: number;
+  },
+  next: T,
+) => {
+  self.count++;
+
+  if (self.count > self.skipCount) {
+    self.delegate.notify(next);
+  }
+};
+
+export const notifyTakeLast = <T>(
+  self: {
+    last: T[];
+    readonly maxCount: number;
+  },
+  next: T,
+) => {
+  const last = self.last;
+
+  last.push(next);
+
+  if (last.length > self.maxCount) {
+    last.shift();
+  }
+};

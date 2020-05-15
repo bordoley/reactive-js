@@ -7,4 +7,5 @@ import { pipe } from "../../functions";
  *
  * @param value The value to emit.
  */
-export const fromValue = <T>(value: T): EnumerableLike<T> => pipe([value], fromArray());
+export const fromValue = <T>(value: T): EnumerableLike<T> =>
+  pipe([value], fromArray());

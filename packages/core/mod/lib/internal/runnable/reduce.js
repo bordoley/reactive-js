@@ -1,16 +1,12 @@
-import { assertSinkState } from "./sink.js";
-class ReducerSink {
+import { AbstractSink } from "./sink.js";
+class ReducerSink extends AbstractSink {
     constructor(acc, reducer) {
+        super();
         this.acc = acc;
         this.reducer = reducer;
-        this.isDone = false;
     }
     notify(next) {
-        assertSinkState(this);
         this.acc = this.reducer(this.acc, next);
-    }
-    done() {
-        this.isDone = true;
     }
 }
 export const reduce = (reducer, initialValue) => runnable => {

@@ -10,14 +10,12 @@ class TakeWhileObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        if (!this.isDisposed) {
-            const satisfiesPredicate = this.predicate(next);
-            if (satisfiesPredicate || this.inclusive) {
-                this.delegate.notify(next);
-            }
-            if (!satisfiesPredicate) {
-                dispose(this);
-            }
+        const satisfiesPredicate = this.predicate(next);
+        if (satisfiesPredicate || this.inclusive) {
+            this.delegate.notify(next);
+        }
+        if (!satisfiesPredicate) {
+            dispose(this);
         }
     }
 }
