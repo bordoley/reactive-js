@@ -825,7 +825,7 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *keyof T[]*
+▸ **toArray**<**T**>(): *function*
 
 Accumulates all values emitted by `enumerable` into an array.
 
@@ -833,13 +833,15 @@ Accumulates all values emitted by `enumerable` into an array.
 
 ▪ **T**
 
+**Returns:** *function*
+
+▸ (`a`: TA): *TB*
+
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |   |
-
-**Returns:** *keyof T[]*
+Name | Type |
+------ | ------ |
+`a` | TA |
 
 ___
 
