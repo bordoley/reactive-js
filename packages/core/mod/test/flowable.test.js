@@ -28,7 +28,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     expectTrue(emptyStream.isDisposed);
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    const lib = pipe(str, fromValue, encodeUtf8, decodeWithCharset());
+    const lib = pipe(str, fromValue(), encodeUtf8, decodeWithCharset());
     const dest = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
@@ -62,7 +62,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue(1), scheduler);
+    const fromValueStream = stream(fromValue()(1), scheduler);
     dispatch(fromValueStream, 2);
     dispatch(fromValueStream, 2);
     dispatch(fromValueStream, 1);
@@ -78,7 +78,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
-    const lib = pipe(fromValue(1), map(_ => 2));
+    const lib = pipe(1, fromValue(), map(_ => 2));
     const dest = createFlowableSinkAccumulator(sum, returns(0));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));

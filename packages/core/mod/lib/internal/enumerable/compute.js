@@ -9,4 +9,5 @@ class ComputeEnumerable {
         return pipe([this.f()], fromArray(), enumerate);
     }
 }
-export const compute = (f) => new ComputeEnumerable(f);
+const _compute = (f) => new ComputeEnumerable(f);
+export const compute = () => _compute;

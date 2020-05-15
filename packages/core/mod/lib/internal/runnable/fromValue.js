@@ -1,5 +1,6 @@
 import { createRunnable } from "./createRunnable.js";
-export const fromValue = (value) => createRunnable(sink => {
+const _fromValue = (value) => createRunnable(sink => {
     sink.notify(value);
     sink.done();
 });
+export const fromValue = () => _fromValue;

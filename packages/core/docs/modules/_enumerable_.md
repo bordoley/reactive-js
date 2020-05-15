@@ -76,7 +76,7 @@ A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`f`: [Factory](_functions_.md#factory)‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **compute**<**T**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that emits the computed value.
 
@@ -84,13 +84,7 @@ Creates an EnumerableLike that emits the computed value.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`f` | [Factory](_functions_.md#factory)‹T› |
-
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -414,7 +408,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`value`: T): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that yields `value`.
 
@@ -422,13 +416,7 @@ Creates an EnumerableLike that yields `value`.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`value` | T | The value to emit.  |
-
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 

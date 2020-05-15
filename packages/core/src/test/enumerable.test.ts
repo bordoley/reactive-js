@@ -123,7 +123,7 @@ export const tests = describe(
     "first",
     test(
       "when enumerable is not empty",
-      defer(returns(1), compute, first, expectEquals(1)),
+      defer(returns(1), compute(), first, expectEquals(1)),
     ),
     test("when enumerable is empty", defer(empty(), first, expectNone)),
   ),
@@ -131,7 +131,7 @@ export const tests = describe(
     "flatMap",
     defer(
       0,
-      fromValue,
+      fromValue(),
       flatMap(_ => fromArray()([1, 2, 3])),
       toArray(),
       expectArrayEquals([1, 2, 3]),
@@ -269,7 +269,7 @@ export const tests = describe(
     ),
     test(
       "when taking more than all the items produced by the source",
-      defer(1, fromValue, takeFirst(3), toArray(), expectArrayEquals([1])),
+      defer(1, fromValue(), takeFirst(3), toArray(), expectArrayEquals([1])),
     ),
   ),
   test(
