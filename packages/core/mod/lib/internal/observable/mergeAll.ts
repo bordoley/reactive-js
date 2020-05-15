@@ -13,7 +13,7 @@ import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
@@ -80,7 +80,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   }
 
   notify(next: ObservableLike<T>) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const queue = this.queue;
     if (!this.isDisposed) {

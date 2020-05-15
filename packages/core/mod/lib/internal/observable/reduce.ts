@@ -6,7 +6,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
@@ -26,7 +26,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     this.acc = this.reducer(this.acc, next);
   }

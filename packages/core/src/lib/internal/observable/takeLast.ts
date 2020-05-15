@@ -7,7 +7,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -31,7 +31,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed) {
       const last = this.last;

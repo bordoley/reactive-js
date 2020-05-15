@@ -2,7 +2,7 @@ import { dispose, add } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class ReduceObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);
@@ -18,7 +18,7 @@ class ReduceObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         this.acc = this.reducer(this.acc, next);
     }
 }

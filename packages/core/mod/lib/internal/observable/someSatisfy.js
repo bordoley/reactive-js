@@ -3,7 +3,7 @@ import { strictEquality, isEqualTo, } from "../../functions.js";
 import { isNone } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class SomeSatisfyObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
@@ -18,7 +18,7 @@ class SomeSatisfyObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         const passesPredicate = this.predicate(next);
         if (passesPredicate) {
             const delegate = this.delegate;

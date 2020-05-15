@@ -2,16 +2,19 @@ import { add, AbstractDisposable } from "../../disposable.js";
 import { ignore } from "../../functions.js";
 import { schedule, } from "../../scheduler.js";
 import { __DEV__ } from "../env.js";
-const assertObserverNotifyInContinuationProduction = ignore;
-const assertObserverNotifyInContinuationDev = (observer) => {
+const assertObserverStateProduction = ignore;
+const assertObserverStateDev = (observer) => {
     if (!observer.inContinuation) {
         throw new Error("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
     }
+    else if (observer.isDisposed) {
+        throw new Error("Observer is disposed");
+    }
 };
-const _assertObserverNotifyInContinuation = __DEV__
-    ? assertObserverNotifyInContinuationDev
-    : assertObserverNotifyInContinuationProduction;
-export const assertObserverNotifyInContinuation = _assertObserverNotifyInContinuation;
+const _assertObserverState = __DEV__
+    ? assertObserverStateDev
+    : assertObserverStateProduction;
+export const assertObserverState = _assertObserverState;
 export class AbstractObserver extends AbstractDisposable {
     constructor(scheduler) {
         super();

@@ -5,7 +5,7 @@ import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { createScheduledObservable } from "./observable.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 type LatestCtx = {
@@ -40,7 +40,7 @@ class LatestObserver extends AbstractDelegatingObserver<unknown, unknown[]> {
   }
 
   notify(next: unknown) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const ctx = this.ctx;
     this.latest = next;

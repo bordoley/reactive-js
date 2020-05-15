@@ -4,7 +4,7 @@ import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class WithLatestFromObserver extends AbstractDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);
@@ -23,7 +23,7 @@ class WithLatestFromObserver extends AbstractDelegatingObserver {
         add(this, otherSubscription, delegate);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed && this.hasLatest) {
             const result = this.selector(next, this.otherLatest);
             this.delegate.notify(result);

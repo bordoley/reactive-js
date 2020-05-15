@@ -8,24 +8,28 @@ import {
 import { __DEV__ } from "../env";
 import { ObserverLike } from "./interfaces";
 
-const assertObserverNotifyInContinuationProduction = ignore;
-const assertObserverNotifyInContinuationDev = <T>(
+const assertObserverStateProduction = ignore;
+const assertObserverStateDev = <T>(
   observer: ObserverLike<T>,
 ) => {
   if (!observer.inContinuation) {
     throw new Error(
       "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
     );
+  } else if(observer.isDisposed) {
+    throw new Error(
+      "Observer is disposed",
+    );
   }
 };
 
-const _assertObserverNotifyInContinuation = __DEV__
-  ? assertObserverNotifyInContinuationDev
-  : assertObserverNotifyInContinuationProduction;
+const _assertObserverState = __DEV__
+  ? assertObserverStateDev
+  : assertObserverStateProduction;
 
-export const assertObserverNotifyInContinuation: SideEffect1<ObserverLike<
+export const assertObserverState: SideEffect1<ObserverLike<
   unknown
->> = _assertObserverNotifyInContinuation;
+>> = _assertObserverState;
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.

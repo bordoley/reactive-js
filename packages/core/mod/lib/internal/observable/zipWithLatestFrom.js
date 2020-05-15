@@ -4,7 +4,7 @@ import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractObserver, assertObserverState, } from "./observer.js";
 const notifyDelegate = (observer) => {
     if (observer.queue.length > 0 && observer.hasLatest) {
         observer.hasLatest = false;
@@ -48,7 +48,7 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         add(delegate, otherSubscription, this);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         this.queue.push(next);
         notifyDelegate(this);
     }

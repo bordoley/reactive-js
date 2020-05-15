@@ -5,7 +5,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 import { notifyDistinctUntilChanged } from "../notifyMixins";
 
@@ -22,7 +22,7 @@ class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
     notifyDistinctUntilChanged(this, next);
   }
 }

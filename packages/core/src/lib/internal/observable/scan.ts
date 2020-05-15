@@ -4,7 +4,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 import { notifyScan } from "../notifyMixins";
 
@@ -19,7 +19,7 @@ class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
     notifyScan(this, next);
   }
 }

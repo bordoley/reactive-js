@@ -5,7 +5,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -26,7 +26,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     this.isEmpty = false;
     this.delegate.notify(next);

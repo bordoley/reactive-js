@@ -4,7 +4,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 import { notifyKeepType } from "../notifyMixins.ts";
@@ -22,7 +22,7 @@ class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
   }
 
   notify(next: TA) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
     notifyKeepType(this, next);
   }
 }

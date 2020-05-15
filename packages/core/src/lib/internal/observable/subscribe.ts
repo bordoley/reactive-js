@@ -4,12 +4,12 @@ import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import {
   AbstractObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class DefaultObserver<T> extends AbstractObserver<T> {
   notify(_: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
   }
 }
 

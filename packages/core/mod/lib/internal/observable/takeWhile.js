@@ -1,6 +1,6 @@
 import { add, dispose } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class TakeWhileObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
@@ -9,7 +9,7 @@ class TakeWhileObserver extends AbstractDelegatingObserver {
         add(this, delegate);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed) {
             const satisfiesPredicate = this.predicate(next);
             if (satisfiesPredicate || this.inclusive) {

@@ -2,7 +2,7 @@ import { add } from "../../disposable.ts";
 import { returns, Function } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation } from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { notifyMap } from "../notifyMixins.ts";
 
 class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
@@ -15,7 +15,7 @@ class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   }
 
   notify(next: TA) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
     notifyMap(this, next);
   }
 }

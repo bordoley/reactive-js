@@ -3,7 +3,7 @@ import { current } from "../../enumerable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 import { using } from "./using.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
@@ -34,7 +34,7 @@ class EnumeratorObserver extends AbstractDisposable {
         return this.hasCurrent;
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         this.current = next;
         this.hasCurrent = true;
     }
@@ -105,7 +105,7 @@ class ZipObserver extends AbstractDelegatingObserver {
         }
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         const enumerators = this.enumerators;
         if (!this.isDisposed) {
             if (this.hasCurrent) {

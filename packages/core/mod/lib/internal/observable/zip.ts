@@ -12,7 +12,7 @@ import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 import { using } from "./using.ts";
 
@@ -50,7 +50,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
   }
 
   notify(next: T): void {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     this.current = next;
     this.hasCurrent = true;
@@ -141,7 +141,7 @@ class ZipObserver extends AbstractDelegatingObserver<unknown, unknown[]>
   }
 
   notify(next: unknown) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const enumerators = this.enumerators;
 

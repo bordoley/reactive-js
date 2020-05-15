@@ -15,7 +15,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 /**
@@ -83,7 +83,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed) {
       this.value = next;

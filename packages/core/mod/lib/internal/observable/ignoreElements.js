@@ -1,13 +1,13 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class IgnoreObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
         add(this, delegate);
     }
     notify(_) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
     }
 }
 const operator = (observer) => new IgnoreObserver(observer);

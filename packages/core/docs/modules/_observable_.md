@@ -30,7 +30,7 @@
 
 ### Variables
 
-* [assertObserverNotifyInContinuation](_observable_.md#const-assertobservernotifyincontinuation)
+* [assertObserverState](_observable_.md#const-assertobserverstate)
 * [timeoutError](_observable_.md#const-timeouterror)
 
 ### Functions
@@ -186,9 +186,9 @@ Name | Type |
 
 ## Variables
 
-### `Const` assertObserverNotifyInContinuation
+### `Const` assertObserverState
 
-• **assertObserverNotifyInContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[ObserverLike](../interfaces/_observable_.observerlike.md)‹unknown››* = _assertObserverNotifyInContinuation
+• **assertObserverState**: *[SideEffect1](_functions_.md#sideeffect1)‹[ObserverLike](../interfaces/_observable_.observerlike.md)‹unknown››* = _assertObserverState
 
 ___
 

@@ -5,7 +5,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -17,7 +17,7 @@ class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed) {
       this.count++;

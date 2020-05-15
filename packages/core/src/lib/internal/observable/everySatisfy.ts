@@ -6,7 +6,7 @@ import { ObserverLike, ObservablePredicate } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
@@ -25,7 +25,7 @@ class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const failedPredicate = !this.predicate(next);
     if (failedPredicate) {

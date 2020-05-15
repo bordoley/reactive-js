@@ -13,7 +13,7 @@ import { lift } from "./lift";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 import { throws } from "./throws";
 
@@ -41,7 +41,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     dispose(this.durationSubscription);
     this.delegate.notify(next);

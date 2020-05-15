@@ -13,7 +13,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -59,7 +59,7 @@ class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed) {
       this.delegate.notify(next);

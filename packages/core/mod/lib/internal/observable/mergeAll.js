@@ -5,7 +5,7 @@ import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 const subscribeNext = (observer) => {
     if (observer.activeCount < observer.maxConcurrency) {
         const nextObs = observer.queue.shift();
@@ -49,7 +49,7 @@ class MergeObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         const queue = this.queue;
         if (!this.isDisposed) {
             queue.push(next);

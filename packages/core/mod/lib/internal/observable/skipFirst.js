@@ -1,7 +1,7 @@
 import { add } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class SkipFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, skipCount) {
         super(delegate);
@@ -10,7 +10,7 @@ class SkipFirstObserver extends AbstractDelegatingObserver {
         add(this, delegate);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed) {
             this.count++;
             if (this.count > this.skipCount) {
