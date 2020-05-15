@@ -80,6 +80,6 @@ class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
 const _flatten = lift(s => new FlattenSink(s));
 export const flatten = <T>(): RunnableFunction<RunnableLike<T>, T> => _flatten;
 
-export const flatMap = <TA, TB>(
+export const concatMap = <TA, TB>(
   mapper: Function<TA, RunnableLike<TB>>,
 ): RunnableFunction<TA, TB> => compose(map(mapper), flatten());

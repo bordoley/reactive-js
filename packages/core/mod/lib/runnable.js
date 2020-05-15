@@ -1,5 +1,5 @@
 export { compute } from "./internal/runnable/compute.js";
-export { concat, concatWith, endWith, startWith, flatten, flatMap, } from "./internal/runnable/concat.js";
+export { concat, concatWith, endWith, startWith, flatten, concatMap, } from "./internal/runnable/concat.js";
 export { createRunnable } from "./internal/runnable/createRunnable.js";
 export { distinctUntilChanged } from "./internal/runnable/distinctUntilChanged.js";
 export { empty } from "./internal/runnable/empty.js";

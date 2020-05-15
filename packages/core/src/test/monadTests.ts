@@ -1,32 +1,4 @@
 import {
-  compute,
-  concat,
-  contains,
-  distinctUntilChanged,
-  first,
-  fromArray,
-  fromIterable,
-  empty,
-  concatMap,
-  forEach,
-  keep,
-  map,
-  noneSatisfy,
-  fromValue,
-  repeat,
-  scan,
-  skipFirst,
-  startWith,
-  takeFirst,
-  takeLast,
-  toArray,
-  generate,
-  endWith,
-  takeWhile,
-  everySatisfy,
-} from "../lib/runnable.ts";
-import * as Runnable from "../lib/runnable.ts";
-import {
   pipe,
   returns,
   alwaysFalse,
@@ -35,40 +7,37 @@ import {
   sum,
   defer,
   incrementBy,
-} from "../lib/functions.ts";
+} from "../lib/functions";
 import {
   test,
   describe,
-  expectNone,
-  expectEquals,
   expectArrayEquals,
   mockFn,
   expectToHaveBeenCalledTimes,
   expectTrue,
   expectFalse,
-} from "../lib/internal/testing.ts";
-import { createMonadTests } from "./monadTests.ts";
+} from "../lib/internal/testing";
 
-export const tests = describe(
-  "runnable",
+export const createMonadTests = (m: any) => describe(
+  "monadic functions",
   test(
     "concat",
     defer(
-      concat(empty(), fromArray()([1, 2, 3]), empty(), fromArray()([4, 5, 6])),
-      toArray(),
+      m.concat(m.empty(), m.fromArray()([1, 2, 3]), m.empty(), m.fromArray()([4, 5, 6])),
+      m.toArray(),
       expectArrayEquals([1, 2, 3, 4, 5, 6]),
     ),
   ),
   describe(
     "contains",
-    test("source is empty", defer(empty<number>(), contains(1), expectFalse)),
+    test("source is empty", defer(m.empty(), m.contains(1), expectFalse)),
     test(
       "source contains value",
-      defer(generate(increment, returns<number>(0)), contains(1), expectTrue),
+      defer(m.generate(increment, returns(0)), m.contains(1), expectTrue),
     ),
     test(
       "source does not contain value",
-      defer([2, 3, 4], fromArray(), contains(1), expectFalse),
+      defer([2, 3, 4], m.fromArray(), m.contains(1), expectFalse),
     ),
   ),
   describe(
@@ -77,9 +46,9 @@ export const tests = describe(
       "when source has duplicates in order",
       defer(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        fromArray(),
-        distinctUntilChanged(),
-        toArray(),
+        m.fromArray(),
+        m.distinctUntilChanged(),
+        m.toArray(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
@@ -87,9 +56,9 @@ export const tests = describe(
       "when source is empty",
       defer(
         [],
-        fromArray(),
-        distinctUntilChanged(),
-        toArray(),
+        m.fromArray(),
+        m.distinctUntilChanged(),
+        m.toArray(),
         expectArrayEquals([]),
       ),
     ),
@@ -99,9 +68,9 @@ export const tests = describe(
     "endWith",
     defer(
       [1, 2, 3],
-      fromArray(),
-      endWith(4),
-      toArray(),
+      m.fromArray(),
+      m.endWith(4),
+      m.toArray(),
       expectArrayEquals([1, 2, 3, 4]),
     ),
   ),
@@ -109,48 +78,40 @@ export const tests = describe(
     "everySatisfy",
     test(
       "source is empty",
-      defer(empty(), everySatisfy(alwaysFalse), expectTrue),
+      defer(m.empty(), m.everySatisfy(alwaysFalse), expectTrue),
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), expectTrue),
+      defer([1, 2, 3], m.fromArray(), m.everySatisfy(alwaysTrue), expectTrue),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), expectFalse),
+      defer([1, 2, 3], m.fromArray(), m.everySatisfy(alwaysFalse), expectFalse),
     ),
-  ),
-  describe(
-    "first",
-    test(
-      "when enumerable is not empty",
-      defer(returns(1), compute(), first, expectEquals(1)),
-    ),
-    test("when enumerable is empty", defer(empty(), first, expectNone)),
   ),
   test(
     "concatMap",
     defer(
       0,
-      fromValue(),
-      concatMap(_ => fromArray()([1, 2, 3])),
-      toArray(),
+      m.fromValue(),
+      m.concatMap((_: any) => m.fromArray()([1, 2, 3])),
+      m.toArray(),
       expectArrayEquals([1, 2, 3]),
     ),
   ),
   test("forEach", () => {
     const fn = mockFn();
 
-    pipe([1, 2, 3], fromIterable, forEach(fn));
+    pipe([1, 2, 3], m.fromIterable, m.forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
   }),
   test(
     "keep",
     defer(
       [4, 8, 10, 7],
-      fromArray(),
-      keep(x => x > 5),
-      toArray(),
+      m.fromArray(),
+      m.keep((x: any) => x > 5),
+      m.toArray(),
       expectArrayEquals([8, 10, 7]),
     ),
   ),
@@ -158,9 +119,9 @@ export const tests = describe(
     "map",
     defer(
       [1, 2, 3],
-      fromArray(),
-      map(increment),
-      toArray(),
+      m.fromArray(),
+      m.map(increment),
+      m.toArray(),
       expectArrayEquals([2, 3, 4]),
     ),
   ),
@@ -168,15 +129,15 @@ export const tests = describe(
     "noneSatisfy",
     test(
       "source is empty",
-      defer(empty(), noneSatisfy(alwaysFalse), expectTrue),
+      defer(m.empty(), m.noneSatisfy(alwaysFalse), expectTrue),
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysTrue), expectFalse),
+      defer([1, 2, 3], m.fromArray(), m.noneSatisfy(alwaysTrue), expectFalse),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysFalse), expectTrue),
+      defer([1, 2, 3], m.fromArray(),m. noneSatisfy(alwaysFalse), expectTrue),
     ),
   ),
   describe(
@@ -185,10 +146,10 @@ export const tests = describe(
       "when always repeating",
       defer(
         [1, 2, 3],
-        fromArray(),
-        repeat(),
-        takeFirst(6),
-        toArray(),
+        m.fromArray(),
+        m.repeat(),
+        m.takeFirst(6),
+        m.toArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -197,9 +158,9 @@ export const tests = describe(
       "when repeating a finite amount of times.",
       defer(
         [1, 2, 3],
-        fromArray(),
-        repeat(3),
-        toArray(),
+        m.fromArray(),
+        m.repeat(3),
+        m.toArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -207,9 +168,9 @@ export const tests = describe(
       "when repeating with a predicate",
       defer(
         [1, 2, 3],
-        fromArray(),
-        repeat(x => x < 1),
-        toArray(),
+        m.fromArray(),
+        m.repeat((x: any) => x < 1),
+        m.toArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -219,9 +180,9 @@ export const tests = describe(
     "scan",
     defer(
       [1, 1, 1],
-      fromArray(),
-      scan(sum, returns(0)),
-      toArray(),
+      m.fromArray(),
+      m.scan(sum, returns(0)),
+      m.toArray(),
       expectArrayEquals([1, 2, 3]),
     ),
   ),
@@ -231,9 +192,9 @@ export const tests = describe(
       "when skipped source has additional elements",
       defer(
         [1, 2, 3],
-        fromArray(),
-        skipFirst(2),
-        toArray(),
+        m.fromArray(),
+        m.skipFirst(2),
+        m.toArray(),
         expectArrayEquals([3]),
       ),
     ),
@@ -241,9 +202,9 @@ export const tests = describe(
       "when all elements are skipped",
       defer(
         [1, 2, 3],
-        fromArray(),
-        skipFirst(4),
-        toArray(),
+        m.fromArray(),
+        m.skipFirst(4),
+        m.toArray(),
         expectArrayEquals([]),
       ),
     ),
@@ -253,9 +214,9 @@ export const tests = describe(
     "startWith",
     defer(
       [1, 2, 3],
-      fromArray(),
-      startWith(0),
-      toArray(),
+      m.fromArray(),
+      m.startWith(0),
+      m.toArray(),
       expectArrayEquals([0, 1, 2, 3]),
     ),
   ),
@@ -265,24 +226,24 @@ export const tests = describe(
     test(
       "when taking fewer than the total number of elements in the source",
       defer(
-        generate<number>(increment, returns(0)),
-        takeFirst(3),
-        toArray(),
+        m.generate(increment, returns(0)),
+        m.takeFirst(3),
+        m.toArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
     test(
       "when taking more than all the items produced by the source",
-      defer(1, fromValue(), takeFirst(3), toArray(), expectArrayEquals([1])),
+      defer(1, m.fromValue(), m.takeFirst(3), m.toArray(), expectArrayEquals([1])),
     ),
   ),
   test(
     "takeLast",
     defer(
       [1, 2, 3, 4, 5],
-      fromArray(),
-      takeLast(3),
-      toArray(),
+      m.fromArray(),
+      m.takeLast(3),
+      m.toArray(),
       expectArrayEquals([3, 4, 5]),
     ),
   ),
@@ -290,27 +251,27 @@ export const tests = describe(
     "takeWhile",
     test("exclusive", () => {
       pipe(
-        generate<number>(increment, returns(0)),
-        takeWhile(x => x < 4),
-        toArray(),
+        m.generate(increment, returns(0)),
+        m.takeWhile((x: any) => x < 4),
+        m.toArray(),
         expectArrayEquals([1, 2, 3]),
       );
       pipe(
         [1, 2, 3],
-        fromArray(),
-        takeWhile(alwaysTrue),
-        toArray(),
+        m.fromArray(),
+        m.takeWhile(alwaysTrue),
+        m.toArray(),
         expectArrayEquals([1, 2, 3]),
       );
-      pipe(empty(), takeWhile(alwaysTrue), toArray(), expectArrayEquals([]));
+      pipe(m.empty(), m.takeWhile(alwaysTrue), m.toArray(), expectArrayEquals([]));
     }),
 
     test(
       "inclusive",
       defer(
-        generate<number>(increment, returns(0)),
-        takeWhile(x => x < 4, { inclusive: true }),
-        toArray(),
+        m.generate(increment, returns(0)),
+        m.takeWhile((x: any) => x < 4, { inclusive: true }),
+        m.toArray(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
@@ -318,17 +279,14 @@ export const tests = describe(
   test(
     "lift",
     defer(
-      generate<number>(increment, returns(0)),
-      map(x => x * 2),
-      takeFirst(3),
-      concatMap(x =>
-        pipe(generate<number>(incrementBy(1), returns(0)), takeFirst(x)),
+      m.generate(increment, returns(0)),
+      m.map((x: any) => x * 2),
+      m.takeFirst(3),
+      m.concatMap((x: any) =>
+        pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst(x)),
       ),
-      toArray(),
+      m.toArray(),
       expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]),
     ),
   ),
-  createMonadTests(Runnable),
 );
-
-

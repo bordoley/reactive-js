@@ -52,4 +52,4 @@ class FlattenSink extends AbstractDelegatingSink {
 }
 const _flatten = lift(s => new FlattenSink(s));
 export const flatten = () => _flatten;
-export const flatMap = (mapper) => compose(map(mapper), flatten());
+export const concatMap = (mapper) => compose(map(mapper), flatten());

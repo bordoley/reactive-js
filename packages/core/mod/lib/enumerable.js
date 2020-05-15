@@ -5,7 +5,7 @@ export { enumerate, hasCurrent, current, move, } from "./internal/enumerable/enu
 export { endWith } from "./internal/enumerable/endWith.js";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy.js";
 export { first } from "./internal/enumerable/first.js";
-export { flatten, flatMap } from "./internal/enumerable/flatten.js";
+export { flatten, concatMap } from "./internal/enumerable/flatten.js";
 export { forEach } from "./internal/enumerable/forEach.js";
 export { empty, fromArray } from "./internal/enumerable/fromArray.js";
 export { fromIterable, fromIterator } from "./internal/enumerable/fromIterator.js";
