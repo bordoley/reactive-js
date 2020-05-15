@@ -13,7 +13,6 @@ import {
   takeWhile,
   keepType,
   map as mapObs,
-  reduce,
   onNotify,
   subscribe,
   createObservable,
@@ -21,6 +20,7 @@ import {
 } from "../observable.ts";
 import { add } from "../disposable.ts";
 import { stream, createStreamable } from "../streamable.ts";
+import { reduceOp } from "./observable/reduce.ts";
 
 const isNext = <T>(
   ev: FlowEvent<T>,
@@ -56,7 +56,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
             takeWhile(isNext),
             keepType(isNext),
             mapObs(ev => ev.data),
-            reduce(this.reducer, returns(this.acc)),
+            reduceOp(this.reducer, returns(this.acc)),
             onNotify(acc => {
               this._acc = acc;
             }),

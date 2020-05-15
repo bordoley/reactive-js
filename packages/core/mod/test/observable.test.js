@@ -101,7 +101,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     };
     const subscription = pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
     pipe(subscription.error, expectSome);
-})), test("reduce", defer([1, 1, 1], fromArray(), reduce(sum, returns(0)), toValue(), expectEquals(3))), describe("repeat", test("repeats the observable n times", defer(1, fromValue(), repeat(3), toArray(), expectArrayEquals([1, 1, 1]))), test("when the repeat function throws", () => {
+})), test("reduce", defer([1, 1, 1], fromArray(), reduce(sum, returns(0)), expectEquals(3))), describe("repeat", test("repeats the observable n times", defer(1, fromValue(), repeat(3), toArray(), expectArrayEquals([1, 1, 1]))), test("when the repeat function throws", () => {
     const error = new Error();
     pipe(defer(1, fromValue(), repeat(_ => {
         throw error;

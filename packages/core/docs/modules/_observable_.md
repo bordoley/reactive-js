@@ -1454,7 +1454,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›, `schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, TAcc›*
 
 Returns an `ObservableLike` that applies an accumulator function
 over the source, returning the accumulated result when the subscription is disposed.
@@ -1467,12 +1467,13 @@ over the source, returning the accumulated result when the subscription is dispo
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› | The accumulator function called on each source value. |
-`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
+Name | Type | Default | Description |
+------ | ------ | ------ | ------ |
+`reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› | - | The accumulator function called on each source value. |
+`initialValue` | [Factory](_functions_.md#factory)‹TAcc› | - | The initial accumulation value.  |
+`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler | - |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, TAcc›*
 
 ___
 
