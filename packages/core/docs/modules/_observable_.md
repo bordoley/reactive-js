@@ -194,7 +194,9 @@ ___
 
 ### `Const` timeoutError
 
-• **timeoutError**: *unique symbol* = Symbol("TimeoutError")
+• **timeoutError**: *unique symbol* = Symbol(
+  "@reactive-js/core/lib/observable/timeoutError",
+)
 
 Symbol thrown when the timeout operator times out
 

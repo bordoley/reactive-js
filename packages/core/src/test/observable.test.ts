@@ -1130,12 +1130,17 @@ export const tests = describe(
     ),
   ),
 
-  test("lift", defer(
-    generate<number>(increment, returns(0)),
-    map(x => x * 2),
-    takeFirst(3),
-    concatMap(x => pipe(generate<number>(incrementBy(1), returns(0)),  takeFirst(x))),
-    toArray(),
-    expectArrayEquals([1,2,1,2,3,4,1,2,3,4,5,6]),
-  ))
+  test(
+    "lift",
+    defer(
+      generate<number>(increment, returns(0)),
+      map(x => x * 2),
+      takeFirst(3),
+      concatMap(x =>
+        pipe(generate<number>(incrementBy(1), returns(0)), takeFirst(x)),
+      ),
+      toArray(),
+      expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]),
+    ),
+  ),
 );

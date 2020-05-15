@@ -11,6 +11,7 @@ export { fromEnumerable, fromEnumerator, } from "./internal/runnable/fromEnumera
 export { fromIterable, fromIterator } from "./internal/runnable/fromIterable.js";
 export { fromValue } from "./internal/runnable/fromValue.js";
 export { generate } from "./internal/runnable/generate.js";
+export { sinkDone, } from "./internal/runnable/interfaces.js";
 export { lift } from "./internal/runnable/lift.js";
 export { keep, keepType } from "./internal/runnable/keep.js";
 export { map } from "./internal/runnable/map.js";

@@ -4,6 +4,10 @@ class LiftedRunnable {
         this.src = src;
         this.operators = operators;
     }
+    runUnsafe(sink) {
+        const liftedSink = pipe(sink, ...this.operators);
+        this.src.runUnsafe(liftedSink);
+    }
     run(sink) {
         const liftedSink = pipe(sink, ...this.operators);
         this.src.run(liftedSink);

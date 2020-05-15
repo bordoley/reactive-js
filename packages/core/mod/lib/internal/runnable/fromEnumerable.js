@@ -2,7 +2,7 @@ import { createRunnable } from "./createRunnable.js";
 export const fromEnumerator = (f) => {
     const run = (sink) => {
         const enumerator = f();
-        while (!sink.isDone && enumerator.move()) {
+        while (enumerator.move()) {
             sink.notify(enumerator.current);
         }
         sink.done();

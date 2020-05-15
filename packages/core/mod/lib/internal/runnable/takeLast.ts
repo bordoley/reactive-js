@@ -1,11 +1,10 @@
-import { RunnableFunction, SinkLike } from "./interfaces.ts";
+import { RunnableFunction, SinkLike, sinkDone } from "./interfaces.ts";
 import { pipe } from "../../functions.ts";
 import { lift } from "./lift.ts";
 import { empty } from "./empty.ts";
 import { fromArray } from "./fromArray.ts";
 
 class TakeLastSink<T> implements SinkLike<T> {
-  isDone = false;
   readonly last: T[] = [];
 
   constructor(private delegate: SinkLike<T>, readonly maxCount: number) {}
@@ -21,10 +20,8 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 
   done() {
-    if (!this.isDone) {
-      this.isDone = true;
-      fromArray()(this.last).run(this.delegate);
-    }
+    fromArray()(this.last).run(this.delegate);
+    throw sinkDone;
   }
 }
 
