@@ -56,7 +56,7 @@
     "compile-cjs": "tsc -p tsconfig.cjs.json",
     "compile-esm": "tsc -p tsconfig.esm.json",
     "compile-types": "tsc -p tsconfig.types.json",
-    "deno-test": "deno test testRunner.deno.ts",
+    "deno-test": "deno test -r testRunner.deno.ts",
     "docs": "node ../../scripts/docs.mjs",
     "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types",
     "lib-js": "cp -r ./build/cjs/lib/ ./lib",
