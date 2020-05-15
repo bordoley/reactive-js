@@ -5,7 +5,7 @@ import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
@@ -20,7 +20,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         dispose(this.inner);
         const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate), addDisposableOrTeardown(e => {
             if (isSome(e) || this.isDisposed) {

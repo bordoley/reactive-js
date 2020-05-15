@@ -1,7 +1,7 @@
 import { add } from "../../disposable.js";
 import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 import { notifyDistinctUntilChanged } from "../notifyMixins.js";
 class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
     constructor(delegate, equality) {
@@ -11,7 +11,7 @@ class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
         add(this, delegate);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         notifyDistinctUntilChanged(this, next);
     }
 }

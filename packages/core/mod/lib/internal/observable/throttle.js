@@ -5,7 +5,7 @@ import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 const setupDurationSubscription = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
 };
@@ -36,7 +36,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed) {
             this.value = next;
             this.hasValue = true;

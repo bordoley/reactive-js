@@ -1,6 +1,6 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class OnNotifyObserver extends AbstractDelegatingObserver {
     constructor(delegate, onNotify) {
         super(delegate);
@@ -8,7 +8,7 @@ class OnNotifyObserver extends AbstractDelegatingObserver {
         add(this, delegate);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed) {
             this.onNotify(next);
             this.delegate.notify(next);

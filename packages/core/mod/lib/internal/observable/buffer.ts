@@ -15,7 +15,7 @@ import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer.ts";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
@@ -50,7 +50,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const buffer = this.buffer;
 

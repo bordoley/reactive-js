@@ -1,7 +1,7 @@
 import { dispose, add } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { createScheduledObservable } from "./observable.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);
@@ -18,7 +18,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         const ctx = this.ctx;
         this.latest = next;
         if (!this.ready) {

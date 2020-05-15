@@ -13,7 +13,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class SwitchObserver<T> extends AbstractDelegatingObserver<
@@ -36,7 +36,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 
   notify(next: ObservableLike<T>) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     dispose(this.inner);
 

@@ -3,7 +3,7 @@ import { pipe, returns } from "../../functions.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 import { throws } from "./throws.js";
 export const timeoutError = Symbol("TimeoutError");
 const setupDurationSubscription = (observer) => {
@@ -18,7 +18,7 @@ class TimeoutObserver extends AbstractDelegatingObserver {
         setupDurationSubscription(this);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         dispose(this.durationSubscription);
         this.delegate.notify(next);
     }

@@ -4,7 +4,7 @@ import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -18,7 +18,7 @@ class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed) {
       const satisfiesPredicate = this.predicate(next);

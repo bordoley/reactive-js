@@ -11,7 +11,7 @@ import { ObserverLike, ObservablePredicate } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
@@ -30,7 +30,7 @@ class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
   }
 
   notify(next: T) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     const passesPredicate = this.predicate(next);
     if (passesPredicate) {

@@ -4,7 +4,7 @@ import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class RepeatObserver extends AbstractDelegatingObserver {
     constructor(delegate, observable, shouldRepeat) {
         super(delegate);
@@ -35,7 +35,7 @@ class RepeatObserver extends AbstractDelegatingObserver {
         add(this, this.onDispose);
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         if (!this.isDisposed) {
             this.delegate.notify(next);
         }

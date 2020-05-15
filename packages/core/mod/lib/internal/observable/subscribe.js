@@ -1,7 +1,7 @@
-import { AbstractObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractObserver, assertObserverState, } from "./observer.js";
 class DefaultObserver extends AbstractObserver {
     notify(_) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
     }
 }
 export const subscribe = (scheduler) => (observable) => {

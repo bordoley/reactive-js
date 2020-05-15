@@ -1,7 +1,7 @@
 import { add, dispose } from "../../disposable.js";
 import { isNone } from "../../option.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverNotifyInContinuation, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
 class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
     constructor(delegate, factory) {
         super(delegate);
@@ -16,7 +16,7 @@ class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
         });
     }
     notify(next) {
-        assertObserverNotifyInContinuation(this);
+        assertObserverState(this);
         this.isEmpty = false;
         this.delegate.notify(next);
     }

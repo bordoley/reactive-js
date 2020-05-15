@@ -12,7 +12,7 @@ export {
 
 export {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./internal/observable/observer";
 
 export {

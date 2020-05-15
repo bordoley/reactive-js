@@ -7,7 +7,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 const notifyDelegate = <TA, TB, TC>(
@@ -70,7 +70,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
   }
 
   notify(next: TA) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
     this.queue.push(next);
 
     notifyDelegate(this);

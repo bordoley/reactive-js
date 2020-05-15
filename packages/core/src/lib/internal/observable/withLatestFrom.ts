@@ -7,7 +7,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
@@ -45,7 +45,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   }
 
   notify(next: TA) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
 
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);

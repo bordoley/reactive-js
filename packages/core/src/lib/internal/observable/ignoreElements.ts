@@ -3,7 +3,7 @@ import { ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
-  assertObserverNotifyInContinuation,
+  assertObserverState,
 } from "./observer";
 
 class IgnoreObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
@@ -13,7 +13,7 @@ class IgnoreObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   }
 
   notify(_: TA) {
-    assertObserverNotifyInContinuation(this);
+    assertObserverState(this);
   }
 }
 
