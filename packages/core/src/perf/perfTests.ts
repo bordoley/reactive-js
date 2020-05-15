@@ -26,9 +26,10 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest(
       "enumerable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, toRunnable } = await import(
           "../lib/enumerable"
         );
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
@@ -38,6 +39,7 @@ export const filterMapFusion = (n: number) =>
           map(increment),
           map(increment),
           keep(isEven),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -46,9 +48,10 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, toRunnable } = await import(
           "../lib/observable"
         );
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
@@ -58,6 +61,7 @@ export const filterMapFusion = (n: number) =>
           map(increment),
           map(increment),
           keep(isEven),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -66,7 +70,7 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest(
       "runnable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, toRunnable, reduce } = await import(
           "../lib/runnable"
         );
 
@@ -78,6 +82,7 @@ export const filterMapFusion = (n: number) =>
           map(increment),
           map(increment),
           keep(isEven),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -109,15 +114,18 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "enumerable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, toRunnable } = await import(
           "../lib/enumerable"
         );
+
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
           fromArray(),
           keep(isEven),
           map(increment),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -126,15 +134,18 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, toRunnable } = await import(
           "../lib/observable"
         );
+
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
           fromArray(),
           keep(isEven),
           map(increment),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -143,7 +154,7 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "runnable",
       async src => {
-        const { fromArray, keep, map, reduce } = await import(
+        const { fromArray, keep, map, reduce, toRunnable } = await import(
           "../lib/runnable"
         );
 
@@ -152,6 +163,7 @@ export const filterMapReduce = (n: number) =>
           fromArray(),
           keep(isEven),
           map(increment),
+          toRunnable(),
           reduce(sum, returns(0)),
         );
       },
@@ -176,12 +188,16 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "enumerable",
       async src => {
-        const { fromArray, reduce, scan } = await import("../lib/enumerable");
+        const { fromArray, toRunnable, scan } = await import(
+          "../lib/enumerable"
+        );
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
           fromArray(),
           scan(sum, returns(0)),
+          toRunnable(),
           reduce(passthrough, returns(0)),
         );
       },
@@ -190,14 +206,16 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "observable",
       async src => {
-        const { fromArray, reduce, scan } = await import(
+        const { fromArray, scan, toRunnable } = await import(
           "../lib/observable"
         );
+        const { reduce } = await import("../lib/runnable");
 
         return defer(
           src,
           fromArray(),
           scan(sum, returns(0)),
+          toRunnable(),
           reduce(passthrough, returns(0)),
         );
       },
@@ -206,12 +224,15 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "runnable",
       async src => {
-        const { fromArray, reduce, scan } = await import("../lib/runnable");
+        const { fromArray, reduce, scan, toRunnable } = await import(
+          "../lib/runnable"
+        );
 
         return defer(
           src,
           fromArray(),
           scan(sum, returns(0)),
+          toRunnable(),
           reduce<number, number>(passthrough, returns(0)),
         );
       },

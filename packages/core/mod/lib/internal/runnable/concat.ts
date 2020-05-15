@@ -1,8 +1,4 @@
-import {
-  RunnableLike,
-  SinkLike,
-  RunnableFunction,
-} from "./interfaces.ts";
+import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces.ts";
 import { Function, compose } from "../../functions.ts";
 import { createRunnable } from "./createRunnable.ts";
 import { fromArray } from "./fromArray.ts";

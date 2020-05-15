@@ -1,6 +1,7 @@
-import { fromIterable, first, enumerate, } from "../../enumerable.js";
+import { fromIterable, toRunnable, enumerate, } from "../../enumerable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
+import { first } from "../../runnable.js";
 class UniqueQueueImpl {
     constructor() {
         this.values = new Set();
@@ -15,7 +16,7 @@ class UniqueQueueImpl {
         return pipe(this.values, fromIterable, enumerate);
     }
     peek() {
-        return pipe(this.values, fromIterable, first);
+        return pipe(this.values, fromIterable, toRunnable(), first);
     }
     pop() {
         const head = this.peek();

@@ -1,4 +1,4 @@
-import { Function } from "../../functions";
+import { Function, returns } from "../../functions";
 import { none } from "../../option";
 import { EnumeratorLike, EnumerableFunction } from "./interfaces";
 import { lift } from "./lift";
@@ -38,3 +38,6 @@ export const map = <TA, TB>(
     new MapEnumerator(enumerator, mapper);
   return lift(operator);
 };
+
+export const mapTo = <TA, TB>(v: TB): EnumerableFunction<TA, TB> =>
+  map(returns(v));

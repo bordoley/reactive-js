@@ -1,14 +1,20 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable.js";
-import { pipe } from "../../functions.js";
-import { none } from "../../option.js";
+import { createRunnable } from "../../runnable.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
+import { pipe } from "../../functions.js";
+import { none, isNone } from "../../option.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-export const forEach = (callback, schedulerFactory = createVirtualTimeScheduler) => observable => {
+export const toRunnable = (schedulerFactory = createVirtualTimeScheduler) => source => createRunnable(sink => {
     const scheduler = schedulerFactory();
     let error = none;
-    const subscription = pipe(observable, onNotify(callback), subscribe(scheduler), addDisposableOrTeardown(e => {
+    const subscription = pipe(source, onNotify((next) => {
+        sink.notify(next);
+    }), subscribe(scheduler), addDisposableOrTeardown(e => {
         error = e;
+        if (isNone(e)) {
+            sink.done();
+        }
     }));
     scheduler.continue();
     dispose(subscription);
@@ -18,4 +24,4 @@ export const forEach = (callback, schedulerFactory = createVirtualTimeScheduler)
         const { cause } = reifiedError;
         throw cause;
     }
-};
+});

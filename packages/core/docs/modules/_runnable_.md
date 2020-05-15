@@ -38,16 +38,14 @@
 * [flatten](_runnable_.md#const-flatten)
 * [forEach](_runnable_.md#const-foreach)
 * [fromArray](_runnable_.md#const-fromarray)
-* [fromEnumerable](_runnable_.md#const-fromenumerable)
-* [fromEnumerator](_runnable_.md#const-fromenumerator)
-* [fromIterable](_runnable_.md#const-fromiterable)
-* [fromIterator](_runnable_.md#const-fromiterator)
 * [fromValue](_runnable_.md#const-fromvalue)
 * [generate](_runnable_.md#const-generate)
 * [keep](_runnable_.md#const-keep)
 * [keepType](_runnable_.md#const-keeptype)
+* [last](_runnable_.md#const-last)
 * [lift](_runnable_.md#const-lift)
 * [map](_runnable_.md#const-map)
+* [mapTo](_runnable_.md#const-mapto)
 * [noneSatisfy](_runnable_.md#const-nonesatisfy)
 * [reduce](_runnable_.md#const-reduce)
 * [repeat](_runnable_.md#repeat)
@@ -59,6 +57,7 @@
 * [takeLast](_runnable_.md#const-takelast)
 * [takeWhile](_runnable_.md#const-takewhile)
 * [toArray](_runnable_.md#const-toarray)
+* [toRunnable](_runnable_.md#const-torunnable)
 
 ## Type aliases
 
@@ -326,82 +325,6 @@ Name | Type |
 
 ___
 
-### `Const` fromEnumerable
-
-▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-___
-
-### `Const` fromEnumerator
-
-▸ **fromEnumerator**<**T**>(`f`: [Factory](_functions_.md#factory)‹[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T››): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`f` | [Factory](_functions_.md#factory)‹[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›› |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-___
-
-### `Const` fromIterable
-
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`iterable` | Iterable‹T› |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-___
-
-### `Const` fromIterator
-
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: [Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-▪ **TReturn**
-
-▪ **TNext**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`f` | [Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext›› |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
-
-___
-
 ### `Const` fromValue
 
 ▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
@@ -471,6 +394,24 @@ Name | Type |
 
 ___
 
+### `Const` last
+
+▸ **last**<**T**>(`runnable`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›): *[Option](_option_.md#option)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`runnable` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
+
+**Returns:** *[Option](_option_.md#option)‹T›*
+
+___
+
 ### `Const` lift
 
 ▸ **lift**<**TA**, **TB**>(`operator`: [SinkFunction](_runnable_.md#sinkfunction)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
@@ -506,6 +447,26 @@ ___
 Name | Type |
 ------ | ------ |
 `mapper` | [Function](_functions_.md#function)‹TA, TB› |
+
+**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+
+___
+
+### `Const` mapTo
+
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | TB |
 
 **Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
@@ -750,3 +711,15 @@ Accumulates all values emitted by `enumerable` into an array.
 Name | Type |
 ------ | ------ |
 `a` | TA |
+
+___
+
+### `Const` toRunnable
+
+▸ **toRunnable**<**T**>(): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*

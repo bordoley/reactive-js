@@ -5,10 +5,11 @@ import {
   subscribe,
   fromValue,
   ObservableLike,
-  forEach,
+  toRunnable,
   onNotify,
   never,
 } from "../lib/observable";
+import { forEach } from "../lib/runnable";
 import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 import {
@@ -97,7 +98,8 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      forEach(x => x(), returns(scheduler)),
+      toRunnable(returns(scheduler)),
+      forEach(x => x()),
     );
   }),
 
@@ -128,7 +130,8 @@ export const tests = describe(
         },
       ],
       fromArray(),
-      forEach(x => x(), returns(scheduler)),
+      toRunnable(returns(scheduler)),
+      forEach(x => x()),
     );
   }),
 
@@ -156,7 +159,8 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      forEach(x => x(), returns(scheduler)),
+      toRunnable(returns(scheduler)),
+      forEach(x => x()),
     );
   }),
 );

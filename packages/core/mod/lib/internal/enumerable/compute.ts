@@ -19,4 +19,5 @@ const _compute = <T>(f: Factory<T>): EnumerableLike<T> =>
  *
  * @param valueFactory
  */
-export const compute = <T>(): Function<Factory<T>, EnumerableLike<T>> => _compute;
+export const compute = <T>(): Function<Factory<T>, EnumerableLike<T>> =>
+  _compute;

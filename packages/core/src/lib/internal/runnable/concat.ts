@@ -1,8 +1,4 @@
-import {
-  RunnableLike,
-  SinkLike,
-  RunnableFunction,
-} from "./interfaces";
+import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces";
 import { Function, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";

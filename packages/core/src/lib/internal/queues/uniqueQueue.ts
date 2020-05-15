@@ -1,12 +1,13 @@
 import {
   fromIterable,
-  first,
+  toRunnable,
   EnumeratorLike,
   enumerate,
 } from "../../enumerable";
 import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { QueueLike } from "./interfaces";
+import { first } from "../../runnable";
 
 class UniqueQueueImpl<T> implements QueueLike<T> {
   readonly values: Set<T> = new Set();
@@ -24,7 +25,7 @@ class UniqueQueueImpl<T> implements QueueLike<T> {
   }
 
   peek() {
-    return pipe(this.values, fromIterable, first);
+    return pipe(this.values, fromIterable, toRunnable(), first);
   }
 
   pop() {
