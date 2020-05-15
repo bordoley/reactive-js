@@ -67,7 +67,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   }
 
   enumerate(): EnumeratorLike<T> {
-    return pipe(this.values, fromArray, enumerate);
+    return pipe(this.values, fromArray(), enumerate);
   }
 
   peek() {

@@ -11,7 +11,7 @@ class ReducerSink<T, TAcc> implements SinkLike<T> {
     assertSinkState(this);
     this.acc = this.reducer(this.acc, next);
   }
-  
+
   done(): void {
     this.isDone = true;
   }

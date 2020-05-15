@@ -2,10 +2,7 @@ import { add } from "../../disposable";
 import { Predicate, TypePredicate } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 import { notifyKeepType } from "../notifyMixins";
 

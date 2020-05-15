@@ -10,11 +10,13 @@ const fromArrayScanner = (acc: number, _: void): number => acc + 1;
  *
  * @param values The array.
  */
-export const fromArray = <T>(values: readonly T[]): AsyncEnumerableLike<T> =>
+export const fromArray = <T>({ startIndex } = { startIndex: 0 }) => (
+  values: readonly T[],
+): AsyncEnumerableLike<T> =>
   createStreamable(
     compose(
-      scan(fromArrayScanner, returns(-1)),
+      scan(fromArrayScanner, returns(startIndex - 1)),
       map((i: number) => values[i]),
-      takeFirst(values.length),
+      takeFirst(values.length - startIndex),
     ),
   );

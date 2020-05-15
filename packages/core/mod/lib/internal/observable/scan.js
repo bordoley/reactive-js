@@ -1,6 +1,6 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { notifyScan } from "../notifyMixins.js";
 class ScanObserver extends AbstractDelegatingObserver {
     constructor(delegate, scanner, acc) {

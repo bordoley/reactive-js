@@ -4,10 +4,7 @@ import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(

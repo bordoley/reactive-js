@@ -2,10 +2,7 @@ import { add } from "../../disposable";
 import { SideEffect1 } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(

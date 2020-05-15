@@ -4,7 +4,7 @@ import { isSome } from "../../option.js";
 import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);

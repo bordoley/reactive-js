@@ -33,7 +33,7 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
           last.shift();
         }
       }
-      this.enumerator = pipe(last, fromArray, enumerate);
+      this.enumerator = pipe(last, fromArray(), enumerate);
     }
 
     this.enumerator.move();

@@ -53,7 +53,7 @@ class PriorityQueueImpl {
         this.values.length = 0;
     }
     enumerate() {
-        return pipe(this.values, fromArray, enumerate);
+        return pipe(this.values, fromArray(), enumerate);
     }
     peek() {
         return this.values[0];

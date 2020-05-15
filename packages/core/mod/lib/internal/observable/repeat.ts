@@ -11,10 +11,7 @@ import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.t
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
   private readonly innerSubscription = createSerialDisposable();

@@ -1,3 +1,4 @@
+import { pipe } from "../../functions.js";
 import { enumerate } from "./enumerator.js";
 import { fromArray } from "./fromArray.js";
 class ComputeEnumerable {
@@ -5,7 +6,7 @@ class ComputeEnumerable {
         this.f = f;
     }
     enumerate() {
-        return enumerate(fromArray([this.f()]));
+        return pipe([this.f()], fromArray(), enumerate);
     }
 }
 export const compute = (f) => new ComputeEnumerable(f);

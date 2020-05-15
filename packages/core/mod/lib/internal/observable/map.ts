@@ -6,10 +6,7 @@ import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { notifyMap } from "../notifyMixins.ts";
 
 class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
-  constructor(
-    delegate: ObserverLike<TB>,
-    readonly mapper: Function<TA, TB>,
-  ) {
+  constructor(delegate: ObserverLike<TB>, readonly mapper: Function<TA, TB>) {
     super(delegate);
     add(this, delegate);
   }

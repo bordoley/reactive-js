@@ -12,7 +12,8 @@ export const tests = describe("async-enumerable", test("consume", () => {
     pipe(enumerable, consume((acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)), returns(0)), toValue(), expectEquals(3));
 }), describe("consumeAsync", test("when the consumer early terminates", defer([1, 2, 3, 4, 5, 6], fromIterable, consumeAsync((acc, next) => fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)), returns(0)), toValue(), expectEquals(3))), test("when the consumer never terminates", defer([1, 2, 3, 4, 5, 6], fromIterable, consumeAsync((acc, next) => pipe(acc + next, continue_, fromValue()), returns(0)), toValue(), expectEquals(21)))), test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(fromArray([1, 2, 3, 4, 5, 6]), scheduler);
+    const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArray());
+    const enumerator = stream(enumerable, scheduler);
     const result = [];
     pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler));
     dispatch(enumerator, none);

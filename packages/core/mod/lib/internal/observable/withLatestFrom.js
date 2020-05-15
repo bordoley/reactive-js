@@ -4,7 +4,7 @@ import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class WithLatestFromObserver extends AbstractDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);

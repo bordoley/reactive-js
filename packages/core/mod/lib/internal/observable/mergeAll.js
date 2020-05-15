@@ -5,7 +5,7 @@ import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 const subscribeNext = (observer) => {
     if (observer.activeCount < observer.maxConcurrency) {
         const nextObs = observer.queue.shift();

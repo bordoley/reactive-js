@@ -2,10 +2,7 @@ import { add } from "../../disposable";
 import { Factory, Reducer } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { notifyScan } from "../notifyMixins";
 
 class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {

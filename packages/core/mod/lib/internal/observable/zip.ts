@@ -10,10 +10,7 @@ import { SchedulerContinuationLike } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { using } from "./using.ts";
 
 class EnumeratorObserver<T> extends AbstractDisposable

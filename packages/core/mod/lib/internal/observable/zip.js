@@ -3,7 +3,7 @@ import { current } from "../../enumerable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {

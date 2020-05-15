@@ -53,7 +53,7 @@ export const tests = describe(
   test(
     "concat",
     defer(
-      concat(empty(), fromArray([1, 2, 3]), empty(), fromArray([4, 5, 6])),
+      concat(empty(), fromArray()([1, 2, 3]), empty(), fromArray()([4, 5, 6])),
       toArray,
       expectArrayEquals([1, 2, 3, 4, 5, 6]),
     ),
@@ -67,7 +67,7 @@ export const tests = describe(
     ),
     test(
       "source does not contain value",
-      defer([2, 3, 4], fromArray, contains(1), expectFalse),
+      defer([2, 3, 4], fromArray(), contains(1), expectFalse),
     ),
   ),
   describe(
@@ -76,7 +76,7 @@ export const tests = describe(
       "when source has duplicates in order",
       defer(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        fromArray,
+        fromArray(),
         distinctUntilChanged(),
         toArray,
         expectArrayEquals([1, 2, 3, 4]),
@@ -86,7 +86,7 @@ export const tests = describe(
       "when source is empty",
       defer(
         [],
-        fromArray,
+        fromArray(),
         distinctUntilChanged(),
         toArray,
         expectArrayEquals([]),
@@ -97,7 +97,7 @@ export const tests = describe(
     "endWith",
     defer(
       [1, 2, 3],
-      fromArray,
+      fromArray(),
       endWith(4),
       toArray,
       expectArrayEquals([1, 2, 3, 4]),
@@ -111,11 +111,11 @@ export const tests = describe(
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray, everySatisfy(alwaysTrue), expectTrue),
+      defer([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), expectTrue),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray, everySatisfy(alwaysFalse), expectFalse),
+      defer([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), expectFalse),
     ),
   ),
   describe(
@@ -131,7 +131,7 @@ export const tests = describe(
     defer(
       0,
       fromValue,
-      flatMap(_ => fromArray([1, 2, 3])),
+      flatMap(_ => fromArray()([1, 2, 3])),
       toArray,
       expectArrayEquals([1, 2, 3]),
     ),
@@ -146,7 +146,7 @@ export const tests = describe(
     "keep",
     defer(
       [4, 8, 10, 7],
-      fromArray,
+      fromArray(),
       keep(x => x > 5),
       toArray,
       expectArrayEquals([8, 10, 7]),
@@ -156,7 +156,7 @@ export const tests = describe(
     "map",
     defer(
       [1, 2, 3],
-      fromArray,
+      fromArray(),
       map(increment),
       toArray,
       expectArrayEquals([2, 3, 4]),
@@ -170,11 +170,11 @@ export const tests = describe(
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray, noneSatisfy(alwaysTrue), expectFalse),
+      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysTrue), expectFalse),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray, noneSatisfy(alwaysFalse), expectTrue),
+      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysFalse), expectTrue),
     ),
   ),
   describe(
@@ -183,7 +183,7 @@ export const tests = describe(
       "when always repeating",
       defer(
         [1, 2, 3],
-        fromArray,
+        fromArray(),
         repeat(),
         takeFirst(6),
         toArray,
@@ -194,7 +194,7 @@ export const tests = describe(
       "when repeating a finite amount of times.",
       defer(
         [1, 2, 3],
-        fromArray,
+        fromArray(),
         repeat(3),
         toArray,
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -204,7 +204,7 @@ export const tests = describe(
       "when repeating with a predicate",
       defer(
         [1, 2, 3],
-        fromArray,
+        fromArray(),
         repeat(x => x < 1),
         toArray,
         expectArrayEquals([1, 2, 3]),
@@ -216,7 +216,7 @@ export const tests = describe(
     "scan",
     defer(
       [1, 1, 1],
-      fromArray,
+      fromArray(),
       scan(sum, returns(0)),
       toArray,
       expectArrayEquals([1, 2, 3]),
@@ -228,7 +228,7 @@ export const tests = describe(
       "when skipped source has additional elements",
       defer(
         [1, 2, 3],
-        fromArray,
+        fromArray(),
         skipFirst(2),
         toArray,
         expectArrayEquals([3]),
@@ -236,14 +236,14 @@ export const tests = describe(
     ),
     test(
       "when all elements are skipped",
-      defer([1, 2, 3], fromArray, skipFirst(4), toArray, expectArrayEquals([])),
+      defer([1, 2, 3], fromArray(), skipFirst(4), toArray, expectArrayEquals([])),
     ),
   ),
   test(
     "startWith",
     defer(
       [1, 2, 3],
-      fromArray,
+      fromArray(),
       startWith(0),
       toArray,
       expectArrayEquals([0, 1, 2, 3]),
@@ -268,7 +268,7 @@ export const tests = describe(
       "takeLast",
       defer(
         [1, 2, 3, 4, 5],
-        fromArray,
+        fromArray(),
         takeLast(3),
         toArray,
         expectArrayEquals([3, 4, 5]),
@@ -285,7 +285,7 @@ export const tests = describe(
         );
         pipe(
           [1, 2, 3],
-          fromArray,
+          fromArray(),
           takeWhile(alwaysTrue),
           toArray,
           expectArrayEquals([1, 2, 3]),
@@ -308,7 +308,7 @@ export const tests = describe(
     "toIterable",
     defer(
       [1, 2, 3],
-      fromArray,
+      fromArray(),
       toIterable,
       fromIterable,
       toArray,
@@ -319,8 +319,8 @@ export const tests = describe(
     "zip",
     defer(
       [1, 2, 3],
-      fromArray,
-      zipWith(fromArray([1, 2, 3, 4, 5])),
+      fromArray(),
+      zipWith(fromArray<number>()([1, 2, 3, 4, 5])),
       map(([a, b]) => a + b),
       toArray,
       expectArrayEquals([2, 4, 6]),

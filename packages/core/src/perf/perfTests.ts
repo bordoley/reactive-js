@@ -32,7 +32,7 @@ export const filterMapFusion = (n: number) =>
 
         return defer(
           src,
-          fromArray,
+          fromArray(),
           map(increment),
           keep(isOdd),
           map(increment),
@@ -116,7 +116,7 @@ export const filterMapReduce = (n: number) =>
 
         return defer(
           src,
-          fromArray,
+          fromArray(),
           keep(isEven),
           map(increment),
           reduce(sum, returns(0)),
@@ -182,7 +182,7 @@ export const scanReduce = (n: number) =>
 
         return defer(
           src,
-          fromArray,
+          fromArray(),
           scan(sum, returns(0)),
           reduce(passthrough, returns(0)),
         );

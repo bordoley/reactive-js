@@ -5,10 +5,7 @@ import { AbstractDelegatingSink, assertSinkState } from "./sink.ts";
 import { notifyMap } from "../notifyMixins.ts";
 
 class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
-  constructor(
-    delegate: SinkLike<TB>,
-    readonly mapper: Function<TA, TB>,
-  ) {
+  constructor(delegate: SinkLike<TB>, readonly mapper: Function<TA, TB>) {
     super(delegate);
   }
 

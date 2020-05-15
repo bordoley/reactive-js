@@ -49,13 +49,13 @@ export const notifyMap = <TA, TB>(
 export const notifyScan = <T, TAcc>(
   self: {
     readonly delegate: NotifiableLike<TAcc>;
-    acc: TAcc,
-    readonly scanner: Reducer<T, TAcc>,
+    acc: TAcc;
+    readonly scanner: Reducer<T, TAcc>;
   },
-  next: T
-) =>  {
+  next: T,
+) => {
   const nextAcc = self.scanner(self.acc, next);
   self.acc = nextAcc;
 
   self.delegate.notify(nextAcc);
-}
+};

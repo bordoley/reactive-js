@@ -11,10 +11,7 @@ import { concat } from "./concat.ts";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { subscribe } from "./subscribe.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { throws } from "./throws.ts";
 
 /** Symbol thrown when the timeout operator times out */

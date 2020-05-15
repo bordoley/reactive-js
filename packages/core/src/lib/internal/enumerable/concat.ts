@@ -15,7 +15,7 @@ export function concat<T>(
 export function concat<T>(
   ...observables: EnumerableLike<T>[]
 ): EnumerableLike<T> {
-  return pipe(observables, fromArray, flatten());
+  return pipe(observables, fromArray(), flatten());
 }
 
 export const concatWith = <T>(

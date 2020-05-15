@@ -2,10 +2,7 @@ import { add, dispose } from "../../disposable";
 import { Predicate } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
