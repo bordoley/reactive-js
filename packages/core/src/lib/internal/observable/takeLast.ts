@@ -32,7 +32,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     const last = this.last;
 
     last.push(next);
-  
+
     if (last.length > this.maxCount) {
       last.shift();
     }

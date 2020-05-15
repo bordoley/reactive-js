@@ -22,7 +22,6 @@ class TakeLastSink {
             fromArray()(this.last).run(this.delegate);
         }
     }
-    ;
 }
 export const takeLast = (count = 1) => {
     const operator = (sink) => new TakeLastSink(sink, count);

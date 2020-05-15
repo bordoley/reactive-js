@@ -74,9 +74,9 @@ import {
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
+import { HttpExtensionHeader } from "@reactive-js/http/src/lib/http";
 import db from "mime-db";
 import mime from "mime-types";
-import { HttpExtensionHeader } from "@reactive-js/http/src/lib/http";
 
 const scheduler = pipe(
   createHostScheduler(),

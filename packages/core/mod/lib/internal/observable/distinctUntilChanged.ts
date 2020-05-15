@@ -16,7 +16,7 @@ class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverState(this);
-    
+
     const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
 
     if (shouldEmit) {

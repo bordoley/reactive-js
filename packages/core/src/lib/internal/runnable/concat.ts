@@ -6,12 +6,10 @@ import { AbstractDelegatingSink } from "./sink";
 class ConcatSink<T> extends AbstractDelegatingSink<T, T> {
   isDone = false;
 
-  constructor(
-     delegate: SinkLike<T>,
-  ) {
+  constructor(delegate: SinkLike<T>) {
     super(delegate);
   }
-  
+
   done() {
     this.isDone = true;
   }
