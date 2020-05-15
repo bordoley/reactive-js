@@ -127,19 +127,13 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`data`: T): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`data` | T |
-
-**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 ___
 

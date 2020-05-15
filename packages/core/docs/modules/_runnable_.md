@@ -82,19 +82,13 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`f`: [Factory](_functions_.md#factory)‹T›): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+▸ **compute**<**T**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`f` | [Factory](_functions_.md#factory)‹T› |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 
@@ -410,19 +404,13 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`value`: T): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | T |
-
-**Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 

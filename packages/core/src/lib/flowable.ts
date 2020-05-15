@@ -70,20 +70,21 @@ const _empty: FlowableLike<any> = createStreamable(
 );
 export const empty = <T>(): FlowableLike<T> => _empty;
 
-export const fromValue = <T>(data: T): FlowableLike<T> =>
-  createStreamable(
-    compose(
-      keep(isEqualTo(FlowMode.Resume)),
-      takeFirst(),
-      genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
-        switch (mode) {
-          case FlowMode.Resume:
-            yield next(data);
-            yield complete();
-        }
-      }),
-    ),
-  );
+const _fromValue = <T>(data: T): FlowableLike<T> =>
+createStreamable(
+  compose(
+    keep(isEqualTo(FlowMode.Resume)),
+    takeFirst(),
+    genMap(function*(mode: FlowMode): Generator<FlowEvent<T>> {
+      switch (mode) {
+        case FlowMode.Resume:
+          yield next(data);
+          yield complete();
+      }
+    }),
+  ),
+);
+export const fromValue = <T>(): Function<T, FlowableLike<T>> => _fromValue;
 
 export const map = <TA, TB>(
   mapper: Function<TA, TB>,

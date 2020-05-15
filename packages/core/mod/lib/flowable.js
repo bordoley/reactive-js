@@ -11,13 +11,14 @@ const _complete = { type: 2 };
 export const complete = () => _complete;
 const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2), { inclusive: true }), mapTo(complete())));
 export const empty = () => _empty;
-export const fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
+const _fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
     switch (mode) {
         case 1:
             yield next(data);
             yield complete();
     }
 })));
+export const fromValue = () => _fromValue;
 export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
 export const fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {

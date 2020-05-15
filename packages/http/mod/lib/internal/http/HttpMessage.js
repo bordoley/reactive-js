@@ -54,5 +54,5 @@ export const decodeHttpMessageWithCharset = ({ contentInfo, ...msg }) => {
 };
 export const toFlowableHttpMessage = ({ body, ...msg }) => ({
     ...msg,
-    body: fromValue(body),
+    body: fromValue()(body),
 });

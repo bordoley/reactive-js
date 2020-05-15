@@ -69,7 +69,7 @@ export const tests = describe(
   test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
 
-    const lib = pipe(str, fromValue, encodeUtf8, decodeWithCharset());
+    const lib = pipe(str, fromValue(), encodeUtf8, decodeWithCharset());
     const dest = createFlowableSinkAccumulator(
       (acc: string, next: string) => acc + next,
       returns(""),
@@ -123,7 +123,7 @@ export const tests = describe(
   }),
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue(1), scheduler);
+    const fromValueStream = stream(fromValue()(1), scheduler);
 
     dispatch(fromValueStream, FlowMode.Pause);
     dispatch(fromValueStream, FlowMode.Pause);
@@ -149,7 +149,8 @@ export const tests = describe(
   }),
   test("map", () => {
     const lib = pipe(
-      fromValue(1),
+      1,
+      fromValue(),
       map(_ => 2),
     );
     const dest = createFlowableSinkAccumulator(sum, returns(0));

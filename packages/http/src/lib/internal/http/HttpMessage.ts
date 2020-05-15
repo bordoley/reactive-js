@@ -77,5 +77,5 @@ export const toFlowableHttpMessage = <TBody>({
   ...msg
 }: HttpMessage<TBody>): HttpMessage<FlowableLike<TBody>> => ({
   ...msg,
-  body: fromValue(body),
+  body: fromValue()(body),
 });
