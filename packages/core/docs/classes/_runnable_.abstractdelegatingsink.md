@@ -25,6 +25,9 @@
 ### Properties
 
 * [delegate](_runnable_.abstractdelegatingsink.md#delegate)
+
+### Accessors
+
 * [isDone](_runnable_.abstractdelegatingsink.md#isdone)
 
 ### Methods
@@ -52,13 +55,13 @@ Name | Type |
 
 • **delegate**: *[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›*
 
-___
+## Accessors
 
 ###  isDone
 
-• **isDone**: *boolean* = false
+• **get isDone**(): *boolean*
 
-*Implementation of [SinkLike](../interfaces/_runnable_.sinklike.md).[isDone](../interfaces/_runnable_.sinklike.md#isdone)*
+**Returns:** *boolean*
 
 ## Methods
 

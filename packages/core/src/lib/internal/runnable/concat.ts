@@ -1,17 +1,22 @@
 import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces";
+import { Function, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
+import { lift } from "./lift";
+import { map } from "./map";
 import { AbstractDelegatingSink } from "./sink";
 
-class ConcatSink<T> extends AbstractDelegatingSink<T, T> {
-  isDone = false;
+class ConcatSink<T> implements SinkLike<T> {
+  private _isDone = false;
+  constructor(private readonly delegate: SinkLike<T>) {
+  }
 
-  constructor(delegate: SinkLike<T>) {
-    super(delegate);
+  get isDone() {
+    return this._isDone || this.delegate.isDone;
   }
 
   done() {
-    this.isDone = true;
+    this._isDone = true;
   }
 
   notify(next: T) {
@@ -50,3 +55,21 @@ export function startWith<T>(value: T, ...values: T[]): RunnableFunction<T, T>;
 export function startWith<T>(...values: T[]): RunnableFunction<T, T> {
   return obs => concat(fromArray()(values), obs);
 }
+
+
+class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
+  constructor(delegate: SinkLike<T>) {
+    super(delegate);
+  }
+
+  notify(next: RunnableLike<T>) {
+    next.run(new ConcatSink(this.delegate));
+  }
+}
+
+const _flatten = lift(s => new FlattenSink(s));
+export const flatten = <T>(): RunnableFunction<RunnableLike<T>, T> => _flatten;
+
+export const flatMap = <TA, TB>(
+  mapper: Function<TA, RunnableLike<TB>>,
+): RunnableFunction<TA, TB> => compose(map(mapper), flatten());

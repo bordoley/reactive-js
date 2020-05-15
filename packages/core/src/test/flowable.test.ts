@@ -85,7 +85,7 @@ export const tests = describe(
   test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = stream(
-      pipe(generate(increment, returns(0), { delay: 1 }), fromObservable),
+      pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable),
       scheduler,
     );
 

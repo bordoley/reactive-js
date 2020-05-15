@@ -15,11 +15,9 @@ class GenerateProducer extends AbstractProducer {
         let acc = this.acc;
         let isDisposed = this.isDisposed;
         while (!isDisposed) {
+            acc = generator(acc);
             this.notify(acc);
             isDisposed = this.isDisposed;
-            if (!isDisposed) {
-                acc = generator(acc);
-            }
             if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
                 this.acc = acc;
                 schedule(scheduler, this, this);

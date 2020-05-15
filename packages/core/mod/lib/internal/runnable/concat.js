@@ -1,13 +1,19 @@
+import { compose } from "../../functions.js";
 import { createRunnable } from "./createRunnable.js";
 import { fromArray } from "./fromArray.js";
+import { lift } from "./lift.js";
+import { map } from "./map.js";
 import { AbstractDelegatingSink } from "./sink.js";
-class ConcatSink extends AbstractDelegatingSink {
+class ConcatSink {
     constructor(delegate) {
-        super(delegate);
-        this.isDone = false;
+        this.delegate = delegate;
+        this._isDone = false;
+    }
+    get isDone() {
+        return this._isDone || this.delegate.isDone;
     }
     done() {
-        this.isDone = true;
+        this._isDone = true;
     }
     notify(next) {
         this.delegate.notify(next);
@@ -28,3 +34,14 @@ export function endWith(...values) {
 export function startWith(...values) {
     return obs => concat(fromArray()(values), obs);
 }
+class FlattenSink extends AbstractDelegatingSink {
+    constructor(delegate) {
+        super(delegate);
+    }
+    notify(next) {
+        next.run(new ConcatSink(this.delegate));
+    }
+}
+const _flatten = lift(s => new FlattenSink(s));
+export const flatten = () => _flatten;
+export const flatMap = (mapper) => compose(map(mapper), flatten());

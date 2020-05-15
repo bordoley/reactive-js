@@ -81,6 +81,7 @@ import {
   dispatchTo,
   dispatch,
   zipLatestWith,
+  concatMap,
 } from "../lib/observable";
 import {
   createHostScheduler,
@@ -199,10 +200,10 @@ export const tests = describe(
   test(
     "combineLatest",
     defer(
-      generate(incrementBy(2), returns(3), { delay: 2 }),
+      generate(incrementBy(2), returns(1), { delay: 2 }),
       takeFirst(3),
       combineLatestWith(
-        pipe(generate(incrementBy(2), returns(2), { delay: 3 }), takeFirst(2)),
+        pipe(generate(incrementBy(2), returns(0), { delay: 3 }), takeFirst(2)),
       ),
       toArray(),
       expectArrayEquals(
@@ -859,7 +860,7 @@ export const tests = describe(
     test(
       "first",
       defer(
-        generate(increment, returns<number>(0), { delay: 1 }),
+        generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst(100),
         throttle(50, ThrottleMode.First),
         toArray(),
@@ -870,7 +871,7 @@ export const tests = describe(
     test(
       "last",
       defer(
-        generate(increment, returns<number>(0), { delay: 1 }),
+        generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst(200),
         throttle(50, ThrottleMode.Last),
         toArray(),
@@ -881,7 +882,7 @@ export const tests = describe(
     test(
       "interval",
       defer(
-        generate(increment, returns<number>(0), { delay: 1 }),
+        generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst(200),
         throttle(75, ThrottleMode.Interval),
         toArray(),
@@ -1011,7 +1012,7 @@ export const tests = describe(
         zip(
           pipe([1, 2], fromArray()),
           pipe([1, 2], fromArray(), map(increment)),
-          generate(increment, returns<number>(3)),
+          generate(increment, returns<number>(2)),
         ),
         toArray(),
         expectArrayEquals(
@@ -1128,4 +1129,13 @@ export const tests = describe(
       ),
     ),
   ),
+
+  test("lift", defer(
+    generate<number>(increment, returns(0)),
+    map(x => x * 2),
+    takeFirst(3),
+    concatMap(x => pipe(generate<number>(incrementBy(1), returns(0)),  takeFirst(x))),
+    toArray(),
+    expectArrayEquals([1,2,1,2,3,4,1,2,3,4,5,6]),
+  ))
 );

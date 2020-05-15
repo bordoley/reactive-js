@@ -1,11 +1,10 @@
 export { compute } from "./internal/runnable/compute.js";
-export { concat, concatWith, endWith, startWith, } from "./internal/runnable/concat.js";
+export { concat, concatWith, endWith, startWith, flatten, flatMap, } from "./internal/runnable/concat.js";
 export { createRunnable } from "./internal/runnable/createRunnable.js";
 export { distinctUntilChanged } from "./internal/runnable/distinctUntilChanged.js";
 export { empty } from "./internal/runnable/empty.js";
 export { everySatisfy, noneSatisfy } from "./internal/runnable/everySatisfy.js";
 export { first } from "./internal/runnable/first.js";
-export { flatten, flatMap } from "./internal/runnable/flatten.js";
 export { forEach } from "./internal/runnable/forEach.js";
 export { fromArray } from "./internal/runnable/fromArray.js";
 export { fromEnumerable, fromEnumerator, } from "./internal/runnable/fromEnumerable.js";
