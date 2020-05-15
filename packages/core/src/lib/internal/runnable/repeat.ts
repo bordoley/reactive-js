@@ -47,8 +47,8 @@ export function repeat<T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        runnable.run(new RepeatSink(sink));
+        runnable.runUnsafe(new RepeatSink(sink));
         count++;
-      } while (!sink.isDone && shouldRepeat(count));
+      } while (shouldRepeat(count));
     });
 }

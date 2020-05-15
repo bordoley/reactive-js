@@ -1,8 +1,18 @@
-import { SinkLike, RunnableLike } from "./interfaces";
+import { SinkLike, RunnableLike, sinkDone } from "./interfaces";
 import { SideEffect1 } from "../../functions";
 
 class RunnableImpl<T> implements RunnableLike<T> {
-  constructor(readonly run: SideEffect1<SinkLike<T>>) {}
+  constructor(readonly runUnsafe: SideEffect1<SinkLike<T>>) {}
+
+  run(sink: SinkLike<T>) {
+    try {
+      this.runUnsafe(sink);
+    } catch (e) {
+      if (e !== sinkDone) {
+        throw e;
+      }
+    }
+  }
 }
 
 export const createRunnable = <T>(

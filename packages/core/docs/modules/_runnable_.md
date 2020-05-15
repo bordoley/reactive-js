@@ -18,6 +18,10 @@
 * [RunnableFunction](_runnable_.md#runnablefunction)
 * [SinkFunction](_runnable_.md#sinkfunction)
 
+### Variables
+
+* [sinkDone](_runnable_.md#const-sinkdone)
+
 ### Functions
 
 * [compute](_runnable_.md#const-compute)
@@ -67,6 +71,12 @@ ___
 ###  SinkFunction
 
 Ƭ **SinkFunction**: *[Function](_functions_.md#function)‹[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›, [SinkLike](../interfaces/_runnable_.sinklike.md)‹TA››*
+
+## Variables
+
+### `Const` sinkDone
+
+• **sinkDone**: *unique symbol* = Symbol("@reactive-js/core/lib/runnable/sinkDone")
 
 ## Functions
 

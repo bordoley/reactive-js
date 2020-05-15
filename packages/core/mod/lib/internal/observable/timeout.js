@@ -5,7 +5,7 @@ import { lift } from "./lift.js";
 import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { throws } from "./throws.js";
-export const timeoutError = Symbol("TimeoutError");
+export const timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 const setupDurationSubscription = (observer) => {
     observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
 };

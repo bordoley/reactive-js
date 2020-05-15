@@ -1,3 +1,4 @@
+import { sinkDone } from "./interfaces.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { empty } from "./empty.js";
@@ -6,7 +7,6 @@ class TakeLastSink {
     constructor(delegate, maxCount) {
         this.delegate = delegate;
         this.maxCount = maxCount;
-        this.isDone = false;
         this.last = [];
     }
     notify(next) {
@@ -17,10 +17,8 @@ class TakeLastSink {
         }
     }
     done() {
-        if (!this.isDone) {
-            this.isDone = true;
-            fromArray()(this.last).run(this.delegate);
-        }
+        fromArray()(this.last).run(this.delegate);
+        throw sinkDone;
     }
 }
 export const takeLast = (count = 1) => {

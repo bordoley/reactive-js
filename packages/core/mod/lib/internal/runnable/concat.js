@@ -4,27 +4,35 @@ import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { AbstractDelegatingSink } from "./sink.js";
+const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
 class ConcatSink {
     constructor(delegate) {
         this.delegate = delegate;
-        this._isDone = false;
-    }
-    get isDone() {
-        return this._isDone || this.delegate.isDone;
     }
     done() {
-        this._isDone = true;
+        throw concatSinkDone;
     }
     notify(next) {
         this.delegate.notify(next);
     }
 }
+const runConcatUnsafe = (runnable, sink) => {
+    try {
+        runnable.runUnsafe(new ConcatSink(sink));
+    }
+    catch (e) {
+        if (e !== concatSinkDone) {
+            throw e;
+        }
+    }
+};
 export function concat(...runnables) {
     return createRunnable((sink) => {
         const runnablesLength = runnables.length;
-        for (let i = 0; i < runnablesLength && !sink.isDone; i++) {
-            runnables[i].run(new ConcatSink(sink));
+        for (let i = 0; i < runnablesLength; i++) {
+            runConcatUnsafe(runnables[i], sink);
         }
+        sink.done();
     });
 }
 export const concatWith = (snd) => first => concat(first, snd);
@@ -39,7 +47,7 @@ class FlattenSink extends AbstractDelegatingSink {
         super(delegate);
     }
     notify(next) {
-        next.run(new ConcatSink(this.delegate));
+        runConcatUnsafe(next, this.delegate);
     }
 }
 const _flatten = lift(s => new FlattenSink(s));

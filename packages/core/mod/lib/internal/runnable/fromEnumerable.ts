@@ -8,7 +8,7 @@ export const fromEnumerator = <T>(
 ): RunnableLike<T> => {
   const run = (sink: SinkLike<T>) => {
     const enumerator = f();
-    while (!sink.isDone && enumerator.move()) {
+    while (enumerator.move()) {
       sink.notify(enumerator.current);
     }
     sink.done();

@@ -1,4 +1,8 @@
-import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces";
+import {
+  RunnableLike,
+  SinkLike,
+  RunnableFunction,
+} from "./interfaces";
 import { Function, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
@@ -6,23 +10,29 @@ import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingSink } from "./sink";
 
-class ConcatSink<T> implements SinkLike<T> {
-  private _isDone = false;
-  constructor(private readonly delegate: SinkLike<T>) {
-  }
+const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
 
-  get isDone() {
-    return this._isDone || this.delegate.isDone;
-  }
+class ConcatSink<T> implements SinkLike<T> {
+  constructor(private readonly delegate: SinkLike<T>) {}
 
   done() {
-    this._isDone = true;
+    throw concatSinkDone;
   }
 
   notify(next: T) {
     this.delegate.notify(next);
   }
 }
+
+const runConcatUnsafe = <T>(runnable: RunnableLike<T>, sink: SinkLike<T>) => {
+  try {
+    runnable.runUnsafe(new ConcatSink(sink));
+  } catch (e) {
+    if (e !== concatSinkDone) {
+      throw e;
+    }
+  }
+};
 
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
@@ -36,9 +46,10 @@ export function concat<T>(
 export function concat<T>(...runnables: RunnableLike<T>[]): RunnableLike<T> {
   return createRunnable((sink: SinkLike<T>) => {
     const runnablesLength = runnables.length;
-    for (let i = 0; i < runnablesLength && !sink.isDone; i++) {
-      runnables[i].run(new ConcatSink(sink));
+    for (let i = 0; i < runnablesLength; i++) {
+      runConcatUnsafe(runnables[i], sink);
     }
+    sink.done();
   });
 }
 
@@ -56,14 +67,13 @@ export function startWith<T>(...values: T[]): RunnableFunction<T, T> {
   return obs => concat(fromArray()(values), obs);
 }
 
-
 class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
   constructor(delegate: SinkLike<T>) {
     super(delegate);
   }
 
   notify(next: RunnableLike<T>) {
-    next.run(new ConcatSink(this.delegate));
+    runConcatUnsafe(next, this.delegate);
   }
 }
 

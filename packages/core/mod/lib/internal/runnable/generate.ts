@@ -8,11 +8,10 @@ export const generate = <T>(
 ): RunnableLike<T> => {
   const run = (sink: SinkLike<T>) => {
     let acc = initialValue();
-    while (!sink.isDone) {
+    while (true) {
       acc = generator(acc);
       sink.notify(acc);
     }
-    sink.done();
   };
   return createRunnable(run);
 };

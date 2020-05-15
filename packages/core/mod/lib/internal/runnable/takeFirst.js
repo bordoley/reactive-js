@@ -9,6 +9,7 @@ class TakeFirstSink extends AbstractDelegatingSink {
         this.count = 0;
     }
     notify(next) {
+        debugger;
         this.count++;
         this.delegate.notify(next);
         if (this.count >= this.maxCount) {

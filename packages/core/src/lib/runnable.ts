@@ -26,6 +26,7 @@ export {
   RunnableFunction,
   SinkLike,
   SinkFunction,
+  sinkDone,
 } from "./internal/runnable/interfaces";
 export { lift } from "./internal/runnable/lift";
 export { keep, keepType } from "./internal/runnable/keep";

@@ -34,7 +34,7 @@ const throwParseErrorDev = (charStream) => {
     const error = new ParserError(charStream.index);
     throw error;
 };
-const parseErrorSymbol = Symbol("ParseError");
+const parseErrorSymbol = Symbol("@reactive-js/core/lib/parserCombinator/parseError");
 const throwParseErrorProd = (_) => {
     throw parseErrorSymbol;
 };

@@ -16,7 +16,7 @@ export const fromArray = <T>(
     const valuesLength = values.length;
     for (
       let index = startIndex;
-      index < valuesLength && !sink.isDone;
+      index < valuesLength;
       index++
     ) {
       sink.notify(values[index]);

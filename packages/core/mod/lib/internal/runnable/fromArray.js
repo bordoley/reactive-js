@@ -6,7 +6,7 @@ export const fromArray = (options = {
     const startIndex = Math.max(Math.min(options.startIndex, valuesLength), 0);
     const run = (sink) => {
         const valuesLength = values.length;
-        for (let index = startIndex; index < valuesLength && !sink.isDone; index++) {
+        for (let index = startIndex; index < valuesLength; index++) {
             sink.notify(values[index]);
         }
         sink.done();

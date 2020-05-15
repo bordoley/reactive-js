@@ -16,20 +16,10 @@
 
 ## Index
 
-### Properties
-
-* [isDone](_runnable_.sinklike.md#isdone)
-
 ### Methods
 
 * [done](_runnable_.sinklike.md#done)
 * [notify](_runnable_.sinklike.md#notify)
-
-## Properties
-
-###  isDone
-
-• **isDone**: *boolean*
 
 ## Methods
 
