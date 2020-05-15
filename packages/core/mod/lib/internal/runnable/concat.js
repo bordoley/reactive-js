@@ -1,31 +1,25 @@
 import { createRunnable } from "./createRunnable.js";
 import { fromArray } from "./fromArray.js";
-class ConcatSink {
-    constructor(delegate, runnables, next) {
-        this.delegate = delegate;
-        this.runnables = runnables;
-        this.next = next;
+import { AbstractDelegatingSink } from "./sink.js";
+class ConcatSink extends AbstractDelegatingSink {
+    constructor(delegate) {
+        super(delegate);
         this.isDone = false;
     }
     done() {
-        const delegate = this.delegate;
-        const runnables = this.runnables;
-        const next = this.next;
-        this.next++;
-        if (next < runnables.length) {
-            runnables[next].run(this);
-        }
-        else {
-            this.isDone = true;
-            delegate.done();
-        }
+        this.isDone = true;
     }
     notify(next) {
         this.delegate.notify(next);
     }
 }
 export function concat(...runnables) {
-    return createRunnable((sink) => runnables[0].run(new ConcatSink(sink, runnables, 1)));
+    return createRunnable((sink) => {
+        const runnablesLength = runnables.length;
+        for (let i = 0; i < runnablesLength && !sink.isDone; i++) {
+            runnables[i].run(new ConcatSink(sink));
+        }
+    });
 }
 export const concatWith = (snd) => first => concat(first, snd);
 export function endWith(...values) {
