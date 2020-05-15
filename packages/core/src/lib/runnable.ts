@@ -5,7 +5,7 @@ export {
   endWith,
   startWith,
   flatten,
-  flatMap,
+  concatMap,
 } from "./internal/runnable/concat";
 export { createRunnable } from "./internal/runnable/createRunnable";
 export { distinctUntilChanged } from "./internal/runnable/distinctUntilChanged";

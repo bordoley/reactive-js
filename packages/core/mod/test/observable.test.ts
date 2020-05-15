@@ -17,6 +17,7 @@ import {
   forEach as forEachEnumerable,
   fromArray as fromArrayEnumerable,
 } from "../lib/enumerable.ts";
+import * as Observable from "../lib/observable.ts";
 import {
   await_,
   buffer,
@@ -103,6 +104,7 @@ import {
   expectSome,
 } from "../lib/internal/testing.ts";
 import { dispose } from "../lib/disposable.ts";
+import { createMonadTests } from "./monadTests.ts";
 
 const scheduler = createHostScheduler();
 
@@ -1143,4 +1145,5 @@ export const tests = describe(
       expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]),
     ),
   ),
+  createMonadTests(Observable),
 );

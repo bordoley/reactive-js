@@ -37,4 +37,4 @@ class FlattenEnumerator {
 const operator = (enumerator) => new FlattenEnumerator(enumerator);
 const _flatten = lift(operator);
 export const flatten = () => _flatten;
-export const flatMap = (mapper) => compose(map(mapper), flatten());
+export const concatMap = (mapper) => compose(map(mapper), flatten());

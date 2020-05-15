@@ -18,6 +18,7 @@
 
 * [compute](_enumerable_.md#const-compute)
 * [concat](_enumerable_.md#concat)
+* [concatMap](_enumerable_.md#const-concatmap)
 * [concatWith](_enumerable_.md#const-concatwith)
 * [contains](_enumerable_.md#const-contains)
 * [current](_enumerable_.md#const-current)
@@ -27,7 +28,6 @@
 * [enumerate](_enumerable_.md#const-enumerate)
 * [everySatisfy](_enumerable_.md#const-everysatisfy)
 * [first](_enumerable_.md#const-first)
-* [flatMap](_enumerable_.md#const-flatmap)
 * [flatten](_enumerable_.md#const-flatten)
 * [forEach](_enumerable_.md#const-foreach)
 * [fromArray](_enumerable_.md#const-fromarray)
@@ -107,6 +107,28 @@ Name | Type |
 `...tail` | Array‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›› |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
+### `Const` concatMap
+
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
+
+Maps each item yielded by the sourc using a mapping function, then flattens the result.
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`mapper` | [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›› |   |
+
+**Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
 ___
 
@@ -280,28 +302,6 @@ Name | Type | Description |
 `enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |   |
 
 **Returns:** *[Option](_option_.md#option)‹T›*
-
-___
-
-### `Const` flatMap
-
-▸ **flatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
-
-Maps each item yielded by the sourc using a mapping function, then flattens the result.
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›› |   |
-
-**Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
 ___
 

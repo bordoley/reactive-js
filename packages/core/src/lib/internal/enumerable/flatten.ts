@@ -60,6 +60,6 @@ export const flatten = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
  *
  * @param mapper
  */
-export const flatMap = <TA, TB>(
+export const concatMap = <TA, TB>(
   mapper: Function<TA, EnumerableLike<TB>>,
 ): EnumerableFunction<TA, TB> => compose(map(mapper), flatten());

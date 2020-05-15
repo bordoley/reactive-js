@@ -26,6 +26,7 @@
 
 * [compute](_runnable_.md#const-compute)
 * [concat](_runnable_.md#concat)
+* [concatMap](_runnable_.md#const-concatmap)
 * [concatWith](_runnable_.md#const-concatwith)
 * [contains](_runnable_.md#const-contains)
 * [createRunnable](_runnable_.md#const-createrunnable)
@@ -34,7 +35,6 @@
 * [endWith](_runnable_.md#endwith)
 * [everySatisfy](_runnable_.md#const-everysatisfy)
 * [first](_runnable_.md#const-first)
-* [flatMap](_runnable_.md#const-flatmap)
 * [flatten](_runnable_.md#const-flatten)
 * [forEach](_runnable_.md#const-foreach)
 * [fromArray](_runnable_.md#const-fromarray)
@@ -111,6 +111,26 @@ Name | Type |
 `...tail` | Array‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›› |
 
 **Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+
+___
+
+### `Const` concatMap
+
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`mapper` | [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB›› |
+
+**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
 ___
 
@@ -251,26 +271,6 @@ Name | Type |
 `runnable` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
 
 **Returns:** *[Option](_option_.md#option)‹T›*
-
-___
-
-### `Const` flatMap
-
-▸ **flatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
-
-**Type parameters:**
-
-▪ **TA**
-
-▪ **TB**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB›› |
-
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
 ___
 

@@ -10,7 +10,7 @@ export {
 export { endWith } from "./internal/enumerable/endWith";
 export { everySatisfy, noneSatisfy } from "./internal/enumerable/everySatisfy";
 export { first } from "./internal/enumerable/first";
-export { flatten, flatMap } from "./internal/enumerable/flatten";
+export { flatten, concatMap } from "./internal/enumerable/flatten";
 export { forEach } from "./internal/enumerable/forEach";
 export { empty, fromArray } from "./internal/enumerable/fromArray";
 export { fromIterable, fromIterator } from "./internal/enumerable/fromIterator";

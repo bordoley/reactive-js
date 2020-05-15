@@ -7,7 +7,7 @@ import {
   fromArray,
   fromIterable,
   empty,
-  flatMap,
+  concatMap,
   forEach,
   keep,
   map,
@@ -25,6 +25,7 @@ import {
   takeWhile,
   everySatisfy,
 } from "../lib/runnable";
+import * as Runnable from "../lib/runnable";
 import {
   pipe,
   returns,
@@ -46,6 +47,7 @@ import {
   expectTrue,
   expectFalse,
 } from "../lib/internal/testing";
+import { createMonadTests } from "./monadTests";
 
 export const tests = describe(
   "runnable",
@@ -127,11 +129,11 @@ export const tests = describe(
     test("when enumerable is empty", defer(empty(), first, expectNone)),
   ),
   test(
-    "flatMap",
+    "concatMap",
     defer(
       0,
       fromValue(),
-      flatMap(_ => fromArray()([1, 2, 3])),
+      concatMap(_ => fromArray()([1, 2, 3])),
       toArray(),
       expectArrayEquals([1, 2, 3]),
     ),
@@ -319,11 +321,14 @@ export const tests = describe(
       generate<number>(increment, returns(0)),
       map(x => x * 2),
       takeFirst(3),
-      flatMap(x =>
+      concatMap(x =>
         pipe(generate<number>(incrementBy(1), returns(0)), takeFirst(x)),
       ),
       toArray(),
       expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]),
     ),
   ),
+  createMonadTests(Runnable),
 );
+
+
