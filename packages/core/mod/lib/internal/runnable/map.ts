@@ -10,7 +10,7 @@ class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
 
   notify(next: TA) {
     const mapped = this.mapper(next);
-  this.delegate.notify(mapped);
+    this.delegate.notify(mapped);
   }
 }
 

@@ -8,25 +8,24 @@ class TakeLastSink<T> implements SinkLike<T> {
   isDone = false;
   readonly last: T[] = [];
 
-  constructor(private delegate: SinkLike<T>, readonly maxCount: number) {
-  }
+  constructor(private delegate: SinkLike<T>, readonly maxCount: number) {}
 
   notify(next: T) {
     const last = this.last;
 
     last.push(next);
-  
+
     if (last.length > this.maxCount) {
       last.shift();
     }
   }
 
   done() {
-    if(!this.isDone) {
+    if (!this.isDone) {
       this.isDone = true;
       fromArray()(this.last).run(this.delegate);
     }
-  };
+  }
 }
 
 export const takeLast = <T>(count = 1): RunnableFunction<T, T> => {

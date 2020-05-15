@@ -1,4 +1,3 @@
-import { benchmarkTest, benchmarkGroup } from "../lib/internal/benchmark";
 import {
   defer,
   isEven,
@@ -9,6 +8,7 @@ import {
   callWith,
   bind,
 } from "../lib/functions";
+import { benchmarkTest, benchmarkGroup } from "../lib/internal/benchmark";
 
 export const passthrough = <T>(_: T, x: T) => x;
 export const createArray = (n: number): ReadonlyArray<number> => {

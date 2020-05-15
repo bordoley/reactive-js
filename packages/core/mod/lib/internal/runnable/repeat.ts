@@ -6,16 +6,13 @@ import { createRunnable } from "./createRunnable.ts";
 class RepeatSink<T> implements SinkLike<T> {
   isDone = false;
 
-  constructor(
-    private readonly delegate: SinkLike<T>,
-  ) {}
+  constructor(private readonly delegate: SinkLike<T>) {}
 
   notify(next: T): void {
     this.delegate.notify(next);
   }
 
-  done(): void {
-  }
+  done(): void {}
 }
 
 /**
@@ -52,6 +49,6 @@ export function repeat<T>(
       do {
         runnable.run(new RepeatSink(sink));
         count++;
-      } while(!sink.isDone && shouldRepeat(count));
+      } while (!sink.isDone && shouldRepeat(count));
     });
 }

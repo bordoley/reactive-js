@@ -14,6 +14,7 @@ class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverState(this);
+    this.count++;
     if (this.count > this.skipCount) {
       this.delegate.notify(next);
     }

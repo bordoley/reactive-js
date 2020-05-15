@@ -9,8 +9,7 @@ class RepeatSink {
     notify(next) {
         this.delegate.notify(next);
     }
-    done() {
-    }
+    done() { }
 }
 export function repeat(predicate) {
     const shouldRepeat = isNone(predicate)

@@ -11,6 +11,7 @@ class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
+    this.count++;
     if (this.count > this.skipCount) {
       this.delegate.notify(next);
     }
