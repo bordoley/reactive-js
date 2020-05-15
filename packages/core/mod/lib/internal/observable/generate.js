@@ -9,7 +9,7 @@ class GenerateProducer extends AbstractProducer {
         this.acc = acc;
         this.delay = delay;
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         const generator = this.generator;
         const delay = this.delay;
         let acc = this.acc;

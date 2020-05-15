@@ -92,7 +92,7 @@ const createCallback = (
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
-    continuation.run(scheduler);
+    continuation.continue(scheduler);
     scheduler.inContinuation = false;
   }
 };

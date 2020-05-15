@@ -47,12 +47,12 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         this.taskIDCount = 0;
         this.taskQueue = createPriorityQueue(comparator);
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         this.host = scheduler;
         while (move(this)) {
             const continuation = this.current;
             this.inContinuation = true;
-            continuation.run(this);
+            continuation.continue(this);
             this.inContinuation = false;
             if (scheduler.shouldYield()) {
                 this.host = ignoreScheduler;
@@ -63,8 +63,8 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         this.host = ignoreScheduler;
         dispose(this);
     }
-    run(scheduler = ignoreScheduler) {
-        super.run(scheduler);
+    continue(scheduler = ignoreScheduler) {
+        super.continue(scheduler);
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         delay = Math.max(0, delay);

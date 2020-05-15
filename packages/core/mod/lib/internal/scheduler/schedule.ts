@@ -12,7 +12,7 @@ class CallbackSchedulerContinuation extends AbstractSchedulerContinuation {
     super();
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     this.cb(scheduler);
     dispose(this);
   }

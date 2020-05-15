@@ -69,5 +69,5 @@ export const tests = describe("resource manager", test("integration test", () =>
         ignore,
         bind(dispose, rm),
     ], fromArray({ delay: 1 }), onNotify(lib => lib()), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
 }));

@@ -21,7 +21,7 @@ class FromArrayProducer<T> extends AbstractProducer<T> {
     super(observer);
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     const delay = this.delay;
     const values = this.values;
     const length = values.length;

@@ -68,14 +68,14 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super();
   }
 
-  produce(scheduler: SchedulerLike) {
+  continueUnsafe(scheduler: SchedulerLike) {
     this.host = scheduler;
 
     while (move(this)) {
       const continuation = this.current;
 
       this.inContinuation = true;
-      continuation.run(this);
+      continuation.continue(this);
       this.inContinuation = false;
 
       if (scheduler.shouldYield()) {
@@ -89,8 +89,8 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     dispose(this);
   }
 
-  run(scheduler = ignoreScheduler) {
-    super.run(scheduler);
+  continue(scheduler = ignoreScheduler) {
+    super.continue(scheduler);
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {

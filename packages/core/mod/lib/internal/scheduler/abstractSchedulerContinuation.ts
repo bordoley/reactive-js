@@ -48,17 +48,17 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
     this.listeners.delete(listener);
   }
 
-  abstract produce(scheduler: SchedulerLike): void;
+  abstract continueUnsafe(scheduler: SchedulerLike): void;
 
   /** @ignore */
-  run(scheduler: SchedulerLike) {
+  continue(scheduler: SchedulerLike) {
     const listeners = this.listeners;
     let error: Option<Exception> = none;
 
     if (!this.isDisposed) {
       notifyListeners(listeners, true);
       try {
-        this.produce(scheduler);
+        this.continueUnsafe(scheduler);
       } catch (cause) {
         error = { cause };
       }

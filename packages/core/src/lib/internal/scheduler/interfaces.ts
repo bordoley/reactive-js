@@ -22,7 +22,7 @@ export interface SchedulerContinuationLike extends DisposableLike {
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */
-  run(scheduler: SchedulerLike): void;
+  continue(scheduler: SchedulerLike): void;
 }
 
 /**
@@ -56,7 +56,7 @@ export interface VirtualTimeSchedulerLike
   extends DisposableLike,
     SchedulerLike,
     SchedulerContinuationLike {
-  run(scheduler?: SchedulerLike): void;
+  continue(scheduler?: SchedulerLike): void;
 }
 
 export interface PausableSchedulerLike extends SchedulerLike {

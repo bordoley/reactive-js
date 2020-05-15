@@ -36,7 +36,7 @@ export const toValue = (
     }),
   );
 
-  scheduler.run();
+  scheduler.continue();
 
   dispose(subscription);
   dispose(scheduler);

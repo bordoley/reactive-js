@@ -9,7 +9,7 @@ class ReactiveCacheSchedulerContinuation extends AbstractSchedulerContinuation {
         super();
         this.cache = cache;
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         const { cache, maxCount, garbage } = this.cache;
         for (const [, stream] of garbage) {
             dispose(stream);

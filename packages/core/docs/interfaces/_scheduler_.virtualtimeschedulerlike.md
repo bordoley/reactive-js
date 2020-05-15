@@ -18,15 +18,15 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 ### Methods
 
-* [run](_scheduler_.virtualtimeschedulerlike.md#run)
+* [continue](_scheduler_.virtualtimeschedulerlike.md#continue)
 
 ## Methods
 
-###  run
+###  continue
 
-▸ **run**(`scheduler?`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
+▸ **continue**(`scheduler?`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
 
-*Overrides [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md).[run](_scheduler_.schedulercontinuationlike.md#run)*
+*Overrides [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md).[continue](_scheduler_.schedulercontinuationlike.md#continue)*
 
 **Parameters:**
 

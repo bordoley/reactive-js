@@ -96,7 +96,7 @@ export const tests = describe(
     dispatch(enumerator, none);
     dispatch(enumerator, none);
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
@@ -123,7 +123,7 @@ export const tests = describe(
     dispatch(enumerator, none);
     dispatch(enumerator, none);
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
@@ -147,7 +147,7 @@ export const tests = describe(
     dispatch(enumerator, none);
     dispatch(enumerator, none);
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),

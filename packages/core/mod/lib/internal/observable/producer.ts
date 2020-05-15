@@ -15,5 +15,5 @@ export abstract class AbstractProducer<
     this.observer.notify(next);
   }
 
-  abstract produce(scheduler: SchedulerLike): void;
+  abstract continueUnsafe(scheduler: SchedulerLike): void;
 }

@@ -54,7 +54,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([0, 1, 3]));
   }),
@@ -75,7 +75,7 @@ export const tests = describe(
         }),
         subscribe(scheduler),
       );
-      scheduler.run();
+      scheduler.continue();
 
       pipe(result, expectArrayEquals([]));
       expectTrue(emptyStream.isDisposed);
@@ -104,7 +104,7 @@ export const tests = describe(
           disposedTime = scheduler.now;
         }),
       );
-      scheduler.run();
+      scheduler.continue();
 
       pipe(result, expectArrayEquals([]));
       expectTrue(emptyStream.isDisposed);
@@ -153,7 +153,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([110, 120, 130]));
     expectTrue(subscription.isDisposed);
@@ -186,7 +186,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([110, 120, 130]));
     expectTrue(subscription.isDisposed);
@@ -212,7 +212,7 @@ export const tests = describe(
 
     expectTrue(notifyStream.isDisposed);
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
@@ -235,7 +235,7 @@ export const tests = describe(
     dispatch(scanStream, 2);
     dispatch(scanStream, 3);
 
-    scheduler.run();
+    scheduler.continue();
 
     pipe(result, expectArrayEquals([1, 3, 6]));
   }),
@@ -262,7 +262,7 @@ export const tests = describe(
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
 
-    scheduler.run();
+    scheduler.continue();
 
     expectTrue(subscription.isDisposed);
     pipe(result, expectEquals(3));

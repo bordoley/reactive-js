@@ -10,7 +10,7 @@ class FromArrayProducer extends AbstractProducer {
         this.delay = delay;
         this.index = this.startIndex;
     }
-    produce(scheduler) {
+    continueUnsafe(scheduler) {
         const delay = this.delay;
         const values = this.values;
         const length = values.length;

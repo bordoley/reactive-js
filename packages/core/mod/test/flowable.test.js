@@ -11,7 +11,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     const dest = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(dest.acc, expectEquals(String.fromCodePoint(8364)));
     expectTrue(subscription.isDisposed);
 }), test("empty", () => {
@@ -21,7 +21,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     dispatch(emptyStream, 1);
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0].type, expectEquals(2));
     expectTrue(subscription.isDisposed);
@@ -32,7 +32,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     const dest = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(dest.acc, expectEquals(str));
     expectTrue(subscription.isDisposed);
 }), test("fromObservable", () => {
@@ -50,7 +50,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     const subscription = pipe(generateStream, onNotify(x => {
         f(scheduler.now, x);
     }), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(f, expectToHaveBeenCalledTimes(4));
     pipe(f.calls[0][1].type, expectEquals(1));
     pipe(f.calls[0][1].data, expectEquals(0));
@@ -70,7 +70,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     dispatch(fromValueStream, 2);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(f, expectToHaveBeenCalledTimes(2));
     pipe(f.calls[0][0].type, expectEquals(1));
     pipe(f.calls[0][0].data, expectEquals(1));
@@ -82,7 +82,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     const dest = createFlowableSinkAccumulator(sum, returns(0));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.run();
+    scheduler.continue();
     pipe(dest.acc, expectEquals(2));
     expectTrue(subscription.isDisposed);
 }));

@@ -21,13 +21,13 @@ export class AbstractSchedulerContinuation extends AbstractDisposable {
     removeListener(_ev, listener) {
         this.listeners.delete(listener);
     }
-    run(scheduler) {
+    continue(scheduler) {
         const listeners = this.listeners;
         let error = none;
         if (!this.isDisposed) {
             notifyListeners(listeners, true);
             try {
-                this.produce(scheduler);
+                this.continueUnsafe(scheduler);
             }
             catch (cause) {
                 error = { cause };

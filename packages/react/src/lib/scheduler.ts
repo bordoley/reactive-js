@@ -61,7 +61,7 @@ const priorityScheduler = {
 
     const callback = () => {
       priorityScheduler.inContinuation = true;
-      continuation.run(scheduler);
+      continuation.continue(scheduler);
       priorityScheduler.inContinuation = false;
       dispose(callbackNodeDisposable);
     };

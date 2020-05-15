@@ -10,7 +10,7 @@ export const forEach = (callback, schedulerFactory = createVirtualTimeScheduler)
     const subscription = pipe(observable, onNotify(callback), subscribe(scheduler), addDisposableOrTeardown(e => {
         error = e;
     }));
-    scheduler.run();
+    scheduler.continue();
     dispose(subscription);
     dispose(scheduler);
     const reifiedError = error;

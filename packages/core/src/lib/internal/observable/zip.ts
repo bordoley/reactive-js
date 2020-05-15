@@ -36,7 +36,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
       }
 
       this.inContinuation = true;
-      continuation.run(this);
+      continuation.continue(this);
       this.inContinuation = false;
 
       const error = this.error;
