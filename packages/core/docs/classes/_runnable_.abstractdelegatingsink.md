@@ -26,6 +26,10 @@
 
 * [delegate](_runnable_.abstractdelegatingsink.md#delegate)
 
+### Accessors
+
+* [isDone](_runnable_.abstractdelegatingsink.md#isdone)
+
 ### Methods
 
 * [done](_runnable_.abstractdelegatingsink.md#done)
@@ -50,6 +54,14 @@ Name | Type |
 ###  delegate
 
 • **delegate**: *[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›*
+
+## Accessors
+
+###  isDone
+
+• **get isDone**(): *boolean*
+
+**Returns:** *boolean*
 
 ## Methods
 

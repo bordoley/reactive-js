@@ -20,8 +20,8 @@ export function repeat(predicate) {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            runnable.runUnsafe(new RepeatSink(sink));
+            runnable.run(new RepeatSink(sink));
             count++;
-        } while (shouldRepeat(count));
+        } while (!sink.isDone && shouldRepeat(count));
     });
 }

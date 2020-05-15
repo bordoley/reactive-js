@@ -2,11 +2,11 @@ import { SinkLike, RunnableLike, sinkDone } from "./interfaces";
 import { SideEffect1 } from "../../functions";
 
 class RunnableImpl<T> implements RunnableLike<T> {
-  constructor(readonly runUnsafe: SideEffect1<SinkLike<T>>) {}
+  constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
 
   run(sink: SinkLike<T>) {
     try {
-      this.runUnsafe(sink);
+      this._run(sink);
     } catch (e) {
       if (e !== sinkDone) {
         throw e;

@@ -8,8 +8,10 @@ const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
 class ConcatSink {
     constructor(delegate) {
         this.delegate = delegate;
+        this.isDone = false;
     }
     done() {
+        this.isDone = true;
         throw concatSinkDone;
     }
     notify(next) {
@@ -18,7 +20,7 @@ class ConcatSink {
 }
 const runConcatUnsafe = (runnable, sink) => {
     try {
-        runnable.runUnsafe(new ConcatSink(sink));
+        runnable.run(new ConcatSink(sink));
     }
     catch (e) {
         if (e !== concatSinkDone) {

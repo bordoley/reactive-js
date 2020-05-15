@@ -12,11 +12,6 @@ class LiftedRunnable<T> implements RunnableLike<T> {
     readonly operators: SinkFunction<any, any>[],
   ) {}
 
-  runUnsafe(sink: SinkLike<T>) {
-    const liftedSink = pipe(sink, ...this.operators) as SinkLike<T>;
-    this.src.runUnsafe(liftedSink);
-  }
-
   run(sink: SinkLike<T>) {
     const liftedSink = pipe(sink, ...this.operators) as SinkLike<T>;
     this.src.run(liftedSink);

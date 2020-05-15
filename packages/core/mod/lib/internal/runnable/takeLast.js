@@ -9,6 +9,9 @@ class TakeLastSink {
         this.maxCount = maxCount;
         this.last = [];
     }
+    get isDone() {
+        return this.delegate.isDone;
+    }
     notify(next) {
         const last = this.last;
         last.push(next);

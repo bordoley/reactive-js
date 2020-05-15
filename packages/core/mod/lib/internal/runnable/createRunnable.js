@@ -1,11 +1,11 @@
 import { sinkDone } from "./interfaces.js";
 class RunnableImpl {
-    constructor(runUnsafe) {
-        this.runUnsafe = runUnsafe;
+    constructor(_run) {
+        this._run = _run;
     }
     run(sink) {
         try {
-            this.runUnsafe(sink);
+            this._run(sink);
         }
         catch (e) {
             if (e !== sinkDone) {
