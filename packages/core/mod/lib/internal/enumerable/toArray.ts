@@ -1,5 +1,3 @@
-import { pipe } from "../../functions.ts";
-import { EnumerableLike } from "./interfaces.ts";
 import { reduce } from "./reduce.ts";
 
 /**
@@ -7,14 +5,11 @@ import { reduce } from "./reduce.ts";
  *
  * @param enumerable
  */
-export const toArray = <T>(enumerable: EnumerableLike<T>): readonly T[] =>
-  pipe(
-    enumerable,
-    reduce(
-      (acc, next) => {
-        acc.push(next);
-        return acc;
-      },
-      (): T[] => [],
-    ),
+export const toArray = <T>() =>
+  reduce(
+    (acc, next: T) => {
+      acc.push(next);
+      return acc;
+    },
+    (): T[] => [],
   );

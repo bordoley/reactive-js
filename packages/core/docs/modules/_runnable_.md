@@ -745,7 +745,7 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(`runnable`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›): *keyof T[]*
+▸ **toArray**<**T**>(): *function*
 
 Accumulates all values emitted by `enumerable` into an array.
 
@@ -753,10 +753,12 @@ Accumulates all values emitted by `enumerable` into an array.
 
 ▪ **T**
 
+**Returns:** *function*
+
+▸ (`a`: TA): *TB*
+
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`runnable` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
-
-**Returns:** *keyof T[]*
+`a` | TA |
