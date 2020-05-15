@@ -1,6 +1,7 @@
 import { concatWith } from "./concat.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableFunction } from "./interfaces.ts";
+import { pipe } from "../../functions.ts";
 
 /**
  * Returns an EnumerableLike that yields items from the source,
@@ -8,5 +9,5 @@ import { EnumerableFunction } from "./interfaces.ts";
  */
 export function endWith<T>(value: T, ...values: T[]): EnumerableFunction<T, T>;
 export function endWith<T>(...values: T[]): EnumerableFunction<T, T> {
-  return concatWith(fromArray(values));
+  return pipe(values, fromArray(),concatWith);
 }

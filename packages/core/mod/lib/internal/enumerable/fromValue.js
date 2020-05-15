@@ -1,2 +1,3 @@
 import { fromArray } from "./fromArray.js";
-export const fromValue = (value) => fromArray([value]);
+import { pipe } from "../../functions.js";
+export const fromValue = (value) => pipe([value], fromArray());

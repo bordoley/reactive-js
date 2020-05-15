@@ -11,10 +11,7 @@ import { lift } from "./lift.ts";
 import { map } from "./map.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,

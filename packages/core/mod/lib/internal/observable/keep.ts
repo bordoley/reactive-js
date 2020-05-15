@@ -2,10 +2,7 @@ import { add } from "../../disposable.ts";
 import { Predicate, TypePredicate } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 import { notifyKeepType } from "../notifyMixins.ts";
 

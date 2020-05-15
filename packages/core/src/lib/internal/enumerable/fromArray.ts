@@ -4,9 +4,8 @@ import { EnumerableLike, EnumeratorLike } from "./interfaces";
 class ArrayEnumerator<T> implements EnumeratorLike<T> {
   current: any = none;
   hasCurrent = false;
-  index = -1;
 
-  constructor(private readonly array: readonly T[]) {}
+  constructor(private readonly array: readonly T[], private index: number) {}
 
   move(): boolean {
     const array = this.array;
@@ -29,10 +28,10 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
 }
 
 class ArrayEnumerable<T> implements EnumerableLike<T> {
-  constructor(private readonly values: readonly T[]) {}
+  constructor(private readonly values: readonly T[], private startIndex: number) {}
 
   enumerate() {
-    return new ArrayEnumerator(this.values);
+    return new ArrayEnumerator(this.values, this.startIndex);
   }
 }
 
@@ -41,12 +40,12 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
  *
  * @param values
  */
-export const fromArray = <T>(values: readonly T[]): EnumerableLike<T> =>
-  new ArrayEnumerable(values);
+export const fromArray = <T>({ startIndex } = { startIndex: 0 }) => (values: readonly T[]): EnumerableLike<T> =>
+  new ArrayEnumerable(values, startIndex - 1);
 
-const _empty = fromArray([]);
+const _empty = fromArray()([]);
 
 /**
  * Returns an empty EnumerableLike.
  */
-export const empty = <T>(): EnumerableLike<T> => _empty;
+export const empty = <T>(): EnumerableLike<T> => _empty as EnumerableLike<T>;

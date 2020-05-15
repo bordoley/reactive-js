@@ -3,20 +3,14 @@ import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { notifyDistinctUntilChanged } from "../notifyMixins";
 
 class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
   prev: Option<T>;
   hasValue = false;
 
-  constructor(
-    delegate: ObserverLike<T>,
-    readonly equality: Equality<T>,
-  ) {
+  constructor(delegate: ObserverLike<T>, readonly equality: Equality<T>) {
     super(delegate);
     add(this, delegate);
   }

@@ -5,10 +5,7 @@ import { ObserverLike, ObservableLike, ObservableFunction } from "./interfaces.t
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import {
-  AbstractObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractObserver, assertObserverState } from "./observer.ts";
 
 const notifyDelegate = <TA, TB, TC>(
   observer: ZipWithLatestFromObserver<TA, TB, TC>,

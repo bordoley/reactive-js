@@ -13,10 +13,7 @@ import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.t
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 /**
  * The throttle mode used by the `throttle` operator.

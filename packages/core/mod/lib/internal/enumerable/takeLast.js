@@ -27,7 +27,7 @@ class TakeLastEnumerator {
                     last.shift();
                 }
             }
-            this.enumerator = pipe(last, fromArray, enumerate);
+            this.enumerator = pipe(last, fromArray(), enumerate);
         }
         this.enumerator.move();
         return this.hasCurrent;

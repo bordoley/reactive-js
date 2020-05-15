@@ -2,10 +2,7 @@ import { add } from "../../disposable";
 import { pipe } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   private count = 0;

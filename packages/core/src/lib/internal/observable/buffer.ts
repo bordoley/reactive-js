@@ -13,10 +13,7 @@ import { lift } from "./lift";
 import { never } from "./never";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private durationSubscription = disposed;

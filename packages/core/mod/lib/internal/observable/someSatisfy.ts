@@ -9,10 +9,7 @@ import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObserverLike, ObservablePredicate } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
   constructor(

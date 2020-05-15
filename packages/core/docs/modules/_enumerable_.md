@@ -347,7 +347,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`values`: keyof T[]): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **fromArray**<**T**>(`__namedParameters`: object): *(Anonymous function)*
 
 Returns an EnumerableLike view over the `values` array.
 
@@ -357,11 +357,13 @@ Returns an EnumerableLike view over the `values` array.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`values` | keyof T[] |   |
+▪`Default value`  **__namedParameters**: *object*= { startIndex: 0 }
 
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+Name | Type |
+------ | ------ |
+`startIndex` | number |
+
+**Returns:** *(Anonymous function)*
 
 ___
 

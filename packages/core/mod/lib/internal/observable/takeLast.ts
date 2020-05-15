@@ -5,10 +5,7 @@ import { empty } from "./empty.ts";
 import { fromArray } from "./fromArray.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   private readonly last: T[] = [];

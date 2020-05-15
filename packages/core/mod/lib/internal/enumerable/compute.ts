@@ -1,4 +1,4 @@
-import { Factory } from "../../functions.ts";
+import { Factory, pipe } from "../../functions.ts";
 import { enumerate } from "./enumerator.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableLike } from "./interfaces.ts";
@@ -7,7 +7,7 @@ class ComputeEnumerable<T> implements EnumerableLike<T> {
   constructor(private readonly f: Factory<T>) {}
 
   enumerate() {
-    return enumerate(fromArray([this.f()]));
+    return pipe([this.f()], fromArray(), enumerate);
   }
 }
 

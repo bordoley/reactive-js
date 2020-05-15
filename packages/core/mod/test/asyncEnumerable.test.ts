@@ -83,7 +83,8 @@ export const tests = describe(
 
   test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(fromArray([1, 2, 3, 4, 5, 6]), scheduler);
+    const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArray<number>());
+    const enumerator = stream(enumerable, scheduler);
 
     const result: number[] = [];
     pipe(

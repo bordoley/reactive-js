@@ -1,4 +1,4 @@
-import { AbstractObserver, assertObserverState, } from "./observer.js";
+import { AbstractObserver, assertObserverState } from "./observer.js";
 class DefaultObserver extends AbstractObserver {
     notify(_) {
         assertObserverState(this);

@@ -3,10 +3,7 @@ import { pipe } from "../../functions";
 import { empty } from "./empty";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   private count = 0;

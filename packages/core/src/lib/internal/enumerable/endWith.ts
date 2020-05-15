@@ -1,6 +1,7 @@
 import { concatWith } from "./concat";
 import { fromArray } from "./fromArray";
 import { EnumerableFunction } from "./interfaces";
+import { pipe } from "../../functions";
 
 /**
  * Returns an EnumerableLike that yields items from the source,
@@ -8,5 +9,5 @@ import { EnumerableFunction } from "./interfaces";
  */
 export function endWith<T>(value: T, ...values: T[]): EnumerableFunction<T, T>;
 export function endWith<T>(...values: T[]): EnumerableFunction<T, T> {
-  return concatWith(fromArray(values));
+  return pipe(values, fromArray(),concatWith);
 }

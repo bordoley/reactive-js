@@ -4,10 +4,7 @@ import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObserverLike, ObservablePredicate } from "./interfaces";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
   constructor(

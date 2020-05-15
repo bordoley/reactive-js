@@ -11,10 +11,7 @@ import { concat } from "./concat";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { subscribe } from "./subscribe";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { throws } from "./throws";
 
 /** Symbol thrown when the timeout operator times out */

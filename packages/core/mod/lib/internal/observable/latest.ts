@@ -3,10 +3,7 @@ import { dispose, add } from "../../disposable.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { createScheduledObservable } from "./observable.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 type LatestCtx = {
   completedCount: number;

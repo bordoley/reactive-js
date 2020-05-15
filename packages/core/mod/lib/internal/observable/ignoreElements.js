@@ -1,6 +1,6 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class IgnoreObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);

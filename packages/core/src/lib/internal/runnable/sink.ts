@@ -16,13 +16,9 @@ export abstract class AbstractDelegatingSink<TA, TB> implements SinkLike<TA> {
 }
 
 const assertSinkStateProduction = ignore;
-const assertSinkStateDev = <T>(
-  sink: SinkLike<T>,
-) => {
+const assertSinkStateDev = <T>(sink: SinkLike<T>) => {
   if (sink.isDone) {
-    throw new Error(
-      "Sink is done"
-    );
+    throw new Error("Sink is done");
   }
 };
 
@@ -30,6 +26,4 @@ const _asserSinkState = __DEV__
   ? assertSinkStateDev
   : assertSinkStateProduction;
 
-export const assertSinkState: SideEffect1<SinkLike<
-  unknown
->> = _asserSinkState;
+export const assertSinkState: SideEffect1<SinkLike<unknown>> = _asserSinkState;

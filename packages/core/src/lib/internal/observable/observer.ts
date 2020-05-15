@@ -9,17 +9,13 @@ import { __DEV__ } from "../env";
 import { ObserverLike } from "./interfaces";
 
 const assertObserverStateProduction = ignore;
-const assertObserverStateDev = <T>(
-  observer: ObserverLike<T>,
-) => {
+const assertObserverStateDev = <T>(observer: ObserverLike<T>) => {
   if (!observer.inContinuation) {
     throw new Error(
       "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
     );
-  } else if(observer.isDisposed) {
-    throw new Error(
-      "Observer is disposed",
-    );
+  } else if (observer.isDisposed) {
+    throw new Error("Observer is disposed");
   }
 };
 

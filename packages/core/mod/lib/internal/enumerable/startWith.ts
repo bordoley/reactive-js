@@ -10,5 +10,5 @@ export function startWith<T>(
   ...values: T[]
 ): EnumerableFunction<T, T>;
 export function startWith<T>(...values: T[]): EnumerableFunction<T, T> {
-  return obs => concat(fromArray(values), obs);
+  return obs => concat(fromArray<T>()(values), obs);
 }

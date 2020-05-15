@@ -2,10 +2,7 @@ import { DisposableLike } from "../../disposable";
 import { Function } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
-import {
-  AbstractObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractObserver, assertObserverState } from "./observer";
 
 class DefaultObserver<T> extends AbstractObserver<T> {
   notify(_: T) {

@@ -1,10 +1,10 @@
 import { none } from "../../option.js";
 class ArrayEnumerator {
-    constructor(array) {
+    constructor(array, index) {
         this.array = array;
+        this.index = index;
         this.current = none;
         this.hasCurrent = false;
-        this.index = -1;
     }
     move() {
         const array = this.array;
@@ -23,13 +23,14 @@ class ArrayEnumerator {
     }
 }
 class ArrayEnumerable {
-    constructor(values) {
+    constructor(values, startIndex) {
         this.values = values;
+        this.startIndex = startIndex;
     }
     enumerate() {
-        return new ArrayEnumerator(this.values);
+        return new ArrayEnumerator(this.values, this.startIndex);
     }
 }
-export const fromArray = (values) => new ArrayEnumerable(values);
-const _empty = fromArray([]);
+export const fromArray = ({ startIndex } = { startIndex: 0 }) => (values) => new ArrayEnumerable(values, startIndex - 1);
+const _empty = fromArray()([]);
 export const empty = () => _empty;

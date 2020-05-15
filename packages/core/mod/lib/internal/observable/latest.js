@@ -1,7 +1,7 @@
 import { dispose, add } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { createScheduledObservable } from "./observable.js";
-import { AbstractDelegatingObserver, assertObserverState, } from "./observer.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);

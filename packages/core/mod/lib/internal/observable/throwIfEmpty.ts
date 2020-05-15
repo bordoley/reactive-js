@@ -3,10 +3,7 @@ import { Factory } from "../../functions.ts";
 import { isNone } from "../../option.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
   private isEmpty = true;
