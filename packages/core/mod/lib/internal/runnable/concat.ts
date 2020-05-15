@@ -1,28 +1,19 @@
 import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces.ts";
 import { createRunnable } from "./createRunnable.ts";
 import { fromArray } from "./fromArray.ts";
+import { AbstractDelegatingSink } from "./sink.ts";
 
-class ConcatSink<T> implements SinkLike<T> {
+class ConcatSink<T> extends AbstractDelegatingSink<T, T> {
   isDone = false;
 
   constructor(
-    private readonly delegate: SinkLike<T>,
-    private readonly runnables: RunnableLike<T>[],
-    private next: number,
-  ) {}
-
+     delegate: SinkLike<T>,
+  ) {
+    super(delegate);
+  }
+  
   done() {
-    const delegate = this.delegate;
-    const runnables = this.runnables;
-    const next = this.next;
-    this.next++;
-
-    if (next < runnables.length) {
-      runnables[next].run(this);
-    } else {
-      this.isDone = true;
-      delegate.done();
-    }
+    this.isDone = true;
   }
 
   notify(next: T) {
@@ -40,9 +31,12 @@ export function concat<T>(
 ): RunnableLike<T>;
 
 export function concat<T>(...runnables: RunnableLike<T>[]): RunnableLike<T> {
-  return createRunnable((sink: SinkLike<T>) =>
-    runnables[0].run(new ConcatSink(sink, runnables, 1)),
-  );
+  return createRunnable((sink: SinkLike<T>) => {
+    const runnablesLength = runnables.length;
+    for (let i = 0; i < runnablesLength && !sink.isDone; i++) {
+      runnables[i].run(new ConcatSink(sink));
+    }
+  });
 }
 
 export const concatWith = <T>(

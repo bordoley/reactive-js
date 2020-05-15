@@ -1,16 +1,13 @@
 import { alwaysTrue, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
-import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces.ts";
+import { SinkLike, RunnableFunction } from "./interfaces.ts";
 import { createRunnable } from "./createRunnable.ts";
 
 class RepeatSink<T> implements SinkLike<T> {
-  private count = 0;
   isDone = false;
 
   constructor(
     private readonly delegate: SinkLike<T>,
-    private readonly src: RunnableLike<T>,
-    private readonly shouldRepeat: Predicate<number>,
   ) {}
 
   notify(next: T): void {
@@ -18,12 +15,6 @@ class RepeatSink<T> implements SinkLike<T> {
   }
 
   done(): void {
-    this.count++;
-    if (!this.delegate.isDone && this.shouldRepeat(this.count)) {
-      this.src.run(this);
-    } else {
-      this.isDone = true;
-    }
   }
 }
 
@@ -49,14 +40,18 @@ export function repeat<T>(): RunnableFunction<T, T>;
 export function repeat<T>(
   predicate?: Predicate<number> | number,
 ): RunnableFunction<T, T> {
-  const repeatPredicate = isNone(predicate)
+  const shouldRepeat = isNone(predicate)
     ? alwaysTrue
     : typeof predicate === "number"
     ? (count: number) => count < predicate
     : (count: number) => predicate(count);
 
   return runnable =>
-    createRunnable(sink =>
-      runnable.run(new RepeatSink(sink, runnable, repeatPredicate)),
-    );
+    createRunnable(sink => {
+      let count = 0;
+      do {
+        runnable.run(new RepeatSink(sink));
+        count++;
+      } while(!sink.isDone && shouldRepeat(count));
+    });
 }

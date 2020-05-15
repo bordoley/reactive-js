@@ -7,9 +7,9 @@ import { RunnableLike } from "./interfaces.ts";
  *
  * @param enumerable
  */
-export const toArray = <T>(enumerable: RunnableLike<T>): readonly T[] =>
+export const toArray = <T>(runnable: RunnableLike<T>): readonly T[] =>
   pipe(
-    enumerable,
+    runnable,
     reduce(
       (acc, next) => {
         acc.push(next);
