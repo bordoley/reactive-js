@@ -4,13 +4,14 @@ export {
   concatWith,
   endWith,
   startWith,
+  flatten,
+  flatMap,
 } from "./internal/runnable/concat";
 export { createRunnable } from "./internal/runnable/createRunnable";
 export { distinctUntilChanged } from "./internal/runnable/distinctUntilChanged";
 export { empty } from "./internal/runnable/empty";
 export { everySatisfy, noneSatisfy } from "./internal/runnable/everySatisfy";
 export { first } from "./internal/runnable/first";
-export { flatten, flatMap } from "./internal/runnable/flatten";
 export { forEach } from "./internal/runnable/forEach";
 export { fromArray } from "./internal/runnable/fromArray";
 export {

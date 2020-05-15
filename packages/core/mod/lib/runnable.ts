@@ -4,13 +4,14 @@ export {
   concatWith,
   endWith,
   startWith,
+  flatten,
+  flatMap,
 } from "./internal/runnable/concat.ts";
 export { createRunnable } from "./internal/runnable/createRunnable.ts";
 export { distinctUntilChanged } from "./internal/runnable/distinctUntilChanged.ts";
 export { empty } from "./internal/runnable/empty.ts";
 export { everySatisfy, noneSatisfy } from "./internal/runnable/everySatisfy.ts";
 export { first } from "./internal/runnable/first.ts";
-export { flatten, flatMap } from "./internal/runnable/flatten.ts";
 export { forEach } from "./internal/runnable/forEach.ts";
 export { fromArray } from "./internal/runnable/fromArray.ts";
 export {

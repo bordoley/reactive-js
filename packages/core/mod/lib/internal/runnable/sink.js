@@ -9,12 +9,11 @@ export class AbstractSink {
 export class AbstractDelegatingSink {
     constructor(delegate) {
         this.delegate = delegate;
-        this.isDone = false;
+    }
+    get isDone() {
+        return this.delegate.isDone;
     }
     done() {
-        if (!this.isDone) {
-            this.isDone = true;
-            this.delegate.done();
-        }
+        this.delegate.done();
     }
 }

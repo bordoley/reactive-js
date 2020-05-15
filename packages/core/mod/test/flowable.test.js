@@ -37,7 +37,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = stream(pipe(generate(increment, returns(0), { delay: 1 }), fromObservable), scheduler);
+    const generateStream = stream(pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable), scheduler);
     dispatch(generateStream, 1);
     schedule(scheduler, bind(dispatch, generateStream, 2), {
         delay: 2,

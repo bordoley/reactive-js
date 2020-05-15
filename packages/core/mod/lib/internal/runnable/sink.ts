@@ -13,16 +13,15 @@ export abstract class AbstractSink<T> implements SinkLike<T> {
 }
 
 export abstract class AbstractDelegatingSink<TA, TB> implements SinkLike<TA> {
-  isDone = false;
-
   constructor(readonly delegate: SinkLike<TB>) {}
+
+  get isDone() {
+    return this.delegate.isDone;
+  }
 
   abstract notify(next: TA): void;
 
   done(): void {
-    if (!this.isDone) {
-      this.isDone = true;
-      this.delegate.done();
-    }
+    this.delegate.done();
   }
 }
