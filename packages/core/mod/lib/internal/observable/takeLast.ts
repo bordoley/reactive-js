@@ -6,7 +6,6 @@ import { fromArray } from "./fromArray.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
-import { notifyTakeLast } from "../notifyMixins.ts";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly last: T[] = [];
@@ -30,7 +29,13 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverState(this);
-    notifyTakeLast(this, next);
+    const last = this.last;
+
+    last.push(next);
+  
+    if (last.length > this.maxCount) {
+      last.shift();
+    }
   }
 }
 

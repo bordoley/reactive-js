@@ -2,7 +2,6 @@ import { Factory, Reducer } from "../../functions.ts";
 import { RunnableFunction, SinkLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSink } from "./sink.ts";
-import { notifyScan } from "../notifyMixins.ts";
 
 class ScanSink<T, TAcc> extends AbstractDelegatingSink<T, TAcc> {
   constructor(
@@ -14,7 +13,10 @@ class ScanSink<T, TAcc> extends AbstractDelegatingSink<T, TAcc> {
   }
 
   notify(next: T) {
-    notifyScan(this, next);
+    const nextAcc = this.scanner(this.acc, next);
+    this.acc = nextAcc;
+
+    this.delegate.notify(nextAcc);
   }
 }
 

@@ -12,7 +12,9 @@ export class AbstractDelegatingSink {
         this.isDone = false;
     }
     done() {
-        this.isDone = true;
-        this.delegate.done();
+        if (!this.isDone) {
+            this.isDone = true;
+            this.delegate.done();
+        }
     }
 }

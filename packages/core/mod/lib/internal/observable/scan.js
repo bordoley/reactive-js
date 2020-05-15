@@ -1,7 +1,6 @@
 import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-import { notifyScan } from "../notifyMixins.js";
 class ScanObserver extends AbstractDelegatingObserver {
     constructor(delegate, scanner, acc) {
         super(delegate);
@@ -11,7 +10,9 @@ class ScanObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        notifyScan(this, next);
+        const nextAcc = this.scanner(this.acc, next);
+        this.acc = nextAcc;
+        this.delegate.notify(nextAcc);
     }
 }
 export const scan = (scanner, initialValue) => {

@@ -3,7 +3,6 @@ import { Factory, Reducer } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { notifyScan } from "../notifyMixins";
 
 class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
@@ -17,7 +16,10 @@ class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
 
   notify(next: T) {
     assertObserverState(this);
-    notifyScan(this, next);
+    const nextAcc = this.scanner(this.acc, next);
+    this.acc = nextAcc;
+
+    this.delegate.notify(nextAcc);
   }
 }
 

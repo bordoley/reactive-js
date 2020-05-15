@@ -2,7 +2,6 @@ import { add } from "../../disposable.js";
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-import { notifyMap } from "../notifyMixins.js";
 class MapObserver extends AbstractDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);
@@ -11,7 +10,8 @@ class MapObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        notifyMap(this, next);
+        const mapped = this.mapper(next);
+        this.delegate.notify(mapped);
     }
 }
 export const map = (mapper) => {

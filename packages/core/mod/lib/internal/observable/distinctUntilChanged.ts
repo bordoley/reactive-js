@@ -4,7 +4,6 @@ import { Option } from "../../option.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
-import { notifyDistinctUntilChanged } from "../notifyMixins.ts";
 
 class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
   prev: Option<T>;
@@ -17,7 +16,14 @@ class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverState(this);
-    notifyDistinctUntilChanged(this, next);
+    
+    const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
+
+    if (shouldEmit) {
+      this.prev = next;
+      this.hasValue = true;
+      this.delegate.notify(next);
+    }
   }
 }
 

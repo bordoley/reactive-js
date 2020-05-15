@@ -3,7 +3,6 @@ import { returns, Function } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { notifyMap } from "../notifyMixins";
 
 class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   constructor(delegate: ObserverLike<TB>, readonly mapper: Function<TA, TB>) {
@@ -13,7 +12,8 @@ class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
 
   notify(next: TA) {
     assertObserverState(this);
-    notifyMap(this, next);
+    const mapped = this.mapper(next);
+    this.delegate.notify(mapped);
   }
 }
 

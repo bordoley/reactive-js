@@ -1,5 +1,4 @@
 import { RunnableFunction, SinkLike } from "./interfaces.ts";
-import { notifyTakeLast } from "../notifyMixins.ts";
 import { pipe } from "../../functions.ts";
 import { lift } from "./lift.ts";
 import { empty } from "./empty.ts";
@@ -13,12 +12,20 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 
   notify(next: T) {
-    notifyTakeLast(this, next);
+    const last = this.last;
+
+    last.push(next);
+  
+    if (last.length > this.maxCount) {
+      last.shift();
+    }
   }
 
   done() {
-    this.isDone = true;
-    fromArray()(this.last).run(this.delegate);
+    if(!this.isDone) {
+      this.isDone = true;
+      fromArray()(this.last).run(this.delegate);
+    }
   };
 }
 

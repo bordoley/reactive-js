@@ -1,4 +1,3 @@
-import { notifyTakeLast } from "../notifyMixins.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { empty } from "./empty.js";
@@ -11,11 +10,17 @@ class TakeLastSink {
         this.last = [];
     }
     notify(next) {
-        notifyTakeLast(this, next);
+        const last = this.last;
+        last.push(next);
+        if (last.length > this.maxCount) {
+            last.shift();
+        }
     }
     done() {
-        this.isDone = true;
-        fromArray()(this.last).run(this.delegate);
+        if (!this.isDone) {
+            this.isDone = true;
+            fromArray()(this.last).run(this.delegate);
+        }
     }
     ;
 }
