@@ -18,6 +18,7 @@
 
 * [compute](_enumerable_.md#const-compute)
 * [concat](_enumerable_.md#concat)
+* [concatAll](_enumerable_.md#const-concatall)
 * [concatMap](_enumerable_.md#const-concatmap)
 * [concatWith](_enumerable_.md#const-concatwith)
 * [current](_enumerable_.md#const-current)
@@ -25,7 +26,6 @@
 * [empty](_enumerable_.md#const-empty)
 * [endWith](_enumerable_.md#endwith)
 * [enumerate](_enumerable_.md#const-enumerate)
-* [flatten](_enumerable_.md#const-flatten)
 * [fromArray](_enumerable_.md#const-fromarray)
 * [fromIterable](_enumerable_.md#const-fromiterable)
 * [fromIterator](_enumerable_.md#const-fromiterator)
@@ -101,6 +101,20 @@ Name | Type |
 `...tail` | Array‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›› |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+
+___
+
+### `Const` concatAll
+
+▸ **concatAll**<**T**>(): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
+
+Converts a higher-order EnumerableLike into a first-order EnumerableLike.
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
 
 ___
 
@@ -234,20 +248,6 @@ Name | Type |
 `enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
 
 **Returns:** *[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›*
-
-___
-
-### `Const` flatten
-
-▸ **flatten**<**T**>(): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
-
-Converts a higher-order EnumerableLike into a first-order EnumerableLike.
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
 
 ___
 

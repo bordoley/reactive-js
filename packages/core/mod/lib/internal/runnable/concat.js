@@ -52,6 +52,6 @@ class FlattenSink extends AbstractDelegatingSink {
         runConcatUnsafe(next, this.delegate);
     }
 }
-const _flatten = lift(s => new FlattenSink(s));
-export const flatten = () => _flatten;
-export const concatMap = (mapper) => compose(map(mapper), flatten());
+const _concatAll = lift(s => new FlattenSink(s));
+export const concatAll = () => _concatAll;
+export const concatMap = (mapper) => compose(map(mapper), concatAll());

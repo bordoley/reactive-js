@@ -4,7 +4,7 @@ export {
   concatWith,
   endWith,
   startWith,
-  flatten,
+  concatAll,
   concatMap,
 } from "./internal/runnable/concat";
 export { createRunnable } from "./internal/runnable/createRunnable";

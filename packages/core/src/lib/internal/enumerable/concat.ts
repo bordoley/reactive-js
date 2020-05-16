@@ -1,5 +1,5 @@
 import { pipe } from "../../functions";
-import { flatten } from "./flatten";
+import { concatAll } from "./concatAll";
 import { fromArray } from "./fromArray";
 import { EnumerableLike, EnumerableFunction } from "./interfaces";
 
@@ -15,7 +15,7 @@ export function concat<T>(
 export function concat<T>(
   ...enumerables: EnumerableLike<T>[]
 ): EnumerableLike<T> {
-  return pipe(enumerables, fromArray(), flatten());
+  return pipe(enumerables, fromArray(), concatAll());
 }
 
 export const concatWith = <T>(

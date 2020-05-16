@@ -1,5 +1,7 @@
 import { reduce } from "./reduce.js";
-export const toArray = () => reduce((acc, next) => {
+const toArrayReducer = (acc, next) => {
     acc.push(next);
     return acc;
-}, () => []);
+};
+const _toArray = reduce(toArrayReducer, () => []);
+export const toArray = () => _toArray;

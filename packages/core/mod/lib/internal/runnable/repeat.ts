@@ -16,7 +16,7 @@ class RepeatSink<T> implements SinkLike<T> {
 }
 
 /**
- * Returns an EnumerableLike that applies the predicate function each time the source
+ * Returns an RunnableLike that applies the predicate function each time the source
  * completes to determine if the enumerable should be repeated.
  *
  * @param predicate The predicate function to apply.
@@ -24,13 +24,13 @@ class RepeatSink<T> implements SinkLike<T> {
 export function repeat<T>(predicate: Predicate<number>): RunnableFunction<T, T>;
 
 /**
- * Returns an EnumerableLike that repeats the source count times.
+ * Returns an RunnableLike that repeats the source count times.
  * @param count
  */
 export function repeat<T>(count: number): RunnableFunction<T, T>;
 
 /**
- * Returns an EnumerableLike` that continually repeats the source.
+ * Returns an RunnableLike that continually repeats the source.
  */
 export function repeat<T>(): RunnableFunction<T, T>;
 
