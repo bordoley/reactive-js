@@ -6,7 +6,7 @@ import {
   hasCurrent,
   move,
 } from "../../enumerable";
-import { compose, bind } from "../../functions";
+import { Function, compose, bind } from "../../functions";
 import {
   withLatestFrom,
   onNotify,
@@ -18,12 +18,7 @@ import { createStreamable } from "../../streamable";
 
 import { AsyncEnumerableLike } from "./interfaces";
 
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-export const fromEnumerable = <T>(
+const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
 ): AsyncEnumerableLike<T> =>
   createStreamable(
@@ -37,3 +32,13 @@ export const fromEnumerable = <T>(
       map(current),
     ),
   );
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+export const fromEnumerable = <T>(): Function<
+  EnumerableLike<T>,
+  AsyncEnumerableLike<T>
+> => _fromEnumerable;

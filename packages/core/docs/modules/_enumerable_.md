@@ -275,7 +275,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **fromIterable**<**T**>(): *[Function](_functions_.md#function)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Converts a javascript Iterable to an EnumerableLike.
 
@@ -283,19 +283,13 @@ Converts a javascript Iterable to an EnumerableLike.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`iterable` | Iterable‹T› |   |
-
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`f`: [Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns a single use EnumerableLike over the javascript Iterator
 returned by the function `f`.
@@ -308,13 +302,7 @@ returned by the function `f`.
 
 ▪ **TNext**
 
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`f` | [Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext›› |   |
-
-**Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -681,7 +669,7 @@ ___
 
 ### `Const` toIterable
 
-▸ **toIterable**<**T**>(`source`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *Iterable‹T›*
+▸ **toIterable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
 
 Converts an EnumerableLike into a javascript Iterable.
 
@@ -689,13 +677,7 @@ Converts an EnumerableLike into a javascript Iterable.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`source` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
-
-**Returns:** *Iterable‹T›*
+**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
 
 ___
 

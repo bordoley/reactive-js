@@ -1,3 +1,5 @@
 import { fromIterable as fromIterableEnumerable } from "../../enumerable.js";
 import { fromEnumerable } from "./fromEnumerable.js";
-export const fromIterable = (iterable) => fromEnumerable(fromIterableEnumerable(iterable));
+import { pipe } from "../../functions.js";
+const _fromIterable = (iterable) => pipe(iterable, fromIterableEnumerable(), fromEnumerable());
+export const fromIterable = () => _fromIterable;

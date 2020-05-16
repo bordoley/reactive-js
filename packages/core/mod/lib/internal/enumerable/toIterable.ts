@@ -1,5 +1,6 @@
 import { enumerate } from "./enumerator.ts";
 import { EnumerableLike } from "./interfaces.ts";
+import { Function } from "../../functions.ts";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}
@@ -12,8 +13,10 @@ class EnumerableIterable<T> implements Iterable<T> {
   }
 }
 
+export const _toIterable = <T>(source: EnumerableLike<T>): Iterable<T> =>
+  new EnumerableIterable(source);
+
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */
-export const toIterable = <T>(source: EnumerableLike<T>): Iterable<T> =>
-  new EnumerableIterable(source);
+export const toIterable = <T>(): Function<EnumerableLike<T>, Iterable<T>> => _toIterable;

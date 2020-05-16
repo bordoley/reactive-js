@@ -20,15 +20,15 @@ function* iterateKeyedQueueKeyValuePairs(queue) {
 class KeyedQueue {
     constructor() {
         this.count = 0;
-        this.keys = fromIterator(() => this.map.keys());
+        this.keys = fromIterator()(() => this.map.keys());
         this.map = new Map();
-        this.values = fromIterator(bind(iterateKeyedQueueValues, this));
+        this.values = fromIterator()(bind(iterateKeyedQueueValues, this));
     }
     clear() {
         this.map.clear();
     }
     enumerate() {
-        return pipe(bind(iterateKeyedQueueKeyValuePairs, this), fromIterator, enumerate);
+        return pipe(bind(iterateKeyedQueueKeyValuePairs, this), fromIterator(), enumerate);
     }
     peek(key) {
         var _a;

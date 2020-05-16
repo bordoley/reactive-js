@@ -1,4 +1,4 @@
-import { Factory } from "../../functions";
+import { Factory, Function } from "../../functions";
 import { none } from "../../option";
 import { EnumerableLike, EnumeratorLike } from "./interfaces";
 
@@ -35,6 +35,10 @@ class IteratorEnumerable<T, TReturn = any, TNext = unknown>
   }
 }
 
+const _fromIterator = <T, TReturn = any, TNext = unknown>(
+  f: Factory<Iterator<T, TReturn, TNext>>,
+): EnumerableLike<T> => new IteratorEnumerable(f);
+
 /**
  * Returns a single use EnumerableLike over the javascript Iterator
  * returned by the function `f`.
@@ -42,13 +46,15 @@ class IteratorEnumerable<T, TReturn = any, TNext = unknown>
  * @param f
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
-  f: Factory<Iterator<T, TReturn, TNext>>,
-): EnumerableLike<T> => new IteratorEnumerable(f);
+): Function<Factory<Iterator<T, TReturn, TNext>>,EnumerableLike<T>> => _fromIterator;
+
+const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
+  _fromIterator(() => iterable[Symbol.iterator]());
 
 /**
  * Converts a javascript Iterable to an EnumerableLike.
  *
  * @param iterable
  */
-export const fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
-  fromIterator(() => iterable[Symbol.iterator]());
+export const fromIterable = <T>(): Function<Iterable<T>, EnumerableLike<T>> =>
+  _fromIterable;

@@ -26,5 +26,7 @@ class IteratorEnumerable {
         return enumerator;
     }
 }
-export const fromIterator = (f) => new IteratorEnumerable(f);
-export const fromIterable = (iterable) => fromIterator(() => iterable[Symbol.iterator]());
+const _fromIterator = (f) => new IteratorEnumerable(f);
+export const fromIterator = () => _fromIterator;
+const _fromIterable = (iterable) => _fromIterator(() => iterable[Symbol.iterator]());
+export const fromIterable = () => _fromIterable;

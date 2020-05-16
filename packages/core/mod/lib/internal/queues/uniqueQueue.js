@@ -13,10 +13,10 @@ class UniqueQueueImpl {
         this.values.clear();
     }
     enumerate() {
-        return pipe(this.values, fromIterable, enumerate);
+        return pipe(this.values, fromIterable(), enumerate);
     }
     peek() {
-        return pipe(this.values, fromIterable, toRunnable(), first);
+        return pipe(this.values, fromIterable(), toRunnable(), first);
     }
     pop() {
         const head = this.peek();
