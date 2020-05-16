@@ -57,10 +57,7 @@ class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   notify(next: T) {
     assertObserverState(this);
-
-    if (!this.isDisposed) {
-      this.delegate.notify(next);
-    }
+    this.delegate.notify(next);
   }
 }
 

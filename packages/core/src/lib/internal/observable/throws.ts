@@ -12,7 +12,6 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
   constructor(
     observer: ObserverLike<T>,
     private readonly f: Factory<unknown>,
-    readonly delay: number,
   ) {
     super(observer);
   }
@@ -33,7 +32,7 @@ export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
   const factory = (observer: ObserverLike<T>) =>
-    new ThrowsProducer(observer, errorFactory, delay);
+    new ThrowsProducer(observer, errorFactory);
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

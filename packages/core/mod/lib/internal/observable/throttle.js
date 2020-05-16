@@ -37,18 +37,16 @@ class ThrottleObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        if (!this.isDisposed) {
-            this.value = next;
-            this.hasValue = true;
-            const durationSubscriptionDisposableIsDisposed = this.durationSubscription
-                .inner.isDisposed;
-            if (durationSubscriptionDisposableIsDisposed &&
-                this.mode !== 2) {
-                this.onNotify();
-            }
-            else if (durationSubscriptionDisposableIsDisposed) {
-                setupDurationSubscription(this, next);
-            }
+        this.value = next;
+        this.hasValue = true;
+        const durationSubscriptionDisposableIsDisposed = this.durationSubscription
+            .inner.isDisposed;
+        if (durationSubscriptionDisposableIsDisposed &&
+            this.mode !== 2) {
+            this.onNotify();
+        }
+        else if (durationSubscriptionDisposableIsDisposed) {
+            setupDurationSubscription(this, next);
         }
     }
 }
