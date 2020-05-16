@@ -34,7 +34,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   addListener(
     _ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ): void {
+  ) {
     if (!this.isDisposed) {
       this.listeners.add(listener);
     }
@@ -44,7 +44,7 @@ export abstract class AbstractSchedulerContinuation extends AbstractDisposable
   removeListener(
     _ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ): void {
+  ) {
     this.listeners.delete(listener);
   }
 

@@ -46,7 +46,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
     return this.hasCurrent;
   }
 
-  notify(next: T): void {
+  notify(next: T) {
     assertObserverState(this);
 
     this.current = next;
@@ -56,7 +56,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
   schedule(
     continuation: SchedulerContinuationLike,
     { delay } = { delay: 0 },
-  ): void {
+  ) {
     add(this, continuation);
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);

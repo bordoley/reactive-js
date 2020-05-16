@@ -7,7 +7,7 @@ class ReducerSink<T, TAcc> extends AbstractSink<T> {
     super();
   }
 
-  notify(next: T): void {
+  notify(next: T) {
     this.acc = this.reducer(this.acc, next);
   }
 }

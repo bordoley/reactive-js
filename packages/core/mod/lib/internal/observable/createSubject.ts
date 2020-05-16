@@ -17,7 +17,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     return this.observers.size;
   }
 
-  dispatch(next: T): void {
+  dispatch(next: T) {
     if (!this.isDisposed) {
       const replayed = this.replayed;
       const replayCount = this.replayCount;

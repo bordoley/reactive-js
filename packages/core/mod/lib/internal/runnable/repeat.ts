@@ -8,11 +8,11 @@ class RepeatSink<T> implements SinkLike<T> {
 
   constructor(private readonly delegate: SinkLike<T>) {}
 
-  notify(next: T): void {
+  notify(next: T) {
     this.delegate.notify(next);
   }
 
-  done(): void {}
+  done() {}
 }
 
 /**
