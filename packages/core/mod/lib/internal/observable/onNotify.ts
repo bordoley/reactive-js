@@ -1,16 +1,14 @@
-import { add } from "../../disposable.ts";
 import { SideEffect1 } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
-class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
+class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   constructor(
     delegate: ObserverLike<T>,
     private readonly onNotify: SideEffect1<T>,
   ) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: T) {

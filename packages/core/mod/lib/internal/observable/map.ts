@@ -1,13 +1,11 @@
-import { add } from "../../disposable.ts";
 import { returns, Function1 } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
-class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
+class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
   constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: TA) {

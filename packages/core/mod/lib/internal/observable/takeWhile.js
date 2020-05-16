@@ -1,12 +1,11 @@
-import { add, dispose } from "../../disposable.js";
+import { dispose } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class TakeWhileObserver extends AbstractDelegatingObserver {
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+class TakeWhileObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
         this.inclusive = inclusive;
-        add(this, delegate);
     }
     notify(next) {
         assertObserverState(this);

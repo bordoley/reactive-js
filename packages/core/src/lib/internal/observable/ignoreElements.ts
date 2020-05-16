@@ -1,14 +1,8 @@
-import { add } from "../../disposable";
 import { ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
-class IgnoreObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
-  constructor(delegate: ObserverLike<TB>) {
-    super(delegate);
-    add(this, delegate);
-  }
-
+class IgnoreObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
   notify(_: TA) {
     assertObserverState(this);
   }

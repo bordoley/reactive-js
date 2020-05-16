@@ -1,14 +1,13 @@
-import { add, dispose } from "../../disposable.js";
+import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class TakeFirstObserver extends AbstractDelegatingObserver {
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+class TakeFirstObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
         this.count = 0;
-        add(this, delegate);
     }
     notify(next) {
         assertObserverState(this);

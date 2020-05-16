@@ -1,12 +1,10 @@
-import { add } from "../../disposable.js";
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class MapObserver extends AbstractDelegatingObserver {
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+class MapObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
-        add(this, delegate);
     }
     notify(next) {
         assertObserverState(this);

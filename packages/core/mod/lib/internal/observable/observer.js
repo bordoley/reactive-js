@@ -44,6 +44,14 @@ export class AbstractDelegatingObserver extends AbstractObserver {
         add(delegate, this);
     }
 }
+export class AbstractAutoDisposingDelegatingObserver extends AbstractObserver {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        add(delegate, this);
+        add(this, delegate);
+    }
+}
 class DelegatingObserver extends AbstractObserver {
     constructor(delegate) {
         super(delegate);
