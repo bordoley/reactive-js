@@ -9,7 +9,6 @@ class TakeFirstSink extends AbstractDelegatingSink {
         this.count = 0;
     }
     notify(next) {
-        debugger;
         this.count++;
         this.delegate.notify(next);
         if (this.count >= this.maxCount) {
@@ -19,5 +18,5 @@ class TakeFirstSink extends AbstractDelegatingSink {
 }
 export const takeFirst = (count = 1) => {
     const operator = (sink) => new TakeFirstSink(sink, count);
-    return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+    return observable => count > 0 ? pipe(observable, lift(operator)) : empty();
 };

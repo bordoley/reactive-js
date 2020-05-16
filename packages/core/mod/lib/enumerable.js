@@ -3,7 +3,7 @@ export { concat, concatWith } from "./internal/enumerable/concat.js";
 export { distinctUntilChanged } from "./internal/enumerable/distinctUntilChanged.js";
 export { enumerate, hasCurrent, current, move, } from "./internal/enumerable/enumerator.js";
 export { endWith } from "./internal/enumerable/endWith.js";
-export { flatten, concatMap } from "./internal/enumerable/flatten.js";
+export { concatAll, concatMap } from "./internal/enumerable/concatAll.js";
 export { empty, fromArray } from "./internal/enumerable/fromArray.js";
 export { fromIterable, fromIterator } from "./internal/enumerable/fromIterator.js";
 export { generate } from "./internal/enumerable/generate.js";

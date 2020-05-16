@@ -9,7 +9,7 @@ import {
 import { lift } from "./lift";
 import { map } from "./map";
 
-class FlattenEnumerator<T> implements EnumeratorLike<T> {
+class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
   current = (none as unknown) as T;
   hasCurrent = false;
 
@@ -45,15 +45,15 @@ class FlattenEnumerator<T> implements EnumeratorLike<T> {
 }
 
 const operator = <T>(enumerator: EnumeratorLike<EnumerableLike<T>>) =>
-  new FlattenEnumerator(enumerator);
+  new ConcatAllEnumerator(enumerator);
 
-const _flatten = lift(operator);
+const _concatAll = lift(operator);
 
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
-export const flatten = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
-  _flatten;
+export const concatAll = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
+  _concatAll;
 
 /**
  * Maps each item yielded by the sourc using a mapping function, then flattens the result.
@@ -62,4 +62,4 @@ export const flatten = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
  */
 export const concatMap = <TA, TB>(
   mapper: Function<TA, EnumerableLike<TB>>,
-): EnumerableFunction<TA, TB> => compose(map(mapper), flatten());
+): EnumerableFunction<TA, TB> => compose(map(mapper), concatAll());

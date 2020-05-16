@@ -3,7 +3,7 @@ import { isNone, isSome, none } from "../../option.js";
 import { enumerate } from "./enumerator.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
-class FlattenEnumerator {
+class ConcatAllEnumerator {
     constructor(delegate) {
         this.delegate = delegate;
         this.current = none;
@@ -34,7 +34,7 @@ class FlattenEnumerator {
         return this.hasCurrent;
     }
 }
-const operator = (enumerator) => new FlattenEnumerator(enumerator);
-const _flatten = lift(operator);
-export const flatten = () => _flatten;
-export const concatMap = (mapper) => compose(map(mapper), flatten());
+const operator = (enumerator) => new ConcatAllEnumerator(enumerator);
+const _concatAll = lift(operator);
+export const concatAll = () => _concatAll;
+export const concatMap = (mapper) => compose(map(mapper), concatAll());

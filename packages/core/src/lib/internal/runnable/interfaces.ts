@@ -3,7 +3,7 @@ import { Function } from "../../functions";
 export const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
 export interface SinkLike<T> {
   readonly isDone: boolean;
-  
+
   notify(next: T): void;
   done(): void;
 }

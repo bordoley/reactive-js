@@ -8,7 +8,7 @@ export {
   move,
 } from "./internal/enumerable/enumerator";
 export { endWith } from "./internal/enumerable/endWith";
-export { flatten, concatMap } from "./internal/enumerable/flatten";
+export { concatAll, concatMap } from "./internal/enumerable/concatAll";
 export { empty, fromArray } from "./internal/enumerable/fromArray";
 export { fromIterable, fromIterator } from "./internal/enumerable/fromIterator";
 export { generate } from "./internal/enumerable/generate";

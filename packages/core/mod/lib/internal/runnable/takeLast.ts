@@ -7,7 +7,10 @@ import { fromArray } from "./fromArray.ts";
 class TakeLastSink<T> implements SinkLike<T> {
   private readonly last: T[] = [];
 
-  constructor(private delegate: SinkLike<T>, private readonly maxCount: number) {}
+  constructor(
+    private delegate: SinkLike<T>,
+    private readonly maxCount: number,
+  ) {}
 
   get isDone() {
     return this.delegate.isDone;

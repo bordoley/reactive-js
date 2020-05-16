@@ -26,6 +26,7 @@
 
 * [compute](_runnable_.md#const-compute)
 * [concat](_runnable_.md#concat)
+* [concatAll](_runnable_.md#const-concatall)
 * [concatMap](_runnable_.md#const-concatmap)
 * [concatWith](_runnable_.md#const-concatwith)
 * [contains](_runnable_.md#const-contains)
@@ -35,7 +36,6 @@
 * [endWith](_runnable_.md#endwith)
 * [everySatisfy](_runnable_.md#const-everysatisfy)
 * [first](_runnable_.md#const-first)
-* [flatten](_runnable_.md#const-flatten)
 * [forEach](_runnable_.md#const-foreach)
 * [fromArray](_runnable_.md#const-fromarray)
 * [fromValue](_runnable_.md#const-fromvalue)
@@ -110,6 +110,18 @@ Name | Type |
 `...tail` | Array‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›› |
 
 **Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+
+___
+
+### `Const` concatAll
+
+▸ **concatAll**<**T**>(): *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
 
 ___
 
@@ -270,18 +282,6 @@ Name | Type |
 `runnable` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
 
 **Returns:** *[Option](_option_.md#option)‹T›*
-
-___
-
-### `Const` flatten
-
-▸ **flatten**<**T**>(): *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
 
 ___
 
@@ -515,7 +515,7 @@ ___
 
 ▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
 
-Returns an EnumerableLike that applies the predicate function each time the source
+Returns an RunnableLike that applies the predicate function each time the source
 completes to determine if the enumerable should be repeated.
 
 **Type parameters:**
@@ -532,7 +532,7 @@ Name | Type | Description |
 
 ▸ **repeat**<**T**>(`count`: number): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
 
-Returns an EnumerableLike that repeats the source count times.
+Returns an RunnableLike that repeats the source count times.
 
 **Type parameters:**
 
@@ -548,7 +548,7 @@ Name | Type | Description |
 
 ▸ **repeat**<**T**>(): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
 
-Returns an EnumerableLike` that continually repeats the source.
+Returns an RunnableLike that continually repeats the source.
 
 **Type parameters:**
 
@@ -694,23 +694,15 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(): *function*
+▸ **toArray**<**T**>(): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
 
-Accumulates all values emitted by `enumerable` into an array.
+Accumulates all values emitted by `runnable` into an array.
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
 
 ___
 

@@ -8,7 +8,7 @@ export {
   move,
 } from "./internal/enumerable/enumerator.ts";
 export { endWith } from "./internal/enumerable/endWith.ts";
-export { flatten, concatMap } from "./internal/enumerable/flatten.ts";
+export { concatAll, concatMap } from "./internal/enumerable/concatAll.ts";
 export { empty, fromArray } from "./internal/enumerable/fromArray.ts";
 export { fromIterable, fromIterator } from "./internal/enumerable/fromIterator.ts";
 export { generate } from "./internal/enumerable/generate.ts";
