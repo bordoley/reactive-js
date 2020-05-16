@@ -109,7 +109,10 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(fromIterable<number>()([1, 2, 3, 4, 5, 6]), scheduler);
+    const enumerator = stream(
+      fromIterable<number>()([1, 2, 3, 4, 5, 6]),
+      scheduler,
+    );
 
     const result: number[] = [];
     let error: Option<Exception> = none;

@@ -1,23 +1,22 @@
-import { dispose, add } from "../../disposable.ts";
+import { dispose, addDisposableOrTeardown } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
-import { AbstractDelegatingObserver } from "./observer.ts";
+import { createDelegatingObserver } from "./observer.ts";
+import { pipe } from "../../functions.ts";
 
-class ConcatObserver<T> extends AbstractDelegatingObserver<T, T> {
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly observables: ObservableLike<T>[],
-    private readonly next: number,
-  ) {
-    super(delegate);
-    add(this, error => {
-      const observables = this.observables;
-      const next = this.next;
-
+const createConcatObserver = <T>(
+  delegate: ObserverLike<T>,
+  observables: ObservableLike<T>[],
+  next: number,
+) =>
+  pipe(
+    delegate,
+    createDelegatingObserver,
+    addDisposableOrTeardown(error => {
       if (isSome(error)) {
         dispose(delegate, error);
       } else if (next < observables.length) {
-        const concatObserver = new ConcatObserver(
+        const concatObserver = createConcatObserver(
           delegate,
           observables,
           next + 1,
@@ -26,13 +25,8 @@ class ConcatObserver<T> extends AbstractDelegatingObserver<T, T> {
       } else {
         dispose(delegate);
       }
-    });
-  }
-
-  notify(next: T) {
-    this.delegate.notify(next);
-  }
-}
+    }),
+  );
 
 class ConcatObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;
@@ -45,7 +39,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
     const observables = this.observables;
 
     if (observables.length > 0) {
-      const concatObserver = new ConcatObserver(observer, observables, 1);
+      const concatObserver = createConcatObserver(observer, observables, 1);
       observables[0].observe(concatObserver);
     } else {
       dispose(observer);

@@ -9,10 +9,7 @@ import {
 import { AbstractProducer } from "./producer";
 
 class ThrowsProducer<T> extends AbstractProducer<T> {
-  constructor(
-    observer: ObserverLike<T>,
-    private readonly f: Factory<unknown>,
-  ) {
+  constructor(observer: ObserverLike<T>, private readonly f: Factory<unknown>) {
     super(observer);
   }
 

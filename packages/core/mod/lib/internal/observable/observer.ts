@@ -80,7 +80,6 @@ export abstract class AbstractDelegatingObserver<
   }
 }
 
-
 class DelegatingObserver<T> extends AbstractObserver<T> {
   constructor(readonly delegate: ObserverLike<T>) {
     super(delegate);
@@ -92,5 +91,6 @@ class DelegatingObserver<T> extends AbstractObserver<T> {
   }
 }
 
-export const createDelegatingObserver = <T>(delegate: ObserverLike<T>): ObserverLike<T> =>
-  new DelegatingObserver(delegate);
+export const createDelegatingObserver = <T>(
+  delegate: ObserverLike<T>,
+): ObserverLike<T> => new DelegatingObserver(delegate);

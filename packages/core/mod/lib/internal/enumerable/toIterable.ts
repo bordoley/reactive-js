@@ -19,4 +19,5 @@ export const _toIterable = <T>(source: EnumerableLike<T>): Iterable<T> =>
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */
-export const toIterable = <T>(): Function1<EnumerableLike<T>, Iterable<T>> => _toIterable;
+export const toIterable = <T>(): Function1<EnumerableLike<T>, Iterable<T>> =>
+  _toIterable;

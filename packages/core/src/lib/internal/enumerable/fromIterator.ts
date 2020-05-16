@@ -45,8 +45,10 @@ const _fromIterator = <T, TReturn = any, TNext = unknown>(
  *
  * @param f
  */
-export const fromIterator = <T, TReturn = any, TNext = unknown>(
-): Function1<Factory<Iterator<T, TReturn, TNext>>,EnumerableLike<T>> => _fromIterator;
+export const fromIterator = <T, TReturn = any, TNext = unknown>(): Function1<
+  Factory<Iterator<T, TReturn, TNext>>,
+  EnumerableLike<T>
+> => _fromIterator;
 
 const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
   _fromIterator(() => iterable[Symbol.iterator]());
