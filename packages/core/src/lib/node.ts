@@ -1,6 +1,6 @@
 export { bindNodeCallback } from "./internal/node/bindNodeCallback";
-export { createReadableFlowable } from "./internal/node/createReadableFlowable";
-export { createWritableFlowableSink } from "./internal/node/createWritableFlowableSink";
+export { createReadableIOStream } from "./internal/node/createReadableIOStream";
+export { createWritableIOSink } from "./internal/node/createWritableIOSink";
 export { createDisposableNodeStream } from "./internal/node/nodeStream";
 export {
   brotliDecompress,

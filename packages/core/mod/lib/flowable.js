@@ -1,26 +1,18 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
-import { compose, pipe, returns, isEqualTo } from "./functions.js";
-import { endWith, map as mapObs, mapTo, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, withLatestFrom, compute, concatMap, fromIterator, } from "./observable.js";
+import { compose, pipe, isEqualTo } from "./functions.js";
+import { ignoreElements, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
-import { createStreamable, map as mapStream, lift, } from "./streamable.js";
-export const next = (data) => ({
-    type: 1,
-    data,
-});
-const _complete = { type: 2 };
-export const complete = () => _complete;
-const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2), { inclusive: true }), mapTo(complete())));
+import { createStreamable, } from "./streamable.js";
+const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2)), ignoreElements()));
 export const empty = () => _empty;
 const _fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
     switch (mode) {
         case 1:
-            yield next(data);
-            yield complete();
+            yield data;
     }
 })));
 export const fromValue = () => _fromValue;
-export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
-export const fromObservable = (observable) => {
+const _fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler);
         const onModeChange = (mode) => {
@@ -36,36 +28,7 @@ export const fromObservable = (observable) => {
         const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(scheduler), addDisposableOrTeardown(pausableScheduler));
         return add(pausableScheduler, modeSubscription);
     };
-    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), mapObs(next), endWith(complete())));
+    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler)));
     return createStreamable(op);
 };
-export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(withLatestFrom(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
-    switch (ev.type) {
-        case 1: {
-            const data = decoder.decode(ev.data, { stream: true });
-            if (data.length > 0) {
-                yield next(data);
-            }
-            break;
-        }
-        case 2: {
-            const data = decoder.decode();
-            if (data.length > 0) {
-                yield next(data);
-            }
-            yield complete();
-            break;
-        }
-    }
-}), concatMap(compose(returns, fromIterator()))));
-export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder()), (ev, textEncoder) => {
-    switch (ev.type) {
-        case 1: {
-            const data = textEncoder.encode(ev.data);
-            return next(data);
-        }
-        case 2: {
-            return ev;
-        }
-    }
-}));
+export const fromObservable = () => _fromObservable;

@@ -12,6 +12,7 @@
 * ["enumerable"](modules/_enumerable_.md)
 * ["flowable"](modules/_flowable_.md)
 * ["functions"](modules/_functions_.md)
+* ["io"](modules/_io_.md)
 * ["node"](modules/_node_.md)
 * ["observable"](modules/_observable_.md)
 * ["option"](modules/_option_.md)

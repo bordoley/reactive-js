@@ -10,8 +10,8 @@
 * [brotliCompress](_node_.md#const-brotlicompress)
 * [brotliDecompress](_node_.md#const-brotlidecompress)
 * [createDisposableNodeStream](_node_.md#const-createdisposablenodestream)
-* [createReadableFlowable](_node_.md#const-createreadableflowable)
-* [createWritableFlowableSink](_node_.md#const-createwritableflowablesink)
+* [createReadableIOStream](_node_.md#const-createreadableiostream)
+* [createWritableIOSink](_node_.md#const-createwritableiosink)
 * [deflate](_node_.md#const-deflate)
 * [gunzip](_node_.md#const-gunzip)
 * [gzip](_node_.md#const-gzip)
@@ -1570,7 +1570,7 @@ ___
 
 ### `Const` brotliCompress
 
-▸ **brotliCompress**(`options`: BrotliOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **brotliCompress**(`options`: BrotliOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1578,13 +1578,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` brotliDecompress
 
-▸ **brotliDecompress**(`options`: BrotliOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **brotliDecompress**(`options`: BrotliOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1592,7 +1592,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
@@ -1614,9 +1614,9 @@ Name | Type |
 
 ___
 
-### `Const` createReadableFlowable
+### `Const` createReadableIOStream
 
-▸ **createReadableFlowable**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+▸ **createReadableIOStream**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[IOStreamLike](../interfaces/_io_.iostreamlike.md)‹Uint8Array›*
 
 **Parameters:**
 
@@ -1624,13 +1624,13 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›› |
 
-**Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹Uint8Array›*
+**Returns:** *[IOStreamLike](../interfaces/_io_.iostreamlike.md)‹Uint8Array›*
 
 ___
 
-### `Const` createWritableFlowableSink
+### `Const` createWritableIOSink
 
-▸ **createWritableFlowableSink**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable››): *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+▸ **createWritableIOSink**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable››): *[IOSinkLike](../interfaces/_io_.iosinklike.md)‹Uint8Array›*
 
 **Parameters:**
 
@@ -1638,13 +1638,13 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Writable›› |
 
-**Returns:** *[FlowableSinkLike](../interfaces/_flowable_.flowablesinklike.md)‹Uint8Array›*
+**Returns:** *[IOSinkLike](../interfaces/_io_.iosinklike.md)‹Uint8Array›*
 
 ___
 
 ### `Const` deflate
 
-▸ **deflate**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **deflate**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1652,13 +1652,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gunzip
 
-▸ **gunzip**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **gunzip**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1666,13 +1666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gzip
 
-▸ **gzip**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **gzip**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1680,13 +1680,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` inflate
 
-▸ **inflate**(`options`: ZlibOptions): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **inflate**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1694,13 +1694,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1708,4 +1708,4 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›› |
 
-**Returns:** *[FlowableFunction](_flowable_.md#flowablefunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*

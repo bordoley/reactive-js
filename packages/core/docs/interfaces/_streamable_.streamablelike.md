@@ -16,7 +16,7 @@
 
   ↳ [FlowableLike](_flowable_.flowablelike.md)
 
-  ↳ [FlowableSinkLike](_flowable_.flowablesinklike.md)
+  ↳ [IOSinkLike](_io_.iosinklike.md)
 
   ↳ [StateStoreLike](_statestore_.statestorelike.md)
 

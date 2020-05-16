@@ -1,11 +1,11 @@
 import {
-  FlowEvent,
-  FlowEventType,
-  FlowableSinkLike,
-  FlowMode,
-} from "../flowable.ts";
-import { Reducer, pipe, returns, Factory } from "../functions.ts";
-import { SchedulerLike } from "../scheduler.ts";
+  IOEvent,
+  IOEventType,
+  IOSinkLike,
+} from "../io";
+import { FlowMode } from "../flowable";
+import { Reducer, pipe, returns, Factory } from "../functions";
+import { SchedulerLike } from "../scheduler";
 import {
   StreamLike,
   ObservableLike,
@@ -18,26 +18,26 @@ import {
   createObservable,
   dispatch,
   reduce,
-} from "../observable.ts";
-import { add } from "../disposable.ts";
-import { stream, createStreamable } from "../streamable.ts";
+} from "../observable";
+import { add } from "../disposable";
+import { stream, createStreamable } from "../streamable";
 
 const isNext = <T>(
-  ev: FlowEvent<T>,
-): ev is { readonly type: FlowEventType.Next; readonly data: T } =>
-  ev.type === FlowEventType.Next;
+  ev: IOEvent<T>,
+): ev is { readonly type: IOEventType.Next; readonly data: T } =>
+  ev.type === IOEventType.Next;
 
 /**
  * @experimental
  * @noInheritDoc
  * */
-export interface FlowableSinkAccumulatorLike<T, TAcc>
-  extends FlowableSinkLike<T> {
+export interface IOSinkAccumulatorLike<T, TAcc>
+  extends IOSinkLike<T> {
   readonly acc: TAcc;
 }
 
-class FlowableSinkAccumulatorImpl<T, TAcc>
-  implements FlowableSinkAccumulatorLike<T, TAcc> {
+class IOSinkAccumulatorImpl<T, TAcc>
+  implements IOSinkAccumulatorLike<T, TAcc> {
   constructor(private readonly reducer: Reducer<T, TAcc>, private _acc: TAcc) {}
 
   get acc() {
@@ -47,8 +47,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): StreamLike<FlowEvent<T>, FlowMode> {
-    const op = (events: ObservableLike<FlowEvent<T>>) =>
+  ): StreamLike<IOEvent<T>, FlowMode> {
+    const op = (events: ObservableLike<IOEvent<T>>) =>
       using(
         scheduler =>
           pipe(
@@ -75,8 +75,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 }
 
 /** @experimental */
-export const createFlowableSinkAccumulator = <T, TAcc>(
+export const createIOSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): FlowableSinkAccumulatorLike<T, TAcc> =>
-  new FlowableSinkAccumulatorImpl(reducer, initialValue());
+): IOSinkAccumulatorLike<T, TAcc> =>
+  new IOSinkAccumulatorImpl(reducer, initialValue());
