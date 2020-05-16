@@ -54,7 +54,7 @@
 
 ###  EnumerableFunction
 
-Ƭ **EnumerableFunction**: *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››*
+Ƭ **EnumerableFunction**: *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››*
 
 A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
 
@@ -62,7 +62,7 @@ ___
 
 ###  EnumeratorFunction
 
-Ƭ **EnumeratorFunction**: *[Function](_functions_.md#function)‹[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹TA›, [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹TB››*
+Ƭ **EnumeratorFunction**: *[Function1](_functions_.md#function1)‹[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹TA›, [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹TB››*
 
 A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 
@@ -70,7 +70,7 @@ A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 
 ### `Const` compute
 
-▸ **compute**<**T**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **compute**<**T**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that emits the computed value.
 
@@ -78,7 +78,7 @@ Creates an EnumerableLike that emits the computed value.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
 Maps each item yielded by the sourc using a mapping function, then flattens the result.
 
@@ -134,7 +134,7 @@ Maps each item yielded by the sourc using a mapping function, then flattens the 
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›› |   |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›› |   |
 
 **Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
@@ -275,7 +275,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(): *[Function](_functions_.md#function)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromIterable**<**T**>(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Converts a javascript Iterable to an EnumerableLike.
 
@@ -283,13 +283,13 @@ Converts a javascript Iterable to an EnumerableLike.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns a single use EnumerableLike over the javascript Iterator
 returned by the function `f`.
@@ -302,13 +302,13 @@ returned by the function `f`.
 
 ▪ **TNext**
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that yields `value`.
 
@@ -316,7 +316,7 @@ Creates an EnumerableLike that yields `value`.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 ___
 
@@ -429,7 +429,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
 Returns an `EnumerableLike` that applies the `mapper` function to each
 value emitted by the source.
@@ -444,7 +444,7 @@ value emitted by the source.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
+`mapper` | [Function1](_functions_.md#function1)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
 
 **Returns:** *[EnumerableFunction](_enumerable_.md#enumerablefunction)‹TA, TB›*
 
@@ -669,7 +669,7 @@ ___
 
 ### `Const` toIterable
 
-▸ **toIterable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
+▸ **toIterable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
 
 Converts an EnumerableLike into a javascript Iterable.
 
@@ -677,19 +677,19 @@ Converts an EnumerableLike into a javascript Iterable.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
 
 ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 

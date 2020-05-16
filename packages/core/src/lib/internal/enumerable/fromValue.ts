@@ -1,6 +1,6 @@
 import { fromArray } from "./fromArray";
 import { EnumerableLike } from "./interfaces";
-import { Function, pipe } from "../../functions";
+import { Function1, pipe } from "../../functions";
 
 const _fromValue = <T>(value: T): EnumerableLike<T> =>
   pipe([value], fromArray());
@@ -10,4 +10,4 @@ const _fromValue = <T>(value: T): EnumerableLike<T> =>
  *
  * @param value The value to emit.
  */
-export const fromValue = <T>(): Function<T, EnumerableLike<T>> => _fromValue;
+export const fromValue = <T>(): Function1<T, EnumerableLike<T>> => _fromValue;

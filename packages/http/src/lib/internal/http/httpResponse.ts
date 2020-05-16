@@ -3,7 +3,7 @@ import {
   FlowableFunction,
   empty,
 } from "@reactive-js/core/lib/flowable";
-import { Function, SideEffect2 } from "@reactive-js/core/lib/functions";
+import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
@@ -200,7 +200,7 @@ export const checkIfNotModified = <T>({
   cacheControl,
   method,
   preconditions,
-}: HttpRequest<unknown>): Function<
+}: HttpRequest<unknown>): Function1<
   HttpResponse<T>,
   HttpResponse<T>
 > => response => {
@@ -248,18 +248,18 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
-export const encodeHttpResponseWithUtf8: Function<
+export const encodeHttpResponseWithUtf8: Function1<
   HttpResponse<string>,
   HttpResponse<Uint8Array>
-> = (encodeHttpMessageWithUtf8 as unknown) as Function<
+> = (encodeHttpMessageWithUtf8 as unknown) as Function1<
   HttpResponse<string>,
   HttpResponse<Uint8Array>
 >;
 
-export const decodeHttpResponseWithCharset: Function<
+export const decodeHttpResponseWithCharset: Function1<
   HttpResponse<Uint8Array>,
   HttpResponse<string>
-> = (decodeHttpMessageWithCharset as unknown) as Function<
+> = (decodeHttpMessageWithCharset as unknown) as Function1<
   HttpResponse<Uint8Array>,
   HttpResponse<string>
 >;
@@ -271,7 +271,7 @@ export const toFlowableHttpResponse = <TBody>(
 
 export const decodeHttpResponseContent = (decoderProvider: {
   [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
-}): Function<
+}): Function1<
   HttpResponse<FlowableLike<Uint8Array>>,
   HttpResponse<FlowableLike<Uint8Array>>
 > => resp => {
@@ -339,7 +339,7 @@ export const encodeHttpResponseContent = (
 
   return (
     request: HttpRequest<unknown>,
-  ): Function<
+  ): Function1<
     HttpResponse<FlowableLike<Uint8Array>>,
     HttpResponse<FlowableLike<Uint8Array>>
   > => response => {

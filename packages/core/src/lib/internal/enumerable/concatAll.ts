@@ -1,4 +1,4 @@
-import { compose, Function } from "../../functions";
+import { compose, Function1 } from "../../functions";
 import { isNone, isSome, none, Option } from "../../option";
 import { enumerate } from "./enumerator";
 import {
@@ -61,5 +61,5 @@ export const concatAll = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
  * @param mapper
  */
 export const concatMap = <TA, TB>(
-  mapper: Function<TA, EnumerableLike<TB>>,
+  mapper: Function1<TA, EnumerableLike<TB>>,
 ): EnumerableFunction<TA, TB> => compose(map(mapper), concatAll());

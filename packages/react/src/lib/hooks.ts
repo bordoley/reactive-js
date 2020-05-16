@@ -10,7 +10,7 @@ import {
   defer,
   returns,
   bind,
-  Function,
+  Function1,
 } from "@reactive-js/core/lib/functions";
 import {
   dispatch as dispatchToStream,
@@ -123,8 +123,8 @@ export const useStreamable = <TReq, T>(
 };
 
 const requestMapper = <TSerialized, TState>(
-  parse: Function<TSerialized, TState>,
-  serialize: Function<TState, TSerialized>,
+  parse: Function1<TSerialized, TState>,
+  serialize: Function1<TState, TSerialized>,
 ) => (
   stateUpdater: StateUpdater<TState>,
 ): StateUpdater<TSerialized> => oldStateString => {
@@ -136,8 +136,8 @@ const requestMapper = <TSerialized, TState>(
 
 export const useSerializedState = <TSerialized, TState>(
   store: StateStoreLike<TSerialized>,
-  parse: Function<TSerialized, TState>,
-  serialize: Function<TState, TSerialized>,
+  parse: Function1<TSerialized, TState>,
+  serialize: Function1<TState, TSerialized>,
 ): [Option<TState>, SideEffect1<StateUpdater<TState>>] => {
   const mappedStore = useMemo(
     defer(store, mapReq(requestMapper(parse, serialize)), map(parse)),

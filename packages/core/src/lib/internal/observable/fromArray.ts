@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable";
-import { Function } from "../../functions";
+import { Function1 } from "../../functions";
 import { schedule } from "../../scheduler";
 import { SchedulerLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
@@ -61,7 +61,7 @@ export const fromArray = <T>(
     delay?: number;
     startIndex?: number;
   } = {},
-): Function<readonly T[], ObservableLike<T>> => values => {
+): Function1<readonly T[], ObservableLike<T>> => values => {
   const delay = Math.max(options.delay ?? 0, 0);
   const startIndex = Math.min(options.startIndex ?? 0, values.length);
 

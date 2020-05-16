@@ -6,7 +6,7 @@ import {
   hasCurrent,
   move,
 } from "../../enumerable";
-import { Function, compose, bind } from "../../functions";
+import { Function1, compose, bind } from "../../functions";
 import {
   withLatestFrom,
   onNotify,
@@ -38,7 +38,7 @@ const _fromEnumerable = <T>(
  *
  * @param iterable
  */
-export const fromEnumerable = <T>(): Function<
+export const fromEnumerable = <T>(): Function1<
   EnumerableLike<T>,
   AsyncEnumerableLike<T>
 > => _fromEnumerable;

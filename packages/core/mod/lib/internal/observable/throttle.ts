@@ -6,7 +6,7 @@ import {
   add,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { pipe, Function } from "../../functions.ts";
+import { pipe, Function1 } from "../../functions.ts";
 import { none, Option, isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
@@ -65,7 +65,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   constructor(
     delegate: ObserverLike<T>,
-    readonly durationFunction: Function<T, ObservableLike<unknown>>,
+    readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly mode: ThrottleMode,
   ) {
     super(delegate);
@@ -108,7 +108,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
  * @param mode The throttle mode.
  */
 export function throttle<T>(
-  duration: Function<T, ObservableLike<unknown>>,
+  duration: Function1<T, ObservableLike<unknown>>,
   mode?: ThrottleMode,
 ): ObservableFunction<T, T>;
 
@@ -126,7 +126,7 @@ export function throttle<T>(
 ): ObservableFunction<T, T>;
 
 export function throttle<T>(
-  duration: Function<T, ObservableLike<unknown>> | number,
+  duration: Function1<T, ObservableLike<unknown>> | number,
   mode: ThrottleMode = ThrottleMode.Interval,
 ): ObservableFunction<T, T> {
   const durationFunction =

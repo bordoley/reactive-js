@@ -73,7 +73,7 @@ Name | Type |
 
 ### `Const` consume
 
-▸ **consume**<**T**, **TAcc**>(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consume**<**T**, **TAcc**>(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -88,13 +88,13 @@ Name | Type |
 `consumer` | [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc› |
 `initial` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 
 ### `Const` consumeAsync
 
-▸ **consumeAsync**<**T**, **TAcc**>(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consumeAsync**<**T**, **TAcc**>(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -109,7 +109,7 @@ Name | Type |
 `consumer` | [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc› |
 `initial` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[Function](_functions_.md#function)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+**Returns:** *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromEnumerable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -181,13 +181,13 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(): *[Function](_functions_.md#function)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromIterable**<**T**>(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -195,7 +195,7 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 ___
 

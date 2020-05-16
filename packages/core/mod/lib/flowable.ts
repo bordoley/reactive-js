@@ -1,5 +1,5 @@
 import { add, addDisposableOrTeardown } from "./disposable.ts";
-import { Function, compose, pipe, returns, isEqualTo } from "./functions.ts";
+import { Function1, compose, pipe, returns, isEqualTo } from "./functions.ts";
 import {
   ObservableLike,
   endWith,
@@ -56,7 +56,7 @@ export interface FlowableLike<T>
 export interface FlowableSinkLike<T>
   extends StreamableLike<FlowEvent<T>, FlowMode> {}
 
-export type FlowableFunction<TA, TB> = Function<
+export type FlowableFunction<TA, TB> = Function1<
   FlowableLike<TA>,
   FlowableLike<TB>
 >;
@@ -84,11 +84,11 @@ const _fromValue = <T>(data: T): FlowableLike<T> =>
       }),
     ),
   );
-export const fromValue = <T>(): Function<T, FlowableLike<T>> => _fromValue;
+export const fromValue = <T>(): Function1<T, FlowableLike<T>> => _fromValue;
 
 export const map = <TA, TB>(
-  mapper: Function<TA, TB>,
-): Function<FlowableLike<TA>, FlowableLike<TB>> =>
+  mapper: Function1<TA, TB>,
+): Function1<FlowableLike<TA>, FlowableLike<TB>> =>
   mapStream((ev: FlowEvent<TA>) =>
     ev.type === FlowEventType.Next ? pipe(ev.data, mapper, next) : ev,
   );

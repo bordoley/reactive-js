@@ -1,5 +1,5 @@
 import { Exception, dispose, add } from "../../disposable.ts";
-import { Function } from "../../functions.ts";
+import { Function1 } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -8,7 +8,7 @@ import { AbstractDelegatingObserver } from "./observer.ts";
 class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
     delegate: ObserverLike<T>,
-    onError: Function<unknown, ObservableLike<T> | void>,
+    onError: Function1<unknown, ObservableLike<T> | void>,
   ) {
     super(delegate);
 
@@ -45,7 +45,7 @@ class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {
  * to continue with or void if the error should be propagated.
  */
 export const catchError = <T>(
-  onError: Function<unknown, ObservableLike<T> | void>,
+  onError: Function1<unknown, ObservableLike<T> | void>,
 ): ObservableFunction<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new CatchErrorObserver(observer, onError);

@@ -1,5 +1,5 @@
 import { FlowableLike, FlowableFunction } from "../../../../../core/mod/lib/flowable.ts";
-import { Function, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
+import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
@@ -242,7 +242,7 @@ export const writeHttpRequestHeaders = <T>(
   writeHttpMessageHeaders(request, writeHeader);
 };
 
-export const disallowProtocolAndHostForwarding = <T>(): Function<
+export const disallowProtocolAndHostForwarding = <T>(): Function1<
   HttpServerRequest<T>,
   HttpServerRequest<T>
 > => request => {
@@ -285,18 +285,18 @@ export const httpRequestToUntypedHeaders = (
   return headers;
 };
 
-export const encodeHttpRequestWithUtf8: Function<
+export const encodeHttpRequestWithUtf8: Function1<
   HttpRequest<string>,
   HttpRequest<Uint8Array>
-> = (encodeHttpMessageWithUtf8 as unknown) as Function<
+> = (encodeHttpMessageWithUtf8 as unknown) as Function1<
   HttpRequest<string>,
   HttpRequest<Uint8Array>
 >;
 
-export const decodeHttpRequestWithCharset: Function<
+export const decodeHttpRequestWithCharset: Function1<
   HttpRequest<Uint8Array>,
   HttpRequest<string>
-> = (decodeHttpMessageWithCharset as unknown) as Function<
+> = (decodeHttpMessageWithCharset as unknown) as Function1<
   HttpRequest<Uint8Array>,
   HttpRequest<string>
 >;
@@ -308,7 +308,7 @@ export const toFlowableHttpRequest = <TBody>(
 
 export const decodeHttpRequestContent = (decoderProvider: {
   [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
-}): Function<
+}): Function1<
   HttpRequest<FlowableLike<Uint8Array>>,
   HttpRequest<FlowableLike<Uint8Array>>
 > => req => {
@@ -351,7 +351,7 @@ export const encodeHttpClientRequestContent = (
       compressible?: boolean;
     };
   } = {},
-): Function<
+): Function1<
   HttpClientRequest<FlowableLike<Uint8Array>>,
   HttpClientRequest<FlowableLike<Uint8Array>>
 > => {

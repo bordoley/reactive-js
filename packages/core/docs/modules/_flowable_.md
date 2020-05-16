@@ -43,7 +43,7 @@ ___
 
 ###  FlowableFunction
 
-Ƭ **FlowableFunction**: *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+Ƭ **FlowableFunction**: *[Function1](_functions_.md#function1)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ## Variables
 
@@ -127,19 +127,19 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[Function1](_functions_.md#function1)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -151,9 +151,9 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, TB› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
-**Returns:** *[Function](_functions_.md#function)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+**Returns:** *[Function1](_functions_.md#function1)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ___
 

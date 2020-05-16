@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown } from "../../disposable";
-import { compose, pipe, Function } from "../../functions";
+import { compose, pipe, Function1 } from "../../functions";
 import {
   ObservableLike,
   onNotify,
@@ -14,7 +14,7 @@ import { subscribe } from "../observable/subscribe";
 import { StreamableLike } from "./interfaces";
 import { stream } from "./streamable";
 
-const ignoreAndNotifyVoid: Function<
+const ignoreAndNotifyVoid: Function1<
   StreamLike<any, any>,
   ObservableLike<void>
 > = compose(ignoreElements(), endWith(none as void));

@@ -1,4 +1,4 @@
-import { Function } from "../../functions.ts";
+import { Function1 } from "../../functions.ts";
 
 /**
  * Inteface that enables iteration over a collection.
@@ -33,13 +33,13 @@ export interface EnumerableLike<T> {
 }
 
 /** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */
-export type EnumeratorFunction<TA, TB> = Function<
+export type EnumeratorFunction<TA, TB> = Function1<
   EnumeratorLike<TA>,
   EnumeratorLike<TB>
 >;
 
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
-export type EnumerableFunction<TA, TB> = Function<
+export type EnumerableFunction<TA, TB> = Function1<
   EnumerableLike<TA>,
   EnumerableLike<TB>
 >;

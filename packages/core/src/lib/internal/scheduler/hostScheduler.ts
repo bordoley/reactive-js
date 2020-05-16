@@ -4,7 +4,7 @@ import {
   dispose,
   add,
 } from "../../disposable";
-import { Factory, SideEffect, Function, bind } from "../../functions";
+import { Factory, SideEffect, Function1, bind } from "../../functions";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
 
 // FIXME: Only declare these to make Deno happy.
@@ -76,7 +76,7 @@ const scheduleDelayed = (cb: SideEffect, delay: number) => {
 const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
   scheduleDelayed(cb, 0);
 
-const scheduleImmediate: Function<
+const scheduleImmediate: Function1<
   SideEffect,
   DisposableLike
 > = supportsSetImmediate

@@ -70,7 +70,7 @@ ___
 
 ### `Const` orCompute
 
-▸ **orCompute**<**T**>(`compute`: [Factory](_functions_.md#factory)‹T›): *[Function](_functions_.md#function)‹[Option](_option_.md#option)‹T›, T›*
+▸ **orCompute**<**T**>(`compute`: [Factory](_functions_.md#factory)‹T›): *[Function1](_functions_.md#function1)‹[Option](_option_.md#option)‹T›, T›*
 
 **Type parameters:**
 
@@ -82,4 +82,4 @@ Name | Type |
 ------ | ------ |
 `compute` | [Factory](_functions_.md#factory)‹T› |
 
-**Returns:** *[Function](_functions_.md#function)‹[Option](_option_.md#option)‹T›, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹[Option](_option_.md#option)‹T›, T›*

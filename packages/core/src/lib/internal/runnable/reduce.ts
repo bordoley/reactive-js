@@ -1,4 +1,4 @@
-import { Function, Reducer, Factory } from "../../functions";
+import { Function1, Reducer, Factory } from "../../functions";
 import { RunnableLike } from "./interfaces";
 import { AbstractSink } from "./sink";
 
@@ -15,7 +15,7 @@ class ReducerSink<T, TAcc> extends AbstractSink<T> {
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): Function<RunnableLike<T>, TAcc> => runnable => {
+): Function1<RunnableLike<T>, TAcc> => runnable => {
   const sink = new ReducerSink(initialValue(), reducer);
   runnable.run(sink);
   return sink.acc;

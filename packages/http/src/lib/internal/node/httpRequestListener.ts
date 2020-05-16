@@ -10,7 +10,7 @@ import {
   bind,
   pipe,
   returns,
-  Function,
+  Function1,
   SideEffect2,
 } from "@reactive-js/core/lib/functions";
 import {
@@ -59,7 +59,7 @@ const defaultOnError = (e: unknown) => {
 };
 
 export type HttpRequestListenerOptions = {
-  readonly onError?: Function<unknown, void | ObservableLike<unknown>>;
+  readonly onError?: Function1<unknown, void | ObservableLike<unknown>>;
 };
 
 export type HttpRequestListener = SideEffect2<

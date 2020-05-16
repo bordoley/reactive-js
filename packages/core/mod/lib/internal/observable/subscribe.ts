@@ -1,5 +1,5 @@
 import { DisposableLike } from "../../disposable.ts";
-import { Function } from "../../functions.ts";
+import { Function1 } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { AbstractObserver, assertObserverState } from "./observer.ts";
@@ -19,7 +19,7 @@ class DefaultObserver<T> extends AbstractObserver<T> {
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,
-): Function<ObservableLike<T>, DisposableLike> => (
+): Function1<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
 ): DisposableLike => {
   const observer = new DefaultObserver(scheduler);

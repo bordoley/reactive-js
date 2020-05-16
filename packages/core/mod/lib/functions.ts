@@ -5,7 +5,7 @@ export type Generator<T> = (prev: T) => T;
 export type Predicate<T> = (a: T) => boolean;
 export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
-export type Function<TA, TB> = (a: TA) => TB;
+export type Function1<TA, TB> = (a: TA) => TB;
 export type Function2<TA, TB, T> = (a: TA, b: TB) => T;
 export type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
 export type Function4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
@@ -59,31 +59,31 @@ export type SideEffect = () => void;
 export type SideEffect1<TA> = (a: TA) => void;
 export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
 
-export function callWith<T>(): Function<Factory<T>, T>;
-export function callWith<TA, T>(a: TA): Function<Function<TA, T>, T>;
+export function callWith<T>(): Function1<Factory<T>, T>;
+export function callWith<TA, T>(a: TA): Function1<Function1<TA, T>, T>;
 export function callWith<TA, TB, T>(
   a: TA,
   b: TB,
-): Function<Function2<TA, TB, T>, T>;
+): Function1<Function2<TA, TB, T>, T>;
 export function callWith<TA, TB, TC, T>(
   a: TA,
   b: TB,
   c: TC,
-): Function<Function3<TA, TB, TC, T>, T>;
+): Function1<Function3<TA, TB, TC, T>, T>;
 export function callWith<TA, TB, TC, TD, T>(
   a: TA,
   b: TB,
   c: TC,
   d: TD,
-): Function<Function4<TA, TB, TC, TD, T>, T>;
+): Function1<Function4<TA, TB, TC, TD, T>, T>;
 export function callWith<T>(
   ...args: any[]
-): Function<(...args: any[]) => T, T> {
+): Function1<(...args: any[]) => T, T> {
   return f => f(...args);
 }
 
 export function bind<T>(factory: Factory<T>): Factory<T>;
-export function bind<TA, T>(op: Function<TA, T>, a: TA): Factory<T>;
+export function bind<TA, T>(op: Function1<TA, T>, a: TA): Factory<T>;
 export function bind<TA, TB, T>(
   func: Function2<TA, TB, T>,
   a: TA,
@@ -184,121 +184,121 @@ export const arrayEquality = <T>(
 ): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
   a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
-export function pipe<T, A>(src: T, op1: Function<T, A>): A;
+export function pipe<T, A>(src: T, op1: Function1<T, A>): A;
 export function pipe<T, A, B>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
 ): B;
 export function pipe<T, A, B, C>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
 ): C;
 export function pipe<T, A, B, C, D>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
 ): D;
 export function pipe<T, A, B, C, D, E>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
 ): E;
 export function pipe<T, A, B, C, D, E, F>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
 ): F;
 export function pipe<T, A, B, C, D, E, F, G>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
 ): G;
 export function pipe<T, A, B, C, D, E, F, G, H>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
 ): H;
 export function pipe<T, A, B, C, D, E, F, G, H, I>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
 ): I;
 export function pipe<T, A, B, C, D, E, F, G, H, I, J>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
 ): J;
 export function pipe<T, A, B, C, D, E, F, G, H, I, J, K>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
 ): K;
 export function pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
-  op12: Function<K, L>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
+  op12: Function1<K, L>,
 ): L;
 
 export function pipe(
   source: unknown,
-  ...operators: Function<any, unknown>[]
+  ...operators: Function1<any, unknown>[]
 ): unknown;
 
 /**
@@ -306,235 +306,235 @@ export function pipe(
  */
 export function pipe(
   source: unknown,
-  ...operators: Function<unknown, unknown>[]
+  ...operators: Function1<unknown, unknown>[]
 ): unknown {
   return operators.reduce((acc, next) => next(acc), source);
 }
 
 export function compose<T, A, B>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-): Function<T, B>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+): Function1<T, B>;
 export function compose<T, A, B, C>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-): Function<T, C>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+): Function1<T, C>;
 export function compose<T, A, B, C, D>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-): Function<T, D>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+): Function1<T, D>;
 export function compose<T, A, B, C, D, E>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-): Function<T, E>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+): Function1<T, E>;
 export function compose<T, A, B, C, D, E, F>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-): Function<T, F>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+): Function1<T, F>;
 export function compose<T, A, B, C, D, E, F, G>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-): Function<T, G>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+): Function1<T, G>;
 export function compose<T, A, B, C, D, E, F, G, H>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-): Function<T, H>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+): Function1<T, H>;
 export function compose<T, A, B, C, D, E, F, G, H, I>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-): Function<T, I>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+): Function1<T, I>;
 export function compose<T, A, B, C, D, E, F, G, H, I, J>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-): Function<T, J>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+): Function1<T, J>;
 export function compose<T, A, B, C, D, E, F, G, H, I, J, K>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
-): Function<T, K>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
+): Function1<T, K>;
 export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
-  op12: Function<K, L>,
-): Function<T, L>;
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
+  op12: Function1<K, L>,
+): Function1<T, L>;
 
 /**
  * composes the source value through a series of unary functions.
  */
 export function compose(
-  ...operators: Array<Function<unknown, unknown>>
-): Function<unknown, unknown> {
+  ...operators: Array<Function1<unknown, unknown>>
+): Function1<unknown, unknown> {
   return source => operators.reduce((acc, next) => next(acc), source);
 }
 
-export function defer<T, A>(src: T, op1: Function<T, A>): Factory<A>;
+export function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
 export function defer<T, A, B>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
 ): Factory<B>;
 export function defer<T, A, B, C>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
 ): Factory<C>;
 export function defer<T, A, B, C, D>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
 ): Factory<D>;
 export function defer<T, A, B, C, D, E>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
 ): Factory<E>;
 export function defer<T, A, B, C, D, E, F>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
 ): Factory<F>;
 export function defer<T, A, B, C, D, E, F, G>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
 ): Factory<G>;
 export function defer<T, A, B, C, D, E, F, G, H>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
 ): Factory<H>;
 export function defer<T, A, B, C, D, E, F, G, H, I>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
 ): Factory<I>;
 export function defer<T, A, B, C, D, E, F, G, H, I, J>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
 ): Factory<J>;
 export function defer<T, A, B, C, D, E, F, G, H, I, J, K>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
 ): Factory<K>;
 export function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   src: T,
-  op1: Function<T, A>,
-  op2: Function<A, B>,
-  op3: Function<B, C>,
-  op4: Function<C, D>,
-  op5: Function<D, E>,
-  op6: Function<E, F>,
-  op7: Function<F, G>,
-  op8: Function<G, H>,
-  op9: Function<H, I>,
-  op10: Function<I, J>,
-  op11: Function<J, K>,
-  op12: Function<K, L>,
+  op1: Function1<T, A>,
+  op2: Function1<A, B>,
+  op3: Function1<B, C>,
+  op4: Function1<C, D>,
+  op5: Function1<D, E>,
+  op6: Function1<E, F>,
+  op7: Function1<F, G>,
+  op8: Function1<G, H>,
+  op9: Function1<H, I>,
+  op10: Function1<I, J>,
+  op11: Function1<J, K>,
+  op12: Function1<K, L>,
 ): Factory<L>;
 
 export function defer(
   source: unknown,
-  ...operators: Function<any, unknown>[]
+  ...operators: Function1<any, unknown>[]
 ): Factory<unknown>;
 
 /**
@@ -542,7 +542,7 @@ export function defer(
  */
 export function defer(
   source: unknown,
-  ...operators: Function<unknown, unknown>[]
+  ...operators: Function1<unknown, unknown>[]
 ): Factory<unknown> {
   return () => operators.reduce((acc, next) => next(acc), source);
 }

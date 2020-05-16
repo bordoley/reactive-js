@@ -1,4 +1,4 @@
-import { Factory, Function, pipe } from "../../functions.ts";
+import { Factory, Function1, pipe } from "../../functions.ts";
 import { enumerate } from "./enumerator.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableLike } from "./interfaces.ts";
@@ -19,5 +19,5 @@ const _compute = <T>(f: Factory<T>): EnumerableLike<T> =>
  *
  * @param valueFactory
  */
-export const compute = <T>(): Function<Factory<T>, EnumerableLike<T>> =>
+export const compute = <T>(): Function1<Factory<T>, EnumerableLike<T>> =>
   _compute;

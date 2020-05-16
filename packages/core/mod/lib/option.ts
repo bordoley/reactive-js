@@ -1,4 +1,4 @@
-import { Factory, Function } from "./functions.ts";
+import { Factory, Function1 } from "./functions.ts";
 
 export type Option<T> = T | undefined;
 
@@ -9,6 +9,6 @@ export const isSome = <T>(option: Option<T>): option is T => option !== none;
 export const isNone = <T>(option: Option<T>): option is undefined =>
   option === none;
 
-export const orCompute = <T>(compute: Factory<T>): Function<Option<T>, T> => (
+export const orCompute = <T>(compute: Factory<T>): Function1<Option<T>, T> => (
   value: Option<T>,
 ) => value ?? compute();

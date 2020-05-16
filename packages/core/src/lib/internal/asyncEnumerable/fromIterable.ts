@@ -1,7 +1,7 @@
 import { fromIterable as fromIterableEnumerable } from "../../enumerable";
 import { fromEnumerable } from "./fromEnumerable";
 import { AsyncEnumerableLike } from "./interfaces";
-import { Function, pipe } from "../../functions";
+import { Function1, pipe } from "../../functions";
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -16,7 +16,7 @@ const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
  *
  * @param iterable
  */
-export const fromIterable = <T>(): Function<
+export const fromIterable = <T>(): Function1<
   Iterable<T>,
   AsyncEnumerableLike<T>
 > => _fromIterable;

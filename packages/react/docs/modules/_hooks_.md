@@ -35,7 +35,7 @@ ___
 
 ### `Const` useSerializedState
 
-▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: Function‹TSerialized, TState›, `serialize`: Function‹TState, TSerialized›): *[Option‹TState›, SideEffect1‹StateUpdater‹TState››]*
+▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: Function1‹TSerialized, TState›, `serialize`: Function1‹TState, TSerialized›): *[Option‹TState›, SideEffect1‹StateUpdater‹TState››]*
 
 **Type parameters:**
 
@@ -48,8 +48,8 @@ ___
 Name | Type |
 ------ | ------ |
 `store` | StateStoreLike‹TSerialized› |
-`parse` | Function‹TSerialized, TState› |
-`serialize` | Function‹TState, TSerialized› |
+`parse` | Function1‹TSerialized, TState› |
+`serialize` | Function1‹TState, TSerialized› |
 
 **Returns:** *[Option‹TState›, SideEffect1‹StateUpdater‹TState››]*
 

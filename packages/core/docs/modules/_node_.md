@@ -133,7 +133,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -160,7 +160,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -333,7 +333,7 @@ Name | Type |
 ------ | ------ |
 `arg1` | A1 |
 
-▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -364,7 +364,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *function*
 
@@ -574,7 +574,7 @@ Name | Type |
 `arg1` | A1 |
 `arg2` | A2 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -609,7 +609,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *function*
 
@@ -840,7 +840,7 @@ Name | Type |
 `arg2` | A2 |
 `arg3` | A3 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -879,7 +879,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1131,7 +1131,7 @@ Name | Type |
 `arg3` | A3 |
 `arg4` | A4 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1174,7 +1174,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *function*
 
@@ -1447,7 +1447,7 @@ Name | Type |
 `arg4` | A4 |
 `arg5` | A5 |
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function](_functions_.md#function)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
 
 **Type parameters:**
 
@@ -1494,7 +1494,7 @@ Name | Type |
 `err` | unknown |
 `res1` | R1 |
 
-▪ **selector**: *[Function](_functions_.md#function)‹R1, T›*
+▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
 
 **Returns:** *function*
 

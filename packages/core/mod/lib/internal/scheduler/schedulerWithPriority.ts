@@ -1,4 +1,4 @@
-import { Function } from "../../functions.ts";
+import { Function1 } from "../../functions.ts";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -40,5 +40,5 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
  */
 export const toSchedulerWithPriority = (
   priority: number,
-): Function<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
+): Function1<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
   new SchedulerWithPriorityImpl(priorityScheduler, priority);

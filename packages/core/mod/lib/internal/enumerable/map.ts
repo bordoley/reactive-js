@@ -1,4 +1,4 @@
-import { Function, returns } from "../../functions.ts";
+import { Function1, returns } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { EnumeratorLike, EnumerableFunction } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -9,7 +9,7 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
 
   constructor(
     readonly delegate: EnumeratorLike<TA>,
-    readonly mapper: Function<TA, TB>,
+    readonly mapper: Function1<TA, TB>,
   ) {}
 
   move(): boolean {
@@ -32,7 +32,7 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 export const map = <TA, TB>(
-  mapper: Function<TA, TB>,
+  mapper: Function1<TA, TB>,
 ): EnumerableFunction<TA, TB> => {
   const operator = (enumerator: EnumeratorLike<TA>) =>
     new MapEnumerator(enumerator, mapper);

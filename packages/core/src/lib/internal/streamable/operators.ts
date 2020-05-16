@@ -1,4 +1,4 @@
-import { Factory, Function, Reducer, SideEffect1 } from "../../functions";
+import { Factory, Function1, Reducer, SideEffect1 } from "../../functions";
 import {
   map as mapObs,
   mapTo as mapToObs,
@@ -9,7 +9,7 @@ import { lift } from "./streamable";
 import { StreamableFunction } from "./interfaces";
 
 export const map = <TReq, TA, TB>(
-  mapper: Function<TA, TB>,
+  mapper: Function1<TA, TB>,
 ): StreamableFunction<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapObs(mapper));
 
 export const mapTo = <TReq, TA, TB>(

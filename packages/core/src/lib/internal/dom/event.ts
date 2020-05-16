@@ -1,11 +1,11 @@
 import { dispose, add } from "../../disposable";
-import { Function } from "../../functions";
+import { Function1 } from "../../functions";
 import { createObservable, ObservableLike, dispatch } from "../../observable";
 
 export const fromEvent = <T>(
   target: EventTarget,
   eventName: string,
-  selector: Function<Event, T>,
+  selector: Function1<Event, T>,
 ): ObservableLike<T> =>
   createObservable(dispatcher => {
     const listener = (event: Event) => {
