@@ -15,23 +15,23 @@ import {
   disposeOnError,
   add,
 } from "../../disposable";
-import { FlowableFunction } from "../../flowable";
+import { IOStreamFunction } from "../../io";
 import { defer, ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
-import { createReadableFlowable } from "./createReadableFlowable";
-import { createWritableFlowableSink } from "./createWritableFlowableSink";
+import { createReadableIOStream } from "./createReadableIOStream";
+import { createWritableIOSink } from "./createWritableIOSink";
 import { createDisposableNodeStream } from "./nodeStream";
 
 export const transform = (
   factory: Factory<DisposableValueLike<Transform>>,
-): FlowableFunction<Uint8Array, Uint8Array> => src =>
+): IOStreamFunction<Uint8Array, Uint8Array> => src =>
   createStreamable(modeObs =>
     using(
       scheduler => {
         const transform = factory();
 
-        const transformSink = createWritableFlowableSink(
+        const transformSink = createWritableIOSink(
           // don't dispose the transform when the writable is disposed.
           () =>
             add(
@@ -46,7 +46,7 @@ export const transform = (
         );
 
         const transformReadableStream = stream(
-          createReadableFlowable(returns(transform)),
+          createReadableIOStream(returns(transform)),
           scheduler,
         );
 
@@ -69,30 +69,30 @@ export const transform = (
 
 export const brotliDecompress = (
   options: BrotliOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
 export const gunzip = (
   options: ZlibOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
 export const gzip = (
   options: ZlibOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
-): FlowableFunction<Uint8Array, Uint8Array> =>
+): IOStreamFunction<Uint8Array, Uint8Array> =>
   transform(defer(options, createDeflate, createDisposableNodeStream));

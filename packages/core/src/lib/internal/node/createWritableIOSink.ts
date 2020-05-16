@@ -1,11 +1,13 @@
 import { Writable } from "stream";
 import { DisposableValueLike, dispose, add } from "../../disposable";
 import {
-  FlowEventType,
   FlowMode,
-  FlowEvent,
-  FlowableSinkLike,
 } from "../../flowable";
+import {
+  IOEventType,
+  IOEvent,
+  IOSinkLike,
+} from "../../io";
 import { pipe, bind, Factory } from "../../functions";
 import {
   createObservable,
@@ -47,7 +49,7 @@ const createWritableEventsObservable = (
 
 const createWritableAndSetupEventSubscription = (
   factory: Factory<DisposableValueLike<Writable>>,
-  events: ObservableLike<FlowEvent<Uint8Array>>,
+  events: ObservableLike<IOEvent<Uint8Array>>,
 ) => (scheduler: SchedulerLike) => {
   const writable = factory();
   const writableValue = writable.value;
@@ -55,7 +57,7 @@ const createWritableAndSetupEventSubscription = (
     events,
     onNotify(ev => {
       switch (ev.type) {
-        case FlowEventType.Next:
+        case IOEventType.Next:
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type exception regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
@@ -64,7 +66,7 @@ const createWritableAndSetupEventSubscription = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
           break;
-        case FlowEventType.Complete:
+        case IOEventType.Complete:
           writableValue.end();
           break;
       }
@@ -75,9 +77,9 @@ const createWritableAndSetupEventSubscription = (
   return add(writable, streamEventsSubscription);
 };
 
-export const createWritableFlowableSink = (
+export const createWritableIOSink = (
   factory: Factory<DisposableValueLike<Writable>>,
-): FlowableSinkLike<Uint8Array> =>
+): IOSinkLike<Uint8Array> =>
   createStreamable(events =>
     using(
       createWritableAndSetupEventSubscription(factory, events),

@@ -8,6 +8,8 @@
 
 ## Hierarchy
 
-* [StreamableLike](_streamable_.streamablelike.md)‹[FlowMode](../enums/_flowable_.flowmode.md), [FlowEvent](../modules/_flowable_.md#flowevent)‹T››
+* [StreamableLike](_streamable_.streamablelike.md)‹[FlowMode](../enums/_flowable_.flowmode.md), T›
 
   ↳ **FlowableLike**
+
+  ↳ [IOStreamLike](_io_.iostreamlike.md)

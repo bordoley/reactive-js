@@ -3,7 +3,7 @@ import { using, takeWhile, keepType, map as mapObs, onNotify, subscribe, createO
 import { add } from "../disposable.js";
 import { stream, createStreamable } from "../streamable.js";
 const isNext = (ev) => ev.type === 1;
-class FlowableSinkAccumulatorImpl {
+class IOSinkAccumulatorImpl {
     constructor(reducer, _acc) {
         this.reducer = reducer;
         this._acc = _acc;
@@ -22,4 +22,4 @@ class FlowableSinkAccumulatorImpl {
         return stream(createStreamable(op), scheduler, replayCount);
     }
 }
-export const createFlowableSinkAccumulator = (reducer, initialValue) => new FlowableSinkAccumulatorImpl(reducer, initialValue());
+export const createIOSinkAccumulator = (reducer, initialValue) => new IOSinkAccumulatorImpl(reducer, initialValue());
