@@ -11,8 +11,10 @@ class ConcatSink {
         this.isDone = false;
     }
     done() {
-        this.isDone = true;
-        throw concatSinkDone;
+        if (!this.isDone) {
+            this.isDone = true;
+            throw concatSinkDone;
+        }
     }
     notify(next) {
         this.delegate.notify(next);

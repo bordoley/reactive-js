@@ -8,8 +8,10 @@ export abstract class AbstractSink<T> implements SinkLike<T> {
   abstract notify(next: T): void;
 
   done() {
-    this.isDone = true;
-    throw sinkDone;
+    if(!this.isDone) {
+      this.isDone = true;
+      throw sinkDone;
+    }
   }
 }
 

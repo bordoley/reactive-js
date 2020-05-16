@@ -4,8 +4,10 @@ export class AbstractSink {
         this.isDone = false;
     }
     done() {
-        this.isDone = true;
-        throw sinkDone;
+        if (!this.isDone) {
+            this.isDone = true;
+            throw sinkDone;
+        }
     }
 }
 export class AbstractDelegatingSink {
