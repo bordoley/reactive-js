@@ -1,10 +1,10 @@
-import { returns, Function } from "../../functions";
+import { returns, Function1 } from "../../functions";
 import { RunnableFunction, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 
 class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
-  constructor(delegate: SinkLike<TB>, readonly mapper: Function<TA, TB>) {
+  constructor(delegate: SinkLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
   }
 
@@ -15,7 +15,7 @@ class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
 }
 
 export const map = <TA, TB>(
-  mapper: Function<TA, TB>,
+  mapper: Function1<TA, TB>,
 ): RunnableFunction<TA, TB> => {
   const operator = (sink: SinkLike<TB>) => new MapSink(sink, mapper);
   return lift(operator);

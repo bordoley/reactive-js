@@ -1,7 +1,7 @@
 import { EnumeratorLike } from "../enumerable";
 import {
   Factory,
-  Function,
+  Function1,
   compose,
   isEqualTo,
   pipe,
@@ -155,24 +155,24 @@ export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
 
 export const concatWith = <TA, TB>(
   other: Parser<TB>,
-): Function<Parser<TA>, Parser<[TA, TB]>> => parser => concat(parser, other);
+): Function1<Parser<TA>, Parser<[TA, TB]>> => parser => concat(parser, other);
 
 export const followedBy = <T>(
   other: Parser<unknown>,
-): Function<Parser<T>, Parser<T>> => parser => charStream => {
+): Function1<Parser<T>, Parser<T>> => parser => charStream => {
   const result = parser(charStream);
   other(charStream);
   return result;
 };
 
 export const map = <TA, TB>(
-  mapper: Function<TA, TB>,
-): Function<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
+  mapper: Function1<TA, TB>,
+): Function1<Parser<TA>, Parser<TB>> => parser => compose(parser, mapper);
 
-export const mapTo = <TA, TB>(v: TB): Function<Parser<TA>, Parser<TB>> =>
+export const mapTo = <TA, TB>(v: TB): Function1<Parser<TA>, Parser<TB>> =>
   map(returns(v));
 
-export const parseWithOrThrow = <T>(parser: Parser<T>): Function<string, T> => {
+export const parseWithOrThrow = <T>(parser: Parser<T>): Function1<string, T> => {
   const parse = pipe(parser, followedBy(pEof));
   return input => {
     const charStream = createCharStream(input);
@@ -180,7 +180,7 @@ export const parseWithOrThrow = <T>(parser: Parser<T>): Function<string, T> => {
   };
 };
 
-export const parseWith = <T>(parse: Parser<T>): Function<string, Option<T>> => {
+export const parseWith = <T>(parse: Parser<T>): Function1<string, Option<T>> => {
   const doParse = parseWithOrThrow(parse);
   return input => {
     try {
@@ -196,7 +196,7 @@ export const parseWith = <T>(parse: Parser<T>): Function<string, Option<T>> => {
 
 export const or = <TA, TB>(
   otherParse: Parser<TB>,
-): Function<Parser<TA>, Parser<TA | TB>> => parse => charStream => {
+): Function1<Parser<TA>, Parser<TA | TB>> => parse => charStream => {
   const index = charStream.index;
 
   try {
@@ -216,7 +216,7 @@ export const many = <T>(
     min?: number;
     max?: number;
   } = {},
-): Function<Parser<T>, Parser<readonly T[]>> => parse => charStream => {
+): Function1<Parser<T>, Parser<readonly T[]>> => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
 
   const retval: T[] = [];
@@ -246,7 +246,7 @@ export const manyIgnore = <T>(
     min?: number;
     max?: number;
   } = {},
-): Function<Parser<T>, Parser<void>> => parse => charStream => {
+): Function1<Parser<T>, Parser<void>> => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
 
   let count = 0;
@@ -286,12 +286,12 @@ export const optional = <T>(
 
 export const orCompute = <T>(
   compute: Factory<T>,
-): Function<Parser<Option<T>>, Parser<T>> =>
+): Function1<Parser<Option<T>>, Parser<T>> =>
   compose(optional, map(orComputeOption(compute)));
 
 export const sepBy1 = <T>(
   separator: Parser<unknown>,
-): Function<Parser<T>, Parser<readonly T[]>> => parser => {
+): Function1<Parser<T>, Parser<readonly T[]>> => parser => {
   const parseTailValue = (charStream: CharStreamLike) => {
     separator(charStream);
     return parser(charStream);
@@ -311,7 +311,7 @@ export const sepBy1 = <T>(
 
 export const sepBy = <T>(
   separator: Parser<unknown>,
-): Function<Parser<T>, Parser<readonly T[]>> =>
+): Function1<Parser<T>, Parser<readonly T[]>> =>
   compose(sepBy1(separator), orCompute<readonly T[]>(returns([])));
 
 export const string = (str: string): Parser<string> => charStream => {
@@ -345,7 +345,7 @@ export const manySatisfy = (
     min?: number;
     max?: number;
   } = {},
-): Function<Parser<CharCode>, Parser<string>> => parser => {
+): Function1<Parser<CharCode>, Parser<string>> => parser => {
   const parse = manyIgnore(options)(parser);
 
   return charStream => {

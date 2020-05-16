@@ -1,4 +1,4 @@
-import { Function } from "../../functions";
+import { Function1 } from "../../functions";
 
 export const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
 export interface SinkLike<T> {
@@ -8,13 +8,13 @@ export interface SinkLike<T> {
   done(): void;
 }
 
-export type SinkFunction<TA, TB> = Function<SinkLike<TB>, SinkLike<TA>>;
+export type SinkFunction<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 
 export interface RunnableLike<T> {
   run(sink: SinkLike<T>): void;
 }
 
-export type RunnableFunction<TA, TB> = Function<
+export type RunnableFunction<TA, TB> = Function1<
   RunnableLike<TA>,
   RunnableLike<TB>
 >;

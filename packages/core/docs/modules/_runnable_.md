@@ -63,13 +63,13 @@
 
 ###  RunnableFunction
 
-Ƭ **RunnableFunction**: *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TA›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››*
+Ƭ **RunnableFunction**: *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TA›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››*
 
 ___
 
 ###  SinkFunction
 
-Ƭ **SinkFunction**: *[Function](_functions_.md#function)‹[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›, [SinkLike](../interfaces/_runnable_.sinklike.md)‹TA››*
+Ƭ **SinkFunction**: *[Function1](_functions_.md#function1)‹[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›, [SinkLike](../interfaces/_runnable_.sinklike.md)‹TA››*
 
 ## Variables
 
@@ -81,13 +81,13 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **compute**<**T**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
 **Type parameters:**
 
@@ -139,7 +139,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB›› |
 
 **Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
@@ -287,7 +287,7 @@ ___
 
 ### `Const` forEach
 
-▸ **forEach**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, void›*
+▸ **forEach**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, void›*
 
 **Type parameters:**
 
@@ -299,13 +299,13 @@ Name | Type |
 ------ | ------ |
 `f` | [SideEffect1](_functions_.md#sideeffect1)‹T› |
 
-**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, void›*
+**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, void›*
 
 ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *[Function](_functions_.md#function)‹keyof T[], [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -321,19 +321,19 @@ Name | Type |
 ------ | ------ |
 `startIndex` | number |
 
-**Returns:** *[Function](_functions_.md#function)‹keyof T[], [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function](_functions_.md#function)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
 **Type parameters:**
 
@@ -446,7 +446,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, TB› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
 **Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
 
@@ -492,7 +492,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, TAcc›*
+▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, TAcc›*
 
 **Type parameters:**
 
@@ -507,7 +507,7 @@ Name | Type |
 `reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
 `initialValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, TAcc›*
+**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, TAcc›*
 
 ___
 
@@ -694,7 +694,7 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
+▸ **toArray**<**T**>(): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
 
 Accumulates all values emitted by `runnable` into an array.
 
@@ -702,16 +702,16 @@ Accumulates all values emitted by `runnable` into an array.
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
+**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
 
 ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(): *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**<**T**>(): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function](_functions_.md#function)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*

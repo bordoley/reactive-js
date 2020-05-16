@@ -1,8 +1,8 @@
-import { Factory, Function, SideEffect, SideEffect1 } from "../functions.ts";
+import { Factory, Function1, SideEffect, SideEffect1 } from "../functions.ts";
 
 export type BenchmarkTest<TData> = {
   name: string;
-  factory: Function<TData, Promise<SideEffect>>;
+  factory: Function1<TData, Promise<SideEffect>>;
 };
 
 export type BenchmarkGroup<TData> = {
@@ -13,7 +13,7 @@ export type BenchmarkGroup<TData> = {
 
 export const benchmarkTest = <TData, T>(
   name: string,
-  setup: Function<TData, Promise<T>>,
+  setup: Function1<TData, Promise<T>>,
   run: SideEffect1<T>,
 ): BenchmarkTest<TData> => {
   const factory = async (data: TData) => {

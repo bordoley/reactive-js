@@ -117,7 +117,7 @@ ___
 
 ### `Const` toSchedulerWithPriority
 
-▸ **toSchedulerWithPriority**(`priority`: number): *[Function](_functions_.md#function)‹[PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md), [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*
+▸ **toSchedulerWithPriority**(`priority`: number): *[Function1](_functions_.md#function1)‹[PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md), [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*
 
 Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
 
@@ -127,4 +127,4 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `priority` | number | The priority to schedule work at.  |
 
-**Returns:** *[Function](_functions_.md#function)‹[PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md), [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*
+**Returns:** *[Function1](_functions_.md#function1)‹[PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md), [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)›*

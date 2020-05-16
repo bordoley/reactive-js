@@ -287,7 +287,7 @@ ___
 
 ### `Const` decodeHttpRequestWithCharset
 
-• **decodeHttpRequestWithCharset**: *Function‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function<
+• **decodeHttpRequestWithCharset**: *Function1‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function1<
   HttpRequest<Uint8Array>,
   HttpRequest<string>
 >
@@ -296,7 +296,7 @@ ___
 
 ### `Const` decodeHttpResponseWithCharset
 
-• **decodeHttpResponseWithCharset**: *Function‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function<
+• **decodeHttpResponseWithCharset**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function1<
   HttpResponse<Uint8Array>,
   HttpResponse<string>
 >
@@ -305,7 +305,7 @@ ___
 
 ### `Const` encodeHttpRequestWithUtf8
 
-• **encodeHttpRequestWithUtf8**: *Function‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function<
+• **encodeHttpRequestWithUtf8**: *Function1‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function1<
   HttpRequest<string>,
   HttpRequest<Uint8Array>
 >
@@ -314,7 +314,7 @@ ___
 
 ### `Const` encodeHttpResponseWithUtf8
 
-• **encodeHttpResponseWithUtf8**: *Function‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function<
+• **encodeHttpResponseWithUtf8**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function1<
   HttpResponse<string>,
   HttpResponse<Uint8Array>
 >
@@ -323,7 +323,7 @@ ___
 
 ### `Const` checkIfNotModified
 
-▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *Function‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
+▸ **checkIfNotModified**<**T**>(`__namedParameters`: object): *Function1‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
 
 **Type parameters:**
 
@@ -339,7 +339,7 @@ Name | Type |
 `method` | [HttpMethod](../enums/_http_.httpmethod.md) |
 `preconditions` | object |
 
-**Returns:** *Function‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
+**Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
 
 ___
 
@@ -428,7 +428,7 @@ ___
 
 ### `Const` createRoutingHttpServer
 
-▸ **createRoutingHttpServer**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: Function‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
+▸ **createRoutingHttpServer**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: Function1‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
 
 **Type parameters:**
 
@@ -441,7 +441,7 @@ ___
 Name | Type |
 ------ | ------ |
 `routes` | object |
-`notFoundHandler` | Function‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
+`notFoundHandler` | Function1‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
 
 **Returns:** *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
 
@@ -449,7 +449,7 @@ ___
 
 ### `Const` decodeHttpRequestContent
 
-▸ **decodeHttpRequestContent**(`decoderProvider`: object): *Function‹[HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array›››*
+▸ **decodeHttpRequestContent**(`decoderProvider`: object): *Function1‹[HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -457,13 +457,13 @@ Name | Type |
 ------ | ------ |
 `decoderProvider` | object |
 
-**Returns:** *Function‹[HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` decodeHttpResponseContent
 
-▸ **decodeHttpResponseContent**(`decoderProvider`: object): *Function‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
+▸ **decodeHttpResponseContent**(`decoderProvider`: object): *Function1‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -471,25 +471,25 @@ Name | Type |
 ------ | ------ |
 `decoderProvider` | object |
 
-**Returns:** *Function‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹FlowableLike‹Uint8Array›››*
 
 ___
 
 ### `Const` disallowProtocolAndHostForwarding
 
-▸ **disallowProtocolAndHostForwarding**<**T**>(): *Function‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
+▸ **disallowProtocolAndHostForwarding**<**T**>(): *Function1‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *Function‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
+**Returns:** *Function1‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
 
 ___
 
 ### `Const` encodeHttpClientRequestContent
 
-▸ **encodeHttpClientRequestContent**(`encoderProvider`: object, `db`: object): *Function‹[HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array›››*
+▸ **encodeHttpClientRequestContent**(`encoderProvider`: object, `db`: object): *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -498,7 +498,7 @@ Name | Type | Default |
 `encoderProvider` | object | - |
 `db` | object | {} |
 
-**Returns:** *Function‹[HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹FlowableLike‹Uint8Array›››*
 
 ___
 
@@ -631,7 +631,7 @@ ___
 
 ### `Const` withDefaultBehaviors
 
-▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: Function‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq››): *(Anonymous function)*
+▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq››): *(Anonymous function)*
 
 **Type parameters:**
 
@@ -643,7 +643,7 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`encodeHttpRequest` | Function‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq›› | identity |
+`encodeHttpRequest` | Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq›› | identity |
 
 **Returns:** *(Anonymous function)*
 

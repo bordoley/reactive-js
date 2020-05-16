@@ -5,7 +5,7 @@ import {
   add,
   addDisposableOrTeardown,
 } from "../../disposable";
-import { pipe, Function } from "../../functions";
+import { pipe, Function1 } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
@@ -30,7 +30,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
 
   constructor(
     delegate: ObserverLike<readonly T[]>,
-    private readonly durationFunction: Function<T, ObservableLike<unknown>>,
+    private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
   ) {
     super(delegate);
@@ -75,7 +75,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
  */
 export function buffer<T>(
   options: {
-    duration?: Function<T, ObservableLike<unknown>> | number;
+    duration?: Function1<T, ObservableLike<unknown>> | number;
     maxBufferSize?: number;
   } = {},
 ): ObservableFunction<T, readonly T[]> {

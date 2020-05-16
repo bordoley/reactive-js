@@ -1,4 +1,4 @@
-import { compose, Function, pipe, Factory, flip } from "../../functions.ts";
+import { compose, Function1, pipe, Factory, flip } from "../../functions.ts";
 import {
   createSubject,
   map,
@@ -54,7 +54,7 @@ const consumeImpl = <TSrc, TAcc>(
     acc: ObservableLike<TAcc>,
   ) => ObservableFunction<TSrc, ConsumeRequest<TAcc>>,
   initial: Factory<TAcc>,
-): Function<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
+): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
     scheduler => {
       const enumerator = stream(enumerable, scheduler);
@@ -85,13 +85,13 @@ const consumeImpl = <TSrc, TAcc>(
 export const consume = <T, TAcc>(
   consumer: Consumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Function<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
   consumer: AsyncConsumer<T, TAcc>,
   initial: Factory<TAcc>,
-): Function<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(
     accObs =>
       compose(

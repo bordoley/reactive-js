@@ -1,4 +1,4 @@
-import { Function, compose, callWith, Factory } from "../../functions.ts";
+import { Function1, compose, callWith, Factory } from "../../functions.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { map } from "./map.ts";
@@ -11,5 +11,5 @@ import { map } from "./map.ts";
  */
 export const compute = <T>(options?: {
   delay: number;
-}): Function<Factory<T>, ObservableLike<T>> =>
+}): Function1<Factory<T>, ObservableLike<T>> =>
   compose(fromValue(options), map(callWith()));

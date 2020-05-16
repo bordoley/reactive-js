@@ -151,7 +151,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -165,7 +165,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, TB› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
 **Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
 
@@ -173,7 +173,7 @@ ___
 
 ### `Const` mapReq
 
-▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: [Function](_functions_.md#function)‹TReqB, TReqA›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReqA, T, TReqB, T›*
+▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: [Function1](_functions_.md#function1)‹TReqB, TReqA›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReqA, T, TReqB, T›*
 
 **Type parameters:**
 
@@ -187,7 +187,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | [Function](_functions_.md#function)‹TReqB, TReqA› |
+`op` | [Function1](_functions_.md#function1)‹TReqB, TReqA› |
 
 **Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReqA, T, TReqB, T›*
 

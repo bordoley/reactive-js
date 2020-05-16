@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown, add } from "../../disposable.ts";
-import { pipe, compose, Function } from "../../functions.ts";
+import { pipe, compose, Function1 } from "../../functions.ts";
 import {
   ObservableFunction,
   StreamLike,
@@ -32,7 +32,7 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
     op: ObservableFunction<TReqB, TB>,
     readonly src: StreamableLike<TReqA, TA>,
     readonly obsOps: ObservableFunction<any, any>[],
-    readonly reqOps: Function<any, any>[],
+    readonly reqOps: Function1<any, any>[],
   ) {
     super(op);
   }
@@ -41,7 +41,7 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
 const liftImpl = <TReqA, TReqB, TA, TB>(
   streamable: StreamableLike<TReqA, TA>,
   obsOps: ObservableFunction<any, any>[],
-  reqOps: Function<any, any>[],
+  reqOps: Function1<any, any>[],
 ) => {
   const src =
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
@@ -74,7 +74,7 @@ export const lift = <TReq, TA, TB>(
 };
 
 export const mapReq = <TReqA, TReqB, T>(
-  op: Function<TReqB, TReqA>,
+  op: Function1<TReqB, TReqA>,
 ): StreamableFunction<TReqA, T, TReqB, T> => streamable => {
   const obsOps =
     streamable instanceof LiftedStreamable ? streamable.obsOps : [];

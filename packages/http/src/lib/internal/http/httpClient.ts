@@ -1,5 +1,5 @@
 import { dispose, DisposableLike } from "@reactive-js/core/lib/disposable";
-import { pipe, identity, Function } from "@reactive-js/core/lib/functions";
+import { pipe, identity, Function1 } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   fromValue,
@@ -68,7 +68,7 @@ const redirectCodes = [
 ];
 
 export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
-  encodeHttpRequest: Function<
+  encodeHttpRequest: Function1<
     HttpClientRequest<TReq>,
     HttpClientRequest<TReq>
   > = identity,

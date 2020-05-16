@@ -1,4 +1,4 @@
-import { Function } from "../../../../../core/mod/lib/functions.ts";
+import { Function1 } from "../../../../../core/mod/lib/functions.ts";
 import { ObservableLike } from "../../../../../core/mod/lib/observable.ts";
 import { isNone, isSome, none, Option } from "../../../../../core/mod/lib/option.ts";
 import { HttpResponse, HttpRequest } from "./interfaces.ts";
@@ -133,7 +133,7 @@ export const createRoutingHttpServer = <TReq, TResp>(
   routes: {
     [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
   },
-  notFoundHandler: Function<
+  notFoundHandler: Function1<
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>
   >,

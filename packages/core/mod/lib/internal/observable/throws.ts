@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.ts";
-import { Function, Factory } from "../../functions.ts";
+import { Function1, Factory } from "../../functions.ts";
 import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
@@ -31,7 +31,7 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
  */
 export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
-): Function<Factory<unknown>, ObservableLike<T>> => errorFactory => {
+): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
   const factory = (observer: ObserverLike<T>) =>
     new ThrowsProducer(observer, errorFactory, delay);
 

@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown } from "../../disposable";
-import { pipe, Function } from "../../functions";
+import { pipe, Function1 } from "../../functions";
 import { none, Option, isSome } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
@@ -14,7 +14,7 @@ import { subscribe } from "./subscribe";
  */
 export const toPromise = <T>(
   scheduler: SchedulerLike,
-): Function<ObservableLike<T>, Promise<T>> => observable =>
+): Function1<ObservableLike<T>, Promise<T>> => observable =>
   new Promise((resolve, reject) => {
     let result: Option<T> = none;
     let hasResult = false;

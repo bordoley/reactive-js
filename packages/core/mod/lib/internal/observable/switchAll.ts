@@ -4,7 +4,7 @@ import {
   dispose,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { compose, pipe, Function } from "../../functions.ts";
+import { compose, pipe, Function1 } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -63,5 +63,5 @@ const switchAllInstance = lift(operator);
 export const switchAll = <T>() =>
   switchAllInstance as ObservableFunction<ObservableLike<T>, T>;
 
-export const switchMap = <TA, TB>(mapper: Function<TA, ObservableLike<TB>>) =>
+export const switchMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) =>
   compose(map(mapper), switchAll());

@@ -1,4 +1,4 @@
-import { Factory, Function } from "../../functions.ts";
+import { Factory, Function1 } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 
@@ -46,7 +46,7 @@ const _fromIterator = <T, TReturn = any, TNext = unknown>(
  * @param f
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(
-): Function<Factory<Iterator<T, TReturn, TNext>>,EnumerableLike<T>> => _fromIterator;
+): Function1<Factory<Iterator<T, TReturn, TNext>>,EnumerableLike<T>> => _fromIterator;
 
 const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
   _fromIterator(() => iterable[Symbol.iterator]());
@@ -56,5 +56,5 @@ const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
  *
  * @param iterable
  */
-export const fromIterable = <T>(): Function<Iterable<T>, EnumerableLike<T>> =>
+export const fromIterable = <T>(): Function1<Iterable<T>, EnumerableLike<T>> =>
   _fromIterable;

@@ -43,7 +43,7 @@ ___
 
 #### Type declaration:
 
-* **onError**? : *Function‹unknown, void | ObservableLike‹unknown››*
+* **onError**? : *Function1‹unknown, void | ObservableLike‹unknown››*
 
 ## Functions
 

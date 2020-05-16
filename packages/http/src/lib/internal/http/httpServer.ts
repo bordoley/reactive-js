@@ -1,4 +1,4 @@
-import { Function } from "@reactive-js/core/lib/functions";
+import { Function1 } from "@reactive-js/core/lib/functions";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { HttpResponse, HttpRequest } from "./interfaces";
@@ -133,7 +133,7 @@ export const createRoutingHttpServer = <TReq, TResp>(
   routes: {
     [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
   },
-  notFoundHandler: Function<
+  notFoundHandler: Function1<
     HttpRequest<TReq>,
     ObservableLike<HttpResponse<TResp>>
   >,

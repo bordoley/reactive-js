@@ -4,7 +4,7 @@ import {
   dispose,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { compose, pipe, Function } from "../../functions.ts";
+import { compose, pipe, Function1 } from "../../functions.ts";
 import { isSome } from "../../option.ts";
 import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -117,7 +117,7 @@ export const mergeAll = <T>(
 };
 
 export const mergeMap = <TA, TB>(
-  mapper: Function<TA, ObservableLike<TB>>,
+  mapper: Function1<TA, ObservableLike<TB>>,
   options: {
     maxBufferSize?: number;
     maxConcurrency?: number;
@@ -136,7 +136,7 @@ export const concatAll = <T>(
   mergeAll({ maxBufferSize, maxConcurrency: 1 });
 
 export const concatMap = <TA, TB>(
-  mapper: Function<TA, ObservableLike<TB>>,
+  mapper: Function1<TA, ObservableLike<TB>>,
   maxBufferSize?: number,
 ) => compose(map(mapper), concatAll(maxBufferSize));
 
@@ -150,5 +150,5 @@ const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 export const exhaust = <T>() =>
   exhaustInstance as ObservableFunction<ObservableLike<T>, T>;
 
-export const exhaustMap = <TA, TB>(mapper: Function<TA, ObservableLike<TB>>) =>
+export const exhaustMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) =>
   compose(map(mapper), exhaust());

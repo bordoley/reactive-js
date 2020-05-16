@@ -1,10 +1,10 @@
-import { Function, SideEffect } from "../../functions.ts";
+import { Function1, SideEffect } from "../../functions.ts";
 import { SchedulerContinuationLike, schedule } from "../../scheduler.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly factory: Function<
+    private readonly factory: Function1<
       ObserverLike<T>,
       SchedulerContinuationLike | SideEffect
     >,
@@ -19,11 +19,11 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 }
 
 export const createScheduledObservable = <T>(
-  factory: Function<ObserverLike<T>, SchedulerContinuationLike | SideEffect>,
+  factory: Function1<ObserverLike<T>, SchedulerContinuationLike | SideEffect>,
   isSynchronous: boolean,
 ): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous, 0);
 
 export const createDelayedScheduledObservable = <T>(
-  factory: Function<ObserverLike<T>, SchedulerContinuationLike | SideEffect>,
+  factory: Function1<ObserverLike<T>, SchedulerContinuationLike | SideEffect>,
   delay: number,
 ): ObservableLike<T> => new ScheduledObservable(factory, false, delay);

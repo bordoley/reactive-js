@@ -1,5 +1,5 @@
 import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces";
-import { Function, compose } from "../../functions";
+import { Function1, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
 import { lift } from "./lift";
@@ -80,5 +80,5 @@ export const concatAll = <T>(): RunnableFunction<RunnableLike<T>, T> =>
   _concatAll;
 
 export const concatMap = <TA, TB>(
-  mapper: Function<TA, RunnableLike<TB>>,
+  mapper: Function1<TA, RunnableLike<TB>>,
 ): RunnableFunction<TA, TB> => compose(map(mapper), concatAll());

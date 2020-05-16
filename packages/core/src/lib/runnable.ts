@@ -39,7 +39,7 @@ export { takeWhile } from "./internal/runnable/takeWhile";
 export { toArray } from "./internal/runnable/toArray";
 
 import { RunnableLike } from "./internal/runnable/interfaces";
-import { Function, identity } from "./functions";
+import { Function1, identity } from "./functions";
 
-export const toRunnable = <T>(): Function<RunnableLike<T>, RunnableLike<T>> =>
+export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;

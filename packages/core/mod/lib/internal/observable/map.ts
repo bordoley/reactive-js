@@ -1,11 +1,11 @@
 import { add } from "../../disposable.ts";
-import { returns, Function } from "../../functions.ts";
+import { returns, Function1 } from "../../functions.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
-  constructor(delegate: ObserverLike<TB>, readonly mapper: Function<TA, TB>) {
+  constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
     add(this, delegate);
   }
@@ -24,7 +24,7 @@ class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 export const map = <TA, TB>(
-  mapper: Function<TA, TB>,
+  mapper: Function1<TA, TB>,
 ): ObservableFunction<TA, TB> => {
   const operator = (observer: ObserverLike<TB>) =>
     new MapObserver(observer, mapper);

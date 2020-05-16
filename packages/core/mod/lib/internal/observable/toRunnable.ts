@@ -4,7 +4,7 @@ import {
   createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
 } from "../../scheduler.ts";
-import { Factory, Function, pipe } from "../../functions.ts";
+import { Factory, Function1, pipe } from "../../functions.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { RunnableLike } from "../runnable/interfaces.ts";
 import { none, Option, isNone } from "../../option.ts";
@@ -15,7 +15,7 @@ export const toRunnable = <T>(
   schedulerFactory: Factory<
     VirtualTimeSchedulerLike
   > = createVirtualTimeScheduler,
-): Function<ObservableLike<T>, RunnableLike<T>> => source =>
+): Function1<ObservableLike<T>, RunnableLike<T>> => source =>
   createRunnable(sink => {
     const scheduler = schedulerFactory();
     let error: Option<Exception> = none;

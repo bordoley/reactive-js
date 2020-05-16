@@ -1,4 +1,4 @@
-import { bind, SideEffect1, Function } from "./functions";
+import { bind, SideEffect1, Function1 } from "./functions";
 import { isSome, none, Option } from "./option";
 
 /**
@@ -72,7 +72,7 @@ export function add<T extends DisposableLike>(
 
 export const addDisposableOrTeardown = <T extends DisposableLike>(
   d: DisposableOrTeardown,
-): Function<T, T> => disposable => add(disposable, d);
+): Function1<T, T> => disposable => add(disposable, d);
 
 export const toErrorHandler = (
   disposable: DisposableLike,

@@ -1,5 +1,5 @@
 import { createRunnable } from "./createRunnable";
-import { Function } from "../../functions";
+import { Function1 } from "../../functions";
 import { RunnableLike, SinkLike } from "./interfaces";
 
 export const fromArray = <T>(
@@ -8,7 +8,7 @@ export const fromArray = <T>(
   } = {
     startIndex: 0,
   },
-): Function<readonly T[], RunnableLike<T>> => values => {
+): Function1<readonly T[], RunnableLike<T>> => values => {
   const valuesLength = values.length;
   const startIndex = Math.max(Math.min(options.startIndex, valuesLength), 0);
 

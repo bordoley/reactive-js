@@ -1,5 +1,5 @@
 import { dispose, DisposableLike } from "../../../../../core/mod/lib/disposable.ts";
-import { pipe, identity, Function } from "../../../../../core/mod/lib/functions.ts";
+import { pipe, identity, Function1 } from "../../../../../core/mod/lib/functions.ts";
 import {
   ObservableLike,
   fromValue,
@@ -68,7 +68,7 @@ const redirectCodes = [
 ];
 
 export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
-  encodeHttpRequest: Function<
+  encodeHttpRequest: Function1<
     HttpClientRequest<TReq>,
     HttpClientRequest<TReq>
   > = identity,

@@ -179,7 +179,7 @@ Symbol thrown when the timeout operator times out
 
 ### `Const` await_
 
-▸ **await_**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **await_**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -191,7 +191,7 @@ Symbol thrown when the timeout operator times out
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
 **Returns:** *function*
 
@@ -225,7 +225,7 @@ and an optional `maxBufferSize`.
 
 Name | Type |
 ------ | ------ |
-`duration?` | [Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› &#124; number |
+`duration?` | [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› &#124; number |
 `maxBufferSize?` | number |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, keyof T[]›*
@@ -234,7 +234,7 @@ ___
 
 ### `Const` catchError
 
-▸ **catchError**<**T**>(`onError`: [Function](_functions_.md#function)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **catchError**<**T**>(`onError`: [Function1](_functions_.md#function1)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
 
 Returns an `ObservableLike` which catches errors produced by the source and either continues with
 the `ObservableLike` returned from the `onError` callback or swallows the error if
@@ -248,7 +248,7 @@ void is returned.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`onError` | [Function](_functions_.md#function)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› &#124; void› | a function that takes source error and either returns an `ObservableLike` to continue with or void if the error should be propagated.  |
+`onError` | [Function1](_functions_.md#function1)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› &#124; void› | a function that takes source error and either returns an `ObservableLike` to continue with or void if the error should be propagated.  |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
 
@@ -526,7 +526,7 @@ ___
 
 ### `Const` compute
 
-▸ **compute**<**T**>(`options?`: object): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **compute**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
 
@@ -542,7 +542,7 @@ Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -591,7 +591,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *function*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *function*
 
 **Type parameters:**
 
@@ -603,7 +603,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 `maxBufferSize?` | number |
 
 **Returns:** *function*
@@ -699,7 +699,7 @@ ___
 
 ### `Const` dispatchTo
 
-▸ **dispatchTo**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›): *[Function](_functions_.md#function)‹T, void›*
+▸ **dispatchTo**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›): *[Function1](_functions_.md#function1)‹T, void›*
 
 **Type parameters:**
 
@@ -711,7 +711,7 @@ Name | Type |
 ------ | ------ |
 `dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
 
-**Returns:** *[Function](_functions_.md#function)‹T, void›*
+**Returns:** *[Function1](_functions_.md#function1)‹T, void›*
 
 ___
 
@@ -806,7 +806,7 @@ ___
 
 ### `Const` exhaustMap
 
-▸ **exhaustMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **exhaustMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -818,7 +818,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
 **Returns:** *function*
 
@@ -834,7 +834,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *[Function](_functions_.md#function)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
 An optional `startIndex` in the array maybe specified,
@@ -855,13 +855,13 @@ Name | Type |
 `delay?` | number |
 `startIndex?` | number |
 
-**Returns:** *[Function](_functions_.md#function)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`__namedParameters`: object): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromEnumerable**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which enumerates through the values
 produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -878,13 +878,13 @@ Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`config`: object): *[Function](_functions_.md#function)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterable**<**T**>(`config`: object): *[Function1](_functions_.md#function1)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterable` with a specified `delay` between emitted items.
@@ -901,13 +901,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
 
-**Returns:** *[Function](_functions_.md#function)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -928,7 +928,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -955,7 +955,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`config`: object): *[Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromValue**<**T**>(`config`: object): *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
 
@@ -971,13 +971,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
 
-**Returns:** *[Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
 ### `Const` genMap
 
-▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: [Function](_functions_.md#function)‹TA, Generator‹TB, TReturn, TNext››): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: [Function1](_functions_.md#function1)‹TA, Generator‹TB, TReturn, TNext››): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
 **Type parameters:**
 
@@ -993,7 +993,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, Generator‹TB, TReturn, TNext›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, Generator‹TB, TReturn, TNext›› |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
@@ -1124,7 +1124,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
 Returns an `ObservableLike` that applies the `mapper` function to each
 value emitted by the source.
@@ -1139,7 +1139,7 @@ value emitted by the source.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
+`mapper` | [Function1](_functions_.md#function1)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
 
@@ -1217,7 +1217,7 @@ ___
 
 ### `Const` mergeMap
 
-▸ **mergeMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options`: object): *function*
+▸ **mergeMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options`: object): *function*
 
 **Type parameters:**
 
@@ -1227,7 +1227,7 @@ ___
 
 **Parameters:**
 
-▪ **mapper**: *[Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››*
+▪ **mapper**: *[Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››*
 
 ▪`Default value`  **options**: *object*= {}
 
@@ -1322,7 +1322,7 @@ ___
 
 ### `Const` publish
 
-▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -1337,7 +1337,7 @@ Name | Type | Default | Description |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source observable. |
 `replayCount` | number | 0 | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to.  |
 
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 ___
 
@@ -1563,7 +1563,7 @@ ___
 
 ### `Const` subscribe
 
-▸ **subscribe**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
+▸ **subscribe**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
 using the provided scheduler. The returned `DisposableLike`
@@ -1579,7 +1579,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The SchedulerLike instance that should be used by the source to notify it's observer.  |
 
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 ___
 
@@ -1628,7 +1628,7 @@ ___
 
 ### `Const` switchMap
 
-▸ **switchMap**<**TA**, **TB**>(`mapper`: [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **switchMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
 
 **Type parameters:**
 
@@ -1640,7 +1640,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`mapper` | [Function](_functions_.md#function)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
+`mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
 **Returns:** *function*
 
@@ -1724,7 +1724,7 @@ ___
 
 ###  throttle
 
-▸ **throttle**<**T**>(`duration`: [Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **throttle**<**T**>(`duration`: [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -1736,7 +1736,7 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`duration` | [Function](_functions_.md#function)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› | Function function that is used to determine the silence duration in between emitted values. |
+`duration` | [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› | Function function that is used to determine the silence duration in between emitted values. |
 `mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
 
 **Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
@@ -1783,7 +1783,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`__namedParameters`: object): *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **throws**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
@@ -1799,7 +1799,7 @@ Name | Type |
 ------ | ------ |
 `delay` | number |
 
-**Returns:** *[Function](_functions_.md#function)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 
@@ -1840,7 +1840,7 @@ ___
 
 ### `Const` toPromise
 
-▸ **toPromise**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
+▸ **toPromise**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
 
 Returns a Promise that completes with the last value produced by
 the source.
@@ -1855,13 +1855,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | The scheduler upon which to subscribe to the source.  |
 
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, Promise‹T››*
 
 ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1873,13 +1873,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
 
-**Returns:** *[Function](_functions_.md#function)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 ___
 
 ###  using
 
-▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource›, `observableFactory`: [Function](_functions_.md#function)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource›, `observableFactory`: [Function1](_functions_.md#function1)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -1894,12 +1894,12 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 Name | Type |
 ------ | ------ |
-`resourceFactory` | [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource› |
-`observableFactory` | [Function](_functions_.md#function)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
+`resourceFactory` | [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource› |
+`observableFactory` | [Function1](_functions_.md#function1)‹TResource, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]›, `observableFactory`: [Function2](_functions_.md#function2)‹TResource1, TResource2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]›, `observableFactory`: [Function2](_functions_.md#function2)‹TResource1, TResource2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -1916,12 +1916,12 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 Name | Type |
 ------ | ------ |
-`resourceFactory` | [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]› |
+`resourceFactory` | [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2]› |
 `observableFactory` | [Function2](_functions_.md#function2)‹TResource1, TResource2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]›, `observableFactory`: [Function3](_functions_.md#function3)‹TResource1, TResource2, TResource3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]›, `observableFactory`: [Function3](_functions_.md#function3)‹TResource1, TResource2, TResource3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -1940,12 +1940,12 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 Name | Type |
 ------ | ------ |
-`resourceFactory` | [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]› |
+`resourceFactory` | [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3]› |
 `observableFactory` | [Function3](_functions_.md#function3)‹TResource1, TResource2, TResource3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]›, `observableFactory`: [Function4](_functions_.md#function4)‹TResource1, TResource2, TResource3, TResource4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]›, `observableFactory`: [Function4](_functions_.md#function4)‹TResource1, TResource2, TResource3, TResource4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -1966,12 +1966,12 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 Name | Type |
 ------ | ------ |
-`resourceFactory` | [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]› |
+`resourceFactory` | [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4]› |
 `observableFactory` | [Function4](_functions_.md#function4)‹TResource1, TResource2, TResource3, TResource4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]›, `observableFactory`: [Function5](_functions_.md#function5)‹TResource1, TResource2, TResource3, TResource4, TResource5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource1**, **TResource2**, **TResource3**, **TResource4**, **TResource5**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]›, `observableFactory`: [Function5](_functions_.md#function5)‹TResource1, TResource2, TResource3, TResource4, TResource5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -1994,12 +1994,12 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 Name | Type |
 ------ | ------ |
-`resourceFactory` | [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]› |
+`resourceFactory` | [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), [TResource1, TResource2, TResource3, TResource4, TResource5]› |
 `observableFactory` | [Function5](_functions_.md#function5)‹TResource1, TResource2, TResource3, TResource4, TResource5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2012,7 +2012,7 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *[Function](_functions_.md#function)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›*
+▪ **resourceFactory**: *[Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›*
 
 ▪ **observableFactory**: *function*
 
