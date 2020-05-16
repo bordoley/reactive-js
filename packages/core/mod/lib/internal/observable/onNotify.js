@@ -9,10 +9,8 @@ class OnNotifyObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        if (!this.isDisposed) {
-            this.onNotify(next);
-            this.delegate.notify(next);
-        }
+        this.onNotify(next);
+        this.delegate.notify(next);
     }
 }
 export function onNotify(onNotify) {

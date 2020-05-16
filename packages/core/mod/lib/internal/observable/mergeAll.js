@@ -51,13 +51,11 @@ class MergeObserver extends AbstractDelegatingObserver {
     notify(next) {
         assertObserverState(this);
         const queue = this.queue;
-        if (!this.isDisposed) {
-            queue.push(next);
-            if (queue.length + this.activeCount > this.maxBufferSize) {
-                queue.shift();
-            }
-            subscribeNext(this);
+        queue.push(next);
+        if (queue.length + this.activeCount > this.maxBufferSize) {
+            queue.shift();
         }
+        subscribeNext(this);
     }
 }
 export const mergeAll = (options = {}) => {

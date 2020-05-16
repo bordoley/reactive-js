@@ -80,15 +80,14 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
     assertObserverState(this);
 
     const queue = this.queue;
-    if (!this.isDisposed) {
-      queue.push(next);
 
-      // Drop old events if the maxBufferSize has been exceeded
-      if (queue.length + this.activeCount > this.maxBufferSize) {
-        queue.shift();
-      }
-      subscribeNext(this);
+    queue.push(next);
+
+    // Drop old events if the maxBufferSize has been exceeded
+    if (queue.length + this.activeCount > this.maxBufferSize) {
+      queue.shift();
     }
+    subscribeNext(this);
   }
 }
 

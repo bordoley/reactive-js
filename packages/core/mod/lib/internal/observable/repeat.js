@@ -36,9 +36,7 @@ class RepeatObserver extends AbstractDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        if (!this.isDisposed) {
-            this.delegate.notify(next);
-        }
+        this.delegate.notify(next);
     }
 }
 const repeatObs = (shouldRepeat) => observable => {
