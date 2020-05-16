@@ -31,7 +31,7 @@ import { stream } from "../lib/streamable.ts";
 export const tests = describe(
   "async-enumerable",
   test("consume", () => {
-    const enumerable = fromIterable([1, 2, 3, 4, 5, 6]);
+    const enumerable = fromIterable<number>()([1, 2, 3, 4, 5, 6]);
 
     pipe(
       enumerable,
@@ -59,7 +59,7 @@ export const tests = describe(
       "when the consumer early terminates",
       defer(
         [1, 2, 3, 4, 5, 6],
-        fromIterable,
+        fromIterable(),
         consumeAsync(
           (acc, next) =>
             fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)),
@@ -74,7 +74,7 @@ export const tests = describe(
       "when the consumer never terminates",
       defer(
         [1, 2, 3, 4, 5, 6],
-        fromIterable,
+        fromIterable(),
         consumeAsync(
           (acc, next) => pipe(acc + next, continue_, fromValue()),
           returns<number>(0),
@@ -109,7 +109,7 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(fromIterable([1, 2, 3, 4, 5, 6]), scheduler);
+    const enumerator = stream(fromIterable<number>()([1, 2, 3, 4, 5, 6]), scheduler);
 
     const result: number[] = [];
     let error: Option<Exception> = none;

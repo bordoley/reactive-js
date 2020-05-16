@@ -173,7 +173,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **fromEnumerable**<**T**>(): *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -181,19 +181,13 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`enumerable` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
-
-**Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`iterable`: Iterable‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **fromIterable**<**T**>(): *[Function](_functions_.md#function)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -201,13 +195,7 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 ▪ **T**
 
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`iterable` | Iterable‹T› |   |
-
-**Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+**Returns:** *[Function](_functions_.md#function)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 ___
 

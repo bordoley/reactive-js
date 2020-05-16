@@ -21,11 +21,11 @@ class UniqueQueueImpl<T> implements QueueLike<T> {
   }
 
   enumerate(): EnumeratorLike<T> {
-    return pipe(this.values, fromIterable, enumerate);
+    return pipe(this.values, fromIterable(), enumerate);
   }
 
   peek() {
-    return pipe(this.values, fromIterable, toRunnable(), first);
+    return pipe(this.values, fromIterable(), toRunnable(), first);
   }
 
   pop() {

@@ -20,9 +20,9 @@ function* iterateKeyedQueueKeyValuePairs(queue) {
 class SetMultimap {
     constructor() {
         this.count = 0;
-        this.keys = fromIterator(() => this.map.keys());
+        this.keys = fromIterator()(() => this.map.keys());
         this.map = new Map();
-        this.values = fromIterator(bind(iterateSetMultimapValues, this));
+        this.values = fromIterator()(bind(iterateSetMultimapValues, this));
     }
     add(key, value) {
         var _a;
@@ -40,7 +40,7 @@ class SetMultimap {
         this.map.clear();
     }
     enumerate() {
-        return pipe(bind(iterateKeyedQueueKeyValuePairs, this), fromIterator, enumerate);
+        return pipe(bind(iterateKeyedQueueKeyValuePairs, this), fromIterator(), enumerate);
     }
     get(key) {
         var _a;

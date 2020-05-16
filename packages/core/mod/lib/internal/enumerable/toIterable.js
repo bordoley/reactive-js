@@ -10,4 +10,5 @@ class EnumerableIterable {
         }
     }
 }
-export const toIterable = (source) => new EnumerableIterable(source);
+export const _toIterable = (source) => new EnumerableIterable(source);
+export const toIterable = () => _toIterable;

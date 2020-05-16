@@ -38,11 +38,11 @@ function* iterateKeyedQueueKeyValuePairs<K, V>(
 class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   count = 0;
 
-  readonly keys: EnumerableLike<K> = fromIterator(() => this.map.keys());
+  readonly keys: EnumerableLike<K> = fromIterator<K>()(() => this.map.keys());
 
   readonly map: Map<K, V[]> = new Map();
 
-  readonly values: EnumerableLike<V> = fromIterator(
+  readonly values: EnumerableLike<V> = fromIterator<V>()(
     bind(iterateKeyedQueueValues, this),
   );
 
@@ -53,7 +53,7 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   enumerate(): EnumeratorLike<[K, V]> {
     return pipe(
       bind(iterateKeyedQueueKeyValuePairs, this),
-      fromIterator,
+      fromIterator(),
       enumerate,
     );
   }

@@ -19,8 +19,8 @@ export const tests = describe(
     defer(
       [1, 2, 3],
       fromArray(),
-      toIterable,
-      fromIterable,
+      toIterable(),
+      fromIterable(),
       toRunnable(),
       toArray(),
       expectArrayEquals([1, 2, 3]),

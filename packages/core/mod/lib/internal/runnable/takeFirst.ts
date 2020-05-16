@@ -22,5 +22,5 @@ class TakeFirstSink<T> extends AbstractDelegatingSink<T, T> {
 
 export const takeFirst = <T>(count = 1): RunnableFunction<T, T> => {
   const operator = (sink: SinkLike<T>) => new TakeFirstSink(sink, count);
-  return observable => count > 0 ? pipe(observable, lift(operator)) : empty();
+  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };
