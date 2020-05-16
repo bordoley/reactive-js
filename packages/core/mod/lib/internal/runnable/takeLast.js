@@ -20,8 +20,10 @@ class TakeLastSink {
         }
     }
     done() {
-        fromArray()(this.last).run(this.delegate);
-        throw sinkDone;
+        if (!this.isDone) {
+            fromArray()(this.last).run(this.delegate);
+            throw sinkDone;
+        }
     }
 }
 export const takeLast = (count = 1) => {
