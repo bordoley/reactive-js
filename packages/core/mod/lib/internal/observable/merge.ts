@@ -1,31 +1,22 @@
-import { add, dispose } from "../../disposable.ts";
+import { dispose, addDisposableOrTeardown } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
-import { AbstractDelegatingObserver } from "./observer.ts";
+import { createDelegatingObserver } from "./observer.ts";
+import { pipe } from "../../functions.ts";
 
-class MergeObserver<T> extends AbstractDelegatingObserver<T, T> {
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly ctx: {
-      readonly count: number;
-      completedCount: number;
-    },
-  ) {
-    super(delegate);
-    add(this, error => {
-      const ctx = this.ctx;
-      ctx.completedCount++;
+const createMergeObserver = <T>(delegate: ObserverLike<T>, count: number, ctx: {
+  completedCount: number;
+}) => pipe(
+  delegate, 
+  createDelegatingObserver, 
+  addDisposableOrTeardown(error => {
+    ctx.completedCount++;
 
-      if (isSome(error) || ctx.completedCount >= ctx.count) {
-        dispose(delegate, error);
-      }
-    });
-  }
-
-  notify(next: T) {
-    this.delegate.notify(next);
-  }
-}
+    if (isSome(error) || ctx.completedCount >= count) {
+      dispose(delegate, error);
+    }
+  }),
+);
 
 class MergeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -35,10 +26,11 @@ class MergeObservable<T> implements ObservableLike<T> {
   observe(observer: ObserverLike<T>) {
     const observables = this.observables;
 
-    const ctx = { count: observables.length, completedCount: 0 };
+    const count = observables.length;
+    const ctx = { completedCount: 0 };
 
     for (const observable of observables) {
-      const mergeObserver = new MergeObserver(observer, ctx);
+      const mergeObserver = createMergeObserver(observer, count, ctx);
 
       observable.observe(mergeObserver);
     }

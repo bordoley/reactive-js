@@ -1,14 +1,8 @@
-import { add } from "../../disposable.ts";
 import { ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
-class IgnoreObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
-  constructor(delegate: ObserverLike<TB>) {
-    super(delegate);
-    add(this, delegate);
-  }
-
+class IgnoreObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
   notify(_: TA) {
     assertObserverState(this);
   }

@@ -1,16 +1,15 @@
-import { add, dispose } from "../../disposable.ts";
+import { dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
 import { ObservableFunction, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
-class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   private count = 0;
 
   constructor(delegate: ObserverLike<T>, private readonly maxCount: number) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: T) {

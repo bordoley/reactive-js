@@ -80,6 +80,18 @@ export abstract class AbstractDelegatingObserver<
   }
 }
 
+export abstract class AbstractAutoDisposingDelegatingObserver<
+  TA,
+  TB
+> extends AbstractObserver<TA> {
+  constructor(readonly delegate: ObserverLike<TB>) {
+    super(delegate);
+    add(delegate, this);
+    add(this, delegate);
+  }
+}
+
+
 class DelegatingObserver<T> extends AbstractObserver<T> {
   constructor(readonly delegate: ObserverLike<T>) {
     super(delegate);

@@ -1,11 +1,9 @@
-import { add } from "../../disposable.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class OnNotifyObserver extends AbstractDelegatingObserver {
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
-        add(this, delegate);
     }
     notify(next) {
         assertObserverState(this);

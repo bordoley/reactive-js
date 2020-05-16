@@ -1,15 +1,13 @@
-import { add } from "../../disposable";
 import { pipe } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
-class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
+class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   count = 0;
 
   constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: T) {

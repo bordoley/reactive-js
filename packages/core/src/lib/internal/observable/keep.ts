@@ -1,10 +1,9 @@
-import { add } from "../../disposable";
 import { Predicate, TypePredicate } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
-class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
+class KeepTypeObserver<TA, TB extends TA> extends AbstractAutoDisposingDelegatingObserver<
   TA,
   TB
 > {
@@ -13,7 +12,6 @@ class KeepTypeObserver<TA, TB extends TA> extends AbstractDelegatingObserver<
     readonly predicate: TypePredicate<TA, TB>,
   ) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: TA) {

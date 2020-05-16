@@ -1,17 +1,15 @@
-import { add } from "../../disposable";
 import { Factory, Reducer } from "../../functions";
 import { ObservableFunction, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
-class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
+class ScanObserver<T, TAcc> extends AbstractAutoDisposingDelegatingObserver<T, TAcc> {
   constructor(
     delegate: ObserverLike<TAcc>,
     readonly scanner: Reducer<T, TAcc>,
     public acc: TAcc,
   ) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: T) {
