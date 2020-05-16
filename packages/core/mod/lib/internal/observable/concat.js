@@ -1,30 +1,19 @@
-import { dispose, add } from "../../disposable.js";
+import { dispose, addDisposableOrTeardown } from "../../disposable.js";
 import { isSome } from "../../option.js";
-import { AbstractDelegatingObserver } from "./observer.js";
-class ConcatObserver extends AbstractDelegatingObserver {
-    constructor(delegate, observables, next) {
-        super(delegate);
-        this.observables = observables;
-        this.next = next;
-        add(this, error => {
-            const observables = this.observables;
-            const next = this.next;
-            if (isSome(error)) {
-                dispose(delegate, error);
-            }
-            else if (next < observables.length) {
-                const concatObserver = new ConcatObserver(delegate, observables, next + 1);
-                observables[next].observe(concatObserver);
-            }
-            else {
-                dispose(delegate);
-            }
-        });
+import { createDelegatingObserver } from "./observer.js";
+import { pipe } from "../../functions.js";
+const createConcatObserver = (delegate, observables, next) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
+    if (isSome(error)) {
+        dispose(delegate, error);
     }
-    notify(next) {
-        this.delegate.notify(next);
+    else if (next < observables.length) {
+        const concatObserver = createConcatObserver(delegate, observables, next + 1);
+        observables[next].observe(concatObserver);
     }
-}
+    else {
+        dispose(delegate);
+    }
+}));
 class ConcatObservable {
     constructor(observables) {
         this.observables = observables;
@@ -33,7 +22,7 @@ class ConcatObservable {
     observe(observer) {
         const observables = this.observables;
         if (observables.length > 0) {
-            const concatObserver = new ConcatObserver(observer, observables, 1);
+            const concatObserver = createConcatObserver(observer, observables, 1);
             observables[0].observe(concatObserver);
         }
         else {

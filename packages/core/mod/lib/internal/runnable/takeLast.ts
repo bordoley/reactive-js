@@ -27,7 +27,7 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 
   done() {
-    if(!this.isDone) {
+    if (!this.isDone) {
       fromArray()(this.last).run(this.delegate);
       throw sinkDone;
     }

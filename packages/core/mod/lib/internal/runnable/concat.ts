@@ -13,7 +13,7 @@ class ConcatSink<T> implements SinkLike<T> {
   constructor(private readonly delegate: SinkLike<T>) {}
 
   done() {
-    if(!this.isDone) {
+    if (!this.isDone) {
       this.isDone = true;
       throw concatSinkDone;
     }

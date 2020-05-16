@@ -2,7 +2,6 @@ import {
   createSerialDisposable,
   Exception,
   dispose,
-  add,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
 import { pipe, Predicate } from "../../functions.ts";
@@ -11,61 +10,51 @@ import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.t
 import { lift } from "./lift.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { createDelegatingObserver } from "./observer.ts";
 
-class RepeatObserver<T> extends AbstractDelegatingObserver<T, T> {
-  private readonly innerSubscription = createSerialDisposable();
-  private count = 1;
+const createRepeatObserver = <T>(
+  delegate: ObserverLike<T>,
+  observable: ObservableLike<T>,
+  shouldRepeat: (count: number, error?: Exception) => boolean,
+) => {
+  const innerSubscription = createSerialDisposable();
+  let count = 1;
 
-  private readonly onDispose = (error?: Exception) => {
+  const onDispose = (error?: Exception) => {
     let shouldComplete = false;
     try {
-      shouldComplete = !this.shouldRepeat(this.count, error);
+      shouldComplete = !shouldRepeat(count, error);
     } catch (cause) {
       shouldComplete = true;
       error = { cause, parent: error } as Exception;
     }
 
-    const delegate = this.delegate;
     if (shouldComplete) {
       dispose(delegate, error);
     } else {
-      this.count++;
-      this.innerSubscription.inner = pipe(
-        this.observable,
-        onNotify(this.onNotify),
+      count++;
+      innerSubscription.inner = pipe(
+        observable,
+        onNotify((next: T) => delegate.notify(next)),
         subscribe(delegate),
-        addDisposableOrTeardown(this.onDispose),
+        addDisposableOrTeardown(onDispose),
       );
     }
   };
 
-  private readonly onNotify = (next: T) => this.delegate.notify(next);
-
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly observable: ObservableLike<T>,
-    private readonly shouldRepeat: (
-      count: number,
-      error?: Exception,
-    ) => boolean,
-  ) {
-    super(delegate);
-    add(delegate, this.innerSubscription);
-    add(this, this.onDispose);
-  }
-
-  notify(next: T) {
-    assertObserverState(this);
-    this.delegate.notify(next);
-  }
-}
+  return pipe(
+    delegate,
+    addDisposableOrTeardown(innerSubscription),
+    createDelegatingObserver,
+    addDisposableOrTeardown(onDispose),
+  );
+};
 
 const repeatObs = <T>(
   shouldRepeat: (count: number, error?: Exception) => boolean,
 ): ObservableFunction<T, T> => observable => {
   const operator = (observer: ObserverLike<T>) =>
-    new RepeatObserver(observer, observable, shouldRepeat);
+    createRepeatObserver(observer, observable, shouldRepeat);
   operator.isSynchronous = true;
   return lift(operator)(observable);
 };

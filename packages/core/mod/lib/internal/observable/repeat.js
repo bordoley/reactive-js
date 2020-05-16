@@ -1,46 +1,34 @@
-import { createSerialDisposable, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
+import { createSerialDisposable, dispose, addDisposableOrTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class RepeatObserver extends AbstractDelegatingObserver {
-    constructor(delegate, observable, shouldRepeat) {
-        super(delegate);
-        this.observable = observable;
-        this.shouldRepeat = shouldRepeat;
-        this.innerSubscription = createSerialDisposable();
-        this.count = 1;
-        this.onDispose = (error) => {
-            let shouldComplete = false;
-            try {
-                shouldComplete = !this.shouldRepeat(this.count, error);
-            }
-            catch (cause) {
-                shouldComplete = true;
-                error = { cause, parent: error };
-            }
-            const delegate = this.delegate;
-            if (shouldComplete) {
-                dispose(delegate, error);
-            }
-            else {
-                this.count++;
-                this.innerSubscription.inner = pipe(this.observable, onNotify(this.onNotify), subscribe(delegate), addDisposableOrTeardown(this.onDispose));
-            }
-        };
-        this.onNotify = (next) => this.delegate.notify(next);
-        add(delegate, this.innerSubscription);
-        add(this, this.onDispose);
-    }
-    notify(next) {
-        assertObserverState(this);
-        this.delegate.notify(next);
-    }
-}
+import { createDelegatingObserver } from "./observer.js";
+const createRepeatObserver = (delegate, observable, shouldRepeat) => {
+    const innerSubscription = createSerialDisposable();
+    let count = 1;
+    const onDispose = (error) => {
+        let shouldComplete = false;
+        try {
+            shouldComplete = !shouldRepeat(count, error);
+        }
+        catch (cause) {
+            shouldComplete = true;
+            error = { cause, parent: error };
+        }
+        if (shouldComplete) {
+            dispose(delegate, error);
+        }
+        else {
+            count++;
+            innerSubscription.inner = pipe(observable, onNotify((next) => delegate.notify(next)), subscribe(delegate), addDisposableOrTeardown(onDispose));
+        }
+    };
+    return pipe(delegate, addDisposableOrTeardown(innerSubscription), createDelegatingObserver, addDisposableOrTeardown(onDispose));
+};
 const repeatObs = (shouldRepeat) => observable => {
-    const operator = (observer) => new RepeatObserver(observer, observable, shouldRepeat);
+    const operator = (observer) => createRepeatObserver(observer, observable, shouldRepeat);
     operator.isSynchronous = true;
     return lift(operator)(observable);
 };

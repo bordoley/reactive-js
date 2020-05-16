@@ -172,7 +172,9 @@ export const map = <TA, TB>(
 export const mapTo = <TA, TB>(v: TB): Function1<Parser<TA>, Parser<TB>> =>
   map(returns(v));
 
-export const parseWithOrThrow = <T>(parser: Parser<T>): Function1<string, T> => {
+export const parseWithOrThrow = <T>(
+  parser: Parser<T>,
+): Function1<string, T> => {
   const parse = pipe(parser, followedBy(pEof));
   return input => {
     const charStream = createCharStream(input);
@@ -180,7 +182,9 @@ export const parseWithOrThrow = <T>(parser: Parser<T>): Function1<string, T> => 
   };
 };
 
-export const parseWith = <T>(parse: Parser<T>): Function1<string, Option<T>> => {
+export const parseWith = <T>(
+  parse: Parser<T>,
+): Function1<string, Option<T>> => {
   const doParse = parseWithOrThrow(parse);
   return input => {
     try {
