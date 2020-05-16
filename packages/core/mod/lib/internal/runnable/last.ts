@@ -9,7 +9,7 @@ class LastSink<T> extends AbstractSink<T> {
     super();
   }
 
-  notify(next: T): void {
+  notify(next: T) {
     this.result = next;
   }
 }

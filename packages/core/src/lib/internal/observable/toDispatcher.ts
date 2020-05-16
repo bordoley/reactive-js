@@ -58,7 +58,7 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
     add(observer, this);
   }
 
-  dispatch(next: T): void {
+  dispatch(next: T) {
     if (!this.isDisposed) {
       this.nextQueue.push(next);
       scheduleDrainQueue(this);

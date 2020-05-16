@@ -56,7 +56,7 @@ const priorityScheduler = {
       priority: number;
       delay?: number;
     },
-  ): void {
+  ) {
     const scheduler = getScheduler(priority);
 
     const callback = () => {

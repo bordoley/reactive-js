@@ -31,7 +31,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     private readonly replay: number,
   ) {}
 
-  observe(observer: ObserverLike<T>): void {
+  observe(observer: ObserverLike<T>) {
     if (this.observerCount === 0) {
       this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
     }
