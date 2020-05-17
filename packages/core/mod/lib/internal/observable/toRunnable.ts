@@ -34,7 +34,7 @@ export const toRunnable = <T>(
       }),
     );
 
-    scheduler.continue();
+    scheduler.run();
 
     dispose(subscription);
     dispose(scheduler);

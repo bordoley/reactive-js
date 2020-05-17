@@ -1,53 +1,10 @@
-import { dispose } from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
-import { schedule } from "../../scheduler.ts";
-import { SchedulerLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
-import { AbstractProducer } from "./producer.ts";
-
-class FromArrayProducer<T> extends AbstractProducer<T> {
-  private index = this.startIndex;
-
-  constructor(
-    observer: ObserverLike<T>,
-    private readonly values: readonly T[],
-    private readonly startIndex: number,
-    readonly delay: number,
-  ) {
-    super(observer);
-  }
-
-  continueUnsafe(scheduler: SchedulerLike) {
-    const delay = this.delay;
-    const values = this.values;
-    const length = values.length;
-
-    let index = this.index;
-    let isDisposed = this.isDisposed;
-
-    while (index < length && !isDisposed) {
-      this.notify(values[index]);
-      index++;
-
-      isDisposed = this.isDisposed;
-      if (
-        index < length &&
-        !isDisposed &&
-        (delay > 0 || scheduler.shouldYield())
-      ) {
-        this.index = index;
-        schedule(scheduler, this, this);
-        return;
-      }
-    }
-
-    dispose(this);
-  }
-}
+import { YieldableLike } from "../scheduler/interfaces.ts";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -63,10 +20,28 @@ export const fromArray = <T>(
   } = {},
 ): Function1<readonly T[], ObservableLike<T>> => values => {
   const delay = Math.max(options.delay ?? 0, 0);
-  const startIndex = Math.min(options.startIndex ?? 0, values.length);
+  const valuesLength = values.length;
+  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
 
-  const factory = (observer: ObserverLike<T>) =>
-    new FromArrayProducer(observer, values, startIndex, delay);
+  const factory = (observer: ObserverLike<T>) => {
+    const yieldOptions = { delay };
+
+    let index = startIndex;   
+    let observerIsDisposed = observer.isDisposed;
+
+    return ($: YieldableLike) => {
+      while (index < valuesLength && !observerIsDisposed) {
+        observer.notify(values[index]);
+        index++;
+  
+        observerIsDisposed = observer.isDisposed;
+        if (index < valuesLength && !observerIsDisposed) {
+          $.yield(yieldOptions);
+        }
+      }
+      observer.dispose();
+    };
+  }
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

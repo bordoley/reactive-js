@@ -1,8 +1,8 @@
-import { AbstractSerialDisposable, disposed, dispose, add, } from "../../disposable.js";
+import { AbstractSerialDisposable, disposed, add, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
-import { schedule } from "./schedule.js";
+import { YieldError, } from "./interfaces.js";
+import { runContinuation, schedule } from "./schedulerContinuation.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -41,35 +41,6 @@ const peek = (scheduler) => {
     }
     return task !== null && task !== void 0 ? task : delayed.peek();
 };
-class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
-    constructor(priorityScheduler) {
-        super();
-        this.priorityScheduler = priorityScheduler;
-    }
-    continueUnsafe(host) {
-        const priorityScheduler = this.priorityScheduler;
-        for (let task = peek(priorityScheduler), isDisposed = this.isDisposed; isSome(task) && !isDisposed; task = peek(priorityScheduler)) {
-            const { continuation, dueTime } = task;
-            const now = host.now;
-            const delay = dueTime - now;
-            if (delay > 0) {
-                priorityScheduler.dueTime = dueTime;
-                schedule(host, this, { delay });
-                return;
-            }
-            move(priorityScheduler);
-            priorityScheduler.inContinuation = true;
-            continuation.continue(this.priorityScheduler);
-            priorityScheduler.inContinuation = false;
-            isDisposed = this.isDisposed;
-            if (!isDisposed && host.shouldYield()) {
-                schedule(host, this);
-                return;
-            }
-        }
-        dispose(this);
-    }
-}
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.priority - b.priority;
@@ -83,17 +54,28 @@ const delayedComparator = (a, b) => {
     return diff;
 };
 const scheduleContinuation = (scheduler, task) => {
-    const continuation = new PrioritySchedulerContinuation(scheduler);
-    scheduler.inner = continuation;
     const dueTime = task.dueTime;
-    scheduler.dueTime = dueTime;
     const delay = dueTime - scheduler.now;
-    schedule(scheduler.host, continuation, { delay });
+    scheduler.dueTime = dueTime;
+    scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
 };
 class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
         this.host = host;
+        this.continuation = ($) => {
+            for (let task = peek(this); isSome(task) && !this.isDisposed; task = peek(this)) {
+                const { continuation, dueTime } = task;
+                const delay = Math.max(dueTime - this.now, 0);
+                if (delay === 0) {
+                    move(this);
+                    this.inContinuation = true;
+                    runContinuation(this, continuation);
+                    this.inContinuation = false;
+                }
+                $.yield({ delay });
+            }
+        };
         this.current = none;
         this.delayed = createPriorityQueue(delayedComparator);
         this.dueTime = 0;
@@ -148,18 +130,22 @@ class PriorityScheduler extends AbstractSerialDisposable {
             }
         }
     }
-    shouldYield() {
+    yield(options = { delay: 0 }) {
         const current = this.current;
+        const { delay } = options;
         const next = peek(this);
         const nextTaskIsHigherPriority = isSome(current) &&
             isSome(next) &&
             current !== next &&
             next.dueTime <= this.now &&
             next.priority < current.priority;
-        return (this.isDisposed ||
+        if (delay > 0 ||
+            this.isDisposed ||
             this.isPaused ||
-            nextTaskIsHigherPriority ||
-            this.host.shouldYield());
+            nextTaskIsHigherPriority) {
+            throw new YieldError(delay);
+        }
+        this.host.yield(options);
     }
 }
 export const toPriorityScheduler = (hostScheduler) => new PriorityScheduler(hostScheduler);

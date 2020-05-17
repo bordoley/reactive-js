@@ -10,6 +10,8 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
+  YieldError,
+  runContinuation,
 } from "@reactive-js/core/lib/scheduler";
 import {
   unstable_IdlePriority,
@@ -61,7 +63,7 @@ const priorityScheduler = {
 
     const callback = () => {
       priorityScheduler.inContinuation = true;
-      continuation.continue(scheduler);
+      runContinuation(scheduler, continuation);
       priorityScheduler.inContinuation = false;
       dispose(callbackNodeDisposable);
     };
@@ -79,7 +81,11 @@ const priorityScheduler = {
     add(continuation, callbackNodeDisposable);
   },
 
-  shouldYield: unstable_shouldYield,
+  yield({ delay } = { delay: 0 }) {
+    if (delay > 0 || unstable_shouldYield()) {
+      throw new YieldError(delay);
+    }
+  }
 };
 
 /** Scheduler that schedules work on React's internal priority scheduler with idle priority. */

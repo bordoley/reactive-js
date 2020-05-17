@@ -1,4 +1,4 @@
-import {
+/*import {
   DisposableLike,
   Exception,
   AbstractDisposable,
@@ -16,7 +16,6 @@ import {
 import { Option, isNone, isSome } from "../option.ts";
 import {
   SchedulerLike,
-  AbstractSchedulerContinuation,
   schedule,
 } from "../scheduler.ts";
 import {
@@ -24,7 +23,8 @@ import {
   StreamableLike,
   stream as streamStreamable,
 } from "../streamable.ts";
-
+*/
+/*
 class ReactiveCacheSchedulerContinuation<
   T
 > extends AbstractSchedulerContinuation {
@@ -51,9 +51,10 @@ class ReactiveCacheSchedulerContinuation<
 
     dispose(this);
   }
-}
+}*/
 
 /** @noInheritDoc */
+/*
 export interface ReactiveCacheLike<T> extends DisposableLike {
   get(key: string): Option<ObservableLike<T>>;
   set(key: string, value: ObservableLike<T>): ObservableLike<T>;
@@ -185,3 +186,4 @@ export const getOrSet = <T>(
   const observable = cache.get(key);
   return observable ?? cache.set(key, defaultValue);
 };
+*/

@@ -1,6 +1,6 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
 import { compose, pipe } from "./functions.js";
-import { fromArray as fromArrayObs, onNotify, subscribe, subscribeOn, using, } from "./observable.js";
+import { fromArray as fromArrayObs, fromDisposable, onNotify, subscribe, subscribeOn, takeUntil, using, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable } from "./streamable.js";
 const _fromObservable = (observable) => {
@@ -19,7 +19,7 @@ const _fromObservable = (observable) => {
         const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(scheduler), addDisposableOrTeardown(pausableScheduler));
         return add(pausableScheduler, modeSubscription);
     };
-    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler)));
+    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil)));
     return createStreamable(op);
 };
 export const fromObservable = () => _fromObservable;

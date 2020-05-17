@@ -1,4 +1,5 @@
 import { schedule } from "../../scheduler.js";
+import { add, disposeOnError } from "../../disposable.js";
 class ScheduledObservable {
     constructor(factory, isSynchronous, delay) {
         this.factory = factory;
@@ -7,7 +8,7 @@ class ScheduledObservable {
     }
     observe(observer) {
         const schedulerContinuation = this.factory(observer);
-        schedule(observer, schedulerContinuation, this);
+        add(schedule(observer, schedulerContinuation, this), disposeOnError(observer));
     }
 }
 export const createScheduledObservable = (factory, isSynchronous) => new ScheduledObservable(factory, isSynchronous, 0);

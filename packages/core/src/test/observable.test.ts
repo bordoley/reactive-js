@@ -413,7 +413,7 @@ export const tests = describe(
       pipe(disp, expectToHaveBeenCalledTimes(0));
       pipe(f, expectToHaveBeenCalledTimes(1));
 
-      scheduler.continue();
+      scheduler.run();
 
       pipe(disp, expectToHaveBeenCalledTimes(1));
       pipe(f, expectToHaveBeenCalledTimes(1));
@@ -529,7 +529,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 

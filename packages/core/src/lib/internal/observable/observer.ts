@@ -1,9 +1,8 @@
-import { add, AbstractDisposable } from "../../disposable";
-import { ignore, SideEffect1 } from "../../functions";
+import { add, AbstractDisposable, addDisposableOrTeardown } from "../../disposable";
+import { ignore, SideEffect1, pipe } from "../../functions";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
-  schedule,
 } from "../../scheduler";
 import { __DEV__ } from "../env";
 import { ObserverLike } from "./interfaces";
@@ -55,12 +54,12 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
   schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
     add(this, continuation);
-    schedule(this.scheduler, continuation, options);
+    this.scheduler.schedule(continuation, options);
   }
 
   /** @ignore */
-  shouldYield() {
-    return this.scheduler.shouldYield();
+  yield(options?: { delay: number }) {
+    return this.scheduler.yield(options);
   }
 }
 
@@ -91,10 +90,9 @@ export abstract class AbstractAutoDisposingDelegatingObserver<
   }
 }
 
-class DelegatingObserver<T> extends AbstractObserver<T> {
+class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(readonly delegate: ObserverLike<T>) {
     super(delegate);
-    add(delegate, this);
   }
 
   notify(next: T) {
@@ -105,3 +103,7 @@ class DelegatingObserver<T> extends AbstractObserver<T> {
 export const createDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
 ): ObserverLike<T> => new DelegatingObserver(delegate);
+
+export const createAutoDisposingDelegatingObserver = <T>(
+  delegate: ObserverLike<T>,
+): ObserverLike<T> => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(delegate));

@@ -4,6 +4,17 @@ export interface SchedulerContinuationRunStatusChangedListenerLike {
   onRunStatusChanged(state: boolean): void;
 }
 
+export interface YieldableLike {
+  readonly inContinuation: boolean;
+  readonly now: number;
+  
+  yield(options?: { delay: number }): void;
+}
+
+export class YieldError {
+  constructor(readonly delay: number) {}
+}
+
 /**
  * A unit of work to be executed by a scheduler.
  *
@@ -22,18 +33,13 @@ export interface SchedulerContinuationLike extends DisposableLike {
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */
-  continue(scheduler: SchedulerLike): void;
+  continue($: YieldableLike): void;
 }
 
 /**
  * An object that schedules units of work on a runloop.
  */
-export interface SchedulerLike {
-  readonly inContinuation: boolean;
-
-  /** The scheduler's current time in ms. */
-  readonly now: number;
-
+export interface SchedulerLike extends YieldableLike {
   /**
    * Schedules a continuation to be executed on the scheduler.
    *
@@ -43,8 +49,6 @@ export interface SchedulerLike {
     continuation: SchedulerContinuationLike,
     options?: { delay: number },
   ): void;
-
-  shouldYield(): boolean;
 }
 
 /**
@@ -54,9 +58,8 @@ export interface SchedulerLike {
  */
 export interface VirtualTimeSchedulerLike
   extends DisposableLike,
-    SchedulerLike,
-    SchedulerContinuationLike {
-  continue(scheduler?: SchedulerLike): void;
+    SchedulerLike {
+  run(): void;
 }
 
 export interface PausableSchedulerLike extends SchedulerLike {
@@ -69,12 +72,7 @@ export interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface PrioritySchedulerLike {
-  readonly inContinuation: boolean;
-
-  /** The scheduler's current time in ms. */
-  readonly now: number;
-
+export interface PrioritySchedulerLike extends YieldableLike {
   /**
    * Schedules a continuation to be executed on the scheduler.
    *
@@ -89,6 +87,4 @@ export interface PrioritySchedulerLike {
     continuation: SchedulerContinuationLike,
     options: { priority: number; delay?: number },
   ): void;
-
-  shouldYield(): boolean;
 }

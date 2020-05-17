@@ -1,9 +1,8 @@
-import { add, dispose } from "../../disposable.js";
-import { alwaysFalse, ignore } from "../../functions.js";
+import { AbstractDisposable, add, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.js";
-import { schedule } from "./schedule.js";
+import { YieldError, } from "./interfaces.js";
+import { runContinuation } from "./schedulerContinuation.js";
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
@@ -28,13 +27,7 @@ const move = (scheduler) => {
     }
     return scheduler.hasCurrent;
 };
-const ignoreScheduler = {
-    inContinuation: true,
-    now: 0,
-    schedule: ignore,
-    shouldYield: alwaysFalse,
-};
-class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
+class VirtualTimeSchedulerImpl extends AbstractDisposable {
     constructor(maxMicroTaskTicks) {
         super();
         this.maxMicroTaskTicks = maxMicroTaskTicks;
@@ -43,28 +36,16 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
         this.inContinuation = false;
         this.microTaskTicks = 0;
         this.now = 0;
-        this.host = ignoreScheduler;
         this.taskIDCount = 0;
         this.taskQueue = createPriorityQueue(comparator);
     }
-    continueUnsafe(scheduler) {
-        this.host = scheduler;
-        while (move(this)) {
-            const continuation = this.current;
+    run() {
+        while (!this.isDisposed && move(this)) {
             this.inContinuation = true;
-            continuation.continue(this);
+            runContinuation(this, this.current);
             this.inContinuation = false;
-            if (scheduler.shouldYield()) {
-                this.host = ignoreScheduler;
-                schedule(scheduler, this);
-                return;
-            }
         }
-        this.host = ignoreScheduler;
         dispose(this);
-    }
-    continue(scheduler = ignoreScheduler) {
-        super.continue(scheduler);
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         delay = Math.max(0, delay);
@@ -78,10 +59,11 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
             this.taskQueue.push(work);
         }
     }
-    shouldYield() {
-        const host = this.host;
+    yield({ delay } = { delay: 0 }) {
         this.microTaskTicks++;
-        return this.microTaskTicks >= this.maxMicroTaskTicks || host.shouldYield();
+        if (delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
+            throw new YieldError(delay);
+        }
     }
 }
 export const createVirtualTimeScheduler = ({ maxMicroTaskTicks } = { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER }) => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);

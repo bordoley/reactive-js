@@ -10,8 +10,6 @@ Abstract base class for implementing the DisposableLike interface.
 
   ↳ [AbstractSerialDisposable](_disposable_.abstractserialdisposable.md)
 
-  ↳ [AbstractSchedulerContinuation](_scheduler_.abstractschedulercontinuation.md)
-
 ## Implements
 
 * [DisposableLike](../interfaces/_disposable_.disposablelike.md)

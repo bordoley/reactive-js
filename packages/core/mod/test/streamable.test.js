@@ -15,7 +15,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     pipe(actionReducerStream, onNotifyObs(x => {
         result.push(x);
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([0, 1, 3]));
 }), describe("empty", test("with no delay", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -26,7 +26,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     const subscription = pipe(emptyStream, onNotifyObs(x => {
         result.push(x);
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([]));
     expectTrue(emptyStream.isDisposed);
     expectTrue(subscription.isDisposed);
@@ -42,7 +42,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     }), subscribe(scheduler), addDisposableOrTeardown(_ => {
         disposedTime = scheduler.now;
     }));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([]));
     expectTrue(emptyStream.isDisposed);
     expectTrue(subscription.isDisposed);
@@ -70,7 +70,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     const subscription = pipe(incrStream, buffer(), onNotifyObs(x => {
         result = x;
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([110, 120, 130]));
     expectTrue(subscription.isDisposed);
 }), test("mapReq", () => {
@@ -84,7 +84,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     const subscription = pipe(incrStream, buffer(), onNotifyObs(x => {
         result = x;
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([110, 120, 130]));
     expectTrue(subscription.isDisposed);
 }), test("onNotify", () => {
@@ -98,7 +98,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     dispatch(notifyStream, 3);
     dispose(notifyStream);
     expectTrue(notifyStream.isDisposed);
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("scan", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -109,7 +109,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     dispatch(scanStream, 1);
     dispatch(scanStream, 2);
     dispatch(scanStream, 3);
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([1, 3, 6]));
 }), test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -120,7 +120,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     }), mapTo(none), lift(startWith(none)));
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
-    scheduler.continue();
+    scheduler.run();
     expectTrue(subscription.isDisposed);
     pipe(result, expectEquals(3));
 }));

@@ -6,7 +6,7 @@
 
 ### Classes
 
-* [AbstractSchedulerContinuation](../classes/_scheduler_.abstractschedulercontinuation.md)
+* [YieldError](../classes/_scheduler_.yielderror.md)
 
 ### Interfaces
 
@@ -16,12 +16,15 @@
 * [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)
 * [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)
 * [VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)
+* [YieldableLike](../interfaces/_scheduler_.yieldablelike.md)
 
 ### Functions
 
 * [createHostScheduler](_scheduler_.md#const-createhostscheduler)
 * [createVirtualTimeScheduler](_scheduler_.md#const-createvirtualtimescheduler)
+* [runContinuation](_scheduler_.md#const-runcontinuation)
 * [schedule](_scheduler_.md#const-schedule)
+* [scheduleWithPriority](_scheduler_.md#const-schedulewithpriority)
 * [toPausableScheduler](_scheduler_.md#const-topausablescheduler)
 * [toPriorityScheduler](_scheduler_.md#const-topriorityscheduler)
 * [toSchedulerWithPriority](_scheduler_.md#const-toschedulerwithpriority)
@@ -64,21 +67,57 @@ Name | Type |
 
 ___
 
+### `Const` runContinuation
+
+▸ **runContinuation**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `continuation`: [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+`continuation` | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md) |
+
+**Returns:** *void*
+
+___
+
 ### `Const` schedule
 
-▸ **schedule**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `schedulerContinuation`: [SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)› | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md), `options`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+▸ **schedule**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `f`: [SideEffect1](_functions_.md#sideeffect1)‹[YieldableLike](../interfaces/_scheduler_.yieldablelike.md)›, `options`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
 **Parameters:**
 
 ▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
-▪ **schedulerContinuation**: *[SideEffect1](_functions_.md#sideeffect1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)› | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)*
+▪ **f**: *[SideEffect1](_functions_.md#sideeffect1)‹[YieldableLike](../interfaces/_scheduler_.yieldablelike.md)›*
 
 ▪`Default value`  **options**: *object*= { delay: 0 }
 
 Name | Type | Default |
 ------ | ------ | ------ |
 `delay` | number | 0 |
+
+**Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+___
+
+### `Const` scheduleWithPriority
+
+▸ **scheduleWithPriority**(`scheduler`: [PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md), `f`: [SideEffect1](_functions_.md#sideeffect1)‹[YieldableLike](../interfaces/_scheduler_.yieldablelike.md)›, `options`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+
+**Parameters:**
+
+▪ **scheduler**: *[PrioritySchedulerLike](../interfaces/_scheduler_.priorityschedulerlike.md)*
+
+▪ **f**: *[SideEffect1](_functions_.md#sideeffect1)‹[YieldableLike](../interfaces/_scheduler_.yieldablelike.md)›*
+
+▪ **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay?` | number |
+`priority` | number |
 
 **Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 

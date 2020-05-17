@@ -12,7 +12,7 @@ export const tests = describe("flowables", test("empty", () => {
     dispatch(emptyStream, 1);
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(0));
     expectTrue(subscription.isDisposed);
     expectTrue(emptyStream.isDisposed);
@@ -31,7 +31,7 @@ export const tests = describe("flowables", test("empty", () => {
     const subscription = pipe(generateStream, onNotify(x => {
         f(scheduler.now, x);
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));
@@ -44,7 +44,7 @@ export const tests = describe("flowables", test("empty", () => {
     dispatch(fromValueStream, 1);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(1));
     expectTrue(subscription.isDisposed);

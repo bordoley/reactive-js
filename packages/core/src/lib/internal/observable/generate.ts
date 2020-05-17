@@ -1,45 +1,10 @@
-import { dispose } from "../../disposable";
 import { Factory, Updater } from "../../functions";
-import { SchedulerLike, schedule } from "../../scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
-import { AbstractProducer } from "./producer";
-
-class GenerateProducer<T> extends AbstractProducer<T> {
-  constructor(
-    observer: ObserverLike<T>,
-    private readonly generator: Updater<T>,
-    private acc: T,
-    readonly delay: number,
-  ) {
-    super(observer);
-  }
-
-  continueUnsafe(scheduler: SchedulerLike) {
-    const generator = this.generator;
-    const delay = this.delay;
-
-    let acc = this.acc;
-    let isDisposed = this.isDisposed;
-
-    while (!isDisposed) {
-      acc = generator(acc);
-      this.notify(acc);
-
-      isDisposed = this.isDisposed;
-      if (!isDisposed && (delay > 0 || scheduler.shouldYield())) {
-        this.acc = acc;
-        schedule(scheduler, this, this);
-        return;
-      }
-    }
-
-    dispose(this);
-  }
-}
+import { YieldableLike } from "../scheduler/interfaces";
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -53,11 +18,28 @@ class GenerateProducer<T> extends AbstractProducer<T> {
 export function generate<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-  { delay }: { delay: number } = { delay: 0 },
+  options: { delay: number } = { delay: 0 },
 ): ObservableLike<T> {
-  const factory = (observer: ObserverLike<T>) =>
-    new GenerateProducer(observer, generator, initialValue(), delay);
+  const factory = (observer: ObserverLike<T>) => {
+    let acc = initialValue();
 
+    return ($: YieldableLike) => {  
+      let observerIsDisposed = observer.isDisposed;
+
+      while (!observerIsDisposed) {
+        acc = generator(acc);
+        observer.notify(acc);
+  
+        observerIsDisposed = observer.isDisposed;
+        if (!observerIsDisposed) {
+          $.yield(options);
+        }
+      }
+      observer.dispose();
+    }
+  };
+
+  const { delay } = options;
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)
     : createScheduledObservable(factory, true);

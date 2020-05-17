@@ -22,7 +22,7 @@ import {
   using,
   throttle,
 } from "@reactive-js/core/lib/observable";
-import { isSome, none } from "@reactive-js/core/lib/option";
+import { none } from "@reactive-js/core/lib/option";
 import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
 import { sendHttpRequest, WebRequestBody } from "@reactive-js/http/lib/dom";
 import {
@@ -115,7 +115,11 @@ const StatefulComponent = (_props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable()), []);
+  const stream = useMemo(() => pipe(
+    obs, 
+    throttle(15), 
+    fromObservable(),
+  ), []);
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });
@@ -134,7 +138,7 @@ const StreamPauseResume = (_props: RoutableComponentProps) => {
   useEffect(() => setMode(mode), [mode, setMode]);
 
   const label = mode === FlowMode.Pause ? "RESUME" : "PAUSE";
-  const displayValue = isSome(value) ?? 0;
+  const displayValue = value ?? 0;
 
   return (
     <>

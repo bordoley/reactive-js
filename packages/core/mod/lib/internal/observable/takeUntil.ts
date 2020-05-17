@@ -1,0 +1,27 @@
+import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
+import { lift } from "./lift.ts";
+import { createAutoDisposingDelegatingObserver } from "./observer.ts";
+import { onNotify } from "./onNotify.ts";
+import { subscribe } from "./subscribe.ts";
+import { addDisposableOrTeardown, add, dispose } from "../../disposable.ts";
+import { pipe, bind } from "../../functions.ts";
+
+export const takeUntil = <T>(
+  notifier: ObservableLike<unknown>,
+): ObservableOperator<T, T> => {
+  const operator = (observer: ObserverLike<T>) => {
+    const takeUntilObserver = createAutoDisposingDelegatingObserver(observer);
+
+    const otherSubscription = pipe(
+      notifier,
+      onNotify(bind(dispose, takeUntilObserver)),
+      subscribe(takeUntilObserver),
+      addDisposableOrTeardown(takeUntilObserver),
+    );
+
+    add(observer, otherSubscription);
+    return takeUntilObserver;
+  }
+  operator.isSynchronous = false;
+  return lift(operator);
+}

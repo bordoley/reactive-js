@@ -6,7 +6,9 @@ An object that schedules units of work on a runloop.
 
 ## Hierarchy
 
-* **SchedulerLike**
+* [YieldableLike](_scheduler_.yieldablelike.md)
+
+  ↳ **SchedulerLike**
 
   ↳ [ObserverLike](_observable_.observerlike.md)
 
@@ -24,7 +26,7 @@ An object that schedules units of work on a runloop.
 ### Methods
 
 * [schedule](_scheduler_.schedulerlike.md#schedule)
-* [shouldYield](_scheduler_.schedulerlike.md#shouldyield)
+* [yield](_scheduler_.schedulerlike.md#yield)
 
 ## Properties
 
@@ -32,13 +34,15 @@ An object that schedules units of work on a runloop.
 
 • **inContinuation**: *boolean*
 
+*Inherited from void*
+
 ___
 
 ###  now
 
 • **now**: *number*
 
-The scheduler's current time in ms.
+*Inherited from void*
 
 ## Methods
 
@@ -64,8 +68,18 @@ Name | Type |
 
 ___
 
-###  shouldYield
+###  yield
 
-▸ **shouldYield**(): *boolean*
+▸ **yield**(`options?`: object): *void*
 
-**Returns:** *boolean*
+*Inherited from void*
+
+**Parameters:**
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay` | number |
+
+**Returns:** *void*

@@ -6,12 +6,14 @@ import {
 } from "../../disposable.ts";
 import { current, EnumeratorLike } from "../../enumerable.ts";
 import { none, isSome, isNone } from "../../option.ts";
-import { SchedulerContinuationLike } from "../../scheduler.ts";
+import { SchedulerContinuationLike, runContinuation } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { using } from "./using.ts";
+import { YieldError } from "../scheduler/interfaces.ts";
+import { returns } from "../../functions.ts";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {
@@ -33,7 +35,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
       }
 
       this.inContinuation = true;
-      continuation.continue(this);
+      runContinuation(this, continuation);
       this.inContinuation = false;
 
       const error = this.error;
@@ -62,8 +64,8 @@ class EnumeratorObserver<T> extends AbstractDisposable
     }
   }
 
-  shouldYield() {
-    return true;
+  yield() {
+    throw new YieldError(0);
   }
 }
 
@@ -179,7 +181,7 @@ class ZipObservable implements ObservableLike<unknown[]> {
       using(
         _ => this.observables.map(subscribeInteractive),
         (...enumerators: EnumeratorObserver<any>[]) =>
-          fromEnumerator()(zipEnumerators(enumerators)),
+          fromEnumerator()(returns(zipEnumerators(enumerators))),
       ).observe(observer);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];

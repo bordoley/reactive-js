@@ -80,7 +80,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(1, fromValue(), onSubscribe(f), subscribe(scheduler));
     pipe(disp, expectToHaveBeenCalledTimes(0));
     pipe(f, expectToHaveBeenCalledTimes(1));
-    scheduler.continue();
+    scheduler.run();
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
 }), test("when callback function throws", () => {
@@ -111,7 +111,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(zip(shared, shared), map(([a, b]) => a + b), buffer(), onNotify(x => {
         result = x;
     }), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));
 }), describe("switchAll", test("with empty source", defer(empty(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", bind(expectToThrow, defer(() => new Error(), throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))))), test("switchMap", defer([1, 2, 3], fromArray({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", bind(expectToThrow, defer(() => new Error(), throws(), takeLast(), toRunnable(), last)))), describe("throttle", test("first", defer(generate(increment, returns(-1), { delay: 1 }), takeFirst(100), throttle(50, 1), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate(increment, returns(-1), { delay: 1 }), takeFirst(200), throttle(50, 2), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate(increment, returns(-1), { delay: 1 }), takeFirst(200), throttle(75, 3), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", bind(expectToThrow, defer([1, 2, 3, 4, 5], fromArray({ delay: 1 }), throttle(_ => throws()(() => new Error())), toRunnable(), last)))), describe("throwIfEmpty", test("when source is empty", bind(expectToThrow, defer(empty(), throwIfEmpty(() => undefined), toRunnable(), last))), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", bind(expectToThrow, defer(1, fromValue({ delay: 2 }), timeout(1), toArray()))), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
     await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);

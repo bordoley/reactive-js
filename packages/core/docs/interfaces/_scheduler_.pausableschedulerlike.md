@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [SchedulerLike](_scheduler_.schedulerlike.md)
+  ↳ [SchedulerLike](_scheduler_.schedulerlike.md)
 
   ↳ **PausableSchedulerLike**
 
@@ -20,7 +20,7 @@
 * [pause](_scheduler_.pausableschedulerlike.md#pause)
 * [resume](_scheduler_.pausableschedulerlike.md#resume)
 * [schedule](_scheduler_.pausableschedulerlike.md#schedule)
-* [shouldYield](_scheduler_.pausableschedulerlike.md#shouldyield)
+* [yield](_scheduler_.pausableschedulerlike.md#yield)
 
 ## Properties
 
@@ -37,8 +37,6 @@ ___
 • **now**: *number*
 
 *Inherited from void*
-
-The scheduler's current time in ms.
 
 ## Methods
 
@@ -82,10 +80,18 @@ Name | Type |
 
 ___
 
-###  shouldYield
+###  yield
 
-▸ **shouldYield**(): *boolean*
+▸ **yield**(`options?`: object): *void*
 
 *Inherited from void*
 
-**Returns:** *boolean*
+**Parameters:**
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`delay` | number |
+
+**Returns:** *void*
